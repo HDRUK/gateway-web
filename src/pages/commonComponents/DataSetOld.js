@@ -34,7 +34,7 @@ export default class DataSet extends React.Component {
             });
 
         } else {
-            axios.get(baseURL + '/api/dataset/' + this.props.id)
+            axios.get(baseURL + '/api/v1/datasets/' + this.props.id)
                 .then((res) => {
                     this.setState({
                         data: {

@@ -78,7 +78,7 @@ const Request = (props) => {
                        'Content-Type': 'application/json'
                    }
                 }
-                axios.post(baseURL + '/api/dataset/sendgrid', JSON.stringify(vals), config)
+                axios.post(baseURL + '/api/v1/datasets/access/request', JSON.stringify(vals), config)
                     .then(response => {
                         message = response.data.message;
                     })
