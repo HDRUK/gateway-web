@@ -167,7 +167,6 @@ class SearchPage extends React.Component {
     }
 
     doSearchCall(searchString, typeString, languageSelected, categoriesSelected, featuresSelected, topicsSelected) {
-
         var searchURL = baseURL + '/api/search?search=' + searchString + '&type=' + typeString;
 
         languageSelected.forEach(language => {
@@ -259,6 +258,10 @@ class SearchPage extends React.Component {
             })
     }
 
+    getFullUrl = () => {
+        return  `${window.location.pathname}?search=${this.state.searchString}&type=${this.state.typeString}&tab=${this.state.key}&toolcategory=${this.state.categoriesSelected}&programminglanguage=${this.state.languageSelected}&features=${this.state.featuresSelected}&topics=${this.state.topicsSelected}&license=${this.state.licensesSelected}&sampleavailability=${this.state.sampleAvailabilitySelected}&keywords=${this.state.keywordsSelected}'&publisher=${this.state.publishersSelected}&ageband=${this.state.ageBandsSelected}&geographiccover=${this.state.geoCoverageSelected}`;
+    }
+
     updateSearchString = (searchString) => {
         this.setState({ searchString: searchString });
     }
@@ -268,62 +271,62 @@ class SearchPage extends React.Component {
     }
 
     updateCombinedLanguages = (languageSelected) => {
-        this.setState({ languageSelected: languageSelected });
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + this.state.categoriesSelected + '&programminglanguage=' + languageSelected + '&features=' + this.state.featuresSelected + '&topics=' + this.state.topicsSelected+ '&license=' + this.state.licensesSelected + '&sampleavailability=' + this.state.sampleAvailabilitySelected + '&keywords=' + this.state.keywordsSelected + '&publisher=' + this.state.publishersSelected + '&ageband=' + this.state.ageBandsSelected + '&geographiccover=' + this.state.geoCoverageSelected)
+        this.setState({ languageSelected });
+        this.props.history.push(this.getFullUrl());
         this.doSearchCall(this.state.searchString, this.state.typeString, languageSelected, this.state.categoriesSelected, this.state.featuresSelected, this.state.topicsSelected);
     }
 
     updateCombinedCategories = (categoriesSelected) => {
-        this.setState({ categoriesSelected: categoriesSelected });
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + categoriesSelected + '&programminglanguage=' + this.state.languageSelected + '&features=' + this.state.featuresSelected + '&topics=' + this.state.topicsSelected+ '&license=' + this.state.licensesSelected + '&sampleavailability=' + this.state.sampleAvailabilitySelected + '&keywords=' + this.state.keywordsSelected + '&publisher=' + this.state.publishersSelected + '&ageband=' + this.state.ageBandsSelected + '&geographiccover=' + this.state.geoCoverageSelected)
+        this.setState({ categoriesSelected });
+        this.props.history.push(his.getFullUrl());
         this.doSearchCall(this.state.searchString, this.state.typeString, this.state.languageSelected, categoriesSelected, this.state.featuresSelected, this.state.topicsSelected);
     }
 
     updateCombinedFeatures = (featuresSelected) => {
-        this.setState({ featuresSelected: featuresSelected });
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + this.state.categoriesSelected + '&programminglanguage=' + this.state.languageSelected + '&features=' + featuresSelected + '&topics=' + this.state.topicsSelected+ '&license=' + this.state.licensesSelected + '&sampleavailability=' + this.state.sampleAvailabilitySelected + '&keywords=' + this.state.keywordsSelected + '&publisher=' + this.state.publishersSelected + '&ageband=' + this.state.ageBandsSelected + '&geographiccover=' + this.state.geoCoverageSelected)
+        this.setState({ featuresSelected });
+        this.props.history.push(his.getFullUrl());
         this.doSearchCall(this.state.searchString, this.state.typeString, this.state.languageSelected, this.state.categoriesSelected, featuresSelected, this.state.topicsSelected);
     }
 
     updateCombinedTopics = (topicsSelected) => {
-        this.setState({ topicsSelected: topicsSelected });
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + this.state.categoriesSelected + '&programminglanguage=' + this.state.languageSelected + '&features=' + this.state.featuresSelected + '&topics=' + topicsSelected+ '&license=' + this.state.licensesSelected + '&sampleavailability=' + this.state.sampleAvailabilitySelected + '&keywords=' + this.state.keywordsSelected + '&publisher=' + this.state.publishersSelected + '&ageband=' + this.state.ageBandsSelected + '&geographiccover=' + this.state.geoCoverageSelected)
+        this.setState({ topicsSelected });
+        this.props.history.push(his.getFullUrl());
         this.doSearchCall(this.state.searchString, this.state.typeString, this.state.languageSelected, this.state.categoriesSelected, this.state.featuresSelected, topicsSelected);
     }
 
     updatePublisher = (publishersSelected) => {
-        this.setState({publishersSelected: publishersSelected})
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + this.state.categoriesSelected + '&programminglanguage=' + this.state.languageSelected + '&features=' + this.state.featuresSelected + '&topics=' + this.state.topicsSelected+ '&license=' + this.state.licensesSelected + '&sampleavailability=' + this.state.sampleAvailabilitySelected + '&keywords=' + this.state.keywordsSelected + '&publisher=' + publishersSelected + '&ageband=' + this.state.ageBandsSelected + '&geographiccover=' + this.state.geoCoverageSelected)
+        this.setState({ publishersSelected })
+        this.props.history.push(his.getFullUrl());
         this.filteredSearch(this.state.searchString, publishersSelected, this.state.licensesSelected, this.state.geoCoverageSelected, this.state.sampleAvailabilitySelected, this.state.keywordsSelected, this.state.ageBandsSelected);
 
     }
     updateLicenses = (licensesSelected) => {
-        this.setState({licensesSelected: licensesSelected})
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + this.state.categoriesSelected + '&programminglanguage=' + this.state.languageSelected + '&features=' + this.state.featuresSelected + '&topics=' + this.state.topicsSelected+ '&license=' + licensesSelected + '&sampleavailability=' + this.state.sampleAvailabilitySelected + '&keywords=' + this.state.keywordsSelected + '&publisher=' + this.state.publishersSelected + '&ageband=' + this.state.ageBandsSelected + '&geographiccover=' + this.state.geoCoverageSelected)
+        this.setState({ licensesSelected })
+        this.props.history.push(his.getFullUrl());
         this.filteredSearch(this.state.searchString, this.state.publishersSelected, licensesSelected, this.state.geoCoverageSelected, this.state.sampleAvailabilitySelected, this.state.keywordsSelected, this.state.ageBandsSelected);
 
     }
     updateGeoCoverage = (geoCoverageSelected) => {
-        this.setState({geoCoverageSelected: geoCoverageSelected})
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + this.state.categoriesSelected + '&programminglanguage=' + this.state.languageSelected + '&features=' + this.state.featuresSelected + '&topics=' + this.state.topicsSelected+ '&license=' + this.state.licensesSelected + '&sampleavailability=' + this.state.sampleAvailabilitySelected + '&keywords=' + this.state.keywordsSelected + '&publisher=' + this.state.publishersSelected + '&ageband=' + this.state.ageBandsSelected + '&geographiccover=' + geoCoverageSelected)
+        this.setState({ geoCoverageSelected })
+        this.props.history.push(this.getFullUrl());
         this.filteredSearch(this.state.searchString, this.state.publishersSelected, this.state.licensesSelected, geoCoverageSelected, this.state.sampleAvailabilitySelected, this.state.keywordsSelected, this.state.ageBandsSelected);
     }
 
     updateSampleAvailability = (sampleAvailabilitySelected) => {
-        this.setState({sampleAvailabilitySelected: sampleAvailabilitySelected})
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + this.state.categoriesSelected + '&programminglanguage=' + this.state.languageSelected + '&features=' + this.state.featuresSelected + '&topics=' + this.state.topicsSelected+ '&license=' + this.state.licensesSelected + '&sampleavailability=' + sampleAvailabilitySelected + '&keywords=' + this.state.keywordsSelected + '&publisher=' + this.state.publishersSelected + '&ageband=' + this.state.ageBandsSelected + '&geographiccover=' + this.state.geoCoverageSelected)
+        this.setState({ sampleAvailabilitySelected })
+        this.props.history.push(this.getFullUrl());
         this.filteredSearch(this.state.searchString, this.state.publishersSelected, this.state.licensesSelected, this.state.geoCoverageSelected, sampleAvailabilitySelected, this.state.keywordsSelected, this.state.ageBandsSelected);
     }
 
     updateKeywords = (keywordsSelected) => {
-        this.setState({keywordsSelected: keywordsSelected})
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + this.state.categoriesSelected + '&programminglanguage=' + this.state.languageSelected + '&features=' + this.state.featuresSelected + '&topics=' + this.state.topicsSelected+ '&license=' + this.state.licensesSelected + '&sampleavailability=' + this.state.sampleAvailabilitySelected + '&keywords=' + keywordsSelected + '&publisher=' + this.state.publishersSelected + '&ageband=' + this.state.ageBandsSelected + '&geographiccover=' + this.state.geoCoverageSelected)
+        this.setState({ keywordsSelected })
+        this.props.history.push(this.getFullUrl());
         this.filteredSearch(this.state.searchString, this.state.publishersSelected, this.state.licensesSelected, this.state.geoCoverageSelected, this.state.sampleAvailabilitySelected, keywordsSelected, this.state.ageBandsSelected);
     }
 
     updateAgeBands = (ageBandsSelected) => {
-        this.setState({ageBandsSelected: ageBandsSelected})
-        this.props.history.push(window.location.pathname + '?search=' + this.state.searchString + '&type=' + this.state.typeString + '&tab=' + this.state.key + '&toolcategory=' + this.state.categoriesSelected + '&programminglanguage=' + this.state.languageSelected + '&features=' + this.state.featuresSelected + '&topics=' + this.state.topicsSelected+ '&license=' + this.state.licensesSelected + '&sampleavailability=' + this.state.sampleAvailabilitySelected + '&keywords=' + this.state.keywordsSelected + '&publisher=' + this.state.publishersSelected + '&ageband=' + ageBandsSelected + '&geographiccover=' + this.state.geoCoverageSelected)
+        this.setState({ ageBandsSelected })
+        this.props.history.push(this.getFullUrl());
         this.filteredSearch(this.state.searchString, this.state.publishersSelected, this.state.licensesSelected, this.state.geoCoverageSelected, this.state.sampleAvailabilitySelected, this.state.keywordsSelected, ageBandsSelected);
     }
 

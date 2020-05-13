@@ -79,6 +79,7 @@ class DatasetDetail extends Component {
   doSearch = (e) => { //fires on enter on searchbar
     if (e.key === 'Enter') {
       if (!!this.state.searchString) {
+        debugger;
         window.location.href = "/search?search=" + this.state.searchString + '&type=all';
       }
     }
