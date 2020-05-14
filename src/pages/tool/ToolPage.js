@@ -67,8 +67,6 @@ class ToolDetail extends Component {
       this.setState({ replyAdded: values.replyAdded })
     }
     this.getDataSearchFromDb();
-    
-    console.log('HERE: ' + this.props.match.params.toolID)
   }
 
 
@@ -286,8 +284,6 @@ class ToolTitle extends Component {
   }
 
   componentDidMount(props) {
-    console.log('props : ' + JSON.stringify(this.props.data))
-    console.log('state : ' + JSON.stringify(this.state.data))
     let counter = !this.props.data.counter ? 1 : this.props.data.counter + 1;
     this.UpdateCounter(this.props.data.id, counter);
     this.injectDiscourseScript();
@@ -307,7 +303,6 @@ class ToolTitle extends Component {
 
   render() {
       const { data, reviewData } = this.state;
-      console.log('data here: ' + JSON.stringify(data))
       var ratingsTotal = 0;
 
       if (reviewData.length > 0) {

@@ -111,7 +111,6 @@ const Request = (props) => {
 
     const onCancel = (e) => {
         e.preventDefault();
-        console.log('back');
     }
 
      //redirect if !logged in

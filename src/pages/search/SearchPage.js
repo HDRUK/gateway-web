@@ -13,9 +13,7 @@ import Project from '../commonComponents/Project';
 import Tool from '../commonComponents/Tool';
 import Person from '../commonComponents/Person';
 import DataSet from '../commonComponents/DataSet';
-import NotFound from '../commonComponents/NotFound'
 import Loading from '../commonComponents/Loading'
-import FilterButtons from './FilterButtons';
 import KeywordsFilter from './KeywordsFilter';
 import ProgrammingLanguageFilter from './ProgrammingLanguageFilter';
 import CategoryFilterTool from './CategoryFilterTool';
@@ -32,7 +30,6 @@ import NoResultsTool from '../commonComponents/NoResultsTools';
 import NoResultsProjects from '../commonComponents/NoResultsProjects';
 import NoResultsPeople from '../commonComponents/NoResultsPeople';
 import NoResultsDatasets from '../commonComponents/NoResultsDatasets';
-import { stat } from 'fs';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -96,33 +93,44 @@ class SearchPage extends React.Component {
 
     componentDidMount() { //fires on first time in or page is refreshed/url loaded
         if (!!window.location.search) {
+            debugger
             var values = queryString.parse(window.location.search);
             this.doSearchCall(values.search, values.type, this.state.languageSelected, this.state.categoriesSelected, this.state.featuresSelected, this.state.topicsSelected);
             this.setState({ searchString: values.search });
             this.setState({ typeString: values.type });
+            debugger;
             this.getDatasetFilters(values.search);
         }
         else {
             this.setState({ data: [], searchString: '', typeString: 'all', isLoading: true });
             this.doSearchCall("", "all", [], [], [], []);
+            debugger;
             this.getDatasetFilters(values.search);
         }
 
     }
 
     getDatasetFilters = (searchString) => {
-
-        axios.get(baseURL + '/api/datasetfilters?search=' + searchString)
-            .then((res) => {
-                this.setState({
-                    publisherData: res.data.data.publisher,
-                    licenseData: res.data.data.license,
-                    geographicCoverageData: res.data.data.geographicCoverage,
-                    ageBandData: res.data.data.ageBand,
-                    physicalSampleAvailabilityData: res.data.data.physicalSampleAvailability,
-                    keywordsData: res.data.data.keywords
-                });
+        debugger;
+        axios.get(baseURL + '/api/v1/datasets/filters?search=' + searchString)
+            .then((response) => {
+                const {data: { success, data, error}} = response;
+                if(success) {
+                    this.setState({
+                        publisherData: data.publisher,
+                        licenseData: data.license,
+                        geographicCoverageData: data.geographicCoverage,
+                        ageBandData: data.ageBand,
+                        physicalSampleAvailabilityData: data.physicalSampleAvailability,
+                        keywordsData: data.keywords
+                    });
+                } else {
+                    console.log(error);
+                }
             })
+            .catch(error => {
+                console.log(error.message);
+            });
       };
 
     componentWillReceiveProps() {
@@ -133,6 +141,7 @@ class SearchPage extends React.Component {
                 this.doSearchCall(values.search, values.type, this.state.languageSelected, this.state.categoriesSelected, this.state.featuresSelected, this.state.topicsSelected);
                 this.setState({ searchString: values.search });
                 this.setState({ typeString: values.type });
+                debugger;
                 this.getDatasetFilters(values.search);
 
             }
@@ -140,6 +149,7 @@ class SearchPage extends React.Component {
         else {
             this.setState({ data: [], searchString: '', typeString: 'all', isLoading: true });
             this.doSearchCall("", "all", [], [], [], []);
+            debugger;
             this.getDatasetFilters(this.state.searchString);
 
         }
@@ -264,6 +274,7 @@ class SearchPage extends React.Component {
     }
 
     updateSearchString = (searchString) => {
+        debugger;
         this.setState({ searchString });
     }
 
@@ -375,7 +386,7 @@ class SearchPage extends React.Component {
     }
 
     render() {
-        const { searchString, typeString, data, key, summary, userState, isLoading, combinedLanguages, languageSelected, combinedToolCategories, combinedProjectCategories, categoriesSelected, combinedFeatures, featuresSelected, combinedToolTopic, combinedProjectTopic, topicsSelected, datasetData, publishersSelected, licensesSelected, geoCoverageSelected, sampleAvailabilitySelected, keywordsSelected, ageBandsSelected, publisherData, licenseData, geographicCoverageData, ageBandData, physicalSampleAvailabilityData, keywordsData } = this.state;
+        const { searchString, data, key, userState, isLoading, combinedLanguages, languageSelected, combinedToolCategories, combinedProjectCategories, categoriesSelected, combinedFeatures, featuresSelected, combinedToolTopic, combinedProjectTopic, topicsSelected, datasetData, publishersSelected, licensesSelected, geoCoverageSelected, sampleAvailabilitySelected, keywordsSelected, ageBandsSelected, publisherData, licenseData, geographicCoverageData, ageBandData, physicalSampleAvailabilityData, keywordsData } = this.state;
 
         var toolCount = 0;
         var projectCount = 0;

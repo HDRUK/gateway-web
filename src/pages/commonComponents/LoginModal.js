@@ -12,7 +12,6 @@ const LoginModal = (props) => {
 
     const showLoginModal = () => {
         var modalID="myModal"
-        debugger
         if (props.isRequest) {
             modalID="myModalRequest";
         }

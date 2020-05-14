@@ -102,7 +102,7 @@ class LandingPage extends React.Component {
         if (e.key === 'Enter') {
             if (!!this.state.searchString) {
                 debugger
-                window.location.href = window.location.pathname + "search?search=" + this.state.searchString + '&type=all&toolcategory=&programminglanguage=&features=&topics=';
+                window.location.href = window.location.pathname + "search?search=" + this.state.searchString + '&type=all';
             }
         }
     }
