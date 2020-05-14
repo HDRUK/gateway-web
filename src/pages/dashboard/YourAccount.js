@@ -36,7 +36,7 @@ class YourAccount extends React.Component {
     }
 
     doYourAccountCall() {
-        axios.get(baseURL + '/api/person/' + this.state.userState[0].id)
+        axios.get(baseURL + '/api/v1/person/' + this.state.userState[0].id)
             .then((res) => {
                 axios.get(baseURL + '/api/v1/users/' + this.state.userState[0].id)
                     .then((resUser) => {
@@ -82,7 +82,7 @@ const YourAccountForm = (props) => {
         },
 
         onSubmit: values => {
-            axios.post(baseURL + '/api/person/edit', values)
+            axios.post(baseURL + '/api/v1/person/edit', values)
                 .then((res) => {
                     window.location.href = '/account?tab=youraccount&accountUpdated=true';
                 });

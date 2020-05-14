@@ -48,7 +48,7 @@ class LandingPage extends React.Component {
 
     getDataSearchFromDb = () => {
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/stats')
+        axios.get(baseURL + '/api/v1/stats')
             .then((res) => {
                 this.setState({
                     data: {
@@ -63,7 +63,7 @@ class LandingPage extends React.Component {
     };
 
     getRecentSearches = () => {
-        axios.get(baseURL + '/api/stats/recent')
+        axios.get(baseURL + '/api/v1/stats/recent')
             .then((res) => {
                 this.setState({
                     searchData: res.data.data
@@ -72,7 +72,7 @@ class LandingPage extends React.Component {
     };
 
     getUnmetData = () => {
-        axios.get(baseURL + '/api/stats/unmet')
+        axios.get(baseURL + '/api/v1/stats/unmet')
             .then((res) => {
                 this.setState({
                     unmetData: res.data.data
@@ -81,7 +81,7 @@ class LandingPage extends React.Component {
     };
 
     getPopularData = () => {
-        axios.get(baseURL + '/api/stats/popular')
+        axios.get(baseURL + '/api/v1/stats/popular')
             .then((res) => {
                 this.setState({
                     popularData: res.data.data
@@ -90,7 +90,7 @@ class LandingPage extends React.Component {
     };
 
     getUpdatesData = () => {
-        axios.get(baseURL + '/api/stats/updates')
+        axios.get(baseURL + '/api/v1/stats/updates')
             .then((res) => {
                 this.setState({
                     updatesData: res.data.data
@@ -101,7 +101,6 @@ class LandingPage extends React.Component {
     doSearch = (e) => { //fires on enter on searchbar
         if (e.key === 'Enter') {
             if (!!this.state.searchString) {
-                debugger
                 window.location.href = window.location.pathname + "search?search=" + this.state.searchString + '&type=all';
             }
         }

@@ -55,7 +55,7 @@ class PersonDetail extends Component {
   getDataSearchFromDb = () => {
     //need to handle error if no id is found
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/person/' + this.props.match.params.personID)
+    axios.get(baseURL + '/api/v1/person/' + this.props.match.params.personID)
       .then((res) => {
         this.setState({
           data: res.data.data[0],

@@ -93,25 +93,26 @@ class SearchPage extends React.Component {
 
     componentDidMount() { //fires on first time in or page is refreshed/url loaded
         if (!!window.location.search) {
-            debugger
             var values = queryString.parse(window.location.search);
             this.doSearchCall(values.search, values.type, this.state.languageSelected, this.state.categoriesSelected, this.state.featuresSelected, this.state.topicsSelected);
             this.setState({ searchString: values.search });
             this.setState({ typeString: values.type });
-            debugger;
             this.getDatasetFilters(values.search);
         }
         else {
             this.setState({ data: [], searchString: '', typeString: 'all', isLoading: true });
             this.doSearchCall("", "all", [], [], [], []);
-            debugger;
             this.getDatasetFilters(values.search);
         }
 
     }
 
+    /**
+     * [getDatasetFilters]
+     * @desc Returns filters for dataset
+     * @return  {[object]}  [{}]
+     */
     getDatasetFilters = (searchString) => {
-        debugger;
         axios.get(baseURL + '/api/v1/datasets/filters?search=' + searchString)
             .then((response) => {
                 const {data: { success, data, error}} = response;
@@ -131,7 +132,7 @@ class SearchPage extends React.Component {
             .catch(error => {
                 console.log(error.message);
             });
-      };
+    };
 
     componentWillReceiveProps() {
         if (!!window.location.search) {
@@ -141,7 +142,6 @@ class SearchPage extends React.Component {
                 this.doSearchCall(values.search, values.type, this.state.languageSelected, this.state.categoriesSelected, this.state.featuresSelected, this.state.topicsSelected);
                 this.setState({ searchString: values.search });
                 this.setState({ typeString: values.type });
-                debugger;
                 this.getDatasetFilters(values.search);
 
             }
@@ -149,7 +149,6 @@ class SearchPage extends React.Component {
         else {
             this.setState({ data: [], searchString: '', typeString: 'all', isLoading: true });
             this.doSearchCall("", "all", [], [], [], []);
-            debugger;
             this.getDatasetFilters(this.state.searchString);
 
         }
@@ -274,7 +273,6 @@ class SearchPage extends React.Component {
     }
 
     updateSearchString = (searchString) => {
-        debugger;
         this.setState({ searchString });
     }
 
