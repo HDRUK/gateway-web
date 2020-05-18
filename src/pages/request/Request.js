@@ -9,9 +9,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { Event, initGA } from '../../tracking';
 import ReactGA from 'react-ga';
-
 var baseURL = require('../commonComponents/BaseURL').getURL();
-
 ReactGA.initialize('UA-166025838-1');
 
 /**
@@ -84,7 +82,7 @@ const Request = (props) => {
                        'Content-Type': 'application/json'
                    }
                 }
-                axios.post(baseURL + '/api/dataset/sendgrid', JSON.stringify(vals), config)
+                axios.post(baseURL + '/api/v1/dataset/sendgrid', JSON.stringify(vals), config)
                     .then(response => {
                         message = response.data.message;
                     })

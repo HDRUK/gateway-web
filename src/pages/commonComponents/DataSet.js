@@ -29,7 +29,7 @@ class DataSet extends React.Component {
       }
 
       getDetailsSearchFromMDC = () => {
-        axios.get(baseURL + '/api/datasets/detail/' + this.state.data.id)
+        axios.get(baseURL + '/api/v1/datasets/detail/' + this.state.data.id)
             .then((res) => {
                 this.setState({
                     detailsData: res.data.data

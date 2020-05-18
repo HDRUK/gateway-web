@@ -30,7 +30,7 @@ class SSOPage extends Component {
   componentDidMount() {
     const url = `${window.location.search}`;
     axios
-    .get(`${baseURL}/api/v1/auth/soo/discourse${url}`)
+    .get(`${baseURL}/api/auth/soo/discourse${url}`)
     .then((res) => {
       if (res.status === 200 && res.data.redirectUrl) {
         window.location.href = res.data.redirectUrl;
