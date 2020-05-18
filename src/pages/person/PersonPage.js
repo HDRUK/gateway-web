@@ -59,7 +59,7 @@ class PersonDetail extends Component {
   getDataSearchFromDb = () => {
     //need to handle error if no id is found
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/person/' + this.props.match.params.personID)
+    axios.get(baseURL + '/api/v1/person/' + this.props.match.params.personID)
       .then((res) => {
         this.setState({
           data: res.data.data[0],
@@ -168,7 +168,7 @@ class PersonTitle extends Component {
   }
 
   UpdateCounter = (id, counter) => {
-    axios.post(baseURL + '/api/counter/update', { id: id, counter: counter });
+    axios.post(baseURL + '/api/v1/counter/update', { id: id, counter: counter });
   }
 
   // here is our UI

@@ -46,7 +46,7 @@ class CompleteRegistration extends Component {
 
     componentDidMount() {
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/auth/register/' + this.props.match.params.personID)
+        axios.get(baseURL + '/api/v1/auth/register/' + this.props.match.params.personID)
             .then((res) => {
             this.setState({
                 userdata: res.data.data,
@@ -114,7 +114,7 @@ const YourAccountForm = (props) => {
         
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
-            axios.post(baseURL + '/api/auth/register', values)
+            axios.post(baseURL + '/api/v1/auth/register', values)
             .then((res) => {
                 const url = `${window.location.search}${res.data.data}`;
                 window.location.href = `${url}${url.includes('?') ? '&': '?' }registrationCompleted=true`;

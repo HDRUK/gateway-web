@@ -121,7 +121,7 @@ class SearchPage extends React.Component {
 
     getDatasetFilters = (searchString) => {
 
-        axios.get(baseURL + '/api/datasetfilters?search=' + searchString)
+        axios.get(baseURL + '/api/v1/datasetfilters?search=' + searchString)
             .then((res) => {
                 this.setState({
                     publisherData: res.data.data.publisher,
@@ -177,7 +177,7 @@ class SearchPage extends React.Component {
 
     doSearchCall(searchString, typeString, languageSelected, categoriesSelected, featuresSelected, topicsSelected) {
 
-        var searchURL = baseURL + '/api/search?search=' + searchString + '&type=' + typeString;
+        var searchURL = baseURL + '/api/v1/search?search=' + searchString + '&type=' + typeString;
 
         languageSelected.forEach(language => {
             searchURL += '&programmingLanguage=' + language;
@@ -254,7 +254,7 @@ class SearchPage extends React.Component {
                 this.setState({ combinedToolCategories: tempCategoriesToolArray, combinedProjectCategories: tempCategoriesProjectArray, combinedLanguages: tempProgrammingLanguageArray, combinedFeatures: tempFeaturesArray, combinedToolTopic: tempToolTopicsArray, combinedProjectTopic: tempProjectTopicsArray });
                 this.setState({ data: !res.data.data ? '' : res.data.data, summary: !res.data.summary ? '' : Object.entries(res.data.summary ) });
 
-                axios.get(baseURL + '/api/datasets/filteredsearch?search=' + this.state.searchString + this.state.publishersFilter + this.state.licensesFilter + this.state.geoCoverageFilter + this.state.sampleAvailabilityFilter + this.state.keywordsFilter + this.state.ageBandsFilter)
+                axios.get(baseURL + '/api/v1/datasets/filteredsearch?search=' + this.state.searchString + this.state.publishersFilter + this.state.licensesFilter + this.state.geoCoverageFilter + this.state.sampleAvailabilityFilter + this.state.keywordsFilter + this.state.ageBandsFilter)
                 .then((res) => {
                     var TempDataSetData = res.data.data.results;
                     

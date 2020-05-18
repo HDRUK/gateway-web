@@ -220,7 +220,7 @@ const EditToolForm = (props) => {
 
       onSubmit: values => {
           //alert(JSON.stringify(values, null, 2));
-          axios.put(baseURL + '/api/mytools/edit', values)
+          axios.put(baseURL + '/api/v1/mytools/edit', values)
               .then((res) => {
                   window.location.href = window.location.search + '/tool/' + props.data.id + '/?toolEdited=true';
               });

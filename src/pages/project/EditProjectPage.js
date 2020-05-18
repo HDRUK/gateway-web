@@ -52,7 +52,7 @@ class EditProjectPage extends React.Component {
   getDataSearchFromDb = () => {
     //need to handle error if no id is found
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/project/' + this.props.match.params.projectID)
+    axios.get(baseURL + '/api/v1/project/' + this.props.match.params.projectID)
       .then((res) => {
         this.setState({
           data: res.data.data[0],
@@ -154,7 +154,7 @@ const EditProjectForm = (props) => {
       }),
 
       onSubmit: values => {
-          axios.put(baseURL + '/api/mytools/edit', values)
+          axios.put(baseURL + '/api/v1/mytools/edit', values)
               .then((res) => {
                   window.location.href = window.location.search + '/project/' + props.data.id + '/?projectEdited=true';
               });

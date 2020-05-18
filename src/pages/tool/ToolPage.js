@@ -286,7 +286,7 @@ class ToolTitle extends Component {
   }
 
   UpdateCounter = (id, counter) => {
-      axios.post(baseURL + '/api/counter/update', { id: id, counter: counter });
+      axios.post(baseURL + '/api/v1/counter/update', { id: id, counter: counter });
   }
 
   render() {

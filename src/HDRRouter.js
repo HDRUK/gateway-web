@@ -40,7 +40,7 @@ class HDRRouter extends Component {
   componentDidMount() {
     axios.defaults.withCredentials = true;
     axios
-      .get(baseURL + '/api/auth/status')
+      .get(baseURL + '/api/v1/auth/status')
       .then((res) => {
         this.setState({
           userState: [

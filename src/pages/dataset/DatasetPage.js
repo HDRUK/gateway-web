@@ -72,7 +72,7 @@ class DatasetDetail extends Component {
 
   getDetailsSearchFromMDC = () => {
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/datasets/detail/' + this.props.match.params.datasetID+'?&id=' + this.state.userState[0].id)
+    axios.get(baseURL + '/api/v1/datasets/detail/' + this.props.match.params.datasetID+'?&id=' + this.state.userState[0].id)
       .then((res) => {
         this.setState({
           data: res.data.data,
