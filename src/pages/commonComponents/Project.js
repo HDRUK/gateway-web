@@ -29,7 +29,7 @@ class Project extends React.Component {
     getDataSearchFromDb = () => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/project/' + this.state.id)
+        axios.get(baseURL + '/api/v1/project/' + this.state.id)
             .then((res) => {
                 this.setState({
                     data: res.data.data[0],

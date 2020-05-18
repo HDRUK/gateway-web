@@ -82,6 +82,8 @@ const YourAccountForm = (props) => {
         },
 
         onSubmit: values => {
+            console.log(values);
+            debugger;
             axios.post(baseURL + '/api/v1/person/edit', values)
                 .then((res) => {
                     window.location.href = '/account?tab=youraccount&accountUpdated=true';

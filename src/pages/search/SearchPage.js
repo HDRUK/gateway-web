@@ -94,6 +94,9 @@ class SearchPage extends React.Component {
     componentDidMount() { //fires on first time in or page is refreshed/url loaded
         if (!!window.location.search) {
             var values = queryString.parse(window.location.search);
+
+
+
             this.doSearchCall(values.search, values.type, this.state.languageSelected, this.state.categoriesSelected, this.state.featuresSelected, this.state.topicsSelected);
             this.setState({ searchString: values.search });
             this.setState({ typeString: values.type });
@@ -113,6 +116,7 @@ class SearchPage extends React.Component {
      * @return  {[object]}  [{}]
      */
     getDatasetFilters = (searchString) => {
+        debugger;
         axios.get(baseURL + '/api/v1/datasets/filters?search=' + searchString)
             .then((response) => {
                 const {data: { success, data, error}} = response;
@@ -177,7 +181,7 @@ class SearchPage extends React.Component {
 
     doSearchCall(searchString, typeString, languageSelected, categoriesSelected, featuresSelected, topicsSelected) {
         // tools project and people
-        var searchURL = baseURL + '/api/search?search=' + searchString + '&type=' + typeString;
+        var searchURL = baseURL + '/api/v1/search?search=' + searchString + '&type=' + typeString;
 
         languageSelected.forEach(language => {
             searchURL += '&programmingLanguage=' + language;
@@ -254,7 +258,7 @@ class SearchPage extends React.Component {
                 this.setState({ combinedToolCategories: tempCategoriesToolArray, combinedProjectCategories: tempCategoriesProjectArray, combinedLanguages: tempProgrammingLanguageArray, combinedFeatures: tempFeaturesArray, combinedToolTopic: tempToolTopicsArray, combinedProjectTopic: tempProjectTopicsArray });
                 this.setState({ data: !res.data.data ? '' : res.data.data, summary: !res.data.summary ? '' : Object.entries(res.data.summary ) });
                 // datasets 
-                axios.get(baseURL + '/api/datasets/filteredsearch?search=' + this.state.searchString + this.state.publishersFilter + this.state.licensesFilter + this.state.geoCoverageFilter + this.state.sampleAvailabilityFilter + this.state.keywordsFilter + this.state.ageBandsFilter)
+                axios.get(baseURL + '/api/v1/datasets/filteredsearch?search=' + this.state.searchString + this.state.publishersFilter + this.state.licensesFilter + this.state.geoCoverageFilter + this.state.sampleAvailabilityFilter + this.state.keywordsFilter + this.state.ageBandsFilter)
                 .then((res) => {
                     var TempDataSetData = res.data.data.results;
                     

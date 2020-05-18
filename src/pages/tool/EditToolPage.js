@@ -69,7 +69,6 @@ class EditToolPage extends React.Component {
     axios.get(baseURL + '/api/v1/search/filter/topic/tool')
       .then((res) => {
         var tempTopicArray = ["Blood", "Cancer and neoplasms", "Cardiovascular", "Congenital disorders", "Ear", "Eye", "Infection", "Inflammatory and immune system", "Injuries and accidents", "Mental health", "Metabolic and Endocrine", "Musculoskeletal", "Neurological", "Oral and Gastrointestinal", "Renal and Urogenital", "Reproductive health and childbirth", "Respiratory", "Skin", "Stroke"]
-
         res.data.data.forEach((to) => {
           if (!tempTopicArray.includes(to) && to !== '') {
             tempTopicArray.push(to);
@@ -98,8 +97,7 @@ class EditToolPage extends React.Component {
   doGetLanguagesCall() {
     axios.get(baseURL + '/api/v1/search/filter/language/tool')
       .then((res) => {
-        var tempLanguagesArray = ["No coding required", ".net", "AJAX", "ASP.NET", "C", "C#", "C++", "CSS", "Django", "HTML", "Java", "Javascript", "jQuery", "JSON", "Matlab", "MySQL", "Node.js", "Objective C", "PHP", "Python", "R", "React JS", "Regex", "Ruby", "Ruby on Rails", "SQL", "SQL server", "Swift", "XML"]
-
+        var tempLanguagesArray = ["No coding required", ".net", "AJAX", "ASP.NET", "C", "C#", "C++", "CSS", "Django", "HTML", "Java", "Javascript", "jQuery", "JSON", "Matlab", "MySQL", "Node.js", "Objective C", "PHP", "Python", "R", "React JS", "Regex", "Ruby", "Ruby on Rails", "SQL", "SQL server", "Swift", "XML"];
         res.data.data.forEach((la) => {
           if (!tempLanguagesArray.includes(la) && la !== '') {
             tempLanguagesArray.push(la);
@@ -113,8 +111,7 @@ class EditToolPage extends React.Component {
   doGetCategoriesCall() {
     axios.get(baseURL + '/api/v1/search/filter/category/tool')
       .then((res) => {
-        var tempCategoriesArray = ["API", "Code snippet", "Container image", "Dashboard", "Developer stack", "Directory", "Docker app", "Kubernetes app", "Library", "Notebook", "Package", "Platform", "Repository", "Service", "Software", "Virtual machine", "Web application"]
-
+        var tempCategoriesArray = ["API", "Code snippet", "Container image", "Dashboard", "Developer stack", "Directory", "Docker app", "Kubernetes app", "Library", "Notebook", "Package", "Platform", "Repository", "Service", "Software", "Virtual machine", "Web application"];
         res.data.data.forEach((ca) => {
           if (!tempCategoriesArray.includes(ca) && ca !== '') {
             tempCategoriesArray.push(ca);
@@ -220,7 +217,7 @@ const EditToolForm = (props) => {
 
       onSubmit: values => {
           //alert(JSON.stringify(values, null, 2));
-          axios.put(baseURL + '/api/mytools/edit', values)
+          axios.put(baseURL + '/api/v1/mytools/edit', values)
               .then((res) => {
                   window.location.href = window.location.search + '/tool/' + props.data.id + '/?toolEdited=true';
               });
