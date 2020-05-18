@@ -114,7 +114,7 @@ class LandingPage extends React.Component {
     }
 
     logout = (e) => {
-        axios.get(baseURL + '/api/auth/logout')
+        axios.get(baseURL + '/api/v1/auth/logout')
             .then((res) => {
                 window.location.href = "/";
             });
