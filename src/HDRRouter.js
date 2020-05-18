@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 
+import SSOPage from './pages/sso/SSOPage';
 import ToolPage from './pages/tool/ToolPage';
 import PersonPage from './pages/person/PersonPage';
 import ProjectPage from './pages/project/ProjectPage';
@@ -91,6 +92,7 @@ class HDRRouter extends Component {
             <Route path='/person/:personID' render={(props) => <PersonPage {...props} userState={userState} />} />
             <Route path='/dataset/:datasetID' render={(props) => <DatasetPage {...props} userState={userState} />} />
             <Route path='/completeRegistration/:personID' render={(props) => <CompleteRegistration {...props} userState={userState} />} />
+            <Route path='/sso' render={(props) => <SSOPage {...props} userState={userState} />} />
 
             {userState[0].loggedIn ? (
               <Route

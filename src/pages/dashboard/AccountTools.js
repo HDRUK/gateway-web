@@ -7,7 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 
 import NotFound from '../commonComponents/NotFound';
-import Loading from '../commonComponents/Loading'
+import Loading from '../commonComponents/Loading';
+
+import { Event, initGA } from '../../tracking';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -23,6 +25,10 @@ class AccountTools extends React.Component {
         userState: []
     };
 
+    componentDidMount() {
+        initGA('UA-166025838-1');
+    }
+
     render() {
         const { userState } = this.state;
 
@@ -31,7 +37,7 @@ class AccountTools extends React.Component {
                 <Row className="mt-3">
                     <Col xs={5} lg={5}></Col>
                     <Col xs={2} lg={2} style={{ textAlign: "center" }}>
-                        <Button variant="primary" href="/addtool" className="AddButton">
+                        <Button variant="primary" href="/addtool" className="AddButton" onClick={() => Event("Buttons", "Click", "Add a new tool")}>
                             + Add a new tool
                             </Button>
                     </Col>

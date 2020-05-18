@@ -116,7 +116,8 @@ const YourAccountForm = (props) => {
             //alert(JSON.stringify(values, null, 2));
             axios.post(baseURL + '/api/v1/auth/register', values)
             .then((res) => {
-                window.location.href = window.location.search + res.data.data + '?registrationCompleted=true';
+                const url = `${window.location.search}${res.data.data}`;
+                window.location.href = `${url}${url.includes('?') ? '&': '?' }registrationCompleted=true`;
             });
         }
     });

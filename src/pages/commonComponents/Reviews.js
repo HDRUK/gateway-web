@@ -105,6 +105,21 @@ const ReviewButton = (props) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const showLoginModal = () => {
+      var modalID="myModal"
+      if (props.isRequest) {
+          modalID="myModalRequest";
+      }
+      document.getElementById(modalID).style.display = "block";
+      
+      window.onclick = function (event) {
+          if (event.target === document.getElementById(modalID)) {
+              document.getElementById(modalID).style.display = "none";
+          }
+      }
+  };
+
   return (
     <>
       {
@@ -113,13 +128,13 @@ const ReviewButton = (props) => {
             {props.data.authors.includes(props.userState[0].id) ? '' :
               <Button variant="light" id="AddReviewButton" className="mb-1" onClick={handleShow}>
                 + Add a review
-      </Button>
+              </Button>
             }
           </>
           :
-          <Button variant="light" id="AddReviewButton" className="mb-1" onClick={() => { window.location.href = baseURL + '/auth/google' }}>
+          <Button variant="light" id="AddReviewButton" className="mb-1" onClick={showLoginModal}>
             + Add a review
-      </Button>
+          </Button>
       }
 
       <Modal size="lg" show={show} onHide={handleClose}>

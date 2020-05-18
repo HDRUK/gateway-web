@@ -22,10 +22,14 @@ import Loading from '../commonComponents/Loading'
 import Reviews from '../commonComponents/Reviews';
 import Project from '../commonComponents/Project';
 import SearchBar from '../commonComponents/SearchBar';
+import DiscourseTopic from '../commonComponents/DiscourseTopic';
 
 import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg'
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
 import 'react-tabs/style/react-tabs.css';
+
+// import ReactGA from 'react-ga'; 
+import {PageView, initGA} from '../../tracking';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -49,7 +53,8 @@ class ToolDetail extends Component {
     toolAdded: false,
     toolEdited: false,
     reviewAdded: false,
-    replyAdded: false
+    replyAdded: false,
+    discourseTopic: null
   };
 
   constructor(props) {
@@ -66,7 +71,11 @@ class ToolDetail extends Component {
       this.setState({ reviewAdded: values.reviewAdded });
       this.setState({ replyAdded: values.replyAdded })
     }
+
     this.getDataSearchFromDb();
+    initGA('UA-166025838-1');
+    PageView();
+    this.getDataSearchFromDb(); 
   }
 
 
@@ -85,6 +94,7 @@ class ToolDetail extends Component {
         this.setState({
           data: res.data.data[0],
           reviewData: res.data.reviewData,
+          discourseTopic: res.data.discourseTopic,
           isLoading: false
         });
         document.title = res.data.data[0].name.trim();
@@ -104,7 +114,7 @@ class ToolDetail extends Component {
   }
 
   render() {
-    const { searchString, data, isLoading, userState, toolAdded, toolEdited, reviewAdded, replyAdded, reviewData } = this.state;
+    const { searchString, data, isLoading, userState, toolAdded, toolEdited, reviewAdded, replyAdded, reviewData, discourseTopic } = this.state;
 
     if (isLoading) {
       return <Container><Loading /></Container>;
@@ -206,14 +216,8 @@ class ToolDetail extends Component {
                   <Tab eventKey="Reviews" title={'Reviews (' + reviewData.length + ')'}>
                     <Reviews data={data} userState={userState} reviewData={reviewData} />
                   </Tab>
-                  <Tab eventKey="Collaboration" title={'Collaboration'}>
-                    <Row className="mt-2">
-                      <Col>
-                        <div className="Rectangle">
-                          <div id='discourse-comments'></div>
-                        </div>
-                      </Col>
-                    </Row>
+                  <Tab eventKey="Collaboration" title={`Discussion (${discourseTopic && discourseTopic.posts ? discourseTopic.posts.length : 0})`}>
+                    <DiscourseTopic topic={discourseTopic} toolId={data.id} userState={userState} />
                   </Tab>
                   <Tab eventKey="Projects" title={'Projects using this (' + data.projectids.length + ')'}>
                     {data.projectids.length <= 0 ? <NotFound word="projects" /> : data.projectids.map(id => <Project id={id} />)}
@@ -252,8 +256,6 @@ class ToolDetail extends Component {
         </Navbar>
 
         <Row className='AuthorCard' />
-
-
       </div>
     );
   }
@@ -275,30 +277,13 @@ class ToolTitle extends Component {
       reviewData: []
   };
 
-  componentWillMount() {
-    window.DiscourseEmbed = {
-      // TODO: Move to ENV vars.
-      discourseUrl: 'https://discourse-dev.healthresearch.tools/',
-      discourseEmbedUrl: `${window.location.href}`,
-    };
-  }
-
   componentDidMount(props) {
     let counter = !this.props.data.counter ? 1 : this.props.data.counter + 1;
     this.UpdateCounter(this.props.data.id, counter);
-    this.injectDiscourseScript();
   }
 
-  injectDiscourseScript = () => {
-    setTimeout(() => {
-      var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
-      d.src = window.DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
-      (document.getElementsByTagName('body')[0]).appendChild(d);
-    }, 100);
-  };
-
   UpdateCounter = (id, counter) => {
-      axios.post(baseURL + '/api/counter/update', { id: id, counter: counter });
+      axios.post(baseURL + '/api/v1/counter/update', { id: id, counter: counter });
   }
 
   render() {

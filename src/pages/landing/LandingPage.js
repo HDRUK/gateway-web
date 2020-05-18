@@ -55,8 +55,10 @@ class LandingPage extends React.Component {
                         'project': res.data.data.typecounts.project,
                         'tool': res.data.data.typecounts.tool,
                         'account': res.data.data.typecounts.person,
+                        'accessRequests': res.data.data.typecounts.accessRequests,
+                        'datasets': res.data.data.typecounts.datasets,
                         'searches': res.data.data.daycounts.week
-                    },
+                    } ,
                     isLoading: false
                 });
             })
@@ -98,6 +100,7 @@ class LandingPage extends React.Component {
             });
     };
 
+
     doSearch = (e) => { //fires on enter on searchbar
         if (e.key === 'Enter') {
             if (!!this.state.searchString) {
@@ -118,7 +121,7 @@ class LandingPage extends React.Component {
     }
 
     render() {
-        const { data, userState, isLoading, searchData, unmetData, popularData, updatesData } = this.state;
+        const { data, userState, isLoading, searchData, unmetData, popularData, updatesData, datasetsCount } = this.state;
 
         if (isLoading) {
             return <Container><Loading /></Container>;
@@ -157,10 +160,17 @@ class LandingPage extends React.Component {
                     </Row>
                     <Row className="mt-5" />
                     <Row>
-                        <Col sm={2} />
                         <Col sm={2}>
                             <div className="landingPageInformationNumber">{data.account}</div>
                             <div className="landingPageInformationDetail">accounts created</div>
+                        </Col>
+                        <Col sm={2}>
+                            <div className="landingPageInformationNumber">{data.datasets}</div>
+                            <div className="landingPageInformationDetail">datasets</div>
+                        </Col>
+                        <Col sm={2}>
+                            <div className="landingPageInformationNumber">{data.accessRequests}</div>
+                            <div className="landingPageInformationDetail">access requests</div>
                         </Col>
                         <Col sm={2}>
                             <div className="landingPageInformationNumber">{data.project}</div>

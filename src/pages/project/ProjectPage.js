@@ -20,6 +20,9 @@ import Tool from '../commonComponents/Tool';
 import Loading from '../commonComponents/Loading'
 import Creators from '../commonComponents/Creators';
 
+// import ReactGA from 'react-ga'; 
+import {PageView, initGA} from '../../tracking';
+
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
 class ProjectDetail extends Component {
@@ -52,6 +55,8 @@ class ProjectDetail extends Component {
       this.setState({ projectEdited: values.projectEdited });
     }
     this.getDataSearchFromDb();
+    initGA('UA-166025838-1');
+    PageView();
   }
 
   // on loading of tool detail page were id is different
@@ -207,7 +212,7 @@ class ProjectTitle extends Component {
   }
 
   UpdateCounter = (id, counter) => {
-      axios.post(baseURL + '/api/counter/update', { id: id, counter: counter });
+      axios.post(baseURL + '/api/v1/counter/update', { id: id, counter: counter });
   }
 
   render() {

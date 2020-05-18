@@ -15,6 +15,8 @@ import Loading from '../commonComponents/Loading'
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
+import { Event, initGA } from '../../tracking';
+
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
 class AddProjectPage extends React.Component {
@@ -36,6 +38,7 @@ class AddProjectPage extends React.Component {
     };
 
     componentDidMount() {
+        initGA('UA-166025838-1');
         this.doGetTopicsCall();
         this.doGetCategoriesCall();
         this.doGetUsersCall();
@@ -287,7 +290,7 @@ const AddProjectForm = (props) => {
                                 </div>
                             </Col>
                             <Col sm={2} lg={2} className="ml-5">
-                                <Button variant="primary" type="submit" className="AddButton">
+                                <Button variant="primary" type="submit" className="AddButton" onClick={() => Event("Buttons", "Click", "Add project form submitted")}>
                                     Add this project
                                 </Button>
                             </Col>

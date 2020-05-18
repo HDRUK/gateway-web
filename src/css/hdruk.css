@@ -883,3 +883,63 @@ iframe#discourse-embed-frame {
   padding : 10px 22px 10px 22px; 
   border-radius: 2px
 }
+
+.discousion-username {
+  font-family: museo-sans-rounded;
+  font-size: 13px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #848e97;
+}
+
+.discousion-date {
+  font-family: museo-sans-rounded;
+  font-size: 13px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #848e97;
+}
+
+.Gray800-15px {
+  font-family: museo-sans-rounded;
+  font-size: 15px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #3c3c3b;
+}
+
+.discousion-comments-separator {
+  border-top: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+#discourse-add-comment {
+  width: 100%;
+}
+
+.btn-light {
+  background-color: #e7e9ed !important;
+}
+
+.login-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  max-width: 600px;
+}
+
+.login-body {
+  text-align: left;
+  padding: 2px 16px
+}
