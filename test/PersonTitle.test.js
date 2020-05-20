@@ -21,6 +21,6 @@ describe('PersonTitle', () => {
             "link": "https://www.paconsulting.com",
             "likedids": [89522470,89522469,89522468]
           };
-        //const wrapper = mount(<PersonTitle data={dataPerson}/>);
+        const wrapper = mount(<PersonTitle data={dataPerson}/>);
     });
 });
