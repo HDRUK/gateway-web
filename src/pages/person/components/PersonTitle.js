@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {Row, Col} from 'react-bootstrap';
 
 var baseURL = require('../../commonComponents/BaseURL').getURL();
 

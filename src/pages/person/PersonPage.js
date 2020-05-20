@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PersonTitle from './components/PersonTitle';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
+import {Container, Row, Col, Tabs, Tab} from 'react-bootstrap';
 
 import SearchBar from '../commonComponents/SearchBar';
 // import DataSet from '../commonComponents/DataSet';
