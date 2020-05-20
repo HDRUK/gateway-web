@@ -42,8 +42,6 @@ class Project extends React.Component {
     render() {
         const { data, isLoading } = this.state;
 
-        console.log('data is: ' + JSON.stringify(data))
-
         if (typeof data.datasetids === 'undefined') {
             data.datasetids = [];
         }
