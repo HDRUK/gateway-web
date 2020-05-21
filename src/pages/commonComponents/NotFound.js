@@ -15,6 +15,7 @@ class NotFound extends React.Component {
 
     render() {
         const { word } = this.state;
+
         return (
             <Row className="mt-2">
                 <Col>

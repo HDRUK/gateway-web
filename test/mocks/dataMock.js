@@ -157,7 +157,7 @@ const __projectTitle = {
       }
     ]     
   };
-  const __personTitle = {
+const __personTitle = {
     "_id" : "5e544facbd427b6e9cd905a1",
     "activeflag" : "active",
     "bio" : "Jefferson Comprehensive Epilepsy Center, Philadelphia",
@@ -226,6 +226,65 @@ const __tool = {
         }
     ]
 };
+const __notFound = {
+  "word" : "reviews"
+};
+const __reviews = {
+    reviewData : [{
+      "review":"very good review",
+      "date":"2020-05-13T09:41:15.809Z",
+      "person":[
+          {
+              "_id":"5ea196c7cee5cef06ce679d6",
+              "categories":{
+              "programmingLanguage":[
+
+              ]
+              },
+              "tags":{
+              "features":[
+
+              ],
+              "topics":[
+
+              ]
+              },
+              "authors":[
+
+              ],
+              "toolids":[
+
+              ],
+              "id":8370396016757367,
+              "type":"person",
+              "firstname":"Diego",
+              "lastname":"Frison",
+              "activeflag":"active",
+              "createdAt":"2020-04-23T13:23:19.570Z",
+              "updatedAt":"2020-05-01T11:41:19.182Z",
+              "__v":0,
+              "bio":null,
+              "link":null,
+              "orcid":null
+          }
+      ],
+      "owner":[
+
+      ]
+          }],
+      
+  data : {
+      "id":900000007,
+      "authors":[
+          7445336375688558
+      ]
+  },
+
+  userState : [{
+      "loggedIn":true,
+      "id":900000014,
+  }]
+};
 
   module.exports = {
     statsData: __statsData,
@@ -237,5 +296,7 @@ const __tool = {
     projectTitleData: __projectTitle,
     personData: __person,
     personTitleData: __personTitle,
-    toolData: __tool
+    toolData: __tool,
+    notFoundData: __notFound,
+    reviewsData: __reviews
   };

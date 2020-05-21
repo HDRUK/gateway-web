@@ -2,18 +2,21 @@
 // /ShowObjects/Reviews.js
 import React, { Component, useState } from 'react';
 import axios from 'axios';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {Row, Col} from 'react-bootstrap';
 import Rating from 'react-rating';
 import { useFormik } from 'formik';
+
 import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg';
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
+
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import NotFound from './NotFound';
-import Collapse from 'react-bootstrap/Collapse'
+import Collapse from 'react-bootstrap/Collapse';
+
+// import {ReviewButton, ReplyButton} from './ReviewComponents';
 
 var baseURL = require('./BaseURL').getURL();
 
@@ -39,6 +42,11 @@ class Reviews extends Component {
   // see them render into our screen
   render() {
     const { data, userState, reviewData } = this.state;
+    console.log('just data is: ' + JSON.stringify(data))
+    console.log('review data is: ' + JSON.stringify(reviewData))
+    console.log('userState is: ' + JSON.stringify(userState))
+
+
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
     return (
       <div>

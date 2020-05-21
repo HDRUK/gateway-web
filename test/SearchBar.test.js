@@ -9,6 +9,6 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('SearchBar', () => {
     it('renders without crashing', () => {
         var data = {data:[{id:"test"}]};
-        //const wrapper = mount(<SearchBar data={data}/>);
+        const wrapper = mount(<SearchBar data={data}/>);
     });
 });
