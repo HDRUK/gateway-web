@@ -46,8 +46,6 @@ class Tool extends React.Component {
     render() {
         const { data, isLoading, reviewData } = this.state;
 
-        console.log('data is: ' + JSON.stringify(data))
-
         if (isLoading) {
             return <Loading />;
         }
