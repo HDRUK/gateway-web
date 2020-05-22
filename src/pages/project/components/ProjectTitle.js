@@ -36,7 +36,8 @@ class ProjectTitle extends Component {
         var updatedDate = new Date(data.updatedon);
         var updatedOnDate = monthNames[updatedDate.getMonth()] + " " + updatedDate.getFullYear();
   
-        return (
+        return ( 
+            
             <div>
                 <Row className="mt-2">
                     <Col sm={1} lg={1} />
