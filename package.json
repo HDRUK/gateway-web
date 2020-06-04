@@ -34,13 +34,16 @@
     "react-scripts": "3.4.0",
     "react-tabs": "^3.1.0",
     "semantic-ui-react": "^0.88.2",
-    "yup": "^0.28.1"
+    "yup": "^0.28.1",
+    "snyk": "^1.336.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -68,5 +71,6 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "jest": "24.9.0"
-  }
+  },
+  "snyk": true
 }
