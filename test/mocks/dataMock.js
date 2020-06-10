@@ -37,7 +37,10 @@ const __toolTitle = {
   "projectids":[]
   };
 
-const __toolReview = [];
+const __toolReview = [
+    {rating:3},
+    {rating:2}
+];
 
 const __project = {
       "tags": 

@@ -7,4 +7,4 @@ describe('<Reviews /> rendering', () => {
     it('renders without crashing', () => {  
         const wrapper = shallow(<Reviews reviewData={reviewsData.reviewData} userState={reviewsData.userState} data={reviewsData.data}/>);      
     });
-});
+}); 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ToolTitle from '../src/pages/tool/components/ToolTitle';
-import { toolTitle, toolReview} from './mocks/dataMock';
+import { toolTitle, toolReview } from './mocks/dataMock';
 
 let wrapper;
 
