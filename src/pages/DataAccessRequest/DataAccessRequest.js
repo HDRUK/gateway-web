@@ -136,10 +136,10 @@ class DataAccessRequest extends Component {
         if(!_.isEmpty(this.state.questionAnswers)) {
             try {
                 let {_id: id} = this.state;
-                // 4. POST 
+                // 1. POST 
                 const response = await axios.post(`${baseURL}/api/v1/data-access-request/${id}`, {});
-                this.saveTime();
                 alert(`Application saved on ${moment().format('DD/MM/YYYY HH:mm:sss')}`);
+                this.saveTime();
             } catch (err) {
                 console.log(err);
             }
