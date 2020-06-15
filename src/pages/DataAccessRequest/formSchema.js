@@ -14,7 +14,7 @@ export const formSchema = {
         "controlButton": "btn btn-primary pull-right",
         "backButton": "btn btn-default pull-left",
         "errorMessage": "alert alert-danger",
-        "buttonBar": "button-bar hidden" 
+        "buttonBar": "button-bar" 
     },
     "pages": [
         {
@@ -108,6 +108,16 @@ export const formSchema = {
             "navHeader": "Applicant",
             "questionPanelHeaderText": "Test",
             "pageId": "safePeople",
+            "action": {
+                "default": {
+                  "action": "GOTO",
+                  "target": "principleInvestigatorl"
+                }
+              },
+              "button": {
+                "text": "Next",
+                "disabled": false
+              },
             "questionSets": [
                 {
                     "index": 1,
@@ -132,6 +142,15 @@ export const formSchema = {
             "panelHeader": "Safe Project",
             "navHeader": "Safe Project",
             "pageId": "safeProject",
+            action: {
+                "default": {
+                    "action": "SUBMIT",
+                    "target": ""
+                }
+            },
+            "button": {
+                "text": "Submit"
+            },
             "questionSets": [
                 {
                     "index": 1,

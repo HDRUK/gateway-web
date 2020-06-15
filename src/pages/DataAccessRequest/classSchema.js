@@ -14,6 +14,6 @@ export const classSchema = {
         "controlButton": "btn btn-primary pull-right",
         "backButton": "btn btn-default pull-left",
         "errorMessage": "alert alert-danger",
-        "buttonBar": "button-bar hidden" 
+        "buttonBar": "button-bar" 
     }
 }

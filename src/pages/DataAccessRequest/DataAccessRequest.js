@@ -31,6 +31,7 @@ class DataAccessRequest extends Component {
         _id: '',
         schema: {},
         questionAnswers: {},
+        applicationStatus: '',
         activePanelId: '',
         searchString: '',
         key: 'guidance',
@@ -46,8 +47,9 @@ class DataAccessRequest extends Component {
         try {
             let { location: { state: { dataSetId }}} = this.props;
             const response = await axios.get(`${baseURL}/api/v1/data-access-request/${dataSetId}`);
-            const { data: { data: { jsonSchema, questionAnswers, _id }}} = await response;
-            this.setState({schema: {...jsonSchema, ...classSchema}, questionAnswers, _id, activePanelId: 'mrcHealthDataToolkit', isLoading: false});
+            const { data: { data: { jsonSchema, questionAnswers, _id, applicationStatus }}} = await response;
+            this.setState({schema: {...jsonSchema, ...classSchema}, questionAnswers, _id, applicationStatus, activePanelId: 'mrcHealthDataToolkit', isLoading: false});
+            // this.setState({schema: {...formSchema}, activePanelId: 'mrcHealthDataToolkit', isLoading: false});
         }
         catch (error) {
             this.setState({isLoading: false});
@@ -130,10 +132,17 @@ class DataAccessRequest extends Component {
         }
     }
 
-    onFormSubmit(questionAnswers = {}, target = '') {
+    onFormSubmit = async (questionAnswers = {}, target = '') => {
         if(!_.isEmpty(this.state.questionAnswers)) {
-            this.saveTime();
-            alert(`Application saved on ${moment().format('DD/MM/YYYY HH:mm:sss')}`);
+            try {
+                let {_id: id} = this.state;
+                // 4. POST 
+                const response = await axios.post(`${baseURL}/api/v1/data-access-request/${id}`, {});
+                this.saveTime();
+                alert(`Application saved on ${moment().format('DD/MM/YYYY HH:mm:sss')}`);
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 
@@ -153,6 +162,7 @@ class DataAccessRequest extends Component {
             let params = {
                 questionAnswers: JSON.stringify(data)
             }
+            debugger;
             // 4. PATCH the data
             const response = await axios.patch(`${baseURL}/api/v1/data-access-request/${id}`, params);
             // 5. set state
