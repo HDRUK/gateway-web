@@ -89,7 +89,7 @@ class AddCollectionPage extends React.Component {
             if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
             if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
         
-        axios.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL )
+        axios.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL ) 
             .then((res) => {
                 this.setState({
                     datasetData: res.data.datasetResults || [],

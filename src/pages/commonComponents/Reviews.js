@@ -188,7 +188,7 @@ const AddReviewForm = (props) => {
     }),
 
     onSubmit: values => {
-      axios.post(baseURL + '/api/v1/tools/review/add', values)
+      axios.post(baseURL + '/api/v1/tools/review/add', values) 
         .then((res) => {
           window.location.href = '/tool/' + props.data.id + '/?reviewAdded=true';
         });

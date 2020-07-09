@@ -29,6 +29,8 @@ import CompleteRegistration from './pages/registration/CompleteRegistration'
 import LoginModal from './pages/commonComponents/LoginModal';
 import Footer from './pages/commonComponents/Footer';
 
+import AccountGADashboard from './pages/dashboard/AccountGADashboard';
+
 var baseURL = require('./pages/commonComponents/BaseURL').getURL();
 
 class HDRRouter extends Component {
@@ -121,6 +123,8 @@ class HDRRouter extends Component {
                         {userState[0].loggedIn ? (<Route path='/paper/edit/:paperID' render={(props) => <AddEditPaperPage {...props} userState={userState} isEdit="true" /> } />) : ''}
                         <Route path='/paper/:paperID' render={(props) => <PaperPage {...props} userState={userState} />} />
                         
+                        {/* temporarily added to show a couple of GA metrics on frontend */}
+                        <Route path='/gadashboard' render={(props) => <AccountGADashboard {...props} userState={userState} />} />
 
                         {/* Catch all path */}
                         <Redirect to="/search?search=" />
