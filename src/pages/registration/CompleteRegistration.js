@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -7,10 +6,10 @@ import { Row, Col, Container, Button, Alert, Form, InputGroup } from 'react-boot
 
 import SearchBar from '../commonComponents/SearchBar';
 import Loading from '../commonComponents/Loading';
+import { axiosIG } from '../../utils/axios.util';
 
 import 'react-tabs/style/react-tabs.css';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
 
 class CompleteRegistration extends Component {
 
@@ -41,7 +40,7 @@ class CompleteRegistration extends Component {
 
     componentDidMount() {
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/auth/register/' + this.props.match.params.personID)
+        axiosIG.get('/api/v1/auth/register/' + this.props.match.params.personID)
             .then((res) => {
             this.setState({
                 userdata: res.data.data,
@@ -112,7 +111,7 @@ const YourAccountForm = (props) => {
         
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
-            axios.post(baseURL + '/api/v1/auth/register', values)
+            axiosIG.post('/api/v1/auth/register', values)
             .then((res) => {
                 const url = `${window.location.search}${res.data.data}`;
                 window.location.href = `${url}${url.includes('?') ? '&': '?' }registrationCompleted=true`;

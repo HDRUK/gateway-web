@@ -1,7 +1,6 @@
 
 // /ShowObjects.js
 import React, { Component } from 'react';
-import axios from 'axios';
 import queryString from 'query-string';
 import { Row, Col, Tabs, Tab, Container, Alert, Button } from 'react-bootstrap';
 import NotFound from '../commonComponents/NotFound';
@@ -12,14 +11,13 @@ import RelatedObject from '../commonComponents/RelatedObject';
 import SearchBar from '../commonComponents/SearchBar';
 import DiscourseTopic from '../commonComponents/DiscourseTopic';
 import 'react-tabs/style/react-tabs.css';
-import { baseURL } from '../../configs/url.config';
 // import ReactGA from 'react-ga'; 
 import { PageView, initGA } from '../../tracking';
 import SVGIcon from '../../images/SVGIcon';
 import ReactMarkdown from 'react-markdown';
 import moment from 'moment';
 
-var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class ToolDetail extends Component {
 
@@ -77,7 +75,7 @@ class ToolDetail extends Component {
   getDataSearchFromDb = () => {
     //need to handle error if no id is found
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/v1/paper/' + this.props.match.params.paperID)
+    axiosIG.get('/api/v1/paper/' + this.props.match.params.paperID)
       .then((res) => {
         this.setState({
           data: res.data.data[0],

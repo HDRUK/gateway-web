@@ -1,11 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 import {Row, Col, Container} from 'react-bootstrap/';
 import Loading from '../../commonComponents/Loading'
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import moment from 'moment';
-import { baseURL } from '../../../configs/url.config';
+
+import { axiosIG } from '../../../utils/axios.util';
 
 class PreSubCustodian extends React.Component {
 
@@ -28,7 +28,7 @@ class PreSubCustodian extends React.Component {
 
     getDataSearchFromDb = () => {
         this.setState({ isLoading: true });
-        axios.get(`${baseURL}/api/v1/person/${this.state.data.userId}`)
+        axiosIG.get(`/api/v1/person/${this.state.data.userId}`)
           .then((res) => {
             if (typeof res.data.data[0] === "undefined" ) {
                 this.setState({
@@ -46,7 +46,7 @@ class PreSubCustodian extends React.Component {
 
     getDatasetSearch = () => {
         this.setState({ isLoading: true });
-        axios.get(`${baseURL}/api/v1/datasets/${this.state.data.dataSetId}`)
+        axiosIG.get(`/api/v1/datasets/${this.state.data.dataSetId}`)
           .then((res) => {
             this.setState({
               dataset: res.data.data.label,

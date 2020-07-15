@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import moment from 'moment';
 
 import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 
 import NotFound from '../commonComponents/NotFound';
 import Loading from '../commonComponents/Loading'
+import { axiosIG } from '../../utils/axios.util';
 
 import { Event, initGA } from '../../tracking';
-
-var baseURL = require('../commonComponents/BaseURL').getURL();
 
 class AccountCollections extends React.Component {
 
@@ -37,13 +35,13 @@ class AccountCollections extends React.Component {
 
     doCollectionsCall() {
         if (this.state.userState[0].role === "Admin") {
-            axios.get(baseURL + '/api/v1/accounts/admin/collections') 
+            axiosIG.get('/api/v1/accounts/admin/collections') 
                 .then((res) => {
                     this.setState({ data: res.data.data, isLoading: false });
                 });
         }
         else {
-            axios.get(baseURL + '/api/v1/accounts/collections?id=' + this.state.userState[0].id + '')
+            axiosIG.get('/api/v1/accounts/collections?id=' + this.state.userState[0].id + '')
                 .then((res) => {
                     this.setState({ data: res.data.data, isLoading: false });
                 });

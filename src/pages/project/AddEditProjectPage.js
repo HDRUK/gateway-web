@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { initGA } from '../../tracking';
 import moment from 'moment';
 import { Container } from 'react-bootstrap';
@@ -7,12 +6,9 @@ import SearchBar from '../commonComponents/SearchBar';
 import Loading from '../commonComponents/Loading'
 import AddEditProjectForm from './AddEditProjectForm';
 
+import { axiosIG } from '../../utils/axios.util';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-
-
-
-var baseURL = require('../commonComponents/BaseURL').getURL();
 
 class AddEditProjectPage extends React.Component {
 
@@ -60,7 +56,7 @@ class AddEditProjectPage extends React.Component {
     getProjectFromDb = () => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/project/edit/' + this.props.match.params.projectID)
+        axiosIG.get('/api/v1/project/edit/' + this.props.match.params.projectID)
             .then((res) => {
                 this.setState({
                     data: res.data.data[0],
@@ -72,7 +68,7 @@ class AddEditProjectPage extends React.Component {
 
     doGetTopicsCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/topic/project')
+            axiosIG.get('/api/v1/search/filter/topic/project')
                 .then((res) => {
                     this.setState({ combinedTopic: res.data.data.sort(function (a, b) { return (a.toUpperCase() < b.toUpperCase()) ? -1 : (a.toUpperCase() > b.toUpperCase()) ? 1 : 0; }) });
                     resolve();
@@ -82,7 +78,7 @@ class AddEditProjectPage extends React.Component {
 
     doGetFeaturesCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/feature/project')
+            axiosIG.get('/api/v1/search/filter/feature/project')
                 .then((res) => {
                     this.setState({ combinedFeatures: res.data.data.sort(function (a, b) { return (a.toUpperCase() < b.toUpperCase()) ? -1 : (a.toUpperCase() > b.toUpperCase()) ? 1 : 0; }) });
                     resolve();
@@ -92,7 +88,7 @@ class AddEditProjectPage extends React.Component {
 
     doGetCategoriesCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/category/project')
+            axiosIG.get('/api/v1/search/filter/category/project')
                 .then((res) => {
                     this.setState({ combinedCategories: res.data.data.sort(function (a, b) { return (a.toUpperCase() < b.toUpperCase()) ? -1 : (a.toUpperCase() > b.toUpperCase()) ? 1 : 0; }) });
                     resolve();
@@ -102,7 +98,7 @@ class AddEditProjectPage extends React.Component {
 
     doGetUsersCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/users')
+            axiosIG.get('/api/v1/users')
                 .then((res) => {
                     this.setState({ combinedUsers: res.data.data });
                     resolve();
@@ -133,7 +129,7 @@ class AddEditProjectPage extends React.Component {
             if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
             if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
         
-        axios.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL )
+        axiosIG.get('/api/v1/search?search=' + this.state.searchString + searchURL )
             .then((res) => {
                 this.setState({
                     datasetData: res.data.datasetResults || [],

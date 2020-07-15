@@ -2,8 +2,6 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-var baseURL = require('./BaseURL').getURL();
-
 class NoResults extends React.Component {
 
     state = {

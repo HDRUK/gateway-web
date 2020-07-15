@@ -1,14 +1,13 @@
 import React from 'react';
 import {Row, Col, Button, Form} from 'react-bootstrap';
 import SVGIcon from "../../images/SVGIcon";
-import axios from 'axios';
 import Loading from './Loading'
 import { ReactComponent as PersonPlaceholderSvg } from '../../images/person-placeholder.svg';
 import { ReactComponent as CloseIconSvg } from '../../images/close.svg';
 import ReactMarkdown from 'react-markdown'; 
 import { useFormik } from 'formik';
 
-var baseURL = require('./BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class RelatedResourcesResults extends React.Component {
 
@@ -36,7 +35,7 @@ class RelatedResourcesResults extends React.Component {
     getDataSearchFromDb = () => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/tools/' + this.state.objectId)
+        axiosIG.get('/api/v1/tools/' + this.state.objectId)
             .then((res) => {
                 this.setState({
                     data: res.data.data[0],
@@ -47,7 +46,7 @@ class RelatedResourcesResults extends React.Component {
 
     getDatasetData = () => {
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/datasets/detail/' + this.state.objectId)
+        axiosIG.get('/api/v1/datasets/detail/' + this.state.objectId)
         .then((res) => {
             this.setState({
                 data: res.data.data,

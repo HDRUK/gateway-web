@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,8 +10,7 @@ import Loading from '../commonComponents/Loading';
 import SVGIcon from '../../images/SVGIcon';
 import { ReactComponent as WhiteLogoSvg } from '../../../src/images/white.svg';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
-var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class LandingPage extends React.Component {
 
@@ -49,7 +47,7 @@ class LandingPage extends React.Component {
 
     getDataSearchFromDb = () => {
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/stats')
+        axiosIG.get('/api/v1/stats')
             .then((res) => {
                 this.setState({
                     data: {
@@ -66,7 +64,7 @@ class LandingPage extends React.Component {
     };
 
     getRecentSearches = () => {
-        axios.get(baseURL + '/api/v1/stats/recent')
+        axiosIG.get('/api/v1/stats/recent')
             .then((res) => {
                 this.setState({
                     searchData: res.data.data
@@ -75,7 +73,7 @@ class LandingPage extends React.Component {
     };
 
     getUnmetData = () => {
-        axios.get(baseURL + '/api/v1/stats/unmet')
+        axiosIG.get('/api/v1/stats/unmet')
             .then((res) => {
                 this.setState({
                     unmetData: res.data.data
@@ -84,7 +82,7 @@ class LandingPage extends React.Component {
     };
 
     getPopularData = () => {
-        axios.get(baseURL + '/api/v1/stats/popular')
+        axiosIG.get('/api/v1/stats/popular')
             .then((res) => {
                 this.setState({
                     popularData: res.data.data
@@ -93,7 +91,7 @@ class LandingPage extends React.Component {
     };
 
     getUpdatesData = () => {
-        axios.get(baseURL + '/api/v1/stats/updates')
+        axiosIG.get('/api/v1/stats/updates')
             .then((res) => {
                 this.setState({
                     updatesData: res.data.data
@@ -115,7 +113,7 @@ class LandingPage extends React.Component {
     }
 
     logout = (e) => {
-        axios.get(baseURL + '/api/v1/auth/logout')
+        axiosIG.get('/api/v1/auth/logout')
             .then((res) => {
                 window.location.reload(); 
             });

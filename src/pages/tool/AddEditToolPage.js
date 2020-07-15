@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { initGA } from '../../tracking';
 import moment from 'moment';
 import {Container} from 'react-bootstrap';
@@ -9,7 +8,7 @@ import AddEditToolForm from './AddEditToolForm';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class AddEditToolPage extends React.Component {
     
@@ -61,7 +60,7 @@ class AddEditToolPage extends React.Component {
     getToolFromDb = () => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/tools/edit/' + this.props.match.params.toolID)
+        axiosIG.get('/api/v1/tools/edit/' + this.props.match.params.toolID)
           .then((res) => {
             this.setState({
               data: res.data.data[0],
@@ -73,7 +72,7 @@ class AddEditToolPage extends React.Component {
 
     doGetTopicsCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/topic/tool')
+            axiosIG.get('/api/v1/search/filter/topic/tool')
                 .then((res) => {
                     var tempTopicArray = ["Blood", "Cancer and neoplasms", "Cardiovascular", "Congenital disorders", "Ear", "Eye", "Infection", "Inflammatory and immune system", "Injuries and accidents", "Mental health", "Metabolic and Endocrine", "Musculoskeletal", "Neurological", "Oral and Gastrointestinal", "Renal and Urogenital", "Reproductive health and childbirth", "Respiratory", "Skin", "Stroke"]
 
@@ -90,7 +89,7 @@ class AddEditToolPage extends React.Component {
 
     doGetFeaturesCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/feature/tool')
+            axiosIG.get('/api/v1/search/filter/feature/tool')
                 .then((res) => {
                     var tempFeaturesArray = ["Arbitrage", "Association Rules", "Attribution Modeling", "Bayesian Statistics", "Clustering", "Collaborative Filtering", "Confidence Interval", "Cross-Validation", "Decision Trees", "Deep Learning", "Density Estimation", "Ensembles", "Experimental Design", "Feature Selection", "Game Theory", "Geospatial Modeling", "Graphs", "Imputation", "Indexation / Cataloguing", "Jackknife Regression", "Lift Modeling", "Linear Regression", "Linkage Analysis", "Logistic Regression", "Model Fitting", "Monte-Carlo Simulation", "Naive Bayes", "Nearest Neighbors - (k-NN)", "Neural Networks", "Pattern Recognition", "Predictive Modeling", "Principal Component Analysis - (PCA)", "Random Numbers", "Recommendation Engine", "Relevancy Algorithm", "Rule System", "Scoring Engine", "Search Engine", "Segmentation", "Supervised Learning", "Support Vector Machine - (SVM)", "Survival Analysis", "Test of Hypotheses", "Time Series", "Yield Optimization"]
 
@@ -108,7 +107,7 @@ class AddEditToolPage extends React.Component {
 
     doGetLanguagesCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/language/tool')
+            axiosIG.get('/api/v1/search/filter/language/tool')
                 .then((res) => {
                     var tempLanguagesArray = ["No coding required", ".net", "AJAX", "ASP.NET", "C", "C#", "C++", "CSS", "Django", "HTML", "Java", "Javascript", "jQuery", "JSON", "Matlab", "MySQL", "Node.js", "Objective C", "PHP", "Python", "R", "React JS", "Regex", "Ruby", "Ruby on Rails", "SQL", "SQL server", "Swift", "XML"]
 
@@ -126,7 +125,7 @@ class AddEditToolPage extends React.Component {
 
     doGetCategoriesCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/category/tool')
+            axiosIG.get('/api/v1/search/filter/category/tool')
                 .then((res) => {
                     var tempCategoriesArray = ["API", "Code snippet", "Container image", "Dashboard", "Developer stack", "Directory", "Docker app", "Kubernetes app", "Library", "Notebook", "Package", "Platform", "Repository", "Service", "Software", "Virtual machine", "Web application"]
 
@@ -144,7 +143,7 @@ class AddEditToolPage extends React.Component {
 
     doGetLicensesCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/license/tool')
+            axiosIG.get('/api/v1/search/filter/license/tool')
                 .then((res) => {
                     var tempLicensesArray = ["Apache License 2.0", "BSD 3-Clause \"New\" or \"Revised\" license", "BSD 2-Clause \"Simplified\" or \"FreeBSD\" license", "GNU General Public License (GPL)", "GNU Library or \"Lesser\" General Public License (LGPL)", "MIT license", "Mozilla Public License 2.0", "Common Development and Distribution License", "Eclipse Public License version 2.0"]
 
@@ -162,7 +161,7 @@ class AddEditToolPage extends React.Component {
 
     doGetUsersCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/users')
+            axiosIG.get('/api/v1/users')
                 .then((res) => {
                     this.setState({ combinedUsers: res.data.data });
                     resolve();
@@ -194,7 +193,7 @@ class AddEditToolPage extends React.Component {
             if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
             if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
         
-        axios.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL )
+        axiosIG.get('/api/v1/search?search=' + this.state.searchString + searchURL )
             .then((res) => {
                 this.setState({
                     datasetData: res.data.datasetResults || [],

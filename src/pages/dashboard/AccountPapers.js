@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import moment from 'moment';
 
 import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 
 import NotFound from '../commonComponents/NotFound';
 import Loading from '../commonComponents/Loading'
+import { axiosIG } from '../../utils/axios.util';
 
 import { Event, initGA } from '../../tracking';
-
-var baseURL = require('../commonComponents/BaseURL').getURL();
 
 class AccountPapers extends React.Component {
 
@@ -37,13 +35,13 @@ class AccountPapers extends React.Component {
 
     doPapersCall() {
         if (this.state.userState[0].role === "Admin") {
-            axios.get(baseURL + '/api/v1/paper/get/admin')
+            axiosIG.get('/api/v1/paper/get/admin')
                 .then((res) => {
                     this.setState({ data: res.data.data, isLoading: false });
                 });
         }
         else {
-            axios.get(baseURL + '/api/v1/paper/get?id=' + this.state.userState[0].id + '')
+            axiosIG.get('/api/v1/paper/get?id=' + this.state.userState[0].id + '')
                 .then((res) => {
                     this.setState({ data: res.data.data, isLoading: false });
                 });
@@ -51,7 +49,7 @@ class AccountPapers extends React.Component {
     }
 
     approvePaper = (id) => {
-        axios.put(baseURL + '/api/v1/paper/status', {
+        axiosIG.put('/api/v1/paper/status', {
             id: id,
             activeflag: "active"
         })
@@ -290,7 +288,7 @@ function RejectButton(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const rejectObject = () => {
-        axios.put(baseURL + '/api/v1/paper/status', {
+        axiosIG.put('/api/v1/paper/status', {
             id: props.id,
             activeflag: "rejected"
         })
@@ -323,7 +321,7 @@ function DeleteButton(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const deleteObject = () => {
-        axios.put(baseURL + '/api/v1/paper/status', {
+        axiosIG.put('/api/v1/paper/status', {
             id: props.id,
             activeflag: "archive"
         })

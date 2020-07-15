@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
 
-var baseURL = require('./BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class DiscourseAddPost extends Component {
   constructor(props) {
@@ -24,7 +23,7 @@ class DiscourseAddPost extends Component {
     if (!toolId) {
       return;
     }
-    const res = await axios.put(baseURL + `/api/v1/discourse/topic/tool/${toolId}`);
+    const res = await axiosIG.put(`/api/v1/discourse/topic/tool/${toolId}`);
     this.setState({ topicLink: res.data.data.link });
     window.open(res.data.data.link);
   }

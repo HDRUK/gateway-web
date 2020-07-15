@@ -1,12 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button } from 'react-bootstrap';
 import Loading from './Loading'
 import { ReactComponent as PersonPlaceholderSvg } from '../../images/person-placeholder.svg';
 import SVGIcon from "../../images/SVGIcon"
 
-var baseURL = require('./BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class RelatedObject extends React.Component {
     
@@ -61,7 +60,7 @@ class RelatedObject extends React.Component {
     getRelatedObjectFromDb = (id) => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/relatedobject/' + id)
+        axiosIG.get('/api/v1/relatedobject/' + id)
             .then((res) => {
                 this.setState({
                     data: res.data.data[0],

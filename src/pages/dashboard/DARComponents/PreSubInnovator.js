@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import {Row, Col, Container} from 'react-bootstrap/';
 import Loading from '../../commonComponents/Loading'
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import moment from 'moment';
-import { baseURL } from '../../../configs/url.config';
+
+import { axiosIG } from '../../../utils/axios.util';
 
 const PreSubInnovator = ({ data }) => {
 
@@ -25,7 +25,7 @@ const PreSubInnovator = ({ data }) => {
 
     const getDatasetSearch = () => {
         setLoading(true);
-        axios.get(`${baseURL}/api/v1/datasets/${screenData.data.dataSetId}`)
+        axiosIG.get(`/api/v1/datasets/${screenData.data.dataSetId}`)
             .then((res) => {
                 // state: {title, dataSetId: id, custodianEmail: contactPoint, publisher: publisher }}}
                 let {data: {data: { label, quality: { publisher} }}} = res;

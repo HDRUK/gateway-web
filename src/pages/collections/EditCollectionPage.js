@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useFormik } from 'formik'; 
 import * as Yup from 'yup';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -17,9 +16,7 @@ import SVGIcon from '../../images/SVGIcon';
 import ToolTip from '../../images/imageURL-ToolTip.gif';
 
 import { Event, initGA } from '../../tracking';
-
-
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class EditCollectionPage extends React.Component {
 
@@ -59,7 +56,7 @@ class EditCollectionPage extends React.Component {
     getDataSearchFromDb = () => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/collections/' + this.props.match.params.collectionID)
+        axiosIG.get('/api/v1/collections/' + this.props.match.params.collectionID)
           .then((res) => {
             this.setState({
               data: res.data.data[0],
@@ -71,7 +68,7 @@ class EditCollectionPage extends React.Component {
 
     doGetUsersCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/users')
+            axiosIG.get('/api/v1/users')
                 .then((res) => {
                     this.setState({ combinedUsers: res.data.data });
                     resolve();
@@ -102,7 +99,7 @@ class EditCollectionPage extends React.Component {
             if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
             if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
         
-        axios.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL )
+        axiosIG.get('/api/v1/search?search=' + this.state.searchString + searchURL )
             .then((res) => {
                 this.setState({
                     datasetData: res.data.datasetResults || [],
@@ -199,7 +196,7 @@ const EditCollectionForm = (props) => {
         onSubmit: values => {
             values.relatedObjects = props.relatedObjects 
             values.collectionCreator = props.userState[0];
-            axios.put(baseURL + '/api/v1/collections/edit', values)
+            axiosIG.put('/api/v1/collections/edit', values)
                 .then((res) => { 
                     window.location.href = window.location.search + '/collection/' + props.data.id + '/?collectionEdited=true';
                 });

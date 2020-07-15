@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -13,7 +12,7 @@ import RelatedObject from '../commonComponents/RelatedObject';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import SVGIcon from '../../images/SVGIcon';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 const AddEditToolForm = (props) => {
     // Pass the useFormik() hook initial form values and a submit function that will
@@ -59,13 +58,13 @@ const AddEditToolForm = (props) => {
             values.relatedObjects = props.relatedObjects
             values.toolCreator = props.userState[0];
             if (props.isEdit) {
-                axios.put(baseURL + '/api/v1/tools/' + props.data.id, values) 
+                axiosIG.put('/api/v1/tools/' + props.data.id, values) 
                     .then((res) => {
                         window.location.href = window.location.search + '/tool/' + props.data.id + '/?toolEdited=true';
                     });
             }
             else {
-                axios.post(baseURL + '/api/v1/tools', values) 
+                axiosIG.post('/api/v1/tools', values) 
                     .then((res) => {
                         window.location.href = window.location.search + '/tool/' + res.data.id + '/?toolAdded=true';
                     });

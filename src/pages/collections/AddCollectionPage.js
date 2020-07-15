@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -18,9 +17,7 @@ import SVGIcon from '../../images/SVGIcon';
 import ToolTip from '../../images/imageURL-ToolTip.gif';
 
 import { Event, initGA } from '../../tracking';
-
-
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class AddCollectionPage extends React.Component {
 
@@ -58,7 +55,7 @@ class AddCollectionPage extends React.Component {
 
     doGetUsersCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/users')
+            axiosIG.get('/api/v1/users')
                 .then((res) => {
                     this.setState({ combinedUsers: res.data.data });
                     resolve();
@@ -89,7 +86,7 @@ class AddCollectionPage extends React.Component {
             if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
             if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
         
-        axios.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL )
+        axiosIG.get('/api/v1/search?search=' + this.state.searchString + searchURL )
             .then((res) => {
                 this.setState({
                     datasetData: res.data.datasetResults || [],
@@ -183,7 +180,7 @@ const AddCollectionForm = (props) => {
         onSubmit: values => {
             values.relatedObjects = props.relatedObjects 
             values.collectionCreator = props.userState[0];
-            axios.post(baseURL + '/api/v1/collections/add', values)
+            axiosIG.post('/api/v1/collections/add', values)
                 .then((res) => {
                     window.location.href = window.location.search + '/collection/' + res.data.id + '/?collectionAdded=true'; 
                 });

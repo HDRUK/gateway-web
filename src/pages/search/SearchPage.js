@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { PageView, initGA } from '../../tracking';
 import queryString from 'query-string';
 
@@ -11,7 +10,7 @@ import Loading from '../commonComponents/Loading'
 import Filters from './Filters';
 import NoResults from '../commonComponents/NoResults';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class SearchPage extends React.Component {
 
@@ -234,7 +233,7 @@ class SearchPage extends React.Component {
         } 
         
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL)
+        axiosIG.get('/api/v1/search?search=' + this.state.searchString + searchURL)
             .then((res) => {
                 this.setState({
                     datasetData: res.data.datasetResults || [],

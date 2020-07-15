@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import * as Yup from 'yup';
 
 import { Row, Col, Button, Alert, Form, InputGroup } from 'react-bootstrap';
@@ -7,8 +6,7 @@ import { Row, Col, Button, Alert, Form, InputGroup } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import queryString from 'query-string';
 import Loading from '../commonComponents/Loading'
-
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class YourAccount extends React.Component {
 
@@ -35,9 +33,9 @@ class YourAccount extends React.Component {
     }
 
     doYourAccountCall() {
-        axios.get(baseURL + '/api/v1/person/' + this.state.userState[0].id)
+        axiosIG.get('/api/v1/person/' + this.state.userState[0].id)
             .then((res) => {
-                axios.get(baseURL + '/api/v1/users/' + this.state.userState[0].id)
+                axiosIG.get('/api/v1/users/' + this.state.userState[0].id)
                     .then((resUser) => {
                         this.setState({
                             userdata: resUser.data.userdata[0],
@@ -110,7 +108,7 @@ const YourAccountForm = (props) => {
         }),
 
         onSubmit: values => {
-            axios.put(baseURL + '/api/v1/person', values)
+            axiosIG.put('/api/v1/person', values)
                 .then((res) => {
                     window.location.href = '/account?tab=youraccount&accountUpdated=true';
                 });

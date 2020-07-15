@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import moment from 'moment';
 
 import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown, Collapse } from 'react-bootstrap';
@@ -7,8 +6,7 @@ import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown, Collapse 
 import SVGIcon from "../../images/SVGIcon";
 import NotFound from '../commonComponents/NotFound';
 import Loading from '../commonComponents/Loading'
-
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class ReviewTools extends React.Component {
 
@@ -35,13 +33,13 @@ class ReviewTools extends React.Component {
 
     doReviewCall() {
         if (this.state.userState[0].role === "Admin") {
-            axios.get(baseURL + '/api/v1/reviews/admin/pending')
+            axiosIG.get('/api/v1/reviews/admin/pending')
             .then((res) => {
                 this.setState({ data: res.data.data, isLoading: false });
             });
         }
         else {
-            axios.get(baseURL + '/api/v1/reviews/pending?type=tool&id=' + this.state.userState[0].id)
+            axiosIG.get('/api/v1/reviews/pending?type=tool&id=' + this.state.userState[0].id)
             .then((res) => {
                 this.setState({ data: res.data.data, isLoading: false });
             });
@@ -297,7 +295,7 @@ function RejectButton(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const rejectObject = () => {
-        axios.patch(baseURL + '/api/v1/tools/'+props.id, {
+        axiosIG.patch('/api/v1/tools/'+props.id, {
             id: props.id,
             activeflag: "rejected"
         })
@@ -330,7 +328,7 @@ function DeleteButton(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const deleteObject = () => {
-        axios.patch(baseURL + '/api/v1/tools/'+props.id, {
+        axiosIG.patch('/api/v1/tools/'+props.id, {
             id: props.id,
             activeflag: "archive"
         })
@@ -367,7 +365,7 @@ const ReviewReview = (props) => {
     var updatedOnDate = updatedDate.getDate() + " " + monthNames[updatedDate.getMonth()] + " " + updatedDate.getFullYear();
     
     const rejectReview = (id) => {
-        axios.delete(baseURL + '/api/v1/tools/review/reject', {
+        axiosIG.delete('/api/v1/tools/review/reject', {
             data: {
                 id: id
             },
@@ -378,7 +376,7 @@ const ReviewReview = (props) => {
     }
 
     const approveReview = (id) => {
-        axios.post(baseURL + '/api/v1/tools/review/approve', {
+        axiosIG.post('/api/v1/tools/review/approve', {
             id: id,
             activeflag: "active"
         })

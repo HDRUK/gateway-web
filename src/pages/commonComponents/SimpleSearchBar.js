@@ -11,9 +11,6 @@ import { ReactComponent as ClearButtonSvg } from '../../images/clear.svg';
 
 import UserMenu from './UserMenu';
 
-var baseURL = require('./BaseURL').getURL();
-var cmsURL = require('./BaseURL').getCMSURL();
-
 class SimpleSearchBar extends React.Component {
 
     state = {

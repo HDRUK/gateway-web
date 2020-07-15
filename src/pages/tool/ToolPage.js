@@ -1,7 +1,6 @@
 
 // /ShowObjects.js
 import React, { Component } from 'react';
-import axios from 'axios';
 import queryString from 'query-string';
 import { Row, Col, Tabs, Tab, Container, Alert, Button } from 'react-bootstrap';
 
@@ -13,7 +12,6 @@ import SearchBar from '../commonComponents/SearchBar';
 import Creators from '../commonComponents/Creators';
 import DiscourseTopic from '../commonComponents/DiscourseTopic';
 import 'react-tabs/style/react-tabs.css';
-import { baseURL } from '../../configs/url.config';
 import { PageView, initGA } from '../../tracking';
 import ReactMarkdown from 'react-markdown';
 import Rating from 'react-rating';
@@ -22,6 +20,8 @@ import moment from 'moment';
 import SVGIcon from '../../images/SVGIcon';
 import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg'
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
+
+import { axiosIG } from '../../utils/axios.util';
 
 var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
 
@@ -81,7 +81,7 @@ class ToolDetail extends Component {
   getDataSearchFromDb = () => {
     //need to handle error if no id is found
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/v1/tools/' + this.props.match.params.toolID) 
+    axiosIG.get('/api/v1/tools/' + this.props.match.params.toolID) 
       .then((res) => {
         this.setState({
           data: res.data.data[0],

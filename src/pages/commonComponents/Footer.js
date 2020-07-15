@@ -1,8 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import Loading from './Loading'
 
-var cmsURL = require('./BaseURL').getCMSURL();
+import { axiosCMS } from '../../utils/axios.util';
 
 class Footer extends React.Component {
     
@@ -13,8 +12,8 @@ class Footer extends React.Component {
 
 
     async componentDidMount() {
-        axios
-            .get(cmsURL+'/footer', { withCredentials: false })
+        axiosCMS
+            .get('/footer', { withCredentials: false })
             .then((res) => {
                 this.setState({
                     footer: res.data,

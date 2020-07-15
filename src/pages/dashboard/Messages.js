@@ -1,12 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 import Loading from '../commonComponents/Loading'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NotFound from '../commonComponents/NotFound';
 import SVGIcon from "../../images/SVGIcon";
 
-var baseURL = require('../commonComponents/BaseURL').getURL(); 
+import { axiosIG } from '../../utils/axios.util';
 
 class YourAccount extends React.Component {
 
@@ -33,7 +32,7 @@ class YourAccount extends React.Component {
             apiToCall = '/api/v1/messages/admin/' + this.state.userState[0].id;
         }
 
-        axios.get(baseURL + apiToCall)
+        axiosIG.get(apiToCall)
             .then((res) => {
                 this.setState({
                     newData: res.data.newData,

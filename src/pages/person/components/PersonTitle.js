@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {Row, Col} from 'react-bootstrap';
 
-var baseURL = require('../../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../../utils/axios.util';
 
 class PersonTitle extends Component {
 
@@ -24,7 +23,7 @@ class PersonTitle extends Component {
     }
   
     UpdateCounter = (id, counter) => {
-      axios.post(baseURL + '/api/v1/counter/update', { id: id, counter: counter });
+      axiosIG.post('/api/v1/counter/update', { id: id, counter: counter });
     }
   
     // here is our UI

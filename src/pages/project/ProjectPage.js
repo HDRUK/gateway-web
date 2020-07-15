@@ -2,7 +2,6 @@
 // /ShowObjects.js
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
-import axios from 'axios';
 import queryString from 'query-string';
 import {Container, Row, Col, Tabs, Tab, Alert, Button } from 'react-bootstrap';
 import moment from 'moment';
@@ -20,8 +19,7 @@ import DiscourseTopic from '../commonComponents/DiscourseTopic';
 // import ReactGA from 'react-ga'; 
 import {PageView, initGA} from '../../tracking';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
-var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class ProjectDetail extends Component {
   // initialize our state
@@ -68,7 +66,7 @@ class ProjectDetail extends Component {
   getDataSearchFromDb = () => {
     //need to handle error if no id is found
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/v1/project/' + this.props.match.params.projectID)
+    axiosIG.get('/api/v1/project/' + this.props.match.params.projectID)
       .then((res) => {
         this.setState({
           data: res.data.data[0],

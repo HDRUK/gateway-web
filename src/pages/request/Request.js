@@ -1,17 +1,16 @@
 import React, { Fragment, useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import {Row, Container, Col, Button, Form } from 'react-bootstrap';
-import axios from 'axios';
 import moment from 'moment';
 import SearchBar from '../commonComponents/SearchBar';
 import DatePicker from "react-datepicker";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { regExpConfig } from '../../configs/regex.config';
-import { baseURL } from '../../configs/url.config';
 import { Event } from '../../tracking';
 import ReactGA from 'react-ga';
 
+import { axiosIG } from '../../utils/axios.util';
 
 ReactGA.initialize('UA-166025838-1');
 
@@ -89,7 +88,7 @@ const Request = (props) => {
                        'Content-Type': 'application/json'
                    }
                 }
-                axios.post(baseURL + '/api/v1/datasets/access/request', JSON.stringify(vals), config)
+                axiosIG.post('/api/v1/datasets/access/request', JSON.stringify(vals), config)
                     .then(response => {
                         message = response.data.message;
                     })

@@ -5,7 +5,6 @@ import { Container, Row, Col, Button, Tabs, Tab } from 'react-bootstrap';
 import Winterfell from 'winterfell';
 import _ from 'lodash';
 import moment from 'moment';
-import axios from 'axios';
 import TypeaheadCustom from './components/TypeaheadCustom'
 import DatePickerCustom from './components/DatepickerCustom';
 import SearchBar from '../commonComponents/SearchBar';
@@ -15,10 +14,11 @@ import NavItem from './components/NavItem';
 import DarValidation from '../../utils/DarValidation.util';
 import {formSchema} from './formSchema';
 import {classSchema} from './classSchema';
-import { baseURL } from '../../configs/url.config';
 import 'react-tabs/style/react-tabs.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import SVGIcon from "../../images/SVGIcon"
+
+import { axiosIG } from '../../utils/axios.util';
 
 class DataAccessRequest extends Component {
 
@@ -51,7 +51,7 @@ class DataAccessRequest extends Component {
     async componentDidMount() {
         try {
             let { location: { state: { dataSetId }}} = this.props;
-            const response = await axios.get(`${baseURL}/api/v1/data-access-request/dataset/${dataSetId}`);
+            const response = await axiosIG.get(`/api/v1/data-access-request/dataset/${dataSetId}`);
             const { data: { data: { jsonSchema, questionAnswers, _id, applicationStatus }}} = response;
             this.setState({schema: {...jsonSchema, ...classSchema}, questionAnswers, _id, applicationStatus, activePanelId: 'applicant', isLoading: false});
             // this.setState({schema: {...formSchema}, activePanelId: 'mrcHealthDataToolkit', isLoading: false, applicationStatus: 'inProgress'});
@@ -201,7 +201,7 @@ class DataAccessRequest extends Component {
             try {
                 let {_id: id} = this.state;
                 // 1. POST 
-                const response = await axios.post(`${baseURL}/api/v1/data-access-request/${id}`, {});
+                const response = await axiosIG.post(`/api/v1/data-access-request/${id}`, {});
                 const lastSaved = this.saveTime();
                 this.setState({ lastSaved });
                 // 2. Add success banner to local storage
@@ -237,7 +237,7 @@ class DataAccessRequest extends Component {
                 questionAnswers: JSON.stringify(data)
             }
             // 4. PATCH the data
-            const response = await axios.patch(`${baseURL}/api/v1/data-access-request/${id}`, params);
+            const response = await axiosIG.patch(`/api/v1/data-access-request/${id}`, params);
             // 6. get saved time
             const lastSaved = this.saveTime();
             // 5. set state

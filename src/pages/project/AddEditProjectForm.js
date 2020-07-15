@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -13,7 +12,7 @@ import RelatedObject from '../commonComponents/RelatedObject';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import SVGIcon from '../../images/SVGIcon';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 const AddEditProjectForm = (props) => {
     //Fix for projects were features are set to null
@@ -58,13 +57,13 @@ const AddEditProjectForm = (props) => {
             values.relatedObjects = props.relatedObjects
             values.toolCreator = props.userState[0];
             if (props.isEdit) {
-                axios.put(baseURL + '/api/v1/project/' + props.data.id, values)
+                axiosIG.put('/api/v1/project/' + props.data.id, values)
                     .then((res) => {
                         window.location.href = window.location.search + '/project/' + props.data.id + '/?projectEdited=true';
                     });
             }
             else {
-                axios.post(baseURL + '/api/v1/project/', values)
+                axiosIG.post('/api/v1/project/', values)
                     .then((res) => {
                         window.location.href = window.location.search + '/project/' + res.data.id + '/?projectAdded=true';
                     });

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import moment from 'moment';
 
 import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 
 import NotFound from '../commonComponents/NotFound';
 import Loading from '../commonComponents/Loading';
+import { axiosIG } from '../../utils/axios.util';
 
 import { Event, initGA } from '../../tracking';
-
-var baseURL = require('../commonComponents/BaseURL').getURL();
 
 class AccountTools extends React.Component {
 
@@ -36,14 +34,14 @@ class AccountTools extends React.Component {
     }
 
     doToolsCall() {
-            axios.get(baseURL + '/api/v1/tools')
+            axiosIG.get('/api/v1/tools')
                 .then((res) => {
                     this.setState({ data: res.data.data, isLoading: false });
                 });
     }
 
     rejectTool = (id) => {
-        axios.patch(baseURL + '/api/v1/tools/'+id, {
+        axiosIG.patch('/api/v1/tools/'+id, {
             id: id,
             activeflag: "archive"
         })
@@ -53,7 +51,7 @@ class AccountTools extends React.Component {
     }
 
     approveTool = (id) => {
-        axios.patch(baseURL + '/api/v1/tools/'+id, { 
+        axiosIG.patch('/api/v1/tools/'+id, { 
             id: id,
             activeflag: "active"
         })
@@ -295,7 +293,7 @@ function RejectButton(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const rejectObject = () => {
-        axios.patch(baseURL + '/api/v1/tools/'+props.id, {
+        axiosIG.patch('/api/v1/tools/'+props.id, {
             id: props.id,
             activeflag: "rejected"
         })
@@ -328,7 +326,7 @@ function DeleteButton(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const deleteObject = () => {
-        axios.patch(baseURL + '/api/v1/tools/'+props.id, {
+        axiosIG.patch('/api/v1/tools/'+props.id, {
             id: props.id,
             activeflag: "archive"
         })

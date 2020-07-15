@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-var baseURL = require('../../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../../utils/axios.util';
 
 class ProjectTitle extends Component {
 
@@ -27,7 +26,7 @@ class ProjectTitle extends Component {
     }
   
     UpdateCounter = (id, counter) => {
-        axios.post(baseURL + '/api/v1/counter/update', { id: id, counter: counter });
+        axiosIG.post('/api/v1/counter/update', { id: id, counter: counter });
     }
   
     render() {

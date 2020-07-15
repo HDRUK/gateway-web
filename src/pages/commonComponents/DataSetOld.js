@@ -1,11 +1,9 @@
 
 import React from 'react';
-import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import SVGIcon from "../../images/SVGIcon";
-
-var baseURL = require('./BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 export default class DataSet extends React.Component {
 
@@ -34,7 +32,7 @@ export default class DataSet extends React.Component {
             });
 
         } else {
-            axios.get(baseURL + '/api/v1/datasets/' + this.props.id)
+            axiosIG.get('/api/v1/datasets/' + this.props.id)
                 .then((res) => {
                     this.setState({
                         data: {

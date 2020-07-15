@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import classnames from "classnames";
 
 import { Container, Row, Col, Dropdown } from 'react-bootstrap';
@@ -15,8 +14,7 @@ import { ReactComponent as WhiteArrowDownSvg } from '../../images/arrowDownWhite
 
 import moment from 'moment';
 import { cmsURL } from '../../configs/url.config';
-
-var baseURL = require('./BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a href="" ref={ref} onClick={e => { e.preventDefault(); onClick(e); }} >
@@ -100,7 +98,7 @@ class SearchBar extends React.Component {
     };
 
     logout = (e) => { 
-        axios.get(baseURL + '/api/v1/auth/logout')
+        axiosIG.get('/api/v1/auth/logout')
             .then((res) => {
                 window.location.reload();
             });
@@ -117,7 +115,7 @@ class SearchBar extends React.Component {
             apiToCall = '/api/v1/messages/admin/' + this.state.userState[0].id;
         }
 
-        axios.get(baseURL + apiToCall)
+        axiosIG.get(apiToCall)
             .then((res) => {
                 this.setState({
                     newData: res.data.newData,
@@ -132,7 +130,7 @@ class SearchBar extends React.Component {
         if (this.state.userState[0].role === "Admin") {
             apiToCall = '/api/v1/messages/numberofunread/admin/' + this.state.userState[0].id;
         }
-        axios.get(baseURL + apiToCall)
+        axiosIG.get(apiToCall)
             .then((res) => {
                 this.setState({ count: res.data.countUnreadMessages });
             });
@@ -144,7 +142,7 @@ class SearchBar extends React.Component {
             messageIds.push(data.messageID);
         })
 
-        axios.post(baseURL + '/api/v1/messages/markasread',
+        axiosIG.post('/api/v1/messages/markasread',
             messageIds
         );
     }

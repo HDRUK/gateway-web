@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import PersonTitle from './components/PersonTitle';
 
 import {Container, Row, Col, Tabs, Tab} from 'react-bootstrap';
@@ -16,7 +15,7 @@ import Project from '../commonComponents/Project';
 // import ReactGA from 'react-ga'; 
 import {PageView, initGA} from '../../tracking';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class PersonDetail extends Component {
 
@@ -56,7 +55,7 @@ class PersonDetail extends Component {
   getDataSearchFromDb = () => {
     //need to handle error if no id is found
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/v1/person/' + this.props.match.params.personID)
+    axiosIG.get('/api/v1/person/' + this.props.match.params.personID)
       .then((res) => {
         this.setState({
           data: res.data.data[0],

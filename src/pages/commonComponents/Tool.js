@@ -2,11 +2,10 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import SVGIcon from "../../images/SVGIcon";
-import axios from 'axios';
 import Loading from './Loading'
 import ReactMarkdown from 'react-markdown';
 
-var baseURL = require('./BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class Tool extends React.Component {
 
@@ -35,7 +34,7 @@ class Tool extends React.Component {
     getDataSearchFromDb = () => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/tools/' + this.state.id)
+        axiosIG.get('/api/v1/tools/' + this.state.id)
             .then((res) => {
                 this.setState({
                     data: res.data.data[0],

@@ -1,6 +1,5 @@
 // /ShowObjects.js
 import React, { Component } from 'react';
-import axios from 'axios';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
@@ -29,7 +28,7 @@ import CompleteRegistration from './pages/registration/CompleteRegistration'
 import LoginModal from './pages/commonComponents/LoginModal';
 import Footer from './pages/commonComponents/Footer';
 
-var baseURL = require('./pages/commonComponents/BaseURL').getURL();
+import { axiosIG } from './utils/axios.util';
 
 class HDRRouter extends Component {
     // initialize our state
@@ -46,9 +45,8 @@ class HDRRouter extends Component {
     };
 
     async componentDidMount() {
-        axios.defaults.withCredentials = true;
-        axios
-            .get(baseURL + '/api/v1/auth/status')
+        axiosIG
+            .get('/api/v1/auth/status')
             .then((res) => {
                 this.setState({
                     userState: [

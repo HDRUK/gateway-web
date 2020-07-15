@@ -1,11 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import SVGIcon from "../../images/SVGIcon";
 import Loading from './Loading'
 
-var baseURL = require('./BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class ReviewTitle extends React.Component {
 
@@ -26,7 +25,7 @@ class ReviewTitle extends React.Component {
     }
 
     doSearchCall() {
-        axios.get(baseURL + '/api/v1/reviews?id=' + this.state.id)
+        axiosIG.get('/api/v1/reviews?id=' + this.state.id)
             .then((res) => {
                 this.setState({ data: res.data.data[0], isLoading: false });
             });

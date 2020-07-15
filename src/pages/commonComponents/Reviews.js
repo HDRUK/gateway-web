@@ -1,7 +1,5 @@
-
 // /ShowObjects/Reviews.js
 import React, { Component, useState } from 'react';
-import axios from 'axios';
 import {Row, Col} from 'react-bootstrap';
 import Rating from 'react-rating';
 import { useFormik } from 'formik';
@@ -18,7 +16,7 @@ import Collapse from 'react-bootstrap/Collapse';
 
 // import {ReviewButton, ReplyButton} from './ReviewComponents';
 
-var baseURL = require('./BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class Reviews extends Component {
 
@@ -188,7 +186,7 @@ const AddReviewForm = (props) => {
     }),
 
     onSubmit: values => {
-      axios.post(baseURL + '/api/v1/tools/review/add', values)
+      axiosIG.post('/api/v1/tools/review/add', values)
         .then((res) => {
           window.location.href = '/tool/' + props.data.id + '/?reviewAdded=true';
         });
@@ -351,7 +349,7 @@ const ReplyReviewForm = (props) => {
     }),
 
     onSubmit: values => {
-      axios.post(baseURL + '/api/v1/tools/reply', values)
+      axiosIG.post('/api/v1/tools/reply', values)
         .then((res) => {
           window.location.href = '/tool/' + props.data.id + '/?replyAdded=true';
         });

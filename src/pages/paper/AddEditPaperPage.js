@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { initGA } from '../../tracking';
 import moment from 'moment';
 import { Container } from 'react-bootstrap';
@@ -9,7 +8,7 @@ import AddEditPaperForm from './AddEditPaperForm';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class AddEditPaperPage extends React.Component {
 
@@ -54,7 +53,7 @@ class AddEditPaperPage extends React.Component {
     getPaperFromDb = () => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-        axios.get(baseURL + '/api/v1/paper/edit/' + this.props.match.params.paperID)
+        axiosIG.get('/api/v1/paper/edit/' + this.props.match.params.paperID)
           .then((res) => {
             this.setState({
               data: res.data.data[0],
@@ -66,7 +65,7 @@ class AddEditPaperPage extends React.Component {
 
     doGetTopicsCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/topic/paper')
+            axiosIG.get('/api/v1/search/filter/topic/paper')
                 .then((res) => {
                     var tempTopicArray = ["Blood", "Cancer and neoplasms", "Cardiovascular", "Congenital disorders", "Ear", "Eye", "Infection", "Inflammatory and immune system", "Injuries and accidents", "Mental health", "Metabolic and Endocrine", "Musculoskeletal", "Neurological", "Oral and Gastrointestinal", "Renal and Urogenital", "Reproductive health and childbirth", "Respiratory", "Skin", "Stroke"]
 
@@ -83,7 +82,7 @@ class AddEditPaperPage extends React.Component {
 
     doGetFeaturesCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/search/filter/feature/paper')
+            axiosIG.get('/api/v1/search/filter/feature/paper')
                 .then((res) => {
                     var tempFeaturesArray = ["Arbitrage", "Association Rules", "Attribution Modeling", "Bayesian Statistics", "Clustering", "Collaborative Filtering", "Confidence Interval", "Cross-Validation", "Decision Trees", "Deep Learning", "Density Estimation", "Ensembles", "Experimental Design", "Feature Selection", "Game Theory", "Geospatial Modeling", "Graphs", "Imputation", "Indexation / Cataloguing", "Jackknife Regression", "Lift Modeling", "Linear Regression", "Linkage Analysis", "Logistic Regression", "Model Fitting", "Monte-Carlo Simulation", "Naive Bayes", "Nearest Neighbors - (k-NN)", "Neural Networks", "Pattern Recognition", "Predictive Modeling", "Principal Component Analysis - (PCA)", "Random Numbers", "Recommendation Engine", "Relevancy Algorithm", "Rule System", "Scoring Engine", "Search Engine", "Segmentation", "Supervised Learning", "Support Vector Machine - (SVM)", "Survival Analysis", "Test of Hypotheses", "Time Series", "Yield Optimization"]
 
@@ -101,7 +100,7 @@ class AddEditPaperPage extends React.Component {
 
     doGetUsersCall() {
         return new Promise((resolve, reject) => {
-            axios.get(baseURL + '/api/v1/users')
+            axiosIG.get('/api/v1/users')
                 .then((res) => {
                     this.setState({ combinedUsers: res.data.data });
                     resolve();
@@ -133,7 +132,7 @@ class AddEditPaperPage extends React.Component {
             if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
             if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
         
-        axios.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL )
+        axiosIG.get('/api/v1/search?search=' + this.state.searchString + searchURL )
             .then((res) => {
                 this.setState({
                     datasetData: res.data.datasetResults || [],

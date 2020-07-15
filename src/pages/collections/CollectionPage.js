@@ -1,7 +1,6 @@
 
 // /ShowObjects.js
 import React, { Component } from 'react';
-import axios from 'axios';
 import queryString from 'query-string';
 import { Row, Col, Tabs, Tab, Container, Alert, Nav, Navbar } from 'react-bootstrap';
 import NotFound from '../commonComponents/NotFound';
@@ -10,11 +9,9 @@ import Loading from '../commonComponents/Loading'
 import RelatedObject from '../commonComponents/RelatedObject';
 import SearchBar from '../commonComponents/SearchBar';
 import 'react-tabs/style/react-tabs.css';
-import { baseURL } from '../../configs/url.config';
 import moment from 'moment';
 
-
-var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class CollectionPage extends Component { 
 
@@ -60,7 +57,7 @@ componentDidMount() {
 
 getDataSearchFromDb = () => {
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/v1/collections/' + this.props.match.params.collectionID)
+    axiosIG.get('/api/v1/collections/' + this.props.match.params.collectionID)
       .then((res) => {
         this.setState({
           data: res.data.data[0]
@@ -95,7 +92,7 @@ getDataSearchFromDb = () => {
   getToolData = async (toolID) => {
     this.setState({ isLoading: true });
     await Promise.all([
-    axios.get(baseURL + '/api/v1/tools/' + toolID) 
+    axiosIG.get('/api/v1/tools/' + toolID) 
       .then((res) => {
         this.state.objectData.push(res.data.data[0])
       })
@@ -106,7 +103,7 @@ getDataSearchFromDb = () => {
   getPersonData = async (personID) => {
     this.setState({ isLoading: true });
     await Promise.all([
-    axios.get(baseURL + '/api/v1/person/' + personID) 
+    axiosIG.get('/api/v1/person/' + personID) 
       .then((res) => {
         this.state.objectData.push(res.data.data[0])
       })
@@ -117,7 +114,7 @@ getDataSearchFromDb = () => {
   getProjectData = async (projectID) => {
     this.setState({ isLoading: true });
     await Promise.all([
-    axios.get(baseURL + '/api/v1/project/' + projectID) 
+    axiosIG.get('/api/v1/project/' + projectID) 
       .then((res) => {
         this.state.objectData.push(res.data.data[0])
       })
@@ -128,7 +125,7 @@ getDataSearchFromDb = () => {
   getDatasetData = async (datasetID) => {
     this.setState({ isLoading: true });
     await Promise.all([
-    axios.get(baseURL + '/api/v1/datasets/detail/' + datasetID) 
+    axiosIG.get('/api/v1/datasets/detail/' + datasetID) 
       .then((res) => {
         this.state.objectData.push(res.data.data)
       })
@@ -139,7 +136,7 @@ getDataSearchFromDb = () => {
   getPaperData = async (paperID) => {
     this.setState({ isLoading: true });
     await Promise.all([
-    axios.get(baseURL + '/api/v1/paper/' + paperID) 
+    axiosIG.get('/api/v1/paper/' + paperID) 
       .then((res) => {
         this.state.objectData.push(res.data.data[0]) 
       })
@@ -149,7 +146,7 @@ getDataSearchFromDb = () => {
 
   doGetUsersCall() {
     return new Promise((resolve, reject) => {
-        axios.get(baseURL + '/api/v1/users')
+        axiosIG.get('/api/v1/users')
             .then((res) => {
                 this.setState({ combinedUsers: res.data.data });
                 resolve();

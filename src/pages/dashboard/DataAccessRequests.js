@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Row, Col, Button, Container, Tabs, Tab, Alert } from 'react-bootstrap';
 import Loading from '../commonComponents/Loading';
 import PreSubCustodian from './DARComponents/PreSubCustodian';
 import PreSubInnovator from './DARComponents/PreSubInnovator';
 import CustodianApplication from './DARComponents/CustodianApplication';
 import InnovatorApplication from './DARComponents/InnovatorApplication';
-import { baseURL } from '../../configs/url.config';
+
+import { axiosIG } from '../../utils/axios.util';
 
 class DataAccessRequests extends React.Component {
  
@@ -31,7 +31,7 @@ class DataAccessRequests extends React.Component {
 
   getDARsFromDb = () => {
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/v1/dar')
+    axiosIG.get('/api/v1/dar')
     .then((res) => {
       this.setState({
         data: res.data.data,

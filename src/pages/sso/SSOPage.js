@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import { ReactComponent as WhiteLogoSvg } from '../../../src/images/white.svg';
 import Login from '../commonComponents/Login';
-import axios from 'axios';
 
-const baseURL = require('../commonComponents/BaseURL').getURL();
+import { axiosIG } from '../../utils/axios.util';
 
 class SSOPage extends Component {
   state = {
@@ -29,8 +28,8 @@ class SSOPage extends Component {
 
   componentDidMount() {
     const url = `${window.location.search}`;
-    axios
-    .get(`${baseURL}/api/v1/auth/soo/discourse${url}`)
+    axiosIG
+    .get(`/api/v1/auth/soo/discourse${url}`)
     .then((res) => {
       if (res.status === 200 && res.data.redirectUrl) {
         window.location.href = res.data.redirectUrl;

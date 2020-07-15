@@ -3,7 +3,6 @@
 import React, { Component, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { Row, Col, Container, Tabs, Tab, Button, Alert, Tooltip, Overlay } from 'react-bootstrap/';
 import NotFound from '../commonComponents/NotFound';
 import Loading from '../commonComponents/Loading'
@@ -20,11 +19,10 @@ import { Event } from '../../tracking';
 import moment from 'moment';
 import Linkify from "react-linkify";
 import DatasetSchema from './DatasetSchema';
+import { axiosIG } from '../../utils/axios.util';
 
 import 'react-tabs/style/react-tabs.css';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
-var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
 
 class DatasetDetail extends Component {
 
@@ -73,7 +71,7 @@ class DatasetDetail extends Component {
 
   getDetailsSearchFromMDC = () => {
     this.setState({ isLoading: true });
-    axios.get(baseURL + '/api/v1/datasets/detail/' + this.props.match.params.datasetID+'?&id=' + this.state.userState[0].id)
+    axiosIG.get('/api/v1/datasets/detail/' + this.props.match.params.datasetID+'?&id=' + this.state.userState[0].id)
       .then((res) => {
         this.setState({
           data: res.data.data,
@@ -84,7 +82,7 @@ class DatasetDetail extends Component {
   };
 
   getRelatedProjects = () => {
-    axios.get(baseURL + '/api/v1/datasets/relatedobjects/' + this.props.match.params.datasetID)
+    axiosIG.get('/api/v1/datasets/relatedobjects/' + this.props.match.params.datasetID)
       .then((res) => {
         this.setState({
             relatedObjects: res.data.data
@@ -94,7 +92,7 @@ class DatasetDetail extends Component {
   };
 
   getDatasetSchema = () => {
-    axios.get(baseURL + '/api/v1/datasets/schema/' + this.props.match.params.datasetID)
+    axiosIG.get('/api/v1/datasets/schema/' + this.props.match.params.datasetID)
       .then((res) => {
         this.setState({
             datasetSchema: res.data.data
