@@ -225,7 +225,7 @@ class AccountAnalyticsDashboard extends React.Component {
                         <Row className="kpiContainer"> 
 
                             <Col sm={3} lg={3} className="kpiClass"> 
-                                <DashboardKPI kpiText="total datasets" kpiValue={statsDataType.datasets}/>
+                                <DashboardKPI kpiText="total datasets" kpiValue={statsDataType.dataset}/>
                             </Col>
                             <Col sm={3} lg={3} className="kpiClass">
                                 <DashboardKPI kpiText="datasets with technical metadata" kpiValue={datasetsWithTechMetaData.toFixed(0)} percentageFlag={true}/>
