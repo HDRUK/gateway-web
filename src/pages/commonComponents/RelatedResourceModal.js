@@ -74,7 +74,7 @@ class RelatedResourcesModal extends React.Component {
     }
 
     render() {
-        const { userState, datasetIndex, toolIndex, projectIndex, paperIndex, personIndex} = this.state;
+        const { datasetIndex, toolIndex, projectIndex, paperIndex, personIndex } = this.state;
         var { key } = this.state;
 
         var datasetCount = this.props.summary.datasets || 0;
@@ -146,17 +146,29 @@ class RelatedResourcesModal extends React.Component {
             editingObjectTool = 1;
         }  
 
-        this.state.selected.datasets = 0;
-        this.state.selected.tools = 0;
-        this.state.selected.projects = 0;
-        this.state.selected.papers = 0;
-        this.state.selected.persons = 0;
+        this.setState = ({ 
+            selected: {
+                datasets: 0, 
+                tools: 0, 
+                projects: 0, 
+                papers: 0, 
+                persons: 0 
+            }
+        });
 
        if(this.props.relatedObjects) {
-            this.props.relatedObjects.map((object) => {
+           debugger;
+            let relatedObjects = [...this.props.relatedObjects];
+            let relatedObjectIds = [];
+            const rid = relatedObjects.map(r => r.objectId);
+            console.log(rid);
 
-                this.state.relatedObjectIds.push(object.objectId) 
-                
+            relatedObjects.forEach((object) => {
+                let key = object.objectType;
+                relatedObjectIds.push(object.objectId);
+
+                //this.props[`${key}Data`]
+
                 switch (object.objectType) {
                     case 'tool':
                         this.props.toolData.map((tool) => {
@@ -169,7 +181,7 @@ class RelatedResourcesModal extends React.Component {
                             this.props.projectData.map((project) => {
                                 if(object.objectId === project.id || object.objectId === JSON.stringify(project.id)) {
                                  
-                                    this.state.selected.projects++
+                                this.state.selected.projects++
                                 }
                             })
                         break;
@@ -177,7 +189,7 @@ class RelatedResourcesModal extends React.Component {
                             this.props.paperData.map((paper) => {
                                 if(object.objectId === paper.id || object.objectId === JSON.stringify(paper.id)) {
                                  
-                                    this.state.selected.papers++
+                                this.state.selected.papers++
                                 }
                             })
                         break;
@@ -185,7 +197,7 @@ class RelatedResourcesModal extends React.Component {
                             this.props.personData.map((person) => {
                                 if(object.objectId === person.id || object.objectId === JSON.stringify(person.id)) {
                                  
-                                    this.state.selected.persons++
+                                this.state.selected.persons++
                                 }
                             })
                         break;
@@ -193,12 +205,14 @@ class RelatedResourcesModal extends React.Component {
                             this.props.datasetData.map((dataset) => {
                                 if(object.objectId === dataset.id || object.objectId === JSON.stringify(dataset.id)) {
                                  
-                                    this.state.selected.datasets++
+                                this.state.selected.datasets++
                                 }
                             })
                         break;
                 }
             })
+
+            this.setState({relatedObjectIds});
         }
 
         return (

@@ -179,7 +179,7 @@ class DataAccessRequest extends Component {
     onFormUpdate = _.debounce((id, questionAnswers) => {
         let { applicationStatus, lookup } = this.state;
         // 1. check for auto complete
-        if(!_.isEmpty(id)) {
+        if(!_.isEmpty(id) && typeof id === 'string') {
             let [questionId, uniqueId] = id.split('_');
             let qId = questionId.toLowerCase();
             let lookupAutoComplete = [...lookup].includes(qId);

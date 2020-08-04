@@ -4,7 +4,8 @@ import moment from 'moment';
 import { Row, Col, Button } from 'react-bootstrap';
 import Loading from './Loading'
 import { ReactComponent as PersonPlaceholderSvg } from '../../images/person-placeholder.svg';
-import SVGIcon from "../../images/SVGIcon"
+import SVGIcon from "../../images/SVGIcon";
+import _ from 'lodash';
 
 var baseURL = require('./BaseURL').getURL();
 
@@ -63,10 +64,18 @@ class RelatedObject extends React.Component {
         this.setState({ isLoading: true });
         axios.get(baseURL + '/api/v1/relatedobject/' + id)
             .then((res) => {
-                this.setState({
-                    data: res.data.data[0],
-                    isLoading: false
-                });
+                debugger;
+                let [relatedObject = {}] = res.data.data;
+                if(!_.isEmpty(relatedObject)) {
+                    this.setState({
+                        data: relatedObject,
+                        isLoading: false
+                    });
+                } else {
+                    this.setState({
+                        isLoading: false
+                    });
+                }
             })
     };
 
@@ -81,7 +90,7 @@ class RelatedObject extends React.Component {
 
  
     render() {
-        const { data, isLoading, activeLink, relatedObject, inCollection } = this.state; 
+        const { data, isLoading, activeLink, relatedObject, inCollection } = this.state;
 
         if (isLoading) {
             return <Loading />;
@@ -107,6 +116,7 @@ class RelatedObject extends React.Component {
                     <div className={rectangleClassName} onClick={() => !activeLink && !this.props.showRelationshipQuestion && !this.props.showRelationshipAnswer && this.props.doAddToTempRelatedObjects(data.type === "dataset" ? data.datasetid : data.id, data.type) } >
                        
                         {(() => {
+                            debugger;
                             if (data.type === 'tool') {
                                 return(
                                     <Row className="noMargin">
@@ -339,7 +349,7 @@ class RelatedObject extends React.Component {
                                             <a className="black-bold-16" style={{ cursor: 'pointer' }} href={'/dataset/' + data.datasetid} >{data.name}</a>
                                             : <span className="black-bold-16"> {data.name} </span> }
                                             <br />
-                                            <span className="gray800-14"> {data.datasetfields.publisher} </span>
+                                            <span className="gray800-14"> {_.isEmpty(data.datasetfields) ? "" : data.datasetfields.publisher} </span>
                                         </Col>
                                         <Col sm={2} lg={2} className="pad-right-24">
                                             {this.props.showRelationshipAnswer && relatedObject.updated || this.props.collectionUpdated ? <span className="collection-card-updated">{relatedObject.updated ? 'Updated ' + relatedObject.updated.substring(3) : 'Updated ' + this.props.collectionUpdated.substring(3)}</span> : ''}

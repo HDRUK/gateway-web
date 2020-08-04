@@ -4,9 +4,7 @@ import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 import queryString from 'query-string';
-import { Row, Col, Tabs, Tab, Container, Alert, Nav, Navbar } from 'react-bootstrap';
-import NotFound from '../commonComponents/NotFound';
-import Creators from '../commonComponents/Creators';
+import { Row, Col, Tabs, Tab, Container, Alert } from 'react-bootstrap';
 import Loading from '../commonComponents/Loading'
 import RelatedObject from '../commonComponents/RelatedObject';
 import SearchBar from '../commonComponents/SearchBar';
@@ -14,9 +12,6 @@ import 'react-tabs/style/react-tabs.css';
 import { baseURL } from '../../configs/url.config';
 import moment from 'moment';
 import _ from 'lodash';
-
-
-var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
 
 class CollectionPage extends Component { 
 

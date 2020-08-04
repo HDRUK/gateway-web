@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -81,26 +81,22 @@ const AddEditPaperForm = (props) => {
     });
   
     function updateReason(id, reason, type) {
-        let inRelatedObject = false;
-        props.relatedObjects.map((object) => {
-            if(object.objectId===id){
-                inRelatedObject = true;
-                object.reason = reason;
-                object.user = props.userState[0].name;
-                object.updated = moment().format("DD MMM YYYY");
-            }
-        });
-
-        if(!inRelatedObject){
-            props.relatedObjects.push({'objectId':id, 'reason':reason, 'objectType': type, 'user': props.userState[0].name, 'updated':moment().format("DD MMM YYYY")})
+        let relatedObj = props.relatedObjects.find(ro => ro.objectId === id);
+        if(typeof relatedObj != "undefined") {
+            relatedObj.reason = reason;
+            relatedObj.user = props.userState[0].name;
+            relatedObj.updated = moment().format("DD MMM YYYY");
         }
     }
 
-    function descriptionCount(e) {
-        var input = e.target.value;
-        document.getElementById("currentCount").innerHTML=e.target.value.length
-    }
+    const [descriptionLength, setDescriptionLength] = useState(props.data.description.length || 0);
 
+    const onDescKeyUp = (e) => {
+        e.preventDefault();
+        let { target: { value } } = e;
+        setDescriptionLength(value.length);
+    };
+    
     return (
         <div>
             <Row className="mt-4">
@@ -194,9 +190,9 @@ const AddEditPaperForm = (props) => {
                                 </div>
                                 <div style={{ display: 'inline-block', float: 'right' }}>
                                     <br />
-                                    <span className="gray700-13">(<span id="currentCount">{formik.values.description.length || 0}</span>/1500)</span>
+                                    <span className="gray700-13">(<span id="currentCount">{descriptionLength}</span>/1500)</span>
                                 </div>
-                                <Form.Control as="textarea" id="description" name="description" type="text" className={formik.touched.description && formik.errors.description ? "emptyFormInput addFormInput descriptionInput" : "addFormInput descriptionInput"} onKeyUp={descriptionCount} onChange={formik.handleChange}  value={formik.values.description} onBlur={formik.handleBlur} />
+                                <Form.Control as="textarea" id="description" name="description" type="text" className={formik.touched.description && formik.errors.description ? "emptyFormInput addFormInput descriptionInput" : "addFormInput descriptionInput"} onKeyUp={e => onDescKeyUp(e)} onChange={formik.handleChange}  value={formik.values.description} onBlur={formik.handleBlur} />
                                 {formik.touched.description && formik.errors.description ? <div className="errorMessages">{formik.errors.description}</div> : null}
                             </Form.Group>
 
@@ -296,7 +292,7 @@ const AddEditPaperForm = (props) => {
                 <span className="formBottomGap"></span>
             </Row>
         </div>
-    );
+    );                  
 }
 
 export default AddEditPaperForm;
