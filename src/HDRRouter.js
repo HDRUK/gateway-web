@@ -45,7 +45,7 @@ class HDRRouter extends Component {
                 this.setState({
                     userState: [
                         {
-                            loggedIn: true,
+                            loggedIn: res.data.data[0].loggedIn,
                             role: res.data.data[0].role,
                             id: res.data.data[0].id,
                             name: res.data.data[0].name
