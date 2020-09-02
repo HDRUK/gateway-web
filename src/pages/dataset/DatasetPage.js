@@ -831,10 +831,37 @@ class DatasetDetail extends Component {
                               onMouseEnter={this.handleMouseHover}
                               onMouseLeave={this.handleMouseHover}
                             > 
+                            {/* Have to declare SVG inline for now as the same SVG component is being used above for Phenotypes. */}
                               {this.state.isHovering ? (
-                                <InfoFillSVG />
+                                <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+                                <defs>
+                                  <path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0zm0 17a1 1 0 100 2 1 1 0 000-2zm4.12-10.32c-1.149-1.86-4.162-2.144-6.671-1.035l-.915.405.809 1.829.914-.404.198-.083c1.655-.656 3.473-.456 3.964.339.546.882.201 2.006-1.024 3.045C11.622 12.278 11 13.158 11 14.5v1h2v-1l.002-.082c.028-.492.322-.923 1.324-1.805l.548-.475c1.764-1.597 2.347-3.678 1.247-5.459z" id="a"/>
+                                </defs>
+                                <g fill="none" fill-rule="evenodd">
+                                  <mask id="b" fill="#fff">
+                                    <use href="#a"/>
+                                  </mask>
+                                  <use fill="#000" fill-rule="nonzero" href="#a"/>
+                                  <g mask="url(#b)" fill="#475DA7">
+                                    <path d="M0 0h24v24H0z"/>
+                                  </g>
+                                </g>
+                              </svg>
                               ) : (
-                                <InfoSVG />
+                              <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+                                  <defs>
+                                    <path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 15a1 1 0 110 2 1 1 0 010-2zm4.12-10.32c1.1 1.78.518 3.861-1.246 5.458l-.548.475c-1.002.882-1.296 1.313-1.324 1.805L13 14.5v1h-2v-1c0-1.342.622-2.222 2.395-3.724 1.225-1.039 1.57-2.163 1.024-3.045-.491-.795-2.309-.995-3.964-.34l-.198.084-.914.404-.809-1.83.915-.404c2.51-1.109 5.522-.826 6.672 1.034z" id="a"/>
+                                  </defs>
+                                  <g fill="none" fill-rule="evenodd">
+                                    <mask id="b" fill="#fff">
+                                      <use href="#a"/>
+                                    </mask>
+                                    <use fill="#000" fill-rule="nonzero" href="#a"/>
+                                    <g mask="url(#b)" fill="#475DA7">
+                                      <path d="M0 0h24v24H0z"/>
+                                    </g>
+                                  </g>
+                              </svg>
                               )}
                             </span>
 
