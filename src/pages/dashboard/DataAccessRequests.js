@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
@@ -143,7 +143,7 @@ class DataAccessRequestsNew extends React.Component {
     }
 
 	render() {
-		const { userState, key, isLoading, data, approvedCount, rejectedCount, archivedCount, preSubmissionCount, inReviewCount, team, alert } = this.state;
+		const { key, isLoading, data, approvedCount, rejectedCount, archivedCount, preSubmissionCount, inReviewCount, team, alert } = this.state;
 		if (isLoading) {
 			return (
 				<Row>
@@ -343,6 +343,8 @@ class DataAccessRequestsNew extends React.Component {
 
                                         </div>
                                     );
+                                    default:
+                                        return null
                             }
                         })()}
                     </div>

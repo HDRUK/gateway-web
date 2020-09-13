@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import queryString from "query-string";
 import * as Sentry from '@sentry/react';
-import { Row, Col, Tabs, Tab, Container, Alert, Button } from "react-bootstrap";
+import { Row, Col, Tabs, Tab, Container, Alert } from "react-bootstrap";
 import NotFound from "../commonComponents/NotFound";
 import Creators from "../commonComponents/Creators";
 import Loading from "../commonComponents/Loading";
@@ -24,7 +24,6 @@ import SVGIcon from "../../images/SVGIcon";
 import ReactMarkdown from "react-markdown";
 import moment from "moment";
 import _ from 'lodash';
-import { ReactComponent as InfoFillSVG } from "../../images/infofill.svg";
 import { ReactComponent as InfoSVG } from "../../images/info.svg";
 import './Paper.scss'; 
 

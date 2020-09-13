@@ -2,11 +2,6 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 class NotFound extends React.Component {
-    
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <Row className="entryBox noMargin margin-top-16 margin-bottom-16">

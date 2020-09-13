@@ -2,8 +2,6 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-var baseURL = require('./BaseURL').getURL();
-
 class NoResults extends React.Component {
 
     state = {
@@ -33,7 +31,7 @@ class NoResults extends React.Component {
                         return (
                             <Row className="mt-3">
                                 <Col className="gray800-14 text-center">
-                                    <span> Try searching for ‘<a href={'/search?search=' + 'COVID-19'} className="purple-14">COVID-19</a>’ if you want to see examples of datasets </span>
+                                    <span> Try searching for ‘<a href={'/search?search=COVID-19'} className="purple-14">COVID-19</a>’ if you want to see examples of datasets </span>
                                 </Col>
                             </Row>
                         );
@@ -48,7 +46,7 @@ class NoResults extends React.Component {
                                 </Row>
                                 <Row className="mt-3">
                                     <Col className="gray800-14 text-center">
-                                        <span> Try searching for ‘<a href={'/search?search=' + 'COVID-19'} className="purple-14">COVID-19</a>’ if you want to see examples of tools </span>
+                                        <span> Try searching for ‘<a href={'/search?search=COVID-19'} className="purple-14">COVID-19</a>’ if you want to see examples of tools </span>
                                     </Col>
                                 </Row>
                             </>
@@ -64,7 +62,7 @@ class NoResults extends React.Component {
                                 </Row>
                                 <Row className="mt-3">
                                     <Col className="gray800-14 text-center">
-                                        <span> Try searching for ‘<a href={'/search?search=' + 'COVID-19'} className="purple-14">COVID-19</a>’ if you want to see examples of projects </span>
+                                        <span> Try searching for ‘<a href={'/search?search=COVID-19'} className="purple-14">COVID-19</a>’ if you want to see examples of projects </span>
                                     </Col>
                                 </Row>
                             </>
@@ -75,7 +73,7 @@ class NoResults extends React.Component {
                             <>
                                 <Row className="mt-3">
                                     <Col className="gray800-14 text-center">
-                                        <span> Try searching for ‘<a href={'/search?search=' + 'COVID-19'} className="purple-14">COVID-19</a>’ if you want to see examples of papers </span>
+                                        <span> Try searching for ‘<a href={'/search?search=COVID-19'} className="purple-14">COVID-19</a>’ if you want to see examples of papers </span>
                                     </Col>
                                 </Row>
                             </>

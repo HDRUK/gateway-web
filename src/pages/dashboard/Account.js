@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import queryString from 'query-string';
-import { Row, Nav, Accordion, Card, Button } from 'react-bootstrap';
+import { Row, Nav, Accordion } from 'react-bootstrap';
 import _ from 'lodash';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import AccountTools from './AccountTools';
@@ -74,7 +74,7 @@ class Account extends Component {
 	componentDidMount() {
 		if (!!window.location.search) {
 			var values = queryString.parse(window.location.search);
-			if (values.tab !== this.state.tabId || typeof values.tab !== 'undefined'|| typeof values.tab !== null) {
+			if (values.tab !== this.state.tabId || typeof values.tab !== 'undefined'|| values.tab !== null) {
                 this.toggleNav(values.tab);
 				this.setState({ 
                     tabId: values.tab,
@@ -93,7 +93,7 @@ class Account extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (!!window.location.search) {
 			var values = queryString.parse(window.location.search);
-			if (values.tab !== this.state.tabId || typeof values.tab !== 'undefined' || typeof values.tab !== null) {
+			if (values.tab !== this.state.tabId || typeof values.tab !== 'undefined' || values.tab !== null) {
 				this.setState({
 					tabId: values.tab,
 					isDeleted: values.accountDeleted,

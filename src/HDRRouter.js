@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import * as Sentry from '@sentry/react';
 
 import Container from 'react-bootstrap/Container';
 

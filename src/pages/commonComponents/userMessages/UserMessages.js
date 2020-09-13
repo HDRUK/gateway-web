@@ -27,8 +27,6 @@ const UserMessages = ({ topicContext, closed, toggleModal, drawerIsOpen = false 
 
 	const [activeTopic, setActiveTopic] = useState({});
 
-	const [textArea, resetTextArea] = useState('');
-
 	const [modalRequired, setRequiresModal] = useState(requiresModal);
 
 	/**

@@ -37,8 +37,156 @@ class RelatedResourcesModal extends React.Component {
         super(props);
         this.state.userState = props.userState;
         this.state.relatedObjects = props.relatedObjects;
-        this.state.relatedObjectIds = [];
     } 
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps !== this.props){
+            this.setRelatedObjectData();
+        }
+    }
+
+    setRelatedObjectData = () => {
+        let { datasetIndex, toolIndex, projectIndex, paperIndex, personIndex, key} = this.state;
+
+        let datasetCount = this.props.summary.datasets || 0, 
+        toolCount = this.props.summary.tools || 0, 
+        projectCount = this.props.summary.projects || 0, 
+        paperCount = this.props.summary.papers || 0, 
+        personCount = this.props.summary.persons || 0;
+        
+        if (key === '' || typeof key === "undefined") {
+            if (datasetCount > 0) {
+                key = 'Datasets'
+            }
+            else if (toolCount > 0) {
+                key = 'Tools'
+            }
+            else if (projectCount > 0) {
+                key = 'Projects'
+            }
+            else if (paperCount > 0) {
+                key = 'Papers'
+            }
+            else if (personCount > 0) {
+                key = 'People'
+            }
+            else {
+                key = 'Datasets'
+            }
+        }
+
+        let datasetPaginationItems = [], toolPaginationItems = [], projectPaginationItems = [], paperPaginationItems = [], personPaginationItems = [], 
+        maxResult = 40;
+
+        for (let i = 1; i <= Math.ceil(datasetCount / maxResult); i++) {
+            datasetPaginationItems.push(
+                <Pagination.Item key={i} active={i === (datasetIndex/maxResult)+1} onClick={(e) => {this.handlePagination("dataset", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
+            );
+        } 
+        for (let i = 1; i <= Math.ceil(toolCount / maxResult); i++) {
+            toolPaginationItems.push(
+                <Pagination.Item key={i} active={i === (toolIndex/maxResult)+1} onClick={(e) => {this.handlePagination("tool", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
+            );
+        }
+        for (let i = 1; i <= Math.ceil(projectCount / maxResult); i++) {
+            projectPaginationItems.push(
+                <Pagination.Item key={i} active={i === (projectIndex/maxResult)+1} onClick={(e) => {this.handlePagination("project", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
+            );
+        }
+        for (let i = 1; i <= Math.ceil(paperCount / maxResult); i++) {
+            paperPaginationItems.push(
+                <Pagination.Item key={i} active={i === (paperIndex/maxResult)+1} onClick={(e) => {this.handlePagination("paper", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
+            );
+        }
+        for (let i = 1; i <= Math.ceil(personCount / maxResult); i++) {
+            personPaginationItems.push(
+                <Pagination.Item key={i} active={i === (personIndex/maxResult)+1} onClick={(e) => {this.handlePagination("person", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
+            );
+        }
+
+        let editingObjectProject = 0, editingObjectTool = 0;
+    
+        if(this.props.projectData.some(object => object.id === this.props.projectid)){
+            editingObjectProject = 1;
+        }
+        if(this.props.toolData.some(object => object.id === this.props.toolid)){
+            editingObjectTool = 1;
+        }  
+
+        let relatedObjectIds = [], selectedDatasets = 0, selectedTools = 0, selectedProjects = 0, selectedPapers = 0, selectedPersons = 0;
+
+        if(this.props.relatedObjects) {
+            this.props.relatedObjects.forEach((object) => {
+                relatedObjectIds.push(object.objectId) 
+                
+                switch (object.objectType) {
+                    case 'tool':
+                        this.props.toolData.forEach((tool) => {
+                            if(object.objectId === tool.id || object.objectId === JSON.stringify(tool.id)) {
+                                selectedTools++
+                            }
+                        })
+                        break;
+                    case 'project':
+                        this.props.projectData.forEach((project) => {
+                            if(object.objectId === project.id || object.objectId === JSON.stringify(project.id)) {
+                                selectedProjects++
+                            }
+                        })
+                        break;
+                    case 'paper':
+                        this.props.paperData.forEach((paper) => {
+                            if(object.objectId === paper.id || object.objectId === JSON.stringify(paper.id)) {
+                                selectedPapers++
+                            }
+                        })
+                        break;
+                    case 'person':
+                        this.props.personData.forEach((person) => {
+                            if(object.objectId === person.id || object.objectId === JSON.stringify(person.id)) {
+                                selectedPersons++
+                            }
+                        })
+                        break;
+                    case 'dataset':
+                            this.props.datasetData.forEach((dataset) => {
+                            if(object.objectId === dataset.datasetid || object.objectId === JSON.stringify(dataset.datasetid)) {
+                                selectedDatasets++
+                            }
+                        })
+                        break;
+                    default:
+                        console.log('No object type');
+                        break;
+                }
+            })
+
+            this.setState({
+                key,
+                editingObjectProject,
+                editingObjectTool,
+                relatedObjectIds,
+                datasetCount,
+                toolCount, 
+                projectCount, 
+                paperCount, 
+                personCount,
+                maxResult,
+                datasetPaginationItems, 
+                toolPaginationItems, 
+                projectPaginationItems, 
+                paperPaginationItems, 
+                personPaginationItems,
+                selected: {
+                    datasets: selectedDatasets,
+                    tools: selectedTools,
+                    projects: selectedProjects,
+                    papers: selectedPapers,
+                    persons: selectedPersons
+                }
+            });
+        }
+    }
 
 
     handleSelect = (key) => {
@@ -75,133 +223,7 @@ class RelatedResourcesModal extends React.Component {
     }
 
     render() {
-        const { userState, datasetIndex, toolIndex, projectIndex, paperIndex, personIndex} = this.state;
-        var { key } = this.state;
-
-        var datasetCount = this.props.summary.datasets || 0;
-        var toolCount = this.props.summary.tools || 0;
-        var projectCount = this.props.summary.projects || 0;
-        var paperCount = this.props.summary.papers || 0;
-        var personCount = this.props.summary.persons || 0;
-        
-        if (key === '' || typeof key === "undefined") {
-            if (datasetCount > 0) {
-                key = 'Datasets'
-            }
-            else if (toolCount > 0) {
-                key = 'Tools'
-            }
-            else if (projectCount > 0) {
-                key = 'Projects'
-            }
-            else if (paperCount > 0) {
-                key = 'Papers'
-            }
-            else if (personCount > 0) {
-                key = 'People'
-            }
-            else {
-                key = 'Datasets'
-            }
-        }
-
-        let datasetPaginationItems = [];
-        let toolPaginationItems = [];
-        let projectPaginationItems = [];
-        let paperPaginationItems = [];
-        let personPaginationItems = [];
-        var maxResult = 40;
-        for (let i = 1; i <= Math.ceil(datasetCount / maxResult); i++) {
-            datasetPaginationItems.push(
-                <Pagination.Item key={i} active={i === (datasetIndex/maxResult)+1} onClick={(e) => {this.handlePagination("dataset", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
-            );
-        } 
-        for (let i = 1; i <= Math.ceil(toolCount / maxResult); i++) {
-            toolPaginationItems.push(
-                <Pagination.Item key={i} active={i === (toolIndex/maxResult)+1} onClick={(e) => {this.handlePagination("tool", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
-            );
-        }
-        for (let i = 1; i <= Math.ceil(projectCount / maxResult); i++) {
-            projectPaginationItems.push(
-                <Pagination.Item key={i} active={i === (projectIndex/maxResult)+1} onClick={(e) => {this.handlePagination("project", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
-            );
-        }
-        for (let i = 1; i <= Math.ceil(paperCount / maxResult); i++) {
-            paperPaginationItems.push(
-                <Pagination.Item key={i} active={i === (paperIndex/maxResult)+1} onClick={(e) => {this.handlePagination("paper", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
-            );
-        }
-        for (let i = 1; i <= Math.ceil(personCount / maxResult); i++) {
-            personPaginationItems.push(
-                <Pagination.Item key={i} active={i === (personIndex/maxResult)+1} onClick={(e) => {this.handlePagination("person", ((i-1)*(maxResult)), "click")}}>{i}</Pagination.Item>,
-            );
-        }
-
-        var editingObjectProject = 0;
-        var editingObjectTool = 0;
-    
-        if(this.props.projectData.some(object => object.id === this.props.projectid)){
-            editingObjectProject = 1;
-        }
-        if(this.props.toolData.some(object => object.id === this.props.toolid)){
-            editingObjectTool = 1;
-        }  
-
-        this.state.selected.datasets = 0;
-        this.state.selected.tools = 0;
-        this.state.selected.projects = 0;
-        this.state.selected.papers = 0;
-        this.state.selected.persons = 0;
-
-       if(this.props.relatedObjects) {
-            this.props.relatedObjects.map((object) => {
-
-                this.state.relatedObjectIds.push(object.objectId) 
-                
-                switch (object.objectType) {
-                    case 'tool':
-                        this.props.toolData.map((tool) => {
-                            if(object.objectId === tool.id || object.objectId === JSON.stringify(tool.id)) {
-                                this.state.selected.tools++
-                            }
-                        })
-                        break;
-                    case 'project':
-                            this.props.projectData.map((project) => {
-                                if(object.objectId === project.id || object.objectId === JSON.stringify(project.id)) {
-                                 
-                                    this.state.selected.projects++
-                                }
-                            })
-                        break;
-                    case 'paper':
-                            this.props.paperData.map((paper) => {
-                                if(object.objectId === paper.id || object.objectId === JSON.stringify(paper.id)) {
-                                 
-                                    this.state.selected.papers++
-                                }
-                            })
-                        break;
-                    case 'person':
-                            this.props.personData.map((person) => {
-                                if(object.objectId === person.id || object.objectId === JSON.stringify(person.id)) {
-                                 
-                                    this.state.selected.persons++
-                                }
-                            })
-                        break;
-                    case 'dataset':
-                            this.props.datasetData.map((dataset) => {
-                                if(object.objectId === dataset.datasetid || object.objectId === JSON.stringify(dataset.datasetid)) {
-                                 
-                                    this.state.selected.datasets++
-                                }
-                            })
-                        break;
-                }
-            })
-        }
-
+        const { key, editingObjectTool, editingObjectProject, datasetCount, maxResult, datasetPaginationItems, toolPaginationItems, projectPaginationItems, paperPaginationItems, personPaginationItems, toolCount, projectCount, paperCount, personCount } = this.state;  
         return (
             <div>
               <SimpleSearchBar searchString={this.props.searchString} doSearchMethod={this.props.doSearchMethod} doUpdateSearchString={this.props.doUpdateSearchString} userState={this.props.userState} />

@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import { Button, Modal, Row, Col, Tab, Tabs } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import RelatedResourcesModal from '../relatedResourcesModal/RelatedResourceModal';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';    
 import './RelatedResources.scss';   

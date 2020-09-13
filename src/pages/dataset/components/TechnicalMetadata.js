@@ -1,13 +1,8 @@
 import React from "react";
-import axios from "axios";
 import { Col, Row } from "react-bootstrap";
-import SVGIcon from "../../../images/SVGIcon";
 import { ReactComponent as TableSvg } from "../../../images/table.svg";
 import { ReactComponent as ChevronRightSvg } from "../../../images/chevron-right.svg";
 import '../Dataset.scss'; 
-
-
-var baseURL = require("../../commonComponents/BaseURL").getURL();
 
 class TechnicalMetadata extends React.Component {
   state = {

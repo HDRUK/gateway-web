@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import queryString from "query-string";
 import * as Sentry from '@sentry/react';
-import { Row, Col, Tabs, Tab, Container, Alert, Button } from "react-bootstrap";
+import { Row, Col, Tabs, Tab, Container, Alert } from "react-bootstrap";
 import NotFound from "../commonComponents/NotFound";
 import Loading from "../commonComponents/Loading";
 import Reviews from "../commonComponents/reviews/Reviews";

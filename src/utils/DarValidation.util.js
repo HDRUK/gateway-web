@@ -44,7 +44,7 @@ let formatValidationObj = (validationSet = {}, questionPanels = []) => {
         // 1. return [{ pageId, questionSetId, message, fieldID}]
         errorArr = _.reduce({...validationSet}, (arr, errors, fieldId) => {
             if(errors.length) {
-                errors.map((error) => {
+                errors.forEach((error) => {
                     let {  questionSetId, message } = error;
                     let { pageId } = questionPanels.find(el => el.panelId === questionSetId) || '';
                     arr.push({pageId, questionSetId, message, fieldId})

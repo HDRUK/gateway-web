@@ -46,11 +46,6 @@ class TechnicalMetadataVariables extends React.Component {
   render() {
     const { open, flagClosed, techMetadataVariables } = this.state;
 
-    var svgClassName = "";
-    if (flagClosed === false) {
-      svgClassName = "flipSVG";
-    }
-
     return (
       <div className={open ? "variableBox pad-bottom-16 pointer" : "variableBox pad-bottom-16  heightVariable pointer"}  
       onClick={() =>

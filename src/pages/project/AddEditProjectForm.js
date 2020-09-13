@@ -107,7 +107,7 @@ const AddEditProjectForm = (props) => {
 
     function updateReason(id, reason, type) {
         let inRelatedObject = false;
-        props.relatedObjects.map((object) => {
+        props.relatedObjects.forEach((object) => {
             if(object.objectId===id){
                 inRelatedObject = true;
                 object.reason = reason;

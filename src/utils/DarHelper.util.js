@@ -131,6 +131,9 @@ let configActionModal = (type = '') => {
 						}
 					}
 				};
+				break;
+			default:
+				config  = {};
 		}
 	}
 
@@ -144,7 +147,7 @@ let autoComplete = (questionId, uniqueId, questionAnswers) => {
 		typeof uniqueId !== 'undefined' ? `${questionId}_${uniqueId}` : questionId;
 	let answerObj = questionAnswers[`${activeQuestionId}`];
 
-	lookupArr.map((val) => {
+	lookupArr.forEach((val) => {
 		let key, value;
 		value = answerObj[val] || '';
 		key = val;
@@ -426,7 +429,7 @@ let totalQuestionsAnswered = (
 		// 2. omits out blank null, undefined, and [] values from this.state.answers
 		questionAnswers = _.pickBy(
 			{ ...questionAnswers },
-			(v) => v !== null && v !== undefined && v.length != 0
+			(v) => v !== null && v !== undefined && v.length !== 0
 		);
 		// 3. find the relevant questionSet { questionSetId: applicant }
 		let questionSet =
@@ -441,7 +444,7 @@ let totalQuestionsAnswered = (
 
 			// 6. return count of how many questions completed
 			if (!_.isEmpty(questionAnswers)) {
-				let count = Object.keys(questionAnswers).map((value) => {
+				Object.keys(questionAnswers).map((value) => {
 					return totalQuestionKeys.includes(value)
 						? totalAnsweredQuestions++
 						: totalAnsweredQuestions;

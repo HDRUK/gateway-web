@@ -17,13 +17,6 @@ const DataSetModal = ({ open, closed, context, userState }) => {
 
 	let history = useHistory();
 
-	const initScreenData = () => {
-		if(typeof context !== 'undefined' && !_.isEmpty(context) && !_.isEmpty(context.datasets)) {
-			 ({ datasets, title, contactPoint, dataRequestModalContent, showActionButtons = true } = context);
-			setScreenData({ datasets, title, contactPoint, dataRequestModalContent, showActionButtons });
-		}
-	}
-
 	const onRequestAccess = (e) => {
 		// 1. stop default click
 		e.preventDefault();
@@ -56,6 +49,12 @@ const DataSetModal = ({ open, closed, context, userState }) => {
 	}; 
 
 	useEffect(() => {
+		const initScreenData = () => {
+			if(typeof context !== 'undefined' && !_.isEmpty(context) && !_.isEmpty(context.datasets)) {
+				 ({ datasets, title, contactPoint, dataRequestModalContent, showActionButtons = true } = context);
+				setScreenData({ datasets, title, contactPoint, dataRequestModalContent, showActionButtons });
+			}
+		}
 		if (open)
 			initScreenData();
 	}, [open, context]);

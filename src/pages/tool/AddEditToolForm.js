@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Typeahead } from 'react-bootstrap-typeahead'; 
-import { Event } from '../../tracking';
 import moment from 'moment';
 import {Form, Button, Row, Col} from 'react-bootstrap';
 
@@ -110,7 +109,7 @@ const AddEditToolForm = (props) => {
 
     function updateReason(id, reason, type) {
         let inRelatedObject = false;
-        props.relatedObjects.map((object) => {
+        props.relatedObjects.forEach((object) => {
             if(object.objectId===id){
                 inRelatedObject = true;
                 object.reason = reason;
@@ -125,7 +124,6 @@ const AddEditToolForm = (props) => {
     }
 
     function descriptionCount(e) {
-        var input = e.target.value;
         document.getElementById("currentCount").innerHTML=e.target.value.length
     }
 

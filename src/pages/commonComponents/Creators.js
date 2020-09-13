@@ -3,9 +3,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { ReactComponent as PersonPlaceholderSvg } from '../../images/person-placeholder.svg';
-import '../../css/styles.scss';
 import './CommonComponents.scss';  
-
 
 class  Creators extends Component {
   render() {

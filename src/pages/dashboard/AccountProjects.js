@@ -343,6 +343,8 @@ class AccountProjects extends React.Component {
 
                                         </div>
                                     );
+                                    default:
+                                        return ( null )
                             }
                         })()}
                     </Col>

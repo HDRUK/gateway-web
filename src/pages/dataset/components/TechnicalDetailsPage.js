@@ -1,6 +1,5 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import SVGIcon from "../../../images/SVGIcon";
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';  
 
 import { ReactComponent as TableSvg } from "../../../images/table.svg";
@@ -29,12 +28,7 @@ class TechnicalDetailsPage extends React.Component {
   };
 
   render() {
-    const { flagClosed, customType, technicalMetadata, allOpen } = this.state;
-
-    var svgClassName = "";
-    if (flagClosed === false) {
-      svgClassName = "flipSVG";
-    }
+    const { technicalMetadata, allOpen } = this.state;
  
     return (
       <div className="ml-3">

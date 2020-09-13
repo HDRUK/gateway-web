@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import SVGIcon from "../../images/SVGIcon";
 
 const DataSet = (props) => {
-    const {data, detailsData, activeLink} = props;
+    const {data, activeLink} = props;
 
     /**
      * [displayShort]

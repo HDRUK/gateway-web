@@ -18,7 +18,7 @@ const NavDropdown = ({ options, onFormSwitchPanel, enabled }) => {
 
     const onChangeHandler = (e) => {
         let panelId  = e.target.value;
-        let { pageId } = questionPanels.find(q => q.panelId == panelId);
+        let { pageId } = questionPanels.find(q => q.panelId === panelId);
         setSelectedOption(panelId);
         onFormSwitchPanel({ pageId, panelId });
     }

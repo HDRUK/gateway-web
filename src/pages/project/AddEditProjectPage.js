@@ -153,34 +153,42 @@ class AddEditProjectPage extends React.Component {
     }
 
     addToTempRelatedObjects = (id, type) => {
-
-        if(this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some(object => object.objectId === id)){
-            this.state.tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(object => object.objectId !== id);
-        }
-        else {
-            this.state.tempRelatedObjectIds.push({'objectId':id, 'type':type})
-        }
-       this.setState({tempRelatedObjectIds: this.state.tempRelatedObjectIds})
-    }
+		let tempRelatedObjectIds = [];
+		if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some((object) => object.objectId === id)) {
+			tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(
+				(object) => object.objectId !== id
+			);
+		} else {
+			tempRelatedObjectIds.push({ objectId: id, type: type });
+		}
+		this.setState({ tempRelatedObjectIds });
+	};
 
     addToRelatedObjects = () => {
-        this.state.tempRelatedObjectIds.map((object) => {
-            this.state.relatedObjects.push({'objectId':object.objectId, 'reason':'', 'objectType':object.type, 'user':this.state.userState[0].name, 'updated':moment().format("DD MMM YYYY")})
-        })
+		let relatedObjects = [...this.state.relatedObjects];
+		this.state.tempRelatedObjectIds.forEach((object) => {
+			relatedObjects.push({
+				objectId: object.objectId,
+				reason: '',
+				objectType: object.type,
+				user: this.state.userState[0].name,
+				updated: moment().format('DD MMM YYYY')
+			});
+		});
 
-        this.setState({tempRelatedObjectIds: []})
-    }
+		this.setState({ relatedObjects, tempRelatedObjectIds: [] });
+	};
 
     clearRelatedObjects = () => {
         this.setState({tempRelatedObjectIds: [] })
     }
 
     removeObject = (id) => {
-        this.state.relatedObjects = this.state.relatedObjects.filter(obj => obj.objectId !== id);
-        this.state.relatedObjects = this.state.relatedObjects.filter(obj => obj.objectId !== id.toString());
-        this.setState({relatedObjects: this.state.relatedObjects})
-        this.setState({didDelete: true});
-    }
+		let relatedObjects = [...this.state.relatedObjects].filter(
+			(obj) => obj.objectId.toString() !== id.toString()
+		);
+		this.setState({ relatedObjects, didDelete: true });
+	};
 
     updateDeleteFlag = () => {
         this.setState({didDelete: false});

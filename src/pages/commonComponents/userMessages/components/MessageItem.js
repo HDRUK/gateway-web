@@ -1,6 +1,5 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import moment from 'moment';
-import { create } from 'lodash';
 
 const Message = ({ messageDescription, createdBy, createdDate }) => { 
 

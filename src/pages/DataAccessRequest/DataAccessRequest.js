@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { History } from 'react-router';
 import { Container, Row, Col, Modal, Tabs, Tab, Accordion, Card } from 'react-bootstrap';
 import Winterfell from 'winterfell';
 import _ from 'lodash';
@@ -15,7 +14,6 @@ import NavItem from './components/NavItem/NavItem';
 import NavDropdown from './components/NavDropdown/NavDropdown';
 import DarValidation from '../../utils/DarValidation.util';
 import DarHelper from '../../utils/DarHelper.util';
-import ModalHelper from '../../utils/ModalHelper.util';
 import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
 import { classSchema } from './classSchema';
 import { baseURL } from '../../configs/url.config';
@@ -395,7 +393,7 @@ class DataAccessRequest extends Component {
 			try {
 				let { _id } = this.state;
 				// 1. POST
-				const response = await axios.post(`${baseURL}/api/v1/data-access-request/${_id}`, {});
+				await axios.post(`${baseURL}/api/v1/data-access-request/${_id}`, {});
 				const lastSaved = DarHelper.saveTime();
 				this.setState({ lastSaved });
 				let message = {
@@ -430,7 +428,7 @@ class DataAccessRequest extends Component {
 				[`${key}`]: JSON.stringify(data)
 			};
 			// 4. PATCH the data
-			const response = await axios.patch(`${baseURL}/api/v1/data-access-request/${id}`, params);
+			await axios.patch(`${baseURL}/api/v1/data-access-request/${id}`, params);
 			// 6. Get saved time
 			const lastSaved = DarHelper.saveTime();
 			// 5. Set state
@@ -720,7 +718,7 @@ class DataAccessRequest extends Component {
 					applicationStatusDesc: statusDesc
 				};
 				// 1. Update action status
-				const response = await axios.put(`${baseURL}/api/v1/data-access-request/${_id}`, body);
+				await axios.put(`${baseURL}/api/v1/data-access-request/${_id}`, body);
 				// 2. set alert object for screen
 				let alert = {
 					publisher: this.state.publisher || '',
@@ -768,7 +766,7 @@ class DataAccessRequest extends Component {
 			userType,
 			actionModalConfig
 		} = this.state;
-		const { userState, location } = this.props;
+		const { userState } = this.props;
 
 		const aboutForm = (
 			<div className='aboutAccordion'>
@@ -1273,7 +1271,7 @@ class DataAccessRequest extends Component {
 					centered
 					className='darModal'
 				>
-					<iframe src='https://hda-toolkit.org/story_html5.html' className='darIframe'>
+					<iframe title="hdaToolkit" src='https://hda-toolkit.org/story_html5.html' className='darIframe'>
 						{' '}
 					</iframe>
 				</Modal>

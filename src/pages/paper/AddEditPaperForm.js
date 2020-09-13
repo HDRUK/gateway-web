@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import { Event } from '../../tracking';
 
 import {Form, Button, Row, Col} from 'react-bootstrap';
 import moment from 'moment';
@@ -12,8 +11,6 @@ import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import ActionBar from '../commonComponents/actionbar/ActionBar'; 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import SVGIcon from '../../images/SVGIcon';
-import ToolTip from '../../images/imageURL-ToolTip.gif';
-import { ReactComponent as InfoFillSVG } from "../../images/infofill.svg";
 import { ReactComponent as InfoSVG } from "../../images/info.svg";
 import './Paper.scss'; 
 
@@ -138,7 +135,7 @@ const AddEditPaperForm = (props) => {
   
     function updateReason(id, reason, type) {
         let inRelatedObject = false;
-        props.relatedObjects.map((object) => {
+        props.relatedObjects.forEach((object) => {
             if(object.objectId===id){
                 inRelatedObject = true;
                 object.reason = reason;
@@ -153,13 +150,12 @@ const AddEditPaperForm = (props) => {
     }
 
     function descriptionCount(e) {
-        var input = e.target.value;
-        document.getElementById("currentCount").innerHTML=e.target.value.length
+      document.getElementById("currentCount").innerHTML=e.target.value.length
     }
 
     function resultsInsightsCount(e) {
       document.getElementById("resultsInsightsCount").innerHTML=e.target.value.length
-  }
+    }
 
     const [isShown, setIsShown] = useState(false);
 

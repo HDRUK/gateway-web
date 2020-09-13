@@ -4,7 +4,7 @@ import { ReactComponent as ChevronRight } from '../../images/chevron-right.svg';
 import './Search.scss'; 
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <a href="" ref={ref} onClick={e => { e.preventDefault(); onClick(e); }} >
+    <a href="/" ref={ref} onClick={e => { e.preventDefault(); onClick(e); }} >
         {children}
     </a> 
 ));
@@ -20,7 +20,7 @@ const CustomMenu = React.forwardRef(
                         child =>
                             !value || child.props.children.toLowerCase().startsWith(value),
                     )}
-                </ul>
+                </ul> 
             </div>
         );
     },
@@ -41,12 +41,12 @@ class Filters extends Component {
     }
 
     componentWillReceiveProps(props) {
-        this.state = {
+        this.setState({
             data: props.data || [],
             selected: props.selected || [],
             title : props.title || '',
             allFilters: props.allFilters && props.length !== 0 ? props.allFilters : []
-        }
+        });
     }
 
     componentDidMount() {

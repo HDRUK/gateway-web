@@ -1,12 +1,12 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import UnmetDemand from './DARComponents/UnmetDemand';
 import TopSearches from './TopSearches';
-import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Row, Col, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 import DashboardKPI from './DARComponents/DashboardKPI';
 import Loading from '../commonComponents/Loading'
-import { Event, initGA } from '../../tracking';
+import { initGA } from '../../tracking';
 import './Dashboard.scss';  
 
  
@@ -433,6 +433,10 @@ class AccountAnalyticsDashboard extends React.Component {
                                             </Row>
                                         </div>
                                     );
+                                default:
+                                    return (
+                                        null
+                                    );
                         }})()}
                     </Col>
                     <Col sm={1} lg={10} />
@@ -444,15 +448,15 @@ class AccountAnalyticsDashboard extends React.Component {
 
 export default AccountAnalyticsDashboard;
 
-const getDatesForDropdown = (req, res) => {
+const getDatesForDropdown = () => {
 
     let startDate = new Date('2020-06-01T00:00:00.000Z');
     let stopDate = new Date();
-    let dateArray = new Array();
+    let dateArray = [];
     let currentDate = startDate;
 
     while (currentDate <= stopDate) {
-    if(currentDate.getUTCDate() == 1)
+    if(currentDate.getUTCDate() === 1)
         dateArray.push(currentDate)
     
     currentDate = currentDate.addDays(1);

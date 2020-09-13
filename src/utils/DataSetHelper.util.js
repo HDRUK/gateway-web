@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 let showLoginPanel = (window, title, contactPoint) => {
     document.getElementById("myModal").style.display = "block";
     document.getElementById("loginWayFinder").style.display = "none";

@@ -384,22 +384,21 @@ class AddEditToolPage extends React.Component {
 	};
 
 	addToTempRelatedObjects = (id, type) => {
-		if (
-			this.state.tempRelatedObjectIds &&
-			this.state.tempRelatedObjectIds.some((object) => object.objectId === id)
-		) {
-			this.state.tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(
+		let tempRelatedObjectIds = [];
+		if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some((object) => object.objectId === id)) {
+			tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(
 				(object) => object.objectId !== id
 			);
 		} else {
-			this.state.tempRelatedObjectIds.push({ objectId: id, type: type });
+			tempRelatedObjectIds.push({ objectId: id, type: type });
 		}
-		this.setState({ tempRelatedObjectIds: this.state.tempRelatedObjectIds });
+		this.setState({ tempRelatedObjectIds });
 	};
 
 	addToRelatedObjects = () => {
-		this.state.tempRelatedObjectIds.map((object) => {
-			this.state.relatedObjects.push({
+		let relatedObjects = [...this.state.relatedObjects];
+		this.state.tempRelatedObjectIds.forEach((object) => {
+			relatedObjects.push({
 				objectId: object.objectId,
 				reason: '',
 				objectType: object.type,
@@ -408,7 +407,7 @@ class AddEditToolPage extends React.Component {
 			});
 		});
 
-		this.setState({ tempRelatedObjectIds: [] });
+		this.setState({ relatedObjects, tempRelatedObjectIds: [] });
 	};
 
 	clearRelatedObjects = () => {
@@ -416,14 +415,10 @@ class AddEditToolPage extends React.Component {
 	};
 
 	removeObject = (id) => {
-		this.state.relatedObjects = this.state.relatedObjects.filter(
-			(obj) => obj.objectId !== id
+		let relatedObjects = [...this.state.relatedObjects].filter(
+			(obj) => obj.objectId.toString() !== id.toString()
 		);
-		this.state.relatedObjects = this.state.relatedObjects.filter(
-			(obj) => obj.objectId !== id.toString()
-		);
-		this.setState({ relatedObjects: this.state.relatedObjects });
-		this.setState({ didDelete: true });
+		this.setState({ relatedObjects, didDelete: true });
 	};
 
 	updateDeleteFlag = () => {

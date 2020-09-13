@@ -12,7 +12,6 @@ import RelatedResources from '../commonComponents/relatedResources/RelatedResour
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import moment from 'moment';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import SVGIcon from '../../images/SVGIcon';
 import ToolTip from '../../images/imageURL-ToolTip.gif';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer'; 
 import UserMessages from "../commonComponents/userMessages/UserMessages";
@@ -128,18 +127,19 @@ class EditCollectionPage extends React.Component {
     } 
 
     addToTempRelatedObjects = (id, type) => {
-
-        if(this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some(object => object.objectId === id)){
-            this.state.tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(object => object.objectId !== id);
-        }
-        else {
-            this.state.tempRelatedObjectIds.push({'objectId':id, 'type':type})
-        }
-       this.setState({tempRelatedObjectIds: this.state.tempRelatedObjectIds})
-    }
+		let tempRelatedObjectIds = [];
+		if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some((object) => object.objectId === id)) {
+			tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(
+				(object) => object.objectId !== id
+			);
+		} else {
+			tempRelatedObjectIds.push({ objectId: id, type: type });
+		}
+		this.setState({ tempRelatedObjectIds });
+	};
 
     addToRelatedObjects = () => {
-        this.state.tempRelatedObjectIds.map((object) => {
+        this.state.tempRelatedObjectIds.forEach((object) => {
             this.state.relatedObjects.push({'objectId':object.objectId, 'reason':'', 'objectType':object.type, 'user':this.state.userState[0].name, 'updated':moment().format("DD MMM YYYY")})
         })
 
@@ -151,12 +151,11 @@ class EditCollectionPage extends React.Component {
     }
 
     removeObject = (id) => {
-        this.state.relatedObjects = this.state.relatedObjects.filter(obj => obj.objectId !== id);
-        this.state.relatedObjects = this.state.relatedObjects.filter(obj => obj.objectId !== id.toString());
-
-        this.setState({relatedObjects: this.state.relatedObjects})
-        this.setState({didDelete: true});
-    }
+		let relatedObjects = [...this.state.relatedObjects].filter(
+			(obj) => obj.objectId.toString() !== id.toString()
+		);
+		this.setState({ relatedObjects, didDelete: true });
+	};
 
     updateDeleteFlag = () => {
         this.setState({didDelete: false});
@@ -268,7 +267,7 @@ const EditCollectionForm = (props) => {
   
     function updateReason(id, reason, type) {
         let inRelatedObject = false;
-        props.relatedObjects.map((object) => {
+        props.relatedObjects.forEach((object) => {
             if(object.objectId===id){
                 inRelatedObject = true;
                 object.reason = reason;

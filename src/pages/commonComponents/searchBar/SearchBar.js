@@ -8,11 +8,10 @@ import NotificationBadge from 'react-notification-badge';
 import SVGIcon from "../../../images/SVGIcon";
 import { ReactComponent as ColourLogoSvg } from '../../../images/colour.svg';
 import { ReactComponent as ClearButtonSvg } from '../../../images/clear.svg';
-import { ReactComponent as NotificationsBellSvg } from '../../../images/bell.svg'; 
 import { ReactComponent as HamBurgerSvg } from '../../../images/hamburger.svg';
 import { ReactComponent as ArrowDownSvg } from '../../../images/stock.svg';
 import { ReactComponent as WhiteArrowDownSvg } from '../../../images/arrowDownWhite.svg';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 import './SearchBar.scss'; 
 
 

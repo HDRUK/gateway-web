@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import {Col, Row, Button, Accordion } from 'react-bootstrap';
+import {Col, Row } from 'react-bootstrap';
 import './Dashboard.scss'; 
 
 class TopSearches extends React.Component {

@@ -13,10 +13,9 @@ import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 
 import moment from 'moment';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import SVGIcon from '../../images/SVGIcon';
 import ToolTip from '../../images/imageURL-ToolTip.gif';
 
-import { Event, initGA } from '../../tracking';
+import { initGA } from '../../tracking';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer'; 
 import UserMessages from "../commonComponents/userMessages/UserMessages";
 import ActionBar from '../commonComponents/actionbar/ActionBar';
@@ -114,33 +113,42 @@ class AddCollectionPage extends React.Component {
     }
  
     addToTempRelatedObjects = (id, type) => {
-
-        if(this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some(object => object.objectId === id)){
-            this.state.tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(object => object.objectId !== id);
-        }
-        else {
-            this.state.tempRelatedObjectIds.push({'objectId':id, 'type':type})
-        }
-       this.setState({tempRelatedObjectIds: this.state.tempRelatedObjectIds})
-    }
+		let tempRelatedObjectIds = [];
+		if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some((object) => object.objectId === id)) {
+			tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(
+				(object) => object.objectId !== id
+			);
+		} else {
+			tempRelatedObjectIds.push({ objectId: id, type: type });
+		}
+		this.setState({ tempRelatedObjectIds });
+	};
 
     addToRelatedObjects = () => {
-        this.state.tempRelatedObjectIds.map((object) => {
-            this.state.relatedObjects.push({'objectId':object.objectId, 'reason':'', 'objectType':object.type, 'user':this.state.userState[0].name, 'updated':moment().format("DD MMM YYYY")})
-        })
+		let relatedObjects = [...this.state.relatedObjects];
+		this.state.tempRelatedObjectIds.forEach((object) => {
+			relatedObjects.push({
+				objectId: object.objectId,
+				reason: '',
+				objectType: object.type,
+				user: this.state.userState[0].name,
+				updated: moment().format('DD MMM YYYY')
+			});
+		});
 
-        this.setState({tempRelatedObjectIds: []})
-    }
+		this.setState({ relatedObjects, tempRelatedObjectIds: [] });
+	};
 
     clearRelatedObjects = () => {
         this.setState({tempRelatedObjectIds: [] })
     }
 
     removeObject = (id) => {
-        this.state.relatedObjects = this.state.relatedObjects.filter(obj => obj.objectId !== id);
-        this.setState({relatedObjects: this.state.relatedObjects})
-        this.setState({didDelete: true});
-    }
+		let relatedObjects = [...this.state.relatedObjects].filter(
+			(obj) => obj.objectId.toString() !== id.toString()
+		);
+		this.setState({ relatedObjects, didDelete: true });
+	};
 
     updateDeleteFlag = () => {
         this.setState({didDelete: false});
@@ -244,7 +252,7 @@ const AddCollectionForm = (props) => {
   
     function updateReason(id, reason, type) {
         let inRelatedObject = false;
-        props.relatedObjects.map((object) => {
+        props.relatedObjects.forEach((object) => {
             if(object.objectId===id){
                 inRelatedObject = true;
                 object.reason = reason;
@@ -282,7 +290,7 @@ const AddCollectionForm = (props) => {
             <Row className="pixelGapTop">
                 <Col sm={1} lg={1} />
                 <Col sm={10} lg={10}>
-                    <Form onSubmit={formik.handleSubmit} onBlur={formik.handleBlur} autocomplete='off'>
+                    <Form onSubmit={formik.handleSubmit} onBlur={formik.handleBlur} autoComplete="off">
                         <div className="rectangle">
                             <Form.Group>
                                 <span className="gray800-14">Collection name</span>

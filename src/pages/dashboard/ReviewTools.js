@@ -2,9 +2,8 @@ import React, { useState, Fragment } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 
-import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown, Collapse } from 'react-bootstrap';
+import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 
-import SVGIcon from "../../images/SVGIcon";
 import NotFound from '../commonComponents/NotFound';
 import Loading from '../commonComponents/Loading'
 import './Dashboard.scss'; 
@@ -354,6 +353,8 @@ class ReviewTools extends React.Component {
                                             })}
                                         </div>
                                     );
+                                default:
+                                    return null;
                             }
                         })()}
                     </Col>

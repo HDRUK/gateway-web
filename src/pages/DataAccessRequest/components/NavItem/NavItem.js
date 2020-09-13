@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react'
+import React, { Fragment } from 'react'
 import { isEmpty } from 'lodash';
 import '../../DataAccessRequest.scss'; 
 const NavItem = ({parentForm, questionPanels, onFormSwitchPanel, activePanelId, enabled}) => {
@@ -27,6 +27,8 @@ const NavItem = ({parentForm, questionPanels, onFormSwitchPanel, activePanelId, 
                             {item.navHeader}
                         </li> 
                     )
+                } else {
+                    return null;
                 }
             });
         }

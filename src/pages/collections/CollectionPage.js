@@ -9,12 +9,8 @@ import {
 	Tabs,
 	Tab,
 	Container,
-	Alert,
-	Nav,
-	Navbar
+	Alert
 } from 'react-bootstrap';
-import NotFound from '../commonComponents/NotFound';
-import Creators from '../commonComponents/Creators';
 import Loading from '../commonComponents/Loading';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
@@ -27,8 +23,6 @@ import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import './Collections.scss';
-
-var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
 
 class CollectionPage extends Component {
 	// initialize our state
@@ -96,7 +90,7 @@ class CollectionPage extends Component {
 	};
 
 	getObjectData = async (data) => {
-		data.relatedObjects.map((object) => {
+		data.relatedObjects.forEach((object) => {
 			if (object.objectType === 'tool') {
 				this.getToolData(object.objectId);
 			} else if (object.objectType === 'person') {
@@ -451,7 +445,7 @@ class CollectionPage extends Component {
 											var user = '';
 											let showAnswer = false;
 
-											data.relatedObjects.map((dat) => {
+											data.relatedObjects.forEach((dat) => {
 												if (
 													dat.objectId === object.id ||
 													parseInt(dat.objectId) === object.id || 
@@ -474,6 +468,8 @@ class CollectionPage extends Component {
 													collectionUser={user}
 												/>
 											);
+										} else {
+											return null
 										}
 								  })
 								: ''}
@@ -490,7 +486,7 @@ class CollectionPage extends Component {
 											var user = '';
 											let showAnswer = false;
 											if (object.type === "dataset") {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.forEach((dat) => {
 													if (dat.objectId === object.datasetid) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -509,7 +505,11 @@ class CollectionPage extends Component {
 														collectionUser={user}
 													/>
 												);
+											} else {
+												return null
 											}
+										} else {
+											return null
 										}
 								  })
 								: ''}
@@ -526,7 +526,7 @@ class CollectionPage extends Component {
 											var user = '';
 											let showAnswer = false;
 											if (object.type === 'tool') {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.forEach((dat) => {
 													if (parseInt(dat.objectId) === object.id) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -545,7 +545,11 @@ class CollectionPage extends Component {
 														collectionUser={user}
 													/>
 												);
+											} else {
+												return null
 											}
+										} else {
+											return null
 										}
 								  })
 								: ''}
@@ -562,7 +566,7 @@ class CollectionPage extends Component {
 											var user = '';
 											let showAnswer = false;
 											if (object.type === 'project') {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.forEach((dat) => {
 													if (parseInt(dat.objectId) === object.id) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -581,7 +585,11 @@ class CollectionPage extends Component {
 														collectionUser={user}
 													/>
 												);
+											} else {
+												return null
 											}
+										} else {
+											return null
 										}
 								  })
 								: ''}
@@ -598,7 +606,7 @@ class CollectionPage extends Component {
 											var user = '';
 											let showAnswer = false;
 											if (object.type === 'paper') {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.forEach((dat) => {
 													if (parseInt(dat.objectId) === object.id) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -618,7 +626,11 @@ class CollectionPage extends Component {
 														collectionUser={user}
 													/>
 												);
+											} else {
+												return null
 											}
+										} else {
+											return null
 										}
 								  })
 								: ''}
@@ -635,7 +647,7 @@ class CollectionPage extends Component {
 											var user = '';
 											let showAnswer = false;
 											if (object.type === 'person') {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.forEach((dat) => {
 													if (parseInt(dat.objectId) === object.id) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -654,7 +666,11 @@ class CollectionPage extends Component {
 														collectionUser={user}
 													/>
 												);
+											} else {
+												return null
 											}
+										} else {
+											return null
 										}
 								  })
 								: ''}

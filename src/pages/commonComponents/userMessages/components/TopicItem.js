@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React from 'react';
 import moment from 'moment';
 import NotificationBadge from 'react-notification-badge';
 import '../UserMessages.scss';

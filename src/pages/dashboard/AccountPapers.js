@@ -347,6 +347,8 @@ class AccountPapers extends React.Component {
                                             })}
                                         </div>
                                     );
+                                default:
+                                    return ( null )
                             }
                         })()}
                     </Col>

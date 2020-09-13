@@ -1,16 +1,13 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Row, Col, Tabs, Tab, Container, Alert, Button, FormText } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import moment from 'moment';
 import { ReactComponent as CheckSvg } from '../../../images/check.svg';
-import SVGIcon from '../../../images/SVGIcon';
 import ActionBar from '../actionbar/ActionBar'; 
 import './AddToCollection.scss';
 
-
-var baseURL = require('../BaseURL').getURL();
-var cmsURL = require('../BaseURL').getCMSURL();
+var baseURL = require('../BaseURL').getURL()
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a href="" ref={ref} onClick={e => { e.preventDefault(); onClick(e); }} >
@@ -102,7 +99,7 @@ updateCollection(dat){
 }
 
   render() {
-    const {resourceData, collectionsData, userState } = this.state;
+    const { collectionsData, userState } = this.state;
     
    collectionsData.sort((a,b) => (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : ((b.name.toUpperCase() > a.name.toUpperCase()) ? -1 : 0));
 

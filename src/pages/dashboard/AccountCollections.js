@@ -102,7 +102,7 @@ class AccountCollections extends React.Component {
     }
 
     render() {
-        const { userState, key, isLoading, data, activeCount, archiveCount } = this.state;
+        const { key, isLoading, data, activeCount, archiveCount } = this.state;
 
         if (isLoading) {
             return (
@@ -236,6 +236,8 @@ class AccountCollections extends React.Component {
                                             })}
                                         </div>
                                     );
+                                default:
+                                    return ( null )
                             }
                         })()}
                     </Col>
