@@ -22,7 +22,6 @@ const CustodianActionButtons = ({allowedNavigation = false, onNextClick, onActio
     {applicationStatus==="inReview" && roles.includes('reviewer') || roles.includes('manager') ?
       <Dropdown>
         <Dropdown.Toggle as={CustomToggle} >
-          {/* <Button variant="medium" className={`button-secondary margin-right-8 ${allowedNavigation ? '' : 'disabled'}`} > */}
           <Button variant="medium" className={applicationStatus==="submitted" ? "buttonHeight40 dark-14 margin-right-8" : "button-secondary margin-right-8"} >
             Make a decision
           </Button>
@@ -77,12 +76,8 @@ const CustodianActionButtons = ({allowedNavigation = false, onNextClick, onActio
       </Dropdown>
     : ''}
       
-      {/* <button className={`button-secondary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onActionClick(e)} value="Reject">Reject</button>
-      <button className={`button-secondary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onActionClick(e)} value="Approve">Approve</button>
-      <button className={`button-secondary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onActionClick(e)} value="ApproveWithConditions">Approve with conditions</button> */}
-     
-      {/* {applicationStatus==="submitted" && roles.includes('manager') ? <button className={`button-secondary ${allowedNavigation ? '' : 'disabled'}`}>Assign a workflow</button> : ''} */}
-      {applicationStatus==="submitted" && roles.includes('manager') ? <button className="button-secondary">Assign a workflow</button> : ''}
+      {/* TODO Add workflow enabled check */}
+      {applicationStatus==="inReview" && roles.includes('manager') ? <button className="button-secondary">Assign a workflow</button> : ''}
       
       <button className={`button-primary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onNextClick()}>Next</button>
     </Fragment>  
