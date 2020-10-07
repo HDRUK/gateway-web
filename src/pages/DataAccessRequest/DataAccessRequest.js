@@ -103,7 +103,8 @@ class DataAccessRequest extends Component {
 				completedInviteCollaborators: false,
 			},
 			context: {},
-			actionModalConfig: {},
+			actionModalConfig: {}, 
+			roles: []
 		};
 	}
 
@@ -175,6 +176,8 @@ class DataAccessRequest extends Component {
 		} catch (error) {
 			this.setState({ isLoading: false });
 			console.error(error);
+		} finally {
+			this.getRole(this.state.roles)
 		}
 	}
 
@@ -201,6 +204,7 @@ class DataAccessRequest extends Component {
 					},
 				},
 			} = response;
+
 			// 3. Set up the DAR
 			this.setScreenData({
 				jsonSchema,
@@ -265,11 +269,11 @@ class DataAccessRequest extends Component {
 		}
 	};
 
-	loadDataAccessRequest = async (accessId) => {
+	loadDataAccessRequest = async (accessId) => { 
 		try {
 			// 1. Make API call to find and return the application form schema and answers matching this Id
 			let response = await axios.get(
-				`${baseURL}/api/v1/data-access-request/${accessId}`
+				`${baseURL}/api/v1/data-access-request/${accessId}` 
 			);
 			// 2. Destructure backend response for this context containing details of DAR including question set and current progress
 			let {
@@ -329,7 +333,7 @@ class DataAccessRequest extends Component {
 		} = context;
 		let {
 			datasetfields: { publisher },
-		} = datasets[0];
+		} = datasets[0]
 		let { firstname, lastname } = mainApplicant;
 		let showSubmit = false;
 
@@ -866,6 +870,7 @@ class DataAccessRequest extends Component {
 		let {
 			target: { value },
 		} = e;
+
 		this.toggleActionModal(value);
 	};
 
@@ -989,6 +994,16 @@ class DataAccessRequest extends Component {
 		}
 	};
 
+	async getRole(roles) { 
+		let thisteam = [];
+
+		thisteam = this.props.userState[0].teams.filter(team => team.name === this.state.datasets[0].datasetfields.publisher);
+
+		this.setState({
+			roles : thisteam[0].roles
+		});
+	}
+
 	render() {
 		const {
 			lastSaved,
@@ -1023,6 +1038,7 @@ class DataAccessRequest extends Component {
 			readOnly,
 			userType,
 			actionModalConfig,
+			roles
 		} = this.state;
 		const { userState, location } = this.props;
 
@@ -1534,7 +1550,7 @@ class DataAccessRequest extends Component {
 			</div>
 		);
 
-		Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
+		Winterfell.addInputType('typeaheadCustom', TypeaheadCustom); 
 		Winterfell.addInputType('datePickerCustom', DatePickerCustom);
 		Winterfell.addInputType('typeaheadUser', TypeaheadUser);
 
@@ -1755,8 +1771,9 @@ class DataAccessRequest extends Component {
 						<div className='action-bar-status'>{totalQuestions} &nbsp;|&nbsp; {projectId}</div>
 					</div>
 					<div className='action-bar-actions'>
+
 						{userType.toUpperCase() === 'APPLICANT' ? (
-							<ApplicantActionButtons
+							<ApplicantActionButtons 
 								allowedNavigation={allowedNavigation}
 								onNextClick={this.onNextClick}
 								onFormSubmit={this.onFormSubmit}
@@ -1768,6 +1785,8 @@ class DataAccessRequest extends Component {
 								allowedNavigation={allowedNavigation}
 								onActionClick={this.onCustodianAction}
 								onNextClick={this.onNextClick}
+								applicationStatus={applicationStatus}
+								roles={roles}
 							/>
 						)}
 					</div>
