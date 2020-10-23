@@ -102,8 +102,9 @@ class PersonDetail extends Component {
       data.datasetids = [];
     }
 
-    var tools = []
-    var projects = []
+    let tools = []
+    let projects = []
+    let reviews = []
     
     if (data.tools.length > 0) {
         data.tools.forEach(object => {
@@ -115,6 +116,8 @@ class PersonDetail extends Component {
           }
         });
     }
+
+    reviews = data.reviews.length > 0 ? data.reviews.filter((review) => { return review.activeflag === 'active'; }) : [];
 
     return (
       <div>
@@ -134,11 +137,11 @@ class PersonDetail extends Component {
                       return <Tool id={tool.id} activeLink={true} />
                     })}
                   </Tab>
-                  <Tab eventKey="Reviews" title={'Reviews (' + data.reviews.length + ')'}>
-                    {data.reviews.length <= 0 ? <NotFound word="reviews" /> : data.reviews.map((review) => {
-                      return <ReviewsTitle id={review.reviewID} />
-                    })}
-
+                  <Tab eventKey="Reviews" title={'Reviews (' + reviews.length + ')'}>
+                    {reviews.length <= 0 
+                      ? <NotFound word="reviews" /> 
+                      : reviews.map((review) => { return <ReviewsTitle id={review.reviewID}/> })
+                    }
                   </Tab>
                   <Tab eventKey="Data sets" title={'Data sets (' + data.datasetids.length + ')'}>
                     {data.datasetids.length <= 0 ? <NotFound word="data sets" /> : data.datasetids.map(id => <DataSet id={id} activeLink={true} />)}
