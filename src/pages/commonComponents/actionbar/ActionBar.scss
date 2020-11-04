@@ -2,6 +2,7 @@
 @import '../../../css/variables';
  
 .actionBar {
+    position: -webkit-sticky;
     position: sticky;
     z-index: 998;
     left: 0; 

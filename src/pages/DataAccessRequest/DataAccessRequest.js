@@ -1268,7 +1268,7 @@ class DataAccessRequest extends Component {
 					</Col>
 				</Row>
 
-				<div id='darContainer' className='flex-form'>
+				<div id='darContainer' className='flex-form dar-container'>
 					<div id='darLeftCol' className='scrollable-sticky-column'>
 						{[...this.state.jsonSchema.pages].map((item, idx) => (
 							<div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
