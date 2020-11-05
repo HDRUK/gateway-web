@@ -2,6 +2,30 @@
 @import '../../css/typography';
 @import '../../css/mixins';
 
+
+.win {
+	&-container {
+		&--end {
+			display: flex;
+			flex-flow: row;
+			margin: 10px 0;
+			justify-content: flex-end;
+		}
+		&--start {
+			display: flex;
+			flex-flow: row;
+			margin: 10px 0;
+			justify-content: flex-start;
+		}
+		&--centre {
+			display: flex;
+			flex-flow: row;
+			margin: 10px 0;
+			justify-content: center;
+		}
+	}	
+}
+
 .section-header {
 	cursor: pointer;
 	margin-left: 33px;
@@ -234,14 +258,17 @@
 
 input[type=text]:disabled {
 		background-color: #eee !important;
+		pointer-events: none;
 	
 }
 
-input[type=text]:disabled,
-input[type=checkbox]:disabled,
-input[type=radio]:disabled {
+input[type='text']:disabled,
+input[type='checkbox']:disabled,
+input[type='radio']:disabled {
+	pointer-events: none;
 	&:after {
 		background-color: #eee !important;
+		pointer-events: none;
 	}
 }
 
@@ -282,6 +309,18 @@ input[type=radio]:disabled {
 		margin-bottom: 0 !important;
 	}
 
+	&__questions .alert {
+		margin: 1rem 0;
+		padding: 0.5rem 1.25rem;
+		display: flex;
+		align-items: center;
+		svg {
+			margin-right: 0.25rem;
+			width: 22px;
+			height: 22px;
+		}
+	}
+
 	&__check {
 		list-style: none;
 		margin-left: 24px;
@@ -295,6 +334,11 @@ input[type=radio]:disabled {
 				text-align: center;
 				vertical-align: middle;
 				margin-left: -30px;
+			}
+		}
+		&--item {
+			&:last-child {
+				margin-bottom: 1rem;
 			}
 		}
 	}
@@ -318,6 +362,9 @@ input[type=radio]:disabled {
 					margin-right: 10px;
 					vertical-align: middle;
 					transition: all 250ms ease;
+					&:disabled {
+						pointer-events: none;
+					}
 					&:focus {
 						border-color: transparent;
 						outline: none;
@@ -438,12 +485,20 @@ input[type=radio]:disabled {
 		transition: all 0.2s ease-in-out;
 
 		&:hover {
-			background: $gray-200;
+			background: $background;
+
+			& > .win-container > *{
+				visibility: visible;
+			}
 		}
 
 		label {
 			@include font-source(14px, $gray-800, $font-weight-semibold);
 			margin-bottom: 5px;
+		}
+
+		& > .win-container>* {
+			visibility: hidden;
 		}
 	}
 }
@@ -636,3 +691,4 @@ input[type='checkbox']:after {
 		content: '';
 	}
 }
+

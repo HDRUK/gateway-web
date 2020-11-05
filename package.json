@@ -49,7 +49,7 @@
     "snyk": "^1.360.0",
     "uniqid": "^5.2.0",
     "uuid": "^8.3.1",
-    "winterfell": "github:HDRUK/Winterfell",
+    "winterfell": "github:HDRUK/Winterfell#HDWIN-006-RequestUpdate",
     "yup": "^0.28.1"
   },
   "scripts": {

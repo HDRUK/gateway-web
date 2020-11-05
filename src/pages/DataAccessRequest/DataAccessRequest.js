@@ -720,6 +720,7 @@ class DataAccessRequest extends Component {
 	};
 
 	onQuestionClick = async (questionSetId = '', questionId = '') => {
+		debugger;
 		let questionSet, jsonSchema, questionAnswers, data;
 		questionSet = DarHelper.findQuestionSet(questionSetId, {
 			...this.state.jsonSchema
@@ -755,6 +756,21 @@ class DataAccessRequest extends Component {
 			}
 		}
 	};
+	
+	/**
+	 * [onActionChange Winterfell onActionChange handler]
+	 *
+	 * @param   {string}  pageId         [pageId]
+	 * @param   {string}  questionSetId  [questionSetId]
+	 * @param   {string}  questionId     [questionId]
+	 * @param   {string}  action         [action]
+	 *
+	 * @return  {[type]}                 [return description]
+	 */
+	onActionChange = (panelId = '', questionSetId = '', questionId = '', action = '') => {
+		console.log(panelId, questionSetId, questionId, action);
+	}
+
 
 	onHandleDataSetChange = async (e) => {
 		// 1. Deconstruct current state
@@ -1190,10 +1206,12 @@ class DataAccessRequest extends Component {
 					questionAnswers={this.state.questionAnswers}
 					panelId={this.state.activePanelId}
 					disableSubmit={true}
+					inReviewMode={true}
 					readOnly={this.state.readOnly}
 					validationErrors={this.state.validationErrors}
 					onQuestionFocus={this.onQuestionFocus}
 					onQuestionClick={this.onQuestionClick}
+					onActionChange={this.onActionChange}
 					onUpdate={this.onFormUpdate}
 					onSubmit={this.onFormSubmit}
 				/>

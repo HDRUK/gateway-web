@@ -24,6 +24,24 @@ button {
   &:hover {
     cursor: pointer;
   }
+  &:focus {
+    outline: 0;
+  }
+}
+
+.win-container {
+  display: flex;
+  flex-flow: row;
+  margin: 10px 0;
+  &--end {
+    justify-content: flex-end;
+  }
+  &--start {
+    justify-content: flex-start;
+  }
+  &--centre {
+    justify-content: center;
+  }
 }
 
 /* Style Guide Components */
@@ -70,9 +88,17 @@ button {
     @extend .button-;
     background-color: $gray-200;
     color: $indigo;
+
+    &-sm {
+      background-color: #e7e9ed;
+      border: 0;
+      border-radius: 14px;
+      padding: 2px 15px;
+    }
   } &:focus {
     outline: 0;
     box-shadow: 0 0 0 3px rgba(71, 93, 167, 0.25);
+    
   }
 
   &teal {
@@ -1097,6 +1123,11 @@ iframe#discourse-embed-frame {
 
 .flipSVG{
   transform: scaleY(-1) !important;
+}
+
+button:active {
+  outline: none;
+  border: none;
 }
 
 button a {
