@@ -218,7 +218,7 @@ const AddCollectionForm = (props) => {
             name: Yup.string()
                 .required('This cannot be empty'),
             description: Yup.string()
-                .max(5000, 'Maximum of 5,000 characters')
+                .max(5000, 'Maximum of 5,000 characters') 
                 .required('This cannot be empty'),
             authors: Yup.lazy(val => (Array.isArray(val) ? Yup.array().of(Yup.number()) : Yup.number())), 
             imageLink: Yup.string()
