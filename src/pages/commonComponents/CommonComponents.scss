@@ -30,8 +30,8 @@
   position:relative;
   z-index: 997;
   width: '100%';
-  margin-top: -440px; /* negative value of footer height */
-  height: 440px;
+  margin-top: -360px; /* negative value of footer height */
+  min-height: 360px;
   clear: both;
   background-image: linear-gradient(110deg, #50b996, #485ea7 100%);
   padding: 48px;
