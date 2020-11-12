@@ -404,7 +404,7 @@ class RelatedObject extends React.Component {
                                             : <span className="black-bold-16"> {data.firstname && data.lastname ? data.firstname + ' ' + data.lastname : ''} </span>
                                             }
                                             <br />
-                                            <span className="gray800-14"> {data.bio} </span>
+                                            <span className="gray800-14"> {data.showBio ? data.bio : ''} </span>
                                         </Col>
                                         <Col sm={2} lg={2} className="pad-right-24">
                                             {this.props.showRelationshipAnswer && relatedObject.updated || this.props.collectionUpdated ? <span className="collection-card-updated">{relatedObject.updated ? 'Updated ' + relatedObject.updated.substring(3) : 'Updated ' + this.props.collectionUpdated.substring(3)}</span> : ''}
