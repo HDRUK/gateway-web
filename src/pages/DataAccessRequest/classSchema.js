@@ -5,6 +5,7 @@ export const classSchema = {
         "typeaheadCustom": "form-control",
         "datePickerCustom": "form-control",
         "question": "form-group",
+        "questionWrap": "question-wrap",
         "input": "form-control",
         "button": "btn btn-primary",
         "radioListItem": "dar__radio--item",
@@ -15,6 +16,8 @@ export const classSchema = {
         "controlButton": "btn btn-primary pull-right",
         "backButton": "btn btn-default pull-left",
         "errorMessage": "alert alert-danger",
-        "buttonBar": "button-bar hidden" 
+        "buttonBar": "button-bar hidden",
+        "actionControl": "action-control",
+        "nested": "nested",
     }
 }

@@ -271,10 +271,10 @@ input[type=radio]:disabled {
 		padding-right: 8px !important;
 	}
 
-	&__questions .form-group {
-		padding-left: 16px !important;
-		padding-right: 16px !important;
-	}
+	// &__questions .form-group {
+	// 	padding-left: 16px !important;
+	// 	padding-right: 16px !important;
+	// }
 
 	&__questions .card-body .form-group {
 		padding-left: 0 !important;
@@ -435,7 +435,7 @@ input[type=radio]:disabled {
 		font-weight: 500 !important;
 	}
 	.form-group {
-		padding: 10px 12px;
+		// padding: 10px 12px;
 		transition: all 0.2s ease-in-out;
 
 		&:hover {
@@ -533,9 +533,36 @@ input[type=radio]:disabled {
 	width: 85px;
 }
 
+.action-control {
+	position: absolute;
+	top: 10px;
+	right: 25px;
+	visibility: hidden;
+	cursor: pointer;
+
+	opacity:0;
+  transition: visibility 0.65s linear, opacity 0.4s ease-in-out;
+}
+
 .form-group .addFormInputTypeAhead {
 	height: min-content !important;
 	min-height: 40px;
+}
+
+// .form-group-nested {
+// 	margin-top: 1rem;
+// }
+
+.question-wrap {
+	position: relative;
+	margin-bottom: 1rem;
+	padding: 10px 26px;
+	&:hover {
+		> .action-control {
+			visibility: visible;
+			opacity:1;
+		}
+	}
 }
 
 .addFormInputTypeAhead .dropdown-item.active,
