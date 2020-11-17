@@ -54,7 +54,8 @@ const AssignWorkflowModal = ({open, close, workflows, publisher, applicationId})
             // next if workflow is not empty
             if(!_.isEmpty(workflow)) {
                 axios.put(baseURL + `/api/v1/data-access-request/${applicationId}/assignworkflow`, {
-                    "workflowId": workflow._id
+                    "workflowId": workflow._id,
+                    "workflowName": workflow.workflowName
                 })
                 .then((res) => {
                     let alert = {
