@@ -648,7 +648,7 @@ class DatasetDetail extends Component {
                           />
                           </Col>
                           <Col xs={9} className="datasetTitle" >
-                          <span className="black-20"> {data.name} </span>
+                          <span className="black-16"> {data.name} </span>
                           <br />
                           <span >
                             {!_.isEmpty(v2data.summary.publisher.memberOf) ? 
