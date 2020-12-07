@@ -1,14 +1,14 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import moment from 'moment';
-import { isEmpty } from 'lodash'
+import { isNil, isEmpty } from 'lodash';
 import "react-datepicker/dist/react-datepicker.css";
 
 class DatePickerCustom extends React.Component {
   constructor(props) {
-    super(props);    
+    super(props);
     this.state = {
-      date: isEmpty(this.props.value) ? '' : moment(this.props.value).toDate()
+      date: isNil(this.props.value) || isEmpty(this.props.value) ? new Date() : moment(this.props.value, 'DD/MM/YYYY').toDate()
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
@@ -18,12 +18,12 @@ class DatePickerCustom extends React.Component {
   handleChange(e) {
     let date = '';
     if(e) {
-      date = moment(e).toDate();
+      date = e;
     }
 
     this.setState({
       date,
-    }, this.props.onChange.bind(null, date));
+    }, this.props.onChange.bind(null, moment(date).format('DD/MM/YYYY')));
   }
 
   handleFocus(e) {
@@ -39,8 +39,8 @@ class DatePickerCustom extends React.Component {
         <DatePicker
             disabled={this.props.readOnly || false}
             name={this.props.name || 'startdate'}
-            dateFormat="dd/MM/yyyy"
             selected={this.state.date}
+            dateFormat="dd/MM/yyyy"
             onChange={this.handleChange}
             onBlur={this.handleBlur}
             onFocus={this.handleFocus}

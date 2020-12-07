@@ -645,7 +645,7 @@ class DataAccessRequest extends Component {
 			let activePage = _.get(_.keys({ ...errors }), 0);
 			let activePanel = _.get(_.keys({ ...errors }[activePage]), 0);
 			let validationMessages = validationSectionMessages;
-			alert('Please resolve the following validation issues');
+			alert('Some validation issues have been found. Please see all items highlighted in red on this page.');
 			this.updateNavigation(
 				{ pageId: activePage, panelId: activePanel },
 				validationMessages
@@ -1505,7 +1505,7 @@ class DataAccessRequest extends Component {
 								<Tab eventKey='guidance' title='Guidance'>
 									<div className='darTab'>
 										<Col md={12} className='gray700-14'>
-											<span>{activeGuidance ? activeGuidance : 'Active guidance for questions'}.</span>
+											<span>{activeGuidance ? activeGuidance : 'Active guidance for questions'}</span>
 										</Col>
 									</div>
 								</Tab>
