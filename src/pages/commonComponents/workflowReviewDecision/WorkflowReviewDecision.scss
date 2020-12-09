@@ -1,84 +1,80 @@
 @import '../../../css/variables';
 
 .app-red {
-  color: $red;
+	color: $red;
 }
 
 .reviewDecision {
-  box-sizing: border-box;
+	box-sizing: border-box;
 
-  .modal-dialog {
-    max-width: 620px;
-    width: 100%;
-  }
+	.modal-dialog {
+		max-width: 620px;
+		width: 100%;
+	}
 
-  .modal-content {
-    border-radius: 0;
-  }
-  &-head {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
-    position: relative;
-    padding: 32px 32px 25px 32px;
+	.modal-content {
+		border-radius: 0;
+	}
+	&-head {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
+		position: relative;
+		padding: 32px 32px 25px 32px;
 
-    p {
-      margin-bottom: 0;
-      width: 95%;
-    }
+		p {
+			margin-bottom: 0;
+			width: 95%;
+		}
 
+		&--close {
+			position: absolute;
+			top: 16px;
+			right: 16px;
+			width: 16px;
+			height: 16px;
+			fill: $indigo;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
 
-    &--close {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        width: 16px;
-        height: 16px;
-        fill: $indigo;
-        &:hover {
-            cursor: pointer;
-        }
-    }
+	&-body {
+		padding: 25px 32px 16px 32px;
+		&-wrap {
+			margin-bottom: 30px;
+			display: grid;
+			grid-template-columns: 135px 1fr;
+		}
 
-  }
+		&-head {
+			margin-bottom: 10px;
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
+			align-items: center;
+		}
 
-  &-body {
-    padding: 25px 32px 16px 32px;
-    &-wrap {
-      margin-bottom: 30px;
-      display: grid;
-      grid-template-columns: 135px 1fr;
-    }
+		&-desc {
+			display: flex;
+			flex-flow: column;
+			width: 100%;
+		}
+	}
 
-    &-head {
-      margin-bottom: 10px;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-between;
-      align-items: center;
-    }
+	&-footer {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-end;
+		padding: 16px 32px;
 
-    &-desc {
-      display: flex;
-      flex-flow: column;
-      width: 100%;
-    }
-  }
-  
-  &-footer {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-end;
-    padding: 16px 32px;
-
-    button:first-child {
-      margin-right: 10px;
-    }
-  }
-
+		button:first-child {
+			margin-right: 10px;
+		}
+	}
 }
 
 .meta {
-  padding-bottom: 8px;
+	padding-bottom: 8px;
 }
-

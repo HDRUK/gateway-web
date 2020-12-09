@@ -9,7 +9,7 @@ import AddEditPaperForm from './AddEditPaperForm';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import './Paper.scss'; 
+import './Paper.scss';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
@@ -45,16 +45,12 @@ class AddEditPaperPage extends React.Component {
 		isEdit: false,
 		showDrawer: false,
 		showModal: false,
-		context: {}
+		context: {},
 	};
 
 	async componentDidMount() {
 		initGA('UA-166025838-1');
-		await Promise.all([
-			this.doGetTopicsCall(),
-			this.doGetFeaturesCall(),
-			this.doGetUsersCall()
-		]);
+		await Promise.all([this.doGetTopicsCall(), this.doGetFeaturesCall(), this.doGetUsersCall()]);
 		if (this.state.isEdit) this.getPaperFromDb();
 		else this.setState({ isLoading: false });
 	}
@@ -62,22 +58,18 @@ class AddEditPaperPage extends React.Component {
 	getPaperFromDb = () => {
 		//need to handle error if no id is found
 		this.setState({ isLoading: true });
-		axios
-			.get(baseURL + '/api/v1/papers/edit/' + this.props.match.params.paperID)
-			.then((res) => {
-				this.setState({
-					data: res.data.data[0],
-					relatedObjects: res.data.data[0].relatedObjects
-						? res.data.data[0].relatedObjects
-						: []
-				});
-				this.setState({ isLoading: false });
+		axios.get(baseURL + '/api/v1/papers/edit/' + this.props.match.params.paperID).then(res => {
+			this.setState({
+				data: res.data.data[0],
+				relatedObjects: res.data.data[0].relatedObjects ? res.data.data[0].relatedObjects : [],
 			});
+			this.setState({ isLoading: false });
+		});
 	};
 
 	doGetTopicsCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/topic/paper').then((res) => {
+			axios.get(baseURL + '/api/v1/search/filter/topic/paper').then(res => {
 				var tempTopicArray = [
 					'Blood',
 					'Cancer and neoplasms',
@@ -97,22 +89,18 @@ class AddEditPaperPage extends React.Component {
 					'Reproductive health and childbirth',
 					'Respiratory',
 					'Skin',
-					'Stroke'
+					'Stroke',
 				];
 
-				res.data.data[0].forEach((to) => {
+				res.data.data[0].forEach(to => {
 					if (!tempTopicArray.includes(to) && to !== '') {
 						tempTopicArray.push(to);
 					}
 				});
 				this.setState({
 					combinedTopic: tempTopicArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
 				resolve();
 			});
@@ -121,7 +109,7 @@ class AddEditPaperPage extends React.Component {
 
 	doGetFeaturesCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/feature/paper').then((res) => {
+			axios.get(baseURL + '/api/v1/search/filter/feature/paper').then(res => {
 				var tempFeaturesArray = [
 					'Arbitrage',
 					'Association Rules',
@@ -167,10 +155,10 @@ class AddEditPaperPage extends React.Component {
 					'Survival Analysis',
 					'Test of Hypotheses',
 					'Time Series',
-					'Yield Optimization'
+					'Yield Optimization',
 				];
 
-				res.data.data[0].forEach((fe) => {
+				res.data.data[0].forEach(fe => {
 					if (!tempFeaturesArray.includes(fe) && fe !== '') {
 						tempFeaturesArray.push(fe);
 					}
@@ -178,34 +166,29 @@ class AddEditPaperPage extends React.Component {
 
 				this.setState({
 					combinedFeatures: tempFeaturesArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
-				resolve(); 
+				resolve();
 			});
 		});
 	}
 
 	doGetUsersCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/users').then((res) => {
+			axios.get(baseURL + '/api/v1/users').then(res => {
 				this.setState({ combinedUsers: res.data.data });
 				resolve();
 			});
 		});
 	}
 
-	doSearch = (e) => {
+	doSearch = e => {
 		//fires on enter on searchbar
-		if (e.key === 'Enter')
-			window.location.href = '/search?search=' + this.state.searchString;
+		if (e.key === 'Enter') window.location.href = '/search?search=' + this.state.searchString;
 	};
 
-	updateSearchString = (searchString) => {
+	updateSearchString = searchString => {
 		this.setState({ searchString: searchString });
 	};
 
@@ -218,22 +201,16 @@ class AddEditPaperPage extends React.Component {
 			if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
 			if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
 			if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
-			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page; 
-			
+			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;
+
 			axios
-				.get(
-					baseURL +
-						'/api/v1/search?search=' +
-						this.state.searchString +
-						searchURL,
-					{
-						params: {
-							form: true,
-							userID: this.state.userState[0].id
-						}
-					}
-				)
-				.then((res) => {
+				.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL, {
+					params: {
+						form: true,
+						userID: this.state.userState[0].id,
+					},
+				})
+				.then(res => {
 					this.setState({
 						datasetData: res.data.datasetResults || [],
 						toolData: res.data.toolResults || [],
@@ -242,20 +219,15 @@ class AddEditPaperPage extends React.Component {
 						personData: res.data.personResults || [],
 						courseData: res.data.courseResults || [],
 						summary: res.data.summary || [],
-						isLoading: false
+						isLoading: false,
 					});
 				});
 		}
 	};
 
 	addToTempRelatedObjects = (id, type, pid) => {
-		if (
-			this.state.tempRelatedObjectIds &&
-			this.state.tempRelatedObjectIds.some((object) => object.objectId === id)
-		) {
-			this.state.tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(
-				(object) => object.objectId !== id
-			);
+		if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some(object => object.objectId === id)) {
+			this.state.tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(object => object.objectId !== id);
 		} else {
 			this.state.tempRelatedObjectIds.push({ objectId: id, type: type, pid: pid });
 		}
@@ -263,21 +235,23 @@ class AddEditPaperPage extends React.Component {
 	};
 
 	addToRelatedObjects = () => {
-			let {userState: [user = {}]} = this.state;
-			let relatedObjectIds = [...this.state.tempRelatedObjectIds]; 
-			let relatedObjects = [...this.state.relatedObjects];
+		let {
+			userState: [user = {}],
+		} = this.state;
+		let relatedObjectIds = [...this.state.tempRelatedObjectIds];
+		let relatedObjects = [...this.state.relatedObjects];
 
-			let newRelatedObjects = relatedObjectIds.map((relatedObject) => { 
-				let newRelatedObject = { 
-					...relatedObject, 
-					objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId, 
-					user: user.name, 
-					updated: moment().format('DD MM YYYY') 
-				};
-				return newRelatedObject; 
-			});
-			this.setState({relatedObjects: [...relatedObjects, ...newRelatedObjects]});
-			this.setState({ tempRelatedObjectIds: [] });
+		let newRelatedObjects = relatedObjectIds.map(relatedObject => {
+			let newRelatedObject = {
+				...relatedObject,
+				objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId,
+				user: user.name,
+				updated: moment().format('DD MM YYYY'),
+			};
+			return newRelatedObject;
+		});
+		this.setState({ relatedObjects: [...relatedObjects, ...newRelatedObjects] });
+		this.setState({ tempRelatedObjectIds: [] });
 	};
 
 	clearRelatedObjects = () => {
@@ -285,20 +259,14 @@ class AddEditPaperPage extends React.Component {
 	};
 
 	removeObject = (id, type, datasetid) => {
-
 		let countOfRelatedObjects = this.state.relatedObjects.length;
-		let newRelatedObjects = [...this.state.relatedObjects].filter(
-			(obj) => (obj.objectId !== id && obj.objectId !== id.toString())
-		);
-		
-		//if an item was not removed try removing by datasetid for retro linkages 
-		if((countOfRelatedObjects <= newRelatedObjects.length) && type === 'dataset'){
-			
-			newRelatedObjects = [...this.state.relatedObjects].filter(
-				(obj) => (obj.objectId !== datasetid && obj.objectId !== datasetid.toString())
-			);
+		let newRelatedObjects = [...this.state.relatedObjects].filter(obj => obj.objectId !== id && obj.objectId !== id.toString());
+
+		//if an item was not removed try removing by datasetid for retro linkages
+		if (countOfRelatedObjects <= newRelatedObjects.length && type === 'dataset') {
+			newRelatedObjects = [...this.state.relatedObjects].filter(obj => obj.objectId !== datasetid && obj.objectId !== datasetid.toString());
 		}
-		this.setState({relatedObjects: newRelatedObjects});
+		this.setState({ relatedObjects: newRelatedObjects });
 		this.setState({ didDelete: true });
 	};
 
@@ -307,7 +275,7 @@ class AddEditPaperPage extends React.Component {
 	};
 
 	toggleDrawer = () => {
-		this.setState((prevState) => {
+		this.setState(prevState => {
 			if (prevState.showDrawer === true) {
 				this.searchBar.current.getNumberOfUnreadMessages();
 			}
@@ -316,10 +284,10 @@ class AddEditPaperPage extends React.Component {
 	};
 
 	toggleModal = (showEnquiry = false, context = {}) => {
-        this.setState( ( prevState ) => {
-            return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
-        });
-    }
+		this.setState(prevState => {
+			return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
+		});
+	};
 
 	render() {
 		const {
@@ -345,7 +313,7 @@ class AddEditPaperPage extends React.Component {
 			didDelete,
 			showDrawer,
 			showModal,
-			context
+			context,
 		} = this.state;
 
 		if (isLoading) {
@@ -364,7 +332,7 @@ class AddEditPaperPage extends React.Component {
 					doUpdateSearchString={this.updateSearchString}
 					doToggleDrawer={this.toggleDrawer}
 					userState={userState}
-				/> 
+				/>
 
 				<AddEditPaperForm
 					data={data}
@@ -384,7 +352,7 @@ class AddEditPaperPage extends React.Component {
 					projectData={projectData}
 					paperData={paperData}
 					personData={personData}
-          courseData={courseData}
+					courseData={courseData}
 					summary={summary}
 					doAddToTempRelatedObjects={this.addToTempRelatedObjects}
 					tempRelatedObjectIds={this.state.tempRelatedObjectIds}
@@ -405,12 +373,7 @@ class AddEditPaperPage extends React.Component {
 					/>
 				</SideDrawer>
 
-				<DataSetModal 
-                    open={showModal} 
-                    context={context}
-                    closed={this.toggleModal}
-                    userState={userState[0]} 
-				/>
+				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
 			</div>
 		);
 	}

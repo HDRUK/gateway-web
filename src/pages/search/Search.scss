@@ -1,57 +1,57 @@
-@import '../../css/variables'; 
+@import '../../css/variables';
 
 .filterCard {
-    box-shadow: 1px 1px 3px 0 #00000017;
-    background-color: $white;
-    padding: 10px;
+	box-shadow: 1px 1px 3px 0 #00000017;
+	background-color: $white;
+	padding: 10px;
 }
 
 .filterCardSelected {
-    box-shadow: 1px 1px 3px 0 #00000017;
-    background-color: $white;
-    padding: 10px;
-    border: 2px solid #3db28c
+	box-shadow: 1px 1px 3px 0 #00000017;
+	background-color: $white;
+	padding: 10px;
+	border: 2px solid #3db28c;
 }
 
 .bubbleCount {
-    width: 24px;
-    height: 24px;
-    background-color: $purple;
-    border-radius: 16px;
-    display: inline-block;
-    text-align: center;
-    line-height: 24px;
-  }
+	width: 24px;
+	height: 24px;
+	background-color: $purple;
+	border-radius: 16px;
+	display: inline-block;
+	text-align: center;
+	line-height: 24px;
+}
 
 .filterMenu {
-    transform: translate(275px, 0px) !important;
-    max-height: 345px;
-    width: 480px;
-    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03) !important;
+	transform: translate(275px, 0px) !important;
+	max-height: 345px;
+	width: 480px;
+	box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03) !important;
 }
 
 .filterMenuInner {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    word-wrap: break-word;
-    max-height: 285px;
-    padding:5px 20px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	word-wrap: break-word;
+	max-height: 285px;
+	padding: 5px 20px;
 }
 
 .filterMenuHeader {
-    padding:10px 20px;
+	padding: 10px 20px;
 }
 
 .filterHolder {
-    position: -webkit-sticky !important; /* Safari */
-    position: sticky !important;
-    width:265px;
-    z-index:999;
-    margin-top: 45px;
-    top: 100px;
+	position: -webkit-sticky !important; /* Safari */
+	position: sticky !important;
+	width: 265px;
+	z-index: 999;
+	margin-top: 45px;
+	top: 100px;
 }
 
 .courseDateHeader {
-    margin-top: 7px !important;
-    margin-bottom: 7px;
+	margin-top: 7px !important;
+	margin-bottom: 7px;
 }

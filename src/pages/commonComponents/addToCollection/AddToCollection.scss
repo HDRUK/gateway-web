@@ -2,51 +2,51 @@
 @import '../../../css/mixins';
 
 .addToCollectionDropdown {
-    width: 229px !important;
-    max-height: 176px !important;
-    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03) !important;
-    background-color: $white !important;
-    overflow-x: hidden !important;
-    overflow-y: scroll !important;
-    margin-bottom: 24px !important;
-    padding-top: 0px !important;
-    padding-bottom: 12px !important;
-  }
+	width: 229px !important;
+	max-height: 176px !important;
+	box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03) !important;
+	background-color: $white !important;
+	overflow-x: hidden !important;
+	overflow-y: scroll !important;
+	margin-bottom: 24px !important;
+	padding-top: 0px !important;
+	padding-bottom: 12px !important;
+}
 
 .addToCollectionHeader {
-  position: sticky;
-  top: 0;
-  background-color: $white;
-  z-index: 1;
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 16px;
+	position: sticky;
+	top: 0;
+	background-color: $white;
+	z-index: 1;
+	padding-left: 16px;
+	padding-right: 16px;
+	padding-top: 16px;
 }
 
 .addToCollectionItem {
-    white-space: pre-wrap !important;
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-  
+	white-space: pre-wrap !important;
+	padding-left: 16px;
+	padding-right: 16px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
 .addToCollectionItem:hover {
-    background-color: $gray-200 !important;
+	background-color: $gray-200 !important;
 }
 
 .checkSvg {
-  float: right;
-  
-  @include mq("tablet-small",max) {
-    transform: translate(-5px, 0px) !important;
-  }
-  
-  @include mq("phablet",max) {
-    transform: translate(0px, -20px) !important;
-  }
+	float: right;
+
+	@include mq('tablet-small', max) {
+		transform: translate(-5px, 0px) !important;
+	}
+
+	@include mq('phablet', max) {
+		transform: translate(0px, -20px) !important;
+	}
 }
 
 .linkToTechnicalDetails {
-  background: $gray-200;
+	background: $gray-200;
 }

@@ -2,86 +2,85 @@
 @import '../../../css/mixins';
 
 .collectionCard {
-    width: 362px; 
-    height: 355px;
-    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03);
-    background-color: #ffffff;
-    margin-bottom: 24px;
-    transform: translate(-8px, -8px);
+	width: 362px;
+	height: 355px;
+	box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03);
+	background-color: #ffffff;
+	margin-bottom: 24px;
+	transform: translate(-8px, -8px);
 
-    @include mq('phone-wide', max){
-        width: 320px !important;
-        height: 420px !important;
-    }
+	@include mq('phone-wide', max) {
+		width: 320px !important;
+		height: 420px !important;
+	}
 
-    @include mq('phone', max){
-        width: 280px !important;
-    }
-  } 
+	@include mq('phone', max) {
+		width: 280px !important;
+	}
+}
 
 .collectionBackgroundCard {
-    width: 366px;
-    height: 359px;
-    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03);
-    background-color: #ffffff;  
-    margin-bottom: 24px;
+	width: 366px;
+	height: 359px;
+	box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03);
+	background-color: #ffffff;
+	margin-bottom: 24px;
 
-    @include mq('phone-wide', max){
-        width: 324px !important;
-        height: 424px !important;
-    }
+	@include mq('phone-wide', max) {
+		width: 324px !important;
+		height: 424px !important;
+	}
 
-    @include mq('phone', max){
-        width: 280px !important;
-    }
-
+	@include mq('phone', max) {
+		width: 280px !important;
+	}
 }
 
 .collectionCardHolder {
-    transform: translate(8px, 8px);
+	transform: translate(8px, 8px);
 }
 
-.collectionCardHeader{
-    padding: 24px 24px 16px 24px !important;
+.collectionCardHeader {
+	padding: 24px 24px 16px 24px !important;
 }
 
-.collectionCardFooter{
-    padding: 16px 24px 24px 24px !important;
+.collectionCardFooter {
+	padding: 16px 24px 24px 24px !important;
 }
 
-.collectionCountsBanner{
-    width: 362px;
-    min-height: 31px;
-    background-color: $gray-pale;
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+.collectionCountsBanner {
+	width: 362px;
+	min-height: 31px;
+	background-color: $gray-pale;
+	padding-left: 24px !important;
+	padding-right: 24px !important;
+	padding-top: 8px !important;
+	padding-bottom: 8px !important;
 }
 
 #defaultCollectionCardImage {
-    width: 362px;
-    height: 141px;
-    background-image: linear-gradient(124deg, #50b996, #485ea7);
+	width: 362px;
+	height: 141px;
+	background-image: linear-gradient(124deg, #50b996, #485ea7);
 
-    @include mq('phone-wide', max){
-        width: 320px !important;
-    }
+	@include mq('phone-wide', max) {
+		width: 320px !important;
+	}
 
-    @include mq('phone', max){
-        width: 280px !important;
-    }
+	@include mq('phone', max) {
+		width: 280px !important;
+	}
 }
 
 #collectionCardImage {
-    width: 362px !important;
-    height: 141px !important;
+	width: 362px !important;
+	height: 141px !important;
 
-    @include mq('phone-wide', max){
-        width: 320px !important;
-    }
+	@include mq('phone-wide', max) {
+		width: 320px !important;
+	}
 
-    @include mq('phone', max){
-        width: 280px !important;
-    }
+	@include mq('phone', max) {
+		width: 280px !important;
+	}
 }

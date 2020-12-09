@@ -1,16 +1,9 @@
-// /ShowObjects.js 
+// /ShowObjects.js
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 import queryString from 'query-string';
-import {
-	Row,
-	Col,
-	Tabs,
-	Tab,
-	Container,
-	Alert
-} from 'react-bootstrap';
+import { Row, Col, Tabs, Tab, Container, Alert } from 'react-bootstrap';
 import Loading from '../commonComponents/Loading';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
@@ -40,8 +33,8 @@ class CollectionPage extends Component {
 				loggedIn: false,
 				role: 'Reader',
 				id: null,
-				name: null
-			}
+				name: null,
+			},
 		],
 		searchString: '',
 		toolCount: 0,
@@ -56,7 +49,7 @@ class CollectionPage extends Component {
 		discoursePostCount: 0,
 		showDrawer: false,
 		showModal: false,
-		context: {}
+		context: {},
 	};
 
 	constructor(props) {
@@ -76,22 +69,18 @@ class CollectionPage extends Component {
 
 	getDataSearchFromDb = () => {
 		this.setState({ isLoading: true });
-		axios
-			.get(
-				baseURL + '/api/v1/collections/' + this.props.match.params.collectionID
-			)
-			.then((res) => {
-				this.setState({
-					data: res.data.data[0],
-					discourseTopic: res.data.discourseTopic
-				});
-				this.getObjectData(res.data.data[0]);
-				this.setState({ isLoading: false });
+		axios.get(baseURL + '/api/v1/collections/' + this.props.match.params.collectionID).then(res => {
+			this.setState({
+				data: res.data.data[0],
+				discourseTopic: res.data.discourseTopic,
 			});
+			this.getObjectData(res.data.data[0]);
+			this.setState({ isLoading: false });
+		});
 	};
 
-	getObjectData = async (data) => {
-		data.relatedObjects.map((object) => {
+	getObjectData = async data => {
+		data.relatedObjects.map(object => {
 			if (object.objectType === 'tool') {
 				this.getToolData(object.objectId);
 			} else if (object.objectType === 'person') {
@@ -102,103 +91,97 @@ class CollectionPage extends Component {
 				this.getDatasetData(object.objectId);
 			} else if (object.objectType === 'paper') {
 				this.getPaperData(object.objectId);
-			}
-			else if (object.objectType === 'course') {
+			} else if (object.objectType === 'course') {
 				this.getCourseData(object.objectId);
 			}
 		});
 		this.setState({ isLoading: false });
 	};
 
-	getToolData = async (toolID) => {
+	getToolData = async toolID => {
 		this.setState({ isLoading: true });
 		await Promise.all([
-			axios.get(baseURL + '/api/v1/tools/' + toolID).then((res) => {
+			axios.get(baseURL + '/api/v1/tools/' + toolID).then(res => {
 				this.state.objectData.push(res.data.data[0]);
 				if (
 					res.data.data[0].activeflag === 'active' ||
-					(res.data.data[0].activeflag === 'review' &&
-						res.data.data[0].authors.includes(this.state.userState[0].id))
+					(res.data.data[0].activeflag === 'review' && res.data.data[0].authors.includes(this.state.userState[0].id))
 				) {
 					this.state.toolCount++;
 				}
-			})
+			}),
 		]);
 		this.setState({ objectData: this.state.objectData });
 	};
 
-	getPersonData = async (personID) => {
+	getPersonData = async personID => {
 		this.setState({ isLoading: true });
 		await Promise.all([
-			axios.get(baseURL + '/api/v1/person/' + personID).then((res) => {
+			axios.get(baseURL + '/api/v1/person/' + personID).then(res => {
 				this.state.objectData.push(res.data.data[0]);
 				if (
 					res.data.data[0].activeflag === 'active' ||
-					(res.data.data[0].activeflag === 'review' &&
-						res.data.data[0].authors.includes(this.state.userState[0].id))
+					(res.data.data[0].activeflag === 'review' && res.data.data[0].authors.includes(this.state.userState[0].id))
 				) {
 					this.state.personCount++;
 				}
-			})
+			}),
 		]);
 		this.setState({ objectData: this.state.objectData });
 	};
 
-	getProjectData = async (projectID) => {
+	getProjectData = async projectID => {
 		this.setState({ isLoading: true });
 		await Promise.all([
-			axios.get(baseURL + '/api/v1/projects/' + projectID).then((res) => {
+			axios.get(baseURL + '/api/v1/projects/' + projectID).then(res => {
 				this.state.objectData.push(res.data.data[0]);
 				if (
 					res.data.data[0].activeflag === 'active' ||
-					(res.data.data[0].activeflag === 'review' &&
-						res.data.data[0].authors.includes(this.state.userState[0].id))
+					(res.data.data[0].activeflag === 'review' && res.data.data[0].authors.includes(this.state.userState[0].id))
 				) {
 					this.state.projectCount++;
 				}
-			})
+			}),
 		]);
 		this.setState({ objectData: this.state.objectData });
 	};
 
-	getDatasetData = async (datasetID) => {
+	getDatasetData = async datasetID => {
 		this.setState({ isLoading: true });
 		await Promise.all([
-			axios.get(baseURL + '/api/v1/datasets/' + datasetID).then((res) => {
+			axios.get(baseURL + '/api/v1/datasets/' + datasetID).then(res => {
 				this.state.objectData.push(res.data.data);
 				if (
 					res.data.data.activeflag === 'active' ||
-					(res.data.data.activeflag === 'review' &&
-						res.data.data.authors.includes(this.state.userState[0].id))
+					(res.data.data.activeflag === 'review' && res.data.data.authors.includes(this.state.userState[0].id))
 				) {
 					this.state.datasetCount++;
 				}
-			})
+			}),
 		]);
 		this.setState({ objectData: this.state.objectData });
 	};
 
-	getPaperData = async (paperID) => {
+	getPaperData = async paperID => {
 		this.setState({ isLoading: true });
 		await Promise.all([
-			axios.get(baseURL + '/api/v1/papers/' + paperID).then((res) => {
+			axios.get(baseURL + '/api/v1/papers/' + paperID).then(res => {
 				this.state.objectData.push(res.data.data[0]);
 				if (
 					res.data.data[0].activeflag === 'active' ||
-					(res.data.data[0].activeflag === 'review' &&
-						res.data.data[0].authors.includes(this.state.userState[0].id))
+					(res.data.data[0].activeflag === 'review' && res.data.data[0].authors.includes(this.state.userState[0].id))
 				) {
 					this.state.paperCount++;
 				}
-			})
+			}),
 		]);
 		this.setState({ objectData: this.state.objectData });
 	};
 
-	getCourseData = async (courseID) => {
+	getCourseData = async courseID => {
 		this.setState({ isLoading: true });
 		await Promise.all([
-			axios.get(baseURL + '/api/v1/course/' + courseID).then((res) => {
+			axios.get(baseURL + '/api/v1/course/' + courseID).then(res => {
 				this.state.objectData.push(res.data.data[0]);
 				if (
 					res.data.data[0].activeflag === 'active' ||
@@ -206,40 +189,39 @@ class CollectionPage extends Component {
 				) {
 					this.state.courseCount++;
 				}
-			})
+			}),
 		]);
 		this.setState({ objectData: this.state.objectData });
 	};
 
 	doGetUsersCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/users').then((res) => {
+			axios.get(baseURL + '/api/v1/users').then(res => {
 				this.setState({ combinedUsers: res.data.data });
 				resolve();
 			});
 		});
 	}
 
-	handleSelect = (key) => {
+	handleSelect = key => {
 		this.setState({ key: key });
 	};
 
-	doSearch = (e) => {
+	doSearch = e => {
 		//fires on enter on searchbar
-		if (e.key === 'Enter')
-			window.location.href = '/search?search=' + this.state.searchString;
+		if (e.key === 'Enter') window.location.href = '/search?search=' + this.state.searchString;
 	};
 
-	updateSearchString = (searchString) => {
+	updateSearchString = searchString => {
 		this.setState({ searchString: searchString });
 	};
 
-	updateDiscoursePostCount = (count) => {
+	updateDiscoursePostCount = count => {
 		this.setState({ discoursePostCount: count });
-	}
+	};
 
 	toggleDrawer = () => {
-		this.setState((prevState) => {
+		this.setState(prevState => {
 			if (prevState.showDrawer === true) {
 				this.searchBar.current.getNumberOfUnreadMessages();
 			}
@@ -248,10 +230,10 @@ class CollectionPage extends Component {
 	};
 
 	toggleModal = (showEnquiry = false, context = {}) => {
-        this.setState( ( prevState ) => {
-            return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
-        });
-    }
+		this.setState(prevState => {
+			return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
+		});
+	};
 
 	render() {
 		const {
@@ -271,11 +253,10 @@ class CollectionPage extends Component {
 			discoursePostCount,
 			showDrawer,
 			showModal,
-			context
+			context,
 		} = this.state;
 		var { key } = this.state;
-		var allCount =
-			toolCount + datasetCount + personCount + projectCount + paperCount + courseCount;
+		var allCount = toolCount + datasetCount + personCount + projectCount + paperCount + courseCount;
 
 		let datasetPublisher;
 		let datasetLogo;
@@ -287,7 +268,7 @@ class CollectionPage extends Component {
 				</Container>
 			);
 		}
- 
+
 		return (
 			<div>
 				<SearchBar
@@ -303,8 +284,8 @@ class CollectionPage extends Component {
 						{collectionAdded ? (
 							<Row>
 								<Col sm={1} lg={1} />
-								<Col sm={10} lg={10} className="pad-left-0">
-									<Alert variant='success' className='mt-3'> 
+								<Col sm={10} lg={10} className='pad-left-0'>
+									<Alert variant='success' className='mt-3'>
 										This collection is now live. Anyone with the link can see this page.
 									</Alert>
 								</Col>
@@ -342,51 +323,27 @@ class CollectionPage extends Component {
 							''
 						)}
 
-						<Row className="margin-top-16">
+						<Row className='margin-top-16'>
 							<Col sm={1} lg={1} />
-							
+
 							{!data.imageLink || data.imageLink === 'https://' ? (
-									<div id="defaultCollectionImage" className="margin-right-1" />
+								<div id='defaultCollectionImage' className='margin-right-1' />
 							) : (
-									<img
-										src={data.imageLink}
-										alt='collectionLogo'
-										id='collectionImage'
-										className="margin-right-1"
-									/>
+								<img src={data.imageLink} alt='collectionLogo' id='collectionImage' className='margin-right-1' />
 							)}
 
-							<Col
-								className = 'titleWidth'
-							> 
+							<Col className='titleWidth'>
 								<Row>
-									<Col
-										sm={9}
-										lg={9}
-										className = 'collectionTitleCard'
-									>
-										<span className='black-28 collectionTitleText'>
-											{' '}
-											{data.name}{' '}
-										</span>
+									<Col sm={9} lg={9} className='collectionTitleCard'>
+										<span className='black-28 collectionTitleText'> {data.name} </span>
 									</Col>
-									<Col
-										sm={2}
-										lg={2}
-										className = 'collectionDate collectionTitleCard'
-									>
-										<span className='gray700-13'>
-											Created {moment(data.createdAt).format('MMM YYYY')}{' '}
-										</span>
+									<Col sm={2} lg={2} className='collectionDate collectionTitleCard'>
+										<span className='gray700-13'>Created {moment(data.createdAt).format('MMM YYYY')} </span>
 									</Col>
 								</Row>
 
 								<Row>
-									<Col
-										sm={10}
-										lg={10}
-										className = 'collectionTitleCard'
-									>
+									<Col sm={10} lg={10} className='collectionTitleCard'>
 										{data.persons.map((person, index) => {
 											if (index > 0) {
 												return (
@@ -418,35 +375,24 @@ class CollectionPage extends Component {
 				</div>
 
 				<div>
-					<Tabs
-						className='tabsBackground gray700-13'
-						activeKey={key}
-						onSelect={this.handleSelect}
-					>
+					<Tabs className='tabsBackground gray700-13' activeKey={key} onSelect={this.handleSelect}>
 						<Tab eventKey='All' title={'All (' + allCount + ')'}></Tab>
-						<Tab
-							eventKey='Datasets'
-							title={'Datasets (' + datasetCount + ')'}
-						></Tab>
+						<Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'}></Tab>
 						<Tab eventKey='Tools' title={'Tools (' + toolCount + ')'}></Tab>
 						<Tab eventKey='Papers' title={'Papers (' + paperCount + ')'}></Tab>
-						<Tab
-							eventKey='Projects'
-							title={'Projects (' + projectCount + ')'}
-						></Tab>
+						<Tab eventKey='Projects' title={'Projects (' + projectCount + ')'}></Tab>
 						<Tab eventKey='People' title={'People (' + personCount + ')'}></Tab>
 						<Tab eventKey='Course' title={'Course (' + courseCount + ')'}></Tab>
-						<Tab eventKey="Collaboration" title={`Discussion (${discoursePostCount})`}>
+						<Tab eventKey='Collaboration' title={`Discussion (${discoursePostCount})`}>
 							<Container className='resource-card'>
 								<Row>
 									<Col sm={1} lg={1} />
 									<Col sm={10} lg={10}>
-									<DiscourseTopic
-										collectionId={data.id}
-										topicId={data.discourseTopicId || 0}
-										userState={userState}
-										onUpdateDiscoursePostCount={this.updateDiscoursePostCount}>
-									</DiscourseTopic>
+										<DiscourseTopic
+											collectionId={data.id}
+											topicId={data.discourseTopicId || 0}
+											userState={userState}
+											onUpdateDiscoursePostCount={this.updateDiscoursePostCount}></DiscourseTopic>
 									</Col>
 								</Row>
 							</Container>
@@ -459,26 +405,30 @@ class CollectionPage extends Component {
 						<Col sm={1} lg={1} />
 						<Col sm={10} lg={10}>
 							{key === 'All'
-								? objectData.map((object) => {
+								? objectData.map(object => {
 										if (
-											object.activeflag === 'active' 
-											|| (object.type === 'course' && object.activeflag === 'review' && object.creator[0].id === userState[0].id)
-											|| (object.type !== 'course' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
+											object.activeflag === 'active' ||
+											(object.type === 'course' && object.activeflag === 'review' && object.creator[0].id === userState[0].id) ||
+											(object.type !== 'course' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
 										) {
 											var reason = '';
 											var updated = '';
 											var user = '';
 											let showAnswer = false;
 
-											{!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.name') ? datasetPublisher = object.datasetv2.summary.publisher.name : datasetPublisher = ''}
-											{!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.logo') ? datasetLogo = object.datasetv2.summary.publisher.logo : datasetLogo = ''}
+											{
+												!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.name')
+													? (datasetPublisher = object.datasetv2.summary.publisher.name)
+													: (datasetPublisher = '');
+											}
+											{
+												!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.logo')
+													? (datasetLogo = object.datasetv2.summary.publisher.logo)
+													: (datasetLogo = '');
+											}
 
-											data.relatedObjects.map((dat) => {
-												if (
-													dat.objectId === object.id ||
-													parseInt(dat.objectId) === object.id || 
-													dat.objectId === object.datasetid
-												) {
+											data.relatedObjects.map(dat => {
+												if (dat.objectId === object.id || parseInt(dat.objectId) === object.id || dat.objectId === object.datasetid) {
 													reason = dat.reason;
 													updated = dat.updated;
 													user = dat.user;
@@ -494,7 +444,7 @@ class CollectionPage extends Component {
 													collectionReason={reason}
 													collectionUpdated={updated}
 													collectionUser={user}
-													datasetPublisher={datasetPublisher} 
+													datasetPublisher={datasetPublisher}
 													datasetLogo={datasetLogo}
 												/>
 											);
@@ -503,29 +453,35 @@ class CollectionPage extends Component {
 								: ''}
 
 							{key === 'Datasets'
-								? objectData.map((object) => {
+								? objectData.map(object => {
 										if (
 											object.activeflag === 'active' ||
-											(object.type === 'dataset' && object.activeflag === 'review' &&
-												object.authors.includes(userState[0].id))
+											(object.type === 'dataset' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
 										) {
 											var reason = '';
 											var updated = '';
 											var user = '';
 											let showAnswer = false;
-											if (object.type === "dataset") {
+											if (object.type === 'dataset') {
+												{
+													!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.name')
+														? (datasetPublisher = object.datasetv2.summary.publisher.name)
+														: (datasetPublisher = '');
+												}
+												{
+													!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.logo')
+														? (datasetLogo = object.datasetv2.summary.publisher.logo)
+														: (datasetLogo = '');
+												}
 
-												{!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.name') ? datasetPublisher = object.datasetv2.summary.publisher.name : datasetPublisher = ''}
-												{!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.logo') ? datasetLogo = object.datasetv2.summary.publisher.logo : datasetLogo = ''}
-	
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.map(dat => {
 													if (dat.objectId === object.datasetid) {
 														reason = dat.reason;
 														updated = dat.updated;
 														user = dat.user;
 														showAnswer = !_.isEmpty(reason);
 													}
-												});												
+												});
 												return (
 													<RelatedObject
 														key={object.id}
@@ -535,7 +491,7 @@ class CollectionPage extends Component {
 														collectionReason={reason}
 														collectionUpdated={updated}
 														collectionUser={user}
-														datasetPublisher={datasetPublisher} 
+														datasetPublisher={datasetPublisher}
 														datasetLogo={datasetLogo}
 													/>
 												);
@@ -545,18 +501,17 @@ class CollectionPage extends Component {
 								: ''}
 
 							{key === 'Tools'
-								? objectData.map((object) => {
+								? objectData.map(object => {
 										if (
 											object.activeflag === 'active' ||
-											(object.type === 'tool' && object.activeflag === 'review' &&
-												object.authors.includes(userState[0].id))
+											(object.type === 'tool' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
 										) {
 											var reason = '';
 											var updated = '';
 											var user = '';
 											let showAnswer = false;
 											if (object.type === 'tool') {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.map(dat => {
 													if (parseInt(dat.objectId) === object.id) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -581,18 +536,17 @@ class CollectionPage extends Component {
 								: ''}
 
 							{key === 'Projects'
-								? objectData.map((object) => {
+								? objectData.map(object => {
 										if (
 											object.activeflag === 'active' ||
-											(object.type === 'project' && object.activeflag === 'review' &&
-												object.authors.includes(userState[0].id))
+											(object.type === 'project' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
 										) {
 											var reason = '';
 											var updated = '';
 											var user = '';
 											let showAnswer = false;
 											if (object.type === 'project') {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.map(dat => {
 													if (parseInt(dat.objectId) === object.id) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -617,18 +571,17 @@ class CollectionPage extends Component {
 								: ''}
 
 							{key === 'Papers'
-								? objectData.map((object) => {
+								? objectData.map(object => {
 										if (
 											object.activeflag === 'active' ||
-											(object.type === 'paper' && object.activeflag === 'review' &&
-												object.authors.includes(userState[0].id))
+											(object.type === 'paper' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
 										) {
 											var reason = '';
 											var updated = '';
 											var user = '';
 											let showAnswer = false;
 											if (object.type === 'paper') {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.map(dat => {
 													if (parseInt(dat.objectId) === object.id) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -654,18 +607,17 @@ class CollectionPage extends Component {
 								: ''}
 
 							{key === 'People'
-								? objectData.map((object) => {
+								? objectData.map(object => {
 										if (
 											object.activeflag === 'active' ||
-											(object.type === 'person' && object.activeflag === 'review' &&
-												object.authors.includes(userState[0].id))
+											(object.type === 'person' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
 										) {
 											var reason = '';
 											var updated = '';
 											var user = '';
 											let showAnswer = false;
 											if (object.type === 'person') {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.map(dat => {
 													if (parseInt(dat.objectId) === object.id) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -690,18 +642,17 @@ class CollectionPage extends Component {
 								: ''}
 
 							{key === 'Course'
-								? objectData.map((object) => {
+								? objectData.map(object => {
 										if (
 											object.activeflag === 'active' ||
-											(object.type === 'course' && object.activeflag === 'review' 
-												&& object.creator[0].id === userState[0].id)
+											(object.type === 'course' && object.activeflag === 'review' && object.creator[0].id === userState[0].id)
 										) {
 											var reason = '';
 											var updated = '';
 											var user = '';
 											let showAnswer = false;
 											if (object.type === 'course') {
-												data.relatedObjects.map((dat) => {
+												data.relatedObjects.map(dat => {
 													if (parseInt(dat.objectId) === object.id) {
 														reason = dat.reason;
 														updated = dat.updated;
@@ -737,12 +688,7 @@ class CollectionPage extends Component {
 					/>
 				</SideDrawer>
 
-				<DataSetModal 
-                    open={showModal} 
-                    context={context}
-                    closed={this.toggleModal}
-                    userState={userState[0]} 
-				/>
+				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
 			</div>
 		);
 	}

@@ -36,7 +36,7 @@ const validateSchema = Yup.object().shape({
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-const AddEditToolForm = (props) => {
+const AddEditToolForm = props => {
 	const formik = useFormik({
 		initialValues: {
 			id: props.data.id || '',
@@ -79,15 +79,15 @@ const AddEditToolForm = (props) => {
 			authors: Yup.string().required('This cannot be empty'),
 		}),
 
-		onSubmit: (values) => {
+		onSubmit: values => {
 			values.relatedObjects = props.relatedObjects;
 			values.toolCreator = props.userState[0];
 			if (props.isEdit) {
-				axios.put(baseURL + '/api/v1/tools/' + props.data.id, values).then((res) => {
+				axios.put(baseURL + '/api/v1/tools/' + props.data.id, values).then(res => {
 					window.location.href = window.location.search + '/tool/' + props.data.id + '/?toolEdited=true';
 				});
 			} else {
-				axios.post(baseURL + '/api/v1/tools', values).then((res) => {
+				axios.post(baseURL + '/api/v1/tools', values).then(res => {
 					window.location.href = window.location.search + '/tool/' + res.data.response.id + '/?toolAdded=true';
 				});
 			}
@@ -97,8 +97,8 @@ const AddEditToolForm = (props) => {
 	var listOfAuthors = [];
 
 	if (props.isEdit) {
-		props.data.authors.forEach((author) => {
-			props.combinedUsers.forEach((user) => {
+		props.data.authors.forEach(author => {
+			props.combinedUsers.forEach(user => {
 				if (user.id === author) {
 					if (props.userState[0].id === user.id) {
 						listOfAuthors.push({ id: user.id, name: user.name + ' (You)' });
@@ -112,7 +112,7 @@ const AddEditToolForm = (props) => {
 			});
 		});
 	} else {
-		props.combinedUsers.forEach((user) => {
+		props.combinedUsers.forEach(user => {
 			if (user.id === props.userState[0].id) {
 				listOfAuthors.push({ id: user.id, name: user.name + ' (You)' });
 				if (!user.name.includes('(You)')) {
@@ -124,7 +124,7 @@ const AddEditToolForm = (props) => {
 
 	function updateReason(id, reason, type) {
 		let inRelatedObject = false;
-		props.relatedObjects.map((object) => {
+		props.relatedObjects.map(object => {
 			if (object.objectId === id) {
 				inRelatedObject = true;
 				object.reason = reason;
@@ -170,7 +170,9 @@ const AddEditToolForm = (props) => {
 										<div className='rectangle'>
 											<Row>
 												<Col sm={10} lg={10}>
-													<p className='black-20 margin-bottom-0 pad-bottom-8'>{props.isEdit ? 'Edit your tool or resource' : 'Add a new tool or resource'}</p>
+													<p className='black-20 margin-bottom-0 pad-bottom-8'>
+														{props.isEdit ? 'Edit your tool or resource' : 'Add a new tool or resource'}
+													</p>
 												</Col>
 												<Col sm={2} lg={2} className='text-right'>
 													<span className='badge-tool'>
@@ -179,7 +181,9 @@ const AddEditToolForm = (props) => {
 													</span>
 												</Col>
 											</Row>
-											<p className='gray800-14 margin-bottom-0'>Tools can be anything you or someone else created or used during a research project</p>
+											<p className='gray800-14 margin-bottom-0'>
+												Tools can be anything you or someone else created or used during a research project
+											</p>
 										</div>
 									</Col>
 									<Col sm={1} lg={10} />
@@ -228,19 +232,27 @@ const AddEditToolForm = (props) => {
 														defaultSelected={[formik.values.categories.category]}
 														options={props.combinedCategories}
 														className={
-															formik.touched.categories && formik.errors.categories && typeof formik.errors.categories.category !== 'undefined'
+															formik.touched.categories &&
+															formik.errors.categories &&
+															typeof formik.errors.categories.category !== 'undefined'
 																? 'emptyFormInputTypeAhead addFormInputTypeAhead'
 																: 'addFormInputTypeAhead'
 														}
-														onChange={(selected) => {
+														onChange={selected => {
 															var tempSelected = [];
-															selected.forEach((selectedItem) => {
-																selectedItem.customOption === true ? tempSelected.push(selectedItem.category) : tempSelected.push(selectedItem);
+															selected.forEach(selectedItem => {
+																selectedItem.customOption === true
+																	? tempSelected.push(selectedItem.category)
+																	: tempSelected.push(selectedItem);
 															});
-															tempSelected.length > 0 ? (formik.values.categories.category = tempSelected[0]) : (formik.values.categories.category = '');
+															tempSelected.length > 0
+																? (formik.values.categories.category = tempSelected[0])
+																: (formik.values.categories.category = '');
 														}}
 													/>
-													{formik.touched.categories && formik.errors.categories && typeof formik.errors.categories.category !== 'undefined' ? (
+													{formik.touched.categories &&
+													formik.errors.categories &&
+													typeof formik.errors.categories.category !== 'undefined' ? (
 														<div className='errorMessages'>{formik.errors.categories.category}</div>
 													) : null}
 												</Form.Group>
@@ -261,13 +273,19 @@ const AddEditToolForm = (props) => {
 														id='description'
 														name='description'
 														type='text'
-														className={formik.touched.description && formik.errors.description ? 'emptyFormInput addFormInput descriptionInput' : 'addFormInput descriptionInput'}
+														className={
+															formik.touched.description && formik.errors.description
+																? 'emptyFormInput addFormInput descriptionInput'
+																: 'addFormInput descriptionInput'
+														}
 														onKeyUp={descriptionCount}
 														onChange={formik.handleChange}
 														value={formik.values.description}
 														onBlur={formik.handleBlur}
 													/>
-													{formik.touched.description && formik.errors.description ? <div className='errorMessages'>{formik.errors.description}</div> : null}
+													{formik.touched.description && formik.errors.description ? (
+														<div className='errorMessages'>{formik.errors.description}</div>
+													) : null}
 												</Form.Group>
 
 												<Form.Group>
@@ -287,39 +305,53 @@ const AddEditToolForm = (props) => {
 														id='resultsInsights'
 														name='resultsInsights'
 														type='text'
-														className={formik.touched.resultsInsights && formik.errors.resultsInsights ? 'emptyFormInput addFormInput descriptionInput' : 'addFormInput descriptionInput'}
+														className={
+															formik.touched.resultsInsights && formik.errors.resultsInsights
+																? 'emptyFormInput addFormInput descriptionInput'
+																: 'addFormInput descriptionInput'
+														}
 														onKeyUp={resultsInsightsCount}
 														onChange={formik.handleChange}
 														value={formik.values.resultsInsights}
 														onBlur={formik.handleBlur}
 													/>
-													{formik.touched.resultsInsights && formik.errors.resultsInsights ? <div className='errorMessages'>{formik.errors.resultsInsights}</div> : null}
+													{formik.touched.resultsInsights && formik.errors.resultsInsights ? (
+														<div className='errorMessages'>{formik.errors.resultsInsights}</div>
+													) : null}
 												</Form.Group>
 
 												<Form.Group>
 													<span className='gray800-14'>Authors on the Gateway</span>
 													<Typeahead
 														id='authors'
-														labelKey={(authors) => `${authors.name}`}
+														labelKey={authors => `${authors.name}`}
 														defaultSelected={listOfAuthors}
 														multiple
 														options={props.combinedUsers}
-														className={formik.touched.authors && formik.errors.authors ? 'emptyFormInputTypeAhead addFormInputTypeAhead' : 'addFormInputTypeAhead'}
-														onChange={(selected) => {
+														className={
+															formik.touched.authors && formik.errors.authors
+																? 'emptyFormInputTypeAhead addFormInputTypeAhead'
+																: 'addFormInputTypeAhead'
+														}
+														onChange={selected => {
 															var tempSelected = [];
-															selected.forEach((selectedItem) => {
+															selected.forEach(selectedItem => {
 																tempSelected.push(selectedItem.id);
 															});
 															formik.values.authors = tempSelected;
 														}}
 													/>
-													{formik.touched.authors && formik.errors.authors ? <div className='errorMessages'>{formik.errors.authors}</div> : null}
+													{formik.touched.authors && formik.errors.authors ? (
+														<div className='errorMessages'>{formik.errors.authors}</div>
+													) : null}
 												</Form.Group>
 
 												<Row className='mt-2'>
 													<Col sm={12} md={8}>
 														<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Implementation</p>
-														<p className='gray700-13 margin-bottom-0'>Programming languages, formalisms or frameworks. E.g. Python, RDF, GATE</p>
+														<p className='gray700-13 margin-bottom-0'>
+															Programming languages, formalisms or frameworks. E.g. Python, RDF, GATE
+														</p>
 													</Col>
 													<Col sm={6} md={3}>
 														<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Version (optional)</p>
@@ -355,10 +387,12 @@ const AddEditToolForm = (props) => {
 																								? 'emptyFormInputTypeAhead addFormInputTypeAhead'
 																								: 'addFormInputTypeAhead'
 																						}
-																						onChange={(selected) => {
+																						onChange={selected => {
 																							var tempSelected = [];
-																							selected.forEach((selectedItem) => {
-																								selectedItem.customOption === true ? tempSelected.push(selectedItem.label) : tempSelected.push(selectedItem);
+																							selected.forEach(selectedItem => {
+																								selectedItem.customOption === true
+																									? tempSelected.push(selectedItem.label)
+																									: tempSelected.push(selectedItem);
 																							});
 																							tempSelected.length > 0
 																								? (formik.values.programmingLanguage[index].programmingLanguage = tempSelected[0])
@@ -372,7 +406,9 @@ const AddEditToolForm = (props) => {
 																					typeof formik.errors.programmingLanguage[index] !== 'undefined' &&
 																					formik.touched.programmingLanguage[index] &&
 																					formik.touched.programmingLanguage[index].version ? (
-																						<div className='errorMessages'>{formik.errors.programmingLanguage[index].programmingLanguage}</div>
+																						<div className='errorMessages'>
+																							{formik.errors.programmingLanguage[index].programmingLanguage}
+																						</div>
 																					) : null}
 																				</Form.Group>
 																			</Col>
@@ -390,7 +426,9 @@ const AddEditToolForm = (props) => {
 																				</div>
 																			</Col>
 
-																			<Col style={{ paddingRight: '0px' }} className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'>
+																			<Col
+																				style={{ paddingRight: '0px' }}
+																				className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'>
 																				<button
 																					type='button'
 																					className='plusMinusButton'
@@ -398,22 +436,23 @@ const AddEditToolForm = (props) => {
 																					onClick={() => {
 																						remove(index);
 																						formik.values.programmingLanguage.splice(index, 1);
-																					}}
-																				>
+																					}}>
 																					-
 																				</button>
 																				<button
 																					type='button'
 																					className='plusMinusButton'
-																					disabled={formik.values.programmingLanguage.length >= 5 || index !== formik.values.programmingLanguage.length - 1}
+																					disabled={
+																						formik.values.programmingLanguage.length >= 5 ||
+																						index !== formik.values.programmingLanguage.length - 1
+																					}
 																					onClick={() => {
 																						push(new ProgrammingLanguage());
 																						formik.values.programmingLanguage.push({
 																							programmingLanguage: '',
 																							version: '',
 																						});
-																					}}
-																				>
+																					}}>
 																					+
 																				</button>
 																			</Col>
@@ -434,10 +473,12 @@ const AddEditToolForm = (props) => {
 														defaultSelected={[formik.values.license]}
 														options={props.combinedLicenses}
 														className='addFormInputTypeAhead'
-														onChange={(selected) => {
+														onChange={selected => {
 															var tempSelected = [];
-															selected.forEach((selectedItem) => {
-																selectedItem.customOption === true ? tempSelected.push(selectedItem.license) : tempSelected.push(selectedItem);
+															selected.forEach(selectedItem => {
+																selectedItem.customOption === true
+																	? tempSelected.push(selectedItem.license)
+																	: tempSelected.push(selectedItem);
 															});
 															tempSelected.length > 0 ? (formik.values.license = tempSelected[0]) : (formik.values.license = '');
 														}}
@@ -446,7 +487,9 @@ const AddEditToolForm = (props) => {
 
 												<Form.Group>
 													<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Keywords (optional)</p>
-													<p className='gray700-13 margin-bottom-0'>Technological paradigms or other keywords. Eg. Rule-based, clustering, supervised machine learning</p>
+													<p className='gray700-13 margin-bottom-0'>
+														Technological paradigms or other keywords. Eg. Rule-based, clustering, supervised machine learning
+													</p>
 													<Typeahead
 														id='tags.features'
 														labelKey='features'
@@ -455,10 +498,12 @@ const AddEditToolForm = (props) => {
 														multiple
 														options={props.combinedFeatures}
 														className='addFormInputTypeAhead'
-														onChange={(selected) => {
+														onChange={selected => {
 															var tempSelected = [];
-															selected.forEach((selectedItem) => {
-																selectedItem.customOption === true ? tempSelected.push(selectedItem.features) : tempSelected.push(selectedItem);
+															selected.forEach(selectedItem => {
+																selectedItem.customOption === true
+																	? tempSelected.push(selectedItem.features)
+																	: tempSelected.push(selectedItem);
 															});
 															formik.values.tags.features = tempSelected;
 														}}
@@ -476,10 +521,12 @@ const AddEditToolForm = (props) => {
 														multiple
 														options={props.combinedTopic}
 														className='addFormInputTypeAhead'
-														onChange={(selected) => {
+														onChange={selected => {
 															var tempSelected = [];
-															selected.forEach((selectedItem) => {
-																selectedItem.customOption === true ? tempSelected.push(selectedItem.topics) : tempSelected.push(selectedItem);
+															selected.forEach(selectedItem => {
+																selectedItem.customOption === true
+																	? tempSelected.push(selectedItem.topics)
+																	: tempSelected.push(selectedItem);
 															});
 															formik.values.tags.topics = tempSelected;
 														}}
@@ -491,15 +538,17 @@ const AddEditToolForm = (props) => {
 												<span className='black-20'>Related resources</span>
 												<span className='gray800-14'> (optional)</span>
 												<br />
-												<span className='gray800-14'>Show relationships to papers, projects, datasets and tools. Resources must be added to the Gateway first.</span>
+												<span className='gray800-14'>
+													Show relationships to papers, projects, datasets and tools. Resources must be added to the Gateway first.
+												</span>
 											</div>
 
 											{props.relatedObjects.length === 0 ? (
 												''
 											) : (
 												<div className='rectangle'>
-													{props.relatedObjects.map((object) => {
-														if(!_.isNil(object.objectId)){
+													{props.relatedObjects.map(object => {
+														if (!_.isNil(object.objectId)) {
 															return (
 																<RelatedObject
 																	showRelationshipQuestion={true}
@@ -531,7 +580,7 @@ const AddEditToolForm = (props) => {
 															projectData={props.projectData}
 															paperData={props.paperData}
 															personData={props.personData}
-                              courseData={props.courseData}
+															courseData={props.courseData}
 															summary={props.summary}
 															doAddToTempRelatedObjects={props.doAddToTempRelatedObjects}
 															tempRelatedObjectIds={props.tempRelatedObjectIds}

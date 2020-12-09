@@ -1,27 +1,25 @@
-
 @import '../../../css/variables';
 
 .sideDrawer {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    right: 0;
-    z-index: 2100;
-    background-color: #f6f7f8;
-    box-sizing: border-box;
-    transition: transform 0.3s ease-out;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	right: 0;
+	z-index: 2100;
+	background-color: #f6f7f8;
+	box-sizing: border-box;
+	transition: transform 0.3s ease-out;
 
-
-    @media (min-width: $bp-medium) {
-        width: 70vw;
-    }   
+	@media (min-width: $bp-medium) {
+		width: 70vw;
+	}
 }
-    
+
 .open-drawer {
-    transform: translateX(0%);
+	transform: translateX(0%);
 }
 
 .close-drawer {
-    transform: translateX(100%);
+	transform: translateX(100%);
 }

@@ -16,20 +16,29 @@ Example
         @include font-source(14px, $indigo, 500, false, 0.5);
     }
 */
-@mixin font-source($size: false, $colour: false, $weight: false,  $lh: false, $opacity: false) {
-    font-family: $heading-font-family;
-    @if $size { font-size: $size !important; }
-    @if $colour { color: $colour !important; }
-    @if $weight { font-weight: $weight; }
-    @if $lh { line-height: $lh; }
-    @if $opacity { opacity: $opacity; }
+@mixin font-source($size: false, $colour: false, $weight: false, $lh: false, $opacity: false) {
+	font-family: $heading-font-family;
+	@if $size {
+		font-size: $size !important;
+	}
+	@if $colour {
+		color: $colour !important;
+	}
+	@if $weight {
+		font-weight: $weight;
+	}
+	@if $lh {
+		line-height: $lh;
+	}
+	@if $opacity {
+		opacity: $opacity;
+	}
 }
-
 
 // Media Query
 
 // Example
- /*.site-header {
+/*.site-header {
      padding: 2rem;
      font-size: 1.8rem;
      @include mq('tablet-wide') {
@@ -37,28 +46,27 @@ Example
          font-size: 2.4rem;
      }
  }*/
- 
 
 $breakpoints: (
-    "phone":        320px,
-    "phone-wide":   480px,
-    "phablet":      560px,
-    "tablet-small": 640px,
-    "tablet":       768px,
-    "tablet-wide":  1024px,
-    "desktop":      1248px,
-    "desktop-wide": 1440px
+	'phone': 320px,
+	'phone-wide': 480px,
+	'phablet': 560px,
+	'tablet-small': 640px,
+	'tablet': 768px,
+	'tablet-wide': 1024px,
+	'desktop': 1248px,
+	'desktop-wide': 1440px,
 );
 @mixin mq($width, $type: min) {
-    @if map_has_key($breakpoints, $width) {
-        $width: map_get($breakpoints, $width);
-        @if $type == max {
-            $width: $width - 1px;
-        }
-        @media only screen and (#{$type}-width: $width) {
-            @content;
-        }
-    }
+	@if map_has_key($breakpoints, $width) {
+		$width: map_get($breakpoints, $width);
+		@if $type == max {
+			$width: $width - 1px;
+		}
+		@media only screen and (#{$type}-width: $width) {
+			@content;
+		}
+	}
 }
 
 /*
@@ -75,7 +83,6 @@ $breakpoints: (
 	border-radius: $border;
 }
 
-
 /* 
 	Retina images
 	example:
@@ -88,10 +95,10 @@ $breakpoints: (
 
 @mixin retina {
 	@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-	only screen and (-moz-min-device-pixel-ratio: 1.5),
-	only screen and (-o-min-device-pixel-ratio: 3 / 2),
-	only screen and (min-device-pixel-ratio: 1.5),
-	only screen and (min-resolution: 1.5dppx) {
+		only screen and (-moz-min-device-pixel-ratio: 1.5),
+		only screen and (-o-min-device-pixel-ratio: 3 / 2),
+		only screen and (min-device-pixel-ratio: 1.5),
+		only screen and (min-resolution: 1.5dppx) {
 		@content;
 	}
 }
@@ -102,7 +109,10 @@ button::-moz-focus-inner {
 }
 
 input {
-	&[type="reset"]::-moz-focus-inner, &[type="button"]::-moz-focus-inner, &[type="submit"]::-moz-focus-inner, &[type="file"] > input[type="button"]::-moz-focus-inner {
+	&[type='reset']::-moz-focus-inner,
+	&[type='button']::-moz-focus-inner,
+	&[type='submit']::-moz-focus-inner,
+	&[type='file'] > input[type='button']::-moz-focus-inner {
 		border: none;
 	}
 }

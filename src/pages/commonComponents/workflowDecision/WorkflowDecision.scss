@@ -1,16 +1,15 @@
-
 .status-text {
-  margin-left: auto;
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  svg {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-  }
+	margin-left: auto;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	svg {
+		width: 24px;
+		height: 24px;
+		margin-right: 10px;
+	}
 
-  rect {
-    fill: red;
-  }
+	rect {
+		fill: red;
+	}
 }

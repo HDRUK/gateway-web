@@ -1,60 +1,60 @@
-@import '../../css/variables'; 
-@import '../../css/mixins'; 
+@import '../../css/variables';
+@import '../../css/mixins';
 
 .paperFormCheckbox {
-    width: 0% !important;
-  }
+	width: 0% !important;
+}
 
 .paperFormSVG {
-  transform: translate(8px, 3px);
+	transform: translate(8px, 3px);
 }
 
 .preprintFormToolTip {
-    width: 275px;
-    border-radius: 8px;
-    background-color: $dark;
-    padding: 10px;
-    position: absolute;
-    left: 5%;
-    top: 90%;
-    z-index: 1;
-  }
-
-.preprintToolTip{
-  width: 275px;
-  border-radius: 8px;
-  background-color: $dark;
-  padding: 10px;
-  position: absolute;
-  left: 80%;
-  top: 60%;
-  z-index: 1;
-
-  @include mq('tablet-wide', max){ 
-    left: 64%;
-    top: 70%;
-  }
-
-  @include mq('tablet-small', max){
-    left: 0%;
-    top: 75%;
-  }
+	width: 275px;
+	border-radius: 8px;
+	background-color: $dark;
+	padding: 10px;
+	position: absolute;
+	left: 5%;
+	top: 90%;
+	z-index: 1;
 }
 
-#preprintCheckCol { 
-  margin-left: -36px; 
-  padding-left: 8px;
+.preprintToolTip {
+	width: 275px;
+	border-radius: 8px;
+	background-color: $dark;
+	padding: 10px;
+	position: absolute;
+	left: 80%;
+	top: 60%;
+	z-index: 1;
 
-  @include mq('tablet-wide',max){
-    margin-left: -15px;
-  }
+	@include mq('tablet-wide', max) {
+		left: 64%;
+		top: 70%;
+	}
 
-  @include mq('tablet',max){
-    margin-left: 0px;
-  }
+	@include mq('tablet-small', max) {
+		left: 0%;
+		top: 75%;
+	}
+}
 
-  @include mq('phablet',max){
-    margin-left: 35px;
-    margin-top: -13px;
-  }
+#preprintCheckCol {
+	margin-left: -36px;
+	padding-left: 8px;
+
+	@include mq('tablet-wide', max) {
+		margin-left: -15px;
+	}
+
+	@include mq('tablet', max) {
+		margin-left: 0px;
+	}
+
+	@include mq('phablet', max) {
+		margin-left: 35px;
+		margin-top: -13px;
+	}
 }

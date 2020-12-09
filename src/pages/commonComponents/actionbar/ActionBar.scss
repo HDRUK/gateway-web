@@ -1,22 +1,22 @@
 @import '../../../css/mixins';
 @import '../../../css/variables';
- 
-.actionBar {
-    position: sticky;
-    z-index: 998;
-    left: 0; 
-    bottom: 0;
-    height: 72px;
-    width:100%;
-    box-shadow: 1px 1px 0 3px #00000017;
-    background-color: $white;
-    text-align: right;
-    padding: 15px;
-    margin-bottom: -440px;
- }
 
-.floatRight{
-    @include mq('tablet-small'){
-      float: right;
-    }
-  }
+.actionBar {
+	position: sticky;
+	z-index: 998;
+	left: 0;
+	bottom: 0;
+	height: 72px;
+	width: 100%;
+	box-shadow: 1px 1px 0 3px #00000017;
+	background-color: $white;
+	text-align: right;
+	padding: 15px;
+	margin-bottom: -440px;
+}
+
+.floatRight {
+	@include mq('tablet-small') {
+		float: right;
+	}
+}

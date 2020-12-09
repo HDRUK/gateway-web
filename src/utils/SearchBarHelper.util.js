@@ -4,8 +4,7 @@
  */
 let doSearch = (e, component) => {
 	//fires on enter on searchbar
-	if (e.key === 'Enter')
-		window.location.href = '/search?search=' + component.state.searchString;
+	if (e.key === 'Enter') window.location.href = '/search?search=' + component.state.searchString;
 };
 
 let updateSearchString = (searchString, component) => {
@@ -13,6 +12,6 @@ let updateSearchString = (searchString, component) => {
 };
 
 export default {
-    doSearch: doSearch,
-    updateSearchString: updateSearchString
+	doSearch: doSearch,
+	updateSearchString: updateSearchString,
 };

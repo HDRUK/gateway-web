@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { initGA } from '../../tracking';
-import moment from 'moment'; 
+import moment from 'moment';
 import { Container } from 'react-bootstrap';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
@@ -34,8 +34,8 @@ class AddEditCoursePage extends React.Component {
 		toolData: [],
 		projectData: [],
 		paperData: [],
-        personData: [],
-        courseData: [],
+		personData: [],
+		courseData: [],
 		summary: [],
 		tempRelatedObjectIds: [],
 		relatedObjects: [],
@@ -43,16 +43,12 @@ class AddEditCoursePage extends React.Component {
 		isEdit: false,
 		showDrawer: false,
 		showModal: false,
-		context: {}
+		context: {},
 	};
 
 	async componentDidMount() {
 		initGA('UA-166025838-1');
-		await Promise.all([
-			this.doGetDomainsCall(),
-			this.doGetKeywordsCall(),
-			this.doGetAwardsCall()
-		]);
+		await Promise.all([this.doGetDomainsCall(), this.doGetKeywordsCall(), this.doGetAwardsCall()]);
 		if (this.state.isEdit) this.getToolFromDb();
 		else this.setState({ isLoading: false });
 	}
@@ -60,39 +56,31 @@ class AddEditCoursePage extends React.Component {
 	getToolFromDb = () => {
 		//need to handle error if no id is found
 		this.setState({ isLoading: true });
-		axios
-			.get(baseURL + '/api/v1/course/edit/' + this.props.match.params.courseID)
-			.then((res) => {
-				this.setState({
-					data: res.data.data[0],
-					relatedObjects: res.data.data[0].relatedObjects
-						? res.data.data[0].relatedObjects
-						: []
-				});
-				this.setState({ isLoading: false });
+		axios.get(baseURL + '/api/v1/course/edit/' + this.props.match.params.courseID).then(res => {
+			this.setState({
+				data: res.data.data[0],
+				relatedObjects: res.data.data[0].relatedObjects ? res.data.data[0].relatedObjects : [],
 			});
+			this.setState({ isLoading: false });
+		});
 	};
 
 	doGetDomainsCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/domains/course').then((res) => {
+			axios.get(baseURL + '/api/v1/search/filter/domains/course').then(res => {
 				var tempDomainsArray = [
 					/* 'Blood'*/
 				];
 
-				res.data.data[0].forEach((dat) => {
+				res.data.data[0].forEach(dat => {
 					if (!tempDomainsArray.includes(dat) && dat !== '') {
 						tempDomainsArray.push(dat);
 					}
-                });
+				});
 				this.setState({
 					combinedDomains: tempDomainsArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
 				resolve();
 			});
@@ -101,12 +89,12 @@ class AddEditCoursePage extends React.Component {
 
 	doGetKeywordsCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/keywords/course').then((res) => {
+			axios.get(baseURL + '/api/v1/search/filter/keywords/course').then(res => {
 				var tempKeywordsArray = [
 					/* 'Arbitrage' */
 				];
 
-				res.data.data[0].forEach((dat) => {
+				res.data.data[0].forEach(dat => {
 					if (!tempKeywordsArray.includes(dat) && dat !== '') {
 						tempKeywordsArray.push(dat);
 					}
@@ -114,12 +102,8 @@ class AddEditCoursePage extends React.Component {
 
 				this.setState({
 					combinedKeywords: tempKeywordsArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
 				resolve();
 			});
@@ -128,12 +112,10 @@ class AddEditCoursePage extends React.Component {
 
 	doGetAwardsCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/awards/course').then((res) => {
-				var tempAwardsArray = [
-					'CPD', 'Fellowship', 'PhD', 'CPE', 'PGCert', 'PGDip', 'MSc', 'DPhil', 'BSc'
-				];
+			axios.get(baseURL + '/api/v1/search/filter/awards/course').then(res => {
+				var tempAwardsArray = ['CPD', 'Fellowship', 'PhD', 'CPE', 'PGCert', 'PGDip', 'MSc', 'DPhil', 'BSc'];
 
-				res.data.data[0].forEach((dat) => {
+				res.data.data[0].forEach(dat => {
 					if (!tempAwardsArray.includes(dat) && dat !== '') {
 						tempAwardsArray.push(dat);
 					}
@@ -141,25 +123,20 @@ class AddEditCoursePage extends React.Component {
 
 				this.setState({
 					combinedAwards: tempAwardsArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
 				resolve();
 			});
 		});
 	}
 
-	doSearch = (e) => {
+	doSearch = e => {
 		//fires on enter on searchbar
-		if (e.key === 'Enter')
-			window.location.href = '/search?search=' + this.state.searchString;
+		if (e.key === 'Enter') window.location.href = '/search?search=' + this.state.searchString;
 	};
 
-	updateSearchString = (searchString) => {
+	updateSearchString = searchString => {
 		this.setState({ searchString: searchString });
 	};
 
@@ -172,22 +149,16 @@ class AddEditCoursePage extends React.Component {
 			if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
 			if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
 			if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
-			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page; 
-			
+			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;
+
 			axios
-				.get(
-					baseURL +
-						'/api/v1/search?search=' +
-						this.state.searchString +
-						searchURL,
-					{
-						params: {
-							form: true,
-							userID: this.state.userState[0].id
-						}
-					}
-				)
-				.then((res) => {
+				.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL, {
+					params: {
+						form: true,
+						userID: this.state.userState[0].id,
+					},
+				})
+				.then(res => {
 					this.setState({
 						datasetData: res.data.datasetResults || [],
 						toolData: res.data.toolResults || [],
@@ -196,20 +167,15 @@ class AddEditCoursePage extends React.Component {
 						personData: res.data.personResults || [],
 						courseData: res.data.courseResults || [],
 						summary: res.data.summary || [],
-						isLoading: false
+						isLoading: false,
 					});
 				});
 		}
 	};
 
 	addToTempRelatedObjects = (id, type, pid) => {
-		if (
-			this.state.tempRelatedObjectIds &&
-			this.state.tempRelatedObjectIds.some((object) => object.objectId === id)
-		) {
-			this.setState({tempRelatedObjectIds: this.state.tempRelatedObjectIds.filter(
-				(object) => object.objectId !== id
-			)})
+		if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some(object => object.objectId === id)) {
+			this.setState({ tempRelatedObjectIds: this.state.tempRelatedObjectIds.filter(object => object.objectId !== id) });
 		} else {
 			this.state.tempRelatedObjectIds.push({ objectId: id, type: type, pid: pid });
 		}
@@ -217,21 +183,23 @@ class AddEditCoursePage extends React.Component {
 	};
 
 	addToRelatedObjects = () => {
-		let {userState: [user = {}]} = this.state;
-		let relatedObjectIds = [...this.state.tempRelatedObjectIds]; 
+		let {
+			userState: [user = {}],
+		} = this.state;
+		let relatedObjectIds = [...this.state.tempRelatedObjectIds];
 		let relatedObjects = [...this.state.relatedObjects];
 
-		let newRelatedObjects = relatedObjectIds.map((relatedObject) => { 
-			let newRelatedObject = { 
-				...relatedObject, 
-				objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId, 
-				user: user.name, 
-				updated: moment().format('DD MM YYYY') 
+		let newRelatedObjects = relatedObjectIds.map(relatedObject => {
+			let newRelatedObject = {
+				...relatedObject,
+				objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId,
+				user: user.name,
+				updated: moment().format('DD MM YYYY'),
 			};
-			return newRelatedObject; 
+			return newRelatedObject;
 		});
 
-		this.setState({relatedObjects: [...relatedObjects, ...newRelatedObjects]});
+		this.setState({ relatedObjects: [...relatedObjects, ...newRelatedObjects] });
 	};
 
 	clearRelatedObjects = () => {
@@ -239,18 +207,13 @@ class AddEditCoursePage extends React.Component {
 	};
 
 	removeObject = (id, type, datasetid) => {
-
 		let countOfRelatedObjects = this.state.relatedObjects.length;
-		
-		let updatedRelatedObjects = [...this.state.relatedObjects].filter(
-			(obj) => (obj.objectId !== id && obj.objectId !== id.toString())
-		);
 
-		//if an item was not removed try removing by datasetid for retro linkages 
-		if((countOfRelatedObjects <= updatedRelatedObjects.length) && type === 'dataset'){
-			updatedRelatedObjects = this.state.relatedObjects.filter(
-				(obj) => (obj.objectId !== datasetid && obj.objectId !== datasetid.toString())
-			);
+		let updatedRelatedObjects = [...this.state.relatedObjects].filter(obj => obj.objectId !== id && obj.objectId !== id.toString());
+
+		//if an item was not removed try removing by datasetid for retro linkages
+		if (countOfRelatedObjects <= updatedRelatedObjects.length && type === 'dataset') {
+			updatedRelatedObjects = this.state.relatedObjects.filter(obj => obj.objectId !== datasetid && obj.objectId !== datasetid.toString());
 		}
 
 		this.setState({ relatedObjects: updatedRelatedObjects, didDelete: true });
@@ -261,7 +224,7 @@ class AddEditCoursePage extends React.Component {
 	};
 
 	toggleDrawer = () => {
-		this.setState((prevState) => {
+		this.setState(prevState => {
 			if (prevState.showDrawer === true) {
 				this.searchBar.current.getNumberOfUnreadMessages();
 			}
@@ -270,10 +233,10 @@ class AddEditCoursePage extends React.Component {
 	};
 
 	toggleModal = (showEnquiry = false, context = {}) => {
-		this.setState( ( prevState ) => {
+		this.setState(prevState => {
 			return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
 		});
-	  }
+	};
 
 	render() {
 		const {
@@ -296,7 +259,7 @@ class AddEditCoursePage extends React.Component {
 			didDelete,
 			showDrawer,
 			showModal,
-			context
+			context,
 		} = this.state;
 
 		if (isLoading) {
@@ -316,34 +279,34 @@ class AddEditCoursePage extends React.Component {
 					doToggleDrawer={this.toggleDrawer}
 					userState={userState}
 				/>
-				
-                <AddEditCourseForm
-                    data={data}
-                    isEdit={isEdit}
-                    combinedDomains={combinedDomains}
-                    combinedKeywords={combinedKeywords}
-                    combinedAwards={combinedAwards}
-                    userState={userState}
-                    searchString={searchString}
-                    doSearchMethod={this.doModalSearch}
-                    doUpdateSearchString={this.updateSearchString}
-                    datasetData={datasetData}
-                    toolData={toolData}
-                    projectData={projectData}
-                    paperData={paperData}
-                    personData={personData}
-                    courseData={courseData}
-                    summary={summary}
-                    doAddToTempRelatedObjects={this.addToTempRelatedObjects}
-                    tempRelatedObjectIds={this.state.tempRelatedObjectIds}
-                    doClearRelatedObjects={this.clearRelatedObjects}
-                    doAddToRelatedObjects={this.addToRelatedObjects}
-                    doRemoveObject={this.removeObject}
-                    relatedObjects={relatedObjects}
-                    didDelete={didDelete}
-                    updateDeleteFlag={this.updateDeleteFlag}
-                />
-				
+
+				<AddEditCourseForm
+					data={data}
+					isEdit={isEdit}
+					combinedDomains={combinedDomains}
+					combinedKeywords={combinedKeywords}
+					combinedAwards={combinedAwards}
+					userState={userState}
+					searchString={searchString}
+					doSearchMethod={this.doModalSearch}
+					doUpdateSearchString={this.updateSearchString}
+					datasetData={datasetData}
+					toolData={toolData}
+					projectData={projectData}
+					paperData={paperData}
+					personData={personData}
+					courseData={courseData}
+					summary={summary}
+					doAddToTempRelatedObjects={this.addToTempRelatedObjects}
+					tempRelatedObjectIds={this.state.tempRelatedObjectIds}
+					doClearRelatedObjects={this.clearRelatedObjects}
+					doAddToRelatedObjects={this.addToRelatedObjects}
+					doRemoveObject={this.removeObject}
+					relatedObjects={relatedObjects}
+					didDelete={didDelete}
+					updateDeleteFlag={this.updateDeleteFlag}
+				/>
+
 				<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
 					<UserMessages
 						userState={userState[0]}
@@ -353,12 +316,7 @@ class AddEditCoursePage extends React.Component {
 					/>
 				</SideDrawer>
 
-				<DataSetModal 
-                    open={showModal} 
-                    context={context}
-                    closed={this.toggleModal}
-                    userState={userState[0]} 
-				/>
+				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
 			</div>
 		);
 	}

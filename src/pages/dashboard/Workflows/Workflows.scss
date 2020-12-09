@@ -3,323 +3,316 @@
 @import '../../../css/mixins';
 
 .main {
+	&-card {
+		background: $white;
+		box-sizing: border-box;
+		margin-bottom: 20px;
+		padding: 25px;
+		box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
+	}
 
-  &-card {
-    background: $white;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    padding: 25px;
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
-  }
+	&-header {
+		display: flex;
+		flex-flow: column nowrap;
 
-  &-header{
-    display: flex;
-    flex-flow: column nowrap;
-    
-    @media (min-width: $bp-medium) {
-      align-items: center;
-      flex-flow: row nowrap;
-    }
-  
+		@media (min-width: $bp-medium) {
+			align-items: center;
+			flex-flow: row nowrap;
+		}
 
-    &-desc {
-      @media (min-width: $bp-medium) {
-        width: 65%;
-      }
-      @media (min-width: '1024px') {
-        width: 70%;
-      }
-    }
+		&-desc {
+			@media (min-width: $bp-medium) {
+				width: 65%;
+			}
+			@media (min-width: '1024px') {
+				width: 70%;
+			}
+		}
 
-    &-action {
-      margin-top: 10px;
-      @media (min-width: $bp-medium) {
-        margin-top: 0;
-        margin-left: auto;
-      }
-    }
-  }
+		&-action {
+			margin-top: 10px;
+			@media (min-width: $bp-medium) {
+				margin-top: 0;
+				margin-left: auto;
+			}
+		}
+	}
 
-  &-body {
-    margin-top: 30px;
-  }
+	&-body {
+		margin-top: 30px;
+	}
 
-  &-accordion {
-    margin-bottom: 2px;
+	&-accordion {
+		margin-bottom: 2px;
 
-    &-header{
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-      cursor: pointer;
-      background: $teal;
-      padding: 16px 25px;
-      display: flex;
-      color: $white;
-      width: 100%;
-      
+		&-header {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+			cursor: pointer;
+			background: $teal;
+			padding: 16px 25px;
+			display: flex;
+			color: $white;
+			width: 100%;
 
-      svg {
-        width: 20px;
-        height: 20px;
-        margin-right: 15px;
-        transform-origin: 10px 13px;
-      }
+			svg {
+				width: 20px;
+				height: 20px;
+				margin-right: 15px;
+				transform-origin: 10px 13px;
+			}
 
-      h1 {
-        @include font-source(16px, $white, $font-weight-semibold);
-        margin-bottom: 0;
-      }
-  }
+			h1 {
+				@include font-source(16px, $white, $font-weight-semibold);
+				margin-bottom: 0;
+			}
+		}
 
-    &-body {
-      padding: 25px;
-      border-right: 1px solid $gray-300;
-      border-bottom: 1px solid $gray-300;
-      border-left: 1px solid $gray-300;
+		&-body {
+			padding: 25px;
+			border-right: 1px solid $gray-300;
+			border-bottom: 1px solid $gray-300;
+			border-left: 1px solid $gray-300;
 
-      .form-group {
-        .is-invalid {
-          border: 2px solid $red;
-        }
-      }
+			.form-group {
+				.is-invalid {
+					border: 2px solid $red;
+				}
+			}
 
-      label {
-        @include font-source(14px, $gray-800, $font-weight-semibold);
-        margin-bottom: 0;
-      }
+			label {
+				@include font-source(14px, $gray-800, $font-weight-semibold);
+				margin-bottom: 0;
+			}
 
-      small {
-        margin-top: 0;
-        @include font-source(13px, $gray-700, $font-weight-semibold);
-      }
+			small {
+				margin-top: 0;
+				@include font-source(13px, $gray-700, $font-weight-semibold);
+			}
 
-      input.checker.is-invalid:after {
-        border: 2px solid $red;
-      }
-      
-      input[type='checkbox'] {
-        &:checked {
-          &:after{
-            padding-top: 0;
-          }
-        }
-      }
-    }
-  }
+			input.checker.is-invalid:after {
+				border: 2px solid $red;
+			}
 
-  &-footer {
-    margin-top: 16px;
-    width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
+			input[type='checkbox'] {
+				&:checked {
+					&:after {
+						padding-top: 0;
+					}
+				}
+			}
+		}
+	}
 
-    button {
-      width: 100%;
-    }
-  }
+	&-footer {
+		margin-top: 16px;
+		width: 100%;
+		display: flex;
+		flex-flow: row nowrap;
 
+		button {
+			width: 100%;
+		}
+	}
 }
 
 .phase {
-  &-action {
-    display: flex;
-    flex-flow: row nowrap;
-    width: 100%;
-    justify-content: flex-end;
-  }
+	&-action {
+		display: flex;
+		flex-flow: row nowrap;
+		width: 100%;
+		justify-content: flex-end;
+	}
 }
 
 .workflow {
+	h1 {
+		@include font-source(18px, $gray-800, $font-weight-semibold);
+	}
 
-  h1 {
-    @include font-source(18px, $gray-800, $font-weight-semibold);
-  }
+	&-card {
+		margin-bottom: 10px;
+		padding: 25px 25px 10px 25px;
+		background: $white;
+		box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
+	}
 
-  &-card {
-    margin-bottom: 10px;
-    padding: 25px 25px 10px 25px;
-    background: $white;
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
-  }
+	&-header {
+		display: flex;
+		flex-flow: column;
+		width: 100%;
+		position: relative;
+		margin-bottom: 10px;
+		padding: 10px 0;
+		border-bottom: 1px solid #f6f7f8;
 
-  &-header {
-    display: flex;
-    flex-flow: column;
-    width: 100%;
-    position: relative;
-    margin-bottom: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid #f6f7f8;
+		@media (min-width: $bp-medium) {
+			flex-flow: row;
+		}
 
-    @media (min-width: $bp-medium) {
-      flex-flow: row;
-    }
+		h1 {
+			display: flex;
+			flex-flow: row;
+			align-items: center;
+			svg {
+				margin-right: 10px;
+			}
+		}
 
-    h1 {
-      display: flex;
-      flex-flow: row;
-      align-items: center;
-      svg {
-        margin-right: 10px;
-      }
-    }
+		div {
+			@include font-source(13px, $gray-700, $font-weight-semibold);
+			svg {
+				transform-origin: 6px 11px;
+			}
+		}
+	}
 
-    div {
-      @include font-source(13px, $gray-700, $font-weight-semibold);
-      svg {
-        transform-origin: 6px 11px;
-      }
-    } 
-  }
+	&-step {
+		display: flex;
+		flex-flow: column;
+		padding: 10px 0;
+		cursor: pointer;
+		&:after {
+			height: 1px;
+			display: block;
+			width: 100%;
+			background: #e7e9ed;
+			content: '';
+		}
 
+		h1 {
+			display: flex;
+			flex-flow: row;
+			align-items: center;
+			margin-bottom: 16px;
+			@include font-source(18px, $gray-800, $font-weight-semibold);
+			svg {
+				margin-left: auto;
+				transform-origin: 10px 13px;
+			}
+		}
 
-  &-step {
-    display: flex;
-    flex-flow: column;
-    padding: 10px 0;
-    cursor: pointer;
-    &:after {
-      height: 1px;
-      display: block;
-      width: 100%;
-      background: #e7e9ed;
-      content: '';
-    }
+		&-body {
+			display: grid;
+			grid-template-columns: 100px 1fr;
+			padding: 10px 0;
+		}
+	}
 
-    h1 {
-      display: flex;
-      flex-flow: row;
-      align-items: center;
-      margin-bottom: 16px;
-      @include font-source(18px, $gray-800, $font-weight-semibold);
-      svg {
-        margin-left: auto;
-        transform-origin: 10px 13px;
-      }
-    }
+	&-action {
+		margin-top: 10px;
+		@media (min-width: $bp-medium) {
+			margin-top: 0;
+			margin-left: auto;
+		}
+	}
 
-    &-body {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      padding: 10px 0;
-
-    }
-  }
-
-  &-action {
-    margin-top: 10px;
-    @media (min-width: $bp-medium) {
-      margin-top: 0;
-      margin-left: auto;
-    }
-  }
-
-  &-action-bar{
-    margin-top: 50px;
-    display: flex;
-    flex-flow: row nowrap;
-    width: 100;
-    justify-content: space-between;
-    align-items: center;
-    background: $white;
-    padding: 15px;
-    button {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-      svg {
-        fill: $white !important;
-        width: 20px;
-        height: 20px;
-        vertical-align: middle;
-      }
-    }
-  }
+	&-action-bar {
+		margin-top: 50px;
+		display: flex;
+		flex-flow: row nowrap;
+		width: 100;
+		justify-content: space-between;
+		align-items: center;
+		background: $white;
+		padding: 15px;
+		button {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+			svg {
+				fill: $white !important;
+				width: 20px;
+				height: 20px;
+				vertical-align: middle;
+			}
+		}
+	}
 }
 
 .workflowModal {
-  box-sizing: border-box;
+	box-sizing: border-box;
 
-  .modal-dialog {
-    max-width: 395px;
-    transform: translate(0%, 50%) !important;
-  }
+	.modal-dialog {
+		max-width: 395px;
+		transform: translate(0%, 50%) !important;
+	}
 
-  &-header {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    padding: 32px 32px 0 32px;
+	&-header {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		padding: 32px 32px 0 32px;
 
-    h1 {
-      width: 90%;
-    }
+		h1 {
+			width: 90%;
+		}
 
-    &--close {
-      position: absolute;
-      top: 17px;
-      right: 25px;
-      width: 16px;
-      height: 16px;
-      fill: $indigo;
-      &:hover {
-          cursor: pointer;
-      }
-    }
-  } 
+		&--close {
+			position: absolute;
+			top: 17px;
+			right: 25px;
+			width: 16px;
+			height: 16px;
+			fill: $indigo;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
 
-  &-body {
-    width: 100%;
-    padding: 10px 32px 20px 32px;
-    @include font-source(14px, $gray-800, $font-weight-semibold);
-  }
+	&-body {
+		width: 100%;
+		padding: 10px 32px 20px 32px;
+		@include font-source(14px, $gray-800, $font-weight-semibold);
+	}
 
-  &-footer {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-end;
-      align-items: center;
-      width: 100%;
-      padding: 20px 0 32px 0;
-      background: $white;
+	&-footer {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-end;
+		align-items: center;
+		width: 100%;
+		padding: 20px 0 32px 0;
+		background: $white;
 
-      &--wrap {
-          display: flex;
-          flex-flow: row nowrap;
-          padding: 0 16px;
-      }
-  }
+		&--wrap {
+			display: flex;
+			flex-flow: row nowrap;
+			padding: 0 16px;
+		}
+	}
 }
 
 .control {
-  &-name {
-    max-width: 370px;
-    width: 100%;
-  }
-  &-deadline {
-    max-width: 80px;
-    width: 100%;
-  }
+	&-name {
+		max-width: 370px;
+		width: 100%;
+	}
+	&-deadline {
+		max-width: 80px;
+		width: 100%;
+	}
 }
 
 .flip180 {
-  transform: rotateX(180deg);
+	transform: rotateX(180deg);
 }
 
 .box {
-  display: flex;
-  flex-flow: wrap;
-  padding-bottom: 10px;
+	display: flex;
+	flex-flow: wrap;
+	padding-bottom: 10px;
 }
 
 .applications {
-  padding: 10px 0;
-  ul {
-    margin: 0;
-    padding: 0;
-    li {
-      padding: 4px 0;
-    }
-  }
+	padding: 10px 0;
+	ul {
+		margin: 0;
+		padding: 0;
+		li {
+			padding: 4px 0;
+		}
+	}
 }

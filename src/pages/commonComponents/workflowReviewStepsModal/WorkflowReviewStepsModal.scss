@@ -2,169 +2,163 @@
 @import '../../../css/typography';
 
 .app-red {
-    color: $red;
+	color: $red;
 }
 
 .reviewWrap {
-    padding: 15px 25px;
+	padding: 15px 25px;
 }
 
 .workflowReview {
-  box-sizing: border-box;
+	box-sizing: border-box;
 
-  .modal-dialog {
-    max-width: 940px;
-    width: 100%;
-  }
+	.modal-dialog {
+		max-width: 940px;
+		width: 100%;
+	}
 
-  .modal-content {
-    border-radius: 0;
-  }
+	.modal-content {
+		border-radius: 0;
+	}
 
-    &-header {
-        display: flex;
-        flex-flow: column nowrap;    
-        width: 100%;    
-        padding: 32px;
+	&-header {
+		display: flex;
+		flex-flow: column nowrap;
+		width: 100%;
+		padding: 32px;
 
-        &--wrap {
-            p {
-                margin-bottom: 0;
-                color: $gray-800;
-                font-size: 14px;
-            }
-        
-        }
-    }
+		&--wrap {
+			p {
+				margin-bottom: 0;
+				color: $gray-800;
+				font-size: 14px;
+			}
+		}
+	}
 
-    &-head {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        position: relative;
+	&-head {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		position: relative;
 
-        &--close {
-            position: absolute;
-            top: -16px;
-            right: -16px;
-            width: 16px;
-            height: 16px;
-            fill: $indigo;
-            &:hover {
-                cursor: pointer;
-            }
-        }
+		&--close {
+			position: absolute;
+			top: -16px;
+			right: -16px;
+			width: 16px;
+			height: 16px;
+			fill: $indigo;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
 
-    }
+	&-body {
+		background-color: $background;
+		width: 100%;
+		padding: 25px 32px;
+	}
 
-    &-body {
-        background-color: $background;
-        width: 100%;
-        padding: 25px 32px;
-    }
-
-    &-footer {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-end;
-        padding: 15px;
-    }
-
+	&-footer {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-end;
+		padding: 15px;
+	}
 }
 
 .step {
-    position: relative;
-    width: 100%;
-    background: $white;
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
-    margin-bottom: 15px;
-    cursor: pointer;
+	position: relative;
+	width: 100%;
+	background: $white;
+	box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
+	margin-bottom: 15px;
+	cursor: pointer;
 
-    &-header {
-        display: flex;
-        position: relative;
-        flex-flow: column nowrap;
-        align-items: center;
-        width: 100%;
-        border-bottom: 1px solid $gray-300;
-        @media (min-width: $bp-small) {
-            flex-flow: row nowrap;
-        }
+	&-header {
+		display: flex;
+		position: relative;
+		flex-flow: column nowrap;
+		align-items: center;
+		width: 100%;
+		border-bottom: 1px solid $gray-300;
+		@media (min-width: $bp-small) {
+			flex-flow: row nowrap;
+		}
 
-        svg {
-            transform-origin: 0 13px;
-        }
+		svg {
+			transform-origin: 0 13px;
+		}
 
-        &-title {
-            display: flex;
-            flex-flow: column wrap;
-            margin-right: auto
-        }
+		&-title {
+			display: flex;
+			flex-flow: column wrap;
+			margin-right: auto;
+		}
 
-        &-status {
-            display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-            margin-top: 10px;
-            @media (min-width: $bp-small) {
-                margin-top: 0;
-            }
+		&-status {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+			margin-top: 10px;
+			@media (min-width: $bp-small) {
+				margin-top: 0;
+			}
 
-            .sla {
-                margin-right: 25px;;
-            }
-        }
-    }
+			.sla {
+				margin-right: 25px;
+			}
+		}
+	}
 
-    &-body {
-        padding: 12px 25px;
-    }
+	&-body {
+		padding: 12px 25px;
+	}
 
-    &-review {
-        border-bottom: 1px solid $gray-300;
+	&-review {
+		border-bottom: 1px solid $gray-300;
 
-        &-wrap {
-            display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-            width: 100%;
-            padding: 12px 0;
-            
-            &--reviewer {
-                position: relative;
-                width: 80%;
+		&-wrap {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+			width: 100%;
+			padding: 12px 0;
 
-                div {
-                    padding-left: 30px;
-                }
+			&--reviewer {
+				position: relative;
+				width: 80%;
 
-                svg {
-                    position: absolute;
-                    transform-origin: 0 13px;
-                    top: -3px;
-                    left: 0;
-                }
-            }
-    
-            &--decision {
-                position: relative;
-            }
-        }
+				div {
+					padding-left: 30px;
+				}
 
-        &-comment {
-            padding: 0 30px 15px;
-        }
+				svg {
+					position: absolute;
+					transform-origin: 0 13px;
+					top: -3px;
+					left: 0;
+				}
+			}
 
+			&--decision {
+				position: relative;
+			}
+		}
 
-    }
+		&-comment {
+			padding: 0 30px 15px;
+		}
+	}
 }
 
 .chevron {
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    @media (min-width: $bp-small) {
-        top: 33px;
-    }
+	position: absolute;
+	top: 20px;
+	right: 15px;
+	@media (min-width: $bp-small) {
+		top: 33px;
+	}
 }
-

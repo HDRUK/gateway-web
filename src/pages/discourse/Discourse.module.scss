@@ -3,112 +3,112 @@
 @import '../../css/mixins';
 
 .rectangle {
-    width: 100%;
-  }
-  
+	width: 100%;
+}
+
 .buttonFooter {
-    width: 100%;
-    text-align: right;
-    margin-top: 24px;
+	width: 100%;
+	text-align: right;
+	margin-top: 24px;
 }
 
 .buttonFooter > button {
-    margin-left: 8px;
+	margin-left: 8px;
 }
 
 .buttonFooter > img {
-    margin-left: 16px;
+	margin-left: 16px;
 }
 
 .iconButton {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
 }
 
 .newPostContainer {
-    width: 100%;
-    box-shadow: 1px 1px 3px 0 #00000017;
-    background-color: $white;
-    padding: 32px;
-    margin-top: 16px;
+	width: 100%;
+	box-shadow: 1px 1px 3px 0 #00000017;
+	background-color: $white;
+	padding: 32px;
+	margin-top: 16px;
 }
 
 .postContents {
-    display: flex;
-    flex-direction: row;
-    margin-top: 16px;
-    padding: 16px 24px 24px 24px;
-    background-color: white;
-    background-clip: padding-box;
-    box-shadow: 1px 1px 3px 0 #00000017;
+	display: flex;
+	flex-direction: row;
+	margin-top: 16px;
+	padding: 16px 24px 24px 24px;
+	background-color: white;
+	background-clip: padding-box;
+	box-shadow: 1px 1px 3px 0 #00000017;
 }
 
 .postRightCol {
-    margin-left: 16px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+	margin-left: 16px;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
 }
 
 .postDetails {
-    display: flex;
-    flex-direction: row;
-    line-height: 13px;
+	display: flex;
+	flex-direction: row;
+	line-height: 13px;
 }
 
 .txtComment {
-    height: 155px;
-    display: block;
+	height: 155px;
+	display: block;
 }
 
 .validationMessage {
-    margin-top: 4px;
-    display: block;
-    line-height: 14px;
+	margin-top: 4px;
+	display: block;
+	line-height: 14px;
 }
 
 .inputError {
-    border: solid 2px #dc3645;
+	border: solid 2px #dc3645;
 }
 
 .postDate {
-    flex-grow: 1;
-    text-align: right;
+	flex-grow: 1;
+	text-align: right;
 }
 
 .postUsername > span {
-    font-family: museo-sans-rounded;
-    font-size: 13px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #848e97;
+	font-family: museo-sans-rounded;
+	font-size: 13px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #848e97;
 }
 
 .postDate > span {
-    font-family: museo-sans-rounded;
-    font-size: 13px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: right;
-    color: #848e97;
+	font-family: museo-sans-rounded;
+	font-size: 13px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: right;
+	color: #848e97;
 }
 
-.buttonAddComment{
-    width: 100%;
-    background-color: #e7e9ed !important;
+.buttonAddComment {
+	width: 100%;
+	background-color: #e7e9ed !important;
 }
 
 .postComment {
-    margin-top: 16px;
+	margin-top: 16px;
 }
 
 .postComment > p {
-    margin-bottom: 0px;
+	margin-bottom: 0px;
 }

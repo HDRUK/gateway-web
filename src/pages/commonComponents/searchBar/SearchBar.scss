@@ -2,343 +2,343 @@
 @import '../../../css/mixins';
 
 body.modal-open {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 .navbarShown {
-      width: 100%;
-      position: fixed;
-      top: 0;
-      transition: top 0.3s;
-      z-index: 999;
-    }
+	width: 100%;
+	position: fixed;
+	top: 0;
+	transition: top 0.3s;
+	z-index: 999;
+}
 
 .navbarHidden {
-  top: -500px !important;
+	top: -500px !important;
 }
 
 .searchBarBackground {
-    width: 100%;
-    background-color: $white;
-  }
+	width: 100%;
+	background-color: $white;
+}
 
 .whiteBackground {
-  min-height: 80px;
-  background-color: $white;
-  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
+	min-height: 80px;
+	background-color: $white;
+	box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
 }
 
 @media (min-width: 1286px) {
-      .navBarLogoSpacing {
-        vertical-align: middle;
-        display: inline-block;
-      }
-    
-      .navBarLinkSpacing {
-        vertical-align: middle;
-        display: inline-block;
-        margin-top: 12px;
-        padding: 0px 0px 0px 30px;
-      }
-    
-      .navBarLoginSpacing {
-        padding: 0px 40px 0px 0px;
-      }
-    
-      .navBarNotificationSpacing {
-        padding: 0px 25px;
-      }
-    
-      .navBarSearchBarSpacing {
-        width: 50%;
-        text-align: left;
-      }
-    
-      .searchBarInputGrey {
-        border: 0;
-        background-color: #f6f7f8;
-        display: inline-block;
-        border-radius: 4px;
-        padding: 5px;
-        width: 100%;
-      }
-    
-      #searchInputSpanGrey {
-        display: inline-block;
-        width: 80%;
-        outline: none;
-        border: 0;
-        font-size: 16px;
-        background-color: #f6f7f8;
-        color: $gray-800;
-        padding-top: 7px;
-      }
-    
-      .desktopLoginMenu {
-        width: 200px;
-        top: 28px !important;
-        left: -28px !important;
-      }
-    
-      .desktopNotificationMenu {
-        overflow-x: hidden;
-        overflow-y: scroll;
-        max-height: 400px;
-        width: 400px;
-        top: 28px !important;
-        word-wrap: break-word;
-      }
-    }
-    
-    @media (max-width: 1285px) {
-      .navBarLogoSpacing {
-        vertical-align: middle;
-        display: inline-block;
-      }
-    
-      .navBarLinkSpacing {
-        vertical-align: middle;
-        display: inline-block;
-        margin-top: 12px;
-        padding: 0px 0px 0px 15px;
-      }
-    
-      .navBarLoginSpacing {
-        padding: 0px 20px 0px 0px;
-      }
-    
-      .navBarNotificationSpacing {
-        padding: 0px 15px 0px 15px;
-        display: flex;
-        flex-flow: row;
-        justify-content: center;
-        align-items: center;
-        align-self: stretch;
-        height: 100%;
-      }
-    
-      .navBarSearchBarSpacing {
-        width: 50%;
-        text-align: left;
-      }
-    
-      .searchBarInputGrey {
-        border: 0;
-        background-color: #f6f7f8;
-        display: inline-block;
-        border-radius: 4px;
-        padding: 5px;
-        width: 100%;
-      }
-    
-      #searchInputSpanGrey {
-        display: inline-block;
-        width: 70%;
-        outline: none;
-        border: 0;
-        font-size: 16px;
-        background-color: #f6f7f8;
-        color: $gray-800;
-        padding-top: 7px;
-      }
-    
-      .desktopLoginMenu {
-        width: 200px;
-        top: 29px !important;
-        left: -31px !important;
-      }
-    
-      .desktopNotificationMenu {
-        overflow-x: hidden;
-        overflow-y: scroll;
-        max-height: 400px;
-        width: 400px;
-        word-wrap: break-word;
-        top: 28px !important;
-      }
-    }
-    
-    @media (max-width: 991px) {
-      .navBarLogoSpacing {
-        vertical-align: middle;
-        display: inline-block;
-      }
-    
-      .navBarLinkSpacing {
-        margin-top: 12px;
-        padding: 0px 0px 0px 5px;
-      }
-    
-      .navBarLoginSpacing {
-        padding: 0px 20px 0px 0px;
-      }
-    
-      .navBarNotificationSpacing {
-        margin-right: 30px;
-        padding: 0px 0px 0px 5px;
-      }
-    
-      .navBarSearchBarSpacing {
-        width: 100%;
-        text-align: left;
-      }
-    
-      .navBarSearchIconHolder {
-        float: right;
-        background-color: #f6f7f8;
-        padding: 10px 10px 5px 10px;
-        border-radius: 15px;
-        margin-top: 20px;
-      }
-    
-      .navBarSearchIconHolderAlt {
-        float: right;
-        background-color: #f6f7f8;
-        padding: 10px 10px 5px 10px;
-        border-radius: 15px;
-        margin-top: 20px;
-        margin-right: 25px;
-      }
-    
-      .searchBarInputGrey {
-        border: 0;
-        background-color: #f6f7f8;
-        display: inline-block;
-        border-radius: 4px;
-        margin-top: 16px;
-        padding: 5px;
-        width: 100%;
-      }
-    
-      #searchInputSpanGrey {
-        display: inline-block;
-        width: 70%;
-        outline: none;
-        border: 0;
-        font-size: 16px;
-        background-color: #f6f7f8;
-        color: $gray-800;
-        padding-top: 7px;
-      }
-    
-      .mobileLoginMenu {
-        width: 300px;
-        top: 16px !important;
-        left: -5px !important;
-      }
-    
-      .mobileNotificationMenu {
-        top: 28px !important;
-        transform: translate3d(-290px, 24px, 0px) !important;
-        padding: 0 !important;
-        width: 320px;
-        max-height: 400px;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        word-wrap: break-word;
-      }
-    }
+	.navBarLogoSpacing {
+		vertical-align: middle;
+		display: inline-block;
+	}
+
+	.navBarLinkSpacing {
+		vertical-align: middle;
+		display: inline-block;
+		margin-top: 12px;
+		padding: 0px 0px 0px 30px;
+	}
+
+	.navBarLoginSpacing {
+		padding: 0px 40px 0px 0px;
+	}
+
+	.navBarNotificationSpacing {
+		padding: 0px 25px;
+	}
+
+	.navBarSearchBarSpacing {
+		width: 50%;
+		text-align: left;
+	}
+
+	.searchBarInputGrey {
+		border: 0;
+		background-color: #f6f7f8;
+		display: inline-block;
+		border-radius: 4px;
+		padding: 5px;
+		width: 100%;
+	}
+
+	#searchInputSpanGrey {
+		display: inline-block;
+		width: 80%;
+		outline: none;
+		border: 0;
+		font-size: 16px;
+		background-color: #f6f7f8;
+		color: $gray-800;
+		padding-top: 7px;
+	}
+
+	.desktopLoginMenu {
+		width: 200px;
+		top: 28px !important;
+		left: -28px !important;
+	}
+
+	.desktopNotificationMenu {
+		overflow-x: hidden;
+		overflow-y: scroll;
+		max-height: 400px;
+		width: 400px;
+		top: 28px !important;
+		word-wrap: break-word;
+	}
+}
+
+@media (max-width: 1285px) {
+	.navBarLogoSpacing {
+		vertical-align: middle;
+		display: inline-block;
+	}
+
+	.navBarLinkSpacing {
+		vertical-align: middle;
+		display: inline-block;
+		margin-top: 12px;
+		padding: 0px 0px 0px 15px;
+	}
+
+	.navBarLoginSpacing {
+		padding: 0px 20px 0px 0px;
+	}
+
+	.navBarNotificationSpacing {
+		padding: 0px 15px 0px 15px;
+		display: flex;
+		flex-flow: row;
+		justify-content: center;
+		align-items: center;
+		align-self: stretch;
+		height: 100%;
+	}
+
+	.navBarSearchBarSpacing {
+		width: 50%;
+		text-align: left;
+	}
+
+	.searchBarInputGrey {
+		border: 0;
+		background-color: #f6f7f8;
+		display: inline-block;
+		border-radius: 4px;
+		padding: 5px;
+		width: 100%;
+	}
+
+	#searchInputSpanGrey {
+		display: inline-block;
+		width: 70%;
+		outline: none;
+		border: 0;
+		font-size: 16px;
+		background-color: #f6f7f8;
+		color: $gray-800;
+		padding-top: 7px;
+	}
+
+	.desktopLoginMenu {
+		width: 200px;
+		top: 29px !important;
+		left: -31px !important;
+	}
+
+	.desktopNotificationMenu {
+		overflow-x: hidden;
+		overflow-y: scroll;
+		max-height: 400px;
+		width: 400px;
+		word-wrap: break-word;
+		top: 28px !important;
+	}
+}
+
+@media (max-width: 991px) {
+	.navBarLogoSpacing {
+		vertical-align: middle;
+		display: inline-block;
+	}
+
+	.navBarLinkSpacing {
+		margin-top: 12px;
+		padding: 0px 0px 0px 5px;
+	}
+
+	.navBarLoginSpacing {
+		padding: 0px 20px 0px 0px;
+	}
+
+	.navBarNotificationSpacing {
+		margin-right: 30px;
+		padding: 0px 0px 0px 5px;
+	}
+
+	.navBarSearchBarSpacing {
+		width: 100%;
+		text-align: left;
+	}
+
+	.navBarSearchIconHolder {
+		float: right;
+		background-color: #f6f7f8;
+		padding: 10px 10px 5px 10px;
+		border-radius: 15px;
+		margin-top: 20px;
+	}
+
+	.navBarSearchIconHolderAlt {
+		float: right;
+		background-color: #f6f7f8;
+		padding: 10px 10px 5px 10px;
+		border-radius: 15px;
+		margin-top: 20px;
+		margin-right: 25px;
+	}
+
+	.searchBarInputGrey {
+		border: 0;
+		background-color: #f6f7f8;
+		display: inline-block;
+		border-radius: 4px;
+		margin-top: 16px;
+		padding: 5px;
+		width: 100%;
+	}
+
+	#searchInputSpanGrey {
+		display: inline-block;
+		width: 70%;
+		outline: none;
+		border: 0;
+		font-size: 16px;
+		background-color: #f6f7f8;
+		color: $gray-800;
+		padding-top: 7px;
+	}
+
+	.mobileLoginMenu {
+		width: 300px;
+		top: 16px !important;
+		left: -5px !important;
+	}
+
+	.mobileNotificationMenu {
+		top: 28px !important;
+		transform: translate3d(-290px, 24px, 0px) !important;
+		padding: 0 !important;
+		width: 320px;
+		max-height: 400px;
+		overflow-x: hidden;
+		overflow-y: scroll;
+		word-wrap: break-word;
+	}
+}
 
 .nav-wrapper {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  height: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: flex-end;
+	width: 100%;
+	height: 100%;
 }
 
 .searchInputIconGrey {
-    float: left;
-    min-width: 40px;
-    padding: 10px 0px 0px 12px;
-  }
+	float: left;
+	min-width: 40px;
+	padding: 10px 0px 0px 12px;
+}
 
 .searchInputClearGrey {
-  float: right;
-  padding: 8px 10px 0px 0px;
+	float: right;
+	padding: 8px 10px 0px 0px;
 }
 
 .navBarNotificationSpacing {
-    position: relative;
-  }
+	position: relative;
+}
 
 #notificationsBell:hover {
-  background-size: 40px, 40px;
-  background: $gray-300;
-  @include rounded(70px);
+	background-size: 40px, 40px;
+	background: $gray-300;
+	@include rounded(70px);
 }
 
 .notificationsBell {
-  background-size: 40px, 40px;
-  background: $gray-300;
-  @include rounded(70px);
+	background-size: 40px, 40px;
+	background: $gray-300;
+	@include rounded(70px);
 }
 
 .desktopNotificationMenu {
-      transform: translate(-380px, 23px) !important;
-      padding: 0 !important;
-    }
+	transform: translate(-380px, 23px) !important;
+	padding: 0 !important;
+}
 
 .noNotifications {
-  width: 100%;
-  box-shadow: 1px 1px 3px 0 #00000017;
-  background-color: $white;
-  padding-top: 40%;
-  padding-right: 20px;
-  padding-bottom: 40%;
-  padding-left: 20px;
+	width: 100%;
+	box-shadow: 1px 1px 3px 0 #00000017;
+	background-color: $white;
+	padding-top: 40%;
+	padding-right: 20px;
+	padding-bottom: 40%;
+	padding-left: 20px;
 }
 
 .notificationReadBackground {
-    background-color: #f6f7f8;
-  }
+	background-color: #f6f7f8;
+}
 
 .notificationDate {
-  padding: 10px 0px 5px 15px;
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(83, 87, 90, 0.8);
+	padding: 10px 0px 5px 15px;
+	font-size: 13px;
+	font-weight: 500;
+	color: rgba(83, 87, 90, 0.8);
 }
 
 .notificationInfoHolder {
-    padding: 0px 0px 10px 15px;
-  }
+	padding: 0px 0px 10px 15px;
+}
 
 .notificationInfo {
-  overflow: hidden;
-  font-size: 14px;
-  color: $gray-800;
+	overflow: hidden;
+	font-size: 14px;
+	color: $gray-800;
 }
 
 .offlineNotificationGap {
-    vertical-align: middle;
-    display: inline-block;
-    margin-top: 15px;
-  }
+	vertical-align: middle;
+	display: inline-block;
+	margin-top: 15px;
+}
 
 .hamBurgerHolder {
-  margin: 27px 0px 0px 27px;
-} 
+	margin: 27px 0px 0px 27px;
+}
 
 #desktopSearchBar {
-  display: none;
-} 
+	display: none;
+}
 
 #mobileSearchBar {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
 }
 
 @media (min-width: 1020px) {
-  #desktopSearchBar {
-    display: block;
-  }
+	#desktopSearchBar {
+		display: block;
+	}
 
-  #mobileSearchBar {
-    display: none;
-  }
+	#mobileSearchBar {
+		display: none;
+	}
 }

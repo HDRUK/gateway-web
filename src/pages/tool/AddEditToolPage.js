@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { initGA } from '../../tracking';
-import moment from 'moment'; 
+import moment from 'moment';
 import { Container } from 'react-bootstrap';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
@@ -47,7 +47,7 @@ class AddEditToolPage extends React.Component {
 		isEdit: false,
 		showDrawer: false,
 		showModal: false,
-		context: {}
+		context: {},
 	};
 
 	async componentDidMount() {
@@ -58,7 +58,7 @@ class AddEditToolPage extends React.Component {
 			this.doGetLanguagesCall(),
 			this.doGetCategoriesCall(),
 			this.doGetLicensesCall(),
-			this.doGetUsersCall()
+			this.doGetUsersCall(),
 		]);
 		if (this.state.isEdit) this.getToolFromDb();
 		else this.setState({ isLoading: false });
@@ -67,22 +67,18 @@ class AddEditToolPage extends React.Component {
 	getToolFromDb = () => {
 		//need to handle error if no id is found
 		this.setState({ isLoading: true });
-		axios
-			.get(baseURL + '/api/v1/tools/edit/' + this.props.match.params.toolID)
-			.then((res) => {
-				this.setState({
-					data: res.data.data[0],
-					relatedObjects: res.data.data[0].relatedObjects
-						? res.data.data[0].relatedObjects
-						: []
-				});
-				this.setState({ isLoading: false });
+		axios.get(baseURL + '/api/v1/tools/edit/' + this.props.match.params.toolID).then(res => {
+			this.setState({
+				data: res.data.data[0],
+				relatedObjects: res.data.data[0].relatedObjects ? res.data.data[0].relatedObjects : [],
 			});
+			this.setState({ isLoading: false });
+		});
 	};
 
 	doGetTopicsCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/topic/tool').then((res) => {
+			axios.get(baseURL + '/api/v1/search/filter/topic/tool').then(res => {
 				var tempTopicArray = [
 					'Blood',
 					'Cancer and neoplasms',
@@ -102,23 +98,19 @@ class AddEditToolPage extends React.Component {
 					'Reproductive health and childbirth',
 					'Respiratory',
 					'Skin',
-					'Stroke'
+					'Stroke',
 				];
 
-				res.data.data[0].forEach((to) => {
+				res.data.data[0].forEach(to => {
 					if (!tempTopicArray.includes(to) && to !== '') {
 						tempTopicArray.push(to);
 					}
-                });
+				});
 
 				this.setState({
 					combinedTopic: tempTopicArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
 				resolve();
 			});
@@ -127,7 +119,7 @@ class AddEditToolPage extends React.Component {
 
 	doGetFeaturesCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/feature/tool').then((res) => {
+			axios.get(baseURL + '/api/v1/search/filter/feature/tool').then(res => {
 				var tempFeaturesArray = [
 					'Arbitrage',
 					'Association Rules',
@@ -173,10 +165,10 @@ class AddEditToolPage extends React.Component {
 					'Survival Analysis',
 					'Test of Hypotheses',
 					'Time Series',
-					'Yield Optimization'
+					'Yield Optimization',
 				];
 
-				res.data.data[0].forEach((fe) => {
+				res.data.data[0].forEach(fe => {
 					if (!tempFeaturesArray.includes(fe) && fe !== '') {
 						tempFeaturesArray.push(fe);
 					}
@@ -184,12 +176,8 @@ class AddEditToolPage extends React.Component {
 
 				this.setState({
 					combinedFeatures: tempFeaturesArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
 				resolve();
 			});
@@ -198,7 +186,7 @@ class AddEditToolPage extends React.Component {
 
 	doGetLanguagesCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/language/tool').then((res) => {
+			axios.get(baseURL + '/api/v1/search/filter/language/tool').then(res => {
 				var tempLanguagesArray = [
 					'No coding required',
 					'.net',
@@ -228,10 +216,10 @@ class AddEditToolPage extends React.Component {
 					'SQL',
 					'SQL server',
 					'Swift',
-					'XML'
+					'XML',
 				];
 
-				res.data.data[0].forEach((la) => {
+				res.data.data[0].forEach(la => {
 					if (!tempLanguagesArray.includes(la) && la !== '') {
 						tempLanguagesArray.push(la);
 					}
@@ -239,12 +227,8 @@ class AddEditToolPage extends React.Component {
 
 				this.setState({
 					combinedLanguages: tempLanguagesArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
 				resolve();
 			});
@@ -253,7 +237,7 @@ class AddEditToolPage extends React.Component {
 
 	doGetCategoriesCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/category/tool').then((res) => {
+			axios.get(baseURL + '/api/v1/search/filter/category/tool').then(res => {
 				var tempCategoriesArray = [
 					'API',
 					'Code snippet',
@@ -271,10 +255,10 @@ class AddEditToolPage extends React.Component {
 					'Service',
 					'Software',
 					'Virtual machine',
-					'Web application'
+					'Web application',
 				];
 
-				res.data.data[0].forEach((ca) => {
+				res.data.data[0].forEach(ca => {
 					if (!tempCategoriesArray.includes(ca) && ca !== '') {
 						tempCategoriesArray.push(ca);
 					}
@@ -282,12 +266,8 @@ class AddEditToolPage extends React.Component {
 
 				this.setState({
 					combinedCategories: tempCategoriesArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
 				resolve();
 			});
@@ -296,7 +276,7 @@ class AddEditToolPage extends React.Component {
 
 	doGetLicensesCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/license/tool').then((res) => {
+			axios.get(baseURL + '/api/v1/search/filter/license/tool').then(res => {
 				var tempLicensesArray = [
 					'Apache License 2.0',
 					'BSD 3-Clause "New" or "Revised" license',
@@ -306,10 +286,10 @@ class AddEditToolPage extends React.Component {
 					'MIT license',
 					'Mozilla Public License 2.0',
 					'Common Development and Distribution License',
-					'Eclipse Public License version 2.0'
+					'Eclipse Public License version 2.0',
 				];
 
-				res.data.data[0].forEach((li) => {
+				res.data.data[0].forEach(li => {
 					if (!tempLicensesArray.includes(li) && li !== '') {
 						tempLicensesArray.push(li);
 					}
@@ -317,12 +297,8 @@ class AddEditToolPage extends React.Component {
 
 				this.setState({
 					combinedLicenses: tempLicensesArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase()
-							? -1
-							: a.toUpperCase() > b.toUpperCase()
-							? 1
-							: 0;
-					})
+						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+					}),
 				});
 				resolve();
 			});
@@ -331,20 +307,19 @@ class AddEditToolPage extends React.Component {
 
 	doGetUsersCall() {
 		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/users').then((res) => {
+			axios.get(baseURL + '/api/v1/users').then(res => {
 				this.setState({ combinedUsers: res.data.data });
 				resolve();
 			});
 		});
 	}
 
-	doSearch = (e) => {
+	doSearch = e => {
 		//fires on enter on searchbar
-		if (e.key === 'Enter')
-			window.location.href = '/search?search=' + this.state.searchString;
+		if (e.key === 'Enter') window.location.href = '/search?search=' + this.state.searchString;
 	};
 
-	updateSearchString = (searchString) => {
+	updateSearchString = searchString => {
 		this.setState({ searchString: searchString });
 	};
 
@@ -357,22 +332,16 @@ class AddEditToolPage extends React.Component {
 			if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
 			if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
 			if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
-			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page; 
-			
+			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;
+
 			axios
-				.get(
-					baseURL +
-						'/api/v1/search?search=' +
-						this.state.searchString +
-						searchURL,
-					{
-						params: {
-							form: true,
-							userID: this.state.userState[0].id
-						}
-					}
-				)
-				.then((res) => {
+				.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL, {
+					params: {
+						form: true,
+						userID: this.state.userState[0].id,
+					},
+				})
+				.then(res => {
 					this.setState({
 						datasetData: res.data.datasetResults || [],
 						toolData: res.data.toolResults || [],
@@ -381,20 +350,15 @@ class AddEditToolPage extends React.Component {
 						personData: res.data.personResults || [],
 						courseData: res.data.courseResults || [],
 						summary: res.data.summary || [],
-						isLoading: false
+						isLoading: false,
 					});
 				});
 		}
 	};
 
 	addToTempRelatedObjects = (id, type, pid) => {
-		if (
-			this.state.tempRelatedObjectIds &&
-			this.state.tempRelatedObjectIds.some((object) => object.objectId === id)
-		) {
-			this.state.tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(
-				(object) => object.objectId !== id
-			);
+		if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some(object => object.objectId === id)) {
+			this.state.tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(object => object.objectId !== id);
 		} else {
 			this.state.tempRelatedObjectIds.push({ objectId: id, type: type, pid: pid });
 		}
@@ -402,20 +366,22 @@ class AddEditToolPage extends React.Component {
 	};
 
 	addToRelatedObjects = () => {
-		let {userState: [user = {}]} = this.state;
-		let relatedObjectIds = [...this.state.tempRelatedObjectIds]; 
+		let {
+			userState: [user = {}],
+		} = this.state;
+		let relatedObjectIds = [...this.state.tempRelatedObjectIds];
 		let relatedObjects = [...this.state.relatedObjects];
 
-		let newRelatedObjects = relatedObjectIds.map((relatedObject) => { 
-			let newRelatedObject = { 
-				...relatedObject, 
-				objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId, 
-				user: user.name, 
-				updated: moment().format('DD MM YYYY') 
+		let newRelatedObjects = relatedObjectIds.map(relatedObject => {
+			let newRelatedObject = {
+				...relatedObject,
+				objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId,
+				user: user.name,
+				updated: moment().format('DD MM YYYY'),
 			};
-			return newRelatedObject; 
+			return newRelatedObject;
 		});
-		this.setState({relatedObjects: [...relatedObjects, ...newRelatedObjects]});
+		this.setState({ relatedObjects: [...relatedObjects, ...newRelatedObjects] });
 		this.setState({ tempRelatedObjectIds: [] });
 	};
 
@@ -424,20 +390,14 @@ class AddEditToolPage extends React.Component {
 	};
 
 	removeObject = (id, type, datasetid) => {
-
 		let countOfRelatedObjects = this.state.relatedObjects.length;
-		let newRelatedObjects = [...this.state.relatedObjects].filter(
-			(obj) => (obj.objectId !== id && obj.objectId !== id.toString())
-		);
-		
-		//if an item was not removed try removing by datasetid for retro linkages 
-		if((countOfRelatedObjects <= newRelatedObjects.length) && type === 'dataset'){
-			
-			newRelatedObjects = [...this.state.relatedObjects].filter(
-				(obj) => (obj.objectId !== datasetid && obj.objectId !== datasetid.toString())
-			);
+		let newRelatedObjects = [...this.state.relatedObjects].filter(obj => obj.objectId !== id && obj.objectId !== id.toString());
+
+		//if an item was not removed try removing by datasetid for retro linkages
+		if (countOfRelatedObjects <= newRelatedObjects.length && type === 'dataset') {
+			newRelatedObjects = [...this.state.relatedObjects].filter(obj => obj.objectId !== datasetid && obj.objectId !== datasetid.toString());
 		}
-		this.setState({relatedObjects: newRelatedObjects});
+		this.setState({ relatedObjects: newRelatedObjects });
 		this.setState({ didDelete: true });
 	};
 
@@ -446,7 +406,7 @@ class AddEditToolPage extends React.Component {
 	};
 
 	toggleDrawer = () => {
-		this.setState((prevState) => {
+		this.setState(prevState => {
 			if (prevState.showDrawer === true) {
 				this.searchBar.current.getNumberOfUnreadMessages();
 			}
@@ -455,10 +415,10 @@ class AddEditToolPage extends React.Component {
 	};
 
 	toggleModal = (showEnquiry = false, context = {}) => {
-		this.setState( ( prevState ) => {
+		this.setState(prevState => {
 			return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
 		});
-	  }
+	};
 
 	render() {
 		const {
@@ -484,7 +444,7 @@ class AddEditToolPage extends React.Component {
 			didDelete,
 			showDrawer,
 			showModal,
-			context
+			context,
 		} = this.state;
 
 		if (isLoading) {
@@ -495,7 +455,7 @@ class AddEditToolPage extends React.Component {
 			);
 		}
 
-		return ( 
+		return (
 			<div>
 				<SearchBar
 					ref={this.searchBar}
@@ -522,7 +482,7 @@ class AddEditToolPage extends React.Component {
 					projectData={projectData}
 					paperData={paperData}
 					personData={personData}
-          courseData={courseData}
+					courseData={courseData}
 					summary={summary}
 					doAddToTempRelatedObjects={this.addToTempRelatedObjects}
 					tempRelatedObjectIds={this.state.tempRelatedObjectIds}
@@ -542,12 +502,7 @@ class AddEditToolPage extends React.Component {
 					/>
 				</SideDrawer>
 
-				<DataSetModal 
-                    open={showModal} 
-                    context={context}
-                    closed={this.toggleModal}
-                    userState={userState[0]} 
-				/>
+				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
 			</div>
 		);
 	}

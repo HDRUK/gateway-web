@@ -8,10 +8,10 @@ import '@testing-library/react';
 import '@testing-library/jest-dom';
 import Enzyme, { shallow, render, mount } from 'enzyme';
 import 'regenerator-runtime/runtime';
-import Adapter from 'enzyme-adapter-react-16';;// React 16 Enzyme adapter
+import Adapter from 'enzyme-adapter-react-16'; // React 16 Enzyme adapter
 
-Enzyme.configure({ 
-    adapter: new Adapter() 
+Enzyme.configure({
+	adapter: new Adapter(),
 });
 // Make Enzyme functions available in all test files without importing
 global.React = React;

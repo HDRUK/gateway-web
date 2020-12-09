@@ -1,86 +1,86 @@
 @import '../../css/mixins';
 @import '../../css/variables';
 
-.logoWidth{
-    @include mq('tablet-small', max){
-        width: 20% !important;
-    }
-    overflow: hidden;
-  }
-
-.titleWidth{
-    @include mq('tablet-small', max){
-        width: 80% !important;
-    }
-  }
-
-.collectionTitleCard{
-  @include mq('tablet-wide',max){
-      padding-left: 8% !important;
-  }
-  @include mq('tablet',max){
-      padding-left: 15% !important;
-  }
-  @include mq('phablet',max){
-      padding-left: 5% !important;
-  }
-  @include mq('phone-wide',max){
-      padding-left: 15% !important;
-  }
-  @include mq('phone',max){
-      padding-left: 25% !important;
-  }
+.logoWidth {
+	@include mq('tablet-small', max) {
+		width: 20% !important;
+	}
+	overflow: hidden;
 }
 
-.collectionTitleText{
-    @include mq('tablet-wide',max){
-        font-size: 24px !important;
-    }
-  }
+.titleWidth {
+	@include mq('tablet-small', max) {
+		width: 80% !important;
+	}
+}
 
-.collectionDate{
-  @include mq('tablet-wide',max){
-      max-width: 100% !important;
-      flex: 0 0 100% !important;
-  }
+.collectionTitleCard {
+	@include mq('tablet-wide', max) {
+		padding-left: 8% !important;
+	}
+	@include mq('tablet', max) {
+		padding-left: 15% !important;
+	}
+	@include mq('phablet', max) {
+		padding-left: 5% !important;
+	}
+	@include mq('phone-wide', max) {
+		padding-left: 15% !important;
+	}
+	@include mq('phone', max) {
+		padding-left: 25% !important;
+	}
+}
+
+.collectionTitleText {
+	@include mq('tablet-wide', max) {
+		font-size: 24px !important;
+	}
+}
+
+.collectionDate {
+	@include mq('tablet-wide', max) {
+		max-width: 100% !important;
+		flex: 0 0 100% !important;
+	}
 }
 
 .resource-card {
-    margin-top: 16px;
-    margin-bottom: 48px;
-  }
+	margin-top: 16px;
+	margin-bottom: 48px;
+}
 
 .relatedResourcesRectangle {
-  width: 100%;
-  box-shadow: 1px 1px 3px 0 #00000017; 
-  background-color: $white;
+	width: 100%;
+	box-shadow: 1px 1px 3px 0 #00000017;
+	background-color: $white;
 }
 
 .relatedObjectRectangle {
-      width: 100%;
-      background-color: $white;
-      border: none;
-      padding-left: 24px;
-      padding-right: 24px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-    }  
+	width: 100%;
+	background-color: $white;
+	border: none;
+	padding-left: 24px;
+	padding-right: 24px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
 
 #imageToolTip {
-  position: absolute;
-  width: 326px;
-  height: 164px;
-  left: -50%;
-  top: 50%;
-} 
+	position: absolute;
+	width: 326px;
+	height: 164px;
+	left: -50%;
+	top: 50%;
+}
 
 #defaultCollectionImage {
-  width: 110px;
-  height: 73px;
-  background-image: linear-gradient(124deg, #50b996, #485ea7);
+	width: 110px;
+	height: 73px;
+	background-image: linear-gradient(124deg, #50b996, #485ea7);
 }
 
 #collectionImage {
-  width: 110px !important;
-  height: 73px !important;
+	width: 110px !important;
+	height: 73px !important;
 }

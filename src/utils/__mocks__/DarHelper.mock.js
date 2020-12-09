@@ -14,7 +14,7 @@ export const formSchema = {
 		controlButton: 'btn btn-primary pull-right',
 		backButton: 'btn btn-default pull-left',
 		errorMessage: 'alert alert-danger',
-		buttonBar: 'button-bar hidden'
+		buttonBar: 'button-bar hidden',
 	},
 	pages: [
 		{
@@ -22,214 +22,214 @@ export const formSchema = {
 			active: false,
 			title: 'About this application',
 			description:
-				'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.'
+				'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.',
 		},
 		{
 			pageId: 'about',
 			active: false,
 			title: 'About this application',
 			description:
-				'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.'
+				'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.',
 		},
 		{
 			pageId: 'safepeople',
 			active: true,
 			title: 'Safe people',
-			description: 'TODO'
+			description: 'TODO',
 		},
 		{
 			title: 'Safe project',
 			pageId: 'safeproject',
 			active: false,
-			description: 'TODO'
+			description: 'TODO',
 		},
 		{
 			description: 'TODO',
 			pageId: 'safesettings',
 			active: false,
-			title: 'Safe settings'
+			title: 'Safe settings',
 		},
 		{
 			description: 'TODO',
 			title: 'Safe data',
 			pageId: 'safedata',
-			active: false
+			active: false,
 		},
 		{
 			title: 'Safe outputs',
 			active: false,
 			pageId: 'safeoutputs',
-			description: 'TODO'
+			description: 'TODO',
 		},
 		{
 			pageId: 'files',
 			active: false,
 			title: 'Files',
 			description:
-				'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.'
-		}
+				'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.',
+		},
 	],
 	formPanels: [
 		{
 			panelId: 'about',
 			index: 0,
-			pageId: 'about'
+			pageId: 'about',
 		},
 		{
 			panelId: 'applicant',
 			index: 1,
-			pageId: 'safepeople'
+			pageId: 'safepeople',
 		},
 		{
 			pageId: 'safepeople',
 			index: 2,
-			panelId: 'organisationconductingthestudy'
+			panelId: 'organisationconductingthestudy',
 		},
 		{
 			pageId: 'safeproject',
 			index: 3,
-			panelId: 'projectdetails'
+			panelId: 'projectdetails',
 		},
 		{
 			panelId: 'commercialinterest',
 			index: 4,
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			panelId: 'organisationwithcommercialinterest',
 			pageId: 'safeproject',
-			index: 5
+			index: 5,
 		},
 		{
 			panelId: 'funding',
 			pageId: 'safeproject',
-			index: 6
+			index: 6,
 		},
 		{
 			pageId: 'safeproject',
 			index: 7,
-			panelId: 'funderdetails'
+			panelId: 'funderdetails',
 		},
 		{
 			panelId: 'sponsorship',
 			index: 8,
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			pageId: 'safeproject',
 			index: 9,
-			panelId: 'sponsordetails'
+			panelId: 'sponsordetails',
 		},
 		{
 			panelId: 'geographicallocation',
 			pageId: 'safesettings',
-			index: 10
+			index: 10,
 		},
 		{
 			index: 11,
 			pageId: 'safesettings',
-			panelId: 'storage'
+			panelId: 'storage',
 		},
 		{
 			index: 12,
 			pageId: 'safesettings',
-			panelId: 'localstorage'
+			panelId: 'localstorage',
 		},
 		{
 			pageId: 'safesettings',
 			index: 13,
-			panelId: 'dPA'
+			panelId: 'dPA',
 		},
 		{
 			panelId: 'dataSecurityandProtectionToolkitDSPToolkit',
 			pageId: 'safesettings',
-			index: 14
+			index: 14,
 		},
 		{
 			index: 15,
 			pageId: 'safesettings',
-			panelId: 'iSO27001'
+			panelId: 'iSO27001',
 		},
 		{
 			index: 16,
 			pageId: 'safesettings',
-			panelId: 'sLSP'
+			panelId: 'sLSP',
 		},
 		{
 			pageId: 'safesettings',
 			index: 17,
-			panelId: 'processing'
+			panelId: 'processing',
 		},
 		{
 			index: 18,
 			pageId: 'safesettings',
-			panelId: 'partnerorganisation'
+			panelId: 'partnerorganisation',
 		},
 		{
 			index: 19,
 			pageId: 'safesettings',
-			panelId: 'informationgovernanceassurance'
+			panelId: 'informationgovernanceassurance',
 		},
 		{
 			index: 20,
 			pageId: 'safedata',
-			panelId: 'datasetsrequested'
+			panelId: 'datasetsrequested',
 		},
 		{
 			panelId: 'otherdatasets',
 			pageId: 'safedata',
-			index: 21
+			index: 21,
 		},
 		{
 			pageId: 'safedata',
 			index: 22,
-			panelId: 'legalbasis'
+			panelId: 'legalbasis',
 		},
 		{
 			index: 23,
 			pageId: 'safedata',
-			panelId: 'directcare'
+			panelId: 'directcare',
 		},
 		{
 			panelId: 'informedconsent',
 			pageId: 'safedata',
-			index: 24
+			index: 24,
 		},
 		{
 			panelId: 'section251exemption',
 			pageId: 'safedata',
-			index: 25
+			index: 25,
 		},
 		{
 			panelId: 'regulation3HealthServicesControlofPatientInformationRegulations2002',
 			index: 26,
-			pageId: 'safedata'
+			pageId: 'safedata',
 		},
 		{
 			panelId: 'ethics',
 			index: 27,
-			pageId: 'safedata'
+			pageId: 'safedata',
 		},
 		{
 			panelId: 'publication',
 			index: 28,
-			pageId: 'safeoutputs'
+			pageId: 'safeoutputs',
 		},
 		{
 			panelId: 'datadestruction',
 			pageId: 'safeoutputs',
-			index: 29
+			index: 29,
 		},
 		{
 			panelId: 'files',
 			index: 100,
-			pageId: 'files'
+			pageId: 'files',
 		},
 		{
 			panelId: 'files',
 			index: 100,
-			pageId: 'files'
-		}
+			pageId: 'files',
+		},
 	],
 	questionPanels: [
 		{
@@ -240,13 +240,13 @@ export const formSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'applicant'
+					questionSetId: 'applicant',
 				},
 				{
 					index: 100,
-					questionSetId: 'addApplicant'
-				}
-			]
+					questionSetId: 'addApplicant',
+				},
+			],
 		},
 		{
 			panelId: 'organisationconductingthestudy',
@@ -254,51 +254,51 @@ export const formSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'organisationconductingthestudy'
-				}
+					questionSetId: 'organisationconductingthestudy',
+				},
 			],
 			navHeader: 'Organisation conducting the study',
 			pageId: 'safepeople',
-			panelHeader: 'Organisation conducting the study'
+			panelHeader: 'Organisation conducting the study',
 		},
 		{
 			navHeader: 'Project details',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'projectdetails'
-				}
+					questionSetId: 'projectdetails',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'projectdetails',
 			panelHeader: 'Project details',
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			navHeader: 'Commercial interest',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'commercialinterest'
-				}
+					questionSetId: 'commercialinterest',
+				},
 			],
 			panelId: 'commercialinterest',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			pageId: 'safeproject',
-			panelHeader: 'Commercial interest'
+			panelHeader: 'Commercial interest',
 		},
 		{
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'organisationwithcommercialinterest'
-				}
+					questionSetId: 'organisationwithcommercialinterest',
+				},
 			],
 			panelId: 'organisationwithcommercialinterest',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			navHeader: 'Organisation with commercial interest',
 			panelHeader: 'Organisation with commercial interest',
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			pageId: 'safeproject',
@@ -308,23 +308,23 @@ export const formSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'funding'
-				}
+					questionSetId: 'funding',
+				},
 			],
-			navHeader: 'Funding'
+			navHeader: 'Funding',
 		},
 		{
 			navHeader: 'Funder details',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'funderdetails'
-				}
+					questionSetId: 'funderdetails',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'funderdetails',
 			panelHeader: 'Funder details',
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			pageId: 'safeproject',
@@ -333,11 +333,11 @@ export const formSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'sponsorship'
-				}
+					questionSetId: 'sponsorship',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
-			panelId: 'sponsorship'
+			panelId: 'sponsorship',
 		},
 		{
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
@@ -345,12 +345,12 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'sponsordetails',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			navHeader: 'Sponsor details',
 			pageId: 'safeproject',
-			panelHeader: 'Sponsor details'
+			panelHeader: 'Sponsor details',
 		},
 		{
 			pageId: 'safesettings',
@@ -361,9 +361,9 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'geographicallocation',
-					index: 1
-				}
-			]
+					index: 1,
+				},
+			],
 		},
 		{
 			navHeader: 'Storage',
@@ -372,11 +372,11 @@ export const formSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'storage'
-				}
+					questionSetId: 'storage',
+				},
 			],
 			pageId: 'safesettings',
-			panelHeader: 'Storage'
+			panelHeader: 'Storage',
 		},
 		{
 			navHeader: 'Local storage',
@@ -385,11 +385,11 @@ export const formSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'localstorage'
-				}
+					questionSetId: 'localstorage',
+				},
 			],
 			panelHeader: 'Local storage',
-			pageId: 'safesettings'
+			pageId: 'safesettings',
 		},
 		{
 			panelHeader: 'DPA',
@@ -398,11 +398,11 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'dPA',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			panelId: 'dPA',
-			questionPanelHeaderText: 'TODO: We need a decription for this panel'
+			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 		},
 		{
 			panelHeader: 'Data Security and Protection Toolkit (DSP Toolkit)',
@@ -413,9 +413,9 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'dataSecurityandProtectionToolkitDSPToolkit',
-					index: 1
-				}
-			]
+					index: 1,
+				},
+			],
 		},
 		{
 			panelHeader: 'ISO 27001',
@@ -425,23 +425,23 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'iSO27001',
-					index: 1
-				}
+					index: 1,
+				},
 			],
-			navHeader: 'ISO 27001'
+			navHeader: 'ISO 27001',
 		},
 		{
 			navHeader: 'SLSP',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'sLSP'
-				}
+					questionSetId: 'sLSP',
+				},
 			],
 			panelId: 'sLSP',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelHeader: 'SLSP',
-			pageId: 'safesettings'
+			pageId: 'safesettings',
 		},
 		{
 			pageId: 'safesettings',
@@ -450,11 +450,11 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'processing',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
-			panelId: 'processing'
+			panelId: 'processing',
 		},
 		{
 			navHeader: 'Partner organisation',
@@ -463,11 +463,11 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'partnerorganisation',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			pageId: 'safesettings',
-			panelHeader: 'Partner organisation'
+			panelHeader: 'Partner organisation',
 		},
 		{
 			panelHeader: 'Information governance assurance',
@@ -477,23 +477,23 @@ export const formSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'informationgovernanceassurance'
-				}
+					questionSetId: 'informationgovernanceassurance',
+				},
 			],
-			navHeader: 'Information governance assurance'
+			navHeader: 'Information governance assurance',
 		},
 		{
 			navHeader: 'Datasets requested',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'datasetsrequested'
-				}
+					questionSetId: 'datasetsrequested',
+				},
 			],
 			panelId: 'datasetsrequested',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			pageId: 'safedata',
-			panelHeader: 'Datasets requested'
+			panelHeader: 'Datasets requested',
 		},
 		{
 			panelHeader: 'Other datasets',
@@ -503,10 +503,10 @@ export const formSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'otherdatasets'
-				}
+					questionSetId: 'otherdatasets',
+				},
 			],
-			navHeader: 'Other datasets'
+			navHeader: 'Other datasets',
 		},
 		{
 			panelHeader: 'Legal basis',
@@ -517,22 +517,22 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'legalbasis',
-					index: 1
-				}
-			]
+					index: 1,
+				},
+			],
 		},
 		{
 			questionSets: [
 				{
 					questionSetId: 'directcare',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'directcare',
 			navHeader: 'Direct care',
 			pageId: 'safedata',
-			panelHeader: 'Direct care'
+			panelHeader: 'Direct care',
 		},
 		{
 			navHeader: 'Informed consent',
@@ -541,24 +541,24 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'informedconsent',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			pageId: 'safedata',
-			panelHeader: 'Informed consent'
+			panelHeader: 'Informed consent',
 		},
 		{
 			navHeader: 'Section 251 exemption',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'section251exemption'
-				}
+					questionSetId: 'section251exemption',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'section251exemption',
 			panelHeader: 'Section 251 exemption',
-			pageId: 'safedata'
+			pageId: 'safedata',
 		},
 		{
 			panelId: 'regulation3HealthServicesControlofPatientInformationRegulations2002',
@@ -566,12 +566,12 @@ export const formSchema = {
 			questionSets: [
 				{
 					questionSetId: 'regulation3HealthServicesControlofPatientInformationRegulations2002',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			navHeader: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
 			panelHeader: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
-			pageId: 'safedata'
+			pageId: 'safedata',
 		},
 		{
 			pageId: 'safedata',
@@ -580,38 +580,38 @@ export const formSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'ethics'
-				}
+					questionSetId: 'ethics',
+				},
 			],
 			panelId: 'ethics',
-			questionPanelHeaderText: 'TODO: We need a decription for this panel'
+			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 		},
 		{
 			navHeader: 'Publication',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'publication'
-				}
+					questionSetId: 'publication',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'publication',
 			pageId: 'safeoutputs',
-			panelHeader: 'Publication'
+			panelHeader: 'Publication',
 		},
 		{
 			questionSets: [
 				{
 					questionSetId: 'datadestruction',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			panelId: 'datadestruction',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			navHeader: 'Data destruction',
 			panelHeader: 'Data destruction',
-			pageId: 'safeoutputs'
-		}
+			pageId: 'safeoutputs',
+		},
 	],
 	questionSets: [
 		{
@@ -626,15 +626,15 @@ export const formSchema = {
 						options: [
 							{
 								text: 'Principle investigator',
-								value: 'Principle investigator'
+								value: 'Principle investigator',
 							},
 							{
 								text: 'Main applicant',
-								value: 'Main applicant'
+								value: 'Main applicant',
 							},
 							{
 								text: 'Investigator/collaborator',
-								value: 'Investigator/collaborator'
+								value: 'Investigator/collaborator',
 							},
 							{
 								text: 'Other',
@@ -644,20 +644,20 @@ export const formSchema = {
 										questionId: 'roleOther',
 										question: 'Other role please specify',
 										input: {
-											type: 'textInput'
+											type: 'textInput',
 										},
 										validations: [
 											{
 												type: 'isLength',
-												params: [5]
-											}
-										]
-									}
-								]
-							}
-						]
+												params: [5],
+											},
+										],
+									},
+								],
+							},
+						],
 					},
-					guidance: 'Select a role for the individual.'
+					guidance: 'Select a role for the individual.',
 				},
 				{
 					questionId: 'fullname',
@@ -665,53 +665,53 @@ export const formSchema = {
 					input: {
 						type: 'typeaheadUser',
 						placeholder: 'Please select',
-						options: ['javascript', 'node']
+						options: ['javascript', 'node'],
 					},
 					validateOn: 'blur',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
-					guidance: 'All applicants must have an account in the Gateway.'
+					guidance: 'All applicants must have an account in the Gateway.',
 				},
 				{
 					questionId: 'applicantjobtitle',
 					question: 'Job Title',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					guidance: 'Job title.'
+					guidance: 'Job title.',
 				},
 				{
 					questionId: 'bio',
 					question: 'Affiliation',
 					input: {
 						type: 'textInput',
-						disabled: true
+						disabled: true,
 					},
-					guidance: 'University of Cambridge.'
+					guidance: 'University of Cambridge.',
 				},
 				{
 					questionId: 'orcid',
 					question: 'ORCID',
 					input: {
 						type: 'textInput',
-						disabled: true
+						disabled: true,
 					},
-					guidance: 'ORCID.'
+					guidance: 'ORCID.',
 				},
 				{
 					questionId: 'email',
 					question: 'Email',
 					input: {
 						type: 'textInput',
-						disabled: true
+						disabled: true,
 					},
-					guidance: 'Email.'
-				}
-			]
+					guidance: 'Email.',
+				},
+			],
 		},
 		{
 			questions: [
@@ -721,41 +721,41 @@ export const formSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Organisation name'
+					question: 'Organisation name',
 				},
 				{
 					questionId: 'registeredaddressline1',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Registered address (line 1)'
+					question: 'Registered address (line 1)',
 				},
 				{
 					questionId: 'registeredaddressline2',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Registered address (line 2)'
+					question: 'Registered address (line 2)',
 				},
 				{
 					questionId: 'city',
@@ -763,13 +763,13 @@ export const formSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'City'
+					question: 'City',
 				},
 				{
 					questionId: 'postcode',
@@ -777,13 +777,13 @@ export const formSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Postcode'
+					question: 'Postcode',
 				},
 				{
 					questionId: 'country',
@@ -791,13 +791,13 @@ export const formSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Country'
+					question: 'Country',
 				},
 				{
 					questionId: 'organisationtype',
@@ -805,110 +805,110 @@ export const formSchema = {
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					input: {
 						options: [
 							{
 								text: 'Academic institution',
-								value: 'Academic institution'
+								value: 'Academic institution',
 							},
 							{
 								value: '(UK)',
-								text: '(UK)'
+								text: '(UK)',
 							},
 							{
 								text: 'Commercial',
-								value: 'Commercial'
+								value: 'Commercial',
 							},
 							{
 								value: 'CQC-registered health and/or social care provider',
-								text: 'CQC-registered health and/or social care provider'
+								text: 'CQC-registered health and/or social care provider',
 							},
 							{
 								text: 'CQC approved national contractor',
-								value: 'CQC approved national contractor'
+								value: 'CQC approved national contractor',
 							},
 							{
 								text: 'Local authority',
-								value: 'Local authority'
+								value: 'Local authority',
 							},
 							{
 								text: 'Government agency (health and social care)',
-								value: 'Government agency (health and social care)'
+								value: 'Government agency (health and social care)',
 							},
 							{
 								value: 'Government agency outside of health and adult social care',
-								text: 'Government agency outside of health and adult social care'
+								text: 'Government agency outside of health and adult social care',
 							},
 							{
 								value: 'Independent sector organisation',
-								text: 'Independent sector organisation'
+								text: 'Independent sector organisation',
 							},
 							{
 								text: 'Charity',
-								value: 'Charity'
+								value: 'Charity',
 							},
 							{
 								value: 'International Organisation',
-								text: 'International Organisation'
+								text: 'International Organisation',
 							},
 							{
 								value: 'Other (please specify)',
-								text: 'Other (please specify)'
-							}
+								text: 'Other (please specify)',
+							},
 						],
-						type: 'selectInput'
+						type: 'selectInput',
 					},
-					question: 'Organisation type'
-				}
+					question: 'Organisation type',
+				},
 			],
 			questionSetHeader: 'Organisation conducting the study',
-			questionSetId: 'organisationconductingthestudy'
+			questionSetId: 'organisationconductingthestudy',
 		},
 		{
 			questionSetHeader: 'Project details',
 			questions: [
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Title of study',
 					questionId: 'titleofstudy',
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					input: {
 						options: [
 							{
 								text: 'Service evaluation',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Research'
+								text: 'Research',
 							},
 							{
 								value: 'false',
-								text: 'Clinical audit'
+								text: 'Clinical audit',
 							},
 							{
 								text: 'Surveillance',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Other (please specify)'
-							}
+								text: 'Other (please specify)',
+							},
 						],
-						type: 'radioOptionsInput'
+						type: 'radioOptionsInput',
 					},
 					question: 'What is the study type?',
 					questionId: 'whatisthestudytype',
@@ -916,16 +916,16 @@ export const formSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
-					]
+							type: 'isLength',
+						},
+					],
 				},
 				{
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					questionId: 'thisapplicationis',
 					question: 'This application is...',
@@ -934,114 +934,114 @@ export const formSchema = {
 						options: [
 							{
 								value: 'false',
-								text: 'A new application'
+								text: 'A new application',
 							},
 							{
 								text: 'An amendment to an existing application extension',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								text: 'A renewal of an existing approval',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Related to a previous application (approved or not)'
-							}
-						]
-					}
+								text: 'Related to a previous application (approved or not)',
+							},
+						],
+					},
 				},
 				{
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					questionId: 'pleaseprovidealaysummaryoftheproject',
 					question: 'Please provide a lay summary of the project',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					question: 'What are the project aims, objectives and rationale?',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
-					questionId: 'whataretheprojectaimsobjectivesandrationale'
+					questionId: 'whataretheprojectaimsobjectivesandrationale',
 				},
 				{
 					questionId: 'whatistheprojectMethodology',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'What is the project Methodology?'
+					question: 'What is the project Methodology?',
 				},
 				{
 					question: 'What is the anticipated public health benefit and/or impact of conducting this project?',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
-					questionId: 'whatistheanticipatedpublichealthbenefitandorimpactofconductingthisproject'
+					questionId: 'whatistheanticipatedpublichealthbenefitandorimpactofconductingthisproject',
 				},
 				{
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					questionId: 'whenwillyouneedthedata',
 					question: 'When will you need the data?',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'How long will you need the data? (months)',
 					questionId: 'howlongwillyouneedthedatamonths',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
+							params: [1],
 						},
 						{
-							type: 'isNumeric'
-						}
-					]
+							type: 'isNumeric',
+						},
+					],
 				},
 				{
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					question:
 						'Can you provide an outline of the public engagement strategy of the study or a brief explanation why there is no public engagement?',
-					questionId: 'canyouprovideanoutlineofthepublicengagementstrategyofthestudyorabriefexplanationwhythereisnopublicengagement'
-				}
+					questionId: 'canyouprovideanoutlineofthepublicengagementstrategyofthestudyorabriefexplanationwhythereisnopublicengagement',
+				},
 			],
-			questionSetId: 'projectdetails'
+			questionSetId: 'projectdetails',
 		},
 		{
 			questions: [
@@ -1050,27 +1050,27 @@ export const formSchema = {
 						options: [
 							{
 								value: 'false',
-								text: 'Yes'
+								text: 'Yes',
 							},
 							{
 								text: 'No',
-								value: 'false'
-							}
+								value: 'false',
+							},
 						],
-						type: 'radioOptionsInput'
+						type: 'radioOptionsInput',
 					},
 					question: 'Is there a commercial interest in the project, either by funding or direct input into project design or team?',
 					questionId: 'isthereacommercialinterestintheprojecteitherbyfundingordirectinputintoprojectdesignorteam',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
-					]
-				}
+							params: [1],
+						},
+					],
+				},
 			],
 			questionSetHeader: 'Commercial interest',
-			questionSetId: 'commercialinterest'
+			questionSetId: 'commercialinterest',
 		},
 		{
 			questionSetId: 'organisationwithcommercialinterest',
@@ -1079,59 +1079,59 @@ export const formSchema = {
 					questionId: 'organisationname',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Organisation name'
+					question: 'Organisation name',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Registered address (line 1)',
 					questionId: 'registeredaddressline1',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					question: 'Registered address (line 2)',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'registeredaddressline2'
+					questionId: 'registeredaddressline2',
 				},
 				{
 					questionId: 'city',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'City'
+					question: 'City',
 				},
 				{
 					question: 'Postcode',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'postcode'
+					questionId: 'postcode',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Country',
 					questionId: 'country',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					questionId: 'pleasedescribethenatureofinterest',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'Please describe the nature of interest'
-				}
+					question: 'Please describe the nature of interest',
+				},
 			],
-			questionSetHeader: 'Organisation with commercial interest'
+			questionSetHeader: 'Organisation with commercial interest',
 		},
 		{
 			questionSetId: 'funding',
@@ -1143,78 +1143,78 @@ export const formSchema = {
 						options: [
 							{
 								text: 'Yes',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								text: 'No',
-								value: 'false'
-							}
-						]
+								value: 'false',
+							},
+						],
 					},
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
-					questionId: 'doesyourprojecthaveafunder'
-				}
+					questionId: 'doesyourprojecthaveafunder',
+				},
 			],
-			questionSetHeader: 'Funding'
+			questionSetHeader: 'Funding',
 		},
 		{
 			questionSetHeader: 'Funder details',
 			questions: [
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Organisation name',
 					questionId: 'organisationname',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					questionId: 'registeredaddressline1',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Registered address (line 1)'
+					question: 'Registered address (line 1)',
 				},
 				{
 					question: 'Registered address (line 2)',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'registeredaddressline2'
+					questionId: 'registeredaddressline2',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'City',
 					questionId: 'city',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					question: 'Postcode',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'postcode'
+					questionId: 'postcode',
 				},
 				{
 					guidance: 'Enter guidance text here',
 					questionId: 'country',
 					question: 'Country',
 					input: {
-						type: 'textInput'
-					}
-				}
+						type: 'textInput',
+					},
+				},
 			],
-			questionSetId: 'funderdetails'
+			questionSetId: 'funderdetails',
 		},
 		{
 			questionSetId: 'sponsorship',
@@ -1224,26 +1224,26 @@ export const formSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
 						options: [
 							{
 								value: 'false',
-								text: 'Yes'
+								text: 'Yes',
 							},
 							{
 								value: 'false',
-								text: 'No'
-							}
+								text: 'No',
+							},
 						],
-						type: 'radioOptionsInput'
+						type: 'radioOptionsInput',
 					},
-					question: 'Does your project have a sponsor?'
-				}
+					question: 'Does your project have a sponsor?',
+				},
 			],
-			questionSetHeader: 'Sponsorship'
+			questionSetHeader: 'Sponsorship',
 		},
 		{
 			questions: [
@@ -1251,45 +1251,45 @@ export const formSchema = {
 					questionId: 'organisationname',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Organisation name'
+					question: 'Organisation name',
 				},
 				{
 					questionId: 'registeredaddressline1',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Registered address (line 1)'
+					question: 'Registered address (line 1)',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Registered address (line 2)',
 					questionId: 'registeredaddressline2',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					questionId: 'city',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'City'
+					question: 'City',
 				},
 				{
 					questionId: 'postcode',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Postcode'
-				}
+					question: 'Postcode',
+				},
 			],
 			questionSetHeader: 'Sponsor details',
-			questionSetId: 'sponsordetails'
+			questionSetId: 'sponsordetails',
 		},
 		{
 			questions: [
@@ -1299,25 +1299,25 @@ export const formSchema = {
 						options: [
 							{
 								text: 'UK',
-								value: 'UK'
+								value: 'UK',
 							},
 							{
 								text: 'EU',
-								value: 'EU'
+								value: 'EU',
 							},
 							{
 								text: 'Worldwide',
-								value: 'Worldwide'
-							}
+								value: 'Worldwide',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'willthedatabestoredorprocessedoutsideoftheUK'
-				}
+					questionId: 'willthedatabestoredorprocessedoutsideoftheUK',
+				},
 			],
 			questionSetHeader: 'Geographical location',
-			questionSetId: 'geographicallocation'
+			questionSetId: 'geographicallocation',
 		},
 		{
 			questions: [
@@ -1329,19 +1329,19 @@ export const formSchema = {
 						options: [
 							{
 								text: 'Trusted Research Environment',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Local storage'
-							}
-						]
+								text: 'Local storage',
+							},
+						],
 					},
-					question: 'Where will the data be stored?'
-				}
+					question: 'Where will the data be stored?',
+				},
 			],
 			questionSetHeader: 'Storage',
-			questionSetId: 'storage'
+			questionSetId: 'storage',
 		},
 		{
 			questionSetHeader: 'Local storage',
@@ -1351,41 +1351,41 @@ export const formSchema = {
 					questionId: 'organisationname',
 					question: 'Organisation name',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					input: {
 						options: [
 							{
 								value: 'DPA registration',
-								text: 'DPA registration'
+								text: 'DPA registration',
 							},
 							{
 								text: 'Data Security and Protection Toolkit (DSP Toolkit)',
-								value: 'Data Security and Protection Toolkit (DSP Toolkit)'
+								value: 'Data Security and Protection Toolkit (DSP Toolkit)',
 							},
 							{
 								value: 'ISO 27001',
-								text: 'ISO 27001'
+								text: 'ISO 27001',
 							},
 							{
 								value: 'SLSP',
-								text: 'SLSP'
+								text: 'SLSP',
 							},
 							{
 								text: 'Other (please specify)',
-								value: 'Other (please specify)'
-							}
+								value: 'Other (please specify)',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
 					question: 'What type of security assurance does this organisation have in place?',
 					questionId: 'whattypeofsecurityassurancedoesthisorganisationhaveinplace',
-					guidance: 'Enter guidance text here'
-				}
+					guidance: 'Enter guidance text here',
+				},
 			],
-			questionSetId: 'localstorage'
+			questionSetId: 'localstorage',
 		},
 		{
 			questionSetId: 'dPA',
@@ -1393,21 +1393,21 @@ export const formSchema = {
 				{
 					question: 'DPA Registration code',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'dPARegistrationcode'
+					questionId: 'dPARegistrationcode',
 				},
 				{
 					questionId: 'dPAExpirationdate',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'DPA Expiration date'
-				}
+					question: 'DPA Expiration date',
+				},
 			],
-			questionSetHeader: 'DPA'
+			questionSetHeader: 'DPA',
 		},
 		{
 			questions: [
@@ -1416,28 +1416,28 @@ export const formSchema = {
 					questionId: 'organisationcode',
 					question: 'Organisation code',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					questionId: 'toolkitscore',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Toolkit score'
+					question: 'Toolkit score',
 				},
 				{
 					questionId: 'versioncompleted',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Version completed'
-				}
+					question: 'Version completed',
+				},
 			],
 			questionSetHeader: 'Data Security and Protection Toolkit (DSP Toolkit)',
-			questionSetId: 'dataSecurityandProtectionToolkitDSPToolkit'
+			questionSetId: 'dataSecurityandProtectionToolkitDSPToolkit',
 		},
 		{
 			questionSetId: 'iSO27001',
@@ -1448,16 +1448,16 @@ export const formSchema = {
 						options: [
 							{
 								value: 'I have enclosed a copy of my certificate',
-								text: 'I have enclosed a copy of my certificate'
-							}
+								text: 'I have enclosed a copy of my certificate',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'pleaseencloseacopyofyourcertificate'
-				}
+					questionId: 'pleaseencloseacopyofyourcertificate',
+				},
 			],
-			questionSetHeader: 'ISO 27001'
+			questionSetHeader: 'ISO 27001',
 		},
 		{
 			questions: [
@@ -1467,17 +1467,17 @@ export const formSchema = {
 						options: [
 							{
 								text: 'I have enclosed a completed system level security policy for ODR review',
-								value: 'I have enclosed a completed system level security policy for ODR review'
-							}
-						]
+								value: 'I have enclosed a completed system level security policy for ODR review',
+							},
+						],
 					},
 					question: 'Please enclose a completed system level security policy for ODR review',
 					questionId: 'pleaseencloseacompletedsystemlevelsecuritypolicyforODRreview',
-					guidance: 'Enter guidance text here'
-				}
+					guidance: 'Enter guidance text here',
+				},
 			],
 			questionSetHeader: 'SLSP',
-			questionSetId: 'sLSP'
+			questionSetId: 'sLSP',
 		},
 		{
 			questions: [
@@ -1490,18 +1490,18 @@ export const formSchema = {
 						options: [
 							{
 								text: 'Same environment as storage',
-								value: 'Same environment as storage'
+								value: 'Same environment as storage',
 							},
 							{
 								value: 'Partner organisation',
-								text: 'Partner organisation'
-							}
-						]
-					}
-				}
+								text: 'Partner organisation',
+							},
+						],
+					},
+				},
 			],
 			questionSetHeader: 'Processing',
-			questionSetId: 'processing'
+			questionSetId: 'processing',
 		},
 		{
 			questions: [
@@ -1509,45 +1509,45 @@ export const formSchema = {
 					questionId: 'organisationname',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Organisation name'
+					question: 'Organisation name',
 				},
 				{
 					question: 'Registered address (line 1)',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'registeredaddressline1'
+					questionId: 'registeredaddressline1',
 				},
 				{
 					guidance: 'Enter guidance text here',
 					questionId: 'registeredaddressline2',
 					question: 'Registered address (line 2)',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					questionId: 'city',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'City'
+					question: 'City',
 				},
 				{
 					guidance: 'Enter guidance text here',
 					questionId: 'postcode',
 					question: 'Postcode',
 					input: {
-						type: 'textInput'
-					}
-				}
+						type: 'textInput',
+					},
+				},
 			],
 			questionSetHeader: 'Partner organisation',
-			questionSetId: 'partnerorganisation'
+			questionSetId: 'partnerorganisation',
 		},
 		{
 			questionSetHeader: 'Information governance assurance',
@@ -1557,8 +1557,8 @@ export const formSchema = {
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					input: {
 						type: 'checkboxOptionsInput',
@@ -1567,32 +1567,32 @@ export const formSchema = {
 								value:
 									'I certify that the individual(s) who will process the data is a/are bona fide worker(s) at the applicant’s organisation',
 								text:
-									'I certify that the individual(s) who will process the data is a/are bona fide worker(s) at the applicant’s organisation'
+									'I certify that the individual(s) who will process the data is a/are bona fide worker(s) at the applicant’s organisation',
 							},
 							{
 								text:
 									'I certify that the individual(s) (including permanent, temporary and locums) who is/ will process the data has/have been subject to personnel background checks and their employment contracts include compliance with organisational information governance standards.',
 								value:
-									'I certify that the individual(s) (including permanent, temporary and locums) who is/ will process the data has/have been subject to personnel background checks and their employment contracts include compliance with organisational information governance standards.'
+									'I certify that the individual(s) (including permanent, temporary and locums) who is/ will process the data has/have been subject to personnel background checks and their employment contracts include compliance with organisational information governance standards.',
 							},
 							{
 								text:
 									'I certify that information governance awareness and mandatory training procedures are in place and the individual(s) who is/ will process the data is/are appropriately trained.',
 								value:
-									'I certify that information governance awareness and mandatory training procedures are in place and the individual(s) who is/ will process the data is/are appropriately trained.'
+									'I certify that information governance awareness and mandatory training procedures are in place and the individual(s) who is/ will process the data is/are appropriately trained.',
 							},
 							{
 								value:
 									'I certify that the data can be entrusted to the organisation, in the knowledge that the individual(s) processing the data will conscientiously discharge his/her/their obligations, including with regard to confidentiality of the data.',
 								text:
-									'I certify that the data can be entrusted to the organisation, in the knowledge that the individual(s) processing the data will conscientiously discharge his/her/their obligations, including with regard to confidentiality of the data.'
-							}
-						]
+									'I certify that the data can be entrusted to the organisation, in the knowledge that the individual(s) processing the data will conscientiously discharge his/her/their obligations, including with regard to confidentiality of the data.',
+							},
+						],
 					},
-					question: 'Please confirm the items below'
-				}
+					question: 'Please confirm the items below',
+				},
 			],
-			questionSetId: 'informationgovernanceassurance'
+			questionSetId: 'informationgovernanceassurance',
 		},
 		{
 			questionSetId: 'datasetsrequested',
@@ -1600,16 +1600,16 @@ export const formSchema = {
 				{
 					question: 'Please indicate all datasets necessary to conduct the project',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					questionId: 'pleaseindicatealldatasetsnecessarytoconducttheproject'
+					questionId: 'pleaseindicatealldatasetsnecessarytoconducttheproject',
 				},
 				{
 					questionId: 'howwillthedatarequestedbeusedinthedeliveryoftheproject',
 					question: 'How will the data requested be used in the delivery of the project?',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					question: 'Please classify the datasets requested',
@@ -1617,26 +1617,26 @@ export const formSchema = {
 						options: [
 							{
 								value: 'false',
-								text: 'Anonymous'
+								text: 'Anonymous',
 							},
 							{
 								text: 'De-identified',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								text: 'Personally identifiable',
-								value: 'false'
-							}
+								value: 'false',
+							},
 						],
-						type: 'radioOptionsInput'
+						type: 'radioOptionsInput',
 					},
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
-					questionId: 'pleaseclassifythedatasetsrequested'
+					questionId: 'pleaseclassifythedatasetsrequested',
 				},
 				{
 					question: 'Please indicate the data frequency required for the project',
@@ -1645,30 +1645,30 @@ export const formSchema = {
 						options: [
 							{
 								value: 'false',
-								text: 'One off'
+								text: 'One off',
 							},
 							{
 								text: 'Periodic - monthly',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Periodic - quarterly'
+								text: 'Periodic - quarterly',
 							},
 							{
 								value: 'false',
-								text: 'Periodic - annually'
+								text: 'Periodic - annually',
 							},
 							{
 								text: 'Other (please specify)',
-								value: 'false'
-							}
-						]
+								value: 'false',
+							},
+						],
 					},
-					questionId: 'pleaseindicatethedatafrequencyrequiredfortheproject'
-				}
+					questionId: 'pleaseindicatethedatafrequencyrequiredfortheproject',
+				},
 			],
-			questionSetHeader: 'Datasets requested'
+			questionSetHeader: 'Datasets requested',
 		},
 		{
 			questionSetId: 'otherdatasets',
@@ -1678,17 +1678,17 @@ export const formSchema = {
 					questionId: 'specifyanydatalinkagesrequirementsincludingdataflowsbetweendatacustodians',
 					question: 'Specify any data linkages requirements including data flows between data custodians.',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					questionId:
 						'describeanydatasetsalreadyheldfortheprojectpleaseincludedatasetnameclassificationofthedatathelegalbasisforprocessingandthedatasetperiod',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					question:
-						'Describe any datasets already held for the project (please include dataset name, classification of the data, the legal basis for processing and the dataset period).'
+						'Describe any datasets already held for the project (please include dataset name, classification of the data, the legal basis for processing and the dataset period).',
 				},
 				{
 					question: 'Please provide details of any data sharing agreement already in place for this project',
@@ -1697,13 +1697,13 @@ export const formSchema = {
 						options: [
 							{
 								text: 'I have enclosed a copy of existing sharing agreement documents',
-								value: 'I have enclosed a copy of existing sharing agreement documents'
-							}
-						]
+								value: 'I have enclosed a copy of existing sharing agreement documents',
+							},
+						],
 					},
-					questionId: 'pleaseprovidedetailsofanydatasharingagreementalreadyinplaceforthisproject'
-				}
-			]
+					questionId: 'pleaseprovidedetailsofanydatasharingagreementalreadyinplaceforthisproject',
+				},
+			],
 		},
 		{
 			questionSetHeader: 'Legal basis',
@@ -1717,26 +1717,26 @@ export const formSchema = {
 						options: [
 							{
 								text: 'Direct care',
-								value: 'Direct care'
+								value: 'Direct care',
 							},
 							{
 								value: 'Informed consent',
-								text: 'Informed consent'
+								text: 'Informed consent',
 							},
 							{
 								text: 'Section 251 exemption',
-								value: 'Section 251 exemption'
+								value: 'Section 251 exemption',
 							},
 							{
 								value: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
-								text: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)'
-							}
+								text: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
+							},
 						],
-						type: 'checkboxOptionsInput'
-					}
-				}
+						type: 'checkboxOptionsInput',
+					},
+				},
 			],
-			questionSetId: 'legalbasis'
+			questionSetId: 'legalbasis',
 		},
 		{
 			questions: [
@@ -1749,10 +1749,10 @@ export const formSchema = {
 						options: [
 							{
 								value: 'I have enclosed evidence of caldicott guardian or other approved signatory',
-								text: 'I have enclosed evidence of caldicott guardian or other approved signatory'
-							}
-						]
-					}
+								text: 'I have enclosed evidence of caldicott guardian or other approved signatory',
+							},
+						],
+					},
 				},
 				{
 					question: 'Signed letter from guardian',
@@ -1761,22 +1761,22 @@ export const formSchema = {
 						options: [
 							{
 								value: 'I have enclosed a signed letter from my Caldicott guardian',
-								text: 'I have enclosed a signed letter from my Caldicott guardian'
-							}
-						]
+								text: 'I have enclosed a signed letter from my Caldicott guardian',
+							},
+						],
 					},
-					questionId: 'signedletterfromguardian'
+					questionId: 'signedletterfromguardian',
 				},
 				{
 					questionId: 'caldicottguardianname',
 					question: 'Caldicott guardian name',
 					input: {
-						type: 'textInput'
-					}
-				}
+						type: 'textInput',
+					},
+				},
 			],
 			questionSetHeader: 'Direct care',
-			questionSetId: 'directcare'
+			questionSetId: 'directcare',
 		},
 		{
 			questionSetHeader: 'Informed consent',
@@ -1790,41 +1790,41 @@ export const formSchema = {
 								text:
 									'I have enclosed a blank copy of the consent form(s) and all associated patient information materials (letters of invitations, leaflets, questionnaires etc.)',
 								value:
-									'I have enclosed a blank copy of the consent form(s) and all associated patient information materials (letters of invitations, leaflets, questionnaires etc.)'
-							}
-						]
+									'I have enclosed a blank copy of the consent form(s) and all associated patient information materials (letters of invitations, leaflets, questionnaires etc.)',
+							},
+						],
 					},
-					question: 'Please enclose a copy of blank consent form and any associated patient information documents with this form'
-				}
+					question: 'Please enclose a copy of blank consent form and any associated patient information documents with this form',
+				},
 			],
-			questionSetId: 'informedconsent'
+			questionSetId: 'informedconsent',
 		},
 		{
 			questionSetHeader: 'Section 251 exemption',
 			questions: [
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'CAR reference',
-					questionId: 'cARreference'
+					questionId: 'cARreference',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Date of approval',
-					questionId: 'dateofapproval'
+					questionId: 'dateofapproval',
 				},
 				{
 					questionId: 'dateofnextrenewal',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Date of next renewal'
-				}
+					question: 'Date of next renewal',
+				},
 			],
-			questionSetId: 'section251exemption'
+			questionSetId: 'section251exemption',
 		},
 		{
 			questions: [
@@ -1834,12 +1834,12 @@ export const formSchema = {
 						options: [
 							{
 								value: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters',
-								text: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters'
-							}
-						]
+								text: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters',
+							},
+						],
 					},
 					question: 'Please enclose a copy of the S251 approval, approved amendments and any renewal letters',
-					questionId: 'pleaseencloseacopyoftheS251approvalapprovedamendmentsandanyrenewalletters'
+					questionId: 'pleaseencloseacopyoftheS251approvalapprovedamendmentsandanyrenewalletters',
 				},
 				{
 					question:
@@ -1848,17 +1848,17 @@ export const formSchema = {
 						options: [
 							{
 								value: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters from data custodian',
-								text: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters from data custodian'
-							}
+								text: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters from data custodian',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
 					questionId:
-						'pleaseenclosealllettersdocumentingthatsection251supporthasbeengrantedandremainsextantsenttoyoubydatacustodianforthisproject'
-				}
+						'pleaseenclosealllettersdocumentingthatsection251supporthasbeengrantedandremainsextantsenttoyoubydatacustodianforthisproject',
+				},
 			],
 			questionSetHeader: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
-			questionSetId: 'regulation3HealthServicesControlofPatientInformationRegulations2002'
+			questionSetId: 'regulation3HealthServicesControlofPatientInformationRegulations2002',
 		},
 		{
 			questions: [
@@ -1868,37 +1868,37 @@ export const formSchema = {
 						options: [
 							{
 								text: 'Yes',
-								value: 'Yes'
+								value: 'Yes',
 							},
 							{
 								text: 'No',
-								value: 'No'
-							}
+								value: 'No',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
-					questionId: 'hasethicsapprovalbeenobtained'
+					questionId: 'hasethicsapprovalbeenobtained',
 				},
 				{
 					question: 'REC Committee name',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					questionId: 'rECCommitteename'
+					questionId: 'rECCommitteename',
 				},
 				{
 					questionId: 'rECreferencenumber',
 					question: 'REC reference number',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					questionId: 'othercommittee',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Other committee'
+					question: 'Other committee',
 				},
 				{
 					questionId: 'pleaseencloseacopyofthefinalRECapprovalletterandlettersdocumentinganyRECapprovedamendments',
@@ -1906,16 +1906,16 @@ export const formSchema = {
 						options: [
 							{
 								value: 'I have enclosed a copy of the final REC approval letter and letters documenting any REC-approved amendments',
-								text: 'I have enclosed a copy of the final REC approval letter and letters documenting any REC-approved amendments'
-							}
+								text: 'I have enclosed a copy of the final REC approval letter and letters documenting any REC-approved amendments',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
-					question: 'Please enclose a copy of the final REC approval letter and letters documenting any REC-approved amendments'
-				}
+					question: 'Please enclose a copy of the final REC approval letter and letters documenting any REC-approved amendments',
+				},
 			],
 			questionSetHeader: 'Ethics',
-			questionSetId: 'ethics'
+			questionSetId: 'ethics',
 		},
 		{
 			questionSetHeader: 'Publication',
@@ -1924,33 +1924,33 @@ export const formSchema = {
 					questionId: 'pleasedescribeanypublicationplansincludingmilestonesforpublication',
 					question: 'Please describe any publication plans including milestones for publication',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					questionId: 'howwillproposalfindingsbepublishedtowhataudienceandinwhatformatPleasegivedetails',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'How will proposal findings be published, to what audience and in what format? Please give details.'
+					question: 'How will proposal findings be published, to what audience and in what format? Please give details.',
 				},
 				{
 					questionId: 'whatstepswillbetakentoensurethatindividualscannotbeidentifiedPleasedescribewhatdisclosurecontrolpolicywillbeapplied',
 					question:
 						'What steps will be taken to ensure that individuals cannot be identified? Please describe what disclosure control policy will be applied',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					questionId: 'willtheoutputsbepublishedinanopenaccessplatform',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'Will the outputs be published in an open access platform?'
-				}
+					question: 'Will the outputs be published in an open access platform?',
+				},
 			],
-			questionSetId: 'publication'
+			questionSetId: 'publication',
 		},
 		{
 			questionSetHeader: 'Data destruction',
@@ -1959,27 +1959,27 @@ export const formSchema = {
 					questionId:
 						'howlongdoyouintendtoretainidentifiableorpotentiallyidentifiableinformationaftertheconclusionoftheprojectincludingarchivebackupcopies',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					question:
-						'How long do you intend to retain identifiable or potentially identifiable information after the conclusion of the project (including archive/backup copies)?'
+						'How long do you intend to retain identifiable or potentially identifiable information after the conclusion of the project (including archive/backup copies)?',
 				},
 				{
 					questionId: 'whatmethodofdestructionwillbeusedwhenthisperiodhasexpired',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'What method of destruction will be used when this period has expired?'
+					question: 'What method of destruction will be used when this period has expired?',
 				},
 				{
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					question: 'What evidence will be obtained that destruction has occurred?',
-					questionId: 'whatevidencewillbeobtainedthatdestructionhasoccurred'
-				}
+					questionId: 'whatevidencewillbeobtainedthatdestructionhasoccurred',
+				},
 			],
-			questionSetId: 'datadestruction'
+			questionSetId: 'datadestruction',
 		},
 		{
 			questionSetId: 'addApplicant',
@@ -1991,222 +1991,222 @@ export const formSchema = {
 						action: 'addApplicant',
 						panelId: 'applicant',
 						text: '+ Add another person to this application',
-						class: 'btn btn-primary addButton'
+						class: 'btn btn-primary addButton',
 					},
-					guidance: 'Some safe project guidance.'
-				}
-			]
-		}
-	]
+					guidance: 'Some safe project guidance.',
+				},
+			],
+		},
+	],
 };
 
 export const uniquePages = [
-  {
-    pageId: 'about',
-    active: false,
-    title: 'About this application',
-    description:
-      'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.'
-  },
-  {
-    pageId: 'safepeople',
-    active: true,
-    title: 'Safe people',
-    description: 'TODO'
-  },
-  {
-    title: 'Safe project',
-    pageId: 'safeproject',
-    active: false,
-    description: 'TODO'
-  },
-  {
-    description: 'TODO',
-    pageId: 'safesettings',
-    active: false,
-    title: 'Safe settings'
-  },
-  {
-    description: 'TODO',
-    title: 'Safe data',
-    pageId: 'safedata',
-    active: false
-  },
-  {
-    title: 'Safe outputs',
-    active: false,
-    pageId: 'safeoutputs',
-    description: 'TODO'
-  },
-  {
-    pageId: 'files',
-    active: false,
-    title: 'Files',
-    description:
-      'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.'
-  }
+	{
+		pageId: 'about',
+		active: false,
+		title: 'About this application',
+		description:
+			'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.',
+	},
+	{
+		pageId: 'safepeople',
+		active: true,
+		title: 'Safe people',
+		description: 'TODO',
+	},
+	{
+		title: 'Safe project',
+		pageId: 'safeproject',
+		active: false,
+		description: 'TODO',
+	},
+	{
+		description: 'TODO',
+		pageId: 'safesettings',
+		active: false,
+		title: 'Safe settings',
+	},
+	{
+		description: 'TODO',
+		title: 'Safe data',
+		pageId: 'safedata',
+		active: false,
+	},
+	{
+		title: 'Safe outputs',
+		active: false,
+		pageId: 'safeoutputs',
+		description: 'TODO',
+	},
+	{
+		pageId: 'files',
+		active: false,
+		title: 'Files',
+		description:
+			'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.',
+	},
 ];
 
 export const uniqueFormPanels = [
 	{
 		panelId: 'about',
 		index: 0,
-		pageId: 'about'
+		pageId: 'about',
 	},
 	{
 		panelId: 'applicant',
 		index: 1,
-		pageId: 'safepeople'
+		pageId: 'safepeople',
 	},
 	{
 		pageId: 'safepeople',
 		index: 2,
-		panelId: 'organisationconductingthestudy'
+		panelId: 'organisationconductingthestudy',
 	},
 	{
 		pageId: 'safeproject',
 		index: 3,
-		panelId: 'projectdetails'
+		panelId: 'projectdetails',
 	},
 	{
 		panelId: 'commercialinterest',
 		index: 4,
-		pageId: 'safeproject'
+		pageId: 'safeproject',
 	},
 	{
 		panelId: 'organisationwithcommercialinterest',
 		pageId: 'safeproject',
-		index: 5
+		index: 5,
 	},
 	{
 		panelId: 'funding',
 		pageId: 'safeproject',
-		index: 6
+		index: 6,
 	},
 	{
 		pageId: 'safeproject',
 		index: 7,
-		panelId: 'funderdetails'
+		panelId: 'funderdetails',
 	},
 	{
 		panelId: 'sponsorship',
 		index: 8,
-		pageId: 'safeproject'
+		pageId: 'safeproject',
 	},
 	{
 		pageId: 'safeproject',
 		index: 9,
-		panelId: 'sponsordetails'
+		panelId: 'sponsordetails',
 	},
 	{
 		panelId: 'geographicallocation',
 		pageId: 'safesettings',
-		index: 10
+		index: 10,
 	},
 	{
 		index: 11,
 		pageId: 'safesettings',
-		panelId: 'storage'
+		panelId: 'storage',
 	},
 	{
 		index: 12,
 		pageId: 'safesettings',
-		panelId: 'localstorage'
+		panelId: 'localstorage',
 	},
 	{
 		pageId: 'safesettings',
 		index: 13,
-		panelId: 'dPA'
+		panelId: 'dPA',
 	},
 	{
 		panelId: 'dataSecurityandProtectionToolkitDSPToolkit',
 		pageId: 'safesettings',
-		index: 14
+		index: 14,
 	},
 	{
 		index: 15,
 		pageId: 'safesettings',
-		panelId: 'iSO27001'
+		panelId: 'iSO27001',
 	},
 	{
 		index: 16,
 		pageId: 'safesettings',
-		panelId: 'sLSP'
+		panelId: 'sLSP',
 	},
 	{
 		pageId: 'safesettings',
 		index: 17,
-		panelId: 'processing'
+		panelId: 'processing',
 	},
 	{
 		index: 18,
 		pageId: 'safesettings',
-		panelId: 'partnerorganisation'
+		panelId: 'partnerorganisation',
 	},
 	{
 		index: 19,
 		pageId: 'safesettings',
-		panelId: 'informationgovernanceassurance'
+		panelId: 'informationgovernanceassurance',
 	},
 	{
 		index: 20,
 		pageId: 'safedata',
-		panelId: 'datasetsrequested'
+		panelId: 'datasetsrequested',
 	},
 	{
 		panelId: 'otherdatasets',
 		pageId: 'safedata',
-		index: 21
+		index: 21,
 	},
 	{
 		pageId: 'safedata',
 		index: 22,
-		panelId: 'legalbasis'
+		panelId: 'legalbasis',
 	},
 	{
 		index: 23,
 		pageId: 'safedata',
-		panelId: 'directcare'
+		panelId: 'directcare',
 	},
 	{
 		panelId: 'informedconsent',
 		pageId: 'safedata',
-		index: 24
+		index: 24,
 	},
 	{
 		panelId: 'section251exemption',
 		pageId: 'safedata',
-		index: 25
+		index: 25,
 	},
 	{
 		panelId: 'regulation3HealthServicesControlofPatientInformationRegulations2002',
 		index: 26,
-		pageId: 'safedata'
+		pageId: 'safedata',
 	},
 	{
 		panelId: 'ethics',
 		index: 27,
-		pageId: 'safedata'
+		pageId: 'safedata',
 	},
 	{
 		panelId: 'publication',
 		index: 28,
-		pageId: 'safeoutputs'
+		pageId: 'safeoutputs',
 	},
 	{
 		panelId: 'datadestruction',
 		pageId: 'safeoutputs',
-		index: 29
+		index: 29,
 	},
 	{
 		panelId: 'files',
 		index: 100,
-		pageId: 'files'
-	}
+		pageId: 'files',
+	},
 ];
 
 export const uniqueSchema = {
-  classes: {
+	classes: {
 		form: 'dar-form',
 		select: 'form-control',
 		typeaheadCustom: 'form-control',
@@ -2221,7 +2221,7 @@ export const uniqueSchema = {
 		controlButton: 'btn btn-primary pull-right',
 		backButton: 'btn btn-default pull-left',
 		errorMessage: 'alert alert-danger',
-		buttonBar: 'button-bar hidden'
+		buttonBar: 'button-bar hidden',
 	},
 	pages: [
 		{
@@ -2229,202 +2229,202 @@ export const uniqueSchema = {
 			active: false,
 			title: 'About this application',
 			description:
-				'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.'
+				'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.',
 		},
 		{
 			pageId: 'safepeople',
 			active: true,
 			title: 'Safe people',
-			description: 'TODO'
+			description: 'TODO',
 		},
 		{
 			title: 'Safe project',
 			pageId: 'safeproject',
 			active: false,
-			description: 'TODO'
+			description: 'TODO',
 		},
 		{
 			description: 'TODO',
 			pageId: 'safesettings',
 			active: false,
-			title: 'Safe settings'
+			title: 'Safe settings',
 		},
 		{
 			description: 'TODO',
 			title: 'Safe data',
 			pageId: 'safedata',
-			active: false
+			active: false,
 		},
 		{
 			title: 'Safe outputs',
 			active: false,
 			pageId: 'safeoutputs',
-			description: 'TODO'
+			description: 'TODO',
 		},
 		{
 			pageId: 'files',
 			active: false,
 			title: 'Files',
 			description:
-				'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.'
-		}
+				'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.',
+		},
 	],
 	formPanels: [
 		{
 			panelId: 'about',
 			index: 0,
-			pageId: 'about'
+			pageId: 'about',
 		},
 		{
 			panelId: 'applicant',
 			index: 1,
-			pageId: 'safepeople'
+			pageId: 'safepeople',
 		},
 		{
 			pageId: 'safepeople',
 			index: 2,
-			panelId: 'organisationconductingthestudy'
+			panelId: 'organisationconductingthestudy',
 		},
 		{
 			pageId: 'safeproject',
 			index: 3,
-			panelId: 'projectdetails'
+			panelId: 'projectdetails',
 		},
 		{
 			panelId: 'commercialinterest',
 			index: 4,
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			panelId: 'organisationwithcommercialinterest',
 			pageId: 'safeproject',
-			index: 5
+			index: 5,
 		},
 		{
 			panelId: 'funding',
 			pageId: 'safeproject',
-			index: 6
+			index: 6,
 		},
 		{
 			pageId: 'safeproject',
 			index: 7,
-			panelId: 'funderdetails'
+			panelId: 'funderdetails',
 		},
 		{
 			panelId: 'sponsorship',
 			index: 8,
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			pageId: 'safeproject',
 			index: 9,
-			panelId: 'sponsordetails'
+			panelId: 'sponsordetails',
 		},
 		{
 			panelId: 'geographicallocation',
 			pageId: 'safesettings',
-			index: 10
+			index: 10,
 		},
 		{
 			index: 11,
 			pageId: 'safesettings',
-			panelId: 'storage'
+			panelId: 'storage',
 		},
 		{
 			index: 12,
 			pageId: 'safesettings',
-			panelId: 'localstorage'
+			panelId: 'localstorage',
 		},
 		{
 			pageId: 'safesettings',
 			index: 13,
-			panelId: 'dPA'
+			panelId: 'dPA',
 		},
 		{
 			panelId: 'dataSecurityandProtectionToolkitDSPToolkit',
 			pageId: 'safesettings',
-			index: 14
+			index: 14,
 		},
 		{
 			index: 15,
 			pageId: 'safesettings',
-			panelId: 'iSO27001'
+			panelId: 'iSO27001',
 		},
 		{
 			index: 16,
 			pageId: 'safesettings',
-			panelId: 'sLSP'
+			panelId: 'sLSP',
 		},
 		{
 			pageId: 'safesettings',
 			index: 17,
-			panelId: 'processing'
+			panelId: 'processing',
 		},
 		{
 			index: 18,
 			pageId: 'safesettings',
-			panelId: 'partnerorganisation'
+			panelId: 'partnerorganisation',
 		},
 		{
 			index: 19,
 			pageId: 'safesettings',
-			panelId: 'informationgovernanceassurance'
+			panelId: 'informationgovernanceassurance',
 		},
 		{
 			index: 20,
 			pageId: 'safedata',
-			panelId: 'datasetsrequested'
+			panelId: 'datasetsrequested',
 		},
 		{
 			panelId: 'otherdatasets',
 			pageId: 'safedata',
-			index: 21
+			index: 21,
 		},
 		{
 			pageId: 'safedata',
 			index: 22,
-			panelId: 'legalbasis'
+			panelId: 'legalbasis',
 		},
 		{
 			index: 23,
 			pageId: 'safedata',
-			panelId: 'directcare'
+			panelId: 'directcare',
 		},
 		{
 			panelId: 'informedconsent',
 			pageId: 'safedata',
-			index: 24
+			index: 24,
 		},
 		{
 			panelId: 'section251exemption',
 			pageId: 'safedata',
-			index: 25
+			index: 25,
 		},
 		{
 			panelId: 'regulation3HealthServicesControlofPatientInformationRegulations2002',
 			index: 26,
-			pageId: 'safedata'
+			pageId: 'safedata',
 		},
 		{
 			panelId: 'ethics',
 			index: 27,
-			pageId: 'safedata'
+			pageId: 'safedata',
 		},
 		{
 			panelId: 'publication',
 			index: 28,
-			pageId: 'safeoutputs'
+			pageId: 'safeoutputs',
 		},
 		{
 			panelId: 'datadestruction',
 			pageId: 'safeoutputs',
-			index: 29
+			index: 29,
 		},
 		{
 			panelId: 'files',
 			index: 100,
-			pageId: 'files'
-		}
+			pageId: 'files',
+		},
 	],
 	questionPanels: [
 		{
@@ -2435,13 +2435,13 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'applicant'
+					questionSetId: 'applicant',
 				},
 				{
 					index: 100,
-					questionSetId: 'addApplicant'
-				}
-			]
+					questionSetId: 'addApplicant',
+				},
+			],
 		},
 		{
 			panelId: 'organisationconductingthestudy',
@@ -2449,51 +2449,51 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'organisationconductingthestudy'
-				}
+					questionSetId: 'organisationconductingthestudy',
+				},
 			],
 			navHeader: 'Organisation conducting the study',
 			pageId: 'safepeople',
-			panelHeader: 'Organisation conducting the study'
+			panelHeader: 'Organisation conducting the study',
 		},
 		{
 			navHeader: 'Project details',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'projectdetails'
-				}
+					questionSetId: 'projectdetails',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'projectdetails',
 			panelHeader: 'Project details',
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			navHeader: 'Commercial interest',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'commercialinterest'
-				}
+					questionSetId: 'commercialinterest',
+				},
 			],
 			panelId: 'commercialinterest',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			pageId: 'safeproject',
-			panelHeader: 'Commercial interest'
+			panelHeader: 'Commercial interest',
 		},
 		{
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'organisationwithcommercialinterest'
-				}
+					questionSetId: 'organisationwithcommercialinterest',
+				},
 			],
 			panelId: 'organisationwithcommercialinterest',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			navHeader: 'Organisation with commercial interest',
 			panelHeader: 'Organisation with commercial interest',
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			pageId: 'safeproject',
@@ -2503,23 +2503,23 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'funding'
-				}
+					questionSetId: 'funding',
+				},
 			],
-			navHeader: 'Funding'
+			navHeader: 'Funding',
 		},
 		{
 			navHeader: 'Funder details',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'funderdetails'
-				}
+					questionSetId: 'funderdetails',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'funderdetails',
 			panelHeader: 'Funder details',
-			pageId: 'safeproject'
+			pageId: 'safeproject',
 		},
 		{
 			pageId: 'safeproject',
@@ -2528,11 +2528,11 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'sponsorship'
-				}
+					questionSetId: 'sponsorship',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
-			panelId: 'sponsorship'
+			panelId: 'sponsorship',
 		},
 		{
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
@@ -2540,12 +2540,12 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'sponsordetails',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			navHeader: 'Sponsor details',
 			pageId: 'safeproject',
-			panelHeader: 'Sponsor details'
+			panelHeader: 'Sponsor details',
 		},
 		{
 			pageId: 'safesettings',
@@ -2556,9 +2556,9 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'geographicallocation',
-					index: 1
-				}
-			]
+					index: 1,
+				},
+			],
 		},
 		{
 			navHeader: 'Storage',
@@ -2567,11 +2567,11 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'storage'
-				}
+					questionSetId: 'storage',
+				},
 			],
 			pageId: 'safesettings',
-			panelHeader: 'Storage'
+			panelHeader: 'Storage',
 		},
 		{
 			navHeader: 'Local storage',
@@ -2580,11 +2580,11 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'localstorage'
-				}
+					questionSetId: 'localstorage',
+				},
 			],
 			panelHeader: 'Local storage',
-			pageId: 'safesettings'
+			pageId: 'safesettings',
 		},
 		{
 			panelHeader: 'DPA',
@@ -2593,11 +2593,11 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'dPA',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			panelId: 'dPA',
-			questionPanelHeaderText: 'TODO: We need a decription for this panel'
+			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 		},
 		{
 			panelHeader: 'Data Security and Protection Toolkit (DSP Toolkit)',
@@ -2608,9 +2608,9 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'dataSecurityandProtectionToolkitDSPToolkit',
-					index: 1
-				}
-			]
+					index: 1,
+				},
+			],
 		},
 		{
 			panelHeader: 'ISO 27001',
@@ -2620,23 +2620,23 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'iSO27001',
-					index: 1
-				}
+					index: 1,
+				},
 			],
-			navHeader: 'ISO 27001'
+			navHeader: 'ISO 27001',
 		},
 		{
 			navHeader: 'SLSP',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'sLSP'
-				}
+					questionSetId: 'sLSP',
+				},
 			],
 			panelId: 'sLSP',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelHeader: 'SLSP',
-			pageId: 'safesettings'
+			pageId: 'safesettings',
 		},
 		{
 			pageId: 'safesettings',
@@ -2645,11 +2645,11 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'processing',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
-			panelId: 'processing'
+			panelId: 'processing',
 		},
 		{
 			navHeader: 'Partner organisation',
@@ -2658,11 +2658,11 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'partnerorganisation',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			pageId: 'safesettings',
-			panelHeader: 'Partner organisation'
+			panelHeader: 'Partner organisation',
 		},
 		{
 			panelHeader: 'Information governance assurance',
@@ -2672,23 +2672,23 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'informationgovernanceassurance'
-				}
+					questionSetId: 'informationgovernanceassurance',
+				},
 			],
-			navHeader: 'Information governance assurance'
+			navHeader: 'Information governance assurance',
 		},
 		{
 			navHeader: 'Datasets requested',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'datasetsrequested'
-				}
+					questionSetId: 'datasetsrequested',
+				},
 			],
 			panelId: 'datasetsrequested',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			pageId: 'safedata',
-			panelHeader: 'Datasets requested'
+			panelHeader: 'Datasets requested',
 		},
 		{
 			panelHeader: 'Other datasets',
@@ -2698,10 +2698,10 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'otherdatasets'
-				}
+					questionSetId: 'otherdatasets',
+				},
 			],
-			navHeader: 'Other datasets'
+			navHeader: 'Other datasets',
 		},
 		{
 			panelHeader: 'Legal basis',
@@ -2712,22 +2712,22 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'legalbasis',
-					index: 1
-				}
-			]
+					index: 1,
+				},
+			],
 		},
 		{
 			questionSets: [
 				{
 					questionSetId: 'directcare',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'directcare',
 			navHeader: 'Direct care',
 			pageId: 'safedata',
-			panelHeader: 'Direct care'
+			panelHeader: 'Direct care',
 		},
 		{
 			navHeader: 'Informed consent',
@@ -2736,24 +2736,24 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'informedconsent',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			pageId: 'safedata',
-			panelHeader: 'Informed consent'
+			panelHeader: 'Informed consent',
 		},
 		{
 			navHeader: 'Section 251 exemption',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'section251exemption'
-				}
+					questionSetId: 'section251exemption',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'section251exemption',
 			panelHeader: 'Section 251 exemption',
-			pageId: 'safedata'
+			pageId: 'safedata',
 		},
 		{
 			panelId: 'regulation3HealthServicesControlofPatientInformationRegulations2002',
@@ -2761,12 +2761,12 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					questionSetId: 'regulation3HealthServicesControlofPatientInformationRegulations2002',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			navHeader: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
 			panelHeader: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
-			pageId: 'safedata'
+			pageId: 'safedata',
 		},
 		{
 			pageId: 'safedata',
@@ -2775,38 +2775,38 @@ export const uniqueSchema = {
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'ethics'
-				}
+					questionSetId: 'ethics',
+				},
 			],
 			panelId: 'ethics',
-			questionPanelHeaderText: 'TODO: We need a decription for this panel'
+			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 		},
 		{
 			navHeader: 'Publication',
 			questionSets: [
 				{
 					index: 1,
-					questionSetId: 'publication'
-				}
+					questionSetId: 'publication',
+				},
 			],
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			panelId: 'publication',
 			pageId: 'safeoutputs',
-			panelHeader: 'Publication'
+			panelHeader: 'Publication',
 		},
 		{
 			questionSets: [
 				{
 					questionSetId: 'datadestruction',
-					index: 1
-				}
+					index: 1,
+				},
 			],
 			panelId: 'datadestruction',
 			questionPanelHeaderText: 'TODO: We need a decription for this panel',
 			navHeader: 'Data destruction',
 			panelHeader: 'Data destruction',
-			pageId: 'safeoutputs'
-		}
+			pageId: 'safeoutputs',
+		},
 	],
 	questionSets: [
 		{
@@ -2821,15 +2821,15 @@ export const uniqueSchema = {
 						options: [
 							{
 								text: 'Principle investigator',
-								value: 'Principle investigator'
+								value: 'Principle investigator',
 							},
 							{
 								text: 'Main applicant',
-								value: 'Main applicant'
+								value: 'Main applicant',
 							},
 							{
 								text: 'Investigator/collaborator',
-								value: 'Investigator/collaborator'
+								value: 'Investigator/collaborator',
 							},
 							{
 								text: 'Other',
@@ -2839,20 +2839,20 @@ export const uniqueSchema = {
 										questionId: 'roleOther',
 										question: 'Other role please specify',
 										input: {
-											type: 'textInput'
+											type: 'textInput',
 										},
 										validations: [
 											{
 												type: 'isLength',
-												params: [5]
-											}
-										]
-									}
-								]
-							}
-						]
+												params: [5],
+											},
+										],
+									},
+								],
+							},
+						],
 					},
-					guidance: 'Select a role for the individual.'
+					guidance: 'Select a role for the individual.',
 				},
 				{
 					questionId: 'fullname',
@@ -2860,53 +2860,53 @@ export const uniqueSchema = {
 					input: {
 						type: 'typeaheadUser',
 						placeholder: 'Please select',
-						options: ['javascript', 'node']
+						options: ['javascript', 'node'],
 					},
 					validateOn: 'blur',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
-					guidance: 'All applicants must have an account in the Gateway.'
+					guidance: 'All applicants must have an account in the Gateway.',
 				},
 				{
 					questionId: 'applicantjobtitle',
 					question: 'Job Title',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					guidance: 'Job title.'
+					guidance: 'Job title.',
 				},
 				{
 					questionId: 'bio',
 					question: 'Affiliation',
 					input: {
 						type: 'textInput',
-						disabled: true
+						disabled: true,
 					},
-					guidance: 'University of Cambridge.'
+					guidance: 'University of Cambridge.',
 				},
 				{
 					questionId: 'orcid',
 					question: 'ORCID',
 					input: {
 						type: 'textInput',
-						disabled: true
+						disabled: true,
 					},
-					guidance: 'ORCID.'
+					guidance: 'ORCID.',
 				},
 				{
 					questionId: 'email',
 					question: 'Email',
 					input: {
 						type: 'textInput',
-						disabled: true
+						disabled: true,
 					},
-					guidance: 'Email.'
-				}
-			]
+					guidance: 'Email.',
+				},
+			],
 		},
 		{
 			questions: [
@@ -2916,41 +2916,41 @@ export const uniqueSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Organisation name'
+					question: 'Organisation name',
 				},
 				{
 					questionId: 'registeredaddressline1',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Registered address (line 1)'
+					question: 'Registered address (line 1)',
 				},
 				{
 					questionId: 'registeredaddressline2',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Registered address (line 2)'
+					question: 'Registered address (line 2)',
 				},
 				{
 					questionId: 'city',
@@ -2958,13 +2958,13 @@ export const uniqueSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'City'
+					question: 'City',
 				},
 				{
 					questionId: 'postcode',
@@ -2972,13 +2972,13 @@ export const uniqueSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Postcode'
+					question: 'Postcode',
 				},
 				{
 					questionId: 'country',
@@ -2986,13 +2986,13 @@ export const uniqueSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Country'
+					question: 'Country',
 				},
 				{
 					questionId: 'organisationtype',
@@ -3000,110 +3000,110 @@ export const uniqueSchema = {
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					input: {
 						options: [
 							{
 								text: 'Academic institution',
-								value: 'Academic institution'
+								value: 'Academic institution',
 							},
 							{
 								value: '(UK)',
-								text: '(UK)'
+								text: '(UK)',
 							},
 							{
 								text: 'Commercial',
-								value: 'Commercial'
+								value: 'Commercial',
 							},
 							{
 								value: 'CQC-registered health and/or social care provider',
-								text: 'CQC-registered health and/or social care provider'
+								text: 'CQC-registered health and/or social care provider',
 							},
 							{
 								text: 'CQC approved national contractor',
-								value: 'CQC approved national contractor'
+								value: 'CQC approved national contractor',
 							},
 							{
 								text: 'Local authority',
-								value: 'Local authority'
+								value: 'Local authority',
 							},
 							{
 								text: 'Government agency (health and social care)',
-								value: 'Government agency (health and social care)'
+								value: 'Government agency (health and social care)',
 							},
 							{
 								value: 'Government agency outside of health and adult social care',
-								text: 'Government agency outside of health and adult social care'
+								text: 'Government agency outside of health and adult social care',
 							},
 							{
 								value: 'Independent sector organisation',
-								text: 'Independent sector organisation'
+								text: 'Independent sector organisation',
 							},
 							{
 								text: 'Charity',
-								value: 'Charity'
+								value: 'Charity',
 							},
 							{
 								value: 'International Organisation',
-								text: 'International Organisation'
+								text: 'International Organisation',
 							},
 							{
 								value: 'Other (please specify)',
-								text: 'Other (please specify)'
-							}
+								text: 'Other (please specify)',
+							},
 						],
-						type: 'selectInput'
+						type: 'selectInput',
 					},
-					question: 'Organisation type'
-				}
+					question: 'Organisation type',
+				},
 			],
 			questionSetHeader: 'Organisation conducting the study',
-			questionSetId: 'organisationconductingthestudy'
+			questionSetId: 'organisationconductingthestudy',
 		},
 		{
 			questionSetHeader: 'Project details',
 			questions: [
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Title of study',
 					questionId: 'titleofstudy',
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					input: {
 						options: [
 							{
 								text: 'Service evaluation',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Research'
+								text: 'Research',
 							},
 							{
 								value: 'false',
-								text: 'Clinical audit'
+								text: 'Clinical audit',
 							},
 							{
 								text: 'Surveillance',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Other (please specify)'
-							}
+								text: 'Other (please specify)',
+							},
 						],
-						type: 'radioOptionsInput'
+						type: 'radioOptionsInput',
 					},
 					question: 'What is the study type?',
 					questionId: 'whatisthestudytype',
@@ -3111,16 +3111,16 @@ export const uniqueSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
-					]
+							type: 'isLength',
+						},
+					],
 				},
 				{
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					questionId: 'thisapplicationis',
 					question: 'This application is...',
@@ -3129,114 +3129,114 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'false',
-								text: 'A new application'
+								text: 'A new application',
 							},
 							{
 								text: 'An amendment to an existing application extension',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								text: 'A renewal of an existing approval',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Related to a previous application (approved or not)'
-							}
-						]
-					}
+								text: 'Related to a previous application (approved or not)',
+							},
+						],
+					},
 				},
 				{
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					questionId: 'pleaseprovidealaysummaryoftheproject',
 					question: 'Please provide a lay summary of the project',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					question: 'What are the project aims, objectives and rationale?',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
-					questionId: 'whataretheprojectaimsobjectivesandrationale'
+					questionId: 'whataretheprojectaimsobjectivesandrationale',
 				},
 				{
 					questionId: 'whatistheprojectMethodology',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'What is the project Methodology?'
+					question: 'What is the project Methodology?',
 				},
 				{
 					question: 'What is the anticipated public health benefit and/or impact of conducting this project?',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
-					questionId: 'whatistheanticipatedpublichealthbenefitandorimpactofconductingthisproject'
+					questionId: 'whatistheanticipatedpublichealthbenefitandorimpactofconductingthisproject',
 				},
 				{
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					questionId: 'whenwillyouneedthedata',
 					question: 'When will you need the data?',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'How long will you need the data? (months)',
 					questionId: 'howlongwillyouneedthedatamonths',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
+							params: [1],
 						},
 						{
-							type: 'isNumeric'
-						}
-					]
+							type: 'isNumeric',
+						},
+					],
 				},
 				{
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					question:
 						'Can you provide an outline of the public engagement strategy of the study or a brief explanation why there is no public engagement?',
-					questionId: 'canyouprovideanoutlineofthepublicengagementstrategyofthestudyorabriefexplanationwhythereisnopublicengagement'
-				}
+					questionId: 'canyouprovideanoutlineofthepublicengagementstrategyofthestudyorabriefexplanationwhythereisnopublicengagement',
+				},
 			],
-			questionSetId: 'projectdetails'
+			questionSetId: 'projectdetails',
 		},
 		{
 			questions: [
@@ -3245,27 +3245,27 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'false',
-								text: 'Yes'
+								text: 'Yes',
 							},
 							{
 								text: 'No',
-								value: 'false'
-							}
+								value: 'false',
+							},
 						],
-						type: 'radioOptionsInput'
+						type: 'radioOptionsInput',
 					},
 					question: 'Is there a commercial interest in the project, either by funding or direct input into project design or team?',
 					questionId: 'isthereacommercialinterestintheprojecteitherbyfundingordirectinputintoprojectdesignorteam',
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
-					]
-				}
+							params: [1],
+						},
+					],
+				},
 			],
 			questionSetHeader: 'Commercial interest',
-			questionSetId: 'commercialinterest'
+			questionSetId: 'commercialinterest',
 		},
 		{
 			questionSetId: 'organisationwithcommercialinterest',
@@ -3274,59 +3274,59 @@ export const uniqueSchema = {
 					questionId: 'organisationname',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Organisation name'
+					question: 'Organisation name',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Registered address (line 1)',
 					questionId: 'registeredaddressline1',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					question: 'Registered address (line 2)',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'registeredaddressline2'
+					questionId: 'registeredaddressline2',
 				},
 				{
 					questionId: 'city',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'City'
+					question: 'City',
 				},
 				{
 					question: 'Postcode',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'postcode'
+					questionId: 'postcode',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Country',
 					questionId: 'country',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					questionId: 'pleasedescribethenatureofinterest',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'Please describe the nature of interest'
-				}
+					question: 'Please describe the nature of interest',
+				},
 			],
-			questionSetHeader: 'Organisation with commercial interest'
+			questionSetHeader: 'Organisation with commercial interest',
 		},
 		{
 			questionSetId: 'funding',
@@ -3338,78 +3338,78 @@ export const uniqueSchema = {
 						options: [
 							{
 								text: 'Yes',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								text: 'No',
-								value: 'false'
-							}
-						]
+								value: 'false',
+							},
+						],
 					},
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
-					questionId: 'doesyourprojecthaveafunder'
-				}
+					questionId: 'doesyourprojecthaveafunder',
+				},
 			],
-			questionSetHeader: 'Funding'
+			questionSetHeader: 'Funding',
 		},
 		{
 			questionSetHeader: 'Funder details',
 			questions: [
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Organisation name',
 					questionId: 'organisationname',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					questionId: 'registeredaddressline1',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Registered address (line 1)'
+					question: 'Registered address (line 1)',
 				},
 				{
 					question: 'Registered address (line 2)',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'registeredaddressline2'
+					questionId: 'registeredaddressline2',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'City',
 					questionId: 'city',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					question: 'Postcode',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'postcode'
+					questionId: 'postcode',
 				},
 				{
 					guidance: 'Enter guidance text here',
 					questionId: 'country',
 					question: 'Country',
 					input: {
-						type: 'textInput'
-					}
-				}
+						type: 'textInput',
+					},
+				},
 			],
-			questionSetId: 'funderdetails'
+			questionSetId: 'funderdetails',
 		},
 		{
 			questionSetId: 'sponsorship',
@@ -3419,26 +3419,26 @@ export const uniqueSchema = {
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
 					input: {
 						options: [
 							{
 								value: 'false',
-								text: 'Yes'
+								text: 'Yes',
 							},
 							{
 								value: 'false',
-								text: 'No'
-							}
+								text: 'No',
+							},
 						],
-						type: 'radioOptionsInput'
+						type: 'radioOptionsInput',
 					},
-					question: 'Does your project have a sponsor?'
-				}
+					question: 'Does your project have a sponsor?',
+				},
 			],
-			questionSetHeader: 'Sponsorship'
+			questionSetHeader: 'Sponsorship',
 		},
 		{
 			questions: [
@@ -3446,45 +3446,45 @@ export const uniqueSchema = {
 					questionId: 'organisationname',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Organisation name'
+					question: 'Organisation name',
 				},
 				{
 					questionId: 'registeredaddressline1',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Registered address (line 1)'
+					question: 'Registered address (line 1)',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Registered address (line 2)',
 					questionId: 'registeredaddressline2',
-					guidance: 'Enter guidance text here'
+					guidance: 'Enter guidance text here',
 				},
 				{
 					questionId: 'city',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'City'
+					question: 'City',
 				},
 				{
 					questionId: 'postcode',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Postcode'
-				}
+					question: 'Postcode',
+				},
 			],
 			questionSetHeader: 'Sponsor details',
-			questionSetId: 'sponsordetails'
+			questionSetId: 'sponsordetails',
 		},
 		{
 			questions: [
@@ -3494,25 +3494,25 @@ export const uniqueSchema = {
 						options: [
 							{
 								text: 'UK',
-								value: 'UK'
+								value: 'UK',
 							},
 							{
 								text: 'EU',
-								value: 'EU'
+								value: 'EU',
 							},
 							{
 								text: 'Worldwide',
-								value: 'Worldwide'
-							}
+								value: 'Worldwide',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'willthedatabestoredorprocessedoutsideoftheUK'
-				}
+					questionId: 'willthedatabestoredorprocessedoutsideoftheUK',
+				},
 			],
 			questionSetHeader: 'Geographical location',
-			questionSetId: 'geographicallocation'
+			questionSetId: 'geographicallocation',
 		},
 		{
 			questions: [
@@ -3524,19 +3524,19 @@ export const uniqueSchema = {
 						options: [
 							{
 								text: 'Trusted Research Environment',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Local storage'
-							}
-						]
+								text: 'Local storage',
+							},
+						],
 					},
-					question: 'Where will the data be stored?'
-				}
+					question: 'Where will the data be stored?',
+				},
 			],
 			questionSetHeader: 'Storage',
-			questionSetId: 'storage'
+			questionSetId: 'storage',
 		},
 		{
 			questionSetHeader: 'Local storage',
@@ -3546,41 +3546,41 @@ export const uniqueSchema = {
 					questionId: 'organisationname',
 					question: 'Organisation name',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					input: {
 						options: [
 							{
 								value: 'DPA registration',
-								text: 'DPA registration'
+								text: 'DPA registration',
 							},
 							{
 								text: 'Data Security and Protection Toolkit (DSP Toolkit)',
-								value: 'Data Security and Protection Toolkit (DSP Toolkit)'
+								value: 'Data Security and Protection Toolkit (DSP Toolkit)',
 							},
 							{
 								value: 'ISO 27001',
-								text: 'ISO 27001'
+								text: 'ISO 27001',
 							},
 							{
 								value: 'SLSP',
-								text: 'SLSP'
+								text: 'SLSP',
 							},
 							{
 								text: 'Other (please specify)',
-								value: 'Other (please specify)'
-							}
+								value: 'Other (please specify)',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
 					question: 'What type of security assurance does this organisation have in place?',
 					questionId: 'whattypeofsecurityassurancedoesthisorganisationhaveinplace',
-					guidance: 'Enter guidance text here'
-				}
+					guidance: 'Enter guidance text here',
+				},
 			],
-			questionSetId: 'localstorage'
+			questionSetId: 'localstorage',
 		},
 		{
 			questionSetId: 'dPA',
@@ -3588,21 +3588,21 @@ export const uniqueSchema = {
 				{
 					question: 'DPA Registration code',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'dPARegistrationcode'
+					questionId: 'dPARegistrationcode',
 				},
 				{
 					questionId: 'dPAExpirationdate',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'DPA Expiration date'
-				}
+					question: 'DPA Expiration date',
+				},
 			],
-			questionSetHeader: 'DPA'
+			questionSetHeader: 'DPA',
 		},
 		{
 			questions: [
@@ -3611,28 +3611,28 @@ export const uniqueSchema = {
 					questionId: 'organisationcode',
 					question: 'Organisation code',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					questionId: 'toolkitscore',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Toolkit score'
+					question: 'Toolkit score',
 				},
 				{
 					questionId: 'versioncompleted',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Version completed'
-				}
+					question: 'Version completed',
+				},
 			],
 			questionSetHeader: 'Data Security and Protection Toolkit (DSP Toolkit)',
-			questionSetId: 'dataSecurityandProtectionToolkitDSPToolkit'
+			questionSetId: 'dataSecurityandProtectionToolkitDSPToolkit',
 		},
 		{
 			questionSetId: 'iSO27001',
@@ -3643,16 +3643,16 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'I have enclosed a copy of my certificate',
-								text: 'I have enclosed a copy of my certificate'
-							}
+								text: 'I have enclosed a copy of my certificate',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'pleaseencloseacopyofyourcertificate'
-				}
+					questionId: 'pleaseencloseacopyofyourcertificate',
+				},
 			],
-			questionSetHeader: 'ISO 27001'
+			questionSetHeader: 'ISO 27001',
 		},
 		{
 			questions: [
@@ -3662,17 +3662,17 @@ export const uniqueSchema = {
 						options: [
 							{
 								text: 'I have enclosed a completed system level security policy for ODR review',
-								value: 'I have enclosed a completed system level security policy for ODR review'
-							}
-						]
+								value: 'I have enclosed a completed system level security policy for ODR review',
+							},
+						],
 					},
 					question: 'Please enclose a completed system level security policy for ODR review',
 					questionId: 'pleaseencloseacompletedsystemlevelsecuritypolicyforODRreview',
-					guidance: 'Enter guidance text here'
-				}
+					guidance: 'Enter guidance text here',
+				},
 			],
 			questionSetHeader: 'SLSP',
-			questionSetId: 'sLSP'
+			questionSetId: 'sLSP',
 		},
 		{
 			questions: [
@@ -3685,18 +3685,18 @@ export const uniqueSchema = {
 						options: [
 							{
 								text: 'Same environment as storage',
-								value: 'Same environment as storage'
+								value: 'Same environment as storage',
 							},
 							{
 								value: 'Partner organisation',
-								text: 'Partner organisation'
-							}
-						]
-					}
-				}
+								text: 'Partner organisation',
+							},
+						],
+					},
+				},
 			],
 			questionSetHeader: 'Processing',
-			questionSetId: 'processing'
+			questionSetId: 'processing',
 		},
 		{
 			questions: [
@@ -3704,45 +3704,45 @@ export const uniqueSchema = {
 					questionId: 'organisationname',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Organisation name'
+					question: 'Organisation name',
 				},
 				{
 					question: 'Registered address (line 1)',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					guidance: 'Enter guidance text here',
-					questionId: 'registeredaddressline1'
+					questionId: 'registeredaddressline1',
 				},
 				{
 					guidance: 'Enter guidance text here',
 					questionId: 'registeredaddressline2',
 					question: 'Registered address (line 2)',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					questionId: 'city',
 					guidance: 'Enter guidance text here',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'City'
+					question: 'City',
 				},
 				{
 					guidance: 'Enter guidance text here',
 					questionId: 'postcode',
 					question: 'Postcode',
 					input: {
-						type: 'textInput'
-					}
-				}
+						type: 'textInput',
+					},
+				},
 			],
 			questionSetHeader: 'Partner organisation',
-			questionSetId: 'partnerorganisation'
+			questionSetId: 'partnerorganisation',
 		},
 		{
 			questionSetHeader: 'Information governance assurance',
@@ -3752,8 +3752,8 @@ export const uniqueSchema = {
 					validations: [
 						{
 							type: 'isLength',
-							params: [1]
-						}
+							params: [1],
+						},
 					],
 					input: {
 						type: 'checkboxOptionsInput',
@@ -3762,32 +3762,32 @@ export const uniqueSchema = {
 								value:
 									'I certify that the individual(s) who will process the data is a/are bona fide worker(s) at the applicant’s organisation',
 								text:
-									'I certify that the individual(s) who will process the data is a/are bona fide worker(s) at the applicant’s organisation'
+									'I certify that the individual(s) who will process the data is a/are bona fide worker(s) at the applicant’s organisation',
 							},
 							{
 								text:
 									'I certify that the individual(s) (including permanent, temporary and locums) who is/ will process the data has/have been subject to personnel background checks and their employment contracts include compliance with organisational information governance standards.',
 								value:
-									'I certify that the individual(s) (including permanent, temporary and locums) who is/ will process the data has/have been subject to personnel background checks and their employment contracts include compliance with organisational information governance standards.'
+									'I certify that the individual(s) (including permanent, temporary and locums) who is/ will process the data has/have been subject to personnel background checks and their employment contracts include compliance with organisational information governance standards.',
 							},
 							{
 								text:
 									'I certify that information governance awareness and mandatory training procedures are in place and the individual(s) who is/ will process the data is/are appropriately trained.',
 								value:
-									'I certify that information governance awareness and mandatory training procedures are in place and the individual(s) who is/ will process the data is/are appropriately trained.'
+									'I certify that information governance awareness and mandatory training procedures are in place and the individual(s) who is/ will process the data is/are appropriately trained.',
 							},
 							{
 								value:
 									'I certify that the data can be entrusted to the organisation, in the knowledge that the individual(s) processing the data will conscientiously discharge his/her/their obligations, including with regard to confidentiality of the data.',
 								text:
-									'I certify that the data can be entrusted to the organisation, in the knowledge that the individual(s) processing the data will conscientiously discharge his/her/their obligations, including with regard to confidentiality of the data.'
-							}
-						]
+									'I certify that the data can be entrusted to the organisation, in the knowledge that the individual(s) processing the data will conscientiously discharge his/her/their obligations, including with regard to confidentiality of the data.',
+							},
+						],
 					},
-					question: 'Please confirm the items below'
-				}
+					question: 'Please confirm the items below',
+				},
 			],
-			questionSetId: 'informationgovernanceassurance'
+			questionSetId: 'informationgovernanceassurance',
 		},
 		{
 			questionSetId: 'datasetsrequested',
@@ -3795,16 +3795,16 @@ export const uniqueSchema = {
 				{
 					question: 'Please indicate all datasets necessary to conduct the project',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					questionId: 'pleaseindicatealldatasetsnecessarytoconducttheproject'
+					questionId: 'pleaseindicatealldatasetsnecessarytoconducttheproject',
 				},
 				{
 					questionId: 'howwillthedatarequestedbeusedinthedeliveryoftheproject',
 					question: 'How will the data requested be used in the delivery of the project?',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					question: 'Please classify the datasets requested',
@@ -3812,26 +3812,26 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'false',
-								text: 'Anonymous'
+								text: 'Anonymous',
 							},
 							{
 								text: 'De-identified',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								text: 'Personally identifiable',
-								value: 'false'
-							}
+								value: 'false',
+							},
 						],
-						type: 'radioOptionsInput'
+						type: 'radioOptionsInput',
 					},
 					validations: [
 						{
 							params: [1],
-							type: 'isLength'
-						}
+							type: 'isLength',
+						},
 					],
-					questionId: 'pleaseclassifythedatasetsrequested'
+					questionId: 'pleaseclassifythedatasetsrequested',
 				},
 				{
 					question: 'Please indicate the data frequency required for the project',
@@ -3840,30 +3840,30 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'false',
-								text: 'One off'
+								text: 'One off',
 							},
 							{
 								text: 'Periodic - monthly',
-								value: 'false'
+								value: 'false',
 							},
 							{
 								value: 'false',
-								text: 'Periodic - quarterly'
+								text: 'Periodic - quarterly',
 							},
 							{
 								value: 'false',
-								text: 'Periodic - annually'
+								text: 'Periodic - annually',
 							},
 							{
 								text: 'Other (please specify)',
-								value: 'false'
-							}
-						]
+								value: 'false',
+							},
+						],
 					},
-					questionId: 'pleaseindicatethedatafrequencyrequiredfortheproject'
-				}
+					questionId: 'pleaseindicatethedatafrequencyrequiredfortheproject',
+				},
 			],
-			questionSetHeader: 'Datasets requested'
+			questionSetHeader: 'Datasets requested',
 		},
 		{
 			questionSetId: 'otherdatasets',
@@ -3873,17 +3873,17 @@ export const uniqueSchema = {
 					questionId: 'specifyanydatalinkagesrequirementsincludingdataflowsbetweendatacustodians',
 					question: 'Specify any data linkages requirements including data flows between data custodians.',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					questionId:
 						'describeanydatasetsalreadyheldfortheprojectpleaseincludedatasetnameclassificationofthedatathelegalbasisforprocessingandthedatasetperiod',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					question:
-						'Describe any datasets already held for the project (please include dataset name, classification of the data, the legal basis for processing and the dataset period).'
+						'Describe any datasets already held for the project (please include dataset name, classification of the data, the legal basis for processing and the dataset period).',
 				},
 				{
 					question: 'Please provide details of any data sharing agreement already in place for this project',
@@ -3892,13 +3892,13 @@ export const uniqueSchema = {
 						options: [
 							{
 								text: 'I have enclosed a copy of existing sharing agreement documents',
-								value: 'I have enclosed a copy of existing sharing agreement documents'
-							}
-						]
+								value: 'I have enclosed a copy of existing sharing agreement documents',
+							},
+						],
 					},
-					questionId: 'pleaseprovidedetailsofanydatasharingagreementalreadyinplaceforthisproject'
-				}
-			]
+					questionId: 'pleaseprovidedetailsofanydatasharingagreementalreadyinplaceforthisproject',
+				},
+			],
 		},
 		{
 			questionSetHeader: 'Legal basis',
@@ -3912,26 +3912,26 @@ export const uniqueSchema = {
 						options: [
 							{
 								text: 'Direct care',
-								value: 'Direct care'
+								value: 'Direct care',
 							},
 							{
 								value: 'Informed consent',
-								text: 'Informed consent'
+								text: 'Informed consent',
 							},
 							{
 								text: 'Section 251 exemption',
-								value: 'Section 251 exemption'
+								value: 'Section 251 exemption',
 							},
 							{
 								value: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
-								text: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)'
-							}
+								text: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
+							},
 						],
-						type: 'checkboxOptionsInput'
-					}
-				}
+						type: 'checkboxOptionsInput',
+					},
+				},
 			],
-			questionSetId: 'legalbasis'
+			questionSetId: 'legalbasis',
 		},
 		{
 			questions: [
@@ -3944,10 +3944,10 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'I have enclosed evidence of caldicott guardian or other approved signatory',
-								text: 'I have enclosed evidence of caldicott guardian or other approved signatory'
-							}
-						]
-					}
+								text: 'I have enclosed evidence of caldicott guardian or other approved signatory',
+							},
+						],
+					},
 				},
 				{
 					question: 'Signed letter from guardian',
@@ -3956,22 +3956,22 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'I have enclosed a signed letter from my Caldicott guardian',
-								text: 'I have enclosed a signed letter from my Caldicott guardian'
-							}
-						]
+								text: 'I have enclosed a signed letter from my Caldicott guardian',
+							},
+						],
 					},
-					questionId: 'signedletterfromguardian'
+					questionId: 'signedletterfromguardian',
 				},
 				{
 					questionId: 'caldicottguardianname',
 					question: 'Caldicott guardian name',
 					input: {
-						type: 'textInput'
-					}
-				}
+						type: 'textInput',
+					},
+				},
 			],
 			questionSetHeader: 'Direct care',
-			questionSetId: 'directcare'
+			questionSetId: 'directcare',
 		},
 		{
 			questionSetHeader: 'Informed consent',
@@ -3985,41 +3985,41 @@ export const uniqueSchema = {
 								text:
 									'I have enclosed a blank copy of the consent form(s) and all associated patient information materials (letters of invitations, leaflets, questionnaires etc.)',
 								value:
-									'I have enclosed a blank copy of the consent form(s) and all associated patient information materials (letters of invitations, leaflets, questionnaires etc.)'
-							}
-						]
+									'I have enclosed a blank copy of the consent form(s) and all associated patient information materials (letters of invitations, leaflets, questionnaires etc.)',
+							},
+						],
 					},
-					question: 'Please enclose a copy of blank consent form and any associated patient information documents with this form'
-				}
+					question: 'Please enclose a copy of blank consent form and any associated patient information documents with this form',
+				},
 			],
-			questionSetId: 'informedconsent'
+			questionSetId: 'informedconsent',
 		},
 		{
 			questionSetHeader: 'Section 251 exemption',
 			questions: [
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'CAR reference',
-					questionId: 'cARreference'
+					questionId: 'cARreference',
 				},
 				{
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
 					question: 'Date of approval',
-					questionId: 'dateofapproval'
+					questionId: 'dateofapproval',
 				},
 				{
 					questionId: 'dateofnextrenewal',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Date of next renewal'
-				}
+					question: 'Date of next renewal',
+				},
 			],
-			questionSetId: 'section251exemption'
+			questionSetId: 'section251exemption',
 		},
 		{
 			questions: [
@@ -4029,12 +4029,12 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters',
-								text: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters'
-							}
-						]
+								text: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters',
+							},
+						],
 					},
 					question: 'Please enclose a copy of the S251 approval, approved amendments and any renewal letters',
-					questionId: 'pleaseencloseacopyoftheS251approvalapprovedamendmentsandanyrenewalletters'
+					questionId: 'pleaseencloseacopyoftheS251approvalapprovedamendmentsandanyrenewalletters',
 				},
 				{
 					question:
@@ -4043,17 +4043,17 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters from data custodian',
-								text: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters from data custodian'
-							}
+								text: 'I have enclosed a copy of the S251 approval, approved amendments and any renewal letters from data custodian',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
 					questionId:
-						'pleaseenclosealllettersdocumentingthatsection251supporthasbeengrantedandremainsextantsenttoyoubydatacustodianforthisproject'
-				}
+						'pleaseenclosealllettersdocumentingthatsection251supporthasbeengrantedandremainsextantsenttoyoubydatacustodianforthisproject',
+				},
 			],
 			questionSetHeader: 'Regulation 3 Health Services (Control of Patient Information Regulations 2002)',
-			questionSetId: 'regulation3HealthServicesControlofPatientInformationRegulations2002'
+			questionSetId: 'regulation3HealthServicesControlofPatientInformationRegulations2002',
 		},
 		{
 			questions: [
@@ -4063,37 +4063,37 @@ export const uniqueSchema = {
 						options: [
 							{
 								text: 'Yes',
-								value: 'Yes'
+								value: 'Yes',
 							},
 							{
 								text: 'No',
-								value: 'No'
-							}
+								value: 'No',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
-					questionId: 'hasethicsapprovalbeenobtained'
+					questionId: 'hasethicsapprovalbeenobtained',
 				},
 				{
 					question: 'REC Committee name',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					questionId: 'rECCommitteename'
+					questionId: 'rECCommitteename',
 				},
 				{
 					questionId: 'rECreferencenumber',
 					question: 'REC reference number',
 					input: {
-						type: 'textInput'
-					}
+						type: 'textInput',
+					},
 				},
 				{
 					questionId: 'othercommittee',
 					input: {
-						type: 'textInput'
+						type: 'textInput',
 					},
-					question: 'Other committee'
+					question: 'Other committee',
 				},
 				{
 					questionId: 'pleaseencloseacopyofthefinalRECapprovalletterandlettersdocumentinganyRECapprovedamendments',
@@ -4101,16 +4101,16 @@ export const uniqueSchema = {
 						options: [
 							{
 								value: 'I have enclosed a copy of the final REC approval letter and letters documenting any REC-approved amendments',
-								text: 'I have enclosed a copy of the final REC approval letter and letters documenting any REC-approved amendments'
-							}
+								text: 'I have enclosed a copy of the final REC approval letter and letters documenting any REC-approved amendments',
+							},
 						],
-						type: 'checkboxOptionsInput'
+						type: 'checkboxOptionsInput',
 					},
-					question: 'Please enclose a copy of the final REC approval letter and letters documenting any REC-approved amendments'
-				}
+					question: 'Please enclose a copy of the final REC approval letter and letters documenting any REC-approved amendments',
+				},
 			],
 			questionSetHeader: 'Ethics',
-			questionSetId: 'ethics'
+			questionSetId: 'ethics',
 		},
 		{
 			questionSetHeader: 'Publication',
@@ -4119,33 +4119,33 @@ export const uniqueSchema = {
 					questionId: 'pleasedescribeanypublicationplansincludingmilestonesforpublication',
 					question: 'Please describe any publication plans including milestones for publication',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					questionId: 'howwillproposalfindingsbepublishedtowhataudienceandinwhatformatPleasegivedetails',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'How will proposal findings be published, to what audience and in what format? Please give details.'
+					question: 'How will proposal findings be published, to what audience and in what format? Please give details.',
 				},
 				{
 					questionId: 'whatstepswillbetakentoensurethatindividualscannotbeidentifiedPleasedescribewhatdisclosurecontrolpolicywillbeapplied',
 					question:
 						'What steps will be taken to ensure that individuals cannot be identified? Please describe what disclosure control policy will be applied',
 					input: {
-						type: 'textareaInput'
-					}
+						type: 'textareaInput',
+					},
 				},
 				{
 					questionId: 'willtheoutputsbepublishedinanopenaccessplatform',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'Will the outputs be published in an open access platform?'
-				}
+					question: 'Will the outputs be published in an open access platform?',
+				},
 			],
-			questionSetId: 'publication'
+			questionSetId: 'publication',
 		},
 		{
 			questionSetHeader: 'Data destruction',
@@ -4154,27 +4154,27 @@ export const uniqueSchema = {
 					questionId:
 						'howlongdoyouintendtoretainidentifiableorpotentiallyidentifiableinformationaftertheconclusionoftheprojectincludingarchivebackupcopies',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					question:
-						'How long do you intend to retain identifiable or potentially identifiable information after the conclusion of the project (including archive/backup copies)?'
+						'How long do you intend to retain identifiable or potentially identifiable information after the conclusion of the project (including archive/backup copies)?',
 				},
 				{
 					questionId: 'whatmethodofdestructionwillbeusedwhenthisperiodhasexpired',
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
-					question: 'What method of destruction will be used when this period has expired?'
+					question: 'What method of destruction will be used when this period has expired?',
 				},
 				{
 					input: {
-						type: 'textareaInput'
+						type: 'textareaInput',
 					},
 					question: 'What evidence will be obtained that destruction has occurred?',
-					questionId: 'whatevidencewillbeobtainedthatdestructionhasoccurred'
-				}
+					questionId: 'whatevidencewillbeobtainedthatdestructionhasoccurred',
+				},
 			],
-			questionSetId: 'datadestruction'
+			questionSetId: 'datadestruction',
 		},
 		{
 			questionSetId: 'addApplicant',
@@ -4186,11 +4186,11 @@ export const uniqueSchema = {
 						action: 'addApplicant',
 						panelId: 'applicant',
 						text: '+ Add another person to this application',
-						class: 'btn btn-primary addButton'
+						class: 'btn btn-primary addButton',
 					},
-					guidance: 'Some safe project guidance.'
-				}
-			]
-		}
-	]
-}
+					guidance: 'Some safe project guidance.',
+				},
+			],
+		},
+	],
+};

@@ -5,7 +5,7 @@ import axios from 'axios';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import './Dashboard.scss'; 
+import './Dashboard.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -17,14 +17,14 @@ class Unsubscribe extends Component {
 				loggedIn: false,
 				role: 'Reader',
 				id: null,
-				name: null
-			}
+				name: null,
+			},
 		],
 		searchString: null,
 		msg: '',
 		showDrawer: false,
 		showModal: false,
-		context: {}
+		context: {},
 	};
 
 	constructor(props) {
@@ -41,72 +41,60 @@ class Unsubscribe extends Component {
 		if (this.props.match.params.userObjectID) {
 			this.setState({ isLoading: true });
 			await axios
-				.put(
-					baseURL +
-						'/api/v1/person/unsubscribe/' +
-						this.props.match.params.userObjectID
-				)
-				.then((response) => {
+				.put(baseURL + '/api/v1/person/unsubscribe/' + this.props.match.params.userObjectID)
+				.then(response => {
 					this.setState({
 						isLoading: false,
 						msg: response.data.msg,
-						error: false
+						error: false,
 					});
 				})
-				.catch((err) => {
+				.catch(err => {
 					this.setState({
 						isLoading: false,
 						msg: err.response.data.msg,
-						error: true
+						error: true,
 					});
 				});
 		} else {
 			this.setState({
 				isLoading: false,
 				msg: 'A problem occurred unsubscribing from email notifications.',
-				error: true
+				error: true,
 			});
 		}
 	};
 
-	doSearch = (e) => {
+	doSearch = e => {
 		//fires on enter on searchbar
 		if (e.key === 'Enter') {
 			if (!!this.state.searchString) {
-				window.location.href =
-					window.location.search + '/search?search=' + this.state.searchString;
+				window.location.href = window.location.search + '/search?search=' + this.state.searchString;
 			}
 		}
 	};
 
-	updateSearchString = (searchString) => {
+	updateSearchString = searchString => {
 		this.setState({ searchString: searchString });
 	};
 
-    toggleDrawer = () => {
-        this.setState( ( prevState ) => {
-            if(prevState.showDrawer === true) {
-                this.searchBar.current.getNumberOfUnreadMessages();
-            }
-            return { showDrawer: !prevState.showDrawer };
-        });
-    }
+	toggleDrawer = () => {
+		this.setState(prevState => {
+			if (prevState.showDrawer === true) {
+				this.searchBar.current.getNumberOfUnreadMessages();
+			}
+			return { showDrawer: !prevState.showDrawer };
+		});
+	};
 
 	toggleModal = (showEnquiry = false, context = {}) => {
-        this.setState( ( prevState ) => {
-            return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
-        });
-    }
+		this.setState(prevState => {
+			return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
+		});
+	};
 
 	render() {
-		const {
-			searchString,
-			userState,
-			error,
-			showDrawer,
-			showModal,
-			context
-		} = this.state;
+		const { searchString, userState, error, showDrawer, showModal, context } = this.state;
 
 		return (
 			<div>
@@ -139,12 +127,7 @@ class Unsubscribe extends Component {
 						/>
 					</SideDrawer>
 
-					<DataSetModal 
-						open={showModal} 
-						context={context}
-						closed={this.toggleModal}
-						userState={userState[0]} 
-					/>
+					<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
 				</div>
 			</div>
 		);

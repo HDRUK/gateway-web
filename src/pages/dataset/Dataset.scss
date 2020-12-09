@@ -1,371 +1,369 @@
 @import '../../css/variables';
 @import '../../css/mixins';
- 
-.dataClassToolTip{
-  width: 275px;
-  border-radius: 8px;
-  background-color: $dark;
-  padding: 10px;
-  position: absolute;
-  left: 0%;
-  top: 80%;
-  z-index: 1;
+
+.dataClassToolTip {
+	width: 275px;
+	border-radius: 8px;
+	background-color: $dark;
+	padding: 10px;
+	position: absolute;
+	left: 0%;
+	top: 80%;
+	z-index: 1;
 }
 
 .dataShieldToolTip {
-  width: 117px;
-  min-height: 31px;
-  padding: 8px;
-  border-radius: 8px;
-  background-color: $dark;
-  position: absolute;
-  z-index: 1;
-  left: -2%;
-  top: -2%;
-  text-align: center;
+	width: 117px;
+	min-height: 31px;
+	padding: 8px;
+	border-radius: 8px;
+	background-color: $dark;
+	position: absolute;
+	z-index: 1;
+	left: -2%;
+	top: -2%;
+	text-align: center;
 }
 
-.datasetToolTip{
-    max-width: 636px;
-    border-radius: 8px;
-    background-color: #232f34;
-    padding: 8px;
-    margin: 10px 0 16.5px 42px;
-    position: absolute;
-    left: 26%;
-    z-index: 1;
-    transform: translate(0px, -20px);
+.datasetToolTip {
+	max-width: 636px;
+	border-radius: 8px;
+	background-color: #232f34;
+	padding: 8px;
+	margin: 10px 0 16.5px 42px;
+	position: absolute;
+	left: 26%;
+	z-index: 1;
+	transform: translate(0px, -20px);
 
-    @include mq('phablet',max){
-      left: 6%;
-      transform: translate(0px, 8px);
-    }
+	@include mq('phablet', max) {
+		left: 6%;
+		transform: translate(0px, 8px);
+	}
 }
 
 #datasetTooltipSvg {
-  transform: translate(0px, 2px);
+	transform: translate(0px, 2px);
 }
 
-.datasetEmptyInfo{
-  text-align: center;
-  padding: 16px 22px 16px 22px;
+.datasetEmptyInfo {
+	text-align: center;
+	padding: 16px 22px 16px 22px;
 }
 
 .datasetEmptyButton {
-  width: 198px;
-  height: 40px;
+	width: 198px;
+	height: 40px;
 }
 
 .gatewaySearchButton {
-  height: 40px;
-  width: 153px;
-  border: 2px solid $teal !important;
-  border-radius: 4px !important;
-  background-color: $white;
-  color: $indigo;
-  font-family: museo-sans-rounded;
-  font-size: 14px !important;
+	height: 40px;
+	width: 153px;
+	border: 2px solid $teal !important;
+	border-radius: 4px !important;
+	background-color: $white;
+	color: $indigo;
+	font-family: museo-sans-rounded;
+	font-size: 14px !important;
 }
 
 .v2Value {
-  margin-left: -45px;
+	margin-left: -45px;
 
-  @include mq('desktop',max){
-    margin-left: -32px;
-  }
+	@include mq('desktop', max) {
+		margin-left: -32px;
+	}
 
-  @include mq('tablet-wide',max){
-    margin-left: -16px;
-  }
+	@include mq('tablet-wide', max) {
+		margin-left: -16px;
+	}
 
-  @include mq('tablet',max){
-    margin-left: 0px;
-  }
+	@include mq('tablet', max) {
+		margin-left: 0px;
+	}
 }
 
 .datasetLinked {
-  margin-left: -32px;
+	margin-left: -32px;
 
-  @include mq('desktop',max){
-    margin-left: -24px;
-  }
+	@include mq('desktop', max) {
+		margin-left: -24px;
+	}
 
-  @include mq('tablet-wide',max){
-    margin-left: -12px;
-  }
+	@include mq('tablet-wide', max) {
+		margin-left: -12px;
+	}
 
-  @include mq('tablet',max){
-    margin-left: -8px;
-  }
+	@include mq('tablet', max) {
+		margin-left: -8px;
+	}
 
-  @include mq('phablet',max){
-    margin-left: 0px;
-  }  
+	@include mq('phablet', max) {
+		margin-left: 0px;
+	}
 }
 
-.variableBox { 
-    background-color: $white;
-    padding: 30px;
-    margin-left: 8px;
-    margin-right: 8px;
-    border-bottom: #e7e9ed solid 1px;
-
+.variableBox {
+	background-color: $white;
+	padding: 30px;
+	margin-left: 8px;
+	margin-right: 8px;
+	border-bottom: #e7e9ed solid 1px;
 }
 
-.variableBox .collapseWait{
-  transition: transform 0.5s linear 0s;
+.variableBox .collapseWait {
+	transition: transform 0.5s linear 0s;
 }
 
-.heightDataClass{ 
-  @include mq('tablet-wide'){
-    height: 114px !important;
-  }
+.heightDataClass {
+	@include mq('tablet-wide') {
+		height: 114px !important;
+	}
 }
 
-.dataClassArrow{
-    @include mq('tablet-small',max){
-      transform: translate(-20px, 0px) !important;
-    }
-  }
-
-.heightVariable{
-  @include mq('tablet-wide'){
-    height: 56px !important;
-  }
-
-  @include mq('tablet-wide', max){
-    height: 62px !important;
-  }
-
-  @include mq('tablet-small', max){
-    height: 95px !important;
-  }
-
-  @include mq('phone-wide', max){
-    height: 115px !important;
-  }
+.dataClassArrow {
+	@include mq('tablet-small', max) {
+		transform: translate(-20px, 0px) !important;
+	}
 }
 
-.centerVariable{
-    position: absolute;
-    transform: translateY(-50%);
-    width: 95%;
-  }
+.heightVariable {
+	@include mq('tablet-wide') {
+		height: 56px !important;
+	}
 
-.variablePadding{
-  @include mq('tablet-small', max){
-    padding-top: 40px !important;
-  }
+	@include mq('tablet-wide', max) {
+		height: 62px !important;
+	}
 
-  @include mq('phone-wide', max){
-    padding-top: 50px !important;
-  }
+	@include mq('tablet-small', max) {
+		height: 95px !important;
+	}
 
+	@include mq('phone-wide', max) {
+		height: 115px !important;
+	}
 }
 
-.variableArrow{
-    @include mq('tablet-wide',max){
-      transform: translate(-25px, 0px) !important;
-    }
-    @include mq('tablet-wide'){
-      transform: translate(0px, -8px);
-    }
-} 
+.centerVariable {
+	position: absolute;
+	transform: translateY(-50%);
+	width: 95%;
+}
+
+.variablePadding {
+	@include mq('tablet-small', max) {
+		padding-top: 40px !important;
+	}
+
+	@include mq('phone-wide', max) {
+		padding-top: 50px !important;
+	}
+}
+
+.variableArrow {
+	@include mq('tablet-wide', max) {
+		transform: translate(-25px, 0px) !important;
+	}
+	@include mq('tablet-wide') {
+		transform: translate(0px, -8px);
+	}
+}
 
 .customLabel {
-  background-color: $light-teal !important;
-  border: none !important;
-  padding: 4px !important;
-  width: 84px;
+	background-color: $light-teal !important;
+	border: none !important;
+	padding: 4px !important;
+	width: 84px;
 }
 
-.dataUtilityModal  {
-  height: calc(100% - 20px);
-  
-  .modal-dialog {
-    margin: 10px auto;
-    max-width: 945px;
-    width: 100%;
-  }
+.dataUtilityModal {
+	height: calc(100% - 20px);
 
-  .modal-body {
-    position: relative;
-  }
+	.modal-dialog {
+		margin: 10px auto;
+		max-width: 945px;
+		width: 100%;
+	}
 
-  .dataUtilityModalBackground { 
-    // background: $gray-light;
-      overflow-y: auto;
-      height: calc(100vh - 320px);
-  }
+	.modal-body {
+		position: relative;
+	}
+
+	.dataUtilityModalBackground {
+		// background: $gray-light;
+		overflow-y: auto;
+		height: calc(100vh - 320px);
+	}
 }
 
 .purpleHeader {
-  max-width: 897px;
-  height: 44px;
-  background-color: $purple;
-  padding: 12px 16px 12px 16px;
+	max-width: 897px;
+	height: 44px;
+	background-color: $purple;
+	padding: 12px 16px 12px 16px;
 }
 
 .greySubHeader {
-  max-width: 897px;
-  min-height: 31px;
-  background-color: $background;
-  border-bottom: #e7e9ed solid 1px;
-  padding: 8px 16px 8px 16px;
+	max-width: 897px;
+	min-height: 31px;
+	background-color: $background;
+	border-bottom: #e7e9ed solid 1px;
+	padding: 8px 16px 8px 16px;
 }
 
-.dataUtilityBox { 
-  max-width: 897px;
-  background-color: $white;
-  border-bottom: #e7e9ed solid 1px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+.dataUtilityBox {
+	max-width: 897px;
+	background-color: $white;
+	border-bottom: #e7e9ed solid 1px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
 
 .topBorder {
-  border-top: #e7e9ed solid 1px;
+	border-top: #e7e9ed solid 1px;
 }
 
 .bottomBorder {
-  border-bottom: #e7e9ed solid 1px;
+	border-bottom: #e7e9ed solid 1px;
 }
 
-.dataUtilityCollapse .collapseWait{
-  transition: all 0s linear 0.5s;
+.dataUtilityCollapse .collapseWait {
+	transition: all 0s linear 0.5s;
 }
 
-.dataQualityCollapse .dataCollapseWait{
-  transition: all 0s linear 0.5s;
-  margin-left: 24px;
-  margin-right: 24px;
-  margin-bottom: 24px;
+.dataQualityCollapse .dataCollapseWait {
+	transition: all 0s linear 0.5s;
+	margin-left: 24px;
+	margin-right: 24px;
+	margin-bottom: 24px;
 }
 
 .dataUtilityClose {
-  float: right;
-  padding-top: 9px;
-  padding-right: 16px;
+	float: right;
+	padding-top: 9px;
+	padding-right: 16px;
 }
 
 #dataUtilityHeader {
-  margin-top: 33px;
-  margin-left: 9px;
-  margin-right: 32px;
+	margin-top: 33px;
+	margin-left: 9px;
+	margin-right: 32px;
 }
 
 .expandAllBox {
-  width: 100%;
-  // box-shadow: 1px 1px 3px 0 #00000017;
-  background-color: $white;
-  padding: 16px 24px 16px 24px;
-  margin-bottom: 16px;
+	width: 100%;
+	// box-shadow: 1px 1px 3px 0 #00000017;
+	background-color: $white;
+	padding: 16px 24px 16px 24px;
+	margin-bottom: 16px;
 }
 
 #expandAllModal {
-  position: absolute;
-  right: 24px;
+	position: absolute;
+	right: 24px;
 }
 
-.dataUtilityRow {  
-  height: 20px;
+.dataUtilityRow {
+	height: 20px;
 }
 
 .dataUtilityChevron {
-  margin-top: auto;
-  margin-bottom: auto;
-  height: 100%;
+	margin-top: auto;
+	margin-bottom: auto;
+	height: 100%;
 
-  @include mq('phone-wide',max){
-    transform: translate(-12px, 0px);
-  }  
-  @include mq('phone',max){
-    transform: translate(-20px, 0px);
-  }
+	@include mq('phone-wide', max) {
+		transform: translate(-12px, 0px);
+	}
+	@include mq('phone', max) {
+		transform: translate(-20px, 0px);
+	}
 }
 
 .dataUtilityTitle {
-  transform: translate(-36px, 0px);
+	transform: translate(-36px, 0px);
 }
 
 .dataUtilitySvg {
-  transform: translate(-50px, 0px);
+	transform: translate(-50px, 0px);
 }
 
-.dataUtilityArrow{
-  @include mq('tablet-wide'){
-    transform: translate(-4px, -4px);
-  }
-} 
+.dataUtilityArrow {
+	@include mq('tablet-wide') {
+		transform: translate(-4px, -4px);
+	}
+}
 
 .flippedDataUtilityArrow {
-  margin-right: 4px;
-  margin-left: -4px;
-  margin-top: 4px;
+	margin-right: 4px;
+	margin-left: -4px;
+	margin-top: 4px;
 }
 
-.dataQualityArrow{
-  transform: translate(0px, -8px);
-} 
+.dataQualityArrow {
+	transform: translate(0px, -8px);
+}
 
 .dataFloatRight {
-  float: right;
+	float: right;
 }
 
 #notYetRatedRow {
-  text-align: center;
+	text-align: center;
 }
 
 .metaRichRectangle {
-  width: 100%;
-  box-shadow: 1px 1px 3px 0 #00000017;
-  background-color: $white;
-  padding: 16px 24px 32px 24px;
+	width: 100%;
+	box-shadow: 1px 1px 3px 0 #00000017;
+	background-color: $white;
+	padding: 16px 24px 32px 24px;
 }
 
 .notRatedRectangle {
-  width: 100%;
-  box-shadow: 1px 1px 3px 0 #00000017;
-  background-color: $white;
-  padding: 24px 24px 32px 24px;
+	width: 100%;
+	box-shadow: 1px 1px 3px 0 #00000017;
+	background-color: $white;
+	padding: 24px 24px 32px 24px;
 }
 
-.greyedOutChevron {    
-  margin-top: 3.5px;
-  margin-bottom: 3.5px;
+.greyedOutChevron {
+	margin-top: 3.5px;
+	margin-bottom: 3.5px;
 }
 
-.floatRightLinkedDataset{
-  float: right;
+.floatRightLinkedDataset {
+	float: right;
 }
 
 .datasetImageCircle {
-  width: 80px;
-  height: 80px;
-  margin: 0 5px 16px 0;
-  padding: 8px;
-  border: solid 2px $gray-300;
-  background-color: #ffffff; 
-  border-radius: 50%;
+	width: 80px;
+	height: 80px;
+	margin: 0 5px 16px 0;
+	padding: 8px;
+	border: solid 2px $gray-300;
+	background-color: #ffffff;
+	border-radius: 50%;
 }
 
 .defaultDatasetIcon {
-  margin-top: -3px;
-  margin-left: -2px;
+	margin-top: -3px;
+	margin-left: -2px;
 }
 
 .datasetTitle {
-  padding-left: 32px !important;
-  padding-top: 8px;
+	padding-left: 32px !important;
+	padding-top: 8px;
 
-  @include mq('desktop',max){ 
-    padding-left: 44px !important;
-  }
+	@include mq('desktop', max) {
+		padding-left: 44px !important;
+	}
 
-  @include mq('tablet-wide',max){
-    padding-left: 60px !important;
-  }
+	@include mq('tablet-wide', max) {
+		padding-left: 60px !important;
+	}
 
-  @include mq('tablet',max){
-    padding-left: 72px !important;
-  }
+	@include mq('tablet', max) {
+		padding-left: 72px !important;
+	}
 }

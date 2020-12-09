@@ -3,21 +3,17 @@ import Backdrop from '../backdrop/Backdrop';
 
 import './SideDrawer.scss';
 
-const SideDrawer = (props) => {
+const SideDrawer = props => {
+	let attachedClasses = ['sideDrawer', 'close-drawer'];
 
-    let attachedClasses = ['sideDrawer', 'close-drawer'];
+	if (props.open) attachedClasses = ['sideDrawer', 'open-drawer'];
 
-    if (props.open) 
-        attachedClasses = ['sideDrawer', 'open-drawer'];
-    
-    return (
-        <Fragment>
-            <Backdrop show={props.open} clicked={props.closed}/>
-            <div className={attachedClasses.join(' ')}>
-               {props.children}
-            </div>
-        </Fragment>
-    );
+	return (
+		<Fragment>
+			<Backdrop show={props.open} clicked={props.closed} />
+			<div className={attachedClasses.join(' ')}>{props.children}</div>
+		</Fragment>
+	);
 };
 
-export default SideDrawer; 
+export default SideDrawer;

@@ -1,5 +1,5 @@
-let toggleDrawer = (parentComponent) => {
-	parentComponent.setState((prevState) => {
+let toggleDrawer = parentComponent => {
+	parentComponent.setState(prevState => {
 		if (prevState.showDrawer === true) {
 			parentComponent.searchBar.current.getNumberOfUnreadMessages();
 		}
@@ -8,26 +8,26 @@ let toggleDrawer = (parentComponent) => {
 };
 
 let toggleModal = (parentComponent, showEnquiry = false, context = {}) => {
-	parentComponent.setState( ( prevState ) => {
-		return { 
+	parentComponent.setState(prevState => {
+		return {
 			showModal: !prevState.showModal,
-			context 
+			context,
 		};
 	});
 
-	if(showEnquiry) {
-	  toggleDrawer(parentComponent);
+	if (showEnquiry) {
+		toggleDrawer(parentComponent);
 	}
-}
+};
 
-let toggleMrcModal = (parentComponent) => {
-	parentComponent.setState( ( prevState ) => {
+let toggleMrcModal = parentComponent => {
+	parentComponent.setState(prevState => {
 		return { showMrcModal: !prevState.showMrcModal };
 	});
-}
+};
 
 export default {
-  toggleDrawer	 : 	toggleDrawer,
-	toggleModal		 : 	toggleModal,
-	toggleMrcModal :	toggleMrcModal
+	toggleDrawer: toggleDrawer,
+	toggleModal: toggleModal,
+	toggleMrcModal: toggleMrcModal,
 };

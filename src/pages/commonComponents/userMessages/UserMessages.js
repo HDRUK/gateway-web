@@ -15,11 +15,20 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 		'Use messages to clarify questions with the data custodian before starting your application to request access to the data. Provide a brief description of your project and what datasets you are interested in.';
 
 	let relatedObjectIds, title, subTitle, datasets, tags, allowNewMessage, requiresModal, dataRequestModalContent;
-	
+
 	let history = useHistory();
 
 	if (typeof topicContext !== 'undefined')
-		({ relatedObjectIds = [], title = '', subTitle = '', datasets = [], tags = [], allowNewMessage = false, requiresModal = false, dataRequestModalContent = {} } = topicContext);
+		({
+			relatedObjectIds = [],
+			title = '',
+			subTitle = '',
+			datasets = [],
+			tags = [],
+			allowNewMessage = false,
+			requiresModal = false,
+			dataRequestModalContent = {},
+		} = topicContext);
 
 	const [messageDescription, setMessageDescription] = useState('');
 
@@ -40,14 +49,14 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 	const getUserTopics = async () => {
 		await axios
 			.get(`${baseURL}/api/v1/topics`)
-			.then(async (res) => {
+			.then(async res => {
 				const {
-					data: { topics }
+					data: { topics },
 				} = res;
 				// 1. clone topics from t
 				let topicsArr = [...topics];
 				// 2. check if  dataset id has been passed
-				if(_.isEmpty(datasets) && !_.isEmpty(topicsArr)) {
+				if (_.isEmpty(datasets) && !_.isEmpty(topicsArr)) {
 					const initialTopic = topicsArr[0];
 					topicsArr[0].active = true;
 					await getTopicById(initialTopic._id);
@@ -79,7 +88,7 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 				// 7. set topics state
 				setTopics(topicsArr);
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.error(error);
 			});
 	};
@@ -98,9 +107,9 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 				createdDate: 'New message',
 				active: true,
 				topicMessages: [],
-				requiresModal, 
+				requiresModal,
 				dataRequestModalContent,
-				datasets
+				datasets,
 			};
 			return topic;
 		}
@@ -111,9 +120,7 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 		// 1. Check that a valid set of params have been passed
 		if (!_.isEmpty(topics) && !_.isEmpty(relatedObjectIds)) {
 			// 2. Find the index of a topic that contains each of the relatedObjectIds
-			const idx = topics.findIndex(
-				(t) => relatedObjectIds.every(id => t.relatedObjectIds.includes(id))
-			);
+			const idx = topics.findIndex(t => relatedObjectIds.every(id => t.relatedObjectIds.includes(id)));
 			// 3. Return the index for selection otherwise return -1 and create new topic to cover all objects
 			return idx;
 		}
@@ -135,7 +142,7 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 		const generatedTopics = [...topics].reduce((arr, item) => {
 			let topic = {
 				...item,
-				active: item._id === id
+				active: item._id === id,
 			};
 			// setActiveTopic if active
 			if (topic.active) {
@@ -162,19 +169,23 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 			// 2. Load full topic details from Db
 			await axios
 				.get(`${baseURL}/api/v1/topics/${id}`)
-				.then(async (res) => {
+				.then(async res => {
 					let dataRequestModalContent = {};
-					let {data: { topic }} = res;
-					let {datasets: [publisherObj = {}, ...rest] = []} = topic;
-					const {data: { publisher = {} }} = await getPublisherById(publisherObj.publisher);
-					if(!_.isEmpty(publisher)) {
-						({dataRequestModalContent} = publisher);
+					let {
+						data: { topic },
+					} = res;
+					let { datasets: [publisherObj = {}, ...rest] = [] } = topic;
+					const {
+						data: { publisher = {} },
+					} = await getPublisherById(publisherObj.publisher);
+					if (!_.isEmpty(publisher)) {
+						({ dataRequestModalContent } = publisher);
 						setRequiresModal(!_.isEmpty(dataRequestModalContent) ? true : false);
 					}
 					// 3. Set active topic to update messages pane
 					setActiveTopic({ ...topic, modalRequired, dataRequestModalContent, active: true });
 				})
-				.catch((err) => {
+				.catch(err => {
 					console.error(err);
 					return {};
 				});
@@ -182,54 +193,53 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 			// 2. Otherwise it is a new topic so find topic with empty id in topic list
 			let topic = topics.find(t => t._id === '');
 			// 3. Check new topic was found
-			if(!topic) {
+			if (!topic) {
 				console.error('An error occurred selecting the topic');
 				return {};
 			}
 			// 4. Set active topic to update messages pane
-			setActiveTopic({ ...topic, active: true});
+			setActiveTopic({ ...topic, active: true });
 		}
 	};
 
 	const getPublisherById = (publisherId = '') => {
-		if(!_.isEmpty(publisherId)) {
+		if (!_.isEmpty(publisherId)) {
 			const response = axios.get(`${baseURL}/api/v1/publishers/${publisherId}`);
 			return response;
 		}
 		return {};
-	}
+	};
 
 	/**
 	 * Request Access
 	 * @param topic {ObjectId}
 	 * @desc When a user clicks Request Access button in header
 	 */
-	const onRequestAccess = (e) => {
-        e.preventDefault();
+	const onRequestAccess = e => {
+		e.preventDefault();
 		//let id = '';
 		if (!_.isEmpty(activeTopic)) {
-            // remove scroll if in body
-            if(document.body.classList.contains('no-scroll'))
-                document.body.classList.remove('no-scroll');
+			// remove scroll if in body
+			if (document.body.classList.contains('no-scroll')) document.body.classList.remove('no-scroll');
 			let { datasets } = { ...activeTopic };
 			closed();
 			const { publisher } = datasets[0];
-			history.push({ pathname: `/data-access-request/publisher/${publisher}`}, { datasets });
-		} 
+			history.push({ pathname: `/data-access-request/publisher/${publisher}` }, { datasets });
+		}
 	};
 
-	const onShowModal = (e) => {
+	const onShowModal = e => {
 		e.preventDefault();
 		closed();
 		toggleModal(false, activeTopic);
-	}
+	};
 
 	/**
 	 * onMessageChange
 	 * @param event {<Object>}
 	 * @desc Event to set message description text
 	 */
-	const onMessageChange = (e) => {
+	const onMessageChange = e => {
 		e.preventDefault();
 		setMessageDescription(e.target.value);
 	};
@@ -239,7 +249,7 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 	 * @param event {<Object>}
 	 * @desc Event to Post message to db
 	 */
-	const onSubmitMessage = (e) => {
+	const onSubmitMessage = e => {
 		e.preventDefault();
 		if (_.isEmpty(messageDescription)) return false;
 
@@ -247,25 +257,19 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 			messageType: 'message',
 			topic: activeTopic._id,
 			relatedObjectIds: activeTopic.relatedObjectIds,
-			messageDescription
+			messageDescription,
 		};
 		// do post here
 		axios
 			.post(`${baseURL}/api/v1/messages`, params)
-			.then((response) => {
+			.then(response => {
 				// 1. set textarea to be blank
 				setMessageDescription('');
 				// 2. deconstruct message obj
 				const {
 					data: {
-						message: {
-							messageDescription,
-							createdDate,
-							createdByName,
-							_id,
-							topic
-						}
-					}
+						message: { messageDescription, createdDate, createdByName, _id, topic },
+					},
 				} = response;
 				// 3. copy new message
 				let newTopic = { ...activeTopic };
@@ -286,87 +290,76 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 					_id,
 					messageDescription,
 					createdDate,
-					createdBy: createdByName
+					createdBy: createdByName,
 				});
 				// 6. set the active topic
 				setActiveTopic(newTopic);
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.log(err);
 			});
 	};
 
 	useEffect(() => {
 		// 1. GET Topics for current user
-		if (drawerIsOpen)
-			getUserTopics();
+		if (drawerIsOpen) getUserTopics();
 	}, [drawerIsOpen, topicContext]);
 
 	return (
-			<Fragment>
-				<div className='sideDrawer-header'>
-					<div>Messages</div>
-					<CloseButtonSvg
-						className='sideDrawer-header--close'
-						onClick={() => onCloseDrawer()}
-					/>
-				</div>
-				{ topics.length > 0 ? 
-					<div className='sideDrawer-body'>
-						<TopicList topics={topics} onTopicClick={onTopicClick} />
-						<div className='messageArea'>
-							<div className='messageArea-header'>
-								{!_.isEmpty(activeTopic) ? (
-									<MessageHeader
-										userState={userState}
-										topic={activeTopic}
-										modalRequired={modalRequired}
-										onRequestAccess={onRequestAccess}
-										onShowModal={onShowModal}
-									/>
-								) : (
-									''
-								)}
-							</div>
-							<div className='messageArea-body'>
-								{!_.isEmpty(activeTopic.topicMessages)
-									? activeTopic.topicMessages.map((message) => (
-																				<MessageItem 
-																						key={message._id} 
-																						{...message} 
-																				/>
-										))
-									: ''}
-							</div>
-							<div className='messageArea-footer'>
-								{!_.isEmpty(activeTopic) ? (
-									<MessageFooter
-										value={messageDescription}
-										onSubmitMessage={onSubmitMessage}
-										onMessageChange={onMessageChange}
-									/>
-								) : (
-									''
-								)}
-								
-							</div>
+		<Fragment>
+			<div className='sideDrawer-header'>
+				<div>Messages</div>
+				<CloseButtonSvg className='sideDrawer-header--close' onClick={() => onCloseDrawer()} />
+			</div>
+			{topics.length > 0 ? (
+				<div className='sideDrawer-body'>
+					<TopicList topics={topics} onTopicClick={onTopicClick} />
+					<div className='messageArea'>
+						<div className='messageArea-header'>
+							{!_.isEmpty(activeTopic) ? (
+								<MessageHeader
+									userState={userState}
+									topic={activeTopic}
+									modalRequired={modalRequired}
+									onRequestAccess={onRequestAccess}
+									onShowModal={onShowModal}
+								/>
+							) : (
+								''
+							)}
+						</div>
+						<div className='messageArea-body'>
+							{!_.isEmpty(activeTopic.topicMessages)
+								? activeTopic.topicMessages.map(message => <MessageItem key={message._id} {...message} />)
+								: ''}
+						</div>
+						<div className='messageArea-footer'>
+							{!_.isEmpty(activeTopic) ? (
+								<MessageFooter value={messageDescription} onSubmitMessage={onSubmitMessage} onMessageChange={onMessageChange} />
+							) : (
+								''
+							)}
 						</div>
 					</div>
-					: 
-						<div className='sideDrawer-noMessages'>
-							<div>No messages yet</div>
-							<div>Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.</div>
-						</div>
-					}
-			</Fragment>
+				</div>
+			) : (
+				<div className='sideDrawer-noMessages'>
+					<div>No messages yet</div>
+					<div>
+						Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select
+						a dataset and make an enquiry.
+					</div>
+				</div>
+			)}
+		</Fragment>
 	);
 };
 
 export default UserMessages;
 
 UserMessages.defaultProps = {
-	closed			: () => {},
-	toggleModal		: () => {},
-	topicContext	: undefined,
-	drawerIsOpen	: false
+	closed: () => {},
+	toggleModal: () => {},
+	topicContext: undefined,
+	drawerIsOpen: false,
 };

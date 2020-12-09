@@ -2,211 +2,208 @@
 @import '../../../css/variables';
 
 .tabsBackground {
-  margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 
 .main-alert {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
 }
 
 .dataAccessHeader {
-  div {
-    display: block;
-    &:nth-child(3) {
-      margin-top: 30px;
-      display: flex;
-      flex-flow: row;
-      align-items: center;
-      svg {
-        margin-right: 10px;
-      }
-      span {
-        margin-left: 5px;
-      }
-    }
-  }
+	div {
+		display: block;
+		&:nth-child(3) {
+			margin-top: 30px;
+			display: flex;
+			flex-flow: row;
+			align-items: center;
+			svg {
+				margin-right: 10px;
+			}
+			span {
+				margin-left: 5px;
+			}
+		}
+	}
 }
 
 .layoutCard {
-    width: 100%;
-    box-sizing: border-box;
-    margin: 5px 0 10px 0;
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.1);
-    background: $white;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 5px 0 10px 0;
+	box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.1);
+	background: $white;
 
-    &:hover {
-      cursor: pointer;
-    }
+	&:hover {
+		cursor: pointer;
+	}
 
-    .header {
-      display: flex;
-      flex-flow: column nowrap;
-      margin-bottom: 10px;
-      padding: 25px 25px 0 25px;
-  
-      @media (min-width: $bp-large) {
-          flex-flow: row wrap;
-          justify-content: space-between;
-      }
+	.header {
+		display: flex;
+		flex-flow: column nowrap;
+		margin-bottom: 10px;
+		padding: 25px 25px 0 25px;
 
-      &-title {
-        @media (min-width: $bp-large) {
-          width: 55%;
-        }
-        @media (min-width: $bp-largest) {
-          width: 65%;
-        }
+		@media (min-width: $bp-large) {
+			flex-flow: row wrap;
+			justify-content: space-between;
+		}
 
-        h1 {
-          font-size: 18px;
-          line-height: 22px;
-        }
-      }
+		&-title {
+			@media (min-width: $bp-large) {
+				width: 55%;
+			}
+			@media (min-width: $bp-largest) {
+				width: 65%;
+			}
 
-      &-status {
-        display: flex;
-        flex-flow: row;
-        justify-content: space-between;
-        align-items: center;
-      
-      }
+			h1 {
+				font-size: 18px;
+				line-height: 22px;
+			}
+		}
 
-      .sla {
-        margin-right: 0;
-        margin-bottom: 0;
-      }
+		&-status {
+			display: flex;
+			flex-flow: row;
+			justify-content: space-between;
+			align-items: center;
+		}
 
-    }
+		.sla {
+			margin-right: 0;
+			margin-bottom: 0;
+		}
+	}
 
-    .body {
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      padding: 10px 25px 10px 25px;
+	.body {
+		display: grid;
+		grid-template-columns: 150px 1fr;
+		padding: 10px 25px 10px 25px;
 
-      .box {
-        display: flex;
-        flex-flow: wrap;
-        align-items: flex-start;
-        @include font-source(14px, $gray-800, $font-weight-semibold);
-        padding-bottom: 10px;
-        word-break: break-word;
-        position: relative;
+		.box {
+			display: flex;
+			flex-flow: wrap;
+			align-items: flex-start;
+			@include font-source(14px, $gray-800, $font-weight-semibold);
+			padding-bottom: 10px;
+			word-break: break-word;
+			position: relative;
 
-        &:nth-child(odd) {
-          opacity: 0.7;
-        }
+			&:nth-child(odd) {
+				opacity: 0.7;
+			}
 
-        &-meta {
-          position: absolute;
-          right: 0;
+			&-meta {
+				position: absolute;
+				right: 0;
 
-          & > button {
-            margin-top: -21px;
-          }
-        }
+				& > button {
+					margin-top: -21px;
+				}
+			}
 
-        @media (min-width: $bp-largest) {
-          align-items: center;
-        }
+			@media (min-width: $bp-largest) {
+				align-items: center;
+			}
 
-        &-link {
-          color: $purple !important;
-        }
+			&-link {
+				color: $purple !important;
+			}
 
-        &-deadline {
-          color: $red;
-          margin-left: auto;
-        }
+			&-deadline {
+				color: $red;
+				margin-left: auto;
+			}
 
-        &-check {
-          path {
-            fill: #2c8267;
-          }
-        }
+			&-check {
+				path {
+					fill: #2c8267;
+				}
+			}
 
-        &-review {
-          margin-left: auto;
-        }
+			&-review {
+				margin-left: auto;
+			}
 
-        &:nth-child(3),
-        &:nth-child(4) {
-          margin-top: -5px;
-        }
+			&:nth-child(3),
+			&:nth-child(4) {
+				margin-top: -5px;
+			}
 
-        .sla {
-          margin-bottom: 5px;
-        }
+			.sla {
+				margin-bottom: 5px;
+			}
 
-        .status-text {
-          margin-left: auto;
-        }
-      }
-    }
+			.status-text {
+				margin-left: auto;
+			}
+		}
+	}
 
-  .comment {
-    margin-top: 10px;
+	.comment {
+		margin-top: 10px;
 
-    h1 {
-      position: relative;
-      z-index: 1;
-      overflow: hidden;
-      text-align: center;
-      margin-bottom: 0;
-      @include font-source(14px, $gray-700, 500);
+		h1 {
+			position: relative;
+			z-index: 1;
+			overflow: hidden;
+			text-align: center;
+			margin-bottom: 0;
+			@include font-source(14px, $gray-700, 500);
 
-      &:before, &:after {
-        position: absolute;
-        top: 51%;
-        overflow: hidden;
-        width: 48%;
-        height: 1px;
-        content: '\a0';
-        background-color: #e7e9ed;
-      }
+			&:before,
+			&:after {
+				position: absolute;
+				top: 51%;
+				overflow: hidden;
+				width: 48%;
+				height: 1px;
+				content: '\a0';
+				background-color: #e7e9ed;
+			}
 
-      &:before {
-        margin-left: -50%;
-        text-align: right;
-      }
+			&:before {
+				margin-left: -50%;
+				text-align: right;
+			}
 
-      &:after {
-        margin-left: 2%;
-        text-align: right;
-      }
-    }
+			&:after {
+				margin-left: 2%;
+				text-align: right;
+			}
+		}
 
-    &-wrapper {
-      padding: 5px 10px;
-    }
+		&-wrapper {
+			padding: 5px 10px;
+		}
 
-    &-item {
-      padding: 15px;
-      background: $background;
-      border-radius: 8px;
-      @include font-source(13px, $gray-800 500);
+		&-item {
+			padding: 15px;
+			background: $background;
+			border-radius: 8px;
+			@include font-source(13px, $gray-800 500);
 
-      &-header {
-        display: flex;
-        flex-flow: row;
-        justify-content: space-between;
+			&-header {
+				display: flex;
+				flex-flow: row;
+				justify-content: space-between;
 
-        h2 {
-          @include font-source(14px, $gray-600, 500);
-        }
+				h2 {
+					@include font-source(14px, $gray-600, 500);
+				}
+			}
 
-      }
-
-      &-body {
-        word-wrap: break-word;
-      }
-
-    }
-  }
+			&-body {
+				word-wrap: break-word;
+			}
+		}
+	}
 }
 
 .time {
-  @include font-source(13px, $gray-700, 500);
-  margin-right: 15px;
+	@include font-source(13px, $gray-700, 500);
+	margin-right: 15px;
 }

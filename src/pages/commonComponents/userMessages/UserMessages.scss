@@ -2,161 +2,160 @@
 @import '../../../css/typography';
 @import '../sidedrawer/SideDrawer.scss';
 
-
 .sideDrawer {
-    &-header {
-        box-sizing: border-box;
-        padding: 25px;
-        background: $indigo;
-        height: 72px;
-        display: flex;
-        color: $white;
-        align-items: center;
-        justify-content: space-between;
-        &-wrapper {
-            display: grid;
-        }
-        &--close {
-            fill: #fff;
-            width: 20px;
-            height: 20px;
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
+	&-header {
+		box-sizing: border-box;
+		padding: 25px;
+		background: $indigo;
+		height: 72px;
+		display: flex;
+		color: $white;
+		align-items: center;
+		justify-content: space-between;
+		&-wrapper {
+			display: grid;
+		}
+		&--close {
+			fill: #fff;
+			width: 20px;
+			height: 20px;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
 
-    &-noMessages {
-        height: calc(100vh - 72px);
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
+	&-noMessages {
+		height: calc(100vh - 72px);
+		display: flex;
+		flex-flow: column;
+		justify-content: center;
+		align-items: center;
 
-        div:first-child {
-            margin-bottom: 24px;
-            @include font-source(14px, $soft-black, $font-weight-bold);
-        }
+		div:first-child {
+			margin-bottom: 24px;
+			@include font-source(14px, $soft-black, $font-weight-bold);
+		}
 
-        div:nth-child(2) {
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            @include font-source(14px, $soft-black, $font-weight-semibold);
-        }
-    }
-    
-    &-body {
-        display: grid;
-        height: 100vh;
-        grid-template-columns: 35% 65%;
-        justify-items: stretch;
-        align-items: stretch;
-    }
+		div:nth-child(2) {
+			max-width: 400px;
+			width: 100%;
+			text-align: center;
+			@include font-source(14px, $soft-black, $font-weight-semibold);
+		}
+	}
 
-    &-nav {
-        background: $gray-200;
-        overflow-y: auto;
-        height: calc(100vh - 72px);
-        box-sizing: border-box;
-        &-item {
-            margin-bottom: 1px;
-            box-sizing: inherit;
-            width: 100%;
-            height: 105px;
-            padding: 15px 24px;
-            background: $white;
-            border-right: 1px solid #e7e9ed;
-            &:hover {
-                cursor: pointer !important;
-            }
-        }
-    }
+	&-body {
+		display: grid;
+		height: 100vh;
+		grid-template-columns: 35% 65%;
+		justify-items: stretch;
+		align-items: stretch;
+	}
+
+	&-nav {
+		background: $gray-200;
+		overflow-y: auto;
+		height: calc(100vh - 72px);
+		box-sizing: border-box;
+		&-item {
+			margin-bottom: 1px;
+			box-sizing: inherit;
+			width: 100%;
+			height: 105px;
+			padding: 15px 24px;
+			background: $white;
+			border-right: 1px solid #e7e9ed;
+			&:hover {
+				cursor: pointer !important;
+			}
+		}
+	}
 }
 
 .nav {
-    &-meta {
-        display: flex;
-        flex-flow: row nowrap;
-        width: 100%;
-        justify-content: space-between;
-    }
-    &-desc, &-title {
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+	&-meta {
+		display: flex;
+		flex-flow: row nowrap;
+		width: 100%;
+		justify-content: space-between;
+	}
+	&-desc,
+	&-title {
+		width: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
 .messageArea {
-    display: grid;
-    grid-template-rows: 1fr 10fr 170px;
-    box-sizing: border-box;
-    height: calc(100vh - 40px);
+	display: grid;
+	grid-template-rows: 1fr 10fr 170px;
+	box-sizing: border-box;
+	height: calc(100vh - 40px);
 
-    &-header{
-        background: $white;
-        padding: 24px;
-        border-bottom: 1px solid $gray-200;
-        display: flex;
-        align-items: flex-start;
-        flex-flow: column nowrap;
-        @media (min-width: $bp-large) {
-            flex-flow: column wrap;
-            align-items: center;
-        }
+	&-header {
+		background: $white;
+		padding: 24px;
+		border-bottom: 1px solid $gray-200;
+		display: flex;
+		align-items: flex-start;
+		flex-flow: column nowrap;
+		@media (min-width: $bp-large) {
+			flex-flow: column wrap;
+			align-items: center;
+		}
 
-        &-desc {
-            width: 100%;
-            h1 {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-        }
+		&-desc {
+			width: 100%;
+			h1 {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
 
+		&-action {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: flex-end;
+			align-items: center;
+			padding-top: 16px;
+			width: 100%;
+		}
+	}
 
-        &-action {
-            display: flex;
-            flex-flow: row wrap;
-            justify-content: flex-end;
-            align-items: center;
-            padding-top: 16px;
-            width: 100%;
-        }
-    }
-    
-    &-body{
-        background: $white;
-        overflow-y: auto;
-    }
+	&-body {
+		background: $white;
+		overflow-y: auto;
+	}
 
-    &-item {
-        display: flex;
-        padding: 15px 24px;
-        flex-flow: column nowrap;
-        width: 100%;
-        min-height: 106px;
-        border-bottom: 1px solid $gray-200;
-        @include font-source(14px, $soft-black, $font-weight-semibold);
-        &-header {
-            display: flex;
-            flex-flow: row nowrap;
-            width: 100%;
-            margin-bottom: 12px;
-            justify-content: space-between;
-        }
-    }
+	&-item {
+		display: flex;
+		padding: 15px 24px;
+		flex-flow: column nowrap;
+		width: 100%;
+		min-height: 106px;
+		border-bottom: 1px solid $gray-200;
+		@include font-source(14px, $soft-black, $font-weight-semibold);
+		&-header {
+			display: flex;
+			flex-flow: row nowrap;
+			width: 100%;
+			margin-bottom: 12px;
+			justify-content: space-between;
+		}
+	}
 
-    &-footer {
-        display: flex;
-        flex-flow: column nowrap;
-        border-top: 1px solid $gray-200;
-        padding: 15px 24px;
-        background: $white;
-    }
+	&-footer {
+		display: flex;
+		flex-flow: column nowrap;
+		border-top: 1px solid $gray-200;
+		padding: 15px 24px;
+		background: $white;
+	}
 }
 
 .selected-item {
-    border-right: 4px solid $teal !important;
+	border-right: 4px solid $teal !important;
 }

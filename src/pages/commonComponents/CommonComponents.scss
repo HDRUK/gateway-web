@@ -1,90 +1,89 @@
 @import '../../css/variables';
 
 .login-modal {
-  background: rgba(0,0,0, 0.5);
+	background: rgba(0, 0, 0, 0.5);
 
-  .modal-dialog {
-    margin: 10% auto 0 auto;
-  }
+	.modal-dialog {
+		margin: 10% auto 0 auto;
+	}
 
-  .modal-content {
-    max-width: 600px;
-    margin: 0 auto;
-    webkit-animation-name: animatetop;
-    -webkit-animation-duration: .4s;
-    animation-name: animatetop;
-    animation-duration: .4s;
-  }
-  
+	.modal-content {
+		max-width: 600px;
+		margin: 0 auto;
+		webkit-animation-name: animatetop;
+		-webkit-animation-duration: 0.4s;
+		animation-name: animatetop;
+		animation-duration: 0.4s;
+	}
 }
 
 .authorCardHolder {
-  padding: 0px 15px;
+	padding: 0px 15px;
 }
 
 .authorCard {
-  height: 80px;
-  padding:10px;
-  border: 1px solid $gray-300;
-  background-color: #ffffff;
+	height: 80px;
+	padding: 10px;
+	border: 1px solid $gray-300;
+	background-color: #ffffff;
 }
 
-.footerBottom {   
-  position:relative;
-  z-index: 997;
-  width: '100%';
-  margin-top: -360px; /* negative value of footer height */
-  min-height: 360px;
-  clear: both;
-  background-image: linear-gradient(110deg, #50b996, #485ea7 100%);
-  padding: 48px;
+.footerBottom {
+	position: relative;
+	z-index: 997;
+	width: '100%';
+	margin-top: -360px; /* negative value of footer height */
+	min-height: 360px;
+	clear: both;
+	background-image: linear-gradient(110deg, #50b996, #485ea7 100%);
+	padding: 48px;
 }
 
 .openAthensButton {
-  width: 200px;
-  background: $purple;
-  color: white;
-  padding: 8px 20px;
-  border-radius: 2px;
-  display: block;
-  margin: 0 auto;
-  position: relative;
+	width: 200px;
+	background: $purple;
+	color: white;
+	padding: 8px 20px;
+	border-radius: 2px;
+	display: block;
+	margin: 0 auto;
+	position: relative;
 }
 
 .openAthensButton:hover {
-  text-decoration: none;
-  background: $purple;
-  color: white;
+	text-decoration: none;
+	background: $purple;
+	color: white;
 }
 
 .showAllLoginOptionsButton {
-  width: 250px;
-  background: $purple;
-  color: white;
-  padding: 8px 20px;
-  border-radius: 2px;
-  display: block;
-  margin: 0 auto;
-  text-align: center;
-  font-size: 14px;
+	width: 250px;
+	background: $purple;
+	color: white;
+	padding: 8px 20px;
+	border-radius: 2px;
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 14px;
 }
 
 .dateHolder {
-  text-align: right;
-  padding-right: 25px;
+	text-align: right;
+	padding-right: 25px;
 }
 
 .loginImageOff,
 .loginButtonHolder:hover .loginImageOn {
-    display: none;
-    margin-left:auto;
-    margin-right:auto;
-    width: 200px
+	display: none;
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
 }
 .loginImageOn,
 .loginButtonHolder:hover .loginImageOff {
-    display: inline-block;
-    margin-left:auto;
-    margin-right:auto;
-    width: 200px
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
 }

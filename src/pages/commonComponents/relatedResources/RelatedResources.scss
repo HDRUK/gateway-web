@@ -1,65 +1,62 @@
 @import '../../../css/mixins';
 @import '../../../css/variables';
 
+.relatedResourcesModal {
+	height: calc(100% - 20px);
 
-.relatedResourcesModal  {
-  height: calc(100% - 20px);
-  
-  .modal-dialog {
-    margin: 10px auto;
-    max-width: 1024px;
-    width: 100%;
-  }
+	.modal-dialog {
+		margin: 10px auto;
+		max-width: 1024px;
+		width: 100%;
+	}
 
-  .modal-body {
-    position: relative;
-  }
+	.modal-body {
+		position: relative;
+	}
 
-  .related-search-wrap {
-    position: relative;
-    display: block;
-    min-height: 90px
-  }
+	.related-search-wrap {
+		position: relative;
+		display: block;
+		min-height: 90px;
+	}
 
-  .realted-search-body {
-    position: relative;
-    display: flex;
-    flex-flow: column nowrap;
-    height: 90px;
-  }
+	.realted-search-body {
+		position: relative;
+		display: flex;
+		flex-flow: column nowrap;
+		height: 90px;
+	}
 
-  .searchBarBackground {
-    width: 100%;
-  }
+	.searchBarBackground {
+		width: 100%;
+	}
 
-  .searchTabsHolder {
-    position: fixed;
-    top: 150px;
-    width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-  }
+	.searchTabsHolder {
+		position: fixed;
+		top: 150px;
+		width: 100%;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+	}
 
-  .relatedModalBackground {
-    background: $gray-light;
-      overflow-y: auto;
-      height: calc(100vh - 320px);
-  }
+	.relatedModalBackground {
+		background: $gray-light;
+		overflow-y: auto;
+		height: calc(100vh - 320px);
+	}
 }
 
 .modal-close {
-    margin-top: -10px;
+	margin-top: -10px;
 }
 
 @media screen and (max-width: 1146px) {
-  #unselectButton {
-    margin-bottom: 1%;
-    width: 116px;
-  }
-  #addResources {
-    width: 116px;
-  }
-} 
-
-
+	#unselectButton {
+		margin-bottom: 1%;
+		width: 116px;
+	}
+	#addResources {
+		width: 116px;
+	}
+}

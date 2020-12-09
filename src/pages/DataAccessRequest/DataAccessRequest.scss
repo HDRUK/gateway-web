@@ -239,14 +239,13 @@
 	background: #eee !important;
 }
 
-input[type=text]:disabled {
-		background-color: #eee !important;
-	
+input[type='text']:disabled {
+	background-color: #eee !important;
 }
 
-input[type=text]:disabled,
-input[type=checkbox]:disabled,
-input[type=radio]:disabled {
+input[type='text']:disabled,
+input[type='checkbox']:disabled,
+input[type='radio']:disabled {
 	&:after {
 		background-color: #eee !important;
 	}
@@ -616,11 +615,11 @@ input[type='checkbox']:after {
 
 .makeADecisionDropdown {
 	position: relative;
-    width: 320px !important;
-    max-height: 314px !important;	
-    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03) !important;
-    background-color: $white !important;
-		padding: 12px 16px 12px 16px !important;
+	width: 320px !important;
+	max-height: 314px !important;
+	box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03) !important;
+	background-color: $white !important;
+	padding: 12px 16px 12px 16px !important;
 
 	option {
 		padding: 4px 0;
@@ -634,7 +633,6 @@ input[type='checkbox']:after {
 	z-index: 1;
 	padding-left: 16px;
 	padding-right: 16px;
-
 }
 
 .review-phase {
@@ -647,9 +645,9 @@ input[type='checkbox']:after {
 
 	&:after {
 		position: absolute;
-    bottom: -8px;
-    left: -15px;
-    height: 1px;
+		bottom: -8px;
+		left: -15px;
+		height: 1px;
 		background: $gray-pale;
 		width: 316px;
 		z-index: 1000;

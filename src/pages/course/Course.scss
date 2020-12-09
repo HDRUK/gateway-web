@@ -1,48 +1,48 @@
-@import '../../css/variables'; 
-@import '../../css/mixins'; 
+@import '../../css/variables';
+@import '../../css/mixins';
 
 .pillDivider {
-  width: 1px;
-  height: 25px;
-  background-color: $gray-400;
-  padding: 0px;
-  margin: 0px;
+	width: 1px;
+	height: 25px;
+	background-color: $gray-400;
+	padding: 0px;
+	margin: 0px;
 }
 
 .smallFormInput {
-    width: 100%;
-    max-width: 480px;
-    height: 44px;
-  }
+	width: 100%;
+	max-width: 480px;
+	height: 44px;
+}
 
 .emptySmallFormInput,
 .emptySmallFormInput:focus {
-    @include rounded(4px);
-    border: solid 2px $red !important;
+	@include rounded(4px);
+	border: solid 2px $red !important;
 }
 
-  .setHeight {
-    height: 40px;
-  }
+.setHeight {
+	height: 40px;
+}
 
-  .setWidth {
-    width: 123px;
-  }
+.setWidth {
+	width: 123px;
+}
 
-  .checker {
-    width: 0% !important;
-    margin-left: 15px;
-    margin-right: 12px;
-  }
+.checker {
+	width: 0% !important;
+	margin-left: 15px;
+	margin-right: 12px;
+}
 
-  .main-body {
-      margin-top:0px !important;
-  }
+.main-body {
+	margin-top: 0px !important;
+}
 
-  .main-accordion-body {
-      padding-bottom:10px !important
-  }
+.main-accordion-body {
+	padding-bottom: 10px !important;
+}
 
-  .button-tertiary:disabled {
-    opacity: 0.2;
-  }
+.button-tertiary:disabled {
+	opacity: 0.2;
+}

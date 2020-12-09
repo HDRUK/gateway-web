@@ -12,7 +12,7 @@ class TechnicalDetailsPage extends React.Component {
 		technicalMetadata: null,
 		flagClosed: true,
 		customType: false,
-		allOpen: false
+		allOpen: false,
 	};
 
 	constructor(props) {
@@ -20,7 +20,7 @@ class TechnicalDetailsPage extends React.Component {
 		this.state.technicalMetadata = props.technicalMetadata;
 	}
 
-	updateAllOpen = (allOpen) => {
+	updateAllOpen = allOpen => {
 		if (allOpen === false) {
 			this.setState({ allOpen: true });
 		} else if (allOpen === true) {
@@ -78,7 +78,7 @@ class TechnicalDetailsPage extends React.Component {
 								</Col>
 							</Row>
 
-							{technicalMetadata.elements.map((element) => (
+							{technicalMetadata.elements.map(element => (
 								<TechnicalMetadataVariables techMetadataVariables={element} open={allOpen} />
 							))}
 							<div className='height-16' />

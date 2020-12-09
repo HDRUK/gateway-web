@@ -9,12 +9,12 @@ class DiscourseAddPost extends Component {
 
 	// initialize our state
 	state = {
-		userState: []
+		userState: [],
 	};
 
 	render() {
 		const { userState } = this.state;
-		const showLoginModal = (props) => {
+		const showLoginModal = props => {
 			var modalID = 'myModal';
 			if (props.isRequest) {
 				modalID = 'myModalRequest';
