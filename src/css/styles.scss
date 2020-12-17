@@ -1583,3 +1583,19 @@ button a {
 .line-height-normal {
   line-height: normal;
 }
+
+.hiddenSelectBox {
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.sectorValueInFront {
+  z-index: 2;
+  width: 100%;
+}
+
+.sectorValue {
+  position: absolute;
+  z-index: 1;
+}
