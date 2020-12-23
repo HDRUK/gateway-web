@@ -215,7 +215,11 @@ export const AccountTools = props => {
 																	<Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
 																		Edit
 																	</Dropdown.Item>
-																	<EntityActionButton id={tool.id} action={archiveTool} entity='tool' actionType='archive' />
+																	{userState[0].role === 'Admin' ? (
+																		<EntityActionButton id={tool.id} action={archiveTool} entity='tool' actionType='archive' />
+																	) : (
+																		''
+																	)}
 																</DropdownButton>
 															</Col>
 														</Row>
@@ -400,24 +404,32 @@ export const AccountTools = props => {
 															</Col>
 
 															<Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-																<DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
-																	<Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
-																		Edit
-																	</Dropdown.Item>
-																	<Dropdown.Item href='#' onClick={() => approveTool(tool.id)} className='black-14'>
-																		Approve
-																	</Dropdown.Item>
-																	<Dropdown.Item href='#' onClick={() => toggleActionModal()} className='black-14'>
-																		Reject
-																	</Dropdown.Item>
-																	<ActionModal
-																		id={tool.id}
-																		open={showActionModal}
-																		context={actionModalConfig}
-																		updateApplicationStatus={rejectObject}
-																		close={toggleActionModal}
-																	/>
-																</DropdownButton>
+																{userState[0].role === 'Admin' ? (
+																	<DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
+																		<Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
+																			Edit
+																		</Dropdown.Item>
+																		<Dropdown.Item href='#' onClick={() => approveTool(tool.id)} className='black-14'>
+																			Approve
+																		</Dropdown.Item>
+																		<Dropdown.Item href='#' onClick={() => toggleActionModal()} className='black-14'>
+																			Reject
+																		</Dropdown.Item>
+																		<ActionModal
+																			id={tool.id}
+																			open={showActionModal}
+																			context={actionModalConfig}
+																			updateApplicationStatus={rejectObject}
+																			close={toggleActionModal}
+																		/>
+																	</DropdownButton>
+																) : (
+																	<DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
+																		<Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
+																			Edit
+																		</Dropdown.Item>
+																	</DropdownButton>
+																)}
 															</Col>
 														</Row>
 													);
