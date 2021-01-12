@@ -27,7 +27,9 @@ export const AccountPapers = props => {
 	};
 
 	useEffect(() => {
-		initGA('UA-166025838-1');
+		if (process.env.NODE_ENV === 'production') {
+			initGA('UA-166025838-1');
+		}
 		doPapersCall();
 	}, []);
 
@@ -115,7 +117,7 @@ export const AccountPapers = props => {
 			<Row>
 				<Col xs={1}></Col>
 				<Col xs={10}>
-					<Loading />
+					<Loading data-testid='isLoading' />
 				</Col>
 				<Col xs={1}></Col>
 			</Row>
@@ -148,7 +150,7 @@ export const AccountPapers = props => {
 					</Row>
 					<Row className='tabsBackground'>
 						<Col sm={12} lg={12}>
-							<Tabs className='dataAccessTabs gray700-13' activeKey={key} onSelect={handleSelect}>
+							<Tabs className='dataAccessTabs gray700-13' data-testid='paperTabs' activeKey={key} onSelect={handleSelect}>
 								<Tab eventKey='active' title={'Active (' + activeCount + ')'}>
 									{' '}
 								</Tab>
@@ -190,7 +192,7 @@ export const AccountPapers = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox' key={i}>
+														<Row className='entryBox' data-testid='paperEntryActive' key={i}>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -248,7 +250,7 @@ export const AccountPapers = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='paperEntryPending'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -322,7 +324,7 @@ export const AccountPapers = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='paperEntryRejected'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -373,7 +375,7 @@ export const AccountPapers = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='paperEntryArchive'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>

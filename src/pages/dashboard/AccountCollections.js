@@ -145,7 +145,7 @@ const AccountCollections = props => {
 
 					<Row className='tabsBackground'>
 						<Col sm={12} lg={12}>
-							<Tabs className='dataAccessTabs gray700-13' activeKey={key} onSelect={handleSelect}>
+							<Tabs data-testid='collectionTabs' className='dataAccessTabs gray700-13' activeKey={key} onSelect={handleSelect}>
 								<Tab eventKey='active' title={'Active (' + activeCount + ')'}>
 									{' '}
 								</Tab>
@@ -173,7 +173,7 @@ const AccountCollections = props => {
 										)}
 
 										{activeCount <= 0 ? (
-											<Row className='margin-right-15'>
+											<Row className='margin-right-15' data-testid='collectionEntryNotFound'>
 												<NotFound word='collections' />
 											</Row>
 										) : (
@@ -182,7 +182,7 @@ const AccountCollections = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox' data-testid='collectionEntry'>
+														<Row className='entryBox' data-testid='collectionEntryActive'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(collection.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -253,7 +253,7 @@ const AccountCollections = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox' data-testid='collectionEntry'>
+														<Row className='entryBox' data-testid='collectionEntryArchive'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(collection.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>

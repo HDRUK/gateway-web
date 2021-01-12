@@ -18,7 +18,7 @@ import './Collections.scss';
 
 export const CollectionPage = props => {
 	const [collectionData, setCollectionData] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(true); 
 	const [toolCount, setToolCount] = useState(0);
 	const [datasetCount, setDatasetCount] = useState(0);
 	const [personCount, setPersonCount] = useState(0);
@@ -29,7 +29,7 @@ export const CollectionPage = props => {
 	const [collectionEdited, setCollectionEdited] = useState(false);
 	const [searchString, setSearchString] = useState('');
 	const [discoursePostCount, setDiscoursePostCount] = useState(0);
-	const [key, setKey] = useState('All');
+	const [key, setKey] = useState('Datasets'); 
 	const [searchBar] = useState(React.createRef());
 	const [showDrawer, setShowDrawer] = useState(false);
 	const [showModal, setShowModal] = useState(false);
@@ -44,7 +44,7 @@ export const CollectionPage = props => {
 				name: null,
 			},
 		]
-	);
+	); 
 
 	//componentDidMount - on loading of project detail page
 	useEffect(() => {
@@ -67,14 +67,15 @@ export const CollectionPage = props => {
 				setCollectionData(res.data.data[0]);
 				await getObjectData(res.data.data[0]);
 				countEntities();
+
 				setIsLoading(false);
 			}
 		});
-	};
+	}; 
 
 	const getObjectData = async data => {
 		setIsLoading(true);
-		for (const object of data.relatedObjects) {
+		for (const object of data.relatedObjects) { 
 			await genericGetEntityData(object);
 		}
 	};
@@ -90,7 +91,7 @@ export const CollectionPage = props => {
 		}
 		await axios.get(baseURL + '/api/v1/' + entityType + '/' + entityID).then(async res => {
 			//extract standard result object from api
-			let result = entityType === 'datasets' ? res.data.data : res.data.data[0];
+			let result = entityType === 'datasets' ? res.data.data : entityType === 'person' ? res.data.person : res.data.data[0];
 			objectsToAdd.push(result);
 			if (result.activeflag === 'active' || (result.activeflag === 'review' && result.authors.includes(userState[0].id))) {
 				setObjectData(objectsToAdd);
@@ -99,14 +100,30 @@ export const CollectionPage = props => {
 	};
 
 	const countEntities = () => {
-		const entityCounts = objectData.reduce((entityCountsByType, currentValue) => {
+		const entityCounts = objectData.reduce((entityCountsByType, currentValue) => { 
 			let type = currentValue.type;
-			if (!entityCountsByType.hasOwnProperty(type)) {
+			if (!entityCountsByType.hasOwnProperty(type)) { 
 				entityCountsByType[type] = 0;
 			}
 			entityCountsByType[type]++;
 			return entityCountsByType;
 		}, {});
+
+		let key;
+		if(entityCounts.dataset > 0){
+			key = 'Datasets' 
+		} else if (entityCounts.tool > 0){
+			key = 'Tools' 
+		} else if (entityCounts.paper > 0){
+			key = 'Papers' 
+		} else if (entityCounts.project > 0){
+			key = 'Projects' 
+		} else if (entityCounts.person > 0){
+			key = 'People' 
+		} else if (entityCounts.course > 0){
+			key = 'Course' 
+		}
+		setKey(key);
 
 		setToolCount(entityCounts.tool || 0);
 		setPersonCount(entityCounts.person || 0);
@@ -146,7 +163,6 @@ export const CollectionPage = props => {
 		setShowDrawer(showEnquiry);
 	};
 
-	const allCount = toolCount + datasetCount + personCount + projectCount + paperCount + courseCount;
 	let datasetPublisher;
 	let datasetLogo;
 
@@ -224,10 +240,10 @@ export const CollectionPage = props => {
 						<Col className='titleWidth'>
 							<Row>
 								<Col sm={9} lg={9} className='collectionTitleCard'>
-									<span className='black-28 collectionTitleText'> {collectionData.name} </span>
+									<span className='black-28 collectionTitleText' data-testid='collectionName' > {collectionData.name} </span>
 								</Col>
 								<Col sm={2} lg={2} className='collectionDate collectionTitleCard'>
-									<span className='gray700-13'>Created {moment(collectionData.createdAt).format('MMM YYYY')} </span>
+									<span className='gray700-13' data-testid='collectionCreated'>Created {moment(collectionData.createdAt).format('MMM YYYY')} </span>
 								</Col>
 							</Row>
 
@@ -246,7 +262,7 @@ export const CollectionPage = props => {
 													{person.firstname} {person.lastname}
 												</span>
 											);
-										}
+										} 
 									})}
 								</Col>
 							</Row>
@@ -256,7 +272,7 @@ export const CollectionPage = props => {
 					<Row className='pad-top-32'>
 						<Col sm={1} lg={1} />
 						<Col sm={10} lg={10} className='gray800-14'>
-							<ReactMarkdown source={collectionData.description} />
+							<ReactMarkdown source={collectionData.description} data-testid='collectionDescription' />
 						</Col>
 						<Col sm={1} lg={1} />
 					</Row>
@@ -264,8 +280,7 @@ export const CollectionPage = props => {
 			</div>
 
 			<div>
-				<Tabs className='tabsBackground gray700-13' activeKey={key} onSelect={handleSelect}>
-					<Tab eventKey='All' title={'All (' + allCount + ')'}></Tab>
+				<Tabs className='tabsBackground gray700-13' activeKey={key} onSelect={handleSelect} data-testid='collectionPageTabs'>
 					<Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'}></Tab>
 					<Tab eventKey='Tools' title={'Tools (' + toolCount + ')'}></Tab>
 					<Tab eventKey='Papers' title={'Papers (' + paperCount + ')'}></Tab>
@@ -281,7 +296,7 @@ export const CollectionPage = props => {
 										collectionId={collectionData.id}
 										topicId={collectionData.discourseTopicId || 0}
 										userState={userState}
-										onUpdateDiscoursePostCount={updateDiscoursePostCount}></DiscourseTopic>
+										onUpdateDiscoursePostCount={updateDiscoursePostCount}></DiscourseTopic> 
 								</Col>
 							</Row>
 						</Container>
@@ -293,55 +308,6 @@ export const CollectionPage = props => {
 				<Row>
 					<Col sm={1} lg={1} />
 					<Col sm={10} lg={10}>
-						{key === 'All'
-							? objectData.map(object => {
-									if (
-										object.activeflag === 'active' ||
-										(object.activeflag === 'archive' && object.type === 'dataset') ||
-										(object.type === 'course' && object.activeflag === 'review' && object.creator[0].id === userState[0].id) ||
-										(object.type !== 'course' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
-									) {
-										var reason = '';
-										var updated = '';
-										var user = '';
-										let showAnswer = false;
-
-										{
-											!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.name')
-												? (datasetPublisher = object.datasetv2.summary.publisher.name)
-												: (datasetPublisher = '');
-										}
-										{
-											!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.logo')
-												? (datasetLogo = object.datasetv2.summary.publisher.logo)
-												: (datasetLogo = '');
-										}
-
-										collectionData.relatedObjects.map(dat => {
-											if (dat.objectId === object.id || parseInt(dat.objectId) === object.id || dat.objectId === object.datasetid) {
-												reason = dat.reason;
-												updated = dat.updated;
-												user = dat.user;
-												showAnswer = !_.isEmpty(reason);
-											}
-										});
-										return (
-											<RelatedObject
-												key={object.id}
-												data={object}
-												activeLink={true}
-												showRelationshipAnswer={showAnswer}
-												collectionReason={reason}
-												collectionUpdated={updated}
-												collectionUser={user}
-												datasetPublisher={datasetPublisher}
-												datasetLogo={datasetLogo}
-											/>
-										);
-									}
-							  })
-							: ''}
-
 						{key === 'Datasets'
 							? objectData.map(object => {
 									if (
@@ -571,7 +537,7 @@ export const CollectionPage = props => {
 				</Row>
 			</Container>
 			<SideDrawer open={showDrawer} closed={toggleDrawer}>
-				<UserMessages userState={userState[0]} closed={toggleDrawer} toggleModal={toggleModal} drawerIsOpen={showDrawer} />
+				<UserMessages userState={userState[0]} closed={toggleDrawer} toggleModal={toggleModal} drawerIsOpen={showDrawer} />  
 			</SideDrawer>
 
 			<DataSetModal open={showModal} context={context} closed={toggleModal} userState={userState[0]} />

@@ -171,7 +171,7 @@ class DatasetDetail extends Component {
 					allowNewMessage: false,
 				};
 
-				this.updateCounter(this.props.match.params.datasetID, counter);
+				this.updateCounter(this.state.data.datasetid, counter);
 
 				if (!_.isUndefined(res.data.data.relatedObjects)) {
 					await this.getAdditionalObjectInfo(res.data.data.relatedObjects);

@@ -232,7 +232,7 @@ class AddCollectionPage extends React.Component {
 						userState={userState[0]}
 						closed={this.toggleDrawer}
 						toggleModal={this.toggleModal}
-						drawerIsOpen={this.state.showDrawer}
+						drawerIsOpen={this.state.showDrawer} 
 					/>
 				</SideDrawer>
 
@@ -261,7 +261,7 @@ const AddCollectionForm = props => {
 			authors: Yup.lazy(val => (Array.isArray(val) ? Yup.array().of(Yup.number()) : Yup.number())),
 			imageLink: Yup.string().matches(
 				/^(http|https){1}:\/\/[A-Za-z0-9-\/\._~:\?#\[\]@!\$&'\(\)\*\+,;%=]+$/,
-				'Invalid URL: should start with http:// or https://'
+				{message: 'Invalid URL: should start with http:// or https://'}
 			),
 		}),
 
@@ -454,7 +454,7 @@ const AddCollectionForm = props => {
 												inCollection={true}
 											/>
 										</div>
-									);
+									); 
 								})}
 
 								<div className='flexCenter pt-3 pb-3'>

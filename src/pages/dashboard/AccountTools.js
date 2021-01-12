@@ -27,7 +27,9 @@ export const AccountTools = props => {
 	};
 
 	useEffect(() => {
-		initGA('UA-166025838-1');
+		if (process.env.NODE_ENV === 'production') {
+			initGA('UA-166025838-1');
+		}
 		doToolsCall();
 	}, []);
 
@@ -116,7 +118,7 @@ export const AccountTools = props => {
 			<Row>
 				<Col xs={1}></Col>
 				<Col xs={10}>
-					<Loading />
+					<Loading data-testid='isLoading' />
 				</Col>
 				<Col xs={1}></Col>
 			</Row>
@@ -146,7 +148,7 @@ export const AccountTools = props => {
 
 					<Row className='tabsBackground'>
 						<Col sm={12} lg={12}>
-							<Tabs className='dataAccessTabs gray700-13' activeKey={key} onSelect={handleSelect}>
+							<Tabs className='dataAccessTabs gray700-13' data-testid='toolTabs' activeKey={key} onSelect={handleSelect}>
 								<Tab eventKey='active' title={'Active (' + activeCount + ')'}>
 									{' '}
 								</Tab>
@@ -189,7 +191,7 @@ export const AccountTools = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='toolEntryActive'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -249,7 +251,7 @@ export const AccountTools = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='toolEntryPending'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -325,7 +327,7 @@ export const AccountTools = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='toolEntryRejected'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -378,7 +380,7 @@ export const AccountTools = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='toolEntryArchive'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>

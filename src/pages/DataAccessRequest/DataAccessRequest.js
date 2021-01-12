@@ -736,45 +736,51 @@ class DataAccessRequest extends Component {
 	};
 
 	/**
-	 * [onQuestionClick]
-	 * @desc Add's or Removes applicants dynamically
+	 * [onQuestionSetAction]
+	 * @desc Allows custom actions to be executed on specific question sets
 	 *
 	 * @param   {string}  questionSetId  [questionSetId]
 	 * @param   {string}  questionId     [questionId]
 	 */
-	onQuestionClick = async (questionSetId = '', questionId = '') => {
-		let questionSet, jsonSchema, questionAnswers, data, schema;
-
-		questionSet = DarHelper.findQuestionSet(questionSetId, { ...this.state.jsonSchema });
-
+	onQuestionSetAction = async (questionSetId = '', questionId = '') => {
+		// locate question set containing button invoking action
+		const questionSet = DarHelper.findQuestionSet(questionSetId, { ...this.state.jsonSchema });
 		if (!_.isEmpty(questionSet) && !_.isEmpty(questionId)) {
-			// remove about and files from pages to stop duplicate, about / files added to DAR on init
-			schema = DarHelper.removeStaticPages({ ...this.state.jsonSchema });
-
+			// deconstruct action to invoke from schema
 			let {
-				input: { action },
-			} = DarHelper.findQuestion(questionId, questionSet);
-			switch (action) {
-				case 'addApplicant':
-					let duplicateQuestionSet = DarHelper.questionSetToDuplicate(questionSetId, { ...schema });
-					jsonSchema = DarHelper.insertSchemaUpdates(questionSetId, duplicateQuestionSet, { ...schema });
-					data = { key: 'jsonSchema', data: jsonSchema };
-					// post to API to do of new jsonSchema
-					await this.updateApplication(data);
-					break;
-				case 'removeApplicant':
-					jsonSchema = DarHelper.removeQuestionReferences(questionSetId, questionId, { ...schema });
-					questionAnswers = DarHelper.removeQuestionAnswers(questionId, { ...this.state.questionAnswers });
-					// post to API of new jsonSchema
-					await this.updateApplication({ key: 'jsonSchema', data: jsonSchema });
-					await this.updateApplication({ key: 'questionAnswers', data: questionAnswers });
-					break;
-				default:
-					console.log(questionSetId);
-					break;
+				input: { action = '', questionIds = [], separatorText = '' },
+			} = DarHelper.getActiveQuestion(questionSet.questions, questionId, );
+			// ensure valid action was found for question set button click
+			if(_.isEmpty(action)) {
+				return console.error(`Action could not be invoked for question set - ${questionSetId}, question - ${questionId}`);
 			}
+			// call API with action, questionId and questionSetId
+			const stateObj = await this.postQuestionSetAction(questionSetId, questionId, questionIds, action, separatorText);
+			// spread json schema response into state and reload static content
+			this.setState({ ...stateObj });
+		} else {
+			console.error(`Action could not be invoked as question set - ${questionSetId}, question - ${questionId} could not be found`);
 		}
 	};
+
+	/**
+	 * [postQuestionSetAction]
+	 * @desc Allows custom actions to be executed on specific questions or question sets
+	 *
+	 * @param   {string}  questionSetId  [questionSetId]
+	 * @param   {string}  questionId     [questionId]
+	 * @param	{string}  mode			 [mode]
+	 */
+	postQuestionSetAction = async (questionSetId, questionId, questionIds = [], mode, separatorText = '') => {
+		// post requested action to the API to perform an update to the application form
+		let response = await axios.post(`${baseURL}/api/v1/data-access-request/${this.state._id}/actions`, { questionSetId, questionId, questionIds, mode, separatorText });
+		// deconstruct the response containing the modified schema
+		let {accessRecord: { jsonSchema, questionAnswers } } = response.data;
+		// add in static content to schema (includes about application, file upload panels etc.)
+		jsonSchema = this.injectStaticContent(jsonSchema, this.state.inReviewMode, this.state.reviewSections);
+		// return the updated schema to allow it to be spread into state later
+		return { jsonSchema, questionAnswers }; 
+	}
 
 	/**
 	 * onQuestionAction
@@ -854,7 +860,7 @@ class DataAccessRequest extends Component {
 
 		return stateObj; 
 	}
-
+	
 	/**
 	 * removeActiveQuestionClass
 	 * @desc Removes active class on a single question
@@ -1393,7 +1399,7 @@ class DataAccessRequest extends Component {
 					readOnly={this.state.readOnly}
 					validationErrors={this.state.validationErrors}
 					renderRequiredAsterisk={() => <span>{'*'}</span>}
-					onQuestionClick={this.onQuestionClick}
+					onQuestionClick={this.onQuestionSetAction}
 					onQuestionAction={this.onQuestionAction}
 					onUpdate={this.onFormUpdate}
 					onSubmit={this.onFormSubmit}

@@ -632,6 +632,7 @@ input[type='radio']:disabled {
 			@include font-source(14px, $gray-800, $font-weight-semibold);
 			margin-bottom: 5px;
 			width: 90%;
+			white-space: pre-line;
 		}
 	}
 }

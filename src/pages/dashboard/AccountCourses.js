@@ -27,7 +27,9 @@ export const AccountCourses = props => {
 	};
 
 	useEffect(() => {
-		initGA('UA-166025838-1');
+		if (process.env.NODE_ENV === 'production') {
+			initGA('UA-166025838-1');
+		}
 		doCoursesCall();
 	}, []);
 
@@ -115,7 +117,7 @@ export const AccountCourses = props => {
 			<Row>
 				<Col xs={1}></Col>
 				<Col xs={10}>
-					<Loading />
+					<Loading data-testid='isLoading' />
 				</Col>
 				<Col xs={1}></Col>
 			</Row>
@@ -149,7 +151,7 @@ export const AccountCourses = props => {
 
 					<Row className='tabsBackground'>
 						<Col sm={12} lg={12}>
-							<Tabs className='dataAccessTabs gray700-13' activeKey={key} onSelect={handleSelect}>
+							<Tabs className='dataAccessTabs gray700-13' data-testid='courseTabs' activeKey={key} onSelect={handleSelect}>
 								<Tab eventKey='active' title={'Active (' + activeCount + ')'}>
 									{' '}
 								</Tab>
@@ -192,7 +194,7 @@ export const AccountCourses = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox' key={i}>
+														<Row className='entryBox' data-testid='courseEntryActive' key={i}>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -255,7 +257,7 @@ export const AccountCourses = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='courseEntryPending'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -331,7 +333,7 @@ export const AccountCourses = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='courseEntryRejected'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
@@ -384,7 +386,7 @@ export const AccountCourses = props => {
 													return <></>;
 												} else {
 													return (
-														<Row className='entryBox'>
+														<Row className='entryBox' data-testid='courseEntryArchive'>
 															<Col sm={12} lg={2} className='pt-2 gray800-14'>
 																{moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
 															</Col>
