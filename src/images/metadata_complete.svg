@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>bubble / metadata status / complete</title>
+    <defs>
+        <path d="M6.65847468,11.3337294 C6.48167814,11.3337294 6.3121365,11.263429 6.18714135,11.138396 L4.18714135,9.13839605 C3.93449321,8.87681012 3.93810643,8.46100619 4.1952623,8.20385033 C4.45241816,7.94669446 4.86822209,7.94308124 5.12980801,8.19572938 L6.59647468,9.66239605 L10.7984747,4.25772938 C11.0245432,3.96685942 11.4436047,3.91432751 11.7344747,4.14039606 C12.0253446,4.36646461 12.0778766,4.78552608 11.851808,5.07639605 L7.18514135,11.076396 C7.06786462,11.2279377 6.89105054,11.321688 6.69980801,11.3337294 L6.65847468,11.3337294 Z" id="path-1"></path>
+    </defs>
+    <g id="Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-21.000000, -24.000000)">
+            <g id="bubble-/-metadata-status-/-complete" transform="translate(21.000000, 24.000000)">
+                <circle id="Oval" stroke="#475DA7" stroke-width="4" fill="#475DA7" cx="8" cy="8" r="6"></circle>
+                <g id="icon-/-check">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Path" fill="#111111" fill-rule="nonzero" xlink:href="#path-1"></use>
+                    <g id="Group" mask="url(#mask-2)" fill="#FFFFFF">
+                        <g id="colour">
+                            <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

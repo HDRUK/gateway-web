@@ -9,6 +9,7 @@ import ActionModal from '../commonComponents/ActionModal/ActionModal';
 import _ from 'lodash';
 import { Event, initGA } from '../../tracking';
 import { EntityActionButton } from './EntityActionButton.jsx';
+import DatasetCard from '../commonComponents/DatasetCard';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -184,44 +185,61 @@ export const AccountTools = props => {
 												<NotFound word='tools' />
 											</Row>
 										) : (
-											toolsList.map(tool => {
-												if (tool.activeflag !== 'active') {
-													return <></>;
-												} else {
-													return (
-														<Row className='entryBox'>
-															<Col sm={12} lg={2} className='pt-2 gray800-14'>
-																{moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
-															</Col>
-															<Col sm={12} lg={5} className='pt-2'>
-																<a href={'/tool/' + tool.id} className='black-14'>
-																	{tool.name}
-																</a>
-															</Col>
-															<Col sm={12} lg={2} className='pt-2 gray800-14'>
-																{tool.persons <= 0
-																	? 'Author not listed'
-																	: tool.persons.map(person => {
-																			return (
-																				<span>
-																					{person.firstname} {person.lastname} <br />
-																				</span>
-																			);
-																	  })}
-															</Col>
+											// toolsList.map(tool => {
+											// 	if (tool.activeflag !== 'active') {
+											// 		return <></>;
+											// 	} else {
+											// 		return (
+											// 			<Row className='entryBox'>
+											// 				<Col sm={12} lg={2} className='pt-2 gray800-14'>
+											// 					{moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
+											// 				</Col>
+											// 				<Col sm={12} lg={5} className='pt-2'>
+											// 					<a href={'/tool/' + tool.id} className='black-14'>
+											// 						{tool.name}
+											// 					</a>
+											// 				</Col>
+											// 				<Col sm={12} lg={2} className='pt-2 gray800-14'>
+											// 					{tool.persons <= 0
+											// 						? 'Author not listed'
+											// 						: tool.persons.map(person => {
+											// 								return (
+											// 									<span>
+											// 										{person.firstname} {person.lastname} <br />
+											// 									</span>
+											// 								);
+											// 						  })}
+											// 				</Col>
 
-															<Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-																<DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
-																	<Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
-																		Edit
-																	</Dropdown.Item>
-																	<EntityActionButton id={tool.id} action={archiveTool} entity='tool' actionType='archive' />
-																</DropdownButton>
-															</Col>
-														</Row>
-													);
-												}
-											})
+											// 				<Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+											// 					<DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
+											// 						<Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
+											// 							Edit
+											// 						</Dropdown.Item>
+											// 						<EntityActionButton id={tool.id} action={archiveTool} entity='tool' actionType='archive' />
+											// 					</DropdownButton>
+											// 				</Col>
+											// 			</Row>
+											// 		);
+											// 	}
+											// })
+											<Fragment>
+												<DatasetCard
+													title='Cambridge Blood and Stem Cell Biobank'
+													publisher='a publisher'
+													version='2'
+													isDraft={true}
+													datasetStatus='isPending'
+													lastActivity=''></DatasetCard>
+
+												<DatasetCard
+													title='Diagnostic and Therapy Services Waiting Times'
+													publisher='NHS Digital'
+													version='3.0'
+													// isDraft={true}
+													datasetStatus='rejected'
+													lastActivity=''></DatasetCard>
+											</Fragment>
 										)}
 									</div>
 								);
