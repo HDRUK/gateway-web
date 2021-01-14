@@ -24,8 +24,8 @@ export const DatasetCard = props => {
 			// onClick={e => this.navigateToLocation(e, _id, applicationStatus)}
 		>
 			<div className='col-md-12'>
-				<div className='layoutCard'>
-					<div className='header mb-0'>
+				<div className='layoutCard mb-0'>
+					<div className='header mb-0 mt-2'>
 						<div className='header-title'>
 							<h1>{title}</h1>
 						</div>
