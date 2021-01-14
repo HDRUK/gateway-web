@@ -27,6 +27,33 @@ export const AccountTools = props => {
 		title: 'Reject this Tool?',
 	};
 
+	let completion1 = {
+		summary: 'done',
+		documentation: 'partial',
+		coverage: 'empty',
+		provenance: 'partial',
+		accessibility: 'empty',
+		enrichment: 'done',
+		observations: 'done',
+		structuralMetaData: 'partial',
+	};
+	let completion2 = {
+		summary: 'partial',
+		documentation: 'partial',
+		coverage: 'done',
+		provenance: 'partial',
+		accessibility: 'empty',
+		enrichment: 'empty',
+		observations: 'done',
+		structuralMetaData: 'empty',
+	};
+
+	let statusIcons = {
+		partial: { text: 'Partially completed', icon: 'MetadataHalfDoneSvg' },
+		done: { text: 'Completed', icon: 'MetadataHalfDoneSvg' },
+		empty: { text: 'Not completed', icon: 'MetadataHalfDoneSvg' },
+	};
+
 	useEffect(() => {
 		initGA('UA-166025838-1');
 		doToolsCall();
@@ -230,7 +257,8 @@ export const AccountTools = props => {
 													version='2'
 													isDraft={true}
 													datasetStatus='isPending'
-													lastActivity=''></DatasetCard>
+													lastActivity=''
+													completion={completion1}></DatasetCard>
 
 												<DatasetCard
 													title='Diagnostic and Therapy Services Waiting Times'
@@ -238,7 +266,8 @@ export const AccountTools = props => {
 													version='3.0'
 													// isDraft={true}
 													datasetStatus='rejected'
-													lastActivity=''></DatasetCard>
+													lastActivity=''
+													completion={completion2}></DatasetCard>
 											</Fragment>
 										)}
 									</div>

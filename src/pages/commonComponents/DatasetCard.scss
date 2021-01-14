@@ -1,4 +1,17 @@
 .dataset-completion-wheels {
-	padding-left: 25px;
-	margin-top: -15px;
+	display: flex;
+	flex-flow: row;
+	max-width: 145px;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	margin: 0 25px;
+}
+
+.version-list {
+	display: flex;
+	flex-flow: wrap;
+	align-items: flex-start !important;
+	word-break: break-word;
+	position: relative;
 }
