@@ -67,6 +67,7 @@ class AddToCollection extends Component {
 		let tempRelatedObject = {
 			objectId: this.state.resourceData.type === 'dataset' ? this.state.resourceData.datasetid : this.state.resourceData.id,
 			reason: '',
+			pid: this.state.resourceData.pid || '',
 			objectType: this.state.resourceData.type,
 			user: this.state.userState[0].name,
 			updated: moment().format('DD MMM YYYY'),
