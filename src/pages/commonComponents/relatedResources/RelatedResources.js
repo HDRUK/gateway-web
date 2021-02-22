@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Button, Modal, Row, Col, Tab, Tabs } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import RelatedResourcesModal from '../relatedResourcesModal/RelatedResourceModal';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import './RelatedResources.scss';
@@ -14,6 +14,12 @@ const RelatedResources = React.forwardRef((props, ref) => {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	const [datasetIndex, setDatasetIndex] = useState(0);
+	const [toolIndex, setToolIndex] = useState(0);
+	const [paperIndex, setPaperIndex] = useState(0);
+	const [projectIndex, setProjectIndex] = useState(0);
+	const [personIndex, setPersonIndex] = useState(0);
+	const [courseIndex, setCourseIndex] = useState(0);
 
 	function addResources() {
 		handleClose();
@@ -60,6 +66,18 @@ const RelatedResources = React.forwardRef((props, ref) => {
 						doAddToTempRelatedObjects={props.doAddToTempRelatedObjects}
 						tempRelatedObjectIds={props.tempRelatedObjectIds}
 						relatedObjects={props.relatedObjects}
+						setDatasetIndex={setDatasetIndex}
+						setToolIndex={setToolIndex}
+						setPaperIndex={setPaperIndex}
+						setProjectIndex={setProjectIndex}
+						setCourseIndex={setCourseIndex}
+						setPersonIndex={setPersonIndex}
+						datasetIndex={datasetIndex}
+						toolIndex={toolIndex}
+						paperIndex={paperIndex}
+						projectIndex={projectIndex}
+						courseIndex={courseIndex}
+						personIndex={personIndex}
 					/>
 				</Modal.Body>
 				<Modal.Footer>
