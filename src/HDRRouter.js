@@ -216,4 +216,4 @@ class HDRRouter extends Component {
 		);
 	}
 }
-export default HDRRouter;
+export default HDRRouter; 
