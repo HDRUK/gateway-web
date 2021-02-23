@@ -14,12 +14,12 @@ const RelatedResources = React.forwardRef((props, ref) => {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	const [datasetIndex, setDatasetIndex] = useState(0);
-	const [toolIndex, setToolIndex] = useState(0);
-	const [paperIndex, setPaperIndex] = useState(0);
-	const [projectIndex, setProjectIndex] = useState(0);
-	const [personIndex, setPersonIndex] = useState(0);
-	const [courseIndex, setCourseIndex] = useState(0);
+	const [datasetPaginationIndex, setDatasetPaginationIndex] = useState(0);
+	const [toolPaginationIndex, setToolPaginationIndex] = useState(0);
+	const [paperPaginationIndex, setPaperPaginationIndex] = useState(0);
+	const [projectPaginationIndex, setProjectPaginationIndex] = useState(0);
+	const [personPaginationIndex, setPersonPaginationIndex] = useState(0);
+	const [coursePaginationIndex, setCoursePaginationIndex] = useState(0);
 
 	function addResources() {
 		handleClose();
@@ -66,18 +66,18 @@ const RelatedResources = React.forwardRef((props, ref) => {
 						doAddToTempRelatedObjects={props.doAddToTempRelatedObjects}
 						tempRelatedObjectIds={props.tempRelatedObjectIds}
 						relatedObjects={props.relatedObjects}
-						setDatasetIndex={setDatasetIndex}
-						setToolIndex={setToolIndex}
-						setPaperIndex={setPaperIndex}
-						setProjectIndex={setProjectIndex}
-						setCourseIndex={setCourseIndex}
-						setPersonIndex={setPersonIndex}
-						datasetIndex={datasetIndex}
-						toolIndex={toolIndex}
-						paperIndex={paperIndex}
-						projectIndex={projectIndex}
-						courseIndex={courseIndex}
-						personIndex={personIndex}
+						setDatasetPaginationIndex={setDatasetPaginationIndex}
+						setToolPaginationIndex={setToolPaginationIndex}
+						setPaperPaginationIndex={setPaperPaginationIndex}
+						setProjectPaginationIndex={setProjectPaginationIndex}
+						setCoursePaginationIndex={setCoursePaginationIndex}
+						setPersonPaginationIndex={setPersonPaginationIndex}
+						datasetPaginationIndex={datasetPaginationIndex}
+						toolPaginationIndex={toolPaginationIndex}
+						paperPaginationIndex={paperPaginationIndex}
+						projectPaginationIndex={projectPaginationIndex}
+						coursePaginationIndex={coursePaginationIndex}
+						personPaginationIndex={personPaginationIndex}
 					/>
 				</Modal.Body>
 				<Modal.Footer>

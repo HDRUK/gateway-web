@@ -54,12 +54,12 @@ class RelatedResourcesModal extends React.Component {
 		) {
 			if (this.state.previousSearchString !== this.state.searchString) {
 				this.setState({ previousSearchString: this.props.searchString });
-				this.setDatasetIndex(0);
-				this.setProjectIndex(0);
-				this.setPaperIndex(0);
-				this.setToolIndex(0);
-				this.setCourseIndex(0);
-				this.setPersonIndex(0);
+				this.setDatasetPaginationIndex(0);
+				this.setProjectPaginationIndex(0);
+				this.setPaperPaginationIndex(0);
+				this.setToolPaginationIndex(0);
+				this.setCoursePaginationIndex(0);
+				this.setPersonPaginationIndex(0);
 			}
 		}
 	}
@@ -68,28 +68,28 @@ class RelatedResourcesModal extends React.Component {
 		this.setState({ key: key });
 	};
 
-	setDatasetIndex = async index => {
-		this.props.setDatasetIndex(index);
+	setDatasetPaginationIndex = async index => {
+		this.props.setDatasetPaginationIndex(index);
 	};
 
-	setProjectIndex = async index => {
-		this.props.setProjectIndex(index);
+	setProjectPaginationIndex = async index => {
+		this.props.setProjectPaginationIndex(index);
 	};
 
-	setPaperIndex = async index => {
-		this.props.setPaperIndex(index);
+	setPaperPaginationIndex = async index => {
+		this.props.setPaperPaginationIndex(index);
 	};
 
-	setToolIndex = async index => {
-		this.props.setToolIndex(index);
+	setToolPaginationIndex = async index => {
+		this.props.setToolPaginationIndex(index);
 	};
 
-	setCourseIndex = async index => {
-		this.props.setCourseIndex(index);
+	setCoursePaginationIndex = async index => {
+		this.props.setCoursePaginationIndex(index);
 	};
 
-	setPersonIndex = async index => {
-		this.props.setPersonIndex(index);
+	setPersonPaginationIndex = async index => {
+		this.props.setPersonPaginationIndex(index);
 	};
 
 	render() {
@@ -422,8 +422,8 @@ class RelatedResourcesModal extends React.Component {
 											doEntitiesCall={this.props.doSearchMethod}
 											entityCount={datasetCount}
 											statusKey={key}
-											paginationIndex={this.props.datasetIndex}
-											setPaginationIndex={this.setDatasetIndex}
+											paginationIndex={this.props.datasetPaginationIndex}
+											setPaginationIndex={this.setDatasetPaginationIndex}
 											maxResult={maxResult}
 											relatedResources={true}></PaginationHelper>
 									) : (
@@ -435,8 +435,8 @@ class RelatedResourcesModal extends React.Component {
 											doEntitiesCall={this.props.doSearchMethod}
 											entityCount={toolCount}
 											statusKey={key}
-											paginationIndex={this.props.toolIndex}
-											setPaginationIndex={this.setToolIndex}
+											paginationIndex={this.props.toolPaginationIndex}
+											setPaginationIndex={this.setToolPaginationIndex}
 											maxResult={maxResult}
 											relatedResources={true}></PaginationHelper>
 									) : (
@@ -448,8 +448,8 @@ class RelatedResourcesModal extends React.Component {
 											doEntitiesCall={this.props.doSearchMethod}
 											entityCount={projectCount}
 											statusKey={key}
-											paginationIndex={this.props.projectIndex}
-											setPaginationIndex={this.setProjectIndex}
+											paginationIndex={this.props.projectPaginationIndex}
+											setPaginationIndex={this.setProjectPaginationIndex}
 											maxResult={maxResult}
 											relatedResources={true}></PaginationHelper>
 									) : (
@@ -461,8 +461,8 @@ class RelatedResourcesModal extends React.Component {
 											doEntitiesCall={this.props.doSearchMethod}
 											entityCount={paperCount}
 											statusKey={key}
-											paginationIndex={this.props.paperIndex}
-											setPaginationIndex={this.setPaperIndex}
+											paginationIndex={this.props.paperPaginationIndex}
+											setPaginationIndex={this.setPaperPaginationIndex}
 											maxResult={maxResult}
 											relatedResources={true}></PaginationHelper>
 									) : (
@@ -474,8 +474,8 @@ class RelatedResourcesModal extends React.Component {
 											doEntitiesCall={this.props.doSearchMethod}
 											entityCount={personCount}
 											statusKey={key}
-											paginationIndex={this.props.personIndex}
-											setPaginationIndex={this.setPersonIndex}
+											paginationIndex={this.props.personPaginationIndex}
+											setPaginationIndex={this.setPersonPaginationIndex}
 											maxResult={maxResult}
 											relatedResources={true}></PaginationHelper>
 									) : (
@@ -487,8 +487,8 @@ class RelatedResourcesModal extends React.Component {
 											doEntitiesCall={this.props.doSearchMethod}
 											entityCount={courseCount}
 											statusKey={key}
-											paginationIndex={this.props.courseIndex}
-											setPaginationIndex={this.setCourseIndex}
+											paginationIndex={this.props.coursePaginationIndex}
+											setPaginationIndex={this.setCoursePaginationIndex}
 											maxResult={maxResult}
 											relatedResources={true}></PaginationHelper>
 									) : (
