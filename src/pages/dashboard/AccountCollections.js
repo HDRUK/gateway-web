@@ -135,7 +135,7 @@ const AccountCollections = props => {
 						<Col sm={12} md={4} style={{ textAlign: 'right' }}>
 							<Button
 								variant='primary'
-								href='/addcollection'
+								href='/collection/add'
 								className='addButton'
 								onClick={() => Event('Buttons', 'Click', 'Add a new collection')}>
 								+ Create a collection
@@ -205,7 +205,7 @@ const AccountCollections = props => {
 
 															<Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
 																<DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
-																	<Dropdown.Item href={'/editcollection/' + collection.id} className='black-14'>
+																	<Dropdown.Item href={'/collection/edit/' + collection.id} className='black-14'>
 																		Edit
 																	</Dropdown.Item>
 																	<EntityActionButton
@@ -276,7 +276,7 @@ const AccountCollections = props => {
 
 															<Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
 																<DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
-																	<Dropdown.Item href={'/editcollection/' + collection.id} className='black-14'>
+																	<Dropdown.Item href={'/collection/edit/' + collection.id} className='black-14'>
 																		Edit
 																	</Dropdown.Item>
 																	<EntityActionButton

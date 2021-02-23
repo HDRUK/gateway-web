@@ -21,8 +21,7 @@ import AddEditToolPage from './pages/tool/AddEditToolPage';
 import AddEditProjectPage from './pages/project/AddEditProjectPage';
 import AddEditPaperPage from './pages/paper/AddEditPaperPage';
 import AddEditCoursePage from './pages/course/AddEditCoursePage';
-import AddCollectionPage from './pages/collections/AddCollectionPage';
-import EditCollectionPage from './pages/collections/EditCollectionPage';
+import AddEditCollectionPage from './pages/collections/AddEditCollectionPage';
 import DataAccessRequest from './pages/DataAccessRequest/DataAccessRequest';
 import Loading from './pages/commonComponents/Loading';
 import CompleteRegistration from './pages/registration/CompleteRegistration';
@@ -71,7 +70,7 @@ class HDRRouter extends Component {
 			if (
 				this.getRectTop(actionBar) + document.body.scrollTop + actionBar.offsetHeight >=
 				this.getRectTop(footer) + document.body.scrollTop
-				) {
+			) {
 				actionBar.style.position = 'absolute';
 				// compensate for the 50px margin on mainWrapper
 				actionBar.style.bottom = '-50px';
@@ -194,8 +193,8 @@ class HDRRouter extends Component {
 						<GuardedRoute path='/data-access-request/publisher/:publisherId' component={DataAccessRequest} userState={userState} />
 						<GuardedRoute path='/data-access-request/:accessId' component={DataAccessRequest} userState={userState} />
 						<GuardedRoute path='/account' component={Account} userState={userState} />
-						<GuardedRoute path='/addcollection' component={AddCollectionPage} userState={userState} />
-						<GuardedRoute path='/editcollection/:collectionID' component={EditCollectionPage} userState={userState} />
+						<GuardedRoute path='/collection/add' component={AddEditCollectionPage} userState={userState} />
+						<GuardedRoute path='/collection/edit/:collectionID' component={AddEditCollectionPage} userState={userState} />
 						<Route path='/collection/:collectionID' render={props => <CollectionPage {...props} userState={userState} />} />
 						<GuardedRoute path='/tool/add' component={AddEditToolPage} userState={userState} />
 						<GuardedRoute path='/tool/edit/:toolID' component={AddEditToolPage} userState={userState} />

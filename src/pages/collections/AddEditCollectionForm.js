@@ -4,258 +4,31 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
-import SearchBar from '../commonComponents/searchBar/SearchBar';
-import Loading from '../commonComponents/Loading';
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import moment from 'moment';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import SVGIcon from '../../images/SVGIcon';
 import ToolTip from '../../images/imageURL-ToolTip.gif';
-import { Event, initGA } from '../../tracking';
-import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
-import UserMessages from '../commonComponents/userMessages/UserMessages';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
-import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import './Collections.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
+let windowUrl = window.location.origin;
 
-class AddCollectionPage extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state.userState = props.userState;
-		this.searchBar = React.createRef();
-	}
-
-	// initialize our state
-	state = {
-		data: [],
-		combinedUsers: [],
-		isLoading: true,
-		userState: [],
-		searchString: '',
-		datasetData: [],
-		toolData: [],
-		projectData: [],
-		personData: [],
-		paperData: [],
-		courseData: [],
-		summary: [],
-		tempRelatedObjectIds: [],
-		relatedObjectIds: [],
-		relatedObjects: [],
-		didDelete: false,
-		showDrawer: false,
-		showModal: false,
-		context: {},
-	};
-
-	async componentDidMount() {
-		initGA('UA-166025838-1');
-		await Promise.all([this.doGetUsersCall()]);
-		this.setState({ isLoading: false });
-	}
-
-	doGetUsersCall() {
-		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/users').then(res => {
-				this.setState({ combinedUsers: res.data.data });
-				resolve();
-			});
-		});
-	}
-
-	doSearch = e => {
-		//fires on enter on searchbar
-		if (e.key === 'Enter') window.location.href = '/search?search=' + this.state.searchString;
-	};
-
-	updateSearchString = searchString => {
-		this.setState({ searchString: searchString });
-	};
-
-	doModalSearch = (e, type, page) => {
-		if (e.key === 'Enter' || e === 'click') {
-			var searchURL = '';
-
-			if (type === 'dataset' && page > 0) searchURL += '&datasetIndex=' + page;
-			if (type === 'tool' && page > 0) searchURL += '&toolIndex=' + page;
-			if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
-			if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
-			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;
-
-			axios
-				.get(baseURL + '/api/v1/search?search=' + this.state.searchString + searchURL, {
-					params: {
-						form: true,
-						userID: this.state.userState[0].id,
-					},
-				})
-				.then(res => {
-					this.setState({
-						datasetData: res.data.datasetResults || [],
-						toolData: res.data.toolResults || [],
-						projectData: res.data.projectResults || [],
-						personData: res.data.personResults || [],
-						paperData: res.data.paperResults || [],
-						courseData: res.data.courseResults || [],
-						summary: res.data.summary || [],
-						isLoading: false,
-					});
-				});
-		}
-	};
-
-	addToTempRelatedObjects = (id, type, pid) => {
-		if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some(object => object.objectId === id)) {
-			this.state.tempRelatedObjectIds = this.state.tempRelatedObjectIds.filter(object => object.objectId !== id);
-		} else {
-			this.state.tempRelatedObjectIds.push({ objectId: id, type: type, pid: pid });
-		}
-		this.setState({ tempRelatedObjectIds: this.state.tempRelatedObjectIds });
-	};
-
-	addToRelatedObjects = () => {
-		this.state.tempRelatedObjectIds.map(object => {
-			this.state.relatedObjects.push({
-				objectId: object.objectId,
-				reason: '',
-				objectType: object.type,
-				pid: object.type === 'dataset' ? object.pid : '',
-				user: this.state.userState[0].name,
-				updated: moment().format('DD MMM YYYY'),
-			});
-		});
-
-		this.setState({ tempRelatedObjectIds: [] });
-	};
-
-	clearRelatedObjects = () => {
-		this.setState({ tempRelatedObjectIds: [] });
-	};
-
-	removeObject = (id, type, datasetid) => {
-		let countOfRelatedObjects = this.state.relatedObjects.length;
-		let newRelatedObjects = [...this.state.relatedObjects].filter(obj => obj.objectId !== id && obj.objectId !== id.toString());
-
-		//if an item was not removed try removing by datasetid for retro linkages
-		if (countOfRelatedObjects <= newRelatedObjects.length && type === 'dataset') {
-			newRelatedObjects = [...this.state.relatedObjects].filter(obj => obj.objectId !== datasetid && obj.objectId !== datasetid.toString());
-		}
-
-		this.setState({ relatedObjects: newRelatedObjects });
-		this.setState({ didDelete: true });
-	};
-
-	updateDeleteFlag = () => {
-		this.setState({ didDelete: false });
-	};
-
-	toggleDrawer = () => {
-		this.setState(prevState => {
-			if (prevState.showDrawer === true) {
-				this.searchBar.current.getNumberOfUnreadMessages();
-			}
-			return { showDrawer: !prevState.showDrawer };
-		});
-	};
-
-	toggleModal = (showEnquiry = false, context = {}) => {
-		this.setState(prevState => {
-			return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
-		});
-	};
-
-	render() {
-		const {
-			data,
-			combinedUsers,
-			isLoading,
-			userState,
-			searchString,
-			datasetData,
-			toolData,
-			projectData,
-			personData,
-			paperData,
-			courseData,
-			summary,
-			relatedObjects,
-			didDelete,
-			showDrawer,
-			showModal,
-			context,
-		} = this.state;
-
-		if (isLoading) {
-			return (
-				<Container>
-					<Loading />
-				</Container>
-			);
-		}
-
-		return (
-			<div>
-				<SearchBar
-					ref={this.searchBar}
-					doSearchMethod={this.doSearch}
-					doUpdateSearchString={this.updateSearchString}
-					doToggleDrawer={this.toggleDrawer}
-					userState={userState}
-				/>
-
-				<AddCollectionForm
-					data={data}
-					combinedUsers={combinedUsers}
-					userState={userState}
-					searchString={searchString}
-					doSearchMethod={this.doModalSearch}
-					doUpdateSearchString={this.updateSearchString}
-					datasetData={datasetData}
-					toolData={toolData}
-					projectData={projectData}
-					personData={personData}
-					paperData={paperData}
-					courseData={courseData}
-					summary={summary}
-					doAddToTempRelatedObjects={this.addToTempRelatedObjects}
-					tempRelatedObjectIds={this.state.tempRelatedObjectIds}
-					doClearRelatedObjects={this.clearRelatedObjects}
-					doAddToRelatedObjects={this.addToRelatedObjects}
-					doRemoveObject={this.removeObject}
-					relatedObjects={relatedObjects}
-					didDelete={didDelete}
-					updateDeleteFlag={this.updateDeleteFlag}
-				/>
-
-				<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
-					<UserMessages
-						userState={userState[0]}
-						closed={this.toggleDrawer}
-						toggleModal={this.toggleModal}
-						drawerIsOpen={this.state.showDrawer}
-					/>
-				</SideDrawer>
-
-				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
-			</div>
-		);
-	}
-}
-
-const AddCollectionForm = props => {
+const AddEditCollectionForm = props => {
 	// Pass the useFormik() hook initial form values and a submit function that will
 	// be called when the form is submitted
-
 	const formik = useFormik({
 		initialValues: {
-			name: '',
-			description: '',
-			authors: [props.userState[0].id],
-			imageLink: '',
+			id: props.data.id || '',
+			name: props.data.name || '',
+			description: props.data.description || '',
+			authors: props.data.authors || [props.userState[0].id],
+			imageLink: props.data.imageLink || '',
 			relatedObjects: props.relatedObjects,
+			publicflag: props.publicFlag || false,
+			keywords: props.data.keywords || [],
 		},
 
 		validationSchema: Yup.object({
@@ -270,22 +43,46 @@ const AddCollectionForm = props => {
 		onSubmit: values => {
 			values.relatedObjects = props.relatedObjects;
 			values.collectionCreator = props.userState[0];
-			axios.post(baseURL + '/api/v1/collections/add', values).then(res => {
-				window.location.href = window.location.search + '/collection/' + res.data.id + '/?collectionAdded=true';
-			});
+
+			if (props.isEdit) {
+				axios.put(baseURL + '/api/v1/collections/edit', values).then(res => {
+					window.location.href = windowUrl + '/collection/' + props.data.id + '/?collectionEdited=true';
+				});
+			} else {
+				axios.post(baseURL + '/api/v1/collections/add', values).then(res => {
+					window.location.href = windowUrl + '/collection/' + res.data.id + '/?collectionAdded=true';
+				});
+			}
 		},
 	});
 
 	var listOfAuthors = [];
 
-	props.combinedUsers.forEach(user => {
-		if (user.id === props.userState[0].id) {
-			listOfAuthors.push({ id: user.id, name: user.name + ' (You)' });
-			if (!user.name.includes('(You)')) {
-				user.name = user.name + ' (You)';
+	if (props.isEdit) {
+		props.data.authors.forEach(author => {
+			props.combinedUsers.forEach(user => {
+				if (user.id === author) {
+					if (props.userState[0].id === user.id) {
+						listOfAuthors.push({ id: user.id, name: user.name + ' (You)' });
+						if (!user.name.includes('(You)')) {
+							user.name = user.name + ' (You)';
+						}
+					} else {
+						listOfAuthors.push({ id: user.id, name: user.name });
+					}
+				}
+			});
+		});
+	} else {
+		props.combinedUsers.forEach(user => {
+			if (user.id === props.userState[0].id) {
+				listOfAuthors.push({ id: user.id, name: user.name + ' (You)' });
+				if (!user.name.includes('(You)')) {
+					user.name = user.name + ' (You)';
+				}
 			}
-		}
-	});
+		});
+	}
 
 	function updateReason(id, reason, type, pid) {
 		let inRelatedObject = false;
@@ -312,6 +109,13 @@ const AddCollectionForm = props => {
 		}
 	}
 
+	const updatePublicFlag = () => {
+		{
+			formik.setFieldValue('publicflag', !props.publicFlag);
+		}
+		props.updatePublicFlag(!props.publicFlag);
+	};
+
 	const [isShown, setIsShown] = useState(false);
 
 	const relatedResourcesRef = React.useRef();
@@ -325,23 +129,10 @@ const AddCollectionForm = props => {
 						<div className='rectangle'>
 							<Row>
 								<Col sm={12} lg={12}>
-									<p className='black-20 margin-bottom-0 pad-bottom-8'>Create a collection</p>
+									<p className='black-20 margin-bottom-0 pad-bottom-8'>{props.isEdit ? 'Edit a collection' : 'Create a collection'}</p>
 								</Col>
 							</Row>
-							<p className='gray800-14 margin-bottom-0'>
-								Collections allow you to display any number of datasets and other resources in a single space. After saving, anyone with the
-								link will be able to see your collection, but it will not be discoverable on the Gateway.
-								<br />
-								<br />
-								Certain collections are featured on the homepage, where anyone can find them. If you’d like to display yours,
-								<a
-									className='purple-blue-14'
-									href='https://hdruk.atlassian.net/servicedesk/customer/portal/1/group/1/create/7'
-									target='_blank'>
-									{' '}
-									please submit a feature request ticket.{' '}
-								</a>
-							</p>
+							<p className='gray800-14 margin-bottom-0'>Collections help collate varying resource types into one discovery space</p>
 						</div>
 					</Col>
 					<Col sm={1} lg={10} />
@@ -352,7 +143,7 @@ const AddCollectionForm = props => {
 					<Col sm={10} lg={10}>
 						<Form onSubmit={formik.handleSubmit} onBlur={formik.handleBlur} autocomplete='off'>
 							<div className='rectangle'>
-								<Form.Group>
+								<Form.Group className='margin-bottom-24'>
 									<span className='gray800-14'>Collection name</span>
 									<Form.Control
 										id='name'
@@ -366,7 +157,7 @@ const AddCollectionForm = props => {
 									{formik.touched.name && formik.errors.name ? <div className='errorMessages'>{formik.errors.name}</div> : null}
 								</Form.Group>
 
-								<Form.Group>
+								<Form.Group className='margin-bottom-24'>
 									<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Description</p>
 									<p className='gray700-13 margin-bottom-0'>Up to 5,000 characters</p>
 									<Form.Control
@@ -388,7 +179,7 @@ const AddCollectionForm = props => {
 									) : null}
 								</Form.Group>
 
-								<Form.Group>
+								<Form.Group className='margin-bottom-24'>
 									<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Collection collaborators</p>
 									<p className='gray700-13 margin-bottom-0'>Anyone added will be able to add and remove resources to this collection.</p>
 									<Typeahead
@@ -408,7 +199,28 @@ const AddCollectionForm = props => {
 									/>
 								</Form.Group>
 
-								<Form.Group>
+								<Form.Group className='margin-bottom-24'>
+									<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Keywords</p>
+									<p className='gray700-13 margin-bottom-0'>E.g. NCS, Charity, Disease etc.</p>
+									<Typeahead
+										id='keywords'
+										labelKey='keywords'
+										allowNew
+										defaultSelected={formik.values.keywords}
+										multiple
+										options={props.combinedKeywords}
+										className='addFormInputTypeAhead'
+										onChange={selected => {
+											var tempSelected = [];
+											selected.forEach(selectedItem => {
+												selectedItem.customOption === true ? tempSelected.push(selectedItem.keywords) : tempSelected.push(selectedItem);
+											});
+											formik.values.keywords = tempSelected;
+										}}
+									/>
+								</Form.Group>
+
+								<Form.Group className='margin-bottom-24'>
 									<Row>
 										<Col sm={7} lg={9}>
 											<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Image URL (optional)</p>
@@ -434,6 +246,25 @@ const AddCollectionForm = props => {
 										<div className='errorMessages'>{formik.errors.imageLink}</div>
 									) : null}
 								</Form.Group>
+
+								<Row className='margin-bottom-8 pad-left-16'>
+									<span
+										className='eyeColumn pad-right-8'
+										onClick={() => {
+											updatePublicFlag();
+										}}>
+										{formik.values.publicflag === true ? (
+											<SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
+										) : (
+											<SVGIcon name='eyeCrossed' width={24} height={24} fill={'#475da7'} className={'pointer'} />
+										)}
+									</span>
+									<span className='gray800-14'>
+										{formik.values.publicflag === true
+											? 'This collection is public, meaning anyone can view and search this collection. Click to make private.'
+											: 'This collection is private. Click to make public.'}
+									</span>
+								</Row>
 							</div>
 
 							<div className='rectangle margin-top-16'>
@@ -521,4 +352,4 @@ const AddCollectionForm = props => {
 	);
 };
 
-export default AddCollectionPage;
+export default AddEditCollectionForm;
