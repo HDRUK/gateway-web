@@ -78,6 +78,7 @@ const RelatedResources = React.forwardRef((props, ref) => {
 						projectPaginationIndex={projectPaginationIndex}
 						coursePaginationIndex={coursePaginationIndex}
 						personPaginationIndex={personPaginationIndex}
+						previousSearchTerm={props.previousSearchTerm}
 					/>
 				</Modal.Body>
 				<Modal.Footer>

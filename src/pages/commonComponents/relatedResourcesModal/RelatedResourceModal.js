@@ -44,16 +44,15 @@ class RelatedResourcesModal extends React.Component {
 		if (this.props.searchString !== prevProps.searchString) {
 			this.setState({ searchString: this.props.searchString });
 		}
-		if (
-			this.props.datasetData !== prevProps.datasetData ||
-			this.props.toolData !== prevProps.toolData ||
-			this.props.projectData !== prevProps.projectData ||
-			this.props.paperData !== prevProps.paperData ||
-			this.props.courseData !== prevProps.courseData ||
-			this.props.personData !== prevProps.personData
-		) {
-			if (this.state.previousSearchString !== this.state.searchString) {
-				this.setState({ previousSearchString: this.props.searchString });
+		if (this.props.previousSearchTerm !== this.state.searchString) {
+			if (
+				this.props.datasetData !== prevProps.datasetData ||
+				this.props.toolData !== prevProps.toolData ||
+				this.props.projectData !== prevProps.projectData ||
+				this.props.paperData !== prevProps.paperData ||
+				this.props.courseData !== prevProps.courseData ||
+				this.props.personData !== prevProps.personData
+			) {
 				this.setDatasetPaginationIndex(0);
 				this.setProjectPaginationIndex(0);
 				this.setPaperPaginationIndex(0);
