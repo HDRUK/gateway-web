@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Button, Modal, Row, Col, Tab, Tabs } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import RelatedResourcesModal from '../relatedResourcesModal/RelatedResourceModal';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import './RelatedResources.scss';
@@ -14,6 +14,12 @@ const RelatedResources = React.forwardRef((props, ref) => {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	const [datasetPaginationIndex, setDatasetPaginationIndex] = useState(0);
+	const [toolPaginationIndex, setToolPaginationIndex] = useState(0);
+	const [paperPaginationIndex, setPaperPaginationIndex] = useState(0);
+	const [projectPaginationIndex, setProjectPaginationIndex] = useState(0);
+	const [personPaginationIndex, setPersonPaginationIndex] = useState(0);
+	const [coursePaginationIndex, setCoursePaginationIndex] = useState(0);
 
 	function addResources() {
 		handleClose();
@@ -60,6 +66,19 @@ const RelatedResources = React.forwardRef((props, ref) => {
 						doAddToTempRelatedObjects={props.doAddToTempRelatedObjects}
 						tempRelatedObjectIds={props.tempRelatedObjectIds}
 						relatedObjects={props.relatedObjects}
+						setDatasetPaginationIndex={setDatasetPaginationIndex}
+						setToolPaginationIndex={setToolPaginationIndex}
+						setPaperPaginationIndex={setPaperPaginationIndex}
+						setProjectPaginationIndex={setProjectPaginationIndex}
+						setCoursePaginationIndex={setCoursePaginationIndex}
+						setPersonPaginationIndex={setPersonPaginationIndex}
+						datasetPaginationIndex={datasetPaginationIndex}
+						toolPaginationIndex={toolPaginationIndex}
+						paperPaginationIndex={paperPaginationIndex}
+						projectPaginationIndex={projectPaginationIndex}
+						coursePaginationIndex={coursePaginationIndex}
+						personPaginationIndex={personPaginationIndex}
+						previousSearchTerm={props.previousSearchTerm}
 					/>
 				</Modal.Body>
 				<Modal.Footer>

@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import { Row, Col, Tab, Tabs, Container, Pagination } from 'react-bootstrap';
+import { Row, Col, Tab, Tabs, Container } from 'react-bootstrap';
 import _ from 'lodash';
-
 import SimpleSearchBar from '../searchBar/SimpleSearchBar';
 import RelatedObject from '../relatedObject/RelatedObject';
 import './RelatedResourcesModal.scss';
+import { PaginationHelper } from '../PaginationHelper';
 
 class RelatedResourcesModal extends React.Component {
 	state = {
@@ -18,12 +18,6 @@ class RelatedResourcesModal extends React.Component {
 		],
 		key: '',
 		summary: [],
-		datasetIndex: 0,
-		toolIndex: 0,
-		projectIndex: 0,
-		paperIndex: 0,
-		personIndex: 0,
-		courseIndex: 0,
 		relatedObjectIds: [],
 		relatedObjects: [],
 		selected: {
@@ -34,6 +28,8 @@ class RelatedResourcesModal extends React.Component {
 			persons: 0,
 			courses: 0,
 		},
+		searchString: '',
+		previousSearchString: '',
 	};
 
 	constructor(props) {
@@ -41,39 +37,69 @@ class RelatedResourcesModal extends React.Component {
 		this.state.userState = props.userState;
 		this.state.relatedObjects = props.relatedObjects;
 		this.state.relatedObjectIds = [];
+		this.state.searchString = props.searchString;
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.searchString !== prevProps.searchString) {
+			this.setState({ searchString: this.props.searchString });
+		}
+		if (this.props.previousSearchTerm !== this.state.searchString) {
+			if (
+				this.props.datasetData !== prevProps.datasetData ||
+				this.props.toolData !== prevProps.toolData ||
+				this.props.projectData !== prevProps.projectData ||
+				this.props.paperData !== prevProps.paperData ||
+				this.props.courseData !== prevProps.courseData ||
+				this.props.personData !== prevProps.personData
+			) {
+				this.setDatasetPaginationIndex(0);
+				this.setProjectPaginationIndex(0);
+				this.setPaperPaginationIndex(0);
+				this.setToolPaginationIndex(0);
+				this.setCoursePaginationIndex(0);
+				this.setPersonPaginationIndex(0);
+			}
+		}
 	}
 
 	handleSelect = key => {
 		this.setState({ key: key });
 	};
 
-	handlePagination = async (type, page, e) => {
-		if (type === 'dataset') {
-			await Promise.all([this.setState({ datasetIndex: page })]);
-		} else if (type === 'tool') {
-			await Promise.all([this.setState({ toolIndex: page })]);
-		} else if (type === 'project') {
-			await Promise.all([this.setState({ projectIndex: page })]);
-		} else if (type === 'paper') {
-			await Promise.all([this.setState({ paperIndex: page })]);
-		} else if (type === 'person') {
-			await Promise.all([this.setState({ personIndex: page })]);
-		} else if (type === 'course') {
-			await Promise.all([this.setState({ courseIndex: page })]);
-		}
-		this.props.doSearchMethod(e, type, page);
+	setDatasetPaginationIndex = async index => {
+		this.props.setDatasetPaginationIndex(index);
+	};
+
+	setProjectPaginationIndex = async index => {
+		this.props.setProjectPaginationIndex(index);
+	};
+
+	setPaperPaginationIndex = async index => {
+		this.props.setPaperPaginationIndex(index);
+	};
+
+	setToolPaginationIndex = async index => {
+		this.props.setToolPaginationIndex(index);
+	};
+
+	setCoursePaginationIndex = async index => {
+		this.props.setCoursePaginationIndex(index);
+	};
+
+	setPersonPaginationIndex = async index => {
+		this.props.setPersonPaginationIndex(index);
 	};
 
 	render() {
-		const { userState, datasetIndex, toolIndex, projectIndex, paperIndex, personIndex, courseIndex } = this.state;
-		var { key } = this.state;
+		let { key } = this.state;
 
-		var datasetCount = this.props.summary.datasets || 0;
-		var toolCount = this.props.summary.tools || 0;
-		var projectCount = this.props.summary.projects || 0;
-		var paperCount = this.props.summary.papers || 0;
-		var personCount = this.props.summary.persons || 0;
-		var courseCount = this.props.summary.courses || 0;
+		let datasetCount = this.props.summary.datasets || 0;
+		let toolCount = this.props.summary.tools || 0;
+		let projectCount = this.props.summary.projects || 0;
+		let paperCount = this.props.summary.papers || 0;
+		let personCount = this.props.summary.persons || 0;
+		let courseCount = this.props.summary.courses || 0;
 
 		if (key === '' || typeof key === 'undefined') {
 			if (datasetCount > 0) {
@@ -92,86 +118,7 @@ class RelatedResourcesModal extends React.Component {
 				key = 'Datasets';
 			}
 		}
-
-		let datasetPaginationItems = [];
-		let toolPaginationItems = [];
-		let projectPaginationItems = [];
-		let paperPaginationItems = [];
-		let personPaginationItems = [];
-		let coursePaginationItems = [];
-		var maxResult = 40;
-		for (let i = 1; i <= Math.ceil(datasetCount / maxResult); i++) {
-			datasetPaginationItems.push(
-				<Pagination.Item
-					key={i}
-					active={i === datasetIndex / maxResult + 1}
-					onClick={e => {
-						this.handlePagination('dataset', (i - 1) * maxResult, 'click');
-					}}>
-					{i}
-				</Pagination.Item>
-			);
-		}
-		for (let i = 1; i <= Math.ceil(toolCount / maxResult); i++) {
-			toolPaginationItems.push(
-				<Pagination.Item
-					key={i}
-					active={i === toolIndex / maxResult + 1}
-					onClick={e => {
-						this.handlePagination('tool', (i - 1) * maxResult, 'click');
-					}}>
-					{i}
-				</Pagination.Item>
-			);
-		}
-		for (let i = 1; i <= Math.ceil(projectCount / maxResult); i++) {
-			projectPaginationItems.push(
-				<Pagination.Item
-					key={i}
-					active={i === projectIndex / maxResult + 1}
-					onClick={e => {
-						this.handlePagination('project', (i - 1) * maxResult, 'click');
-					}}>
-					{i}
-				</Pagination.Item>
-			);
-		}
-		for (let i = 1; i <= Math.ceil(paperCount / maxResult); i++) {
-			paperPaginationItems.push(
-				<Pagination.Item
-					key={i}
-					active={i === paperIndex / maxResult + 1}
-					onClick={e => {
-						this.handlePagination('paper', (i - 1) * maxResult, 'click');
-					}}>
-					{i}
-				</Pagination.Item>
-			);
-		}
-		for (let i = 1; i <= Math.ceil(personCount / maxResult); i++) {
-			personPaginationItems.push(
-				<Pagination.Item
-					key={i}
-					active={i === personIndex / maxResult + 1}
-					onClick={e => {
-						this.handlePagination('person', (i - 1) * maxResult, 'click');
-					}}>
-					{i}
-				</Pagination.Item>
-			);
-		}
-		for (let i = 1; i <= Math.ceil(courseCount / maxResult); i++) {
-			coursePaginationItems.push(
-				<Pagination.Item
-					key={i}
-					active={i === courseIndex / maxResult + 1}
-					onClick={e => {
-						this.handlePagination('course', (i - 1) * maxResult, 'click');
-					}}>
-					{i}
-				</Pagination.Item>
-			);
-		}
+		const maxResult = 40;
 
 		var editingObjectProject = 0;
 		var editingObjectTool = 0;
@@ -252,7 +199,7 @@ class RelatedResourcesModal extends React.Component {
 				<div class='related-search-wrap'>
 					<div className='realted-search-body'>
 						<SimpleSearchBar
-							searchString={this.props.searchString}
+							searchString={this.state.searchString}
 							doSearchMethod={this.props.doSearchMethod}
 							doUpdateSearchString={this.props.doUpdateSearchString}
 							userState={this.props.userState}
@@ -469,17 +416,83 @@ class RelatedResourcesModal extends React.Component {
 									: ''}
 
 								<div className='text-center'>
-									{key === 'Datasets' && datasetCount > maxResult ? <Pagination>{datasetPaginationItems}</Pagination> : ''}
+									{key === 'Datasets' && datasetCount > maxResult ? (
+										<PaginationHelper
+											doEntitiesCall={this.props.doSearchMethod}
+											entityCount={datasetCount}
+											statusKey={key}
+											paginationIndex={this.props.datasetPaginationIndex}
+											setPaginationIndex={this.setDatasetPaginationIndex}
+											maxResult={maxResult}
+											relatedResources={true}></PaginationHelper>
+									) : (
+										''
+									)}
 
-									{key === 'Tools' && toolCount > maxResult ? <Pagination>{toolPaginationItems}</Pagination> : ''}
+									{key === 'Tools' && toolCount > maxResult ? (
+										<PaginationHelper
+											doEntitiesCall={this.props.doSearchMethod}
+											entityCount={toolCount}
+											statusKey={key}
+											paginationIndex={this.props.toolPaginationIndex}
+											setPaginationIndex={this.setToolPaginationIndex}
+											maxResult={maxResult}
+											relatedResources={true}></PaginationHelper>
+									) : (
+										''
+									)}
 
-									{key === 'Projects' && projectCount > maxResult ? <Pagination>{projectPaginationItems}</Pagination> : ''}
+									{key === 'Projects' && projectCount > maxResult ? (
+										<PaginationHelper
+											doEntitiesCall={this.props.doSearchMethod}
+											entityCount={projectCount}
+											statusKey={key}
+											paginationIndex={this.props.projectPaginationIndex}
+											setPaginationIndex={this.setProjectPaginationIndex}
+											maxResult={maxResult}
+											relatedResources={true}></PaginationHelper>
+									) : (
+										''
+									)}
 
-									{key === 'Papers' && paperCount > maxResult ? <Pagination>{paperPaginationItems}</Pagination> : ''}
+									{key === 'Papers' && paperCount > maxResult ? (
+										<PaginationHelper
+											doEntitiesCall={this.props.doSearchMethod}
+											entityCount={paperCount}
+											statusKey={key}
+											paginationIndex={this.props.paperPaginationIndex}
+											setPaginationIndex={this.setPaperPaginationIndex}
+											maxResult={maxResult}
+											relatedResources={true}></PaginationHelper>
+									) : (
+										''
+									)}
 
-									{key === 'People' && personCount > maxResult ? <Pagination>{personPaginationItems}</Pagination> : ''}
+									{key === 'People' && personCount > maxResult ? (
+										<PaginationHelper
+											doEntitiesCall={this.props.doSearchMethod}
+											entityCount={personCount}
+											statusKey={key}
+											paginationIndex={this.props.personPaginationIndex}
+											setPaginationIndex={this.setPersonPaginationIndex}
+											maxResult={maxResult}
+											relatedResources={true}></PaginationHelper>
+									) : (
+										''
+									)}
 
-									{key === 'Course' && courseCount > maxResult ? <Pagination>{coursePaginationItems}</Pagination> : ''}
+									{key === 'Course' && courseCount > maxResult ? (
+										<PaginationHelper
+											doEntitiesCall={this.props.doSearchMethod}
+											entityCount={courseCount}
+											statusKey={key}
+											paginationIndex={this.props.coursePaginationIndex}
+											setPaginationIndex={this.setCoursePaginationIndex}
+											maxResult={maxResult}
+											relatedResources={true}></PaginationHelper>
+									) : (
+										''
+									)}
 								</div>
 							</Col>
 							<Col sm={2} lg={2} />

@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown, Pagination } from 'react-bootstrap';
+import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 import NotFound from '../commonComponents/NotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
@@ -9,6 +9,7 @@ import ActionModal from '../commonComponents/ActionModal/ActionModal';
 import _ from 'lodash';
 import { Event, initGA } from '../../tracking';
 import { EntityActionButton } from './EntityActionButton.jsx';
+import { PaginationHelper } from '../commonComponents/PaginationHelper';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -56,43 +57,6 @@ export const AccountTools = props => {
 		doToolsCall(key, false, index);
 	};
 
-	const handlePagination = (type, index) => {
-		if (type === 'active') {
-			setActiveIndex(index);
-		} else if (type === 'pending') {
-			setPendingIndex(index);
-		} else if (type === 'rejected') {
-			setRejectedIndex(index);
-		} else if (type === 'archive') {
-			setArchiveIndex(index);
-		}
-		doToolsCall(type, false, index);
-	};
-
-	const previousPageButton = (index, maxResult, key) => {
-		return (
-			<Pagination.Prev
-				onClick={e => {
-					handlePagination(key, index - maxResult);
-				}}
-				disabled={index < maxResult}>
-				Previous
-			</Pagination.Prev>
-		);
-	};
-
-	const nextPageButton = (count, index, maxResult, key) => {
-		return (
-			<Pagination.Next
-				onClick={e => {
-					handlePagination(key, index + maxResult);
-				}}
-				disabled={count - (index + maxResult) <= 0}>
-				Next
-			</Pagination.Next>
-		);
-	};
-
 	const doToolsCall = (key, updateCounts, index, firstLoad) => {
 		if (key === 'pending') {
 			key = 'review';
@@ -106,7 +70,7 @@ export const AccountTools = props => {
 		if (typeof index === 'undefined') {
 			apiUrl = baseURL + `/api/v1/tools/getList?status=${key}`;
 		} else {
-			apiUrl = baseURL + `/api/v1/tools/getList?status=${key}&offset=${index}`;
+			apiUrl = baseURL + `/api/v1/tools/getList?status=${key}&offset=${index}&limit=${maxResult}`;
 		}
 
 		axios.get(apiUrl).then(res => {
@@ -195,75 +159,6 @@ export const AccountTools = props => {
 	const shouldChangeTab = () => {
 		return (key === 'pending' && reviewCount <= 1) || (key === 'archive' && archiveCount <= 1) ? true : false;
 	};
-
-	let activePaginationItems = [];
-	let pendingPaginationItems = [];
-	let rejectedPaginationItems = [];
-	let archivePaginationItems = [];
-
-	activePaginationItems.push(previousPageButton(activeIndex, maxResult, 'active'));
-	for (let i = 1; i <= Math.ceil(activeCount / maxResult); i++) {
-		activePaginationItems.push(
-			<Pagination.Item
-				data-testid='activePaginationItem'
-				key={i}
-				active={i === activeIndex / maxResult + 1}
-				onClick={e => {
-					handlePagination('active', (i - 1) * maxResult);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
-	activePaginationItems.push(nextPageButton(activeCount, activeIndex, maxResult, 'active'));
-
-	pendingPaginationItems.push(previousPageButton(pendingIndex, maxResult, 'pending'));
-	for (let i = 1; i <= Math.ceil(reviewCount / maxResult); i++) {
-		pendingPaginationItems.push(
-			<Pagination.Item
-				data-testid='pendingPaginationItem'
-				key={i}
-				active={i === pendingIndex / maxResult + 1}
-				onClick={e => {
-					handlePagination('pending', (i - 1) * maxResult);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
-	pendingPaginationItems.push(nextPageButton(reviewCount, pendingIndex, maxResult, 'pending'));
-
-	rejectedPaginationItems.push(previousPageButton(rejectedIndex, maxResult, 'rejected'));
-	for (let i = 1; i <= Math.ceil(rejectedCount / maxResult); i++) {
-		rejectedPaginationItems.push(
-			<Pagination.Item
-				data-testid='rejectedPaginationItem'
-				key={i}
-				active={i === rejectedIndex / maxResult + 1}
-				onClick={e => {
-					handlePagination('rejected', (i - 1) * maxResult);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
-	rejectedPaginationItems.push(nextPageButton(rejectedCount, rejectedIndex, maxResult, 'rejected'));
-
-	archivePaginationItems.push(previousPageButton(archiveIndex, maxResult, 'archive'));
-	for (let i = 1; i <= Math.ceil(archiveCount / maxResult); i++) {
-		archivePaginationItems.push(
-			<Pagination.Item
-				data-testid='archivePaginationItem'
-				key={i}
-				active={i === archiveIndex / maxResult + 1}
-				onClick={e => {
-					handlePagination('archive', (i - 1) * maxResult);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
-	archivePaginationItems.push(nextPageButton(archiveCount, archiveIndex, maxResult, 'archive'));
 
 	if (isLoading) {
 		return (
@@ -620,30 +515,46 @@ export const AccountTools = props => {
 					{!isResultsLoading && (
 						<div className='text-center entityDashboardPagination'>
 							{key === 'active' && activeCount > maxResult ? (
-								<Pagination className='margin-top-16' data-testid='activePagination'>
-									{activePaginationItems}
-								</Pagination>
+								<PaginationHelper
+									doEntitiesCall={doToolsCall}
+									entityCount={activeCount}
+									statusKey={key}
+									paginationIndex={activeIndex}
+									setPaginationIndex={setActiveIndex}
+									maxResult={maxResult}></PaginationHelper>
 							) : (
 								''
 							)}
 							{key === 'pending' && reviewCount > maxResult ? (
-								<Pagination className='margin-top-16' data-testid='pendingPagination'>
-									{pendingPaginationItems}
-								</Pagination>
+								<PaginationHelper
+									doEntitiesCall={doToolsCall}
+									entityCount={reviewCount}
+									statusKey={key}
+									paginationIndex={pendingIndex}
+									setPaginationIndex={setPendingIndex}
+									maxResult={maxResult}></PaginationHelper>
 							) : (
 								''
 							)}
 							{key === 'rejected' && rejectedCount > maxResult ? (
-								<Pagination className='margin-top-16' data-testid='rejectedPagination'>
-									{rejectedPaginationItems}
-								</Pagination>
+								<PaginationHelper
+									doEntitiesCall={doToolsCall}
+									entityCount={rejectedCount}
+									statusKey={key}
+									paginationIndex={rejectedIndex}
+									setPaginationIndex={setRejectedIndex}
+									maxResult={maxResult}></PaginationHelper>
 							) : (
 								''
 							)}
 							{key === 'archive' && archiveCount > maxResult ? (
-								<Pagination className='margin-top-16' data-testid='archivePagination'>
-									{archivePaginationItems}
-								</Pagination>
+								<PaginationHelper
+									doEntitiesCall={doToolsCall}
+									entityCount={archiveCount}
+									statusKey={key}
+									paginationIndex={archiveIndex}
+									setPaginationIndex={setArchiveIndex}
+									maxResult={maxResult}></PaginationHelper>
 							) : (
 								''
 							)}

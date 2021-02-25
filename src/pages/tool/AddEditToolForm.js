@@ -594,6 +594,7 @@ const AddEditToolForm = props => {
 															relatedObjects={props.relatedObjects}
 															doClearRelatedObjects={props.doClearRelatedObjects}
 															doAddToRelatedObjects={props.doAddToRelatedObjects}
+															previousSearchTerm={props.previousSearchTerm}
 														/>
 													</Col>
 													<Col sm={1} lg={10} />

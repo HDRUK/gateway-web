@@ -48,6 +48,7 @@ class AddEditToolPage extends React.Component {
 		showDrawer: false,
 		showModal: false,
 		context: {},
+		previousSearchTerm: '',
 	};
 
 	async componentDidMount() {
@@ -326,7 +327,6 @@ class AddEditToolPage extends React.Component {
 	doModalSearch = (e, type, page) => {
 		if (e.key === 'Enter' || e === 'click') {
 			var searchURL = '';
-
 			if (type === 'dataset' && page > 0) searchURL += '&datasetIndex=' + page;
 			if (type === 'tool' && page > 0) searchURL += '&toolIndex=' + page;
 			if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
@@ -351,6 +351,7 @@ class AddEditToolPage extends React.Component {
 						courseData: res.data.courseResults || [],
 						summary: res.data.summary || [],
 						isLoading: false,
+						previousSearchTerm: this.state.searchString,
 					});
 				});
 		}
@@ -445,6 +446,7 @@ class AddEditToolPage extends React.Component {
 			showDrawer,
 			showModal,
 			context,
+			previousSearchTerm,
 		} = this.state;
 
 		if (isLoading) {
@@ -492,6 +494,7 @@ class AddEditToolPage extends React.Component {
 					relatedObjects={relatedObjects}
 					didDelete={didDelete}
 					updateDeleteFlag={this.updateDeleteFlag}
+					previousSearchTerm={previousSearchTerm}
 				/>
 				<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
 					<UserMessages
