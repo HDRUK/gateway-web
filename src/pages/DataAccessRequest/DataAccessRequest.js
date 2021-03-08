@@ -576,12 +576,7 @@ class DataAccessRequest extends Component {
 		return id === userId;
 	};
 
-	/**
-	 * [Form Submit]
-	 * @desc Submitting data access request
-	 * @params  Object{questionAnswers}
-	 */
-	onFormSubmit = async () => {
+	onSubmitClick = () => {
 		let invalidQuestions = DarValidation.getQuestionPanelInvalidQuestions(
 			Winterfell,
 			this.state.jsonSchema.questionSets,
@@ -591,38 +586,46 @@ class DataAccessRequest extends Component {
 		let inValidMessages = DarValidation.buildInvalidMessages(Winterfell, invalidQuestions);
 		let errors = DarValidation.formatValidationObj(inValidMessages, [...this.state.jsonSchema.questionPanels]);
 		let isValid = Object.keys(errors).length ? false : true;
-		this.setState({ showConfirmSubmissionModal: false });
 
 		if (isValid) {
-			try {
-				let { _id } = this.state;
-				// 1. POST
-				await axios.post(`${baseURL}/api/v1/data-access-request/${_id}`, {});
-				const lastSaved = DarHelper.saveTime();
-				this.setState({ lastSaved });
-
-				let alert = {
-					tab: 'submitted',
-					message:
-						this.state.applicationStatus === 'inProgress'
-							? 'Your application was submitted successfully'
-							: `You have successfully saved updates to '${this.state.projectName || this.state.datasets[0].name}' application`,
-					publisher: 'user',
-				};
-				this.props.history.push({
-					pathname: '/account',
-					search: '?tab=dataaccessrequests',
-					state: { alert },
-				});
-			} catch (err) {
-				console.error(err.message);
-			}
+			this.setState({ showConfirmSubmissionModal: true });
 		} else {
 			let activePage = _.get(_.keys({ ...errors }), 0);
 			let activePanel = _.get(_.keys({ ...errors }[activePage]), 0);
 			let validationMessages = validationSectionMessages;
 			this.setState({ showMissingFieldsModal: true });
 			this.updateNavigation({ pageId: activePage, panelId: activePanel }, validationMessages);
+		}
+	};
+
+	/**
+	 * [Form Submit]
+	 * @desc Submitting data access request
+	 * @params  Object{questionAnswers}
+	 */
+	onFormSubmit = async () => {
+		try {
+			let { _id } = this.state;
+			// 1. POST
+			await axios.post(`${baseURL}/api/v1/data-access-request/${_id}`, {});
+			const lastSaved = DarHelper.saveTime();
+			this.setState({ lastSaved });
+
+			let alert = {
+				tab: 'submitted',
+				message:
+					this.state.applicationStatus === 'inProgress'
+						? 'Your application was submitted successfully'
+						: `You have successfully saved updates to '${this.state.projectName || this.state.datasets[0].name}' application`,
+				publisher: 'user',
+			};
+			this.props.history.push({
+				pathname: '/account',
+				search: '?tab=dataaccessrequests',
+				state: { alert },
+			});
+		} catch (err) {
+			console.error(err.message);
 		}
 	};
 
@@ -1663,7 +1666,7 @@ class DataAccessRequest extends Component {
 								<ApplicantActionButtons
 									allowedNavigation={allowedNavigation}
 									onNextClick={this.onNextClick}
-									onSubmitClick={this.toggleConfirmSubmissionModal}
+									onSubmitClick={this.onSubmitClick}
 									onShowContributorModal={this.toggleContributorModal}
 									onEditForm={this.onEditForm}
 									showSubmit={this.state.showSubmit}
