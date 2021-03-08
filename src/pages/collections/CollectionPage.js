@@ -174,7 +174,7 @@ export const CollectionPage = props => {
 						<Row>
 							<Col sm={1} lg={1} />
 							<Col sm={10} lg={10} className='pad-left-0'>
-								<Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
+								<Alert variant='success' className='mb-3'>
 									{collectionData.publicflag === true
 										? 'This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.'
 										: 'This private collection is now live. Only those who you share the collection link with will be able to view this page.'}
@@ -190,7 +190,7 @@ export const CollectionPage = props => {
 						<Row>
 							<Col sm={1} lg={1} />
 							<Col sm={10} lg={10}>
-								<Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
+								<Alert variant='success' className='mb-3'>
 									{collectionData.publicflag === true
 										? 'Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users.'
 										: 'Done! Your private collection has been updated. Only those who you share the collection link with will be able to view this page.'}
@@ -254,7 +254,7 @@ export const CollectionPage = props => {
 					</Row>
 					<Row>
 						<Col sm={12} lg={12} className='centerText'>
-							<span className='black-28' data-test-id='collectionName'>
+							<span className='black-28' data-testid='collectionName'>
 								{collectionData.name}{' '}
 							</span>
 						</Col>
@@ -302,7 +302,7 @@ export const CollectionPage = props => {
 
 					<Row className='pad-top-24'>
 						<Col sm={1} lg={1} />
-						<Col sm={10} lg={10} data-test-id='collection-description' className='gray800-14 hdruk-section-body'>
+						<Col sm={10} lg={10} className='gray800-14 hdruk-section-body'>
 							<ReactMarkdown source={collectionData.description} data-testid='collectionDescription' />
 						</Col>
 						<Col sm={1} lg={1} />
@@ -358,6 +358,11 @@ export const CollectionPage = props => {
 										var user = '';
 										let showAnswer = false;
 										if (object.type === 'dataset') {
+											if (object.activeflag === 'archive') {
+												return (
+													<div className='entity-deleted gray800-14'>The dataset '{object.name}' has been deleted by the publisher</div>
+												);
+											}
 											{
 												!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.name')
 													? (datasetPublisher = object.datasetv2.summary.publisher.name)

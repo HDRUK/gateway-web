@@ -90,3 +90,23 @@
 	background-size: cover;
 	background-position: center;
 }
+
+.entity-deleted {
+	height: 40px;
+	background-color: $gray-pale;
+	width: 100%;
+	padding-left: 12px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.entity-deleted-edit {
+	height: 40px;
+	background-color: $gray-pale;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
