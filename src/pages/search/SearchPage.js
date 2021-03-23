@@ -30,7 +30,7 @@ const typeMapper = {
 	'Papers' : 'paper',
 	'People' : 'person',
 	'Courses' : 'course',
-	'Collections': 'collections'
+	'Collections': 'collection'
 }
 
 class SearchPage extends React.Component {
@@ -42,6 +42,7 @@ class SearchPage extends React.Component {
 		paperSort: '',
 		personSort: '',
 		courseSort: '',
+		collectionSort: '',
 		datasetIndex: 0,
 		toolIndex: 0,
 		projectIndex: 0,
@@ -306,6 +307,7 @@ class SearchPage extends React.Component {
 		queryParams.paperSort ? this.setState({ paperSort: queryParams.paperSort }) : this.setState({ paperSort: '' });
 		queryParams.personSort ? this.setState({ personSort: queryParams.personSort }) : this.setState({ personSort: '' });
 		queryParams.courseSort ? this.setState({ courseSort: queryParams.courseSort }) : this.setState({ courseSort: '' });
+		queryParams.collectionSort ? this.setState({ courseSort: queryParams.collectionSort }) : this.setState({ collectionSort: '' });
 	}
 
 	clearFilterStates() {
@@ -467,6 +469,7 @@ class SearchPage extends React.Component {
 		if (this.state.paperSort !== '') searchURL += '&paperSort=' + encodeURIComponent(this.state.paperSort);
 		if (this.state.personSort !== '') searchURL += '&personSort=' + encodeURIComponent(this.state.personSort);
 		if (this.state.courseSort !== '') searchURL += '&courseSort=' + encodeURIComponent(this.state.courseSort);
+		if (this.state.collectionSort !== '') searchURL += '&collectionSort=' + encodeURIComponent(this.state.collectionSort);
 		// login status handler
 		if (this.state.userState[0].loggedIn === false) {
 			let values = queryString.parse(window.location.search);
@@ -966,6 +969,7 @@ class SearchPage extends React.Component {
 			projectSort,
 			paperSort,
 			personSort,
+			collectionSort,
 
 			filtersV2,
 			selectedV2,
@@ -1808,6 +1812,9 @@ class SearchPage extends React.Component {
 																else return 'Sort by relevance';
 															} else if (key === 'People') {
 																if (personSort === 'popularity') return 'Sort by popularity';
+																else return 'Sort by relevance';
+															} else if (key === 'Collections') {
+																if (collectionSort === 'popularity') return 'Sort by popularity';
 																else return 'Sort by relevance';
 															}
 														})()}
