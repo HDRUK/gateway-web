@@ -47,7 +47,7 @@
 		"react-web-tabs": "^1.0.1",
 		"remove-markdown": "^0.3.0",
 		"semantic-ui-react": "^0.88.2",
-		"snyk": "^1.425.4",
+		"snyk": "^1.465.0",
 		"uniqid": "^5.2.0",
 		"uuid": "^8.3.1",
 		"winterfell": "github:HDRUK/Winterfell",
