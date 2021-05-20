@@ -163,11 +163,17 @@ export const CollectionPage = props => {
 		//fires on enter on searchbar
 		if (e.key === 'Enter') {
 			let filteredCollectionItems = objectData.map(object => {
-				return new RegExp(searchCollectionsString, 'i').test(object.name) ||
-					new RegExp(searchCollectionsString, 'i').test(object.description) ||
-					new RegExp(object.tags.features.join('|'), 'i').test(searchCollectionsString)
-					? object
-					: [];
+				if (
+					new RegExp(searchCollectionsString, 'i').test(object.name) || _.has(object, 'description')
+						? new RegExp(searchCollectionsString, 'i').test(object.description)
+						: false || _.has(object, 'tags.features')
+						? new RegExp(object.tags.features.join('|'), 'i').test(searchCollectionsString)
+						: false
+				) {
+					return object;
+				} else {
+					return [];
+				}
 			});
 			setFilteredData(filteredCollectionItems);
 			countEntities(filteredCollectionItems);
