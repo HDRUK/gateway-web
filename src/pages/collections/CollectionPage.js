@@ -163,11 +163,11 @@ export const CollectionPage = props => {
 		//fires on enter on searchbar
 		if (e.key === 'Enter') {
 			let filteredCollectionItems = objectData.map(object => {
-				return object.name.toLowerCase().includes(searchCollectionsString.toLowerCase()) ||
-					object.description.toLowerCase().includes(searchCollectionsString.toLowerCase()) ||
-					new RegExp( object.tags.features.join( "|" ), "i").test(searchCollectionsString)
+				return new RegExp(searchCollectionsString, 'i').test(object.name) ||
+					new RegExp(searchCollectionsString, 'i').test(object.description) ||
+					new RegExp(object.tags.features.join('|'), 'i').test(searchCollectionsString)
 					? object
-					: '';
+					: [];
 			});
 			setFilteredData(filteredCollectionItems);
 			countEntities(filteredCollectionItems);
