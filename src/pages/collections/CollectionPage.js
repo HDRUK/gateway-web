@@ -185,17 +185,17 @@ export const CollectionPage = props => {
 			let filteredCollectionItems = objectData.map(object => {
 				// Searching functionality - searches through object data and returns true if there is a match with the search term
 				if (
-					_.has(object, 'name')
+					(_.has(object, 'name')
 						? object.name.toLowerCase().includes(searchCollectionsString.toLowerCase())
-						: false || _.has(object, 'firstname')
+						: false )|| (_.has(object, 'firstname')
 						? object.firstname.toLowerCase().includes(searchCollectionsString.toLowerCase())
-						: false || _.has(object, 'lastname')
+						: false) || (_.has(object, 'lastname')
 						? object.lastname.toLowerCase().includes(searchCollectionsString.toLowerCase())
-						: false || _.has(object, 'description')
+						: false) || (_.has(object, 'description')
 						? object.description.toLowerCase().includes(searchCollectionsString.toLowerCase())
-						: false || _.has(object, 'tags.features')
+						: false) || ((_.has(object, 'tags.features') && object.tags.features && object.tags.features.length > 0)
 						? new RegExp(object.tags.features.join('|'), 'i').test(searchCollectionsString)
-						: false
+						: false)
 				) {
 					return object;
 				} else {
@@ -293,7 +293,7 @@ export const CollectionPage = props => {
 				key={i}
 				active={i === personIndex + 1}
 				onClick={e => {
-					handlePagination('person', (i - 1));
+					handlePagination('person', i - 1);
 				}}>
 				{i}
 			</Pagination.Item>
