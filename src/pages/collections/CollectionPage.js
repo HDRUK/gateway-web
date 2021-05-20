@@ -238,7 +238,7 @@ export const CollectionPage = props => {
 	let paperPaginationItems = [];
 	let personPaginationItems = [];
 	let coursePaginationItems = [];
-	let maxResult = 10;
+	let maxResult = 24;
 	for (let i = 1; i <= Math.ceil(datasetCount / maxResult); i++) {
 		datasetPaginationItems.push(
 			<Pagination.Item
@@ -293,7 +293,7 @@ export const CollectionPage = props => {
 				key={i}
 				active={i === personIndex + 1}
 				onClick={e => {
-					handlePagination('person', (i - 1) * maxResult);
+					handlePagination('person', (i - 1));
 				}}>
 				{i}
 			</Pagination.Item>
