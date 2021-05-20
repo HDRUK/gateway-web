@@ -19,10 +19,6 @@ const CollectionsSearch = props => {
 		}
 	};
 
-	const doSearch = () => {
-        setSearchString(searchValue);
-	};
-
 	const handleSort = sort => {};
 
 	if (props.isLoading) {
