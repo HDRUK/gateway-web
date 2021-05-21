@@ -45,7 +45,7 @@ const TreeSubHeader = ({ node }) => {
 };
 
 const TreeHeader = ({ node }) => {
-	let { label, closed }= node;
+	let { label, closed, beta = false }= node;
 	let count = 0;
 
 	const getParentCounts = (tree) => {
@@ -73,6 +73,7 @@ const TreeHeader = ({ node }) => {
 		<Fragment>
 			<div className='node-title'>
 				<span className={closed ? '' : 'selected'}>{label}</span>
+				{ beta ? <div className="node-beta">BETA</div> : ''}
 			</div>
 			<div className="node-micro">
 				{renderCount()}

@@ -348,6 +348,13 @@
 			padding: 0 18px;
 		}
 	}
+
+	&-beta {
+		padding: 0 7px;
+		background: $teal;
+		color: $white;
+		border-radius:  3px;
+	}	
 }
 
 .checkbox {
