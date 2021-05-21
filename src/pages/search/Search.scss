@@ -348,6 +348,13 @@
 			padding: 0 18px;
 		}
 	}
+
+	&-beta {
+		background: $teal;
+    padding: 0 7px;
+    color: $white;
+    border-radius: 3px;
+	}
 }
 
 .checkbox {
@@ -445,17 +452,4 @@
 
 .sorting-dropdown > .btn-info {
 	background-color: white !important;
-}
-
-.sorting-dropdown > .btn-info.dropdown-toggle {
-	background-color: white !important;
-}
-
-.sorting-dropdown > .dropdown-menu {
-	padding-top: 0px !important;
-	padding-bottom: 0px !important;
-}
-
-.sortingDropdown {
-	min-width: 18rem;
 }
