@@ -19,6 +19,9 @@ import { cmsURL } from '../../../configs/url.config';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
 import UserDropdownItems from './UserDropdownItems';
 import UserDropdownTeams from './UserDropdownTeams';
+import UatBanner from '../../commonComponents/uatBanner/UatBanner';
+
+import CmsDropdown from './CmsDropdown';
 
 var baseURL = require('../BaseURL').getURL();
 const urlEnv = require('../BaseURL').getURLEnv();
@@ -335,56 +338,45 @@ class SearchBar extends React.Component {
 			}
 		}
 
-		let col1Size = 5;
-		let col2Size = 7;
-		if (showUatBanner === true) {
-			col1Size = 6;
-			col2Size = 6;
-		}
-
 		return (
 			<Fragment>
+				{showUatBanner === true && <UatBanner currentEnv={currentEnv} />}
 				<nav className={classnames('navbarShown', { navbarHidden: !this.state.visible })}>
 					<div className='searchBarBackground' id='desktopSearchBar'>
 						<Row className='whiteBackground'>
-							<Col lg={col1Size}>
+							<Col lg={7} className='pr-0 pl-2'>
 								<div className='navBarLogoSpacing'>
 									<a style={{ cursor: 'pointer' }} href={cmsURL}>
 										<ColourLogoSvg className='ml-4 mt-3' />
 									</a>
 								</div>
+
 								<div className='navBarLinkSpacing'>
-									<a href={cmsURL + '/pages/about'} className='black-14' data-test-id='lnkAbout'>
-										About
+									<CmsDropdown dropdownUrl='exploreDropdown' />
+								</div>
+								<div className='navBarLinkSpacing'>
+									<CmsDropdown dropdownUrl='helpDropdown' />
+								</div>
+								<div className='navBarLinkSpacing'>
+									<CmsDropdown dropdownUrl='usageDataDropdown' />
+								</div>
+								<div className='navBarLinkSpacing'>
+									<CmsDropdown dropdownUrl='aboutUsDropdown' />
+								</div>
+
+								<div className='navBarLinkSpacing'>
+									<a href={cmsURL + '/pages/latest-news'} className='black-14 cmsDropdownTitle'>
+										News
 									</a>
 								</div>
 								<div className='navBarLinkSpacing'>
-									<a href={communityLink} className='black-14' data-test-id='lnkCommunity'>
+									<a href={communityLink} className='black-14 cmsDropdownTitle' data-test-id='lnkCommunity'>
 										Community
 									</a>
 								</div>
-								<div className='navBarLinkSpacing'>
-									<a href={'/dashboard'} className='black-14' data-test-id='lnkPublicDashboard'>
-										Dashboard
-									</a>
-								</div>
-								{showUatBanner === true && (
-									<div class='uatSearchBarBanner uatBannerText'>
-										<span class='verticalMiddle'>
-											{currentEnv}
-											<br />
-											<a
-												class='floatRight uatBannerText'
-												href='https://discourse.healthdatagateway.org/t/using-the-uat-environment/451'
-												target='_blank'>
-												Read more
-											</a>
-										</span>
-									</div>
-								)}
 							</Col>
 
-							<Col lg={col2Size} className='text-right'>
+							<Col lg={5} className='text-right'>
 								<div className='nav-wrapper'>
 									<div className='navBarSearchBarSpacing'>
 										<Container>
@@ -434,7 +426,7 @@ class SearchBar extends React.Component {
 														<NotificationBadge count={this.state.messageCount} style={{ backgroundColor: '#29235c' }} />
 														<SVGIcon name='chat' fill={'#475da7'} width={20} height={20} id='notificationsBell' className={'pointer'} />
 													</div>
-													<div className='navBarNotificationSpacing' data-test-id='imgNotificationBadge'>
+													<div className='navBarBellNotificationSpacing' data-test-id='imgNotificationBadge'>
 														<Dropdown>
 															<Dropdown.Toggle as={CustomToggle} ref={node => (this.node = node)}>
 																<NotificationBadge count={this.state.count} className='notificationsBellBadge' />
@@ -1015,15 +1007,21 @@ class SearchBar extends React.Component {
 													</span>
 												</Dropdown.Item>
 											)}
-											<Dropdown.Item className='black-14' href={cmsURL + '/pages/about'}>
-												About
+
+											<div>
+												<CmsDropdown dropdownUrl='exploreDropdown' isMobile={true} />
+												<CmsDropdown dropdownUrl='helpDropdown' isMobile={true} />
+												<CmsDropdown dropdownUrl='usageDataDropdown' isMobile={true} />
+												<CmsDropdown dropdownUrl='aboutUsDropdown' isMobile={true} />
+											</div>
+
+											<Dropdown.Item className='black-14' href={cmsURL + '/pages/latest-news'}>
+												News
 											</Dropdown.Item>
 											<Dropdown.Item className='black-14' href={communityLink}>
 												Community
 											</Dropdown.Item>
-											<Dropdown.Item className='black-14' href={'/dashboard'}>
-												Dashboard
-											</Dropdown.Item>
+
 											<Dropdown.Divider />
 											{(() => {
 												if (userState[0].loggedIn === true) {
@@ -1141,7 +1139,7 @@ class SearchBar extends React.Component {
 													</div>
 												</Col>
 												<Col xs={2} className='text-right'>
-													<div className='navBarNotificationSpacing'>
+													<div className='navBarBellNotificationSpacing'>
 														<Dropdown>
 															<Dropdown.Toggle as={CustomToggle} ref={nodeMobile => (this.nodeMobile = nodeMobile)}>
 																<NotificationBadge count={this.state.count} style={{ backgroundColor: '#29235c' }} />
