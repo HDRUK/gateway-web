@@ -34,3 +34,32 @@
 .addNewDropDownGap {
 	margin-left: 6px;
 }
+
+// Internet Explorer
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.addNewEntityDropdown {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		min-width: 120px;
+		max-width: 120px;
+		min-height: 47px;
+		border: none;
+		font-size: 14px;
+		border-radius: 4px;
+		margin: 0px 8px 0px 0px;
+		padding-left: 8px;
+		color: $indigo;
+		padding-top: 11px;
+		&:focus {
+			outline: 0;
+		}
+		button {
+			background-color: $background;
+
+			&:hover {
+				background-color: $gray-pale;
+			}
+		}
+	}
+}

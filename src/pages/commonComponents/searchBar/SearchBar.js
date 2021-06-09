@@ -428,7 +428,7 @@ class SearchBar extends React.Component {
 																	width={20}
 																	height={20}
 																	id='notificationsBell'
-																	className={this.state.dropdownOpen ? 'notificationsBell' : null}
+																	className='notificationsBell'
 																	style={{ cursor: 'pointer' }}
 																/>
 																{/* <NotificationsBellSvg width={50} height={50} id="notificationsBell" className={this.state.dropdownOpen ? "notificationsBell" : null} style={{ cursor: 'pointer' }} /> */}
