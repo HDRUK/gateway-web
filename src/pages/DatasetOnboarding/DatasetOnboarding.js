@@ -503,6 +503,8 @@ class DatasetOnboarding extends Component {
 
 		if (isValid) {
 			this.toggleActionModal('SUBMITFORREVIEW');
+		} else if ('user' === 'adminDataset') {
+			this.toggleActionModal('VALIDATIONERRORSADMIN');
 		} else {
 			let activePage = _.get(_.keys({ ...errors }), 0);
 			let activePanel = _.get(_.keys({ ...errors }[activePage]), 0);
