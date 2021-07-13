@@ -191,7 +191,8 @@ let configActionModal = (type = '') => {
 			case 'VALIDATIONERRORS':
 				config = {
 					title: 'Mandatory fields missing',
-					subTitle: 'You cannot submit this dataset for review until you have completed all the mandatory questions.',
+					subTitle: `You cannot submit this dataset for review until you have completed all the mandatory questions. If you need to submit this dataset without the mandatory answers, please raise a support ticket at the following link:`,
+					link: 'https://hdruk.atlassian.net/servicedesk/customer/portal/1',
 					description: false,
 					buttons: {
 						confirmSubmission: {
