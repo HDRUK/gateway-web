@@ -97,7 +97,7 @@ const AccountTeamManagement = ({
 	};
 
 	const getMemberNotification = notificationType => {
-		return memberNotifications.findIndex(notification => notification.notificationType == notificationType);
+		return memberNotifications.findIndex(notification => notification.notificationType === notificationType);
 	};
 
 	const userHasRole = (teamId, role) => {
@@ -119,7 +119,7 @@ const AccountTeamManagement = ({
 		if (!isEmpty(data)) {
 			let teamEmails = [...data];
 			// 3. if the emails are not empty and are clear of errors return the count else 0;
-			return [...teamEmails].filter(item => item.value != '' && isEmpty(item.error)).length;
+			return [...teamEmails].filter(item => item.value !== '' && isEmpty(item.error)).length;
 		}
 		return 0;
 	};
