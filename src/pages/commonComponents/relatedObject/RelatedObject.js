@@ -918,6 +918,7 @@ class RelatedObject extends React.Component {
 																return (
 																	<span
 																		className='pointer'
+																		key={feature}
 																		onClick={event =>
 																			this.updateOnFilterBadge('datasetfeatures', { label: feature, parentKey: 'datasetfeatures' })
 																		}>
