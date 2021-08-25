@@ -29,7 +29,8 @@ const SortDropdown = ({ handleSort, sort, dropdownItems, isCollectionsSearch }) 
 						<Row
 							className={
 								sorting === item ? 'sort-dropdown-item sort-dropdown-item-selected sortingDropdown' : 'sort-dropdown-item sortingDropdown'
-							}>
+							}
+							key={item}>
 							<Col xs={12} className='p-0'>
 								<Dropdown.Item eventKey={item} className='gray800-14'>
 									{(() => {
