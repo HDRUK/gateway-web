@@ -39,42 +39,21 @@ const AccessActivity = ({
 				/>
 			);
 		} else {
-			if (
-				workflowCompleted &&
-				applicationStatus === DarHelperUtil.darStatus.inReview
-			) {
+			if (workflowCompleted && applicationStatus === DarHelperUtil.darStatus.inReview) {
 				reviewDecision = <WorkflowDecision text={reviewStatus} icon='flag' />;
 			} else if (deadlinePassed) {
 				reviewDecision = <div className='box-deadline'>{reviewStatus}</div>;
 			}
 
 			if (isReviewer && deadlinePassed) {
-				reviewDecision = (
-					<WorkflowDecision
-						classProperty='box-deadline'
-						text={reviewStatus}
-						decisionText={decisionStatus}
-						icon='flag'
-					/>
-				);
+				reviewDecision = <WorkflowDecision classProperty='box-deadline' text={reviewStatus} decisionText={decisionStatus} icon='flag' />;
 			} else if (isReviewer && !decisionMade) {
-				reviewDecision = (
-					<WorkflowDecision
-						text={reviewStatus}
-						decisionText={decisionStatus}
-						icon='flag'
-					/>
-				);
+				reviewDecision = <WorkflowDecision text={reviewStatus} decisionText={decisionStatus} icon='flag' />;
 			}
 
 			if (isReviewer && decisionMade) {
 				reviewDecision = (
-					<WorkflowDecision
-						classProperty='box-check'
-						decisionMade={decisionMade}
-						decisionText={decisionStatus}
-						icon='check'
-					/>
+					<WorkflowDecision classProperty='box-check' decisionMade={decisionMade} decisionText={decisionStatus} icon='check' />
 				);
 			}
 		}
@@ -82,7 +61,7 @@ const AccessActivity = ({
 		return reviewDecision;
 	};
 
-	const onClickStartReview = (e) => {
+	const onClickStartReview = e => {
 		navigateToLocation(e, applicationId, applicationStatus);
 	};
 
@@ -101,16 +80,15 @@ const AccessActivity = ({
 				<div className='box'>{publisher}</div>
 				<div className='box'>Applicants</div>
 				<div className='box'>{!_.isEmpty(applicants) ? applicants : '-'}</div>
-				{hasWorkflow == true ? (
+				{hasWorkflow === true ? (
 					<Fragment>
 						<div className='box'>Workflow</div>
 						<div
 							id={`workflow_${workflow._id}`}
 							className='box box-link'
-							onClick={(e) => {
+							onClick={e => {
 								navigateToLocation(e);
-							}}
-						>
+							}}>
 							{!_.isEmpty(workflowName) ? workflowName : '-'}
 							{!_.isEmpty(stepName) ? ` | ${stepName}` : ''}
 							{workflowCompleted ? ' complete' : ''}
@@ -119,41 +97,29 @@ const AccessActivity = ({
 				) : (
 					''
 				)}
-				{isTeam == true &&
-				(applicationStatus === DarHelperUtil.darStatus.submitted ||
-					applicationStatus === DarHelperUtil.darStatus.inReview) ? (
+				{isTeam === true &&
+				(applicationStatus === DarHelperUtil.darStatus.submitted || applicationStatus === DarHelperUtil.darStatus.inReview) ? (
 					<Fragment>
 						<div className='box'>Action required by</div>
-						<div className='box'>
-							{!_.isEmpty(remainingActioners) ? (
-								<Fragment>{remainingActioners}</Fragment>
-							) : (
-								'-'
-							)}
-						</div>
+						<div className='box'>{!_.isEmpty(remainingActioners) ? <Fragment>{remainingActioners}</Fragment> : '-'}</div>
 					</Fragment>
 				) : (
 					''
 				)}
 				<div className='box'>Submitted</div>
-				<div className='box'>
-					{!_.isEmpty(dateSubmitted)
-						? moment(dateSubmitted).format('D MMMM YYYY')
-						: '-'}
-				</div>
+				<div className='box'>{!_.isEmpty(dateSubmitted) ? moment(dateSubmitted).format('D MMMM YYYY') : '-'}</div>
 				<div className='box'>Last activity</div>
 				<div className='box'>
 					{moment(updatedAt).format('D MMMM YYYY HH:mm')}
-					{isTeam == true ? (
+					{isTeam === true ? (
 						<div className='box-meta'>
 							{applicationStatus === DarHelperUtil.darStatus.submitted ? (
 								<button
 									id='startReview'
 									className='button-primary'
-									onClick={(e) => {
+									onClick={e => {
 										onClickStartReview(e);
-									}}
-								>
+									}}>
 									Start review
 								</button>
 							) : !_.isEmpty(reviewStatus) || !_.isEmpty(amendmentStatus) ? (
