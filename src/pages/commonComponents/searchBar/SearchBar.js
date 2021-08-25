@@ -273,7 +273,7 @@ class SearchBar extends React.Component {
 		let link = this.getLink(publisherName);
 
 		return (
-			<a href={`${link}`} class='notificationInfo'>
+			<a href={`${link}`} className='notificationInfo'>
 				{messageDescription}
 			</a>
 		);
@@ -948,8 +948,8 @@ class SearchBar extends React.Component {
 														{this.checkRedirectToast()}
 													</div>
 													<div className='navBarAvatarSpacing'>
-														<div class='avatar-circle'>
-															<span class='initials'>{this.getUserInitials(userState[0].name)}</span>
+														<div className='avatar-circle'>
+															<span className='initials'>{this.getUserInitials(userState[0].name)}</span>
 														</div>
 													</div>
 												</Fragment>
@@ -1049,9 +1049,9 @@ class SearchBar extends React.Component {
 										<Dropdown.Menu as={CustomMenu} className='mobileLoginMenu'>
 											{showUatBanner === true && (
 												<Dropdown.Item href='https://discourse.healthdatagateway.org/t/using-the-uat-environment/451' target='_blank'>
-													<span class='uatMobileSearchBarBanner uatBannerText'>
+													<span className='uatMobileSearchBarBanner uatBannerText'>
 														{currentEnv}
-														<span class='floatRight'>Read more</span>
+														<span className='floatRight'>Read more</span>
 													</span>
 												</Dropdown.Item>
 											)}
@@ -1204,7 +1204,7 @@ class SearchBar extends React.Component {
 																							<Col xs={10}>
 																								<div className='notificationDate'>{messageDateString + '\n'}</div>
 																								<div className='notificationInfoHolder'>
-																									<a href={'/' + dat.tool.type + '/' + dat.tool.id} class='notificationInfo'>
+																									<a href={'/' + dat.tool.type + '/' + dat.tool.id} className='notificationInfo'>
 																										{dat.messageDescription}
 																									</a>
 																								</div>
@@ -1239,7 +1239,7 @@ class SearchBar extends React.Component {
 																							<Col xs={10}>
 																								<div className='notificationDate'>{messageDateString + '\n'}</div>
 																								<div className='notificationInfoHolder'>
-																									<a class='notificationInfo'>{dat.messageDescription}</a>
+																									<a className='notificationInfo'>{dat.messageDescription}</a>
 																								</div>
 																							</Col>
 																							<Col xs={2}>
@@ -1274,7 +1274,7 @@ class SearchBar extends React.Component {
 																									<div className='notificationDate'>{messageDateString + '\n'}</div>
 																									{dat.tool.length && (
 																										<div className='notificationInfoHolder'>
-																											<a href={'/' + dat.tool[0].type + '/' + dat.tool[0].id} class='notificationInfo'>
+																											<a href={'/' + dat.tool[0].type + '/' + dat.tool[0].id} className='notificationInfo'>
 																												{dat.messageDescription}
 																											</a>
 																										</div>
@@ -1311,11 +1311,11 @@ class SearchBar extends React.Component {
 																									<div className='notificationDate'>{messageDateString + '\n'}</div>
 																									<div className='notificationInfoHolder'>
 																										{dat.tool[0] === undefined ? (
-																											<a href={'/'} class='notificationInfo'>
+																											<a href={'/'} className='notificationInfo'>
 																												{dat.messageDescription}
 																											</a>
 																										) : (
-																											<a href={'/' + dat.tool[0].type + '/' + dat.tool[0].id} class='notificationInfo'>
+																											<a href={'/' + dat.tool[0].type + '/' + dat.tool[0].id} className='notificationInfo'>
 																												{dat.messageDescription}
 																											</a>
 																										)}
