@@ -1868,7 +1868,7 @@ class SearchPage extends React.Component {
 									<div className='advanced-search-link-container'>
 										<CDStar fill='#f98e2b' height='20' width='20' />
 										<a
-											href='!#'
+											href='#'
 											className='textUnderline gray800-14 cursorPointer'
 											onClick={() => {
 												this.toggleAdvancedSearchModal();
