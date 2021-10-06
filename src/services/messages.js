@@ -51,7 +51,7 @@ const useGetMessage = (requestOptions, queryOptions = { queryKey: 'getMessage' }
 const useGetUnreadCount = (requestOptions, queryOptions = { queryKey: 'getUnreadCount' }) => {
 	return useQuery({
 		...queryOptions,
-		queryFn: () => getUnreadCount(requestOptions),
+		queryFn: _id => getUnreadCount(_id, requestOptions),
 	});
 };
 
@@ -62,7 +62,11 @@ const usePostMessage = (requestOptions, mutateOptions = { queryKey: 'postMessage
 };
 
 const usePostMarkAsRead = (requestOptions, mutateOptions = { queryKey: 'postMarkAsRead' }) => {
+<<<<<<< HEAD
 	return useMutation(data => postMarkAsRead(data, requestOptions), {
+=======
+	return useMutation((_id, data) => postMarkAsRead(_id, data, requestOptions), {
+>>>>>>> 6f222b89 (Include fonts, setup scss loader, create main.scss)
 		mutateOptions,
 	});
 };
