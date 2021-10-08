@@ -77,6 +77,7 @@ const Dataset = ({
 		: [];
 	const searchTerm = queryString.parse(window.location.search).search ? queryString.parse(window.location.search).search : '';
 	const phenotypesSearched = data.datasetfields.phenotypes.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
+
 	return (
 		<>
 			<Row className='noMargin'>

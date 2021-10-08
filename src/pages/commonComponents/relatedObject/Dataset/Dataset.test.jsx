@@ -138,7 +138,6 @@ describe('Given the Dataset component', () => {
 			expect(screen.getByTestId('dataset-description')).toHaveTextContent(props.data.description);
 		});
 	});
-
 	describe('And when datasetV2 is empty', () => {
 		it('Then Publisher Name should be rendered from datasetfields object in UpperCase', () => {
 			const { rerender } = wrapper;
