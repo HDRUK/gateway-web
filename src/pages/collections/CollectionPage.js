@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import axios from 'axios';
 import queryString from 'query-string';
 import { Row, Col, Tabs, Tab, Container, Alert, Pagination } from 'react-bootstrap';
 import Loading from '../commonComponents/Loading';
@@ -8,7 +7,6 @@ import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import 'react-tabs/style/react-tabs.css';
 import DiscourseTopic from '../discourse/DiscourseTopic';
-import { baseURL } from '../../configs/url.config';
 import moment from 'moment';
 import _ from 'lodash';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
@@ -20,6 +18,7 @@ import SVGIcon from '../../images/SVGIcon';
 import './Collections.scss';
 import CollectionsSearch from './CollectionsSearch';
 import googleAnalytics from '../../tracking';
+import { getCollectionRequest, postCollectionCounterUpdateRequest, getCollectionRelatedObjectsRequest } from '../../services/collection';
 
 export const CollectionPage = props => {
 	const [collectionData, setCollectionData] = useState([]);
@@ -61,23 +60,22 @@ export const CollectionPage = props => {
 		]
 	);
 
-	//componentDidMount - on loading of project detail page
 	useEffect(() => {
 		if (!!window.location.search) {
 			let values = queryString.parse(window.location.search);
 			setCollectionAdded(values.collectionAdded);
 			setCollectionEdited(values.collectionEdited);
 		}
-		getCollectionDataFromDb();
+		getCollectionDataFromApi();
 	}, []);
 
 	useEffect(() => {
 		handleSort(collectionsPageSort);
 	}, [filteredData]);
 
-	const getCollectionDataFromDb = async () => {
+	const getCollectionDataFromApi = async () => {
 		setIsLoading(true);
-		await axios.get(baseURL + '/api/v1/collections/' + props.match.params.collectionID).then(async res => {
+		await getCollectionRequest(props.match.params.collectionID).then(async res => {
 			if (_.isNil(res.data)) {
 				// Redirect user if invalid collection id is supplied
 				window.localStorage.setItem('redirectMsg', `Collection not found for Id: ${props.match.params.collectionID}`);
@@ -95,11 +93,11 @@ export const CollectionPage = props => {
 	};
 
 	const updateCounter = (id, counter) => {
-		axios.post(baseURL + '/api/v1/collectioncounter/update', { id, counter });
+		postCollectionCounterUpdateRequest({ id, counter });
 	};
 
 	const getObjectData = async () => {
-		await axios.get(baseURL + '/api/v1/collections/relatedobjects/' + props.match.params.collectionID).then(async res => {
+		await getCollectionRelatedObjectsRequest(props.match.params.collectionID).then(async res => {
 			setObjectData(res.data.data);
 			setFilteredData(res.data.data);
 			countEntities(res.data.data);
