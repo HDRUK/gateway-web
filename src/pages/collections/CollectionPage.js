@@ -280,20 +280,18 @@ export const CollectionPage = props => {
 		}
 	};
 
-	const handlePagination = (type, page) => {
-		if (type === 'dataset') {
-			setDatasetIndex(page);
-		} else if (type === 'tool') {
-			setToolIndex(page);
-		} else if (type === 'project') {
-			setProjectIndex(page);
-		} else if (type === 'paper') {
-			setPaperIndex(page);
-		} else if (type === 'person') {
-			setPersonIndex(page);
-		} else if (type === 'course') {
-			setCourseIndex(page);
+	const setIndexByType = page => {
+		return {
+			dataset: setDatasetIndex(page),
+			tool: setToolIndex(page),
+			project: setProjectIndex(page),
+			paper: setPaperIndex(page),
+			person: setPersonIndex(page),
+			course: setCourseIndex(page)
 		}
+	}
+	const handlePagination = (type, page) => {
+		setIndexByType(page)[type];
 		window.scrollTo(0, 0);
 	};
 
