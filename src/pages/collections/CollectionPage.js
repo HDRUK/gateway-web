@@ -84,17 +84,13 @@ export const CollectionPage = props => {
 			} else {
 				const localCollectionData = res.data.data[0];
 				let counter = !localCollectionData.counter ? 1 : localCollectionData.counter + 1;
-				updateCounter(props.match.params.collectionID, counter);
+				postCollectionCounterUpdateRequest({ id: props.match.params.collectionID, counter});
 
 				setCollectionData(res.data.data[0]);
 				getObjectData();
 				setIsLoading(false);
 			}
 		});
-	};
-
-	const updateCounter = (id, counter) => {
-		postCollectionCounterUpdateRequest({ id, counter });
 	};
 
 	const getObjectData = async () => {
@@ -138,19 +134,6 @@ export const CollectionPage = props => {
 		setDatasetCount(entityCounts.dataset || 0);
 		setPaperCount(entityCounts.paper || 0);
 		setCourseCount(entityCounts.course || 0);
-	};
-
-	const handleSelect = key => {
-		setKey(key);
-	};
-
-	const doSearch = e => {
-		// Fires on enter on searchbar
-		if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(searchString)}`;
-	};
-
-	const updateSearchString = searchString => {
-		setSearchString(searchString);
 	};
 
 	const updateDiscoursePostCount = count => {
@@ -377,8 +360,8 @@ export const CollectionPage = props => {
 			<SearchBar
 				ref={searchBar}
 				searchString={searchString}
-				doSearchMethod={doSearch}
-				doUpdateSearchString={updateSearchString}
+				doSearchMethod={e => e.key === 'Enter' ? window.location.href = `/search?search=${encodeURIComponent(searchString)}` : null}
+				doUpdateSearchString={searchString => setSearchString(searchString)}
 				doToggleDrawer={toggleDrawer}
 				userState={userState}
 			/>
@@ -533,7 +516,7 @@ export const CollectionPage = props => {
 					className='tabsBackground gray700-13'
 					activeKey={key}
 					onSelect={key => {
-						handleSelect(key);
+						setKey(key);
 						googleAnalytics.recordVirtualPageView(`${key} tab`);
 						googleAnalytics.recordEvent('Collections', `Clicked ${key} tab`, `Viewing ${key}`);
 					}}
