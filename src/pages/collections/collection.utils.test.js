@@ -10,7 +10,7 @@ const paginationTestCases = [[key, 92, 1, paginateFunc, 23]];
 // key, expectedDropdownItems
 const dropdownItemsTestCases = [
     [DATASET, [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES, METADATA]],
-    [PERSON, [RELEVANCE, POPULARITY, RECENTLYADDED],
+    [PERSON, [RELEVANCE, POPULARITY, RECENTLYADDED]],
     [key, [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES]]
 ];
 
