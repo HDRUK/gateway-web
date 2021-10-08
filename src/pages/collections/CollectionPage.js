@@ -19,6 +19,7 @@ import './Collections.scss';
 import CollectionsSearch from './CollectionsSearch';
 import googleAnalytics from '../../tracking';
 import { getCollectionRequest, postCollectionCounterUpdateRequest, getCollectionRelatedObjectsRequest } from '../../services/collection';
+import { generatePaginatedItems } from './collection.utils';
 
 export const CollectionPage = props => {
 	const [collectionData, setCollectionData] = useState([]);
@@ -67,7 +68,7 @@ export const CollectionPage = props => {
 			setCollectionEdited(values.collectionEdited);
 		}
 		getCollectionDataFromApi();
-	}, []);
+	}, []); 
 
 	useEffect(() => {
 		handleSort(collectionsPageSort);
@@ -354,85 +355,12 @@ export const CollectionPage = props => {
 	let datasetPublisher;
 	let datasetLogo;
 
-	let datasetPaginationItems = [];
-	let toolPaginationItems = [];
-	let projectPaginationItems = [];
-	let paperPaginationItems = [];
-	let personPaginationItems = [];
-	let coursePaginationItems = [];
-	let maxResult = 24;
-	for (let i = 1; i <= Math.ceil(datasetCount / maxResult); i++) {
-		datasetPaginationItems.push(
-			<Pagination.Item
-				key={i}
-				active={i === datasetIndex + 1}
-				onClick={e => {
-					handlePagination('dataset', i - 1);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
-	for (let i = 1; i <= Math.ceil(toolCount / maxResult); i++) {
-		toolPaginationItems.push(
-			<Pagination.Item
-				key={i}
-				active={i === toolIndex + 1}
-				onClick={e => {
-					handlePagination('tool', i - 1);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
-	for (let i = 1; i <= Math.ceil(projectCount / maxResult); i++) {
-		projectPaginationItems.push(
-			<Pagination.Item
-				key={i}
-				active={i === projectIndex + 1}
-				onClick={e => {
-					handlePagination('project', i - 1);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
-	for (let i = 1; i <= Math.ceil(paperCount / maxResult); i++) {
-		paperPaginationItems.push(
-			<Pagination.Item
-				key={i}
-				active={i === paperIndex + 1}
-				onClick={e => {
-					handlePagination('paper', i - 1);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
-	for (let i = 1; i <= Math.ceil(personCount / maxResult); i++) {
-		personPaginationItems.push(
-			<Pagination.Item
-				key={i}
-				active={i === personIndex + 1}
-				onClick={e => {
-					handlePagination('person', i - 1);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
-	for (let i = 1; i <= Math.ceil(courseCount / maxResult); i++) {
-		coursePaginationItems.push(
-			<Pagination.Item
-				key={i}
-				active={i === courseIndex + 1}
-				onClick={e => {
-					handlePagination('course', i - 1);
-				}}>
-				{i}
-			</Pagination.Item>
-		);
-	}
+	const datasetPaginationItems = generatePaginatedItems('dataset', datasetCount, datasetIndex, handlePagination);
+	const toolPaginationItems = generatePaginatedItems('tool', toolCount, toolIndex, handlePagination);
+	const projectPaginationItems = generatePaginatedItems('project', projectCount, projectIndex, handlePagination);
+	const paperPaginationItems = generatePaginatedItems('paper', paperCount, paperIndex, handlePagination);
+	const personPaginationItems = generatePaginatedItems('person', personCount, personIndex, handlePagination);
+	const coursePaginationItems = generatePaginatedItems('course', courseCount, courseIndex, handlePagination);
 
 	if (isLoading) {
 		return (
