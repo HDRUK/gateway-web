@@ -1,4 +1,5 @@
 import { Pagination } from 'react-bootstrap';
+import { DATASET, PERSON, RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES, METADATA } from './constants';
 
 const generatePaginatedItems = (key, count, index, paginate) => {
     const items = [];
@@ -20,6 +21,17 @@ const generatePaginatedItems = (key, count, index, paginate) => {
     return items;
 }
 
+const generateDropdownItems = key => {
+    if (key === DATASET) {
+        dropdownItems = [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES, METADATA];
+    } else if (key === PERSON) {
+        dropdownItems = [RELEVANCE, POPULARITY, RECENTLYADDED];
+    } else {
+        dropdownItems = [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES];
+    }
+}
+
 export default {
-    generatePaginatedItems
+    generatePaginatedItems,
+    generateDropdownItems
 }

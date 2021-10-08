@@ -19,7 +19,7 @@ import './Collections.scss';
 import CollectionsSearch from './CollectionsSearch';
 import googleAnalytics from '../../tracking';
 import { getCollectionRequest, postCollectionCounterUpdateRequest, getCollectionRelatedObjectsRequest } from '../../services/collection';
-import { generatePaginatedItems } from './collection.utils';
+import { generatePaginatedItems, generateDropdownItems } from './collection.utils';
 
 export const CollectionPage = props => {
 	const [collectionData, setCollectionData] = useState([]);
@@ -362,21 +362,14 @@ export const CollectionPage = props => {
 	const personPaginationItems = generatePaginatedItems('person', personCount, personIndex, handlePagination);
 	const coursePaginationItems = generatePaginatedItems('course', courseCount, courseIndex, handlePagination);
 
+	const dropdownItems = generateDropdownItems(key);
+
 	if (isLoading) {
 		return (
 			<Container>
 				<Loading data-testid='isLoading' />
 			</Container>
 		);
-	}
-
-	let dropdownItems;
-	if (key === 'dataset') {
-		dropdownItems = ['relevance', 'popularity', 'recentlyadded', 'resources', 'metadata'];
-	} else if (key === 'person') {
-		dropdownItems = ['relevance', 'popularity', 'recentlyadded'];
-	} else {
-		dropdownItems = ['relevance', 'popularity', 'recentlyadded', 'resources'];
 	}
 
 	return (
