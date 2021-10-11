@@ -264,7 +264,7 @@ export const CollectionPage = props => {
 			/>
 			<div className='collectionHeader pixelGapTop pixelGapBottom'>
 				<Container>
-					{collectionAdded ? (
+					{collectionAdded && 
 						<Row>
 							<Col sm={1} lg={1} />
 							<Col sm={10} lg={10} className='pad-left-0'>
@@ -276,11 +276,9 @@ export const CollectionPage = props => {
 							</Col>
 							<Col sm={1} lg={10} />
 						</Row>
-					) : (
-						''
-					)}
+					}
 
-					{collectionEdited ? (
+					{collectionEdited &&
 						<Row>
 							<Col sm={1} lg={1} />
 							<Col sm={10} lg={10}>
@@ -292,11 +290,9 @@ export const CollectionPage = props => {
 							</Col>
 							<Col sm={1} lg={10} />
 						</Row>
-					) : (
-						''
-					)}
+					}
 
-					{collectionData.activeflag === 'archive' ? (
+					{collectionData.activeflag === 'archive' &&
 						<Row>
 							<Col sm={1} lg={1} />
 							<Col sm={10} lg={10}>
@@ -306,9 +302,7 @@ export const CollectionPage = props => {
 							</Col>
 							<Col sm={1} lg={10} />
 						</Row>
-					) : (
-						''
-					)}
+					}
 
 					<Row>
 						<Col md={3} lg={2} />

@@ -646,7 +646,7 @@ class RelatedObject extends React.Component {
 								);
 							} else if (data.type === 'course') {
 								return (
-									<Row className='noMargin'>
+									<Row className='noMargin' data-testid="related-course-row">
 										<Col sm={10} lg={10} className='pad-left-24'>
 											{activeLink === true ? (
 												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/course/' + data.id}>
