@@ -21,6 +21,12 @@ import googleAnalytics from '../../tracking';
 import { getCollectionRequest, postCollectionCounterUpdateRequest, getCollectionRelatedObjectsRequest } from '../../services/collection';
 import { filterCollectionItems, generatePaginatedItems, generateDropdownItems } from './collection.utils';
 import { sortByMetadataQuality, sortByRecentlyAdded, sortByResources, sortByRelevance, sortByPopularity } from './collection.utils.sort';
+import DatasetCollectionResults from './Components/DatasetCollectionResults';
+import ToolCollectionResults from './Components/ToolCollectionResults';
+import ProjectCollectionResults from './Components/ProjectCollectionResults';
+import PaperCollectionResults from './Components/PaperCollectionResults';
+import PersonCollectionResults from './Components/PersonCollectionResults';
+import CourseCollectionResults from './Components/CourseCollectionResults';
 
 export const CollectionPage = props => {
 	const [collectionData, setCollectionData] = useState([]);
@@ -227,9 +233,6 @@ export const CollectionPage = props => {
 		window.scrollTo(0, 0);
 	};
 
-	let datasetPublisher;
-	let datasetLogo;
-
 	const datasetPaginationItems = generatePaginatedItems('dataset', datasetCount, datasetIndex, handlePagination);
 	const toolPaginationItems = generatePaginatedItems('tool', toolCount, toolIndex, handlePagination);
 	const projectPaginationItems = generatePaginatedItems('project', projectCount, projectIndex, handlePagination);
@@ -238,6 +241,8 @@ export const CollectionPage = props => {
 	const coursePaginationItems = generatePaginatedItems('course', courseCount, courseIndex, handlePagination);
 
 	const dropdownItems = generateDropdownItems(key);
+	const { relatedObjects } = collectionData;
+	const userId = userState[0].id;
 
 	if (isLoading) {
 		return (
@@ -459,232 +464,29 @@ export const CollectionPage = props => {
 					<Col sm={1} lg={1} />
 					<Col sm={10} lg={10}>
 						{key === 'dataset'
-							? handlePaginatedItems(datasetIndex).map(object => {
-									if (
-										object.activeflag === 'active' ||
-										(object.activeflag === 'archive' && object.type === 'dataset') ||
-										(object.type === 'dataset' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
-									) {
-										var reason = '';
-										var updated = '';
-										var user = '';
-										let showAnswer = false;
-										if (object.type === 'dataset') {
-											if (object.activeflag === 'archive') {
-												return (
-													<div className='entity-deleted gray800-14'>The dataset '{object.name}' has been deleted by the publisher</div>
-												);
-											}
-
-											!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.name')
-												? (datasetPublisher = object.datasetv2.summary.publisher.name)
-												: (datasetPublisher = '');
-
-											!_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.logo')
-												? (datasetLogo = object.datasetv2.summary.publisher.logo)
-												: (datasetLogo = '');
-
-											collectionData.relatedObjects.map(dat => {
-												if (dat.objectId === object.datasetid) {
-													reason = dat.reason;
-													updated = dat.updated;
-													user = dat.user;
-													showAnswer = !_.isEmpty(reason);
-												}
-											});
-											return (
-												<RelatedObject
-													key={object.id}
-													data={object}
-													activeLink={true}
-													showRelationshipAnswer={showAnswer}
-													collectionReason={reason}
-													collectionUpdated={updated}
-													collectionUser={user}
-													datasetPublisher={datasetPublisher}
-													datasetLogo={datasetLogo}
-												/>
-											);
-										}
-									}
-							  })
-							: ''}
-
+							? <DatasetCollectionResults searchResults={handlePaginatedItems(datasetIndex)} relatedObjects={relatedObjects} userId={userId} />
+							: null
+						}
 						{key === 'tool'
-							? handlePaginatedItems(toolIndex).map(object => {
-									if (
-										object.activeflag === 'active' ||
-										(object.type === 'tool' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
-									) {
-										var reason = '';
-										var updated = '';
-										var user = '';
-										let showAnswer = false;
-										if (object.type === 'tool') {
-											collectionData.relatedObjects.map(dat => {
-												if (parseInt(dat.objectId) === object.id) {
-													reason = dat.reason;
-													updated = dat.updated;
-													user = dat.user;
-													showAnswer = !_.isEmpty(reason);
-												}
-											});
-											return (
-												<RelatedObject
-													key={object.id}
-													data={object}
-													activeLink={true}
-													showRelationshipAnswer={showAnswer}
-													collectionReason={reason}
-													collectionUpdated={updated}
-													collectionUser={user}
-												/>
-											);
-										}
-									}
-							  })
-							: ''}
-
+							? <ToolCollectionResults searchResults={handlePaginatedItems(toolIndex)} relatedObjects={relatedObjects} userId={userId} /> 
+							: null
+						}
 						{key === 'project'
-							? handlePaginatedItems(projectIndex).map(object => {
-									if (
-										object.activeflag === 'active' ||
-										(object.type === 'project' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
-									) {
-										var reason = '';
-										var updated = '';
-										var user = '';
-										let showAnswer = false;
-										if (object.type === 'project') {
-											collectionData.relatedObjects.map(dat => {
-												if (parseInt(dat.objectId) === object.id) {
-													reason = dat.reason;
-													updated = dat.updated;
-													user = dat.user;
-													showAnswer = !_.isEmpty(reason);
-												}
-											});
-											return (
-												<RelatedObject
-													key={object.id}
-													data={object}
-													activeLink={true}
-													showRelationshipAnswer={showAnswer}
-													collectionReason={reason}
-													collectionUpdated={updated}
-													collectionUser={user}
-												/>
-											);
-										}
-									}
-							  })
-							: ''}
-
+							? <ProjectCollectionResults searchResults={handlePaginatedItems(projectIndex)} relatedObjects={relatedObjects} userId={userId} /> 
+							: null
+						}
 						{key === 'paper'
-							? handlePaginatedItems(paperIndex).map(object => {
-									if (
-										object.activeflag === 'active' ||
-										(object.type === 'paper' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
-									) {
-										var reason = '';
-										var updated = '';
-										var user = '';
-										let showAnswer = false;
-										if (object.type === 'paper') {
-											collectionData.relatedObjects.map(dat => {
-												if (parseInt(dat.objectId) === object.id) {
-													reason = dat.reason;
-													updated = dat.updated;
-													user = dat.user;
-													showAnswer = !_.isEmpty(reason);
-												}
-											});
-
-											return (
-												<RelatedObject
-													key={object.id}
-													data={object}
-													activeLink={true}
-													showRelationshipAnswer={showAnswer}
-													collectionReason={reason}
-													collectionUpdated={updated}
-													collectionUser={user}
-												/>
-											);
-										}
-									}
-							  })
-							: ''}
-
+							? <PaperCollectionResults searchResults={handlePaginatedItems(paperIndex)} relatedObjects={relatedObjects} userId={userId} /> 
+							: null
+						}
 						{key === 'person'
-							? handlePaginatedItems(personIndex).map(object => {
-									if (
-										object.activeflag === 'active' ||
-										(object.type === 'person' && object.activeflag === 'review' && object.authors.includes(userState[0].id))
-									) {
-										var reason = '';
-										var updated = '';
-										var user = '';
-										let showAnswer = false;
-										if (object.type === 'person') {
-											collectionData.relatedObjects.map(dat => {
-												if (parseInt(dat.objectId) === object.id) {
-													reason = dat.reason;
-													updated = dat.updated;
-													user = dat.user;
-													showAnswer = !_.isEmpty(reason);
-												}
-											});
-											return (
-												<RelatedObject
-													key={object.id}
-													data={object}
-													activeLink={true}
-													showRelationshipAnswer={showAnswer}
-													collectionReason={reason}
-													collectionUpdated={updated}
-													collectionUser={user}
-												/>
-											);
-										}
-									}
-							  })
-							: ''}
-
+							? <PersonCollectionResults searchResults={handlePaginatedItems(personIndex)} relatedObjects={relatedObjects} userId={userId} /> 
+							: null
+						}
 						{key === 'course'
-							? handlePaginatedItems(courseIndex).map(object => {
-									if (
-										object.activeflag === 'active' ||
-										(object.type === 'course' && object.activeflag === 'review' && object.creator[0].id === userState[0].id)
-									) {
-										var reason = '';
-										var updated = '';
-										var user = '';
-										let showAnswer = false;
-										if (object.type === 'course') {
-											collectionData.relatedObjects.map(dat => {
-												if (parseInt(dat.objectId) === object.id) {
-													reason = dat.reason;
-													updated = dat.updated;
-													user = dat.user;
-													showAnswer = !_.isEmpty(reason);
-												}
-											});
-											return (
-												<RelatedObject
-													key={object.id}
-													data={object}
-													activeLink={true}
-													showRelationshipAnswer={showAnswer}
-													collectionReason={reason}
-													collectionUpdated={updated}
-													collectionUser={user}
-												/>
-											);
-										}
-									}
-							  })
-							: ''}
+							? <CourseCollectionResults searchResults={handlePaginatedItems(courseIndex)} relatedObjects={relatedObjects} userId={userId} /> 
+							: null
+						}
 
 						<div className='text-center'>
 							{key === 'dataset' && datasetCount > maxResult ? <Pagination>{datasetPaginationItems}</Pagination> : ''}

@@ -1,0 +1,40 @@
+import React from 'react';
+import _ from 'lodash';
+import RelatedObject from '../../../commonComponents/relatedObject/RelatedObject';
+
+const ToolCollectionResults = ({ searchResults, relatedObjects, userId }) => {
+    searchResults.map(object => {
+        if (
+            object.activeflag === 'active' ||
+            (object.type === 'tool' && object.activeflag === 'review' && object.authors.includes(userId))
+        ) {
+            let reason = '';
+            let updated = '';
+            let user = '';
+            let showAnswer = false;
+            if (object.type === 'tool') {
+                relatedObjects.map(dat => {
+                    if (parseInt(dat.objectId) === object.id) {
+                        reason = dat.reason;
+                        updated = dat.updated;
+                        user = dat.user;
+                        showAnswer = !_.isEmpty(reason);
+                    }
+                });
+                return (
+                    <RelatedObject
+                        key={object.id}
+                        data={object}
+                        activeLink={true}
+                        showRelationshipAnswer={showAnswer}
+                        collectionReason={reason}
+                        collectionUpdated={updated}
+                        collectionUser={user}
+                    />
+                );
+            }
+        }
+    })
+}
+
+export default ToolCollectionResults;
