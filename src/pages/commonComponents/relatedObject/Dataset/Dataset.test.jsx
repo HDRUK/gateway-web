@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Dataset from './Dataset';
 import mockData from './mockData';
@@ -138,6 +138,7 @@ describe('Given the Dataset component', () => {
 			expect(screen.getByTestId('dataset-description')).toHaveTextContent(props.data.description);
 		});
 	});
+
 	describe('And when datasetV2 is empty', () => {
 		it('Then Publisher Name should be rendered from datasetfields object in UpperCase', () => {
 			const { rerender } = wrapper;
