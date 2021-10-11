@@ -20,6 +20,7 @@ import CollectionsSearch from './CollectionsSearch';
 import googleAnalytics from '../../tracking';
 import { getCollectionRequest, postCollectionCounterUpdateRequest, getCollectionRelatedObjectsRequest } from '../../services/collection';
 import { filterCollectionItems, generatePaginatedItems, generateDropdownItems } from './collection.utils';
+import { sortByMetadataQuality, sortByRecentlyAdded, sortByResources, sortByRelevance, sortByPopularity } from './collection.utils.sort';
 
 export const CollectionPage = props => {
 	const [collectionData, setCollectionData] = useState([]);
@@ -182,75 +183,6 @@ export const CollectionPage = props => {
 		}
 	};
 
-	const sortByMetadataQuality = () =>
-		filteredData.sort((a, b) =>
-			_.has(a, 'datasetfields.metadataquality.quality_score') && _.has(b, 'datasetfields.metadataquality.quality_score')
-				? b.datasetfields.metadataquality.quality_score - a.datasetfields.metadataquality.quality_score
-				: ''
-		);
-
-	const sortByRecentlyAdded = () => {
-		return filteredData.sort((a, b) => b.updated - a.updated);
-	};
-
-	const sortByResources = () => {
-		return filteredData.sort((a, b) => b.relatedresources - a.relatedresources);
-	};
-
-	const sortByRelevance = () => {
-		filteredData.forEach(function (data) {
-			if (data.type === 'course') {
-				let containsSearchTermCount =
-					getCountOfSearchTerm(data.title) +
-					getCountOfSearchTerm(data.description) +
-					getCountOfSearchTerm(data.award) +
-					getCountOfSearchTerm(data.domains);
-				data.searchTermInstances = containsSearchTermCount;
-			} else if (data.type === 'person') {
-				let containsSearchTermCount =
-					getCountOfSearchTerm(data.firstname) + getCountOfSearchTerm(data.lastname) + getCountOfSearchTerm(data.bio);
-				data.searchTermInstances = containsSearchTermCount;
-			} else if (data.type === 'dataset') {
-				let abstractOrDescriptionCount;
-				if (_.has(data, 'datasetfields.abstract') && !_.isNull(data.datasetfields.abstract)) {
-					abstractOrDescriptionCount = getCountOfSearchTerm(data.datasetfields.abstract);
-				} else {
-					abstractOrDescriptionCount = getCountOfSearchTerm(data.description);
-				}
-
-				let containsSearchTermCount =
-					abstractOrDescriptionCount +
-					getCountOfSearchTerm(data.name) +
-					getCountOfSearchTerm(data.tags.topics) +
-					getCountOfSearchTerm(data.tags.features);
-				data.searchTermInstances = containsSearchTermCount;
-			} else {
-				//Other entities ie. Tools, Papers, Projects
-				let containsSearchTermCount =
-					getCountOfSearchTerm(data.name) +
-					getCountOfSearchTerm(data.description) +
-					getCountOfSearchTerm(data.tags.topics) +
-					getCountOfSearchTerm(data.tags.features) +
-					(_.has(data, 'categories.category') && getCountOfSearchTerm(data.categories.category));
-				data.searchTermInstances = containsSearchTermCount;
-			}
-		});
-
-		return filteredData.sort((a, b) => b.searchTermInstances - a.searchTermInstances);
-	};
-
-	const getCountOfSearchTerm = field => {
-		if (_.isArray(field)) {
-			return field.toString().toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
-		} else {
-			return field.toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
-		}
-	};
-
-	const sortByPopularity = () => {
-		return filteredData.sort((a, b) => b.counter - a.counter);
-	};
-
 	const handlePaginatedItems = index => {
 		// Returns the related resources that have the same object type as the current active tab and performs a chunk on them to ensure each page returns 24 results
 		let paginatedItems = _.chunk(
@@ -291,7 +223,7 @@ export const CollectionPage = props => {
 		}
 	}
 	const handlePagination = (type, page) => {
-		setIndexByType(page)[type];
+		setIndexByType(page)[type]();
 		window.scrollTo(0, 0);
 	};
 
