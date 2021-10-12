@@ -66,15 +66,15 @@ describe('Given the sortByMetadataQuality method', () => {
 describe('Given the sortByRecentlyAdded method', () => {
     test('Then the data should be sorted by the updated field', () => {
         const data = [
-            { updated: format(new Date(2019, 02, 01), 'dd/MM/yyyy') },
-            { updated: format(new Date(2020, 02, 01), 'dd/MM/yyyy') }
+            { updated: format(new Date(2020, 2, 1), 'dd/MM/yyyy') },
+            { updated: format(new Date(2019, 2, 1), 'dd/MM/yyyy') }
         ]
 
         sortByRecentlyAdded(data);
 
         const sortedData = [
-            { updated: format(new Date(2020, 02, 01), 'dd/MM/yyyy') },
-            { updated: format(new Date(2019, 02, 01), 'dd/MM/yyyy') },
+            { updated: format(new Date(2020, 2, 1), 'dd/MM/yyyy') },
+            { updated: format(new Date(2019, 2, 1), 'dd/MM/yyyy') }
         ]
 
         expect(data).toEqual(sortedData);
@@ -91,8 +91,8 @@ describe('Given the sortByResources method', () => {
         sortByResources(data);
 
         const sortedData = [
-            { relatedresources: 'decimus' },
-            { relatedresources: 'abacus' }
+            { relatedresources: 'abacus' },
+            { relatedresources: 'decimus' }
         ]
 
         expect(data).toEqual(sortedData);
