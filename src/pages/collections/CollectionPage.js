@@ -472,7 +472,7 @@ export const CollectionPage = props => {
 						{key === 'paper'
 							? <PaperCollectionResults searchResults={handlePaginatedItems(paperIndex)} relatedObjects={relatedObjects} userId={userId} /> 
 							: null
-						}
+						} 
 						{key === 'person'
 							? <PersonCollectionResults searchResults={handlePaginatedItems(personIndex)} relatedObjects={relatedObjects} userId={userId} /> 
 							: null

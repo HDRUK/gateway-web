@@ -3,11 +3,11 @@ import _ from 'lodash';
 import RelatedObject from '../../../commonComponents/relatedObject/RelatedObject';
 
 const ProjectCollectionResults = ({ searchResults, relatedObjects, userId }) => {
+    const canViewResults = object => Boolean(object.activeflag === 'active' ||
+        (object.type === 'project' && object.activeflag === 'review' && object.authors.includes(userId)));
+
     searchResults.map(object => {
-        if (
-            object.activeflag === 'active' ||
-            (object.type === 'project' && object.activeflag === 'review' && object.authors.includes(userId))
-        ) {
+        if (canViewResults) {
             let reason = '';
             let updated = '';
             let user = '';

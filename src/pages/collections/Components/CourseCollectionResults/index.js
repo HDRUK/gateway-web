@@ -3,18 +3,18 @@ import _ from 'lodash';
 import RelatedObject from '../../../commonComponents/relatedObject/RelatedObject';
 
 const CourseCollectionResults = ({ searchResults, relatedObjects, userId }) => {
-    searchResults.map(object => {
-        if (
-            object.activeflag === 'active' ||
-            (object.type === 'course' && object.activeflag === 'review' && object.authors.includes(userId))
-        ) {
+    const canViewResults = searchResult => Boolean(searchResult.activeflag === 'active' ||
+        (searchResult.type === 'course' && searchResult.activeflag === 'review' && searchResult.authors.includes(userId)));
+
+    searchResults.map(searchResult => {
+        if (canViewResults(searchResult)) {
             let reason = '';
             let updated = '';
             let user = '';
             let showAnswer = false;
-            if (object.type === 'course') {
+            if (searchResult.type === 'course') {
                 relatedObjects.map(dat => {
-                    if (parseInt(dat.objectId) === object.id) {
+                    if (parseInt(dat.objectId) === searchResult.id) {
                         reason = dat.reason;
                         updated = dat.updated;
                         user = dat.user;
@@ -23,8 +23,8 @@ const CourseCollectionResults = ({ searchResults, relatedObjects, userId }) => {
                 });
                 return (
                     <RelatedObject
-                        key={object.id}
-                        data={object}
+                        key={searchResult.id}
+                        data={searchResult}
                         activeLink={true}
                         showRelationshipAnswer={showAnswer}
                         collectionReason={reason}
