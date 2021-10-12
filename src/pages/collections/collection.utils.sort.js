@@ -5,22 +5,22 @@ import _ from 'lodash';
 // more functional programming style then we could avoid this, but for now i've just copied the original functions
 // from the CollectionPage component
 
-const sortByMetadataQuality = filteredData =>
-		filteredData.sort((a, b) =>
-			_.has(a, 'datasetfields.metadataquality.quality_score') && _.has(b, 'datasetfields.metadataquality.quality_score')
-				? b.datasetfields.metadataquality.quality_score - a.datasetfields.metadataquality.quality_score
-				: ''
-		);
+export const sortByMetadataQuality = filteredData =>
+    filteredData.sort((a, b) =>
+        _.has(a, 'datasetfields.metadataquality.quality_score') && _.has(b, 'datasetfields.metadataquality.quality_score')
+            ? b.datasetfields.metadataquality.quality_score - a.datasetfields.metadataquality.quality_score
+            : ''
+    );
 
-	const sortByRecentlyAdded = filteredData => {
-		return filteredData.sort((a, b) => b.updated - a.updated);
-	};
+export const sortByRecentlyAdded = filteredData => {
+    return filteredData.sort((a, b) => b.updated - a.updated);
+};
 
-	const sortByResources = filteredData => {
-		return filteredData.sort((a, b) => b.relatedresources - a.relatedresources);
-	};
+export const sortByResources = filteredData => {
+    return filteredData.sort((a, b) => b.relatedresources - a.relatedresources);
+};
 
-const sortByRelevance = (filteredData, searchCollectionsString) => {
+export const sortByRelevance = (filteredData, searchCollectionsString) => {
     const getCountOfSearchTerm = field => {
 		if (_.isArray(field)) {
 			return field.toString().toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
@@ -70,14 +70,6 @@ const sortByRelevance = (filteredData, searchCollectionsString) => {
     return filteredData.sort((a, b) => b.searchTermInstances - a.searchTermInstances);
 };
 
-const sortByPopularity = filteredData => {
+export const sortByPopularity = filteredData => {
     return filteredData.sort((a, b) => b.counter - a.counter);
 };
-
-export default {
-    sortByMetadataQuality,
-    sortByRecentlyAdded,
-    sortByResources,
-    sortByRelevance,
-    sortByPopularity
-}

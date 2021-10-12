@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { DATASET, PERSON, RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES, METADATA } from './constants';
 
 // TODO: Add tests for this
-const filterCollectionItems  = (objectData, searchCollectionsString) => objectData.map(object => {
+export const filterCollectionItems  = (objectData, searchCollectionsString) => objectData.map(object => {
     // Searching functionality - searches through object data and returns true if there is a match with the search term
     if (
         (_.has(object, 'name') ? object.name.toLowerCase().includes(searchCollectionsString.toLowerCase()) : false) ||
@@ -39,7 +39,7 @@ const filterCollectionItems  = (objectData, searchCollectionsString) => objectDa
     }
 });
 
-const generatePaginatedItems = (key, count, index, paginate) => {
+export const generatePaginatedItems = (key, count, index, paginate) => {
     const items = [];
     const maxResult = 24;
 
@@ -59,7 +59,7 @@ const generatePaginatedItems = (key, count, index, paginate) => {
     return items;
 }
 
-const generateDropdownItems = key => {
+export const generateDropdownItems = key => {
     if (key === DATASET) {
         return [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES, METADATA];
     } else if (key === PERSON) {
@@ -67,10 +67,4 @@ const generateDropdownItems = key => {
     } else {
         return [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES];
     }
-}
-
-export default {
-    filterCollectionItems,
-    generatePaginatedItems,
-    generateDropdownItems
 }
