@@ -6,7 +6,7 @@ const PaperCollectionResults = ({ searchResults, relatedObjects, userId }) => {
     const canViewResults = object => Boolean(object.activeflag === 'active' ||
         (object.type === 'paper' && object.activeflag === 'review' && object.authors.includes(userId)));
 
-    searchResults.map(object => {
+    return searchResults.map(object => {
         if (canViewResults(object)) {
             let reason = '';
             let updated = '';

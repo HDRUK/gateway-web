@@ -3,7 +3,6 @@ import ReactMarkdown from 'react-markdown';
 import queryString from 'query-string';
 import { Row, Col, Tabs, Tab, Container, Alert, Pagination } from 'react-bootstrap';
 import Loading from '../commonComponents/Loading';
-import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import 'react-tabs/style/react-tabs.css';
 import DiscourseTopic from '../discourse/DiscourseTopic';

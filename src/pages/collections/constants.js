@@ -1,17 +1,7 @@
-const DATASET = "dataset";
-const PERSON = "person";
-const RELEVANCE = "relevance";
-const POPULARITY = "popularity";
-const RECENTLYADDED = "recentlyadded";
-const RESOURCES = "resources";
-const METADATA = "metadata";
-
-export default {
-    DATASET,
-    PERSON,
-    RELEVANCE,
-    POPULARITY,
-    RECENTLYADDED,
-    RESOURCES,
-    METADATA
-}
+export const DATASET = "dataset";
+export const PERSON = "person";
+export const RELEVANCE = "relevance";
+export const POPULARITY = "popularity";
+export const RECENTLYADDED = "recentlyadded";
+export const RESOURCES = "resources";
+export const METADATA = "metadata";

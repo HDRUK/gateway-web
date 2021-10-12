@@ -6,7 +6,7 @@ const CourseCollectionResults = ({ searchResults, relatedObjects, userId }) => {
     const canViewResults = searchResult => Boolean(searchResult.activeflag === 'active' ||
         (searchResult.type === 'course' && searchResult.activeflag === 'review' && searchResult.authors.includes(userId)));
 
-    searchResults.map(searchResult => {
+    return searchResults.map(searchResult => {
         if (canViewResults(searchResult)) {
             let reason = '';
             let updated = '';

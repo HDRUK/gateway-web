@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import PersonCollectionResults from './index';
 import { getRelatedObjectRequest } from '../../../../services/related-object';
 
-jest.mock('../../../../services/related-object');
+jest.mock('../../../../services/related-object', () => ({ __esModule: true, getRelatedObjectRequest: jest.fn() }));
 
 describe('Given the PersonCollectionResults component', () => {
     describe('When no results can be viewed', () => {
@@ -16,7 +16,7 @@ describe('Given the PersonCollectionResults component', () => {
         ];
 
         test('Then no related results will be rendered', () => {
-            render(<PersonCollectionResults searchResults={searchResults} />);
+            render(<PersonCollectionResults searchResults={searchResults} relatedObjects={[]} />);
             expect(screen.queryByTestId('related-person-object')).toBeFalsy();
         });
     });
@@ -41,7 +41,7 @@ describe('Given the PersonCollectionResults component', () => {
         });
 
         test('Then related results will be rendered', () => {
-            render(<PersonCollectionResults searchResults={searchResults} />);
+            render(<PersonCollectionResults searchResults={searchResults} relatedObjects={[]} />);
             expect(screen.queryByTestId('related-person-object')).toBeTruthy();
         });
     });

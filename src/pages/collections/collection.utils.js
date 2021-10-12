@@ -61,11 +61,11 @@ const generatePaginatedItems = (key, count, index, paginate) => {
 
 const generateDropdownItems = key => {
     if (key === DATASET) {
-        dropdownItems = [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES, METADATA];
+        return [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES, METADATA];
     } else if (key === PERSON) {
-        dropdownItems = [RELEVANCE, POPULARITY, RECENTLYADDED];
+        return [RELEVANCE, POPULARITY, RECENTLYADDED];
     } else {
-        dropdownItems = [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES];
+        return [RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES];
     }
 }
 

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import ProjectCollectionResults from './index';
 import { getRelatedObjectRequest } from '../../../../services/related-object';
 
-jest.mock('../../../../services/related-object');
+jest.mock('../../../../services/related-object', () => ({ __esModule: true, getRelatedObjectRequest: jest.fn() }));
 
 describe('Given the ProjectCollectionResults component', () => {
     describe('When no results can be viewed', () => {
@@ -16,7 +16,7 @@ describe('Given the ProjectCollectionResults component', () => {
         ];
 
         test('Then no related results will be rendered', () => {
-            render(<ProjectCollectionResults searchResults={searchResults} />);
+            render(<ProjectCollectionResults searchResults={searchResults} relatedObjects={[]} />);
             expect(screen.queryByTestId('related-project-object')).toBeFalsy();
         });
     });
@@ -25,7 +25,9 @@ describe('Given the ProjectCollectionResults component', () => {
         const searchResults = [
             { 
                 type: 'project',
-                activeflag: 'active'
+                activeflag: 'active',
+                categories: {},
+                tags: { features: [] }
             }
         ];
 
@@ -38,9 +40,9 @@ describe('Given the ProjectCollectionResults component', () => {
             getRelatedObjectRequest.mockReturnValue([relatedProjectObject]);
         });
 
-        test('Then related results will be rendered', () => {
-            render(<ProjectCollectionResults searchResults={searchResults} />);
-            expect(screen.queryByTestId('related-project-object')).toBeTruthy();
+        test('Then related results will be rendered', async () => {
+            render(<ProjectCollectionResults searchResults={searchResults} relatedObjects={[]} />);
+            expect(await screen.findByTestId('related-project-object')).toBeTruthy();
         });
     });
 });

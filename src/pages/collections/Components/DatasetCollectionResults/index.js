@@ -7,7 +7,7 @@ const DatasetCollectionResults = ({ searchResults, relatedObjects, userId }) => 
         (object.activeflag === 'archive' && object.type === 'dataset') ||
         (object.type === 'dataset' && object.activeflag === 'review' && object.authors.includes(userId)));
 
-    searchResults.map(object => {
+    return searchResults.map(object => {
         if (canViewResults(object)) {
             let reason = '';
             let updated = '';

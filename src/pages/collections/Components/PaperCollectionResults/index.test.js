@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import PaperCollectionResults from './index';
 import { getRelatedObjectRequest } from '../../../../services/related-object';
 
-jest.mock('../../../../services/related-object');
+jest.mock('../../../../services/related-object', () => ({ __esModule: true, getRelatedObjectRequest: jest.fn() }));
 
 describe('Given the PaperCollectionResults component', () => {
     describe('When no results can be viewed', () => {
@@ -16,7 +16,7 @@ describe('Given the PaperCollectionResults component', () => {
         ];
 
         test('Then no related results will be rendered', () => {
-            render(<PaperCollectionResults searchResults={searchResults} />);
+            render(<PaperCollectionResults searchResults={searchResults} relatedObjects={[]} />);
             expect(screen.queryByTestId('related-paper-object')).toBeFalsy();
         });
     });
@@ -25,7 +25,8 @@ describe('Given the PaperCollectionResults component', () => {
         const searchResults = [
             { 
                 type: 'paper',
-                activeflag: 'active'
+                activeflag: 'active',
+                tags: { features: [] }
             }
         ];
 
@@ -42,9 +43,9 @@ describe('Given the PaperCollectionResults component', () => {
             getRelatedObjectRequest.mockReturnValue([relatedPaperObject]);
         });
 
-        test('Then related results will be rendered', () => {
-            render(<PaperCollectionResults searchResults={searchResults} />);
-            expect(screen.queryByTestId('related-paper-object')).toBeTruthy();
+        test('Then related results will be rendered', async () => {
+            render(<PaperCollectionResults searchResults={searchResults} relatedObjects={[]} />);
+            expect(await screen.findByTestId('related-paper-object')).toBeTruthy();
         });
     });
 });

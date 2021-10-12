@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import CourseCollectionResults from './index';
 import { getRelatedObjectForCourseRequest } from '../../../../services/related-object';
 
-jest.mock('../../../../services/related-object');
+jest.mock('../../../../services/related-object', () => ({ __esModule: true, getRelatedObjectForCourseRequest: jest.fn() }));
 
 describe('Given the CourseCollectionResults component', () => {
     describe('When no results can be viewed', () => {
@@ -16,7 +16,7 @@ describe('Given the CourseCollectionResults component', () => {
         ];
 
         test('Then no related results will be rendered', () => {
-            render(<CourseCollectionResults searchResults={searchResults} />);
+            render(<CourseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
             expect(screen.queryByTestId('related-course-object')).toBeFalsy();
         });
     });
@@ -25,7 +25,8 @@ describe('Given the CourseCollectionResults component', () => {
         const searchResults = [
             { 
                 type: 'course',
-                activeflag: 'active'
+                activeflag: 'active',
+                courseOptions: []
             }
         ];
 
@@ -33,16 +34,17 @@ describe('Given the CourseCollectionResults component', () => {
             id: 'id',
             type: 'course',
             title: 'title',
-            provider: 'provider'
+            provider: 'provider',
+            courseOptions: []
         };
 
         beforeAll(() => {
-            getRelatedObjectForCourseRequest.mockReturnValue([relatedCourseObject]);
+            getRelatedObjectForCourseRequest.mockResolvedValue([relatedCourseObject]);
         });
 
-        test('Then related results will be rendered', () => {
-            render(<CourseCollectionResults searchResults={searchResults} />);
-            expect(screen.queryByTestId('related-course-object')).toBeTruthy();
+        test('Then related results will be rendered', async () => {
+            render(<CourseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
+            expect(await screen.findByTestId('related-course-object')).toBeTruthy();
         });
     });
 });

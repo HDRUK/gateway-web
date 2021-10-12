@@ -181,7 +181,7 @@ class RelatedObject extends React.Component {
 						{(() => {
 							if (data.type === 'tool') {
 								return (
-									<Row data-test-id='related-tool-object' className='noMargin'>
+									<Row data-testid='related-tool-object' className='noMargin'>
 										<Col sm={10} lg={10} className='pad-left-24'>
 											{activeLink === true ? (
 												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/tool/' + data.id}>
@@ -363,7 +363,7 @@ class RelatedObject extends React.Component {
 								);
 							} else if (data.type === 'project') {
 								return (
-									<Row data-test-id='related-project-object' className='noMargin'>
+									<Row data-testid='related-project-object' className='noMargin'>
 										<Col sm={10} lg={10} className='pad-left-24'>
 											{activeLink === true ? (
 												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/project/' + data.id}>
@@ -505,7 +505,7 @@ class RelatedObject extends React.Component {
 								);
 							} else if (data.type === 'paper') {
 								return (
-									<Row data-test-id='related-paper-object' className='noMargin'>
+									<Row data-testid='related-paper-object' className='noMargin'>
 										<Col sm={10} lg={10} className='pad-left-24'>
 											{activeLink === true ? (
 												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/paper/' + data.id}>
@@ -609,7 +609,7 @@ class RelatedObject extends React.Component {
 								);
 							} else if (data.type === 'person') {
 								return (
-									<Row data-test-id='related-person-object' className='noMargin pad-left-24'>
+									<Row data-testid='related-person-object' className='noMargin pad-left-24'>
 										<Col className='iconHolder noPadding widthAuto'>
 											<div class='avatar-circle'>
 												<span class='initials'>
@@ -647,7 +647,7 @@ class RelatedObject extends React.Component {
 								);
 							} else if (data.type === 'course') {
 								return (
-									<Row data-test-id='related-course-object' className='noMargin'>
+									<Row data-testid='related-course-object' className='noMargin'>
 										<Col sm={10} lg={10} className='pad-left-24'>
 											{activeLink === true ? (
 												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/course/' + data.id}>
@@ -784,7 +784,7 @@ class RelatedObject extends React.Component {
 								//default to dataset
 								if (data.type === 'dataset' && data.activeflag === 'archive') {
 									return (
-										<Row data-test-id='related-dataset-object-archived' className='noMargin pad-left-24'>
+										<Row data-testid='related-dataset-object-archived' className='noMargin pad-left-24'>
 											<Col sm={10} lg={10} className='entity-deleted-edit gray800-14'>
 												The dataset '{data.name}' has been deleted by the publisher
 											</Col>
@@ -806,7 +806,7 @@ class RelatedObject extends React.Component {
 									phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase()
 								);
 								return (
-									<Row data-test-id='related-dataset-object' className='noMargin'>
+									<Row data-testid='related-dataset-object' className='noMargin'>
 										<Col sm={10} lg={10} className='pad-left-24'>
 											{activeLink === true ? (
 												<a
