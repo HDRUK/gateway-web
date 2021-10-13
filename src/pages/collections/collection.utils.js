@@ -1,3 +1,4 @@
+import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import _ from 'lodash';
 import { DATASET, PERSON, RELEVANCE, POPULARITY, RECENTLYADDED, RESOURCES, METADATA } from './constants';

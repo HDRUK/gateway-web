@@ -29,7 +29,7 @@ const useGetCollectionRelatedObjectsRequest = (requestOptions, queryOptions = { 
 };
 
 const usePostCollectionCounterUpdateRequest = (requestOptions, mutateOptions = { queryKey: 'postCollectionCounterUpdateRequest' }) => {
-	return useMutation((data) => postDataAccessRequest(data, requestOptions), {
+	return useMutation((data) => postCollectionCounterUpdateRequest(data, requestOptions), {
 		mutateOptions,
 	});
 };

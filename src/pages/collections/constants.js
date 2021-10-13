@@ -5,3 +5,4 @@ export const POPULARITY = "popularity";
 export const RECENTLYADDED = "recentlyadded";
 export const RESOURCES = "resources";
 export const METADATA = "metadata";
+export const MAXRESULT = 24;

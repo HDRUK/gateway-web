@@ -17,9 +17,10 @@ import SVGIcon from '../../images/SVGIcon';
 import './Collections.scss';
 import CollectionsSearch from './CollectionsSearch';
 import googleAnalytics from '../../tracking';
-import { getCollectionRequest, postCollectionCounterUpdateRequest, getCollectionRelatedObjectsRequest } from '../../services/collection';
+import collectionService from '../../services/collection';
 import { filterCollectionItems, generatePaginatedItems, generateDropdownItems } from './collection.utils';
 import { sortByMetadataQuality, sortByRecentlyAdded, sortByResources, sortByRelevance, sortByPopularity } from './collection.utils.sort';
+import { MAXRESULT } from './constants';
 import DatasetCollectionResults from './Components/DatasetCollectionResults';
 import ToolCollectionResults from './Components/ToolCollectionResults';
 import ProjectCollectionResults from './Components/ProjectCollectionResults';
@@ -82,7 +83,7 @@ export const CollectionPage = props => {
 
 	const getCollectionDataFromApi = async () => {
 		setIsLoading(true);
-		await getCollectionRequest(props.match.params.collectionID).then(async res => {
+		await collectionService.getCollectionRequest(props.match.params.collectionID).then(async res => {
 			if (_.isNil(res.data)) {
 				// Redirect user if invalid collection id is supplied
 				window.localStorage.setItem('redirectMsg', `Collection not found for Id: ${props.match.params.collectionID}`);
@@ -90,7 +91,7 @@ export const CollectionPage = props => {
 			} else {
 				const localCollectionData = res.data.data[0];
 				let counter = !localCollectionData.counter ? 1 : localCollectionData.counter + 1;
-				postCollectionCounterUpdateRequest({ id: props.match.params.collectionID, counter});
+				collectionService.postCollectionCounterUpdateRequest({ id: props.match.params.collectionID, counter});
 
 				setCollectionData(res.data.data[0]);
 				getObjectData();
@@ -100,7 +101,7 @@ export const CollectionPage = props => {
 	};
 
 	const getObjectData = async () => {
-		await getCollectionRelatedObjectsRequest(props.match.params.collectionID).then(async res => {
+		await collectionService.getCollectionRelatedObjectsRequest(props.match.params.collectionID).then(async res => {
 			setObjectData(res.data.data);
 			setFilteredData(res.data.data);
 			countEntities(res.data.data);
@@ -482,12 +483,12 @@ export const CollectionPage = props => {
 						}
 
 						<div className='text-center'>
-							{key === 'dataset' && datasetCount > maxResult ? <Pagination>{datasetPaginationItems}</Pagination> : ''}
-							{key === 'tool' && toolCount > maxResult ? <Pagination>{toolPaginationItems}</Pagination> : ''}
-							{key === 'project' && projectCount > maxResult ? <Pagination>{projectPaginationItems}</Pagination> : ''}
-							{key === 'paper' && paperCount > maxResult ? <Pagination>{paperPaginationItems}</Pagination> : ''}
-							{key === 'person' && personCount > maxResult ? <Pagination>{personPaginationItems}</Pagination> : ''}
-							{key === 'course' && courseCount > maxResult ? <Pagination>{coursePaginationItems}</Pagination> : ''}
+							{key === 'dataset' && datasetCount > MAXRESULT ? <Pagination>{datasetPaginationItems}</Pagination> : ''}
+							{key === 'tool' && toolCount > MAXRESULT ? <Pagination>{toolPaginationItems}</Pagination> : ''}
+							{key === 'project' && projectCount > MAXRESULT ? <Pagination>{projectPaginationItems}</Pagination> : ''}
+							{key === 'paper' && paperCount > MAXRESULT ? <Pagination>{paperPaginationItems}</Pagination> : ''}
+							{key === 'person' && personCount > MAXRESULT ? <Pagination>{personPaginationItems}</Pagination> : ''}
+							{key === 'course' && courseCount > MAXRESULT ? <Pagination>{coursePaginationItems}</Pagination> : ''}
 						</div>
 					</Col>
 					<Col sm={1} lg={10} />

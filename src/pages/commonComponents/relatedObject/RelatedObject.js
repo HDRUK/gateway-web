@@ -9,7 +9,7 @@ import { ReactComponent as CalendarSvg } from '../../../images/calendaricon.svg'
 import _ from 'lodash';
 import removeMd from 'remove-markdown';
 import googleAnalytics from '../../../tracking';
-import { getRelatedObjectRequest, getRelatedObjectForCourseRequest } from '../../../services/related-object';
+import relatedObjectService from '../../../services/related-object';
 
 var baseURL = require('../BaseURL').getURL();
 var cmsURL = require('../BaseURL').getCMSURL();
@@ -78,14 +78,14 @@ class RelatedObject extends React.Component {
 		this.setState({ isLoading: true });
 
 		if (type === 'course') {
-			getRelatedObjectForCourseRequest(id).then(res => {
+			relatedObjectService.getRelatedObjectForCourseRequest(id).then(res => {
 				this.setState({
 					data: res.data.data[0],
 					isLoading: false,
 				});
 			});
 		} else {
-			getRelatedObjectRequest(id).then(res => {
+			relatedObjectService.getRelatedObjectRequest(id).then(res => {
 				this.setState({
 					data: res.data.data[0],
 					isCohortDiscovery: res.data.data[0].isCohortDiscovery || false,
