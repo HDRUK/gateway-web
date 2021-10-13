@@ -21,6 +21,10 @@ describe('Given the papers service', () => {
 		wrapper.unmount();
 	});
 
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
+
 	describe('When getPapers is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
 			await service.getPapers({
@@ -51,7 +55,7 @@ describe('Given the papers service', () => {
 				option1: true,
 			});
 
-			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/papers/1234`, {
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/papers/edit/1234`, {
 				option1: true,
 			});
 		});
@@ -132,79 +136,54 @@ describe('Given the papers service', () => {
 	describe('When useGetPapers is called', () => {
 		it('Then calls getPapers with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getPapers');
+			const rendered = renderHook(() => service.useGetPapers({ option1: true }), { wrapper });
 
-			const { waitFor, result } = renderHook(() => service.useGetPapers({ option1: true }), { wrapper });
-
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch().then(() => {
-				expect(getSpy).toHaveBeenCalled();
-			});
+			assertServiceRefetchCalled(rendered, getSpy);
 		});
 	});
 
 	describe('When useGetPaper is called', () => {
 		it('Then calls getPaper with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getPaper');
-			const { waitFor, result } = renderHook(() => service.useGetPaper({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetPaper({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch('1234').then(() => {
-				expect(getSpy).toHaveBeenCalledWith('1234');
-			});
+			assertServiceRefetchCalled(rendered, getSpy, '1234');
 		});
 	});
 
 	describe('When useGetEdit is called', () => {
 		it('Then calls getPaper with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getEdit');
-			const { waitFor, result } = renderHook(() => service.useGetEdit({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetEdit({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch('1234').then(() => {
-				expect(getSpy).toHaveBeenCalledWith('1234');
-			});
+			assertServiceRefetchCalled(rendered, getSpy, '1234');
 		});
 	});
 
 	describe('When usePostPaper is called', () => {
 		it('Then calls postPaper with the correct arguments', async () => {
 			const postSpy = jest.spyOn(service, 'postPaper');
-			const { waitFor, result } = renderHook(() => service.usePostPaper({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePostPaper({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(postSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When usePutPaper is called', () => {
 		it('Then calls putPaper with the correct arguments', async () => {
 			const putSpy = jest.spyOn(service, 'putPaper');
-			const { waitFor, result } = renderHook(() => service.usePutPaper({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePutPaper({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(putSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When usePatchPaper is called', () => {
 		it('Then calls patchPaper with the correct arguments', async () => {
 			const putSpy = jest.spyOn(service, 'patchPaper');
-			const { waitFor, result } = renderHook(() => service.usePatchPaper({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePatchPaper({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(putSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
 		});
 	});
 

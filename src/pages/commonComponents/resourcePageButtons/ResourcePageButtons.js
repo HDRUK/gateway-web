@@ -32,13 +32,18 @@ const ResourcePageButtons = props => {
 			)}
 
 			{props.data.type === 'dataset' ? (
-				<Button
-					variant='white'
-					href={'https://metadata-catalogue.org/hdruk/#/catalogue/dataModel/' + props.data.datasetid}
-					target='_blank'
-					className='techDetailButton mr-2'>
-					Technical details
-				</Button>
+				<>
+					<Button variant='white' onClick={props.exportCitation} className='techDetailButton mr-2'>
+						Export citation
+					</Button>
+					<Button
+						variant='white'
+						href={'https://metadata-catalogue.org/hdruk/#/catalogue/dataModel/' + props.data.datasetid}
+						target='_blank'
+						className='techDetailButton mr-2'>
+						Technical details
+					</Button>
+				</>
 			) : (
 				''
 			)}

@@ -20,6 +20,10 @@ describe('Given the dataset-onboarding service', () => {
 		wrapper.unmount();
 	});
 
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
+
 	describe('When getDatasetOnboardings is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
 			await service.getDatasetOnboardings({
@@ -119,78 +123,54 @@ describe('Given the dataset-onboarding service', () => {
 	describe('When useGetDatasetOnboardings is called', () => {
 		it('Then calls getDatasetOnboardings with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getDatasetOnboardings');
-			const { waitFor, result } = renderHook(() => service.useGetDatasetOnboardings({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetDatasetOnboardings({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch().then(() => {
-				expect(getSpy).toHaveBeenCalled();
-			});
+			assertServiceRefetchCalled(rendered, getSpy);
 		});
 	});
 
 	describe('When useGetDatasetOnboarding is called', () => {
 		it('Then calls getDatasetOnboarding with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getDatasetOnboarding');
-			const { waitFor, result } = renderHook(() => service.useGetDatasetOnboarding({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetDatasetOnboarding({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch('1234').then(() => {
-				expect(getSpy).toHaveBeenCalledWith('1234');
-			});
+			assertServiceRefetchCalled(rendered, getSpy, '1234');
 		});
 	});
 
 	describe('When usePostDatasetOnboarding is called', () => {
 		it('Then calls postDatasetOnboarding with the correct arguments', async () => {
 			const postSpy = jest.spyOn(service, 'postDatasetOnboarding');
-			const { waitFor, result } = renderHook(() => service.usePostDatasetOnboarding({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePostDatasetOnboarding({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(postSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When usePutDatasetOnboarding is called', () => {
 		it('Then calls putDatasetOnboarding with the correct arguments', async () => {
 			const putSpy = jest.spyOn(service, 'putDatasetOnboarding');
-			const { waitFor, result } = renderHook(() => service.usePutDatasetOnboarding({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePutDatasetOnboarding({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(putSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When usePatchDatasetOnboarding is called', () => {
 		it('Then calls patchDatasetOnboarding with the correct arguments', async () => {
 			const putSpy = jest.spyOn(service, 'patchDatasetOnboarding');
-			const { waitFor, result } = renderHook(() => service.usePatchDatasetOnboarding({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePatchDatasetOnboarding({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(putSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When useDeleteDatasetOnboarding is called', () => {
 		it('Then calls deleteDatasetOnboarding with the correct arguments', async () => {
 			const deleteSpy = jest.spyOn(service, 'deleteDatasetOnboarding');
-			const { waitFor, result } = renderHook(() => service.useDeleteDatasetOnboarding({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useDeleteDatasetOnboarding({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch('1234').then(() => {
-				expect(deleteSpy).toHaveBeenCalledWith('1234');
-			});
+			assertServiceRefetchCalled(rendered, deleteSpy, '1234');
 		});
 	});
 });

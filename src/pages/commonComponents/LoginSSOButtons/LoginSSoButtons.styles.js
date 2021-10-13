@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 
 export const btnImg = css`
 	width: 20px;
+	height: 20px;
 	float: left;
 `;
 export const btn = css`

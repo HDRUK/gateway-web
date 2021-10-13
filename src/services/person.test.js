@@ -21,6 +21,10 @@ describe('Given the person service', () => {
 		wrapper.unmount();
 	});
 
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
+
 	describe('When getPersons is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
 			await service.getPersons({
@@ -96,7 +100,7 @@ describe('Given the person service', () => {
 			);
 
 			expect(putRequest).toHaveBeenCalledWith(
-				`${apiURL}/person/1234`,
+				`${apiURL}/person/unsubscribe/1234`,
 				{
 					status: 'archive',
 				},
@@ -136,7 +140,7 @@ describe('Given the person service', () => {
 			);
 
 			expect(patchRequest).toHaveBeenCalledWith(
-				`${apiURL}/person/1234`,
+				`${apiURL}/person/profileComplete/1234`,
 				{
 					status: 'archive',
 				},
@@ -160,105 +164,72 @@ describe('Given the person service', () => {
 	describe('When useGetPersons is called', () => {
 		it('Then calls getPersons with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getPersons');
+			const rendered = renderHook(() => service.useGetPersons({ option1: true }), { wrapper });
 
-			const { waitFor, result } = renderHook(() => service.useGetPersons({ option1: true }), { wrapper });
-
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch().then(() => {
-				expect(getSpy).toHaveBeenCalled();
-			});
+			assertServiceRefetchCalled(rendered, getSpy);
 		});
 	});
 
 	describe('When useGetPerson is called', () => {
 		it('Then calls getPerson with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getPerson');
-			const { waitFor, result } = renderHook(() => service.useGetPerson({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetPerson({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch('1234').then(() => {
-				expect(getSpy).toHaveBeenCalledWith('1234');
-			});
+			assertServiceRefetchCalled(rendered, getSpy, '1234');
 		});
 	});
 
 	describe('When usePostPerson is called', () => {
 		it('Then calls postPerson with the correct arguments', async () => {
 			const postSpy = jest.spyOn(service, 'postPerson');
-			const { waitFor, result } = renderHook(() => service.usePostPerson({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePostPerson({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(postSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When usePutPerson is called', () => {
 		it('Then calls putPerson with the correct arguments', async () => {
 			const putSpy = jest.spyOn(service, 'putPerson');
-			const { waitFor, result } = renderHook(() => service.usePutPerson({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePutPerson({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(putSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When usePutUnsubscribe is called', () => {
 		it('Then calls putUnsubscribe with the correct arguments', async () => {
 			const putSpy = jest.spyOn(service, 'putUnsubscribe');
-			const { waitFor, result } = renderHook(() => service.usePutUnsubscribe({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePutUnsubscribe({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(putSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When usePatchPerson is called', () => {
 		it('Then calls patchPerson with the correct arguments', async () => {
 			const putSpy = jest.spyOn(service, 'patchPerson');
-			const { waitFor, result } = renderHook(() => service.usePatchPerson({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePatchPerson({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(putSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When usePatchProfileComplete is called', () => {
 		it('Then calls patchPerson with the correct arguments', async () => {
 			const putSpy = jest.spyOn(service, 'patchProfileComplete');
-			const { waitFor, result } = renderHook(() => service.usePatchProfileComplete({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePatchProfileComplete({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(putSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
 		});
 	});
 
 	describe('When useDeletePerson is called', () => {
 		it('Then calls deletePerson with the correct arguments', async () => {
 			const deleteSpy = jest.spyOn(service, 'deletePerson');
-			const { waitFor, result } = renderHook(() => service.useDeletePerson({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useDeletePerson({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch('1234').then(() => {
-				expect(deleteSpy).toHaveBeenCalledWith('1234');
-			});
+			assertServiceRefetchCalled(rendered, deleteSpy, '1234');
 		});
 	});
 });

@@ -1,9 +1,9 @@
 {
-    "setupFiles": ["raf/polyfill", "<rootDir>/src/setupTests.js"],
-    "moduleNameMapper": {
-        "\\.(css|less|sass|scss)$": "<rootDir>/test/mocks/styleMock.js",
-        "\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/mocks/fileMock.js",
-        "\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js"
-    },
-    "coveragePathIgnorePatterns": [".stories.js", ".styles.js", "index.js", "configs"]
+	"setupFiles": ["raf/polyfill", "<rootDir>/src/setupTests.js"],
+	"moduleNameMapper": {
+		"\\.(css|less|sass|scss)$": "<rootDir>/test/mocks/styleMock.js",
+		"\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/mocks/fileMock.js",
+		"\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js"
+	},
+	"coveragePathIgnorePatterns": ["Mock.js", ".stories.js", ".styles.js", "index.js", "configs"]
 }

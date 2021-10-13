@@ -63,7 +63,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
 							{' '}
 							<a
 								target='_blank'
-								href={`${communityLink}/t/about-the-site-feedback-category/1`}
+								href={`${communityLink}/t/how-to-submit-a-feature-request-or-feedback/1`}
 								data-testid='communityLink'
 								rel='noopener noreferrer'>
 								Suggest another Indentity Provider
@@ -73,7 +73,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
 					<Col sm={6} lg={5}>
 						{lastChoice ? (
 							<span>
-								<img src={lastChoiceSVG} css={styles.btnImg} data-testid='lastChoiceNote' alt='lastChoice' /> Last Time you clicked this
+								<img src={lastChoiceSVG} css={styles.btnImg} data-testid='lastChoiceNote' alt='lastChoice' /> Last time you clicked this
 								button
 							</span>
 						) : null}

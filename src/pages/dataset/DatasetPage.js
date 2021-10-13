@@ -82,6 +82,7 @@ class DatasetDetail extends Component {
 		showAllPhenotype: false,
 		showAllLinkedDatasets: false,
 		showEmpty: false,
+		showCitationSuccess: false,
 		emptyFlagDetails: false,
 		emptyFlagCoverage: false,
 		emptyFlagFormats: false,
@@ -653,6 +654,25 @@ class DatasetDetail extends Component {
 		this.setState({ showAllLinkedDatasets: true });
 	};
 
+	exportCitation = () => {
+		const data = this.state.data;
+		const year = new Date(data.datasetv2.provenance.temporal.distributionReleaseDate).getFullYear();
+		navigator.clipboard.writeText(
+			data.datasetv2.summary.publisher.name +
+				'(' +
+				year +
+				').' +
+				data.name +
+				'.' +
+				data.datasetVersion +
+				'.' +
+				data.type +
+				'.' +
+				data.datasetv2.summary.doiName
+		);
+		this.setState({ showCitationSuccess: true });
+	};
+
 	render() {
 		const {
 			searchString,
@@ -795,6 +815,13 @@ class DatasetDetail extends Component {
 						<Row className='mt-4'>
 							<Col sm={1} />
 							<Col sm={10}>
+								{this.state.showCitationSuccess && (
+									<Alert variant='success' className='citation-banner green-banner'>
+										<Row>
+											<Col>Citation has been copied to clipboard.</Col>
+										</Row>
+									</Alert>
+								)}
 								{alert ? <Alert variant={alert.type}>{alert.message}</Alert> : null}
 								<div className='rectangle'>
 									<Row>
@@ -1422,7 +1449,7 @@ class DatasetDetail extends Component {
 					</SideDrawer>
 
 					<ActionBar userState={userState} showOverride={true}>
-						<ResourcePageButtons data={data} userState={userState} />
+						<ResourcePageButtons data={data} userState={userState} exportCitation={this.exportCitation} />
 					</ActionBar>
 
 					<DataSetModal
