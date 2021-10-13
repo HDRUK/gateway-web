@@ -20,6 +20,10 @@ describe('Given the collection service', () => {
 		wrapper.unmount();
 	});
 
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
+
     describe('When getCollectionRequest is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
 			await service.getCollectionRequest('1234', {
@@ -62,40 +66,27 @@ describe('Given the collection service', () => {
     describe('When useGetCollectionRequest is called', () => {
 		it('Then calls getCollectionRequest with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getCollectionRequest');
-			const { waitFor, result } = renderHook(() => service.useGetCollectionRequest({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetCollectionRequest({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch('1234').then(() => {
-				expect(getSpy).toHaveBeenCalledWith('1234');
-			});
+			assertServiceRefetchCalled(rendered, getSpy);
 		});
 	});
 
     describe('When useGetCollectionRelatedObjectsRequest is called', () => {
 		it('Then calls getCollectionRelatedObjectsRequest with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getCollectionRelatedObjectsRequest');
-			const { waitFor, result } = renderHook(() => service.useGetCollectionRelatedObjectsRequest({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetCollectionRelatedObjectsRequest({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
-
-			result.current.refetch('1234').then(() => {
-				expect(getSpy).toHaveBeenCalledWith('1234');
-			});
+			assertServiceRefetchCalled(rendered, getSpy, '1234');
 		});
 	});
 
     describe('When usePostCollectionCounterUpdateRequest is called', () => {
 		it('Then calls postCollectionCounterUpdateRequest with the correct arguments', async () => {
 			const postSpy = jest.spyOn(service, 'postCollectionCounterUpdateRequest');
-			const { waitFor, result } = renderHook(() => service.usePostCollectionCounterUpdateRequest({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.usePostCollectionCounterUpdateRequest({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
-
-			result.current.mutateAsync('1234', { status: 'archive' }).then(() => {
-				expect(postSpy).toHaveBeenCalledWith('1234', { status: 'archive' });
-			});
+			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
 		});
 	});
-
 });
