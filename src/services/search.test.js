@@ -30,21 +30,21 @@ describe('Given the search service', () => {
 				option1: true,
 			});
 
-			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/search/topic/paper`, {
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/search/filter/topic/paper`, {
 				option1: true,
 			});
 		});
 	});
 
 	describe('When useGetSearch is called', () => {
-		it('Then calls getRequest with the correct arguments', async () => {
+		it('Then calls getSearch with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getSearch');
 			const { waitFor, result } = renderHook(() => service.useGetSearch({ option1: true }), { wrapper });
 
 			await waitFor(() => result.current.mutateAsync);
 
 			result.current.mutateAsync('topic/paper', { status: 'archive' }).then(() => {
-				expect(getSpy).toHaveBeenCalledWith(`${apiURL}/search/topic/paper`, {
+				expect(getSpy).toHaveBeenCalledWith(`${apiURL}/search/filter/topic/paper`, {
 					option1: true,
 					params: { status: 'archive' },
 				});

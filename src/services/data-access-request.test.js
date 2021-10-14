@@ -48,6 +48,18 @@ describe('Given the data-access-request service', () => {
 		});
 	});
 
+	describe('When getDatasets is called', () => {
+		it('Then calls getRequest with the correct arguments', async () => {
+			await service.getDatasets('1234', {
+				option1: true,
+			});
+
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/data-access-request/datasets`, {
+				option1: true,
+			});
+		});
+	});
+
 	describe('When postDataAccessRequest is called', () => {
 		it('Then calls postRequest with the correct arguments', async () => {
 			await service.postDataAccessRequest(
@@ -60,6 +72,86 @@ describe('Given the data-access-request service', () => {
 
 			expect(postRequest).toHaveBeenCalledWith(
 				`${apiURL}/data-access-request/1234`,
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+		});
+	});
+
+	describe('When postRequestAmendments is called', () => {
+		it('Then calls postRequest with the correct arguments', async () => {
+			await service.postRequestAmendments(
+				'1234',
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+
+			expect(postRequest).toHaveBeenCalledWith(
+				`${apiURL}/data-access-request/1234/requestAmendments`,
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+		});
+	});
+
+	describe('When postActions is called', () => {
+		it('Then calls postRequest with the correct arguments', async () => {
+			await service.postActions(
+				'1234',
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+
+			expect(postRequest).toHaveBeenCalledWith(
+				`${apiURL}/data-access-request/1234/actions`,
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+		});
+	});
+
+	describe('When postAmendments is called', () => {
+		it('Then calls postRequest with the correct arguments', async () => {
+			await service.postAmendments(
+				'1234',
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+
+			expect(postRequest).toHaveBeenCalledWith(
+				`${apiURL}/data-access-request/1234/amendments`,
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+		});
+	});
+
+	describe('When postMessages is called', () => {
+		it('Then calls postRequest with the correct arguments', async () => {
+			await service.postMessages(
+				'1234',
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+
+			expect(postRequest).toHaveBeenCalledWith(
+				`${apiURL}/data-access-request/1234/messages`,
 				{
 					status: 'archive',
 				},
@@ -138,10 +230,55 @@ describe('Given the data-access-request service', () => {
 		});
 	});
 
+	describe('When useGetDatasets is called', () => {
+		it('Then calls getDatasets with the correct arguments', async () => {
+			const getSpy = jest.spyOn(service, 'getDatasets');
+			const rendered = renderHook(() => service.useGetDatasets({ option1: true }), { wrapper });
+
+			assertServiceRefetchCalled(rendered, getSpy);
+		});
+	});
+
 	describe('When usePostDataAccessRequest is called', () => {
 		it('Then calls postDataAccessRequest with the correct arguments', async () => {
 			const postSpy = jest.spyOn(service, 'postDataAccessRequest');
 			const rendered = renderHook(() => service.usePostDataAccessRequest({ option1: true }), { wrapper });
+
+			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
+		});
+	});
+
+	describe('When usePostRequestAmendments is called', () => {
+		it('Then calls postActions with the correct arguments', async () => {
+			const postSpy = jest.spyOn(service, 'postRequestAmendments');
+			const rendered = renderHook(() => service.usePostRequestAmendments({ option1: true }), { wrapper });
+
+			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
+		});
+	});
+
+	describe('When usePostActions is called', () => {
+		it('Then calls postActions with the correct arguments', async () => {
+			const postSpy = jest.spyOn(service, 'postActions');
+			const rendered = renderHook(() => service.usePostActions({ option1: true }), { wrapper });
+
+			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
+		});
+	});
+
+	describe('When usePostAmendments is called', () => {
+		it('Then calls postAmendments with the correct arguments', async () => {
+			const postSpy = jest.spyOn(service, 'postAmendments');
+			const rendered = renderHook(() => service.usePostAmendments({ option1: true }), { wrapper });
+
+			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
+		});
+	});
+
+	describe('When usePostMessages is called', () => {
+		it('Then calls postAmendments with the correct arguments', async () => {
+			const postSpy = jest.spyOn(service, 'postMessages');
+			const rendered = renderHook(() => service.usePostMessages({ option1: true }), { wrapper });
 
 			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
 		});

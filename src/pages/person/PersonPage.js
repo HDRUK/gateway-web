@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import PersonTitle from './components/PersonTitle';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
@@ -12,6 +13,7 @@ import Project from '../commonComponents/Project';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
+import ErrorModal from '../commonComponents/errorModal';
 import _ from 'lodash';
 let baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -115,69 +117,71 @@ const PersonDetail = props => {
 			: [];
 
 	return (
-		<div>
-			<SearchBar
-				ref={searchBar}
-				searchString={searchString}
-				doSearchMethod={doSearch}
-				doUpdateSearchString={updateSearchString}
-				doToggleDrawer={toggleDrawer}
-				userState={userState}
-			/>
-			<Container className='mb-5'>
-				<PersonTitle data={data} activeLink={true} />
+		<Sentry.ErrorBoundary fallback={<ErrorModal />}>
+			<div>
+				<SearchBar
+					ref={searchBar}
+					searchString={searchString}
+					doSearchMethod={doSearch}
+					doUpdateSearchString={updateSearchString}
+					doToggleDrawer={toggleDrawer}
+					userState={userState}
+				/>
+				<Container className='mb-5'>
+					<PersonTitle data={data} activeLink={true} />
 
-				<Row className='mt-3'>
-					<Col sm={1} lg={1} />
-					<Col sm={10} lg={10}>
-						<div>
-							<Tabs className='tabsBackground gray700-13'>
-								<Tab eventKey='Tools' title={'Tools (' + tools.length + ')'}>
-									{tools.length <= 0 ? (
-										<NotFound word='tools' />
-									) : (
-										tools.map(tool => {
-											return <Tool id={tool.id} activeLink={true} />;
-										})
-									)}
-								</Tab>
-								<Tab eventKey='Reviews' title={'Reviews (' + reviews.length + ')'}>
-									{reviews.length <= 0 ? (
-										<NotFound word='reviews' />
-									) : (
-										reviews.map(review => {
-											return <ReviewsTitle id={review.reviewID} />;
-										})
-									)}
-								</Tab>
-								<Tab eventKey='Data sets' title={'Data sets (' + data.datasetids.length + ')'}>
-									{data.datasetids.length <= 0 ? (
-										<NotFound word='data sets' />
-									) : (
-										data.datasetids.map(id => <DataSet id={id} activeLink={true} />)
-									)}
-								</Tab>
-								<Tab eventKey='Projects' title={'Projects (' + projects.length + ')'}>
-									{projects.length <= 0 ? (
-										<NotFound word='projects' />
-									) : (
-										projects.map(project => {
-											return <Project id={project.id} activeLink={true} />;
-										})
-									)}
-								</Tab>
-							</Tabs>
-						</div>
-					</Col>
-					<Col sm={1} lg={1} />
-				</Row>
-			</Container>
-			<SideDrawer open={showDrawer} closed={toggleDrawer}>
-				<UserMessages userState={userState[0]} closed={toggleDrawer} toggleModal={toggleModal} drawerIsOpen={showDrawer} />
-			</SideDrawer>
+					<Row className='mt-3'>
+						<Col sm={1} lg={1} />
+						<Col sm={10} lg={10}>
+							<div>
+								<Tabs className='tabsBackground gray700-13'>
+									<Tab eventKey='Tools' title={'Tools (' + tools.length + ')'}>
+										{tools.length <= 0 ? (
+											<NotFound word='tools' />
+										) : (
+											tools.map(tool => {
+												return <Tool id={tool.id} activeLink={true} />;
+											})
+										)}
+									</Tab>
+									<Tab eventKey='Reviews' title={'Reviews (' + reviews.length + ')'}>
+										{reviews.length <= 0 ? (
+											<NotFound word='reviews' />
+										) : (
+											reviews.map(review => {
+												return <ReviewsTitle id={review.reviewID} />;
+											})
+										)}
+									</Tab>
+									<Tab eventKey='Data sets' title={'Data sets (' + data.datasetids.length + ')'}>
+										{data.datasetids.length <= 0 ? (
+											<NotFound word='data sets' />
+										) : (
+											data.datasetids.map(id => <DataSet id={id} activeLink={true} />)
+										)}
+									</Tab>
+									<Tab eventKey='Projects' title={'Projects (' + projects.length + ')'}>
+										{projects.length <= 0 ? (
+											<NotFound word='projects' />
+										) : (
+											projects.map(project => {
+												return <Project id={project.id} activeLink={true} />;
+											})
+										)}
+									</Tab>
+								</Tabs>
+							</div>
+						</Col>
+						<Col sm={1} lg={1} />
+					</Row>
+				</Container>
+				<SideDrawer open={showDrawer} closed={toggleDrawer}>
+					<UserMessages userState={userState[0]} closed={toggleDrawer} toggleModal={toggleModal} drawerIsOpen={showDrawer} />
+				</SideDrawer>
 
-			<DataSetModal open={showModal} context={context} closed={toggleModal} userState={userState[0]} />
-		</div>
+				<DataSetModal open={showModal} context={context} closed={toggleModal} userState={userState[0]} />
+			</div>
+		</Sentry.ErrorBoundary>
 	);
 };
 

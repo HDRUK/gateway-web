@@ -352,7 +352,8 @@ const SVGIcon = ({ name = '', style = {}, fill = '#000', viewBox = '', width = '
 		className={className}
 		xmlns='http://www.w3.org/2000/svg'
 		viewBox={viewBox || getViewBox(name)}
-		xmlnsXlink='http://www.w3.org/1999/xlink'>
+		xmlnsXlink='http://www.w3.org/1999/xlink'
+		data-testid={name}>
 		{getPath(name, { fill })}
 	</svg>
 );

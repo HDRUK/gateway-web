@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AlertModal component When it is rendered Then matches the previous snapshot 1`] = `
+<div
+  class="modal-open"
+  style=""
+>
+  <div
+    class="fade modal-backdrop show"
+  />
+  <div
+    aria-labelledby="contained-modal-title-vcenter"
+    aria-modal="true"
+    class="fade modal show"
+    role="dialog"
+    style="display: block;"
+    tabindex="-1"
+  >
+    <div
+      class="modal-dialog modal-dialog-centered"
+    >
+      <div
+        class="modal-content"
+      >
+        <div
+          class="modal-header"
+        >
+          <div
+            class="modal-title h4"
+            data-testid="modal-header"
+            id="contained-modal-title-vcenter"
+          >
+            This is the header
+          </div>
+        </div>
+        <div
+          class="gray800-14 css-1axlqcz-AlertModal modal-body"
+          data-testid="modal-body"
+        >
+          This is the body
+        </div>
+        <div
+          class="css-n34xqh-AlertModal modal-footer"
+          data-testid="modal-footer"
+        >
+          This is the footer
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

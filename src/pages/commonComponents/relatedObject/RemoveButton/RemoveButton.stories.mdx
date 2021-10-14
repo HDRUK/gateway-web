@@ -1,0 +1,15 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import RemoveButton from './RemoveButton';
+
+<Meta title='Related Resources' component={RemoveButton} />
+
+<Canvas>
+	<Story name='Remove Button'>
+		{props => {
+			const removeButton = () => {
+				alert('removed');
+			};
+			return <RemoveButton {...props} removeButtonHandler={removeButton} />;
+		}}
+	</Story>
+</Canvas>

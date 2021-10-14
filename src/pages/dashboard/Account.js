@@ -1,6 +1,7 @@
 import React, { Component, Fragment, useState } from 'react';
 import queryString from 'query-string';
 import { Nav, Accordion, Dropdown } from 'react-bootstrap';
+import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import axios from 'axios';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
@@ -26,6 +27,7 @@ import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import { tabTypes } from './Team/teamUtil';
 import ActivityLogActionButtons from '../DataAccessRequest/components/ActivityLog/ActivityLogActionButtons';
+import ErrorModal from '../commonComponents/errorModal';
 
 import { ReactComponent as ChevronRightSvg } from '../../images/chevron-bottom.svg';
 import { ReactComponent as CheckSVG } from '../../images/check.svg';
@@ -33,7 +35,6 @@ import './Dashboard.scss';
 import ActivityLog from '../DataAccessRequest/components/ActivityLog/ActivityLog';
 import AccountTeams from './AccountTeams';
 import googleAnalytics from '../../tracking';
-
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -518,9 +519,8 @@ class Account extends Component {
 			dataaccessrequest,
 		} = this.state;
 
-
 		return (
-			<Fragment>
+			<Sentry.ErrorBoundary fallback={<ErrorModal />}>
 				<SearchBar
 					ref={this.searchBar}
 					searchString={searchString}
@@ -642,7 +642,9 @@ class Account extends Component {
 									</div>
 									<div className={`${tabId === 'teams' ? 'activeCard' : 'accountNav'}`} onClick={e => this.toggleNav('teams')}>
 										<Nav.Link className='verticalNavBar gray700-13'>
-											<span className='grey-circle-border'><SVGIcon name='plusChunky' fill={'#b3b8bd'} viewBox='-1 -1 26 26' className='accountSvgs' /></span>
+											<span className='grey-circle-border'>
+												<SVGIcon name='plusChunky' fill={'#b3b8bd'} viewBox='-1 -1 26 26' className='accountSvgs' />
+											</span>
 											<span style={{ 'margin-left': '5px' }}>Teams</span>
 										</Nav.Link>
 									</div>
@@ -872,7 +874,7 @@ class Account extends Component {
 					</ActionBar>
 				)}
 				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
-			</Fragment>
+			</Sentry.ErrorBoundary>
 		);
 	}
 }

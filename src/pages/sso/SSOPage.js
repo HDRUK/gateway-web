@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import axios from 'axios';
+import * as Sentry from '@sentry/react';
+import ErrorModal from '../commonComponents/errorModal';
 import './SSOPage.scss';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
@@ -63,9 +65,10 @@ class SSOPage extends Component {
 
 	render() {
 		const { renderPage, userState } = this.state;
+
 		return (
 			renderPage && (
-				<>
+				<Sentry.ErrorBoundary fallback={<ErrorModal />}>
 					<SearchBar
 						ref={this.searchBar}
 						doSearchMethod={this.doSearch}
@@ -74,7 +77,7 @@ class SSOPage extends Component {
 						userState={userState}
 					/>
 					<div className='landingBackground' />
-				</>
+				</Sentry.ErrorBoundary>
 			)
 		);
 	}

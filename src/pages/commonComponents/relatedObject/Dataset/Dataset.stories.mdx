@@ -1,0 +1,78 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Dataset from './Dataset';
+
+<Meta
+	title='Related Resources'
+	component={Dataset}
+	args={{
+		data: {
+			categories: {
+				programmingLanguage: [],
+			},
+			tags: {
+				features: ['COVID-19', 'TRACKER', 'SAIL', 'COVID', 'MOBILE APP', 'CORONAVIRUS', 'SYMPTOM', 'NCS', 'National Core Study'],
+				topics: [],
+			},
+			datasetfields: {
+				publisher: 'ALLIANCE > SAIL',
+				geographicCoverage: ['Great Britain'],
+				physicalSampleAvailability: ['NOT AVAILABLE'],
+				abstract:
+					"The COVID Symptom Tracker was designed by doctors and scientists at King's College London (KCL), Guys and St Thomas’ Hospital working in partnership with ZOE Global. Led by Dr Tim Spector, professor of genetic epidemiology at KCL and director of TwinsUK.",
+				ageBand: '15-150',
+				metadataquality: {
+					quality_score: 89.48,
+				},
+				phenotypes: [],
+			},
+			programmingLanguage: [],
+			pid: 'c1f4b16c-9dfa-48e5-94ee-f0aa58c270e4',
+			id: 401490453939233,
+			datasetid: '78ce070c-84db-4676-81c5-0c672f4e12e3',
+			type: 'dataset',
+			activeflag: 'active',
+			name: 'COVID-19 Symptom Tracker Dataset',
+			description:
+				"The COVID Symptom Tracker (https://covid.joinzoe.com/) mobile application was designed by doctors and scientists at King's College London, Guys and St Thomas’ Hospitals working in partnership with ZOE Global Ltd – a health science company.\n\nThis research is led by Dr Tim Spector, professor of genetic epidemiology at King’s College London and director of TwinsUK a scientific study of 15,000 identical and non-identical twins, which has been running for nearly three decades.\n\nThe dataset schema includes:\n\nDemographic Information (Year of Birth, Gender, Height, Weight, Postcode)\nHealth Screening Questions (Activity, Heart Disease, Diabetes, Lung Disease, Smoking Status, Kidney Disease, Chemotherapy, Immunosuppressants, Corticosteroids, Blood Pressure Medications, Previous COVID, COVID Symptoms, Needs Help, Housebound Problems, Help Availability, Mobility Aid)\nCOVID Testing Conducted\nHow You Feel?\nSymptom Description\nLocation Information (Home, Hospital, Back From Hospital)\nTreatment Received\nThe data is hosted within the SAIL Databank, a trusted research environment facilitating remote access to health, social care, and administrative data for various national organisations.\n\nThe process for requesting access to the data is dependent on your use case. SAIL is currently expediting all requests that feed directly into the response to the COVID-19 national emergency, and therefore requests from NHS or Government institutions, or organisations working alongside such care providers and policymakers to feed intelligence directly back into the national response, are being expedited with a ~48-hour governance turnaround for such applications once made. Please make enquiries using the link at the bottom of the page which will go the SAIL Databank team, or to Chris Orton at c.orton@swansea.ac.uk\n\nSAIL is welcoming requests from other organisations and for longer-term academic study on the dataset, but please note if this is not directly relevant to the emergency research being carried out which directly interfaces with national responding agencies, there may be an access delay whilst priority use cases are serviced.",
+			license: 'https://covid.joinzoe.com/privacy-notice',
+			datasetv2: {
+				summary: {
+					publisher: {
+						name: 'SAIL',
+						logo: '',
+						memberOf: 'ALLIANCE',
+					},
+				},
+			},
+			counter: 955,
+			isCohortDiscovery: false,
+			persons: [
+				{
+					firstname: 'Rich',
+					lastname: 'Example',
+				},
+			],
+			latestUpdate: '2021-05-04T14:14:49.389Z',
+			relatedresources: 1,
+		},
+		onSearchPage: false,
+		isCohortDiscovery: false,
+		publisherLogo: 'https://uatbeta.healthdatagateway.org/allianceMembers/NHS-Digital-logo_RGB-01.8952cf62.jpg',
+		activeLink: false,
+		showRelationshipQuestion: false,
+	}}
+/>
+
+<Canvas>
+	<Story name='Dataset'>
+		{props => {
+			const updateOnFilterBadge = () => {
+				alert('updateOnFilterBadge');
+			};
+			const removeButton = () => {
+				alert('removed');
+			};
+			return <Dataset {...props} updateOnFilterBadge={updateOnFilterBadge} removeButton={removeButton} />;
+		}}
+	</Story>
+</Canvas>

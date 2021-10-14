@@ -1,15 +1,14 @@
 import React from 'react';
-import queryString from 'query-string';
+import _ from 'lodash';
+import moment from 'moment';
 import { Row, Col, Button, Alert } from 'react-bootstrap';
 import Loading from '../Loading';
 import SVGIcon from '../../../images/SVGIcon';
-import './RelatedObject.scss';
-import moment from 'moment';
 import { ReactComponent as CalendarSvg } from '../../../images/calendaricon.svg';
-import _ from 'lodash';
-import removeMd from 'remove-markdown';
-import googleAnalytics from '../../../tracking';
+import Dataset from './Dataset/Dataset';
+import { stripMarkdown } from '../../../utils/GeneralHelper.util';
 import relatedObjectService from '../../../services/related-object';
+import './RelatedObject.scss';
 
 var baseURL = require('../BaseURL').getURL();
 var cmsURL = require('../BaseURL').getCMSURL();
@@ -114,16 +113,6 @@ class RelatedObject extends React.Component {
 		if (this.props.updateOnFilterBadge) {
 			this.props.updateOnFilterBadge(filter, option);
 		}
-	};
-
-	stripMarkdown = (value = '', truncate = 0) => {
-		if (!_.isEmpty(value)) {
-			if (truncate > 0) {
-				value = value.substr(0, 255) + (value.length > 255 ? '...' : '');
-			}
-			value = removeMd(value);
-		}
-		return value;
 	};
 
 	render() {
@@ -356,7 +345,7 @@ class RelatedObject extends React.Component {
 										</Col>
 										{!this.props.showRelationshipQuestion && (
 											<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-24 pad-bottom-16'>
-												<span className='gray800-14'>{this.stripMarkdown(data.description, 255)}</span>
+												<span className='gray800-14'>{stripMarkdown(data.description, 255)}</span>
 											</Col>
 										)}
 									</Row>
@@ -498,7 +487,7 @@ class RelatedObject extends React.Component {
 										</Col>
 										{!this.props.showRelationshipQuestion && (
 											<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-24 pad-bottom-16'>
-												<span className='gray800-14'>{this.stripMarkdown(data.description, 255)}</span>
+												<span className='gray800-14'>{stripMarkdown(data.description, 255)}</span>
 											</Col>
 										)}
 									</Row>
@@ -602,7 +591,7 @@ class RelatedObject extends React.Component {
 										</Col>
 										{!this.props.showRelationshipQuestion && (
 											<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-24 pad-bottom-16'>
-												<span className='gray800-14'>{this.stripMarkdown(data.description, 255)}</span>
+												<span className='gray800-14'>{stripMarkdown(data.description, 255)}</span>
 											</Col>
 										)}
 									</Row>
@@ -775,234 +764,23 @@ class RelatedObject extends React.Component {
 										</Col>
 										{!this.props.showRelationshipQuestion && (
 											<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-24 pad-bottom-16'>
-												<span className='gray800-14'>{this.stripMarkdown(data.description, 255)}</span>
+												<span className='gray800-14'>{stripMarkdown(data.description, 255)}</span>
 											</Col>
 										)}
 									</Row>
 								);
 							} else {
-								//default to dataset
-								if (data.type === 'dataset' && data.activeflag === 'archive') {
-									return (
-										<Row data-testid='related-dataset-object-archived' className='noMargin pad-left-24'>
-											<Col sm={10} lg={10} className='entity-deleted-edit gray800-14'>
-												The dataset '{data.name}' has been deleted by the publisher
-											</Col>
-											<Col sm={2} lg={2}>
-												<Button variant='medium' className='soft-black-14' onClick={this.removeButton}>
-													<SVGIcon name='closeicon' fill={'#979797'} className='buttonSvg mr-2' />
-													Remove
-												</Button>
-											</Col>
-										</Row>
-									);
-								}
-
-								const phenotypesSelected = queryString.parse(window.location.search).phenotypes
-									? queryString.parse(window.location.search).phenotypes.split('::')
-									: [];
-								const searchTerm = queryString.parse(window.location.search).search ? queryString.parse(window.location.search).search : '';
-								const phenotypesSeached = data.datasetfields.phenotypes.filter(
-									phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase()
-								);
 								return (
-									<Row data-testid='related-dataset-object' className='noMargin'>
-										<Col sm={10} lg={10} className='pad-left-24'>
-											{activeLink === true ? (
-												<a
-													onClick={() => {
-														googleAnalytics.recordEvent('Datasets', 'Clicked on dataset to open', `Dataset name: ${data.name}`);
-													}}
-													className='purple-bold-16'
-													style={{ cursor: 'pointer' }}
-													href={'/dataset/' + data.pid}>
-													{data.name}
-												</a>
-											) : (
-												<span className='black-bold-16'> {data.name} </span>
-											)}
-											<br />
-											{!_.isEmpty(data.datasetv2) ? (
-												<>
-													{!_.isNil(data.datasetv2.summary.publisher.memberOf) ? (
-														<span>
-															<SVGIcon name='shield' fill={'#475da7'} className='svg-16 mr-2' viewBox='0 0 16 16' />
-														</span>
-													) : (
-														''
-													)}
-													<span
-														className={activeLink ? 'gray800-14 underlined' : 'gray800-14'}
-														style={{ cursor: 'pointer' }}
-														onClick={() =>
-															this.updateOnFilterBadge('publisher', {
-																label: data.datasetv2.summary.publisher.name.toUpperCase(),
-																parentKey: 'publisher',
-															})
-														}>
-														{' '}
-														{data.datasetv2.summary.publisher.name}{' '}
-													</span>
-												</>
-											) : (
-												<span
-													className={activeLink ? 'gray800-14 underlined' : 'gray800-14'}
-													style={{ cursor: 'pointer' }}
-													onClick={() => {
-														let name = data.datasetfields.publisher;
-														this.updateOnFilterBadge('publisher', {
-															label: name.includes('>') ? name.split(' > ')[1].toUpperCase() : name.toUpperCase(),
-															parentKey: 'publisher',
-														});
-													}}>
-													{' '}
-													{data.datasetfields.publisher}{' '}
-												</span>
-											)}
-										</Col>
-										<Col sm={2} lg={2} className='pad-right-24'>
-											{!_.isEmpty(publisherLogo) && (
-												<div
-													className='datasetLogoCircle floatRight'
-													style={{
-														backgroundImage: `url('${publisherLogo}')`,
-														backgroundRepeat: 'no-repeat',
-														backgroundPosition: 'center',
-														backgroundSize: 'contain',
-														backgroundOrigin: 'content-box',
-													}}
-												/>
-											)}
-											{this.props.showRelationshipQuestion ? (
-												<Button variant='medium' className='soft-black-14' onClick={this.removeButton}>
-													<SVGIcon name='closeicon' fill={'#979797'} className='buttonSvg mr-2' />
-													Remove
-												</Button>
-											) : (
-												''
-											)}
-										</Col>
-										<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
-											<span className='badge-dataset'>
-												<SVGIcon name='dataseticon' fill={'#113328'} className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
-												<span>Dataset</span>
-											</span>
-											{this.state.isCohortDiscovery ? (
-												<span className='badge-project'>
-													<SVGIcon
-														name='cohorticon'
-														fill={'#472505'}
-														className='badgeSvg mr-2'
-														width='22'
-														height='22'
-														viewBox='0 0 10 10'
-													/>
-													<span>Cohort Discovery</span>
-												</span>
-											) : (
-												''
-											)}
-											{(() => {
-												if (phenotypesSeached.length > 0) {
-													if (activeLink === true) {
-														if (onSearchPage === true) {
-															return (
-																<span
-																	className='pointer'
-																	onClick={event =>
-																		this.updateOnFilterBadge('phenotypes', { label: phenotypesSeached[0].name, parentKey: 'phenotypes' })
-																	}>
-																	<div className='badge-phenotype'>Phenotype: {phenotypesSeached[0].name}</div>
-																</span>
-															);
-														} else {
-															return (
-																<a href={'/search?search=&tab=Datasets&phenotypes=' + phenotypesSeached[0].name}>
-																	<div className='badge-phenotype'>Phenotype: {phenotypesSeached[0].name}</div>
-																</a>
-															);
-														}
-													} else {
-														return <div className='badge-phenotype'>Phenotype: {phenotypesSeached[0].name}</div>;
-													}
-												}
-											})()}
-
-											{!phenotypesSelected || phenotypesSelected.length <= 0
-												? ''
-												: phenotypesSelected.map(phenotype => {
-														if (
-															data.datasetfields.phenotypes.find(
-																phenotypeCheck => phenotypeCheck.name.toLowerCase() === phenotype.toLowerCase()
-															)
-														) {
-															if (activeLink === true) {
-																if (onSearchPage === true) {
-																	return (
-																		<span
-																			className='pointer'
-																			onClick={event =>
-																				this.updateOnFilterBadge('phenotypes', { label: phenotype, parentKey: 'phenotypes' })
-																			}>
-																			<div className='badge-phenotype'>Phenotype: {phenotype}</div>
-																		</span>
-																	);
-																} else {
-																	return (
-																		<a href={'/search?search=&tab=Datasets&phenotypes=' + phenotype}>
-																			<div className='badge-phenotype'>Phenotype: {phenotype}</div>
-																		</a>
-																	);
-																}
-															} else {
-																return <div className='badge-phenotype'>Phenotype: {phenotype}</div>;
-															}
-														}
-												  })}
-
-											{!data.tags.features || data.tags.features.length <= 0
-												? ''
-												: data.tags.features.map((feature, index) => {
-														if (activeLink === true) {
-															if (onSearchPage === true) {
-																return (
-																	<span
-																		key={`feature-${index}`}
-																		className='pointer'
-																		onClick={event =>
-																			this.updateOnFilterBadge('datasetfeatures', { label: feature, parentKey: 'datasetfeatures' })
-																		}>
-																		<div className='badge-tag'>{feature}</div>
-																	</span>
-																);
-															} else {
-																return (
-																	<a href={'/search?search=&tab=Datasets&datasetfeatures=' + feature}>
-																		<div className='badge-tag'>{feature}</div>
-																	</a>
-																);
-															}
-														} else {
-															return <div className='badge-tag'>{feature}</div>;
-														}
-												  })}
-										</Col>
-										{!this.props.showRelationshipQuestion && (
-											<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-24 pad-bottom-16'>
-												<span className='gray800-14'>
-													{(() => {
-														if (!data.datasetfields.abstract || typeof data.datasetfields.abstract === 'undefined') {
-															if (data.description) {
-																return this.stripMarkdown(data.description, 255);
-															}
-														} else {
-															return this.stripMarkdown(data.datasetfields.abstract);
-														}
-													})()}
-												</span>
-											</Col>
-										)}
-									</Row>
+									<Dataset
+										data={data}
+										activeLink={activeLink}
+										publisherLogo={publisherLogo}
+										onSearchPage={onSearchPage ? onSearchPage : false}
+										showRelationshipQuestion={this.props.showRelationshipQuestion ? this.props.showRelationshipQuestion : false}
+										isCohortDiscovery={this.state.isCohortDiscovery}
+										updateOnFilterBadge={this.updateOnFilterBadge}
+										removeButton={this.removeButton}
+									/>
 								);
 							}
 						})()}

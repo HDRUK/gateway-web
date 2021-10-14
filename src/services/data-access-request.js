@@ -10,8 +10,28 @@ const getDataAccessRequest = (_id, options) => {
 	return getRequest(`${apiURL}/data-access-request/${_id}`, options);
 };
 
+const getDatasets = (_id, options) => {
+	return getRequest(`${apiURL}/data-access-request/datasets`, options);
+};
+
 const postDataAccessRequest = (_id, data, options) => {
 	return postRequest(`${apiURL}/data-access-request/${_id}`, data, options);
+};
+
+const postRequestAmendments = (_id, data, options) => {
+	return postRequest(`${apiURL}/data-access-request/${_id}/requestAmendments`, data, options);
+};
+
+const postMessages = (_id, data, options) => {
+	return postRequest(`${apiURL}/data-access-request/${_id}/messages`, data, options);
+};
+
+const postAmendments = (_id, data, options) => {
+	return postRequest(`${apiURL}/data-access-request/${_id}/amendments`, data, options);
+};
+
+const postActions = (_id, data, options) => {
+	return postRequest(`${apiURL}/data-access-request/${_id}/actions`, data, options);
 };
 
 const putDataAccessRequest = (_id, data, options) => {
@@ -40,8 +60,39 @@ const useGetDataAccessRequest = (requestOptions, queryOptions = { queryKey: 'get
 	});
 };
 
-const usePostDataAccessRequest = (requestOptions, mutateOptions = { queryKey: 'postDataAccessRequest' }) => {
+const useGetDatasets = (requestOptions, queryOptions = { queryKey: 'getDatasets' }) => {
+	return useQuery({
+		...queryOptions,
+		queryFn: () => getDatasets(requestOptions),
+	});
+};
+
+const usePostDataAccessRequest = (requestOptions, mutateOptions = { queryKey: 'postActions' }) => {
 	return useMutation((_id, data) => postDataAccessRequest(_id, data, requestOptions), {
+		mutateOptions,
+	});
+};
+
+const usePostRequestAmendments = (requestOptions, mutateOptions = { queryKey: 'postRequestAmendments' }) => {
+	return useMutation((_id, data) => postRequestAmendments(_id, data, requestOptions), {
+		mutateOptions,
+	});
+};
+
+const usePostActions = (requestOptions, mutateOptions = { queryKey: 'postActions' }) => {
+	return useMutation((_id, data) => postActions(_id, data, requestOptions), {
+		mutateOptions,
+	});
+};
+
+const usePostAmendments = (requestOptions, mutateOptions = { queryKey: 'postAmendments' }) => {
+	return useMutation((_id, data) => postAmendments(_id, data, requestOptions), {
+		mutateOptions,
+	});
+};
+
+const usePostMessages = (requestOptions, mutateOptions = { queryKey: 'postMessages' }) => {
+	return useMutation((_id, data) => postMessages(_id, data, requestOptions), {
 		mutateOptions,
 	});
 };
@@ -68,13 +119,23 @@ const useDeleteDataAccessRequest = (requestOptions, queryOptions = { queryKey: '
 export default {
 	getDataAccessRequests,
 	getDataAccessRequest,
+	getDatasets,
 	postDataAccessRequest,
+	postRequestAmendments,
+	postMessages,
+	postActions,
+	postAmendments,
 	putDataAccessRequest,
 	patchDataAccessRequest,
 	deleteDataAccessRequest,
 	useGetDataAccessRequests,
 	useGetDataAccessRequest,
+	useGetDatasets,
 	usePostDataAccessRequest,
+	usePostRequestAmendments,
+	usePostActions,
+	usePostAmendments,
+	usePostMessages,
 	usePutDataAccessRequest,
 	usePatchDataAccessRequest,
 	useDeleteDataAccessRequest,

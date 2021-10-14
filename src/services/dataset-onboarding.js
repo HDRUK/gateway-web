@@ -10,8 +10,16 @@ const getDatasetOnboarding = (_id, options) => {
 	return getRequest(`${apiURL}/dataset-onboarding/${_id}`, options);
 };
 
+const getPublisher = (_id, options) => {
+	return getRequest(`${apiURL}/dataset-onboarding/publisher/${_id}`, options);
+};
+
 const postDatasetOnboarding = (_id, data, options) => {
 	return postRequest(`${apiURL}/dataset-onboarding/${_id}`, data, options);
+};
+
+const postDuplicate = (_id, data, options) => {
+	return postRequest(`${apiURL}/dataset-onboarding/duplicate/${_id}`, data, options);
 };
 
 const putDatasetOnboarding = (_id, data, options) => {
@@ -29,7 +37,7 @@ const deleteDatasetOnboarding = (_id, options) => {
 const useGetDatasetOnboardings = (requestOptions, queryOptions = { queryKey: 'getDatasetOnboardings' }) => {
 	return useQuery({
 		...queryOptions,
-		queryFn: _id => getDatasetOnboardings(requestOptions),
+		queryFn: () => getDatasetOnboardings(requestOptions),
 	});
 };
 
@@ -40,8 +48,21 @@ export const useGetDatasetOnboarding = (requestOptions, queryOptions = { queryKe
 	});
 };
 
+export const useGetPublisher = (requestOptions, queryOptions = { queryKey: 'getPublisher' }) => {
+	return useQuery({
+		...queryOptions,
+		queryFn: _id => getPublisher(_id, requestOptions),
+	});
+};
+
 const usePostDatasetOnboarding = (requestOptions, mutateOptions = { queryKey: 'postDatasetOnboarding' }) => {
 	return useMutation((_id, data) => postDatasetOnboarding(_id, data, requestOptions), {
+		mutateOptions,
+	});
+};
+
+const usePostDuplicate = (requestOptions, mutateOptions = { queryKey: 'postDuplicate' }) => {
+	return useMutation((_id, data) => postDuplicate(_id, data, requestOptions), {
 		mutateOptions,
 	});
 };
@@ -68,13 +89,17 @@ export const useDeleteDatasetOnboarding = (requestOptions, queryOptions = { quer
 export default {
 	getDatasetOnboardings,
 	getDatasetOnboarding,
+	getPublisher,
 	postDatasetOnboarding,
+	postDuplicate,
 	putDatasetOnboarding,
 	patchDatasetOnboarding,
 	deleteDatasetOnboarding,
 	useGetDatasetOnboardings,
 	useGetDatasetOnboarding,
+	useGetPublisher,
 	usePostDatasetOnboarding,
+	usePostDuplicate,
 	usePutDatasetOnboarding,
 	usePatchDatasetOnboarding,
 	useDeleteDatasetOnboarding,

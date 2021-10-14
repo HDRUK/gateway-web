@@ -7,6 +7,5 @@ export const parameters = {
 		},
 	},
 };
-import '../src/css/custom-css-bootstrap-magic-2020-02-10.css';
-import 'react-datepicker/dist/react-datepicker.css';
-import '../src/css/styles.scss';
+
+import './main.scss';

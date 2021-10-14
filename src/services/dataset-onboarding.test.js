@@ -48,6 +48,18 @@ describe('Given the dataset-onboarding service', () => {
 		});
 	});
 
+	describe('When getPublisher is called', () => {
+		it('Then calls getRequest with the correct arguments', async () => {
+			await service.getPublisher('1234', {
+				option1: true,
+			});
+
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/dataset-onboarding/publisher/1234`, {
+				option1: true,
+			});
+		});
+	});
+
 	describe('When postDatasetOnboarding is called', () => {
 		it('Then calls postRequest with the correct arguments', async () => {
 			await service.postDatasetOnboarding(
@@ -60,6 +72,26 @@ describe('Given the dataset-onboarding service', () => {
 
 			expect(postRequest).toHaveBeenCalledWith(
 				`${apiURL}/dataset-onboarding/1234`,
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+		});
+	});
+
+	describe('When postDuplicate is called', () => {
+		it('Then calls postRequest with the correct arguments', async () => {
+			await service.postDuplicate(
+				'1234',
+				{
+					status: 'archive',
+				},
+				{ option1: true }
+			);
+
+			expect(postRequest).toHaveBeenCalledWith(
+				`${apiURL}/dataset-onboarding/duplicate/1234`,
 				{
 					status: 'archive',
 				},
@@ -138,10 +170,28 @@ describe('Given the dataset-onboarding service', () => {
 		});
 	});
 
+	describe('When useGetPublisher is called', () => {
+		it('Then calls getPublisher with the correct arguments', async () => {
+			const getSpy = jest.spyOn(service, 'getPublisher');
+			const rendered = renderHook(() => service.useGetPublisher({ option1: true }), { wrapper });
+
+			assertServiceRefetchCalled(rendered, getSpy, '1234');
+		});
+	});
+
 	describe('When usePostDatasetOnboarding is called', () => {
 		it('Then calls postDatasetOnboarding with the correct arguments', async () => {
 			const postSpy = jest.spyOn(service, 'postDatasetOnboarding');
 			const rendered = renderHook(() => service.usePostDatasetOnboarding({ option1: true }), { wrapper });
+
+			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
+		});
+	});
+
+	describe('When usePostDuplicate is called', () => {
+		it('Then calls postDuplicate with the correct arguments', async () => {
+			const postSpy = jest.spyOn(service, 'postDuplicate');
+			const rendered = renderHook(() => service.usePostDuplicate({ option1: true }), { wrapper });
 
 			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
 		});

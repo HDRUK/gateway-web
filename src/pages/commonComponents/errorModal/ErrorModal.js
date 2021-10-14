@@ -1,43 +1,48 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Modal, Button } from 'react-bootstrap';
-
-import './ErrorModal.scss';
+import { Button } from 'react-bootstrap';
+import AlertModal from '../AlertModal';
 
 const cmsURL = require('../../commonComponents/BaseURL').getCMSURL();
 
-const ErrorModal = ({ show, handleClose }) => {
-	let history = useHistory();
+const ErrorModal = ({ onClose, ...outerProps }) => {
+	const [show, setShow] = React.useState(true);
 
-	window.onclick = function (event) {
-		const modal = document.getElementById('errorModal');
-		if (event.target.childNodes[0] === modal) {
-			history.push({ pathname: '/' });
-		}
-	};
+	const handleClose = React.useCallback(() => {
+		if (onClose) onClose();
+		setShow(false);
 
-	const onClose = () => {
-		handleClose(false);
-		history.push({ pathname: '/' });
-	};
+		//For analytics dashboard (at least), history push doesn't work
+
+		// history.push({ pathname: '/' });
+		window.location.pathname = '/';
+	}, []);
 
 	return (
-		<Modal show={show} onHide={handleClose} aria-labelledby='contained-modal-title-vcenter' centered id='errorModal'>
-			<Modal.Header>
-				<Modal.Title id='contained-modal-title-vcenter'>Oops! Something went wrong!</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-				<div className='gray800-14' style={{ textAlign: 'center' }}>
+		<AlertModal
+			header='Oops! Something went wrong!'
+			body={
+				<>
 					This issue has been automatically reported to our team!
 					<br />
 					If this issue continues, please contact support by clicking <a href={`${cmsURL}/HDRUKGatewaySupportPortal`}>here.</a>
-				</div>
-			</Modal.Body>
-			<Modal.Footer>
-				<Button onClick={onClose}>Close</Button>
-			</Modal.Footer>
-		</Modal>
+				</>
+			}
+			footer={
+				<Button onClick={handleClose} data-testid='close-button'>
+					Close
+				</Button>
+			}
+			variant='error'
+			onHide={handleClose}
+			show={show}
+			{...outerProps}
+		/>
 	);
+};
+
+ErrorModal.propTypes = {
+	onClose: PropTypes.func,
 };
 
 export default ErrorModal;

@@ -17,7 +17,7 @@ import { NotificationContainer } from 'react-notifications';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import ErrorModal from '../commonComponents/errorModal/ErrorModal';
+import ErrorModal from '../commonComponents/errorModal';
 import SortDropdown from './components/SortDropdown';
 import { ReactComponent as CDStar } from '../../images/cd-star.svg';
 import AdvancedSearchModal from '../commonComponents/AdvancedSearchModal/AdvancedSearchModal';
@@ -95,7 +95,6 @@ class SearchPage extends React.Component {
 		showAdvancedSearchModal: false,
 		showSavedPreferencesModal: false,
 		showSavedModal: false,
-		showError: false,
 		context: {},
 		userState: [
 			{
@@ -143,14 +142,6 @@ class SearchPage extends React.Component {
 		this.toggleDataUtilityBanner = this.toggleDataUtilityBanner.bind(this);
 		this.onWizardStepChange = this.onWizardStepChange.bind(this);
 	}
-
-	showModal = () => {
-		this.setState({ showError: true });
-	};
-
-	hideModal = () => {
-		this.setState({ showError: false });
-	};
 
 	hideSavedPreferencesModal = () => {
 		this.setState({ showSavedPreferencesModal: false });
@@ -1604,7 +1595,7 @@ class SearchPage extends React.Component {
 		}
 
 		return (
-			<Sentry.ErrorBoundary fallback={<ErrorModal show={this.showModal} handleClose={this.hideModal} />}>
+			<Sentry.ErrorBoundary fallback={<ErrorModal />}>
 				<div>
 					<SearchBar
 						ref={this.searchBar}

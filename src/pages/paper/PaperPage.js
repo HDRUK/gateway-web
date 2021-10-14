@@ -14,7 +14,7 @@ import UserMessages from '../commonComponents/userMessages/UserMessages';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import ErrorModal from '../commonComponents/errorModal/ErrorModal';
+import ErrorModal from '../commonComponents/errorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import 'react-tabs/style/react-tabs.css';
 import { baseURL } from '../../configs/url.config';
@@ -52,8 +52,6 @@ export const PaperDetail = props => {
 		]
 	);
 
-	let showError = false;
-
 	//componentDidMount - on loading of page detail page
 	useEffect(() => {
 		if (!!window.location.search) {
@@ -70,14 +68,6 @@ export const PaperDetail = props => {
 			getPaperDataFromDb();
 		}
 	});
-
-	const showModalHandler = () => {
-		showError = true;
-	};
-
-	const hideModalHandler = () => {
-		showError = false;
-	};
 
 	const getPaperDataFromDb = () => {
 		setIsLoading(true);
@@ -221,7 +211,7 @@ export const PaperDetail = props => {
 	}
 
 	return (
-		<Sentry.ErrorBoundary fallback={<ErrorModal show={showModalHandler} handleClose={hideModalHandler} />}>
+		<Sentry.ErrorBoundary fallback={<ErrorModal />}>
 			<div>
 				<SearchBar
 					ref={searchBar}
@@ -336,7 +326,9 @@ export const PaperDetail = props => {
 						<Col sm={1} lg={1} />
 						<Col sm={10} lg={10}>
 							<div>
-								<Tabs className='tabsBackground gray700-13 margin-bottom-16' onSelect={key => {
+								<Tabs
+									className='tabsBackground gray700-13 margin-bottom-16'
+									onSelect={key => {
 										googleAnalytics.recordVirtualPageView(`${key} tab`);
 										googleAnalytics.recordEvent('Papers', `Clicked ${key} tab`, `Viewing ${key}`);
 									}}>

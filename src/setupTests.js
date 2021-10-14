@@ -2,7 +2,7 @@ import React from 'react';
 import Enzyme, { shallow, render, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import '@testing-library/react';
+import * as rtl from '@testing-library/react';
 import '@testing-library/jest-dom';
 import 'regenerator-runtime/runtime';
 
@@ -14,6 +14,7 @@ global.React = React;
 global.shallow = shallow;
 global.render = render;
 global.mount = mount;
+global.fireEvent = rtl.fireEvent;
 
 global.assertServiceMutateAsyncCalled = async (rendered, mock, ...args) => {
 	const { waitFor, result } = rendered;
@@ -33,6 +34,17 @@ global.assertServiceRefetchCalled = async (rendered, mock, ...args) => {
 	result.current.refetch(args).then(() => {
 		expect(mock).toHaveBeenCalledWith(args);
 	});
+};
+
+global.createPortalContainer = () => {
+	const div = document.createElement('div');
+	document.body.appendChild(div);
+
+	return div;
+};
+
+global.removePortalContainer = div => {
+	div.parentNode.removeChild(div);
 };
 
 global.assertServicePatchCalled = async () => {};

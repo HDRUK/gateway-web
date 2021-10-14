@@ -24,7 +24,7 @@ import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
-import ErrorModal from '../commonComponents/errorModal/ErrorModal';
+import ErrorModal from '../commonComponents/errorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import googleAnalytics from '../../tracking';
 
@@ -55,7 +55,6 @@ export const ToolDetail = props => {
 	const [context, setContext] = useState({});
 	const [collections, setCollections] = useState([]);
 	const [searchBar] = useState(React.createRef());
-	let showError = false;
 
 	//componentDidMount - on loading of tool detail page
 	useEffect(() => {
@@ -75,14 +74,6 @@ export const ToolDetail = props => {
 			getToolDataFromDb();
 		}
 	});
-
-	const showModalHandler = () => {
-		showError = true;
-	};
-
-	const hideModalHandler = () => {
-		showError = false;
-	};
 
 	const getToolDataFromDb = () => {
 		setIsLoading(true);
@@ -233,7 +224,7 @@ export const ToolDetail = props => {
 	const avgRating = reviewData.length > 0 ? ratingsTotal / ratingsCount : '';
 
 	return (
-		<Sentry.ErrorBoundary fallback={<ErrorModal show={showModalHandler} handleClose={hideModalHandler} />}>
+		<Sentry.ErrorBoundary fallback={<ErrorModal />}>
 			<div>
 				<SearchBar
 					ref={searchBar}

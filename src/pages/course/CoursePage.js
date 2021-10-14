@@ -16,12 +16,11 @@ import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
-import ErrorModal from '../commonComponents/errorModal/ErrorModal';
+import ErrorModal from '../commonComponents/errorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import './Course.scss';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import googleAnalytics from '../../tracking';
-
 
 let baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -48,7 +47,6 @@ export const CourseDetail = props => {
 			},
 		]
 	);
-	let showError = false;
 
 	//componentDidMount - on loading of course detail page
 	useEffect(() => {
@@ -97,14 +95,6 @@ export const CourseDetail = props => {
 		axios.get(baseURL + '/api/v1/collections/entityid/' + localCourseData.id).then(res => {
 			setCollections(res.data.data || []);
 		});
-	};
-
-	const showModalHandler = () => {
-		showError = true;
-	};
-
-	const hideModalHandler = () => {
-		showError = false;
 	};
 
 	const doSearch = e => {
@@ -210,7 +200,7 @@ export const CourseDetail = props => {
 	}
 
 	return (
-		<Sentry.ErrorBoundary fallback={<ErrorModal show={showModalHandler} handleClose={hideModalHandler} />}>
+		<Sentry.ErrorBoundary fallback={<ErrorModal />}>
 			<div>
 				<SearchBar
 					ref={searchBar}

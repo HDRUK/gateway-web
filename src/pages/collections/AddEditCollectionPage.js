@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import * as Sentry from '@sentry/react';
 import { Container } from 'react-bootstrap';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
@@ -9,6 +10,7 @@ import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import { isEditMode } from '../../utils/GeneralHelper.util';
 import AddEditCollectionForm from './AddEditCollectionForm';
+import ErrorModal from '../commonComponents/errorModal';
 import './Collections.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
@@ -237,54 +239,56 @@ class AddEditCollectionPage extends React.Component {
 		}
 
 		return (
-			<div>
-				<SearchBar
-					ref={this.searchBar}
-					doSearchMethod={this.doSearch}
-					doUpdateSearchString={this.updateSearchString}
-					doToggleDrawer={this.toggleDrawer}
-					userState={userState}
-				/>
-
-				<AddEditCollectionForm
-					data={data}
-					combinedUsers={combinedUsers}
-					combinedKeywords={combinedKeywords}
-					userState={userState}
-					searchString={searchString}
-					doSearchMethod={this.doModalSearch}
-					doUpdateSearchString={this.updateSearchString}
-					datasetData={datasetData}
-					toolData={toolData}
-					projectData={projectData}
-					personData={personData}
-					paperData={paperData}
-					courseData={courseData}
-					summary={summary}
-					doAddToTempRelatedObjects={this.addToTempRelatedObjects}
-					tempRelatedObjectIds={this.state.tempRelatedObjectIds}
-					doClearRelatedObjects={this.clearRelatedObjects}
-					doAddToRelatedObjects={this.addToRelatedObjects}
-					doRemoveObject={this.removeObject}
-					relatedObjects={relatedObjects}
-					didDelete={didDelete}
-					updateDeleteFlag={this.updateDeleteFlag}
-					publicFlag={publicFlag}
-					updatePublicFlag={this.updatePublicFlag}
-					isEdit={isEdit}
-				/>
-
-				<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
-					<UserMessages
-						userState={userState[0]}
-						closed={this.toggleDrawer}
-						toggleModal={this.toggleModal}
-						drawerIsOpen={this.state.showDrawer}
+			<Sentry.ErrorBoundary fallback={<ErrorModal />}>
+				<div>
+					<SearchBar
+						ref={this.searchBar}
+						doSearchMethod={this.doSearch}
+						doUpdateSearchString={this.updateSearchString}
+						doToggleDrawer={this.toggleDrawer}
+						userState={userState}
 					/>
-				</SideDrawer>
 
-				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
-			</div>
+					<AddEditCollectionForm
+						data={data}
+						combinedUsers={combinedUsers}
+						combinedKeywords={combinedKeywords}
+						userState={userState}
+						searchString={searchString}
+						doSearchMethod={this.doModalSearch}
+						doUpdateSearchString={this.updateSearchString}
+						datasetData={datasetData}
+						toolData={toolData}
+						projectData={projectData}
+						personData={personData}
+						paperData={paperData}
+						courseData={courseData}
+						summary={summary}
+						doAddToTempRelatedObjects={this.addToTempRelatedObjects}
+						tempRelatedObjectIds={this.state.tempRelatedObjectIds}
+						doClearRelatedObjects={this.clearRelatedObjects}
+						doAddToRelatedObjects={this.addToRelatedObjects}
+						doRemoveObject={this.removeObject}
+						relatedObjects={relatedObjects}
+						didDelete={didDelete}
+						updateDeleteFlag={this.updateDeleteFlag}
+						publicFlag={publicFlag}
+						updatePublicFlag={this.updatePublicFlag}
+						isEdit={isEdit}
+					/>
+
+					<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
+						<UserMessages
+							userState={userState[0]}
+							closed={this.toggleDrawer}
+							toggleModal={this.toggleModal}
+							drawerIsOpen={this.state.showDrawer}
+						/>
+					</SideDrawer>
+
+					<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
+				</div>
+			</Sentry.ErrorBoundary>
 		);
 	}
 }

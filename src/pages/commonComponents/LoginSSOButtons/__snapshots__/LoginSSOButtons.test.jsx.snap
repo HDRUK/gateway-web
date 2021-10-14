@@ -17,15 +17,13 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
           class="gray800-14"
         >
           <button
-            class="btn btn-outline-secondary btn-block"
+            class="btn btn-outline-secondary btn-block css-117p4px"
             data-testid="google"
-            style="text-align: left;"
           >
             <img
               alt="google"
+              class="css-1o49y5s"
               src="googleIcon"
-              style="float: left;"
-              width="20"
             />
               
             Sign in with Google
@@ -39,15 +37,13 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
           class="gray800-14"
         >
           <button
-            class="btn btn-outline-secondary btn-block"
+            class="btn btn-outline-secondary btn-block css-117p4px"
             data-testid="openAthens"
-            style="text-align: left;"
           >
             <img
               alt="openAthens"
+              class="css-1o49y5s"
               src="instIcon"
-              style="float: left;"
-              width="20"
             />
               
             Sign in with institution
@@ -72,15 +68,13 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
           class="gray800-14"
         >
           <button
-            class="btn btn-outline-secondary btn-block"
+            class="btn btn-outline-secondary btn-block css-117p4px"
             data-testid="azure"
-            style="text-align: left;"
           >
             <img
               alt="azure"
+              class="css-1o49y5s"
               src="microsoftIcon"
-              style="float: left;"
-              width="20"
             />
               
             Sign in with Microsoft
@@ -92,7 +86,7 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
       />
     </div>
     <div
-      style="font-size: 12px;"
+      class="css-k2m949-LoginSSOButtons"
     >
       <div
         class="mt-5  row"
@@ -107,7 +101,7 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
              
             <a
               data-testid="communityLink"
-              href="https://test/t/about-the-site-feedback-category/1"
+              href="https://test/t/how-to-submit-a-feature-request-or-feedback/1"
               rel="noopener noreferrer"
               target="_blank"
             >

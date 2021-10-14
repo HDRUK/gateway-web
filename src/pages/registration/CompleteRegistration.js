@@ -1,5 +1,6 @@
 import React, { Component, Fragment, useState, useRef } from 'react';
 import axios from 'axios';
+import * as Sentry from '@sentry/react';
 import { useFormik } from 'formik';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import * as Yup from 'yup';
@@ -9,6 +10,7 @@ import Loading from '../commonComponents/Loading';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
+import ErrorModal from '../commonComponents/errorModal';
 import googleAnalytics from '../../tracking';
 import 'react-tabs/style/react-tabs.css';
 import SVGIcon from '../../images/SVGIcon';
@@ -153,50 +155,52 @@ class CompleteRegistration extends Component {
 		}
 
 		return (
-			<div>
-				<SearchBar
-					ref={this.searchBar}
-					searchString={searchString}
-					doSearchMethod={this.doSearch}
-					doUpdateSearchString={this.updateSearchString}
-					doToggleDrawer={this.toggleDrawer}
-					userState={userState}
-					data-testid='searchBar'
-				/>
-
-				<Container className='mb-5'>
-					<Row className='mt-3'>
-						<Col sm={1} lg={1} />
-						<Col sm={10} lg={10}>
-							<div>
-								<YourAccountForm
-									userdata={userdata}
-									topicData={topicData}
-									showOrganisation={showOrganisation}
-									showBio={showBio}
-									showSector={showSector}
-									showDomain={showDomain}
-									showLink={showLink}
-									showOrcid={showOrcid}
-									combinedOrganisations={combinedOrganisations}
-									data-testid='your-account'
-								/>
-							</div>
-						</Col>
-						<Col sm={1} lg={1} />
-					</Row>
-				</Container>
-				<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
-					<UserMessages
-						userState={userState[0]}
-						closed={this.toggleDrawer}
-						toggleModal={this.toggleModal}
-						drawerIsOpen={this.state.showDrawer}
+			<Sentry.ErrorBoundary fallback={<ErrorModal />}>
+				<div>
+					<SearchBar
+						ref={this.searchBar}
+						searchString={searchString}
+						doSearchMethod={this.doSearch}
+						doUpdateSearchString={this.updateSearchString}
+						doToggleDrawer={this.toggleDrawer}
+						userState={userState}
+						data-testid='searchBar'
 					/>
-				</SideDrawer>
 
-				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
-			</div>
+					<Container className='mb-5'>
+						<Row className='mt-3'>
+							<Col sm={1} lg={1} />
+							<Col sm={10} lg={10}>
+								<div>
+									<YourAccountForm
+										userdata={userdata}
+										topicData={topicData}
+										showOrganisation={showOrganisation}
+										showBio={showBio}
+										showSector={showSector}
+										showDomain={showDomain}
+										showLink={showLink}
+										showOrcid={showOrcid}
+										combinedOrganisations={combinedOrganisations}
+										data-testid='your-account'
+									/>
+								</div>
+							</Col>
+							<Col sm={1} lg={1} />
+						</Row>
+					</Container>
+					<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
+						<UserMessages
+							userState={userState[0]}
+							closed={this.toggleDrawer}
+							toggleModal={this.toggleModal}
+							drawerIsOpen={this.state.showDrawer}
+						/>
+					</SideDrawer>
+
+					<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
+				</div>
+			</Sentry.ErrorBoundary>
 		);
 	}
 }

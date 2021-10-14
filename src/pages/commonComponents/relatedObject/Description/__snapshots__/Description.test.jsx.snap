@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Description component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="pad-left-24 pad-right-24 pad-top-24 pad-bottom-16 col-lg-12 col-sm-12"
+  >
+    <span
+      class="gray800-14"
+      data-testid="test-description"
+    >
+      This is a test description
+    </span>
+  </div>
+</div>
+`;

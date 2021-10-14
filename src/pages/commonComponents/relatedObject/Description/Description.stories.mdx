@@ -1,0 +1,15 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Description from './Description';
+
+<Meta
+	title='Related Resources'
+	component={Description}
+	args={{
+		description: 'this is a test description',
+		type: 'dataset',
+	}}
+/>
+
+<Canvas>
+	<Story name='Description'>{props => <Description description='This is a test description' type='dataset' />}</Story>
+</Canvas>

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import removeMd from 'remove-markdown';
 
 export const isEditMode = (url = '') => {
 	if (!_.isEmpty(url)) {
@@ -26,4 +27,14 @@ export const removeArrayItem = (arr, value) => {
 		arr.splice(index, 1);
 	}
 	return arr;
+};
+
+export const stripMarkdown = (value = '', truncate = 0) => {
+	if (!_.isEmpty(value)) {
+		if (truncate > 0) {
+			value = value.substr(0, 255) + (value.length > 255 ? '...' : '');
+		}
+		value = removeMd(value);
+	}
+	return value;
 };

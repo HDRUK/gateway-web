@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Remove Button component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <button
+    class="soft-black-14 btn btn-medium"
+    data-testid="remove-button"
+    type="button"
+  >
+    <svg
+      class="mr-2 css-1cyke48-RemoveButton"
+      data-testid="closeicon"
+      height="100%"
+      viewBox="0 0 18 18"
+      width="100%"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <path
+        d="M19 3.58578644 20.4142136 5 13.415 12 20.4142136 19 19 20.4142136 12 13.415 5 20.4142136 3.58578644 19 10.585 12 3.58578644 5 5 3.58578644 12 10.585z"
+        fill="#979797"
+      />
+    </svg>
+    Remove
+  </button>
+</div>
+`;

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import * as Sentry from '@sentry/react';
 import UnmetDemand from '../dashboard/DARComponents/UnmetDemand';
 import TopSearches from '../dashboard/TopSearches';
 import TopDatasets from '../dashboard/TopDatasets';
@@ -12,6 +13,7 @@ import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
+import ErrorModal from '../commonComponents/errorModal';
 import '../dashboard/Dashboard.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
@@ -287,399 +289,401 @@ class PublicAnalyticsDashboard extends React.Component {
 		}
 
 		return (
-			<div>
-				<SearchBar
-					ref={this.searchBar}
-					doSearchMethod={this.doSearch}
-					doUpdateSearchString={this.updateSearchString}
-					doToggleDrawer={this.toggleDrawer}
-					userState={userState}
-				/>
-				<Container>
-					<Row>
-						<Col sm={1} lg={1}></Col>
-						<Col sm={10} lg={10} className='dashboardPadding'>
-							<Row className='accountHeader mt-4'>
-								<Col sm={12} lg={12}>
-									<Row>
-										<Col sm={8} lg={8}>
-											<span className='black-20-semibold'>Dashboard</span>
-										</Col>
-										<Col sm={4} lg={4}>
-											<span className='gray700-13 floatRight' data-test-id='dashboard-metrics-last-updated'>
-												Last updated: {moment().format('DD MMM YYYY, hh:mm')}
-											</span>
-										</Col>
-									</Row>
-									<Row>
-										<Col sm={12} lg={12}>
-											<span className='gray700-13'>
-												A collection of statistics, metrics and analytics; giving an overview of the sites data and performance
-											</span>
-										</Col>
-									</Row>
-								</Col>
-							</Row>
-
-							<Row className='kpiContainer'>
-								<Col sm={3} lg={3} className='kpiClass'>
-									<DashboardKPI kpiText='total datasets' kpiValue={statsDataType.dataset} testId='dashboard-dataset-count' />
-								</Col>
-								<Col sm={3} lg={3} className='kpiClass'>
-									<DashboardKPI
-										kpiText='datasets with technical metadata'
-										kpiValue={datasetsWithTechMetaData.toFixed(0)}
-										percentageFlag={true}
-										testId='dashboard-dataset-metadata-percent'
-									/>
-								</Col>
-								<Col sm={3} lg={3} className='kpiClass'>
-									<DashboardKPI
-										kpiText='unique registered users'
-										kpiValue={uniqueUsers.toFixed(0)}
-										percentageFlag={true}
-										testId='dashboard-users-registered-percent'
-									/>
-								</Col>
-								<Col sm={3} lg={3} className='kpiClass'>
-									<DashboardKPI
-										kpiText='uptime in current month'
-										kpiValue={uptime.toFixed(2) % 1 === 0 ? Math.trunc(uptime.toFixed(2)) : uptime.toFixed(2)}
-										percentageFlag={true}
-										testId='dashboard-gateway-uptime-percent'
-									/>
-								</Col>
-							</Row>
-
-							<Row className='accountHeader mt-2'>
-								<Col sm={12} lg={12}>
-									<Row>
-										<Col sm={7} lg={8}>
-											<span className='black-16-semibold'>Monthly</span>
-											<br />
-											<span className='gray700-13'>View the site’s data and performance on a monthly basis</span>
-										</Col>
-										<Col sm={5} lg={4}>
-											<div className='select_option'>
-												<DropdownButton
-													variant='light'
-													alignRight
-													className='floatRight gray800-14'
-													title={moment(this.state.selectedOption).format('MMMM YYYY')}
-													id='dateDropdown'
-													onSelect={this.handleDateSelect.bind(this)}>
-													{dates.map((date, i) => (
-														<Dropdown.Item className='gray800-14' key={i} eventKey={i}>
-															{moment(date).format('MMMM YYYY')}
-														</Dropdown.Item>
-													))}
-												</DropdownButton>
-											</div>
-										</Col>
-									</Row>
-								</Col>
-							</Row>
-
-							<Row className='kpiContainer'>
-								<Col sm={3} lg={3} className='kpiClass'>
-									<DashboardKPI kpiText='users this month' kpiValue={gaUsers} testId='dashboard-users-monthly-count' />
-								</Col>
-								<Col sm={3} lg={3} className='kpiClass'>
-									<DashboardKPI
-										kpiText='searches with results this month'
-										kpiValue={searchesWithResults.toFixed(0)}
-										percentageFlag={true}
-										testId='dashboard-searches-results-percent'
-									/>
-								</Col>
-								<Col sm={3} lg={3} className='kpiClass'>
-									<DashboardKPI
-										kpiText='data access requests this month'
-										kpiValue={accessRequests}
-										testId='dashboard-data-access-requests-count'
-									/>
-								</Col>
-								<Col sm={3} lg={3} className='kpiClass'>
-									<DashboardKPI kpiText='' kpiValue='' />
-								</Col>
-							</Row>
-
-							<Row className='accountHeader margin-top-16'>
-								<Col sm={12} lg={12} className='noPadding'>
-									<Row>
-										<Col sm={12} lg={12}>
-											<span className='black-20'>Data access request</span>
-										</Col>
-									</Row>
-									<Row>
-										<Col sm={12} lg={12}>
-											<span className='gray700-13'>Most popular datasets based on the number of data access requests</span>
-										</Col>
-									</Row>
-								</Col>
-							</Row>
-
-							{topDatasets.length === 0 ? (
-								this.renderNoResults('There were no data access requests this month')
-							) : (
-								<Row className='entryBox noPadding'>
-									<Col sm={12} lg={12} className='resultsPadding'>
-										<Row className='dashboardHeader entrybox gray800-14-bold'>
-											<Col sm={5} lg={6} className='noPadding'>
-												Dataset{' '}
+			<Sentry.ErrorBoundary fallback={<ErrorModal />}>
+				<div>
+					<SearchBar
+						ref={this.searchBar}
+						doSearchMethod={this.doSearch}
+						doUpdateSearchString={this.updateSearchString}
+						doToggleDrawer={this.toggleDrawer}
+						userState={userState}
+					/>
+					<Container>
+						<Row>
+							<Col sm={1} lg={1}></Col>
+							<Col sm={10} lg={10} className='dashboardPadding'>
+								<Row className='accountHeader mt-4'>
+									<Col sm={12} lg={12}>
+										<Row>
+											<Col sm={8} lg={8}>
+												<span className='black-20-semibold'>Dashboard</span>
 											</Col>
-											<Col sm={4} lg={4} className='pad-right-0 pad-left-16'>
-												Custodian
-											</Col>
-											<Col sm={3} lg={2} className='pad-right-0 pad-left-16'>
-												Requests
+											<Col sm={4} lg={4}>
+												<span className='gray700-13 floatRight' data-test-id='dashboard-metrics-last-updated'>
+													Last updated: {moment().format('DD MMM YYYY, hh:mm')}
+												</span>
 											</Col>
 										</Row>
 										<Row>
 											<Col sm={12} lg={12}>
-												{topDatasets.map((dat, i) => {
-													return <TopDatasets key={i} data={dat} />;
-												})}
+												<span className='gray700-13'>
+													A collection of statistics, metrics and analytics; giving an overview of the sites data and performance
+												</span>
 											</Col>
 										</Row>
 									</Col>
 								</Row>
-							)}
 
-							<Row className='accountHeader mt-4' style={{ 'margin-bottom': '0.5px' }}>
-								<Col sm={12} lg={12}>
-									<Row>
-										<Col sm={12} lg={12}>
-											<span className='black-20'>Top searches</span>
-										</Col>
-									</Row>
-									<Row>
-										<Col sm={12} lg={12}>
-											<span className='gray700-13'>Most popular search terms and results</span>
-										</Col>
-									</Row>
-								</Col>
-							</Row>
+								<Row className='kpiContainer'>
+									<Col sm={3} lg={3} className='kpiClass'>
+										<DashboardKPI kpiText='total datasets' kpiValue={statsDataType.dataset} testId='dashboard-dataset-count' />
+									</Col>
+									<Col sm={3} lg={3} className='kpiClass'>
+										<DashboardKPI
+											kpiText='datasets with technical metadata'
+											kpiValue={datasetsWithTechMetaData.toFixed(0)}
+											percentageFlag={true}
+											testId='dashboard-dataset-metadata-percent'
+										/>
+									</Col>
+									<Col sm={3} lg={3} className='kpiClass'>
+										<DashboardKPI
+											kpiText='unique registered users'
+											kpiValue={uniqueUsers.toFixed(0)}
+											percentageFlag={true}
+											testId='dashboard-users-registered-percent'
+										/>
+									</Col>
+									<Col sm={3} lg={3} className='kpiClass'>
+										<DashboardKPI
+											kpiText='uptime in current month'
+											kpiValue={uptime.toFixed(2) % 1 === 0 ? Math.trunc(uptime.toFixed(2)) : uptime.toFixed(2)}
+											percentageFlag={true}
+											testId='dashboard-gateway-uptime-percent'
+										/>
+									</Col>
+								</Row>
 
-							{topSearches.length === 0 ? (
-								this.renderNoResults("There isn't enough data available for this month yet")
-							) : (
-								<Fragment>
-									<Row>
-										<Col sm={12} lg={12}>
-											<Row className='subHeader entrybox gray800-14-bold' style={{ height: '44px' }}>
-												<Col sm={5} lg={6}>
-													Search term{' '}
+								<Row className='accountHeader mt-2'>
+									<Col sm={12} lg={12}>
+										<Row>
+											<Col sm={7} lg={8}>
+												<span className='black-16-semibold'>Monthly</span>
+												<br />
+												<span className='gray700-13'>View the site’s data and performance on a monthly basis</span>
+											</Col>
+											<Col sm={5} lg={4}>
+												<div className='select_option'>
+													<DropdownButton
+														variant='light'
+														alignRight
+														className='floatRight gray800-14'
+														title={moment(this.state.selectedOption).format('MMMM YYYY')}
+														id='dateDropdown'
+														onSelect={this.handleDateSelect.bind(this)}>
+														{dates.map((date, i) => (
+															<Dropdown.Item className='gray800-14' key={i} eventKey={i}>
+																{moment(date).format('MMMM YYYY')}
+															</Dropdown.Item>
+														))}
+													</DropdownButton>
+												</div>
+											</Col>
+										</Row>
+									</Col>
+								</Row>
+
+								<Row className='kpiContainer'>
+									<Col sm={3} lg={3} className='kpiClass'>
+										<DashboardKPI kpiText='users this month' kpiValue={gaUsers} testId='dashboard-users-monthly-count' />
+									</Col>
+									<Col sm={3} lg={3} className='kpiClass'>
+										<DashboardKPI
+											kpiText='searches with results this month'
+											kpiValue={searchesWithResults.toFixed(0)}
+											percentageFlag={true}
+											testId='dashboard-searches-results-percent'
+										/>
+									</Col>
+									<Col sm={3} lg={3} className='kpiClass'>
+										<DashboardKPI
+											kpiText='data access requests this month'
+											kpiValue={accessRequests}
+											testId='dashboard-data-access-requests-count'
+										/>
+									</Col>
+									<Col sm={3} lg={3} className='kpiClass'>
+										<DashboardKPI kpiText='' kpiValue='' />
+									</Col>
+								</Row>
+
+								<Row className='accountHeader margin-top-16'>
+									<Col sm={12} lg={12} className='noPadding'>
+										<Row>
+											<Col sm={12} lg={12}>
+												<span className='black-20'>Data access request</span>
+											</Col>
+										</Row>
+										<Row>
+											<Col sm={12} lg={12}>
+												<span className='gray700-13'>Most popular datasets based on the number of data access requests</span>
+											</Col>
+										</Row>
+									</Col>
+								</Row>
+
+								{topDatasets.length === 0 ? (
+									this.renderNoResults('There were no data access requests this month')
+								) : (
+									<Row className='entryBox noPadding'>
+										<Col sm={12} lg={12} className='resultsPadding'>
+											<Row className='dashboardHeader entrybox gray800-14-bold'>
+												<Col sm={5} lg={6} className='noPadding'>
+													Dataset{' '}
 												</Col>
-												<Col sm={2} lg={2}>
-													Searches
+												<Col sm={4} lg={4} className='pad-right-0 pad-left-16'>
+													Custodian
 												</Col>
-												<Col sm={5} lg={4}>
-													Latest results
+												<Col sm={3} lg={2} className='pad-right-0 pad-left-16'>
+													Requests
 												</Col>
 											</Row>
-											{topSearches.map(dat => {
-												return <TopSearches data={dat} />;
-											})}
+											<Row>
+												<Col sm={12} lg={12}>
+													{topDatasets.map((dat, i) => {
+														return <TopDatasets key={i} data={dat} />;
+													})}
+												</Col>
+											</Row>
 										</Col>
 									</Row>
-								</Fragment>
-							)}
+								)}
 
-							<Row className='accountHeader mt-4'>
-								<Col sm={12} lg={12}>
-									<Row>
-										<Col sm={12} lg={12}>
-											<span className='black-20'>Unmet demand</span>
-										</Col>
-									</Row>
-									<Row>
-										<Col sm={12} lg={12}>
-											<span className='gray700-13'>
-												For each resource type, which searches yielded no results, ordered by highest number of repeat searches
-											</span>
-										</Col>
-									</Row>
-								</Col>
-							</Row>
-							<Row className='tabsBackground'>
-								<Col sm={12} lg={12}>
-									<Tabs
-										className='dataAccessTabs gray700-13'
-										data-test-id='unmet-tabs'
-										activeKey={this.state.key}
-										onSelect={this.handleSelect.bind(this)}>
-										<Tab eventKey='Datasets' title={'Datasets'}></Tab>
-										<Tab eventKey='Tools' title={'Tools'}></Tab>
-										<Tab eventKey='Projects' title={'Projects'}></Tab>
-										<Tab eventKey='Courses' title={'Courses'}></Tab>
-										<Tab eventKey='Papers' title={'Papers'}></Tab>
-										<Tab eventKey='People' title={'People'}></Tab>
-									</Tabs>
-								</Col>
-							</Row>
+								<Row className='accountHeader mt-4' style={{ 'margin-bottom': '0.5px' }}>
+									<Col sm={12} lg={12}>
+										<Row>
+											<Col sm={12} lg={12}>
+												<span className='black-20'>Top searches</span>
+											</Col>
+										</Row>
+										<Row>
+											<Col sm={12} lg={12}>
+												<span className='gray700-13'>Most popular search terms and results</span>
+											</Col>
+										</Row>
+									</Col>
+								</Row>
 
-							{data.length === 0
-								? this.renderNoResults("There isn't enough data available for this month yet")
-								: (() => {
-										switch (key) {
-											case 'Datasets':
-												return (
-													<div>
-														<Row>
-															<Col sm={12} lg={12}>
-																<Row className='subHeader mt-3 gray800-14-bold'>
-																	<Col sm={8} lg={8}>
-																		Search term{' '}
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Searches
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Dataset results
-																	</Col>
-																</Row>
-																{data.map(dat => {
-																	return <UnmetDemand data={dat} />;
-																})}
-															</Col>
-														</Row>
-													</div>
-												);
-											case 'Tools':
-												return (
-													<div>
-														<Row>
-															<Col sm={12} lg={12}>
-																<Row className='subHeader mt-3 gray800-14-bold'>
-																	<Col sm={8} lg={8}>
-																		Search term{' '}
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Searches
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Tool results
-																	</Col>
-																</Row>
-																{data.map(dat => {
-																	return <UnmetDemand data={dat} />;
-																})}
-															</Col>
-														</Row>
-													</div>
-												);
-											case 'Projects':
-												return (
-													<div>
-														<Row>
-															<Col sm={12} lg={12}>
-																<Row className='subHeader mt-3 gray800-14-bold'>
-																	<Col sm={8} lg={8}>
-																		Search term{' '}
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Searches
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Project results
-																	</Col>
-																</Row>
-																{data.map(dat => {
-																	return <UnmetDemand data={dat} />;
-																})}
-															</Col>
-														</Row>
-													</div>
-												);
-											case 'Courses':
-												return (
-													<div>
-														<Row>
-															<Col sm={12} lg={12}>
-																<Row className='subHeader mt-3 gray800-14-bold'>
-																	<Col sm={8} lg={8}>
-																		Search term{' '}
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Searches
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Project results
-																	</Col>
-																</Row>
-																{data.map(dat => {
-																	return <UnmetDemand data={dat} />;
-																})}
-															</Col>
-														</Row>
-													</div>
-												);
-											case 'Papers':
-												return (
-													<div>
-														<Row>
-															<Col sm={12} lg={12}>
-																<Row className='subHeader mt-3 gray800-14-bold'>
-																	<Col sm={8} lg={8}>
-																		Search term{' '}
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Searches
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Paper results
-																	</Col>
-																</Row>
-																{data.map(dat => {
-																	return <UnmetDemand data={dat} />;
-																})}
-															</Col>
-														</Row>
-													</div>
-												);
-											case 'People':
-												return (
-													<div>
-														<Row>
-															<Col sm={12} lg={12}>
-																<Row className='subHeader mt-3 gray800-14-bold'>
-																	<Col sm={8} lg={8}>
-																		Search term{' '}
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		Searches
-																	</Col>
-																	<Col sm={2} lg={2}>
-																		People results
-																	</Col>
-																</Row>
-																{data.map(dat => {
-																	return <UnmetDemand data={dat} />;
-																})}
-															</Col>
-														</Row>
-													</div>
-												);
-											default:
-												return key;
-										}
-								  })()}
-						</Col>
-						<Col sm={1} lg={10} />
-					</Row>
-				</Container>
-				<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
-					<UserMessages
-						userState={userState[0]}
-						closed={this.toggleDrawer}
-						toggleModal={this.toggleModal}
-						drawerIsOpen={this.state.showDrawer}
-					/>
-				</SideDrawer>
+								{topSearches.length === 0 ? (
+									this.renderNoResults("There isn't enough data available for this month yet")
+								) : (
+									<Fragment>
+										<Row>
+											<Col sm={12} lg={12}>
+												<Row className='subHeader entrybox gray800-14-bold' style={{ height: '44px' }}>
+													<Col sm={5} lg={6}>
+														Search term{' '}
+													</Col>
+													<Col sm={2} lg={2}>
+														Searches
+													</Col>
+													<Col sm={5} lg={4}>
+														Latest results
+													</Col>
+												</Row>
+												{topSearches.map(dat => {
+													return <TopSearches data={dat} />;
+												})}
+											</Col>
+										</Row>
+									</Fragment>
+								)}
 
-				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
-			</div>
+								<Row className='accountHeader mt-4'>
+									<Col sm={12} lg={12}>
+										<Row>
+											<Col sm={12} lg={12}>
+												<span className='black-20'>Unmet demand</span>
+											</Col>
+										</Row>
+										<Row>
+											<Col sm={12} lg={12}>
+												<span className='gray700-13'>
+													For each resource type, which searches yielded no results, ordered by highest number of repeat searches
+												</span>
+											</Col>
+										</Row>
+									</Col>
+								</Row>
+								<Row className='tabsBackground'>
+									<Col sm={12} lg={12}>
+										<Tabs
+											className='dataAccessTabs gray700-13'
+											data-test-id='unmet-tabs'
+											activeKey={this.state.key}
+											onSelect={this.handleSelect.bind(this)}>
+											<Tab eventKey='Datasets' title={'Datasets'}></Tab>
+											<Tab eventKey='Tools' title={'Tools'}></Tab>
+											<Tab eventKey='Projects' title={'Projects'}></Tab>
+											<Tab eventKey='Courses' title={'Courses'}></Tab>
+											<Tab eventKey='Papers' title={'Papers'}></Tab>
+											<Tab eventKey='People' title={'People'}></Tab>
+										</Tabs>
+									</Col>
+								</Row>
+
+								{data.length === 0
+									? this.renderNoResults("There isn't enough data available for this month yet")
+									: (() => {
+											switch (key) {
+												case 'Datasets':
+													return (
+														<div>
+															<Row>
+																<Col sm={12} lg={12}>
+																	<Row className='subHeader mt-3 gray800-14-bold'>
+																		<Col sm={8} lg={8}>
+																			Search term{' '}
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Searches
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Dataset results
+																		</Col>
+																	</Row>
+																	{data.map(dat => {
+																		return <UnmetDemand data={dat} />;
+																	})}
+																</Col>
+															</Row>
+														</div>
+													);
+												case 'Tools':
+													return (
+														<div>
+															<Row>
+																<Col sm={12} lg={12}>
+																	<Row className='subHeader mt-3 gray800-14-bold'>
+																		<Col sm={8} lg={8}>
+																			Search term{' '}
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Searches
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Tool results
+																		</Col>
+																	</Row>
+																	{data.map(dat => {
+																		return <UnmetDemand data={dat} />;
+																	})}
+																</Col>
+															</Row>
+														</div>
+													);
+												case 'Projects':
+													return (
+														<div>
+															<Row>
+																<Col sm={12} lg={12}>
+																	<Row className='subHeader mt-3 gray800-14-bold'>
+																		<Col sm={8} lg={8}>
+																			Search term{' '}
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Searches
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Project results
+																		</Col>
+																	</Row>
+																	{data.map(dat => {
+																		return <UnmetDemand data={dat} />;
+																	})}
+																</Col>
+															</Row>
+														</div>
+													);
+												case 'Courses':
+													return (
+														<div>
+															<Row>
+																<Col sm={12} lg={12}>
+																	<Row className='subHeader mt-3 gray800-14-bold'>
+																		<Col sm={8} lg={8}>
+																			Search term{' '}
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Searches
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Project results
+																		</Col>
+																	</Row>
+																	{data.map(dat => {
+																		return <UnmetDemand data={dat} />;
+																	})}
+																</Col>
+															</Row>
+														</div>
+													);
+												case 'Papers':
+													return (
+														<div>
+															<Row>
+																<Col sm={12} lg={12}>
+																	<Row className='subHeader mt-3 gray800-14-bold'>
+																		<Col sm={8} lg={8}>
+																			Search term{' '}
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Searches
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Paper results
+																		</Col>
+																	</Row>
+																	{data.map(dat => {
+																		return <UnmetDemand data={dat} />;
+																	})}
+																</Col>
+															</Row>
+														</div>
+													);
+												case 'People':
+													return (
+														<div>
+															<Row>
+																<Col sm={12} lg={12}>
+																	<Row className='subHeader mt-3 gray800-14-bold'>
+																		<Col sm={8} lg={8}>
+																			Search term{' '}
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			Searches
+																		</Col>
+																		<Col sm={2} lg={2}>
+																			People results
+																		</Col>
+																	</Row>
+																	{data.map(dat => {
+																		return <UnmetDemand data={dat} />;
+																	})}
+																</Col>
+															</Row>
+														</div>
+													);
+												default:
+													return key;
+											}
+									  })()}
+							</Col>
+							<Col sm={1} lg={10} />
+						</Row>
+					</Container>
+					<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
+						<UserMessages
+							userState={userState[0]}
+							closed={this.toggleDrawer}
+							toggleModal={this.toggleModal}
+							drawerIsOpen={this.state.showDrawer}
+						/>
+					</SideDrawer>
+
+					<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
+				</div>
+			</Sentry.ErrorBoundary>
 		);
 	}
 }

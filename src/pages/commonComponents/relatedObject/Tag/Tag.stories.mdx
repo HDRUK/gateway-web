@@ -1,0 +1,27 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Tag from './Tag';
+
+<Meta
+	title='Related Resources'
+	component={Tag}
+	args={{
+		tagName: 'test',
+		tagType: 'phenotype',
+		onSearchPage: true,
+		activeLink: true,
+		url: '/search?search=&tab=Datasets&phenotypes=',
+		parentKey: 'phenotypes',
+		showTagType: false,
+	}}
+/>
+
+<Canvas>
+	<Story name='Tag'>
+		{props => {
+			const updateOnFilterBadge = () => {
+				alert('removed');
+			};
+			return <Tag {...props} updateOnFilterBadgeHandler={updateOnFilterBadge} />;
+		}}
+	</Story>
+</Canvas>

@@ -1,9 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import * as Sentry from '@sentry/react';
 import { Container } from 'react-bootstrap';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
+import ErrorModal from '../commonComponents/errorModal';
 import AddEditPaperForm from './AddEditPaperForm';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
@@ -319,53 +321,55 @@ class AddEditPaperPage extends React.Component {
 		}
 
 		return (
-			<div>
-				<SearchBar
-					ref={this.searchBar}
-					doSearchMethod={this.doSearch}
-					doUpdateSearchString={this.updateSearchString}
-					doToggleDrawer={this.toggleDrawer}
-					userState={userState}
-				/>
-
-				<AddEditPaperForm
-					data={data}
-					isEdit={isEdit}
-					combinedTopic={combinedTopic}
-					combinedFeatures={combinedFeatures}
-					combinedUsers={combinedUsers}
-					userState={userState}
-					searchString={searchString}
-					doSearchMethod={this.doModalSearch}
-					doUpdateSearchString={this.updateSearchString}
-					datasetData={datasetData}
-					toolData={toolData}
-					projectData={projectData}
-					paperData={paperData}
-					personData={personData}
-					courseData={courseData}
-					summary={summary}
-					doAddToTempRelatedObjects={this.addToTempRelatedObjects}
-					tempRelatedObjectIds={this.state.tempRelatedObjectIds}
-					doClearRelatedObjects={this.clearRelatedObjects}
-					doAddToRelatedObjects={this.addToRelatedObjects}
-					doRemoveObject={this.removeObject}
-					relatedObjects={relatedObjects}
-					didDelete={didDelete}
-					updateDeleteFlag={this.updateDeleteFlag}
-				/>
-
-				<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
-					<UserMessages
-						userState={userState[0]}
-						closed={this.toggleDrawer}
-						toggleModal={this.toggleModal}
-						drawerIsOpen={this.state.showDrawer}
+			<Sentry.ErrorBoundary fallback={<ErrorModal />}>
+				<div>
+					<SearchBar
+						ref={this.searchBar}
+						doSearchMethod={this.doSearch}
+						doUpdateSearchString={this.updateSearchString}
+						doToggleDrawer={this.toggleDrawer}
+						userState={userState}
 					/>
-				</SideDrawer>
 
-				<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
-			</div>
+					<AddEditPaperForm
+						data={data}
+						isEdit={isEdit}
+						combinedTopic={combinedTopic}
+						combinedFeatures={combinedFeatures}
+						combinedUsers={combinedUsers}
+						userState={userState}
+						searchString={searchString}
+						doSearchMethod={this.doModalSearch}
+						doUpdateSearchString={this.updateSearchString}
+						datasetData={datasetData}
+						toolData={toolData}
+						projectData={projectData}
+						paperData={paperData}
+						personData={personData}
+						courseData={courseData}
+						summary={summary}
+						doAddToTempRelatedObjects={this.addToTempRelatedObjects}
+						tempRelatedObjectIds={this.state.tempRelatedObjectIds}
+						doClearRelatedObjects={this.clearRelatedObjects}
+						doAddToRelatedObjects={this.addToRelatedObjects}
+						doRemoveObject={this.removeObject}
+						relatedObjects={relatedObjects}
+						didDelete={didDelete}
+						updateDeleteFlag={this.updateDeleteFlag}
+					/>
+
+					<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
+						<UserMessages
+							userState={userState[0]}
+							closed={this.toggleDrawer}
+							toggleModal={this.toggleModal}
+							drawerIsOpen={this.state.showDrawer}
+						/>
+					</SideDrawer>
+
+					<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
+				</div>
+			</Sentry.ErrorBoundary>
 		);
 	}
 }
