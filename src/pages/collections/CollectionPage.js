@@ -414,7 +414,7 @@ export const CollectionPage = props => {
 						className='tabsBackground gray700-13'
 						activeKey={key}
 						onSelect={key => {
-							handleSelect(key);
+							setKey(key);
 							googleAnalytics.recordVirtualPageView(`${key} tab`);
 							googleAnalytics.recordEvent('Collections', `Clicked ${key} tab`, `Viewing ${key}`);
 						}}
@@ -453,7 +453,7 @@ export const CollectionPage = props => {
 					{key !== 'discussion' && (
 						<CollectionsSearch
 							doCollectionsSearchMethod={doCollectionsSearch}
-							doUpdateCollectionsSearchString={updateCollectionsSearchString}
+							doUpdateCollectionsSearchString={searchString => setSearchString(searchString)}
 							isLoading={isResultsLoading}
 							handleSort={handleSort}
 							isCollectionsSearch={true}
