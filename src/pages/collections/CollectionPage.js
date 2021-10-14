@@ -167,23 +167,23 @@ export const CollectionPage = props => {
 		setCollectionsPageSort(sort);
 		switch (sort) {
 			case 'metadata': {
-				sortByMetadataQuality();
+				sortByMetadataQuality(filteredData);
 				break;
 			}
 			case 'recentlyadded': {
-				sortByRecentlyAdded();
+				sortByRecentlyAdded(filteredData);
 				break;
 			}
 			case 'resources': {
-				sortByResources();
+				sortByResources(filteredData);
 				break;
 			}
 			case 'relevance': {
-				sortByRelevance();
+				sortByRelevance(filteredData, searchCollectionsString);
 				break;
 			}
 			case 'popularity': {
-				sortByPopularity();
+				sortByPopularity(filteredData);
 				break;
 			}
 			default:
