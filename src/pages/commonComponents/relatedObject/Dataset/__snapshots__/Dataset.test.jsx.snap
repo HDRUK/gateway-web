@@ -14,7 +14,6 @@ exports[`Given the Dataset component When it is rendered Then matches the previo
       >
          
         COVID-19 Symptom Tracker Dataset
-         
       </span>
       <br />
       <span>
@@ -71,61 +70,91 @@ exports[`Given the Dataset component When it is rendered Then matches the previo
             fill="#113328"
           />
         </svg>
-        Dataset
+        <span>
+          Dataset
+        </span>
+        <span />
       </div>
       <div
         class="badge-tag"
         data-testid="badge-COVID-19"
       >
-        COVID-19
+        <span>
+          COVID-19
+        </span>
+        <span />
       </div>
       <div
         class="badge-tag"
         data-testid="badge-TRACKER"
       >
-        TRACKER
+        <span>
+          TRACKER
+        </span>
+        <span />
       </div>
       <div
         class="badge-tag"
         data-testid="badge-SAIL"
       >
-        SAIL
+        <span>
+          SAIL
+        </span>
+        <span />
       </div>
       <div
         class="badge-tag"
         data-testid="badge-COVID"
       >
-        COVID
+        <span>
+          COVID
+        </span>
+        <span />
       </div>
       <div
         class="badge-tag"
         data-testid="badge-MOBILE APP"
       >
-        MOBILE APP
+        <span>
+          MOBILE APP
+        </span>
+        <span />
       </div>
       <div
         class="badge-tag"
         data-testid="badge-CORONAVIRUS"
       >
-        CORONAVIRUS
+        <span>
+          CORONAVIRUS
+        </span>
+        <span />
       </div>
       <div
         class="badge-tag"
         data-testid="badge-SYMPTOM"
       >
-        SYMPTOM
+        <span>
+          SYMPTOM
+        </span>
+        <span />
       </div>
       <div
         class="badge-tag"
         data-testid="badge-NCS"
       >
-        NCS
+        <span>
+          NCS
+        </span>
+        <span />
       </div>
       <div
         class="badge-tag"
         data-testid="badge-National Core Study"
       >
-        National Core Study
+        <span>
+          National Core Study
+        </span>
+        <span />
       </div>
     </div>
     <div

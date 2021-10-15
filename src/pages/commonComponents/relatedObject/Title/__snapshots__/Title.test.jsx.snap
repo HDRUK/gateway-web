@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Title component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <span
+    class="black-bold-16"
+    data-testid="test-title"
+  >
+     
+    This is a test description
+  </span>
+</div>
+`;

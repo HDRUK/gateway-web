@@ -7,17 +7,27 @@ import * as styles from '../Dataset/Dataset.styles';
 import '../../CommonComponents.scss';
 
 const Tag = props => {
-	const { tagName, tagType, activeLink, onSearchPage, updateOnFilterBadgeHandler, parentKey, url, showTagType } = props;
-	const dispayTagName = showTagType ? `${toTitleCase(tagType)}: ${tagName}` : tagName;
+	const { tagName, tagType, activeLink, onSearchPage, updateOnFilterBadgeHandler, parentKey, filter, url, showTagType, version } = props;
+	const displayTagName = showTagType ? (
+		<>
+			<span>{`${toTitleCase(tagType)}: ${tagName}`}</span>
+			<span>{version}</span>
+		</>
+	) : (
+		<>
+			<span>{tagName}</span>
+			<span>{version}</span>
+		</>
+	);
 	if (activeLink) {
 		if (onSearchPage) {
 			return (
 				<span
 					css={styles.pointer}
-					onClick={event => updateOnFilterBadgeHandler(parentKey, { label: tagName, parentKey: parentKey })}
+					onClick={event => updateOnFilterBadgeHandler(filter, { label: tagName, parentKey: parentKey })}
 					data-testid={`badge-${tagName}-span`}>
 					<div className={`badge-${tagType}`} data-testid={`badge-${tagName}`}>
-						{dispayTagName}
+						{displayTagName}
 					</div>
 				</span>
 			);
@@ -25,7 +35,7 @@ const Tag = props => {
 			return (
 				<a href={`${url}${tagName}`} data-testid={`badge-${tagName}-link`}>
 					<div className={`badge-${tagType}`} data-testid={`badge-${tagName}`}>
-						{dispayTagName}
+						{displayTagName}
 					</div>
 				</a>
 			);
@@ -34,7 +44,7 @@ const Tag = props => {
 		return (
 			<div className={`badge-${tagType}`} data-testid={`badge-${tagName}`}>
 				{props.children}
-				{dispayTagName}
+				{displayTagName}
 			</div>
 		);
 	}
@@ -46,9 +56,15 @@ Tag.propTypes = {
 	activeLink: PropTypes.bool.isRequired,
 	onSearchPage: PropTypes.bool.isRequired,
 	parentKey: PropTypes.string.isRequired,
+	filter: PropTypes.string.isRequired,
 	url: PropTypes.string.isRequired,
 	updateOnFilterBadgeHandler: PropTypes.func.isRequired,
 	showTagType: PropTypes.bool.isRequired,
+	version: PropTypes.string,
+};
+Tag.defaultProps = {
+	version: '',
+	filter: '',
 };
 
 export default Tag;

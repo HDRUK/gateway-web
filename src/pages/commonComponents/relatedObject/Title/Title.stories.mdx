@@ -1,0 +1,16 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Title from './Title';
+
+<Meta
+	title='Related Resources'
+	component={Title}
+	args={{
+		name: 'this is a test title',
+		type: 'dataset',
+		id: '123',
+	}}
+/>
+
+<Canvas>
+	<Story name='Title'>{props => <Title {...props} />}</Story>
+</Canvas>

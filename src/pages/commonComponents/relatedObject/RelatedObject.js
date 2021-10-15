@@ -7,6 +7,7 @@ import Loading from '../Loading';
 import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as CalendarSvg } from '../../../images/calendaricon.svg';
 import Dataset from './Dataset/Dataset';
+import Tool from './Tool/Tool';
 import { stripMarkdown } from '../../../utils/GeneralHelper.util';
 import './RelatedObject.scss';
 
@@ -169,185 +170,14 @@ class RelatedObject extends React.Component {
 						{(() => {
 							if (data.type === 'tool') {
 								return (
-									<Row className='noMargin'>
-										<Col sm={10} lg={10} className='pad-left-24'>
-											{activeLink === true ? (
-												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/tool/' + data.id}>
-													{data.name}
-												</a>
-											) : (
-												<span className='black-bold-16'> {data.name}</span>
-											)}
-											<br />
-											{!data.persons || data.persons <= 0 ? (
-												<span className='gray800-14'>Author not listed</span>
-											) : (
-												data.persons.map((person, index) => {
-													if (activeLink === true) {
-														return (
-															<a className='gray800-14' href={'/person/' + person.id} key={`person-${index}`}>
-																{person.firstname} {person.lastname}
-																{data.persons.length === index + 1 ? '' : ', '}
-															</a>
-														);
-													} else {
-														return (
-															<span className='gray800-14' key={`person-${index}`}>
-																{person.firstname} {person.lastname}
-																{data.persons.length === index + 1 ? '' : ', '}
-															</span>
-														);
-													}
-												})
-											)}
-										</Col>
-										<Col sm={2} lg={2} className='pad-right-24'>
-											{this.props.showRelationshipQuestion ? (
-												<Button variant='medium' className='soft-black-14' onClick={this.removeButton}>
-													<SVGIcon name='closeicon' fill={'#979797'} className='buttonSvg mr-2' />
-													Remove
-												</Button>
-											) : (
-												''
-											)}
-										</Col>
-										<Col className='pad-left-24 pad-right-24 pad-top-16'>
-											<span className='badge-tool'>
-												<SVGIcon name='newtoolicon' fill={'#ffffff'} className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
-												<span>Tool</span>
-											</span>
-
-											{!data.categories.category ? (
-												''
-											) : activeLink === true ? (
-												onSearchPage === true ? (
-													<span
-														className='pointer'
-														onClick={event =>
-															this.updateOnFilterBadge('toolCategoriesSelected', {
-																label: data.categories.category,
-																parentKey: 'toolcategories',
-															})
-														}>
-														<div className='badge-tag'>{data.categories.category}</div>
-													</span>
-												) : (
-													<a href={'/search?search=&tab=Tools&toolcategories=' + data.categories.category}>
-														<div className='badge-tag'>{data.categories.category}</div>
-													</a>
-												)
-											) : (
-												<div className='badge-tag'>{data.categories.category}</div>
-											)}
-
-											{!data.programmingLanguage || data.programmingLanguage.length <= 0
-												? ''
-												: data.programmingLanguage.map((p, i) => {
-														if (activeLink === true) {
-															if (onSearchPage === true) {
-																return (
-																	<span
-																		className='pointer'
-																		onClick={event =>
-																			this.updateOnFilterBadge('toolProgrammingLanguageSelected', {
-																				label: p.programmingLanguage,
-																				parentKey: 'toolprogrammingLanguage',
-																			})
-																		}>
-																		<div className='badge-version' key={i}>
-																			<span>{p.programmingLanguage}</span>
-																			<span>{p.version}</span>
-																		</div>
-																	</span>
-																);
-															} else {
-																return (
-																	<a href={'/search?search=&tab=Tools&toolprogrammingLanguage=' + p.programmingLanguage}>
-																		<div className='badge-version' key={i}>
-																			<span>{p.programmingLanguage}</span>
-																			<span>{p.version}</span>
-																		</div>
-																	</a>
-																);
-															}
-														} else {
-															return (
-																<div className='badge-version' key={i}>
-																	<span>{p.programmingLanguage}</span>
-																	<span>{p.version}</span>
-																</div>
-															);
-														}
-												  })}
-
-											{!data.tags.features || data.tags.features.length <= 0
-												? ''
-												: data.tags.features.map((feature, index) => {
-														if (activeLink === true) {
-															if (onSearchPage === true) {
-																return (
-																	<span
-																		className='pointer'
-																		onClick={event =>
-																			this.updateOnFilterBadge('toolFeaturesSelected', { label: feature, parentKey: 'toolfeatures' })
-																		}
-																		key={`feature-${index}`}>
-																		<div className='badge-tag'>{feature}</div>
-																	</span>
-																);
-															} else {
-																return (
-																	<a href={'/search?search=&tab=Tools&toolfeatures=' + feature} key={`feature-${index}`}>
-																		<div className='badge-tag'>{feature}</div>
-																	</a>
-																);
-															}
-														} else {
-															return (
-																<div className='badge-tag' key={`feature-${index}`}>
-																	{feature}
-																</div>
-															);
-														}
-												  })}
-
-											{!data.tags.topics || data.tags.topics.length <= 0
-												? ''
-												: data.tags.topics.map((topic, index) => {
-														if (activeLink === true) {
-															if (onSearchPage === true) {
-																return (
-																	<span
-																		className='pointer'
-																		onClick={event =>
-																			this.updateOnFilterBadge('toolTopicsSelected', { label: topic, parentKey: 'tooltopics' })
-																		}
-																		key={`topic-${index}`}>
-																		<div className='badge-tag'>{topic}</div>
-																	</span>
-																);
-															} else {
-																return (
-																	<a href={'/search?search=&tab=Tools&tooltopics=' + topic} key={`topic-${index}`}>
-																		<div className='badge-tag'>{topic}</div>
-																	</a>
-																);
-															}
-														} else {
-															return (
-																<div className='badge-tag' key={`topic-${index}`}>
-																	{topic}
-																</div>
-															);
-														}
-												  })}
-										</Col>
-										{!this.props.showRelationshipQuestion && (
-											<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-24 pad-bottom-16'>
-												<span className='gray800-14'>{stripMarkdown(data.description, 255)}</span>
-											</Col>
-										)}
-									</Row>
+									<Tool
+										data={data}
+										activeLink={activeLink}
+										onSearchPage={onSearchPage ? onSearchPage : false}
+										showRelationshipQuestion={this.props.showRelationshipQuestion ? this.props.showRelationshipQuestion : false}
+										updateOnFilterBadge={this.updateOnFilterBadge}
+										removeButton={this.removeButton}
+									/>
 								);
 							} else if (data.type === 'project') {
 								return (

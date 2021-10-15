@@ -6,7 +6,10 @@ exports[`Given the Tag component When it is rendered Then matches the previous s
     class="badge-phenotype"
     data-testid="badge-test"
   >
-    test
+    <span>
+      test
+    </span>
+    <span />
   </div>
 </div>
 `;

@@ -9,6 +9,7 @@ import googleAnalytics from '../../../../tracking';
 import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
 import SVGIcon from '../../../../images/SVGIcon';
 import RemoveButton from '../RemoveButton/RemoveButton';
+import Title from '../Title/Title';
 import Description from '../Description/Description';
 import Tag from '../Tag/Tag';
 import * as styles from './Dataset.styles';
@@ -81,23 +82,15 @@ const Dataset = ({
 		<>
 			<Row className='noMargin'>
 				<Col sm={10} lg={10} className='pad-left-24'>
-					{activeLink ? (
-						<a
-							onClick={() => {
-								googleAnalytics.recordEvent('Datasets', 'Clicked on dataset to open', `Dataset name: ${data.name}`);
-							}}
-							className='purple-bold-16'
-							css={styles.pointer}
-							href={'/dataset/' + data.pid}
-							data-testid='dataset-title'>
-							{data.name}
-						</a>
-					) : (
-						<span className='black-bold-16' data-testid='dataset-title'>
-							{' '}
-							{data.name}{' '}
-						</span>
-					)}
+					<Title
+						id={data.pid}
+						name={data.name}
+						type='dataset'
+						activeLink={activeLink}
+						onClickHandler={() => {
+							googleAnalytics.recordEvent('Datasets', 'Clicked on dataset to open', `Dataset name: ${data.name}`);
+						}}
+					/>
 					<br />
 					{publisherDetails.showShield && (
 						<span>
@@ -131,6 +124,7 @@ const Dataset = ({
 						activeLink={false}
 						onSearchPage={false}
 						parentKey=''
+						filter=''
 						url='/search?search=&tab=Datasets'
 						updateOnFilterBadgeHandler={updateOnFilterBadge}
 						showTagType={false}>
@@ -143,6 +137,7 @@ const Dataset = ({
 							activeLink={false}
 							onSearchPage={false}
 							parentKey=''
+							filter=''
 							url='/search?search=&tab=Datasets'
 							updateOnFilterBadgeHandler={updateOnFilterBadge}
 							showTagType={false}>
@@ -158,6 +153,7 @@ const Dataset = ({
 							activeLink={activeLink}
 							onSearchPage={onSearchPage}
 							parentKey='phenotypes'
+							filter='phenotypes'
 							url='/search?search=&tab=Datasets&phenotypes='
 							updateOnFilterBadgeHandler={updateOnFilterBadge}
 							showTagType={true}
@@ -176,6 +172,7 @@ const Dataset = ({
 										activeLink={activeLink}
 										onSearchPage={onSearchPage}
 										parentKey='phenotypes'
+										filter='phenotypes'
 										url='/search?search=&tab=Datasets&phenotypes='
 										updateOnFilterBadgeHandler={updateOnFilterBadge}
 										showTagType={true}
@@ -197,6 +194,7 @@ const Dataset = ({
 									activeLink={activeLink}
 									onSearchPage={onSearchPage}
 									parentKey='datasetfeatures'
+									filter='datasetfeatures'
 									url='/search?search=&tab=Datasets&datasetfeatures='
 									updateOnFilterBadgeHandler={updateOnFilterBadge}
 									showTagType={false}

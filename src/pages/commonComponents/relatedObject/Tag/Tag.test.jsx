@@ -13,6 +13,7 @@ const props = {
 	url: '/search?search=&tab=Datasets&phenotypes=',
 	parentKey: 'phenotypes',
 	showTagType: false,
+	filter: 'phenotypes',
 };
 let wrapper;
 
