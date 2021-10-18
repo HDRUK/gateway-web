@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElementToBeRemoved, cleanup, screen } from '@testing-library/react';
+import { render, waitForElementToBeRemoved, cleanup, screen, within } from '@testing-library/react';
 import CollectionPage from './CollectionPage';
 import { getCollectionRequest, getCollectionRelatedObjectsRequest } from '../../services/collection';
 import { collectionPageData } from '../../../test/mocks/dataMock';
@@ -80,7 +80,7 @@ describe('Given the CollectionPage component', () => {
         });
 
         it('Then renders the collection counts for each collection type', () => {
-            expect(screen.getByText('Projects (1)')).toBeTruthy();
+            expect(screen.getByText('Projects (2)')).toBeTruthy();
 
             expect(screen.getByText('Datasets (0)')).toBeTruthy();
             expect(screen.getByText('Tools (0)')).toBeTruthy();
@@ -91,13 +91,20 @@ describe('Given the CollectionPage component', () => {
         });
 
         it('Then renders the related objects for each collection type', () => {
-            expect(screen.queryByTestId('related-project-object')).toBeTruthy();
+            expect(screen.queryAllByTestId('related-project-object')).toBeTruthy();
 
             expect(screen.queryByTestId('related-dataset-object')).toBeFalsy();
             expect(screen.queryByTestId('related-tool-object')).toBeFalsy();
             expect(screen.queryByTestId('related-course-object')).toBeFalsy();
             expect(screen.queryByTestId('related-people-object')).toBeFalsy();
             expect(screen.queryByTestId('related-paper-object')).toBeFalsy();
+        });
+
+        it('Then sorts the related objects by recentlyadded', () => {
+            const { projectData } = collectionPageData;
+            const relatedProjects = screen.queryAllByTestId('related-project-object');
+
+            relatedProjects.forEach((rp, index) => expect(within(rp).queryByText(projectData[index].name)).toBeTruthy() );
         });
     });
 });

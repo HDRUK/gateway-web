@@ -368,6 +368,39 @@ const _collectionPage = {
 			  }
 			],
 			updated: 1608595200000
+		},
+		{
+			_id: "5fe1fb09927d9b03cf112dba",
+			categories: {
+			  category: "BHF Data Science Centre",
+			  programmingLanguage: [],
+			  programmingLanguageVersion: null
+			},
+			tags: {
+			  features: [],
+			  topics: []
+			},
+			authors: [
+			  3386431262754379,
+			  38168775611394960
+			],
+			id: 706366297086474,
+			type: "project",
+			name: "Project name 2",
+			description: "Project description 2",
+			activeflag: "active",
+			programmingLanguage: null,
+			counter: 22,
+			relatedresources: 0,
+			persons: [
+			  {
+				_id: "5fc52158a0e863c37c9a8521",
+				id: 3386431262754379,
+				firstname: "Joe",
+				lastname: "Bloggs"
+			  }
+			],
+			updated: 1808595200000
 		}
 	],
 	courseObjectData: [
