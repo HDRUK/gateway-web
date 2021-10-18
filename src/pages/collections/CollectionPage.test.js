@@ -13,30 +13,28 @@ jest.mock('../../services/collection', () => ({
 );
 
 const collectionId = 'collectionId';
-const defaultProps = {
-    userState: [
-        {
-            loggedIn: false,
-            role: 'Reader',
-            id: null,
-            name: null,
-        }
-    ],
-    match: {
-        params: {
-            collectionId
-        }
-    },
-    history: {
-        push: () => {}
+const userState = [
+    {
+        loggedIn: false,
+        role: 'Reader',
+        id: null,
+        name: null,
     }
+];
+const match = {
+    params: {
+        collectionId
+    }
+};
+const history = {
+    push: () => {}
 };
 
 describe('Given the CollectionPage component', () => {
     describe('When the collection is loading', () => {
 
         beforeAll(() => {
-            render(<CollectionPage userState={defaultProps.userState} match={defaultProps.match} history={defaultProps.history} />);
+            render(<CollectionPage userState={userState} match={match} history={history} />);
         });
 
         afterAll(() => {
@@ -58,7 +56,7 @@ describe('Given the CollectionPage component', () => {
             getCollectionRequest.mockResolvedValue({ data: collectionPageData });
             getCollectionRelatedObjectsRequest.mockResolvedValue({ data: { data: projectData } });
 
-            render(<CollectionPage userState={defaultProps.userState} match={defaultProps.match} history={defaultProps.history} />);
+            render(<CollectionPage userState={userState} match={match} history={history} />);
 
             await waitForElementToBeRemoved(() => screen.getByTestId('outerLoadingSpinner'));
         });
