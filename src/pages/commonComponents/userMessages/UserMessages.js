@@ -249,7 +249,7 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
 				// 2. deconstruct message obj
 				const {
 					data: {
-						message: { messageDescription, createdDate, createdByName, _id, topic, firstMessage },
+						messageObj: { messageDescription, createdDate, createdByName, _id, topic, firstMessage },
 					},
 				} = response;
 				// 3. copy new message
