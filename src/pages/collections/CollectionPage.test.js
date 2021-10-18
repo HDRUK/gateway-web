@@ -78,5 +78,26 @@ describe('Given the CollectionPage component', () => {
         it('Then renders the collection description', () => {
             expect(screen.getByText('test description')).toBeTruthy();
         });
+
+        it('Then renders the collection counts for each collection type', () => {
+            expect(screen.getByText('Projects (1)')).toBeTruthy();
+
+            expect(screen.getByText('Datasets (0)')).toBeTruthy();
+            expect(screen.getByText('Tools (0)')).toBeTruthy();
+            expect(screen.getByText('Papers (0)')).toBeTruthy();
+            expect(screen.getByText('People (0)')).toBeTruthy();
+            expect(screen.getByText('Course (0)')).toBeTruthy();
+            expect(screen.getByText('Discussion (0)')).toBeTruthy();
+        });
+
+        it('Then renders the related objects for each collection type', () => {
+            expect(screen.queryByTestId('related-project-object')).toBeTruthy();
+
+            expect(screen.queryByTestId('related-dataset-object')).toBeFalsy();
+            expect(screen.queryByTestId('related-tool-object')).toBeFalsy();
+            expect(screen.queryByTestId('related-course-object')).toBeFalsy();
+            expect(screen.queryByTestId('related-people-object')).toBeFalsy();
+            expect(screen.queryByTestId('related-paper-object')).toBeFalsy();
+        });
     });
 });
