@@ -22,6 +22,10 @@ export const sortByResources = filteredData => {
 
 export const sortByRelevance = (filteredData, searchCollectionsString) => {
     const getCountOfSearchTerm = field => {
+        if(!field) {
+            return 0;
+        }
+
 		if (_.isArray(field)) {
 			return field.toString().toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
 		} else {
