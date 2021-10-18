@@ -19,7 +19,7 @@ import SVGIcon from '../../images/SVGIcon';
 import './Collections.scss';
 import CollectionsSearch from './CollectionsSearch';
 import googleAnalytics from '../../tracking';
-import collectionService from '../../services/collection';
+import { getCollectionRequest, getCollectionRelatedObjectsRequest, postCollectionCounterUpdateRequest } from '../../services/collection';
 import { filterCollectionItems, generatePaginatedItems, generateDropdownItems } from './collection.utils';
 import { sortByMetadataQuality, sortByRecentlyAdded, sortByResources, sortByRelevance, sortByPopularity } from './collection.utils.sort';
 import { MAXRESULT } from './constants';
@@ -85,7 +85,7 @@ export const CollectionPage = props => {
 
 	const getCollectionDataFromApi = async () => {
 		setIsLoading(true);
-		await collectionService.getCollectionRequest(props.match.params.collectionID).then(async res => {
+		await getCollectionRequest(props.match.params.collectionID).then(async res => {
 			if (_.isNil(res.data)) {
 				// Redirect user if invalid collection id is supplied
 				window.localStorage.setItem('redirectMsg', `Collection not found for Id: ${props.match.params.collectionID}`);
@@ -93,7 +93,7 @@ export const CollectionPage = props => {
 			} else {
 				const localCollectionData = res.data.data[0];
 				let counter = !localCollectionData.counter ? 1 : localCollectionData.counter + 1;
-				collectionService.postCollectionCounterUpdateRequest({ id: props.match.params.collectionID, counter});
+				postCollectionCounterUpdateRequest({ id: props.match.params.collectionID, counter});
 
 				setCollectionData(res.data.data[0]);
 				getObjectData();
@@ -103,7 +103,7 @@ export const CollectionPage = props => {
 	};
 
 	const getObjectData = async () => {
-		await collectionService.getCollectionRelatedObjectsRequest(props.match.params.collectionID).then(async res => {
+		await getCollectionRelatedObjectsRequest(props.match.params.collectionID).then(async res => {
 			setObjectData(res.data.data);
 			setFilteredData(res.data.data);
 			countEntities(res.data.data);
@@ -249,14 +249,14 @@ export const CollectionPage = props => {
 	if (isLoading) {
 		return (
 			<Container>
-				<Loading data-testid='isLoading' />
+				<Loading data-testid='outerLoadingSpinner' />
 			</Container>
 		);
 	}
 
 	return (
 		<Sentry.ErrorBoundary fallback={<ErrorModal />}>
-			<div>
+			<div data-testid='collection-container'>
 				<SearchBar
 					ref={searchBar}
 					searchString={searchString}

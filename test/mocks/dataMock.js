@@ -335,6 +335,41 @@ const _collectionPage = {
 			],
 		},
 	],
+	projectData: [
+		{
+			_id: "5fe1fb09927d9b03cf112dbd",
+			categories: {
+			  category: "BHF Data Science Centre",
+			  programmingLanguage: [],
+			  programmingLanguageVersion: null
+			},
+			tags: {
+			  features: [],
+			  topics: []
+			},
+			authors: [
+			  3386431262754379,
+			  38168775611394960
+			],
+			id: 706366297086475,
+			type: "project",
+			name: "Project name",
+			description: "Project description",
+			activeflag: "active",
+			programmingLanguage: null,
+			counter: 44,
+			relatedresources: 0,
+			persons: [
+			  {
+				_id: "5fc52158a0e863c37c9a8521",
+				id: 3386431262754379,
+				firstname: "Joe",
+				lastname: "Bloggs"
+			  }
+			],
+			updated: 1608595200000
+		}
+	],
 	courseObjectData: [
 		{
 			_id: '5f92ef9c56cc14ec404180c8',
