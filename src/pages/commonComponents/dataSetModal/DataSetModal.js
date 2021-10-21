@@ -24,8 +24,10 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
 	const { loggedIn: isLoggedIn } = userState;
 	const [screenData, setScreenData] = useState({});
 	const [non5SafesData, setNon5SafesData] = useState('');
+
 	const showNon5SafesData = () =>
 		!_.isEmpty(non5SafesData) && typeof non5SafesData !== 'undefined' ? <div dangerouslySetInnerHTML={{ __html: non5SafesData }} /> : '';
+		
 	const initScreenData = () => {
 		if (typeof context !== 'undefined' && !_.isEmpty(context) && !_.isEmpty(context.datasets)) {
 			({ datasets, title, subTitle, contactPoint, dataRequestModalContent, showActionButtons = true } = context);
