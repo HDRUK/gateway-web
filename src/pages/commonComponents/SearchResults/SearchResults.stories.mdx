@@ -1,0 +1,24 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import SearchResults from './SearchResults';
+import { data } from './mockData';
+
+<Meta
+	title='SearchResults'
+	component={SearchResults}
+	args={{
+		data,
+		count: 656,
+		pageNumber: 3,
+		totalPages: 10,
+		type: 'datasets',
+		search: 'datasets',
+		updateOnFilterBadge: () => {},
+		onPagination: () => {},
+		maxResult: 40,
+	}}
+/>
+
+<Canvas>
+	<Story name='Basic'>{props => <SearchResults {...props} />}</Story>
+</Canvas>

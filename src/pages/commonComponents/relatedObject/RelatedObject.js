@@ -1,13 +1,12 @@
 import React from 'react';
-import _ from 'lodash';
-import moment from 'moment';
 import { Row, Col, Button, Alert } from 'react-bootstrap';
 import Loading from '../Loading';
 import SVGIcon from '../../../images/SVGIcon';
-import { ReactComponent as CalendarSvg } from '../../../images/calendaricon.svg';
 import Dataset from './Dataset/Dataset';
 import Tool from './Tool/Tool';
 import Paper from './Paper/Paper';
+import Course from './Course/Course';
+import Person from './Person/Person';
 import { stripMarkdown } from '../../../utils/GeneralHelper.util';
 import relatedObjectService from '../../../services/related-object';
 import './RelatedObject.scss';
@@ -122,7 +121,7 @@ class RelatedObject extends React.Component {
 		let publisherLogo;
 
 		if (this.props.datasetPublisher || this.props.datasetLogo) {
-			publisherLogo = !_.isEmpty(this.props.datasetLogo) ? this.props.datasetLogo : publisherLogoURL;
+			publisherLogo = this.props.datasetLogo ? this.props.datasetLogo : publisherLogoURL;
 		}
 
 		if (isLoading) {
@@ -335,176 +334,23 @@ class RelatedObject extends React.Component {
 								);
 							} else if (data.type === 'person') {
 								return (
-									<Row data-testid='related-person-object' className='noMargin pad-left-24'>
-										<Col className='iconHolder noPadding widthAuto'>
-											<div class='avatar-circle'>
-												<span class='initials'>
-													{' '}
-													{data.firstname ? data.firstname.charAt(0).toUpperCase() : ''}
-													{data.lastname ? data.lastname.charAt(0).toUpperCase() : ''}
-												</span>
-											</div>
-										</Col>
-										<Col className='pad-left-8' sm={8} lg={9}>
-											{activeLink === true ? (
-												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/person/' + data.id}>
-													{data.firstname && data.lastname ? data.firstname + ' ' + data.lastname : ''}
-												</a>
-											) : (
-												<span className='black-bold-16'>
-													{' '}
-													{data.firstname && data.lastname ? data.firstname + ' ' + data.lastname : ''}{' '}
-												</span>
-											)}
-											<br />
-											<span className='gray800-14'> {data.bio} </span>
-										</Col>
-										<Col sm={2} lg={2} className='pad-right-24'>
-											{this.props.showRelationshipQuestion ? (
-												<Button variant='medium' className='soft-black-14' onClick={this.removeButton}>
-													<SVGIcon name='closeicon' fill={'#979797'} className='buttonSvg mr-2' />
-													Remove
-												</Button>
-											) : (
-												''
-											)}
-										</Col>
-									</Row>
+									<Person
+										data={data}
+										activeLink={activeLink ? activeLink : false}
+										showRelationshipQuestion={this.props.showRelationshipQuestion ? this.props.showRelationshipQuestion : false}
+										removeButton={this.removeButton}
+									/>
 								);
 							} else if (data.type === 'course') {
 								return (
-									<Row data-testid='related-course-object' className='noMargin'>
-										<Col sm={10} lg={10} className='pad-left-24'>
-											{activeLink === true ? (
-												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/course/' + data.id}>
-													{data.title}
-												</a>
-											) : (
-												<span className='black-bold-16'>{data.title}</span>
-											)}
-											<br />
-											<span
-												className={activeLink ? 'gray800-14 underlined' : 'gray800-14'}
-												style={{ cursor: 'pointer' }}
-												onClick={() => this.updateOnFilterBadge('courseProviderSelected', data.provider)}>
-												{' '}
-												{data.provider}
-											</span>
-
-											<Row className='margin-top-8'>
-												<Col sm={12} lg={12}>
-													<CalendarSvg className='calendarSVG' />
-													<span className='gray800-14 margin-left-10'>
-														{(() => {
-															let courseRender = [];
-															if (onSearchPage === true) {
-																if (_.has(data.courseOptions, 'startDate') && _.isObject(data.courseOptions.startDate)) {
-																	courseRender.push(
-																		<span> Starts {moment(data.courseOptions.startDate).format('dddd Do MMMM YYYY')} </span>
-																	);
-																} else {
-																	courseRender.push(<span> Flexible dates </span>);
-																}
-																if (_.has(data.courseOptions, 'studyMode') && _.isString(data.courseOptions.studyMode))
-																	courseRender.push(<span> | {data.courseOptions.studyMode} </span>);
-															} else {
-																if (_.has(data.courseOptions[0], 'startDate') && _.isObject(data.courseOptions[0].startDate)) {
-																	courseRender.push(
-																		<span> Starts {moment(data.courseOptions[0].startDate).format('dddd Do MMMM YYYY')} </span>
-																	);
-																} else {
-																	courseRender.push(<span> Flexible dates </span>);
-																}
-																if (_.has(data.courseOptions[0], 'studyMode') && _.isString(data.courseOptions[0].studyMode))
-																	courseRender.push('|');
-
-																!_.isEmpty(data.courseOptions[0]) &&
-																	data.courseOptions.map((courseOption, index) => {
-																		return courseRender.push(
-																			<>{index > 0 ? <span> ,{courseOption.studyMode} </span> : <span> {courseOption.studyMode} </span>}</>
-																		);
-																	});
-															}
-															return <>{courseRender}</>;
-														})()}
-													</span>
-												</Col>
-											</Row>
-										</Col>
-										<Col sm={2} lg={2} className='pad-right-24'>
-											{this.props.showRelationshipQuestion ? (
-												<Button variant='medium' className='soft-black-14' onClick={this.removeButton}>
-													<SVGIcon name='closeicon' fill={'#979797'} className='buttonSvg mr-2' />
-													Remove
-												</Button>
-											) : (
-												''
-											)}
-										</Col>
-										<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
-											<span className='badge-course'>
-												<SVGIcon name='educationicon' fill={'#ffffff'} className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
-												<span>Course</span>
-											</span>
-
-											{!data.award || data.award.length <= 0
-												? ''
-												: data.award.map(award => {
-														if (activeLink === true) {
-															if (onSearchPage === true) {
-																return (
-																	<span
-																		className='pointer'
-																		onClick={event =>
-																			this.updateOnFilterBadge('courseAwardSelected', { label: award, parentKey: 'courseaward' })
-																		}>
-																		<div className='badge-tag'>{award}</div>
-																	</span>
-																);
-															} else {
-																return (
-																	<a href={'/search?search=&tab=Courses&courseaward=' + award}>
-																		<div className='badge-tag'>{award}</div>
-																	</a>
-																);
-															}
-														} else {
-															return <div className='badge-tag'>{award}</div>;
-														}
-												  })}
-
-											{!data.domains || data.domains.length <= 0
-												? ''
-												: data.domains.map(domain => {
-														if (activeLink === true) {
-															if (onSearchPage === true) {
-																return (
-																	<span
-																		className='pointer'
-																		onClick={event =>
-																			this.updateOnFilterBadge('courseDomainsSelected', { label: domain, parentKey: 'coursedomains' })
-																		}>
-																		<div className='badge-tag'>{domain}</div>
-																	</span>
-																);
-															} else {
-																return (
-																	<a href={'/search?search=&tab=Courses&coursedomains=' + domain}>
-																		<div className='badge-tag'>{domain}</div>
-																	</a>
-																);
-															}
-														} else {
-															return <div className='badge-tag'>{domain}</div>;
-														}
-												  })}
-										</Col>
-										{!this.props.showRelationshipQuestion && (
-											<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-24 pad-bottom-16'>
-												<span className='gray800-14'>{stripMarkdown(data.description, 255)}</span>
-											</Col>
-										)}
-									</Row>
+									<Course
+										data={data}
+										activeLink={activeLink ? activeLink : false}
+										onSearchPage={onSearchPage ? onSearchPage : false}
+										showRelationshipQuestion={this.props.showRelationshipQuestion ? this.props.showRelationshipQuestion : false}
+										updateOnFilterBadge={this.updateOnFilterBadge}
+										removeButton={this.removeButton}
+									/>
 								);
 							} else {
 								return (

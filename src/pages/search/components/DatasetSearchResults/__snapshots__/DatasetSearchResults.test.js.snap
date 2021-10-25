@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the DatasetSearchResults component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="row"
+  >
+    <div
+      class="text-right save-dropdown"
+    >
+      Sort goes here...
+    </div>
+  </div>
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <div />
+  <ul
+    class="pagination"
+  >
+    <li
+      class="page-item"
+    >
+      <a
+        class="page-link"
+        href="#"
+        role="button"
+      >
+        1
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="page-link"
+        href="#"
+        role="button"
+      >
+        2
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="page-link"
+        href="#"
+        role="button"
+      >
+        3
+      </a>
+    </li>
+    <li
+      class="page-item active"
+    >
+      <span
+        class="page-link"
+      >
+        4
+        <span
+          class="sr-only"
+        >
+          (current)
+        </span>
+      </span>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="page-link"
+        href="#"
+        role="button"
+      >
+        5
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="page-link"
+        href="#"
+        role="button"
+      >
+        6
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="page-link"
+        href="#"
+        role="button"
+      >
+        7
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="page-link"
+        href="#"
+        role="button"
+      >
+        8
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="page-link"
+        href="#"
+        role="button"
+      >
+        9
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="page-link"
+        href="#"
+        role="button"
+      >
+        10
+      </a>
+    </li>
+  </ul>
+</div>
+`;

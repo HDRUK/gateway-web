@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../configs/url.config';
-import { postRequest, putRequest } from '../utils/requests';
+import { deleteRequest, postRequest, putRequest } from '../utils/requests';
 
 const postWorkflow = (data, options) => {
 	return postRequest(`${apiURL}/workflows`, data, options);
@@ -11,7 +11,7 @@ const putWorkflow = (_id, data, options) => {
 };
 
 const deleteWorkflow = (_id, options) => {
-	return putRequest(`${apiURL}/workflows/${_id}`, options);
+	return deleteRequest(`${apiURL}/workflows/${_id}`, options);
 };
 
 const usePostWorkflow = (requestOptions, mutateOptions = { queryKey: 'postWorkflow' }) => {

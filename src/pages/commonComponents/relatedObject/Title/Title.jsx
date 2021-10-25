@@ -8,19 +8,25 @@ import * as styles from '../Dataset/Dataset.styles';
 const Title = props => {
 	const { type, name, id, className, onClickHandler, activeLink } = props;
 	return activeLink ? (
-		<a
-			onClick={onClickHandler}
-			className={className ? className : 'purple-bold-16'}
-			css={styles.pointer}
-			href={`/${type}/${id}`}
-			data-testid={`title-${type}-${id}`}>
-			{name}
-		</a>
+		<>
+			<a
+				onClick={onClickHandler}
+				className={className ? className : 'purple-bold-16'}
+				css={styles.pointer}
+				href={`/${type}/${id}`}
+				data-testid={`title-${type}-${id}`}>
+				{name}
+			</a>
+			{props.children}
+		</>
 	) : (
-		<span className={className ? className : 'black-bold-16'} data-testid={`title-${type}-${id}`}>
-			{' '}
-			{name}
-		</span>
+		<>
+			<span className={className ? className : 'black-bold-16'} data-testid={`title-${type}-${id}`}>
+				{' '}
+				{name}
+			</span>
+			{props.children}
+		</>
 	);
 };
 

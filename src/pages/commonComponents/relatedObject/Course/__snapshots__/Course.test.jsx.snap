@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Course component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="noMargin row"
+    data-testid="related-course-object"
+  >
+    <div
+      class="pad-left-24 col-lg-10 col-sm-10"
+    >
+      <span
+        class="black-bold-16"
+        data-testid="title-course-3491286126459112"
+      >
+         
+        Test A course
+      </span>
+      <br />
+      <span
+        class="gray800-14"
+        data-testid="title-course-Test A"
+      >
+         
+        Test A
+      </span>
+      <div
+        class="margin-top-8 row"
+      >
+        <div
+          class="col-lg-12 col-sm-12"
+        >
+          <iconmock
+            class="calendarSVG"
+          />
+          <span
+            class="gray800-14 margin-left-10"
+          >
+            <span
+              data-testid="course-start-date"
+            >
+               Flexible dates 
+            </span>
+            <span
+              data-testid="course-study-mode"
+            >
+               | 
+              Full-time
+               
+            </span>
+            <span
+              data-testid="course-study-mode-extra"
+            >
+               ,
+              Full-time
+               
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="pad-right-24 col-lg-2 col-sm-2"
+    />
+    <div
+      class="pad-left-24 pad-right-24 pad-top-16 col-lg-12 col-sm-12"
+    >
+      <div
+        class="badge-course"
+        data-testid="badge-Course"
+      >
+        <svg
+          class="badgeSvg mr-2"
+          data-testid="educationicon"
+          height="100%"
+          viewBox="-2 -2 22 22"
+          width="100%"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <path
+            d="M12.168.142c.534-.192 1.12-.19 1.651.01l10.506 3.914c1.243.463 1.874 1.845 1.411 3.087-.281.755-.923 1.319-1.708 1.5l-2.527.584v3.293c0 1.071-.709 2.005-1.724 2.303l-.163.041-1.614.353v.809l.731.857c1.211 1.457 1.73 2.564 1.173 3.84l-.079.168c-1.006 1.996-4.6 1.958-5.577-.013-.63-1.272-.205-2.318.945-3.775l.317-.39.49-.593v-.465l-2.495.547c-.272.06-.553.071-.828.035l-.205-.036-6.016-1.335c-1.098-.243-1.88-1.218-1.88-2.343V9.224L1.82 8.54C.59 8.233-.182 7.025.037 5.792l.034-.16c.194-.778.762-1.408 1.516-1.68zM17.048 18c-.834 1.006-1.17 1.672-1.008 2 .243.491 1.734.527 2 0 .177-.352-.153-1.018-.992-2zm-3.99-11.765c-2.128 0-4.285.82-6.481 2.494l-.001 3.804c0 .188.13.35.313.39l6.016 1.335c.057.013.115.013.172 0l2.923-.64V6.755c-.987-.348-1.968-.52-2.942-.52zM18 7.692v5.488l1.186-.26c.158-.034.276-.158.307-.311l.008-.079V8.7c-.503-.38-1.003-.716-1.5-1.008zm0-3.849v1.584c.996.482 1.985 1.109 2.968 1.88l2.61-.602c.13-.03.237-.125.284-.25.077-.207-.028-.438-.235-.515L18 3.843zm-4.88-1.818c-.088-.033-.185-.033-.274-.001L2.265 5.834c-.126.045-.22.15-.253.28-.053.214.078.431.292.485l2.845.706c2.597-2.035 5.238-3.07 7.909-3.07.985 0 1.966.14 2.942.42V3.099z"
+            fill="#ffffff"
+          />
+        </svg>
+        <span>
+          Course
+        </span>
+        <span />
+      </div>
+      <div
+        class="badge-tag"
+        data-testid="badge-BSc"
+      >
+        <span>
+          BSc
+        </span>
+        <span />
+      </div>
+      <div
+        class="badge-tag"
+        data-testid="badge-test"
+      >
+        <span>
+          test
+        </span>
+        <span />
+      </div>
+    </div>
+    <div
+      class="pad-left-24 pad-right-24 pad-top-24 pad-bottom-16 col-lg-12 col-sm-12"
+    >
+      <span
+        class="gray800-14"
+        data-testid="course-description"
+      >
+        Test A Test A Test A edited Test A
+      </span>
+    </div>
+  </div>
+</div>
+`;

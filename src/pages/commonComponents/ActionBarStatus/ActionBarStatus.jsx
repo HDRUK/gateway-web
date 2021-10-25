@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
+import { cx } from '@emotion/css';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { DISPLAY_DATE_STANDARD } from '../../../configs/constants';
@@ -9,7 +10,7 @@ const formatDate = date => {
 	return moment(date).format(DISPLAY_DATE_STANDARD);
 };
 
-const ActionBarStatus = ({ status, dataset, totalQuestions, ...outerProps }) => {
+const ActionBarStatus = ({ status, dataset, totalQuestions, className, ...outerProps }) => {
 	const {
 		timestamps: { published, submitted, rejected, archived },
 	} = dataset;
@@ -42,7 +43,7 @@ const ActionBarStatus = ({ status, dataset, totalQuestions, ...outerProps }) => 
 	}
 
 	return (
-		<div {...outerProps} className='action-bar-status' css={styles.root}>
+		<div {...outerProps} className={cx('action-bar-status', className)} css={styles.root}>
 			{content}
 		</div>
 	);

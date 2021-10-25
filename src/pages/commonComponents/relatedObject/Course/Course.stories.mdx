@@ -1,0 +1,28 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Course from './Course';
+import mockData from './mockData';
+
+<Meta
+	title='Related Resources/Course'
+	component={Course}
+	args={{
+		data: mockData,
+		onSearchPage: false,
+		activeLink: false,
+		showRelationshipQuestion: false,
+	}}
+/>
+
+<Canvas>
+	<Story name='Course'>
+		{props => {
+			const updateOnFilterBadge = () => {
+				alert('updateOnFilterBadge');
+			};
+			const removeButton = () => {
+				alert('removed');
+			};
+			return <Course {...props} updateOnFilterBadge={updateOnFilterBadge} removeButton={removeButton} />;
+		}}
+	</Story>
+</Canvas>

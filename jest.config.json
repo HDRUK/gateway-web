@@ -5,6 +5,6 @@
 		"\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/mocks/fileMock.js",
 		"\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js"
 	},
-	"coveragePathIgnorePatterns": ["Mock.js", ".stories.js", ".styles.js", "index.js", "configs"],
+	"coveragePathIgnorePatterns": ["mockData.js", "Mock.js", ".stories.js", ".styles.js", "index.js", "configs"],
 	"collectCoverageFrom": ["src/**/*.{js,jsx}"]
 }

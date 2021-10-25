@@ -65,11 +65,11 @@ describe('Given the auth service', () => {
 
 	describe('When deleteDatasetOnboarding is called', () => {
 		it('Then calls deleteRequest with the correct arguments', async () => {
-			await service.deleteDatasetOnboarding('1234', {
+			await service.deleteWorkflow('1234', {
 				option1: true,
 			});
 
-			expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/dataset-onboarding/delete/1234`, {
+			expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/workflows/1234`, {
 				option1: true,
 			});
 		});

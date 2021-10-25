@@ -50,7 +50,7 @@ describe('Given the users service', () => {
 
 	describe('When getLinkedDatasets is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
-			await service.getLinkedDatasets('1234', {
+			await service.getLinkedDatasets('5678', {
 				option1: true,
 			});
 

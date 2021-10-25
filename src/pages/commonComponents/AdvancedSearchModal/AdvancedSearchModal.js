@@ -153,7 +153,7 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
 					headerText='Data utility wizard'
 					isBeta
 					bodyText='A tool to help refine your search to only datasets that meet your data utility requirements.'
-					learnMoreLink=''
+					learnMoreLink='https://www.healthdatagateway.org/about/data-utility-wizard'
 					doesNotRequireSignIn
 					buttonClick={() => {
 						googleAnalytics.recordVirtualPageView('Data utility wizard');

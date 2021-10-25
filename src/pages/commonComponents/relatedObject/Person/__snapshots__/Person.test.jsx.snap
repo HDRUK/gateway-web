@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Paper component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="noMargin pad-left-24 row"
+    data-testid="related-person-object"
+  >
+    <div
+      class="iconHolder noPadding widthAuto col"
+    >
+      <div
+        class="avatar-circle"
+        data-testid="avatar-circle"
+      >
+        <span
+          class="initials"
+        >
+           
+          M
+          N
+        </span>
+      </div>
+    </div>
+    <div
+      class="pad-left-8 col-lg-9 col-sm-8"
+    >
+      <span
+        class="black-bold-16"
+        data-testid="title-person-900000011"
+      >
+         
+        Maromi Nei
+      </span>
+      <br />
+      <span
+        class="gray800-14"
+        data-testid="person-bio"
+      >
+         
+        Jefferson Comprehensive Epilepsy Center
+         
+      </span>
+    </div>
+    <div
+      class="pad-right-24 col-lg-2 col-sm-2"
+    />
+  </div>
+</div>
+`;

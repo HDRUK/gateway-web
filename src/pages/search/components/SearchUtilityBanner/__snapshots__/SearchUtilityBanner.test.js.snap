@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the SearchUtilityBanner component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="fade blue-banner saved-preference-banner alert alert-primary show"
+    role="alert"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h5
+          class="indigo-bold-14"
+        >
+          Data utility wizard applied: Customer filters
+        </h5>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-9"
+      >
+        You can continue to customise your filters below or edit alongside the search term in the data utility wizard.
+      </div>
+      <div
+        class="data-utility-banner col-md-3"
+      >
+        <p
+          class="data-utility-link"
+          role="button"
+        >
+          Edit in data utility wizard
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

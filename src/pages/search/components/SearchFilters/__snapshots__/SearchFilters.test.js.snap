@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the SearchFilters component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="advanced-search-link-container"
+  >
+    <iconmock
+      fill="#f98e2b"
+      height="20"
+      width="20"
+    />
+    <a
+      class="textUnderline gray800-14 cursorPointer"
+      href="javascript:void(0)"
+    >
+      Advanced Search
+    </a>
+  </div>
+</div>
+`;

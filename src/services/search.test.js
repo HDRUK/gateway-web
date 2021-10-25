@@ -26,7 +26,23 @@ describe('Given the search service', () => {
 
 	describe('When getSearch is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
-			await service.getSearch('topic/paper', {
+			await service.getSearch({
+				params: {
+					search: 'search term',
+				},
+			});
+
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/search`, {
+				params: {
+					search: 'search term',
+				},
+			});
+		});
+	});
+
+	describe('When getTopic is called', () => {
+		it('Then calls getRequest with the correct arguments', async () => {
+			await service.getTopic('paper', {
 				option1: true,
 			});
 
@@ -36,19 +52,42 @@ describe('Given the search service', () => {
 		});
 	});
 
+	describe('When getFilters is called', () => {
+		it('Then calls getRequest with the correct arguments', async () => {
+			await service.getFilters('paper', {
+				option1: true,
+			});
+
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/search/filters/paper`, {
+				option1: true,
+			});
+		});
+	});
+
 	describe('When useGetSearch is called', () => {
 		it('Then calls getSearch with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getSearch');
-			const { waitFor, result } = renderHook(() => service.useGetSearch({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetSearch({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.mutateAsync);
+			assertServiceRefetchCalled(rendered, getSpy, { params: { search: 'search term' } });
+		});
+	});
 
-			result.current.mutateAsync('topic/paper', { status: 'archive' }).then(() => {
-				expect(getSpy).toHaveBeenCalledWith(`${apiURL}/search/filter/topic/paper`, {
-					option1: true,
-					params: { status: 'archive' },
-				});
-			});
+	describe('When useGetTopic is called', () => {
+		it('Then calls getTopic with the correct arguments', async () => {
+			const getSpy = jest.spyOn(service, 'getTopic');
+			const rendered = renderHook(() => service.useGetTopic({ option1: true }), { wrapper });
+
+			assertServiceRefetchCalled(rendered, getSpy, 'paper', { option1: true });
+		});
+	});
+
+	describe('When useGetFilters is called', () => {
+		it('Then calls getTopic with the correct arguments', async () => {
+			const getSpy = jest.spyOn(service, 'getFilters');
+			const rendered = renderHook(() => service.useGetFilters({ option1: true }), { wrapper });
+
+			assertServiceRefetchCalled(rendered, getSpy, 'paper', { option1: true });
 		});
 	});
 });
