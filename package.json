@@ -58,7 +58,7 @@
 		"build": "react-scripts build",
 		"test:watchAll": "jest --watchAll --env=jsdom-sixteen --coverage --config=jest.config.json",
 		"test": "jest --env=jsdom-sixteen --coverage --config=jest.config.json",
-		"test-rtl": "jest --env=jsdom-sixteen --testPathIgnorePatterns=/test/ --testPathPattern=/src/pages/commonComponents/DataSetModal",
+		"test-rtl": "jest --env=jsdom-sixteen --testPathIgnorePatterns=/test/",
 		"eject": "react-scripts eject",
 		"snyk-protect": "snyk protect",
 		"prepare": "npm run snyk-protect",
