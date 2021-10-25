@@ -203,6 +203,9 @@ class HDRRouter extends Component {
                     <div className="navBarGap"></div>
                     <div className="mainWrap" onScroll={this.handleScroll}>
                         <Switch>
+                            <Route path="/healthcheck">
+                                <p>Application currently up</p>
+                            </Route>
                             {userState[0].loggedIn && !userState[0].profileComplete ? (
                                 <Route
                                     render={(props) => (
