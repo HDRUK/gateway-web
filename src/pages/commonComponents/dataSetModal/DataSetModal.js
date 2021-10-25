@@ -46,9 +46,12 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
 	useEffect(() => {
 		if (open) initScreenData();
 
-		getNon5SafesModalContentRequest({ withCredentials: false }).then(res => {
-			setNon5SafesData(res.data);
-		});
+		const getNon5SafesModalContent = async () => {
+			const content = await getNon5SafesModalContentRequest({ withCredentials: false });
+			setNon5SafesData(content.data);
+		};
+		
+		getNon5SafesModalContent();
 	}, [open, context]);
 
 	return (
