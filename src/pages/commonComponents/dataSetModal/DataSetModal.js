@@ -81,7 +81,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
 
 				<div className='appModal-footer'>
 					{screenData.showActionButtons ? (
-						<div className='appModal-footer--wrap'>
+						<div className='appModal-footer--wrap' data-testid='actionButtons'>
 							{is5Safes ? (
 								<button
 									className='button-secondary mr-2'
