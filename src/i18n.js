@@ -20,23 +20,7 @@ i18n
         fallbackLng: 'en-GB',
         interpolation: {
         escapeValue: false,
-        },
-        resources: {
-        "en-GB": {
-            translation: {
-                collection: {
-                    private: {
-                        live: 'This private collection is now live. Only those who you share the collection link with will be able to view this page.',
-                        updated: 'Done! Your private collection has been updated. Only those who you share the collection link with will be able to view this page.'
-                    },
-                    public: {
-                        live: 'This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.',
-                        updated: 'Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users.'
-                    }
-                }
-            }
         }
-    }
 });
 
 export default i18n;
