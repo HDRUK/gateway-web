@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import * as Sentry from '@sentry/react';
 import queryString from 'query-string';
+import { useTranslation } from 'react-i18next';
 import { Row, Col, Tabs, Tab, Container, Alert, Pagination } from 'react-bootstrap';
 import Loading from '../commonComponents/Loading';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
@@ -31,6 +32,9 @@ import PersonCollectionResults from './Components/PersonCollectionResults';
 import CourseCollectionResults from './Components/CourseCollectionResults';
 
 export const CollectionPage = props => {
+
+	const { t } = useTranslation();
+
 	const [collectionData, setCollectionData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isResultsLoading, setIsResultsLoading] = useState(true);
@@ -272,9 +276,11 @@ export const CollectionPage = props => {
 								<Col sm={1} lg={1} />
 								<Col sm={10} lg={10} className='pad-left-0'>
 									<Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
-										{collectionData.publicflag === true
-											? 'This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.'
-											: 'This private collection is now live. Only those who you share the collection link with will be able to view this page.'}
+										{
+											collectionData.publicflag === true ? 
+												t('collection.public.live') : 
+												t('collection.private.live')
+										}
 									</Alert>
 								</Col>
 								<Col sm={1} lg={10} />
@@ -288,9 +294,11 @@ export const CollectionPage = props => {
 								<Col sm={1} lg={1} />
 								<Col sm={10} lg={10}>
 									<Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
-										{collectionData.publicflag === true
-											? 'Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users.'
-											: 'Done! Your private collection has been updated. Only those who you share the collection link with will be able to view this page.'}
+										{
+											collectionData.publicflag === true ? 
+												t('collection.public.updated') : 
+												t('collection.private.updated')
+										}
 									</Alert>
 								</Col>
 								<Col sm={1} lg={10} />
