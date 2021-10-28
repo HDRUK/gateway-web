@@ -388,7 +388,7 @@ export const CohortPage = props => {
 														<Col sm={10} className='gray800-14'>
 															<div className='black-20-semibold'>Total entries</div>
 															<div className='gray800-14 mt-1'>
-																{totalResultCount.toLocaleString()} entries found accross {numberOfDatasets}{' '}
+																{totalResultCount.toLocaleString()} entries found across {numberOfDatasets}{' '}
 																{numberOfDatasets > 1 ? 'datasets' : 'dataset'} using the cohort discovery functionality
 															</div>
 															<div className='mt-3'>
@@ -445,20 +445,24 @@ export const CohortPage = props => {
 									<Tab eventKey='Discussion' title='Discussions'>
 										<DiscourseTopic toolId='' topicId='' userState={userState} onUpdateDiscoursePostCount='' />
 									</Tab>
-									<Tab eventKey='Related resources' title={`Related resources (${relatedObjects.length})`}>
+									<Tab
+										eventKey='Related resources'
+										title={`Related resources (${relatedObjects.filter(object => object.objectType !== 'dataset').length})`}>
 										{relatedObjects.length <= 0 ? (
 											<NotFound word='related resources' />
 										) : (
-											relatedObjects.map(object => (
-												<RelatedObject
-													relatedObject={object}
-													objectType={object.objectType}
-													activeLink={true}
-													showRelationshipAnswer={true}
-													datasetPublisher={object.datasetPublisher}
-													datasetLogo={object.datasetLogo}
-												/>
-											))
+											relatedObjects
+												.filter(object => object.objectType !== 'dataset')
+												.map(object => (
+													<RelatedObject
+														relatedObject={object}
+														objectType={object.objectType}
+														activeLink={true}
+														showRelationshipAnswer={true}
+														datasetPublisher={object.datasetPublisher}
+														datasetLogo={object.datasetLogo}
+													/>
+												))
 										)}
 									</Tab>
 								</Tabs>
