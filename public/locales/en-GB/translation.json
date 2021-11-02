@@ -7,6 +7,7 @@
         "public": {
             "live": "This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.",
             "updated": "Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users."
-        }
+        },
+        "created" : "simon"
     }
 }

@@ -1,5 +1,5 @@
 // /ShowObjects.js
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
@@ -197,6 +197,7 @@ class HDRRouter extends Component {
         }
 
         return (
+            <Suspense fallback={'loading'}>
             <ThemeProvider>
                 <Router>
                     <LoginModal userState={userState} />
@@ -364,6 +365,7 @@ class HDRRouter extends Component {
                     <Footer />
                 </Router>
             </ThemeProvider>
+            </Suspense>
         );
     }
 }

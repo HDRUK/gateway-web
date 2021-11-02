@@ -277,9 +277,9 @@ export const CollectionPage = props => {
 								<Col sm={10} lg={10} className='pad-left-0'>
 									<Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
 										{
-											collectionData.publicflag === true ? 
-												t('collection.public.live') : 
-												t('collection.private.live')
+											collectionData.publicflag ?
+											`${t('collection.public.live')}` : 
+											`${t('collection.private.live')}`
 										}
 									</Alert>
 								</Col>
@@ -295,9 +295,9 @@ export const CollectionPage = props => {
 								<Col sm={10} lg={10}>
 									<Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
 										{
-											collectionData.publicflag === true ? 
-												t('collection.public.updated') : 
-												t('collection.private.updated')
+											collectionData.publicflag ? 
+												`${t('collection.public.updated')}` : 
+												`${t('collection.private.updated')}`
 										}
 									</Alert>
 								</Col>
@@ -352,7 +352,7 @@ export const CollectionPage = props => {
 						<Row>
 							<Col sm={12} lg={12} className='collectionCreatedDate'>
 								<span className='gray700-13' data-testid='collectionCreated'>
-									Created {moment(collectionData.createdAt).format('MMM YYYY')}{' '}
+									{`${t('collection.created')} ${moment(collectionData.createdAt).format('MMM YYYY')}`}
 								</span>
 							</Col>
 						</Row>
