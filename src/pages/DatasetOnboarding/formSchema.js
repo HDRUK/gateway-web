@@ -896,7 +896,7 @@ export const formSchema = {
 					validations: [
 						{
 							type: 'isMultiFieldURLRequired',
-							message: 'Please enter a valid URL. Must include http(s)://',
+							message: 'Please enter a valid URL. Must include http(s):// or In Progress',
 						},
 					],
 				},

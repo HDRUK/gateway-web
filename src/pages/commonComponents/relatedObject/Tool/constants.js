@@ -1,6 +1,6 @@
 const tab_url = '/search?search=&tab=Tools';
 export const tool = {
-	TAB: 'Datasets',
+	TAB: 'Tool',
 	FEATURES: {
 		parentKey: 'toolfeatures',
 		filter: 'toolFeaturesSelected',

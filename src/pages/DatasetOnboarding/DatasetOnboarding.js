@@ -1275,11 +1275,12 @@ class DatasetOnboarding extends Component {
 				}
 			},
 			isMultiFieldURLRequired: value => {
-				if (!_.isArray(value)) return !_.isEmpty(value) && !!value.match(/^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/)?[^\s]*$/i);
+				const isMultiFieldURLRegEx = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)|in progress$/i;
+				if (!_.isArray(value)) return !_.isEmpty(value) && !!value.match(isMultiFieldURLRegEx);
 
 				let isNoError = true;
 				value.forEach(url => {
-					if (!url.match(/^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/)?[^\s]*$/i)) isNoError = false;
+					if (!url.match(isMultiFieldURLRegEx)) isNoError = false;
 				});
 				return isNoError;
 			},

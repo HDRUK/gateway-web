@@ -43,7 +43,9 @@ const ActionBarMenu = ({ label, options = [], disabled, buttonClass = 'button-se
 														onClick={e => {
 															action.onClick(e);
 														}}>
-														<span className='gray800-14 title'>{action.title}</span>
+														<span className='gray800-14 title' style={{ marginTop: '0px' }}>
+															{action.title}
+														</span>
 														{action.description && <span className='gray700-13 description'>{action.description}</span>}
 													</div>
 												);
