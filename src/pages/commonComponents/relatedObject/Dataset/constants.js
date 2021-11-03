@@ -1,6 +1,6 @@
 const tab_url = '/search?search=&tab=Datasets';
 export const dataset = {
-	TAB: 'Datasets',
+	TAB: 'Dataset',
 	PHENOTYPES: {
 		parentKey: 'phenotypes',
 		filter: 'phenotypes',
