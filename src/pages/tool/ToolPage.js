@@ -27,6 +27,7 @@ import ResourcePageButtons from '../commonComponents/resourcePageButtons/Resourc
 import ErrorModal from '../commonComponents/errorModal/ErrorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import googleAnalytics from '../../tracking';
+import RelatedResourcesSearch from '../commonComponents/relatedResources/RelatedResourcesSearch';
 
 export const ToolDetail = props => {
 	const [id] = useState('');
@@ -55,6 +56,12 @@ export const ToolDetail = props => {
 	const [context, setContext] = useState({});
 	const [collections, setCollections] = useState([]);
 	const [searchBar] = useState(React.createRef());
+	const [result, setResult] = useState([]);
+	const [collectionsPageSort, setCollectionsPageSort] = useState('recentlyadded');
+	const [filteredData, setFilteredData] = useState([]);
+	const [searchCollectionsString, setCollectionsSearchString] = useState('');
+	const [key, setKey] = useState('dataset');
+	const [relatedResources, setRelatedResources] = useState([]);
 	let showError = false;
 
 	//componentDidMount - on loading of tool detail page
@@ -75,6 +82,10 @@ export const ToolDetail = props => {
 			getToolDataFromDb();
 		}
 	});
+
+	/*useEffect(() => {
+		handleSort(collectionsPageSort);
+	}, [filteredData]);*/
 
 	const showModalHandler = () => {
 		showError = true;
@@ -103,7 +114,7 @@ export const ToolDetail = props => {
 						let localAdditionalObjInfo = await getAdditionalObjectInfo(localToolData.relatedObjects);
 						await populateRelatedObjects(localToolData, localAdditionalObjInfo);
 					}
-
+					setFilteredData(res.data.data);
 					setToolData(localToolData);
 					setReviewData(res.data.reviewData);
 					populateCollections(localToolData);
@@ -120,6 +131,22 @@ export const ToolDetail = props => {
 			setCollections(res.data.data || []);
 		});
 	};
+
+	useEffect(() => {
+		axios.get(baseURL + '/api/v1/tools/relatedobjects/' + props.match.params.toolID).then(res => setRelatedResources(res.data.data));
+	}, []);
+
+	const searchRelatedResource = e => {
+		//console.log(e.target.value);
+		//console.log(relatedObjects);
+		const searchResult = relatedResources.filter(element => element.name.includes(e.target.value));
+
+		setRelatedResources(searchResult);
+		//console.log(searchResult);
+		//console.log(result);
+	};
+
+	console.log(relatedObjects);
 
 	const doSearch = e => {
 		//fires on enter on searchbar
@@ -232,6 +259,132 @@ export const ToolDetail = props => {
 	const ratingsCount = reviewData ? reviewData.length : 0;
 	const avgRating = reviewData.length > 0 ? ratingsTotal / ratingsCount : '';
 
+	//console.log(relatedObjects);
+
+	const arr = [];
+	const title = (t, e) => {
+		const test = arr.push(t);
+
+		console.log(arr);
+	};
+	//console.log(arr);
+
+	//console.log('result' + result);
+
+	let dropdownItems;
+	if (key === 'dataset') {
+		dropdownItems = ['relevance', 'popularity', 'recentlyadded', 'resources', 'metadata'];
+	} else if (key === 'person') {
+		dropdownItems = ['relevance', 'popularity', 'recentlyadded'];
+	} else {
+		dropdownItems = ['relevance', 'popularity', 'recentlyadded', 'resources'];
+	}
+
+	const sortByMetadataQuality = () =>
+		filteredData.sort((a, b) =>
+			_.has(a, 'datasetfields.metadataquality.quality_score') && _.has(b, 'datasetfields.metadataquality.quality_score')
+				? b.datasetfields.metadataquality.quality_score - a.datasetfields.metadataquality.quality_score
+				: ''
+		);
+
+	const sortByRecentlyAdded = () => {
+		return filteredData.sort((a, b) => b.updated - a.updated);
+	};
+
+	const sortByResources = () => {
+		return filteredData.sort((a, b) => b.relatedresources - a.relatedresources);
+	};
+
+	const sortByRelevance = () => {
+		filteredData.forEach(function (data) {
+			if (data.type === 'course') {
+				let containsSearchTermCount =
+					getCountOfSearchTerm(data.title) +
+					getCountOfSearchTerm(data.description) +
+					getCountOfSearchTerm(data.award) +
+					getCountOfSearchTerm(data.domains);
+				data.searchTermInstances = containsSearchTermCount;
+			} else if (data.type === 'person') {
+				let containsSearchTermCount =
+					getCountOfSearchTerm(data.firstname) + getCountOfSearchTerm(data.lastname) + getCountOfSearchTerm(data.bio);
+				data.searchTermInstances = containsSearchTermCount;
+			} else if (data.type === 'dataset') {
+				let abstractOrDescriptionCount;
+				if (_.has(data, 'datasetfields.abstract') && !_.isNull(data.datasetfields.abstract)) {
+					abstractOrDescriptionCount = getCountOfSearchTerm(data.datasetfields.abstract);
+				} else {
+					abstractOrDescriptionCount = getCountOfSearchTerm(data.description);
+				}
+
+				let containsSearchTermCount =
+					abstractOrDescriptionCount +
+					getCountOfSearchTerm(data.name) +
+					getCountOfSearchTerm(data.tags.topics) +
+					getCountOfSearchTerm(data.tags.features);
+				data.searchTermInstances = containsSearchTermCount;
+			} else if (data.type === 'dataUseRegister') {
+				let containsSearchTermCount =
+					getCountOfSearchTerm(data.projectTitle) + getCountOfSearchTerm(data.keywords) + getCountOfSearchTerm(data.datasetTitles);
+				data.searchTermInstances = containsSearchTermCount;
+			} else {
+				//Other entities ie. Tools, Papers
+				let containsSearchTermCount =
+					getCountOfSearchTerm(data.name) +
+					getCountOfSearchTerm(data.description) +
+					getCountOfSearchTerm(data.tags.topics) +
+					getCountOfSearchTerm(data.tags.features) +
+					(_.has(data, 'categories.category') && getCountOfSearchTerm(data.categories.category));
+				data.searchTermInstances = containsSearchTermCount;
+			}
+		});
+
+		return filteredData.sort((a, b) => b.searchTermInstances - a.searchTermInstances);
+	};
+	const getCountOfSearchTerm = field => {
+		if (_.isArray(field)) {
+			return field.toString().toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
+		} else {
+			return field.toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
+		}
+	};
+
+	const sortByPopularity = () => {
+		return filteredData.sort((a, b) => b.counter - a.counter);
+	};
+
+	const handleSort = sort => {
+		setCollectionsPageSort(sort);
+		switch (sort) {
+			case 'metadata': {
+				sortByMetadataQuality();
+				break;
+			}
+			case 'recentlyadded': {
+				sortByRecentlyAdded();
+				break;
+			}
+			case 'resources': {
+				sortByResources();
+				break;
+			}
+			case 'relevance': {
+				sortByRelevance();
+				break;
+			}
+			case 'popularity': {
+				sortByPopularity();
+				break;
+			}
+			default:
+				return sort;
+		}
+	};
+
+	const updateCollectionsSearchString = searchCollectionsString => {
+		setCollectionsSearchString(searchCollectionsString);
+	};
+
+	console.log(relatedResources);
 	return (
 		<Sentry.ErrorBoundary fallback={<ErrorModal show={showModalHandler} handleClose={hideModalHandler} />}>
 			<div>
@@ -573,8 +726,57 @@ export const ToolDetail = props => {
 										/>
 									</Tab>
 									<Tab eventKey='Related resources' title={'Related resources (' + relatedObjects.length + ')'}>
+										<RelatedResourcesSearch
+											onChange={searchRelatedResource}
+											handleSort={handleSort}
+											isCollectionsSearch={true}
+											dropdownItems={dropdownItems}
+											sort={
+												collectionsPageSort === '' ? (searchCollectionsString === '' ? 'recentlyadded' : 'relevance') : collectionsPageSort
+											}
+										/>
+										{relatedResources.map(a => (
+											<div>
+												{a.name}
+												{a && a.datasetv2 && a.datasetv2.summary && a.datasetv2.summary.publisher && a.datasetv2.summary.publisher.name}
+												{a && a.datasetv2 && a.datasetv2.summary && a.datasetv2.summary.logo}
+												{a.type}
+											</div>
+										))}
+										{relatedResources.map(object => (
+											<RelatedObject
+												relatedObject={object}
+												objectType={object.type}
+												activeLink={true}
+												showRelationshipAnswer={true}
+												datasetPublisher={
+													object &&
+													object.datasetv2 &&
+													object.datasetv2.summary &&
+													object.datasetv2.summary.publisher &&
+													object.datasetv2.summary.publisher.name
+												}
+												datasetLogo={object && object.datasetv2 && object.datasetv2.summary && object.datasetv2.summary.logo}
+												showSearch={true}
+												title={object.title}
+												activeflag={object.activeflag}
+											/>
+										))}
 										{relatedObjects.length <= 0 ? (
 											<NotFound word='related resources' />
+										) : result.length > 0 ? (
+											result.map(object => (
+												<RelatedObject
+													relatedObject={object}
+													objectType={object.objectType}
+													activeLink={true}
+													showRelationshipAnswer={true}
+													datasetPublisher={object.datasetPublisher}
+													datasetLogo={object.datasetLogo}
+													showSearch={true}
+													title={title}
+												/>
+											))
 										) : (
 											relatedObjects.map(object => (
 												<RelatedObject
@@ -584,9 +786,23 @@ export const ToolDetail = props => {
 													showRelationshipAnswer={true}
 													datasetPublisher={object.datasetPublisher}
 													datasetLogo={object.datasetLogo}
+													showSearch={true}
+													title={title}
 												/>
 											))
 										)}
+										{/*result.length > 0 &&
+											result.map(object => (
+												<RelatedObject
+													relatedObject={object}
+													objectType={object.objectType}
+													activeLink={true}
+													showRelationshipAnswer={true}
+													datasetPublisher={object.datasetPublisher}
+													datasetLogo={object.datasetLogo}
+													showSearch={true}
+												/>
+											))*/}
 									</Tab>
 									<Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
 										{!collections || collections.length <= 0 ? (

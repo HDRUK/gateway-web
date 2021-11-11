@@ -286,6 +286,8 @@ export const CollectionPage = props => {
 		}
 	};
 
+	console.log(objectData);
+
 	const doCollectionsSearch = e => {
 		// Fires on enter on searchbar
 		if (e.key === 'Enter') {

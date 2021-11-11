@@ -22,7 +22,6 @@ import './Course.scss';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import googleAnalytics from '../../tracking';
 
-
 let baseURL = require('../commonComponents/BaseURL').getURL();
 
 export const CourseDetail = props => {
@@ -208,6 +207,10 @@ export const CourseDetail = props => {
 	if (courseData.relatedObjects === null || typeof courseData.relatedObjects === 'undefined') {
 		courseData.relatedObjects = [];
 	}
+
+	console.log(relatedObjects);
+
+	axios.get(baseURL + '/api/v1/course/relatedobjects/' + props.match.params.courseID).then(res => console.log(res.data));
 
 	return (
 		<Sentry.ErrorBoundary fallback={<ErrorModal show={showModalHandler} handleClose={hideModalHandler} />}>

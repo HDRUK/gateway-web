@@ -133,6 +133,8 @@ class DatasetDetail extends Component {
 
 	getDataset = async () => {
 		this.setState({ isLoading: true });
+		axios.get(baseURL + '/api/v1/datasets/relatedobjects/' + this.props.match.params.datasetID).then(res => console.log(res.data));
+
 		await axios.get(baseURL + '/api/v1/datasets/' + this.props.match.params.datasetID).then(async res => {
 			if (isNil(res.data)) {
 				window.localStorage.setItem('redirectMsg', `Dataset not found for Id: ${this.props.match.params.datasetID}`);
@@ -402,7 +404,6 @@ class DatasetDetail extends Component {
 
 		this.setState({ linkedDatasets });
 	};
-
 	getEmptyFieldsCount(v2data) {
 		let temporalCoverage = '';
 		if (!isEmpty(v2data.provenance.temporal.startDate) && !isEmpty(v2data.provenance.temporal.endDate)) {
@@ -549,6 +550,8 @@ class DatasetDetail extends Component {
 		this.setState({ objects: tempObjects });
 
 		this.getRelatedObjects();
+		// console.log(related objects here)
+		console.log(this.state.relatedObjects);
 	};
 
 	getRelatedObjects = () => {

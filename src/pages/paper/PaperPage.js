@@ -219,6 +219,9 @@ export const PaperDetail = props => {
 	if (paperData.relatedObjects === null || typeof paperData.relatedObjects === 'undefined') {
 		paperData.relatedObjects = [];
 	}
+	axios.get(baseURL + '/api/v1/papers/relatedobjects/' + props.match.params.paperID).then(res => console.log(res.data));
+
+	console.log(relatedObjects);
 
 	return (
 		<Sentry.ErrorBoundary fallback={<ErrorModal show={showModalHandler} handleClose={hideModalHandler} />}>
@@ -336,7 +339,9 @@ export const PaperDetail = props => {
 						<Col sm={1} lg={1} />
 						<Col sm={10} lg={10}>
 							<div>
-								<Tabs className='tabsBackground gray700-13 margin-bottom-16' onSelect={key => {
+								<Tabs
+									className='tabsBackground gray700-13 margin-bottom-16'
+									onSelect={key => {
 										googleAnalytics.recordVirtualPageView(`${key} tab`);
 										googleAnalytics.recordEvent('Papers', `Clicked ${key} tab`, `Viewing ${key}`);
 									}}>
