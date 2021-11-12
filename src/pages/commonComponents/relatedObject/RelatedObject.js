@@ -89,7 +89,7 @@ class RelatedObject extends React.Component {
 			axios.get(baseURL + '/api/v1/relatedobject/' + id).then(res => {
 				this.setState({
 					data: res.data.data[0],
-					isCohortDiscovery: res.data.data[0].isCohortDiscovery || false,
+					//isCohortDiscovery: res.data.data[0].isCohortDiscovery || false,
 					isLoading: false,
 				});
 			});

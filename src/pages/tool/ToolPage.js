@@ -146,7 +146,7 @@ export const ToolDetail = props => {
 		//console.log(result);
 	};
 
-	console.log(relatedObjects);
+	console.log(relatedResources);
 
 	const doSearch = e => {
 		//fires on enter on searchbar
