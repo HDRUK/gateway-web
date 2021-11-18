@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectsSearchSort from './ProjectsSearchSort';
+import DataUsesSearchSort from './DataUsesSearchSort';
 import { render } from '@testing-library/react';
 
 const mockSortDropdown = jest.fn();
@@ -20,14 +20,14 @@ const props = {
 
 const dropdownItems = ['relevance', 'popularity', 'latest', 'resources'];
 
-describe('Given the ProjectsSearchSort component', () => {
+describe('Given the DataUsesSearchSort component', () => {
 	afterEach(() => {
 		mockSortDropdown.mockReset();
 	});
 
 	describe('When it is rendered', () => {
 		beforeAll(() => {
-			wrapper = render(<ProjectsSearchSort {...props} />);
+			wrapper = render(<DataUsesSearchSort {...props} />);
 		});
 
 		it('Then has the correct properties', () => {
@@ -41,7 +41,7 @@ describe('Given the ProjectsSearchSort component', () => {
 
 	describe('When it is rendered with no search or sort term', () => {
 		beforeAll(() => {
-			wrapper = render(<ProjectsSearchSort {...props} search='' sort='' />);
+			wrapper = render(<DataUsesSearchSort {...props} search='' sort='' />);
 		});
 
 		it('Then has the correct properties', () => {
@@ -55,7 +55,7 @@ describe('Given the ProjectsSearchSort component', () => {
 
 	describe('When it is rendered with no sort', () => {
 		beforeAll(() => {
-			wrapper = render(<ProjectsSearchSort {...props} sort='' />);
+			wrapper = render(<DataUsesSearchSort {...props} sort='' />);
 		});
 
 		it('Then has the correct properties', () => {

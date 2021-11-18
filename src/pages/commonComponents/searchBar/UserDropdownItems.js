@@ -19,8 +19,8 @@ export const UserDropdownItems = isAdmin => {
 			<Dropdown.Item href='/account?tab=tools&team=user' className='black-14 user-dropdown-item' data-test-id='optTools'>
 				Tools
 			</Dropdown.Item>
-			<Dropdown.Item href='/account?tab=projects&team=user' className='black-14 user-dropdown-item' data-test-id='optProjects'>
-				Projects
+			<Dropdown.Item href='/account?tab=datause&team=user' className='black-14 user-dropdown-item' data-test-id='optDatause'>
+				Data Uses
 			</Dropdown.Item>
 			<Dropdown.Item href='/account?tab=papers&team=user' className='black-14 user-dropdown-item' data-test-id='optPapers'>
 				Papers

@@ -55,6 +55,9 @@ const UserDropdownTeams = props => {
 								<Dropdown.Item href={`/account?tab=datasets&team=admin`} className='black-14 user-dropdown-item'>
 									Datasets
 								</Dropdown.Item>
+								<Dropdown.Item href={`/account?tab=datause&team=admin`} className='black-14 user-dropdown-item'>
+									Data Uses
+								</Dropdown.Item>
 								<Dropdown.Item href={`/account?tab=teams&team=admin`} className='black-14 user-dropdown-item' data-test-id='optTeams'>
 									Teams
 								</Dropdown.Item>
@@ -71,6 +74,9 @@ const UserDropdownTeams = props => {
 								) : (
 									''
 								)}
+								<Dropdown.Item href={`/account?tab=datause&team=${team._id}`} className='black-14 user-dropdown-item'>
+									Data Uses
+								</Dropdown.Item>
 								{userHasRole(team._id, ['manager', 'metadata_editor']) ? (
 									<Dropdown.Item href={`/account?tab=datasets&team=${team._id}`} className='black-14 user-dropdown-item'>
 										Datasets

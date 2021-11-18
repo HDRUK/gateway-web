@@ -104,8 +104,8 @@ class UnmetDemand extends React.Component {
 										{data.entity === 'dataset' ? null : <br />}
 										{data.entity === 'tool' ? null : <span className='gray700-13'>{data.maxTools || 0} tools</span>}
 										{data.entity === 'tool' ? null : <br />}
-										{data.entity === 'project' ? null : <span className='gray700-13'>{data.maxProjects || 0} projects</span>}
-										{data.entity === 'project' ? null : <br />}
+										{data.entity === 'datause' ? null : <span className='gray700-13'>{data.maxDataUses || 0} data uses</span>}
+										{data.entity === 'datause' ? null : <br />}
 										{data.entity === 'course' ? null : <span className='gray700-13'>{data.maxCourses || 0} courses</span>}
 										{data.entity === 'course' ? null : <br />}
 										{data.entity === 'paper' ? null : <span className='gray700-13'>{data.maxPapers || 0} papers</span>}

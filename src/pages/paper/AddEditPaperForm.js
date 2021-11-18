@@ -237,7 +237,7 @@ const AddEditPaperForm = props => {
 												</Col>
 											</Row>
 											<p className='gray800-14 margin-bottom-0'>
-												Papers should be articles published in a journal. Add a project if you want
+												Papers should be articles published in a journal. Add a data use if you want
 											</p>
 										</div>
 									</Col>
@@ -614,7 +614,7 @@ const AddEditPaperForm = props => {
 												<span className='gray800-14'> (optional)</span>
 												<br />
 												<span className='gray800-14'>
-													Show relationships to papers, projects, datasets and tools. Resources must be added to the Gateway first.
+													Show relationships to papers, data uses, datasets and tools. Resources must be added to the Gateway first.
 												</span>
 											</div>
 
@@ -654,7 +654,6 @@ const AddEditPaperForm = props => {
 															userState={props.userState}
 															datasetData={props.datasetData}
 															toolData={props.toolData}
-															projectData={props.projectData}
 															paperData={props.paperData}
 															personData={props.personData}
 															courseData={props.courseData}

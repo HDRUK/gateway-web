@@ -1,0 +1,97 @@
+[
+	{
+		"lastActivity": "10/07/2021",
+		"projectTitle": "Children's Respiratory Health",
+		"institution": "University Hospital Birmingham",
+		"datasets": ["Child Health Systems Programme - 6-8 week review"],
+		"status": "active"
+	},
+	{
+		"lastActivity": "10/07/2021",
+		"projectTitle": "Additional Clinical Details",
+		"institution": "University of Plymouth",
+		"datasets": ["Patient Identifier"],
+		"status": "active"
+	},
+	{
+		"lastActivity": "10/07/2021",
+		"projectTitle": "One City Health Data Strategy",
+		"institution": "UCL",
+		"datasets": ["Patient Identifier"],
+		"status": "pending approval"
+	},
+	{
+		"lastActivity": "08/06/2021",
+		"projectTitle": "Insomnia in Genetics",
+		"institution": "UCL",
+		"datasets": ["Biobank"],
+		"status": "active"
+	},
+	{
+		"lastActivity": "08/06/2021",
+		"projectTitle": "Epilepsy Therapy in Teenagers",
+		"institution": "University of Camrbidge",
+		"datasets": [
+			"Epilepsy 12 - clinical audit",
+			"Falls and Fragility Fracture Audit Programm National Hip Database Facilities Survery 2019"
+		],
+		"status": "rejected"
+	},
+	{
+		"lastActivity": "06/06/2021",
+		"projectTitle": "Insominia in Genetics",
+		"institution": "UCL",
+		"datasets": ["CPRD Gold"],
+		"status": "rejected"
+	},
+
+	{
+		"lastActivity": "05/06/2021",
+		"projectTitle": "Clinical Practise Research",
+		"institution": "University of Plymouth",
+		"datasets": ["CPRD Gold", "CPRD Aurum"],
+		"status": "active"
+	},
+	{
+		"lastActivity": "05/06/2021",
+		"projectTitle": "Children's Respiratory Health in London",
+		"institution": "University Hospital Birmingham",
+		"datasets": ["Children's Health in London and Luton (CHILL)"],
+		"status": "active"
+	},
+	{
+		"lastActivity": "05/06/2021",
+		"projectTitle": "Children's Respiratory Health in London",
+		"institution": "University Hosiptal Birmingham",
+		"datasets": ["Child Health Systems Programme - 6-8 week review"],
+		"status": "rejected"
+	},
+	{
+		"lastActivity": "03/06/2021",
+		"projectTitle": "Chemotherapy prescribing system",
+		"institution": "University Hospital Birmingham",
+		"datasets": ["ARIA Medonc"],
+		"status": "archived"
+	},
+	{
+		"lastActivity": "03/06/2021",
+		"projectTitle": "Respiration problems in infants (0-1 yrs old)",
+		"institution": "HDR UK",
+		"datasets": ["Genetrics of Astha Severity & Phenotypes"],
+		"status": "rejected"
+	},
+	{
+		"lastActivity": "03/06/2021",
+		"projectTitle": "Leukaemia stem sampling",
+		"institution": "Cardiff University",
+		"datasets": ["Cardiff University Biobank", "Cambridge Blood and Stem Cell Biobank"],
+		"status": "archived"
+	},
+	{
+		"lastActivity": "03/06/2021",
+		"projectTitle": "A scalable federated solution for Uk health data encryption, linking and discovery",
+		"institution": "HDR UK",
+		"datasets": ["Outpatient Appointment Dataset"],
+		"status": "active"
+	}
+]

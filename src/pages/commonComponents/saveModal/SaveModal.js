@@ -59,7 +59,7 @@ const SaveModal = ({ ...props }) => {
 				/>
 				{formik.touched.name && formik.errors.name ? <div className='errorMessages'>{formik.errors.name}</div> : null}
 			</Modal.Body>
-			<Modal.Footer className='saved-modal-footer'>
+			<Modal.Footer>
 				<Button variant='outline-primary saved-no' onClick={props.onSaveHide}>
 					No, nevermind
 				</Button>

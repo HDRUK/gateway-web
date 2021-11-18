@@ -2,8 +2,8 @@ import { useQuery } from 'react-query';
 import { apiURL } from '../configs/url.config';
 import { getRequest } from '../utils/requests';
 
-const getRelatedObjectRequest = (_id, options) => {
-	return getRequest(`${apiURL}/relatedobject/${_id}`, options);
+const getRelatedObjectRequest = (_id, type, options) => {
+	return getRequest(`${apiURL}/relatedobject/${type}/${_id}`, options);
 };
 
 const getRelatedObjectForCourseRequest = (_id, options) => {
@@ -25,8 +25,8 @@ const useGetRelatedObjectForCourseRequest = (requestOptions, queryOptions = { qu
 };
 
 export default {
-    getRelatedObjectRequest,
-    getRelatedObjectForCourseRequest,
-    useGetRelatedObjectRequest,
-    useGetRelatedObjectForCourseRequest
-}
+	getRelatedObjectRequest,
+	getRelatedObjectForCourseRequest,
+	useGetRelatedObjectRequest,
+	useGetRelatedObjectForCourseRequest,
+};

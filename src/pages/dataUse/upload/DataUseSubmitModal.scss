@@ -1,0 +1,44 @@
+.dataUseSubmitModal {
+	box-sizing: border-box;
+	font-size: 14px;
+	color: #3c3c3b;
+
+	.modal-dialog {
+		max-width: 400px;
+		transform: translate(0%, 20%) !important;
+	}
+
+	&-header {
+		margin: 32px 64px 0 32px;
+	}
+
+	&-close {
+		position: absolute;
+		top: 24px;
+		right: 24px;
+		width: 17px;
+		height: 17px;
+		color: #111111;
+	}
+
+	&-body {
+		margin: 32px 32px 0px 32px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&-footer {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-end;
+		align-items: center;
+		width: 100%;
+		padding-bottom: 32px;
+		background: #fff;
+
+		&--wrap {
+			display: flex;
+			flex-flow: row nowrap;
+		}
+	}
+}

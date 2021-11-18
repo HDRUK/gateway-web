@@ -44,6 +44,7 @@
 		"react-rating": "^2.0.4",
 		"react-router-dom": "^5.1.2",
 		"react-schemaorg": "^1.1.0",
+		"react-select": "^5.1.0",
 		"react-slidedown": "^2.4.5",
 		"react-switch": "^6.0.0",
 		"react-tabs": "^3.1.0",

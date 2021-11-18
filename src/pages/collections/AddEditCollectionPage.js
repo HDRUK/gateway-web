@@ -32,7 +32,7 @@ class AddEditCollectionPage extends React.Component {
 		searchString: '',
 		datasetData: [],
 		toolData: [],
-		projectData: [],
+		datauseData: [],
 		personData: [],
 		paperData: [],
 		courseData: [],
@@ -112,7 +112,7 @@ class AddEditCollectionPage extends React.Component {
 
 			if (type === 'dataset' && page > 0) searchURL += '&datasetIndex=' + page;
 			if (type === 'tool' && page > 0) searchURL += '&toolIndex=' + page;
-			if (type === 'project' && page > 0) searchURL += '&projectIndex=' + page;
+			if (type === 'datause' && page > 0) searchURL += '&datauseIndex=' + page;
 			if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
 			if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
 			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;
@@ -128,7 +128,7 @@ class AddEditCollectionPage extends React.Component {
 					this.setState({
 						datasetData: res.data.datasetResults || [],
 						toolData: res.data.toolResults || [],
-						projectData: res.data.projectResults || [],
+						datauseData: res.data.dataUseRegisterResults || [],
 						personData: res.data.personResults || [],
 						paperData: res.data.paperResults || [],
 						courseData: res.data.courseResults || [],
@@ -216,9 +216,9 @@ class AddEditCollectionPage extends React.Component {
 			searchString,
 			datasetData,
 			toolData,
-			projectData,
 			personData,
 			paperData,
+			datauseData,
 			courseData,
 			summary,
 			relatedObjects,
@@ -259,7 +259,7 @@ class AddEditCollectionPage extends React.Component {
 						doUpdateSearchString={this.updateSearchString}
 						datasetData={datasetData}
 						toolData={toolData}
-						projectData={projectData}
+						datauseData={datauseData}
 						personData={personData}
 						paperData={paperData}
 						courseData={courseData}

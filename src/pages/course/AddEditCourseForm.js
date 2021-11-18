@@ -961,7 +961,8 @@ const AddEditCourseForm = props => {
 												<span className='gray800-14'> (optional)</span>
 												<br />
 												<span className='gray800-14'>
-													Show relationships to papers, projects, datasets, tools and courses. Resources must be added to the Gateway first.
+													Show relationships to papers, data uses, datasets, tools and courses. Resources must be added to the Gateway
+													first.
 												</span>
 											</div>
 
@@ -1002,7 +1003,6 @@ const AddEditCourseForm = props => {
 															userState={props.userState}
 															datasetData={props.datasetData}
 															toolData={props.toolData}
-															projectData={props.projectData}
 															paperData={props.paperData}
 															personData={props.personData}
 															courseData={props.courseData}

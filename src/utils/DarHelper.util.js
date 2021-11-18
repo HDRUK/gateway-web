@@ -162,6 +162,13 @@ const activityLogEvents = {
 	NOTE: 'note',
 };
 
+const dataUseRegisterStatus = {
+	ACTIVE: 'active',
+	INREVIEW: 'inReview',
+	REJECTED: 'rejected',
+	ARCHIVED: 'archived',
+};
+
 /**
  * [generateStatusCounts - Used in DataAccessRequest Dashboard for status counts]
  *
@@ -624,4 +631,5 @@ export default {
 	amendmentStatuses: amendmentStatuses,
 	removeStaticPages: removeStaticPages,
 	activityLogEvents: activityLogEvents,
+	dataUseRegisterStatus: dataUseRegisterStatus,
 };

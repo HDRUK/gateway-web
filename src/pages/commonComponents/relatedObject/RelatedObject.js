@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Button, Alert } from 'react-bootstrap';
+import { has } from 'lodash';
 import Loading from '../Loading';
 import SVGIcon from '../../../images/SVGIcon';
 import Dataset from './Dataset/Dataset';
@@ -76,22 +77,13 @@ class RelatedObject extends React.Component {
 		//need to handle error if no id is found
 		this.setState({ isLoading: true });
 
-		if (type === 'course') {
-			relatedObjectService.getRelatedObjectForCourseRequest(id).then(res => {
-				this.setState({
-					data: res.data.data[0],
-					isLoading: false,
-				});
+		relatedObjectService.getRelatedObjectRequest(id, type).then(res => {
+			this.setState({
+				data: res.data.data[0],
+				isCohortDiscovery: res.data.data[0].isCohortDiscovery || false,
+				isLoading: false,
 			});
-		} else {
-			relatedObjectService.getRelatedObjectRequest(id).then(res => {
-				this.setState({
-					data: res.data.data[0],
-					isCohortDiscovery: res.data.data[0].isCohortDiscovery || false,
-					isLoading: false,
-				});
-			});
-		}
+		});
 	};
 
 	removeButton = () => {
@@ -179,146 +171,48 @@ class RelatedObject extends React.Component {
 										removeButton={this.removeButton}
 									/>
 								);
-							} else if (data.type === 'project') {
+							} else if (data.type === 'dataUseRegister') {
 								return (
-									<Row data-testid='related-project-object' className='noMargin'>
+									<Row className='noMargin'>
 										<Col sm={10} lg={10} className='pad-left-24'>
 											{activeLink === true ? (
-												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/project/' + data.id}>
-													{data.name}
+												<a className='purple-bold-16' style={{ cursor: 'pointer' }} href={'/datause/' + data.id}>
+													{data.projectTitle}
 												</a>
 											) : (
-												<span className='black-bold-16'> {data.name}</span>
+												<p className='black-bold-16 padding-bottom-4'>{data.projectTitle}</p>
 											)}
-											<br />
-											{!data.persons || data.persons <= 0 ? (
-												<span className='gray800-14'>Author not listed</span>
-											) : (
-												data.persons.map((person, index) => {
-													if (activeLink === true) {
-														return (
-															<a className='gray800-14' href={'/person/' + person.id} key={`person-${index}`}>
-																{person.firstname} {person.lastname}
-																{data.persons.length === index + 1 ? '' : ', '}
-															</a>
-														);
-													} else {
-														return (
-															<span className='gray800-14' key={`person-${index}`}>
-																{person.firstname} {person.lastname}
-																{data.persons.length === index + 1 ? '' : ', '}
-															</span>
-														);
-													}
-												})
-											)}
-										</Col>
-										<Col sm={2} lg={2} className='pad-right-24'>
-											{this.props.showRelationshipQuestion ? (
-												<Button variant='medium' className='soft-black-14' onClick={this.removeButton}>
-													<SVGIcon name='closeicon' fill={'#979797'} className='buttonSvg mr-2' />
-													Remove
-												</Button>
-											) : (
-												''
-											)}
-										</Col>
-										<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
-											<span className='badge-project'>
-												<SVGIcon name='newestprojecticon' fill={'#472505'} className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
-												<span>Project</span>
+											<p className='gray800-14'>{data.organisationName}</p>
+											<span className='badge-datause'>
+												<SVGIcon name='datauseicon' fill={'#fff'} className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
+												<span>Data use</span>
 											</span>
-
-											{!data.categories.category ? (
-												''
-											) : activeLink === true ? (
-												onSearchPage === true ? (
-													<span
-														className='pointer'
-														onClick={event =>
-															this.updateOnFilterBadge('projectCategoriesSelected', {
-																label: data.categories.category,
-																parentKey: 'projectcategories',
-															})
-														}>
-														<div className='badge-tag'>{data.categories.category}</div>
-													</span>
-												) : (
-													<a href={'/search?search=&tab=Projects&projectcategories=' + data.categories.category}>
-														<div className='badge-tag'>{data.categories.category}</div>
-													</a>
-												)
-											) : (
-												<div className='badge-tag'>{data.categories.category}</div>
-											)}
-
-											{!data.tags.features || data.tags.features.length <= 0
-												? ''
-												: data.tags.features.map((feature, index) => {
-														if (activeLink === true) {
-															if (onSearchPage === true) {
-																return (
-																	<span
-																		className='pointer'
-																		onClick={event =>
-																			this.updateOnFilterBadge('projectFeaturesSelected', { label: feature, parentKey: 'projectfeatures' })
-																		}
-																		key={`tagFeature-${index}`}>
-																		<div className='badge-tag'>{feature}</div>
-																	</span>
-																);
-															} else {
-																return (
-																	<a href={'/search?search=&tab=Projects&projectfeatures=' + feature} key={`tagFeature-${index}`}>
-																		<div className='badge-tag'>{feature}</div>
-																	</a>
-																);
-															}
-														} else {
-															return (
-																<div className='badge-tag' key={`tagFeature-${index}`}>
-																	{feature}
-																</div>
-															);
-														}
-												  })}
-
-											{!data.tags.topics || data.tags.topics.length <= 0
-												? ''
-												: data.tags.topics.map((topic, index) => {
-														if (activeLink === true) {
-															if (onSearchPage === true) {
-																return (
-																	<span
-																		className='pointer'
-																		onClick={event =>
-																			this.updateOnFilterBadge('projectTopicsSelected', { label: topic, parentKey: 'projecttopics' })
-																		}
-																		key={`tagTopic-${index}`}>
-																		<div className='badge-tag'>{topic}</div>
-																	</span>
-																);
-															} else {
-																return (
-																	<a href={'/search?search=&tab=Projects&projecttopics=' + topic} key={`tagTopic-${index}`}>
-																		<div className='badge-tag'>{topic}</div>
-																	</a>
-																);
-															}
-														} else {
-															return (
-																<div className='badge-tag' key={`tagTopic-${index}`}>
-																	{topic}
-																</div>
-															);
-														}
-												  })}
+											{data.keywords.map(word => (
+												<span className='badge-tag'>{word}</span>
+											))}
+											<Row className='pad-top-16'>
+												<Col md={3} className='gray800-14-opacity'>
+													Datasets
+												</Col>
+												<Col md={9} className='gray800-14'>
+													{data.gatewayDatasetsInfo &&
+														data.gatewayDatasetsInfo.map(dataset => (
+															<a href={`/dataset/${dataset.pid}`}>
+																<div className='badge-tag'>{dataset.name}</div>
+															</a>
+														))}
+													{data.nonGatewayDatasets && data.nonGatewayDatasets.join(', ')}
+												</Col>
+											</Row>
+											<Row className='pad-bottom-24 pad-top-8'>
+												<Col md={3} className='gray800-14-opacity'>
+													Data custodian
+												</Col>
+												<Col md={9} className='gray800-14'>
+													{has(data, 'publisherInfo.name') ? data.publisherInfo.name : '-'}
+												</Col>
+											</Row>
 										</Col>
-										{!this.props.showRelationshipQuestion && (
-											<Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-24 pad-bottom-16'>
-												<span className='gray800-14'>{stripMarkdown(data.description, 255)}</span>
-											</Col>
-										)}
 									</Row>
 								);
 							} else if (data.type === 'paper') {

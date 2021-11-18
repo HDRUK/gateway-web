@@ -1,7 +1,9 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import _, { upperFirst } from 'lodash';
+import _ from 'lodash';
+import moment from 'moment';
 import queryString from 'query-string';
+import { CSVLink } from 'react-csv';
 import React from 'react';
 import { Alert, Button, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { NotificationContainer } from 'react-notifications';
@@ -27,7 +29,7 @@ import Filter from './components/Filter';
 import FilterSelection from './components/FilterSelection';
 import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort';
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
-import ProjectsSearchSort from './components/ProjectsSearchResults/ProjectsSearchSort';
+import DataUsesSearchSort from './components/DataUsesSearchResults/DataUsesSearchSort';
 import SearchFilters from './components/SearchFilters';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
@@ -37,11 +39,11 @@ let baseURL = require('../commonComponents/BaseURL').getURL();
 const typeMapper = {
 	Datasets: 'dataset',
 	Tools: 'tool',
-	Projects: 'project',
 	Papers: 'paper',
 	People: 'person',
 	Courses: 'course',
 	Collections: 'collection',
+	Datauses: 'dataUseRegister',
 };
 
 class SearchPage extends React.Component {
@@ -49,21 +51,22 @@ class SearchPage extends React.Component {
 		search: '',
 		datasetSort: '',
 		toolSort: '',
-		projectSort: '',
+		dataUseRegisterSort: '',
 		paperSort: '',
 		personSort: '',
 		courseSort: '',
 		collectionSort: '',
 		datasetIndex: 0,
 		toolIndex: 0,
-		projectIndex: 0,
+		dataUseRegisterIndex: 0,
 		paperIndex: 0,
 		personIndex: 0,
 		courseIndex: 0,
 		collectionIndex: 0,
 		datasetData: [],
 		toolData: [],
-		projectData: [],
+		dataUseRegisterData: [],
+		dataUseRegisterFullData: [],
 		paperData: [],
 		personData: [],
 		courseData: [],
@@ -74,9 +77,6 @@ class SearchPage extends React.Component {
 		toolProgrammingLanguageSelected: [],
 		toolfeaturesSelected: [],
 		toolTopicsSelected: [],
-		projectCategoriesSelected: [],
-		projectFeaturesSelected: [],
-		projectTopicsSelected: [],
 		paperFeaturesSelected: [],
 		paperTopicsSelected: [],
 		courseStartDatesSelected: [],
@@ -113,8 +113,8 @@ class SearchPage extends React.Component {
 		selectedV2Datasets: [],
 		filtersV2Tools: [],
 		selectedV2Tools: [],
-		filtersV2Projects: [],
-		selectedV2Projects: [],
+		filtersV2Datauses: [],
+		selectedV2Datauses: [],
 		filtersV2Papers: [],
 		selectedV2Papers: [],
 		filtersV2Collections: [],
@@ -146,6 +146,7 @@ class SearchPage extends React.Component {
 		this.openDataUtilityWizard = this.openDataUtilityWizard.bind(this);
 		this.toggleDataUtilityBanner = this.toggleDataUtilityBanner.bind(this);
 		this.onWizardStepChange = this.onWizardStepChange.bind(this);
+		this.csvLink = React.createRef();
 	}
 
 	hideSavedPreferencesModal = () => {
@@ -258,7 +259,7 @@ class SearchPage extends React.Component {
 		let queryParams = queryString.parse(window.location.search);
 		// 1. if tabs are different update
 		if (this.state.key !== queryParams.tab) {
-			this.setState({ key: queryParams.tab || 'Datasets' });
+			this.setState({ key: queryParams.tab.replace(/ /g, '') || 'Datasets' });
 		}
 	}
 
@@ -360,7 +361,7 @@ class SearchPage extends React.Component {
 				}
 			}
 			// 12. set the state of filters and selected options
-			const entity = upperFirst(tab);
+			const entity = _.upperFirst(tab);
 			this.setState({ [`filtersV2${entity}s`]: filtersV2, [`selectedV2${entity}s`]: selectedV2 });
 		}
 	};
@@ -381,10 +382,10 @@ class SearchPage extends React.Component {
 			const selectedV2Tools = [...this.state.selectedV2Tools];
 			this.setSelectedFiltersFromQueryParams(filtersV2Tools, selectedV2Tools, queryParams, 'tool');
 		}
-		if (!_.isEmpty(this.state.filtersV2Projects)) {
-			const filtersV2Projects = [...this.state.filtersV2Projects];
-			const selectedV2Projects = [...this.state.selectedV2Projects];
-			this.setSelectedFiltersFromQueryParams(filtersV2Projects, selectedV2Projects, queryParams, 'project');
+		if (!_.isEmpty(this.state.filtersV2Datauses)) {
+			const filtersV2Datauses = [...this.state.filtersV2Datauses];
+			const selectedV2Datauses = [...this.state.selectedV2Datauses];
+			this.setSelectedFiltersFromQueryParams(filtersV2Datauses, selectedV2Datauses, queryParams, 'datause');
 		}
 		if (!_.isEmpty(this.state.filtersV2Papers)) {
 			const filtersV2Papers = [...this.state.filtersV2Papers];
@@ -405,11 +406,13 @@ class SearchPage extends React.Component {
 		queryParams.search ? this.setState({ search: queryParams.search }) : this.setState({ search: '' });
 
 		// Tab
-		queryParams.tab ? this.setState({ key: queryParams.tab }) : this.setState({ key: 'Datasets' });
+		queryParams.tab ? this.setState({ key: queryParams.tab.replace(/ /g, '') }) : this.setState({ key: 'Datasets' });
 		// PageNumbers - should be datasetPageNo etc better convention
 		queryParams.datasetIndex ? this.setState({ datasetIndex: queryParams.datasetIndex }) : this.setState({ datasetIndex: 0 });
 		queryParams.toolIndex ? this.setState({ toolIndex: queryParams.toolIndex }) : this.setState({ toolIndex: 0 });
-		queryParams.projectIndex ? this.setState({ projectIndex: queryParams.projectIndex }) : this.setState({ projectIndex: 0 });
+		queryParams.dataUseRegisterIndex
+			? this.setState({ dataUseRegisterIndex: queryParams.dataUseRegisterIndex })
+			: this.setState({ dataUseRegisterIndex: 0 });
 		queryParams.paperIndex ? this.setState({ paperIndex: queryParams.paperIndex }) : this.setState({ paperIndex: 0 });
 		queryParams.personIndex ? this.setState({ personIndex: queryParams.personIndex }) : this.setState({ personIndex: 0 });
 		queryParams.courseIndex ? this.setState({ courseIndex: queryParams.courseIndex }) : this.setState({ courseIndex: 0 });
@@ -417,7 +420,9 @@ class SearchPage extends React.Component {
 		// Sort for each tab
 		queryParams.datasetSort ? this.setState({ datasetSort: queryParams.datasetSort }) : this.setState({ datasetSort: '' });
 		queryParams.toolSort ? this.setState({ toolSort: queryParams.toolSort }) : this.setState({ toolSort: '' });
-		queryParams.projectSort ? this.setState({ projectSort: queryParams.projectSort }) : this.setState({ projectSort: '' });
+		queryParams.dataUseRegisterSort
+			? this.setState({ dataUseRegisterSort: queryParams.dataUseRegisterSort })
+			: this.setState({ dataUseRegisterSort: '' });
 		queryParams.paperSort ? this.setState({ paperSort: queryParams.paperSort }) : this.setState({ paperSort: '' });
 		queryParams.personSort ? this.setState({ personSort: queryParams.personSort }) : this.setState({ personSort: '' });
 		queryParams.courseSort ? this.setState({ courseSort: queryParams.courseSort }) : this.setState({ courseSort: '' });
@@ -428,7 +433,7 @@ class SearchPage extends React.Component {
 		// 1. v2 take copy of data
 		let filtersV2DatasetsData = !_.isNil(this.state.filtersV2Datasets) ? [...this.state.filtersV2Datasets] : [];
 		let filtersV2ToolsData = !_.isNil(this.state.filtersV2Tools) ? [...this.state.filtersV2Tools] : [];
-		let filtersV2ProjectsData = !_.isNil(this.state.filtersV2Projects) ? [...this.state.filtersV2Projects] : [];
+		let filtersV2DatausesData = !_.isNil(this.state.filtersV2Datauses) ? [...this.state.filtersV2Datauses] : [];
 		let filtersV2CollectionsData = !_.isNil(this.state.filtersV2Collections) ? [...this.state.filtersV2Collections] : [];
 		let filtersV2CoursesData = !_.isNil(this.state.filtersV2Courses) ? [...this.state.filtersV2Courses] : [];
 		let filtersV2PapersData = !_.isNil(this.state.filtersV2Papers) ? [...this.state.filtersV2Papers] : [];
@@ -436,7 +441,7 @@ class SearchPage extends React.Component {
 		// 2. v2 resets the filters UI tree back to default
 		let filtersV2Datasets = this.resetTreeChecked(filtersV2DatasetsData);
 		let filtersV2Tools = this.resetTreeChecked(filtersV2ToolsData);
-		let filtersV2Projects = this.resetTreeChecked(filtersV2ProjectsData);
+		let filtersV2Datauses = this.resetTreeChecked(filtersV2DatausesData);
 		let filtersV2Collections = this.resetTreeChecked(filtersV2CollectionsData);
 		let filtersV2Courses = this.resetTreeChecked(filtersV2CoursesData);
 		let filtersV2Papers = this.resetTreeChecked(filtersV2PapersData);
@@ -447,8 +452,8 @@ class SearchPage extends React.Component {
 				selectedV2Datasets: [],
 				filtersV2Tools,
 				selectedV2Tools: [],
-				filtersV2Projects,
-				selectedV2Projects: [],
+				filtersV2Datauses,
+				selectedV2Datauses: [],
 				filtersV2Papers,
 				selectedV2Papers: [],
 				filtersV2Collections,
@@ -457,14 +462,14 @@ class SearchPage extends React.Component {
 				selectedV2Courses: [],
 				datasetIndex: 0,
 				toolIndex: 0,
-				projectIndex: 0,
+				dataUseRegisterIndex: 0,
 				paperIndex: 0,
 				personIndex: 0,
 				courseIndex: 0,
 				collectionIndex: 0,
 				datasetSort: '',
 				toolSort: '',
-				projectSort: '',
+				dataUseRegisterSort: '',
 				paperSort: '',
 				personSort: '',
 				courseSort: '',
@@ -494,7 +499,15 @@ class SearchPage extends React.Component {
 
 	updateOnFilter = () => {
 		this.setState(
-			{ datasetIndex: 0, toolIndex: 0, projectIndex: 0, paperIndex: 0, personIndex: 0, courseIndex: 0, isResultsLoading: true },
+			{
+				datasetIndex: 0,
+				toolIndex: 0,
+				dataUseRegisterIndex: 0,
+				paperIndex: 0,
+				personIndex: 0,
+				courseIndex: 0,
+				isResultsLoading: true,
+			},
 			() => {
 				this.doSearchCall();
 			}
@@ -520,7 +533,7 @@ class SearchPage extends React.Component {
 		let searchURL = '';
 		let filtersDatasetsV2 = [];
 		let filtersV2Tools = [];
-		let filtersV2Projects = [];
+		let filtersV2Datauses = [];
 		let filtersV2Papers = [];
 		let filtersV2Courses = [];
 		let filtersV2Collections = [];
@@ -528,14 +541,14 @@ class SearchPage extends React.Component {
 			userState,
 			datasetIndex = 0,
 			toolIndex = 0,
-			projectIndex = 0,
+			dataUseRegisterIndex = 0,
 			paperIndex = 0,
 			personIndex = 0,
 			courseIndex = 0,
 			collectionIndex = 0,
 			datasetSort = '',
 			toolSort = '',
-			projectSort = '',
+			dataUseRegisterSort = '',
 			paperSort = '',
 			personSort = '',
 			courseSort = '',
@@ -548,7 +561,7 @@ class SearchPage extends React.Component {
 		let searchObj = {
 			...this.buildSearchObj(this.state.selectedV2Datasets),
 			...this.buildSearchObj(this.state.selectedV2Tools),
-			...this.buildSearchObj(this.state.selectedV2Projects),
+			...this.buildSearchObj(this.state.selectedV2Datauses),
 			...this.buildSearchObj(this.state.selectedV2Papers),
 			...this.buildSearchObj(this.state.selectedV2Courses),
 			...this.buildSearchObj(this.state.selectedV2Collections),
@@ -557,7 +570,7 @@ class SearchPage extends React.Component {
 		searchURL = this.buildSearchUrl(searchObj);
 		if (datasetIndex > 0) searchURL += '&datasetIndex=' + encodeURIComponent(datasetIndex);
 		if (toolIndex > 0) searchURL += '&toolIndex=' + encodeURIComponent(toolIndex);
-		if (projectIndex > 0) searchURL += '&projectIndex=' + encodeURIComponent(projectIndex);
+		if (dataUseRegisterIndex > 0) searchURL += '&dataUseRegisterIndex=' + encodeURIComponent(dataUseRegisterIndex);
 		if (paperIndex > 0) searchURL += '&paperIndex=' + encodeURIComponent(paperIndex);
 		if (personIndex > 0) searchURL += '&personIndex=' + encodeURIComponent(personIndex);
 		if (courseIndex > 0) searchURL += '&courseIndex=' + encodeURIComponent(courseIndex);
@@ -565,7 +578,7 @@ class SearchPage extends React.Component {
 		// sorting across the filter range
 		if (datasetSort !== '') searchURL += '&datasetSort=' + encodeURIComponent(datasetSort);
 		if (toolSort !== '') searchURL += '&toolSort=' + encodeURIComponent(toolSort);
-		if (projectSort !== '') searchURL += '&projectSort=' + encodeURIComponent(projectSort);
+		if (dataUseRegisterSort !== '') searchURL += '&dataUseRegisterSort=' + encodeURIComponent(dataUseRegisterSort);
 		if (paperSort !== '') searchURL += '&paperSort=' + encodeURIComponent(paperSort);
 		if (personSort !== '') searchURL += '&personSort=' + encodeURIComponent(personSort);
 		if (courseSort !== '') searchURL += '&courseSort=' + encodeURIComponent(courseSort);
@@ -603,10 +616,10 @@ class SearchPage extends React.Component {
 						let filtersV2ToolState = this.state.filtersV2Tools || [];
 						filtersV2Tools = this.setHighlightedFilters(filters, [...filtersV2ToolState]);
 						this.setState({ filtersV2Tools });
-					} else if (entityType === 'project') {
-						let filtersV2ProjectState = this.state.filtersV2Projects || [];
-						filtersV2Projects = this.setHighlightedFilters(filters, [...filtersV2ProjectState]);
-						this.setState({ filtersV2Projects });
+					} else if (entityType === 'dataUseRegister') {
+						let filtersV2DatausesState = this.state.filtersV2Datauses || [];
+						filtersV2Datauses = this.setHighlightedFilters(filters, [...filtersV2DatausesState]);
+						this.setState({ filtersV2Datauses });
 					} else if (entityType === 'paper') {
 						let filtersV2PaperState = this.state.filtersV2Papers || [];
 						filtersV2Papers = this.setHighlightedFilters(filters, [...filtersV2PaperState]);
@@ -772,14 +785,14 @@ class SearchPage extends React.Component {
 						this.setState({ filtersV2Tools });
 					}
 					break;
-				case 'Projects':
-					const responseProjects = await axios.get(`${baseURL}/api/v2/filters/project`);
+				case 'Datauses':
+					const responseDatauses = await axios.get(`${baseURL}/api/v2/filters/dataUseRegister`);
 					const {
-						data: { data: filterDataProjects },
-					} = responseProjects;
-					if (!_.isEmpty(filterDataProjects) && _.isEmpty(this.state.filtersV2Projects)) {
-						const filtersV2Projects = this.mapFiltersToDictionary(filterDataProjects, this.state.dataUtilityFilters);
-						this.setState({ filtersV2Projects });
+						data: { data: filterDataDatauses },
+					} = responseDatauses;
+					if (!_.isEmpty(filterDataDatauses) && _.isEmpty(this.state.filtersV2Datauses)) {
+						const filtersV2Datauses = this.mapFiltersToDictionary(filterDataDatauses, this.state.dataUtilityFilters);
+						this.setState({ filtersV2Datauses });
 					}
 					break;
 				case 'Papers':
@@ -1132,8 +1145,8 @@ class SearchPage extends React.Component {
 				return [...this.state.filtersV2Datasets];
 			case 'Tools':
 				return [...this.state.filtersV2Tools];
-			case 'Projects':
-				return [...this.state.filtersV2Projects];
+			case 'Datauses':
+				return [...this.state.filtersV2Datauses];
 			case 'Papers':
 				return [...this.state.filtersV2Papers];
 			case 'Courses':
@@ -1154,8 +1167,8 @@ class SearchPage extends React.Component {
 				return [...this.state.selectedV2Datasets];
 			case 'Tools':
 				return [...this.state.selectedV2Tools];
-			case 'Projects':
-				return [...this.state.selectedV2Projects];
+			case 'Datauses':
+				return [...this.state.selectedV2Datauses];
 			case 'Papers':
 				return [...this.state.selectedV2Papers];
 			case 'Courses':
@@ -1169,7 +1182,15 @@ class SearchPage extends React.Component {
 
 	getCountByKey = key => {
 		let {
-			summary: { datasetCount = 0, toolCount = 0, projectCount = 0, paperCount = 0, personCount = 0, courseCount = 0, collectionCount = 0 },
+			summary: {
+				datasetCount = 0,
+				toolCount = 0,
+				dataUseRegisterCount = 0,
+				paperCount = 0,
+				personCount = 0,
+				courseCount = 0,
+				collectionCount = 0,
+			},
 		} = this.state;
 
 		switch (key) {
@@ -1177,8 +1198,8 @@ class SearchPage extends React.Component {
 				return datasetCount;
 			case 'Tools':
 				return toolCount;
-			case 'Projects':
-				return projectCount;
+			case 'Datauses':
+				return dataUseRegisterCount;
 			case 'Papers':
 				return paperCount;
 			case 'Courses':
@@ -1292,7 +1313,7 @@ class SearchPage extends React.Component {
 		// 1. v2 take copy of data
 		let filtersV2DatasetsData = !_.isNil(this.state.filtersV2Datasets) ? [...this.state.filtersV2Datasets] : [];
 		let filtersV2ToolsData = !_.isNil(this.state.filtersV2Tools) ? [...this.state.filtersV2Tools] : [];
-		let filtersV2ProjectsData = !_.isNil(this.state.filtersV2Projects) ? [...this.state.filtersV2Projects] : [];
+		let filtersV2DatausesData = !_.isNil(this.state.filtersV2Datauses) ? [...this.state.filtersV2Datauses] : [];
 		let filtersV2CollectionsData = !_.isNil(this.state.filtersV2Collections) ? [...this.state.filtersV2Collections] : [];
 		let filtersV2CoursesData = !_.isNil(this.state.filtersV2Courses) ? [...this.state.filtersV2Courses] : [];
 		let filtersV2PapersData = !_.isNil(this.state.filtersV2Papers) ? [...this.state.filtersV2Papers] : [];
@@ -1300,19 +1321,19 @@ class SearchPage extends React.Component {
 		// 2. v2 resets the filters UI tree back to default
 		let filtersV2Datasets = this.resetTreeChecked(filtersV2DatasetsData);
 		let filtersV2Tools = this.resetTreeChecked(filtersV2ToolsData);
-		let filtersV2Projects = this.resetTreeChecked(filtersV2ProjectsData);
+		let filtersV2Datauses = this.resetTreeChecked(filtersV2DatausesData);
 		let filtersV2Collections = this.resetTreeChecked(filtersV2CollectionsData);
 		let filtersV2Courses = this.resetTreeChecked(filtersV2CoursesData);
 		let filtersV2Papers = this.resetTreeChecked(filtersV2PapersData);
 
 		this.setState(
-			prevState => ({
+			{
 				filtersV2Datasets,
 				selectedV2Datasets: [],
 				filtersV2Tools,
 				selectedV2Tools: [],
-				filtersV2Projects,
-				selectedV2Projects: [],
+				filtersV2Datauses,
+				selectedV2Datauses: [],
 				filtersV2Papers,
 				selectedV2Papers: [],
 				filtersV2Collections,
@@ -1333,14 +1354,14 @@ class SearchPage extends React.Component {
 				personSort: '',
 				courseSort: '',
 				collectionSort: '',
-			}),
-			() => {
+			},
+			async () => {
 				if (viewSaved.tab === 'Datasets') {
 					this.setState({ datasetSort: viewSaved.sort });
 				} else if (viewSaved.tab === 'Tools') {
 					this.setState({ toolSort: viewSaved.sort });
-				} else if (viewSaved.tab === 'Projects') {
-					this.setState({ projectSort: viewSaved.sort });
+				} else if (viewSaved.tab === 'Datauses') {
+					this.setState({ dataUseRegisterSort: viewSaved.sort });
 				} else if (viewSaved.tab === 'Papers') {
 					this.setState({ paperSort: viewSaved.sort });
 				} else if (viewSaved.tab === 'People') {
@@ -1349,24 +1370,106 @@ class SearchPage extends React.Component {
 					this.setState({ collectionSort: viewSaved.sort });
 				}
 
-				this.setState({ search: viewSaved.search, key: viewSaved.tab, [`selectedV2${viewSaved.tab}`]: viewSaved.filters }, () => {
+				this.setState({ search: viewSaved.search, key: viewSaved.tab }, async () => {
+					await this.getFilters(viewSaved.tab);
+
+					for (let filter of viewSaved.filters) {
+						this.handleInputChange(
+							{
+								parentKey: filter.parentKey,
+								label: filter.label,
+							},
+							filter.parentKey,
+							true
+						);
+					}
+
 					this.doSearchCall();
 				});
 			}
 		);
 	};
 
+	onClickDownloadResults = () => {
+		let searchObject = this.buildSearchObj(this.state.selectedV2Datauses);
+		let searchURL = this.buildSearchUrl(searchObject);
+
+		axios.get(`${baseURL}/api/v2/data-use-registers/search?search=${encodeURIComponent(this.state.search)}${searchURL}`).then(response => {
+			this.formatDataUseRegisterForDownload(response.data.result);
+		});
+	};
+
+	formatDataUseRegisterForDownload(dataUses) {
+		let formattedDataUses = [];
+
+		dataUses.forEach(dataUse => {
+			const gatewayApplicants = dataUse.gatewayApplicants.map(applicant => {
+				return `${applicant.firstname} ${applicant.lastname} `;
+			});
+
+			const gatewayOutputsTools = dataUse.gatewayOutputsToolsInfo.map(tool => {
+				return `${tool.name} `;
+			});
+
+			const gatewayOutputsPapers = dataUse.gatewayOutputsPapersInfo.map(paper => {
+				return `${paper.name} `;
+			});
+
+			formattedDataUses.push({
+				'Project ID': dataUse.projectIdText,
+				'Project Title': dataUse.projectTitle,
+				'Oganisation Name': dataUse.organisationName,
+				'Organisation Sector': dataUse.organisationSector,
+				'Gateway Applicants': gatewayApplicants,
+				Applicants: dataUse.nonGatewayApplicants,
+				'Funders/Sponsors': dataUse.fundersAndSponsors,
+				'DEA Accredited Researcher': dataUse.accreditedResearcherStatus,
+				'Sub-Licence Arrangements': dataUse.sublicenceArrangements,
+				'Lay Summary': dataUse.laySummary,
+				'Public Benefit Statement': dataUse.publicBenefitStatement,
+				'Request Category Type': dataUse.requestCategoryType,
+				'Techinical Summary': dataUse.technicalSummary,
+				'Other Approval Committees': dataUse.otherApprovalCommittees,
+				'Project Start Date': moment(dataUse.projectStartDate).format('DD/MM/YY'),
+				'Project End Date': moment(dataUse.projectEndDate).format('DD/MM/YY'),
+				'Latest Approval Date': moment(dataUse.latestApprovalDate).format('DD/MM/YY'),
+				'Dataset(s) Names': dataUse.datasetTitles,
+				'Data Sensitivity Level': dataUse.dataSensitivityLevel,
+				'Legal Basis For Data Article 6': dataUse.legalBasisForDataArticle6,
+				'Legal Basis For Data Article 9': dataUse.legalBasisForDataArticle9,
+				'Common Law Duty Of Confidentiality': dataUse.dutyOfConfidentiality,
+				'National Data Opt-Out Applied': dataUse.nationalDataOptOut,
+				'Request Frequency': dataUse.requestFrequency,
+				'Dataset Linkage Description': dataUse.datasetLinkageDescription,
+				'Confidential Data Description': dataUse.confidentialDataDescription,
+				'Access Date': moment(dataUse.accessDate).format('DD/MM/YY'),
+				'Access Type': dataUse.accessType,
+				'Privacy Enhancements': dataUse.privacyEnhancements,
+				'Gateway Research Outputs Tools': gatewayOutputsTools,
+				'Gateway Research Outputs Papers': gatewayOutputsPapers,
+				'Research Outputs': dataUse.researchOutputs,
+				Keywords: dataUse.keywords,
+			});
+		});
+
+		this.setState({ dataUseRegisterFullData: formattedDataUses }, () => {
+			setTimeout(() => {
+				this.csvLink.current.link.click();
+			});
+		});
+	}
+
 	getPreference(key) {
 		let {
 			datasetSort,
 			toolSort,
-			projectSort,
+			dataUseRegisterSort,
 			paperSort,
 			personSort,
 			collectionSort,
 			selectedV2Datasets,
 			selectedV2Tools,
-			selectedV2Projects,
+			selectedV2Datauses,
 			selectedV2Papers,
 			selectedV2Courses,
 			selectedV2Collections,
@@ -1381,9 +1484,9 @@ class SearchPage extends React.Component {
 		} else if (key === 'Tools') {
 			preferenceFilters = selectedV2Tools;
 			perferenceSort = toolSort;
-		} else if (key === 'Projects') {
-			preferenceFilters = selectedV2Projects;
-			perferenceSort = projectSort;
+		} else if (key === 'Datauses') {
+			preferenceFilters = selectedV2Datauses;
+			perferenceSort = dataUseRegisterSort;
 		} else if (key === 'Paper') {
 			preferenceFilters = selectedV2Papers;
 			perferenceSort = paperSort;
@@ -1426,7 +1529,15 @@ class SearchPage extends React.Component {
 
 	getKey() {
 		let {
-			summary: { datasetCount = 0, toolCount = 0, projectCount = 0, paperCount = 0, personCount = 0, courseCount = 0, collectionCount = 0 },
+			summary: {
+				datasetCount = 0,
+				toolCount = 0,
+				dataUseRegisterCount = 0,
+				paperCount = 0,
+				personCount = 0,
+				courseCount = 0,
+				collectionCount = 0,
+			},
 			key,
 		} = this.state;
 
@@ -1435,8 +1546,8 @@ class SearchPage extends React.Component {
 				key = 'Datasets';
 			} else if (toolCount > 0) {
 				key = 'Tools';
-			} else if (projectCount > 0) {
-				key = 'Projects';
+			} else if (dataUseRegisterCount > 0) {
+				key = 'Datauses';
 			} else if (paperCount > 0) {
 				key = 'Papers';
 			} else if (personCount > 0) {
@@ -1466,11 +1577,20 @@ class SearchPage extends React.Component {
 
 	render() {
 		let {
-			summary: { datasetCount = 0, toolCount = 0, projectCount = 0, paperCount = 0, personCount = 0, courseCount = 0, collectionCount = 0 },
+			summary: {
+				datasetCount = 0,
+				toolCount = 0,
+				dataUseRegisterCount = 0,
+				paperCount = 0,
+				personCount = 0,
+				courseCount = 0,
+				collectionCount = 0,
+			},
 			search,
 			datasetData,
 			toolData,
-			projectData,
+			dataUseRegisterData,
+			dataUseRegisterFullData,
 			paperData,
 			personData,
 			courseData,
@@ -1479,7 +1599,7 @@ class SearchPage extends React.Component {
 			isLoading,
 			datasetIndex,
 			toolIndex,
-			projectIndex,
+			dataUseRegisterIndex,
 			paperIndex,
 			personIndex,
 			courseIndex,
@@ -1487,7 +1607,7 @@ class SearchPage extends React.Component {
 			selectedV2Datasets,
 			datasetSort,
 			toolSort,
-			projectSort,
+			dataUseRegisterSort,
 			paperSort,
 			personSort,
 			collectionSort,
@@ -1517,7 +1637,7 @@ class SearchPage extends React.Component {
 			<div className='text-right save-dropdown'>
 				{key === 'Tools' && <ToolsSearchSort onSort={this.handleSort} sort={toolSort} search={search} />}
 				{key === 'Datasets' && <DatasetSearchSort onSort={this.handleSort} sort={datasetSort} search={search} />}
-				{key === 'Projects' && <ProjectsSearchSort onSort={this.handleSort} sort={projectSort} search={search} />}
+				{key === 'Datauses' && <DataUsesSearchSort onSort={this.handleSort} sort={dataUseRegisterSort} search={search} />}
 				{key === 'Collections' && <CollectionsSearchSort onSort={this.handleSort} sort={collectionSort} search={search} />}
 				{key === 'Papers' && <PapersSearchSort onSort={this.handleSort} sort={paperSort} search={search} />}
 				{key === 'People' && <PeopleSearchSort onSort={this.handleSort} sort={personSort} search={search} />}
@@ -1548,7 +1668,7 @@ class SearchPage extends React.Component {
 							<Tabs className='tabsBackground gray700-13' activeKey={key} onSelect={this.handleSelect}>
 								<Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'} />
 								<Tab eventKey='Tools' title={'Tools (' + toolCount + ')'} />
-								<Tab eventKey='Projects' title={'Projects (' + projectCount + ')'} />
+								<Tab eventKey='Datauses' title={'Data uses (' + dataUseRegisterCount + ')'} />
 								<Tab eventKey='Collections' title={'Collections (' + collectionCount + ')'} />
 								<Tab eventKey='Courses' title={'Courses (' + courseCount + ')'} />
 								<Tab eventKey='Papers' title={'Papers (' + paperCount + ')'} />
@@ -1574,6 +1694,22 @@ class SearchPage extends React.Component {
 									Showing {this.getCountByKey(key)} results {this.state.search != '' && `for '${this.state.search}'`}
 								</Col>
 								<Col lg={8} className='saved-buttons'>
+									{this.state.key === 'Datauses' && (
+										<>
+											<Button variant='light' className='saved-preference button-tertiary' onClick={() => this.onClickDownloadResults()}>
+												{' '}
+												Download Results
+											</Button>
+											<CSVLink
+												data={dataUseRegisterFullData}
+												filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
+												className='hidden'
+												ref={this.csvLink}
+												target='_blank'
+											/>
+										</>
+									)}
+
 									{this.state.saveSuccess ? (
 										<Button variant='success' className='saved-disabled button-teal button-teal' disabled>
 											<SVGIcon width='15px' height='15px' name='tick' fill={'#fff'} /> Saved
@@ -1667,13 +1803,13 @@ class SearchPage extends React.Component {
 									/>
 								)}
 
-								{key === 'Projects' && (
+								{key === 'Datauses' && (
 									<SearchResults
-										type='project'
-										data={projectData}
-										count={projectCount}
-										pageNumber={projectIndex / maxResult}
-										totalPages={projectCount / maxResult}
+										type='datause'
+										data={dataUseRegisterData}
+										count={dataUseRegisterCount}
+										pageNumber={dataUseRegisterIndex / maxResult}
+										totalPages={dataUseRegisterCount / maxResult}
 										{...searchProps}
 									/>
 								)}

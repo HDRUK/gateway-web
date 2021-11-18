@@ -34,11 +34,11 @@ const SavedPreferencesModal = ({ show, onHide, viewSaved, activeTab }) => {
 		});
 	};
 
-	const tabs = ['Datasets', 'Tools', 'Projects', 'Collections', 'Courses', 'Papers', 'People'];
+	const tabs = ['Datasets', 'Tools', 'Datauses', 'Collections', 'Courses', 'Papers', 'People'];
 
 	const datasetsTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'Datasets').length;
 	const toolsTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'Tools').length;
-	const projectTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'Projects').length;
+	const datausesTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'Datauses').length;
 	const collectionsTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'Collections').length;
 	const coursesTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'Courses').length;
 	const papersTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'Papers').length;
@@ -68,16 +68,16 @@ const SavedPreferencesModal = ({ show, onHide, viewSaved, activeTab }) => {
 							' ' +
 							((tabName === 'Datasets' && '(' + datasetsTotal + ')') ||
 								(tabName === 'Tools' && '(' + toolsTotal + ')') ||
-								(tabName === 'Projects' && '(' + projectTotal + ')') ||
+								(tabName === 'Datauses' && '(' + datausesTotal + ')') ||
 								(tabName === 'Collections' && '(' + collectionsTotal + ')') ||
 								(tabName === 'Courses' && '(' + coursesTotal + ')') ||
 								(tabName === 'Papers' && '(' + papersTotal + ')') ||
 								(tabName === 'People' && '(' + peopleTotal + ')'))
 						}>
 						<Modal.Body style={{ 'max-height': 'calc(100vh - 450px)', 'overflow-y': 'auto', 'background-color': '#f6f7f8' }}>
-							{data.filter(tabNames => tabNames.filterCriteria.tab === tabName).length > 0 ? (
+							{data.filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, '')).length > 0 ? (
 								data
-									.filter(tabNames => tabNames.filterCriteria.tab === tabName)
+									.filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, ''))
 									.map(savedData => (
 										<div
 											key={savedData._id}

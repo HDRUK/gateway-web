@@ -294,6 +294,12 @@ a.nav-item.nav-link.active {
 		color: $white !important;
 	}
 
+	&-datause {
+		@extend .badge;
+		background-color: $orange;
+		color: $white !important;
+	}
+
 	&-dataset {
 		@extend .badge;
 		background-color: $green-light;

@@ -80,28 +80,6 @@ class NoResults extends React.Component {
 										</Row>
 									</>
 								);
-							} else if (type === 'projects') {
-								return (
-									<>
-										<Row className='mt-3'>
-											<Col className='gray800-14 text-center'>
-												<span> Project can be research projects, work-in-progress, initiatives or any other type of activity. </span>
-											</Col>
-										</Row>
-										<Row className='mt-3'>
-											<Col className='gray800-14 text-center'>
-												<span>
-													{' '}
-													Try searching for ‘
-													<a href={'/search?search=' + 'COVID-19'} className='purple-14'>
-														COVID-19
-													</a>
-													’ if you want to see examples of projects{' '}
-												</span>
-											</Col>
-										</Row>
-									</>
-								);
 							} else if (type === 'papers' || type === 'collections') {
 								return (
 									<>

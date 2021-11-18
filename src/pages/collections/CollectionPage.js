@@ -26,13 +26,12 @@ import { sortByMetadataQuality, sortByRecentlyAdded, sortByResources, sortByRele
 import { MAXRESULT } from './constants';
 import DatasetCollectionResults from './Components/DatasetCollectionResults';
 import ToolCollectionResults from './Components/ToolCollectionResults';
-import ProjectCollectionResults from './Components/ProjectCollectionResults';
+import DataUseCollectionResults from './Components/DataUseCollectionResults';
 import PaperCollectionResults from './Components/PaperCollectionResults';
 import PersonCollectionResults from './Components/PersonCollectionResults';
 import CourseCollectionResults from './Components/CourseCollectionResults';
 
 export const CollectionPage = props => {
-
 	const { t } = useTranslation();
 
 	const [collectionData, setCollectionData] = useState([]);
@@ -41,13 +40,13 @@ export const CollectionPage = props => {
 	const [toolCount, setToolCount] = useState(0);
 	const [datasetCount, setDatasetCount] = useState(0);
 	const [personCount, setPersonCount] = useState(0);
-	const [projectCount, setProjectCount] = useState(0);
+	const [dataUseCount, setDataUseCount] = useState(0);
 	const [paperCount, setPaperCount] = useState(0);
 	const [courseCount, setCourseCount] = useState(0);
 	const [datasetIndex, setDatasetIndex] = useState(0);
 	const [toolIndex, setToolIndex] = useState(0);
-	const [projectIndex, setProjectIndex] = useState(0);
 	const [paperIndex, setPaperIndex] = useState(0);
+	const [dataUseIndex, setDatauseIndex] = useState(0);
 	const [personIndex, setPersonIndex] = useState(0);
 	const [courseIndex, setCourseIndex] = useState(0);
 	const [collectionAdded, setCollectionAdded] = useState(false);
@@ -132,8 +131,8 @@ export const CollectionPage = props => {
 			key = 'tool';
 		} else if (entityCounts.paper > 0) {
 			key = 'paper';
-		} else if (entityCounts.project > 0) {
-			key = 'project';
+		} else if (entityCounts.dataUseRegister > 0) {
+			key = 'dataUseRegister';
 		} else if (entityCounts.person > 0) {
 			key = 'person';
 		} else if (entityCounts.course > 0) {
@@ -143,9 +142,9 @@ export const CollectionPage = props => {
 
 		setToolCount(entityCounts.tool || 0);
 		setPersonCount(entityCounts.person || 0);
-		setProjectCount(entityCounts.project || 0);
 		setDatasetCount(entityCounts.dataset || 0);
 		setPaperCount(entityCounts.paper || 0);
+		setDataUseCount(entityCounts.dataUseRegister || 0);
 		setCourseCount(entityCounts.course || 0);
 	};
 
@@ -228,7 +227,7 @@ export const CollectionPage = props => {
 		return {
 			dataset: () => setDatasetIndex(page),
 			tool: () => setToolIndex(page),
-			project: () => setProjectIndex(page),
+			datause: () => setDatauseIndex(page),
 			paper: () => setPaperIndex(page),
 			person: () => setPersonIndex(page),
 			course: () => setCourseIndex(page),
@@ -241,7 +240,7 @@ export const CollectionPage = props => {
 
 	const datasetPaginationItems = generatePaginatedItems('dataset', datasetCount, datasetIndex, handlePagination);
 	const toolPaginationItems = generatePaginatedItems('tool', toolCount, toolIndex, handlePagination);
-	const projectPaginationItems = generatePaginatedItems('project', projectCount, projectIndex, handlePagination);
+	const dataUsePaginationItems = generatePaginatedItems('datause', dataUseCount, dataUseIndex, handlePagination);
 	const paperPaginationItems = generatePaginatedItems('paper', paperCount, paperIndex, handlePagination);
 	const personPaginationItems = generatePaginatedItems('person', personCount, personIndex, handlePagination);
 	const coursePaginationItems = generatePaginatedItems('course', courseCount, courseIndex, handlePagination);
@@ -276,11 +275,7 @@ export const CollectionPage = props => {
 								<Col sm={1} lg={1} />
 								<Col sm={10} lg={10} className='pad-left-0'>
 									<Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
-										{
-											collectionData.publicflag ?
-											`${t('collection.public.live')}` : 
-											`${t('collection.private.live')}`
-										}
+										{collectionData.publicflag ? `${t('collection.public.live')}` : `${t('collection.private.live')}`}
 									</Alert>
 								</Col>
 								<Col sm={1} lg={10} />
@@ -294,11 +289,7 @@ export const CollectionPage = props => {
 								<Col sm={1} lg={1} />
 								<Col sm={10} lg={10}>
 									<Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
-										{
-											collectionData.publicflag ? 
-												`${t('collection.public.updated')}` : 
-												`${t('collection.private.updated')}`
-										}
+										{collectionData.publicflag ? `${t('collection.public.updated')}` : `${t('collection.private.updated')}`}
 									</Alert>
 								</Col>
 								<Col sm={1} lg={10} />
@@ -431,7 +422,7 @@ export const CollectionPage = props => {
 					<Tab eventKey='dataset' title={'Datasets (' + datasetCount + ')'}></Tab>
 					<Tab eventKey='tool' title={'Tools (' + toolCount + ')'}></Tab>
 					<Tab eventKey='paper' title={'Papers (' + paperCount + ')'}></Tab>
-					<Tab eventKey='project' title={'Projects (' + projectCount + ')'}></Tab>
+					<Tab eventKey='dataUseRegister' title={'Data Uses (' + dataUseCount + ')'}></Tab>
 					<Tab eventKey='person' title={'People (' + personCount + ')'}></Tab>
 					<Tab eventKey='course' title={'Course (' + courseCount + ')'}></Tab>
 					<Tab eventKey='discussion' title={`Discussion (${discoursePostCount})`}>
@@ -483,9 +474,9 @@ export const CollectionPage = props => {
 						{key === 'tool' ? (
 							<ToolCollectionResults searchResults={handlePaginatedItems(toolIndex)} relatedObjects={relatedObjects} userId={userId} />
 						) : null}
-						{key === 'project' ? (
-							<ProjectCollectionResults
-								searchResults={handlePaginatedItems(projectIndex)}
+						{key === 'dataUseRegister' ? (
+							<DataUseCollectionResults
+								searchResults={handlePaginatedItems(dataUseIndex)}
 								relatedObjects={relatedObjects}
 								userId={userId}
 							/>
@@ -503,7 +494,7 @@ export const CollectionPage = props => {
 						<div className='text-center'>
 							{key === 'dataset' && datasetCount > MAXRESULT ? <Pagination>{datasetPaginationItems}</Pagination> : ''}
 							{key === 'tool' && toolCount > MAXRESULT ? <Pagination>{toolPaginationItems}</Pagination> : ''}
-							{key === 'project' && projectCount > MAXRESULT ? <Pagination>{projectPaginationItems}</Pagination> : ''}
+							{key === 'dataUseRegister' && dataUseCount > MAXRESULT ? <Pagination>{dataUsePaginationItems}</Pagination> : ''}
 							{key === 'paper' && paperCount > MAXRESULT ? <Pagination>{paperPaginationItems}</Pagination> : ''}
 							{key === 'person' && personCount > MAXRESULT ? <Pagination>{personPaginationItems}</Pagination> : ''}
 							{key === 'course' && courseCount > MAXRESULT ? <Pagination>{coursePaginationItems}</Pagination> : ''}

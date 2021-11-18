@@ -1,0 +1,446 @@
+@import '../../css/variables';
+
+.datause-card {
+	margin: 10px 0px 0;
+	padding: 24px;
+	box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
+	background-color: #fff;
+
+	.datause-para {
+		line-height: 1px;
+	}
+	.datause-button-grid {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.datause-button {
+		background-color: $purple !important;
+	}
+}
+
+.datause-edit-card {
+	margin: 24px 330px 0;
+}
+
+.data-use-tabs {
+	border-top: 1px solid $gray-200;
+	justify-content: center !important;
+	background-color: white;
+	margin-left: -15px;
+	margin-right: -15px;
+	box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
+}
+
+.data-use-table {
+	margin-top: 16px;
+	background-color: white !important;
+}
+
+.table th,
+.table td {
+	padding: 15px !important;
+	border-top: none !important;
+	border-bottom: 2px solid #eeeeee;
+}
+
+.data-use-no {
+	border-color: $teal !important;
+	color: $indigo !important;
+}
+
+.data-use-no:hover {
+	background-color: $teal !important;
+}
+
+.data-use-action:focus,
+.data-use-action:hover {
+	background-color: $gray-400 !important;
+}
+
+.datause-view {
+	padding-left: 32px;
+	padding-right: 32px;
+}
+
+.datause-view-grid {
+	padding-bottom: 12px;
+}
+
+.datause-relatedresource-input {
+	height: 48px;
+	padding: 14px 12px;
+	border-radius: 4px;
+	border: solid 2px $gray-400 !important;
+	padding: 5px;
+	color: $gray-800;
+	width: 100%;
+}
+
+.datause-comments-divider {
+	position: relative;
+	margin-bottom: 20px;
+	width: 100%;
+	text-align: center !important;
+}
+
+.datause-comments-divider span {
+	position: absolute;
+	top: -11px;
+	background: #fff;
+	padding: 0 10px;
+	margin-left: -140px;
+}
+
+.datause-relatedresource-search {
+	padding-top: 16px;
+}
+
+.datause-comments-section {
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+.datause-comments-date {
+	text-align: right;
+}
+
+.datause-relatedresource-cointainer {
+	margin-top: 16px;
+}
+
+.datause-dropdown {
+	width: 100% !important;
+	height: 42px;
+	text-align: left;
+}
+
+.datause-hidefields-button {
+	justify-content: center;
+}
+
+.datause-about-info {
+	padding-top: 10px;
+	text-align: center;
+}
+
+.datause-info-icon {
+	margin-top: 4px;
+}
+
+.datause-info-icon-button {
+	background-color: transparent !important;
+	border: none !important;
+	padding: 0;
+	height: 17px;
+	width: 17px;
+	margin-top: -3px;
+	margin-left: -9px;
+}
+.datause-info-icon-button:focus {
+	outline: none;
+}
+
+.datause-info-icon-button:hover {
+	background-color: transparent !important;
+	border-color: transparent !important;
+}
+
+.datause-arrow {
+	background: none;
+	border: none;
+}
+
+.datause-arrow:focus {
+	outline: none;
+}
+
+.datause-button {
+	background-color: $gray-200 !important;
+	color: $indigo !important;
+	border: $gray-200 !important;
+	font-size: 14px !important;
+	width: 186px;
+	height: 40px;
+	padding: 12px 18.5px 11px;
+}
+
+.datause-button:active,
+.datause-button:focus {
+	border: $gray-200 !important;
+	outline: none !important;
+}
+
+.datause-relatedresources-search {
+	display: inline-block;
+	border: solid 2px $gray-300 !important;
+	padding: 5px;
+	width: 100%;
+}
+
+.datause-relatedresources-search-input {
+	display: inline-block;
+	width: 90%;
+	color: $gray-800;
+	outline: none;
+	border: 0;
+}
+
+.datause-relatedresources-searchicon {
+	float: left;
+	width: 40px;
+	padding: 2px 0px 0px 4px;
+}
+
+.badge-datause {
+	background-color: #e07410 !important;
+	color: white !important;
+}
+
+.datause-bottombanner {
+	margin-bottom: -99px;
+	margin-top: 99px;
+	border-top: 1px solid $gray-200;
+	width: 101vw;
+}
+
+.datause-addcollection {
+	margin-left: auto;
+	background-color: $gray-200 !important;
+	color: $indigo !important;
+	border: $gray-200 !important;
+	font-size: 14px !important;
+	width: 148px;
+	height: 40px;
+}
+
+.hdruser {
+	background-color: #e5f7f1;
+}
+
+.nonhdruser {
+	border: 2px solid #e5f7f1;
+	background-color: white;
+}
+
+.datatuse-personicon-bg {
+	width: 17px;
+	height: 17px;
+	border-radius: 50%;
+	background-color: #a1e6cf;
+	display: inline-block;
+	margin-top: 3px;
+}
+
+.badge-datause-bold {
+	font-weight: 500 !important;
+	margin-top: -3px;
+}
+
+.datatuse-summary {
+	flex-direction: column;
+}
+
+.datause-safeInfo {
+	padding-left: 28px !important;
+}
+
+.datause-comments-section {
+	background-color: $gray-light;
+	border-radius: 4px;
+}
+
+hr.datause-border {
+	border-top: 1px solid $gray-200;
+	width: 100%;
+}
+
+.datause-badge-right {
+	float: right;
+}
+
+.datause-accordion.card-header {
+	background-color: $teal !important;
+	color: white;
+}
+
+.datause-accordion-header {
+	width: 100%;
+	margin-top: 18px;
+}
+
+.datause-accordion-collapse {
+	border-left: 1px solid $gray-200;
+	border-right: 1px solid $gray-200;
+	margin-left: 14px;
+	margin-right: 14px;
+	margin-top: -10px;
+}
+
+.edit-datause-card.card {
+	border-bottom: none !important;
+	margin-top: -18px;
+	position: inherit;
+}
+
+.edit-datause-arrow {
+	margin-right: 16px;
+}
+
+.datause-card-body.card-body {
+	padding: 18px !important;
+}
+
+.datause-edit-p {
+	margin-top: -12px;
+}
+
+.datause-related-resources {
+	display: flex;
+	align-items: center;
+}
+
+.datause-accordion-collapse:last-child {
+	border-bottom: 1px solid $gray-200;
+}
+
+.datatuse-add-resources {
+	margin: 0 auto;
+	display: flex !important;
+	justify-content: center;
+	border: 2px solid $teal !important;
+}
+
+.datatuse-add-resources:hover {
+	background: $teal !important;
+}
+
+.datause-cancel {
+	background: $gray-200 !important;
+	border: $gray-200 !important;
+	width: 82px;
+	height: 40px;
+	margin-right: 8px;
+}
+
+.datause-save {
+	background: $purple !important;
+	border: $purple !important;
+	width: 62px;
+	height: 40px;
+}
+
+.datause-edit-laysummary {
+	float: right;
+	margin-top: -36px;
+}
+
+.datause-datasetTitle {
+	background: green;
+}
+
+.plusMinusButton {
+	background-color: $gray-light !important;
+
+	border: 0px !important;
+	text-align: center !important;
+
+	color: $plus-minus !important;
+}
+
+.plusMinusButton:hover:enabled {
+	background-color: $plus-minus;
+	color: $gray-light;
+}
+
+.plusMinusButton:disabled {
+	opacity: 0.2;
+}
+
+.datause-save-edit-modal {
+	padding: 16px;
+	width: 394px;
+	margin: 0 auto;
+}
+
+button.close,
+button.close:hover {
+	color: $purple;
+	opacity: 1;
+}
+
+button.close:hover,
+button.close:focus {
+	outline: none;
+}
+
+.css-1rhbuit-multiValue,
+.input-select__multi-value {
+	border: 1px solid #e5f7f1 !important;
+	border-radius: 25px !important;
+	padding: 4px;
+}
+
+.css-xb97g8:hover,
+.input-select__multi-value {
+	color: $indigo !important;
+}
+
+.gateway-input-select {
+	background: #e5f7f1;
+}
+
+.datause-datasettitles {
+	background: #e7e9ed;
+	/* display: block; */
+	width: 100%;
+	padding: 0.5rem 0.75rem;
+	/* font-size: 1rem; */
+	line-height: 1.25;
+	color: #53575a;
+	/* background-color: #fff; */
+	/* background-image: none; */
+	/* background-clip: padding-box; */
+	margin: 0 auto !important;
+	border-radius: 0.25rem;
+}
+
+.datause-datasettitles-pills {
+	background: white;
+	border-radius: 16px;
+	font-size: 13px;
+	padding: 4px;
+	margin-left: 8px;
+}
+
+.datause-datepicker {
+	position: relative;
+}
+
+.datause-calendar-svg {
+	position: absolute;
+	margin-left: -32px;
+	margin-top: 8px;
+}
+
+.input-select {
+	color: $gray-700 !important;
+	font-size: 14px;
+	padding: 4px;
+}
+
+.datapicker-releaseaccess {
+	margin-left: 14px;
+}
+
+.css-1pahdxg-control:active,
+.css-1pahdxg-control:hover,
+.css-1pahdxg-control:visited,
+.css-1pahdxg-control:target,
+.input-select:active,
+.input-select:focus {
+	border: 2px solid #3db28c !important;
+	box-shadow: none !important;
+}
+
+//css-1s2u09g-control:hover
