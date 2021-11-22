@@ -75,6 +75,7 @@ const AccountDatasetRejectModal = ({
 								onChange={handleChange}
 								value={values.applicationStatusDesc}
 								onBlur={handleBlur}
+								rows={8}
 							/>
 							{touched.applicationStatusDesc && errors.applicationStatusDesc ? <div className='errorMessages'>{errors.applicationStatusDesc}</div> : null}
 						</Form.Group>
