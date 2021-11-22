@@ -12,6 +12,7 @@ const AccountDatasetRejectModal = ({
 	open,
 	closed,
 	goToNext,
+	handleReject,
 	showGoToNext
 }) => {
 	const { t } = useTranslation();
@@ -98,7 +99,11 @@ const AccountDatasetRejectModal = ({
 							style={{ marginLeft: '10px' }}
 							onClick={async () => {
 								handleSubmit();
-								closed();
+								handleReject({
+									publisher: '',
+									tab: 'inReview',
+									message: `You have rejected the dataset`
+								});
 							}}>
 							{t('dataset.rejectModal.buttons.reject')}
 						</Button>
@@ -106,10 +111,9 @@ const AccountDatasetRejectModal = ({
 							disabled={!showGoToNext}
 							className='button-secondary'
 							style={{ marginLeft: '10px' }}
-							onClick={() => {
+							onClick={async () => {
 								handleSubmit();
 								goToNext();
-								closed();
 							}}>
 							{t('dataset.rejectModal.buttons.rejectAndGoToNext')}
 						</Button>

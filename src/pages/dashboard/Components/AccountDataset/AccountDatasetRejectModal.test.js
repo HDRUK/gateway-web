@@ -11,6 +11,7 @@ jest.mock('../../../../services/dataset-onboarding/dataset-onboarding');
 let containerDiv;
 const goToNext = jest.fn();
 const closed = jest.fn();
+const handleReject = jest.fn();
 
 describe('Given the AccountDatasetRejectModal component', () => {
 
@@ -19,7 +20,8 @@ describe('Given the AccountDatasetRejectModal component', () => {
         open: true,
         closed,
         goToNext,
-        showGoToNext: true
+        handleReject,
+        showGoToNext: true,
     };
 
     describe('When it is rendered', () => {
@@ -110,8 +112,8 @@ describe('Given the AccountDatasetRejectModal component', () => {
                 }));
             });
 
-            it('Then closes the modal', async () => {
-                await waitFor(() => expect(closed).toHaveBeenCalled());
+            it('Then calls the handleReject prop to close the modal', async () => {
+                await waitFor(() => expect(handleReject).toHaveBeenCalled());
             });
         });
 
@@ -148,10 +150,6 @@ describe('Given the AccountDatasetRejectModal component', () => {
 
             it('Then goes to next dataset', async () => {
                 await waitFor(() => expect(goToNext).toHaveBeenCalled());
-            });
-
-            it('Then closes the modal', async () => {
-                await waitFor(() => expect(closed).toHaveBeenCalled());
             });
         });
     });
