@@ -237,7 +237,7 @@ const AccountDataset = props => {
 				<AccountDatasetRejectModal
 					id={currentDataset._id}
 					open={showRejectDatasetModal}
-					closed={() => setState({...state, showRejectDatasetModal: false })}
+					closed={closeRejectDatasetModal}
 					goToNext={closeRejectModalAndGoToNext}
 					handleReject={closeRejectModalAndRedirectToPendingDatasets}
 					showGoToNext={showNext} />
