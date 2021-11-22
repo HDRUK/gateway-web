@@ -98,9 +98,10 @@ describe('Given the AccountDatasetRejectModal component', () => {
                 const { getByTestId, getByLabelText } = wrapper;
 
                 const descriptionInput = getByLabelText('Description', { exact: false });
-                fireEvent.change(descriptionInput, { target: { value: 'rejected' } });
+                await fireEvent.change(descriptionInput, { target: { value: 'rejected' } });
 
                 button = within(getByTestId('button-container')).getAllByText('Reject')[0];
+                
                 userEvent.click(button);
             });
 

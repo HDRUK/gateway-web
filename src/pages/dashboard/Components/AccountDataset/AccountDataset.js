@@ -131,7 +131,7 @@ const AccountDataset = props => {
 		if (showNext) {
 			handlePaginationClick(1);
 		}
-	}, []);
+	}, [showNext]);
 
 	const closeRejectDatasetModal = () => setState({...state, showRejectDatasetModal: false });
 

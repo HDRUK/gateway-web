@@ -61,7 +61,7 @@ const AccountDatasetRejectModal = ({
 			<Form onSubmit={handleSubmit} onBlur={handleBlur}>
 				<div className='decisionModal-body'>
 					<div className='decisionModal-body--wrap'>
-						<p>{t('dataset.rejectModal.description')}</p>
+						<p data-testid='description'>{t('dataset.rejectModal.description')}</p>
 						<Form.Group>
 							<label for="applicationStatusDesc" className='black-14'>
 								{t('dataset.rejectModal.applicationStatus')}
@@ -78,7 +78,7 @@ const AccountDatasetRejectModal = ({
 								onBlur={handleBlur}
 								rows={8}
 							/>
-							{touched.applicationStatusDesc && errors.applicationStatusDesc ? <div className='errorMessages'>{errors.applicationStatusDesc}</div> : null}
+							{errors.applicationStatusDesc ? <div className='errorMessages'>{errors.applicationStatusDesc}</div> : null}
 						</Form.Group>
 					</div>
 				</div>
@@ -93,6 +93,7 @@ const AccountDatasetRejectModal = ({
 							{t('dataset.rejectModal.buttons.cancel')}
 						</Button>
 						<Button
+							disabled={errors.applicationStatusDesc}
 							type="submit"
 							data-testid="reject-button"
 							className='button-secondary'
@@ -108,7 +109,7 @@ const AccountDatasetRejectModal = ({
 							{t('dataset.rejectModal.buttons.reject')}
 						</Button>
 						<Button
-							disabled={!showGoToNext}
+							disabled={!showGoToNext || errors.applicationStatusDesc}
 							className='button-secondary'
 							style={{ marginLeft: '10px' }}
 							onClick={async () => {
