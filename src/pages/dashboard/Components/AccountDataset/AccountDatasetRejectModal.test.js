@@ -95,7 +95,7 @@ describe('Given the AccountDatasetRejectModal component', () => {
 
                 const { getByTestId, getByLabelText } = wrapper;
 
-                const descriptionInput = getByLabelText('Description');
+                const descriptionInput = getByLabelText('Description', { exact: false });
                 fireEvent.change(descriptionInput, { target: { value: 'rejected' } });
 
                 button = within(getByTestId('button-container')).getAllByText('Reject')[0];
@@ -131,7 +131,7 @@ describe('Given the AccountDatasetRejectModal component', () => {
                 
                 const { getByText, getByLabelText } = wrapper;
 
-                const descriptionInput = getByLabelText('Description');
+                const descriptionInput = getByLabelText('Description', { exact: false });
                 fireEvent.change(descriptionInput, { target: { value: 'rejected' } });
 
                 button = getByText('Reject and go to next');
