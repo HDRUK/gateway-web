@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import datasetOnboardingService from '../../../../services/dataset-onboarding/dataset-onboarding';
+import { TEXTAREA_ROWS } from '../../../../configs/constants';
 import './AccountDatasetDecisionModal.scss';
 
 const AccountDatasetRejectModal = ({
@@ -76,7 +77,7 @@ const AccountDatasetRejectModal = ({
 								onChange={handleChange}
 								value={values.applicationStatusDesc}
 								onBlur={handleBlur}
-								rows={8}
+								rows={TEXTAREA_ROWS}
 							/>
 							{errors.applicationStatusDesc ? <div className='errorMessages'>{errors.applicationStatusDesc}</div> : null}
 						</Form.Group>

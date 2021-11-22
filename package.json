@@ -68,7 +68,7 @@
 		"test:watchAll": "cross-env NODE_ENV=test jest --watchAll --env=jsdom --coverage --config=jest.config.json",
 		"test:watch": "cross-env NODE_ENV=test jest --watch --env=jsdom --coverage --config=jest.config.json",
 		"test": "cross-env NODE_ENV=test jest --env=jsdom --coverage --config=jest.config.json",
-		"test-rtl": "cross-env NODE_ENV=test jest --env=jsdom --testPathIgnorePatterns=/test/ --testPathPattern=/src/pages/dashboard/Components/AccountDataset/AccountDatasetRejectModal.test.js",
+		"test-rtl": "cross-env NODE_ENV=test jest --env=jsdom --testPathIgnorePatterns=/test/",
 		"eject": "react-scripts eject",
 		"snyk-protect": "snyk protect",
 		"prepare": "npm run snyk-protect",
