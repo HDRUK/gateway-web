@@ -106,7 +106,7 @@ describe('Given the AccountDatasetRejectModal component', () => {
             });
 
             it('Then submits the dataset rejection request', async () => {
-                await waitFor(() => expect(datasetOnboardingService.usePutDatasetOnboarding).toHaveBeenCalledWith({
+                await waitFor(() => expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
                     id: 'id',
                     applicationStatus: 'rejected',
                     applicationStatusDesc: 'rejected'
@@ -142,7 +142,7 @@ describe('Given the AccountDatasetRejectModal component', () => {
             });
 
             it('Then submits the dataset rejection request', async () => {
-                await waitFor(() => expect(datasetOnboardingService.usePutDatasetOnboarding).toHaveBeenCalledWith({
+                await waitFor(() => expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
                     id: 'id',
                     applicationStatus: 'rejected',
                     applicationStatusDesc: 'rejected'

@@ -10,6 +10,7 @@ jest.mock('../../../../services/dataset-onboarding/dataset-onboarding');
 let containerDiv;
 const goToNext = jest.fn();
 const closed = jest.fn();
+const handleApprove = jest.fn();
 
 describe('Given the AccountDatasetApproveModal component', () => {
 
@@ -18,7 +19,8 @@ describe('Given the AccountDatasetApproveModal component', () => {
         open: true,
         closed,
         goToNext,
-        showGoToNext: true
+        showGoToNext: true,
+        handleApprove
     };
 
     describe('When it is rendered', () => {
@@ -98,15 +100,15 @@ describe('Given the AccountDatasetApproveModal component', () => {
             });
 
             it('Then submits the dataset approval request', async () => {
-                await waitFor(() => expect(datasetOnboardingService.usePutDatasetOnboarding).toHaveBeenCalledWith({
+                await waitFor(() => expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
                     id: 'id',
                     applicationStatus: 'approved',
                     applicationStatusDesc: ''
                 }));
             });
 
-            it('Then closes the modal', async () => {
-                await waitFor(() => expect(closed).toHaveBeenCalled());
+            it('Then calls the handleApprove prop to close the modal', async () => {
+                await waitFor(() => expect(handleApprove).toHaveBeenCalled());
             });
         });
 
@@ -130,7 +132,7 @@ describe('Given the AccountDatasetApproveModal component', () => {
             });
 
             it('Then submits the dataset approval request', async () => {
-                await waitFor(() => expect(datasetOnboardingService.usePutDatasetOnboarding).toHaveBeenCalledWith({
+                await waitFor(() => expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
                     id: 'id',
                     applicationStatus: 'approved',
                     applicationStatusDesc: ''
@@ -139,10 +141,6 @@ describe('Given the AccountDatasetApproveModal component', () => {
 
             it('Then goes to next dataset', async () => {
                 await waitFor(() => expect(goToNext).toHaveBeenCalled());
-            });
-
-            it('Then closes the modal', async () => {
-                await waitFor(() => expect(closed).toHaveBeenCalled());
             });
         });
     });
