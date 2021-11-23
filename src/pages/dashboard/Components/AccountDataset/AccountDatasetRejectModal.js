@@ -22,7 +22,6 @@ const AccountDatasetRejectModal = ({
 			handleSubmit,
 			handleChange,
 			handleBlur,
-			touched,
 			values,
 			errors
 		} = useFormik({
@@ -38,7 +37,7 @@ const AccountDatasetRejectModal = ({
 				id,
 				applicationStatus: 'rejected'
 			};
-			datasetOnboardingService.usePutDatasetOnboarding(payload);
+			datasetOnboardingService.putDatasetOnboarding(id, payload);
 		},
 	});
 
