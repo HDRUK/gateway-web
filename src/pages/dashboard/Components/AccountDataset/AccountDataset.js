@@ -151,6 +151,22 @@ const AccountDataset = props => {
 		goToNext();
 	};
 
+	const closeApproveDatasetModal = () => setState({...state, showApproveDatasetModal: false });
+
+	const closeApproveModalAndRedirectToPendingDatasets = alert => {
+		closeApproveDatasetModal();
+		history.push({
+			pathname: `/account`,
+			search: '?tab=datasets',
+			state: { alert },
+		});
+	};
+
+	const closeApproveModalAndGoToNext = () => {
+		closeApproveDatasetModal();
+		goToNext();
+	};
+
 	const handleViewForm = React.useCallback(() => {
 		history.push(`/dataset-onboarding/${currentDataset._id}`);
 	}, [currentDataset]);
@@ -233,8 +249,9 @@ const AccountDataset = props => {
 				<AccountDatasetApproveModal
 					id={currentDataset._id}
 					open={showApproveDatasetModal}
-					closed={() => setState({...state, showApproveDatasetModal: false })}
-					goToNext={goToNext}
+					closed={closeApproveDatasetModal}
+					goToNext={closeApproveModalAndGoToNext}
+					handleApprove={closeApproveModalAndRedirectToPendingDatasets}
 					showGoToNext={showNext} />
 				<AccountDatasetRejectModal
 					id={currentDataset._id}
