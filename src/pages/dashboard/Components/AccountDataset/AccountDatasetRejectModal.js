@@ -29,7 +29,7 @@ const AccountDatasetRejectModal = ({
 			applicationStatusDesc: ''
 		},
 		validationSchema: Yup.object({
-			applicationStatusDesc: Yup.string().max(1500).required('Description should not be empty'),
+			applicationStatusDesc: Yup.string().max(1500, 'Description must be less than 1500 characters').required('Description should not be empty'),
 		}),
 		onSubmit: async values => {
 			const payload = {
