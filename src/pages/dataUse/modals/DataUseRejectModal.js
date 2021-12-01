@@ -3,6 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import DarHelperUtil from '../../../utils/DarHelper.util';
 import './DataUseModals.scss';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const DataUseRejectModal = ({ isVisible, toggleModal, onConfirm }) => {
 	const [count, setCount] = useState(0);
@@ -38,13 +39,13 @@ const DataUseRejectModal = ({ isVisible, toggleModal, onConfirm }) => {
 						({count}/{rejectionReasonMaxLength})
 					</span>
 				</div>
-				<textarea
+				<TextareaAutosize
 					className={
-						!isValid ? 'dataUseRejectModal-body-rejection  dataUseRejectModal-body-rejection-error' : 'dataUseRejectModal-body-rejection'
+						!isValid ? 'dataUseRejectModal-body-rejection  dataUseRejectModal-body-rejection-error textarea-dataUseModal' : 'dataUseRejectModal-body-rejection textarea-dataUseModal'
 					}
 					name='rejectionReason'
 					onChange={e => updateCount(e)}
-					value={rejectionReason}></textarea>
+					value={rejectionReason}></TextareaAutosize>
 
 				{!isValid && <div className='dataUseRejectModal-error'>This cannot be longer then {rejectionReasonMaxLength} characters</div>}
 				<div className='dataUseRejectModal-footer'>
