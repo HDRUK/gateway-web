@@ -124,7 +124,6 @@ class TypaheadMultiUser extends React.Component {
 				onChange={e => this.handleChange(e)}
 				selected={this.state.value}
 				disabled={this.state.readOnly}
-				minLength={3}
 				inputProps={{ required: !_.isEmpty(this.props.typeaheadClass) ? true : false }}
 				filterBy={['name']}
 				multiple
