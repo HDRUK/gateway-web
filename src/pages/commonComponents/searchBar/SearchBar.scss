@@ -28,6 +28,13 @@ body.modal-open {
 	box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
 }
 
+.navBarLogoSpacing {
+	a {
+		display: flex;
+		align-items: center;
+	}
+}
+
 .navBarLoginSpacing {
 	padding: 0px 24px 0px 0px;
 
@@ -60,15 +67,9 @@ body.modal-open {
 }
 
 @media (min-width: 1286px) {
-	.navBarLogoSpacing {
-		vertical-align: middle;
-		display: inline-block;
-	}
-
 	.navBarLinkSpacing {
 		vertical-align: middle;
 		display: inline-block;
-		margin-top: 12px;
 		padding: 0px 0px 0px 24px;
 	}
 
@@ -122,16 +123,10 @@ body.modal-open {
 }
 
 @media (max-width: 1285px) {
-	.navBarLogoSpacing {
-		vertical-align: middle;
-		display: inline-block;
-	}
-
 	.navBarLinkSpacing {
 		vertical-align: middle;
 		display: inline-block;
-		margin-top: 12px;
-		padding: 0px 0px 0px 15px;
+		padding: 0px 0px 0px 24px;
 	}
 
 	.navBarBellNotificationSpacing {
@@ -197,11 +192,6 @@ body.modal-open {
 }
 
 @media (max-width: 991px) {
-	.navBarLogoSpacing {
-		vertical-align: middle;
-		display: inline-block;
-	}
-
 	.navBarLinkSpacing {
 		margin-top: 12px;
 		padding: 0px 0px 0px 5px;
@@ -353,26 +343,44 @@ body.modal-open {
 	margin-top: 15px;
 }
 
-.hamBurgerHolder {
-	margin: 27px 0px 0px 27px;
-}
-
 #desktopSearchBar {
 	display: block;
-	@include mq('tablet-wide', max) {
+
+	@include mq('desktop', max) {
 		display: none;
+	}
+
+	.whiteBackground {
+		padding: 0 16px;
+		align-items: center;
+	}
+
+	.form-group {
+		margin: 0;
 	}
 }
 
 #mobileSearchBar {
 	display: none;
-	@include mq('tablet-wide', max) {
+
+	@include mq('desktop', max) {
 		display: block;
 		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
 	}
+
+	.whiteBackground {
+		padding: 0 27px;
+		align-items: center;
+	}
+}
+
+.notificationWrapper {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }
 
 .dropdown-subitem {
@@ -553,16 +561,23 @@ body.modal-open {
 	display: flex;
 	flex-wrap: nowrap !important;
 	justify-content: space-evenly;
-	margin-left: -5px !important;
+
+	.navBarItem {
+		margin-left: 16px;
+	}
+
 	@include mq('tablet-wide', max) {
 		margin-left: 90px !important;
 	}
+
 	@include mq('tablet-small', max) {
 		margin-left: 60px !important;
 	}
+
 	@include mq('phablet', max) {
 		margin-left: 5px !important;
 	}
+
 	@include mq('phone', max) {
 		margin-left: -15px !important;
 	}

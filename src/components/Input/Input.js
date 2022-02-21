@@ -51,7 +51,7 @@ const Input = ({
 	return (
 		<LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
 			<Form.Group controlId={id} css={styles.formGroup}>
-				<Form.Label css={styles.label}>{label}</Form.Label>
+				{label && <Form.Label css={styles.label}>{label}</Form.Label>}
 				<InputGroup
 					css={styles.inputGroup({ prepend: domPrependChanged, append: domAppendChanged, variant, size, error })}
 					className={cx('ui-Input', className)}>

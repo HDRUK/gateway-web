@@ -330,10 +330,10 @@ class SearchBar extends React.Component {
 				<nav className={classnames('navbarShown', { navbarHidden: !this.state.visible })}>
 					<div className='searchBarBackground' id='desktopSearchBar'>
 						<Row className='whiteBackground'>
-							<Col lg={7} className='pr-0 pl-2'>
+							<Col lg={7} className='d-flex align-items-center'>
 								<div className='navBarLogoSpacing'>
 									<a style={{ cursor: 'pointer' }} href={cmsURL}>
-										<ColourLogoSvg className='ml-4 mt-3' />
+										<ColourLogoSvg />
 									</a>
 								</div>
 
@@ -1226,24 +1226,24 @@ class SearchBar extends React.Component {
 													<div id='mobileSearchBarHidden'>
 														<div className='navBarLogoSpacing'>
 															<a href={cmsURL}>
-																<ColourLogoSvgMobile className='ml-4 mt-3' />
+																<ColourLogoSvgMobile />
 															</a>
 														</div>
 													</div>
 												</Col>
-												<Row className='notificationOverallStyle'>
-													<Col xs={4} className='navBarMessageSpacing'>
-														<div onClick={this.props.doToggleDrawer} data-test-id='imgMessageBadge'>
-															<NotificationBadge
-																count={this.state.messageCount}
-																style={{ backgroundColor: '#29235c' }}
-																className='messageBadgeMobile'
-															/>
-															<SVGIcon name='chat' fill={'#475da7'} width={20} height={20} id='notificationsBell' className={'pointer'} />
+												<Col xs={4} className='notificationWrapper'>
+													<div className='notificationOverallStyle'>
+														<div className='navBarItem navBarMessageSpacing'>
+															<div onClick={this.props.doToggleDrawer} data-test-id='imgMessageBadge'>
+																<NotificationBadge
+																	count={this.state.messageCount}
+																	style={{ backgroundColor: '#29235c' }}
+																	className='messageBadgeMobile'
+																/>
+																<SVGIcon name='chat' fill={'#475da7'} width={20} height={20} id='notificationsBell' className={'pointer'} />
+															</div>
 														</div>
-													</Col>
-													<Col xs={4} className='text-right'>
-														<div className='navBarBellNotificationSpacing'>
+														<div className='navBarItem navBarBellNotificationSpacing text-right'>
 															<Dropdown>
 																<Dropdown.Toggle as={CustomToggle} ref={nodeMobile => (this.nodeMobile = nodeMobile)}>
 																	<NotificationBadge
@@ -1434,8 +1434,8 @@ class SearchBar extends React.Component {
 																</Dropdown.Menu>
 															</Dropdown>
 														</div>
-													</Col>
-												</Row>
+													</div>
+												</Col>
 											</>
 										);
 									} else {
@@ -1444,7 +1444,7 @@ class SearchBar extends React.Component {
 												<div id='mobileSearchBarHidden' style={{ display: 'block' }}>
 													<div className='navBarLogoSpacing'>
 														<a href={cmsURL}>
-															<ColourLogoSvg className='ml-4 mt-3' />
+															<ColourLogoSvgMobile />
 														</a>
 													</div>
 												</div>
