@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
 import { apiV2URL, apiURL } from '../../configs/url.config';
-import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
+import { deleteRequest, getRequest, patchRequest, postRequest, putRequest, useMutationWithTranslations } from '../../utils/requests';
 
 const getPapers = options => {
 	return getRequest(`${apiV2URL}/papers`, options);

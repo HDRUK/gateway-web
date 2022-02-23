@@ -20,7 +20,7 @@ import SVGIcon from '../../images/SVGIcon';
 import './Collections.scss';
 import CollectionsSearch from './CollectionsSearch';
 import googleAnalytics from '../../tracking';
-import { getCollectionRequest, getCollectionRelatedObjectsRequest, postCollectionCounterUpdateRequest } from '../../services/collection';
+import collectionsService from '../../services/collections';
 import { filterCollectionItems, generatePaginatedItems, generateDropdownItems } from './collection.utils';
 import { sortByMetadataQuality, sortByRecentlyAdded, sortByResources, sortByRelevance, sortByPopularity } from './collection.utils.sort';
 import { MAXRESULT } from './constants';
@@ -88,7 +88,8 @@ export const CollectionPage = props => {
 
 	const getCollectionDataFromApi = async () => {
 		setIsLoading(true);
-		await getCollectionRequest(props.match.params.collectionID).then(async res => {
+
+		await collectionsService.getCollectionRequest(props.match.params.collectionID).then(async res => {
 			if (_.isNil(res.data)) {
 				// Redirect user if invalid collection id is supplied
 				window.localStorage.setItem('redirectMsg', `Collection not found for Id: ${props.match.params.collectionID}`);
@@ -96,7 +97,7 @@ export const CollectionPage = props => {
 			} else {
 				const localCollectionData = res.data.data[0];
 				let counter = !localCollectionData.counter ? 1 : localCollectionData.counter + 1;
-				postCollectionCounterUpdateRequest({ id: props.match.params.collectionID, counter });
+				collectionsService.postCollectionCounterUpdateRequest({ id: props.match.params.collectionID, counter });
 
 				setCollectionData(res.data.data[0]);
 				getObjectData();
@@ -106,7 +107,7 @@ export const CollectionPage = props => {
 	};
 
 	const getObjectData = async () => {
-		await getCollectionRelatedObjectsRequest(props.match.params.collectionID).then(async res => {
+		await collectionsService.getCollectionRelatedObjectsRequest(props.match.params.collectionID).then(async res => {
 			setObjectData(res.data.data);
 			setFilteredData(res.data.data);
 			countEntities(res.data.data);

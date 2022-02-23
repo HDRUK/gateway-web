@@ -141,7 +141,7 @@ const EditDataUse = props => {
 	};
 
 	const doGetUsersCall = () => {
-		return users.refetch().then(() => {
+		return users.refetch().then(res => {
 			setApplicantsList(res.data.data);
 		});
 	};

@@ -64,18 +64,10 @@ const useGetPublisher = (publisherId, requestOptions, mutateOptions) => {
 	);
 };
 
-const usePostDatasetOnboarding = (data, requestOptions, queryOptions) => {
-	return useQuery({
-		queryKey: 'postDatasetOnboarding',
-		...queryOptions,
-		queryKey: [queryOptions.queryKey, _id],
-		queryFn: async ({ queryKey }) => getPublisher(queryKey[1], requestOptions),
-	});
-};
-
-const usePostDatasetOnboarding = (requestOptions, mutateOptions = { queryKey: 'postDatasetOnboarding' }) => {
+const usePostDatasetOnboarding = (requestOptions, mutateOptions) => {
 	return useMutation((_id, data) => postDatasetOnboarding(_id, data, requestOptions), {
-		mutateOptions,
+		queryKey: 'postDatasetOnboarding',
+		...mutateOptions,
 	});
 };
 

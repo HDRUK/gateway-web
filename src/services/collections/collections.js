@@ -1,20 +1,20 @@
 import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest, postRequest } from '../../utils/requests';
+import { getRequest, postRequest, useMutationWithTranslations } from '../../utils/requests';
 
-export const getCollections = (_id, options) => {
+const getCollections = (_id, options) => {
 	return getRequest(`${apiURL}/collections/entityid/${_id}`, options);
 };
 
-export const getCollectionRequest = (_id, options) => {
+const getCollectionRequest = (_id, options) => {
 	return getRequest(`${apiURL}/collections/${_id}`, options);
 };
 
-export const getCollectionRelatedObjectsRequest = (_id, options) => {
+const getCollectionRelatedObjectsRequest = (_id, options) => {
 	return getRequest(`${apiURL}/collections/relatedobjects/${_id}`, options);
 };
 
-export const postCollectionCounterUpdateRequest = (data, options) => {
+const postCollectionCounterUpdateRequest = (data, options) => {
 	return postRequest(`${apiURL}/collectioncounter/update`, data, options);
 };
 

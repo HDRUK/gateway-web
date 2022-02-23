@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import queryString from 'query-string';
-import { default as React, default as React, useEffect, useState } from 'react';
+import { default as React, useEffect, useState } from 'react';
 import { Alert, Col, Container, Dropdown, Row, Tab, Tabs, Tooltip } from 'react-bootstrap';
 import 'react-tabs/style/react-tabs.css';
 import { baseURL } from '../../../configs/url.config';
