@@ -1,17 +1,17 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import axios from 'axios';
-import { Accordion, Card, Button, Form, Row, Col } from 'react-bootstrap';
-import SVGIcon from '../../../images/SVGIcon';
-import { Typeahead } from 'react-bootstrap-typeahead';
-import { ReactComponent as Calendar } from '../../../images/calendaricon.svg';
-import RelatedResources from '../../commonComponents/relatedResources/RelatedResources';
-import RelatedObject from '../../commonComponents/relatedObject/RelatedObject';
-import DatePicker from 'react-datepicker';
-import ActionBar from '../../commonComponents/actionbar/ActionBar';
-import moment from 'moment';
-import { Formik, useFormik, FieldArray } from 'formik';
+import { FieldArray, Formik, useFormik } from 'formik';
 import { isEmpty, isNil, isNumber } from 'lodash';
+import moment from 'moment';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Accordion, Button, Card, Col, Form, Row } from 'react-bootstrap';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import DatePicker from 'react-datepicker';
 import * as Yup from 'yup';
+import { ReactComponent as Calendar } from '../../../images/calendaricon.svg';
+import SVGIcon from '../../../images/SVGIcon';
+import dataUseRegistersService from '../../../services/data-use-registers';
+import ActionBar from '../../commonComponents/actionbar/ActionBar';
+import RelatedObject from '../../commonComponents/relatedObject/RelatedObject';
+import RelatedResources from '../../commonComponents/relatedResources/RelatedResources';
 
 const baseURL = require('../../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
@@ -34,6 +34,9 @@ const EditFormDataUse = props => {
 	const [datasetsList] = useState(props.datasetsList);
 	const [datasetsArray] = useState(props.datasetsArray);
 	const [disableInput] = useState(props.disableInput);
+
+	const dataUseRegisterUpdate = dataUseRegistersService.usePatchDataUseRegister();
+
 	useEffect(() => {
 		buildListOfUploaders();
 	}, []);
@@ -178,7 +181,7 @@ const EditFormDataUse = props => {
 			values.relatedObjects = props.relatedObjects;
 			values.datasetTitles = props.data.datasetTitles;
 
-			axios.patch(baseURL + '/api/v2/data-use-registers/' + props.data.id, { ...values }).then(() => {
+			dataUseRegisterUpdate.mutateAsync(props.data.id, { ...values }).then(() => {
 				window.location.href = windowUrl + '/datause/' + props.data.id + '/?dataUseEdited=true';
 			});
 		},

@@ -14,21 +14,25 @@ const patchTerms = (_id, data, options) => {
 	return patchRequest(`${apiURL}/users/advancedsearch/terms/${_id}`, data, options);
 };
 
-const useGetUsers = (requestOptions, queryOptions = { queryKey: 'getUsers' }) => {
+const useGetUsers = (requestOptions, queryOptions) => {
 	return useQuery({
+		queryKey: 'getUsers',
 		...queryOptions,
 		queryFn: () => getUsers(requestOptions),
 	});
 };
 
-const usePatchRoles = (requestOptions, mutateOptions = { queryKey: 'patchRoles' }) => {
+const usePatchRoles = (requestOptions, mutateOptions) => {
 	return useMutation((_id, data) => patchRoles(_id, data, requestOptions), {
-		mutateOptions,
+		queryKey: 'patchRoles',
+		...mutateOptions,
 	});
 };
-const usePatchTerms = (requestOptions, mutateOptions = { queryKey: 'patchTerms' }) => {
+
+const usePatchTerms = (requestOptions, mutateOptions) => {
 	return useMutation((_id, data) => patchTerms(_id, data, requestOptions), {
-		mutateOptions,
+		queryKey: 'patchTerms',
+		...mutateOptions,
 	});
 };
 

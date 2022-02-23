@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { getRequest, postRequest } from '../utils/requests';
+import { apiURL } from '../../configs/url.config';
+import { getRequest, postRequest } from '../../utils/requests';
 import service from './collection';
 
 jest.mock('axios');
-jest.mock('../utils/requests');
+jest.mock('../../utils/requests');
 
 let wrapper;
 
@@ -24,7 +24,7 @@ describe('Given the collection service', () => {
 		jest.resetAllMocks();
 	});
 
-    describe('When getCollectionRequest is called', () => {
+	describe('When getCollectionRequest is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
 			await service.getCollectionRequest('1234', {
 				option1: true,
@@ -36,7 +36,7 @@ describe('Given the collection service', () => {
 		});
 	});
 
-    describe('When getCollectionRelatedObjectsRequest is called', () => {
+	describe('When getCollectionRelatedObjectsRequest is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
 			await service.getCollectionRelatedObjectsRequest('1234', {
 				option1: true,
@@ -48,45 +48,38 @@ describe('Given the collection service', () => {
 		});
 	});
 
-    describe('When postCollectionCounterUpdateRequest is called', () => {
+	describe('When postCollectionCounterUpdateRequest is called', () => {
 		it('Then calls postRequest with the correct arguments', async () => {
-			await service.postCollectionCounterUpdateRequest(
-				100,
-				{ id: 1234, option1: true }
-			);
+			await service.postCollectionCounterUpdateRequest(100, { id: 1234, option1: true });
 
-			expect(postRequest).toHaveBeenCalledWith(
-				`${apiURL}/collectioncounter/update`,
-				100,
-				{ id: 1234, option1: true }
-			);
+			expect(postRequest).toHaveBeenCalledWith(`${apiURL}/collectioncounter/update`, 100, { id: 1234, option1: true });
 		});
 	});
 
-    describe('When useGetCollectionRequest is called', () => {
+	describe('When useGetCollectionRequest is called', () => {
 		it('Then calls getCollectionRequest with the correct arguments', async () => {
 			const getSpy = jest.spyOn(service, 'getCollectionRequest');
-			const rendered = renderHook(() => service.useGetCollectionRequest({ option1: true }), { wrapper });
-
-			assertServiceRefetchCalled(rendered, getSpy);
-		});
-	});
-
-    describe('When useGetCollectionRelatedObjectsRequest is called', () => {
-		it('Then calls getCollectionRelatedObjectsRequest with the correct arguments', async () => {
-			const getSpy = jest.spyOn(service, 'getCollectionRelatedObjectsRequest');
-			const rendered = renderHook(() => service.useGetCollectionRelatedObjectsRequest({ option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetCollectionRequest('1234', { option1: true }), { wrapper });
 
 			assertServiceRefetchCalled(rendered, getSpy, '1234');
 		});
 	});
 
-    describe('When usePostCollectionCounterUpdateRequest is called', () => {
+	describe('When useGetCollectionRelatedObjectsRequest is called', () => {
+		it('Then calls getCollectionRelatedObjectsRequest with the correct arguments', async () => {
+			const getSpy = jest.spyOn(service, 'getCollectionRelatedObjectsRequest');
+			const rendered = renderHook(() => service.useGetCollectionRelatedObjectsRequest('1234', { option1: true }), { wrapper });
+
+			assertServiceRefetchCalled(rendered, getSpy, '1234');
+		});
+	});
+
+	describe('When usePostCollectionCounterUpdateRequest is called', () => {
 		it('Then calls postCollectionCounterUpdateRequest with the correct arguments', async () => {
 			const postSpy = jest.spyOn(service, 'postCollectionCounterUpdateRequest');
 			const rendered = renderHook(() => service.usePostCollectionCounterUpdateRequest({ option1: true }), { wrapper });
 
-			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
+			assertServiceMutateAsyncCalled(rendered, postSpy, { status: 'archive' });
 		});
 	});
 });

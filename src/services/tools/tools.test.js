@@ -1,12 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
-import axios from 'axios';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../utils/requests';
+import { apiURL } from '../../configs/url.config';
+import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
 import service from './tools';
 
 jest.mock('axios');
-jest.mock('../utils/requests');
+jest.mock('../../utils/requests');
 
 let wrapper;
 
@@ -31,7 +30,7 @@ describe('Given the tools service', () => {
 				option1: true,
 			});
 
-			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/tools/getList`, {
+			expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/tools`, {
 				option1: true,
 			});
 		});

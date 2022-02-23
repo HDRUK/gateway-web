@@ -1,4 +1,20 @@
 {
+	"services": {
+		"status": {
+			"404": {
+				"title": "Page not found"
+			}
+		},
+		"errors": {
+			"datatuses": {
+				"getDataUseRegistersByTeam": {
+					"404": {
+						"message": "There has been an error getting data uses for this team"
+					}
+				}
+			}
+		}
+	},
 	"collection": {
 		"private": {
 			"live": "This private collection is now live. Only those who you share the collection link with will be able to view this page.",

@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../utils/requests';
+import { apiURL, apiV2URL } from '../../configs/url.config';
+import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
 
 const getTools = options => {
-	return getRequest(`${apiURL}/tools/getList`, options);
+	return getRequest(`${apiV2URL}/tools`, options);
 };
 
 const getTool = (_id, options) => {
@@ -46,67 +46,83 @@ const deleteTool = (_id, options) => {
 	return deleteRequest(`${apiURL}/tools/${_id}`, options);
 };
 
-const useGetTools = (requestOptions, queryOptions = { queryKey: 'getTools' }) => {
-	return useQuery({
-		...queryOptions,
-		queryFn: () => getTools(requestOptions),
-	});
+const useGetTools = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations(
+		params =>
+			getTools({
+				...requestOptions,
+				...params,
+			}),
+		{
+			mutationKey: 'getTools',
+			...mutateOptions,
+		}
+	);
 };
 
-const useGetTool = (requestOptions, queryOptions = { queryKey: 'getTool' }) => {
+const useGetTool = (requestOptions, queryOptions) => {
 	return useQuery({
+		queryKey: 'getTool',
 		...queryOptions,
 		queryFn: _id => getTool(_id, requestOptions),
 	});
 };
 
-const useGetToolEdit = (requestOptions, queryOptions = { queryKey: 'getToolEdit' }) => {
+const useGetToolEdit = (requestOptions, queryOptions) => {
 	return useQuery({
+		queryKey: 'getToolEdit',
 		...queryOptions,
 		queryFn: _id => getToolEdit(_id, requestOptions),
 	});
 };
 
-const useGetProjectTag = (requestOptions, queryOptions = { queryKey: 'getProjectTag' }) => {
+const useGetProjectTag = (requestOptions, queryOptions) => {
 	return useQuery({
+		queryKey: 'getProjectTag',
 		...queryOptions,
 		queryFn: _id => getProjectTag(_id, requestOptions),
 	});
 };
 
-const usePostTool = (requestOptions, mutateOptions = { queryKey: 'postTool' }) => {
+const usePostTool = (requestOptions, mutateOptions) => {
 	return useMutation((_id, data) => postTool(_id, data, requestOptions), {
-		mutateOptions,
+		mutationKey: 'postTool',
+		...mutateOptions,
 	});
 };
 
-const usePostReviewAdd = (requestOptions, mutateOptions = { queryKey: 'postReviewAdd' }) => {
+const usePostReviewAdd = (requestOptions, mutateOptions) => {
 	return useMutation(data => postReviewAdd(data, requestOptions), {
-		mutateOptions,
+		mutationKey: 'postReviewAdd',
+		...mutateOptions,
 	});
 };
 
-const usePostToolsReply = (requestOptions, mutateOptions = { queryKey: 'postToolsReply' }) => {
+const usePostToolsReply = (requestOptions, mutateOptions) => {
 	return useMutation(data => postToolsReply(data, requestOptions), {
-		mutateOptions,
+		mutationKey: 'postToolsReply',
+		...mutateOptions,
 	});
 };
 
-const usePutTool = (requestOptions, mutateOptions = { queryKey: 'putTool' }) => {
+const usePutTool = (requestOptions, mutateOptions) => {
 	return useMutation((_id, data) => putTool(_id, data, requestOptions), {
-		mutateOptions,
+		mutationKey: 'putTool',
+		...mutateOptions,
 	});
 };
 
-const usePutReviewApprove = (requestOptions, mutateOptions = { queryKey: 'putReviewApprove' }) => {
+const usePutReviewApprove = (requestOptions, mutateOptions) => {
 	return useMutation((_id, data) => putReviewApprove(_id, data, requestOptions), {
-		mutateOptions,
+		mutationKey: 'putReviewApprove',
+		...mutateOptions,
 	});
 };
 
-const usePatchTool = (requestOptions, mutateOptions = { queryKey: 'patchTool' }) => {
+const usePatchTool = (requestOptions, mutateOptions) => {
 	return useMutation((_id, data) => patchTool(_id, data, requestOptions), {
-		mutateOptions,
+		mutationKey: 'patchTool',
+		...mutateOptions,
 	});
 };
 

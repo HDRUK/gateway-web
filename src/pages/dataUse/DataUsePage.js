@@ -1,18 +1,20 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Row, Col, Button, Tab, Tabs, Alert } from 'react-bootstrap';
-import axios from 'axios';
 import { isEmpty } from 'lodash';
-import Table from './DataUseTable';
-import Pagination from './DataUsePagination';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Alert, Button, Col, Row, Tab, Tabs } from 'react-bootstrap';
+import { NotificationManager } from 'react-notifications';
+import SVGIcon from '../../images/SVGIcon';
+import dataUseRegistersService from '../../services/data-use-registers';
+import googleAnalytics from '../../tracking';
+import Loading from '../commonComponents/Loading';
+import MessageNotFound from '../commonComponents/MessageNotFound';
+import AccountContent from '../dashboard/Components/AccountContent';
+import DarHelperUtil from './../../utils/DarHelper.util';
 import ArchiveModal from './ArchiveModal';
 import './DataUse.scss';
-import SVGIcon from '../../images/SVGIcon';
+import Pagination from './DataUsePagination';
+import Table from './DataUseTable';
 import DataUseApproveModal from './modals/DataUseApproveModal';
 import DataUseRejectModal from './modals/DataUseRejectModal';
-import DarHelperUtil from './../../utils/DarHelper.util';
-import AccountContent from '../dashboard/Components/AccountContent';
-import Loading from '../commonComponents/Loading';
-import googleAnalytics from '../../tracking';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -30,16 +32,31 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 	const [showRejectModal, setShowRejectModal] = useState(false);
 	const [showArchiveModal, setShowArchiveModal] = useState(false);
 	const [showUnarchiveModal, setShowUnarchiveModal] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
+
+	const dataUseRegistersByTeam = dataUseRegistersService.useGetDataUseRegistersByTeam(null, {
+		onError: ({ title, message }) => {
+			NotificationManager.error(message, title, 10000);
+		},
+	});
+
+	const dataUseRegistersUpdate = dataUseRegistersService.usePatchDataUseRegister();
 
 	useEffect(() => {
-		axios.get(baseURL + '/api/v2/data-use-registers?team=' + team).then(res => {
-			let dataUses = res.data.data;
+		const init = async () => {
+			try {
+				const {
+					data: { data },
+				} = await dataUseRegistersByTeam.mutateAsync(team);
 
-			dataUses.sort((dataUseOne, dataUseTwo) => Date.parse(dataUseTwo.lastActivity) - Date.parse(dataUseOne.lastActivity));
-			setRow(dataUses);
-			setIsLoading(false);
-		});
+				data.sort((a, b) => Date.parse(a.lastActivity) - Date.parse(b.lastActivity));
+
+				setRow(data);
+			} catch (e) {
+				setRow([]);
+			}
+		};
+
+		init();
 	}, [team, alert]);
 
 	const onClickArchive = dataUseId => {
@@ -86,7 +103,7 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 	};
 
 	const updataDataUseStatus = (oldStatus, newStatus, rejectionReason = '') => {
-		axios.patch(baseURL + '/api/v2/data-use-registers/' + dataUseId, { activeflag: newStatus, rejectionReason }).then(res => {
+		dataUseRegistersUpdate.mutateAsync(dataUseId, { activeflag: newStatus, rejectionReason }).then(() => {
 			if (oldStatus === DarHelperUtil.dataUseRegisterStatus.INREVIEW && newStatus === DarHelperUtil.dataUseRegisterStatus.ACTIVE) {
 				showAlert('Your data use have been successfully approved.');
 				toggleApproveModal();
@@ -120,7 +137,7 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 
 	const paginate = pageNumber => setCurrentPage(pageNumber);
 
-	if (isLoading) {
+	if (dataUseRegistersByTeam.isLoading) {
 		return (
 			<AccountContent>
 				<Loading data-testid='isLoading' />
@@ -192,6 +209,8 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 									{team !== 'user' && team !== 'admin' && tabName === 'Archived' && (
 										<Table team={team} data={currentArchived} archived={true} onClickUnarchive={onClickUnarchive} />
 									)}
+
+									{!row.length && <MessageNotFound />}
 
 									<Pagination
 										rowsPerPage={rowsPerPage}

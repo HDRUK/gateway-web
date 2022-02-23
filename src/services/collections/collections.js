@@ -1,0 +1,60 @@
+import { useMutation, useQuery } from 'react-query';
+import { apiURL } from '../../configs/url.config';
+import { getRequest, postRequest } from '../../utils/requests';
+
+export const getCollections = (_id, options) => {
+	return getRequest(`${apiURL}/collections/entityid/${_id}`, options);
+};
+
+export const getCollectionRequest = (_id, options) => {
+	return getRequest(`${apiURL}/collections/${_id}`, options);
+};
+
+export const getCollectionRelatedObjectsRequest = (_id, options) => {
+	return getRequest(`${apiURL}/collections/relatedobjects/${_id}`, options);
+};
+
+export const postCollectionCounterUpdateRequest = (data, options) => {
+	return postRequest(`${apiURL}/collectioncounter/update`, data, options);
+};
+
+const useGetCollections = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations(_id => getCollections(_id, requestOptions), {
+		mutationKey: 'getCollections',
+		...mutateOptions,
+	});
+};
+
+const useGetCollectionRequest = (_id, requestOptions, queryOptions = { queryKey: 'getCollectionRequest' }) => {
+	return useQuery({
+		...queryOptions,
+		queryKey: [queryOptions.queryKey, _id],
+		queryFn: async ({ queryKey }) => getCollectionRequest(queryKey[1], requestOptions),
+	});
+};
+
+const useGetCollectionRelatedObjectsRequest = (_id, requestOptions, queryOptions = { queryKey: 'getCollectionRelatedObjectsRequest' }) => {
+	return useQuery({
+		...queryOptions,
+		queryKey: [queryOptions.queryKey, _id],
+		queryFn: async ({ queryKey }) => getCollectionRelatedObjectsRequest(queryKey[1], requestOptions),
+	});
+};
+
+const usePostCollectionCounterUpdateRequest = (requestOptions, mutateOptions) => {
+	return useMutation(data => postCollectionCounterUpdateRequest(data, requestOptions), {
+		mutationKey: 'postCollectionCounterUpdateRequest',
+		...mutateOptions,
+	});
+};
+
+export default {
+	getCollections,
+	getCollectionRequest,
+	getCollectionRelatedObjectsRequest,
+	postCollectionCounterUpdateRequest,
+	useGetCollections,
+	useGetCollectionRequest,
+	useGetCollectionRelatedObjectsRequest,
+	usePostCollectionCounterUpdateRequest,
+};

@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import queryString from 'query-string';
 import * as Sentry from '@sentry/react';
-import { Row, Col, Tabs, Tab, Container, Alert, Tooltip, Dropdown } from 'react-bootstrap';
-import NotFound from '../../commonComponents/NotFound';
-import Loading from '../../commonComponents/Loading';
-import RelatedObject from '../../commonComponents/relatedObject/RelatedObject';
-import SearchBar from '../../commonComponents/searchBar/SearchBar';
-import DiscourseTopic from '../../discourse/DiscourseTopic';
-import SideDrawer from '../../commonComponents/sidedrawer/SideDrawer';
-import UserMessages from '../../commonComponents/userMessages/UserMessages';
-import ActionBar from '../../commonComponents/actionbar/ActionBar';
-import ResourcePageButtons from '../../commonComponents/resourcePageButtons/ResourcePageButtons';
-import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
-import ErrorModal from '../../commonComponents/errorModal/ErrorModal';
-import CollectionCard from '../../commonComponents/collectionCard/CollectionCard';
+import axios from 'axios';
+import _ from 'lodash';
+import queryString from 'query-string';
+import { default as React, default as React, useEffect, useState } from 'react';
+import { Alert, Col, Container, Dropdown, Row, Tab, Tabs, Tooltip } from 'react-bootstrap';
 import 'react-tabs/style/react-tabs.css';
 import { baseURL } from '../../../configs/url.config';
 import SVGIcon from '../../../images/SVGIcon';
-import _ from 'lodash';
+import collectionsService from '../../../services/collections/collections';
+import dataUseRegistersService from '../../../services/data-use-registers';
+import googleAnalytics from '../../../tracking';
+import ActionBar from '../../commonComponents/actionbar/ActionBar';
+import CollectionCard from '../../commonComponents/collectionCard/CollectionCard';
+import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
+import ErrorModal from '../../commonComponents/errorModal/ErrorModal';
+import Loading from '../../commonComponents/Loading';
+import NotFound from '../../commonComponents/NotFound';
+import RelatedObject from '../../commonComponents/relatedObject/RelatedObject';
+import ResourcePageButtons from '../../commonComponents/resourcePageButtons/ResourcePageButtons';
+import SearchBar from '../../commonComponents/searchBar/SearchBar';
+import SideDrawer from '../../commonComponents/sidedrawer/SideDrawer';
+import UserMessages from '../../commonComponents/userMessages/UserMessages';
+import DiscourseTopic from '../../discourse/DiscourseTopic';
 import '../DataUse.scss';
 import About from './About';
-import googleAnalytics from '../../../tracking';
 
 export const DataUseView = props => {
 	const [id] = useState('');
@@ -52,6 +54,10 @@ export const DataUseView = props => {
 		]
 	);
 
+	const dataUseRegisterCounterQuery = dataUseRegistersService.usePatchDataUseRegisterCounter();
+	const dataUseRegisterQuery = dataUseRegistersService.useGetDataUseRegister();
+	const collectionsQuery = collectionsService.useGetCollections();
+
 	let showError = false;
 
 	//componentDidMount - on loading of page detail page
@@ -81,8 +87,9 @@ export const DataUseView = props => {
 
 	const getDataUseDataFromDb = () => {
 		setIsLoading(true);
-		axios
-			.get(baseURL + '/api/v2/data-use-registers/' + props.match.params.datauseID)
+
+		dataUseRegisterQuery
+			.mutateAsync(props.match.params.datauseID)
 			.then(async res => {
 				if (_.isNil(res.data)) {
 					window.localStorage.setItem('redirectMsg', `Data Use not found for Id: ${props.match.params.datauseID}`);
@@ -109,9 +116,15 @@ export const DataUseView = props => {
 
 	const populateCollections = localDataUseData => {
 		setIsLoading(true);
-		axios.get(baseURL + '/api/v1/collections/entityid/' + localDataUseData.id).then(res => {
-			setCollections(res.data.data || []);
-		});
+
+		collectionsQuery
+			.mutateAsync(localDataUseData.id)
+			.then(res => {
+				setCollections(res.data.data || []);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
 	};
 
 	const doSearch = e => {
@@ -124,7 +137,7 @@ export const DataUseView = props => {
 	};
 
 	const updateCounter = (id, counter) => {
-		axios.patch(baseURL + '/api/v2/data-use-registers/counter', { id, counter });
+		dataUseRegisterCounterQuery.mutateAsync({ id, counter });
 	};
 
 	const updateDiscoursePostCount = count => {

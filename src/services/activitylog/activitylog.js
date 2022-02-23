@@ -6,9 +6,10 @@ const postActivityLog = (data, options) => {
 	return postRequest(`${apiV2URL}/activitylog`, data, options);
 };
 
-const usePostActivityLog = (requestOptions, mutateOptions = { queryKey: 'postActivityLog' }) => {
+const usePostActivityLog = (requestOptions, mutateOptions) => {
 	return useMutation(data => postActivityLog(data, requestOptions), {
-		mutateOptions,
+		mutationKey: 'postActivityLog',
+		...mutateOptions,
 	});
 };
 

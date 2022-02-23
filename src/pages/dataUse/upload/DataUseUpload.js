@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { find, isEmpty, isUndefined, some } from 'lodash';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { Alert, Col, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { SlideDown } from 'react-slidedown';
 import readXlsxFile from 'read-excel-file';
 import convertToJson from 'read-excel-file/schema';
-import { Row, Col, Alert, Image, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { isEmpty, some, find, isUndefined } from 'lodash';
-import axios from 'axios';
-import { SlideDown } from 'react-slidedown';
-import moment from 'moment';
-
 import SVGIcon from '../../../images/SVGIcon';
-
-import DataUseSubmitModal from './DataUseSubmitModal';
+import dataUseRegistersService from '../../../services/data-use-registers';
 import dataUseSchema from './DataUseSchema';
-
+import DataUseSubmitModal from './DataUseSubmitModal';
 import './DataUseUpload.scss';
 
 var baseURL = require('../../commonComponents/BaseURL').getURL();
@@ -30,6 +27,9 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 	const [uploadedData, setUploadedData] = useState({ rows: [], uploadErrors: [], checks: [] });
 	const [dataUseIndexes, setDataUseIndexes] = useState([]);
 	const [recommendedFieldsMissing, setRecommendedFieldsMissing] = useState(false);
+
+	const dataUseRegistersUpload = dataUseRegistersService.usePostDataUseRegisterUpload();
+	const dataUseRegisterCheck = dataUseRegistersService.usePostDataUseRegisterCheck();
 
 	const onUploadDataUseRegister = event => {
 		if (maxSize < event.target.files[0].size) {
@@ -101,20 +101,21 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 			teamId: team,
 			dataUses: uploadedData.rows,
 		};
-		axios.post(baseURL + '/api/v2/data-use-registers/upload', payload).then(res => {
+
+		dataUseRegistersUpload.mutateAsync(payload).then(() => {
 			setIsSubmitModalVisible(false);
 			onSubmit();
+
 			dataUsePage.current.showAlert('Submitted! The Gateway team will process your uploaded data uses and let you know when they go live.');
 		});
 	};
 
 	const checkDataUses = async rows => {
-		const payload = {
+		const response = await dataUseRegisterCheck.mutateAsync({
 			teamId: team,
 			dataUses: rows,
-		};
+		});
 
-		let response = await axios.post(baseURL + '/api/v2/data-use-registers/check', payload);
 		return response.data.result;
 	};
 

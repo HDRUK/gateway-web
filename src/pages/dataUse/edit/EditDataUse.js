@@ -1,19 +1,22 @@
-import React, { useState, useEffect, createRef } from 'react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { baseURL } from '../../../configs/url.config';
-import { isEmpty, isArray } from 'lodash';
-
+import { isArray, isEmpty } from 'lodash';
+import moment from 'moment';
+import React, { createRef, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import EditFormDataUse from './EditDataUseForm';
-import SearchBar from '../../commonComponents/searchBar/SearchBar';
+import { baseURL } from '../../../configs/url.config';
+import dataUseRegistersService from '../../../services/data-use-registers';
+import usersService from '../../../services/users';
+import datasetsService from '../../../services/datasets';
+import toolsService from '../../../services/tools';
+import papersService from '../../../services/papers';
+import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../../commonComponents/errorModal/ErrorModal';
+import Loading from '../../commonComponents/Loading';
+import SearchBar from '../../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../../commonComponents/userMessages/UserMessages';
-import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
-import Loading from '../../commonComponents/Loading';
-import moment from 'moment';
-import SaveModal from '../SaveEditModal';
+import EditFormDataUse from './EditDataUseForm';
 
 const EditDataUse = props => {
 	const [data, setData] = useState([]);
@@ -53,56 +56,78 @@ const EditDataUse = props => {
 		]
 	);
 
-	useEffect(async () => {
-		setIsLoading(true);
-		await Promise.all([
-			doGetKeywordsCall(),
-			doGetUsersCall(),
-			doGetDatasetsCall(),
-			doGetSafeOutputsToolCall(),
-			doGetSafeOutputsPaperCall(),
-		]);
-		axios.get(`${baseURL}/api/v2/data-use-registers/${props.match.params.datauseID}?isEdit=true`).then(res => {
-			setData(res.data);
-			setRelatedObjects(res.data.relatedObjects ? res.data.relatedObjects : []);
-			let safeOutputs = [];
-			res.data.gatewayOutputsPapersInfo.forEach(output => {
-				safeOutputs.push({ id: output.id, name: output.name });
-			});
-			res.data.gatewayOutputsToolsInfo.forEach(output => {
-				safeOutputs.push({ id: output.id, name: output.name });
-			});
-			res.data.nonGatewayOutputs.forEach(output => {
-				safeOutputs.push({ id: 'nonGateway', name: output });
-			});
+	const dataUseRegister = dataUseRegistersService.useGetDataUseRegister();
+	const dataUseResgiters = dataUseRegistersService.useGetDataUseRegisters();
+	const users = usersService.useGetUsers();
+	const tools = toolsService.useGetTools();
+	const papers = papersService.useGetPapers();
+	const datasets = datasetsService.useGetDatasets();
 
-			setSafeOuputsArray(!isEmpty(safeOutputs) ? safeOutputs : [{ id: '', name: '' }]);
+	useEffect(() => {
+		const init = async () => {
+			setIsLoading(true);
 
-			let applicants = [];
-			res.data.gatewayApplicants.forEach(gatewayApplicant => {
-				applicants.push({ id: gatewayApplicant.id, name: `${gatewayApplicant.firstname} ${gatewayApplicant.lastname}` });
-			});
-			res.data.nonGatewayApplicants.forEach(nonGatewayApplicant => {
-				applicants.push({ id: 'nonGateway', name: nonGatewayApplicant });
-			});
-			setApplicantsArray(!isEmpty(applicants) ? applicants : []);
+			await Promise.all([
+				doGetKeywordsCall(),
+				doGetUsersCall(),
+				doGetDatasetsCall(),
+				doGetSafeOutputsToolCall(),
+				doGetSafeOutputsPaperCall(),
+			]);
 
-			let datasets = [];
-			res.data.gatewayDatasetsInfo.forEach(gatewayDataset => {
-				if (isArray(gatewayDataset)) {
-					datasets.push({ pid: gatewayDataset[0].pid, name: gatewayDataset[0].name });
-				} else {
-					datasets.push({ pid: gatewayDataset.pid, name: gatewayDataset.name });
-				}
-			});
-			res.data.nonGatewayDatasets.forEach(nonGatewayDataset => {
-				datasets.push({ pid: 'nonGateway', name: nonGatewayDataset });
-			});
-			setDatasetsArray(!isEmpty(datasets) ? datasets : [{ pid: '', name: '' }]);
+			dataUseRegister.mutateAsync(props.match.params.datauseID).then(res => {
+				setData(res.data);
+				setRelatedObjects(res.data.relatedObjects ? res.data.relatedObjects : []);
 
-			setDisableInput(getUserRoles(res.data.publisher));
-			setIsLoading(false);
-		});
+				let safeOutputs = [];
+				res.data.gatewayOutputsPapersInfo.forEach(output => {
+					safeOutputs.push({ id: output.id, name: output.name });
+				});
+
+				res.data.gatewayOutputsToolsInfo.forEach(output => {
+					safeOutputs.push({ id: output.id, name: output.name });
+				});
+
+				res.data.nonGatewayOutputs.forEach(output => {
+					safeOutputs.push({ id: 'nonGateway', name: output });
+				});
+
+				setSafeOuputsArray(!isEmpty(safeOutputs) ? safeOutputs : [{ id: '', name: '' }]);
+
+				let applicants = [];
+
+				res.data.gatewayApplicants.forEach(gatewayApplicant => {
+					applicants.push({ id: gatewayApplicant.id, name: `${gatewayApplicant.firstname} ${gatewayApplicant.lastname}` });
+				});
+
+				res.data.nonGatewayApplicants.forEach(nonGatewayApplicant => {
+					applicants.push({ id: 'nonGateway', name: nonGatewayApplicant });
+				});
+
+				setApplicantsArray(!isEmpty(applicants) ? applicants : []);
+
+				let datasets = [];
+
+				res.data.gatewayDatasetsInfo.forEach(gatewayDataset => {
+					if (isArray(gatewayDataset)) {
+						datasets.push({ pid: gatewayDataset[0].pid, name: gatewayDataset[0].name });
+					} else {
+						datasets.push({ pid: gatewayDataset.pid, name: gatewayDataset.name });
+					}
+				});
+
+				res.data.nonGatewayDatasets.forEach(nonGatewayDataset => {
+					datasets.push({ pid: 'nonGateway', name: nonGatewayDataset });
+				});
+
+				setDatasetsArray(!isEmpty(datasets) ? datasets : [{ pid: '', name: '' }]);
+
+				setDisableInput(getUserRoles(res.data.publisher));
+				setIsLoading(false);
+			});
+		};
+
+		init();
 	}, []);
 
 	const getUserRoles = publisher => {
@@ -116,60 +141,48 @@ const EditDataUse = props => {
 	};
 
 	const doGetUsersCall = () => {
-		return new Promise(resolve => {
-			axios.get(baseURL + '/api/v1/users').then(res => {
-				setApplicantsList(res.data.data);
-				resolve();
-			});
+		return users.refetch().then(() => {
+			setApplicantsList(res.data.data);
 		});
 	};
 
 	const doGetDatasetsCall = () => {
-		return new Promise(resolve => {
-			axios
-				.get(`${baseURL}/api/v2/datasets`, {
-					params: {
-						activeflag: 'active',
-						fields: 'pid,name,',
-					},
-				})
-				.then(res => {
-					setDatasetsList(res.data.datasets);
-					resolve();
-				});
-		});
+		return datasets
+			.mutateAsync({
+				params: {
+					activeflag: 'active',
+					fields: 'pid,name,',
+				},
+			})
+			.then(res => {
+				setDatasetsList(res.data.datasets);
+			});
 	};
 
 	const doGetSafeOutputsToolCall = () => {
-		return new Promise(resolve => {
-			axios
-				.get(`${baseURL}/api/v2/tools`, {
-					params: {
-						activeflag: 'active',
-						fields: 'id,name,',
-					},
-				})
-				.then(res => {
-					setSafeOuputsToolList(res.data.data);
-					resolve();
-				});
-		});
+		return tools
+			.mutateAsync({
+				params: {
+					activeflag: 'active',
+					fields: 'id,name,',
+				},
+			})
+			.then(res => {
+				setSafeOuputsToolList(res.data.data);
+			});
 	};
 
 	const doGetSafeOutputsPaperCall = () => {
-		return new Promise(resolve => {
-			axios
-				.get(`${baseURL}/api/v2/papers`, {
-					params: {
-						activeflag: 'active',
-						fields: 'id,name,',
-					},
-				})
-				.then(res => {
-					setSafeOuputsPaperList(res.data.data);
-					resolve();
-				});
-		});
+		return papers
+			.mutateAsync({
+				params: {
+					activeflag: 'active',
+					fields: 'id,name,',
+				},
+			})
+			.then(res => {
+				setSafeOuputsPaperList(res.data.data);
+			});
 	};
 
 	let showError = false;
@@ -291,8 +304,8 @@ const EditDataUse = props => {
 
 	const doGetKeywordsCall = () => {
 		return new Promise((resolve, reject) => {
-			axios
-				.get(`${baseURL}/api/v2/data-use-registers`, {
+			dataUseResgiters
+				.mutateAsync({
 					params: {
 						activeflag: 'active',
 						fields: 'keywords,',
@@ -316,6 +329,7 @@ const EditDataUse = props => {
 							return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
 						})
 					);
+
 					resolve();
 				});
 		});
