@@ -5,7 +5,7 @@ import { getRequest, postRequest } from '../../utils/requests';
 import service from './auth';
 
 jest.mock('axios');
-jest.mock('../utils/requests');
+jest.mock('../../utils/requests');
 
 let wrapper;
 
@@ -22,6 +22,18 @@ describe('Given the auth service', () => {
 
 	afterEach(() => {
 		jest.resetAllMocks();
+	});
+
+	describe('When getStatus is called', () => {
+		it('Then calls getRequest with the correct arguments', async () => {
+			await service.getLogout({
+				option1: true,
+			});
+
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/auth/logout`, {
+				option1: true,
+			});
+		});
 	});
 
 	describe('When getLogout is called', () => {
@@ -52,6 +64,15 @@ describe('Given the auth service', () => {
 				},
 				{ option1: true }
 			);
+		});
+	});
+
+	describe('When useGetStatus is called', () => {
+		it('Then calls getStatus with the correct arguments', async () => {
+			const getSpy = jest.spyOn(service, 'getStatus');
+			const rendered = renderHook(() => service.useGetStatus({ option1: true }), { wrapper });
+
+			assertServiceRefetchCalled(rendered, getSpy);
 		});
 	});
 

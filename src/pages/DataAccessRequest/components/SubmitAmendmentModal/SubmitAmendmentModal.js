@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import './SubmitAmendmentModal.scss';
 import googleAnalytics from '../../../../tracking';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const SubmitAmendmentModal = ({ open, close, onHandleSubmit }) => {
 	const [count, setCount] = useState(0);
@@ -71,12 +72,13 @@ const SubmitAmendmentModal = ({ open, close, onHandleSubmit }) => {
 						<label htmlFor='amendDesc'>
 							<span className='gray800-14'>Description</span> <span className='gray700-13'>({count}/1500)</span>
 						</label>
-						<textarea
-							className={`form-control ${formState.invalid && formState.submitted ? `is-invalid` : ''}`}
+						<TextareaAutosize 
+							className={`form-control ${formState.invalid && formState.submitted ? `is-invalid textarea-modal` : 'textarea-modal'}`}
 							name='amendDesc'
 							onChange={handleChange}
 							value={formState.amendDesc}
-							rows='8'></textarea>
+							rows='8'>
+							</TextareaAutosize>
 						<div className='invalid-feedback'>{formState.invalidMessage}</div>
 					</div>
 				</div>

@@ -13,6 +13,7 @@ import ToolTip from '../../images/imageURL-ToolTip.gif';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import googleAnalytics from '../../tracking';
 import './Collections.scss';
+import TextareaAutosize from 'react-textarea-autosize';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
@@ -162,16 +163,16 @@ const AddEditCollectionForm = props => {
 								<Form.Group className='margin-bottom-24'>
 									<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Description</p>
 									<p className='gray700-13 margin-bottom-0'>Up to 5,000 characters</p>
-									<Form.Control
-										as='textarea'
+									<TextareaAutosize
+										as='textarea' 
 										data-test-id='collection-description'
 										id='description'
 										name='description'
 										type='text'
 										className={
 											formik.touched.description && formik.errors.description
-												? 'emptyFormInput addFormInput descriptionInput'
-												: 'addFormInput descriptionInput'
+												? 'emptyFormInput addFormInput descriptionInput textarea-addEditForm'
+												: 'addFormInput descriptionInput textarea-addEditForm'
 										}
 										onChange={formik.handleChange}
 										value={formik.values.description}

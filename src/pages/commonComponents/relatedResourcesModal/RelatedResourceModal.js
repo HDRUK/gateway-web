@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import { Row, Col, Tab, Tabs, Container, Pagination } from 'react-bootstrap';
 import _ from 'lodash';
-import SimpleSearchBar from '../searchBar/SimpleSearchBar';
+import { Col, Container, Pagination, Row, Tab, Tabs } from 'react-bootstrap';
 import RelatedObject from '../relatedObject/RelatedObject';
+import SearchInput from '../../../components/SearchInput';
 import './RelatedResourcesModal.scss';
 
 class RelatedResourcesModal extends React.Component {
@@ -10,7 +10,7 @@ class RelatedResourcesModal extends React.Component {
 		key: '',
 		datasetIndex: 0,
 		toolIndex: 0,
-		datauseIndex: 0,
+		dataUseRegisterIndex: 0,
 		paperIndex: 0,
 		personIndex: 0,
 		courseIndex: 0,
@@ -40,7 +40,7 @@ class RelatedResourcesModal extends React.Component {
 		} else if (type === 'tool') {
 			await Promise.all([this.setState({ toolIndex: page })]);
 		} else if (type === 'datause') {
-			await Promise.all([this.setState({ datauseIndex: page })]);
+			await Promise.all([this.setState({ dataUseRegisterIndex: page })]);
 		} else if (type === 'paper') {
 			await Promise.all([this.setState({ paperIndex: page })]);
 		} else if (type === 'person') {
@@ -51,13 +51,17 @@ class RelatedResourcesModal extends React.Component {
 		this.props.doSearchMethod(e, type, page);
 	};
 
+	handleUpdateSearchString = ({ target: { value } }) => {
+		this.props.doUpdateSearchString(value);
+	};
+
 	render() {
-		const { datasetIndex, toolIndex, datauseIndex, paperIndex, personIndex, courseIndex, selected } = this.state;
+		const { datasetIndex, toolIndex, dataUseRegisterIndex, paperIndex, personIndex, courseIndex, selected } = this.state;
 		let { key } = this.state;
 
 		let datasetCount = this.props.summary.datasetCount || 0;
 		let toolCount = this.props.summary.toolCount || 0;
-		let datauseCount = this.props.summary.dataUseRegisterCount || 0;
+		let dataUseRegisterCount = this.props.summary.dataUseRegisterCount || 0;
 		let paperCount = this.props.summary.paperCount || 0;
 		let personCount = this.props.summary.personCount || 0;
 		let courseCount = this.props.summary.courseCount || 0;
@@ -67,7 +71,7 @@ class RelatedResourcesModal extends React.Component {
 				key = 'Datasets';
 			} else if (toolCount > 0) {
 				key = 'Tools';
-			} else if (datauseCount > 0) {
+			} else if (dataUseRegisterCount > 0) {
 				key = 'Data Uses';
 			} else if (paperCount > 0) {
 				key = 'Papers';
@@ -86,74 +90,74 @@ class RelatedResourcesModal extends React.Component {
 		let paperPaginationItems = [];
 		let personPaginationItems = [];
 		let coursePaginationItems = [];
-		let maxResult = 40;
-		for (let i = 1; i <= Math.ceil(datasetCount / maxResult); i++) {
+		let maxResults = 40;
+		for (let i = 1; i <= Math.ceil(datasetCount / maxResults); i++) {
 			datasetPaginationItems.push(
 				<Pagination.Item
 					key={i}
-					active={i === datasetIndex / maxResult + 1}
+					active={i === datasetIndex / maxResults + 1}
 					onClick={e => {
-						this.handlePagination('dataset', (i - 1) * maxResult, 'click');
+						this.handlePagination('dataset', (i - 1) * maxResults, 'click');
 					}}>
 					{i}
 				</Pagination.Item>
 			);
 		}
-		for (let i = 1; i <= Math.ceil(toolCount / maxResult); i++) {
+		for (let i = 1; i <= Math.ceil(toolCount / maxResults); i++) {
 			toolPaginationItems.push(
 				<Pagination.Item
 					key={i}
-					active={i === toolIndex / maxResult + 1}
+					active={i === toolIndex / maxResults + 1}
 					onClick={e => {
-						this.handlePagination('tool', (i - 1) * maxResult, 'click');
+						this.handlePagination('tool', (i - 1) * maxResults, 'click');
 					}}>
 					{i}
 				</Pagination.Item>
 			);
 		}
-		for (let i = 1; i <= Math.ceil(datauseCount / maxResult); i++) {
+		for (let i = 1; i <= Math.ceil(dataUseRegisterCount / maxResults); i++) {
 			datausePaginationItems.push(
 				<Pagination.Item
 					key={i}
-					active={i === datauseIndex / maxResult + 1}
+					active={i === dataUseRegisterIndex / maxResults + 1}
 					onClick={e => {
-						this.handlePagination('datause', (i - 1) * maxResult, 'click');
+						this.handlePagination('datause', (i - 1) * maxResults, 'click');
 					}}>
 					{i}
 				</Pagination.Item>
 			);
 		}
-		for (let i = 1; i <= Math.ceil(paperCount / maxResult); i++) {
+		for (let i = 1; i <= Math.ceil(paperCount / maxResults); i++) {
 			paperPaginationItems.push(
 				<Pagination.Item
 					key={i}
-					active={i === paperIndex / maxResult + 1}
+					active={i === paperIndex / maxResults + 1}
 					onClick={e => {
-						this.handlePagination('paper', (i - 1) * maxResult, 'click');
+						this.handlePagination('paper', (i - 1) * maxResults, 'click');
 					}}>
 					{i}
 				</Pagination.Item>
 			);
 		}
-		for (let i = 1; i <= Math.ceil(personCount / maxResult); i++) {
+		for (let i = 1; i <= Math.ceil(personCount / maxResults); i++) {
 			personPaginationItems.push(
 				<Pagination.Item
 					key={i}
-					active={i === personIndex / maxResult + 1}
+					active={i === personIndex / maxResults + 1}
 					onClick={e => {
-						this.handlePagination('person', (i - 1) * maxResult, 'click');
+						this.handlePagination('person', (i - 1) * maxResults, 'click');
 					}}>
 					{i}
 				</Pagination.Item>
 			);
 		}
-		for (let i = 1; i <= Math.ceil(courseCount / maxResult); i++) {
+		for (let i = 1; i <= Math.ceil(courseCount / maxResults); i++) {
 			coursePaginationItems.push(
 				<Pagination.Item
 					key={i}
-					active={i === courseIndex / maxResult + 1}
+					active={i === courseIndex / maxResults + 1}
 					onClick={e => {
-						this.handlePagination('course', (i - 1) * maxResult, 'click');
+						this.handlePagination('course', (i - 1) * maxResults, 'click');
 					}}>
 					{i}
 				</Pagination.Item>
@@ -220,14 +224,20 @@ class RelatedResourcesModal extends React.Component {
 			});
 		}
 
+		const { searchString, doSearchMethod, doUpdateSearchString } = this.props;
+
 		return (
 			<Fragment>
 				<div class='related-search-wrap'>
 					<div className='realted-search-body'>
-						<SimpleSearchBar
-							searchString={this.props.searchString}
-							doSearchMethod={this.props.doSearchMethod}
-							doUpdateSearchString={this.props.doUpdateSearchString}
+						<SearchInput
+							value={searchString}
+							onChange={this.handleUpdateSearchString}
+							onReset={() => doUpdateSearchString('')}
+							onSubmit={doSearchMethod}
+							onKeyDown={doSearchMethod}
+							placeholder='Search'
+							variant='secondary'
 						/>
 						{typeof this.props.summary.datasetCount !== 'undefined' ? (
 							<div className='searchTabsHolder'>
@@ -440,17 +450,17 @@ class RelatedResourcesModal extends React.Component {
 									: ''}
 
 								<div className='text-center'>
-									{key === 'Datasets' && datasetCount > maxResult ? <Pagination>{datasetPaginationItems}</Pagination> : ''}
+									{key === 'Datasets' && datasetCount > maxResults ? <Pagination>{datasetPaginationItems}</Pagination> : ''}
 
-									{key === 'Tools' && toolCount > maxResult ? <Pagination>{toolPaginationItems}</Pagination> : ''}
+									{key === 'Tools' && toolCount > maxResults ? <Pagination>{toolPaginationItems}</Pagination> : ''}
 
-									{key === 'Datauses' && datauseCount > maxResult ? <Pagination>{datausePaginationItems}</Pagination> : ''}
+									{key === 'Datauses' && dataUseRegisterCount > maxResults ? <Pagination>{datausePaginationItems}</Pagination> : ''}
 
-									{key === 'Papers' && paperCount > maxResult ? <Pagination>{paperPaginationItems}</Pagination> : ''}
+									{key === 'Papers' && paperCount > maxResults ? <Pagination>{paperPaginationItems}</Pagination> : ''}
 
-									{key === 'People' && personCount > maxResult ? <Pagination>{personPaginationItems}</Pagination> : ''}
+									{key === 'People' && personCount > maxResults ? <Pagination>{personPaginationItems}</Pagination> : ''}
 
-									{key === 'Course' && courseCount > maxResult ? <Pagination>{coursePaginationItems}</Pagination> : ''}
+									{key === 'Course' && courseCount > maxResults ? <Pagination>{coursePaginationItems}</Pagination> : ''}
 								</div>
 							</Col>
 							<Col sm={2} lg={2} />

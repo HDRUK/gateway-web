@@ -12,7 +12,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
-import NotFound from '../NotFound';
+import MessageNotFound from '../MessageNotFound';
 import Collapse from 'react-bootstrap/Collapse';
 import './Reviews.scss';
 
@@ -54,7 +54,7 @@ class Reviews extends Component {
 				{reviewData.length <= 0 ? (
 					<Row>
 						<Col xs={12}>
-							<NotFound word='reviews' />
+							<MessageNotFound word='reviews' />
 						</Col>
 					</Row>
 				) : (

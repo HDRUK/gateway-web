@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
-import NotFound from '../commonComponents/NotFound';
+import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import { EntityActionButton } from './EntityActionButton.jsx';
 import googleAnalytics from '../../tracking';
 import { PaginationHelper } from '../commonComponents/PaginationHelper';
-import AccountContent from './Components/AccountContent';
+import { LayoutContent } from '../../components/Layout';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -21,7 +21,7 @@ const AccountCollections = props => {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [archiveIndex, setArchiveIndex] = useState(0);
 	const [isResultsLoading, setIsResultsLoading] = useState(true);
-	const maxResult = 40;
+	const maxResults = 40;
 
 	useEffect(() => {
 		doCollectionsCall('active', true, 0, true);
@@ -50,7 +50,7 @@ const AccountCollections = props => {
 		if (typeof index === 'undefined') {
 			apiUrl = baseURL + `/api/v1/collections/getList?status=${key}`;
 		} else {
-			apiUrl = baseURL + `/api/v1/collections/getList?status=${key}&offset=${index}&limit=${maxResult}`;
+			apiUrl = baseURL + `/api/v1/collections/getList?status=${key}&offset=${index}&limit=${maxResults}`;
 		}
 
 		axios.get(apiUrl).then(res => {
@@ -77,9 +77,9 @@ const AccountCollections = props => {
 				if (shouldChangeTab()) {
 					setKey('active');
 					doCollectionsCall('active', true, activeIndex);
-				} else if (archiveCount - (archiveIndex + maxResult) <= 0 && archiveCount % maxResult === 1 && archiveCount !== 1) {
-					setArchiveIndex(archiveIndex - maxResult);
-					doCollectionsCall(key, true, archiveIndex - maxResult);
+				} else if (archiveCount - (archiveIndex + maxResults) <= 0 && archiveCount % maxResults === 1 && archiveCount !== 1) {
+					setArchiveIndex(archiveIndex - maxResults);
+					doCollectionsCall(key, true, archiveIndex - maxResults);
 				} else {
 					doCollectionsCall('archive', true, archiveIndex);
 				}
@@ -91,17 +91,22 @@ const AccountCollections = props => {
 			if (shouldChangeTab()) {
 				setKey('active');
 				doCollectionsCall('active', true, activeIndex);
-			} else if (key === 'active' && !shouldChangeTab() && activeCount - (activeIndex + maxResult) <= 0 && activeCount % maxResult === 1) {
-				setActiveIndex(activeIndex - maxResult);
-				doCollectionsCall('active', true, activeIndex - maxResult);
+			} else if (
+				key === 'active' &&
+				!shouldChangeTab() &&
+				activeCount - (activeIndex + maxResults) <= 0 &&
+				activeCount % maxResults === 1
+			) {
+				setActiveIndex(activeIndex - maxResults);
+				doCollectionsCall('active', true, activeIndex - maxResults);
 			} else if (
 				key === 'archive' &&
 				!shouldChangeTab() &&
-				archiveCount - (archiveIndex + maxResult) <= 0 &&
-				archiveCount % maxResult === 1
+				archiveCount - (archiveIndex + maxResults) <= 0 &&
+				archiveCount % maxResults === 1
 			) {
-				setArchiveIndex(archiveIndex - maxResult);
-				doCollectionsCall('archive', true, archiveIndex - maxResult);
+				setArchiveIndex(archiveIndex - maxResults);
+				doCollectionsCall('archive', true, archiveIndex - maxResults);
 			} else if (!shouldChangeTab()) {
 				if (key === 'active') {
 					doCollectionsCall('active', true, activeIndex);
@@ -119,9 +124,9 @@ const AccountCollections = props => {
 			})
 			.then(res => {
 				setKey('active');
-				if (activeCount - (activeIndex + maxResult) <= 0 && activeCount % maxResult === 1 && activeCount !== 1) {
-					setActiveIndex(activeIndex - maxResult);
-					doCollectionsCall(key, true, activeIndex - maxResult);
+				if (activeCount - (activeIndex + maxResults) <= 0 && activeCount % maxResults === 1 && activeCount !== 1) {
+					setActiveIndex(activeIndex - maxResults);
+					doCollectionsCall(key, true, activeIndex - maxResults);
 				} else {
 					doCollectionsCall('active', true, activeIndex);
 				}
@@ -134,15 +139,15 @@ const AccountCollections = props => {
 
 	if (isLoading) {
 		return (
-			<AccountContent className='mt-4'>
+			<LayoutContent className='mt-4'>
 				<Loading data-testid='isLoading' />
-			</AccountContent>
+			</LayoutContent>
 		);
 	}
 
 	return (
 		<div>
-			<AccountContent>
+			<LayoutContent>
 				<Row className='accountHeader'>
 					<Col sm={12} md={8}>
 						<Row>
@@ -203,8 +208,8 @@ const AccountCollections = props => {
 										)}
 
 										{activeCount <= 0 ? (
-											<Row className='margin-right-15' data-testid='collectionEntryNotFound'>
-												<NotFound word='collections' />
+											<Row className='margin-right-15' data-testid='collectionEntryMessageNotFound'>
+												<MessageNotFound word='collections' />
 											</Row>
 										) : (
 											collectionsList.map(collection => {
@@ -275,7 +280,7 @@ const AccountCollections = props => {
 
 										{archiveCount <= 0 ? (
 											<Row className='margin-right-15'>
-												<NotFound word='collections' />
+												<MessageNotFound word='collections' />
 											</Row>
 										) : (
 											collectionsList.map(collection => {
@@ -337,31 +342,31 @@ const AccountCollections = props => {
 
 				{!isResultsLoading && (
 					<div className='text-center entityDashboardPagination'>
-						{key === 'active' && activeCount > maxResult ? (
+						{key === 'active' && activeCount > maxResults ? (
 							<PaginationHelper
 								doEntitiesCall={doCollectionsCall}
 								entityCount={activeCount}
 								statusKey={key}
 								paginationIndex={activeIndex}
 								setPaginationIndex={setActiveIndex}
-								maxResult={maxResult}></PaginationHelper>
+								maxResults={maxResults}></PaginationHelper>
 						) : (
 							''
 						)}
-						{key === 'archive' && archiveCount > maxResult ? (
+						{key === 'archive' && archiveCount > maxResults ? (
 							<PaginationHelper
 								doEntitiesCall={doCollectionsCall}
 								entityCount={archiveCount}
 								statusKey={key}
 								paginationIndex={archiveIndex}
 								setPaginationIndex={setArchiveIndex}
-								maxResult={maxResult}></PaginationHelper>
+								maxResults={maxResults}></PaginationHelper>
 						) : (
 							''
 						)}
 					</div>
 				)}
-			</AccountContent>
+			</LayoutContent>
 		</div>
 	);
 };

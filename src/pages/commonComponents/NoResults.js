@@ -4,19 +4,12 @@ import Col from 'react-bootstrap/Col';
 
 class NoResults extends React.Component {
 	state = {
-		searchString: '',
-		type: '',
 		dataUtilityWizard: false,
 	};
 
-	constructor(props) {
-		super(props);
-		this.state.searchString = props.searchString;
-		this.state.type = props.type;
-	}
-
 	render() {
-		const { searchString, type, dataUtilityWizard } = this.state;
+		const { dataUtilityWizard } = this.state;
+		const { searchString, type } = this.props;
 
 		return (
 			<div>

@@ -1,43 +1,43 @@
-import React, { Component, Fragment } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { has, isNil, isEmpty, isUndefined, _ } from 'lodash';
-import axios from 'axios';
 import * as Sentry from '@sentry/react';
-import { Row, Col, Container, Tabs, Tab, Alert, Tooltip, Button, OverlayTrigger, Dropdown } from 'react-bootstrap/';
-import NotFound from '../commonComponents/NotFound';
-import Loading from '../commonComponents/Loading';
-import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
-import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
-import SearchBar from '../commonComponents/searchBar/SearchBar';
-import SVGIcon from '../../images/SVGIcon';
-import { ReactComponent as InfoFillSVG } from '../../images/infofill.svg';
-import { ReactComponent as InfoSVG } from '../../images/info.svg';
-import { ReactComponent as MetadataBronze } from '../../images/bronzeNew.svg';
-import { ReactComponent as MetadataSilver } from '../../images/silverNew.svg';
-import { ReactComponent as MetadataGold } from '../../images/goldNew.svg';
-import { ReactComponent as MetadataPlatinum } from '../../images/platinumNew.svg';
-import { ReactComponent as MetadataNotRated } from '../../images/notRatedNew.svg';
-import { ReactComponent as GoldStar } from '../../images/cd-star.svg';
-import googleAnalytics from '../../tracking';
+import axios from 'axios';
+import { has, isEmpty, isNil, isUndefined } from 'lodash';
+import React, { Component, Fragment } from 'react';
+import { Alert, Button, Col, Container, Dropdown, OverlayTrigger, Row, Tab, Tabs, Tooltip } from 'react-bootstrap/';
 import Linkify from 'react-linkify';
-import DatasetSchema from './DatasetSchema';
-import TechnicalMetadata from './components/TechnicalMetadata';
-import TechnicalDetailsPage from './components/TechnicalDetailsPage';
-import DiscourseTopic from '../discourse/DiscourseTopic';
+import ReactMarkdown from 'react-markdown';
+import 'react-tabs/style/react-tabs.css';
+import { ReactComponent as MetadataBronze } from '../../images/bronzeNew.svg';
+import { ReactComponent as GoldStar } from '../../images/cd-star.svg';
+import { ReactComponent as MetadataGold } from '../../images/goldNew.svg';
+import { ReactComponent as InfoSVG } from '../../images/info.svg';
+import { ReactComponent as InfoFillSVG } from '../../images/infofill.svg';
+import { ReactComponent as MetadataNotRated } from '../../images/notRatedNew.svg';
+import { ReactComponent as MetadataPlatinum } from '../../images/platinumNew.svg';
+import { ReactComponent as MetadataSilver } from '../../images/silverNew.svg';
+import SVGIcon from '../../images/SVGIcon';
+import googleAnalytics from '../../tracking';
+import DataSetHelper from '../../utils/DataSetHelper.util';
+import ActionBar from '../commonComponents/actionbar/ActionBar';
+import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
+import CommunicateDataCustodianModal from '../commonComponents/communicateDataCustodianModal/CommunicateDataCustodianModal';
+import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
+import ErrorModal from '../commonComponents/errorModal/ErrorModal';
+import Loading from '../commonComponents/Loading';
+import MessageNotFound from '../commonComponents/MessageNotFound';
+import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
+import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
+import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
-import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import DataSetHelper from '../../utils/DataSetHelper.util';
-import ErrorModal from '../commonComponents/errorModal/ErrorModal';
-import CommunicateDataCustodianModal from '../commonComponents/communicateDataCustodianModal/CommunicateDataCustodianModal';
-import 'react-tabs/style/react-tabs.css';
-import './Dataset.scss';
-import DataUtitlityFramework from './components/DataUtilityFramework';
-import DataQuality from './components/DataQuality';
-import ActionBar from '../commonComponents/actionbar/ActionBar';
-import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
-import DatasetAboutCard from './components/DatasetAboutCard';
+import DiscourseTopic from '../discourse/DiscourseTopic';
 import CohortDiscoveryBanner from './components/CohortDiscoveryBanner';
+import DataQuality from './components/DataQuality';
+import DatasetAboutCard from './components/DatasetAboutCard';
+import DataUtitlityFramework from './components/DataUtilityFramework';
+import TechnicalDetailsPage from './components/TechnicalDetailsPage';
+import TechnicalMetadata from './components/TechnicalMetadata';
+import './Dataset.scss';
+import DatasetSchema from './DatasetSchema';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
@@ -1403,7 +1403,7 @@ class DatasetDetail extends Component {
 																	/>
 																))
 															) : (
-																<NotFound word='technical details' />
+																<MessageNotFound word='technical details' />
 															)}
 														</Col>
 													</Row>
@@ -1576,7 +1576,7 @@ class DatasetDetail extends Component {
 													</Col>
 												</Row>
 												{relatedObjectsFiltered.length <= 0 ? (
-													<NotFound word='related resources' />
+													<MessageNotFound word='related resources' />
 												) : (
 													relatedObjectsFiltered.map((object, index) => (
 														<span key={index}>
@@ -1596,10 +1596,10 @@ class DatasetDetail extends Component {
 
 										<Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
 											{!collections || collections.length <= 0 ? (
-												<NotFound text='This dataset has not been featured on any collections yet.' />
+												<MessageNotFound text='This dataset has not been featured on any collections yet.' />
 											) : (
 												<>
-													<NotFound text='This dataset appears on the collections below. A collection can be a group of resources on the same theme or a Trusted Research Environment where this dataset can be accessed.' />
+													<MessageNotFound text='This dataset appears on the collections below. A collection can be a group of resources on the same theme or a Trusted Research Environment where this dataset can be accessed.' />
 
 													<Row>
 														{collections.map(collection => (

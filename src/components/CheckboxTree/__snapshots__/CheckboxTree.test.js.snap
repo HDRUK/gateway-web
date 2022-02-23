@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the CheckboxTree component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="additional-classname css-1sivg29 ui-CheckboxTree css-rjq0ro-CheckboxTree"
+  />
+</div>
+`;

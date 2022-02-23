@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 
-import NotFound from '../commonComponents/NotFound';
+import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 
@@ -213,7 +213,7 @@ class ReviewTools extends React.Component {
 
 											{activeCount <= 0 ? (
 												<Row className='margin-right-15'>
-													<NotFound word='reviews' />
+													<MessageNotFound word='reviews' />
 												</Row>
 											) : (
 												data.map(dat => {
@@ -262,7 +262,7 @@ class ReviewTools extends React.Component {
 
 											{reviewCount <= 0 ? (
 												<Row className='margin-right-15'>
-													<NotFound word='reviews' />
+													<MessageNotFound word='reviews' />
 												</Row>
 											) : (
 												data.map(dat => {
@@ -319,7 +319,7 @@ class ReviewTools extends React.Component {
 
 											{rejectedCount <= 0 ? (
 												<Row className='margin-right-15'>
-													<NotFound word='reviews' />
+													<MessageNotFound word='reviews' />
 												</Row>
 											) : (
 												data.map(dat => {
@@ -368,7 +368,7 @@ class ReviewTools extends React.Component {
 
 											{archiveCount <= 0 ? (
 												<Row className='margin-right-15'>
-													<NotFound word='reviews' />
+													<MessageNotFound word='reviews' />
 												</Row>
 											) : (
 												data.map(dat => {

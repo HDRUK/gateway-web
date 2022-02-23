@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the DropdownCustom component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-LayoutBox css-1sivg29"
+  >
+    <div
+      class="css-2jpb0u-Input form-group"
+    >
+      <label
+        class="form-label"
+      />
+      <div
+        class="ui-Input ui-Typeahead css-gaftnd-Input input-group"
+      >
+        <div
+          class="rbt"
+          style="outline: none; position: relative;"
+          tabindex="-1"
+        >
+          <div
+            style="display: flex; flex: 1; height: 100%; position: relative;"
+          >
+            <input
+              aria-autocomplete="both"
+              aria-expanded="true"
+              aria-haspopup="listbox"
+              aria-owns="prepopulate"
+              autocomplete="off"
+              class="rbt-input-main form-control rbt-input  focus"
+              role="combobox"
+              type="text"
+              value="Ciara Ward"
+            />
+            <input
+              aria-hidden="true"
+              class="rbt-input-hint"
+              readonly=""
+              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: solid solid solid solid; border-width: 2px 2px 2px 2px; font-size: 14px; height: 40px; line-height: normal; padding: 1px 1px 1px 1px;"
+              tabindex="-1"
+              value=""
+            />
+          </div>
+          <ul
+            aria-label="menu-options"
+            class="rbt-menu dropdown-menu show"
+            id="prepopulate"
+            role="listbox"
+            style="position: absolute; display: block; max-height: 300px; overflow: auto; top: 0px; left: 0px; transform: translate3d(NaNpx, NaNpx, 0); will-change: transform; width: 0px;"
+          >
+            <li
+              class="disabled"
+              role="option"
+            >
+              <a
+                class="dropdown-item disabled"
+                href="#"
+              >
+                No matches found.
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

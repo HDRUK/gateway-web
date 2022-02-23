@@ -2,7 +2,6 @@ export default {
 	version: 'Version 2.0.0',
 	versionNumber: 2,
 	applicationStatus: 'active',
-	dateSubmitted: '2021-11-08T14:49:41.225Z',
 	meta: {
 		dateSubmitted: '2021-11-08T14:49:41.225Z',
 		dateCreated: '2021-11-08T14:39:43.513Z',

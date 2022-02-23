@@ -1,0 +1,12 @@
+@import '../../../../css/variables';
+@import '../../../../css/typography';
+
+.darContributorsDropdown {
+    width: 100%;
+    padding: 8px 16px !important;
+}
+
+.noTextDecoration,
+.noTextDecoration:hover  {
+	text-decoration: none;
+}

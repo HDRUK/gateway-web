@@ -97,7 +97,7 @@ const DataUtilityWizardModal = ({
 															checked={entry.label === selectedItems.find(item => item.parentKey === step.key)?.label}
 														/>
 													</InputGroup.Prepend>
-													<FormText className='ml-3'>{entry.label}</FormText>
+													<FormText className='ml-3'>{entry.labelAlias ? entry.labelAlias : entry.label}</FormText>
 												</InputGroup>
 											);
 										})}

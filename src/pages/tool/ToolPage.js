@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import queryString from 'query-string';
 import * as Sentry from '@sentry/react';
-import { Row, Col, Tabs, Tab, Container, Alert, Dropdown } from 'react-bootstrap';
-import NotFound from '../commonComponents/NotFound';
-import Uploader from '../commonComponents/Uploader';
-import Loading from '../commonComponents/Loading';
-import Reviews from '../commonComponents/reviews/Reviews';
-import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
-import SearchBar from '../commonComponents/searchBar/SearchBar';
-import DiscourseTopic from '../discourse/DiscourseTopic';
-import 'react-tabs/style/react-tabs.css';
-import { baseURL } from '../../configs/url.config';
+import axios from 'axios';
+import _ from 'lodash';
+import moment from 'moment';
+import queryString from 'query-string';
+import React, { useEffect, useState } from 'react';
+import { Alert, Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 import Rating from 'react-rating';
-import moment from 'moment';
-import _ from 'lodash';
-import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import SVGIcon from '../../images/SVGIcon';
-import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg';
+import 'react-tabs/style/react-tabs.css';
+import { baseURL } from '../../configs/url.config';
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
-import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
-import UserMessages from '../commonComponents/userMessages/UserMessages';
-import ActionBar from '../commonComponents/actionbar/ActionBar';
-import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
-import ErrorModal from '../commonComponents/errorModal';
-import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
+import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg';
+import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
+import ActionBar from '../commonComponents/actionbar/ActionBar';
+import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
+import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
+import ErrorModal from '../commonComponents/errorModal';
+import Loading from '../commonComponents/Loading';
+import MessageNotFound from '../commonComponents/MessageNotFound';
+import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
+import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
+import Reviews from '../commonComponents/reviews/Reviews';
+import SearchBar from '../commonComponents/searchBar/SearchBar';
+import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
+import Uploader from '../commonComponents/Uploader';
+import UserMessages from '../commonComponents/userMessages/UserMessages';
+import DiscourseTopic from '../discourse/DiscourseTopic';
 
 export const ToolDetail = props => {
 	const [id] = useState('');
@@ -741,7 +741,7 @@ export const ToolDetail = props => {
 												</Col>
 											</Row>
 											{relatedObjectsFiltered.length <= 0 ? (
-												<NotFound word='related resources' />
+												<MessageNotFound word='related resources' />
 											) : (
 												relatedObjectsFiltered.map((object, index) => (
 													<span key={index}>
@@ -760,10 +760,10 @@ export const ToolDetail = props => {
 									</Tab>
 									<Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
 										{!collections || collections.length <= 0 ? (
-											<NotFound text='This tool has not been featured on any collections yet.' />
+											<MessageNotFound text='This tool has not been featured on any collections yet.' />
 										) : (
 											<>
-												<NotFound text='This tool appears on the collections below. A collection is a group of resources on the same theme.' />
+												<MessageNotFound text='This tool appears on the collections below. A collection is a group of resources on the same theme.' />
 
 												<Row>
 													{collections.map(collection => (

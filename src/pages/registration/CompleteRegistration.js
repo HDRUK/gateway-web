@@ -14,6 +14,7 @@ import ErrorModal from '../commonComponents/errorModal';
 import googleAnalytics from '../../tracking';
 import 'react-tabs/style/react-tabs.css';
 import SVGIcon from '../../images/SVGIcon';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
@@ -607,15 +608,15 @@ const YourAccountForm = props => {
 								</Row>
 								<Row>
 									<Col sm={11} lg={11}>
-										<Form.Control
+										<TextareaAutosize
 											as='textarea'
-											id='bio'
+											id='bio' 
 											name='bio'
 											type='text'
 											className={
 												formik.touched.bio && formik.errors.bio
-													? 'emptyFormInput addFormInput descriptionInput'
-													: 'addFormInput descriptionInput'
+													? 'emptyFormInput addFormInput descriptionInput textarea-addEditForm'
+													: 'addFormInput descriptionInput textarea-addEditForm'
 											}
 											onChange={formik.handleChange}
 											value={formik.values.bio}

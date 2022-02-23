@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the SearchControls component When it is rendered And it is not loading Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="css-1sivg29 row"
+  >
+    <div
+      class="col-lg-6"
+    >
+      <div
+        class="css-koyxv1-Input form-group"
+      >
+        <div
+          class="css-j8o1xl-Input input-group-prepend"
+        >
+          <button
+            fill="green700"
+            name="search"
+          >
+            Icon
+          </button>
+        </div>
+        <input
+          class="form-control"
+          name="search"
+          placeholder="Search within dataset"
+          value="dataset"
+        />
+        <div
+          class="ui-Input ui-SearchInput css-1sivg29 css-1r1cho1-Input input-group"
+        >
+          <div
+            class="css-haly75-Input input-group-prepend"
+          >
+            <button
+              fill="green700"
+              name="search"
+            >
+              Icon
+            </button>
+          </div>
+          <input
+            class="form-control"
+            name="search"
+            placeholder="search.placeholder"
+            value="dataset"
+          />
+          <div
+            class="css-x0rxt-Input input-group-append"
+          >
+            <button
+              color="purple500"
+              name="clear"
+              role="button"
+            >
+              Icon
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-lg-2"
+    />
+    <div
+      class="d-flex justify-content-end col-lg-4"
+    >
+      <div
+        class="ui-SortDropdown css-1sivg29 css-16k9oib-SortDropdown"
+      >
+        <div
+          class="ui-Dropdown css-1sivg29 css-1quv89l-SortDropdown dropdown"
+        >
+          <button
+            aria-expanded="false"
+            aria-haspopup="true"
+            class="dropdown-toggle btn btn-primary"
+            type="button"
+          >
+            Match to search terms (closest first)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

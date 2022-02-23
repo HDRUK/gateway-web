@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AccountDatasetsCreate component When it is rendered And "Add new dataset" is clicked Then calls preventDefault 1`] = `
+<div>
+  <div
+    class="fade col-sm-12 main-alert alert alert-success show"
+    role="alert"
+  >
+    <svg
+      class=""
+      data-testid="check"
+      height="18"
+      viewBox="0 0 24 22"
+      width="18"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <path
+        d="M9.988 17c-.265 0-.52-.105-.707-.292l-3-3c-.38-.393-.374-1.016.012-1.402.386-.386 1.01-.391 1.402-.012l2.2 2.2 6.303-8.107c.339-.437.967-.516 1.404-.176.436.339.515.967.176 1.404l-7 9c-.176.227-.441.368-.728.386h-.062z"
+        fill="#2C8267"
+      />
+    </svg>
+     
+    Sample message
+  </div>
+  <div
+    class="accountHeader"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-8 col-sm-12"
+      >
+        <div>
+          <span
+            class="black-20"
+          >
+            Datasets
+          </span>
+        </div>
+        <div>
+          <span
+            class="gray700-13 "
+          >
+            Approve or reject pending datasets.
+          </span>
+        </div>
+      </div>
+      <div
+        class="col-md-4 col-sm-12"
+        style="text-align: right;"
+      >
+        <button
+          class="addButton btn btn-primary"
+          type="button"
+        >
+          + 
+          Add a new dataset
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Given the AccountDatasetsCreate component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="fade col-sm-12 main-alert alert alert-success show"
+    role="alert"
+  >
+    <svg
+      class=""
+      data-testid="check"
+      height="18"
+      viewBox="0 0 24 22"
+      width="18"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <path
+        d="M9.988 17c-.265 0-.52-.105-.707-.292l-3-3c-.38-.393-.374-1.016.012-1.402.386-.386 1.01-.391 1.402-.012l2.2 2.2 6.303-8.107c.339-.437.967-.516 1.404-.176.436.339.515.967.176 1.404l-7 9c-.176.227-.441.368-.728.386h-.062z"
+        fill="#2C8267"
+      />
+    </svg>
+     
+    Sample message
+  </div>
+  <div
+    class="accountHeader"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-8 col-sm-12"
+      >
+        <div>
+          <span
+            class="black-20"
+          >
+            Datasets
+          </span>
+        </div>
+        <div>
+          <span
+            class="gray700-13 "
+          >
+            Approve or reject pending datasets.
+          </span>
+        </div>
+      </div>
+      <div
+        class="col-md-4 col-sm-12"
+        style="text-align: right;"
+      >
+        <button
+          class="addButton btn btn-primary"
+          type="button"
+        >
+          + 
+          Add a new dataset
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

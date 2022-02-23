@@ -1,29 +1,28 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import classnames from 'classnames';
-
-import { Container, Row, Col, Dropdown } from 'react-bootstrap';
-import NotificationBadge from 'react-notification-badge';
 import { isEmpty } from 'lodash';
-import SVGIcon from '../../../images/SVGIcon';
+import moment from 'moment';
+import { Col, Container, Dropdown, Row } from 'react-bootstrap';
+import NotificationBadge from 'react-notification-badge';
+import { NotificationManager } from 'react-notifications';
+import { cmsURL } from '../../../configs/url.config';
+import { ReactComponent as WhiteArrowDownSvg } from '../../../images/arrowDownWhite.svg';
+import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
+import { ReactComponent as ClearButtonSvg } from '../../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../../images/colour.svg';
 import { ReactComponent as ColourLogoSvgMobile } from '../../../images/colourMobile.svg';
-import { ReactComponent as ClearButtonSvg } from '../../../images/clear.svg';
 import { ReactComponent as HamBurgerSvg } from '../../../images/hamburger.svg';
-import { ReactComponent as WhiteArrowDownSvg } from '../../../images/arrowDownWhite.svg';
-import { NotificationManager } from 'react-notifications';
-import AddNewEntity from './AddNewEntity';
-import './SearchBar.scss';
+import SVGIcon from '../../../images/SVGIcon';
+import googleAnalytics from '../../../tracking';
+import SearchInput from '../../../components/SearchInput';
+import UatBanner from '../uatBanner/UatBanner';
 import '../uatBanner/UatBanner.scss';
-import moment from 'moment';
-import { cmsURL } from '../../../configs/url.config';
-import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
+import AddNewEntity from './AddNewEntity';
+import CmsDropdown from './CmsDropdown';
+import './SearchBar.scss';
 import UserDropdownItems from './UserDropdownItems';
 import UserDropdownTeams from './UserDropdownTeams';
-import UatBanner from '../uatBanner/UatBanner';
-import googleAnalytics from '../../../tracking';
-
-import CmsDropdown from './CmsDropdown';
 
 var baseURL = require('../BaseURL').getURL();
 const urlEnv = require('../BaseURL').getURLEnv();
@@ -150,9 +149,17 @@ class SearchBar extends React.Component {
 		});
 	};
 
+	handleSearchReset = () => {
+		this.setState({ textValue: '' });
+
+		if (this.props.doUpdateSearchString) {
+			this.props.doUpdateSearchString('');
+		}
+	};
+
 	onSearch = e => {
-		//onSearch
 		this.setState({ textValue: e.target.value });
+
 		if (this.props.doUpdateSearchString) {
 			this.props.doUpdateSearchString(e.target.value);
 		}
@@ -372,29 +379,13 @@ class SearchBar extends React.Component {
 										<Container>
 											<Row className='searchBarRow'>
 												<Col>
-													<span className='searchBarInputGrey'>
-														<span className='searchInputIconGrey'>
-															<SVGIcon name='searchicon' width={20} height={20} fill={'#2c8267'} stroke='none' type='submit' />
-														</span>
-														<span>
-															<input
-																data-testid='searchbar'
-																type='text'
-																placeholder=''
-																id='searchInputSpanGrey'
-																onChange={this.onSearch}
-																onKeyDown={this.props.doSearchMethod}
-																value={textValue}
-															/>
-														</span>
-														{this.props.searchString !== '' && this.props.searchString !== undefined ? (
-															<span className='searchInputClearGrey' data-testid='searchbar-clear-btn'>
-																<span style={{ cursor: 'pointer' }} onClick={this.props.onClearMethod}>
-																	<ClearButtonSvg />
-																</span>
-															</span>
-														) : null}
-													</span>
+													<SearchInput
+														onChange={this.onSearch}
+														onKeyDown={this.props.doSearchMethod}
+														value={textValue}
+														onReset={this.props.onClearMethod}
+														variant='secondary'
+													/>
 												</Col>
 											</Row>
 										</Container>

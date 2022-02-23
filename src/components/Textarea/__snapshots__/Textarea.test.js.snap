@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Textarea component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="css-hdsa3t-Textarea form-group"
+  >
+    <label
+      class="form-label"
+    >
+      Sample label
+    </label>
+    <div
+      class="ui-Textarea css-1sivg29 css-kfon1y-Textarea input-group"
+    >
+      <div
+        class="ui-TextArea__charCount css-z83g30-Textarea"
+      >
+        11
+         
+        sample description
+        <span
+          class="css-cj1eqa-Textarea"
+        >
+           
+          (
+          11
+          /
+          255
+          )
+        </span>
+      </div>
+      <textarea
+        class="form-control"
+      />
+    </div>
+  </div>
+</div>
+`;

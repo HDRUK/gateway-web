@@ -3,183 +3,187 @@
 exports[`Given the CoursesSearchResults component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="row"
+    style="margin-top: 8px;"
   >
     <div
-      class="text-right save-dropdown"
+      class="row"
     >
-      Sort goes here...
+      <div
+        class="text-right save-dropdown"
+      >
+        Sort goes here...
+      </div>
     </div>
-  </div>
-  <div
-    class="courseDateHeader row"
-  >
     <div
-      class="col"
+      class="courseDateHeader row"
     >
-      <span
-        class="black-20-semibold "
+      <div
+        class="col"
       >
-        Flexible
-      </span>
-    </div>
-  </div>
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <ul
-    class="pagination"
-  >
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
-      >
-        1
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
-      >
-        2
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
-      >
-        3
-      </a>
-    </li>
-    <li
-      class="page-item active"
-    >
-      <span
-        class="page-link"
-      >
-        4
         <span
-          class="sr-only"
+          class="black-20-semibold "
         >
-          (current)
+          Flexible
         </span>
-      </span>
-    </li>
-    <li
-      class="page-item"
+      </div>
+    </div>
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <ul
+      class="pagination"
     >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+      <li
+        class="page-item"
       >
-        5
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          1
+        </a>
+      </li>
+      <li
+        class="page-item"
       >
-        6
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          2
+        </a>
+      </li>
+      <li
+        class="page-item"
       >
-        7
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          3
+        </a>
+      </li>
+      <li
+        class="page-item active"
       >
-        8
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <span
+          class="page-link"
+        >
+          4
+          <span
+            class="sr-only"
+          >
+            (current)
+          </span>
+        </span>
+      </li>
+      <li
+        class="page-item"
       >
-        9
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          5
+        </a>
+      </li>
+      <li
+        class="page-item"
       >
-        10
-      </a>
-    </li>
-  </ul>
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          6
+        </a>
+      </li>
+      <li
+        class="page-item"
+      >
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          7
+        </a>
+      </li>
+      <li
+        class="page-item"
+      >
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          8
+        </a>
+      </li>
+      <li
+        class="page-item"
+      >
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          9
+        </a>
+      </li>
+      <li
+        class="page-item"
+      >
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          10
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
 `;

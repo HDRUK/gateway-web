@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Button, Modal, Row, Col } from 'react-bootstrap';
 import DiscoursePost from './DiscoursePost';
 import DiscourseAddPost from './DiscourseAddPost';
-import NotFound from '../commonComponents/NotFound';
+import MessageNotFound from '../commonComponents/MessageNotFound';
 import styles from './Discourse.module.scss';
 import axios from 'axios';
 import { baseURL } from '../../configs/url.config';
@@ -235,7 +235,7 @@ class DiscourseTopic extends Component {
 				) : (
 					<Row className='margin-top-16'>
 						<Col>
-							<NotFound text='Nothing yet.  Add a comment to start the discussion.' />
+							<MessageNotFound text='Nothing yet.  Add a comment to start the discussion.' />
 						</Col>
 					</Row>
 				)}

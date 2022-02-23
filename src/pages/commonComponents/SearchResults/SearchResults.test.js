@@ -22,7 +22,7 @@ const props = {
 	search: 'search term',
 	updateOnFilterBadge: jest.fn(),
 	onPagination: jest.fn(),
-	maxResult: 40,
+	maxResults: 40,
 	isLoading: false,
 	sort: 'Sort goes here...',
 };
@@ -99,6 +99,18 @@ describe('Given the SearchResults component', () => {
 
 				it('Then shows a no results message', () => {
 					expect(wrapper.getByText('We couldn’t find any dataset matching the search term ‘search term’')).toBeTruthy();
+				});
+
+				describe('And there is a custom error message', () => {
+					beforeAll(() => {
+						wrapper.rerender(
+							<SearchResults {...props} count={0} errorMessage={({ type, search }) => `No results matching ${search} for ${type}`} />
+						);
+					});
+
+					it('Then shows the correct message', () => {
+						expect(wrapper.getByText(`No results matching search term for dataset`)).toBeTruthy();
+					});
 				});
 			});
 

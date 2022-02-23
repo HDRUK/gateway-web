@@ -3,30 +3,34 @@
 exports[`Given the SearchResults component When it is rendered And it is no longer loading And the count is zero Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="row"
+    style="margin-top: 8px;"
   >
     <div
-      class="text-right save-dropdown"
-    >
-      Sort goes here...
-    </div>
-  </div>
-  <div>
-    <div
-      class="mt-4 row"
+      class="row"
     >
       <div
-        class="gray800-14 text-center col"
+        class="text-right save-dropdown"
       >
-        <span>
-           
-          We couldn’t find any 
-          dataset
-           matching the search term ‘
-          search term
-          ’
-           
-        </span>
+        Sort goes here...
+      </div>
+    </div>
+    <div>
+      <div
+        class="mt-4 row"
+      >
+        <div
+          class="gray800-14 text-center col"
+        >
+          <span>
+             
+            We couldn’t find any 
+            dataset
+             matching the search term ‘
+            search term
+            ’
+             
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -36,178 +40,182 @@ exports[`Given the SearchResults component When it is rendered And it is no long
 exports[`Given the SearchResults component When it is rendered And it is no longer loading Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="row"
+    style="margin-top: 8px;"
   >
     <div
-      class="text-right save-dropdown"
+      class="row"
     >
-      Sort goes here...
+      <div
+        class="text-right save-dropdown"
+      >
+        Sort goes here...
+      </div>
     </div>
-  </div>
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <div />
-  <ul
-    class="pagination"
-  >
-    <li
-      class="page-item"
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <ul
+      class="pagination"
     >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+      <li
+        class="page-item"
       >
-        1
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
-      >
-        2
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
-      >
-        3
-      </a>
-    </li>
-    <li
-      class="page-item active"
-    >
-      <span
-        class="page-link"
-      >
-        4
-        <span
-          class="sr-only"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
         >
-          (current)
+          1
+        </a>
+      </li>
+      <li
+        class="page-item"
+      >
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          2
+        </a>
+      </li>
+      <li
+        class="page-item"
+      >
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          3
+        </a>
+      </li>
+      <li
+        class="page-item active"
+      >
+        <span
+          class="page-link"
+        >
+          4
+          <span
+            class="sr-only"
+          >
+            (current)
+          </span>
         </span>
-      </span>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+      </li>
+      <li
+        class="page-item"
       >
-        5
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          5
+        </a>
+      </li>
+      <li
+        class="page-item"
       >
-        6
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          6
+        </a>
+      </li>
+      <li
+        class="page-item"
       >
-        7
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          7
+        </a>
+      </li>
+      <li
+        class="page-item"
       >
-        8
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          8
+        </a>
+      </li>
+      <li
+        class="page-item"
       >
-        9
-      </a>
-    </li>
-    <li
-      class="page-item"
-    >
-      <a
-        class="page-link"
-        href="#"
-        role="button"
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          9
+        </a>
+      </li>
+      <li
+        class="page-item"
       >
-        10
-      </a>
-    </li>
-  </ul>
+        <a
+          class="page-link"
+          href="#"
+          role="button"
+        >
+          10
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
 `;
 
 exports[`Given the SearchResults component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    style="margin-top: 30px;"
+    style="margin-top: 8px;"
   >
     <div
       class="mt-2 row"

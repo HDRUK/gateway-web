@@ -2,12 +2,12 @@ import { isEmpty } from 'lodash';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Alert, Button, Col, Row, Tab, Tabs } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
+import { LayoutContent } from '../../components/Layout';
 import SVGIcon from '../../images/SVGIcon';
 import dataUseRegistersService from '../../services/data-use-registers';
 import googleAnalytics from '../../tracking';
 import Loading from '../commonComponents/Loading';
 import MessageNotFound from '../commonComponents/MessageNotFound';
-import AccountContent from '../dashboard/Components/AccountContent';
 import DarHelperUtil from './../../utils/DarHelper.util';
 import ArchiveModal from './ArchiveModal';
 import './DataUse.scss';
@@ -139,15 +139,15 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 
 	if (dataUseRegistersByTeam.isLoading) {
 		return (
-			<AccountContent>
+			<LayoutContent>
 				<Loading data-testid='isLoading' />
-			</AccountContent>
+			</LayoutContent>
 		);
 	}
 
 	return (
 		<Fragment>
-			<AccountContent>
+			<LayoutContent>
 				<Row>
 					<Col className='pl-0 pr-0'>
 						{!isEmpty(alert) && (
@@ -244,7 +244,7 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 				{showRejectModal && (
 					<DataUseRejectModal onConfirm={updataDataUseStatus} isVisible={showRejectModal} toggleModal={toggleRejectModal} />
 				)}
-			</AccountContent>
+			</LayoutContent>
 		</Fragment>
 	);
 });

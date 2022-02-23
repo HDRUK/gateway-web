@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import UnmetDemand from './DARComponents/UnmetDemand';
-import TopSearches from './TopSearches';
-import TopDatasets from './TopDatasets';
-import { Row, Col, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
-import DashboardKPI from './DARComponents/DashboardKPI';
+import React, { Fragment } from 'react';
+import { Col, Dropdown, DropdownButton, Row } from 'react-bootstrap';
 import Loading from '../commonComponents/Loading';
+import { LayoutContent } from '../../components/Layout';
 import UnmetDemandSection from './Components/UnmetDemand/UnmetDemandSection';
+import DashboardKPI from './DARComponents/DashboardKPI';
 import './Dashboard.scss';
-import AccountContent from './Components/AccountContent';
+import TopDatasets from './TopDatasets';
+import TopSearches from './TopSearches';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 let isMounted = false;
@@ -239,9 +238,9 @@ class AccountAnalyticsDashboard extends React.Component {
 
 		if (isLoading) {
 			return (
-				<AccountContent>
+				<LayoutContent>
 					<Loading data-testid='isLoading' />
-				</AccountContent>
+				</LayoutContent>
 			);
 		}
 

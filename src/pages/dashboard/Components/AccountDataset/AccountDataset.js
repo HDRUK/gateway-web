@@ -1,22 +1,22 @@
 import _ from 'lodash';
-import React, { Suspense, useCallback, useState, useEffect } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import { Redirect, useHistory, useParams } from 'react-router';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { LayoutContent } from '../../../../components/Layout';
 import { useAuth } from '../../../../context/AuthContext';
-import serviceActivityLog from '../../../../services/activitylog/activitylog';
-import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
+import serviceActivityLog from '../../../../services/activitylog';
+import serviceDatasetOnboarding from '../../../../services/dataset-onboarding';
 import { getTeam } from '../../../../utils/auth';
 import { default as DataSetHelper, default as utils } from '../../../../utils/DataSetHelper.util';
 import ActionBar from '../../../commonComponents/actionbar/ActionBar';
+import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 import DatasetCard from '../../../commonComponents/DatasetCard';
 import Loading from '../../../commonComponents/Loading';
-import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
-import AccountContent from '../AccountContent';
+import ActivityLogCard from '../ActivityLogCard';
 import AccountDatasetApproveModal from './AccountDatasetApproveModal';
 import AccountDatasetRejectModal from './AccountDatasetRejectModal';
-import ActivityLogCard from '../ActivityLogCard';
 
 const AccountDataset = props => {
 	const { t } = useTranslation();
@@ -31,16 +31,18 @@ const AccountDataset = props => {
 		showDisabled: true,
 		statusError: false,
 		showApproveDatasetModal: false,
-		showRejectDatasetModal: false
+		showRejectDatasetModal: false,
 	});
 
 	const dataActivityLog = serviceActivityLog.usePostActivityLog();
-	const publisherId = utils.getPublisherID(userState[0], team);
-	const dataPublisher = serviceDatasetOnboarding.useGetPublisher(Array.isArray(publisherId) ? publisherId[0] : publisherId, null);
+	const publisherId = React.useMemo(() => utils.getPublisherID(userState[0], team), [userState[0], team]);
+	const dataPublisher = serviceDatasetOnboarding.useGetPublisher(publisherId);
 
 	useEffect(() => {
 		setTeam(getTeam(props));
-	}, [id]);
+
+		if (publisherId && id) dataPublisher.mutate();
+	}, [publisherId, id]);
 
 	const getValidDatasets = listOfDatasets => {
 		return listOfDatasets.filter(dataset => {
@@ -79,7 +81,9 @@ const AccountDataset = props => {
 		if (dataPublisher.data) {
 			const {
 				data: {
-					data: { listOfDatasets },
+					data: {
+						results: { listOfDatasets },
+					},
 				},
 			} = dataPublisher.data;
 
@@ -100,17 +104,16 @@ const AccountDataset = props => {
 
 	useEffect(() => {
 		const page = getNextPage(0);
-		if (page) {
-			if (page.dataset) {
-				const { dataset } = page;
+		if (page && page.dataset) {
+			const { dataset } = page;
 
-				setCurrentDataset(dataset);
+			setCurrentDataset(dataset);
 
-				dataActivityLog.mutateAsync({
-					versionIds: [...dataset.listOfVersions.map(version => version._id), dataset._id],
-					type: 'dataset',
-				});
-			}
+			dataActivityLog.mutateAsync({
+				versionIds: [...dataset.listOfVersions.map(version => version._id), dataset._id],
+				type: 'dataset',
+			});
+
 			updateButtonStates(page);
 		}
 	}, [dataPublisher.data, id, currentDataset]);
@@ -121,7 +124,7 @@ const AccountDataset = props => {
 
 			if (dataset) {
 				history.push(`/account/datasets/${dataset.pid}`);
-			} 
+			}
 		},
 		[id, dataPublisher.data, team]
 	);
@@ -130,76 +133,82 @@ const AccountDataset = props => {
 
 	const goToNext = useCallback(() => {
 		const { showNext } = state;
+
 		if (showNext) {
 			handlePaginationClick(1);
 		}
-	}, [showNext]);
+	}, [id, showNext]);
 
-	const closeRejectDatasetModal = () => setState({...state, showRejectDatasetModal: false });
+	const closeRejectDatasetModal = () => setState({ ...state, showRejectDatasetModal: false });
 
 	const closeRejectModalAndRedirectToPendingDatasets = alert => {
 		closeRejectDatasetModal();
+
 		history.push({
 			pathname: `/account`,
 			search: '?tab=datasets',
-			state: { alert },
+			state: { alert, team, userState },
 		});
 	};
 
-	const closeRejectModalAndGoToNext = () => {
+	const closeRejectModalAndGoToNext = React.useCallback(() => {
 		closeRejectDatasetModal();
 		goToNext();
-	};
+	}, [id, showNext]);
 
-	const closeApproveDatasetModal = () => setState({...state, showApproveDatasetModal: false });
+	const closeApproveDatasetModal = () => setState({ ...state, showApproveDatasetModal: false });
 
 	const closeApproveModalAndRedirectToPendingDatasets = alert => {
 		closeApproveDatasetModal();
+
 		history.push({
 			pathname: `/account`,
 			search: '?tab=datasets',
-			state: { alert },
+			state: { alert, team },
 		});
 	};
 
-	const closeApproveModalAndGoToNext = () => {
+	const closeApproveModalAndGoToNext = React.useCallback(() => {
 		closeApproveDatasetModal();
 		goToNext();
-	};
+	}, [id, showNext]);
 
 	const handleViewForm = useCallback(() => {
 		history.push(`/dataset-onboarding/${currentDataset._id}`);
 	}, [currentDataset]);
 
-	const makeADecisionActions = [{
-		description: t('dataset.makeADecision'),
-		actions: [
+	const makeADecisionActions = [
 		{
-			title: t('dataset.approve'),
-			onClick: () => {
-				setState({...state, showApproveDatasetModal: true })
-			},
-			visible: true
+			description: t('dataset.makeADecision'),
+			actions: [
+				{
+					title: t('dataset.approve'),
+					onClick: () => {
+						setState({ ...state, showApproveDatasetModal: true });
+					},
+					visible: true,
+				},
+				{
+					title: t('dataset.reject'),
+					onClick: () => {
+						setState({ ...state, showRejectDatasetModal: true });
+					},
+					visible: true,
+				},
+			],
 		},
-		{
-			title: t('dataset.reject'),
-			onClick: () => {
-				setState({...state, showRejectDatasetModal: true })
-			},
-			visible: true
-		}
-	]}];
+	];
 
 	if (dataPublisher.isLoading || dataActivityLog.isLoading) {
 		return (
-			<AccountContent>
+			<LayoutContent>
 				<Loading />
-			</AccountContent>
+			</LayoutContent>
 		);
 	}
 
-	if (dataPublisher.isFetched) {
-		if (dataPublisher.data && !filterCurrentDataset(dataPublisher.data.data.data.listOfDatasets)) {
+	if (dataPublisher.isSuccess) {
+		if (dataPublisher.data && !filterCurrentDataset(dataPublisher.data.data.data.results.listOfDatasets)) {
 			NotificationManager.error('The accessed dataset does not exist', 'Page not found', 10000);
 
 			return <Redirect to='/account?tab=datasets' />;
@@ -208,11 +217,15 @@ const AccountDataset = props => {
 
 			return <Redirect to='/account?tab=datasets' />;
 		}
+	} else if (dataPublisher.isError) {
+		NotificationManager.error('You do not have permission to access this resource', 'Unauthorised', 10000);
+
+		return <Redirect to='/account?tab=youraccount' />;
 	}
 
 	return currentDataset ? (
 		<Suspense fallback={t('loading')}>
-			<AccountContent>
+			<LayoutContent>
 				<DatasetCard
 					id={currentDataset._id}
 					title={currentDataset.name}
@@ -252,15 +265,17 @@ const AccountDataset = props => {
 					closed={closeApproveDatasetModal}
 					goToNext={closeApproveModalAndGoToNext}
 					handleApprove={closeApproveModalAndRedirectToPendingDatasets}
-					showGoToNext={showNext} />
+					showGoToNext={showNext}
+				/>
 				<AccountDatasetRejectModal
 					id={currentDataset._id}
 					open={showRejectDatasetModal}
 					closed={closeRejectDatasetModal}
 					goToNext={closeRejectModalAndGoToNext}
 					handleReject={closeRejectModalAndRedirectToPendingDatasets}
-					showGoToNext={showNext} />
-			</AccountContent>
+					showGoToNext={showNext}
+				/>
+			</LayoutContent>
 		</Suspense>
 	) : null;
 };

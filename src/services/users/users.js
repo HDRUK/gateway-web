@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { getRequest, patchRequest } from '../utils/requests';
+import { apiURL } from '../../configs/url.config';
+import { getRequest, patchRequest } from '../../utils/requests';
 
 const getUsers = options => {
 	return getRequest(`${apiURL}/users`, options);

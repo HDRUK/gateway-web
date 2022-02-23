@@ -17,6 +17,7 @@ import googleAnalytics from '../../tracking';
 import SVGIcon from '../../images/SVGIcon';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import './Course.scss';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
@@ -349,16 +350,16 @@ const AddEditCourseForm = props => {
 															(<span id='currentCount'>{formik.values.description.length || 0}</span>/3000)
 														</span>
 													</div>
-													<Form.Control
+													<TextareaAutosize
 														data-test-id='description'
-														as='textarea'
+														as='textarea' 
 														id='description'
 														name='description'
 														type='text'
 														className={
 															formik.touched.description && formik.errors.description
-																? 'emptyFormInput addFormInput descriptionInput'
-																: 'addFormInput descriptionInput'
+																? 'emptyFormInput addFormInput descriptionInput textarea-addEditForm'
+																: 'addFormInput descriptionInput textarea-addEditForm'
 														}
 														onKeyUp={descriptionCount}
 														onChange={formik.handleChange}

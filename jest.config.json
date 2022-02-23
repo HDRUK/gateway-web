@@ -3,8 +3,10 @@
 	"moduleNameMapper": {
 		"\\.(css|less|sass|scss)$": "<rootDir>/test/mocks/styleMock.js",
 		"\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/mocks/fileMock.js",
-		"\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js"
+		"\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js",
+		"public/(.*)": "<rootDir>/public/$1"
 	},
+	"modulePaths": ["<rootDir>/public"],
 	"coveragePathIgnorePatterns": [
 		"mockData.js",
 		"Mock.js",
@@ -13,7 +15,10 @@
 		"index.js",
 		"configs",
 		"mockMsw.js",
-		"mockServer.js"
+		"mockServer.js",
+		".constants.js",
+		".propTypes.js"
 	],
-	"collectCoverageFrom": ["src/**/*.{js,jsx}"]
+	"collectCoverageFrom": ["src/**/*.{js,jsx}"],
+	"roots": ["<rootDir>", "<rootDir>src"]
 }

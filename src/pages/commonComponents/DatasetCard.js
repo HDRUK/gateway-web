@@ -167,9 +167,6 @@ export const DatasetCard = props => {
 									{datasetStatus === 'draft' ? ' (Draft)' : ''}
 								</div>
 							)}
-							{(() => {
-								console.log(timeStamps.updated);
-							})()}
 							<div className='box'>Last activity</div>
 							<div className='box'>{!isEmpty(timeStamps.updated) ? moment(timeStamps.updated).format('D MMMM YYYY HH:mm') : '-'}</div>
 						</Fragment>

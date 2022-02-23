@@ -62,21 +62,16 @@ describe('Given the dataset-onboarding service', () => {
 
 	describe('When postDatasetOnboarding is called', () => {
 		it('Then calls postRequest with the correct arguments', async () => {
-			await service.postDatasetOnboarding(
-				'1234',
+			const commonArgs = [
 				{
-					status: 'archive',
+					publisherID: 'admin',
 				},
-				{ option1: true }
-			);
+				{ option1: true },
+			];
 
-			expect(postRequest).toHaveBeenCalledWith(
-				`${apiURL}/dataset-onboarding/1234`,
-				{
-					status: 'archive',
-				},
-				{ option1: true }
-			);
+			await service.postDatasetOnboarding(...commonArgs);
+
+			expect(postRequest).toHaveBeenCalledWith(`${apiURL}/dataset-onboarding`, ...commonArgs);
 		});
 	});
 
@@ -171,20 +166,23 @@ describe('Given the dataset-onboarding service', () => {
 	});
 
 	describe('When useGetPublisher is called', () => {
-		it('Then calls getPublisher with the correct arguments', async () => {
+		it('Then calls useGetPublisher with the correct arguments', () => {
 			const getSpy = jest.spyOn(service, 'getPublisher');
-			const rendered = renderHook(() => service.useGetPublisher('1234', { option1: true }), { wrapper });
+			const rendered = renderHook(() => service.useGetPublisher({ option1: true }), { wrapper });
 
-			assertServiceRefetchCalled(rendered, getSpy, '1234');
+			assertServiceMutateAsyncCalled(rendered, getSpy, '1234', {
+				search: 'dataset',
+			});
 		});
 	});
 
 	describe('When usePostDatasetOnboarding is called', () => {
 		it('Then calls postDatasetOnboarding with the correct arguments', async () => {
 			const postSpy = jest.spyOn(service, 'postDatasetOnboarding');
-			const rendered = renderHook(() => service.usePostDatasetOnboarding({ option1: true }), { wrapper });
+			const commonArgs = [{ publisherID: 'admin' }];
+			const rendered = renderHook(() => service.usePostDatasetOnboarding(...commonArgs), { wrapper });
 
-			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
+			assertServiceMutateAsyncCalled(rendered, postSpy, ...commonArgs, { option1: true });
 		});
 	});
 

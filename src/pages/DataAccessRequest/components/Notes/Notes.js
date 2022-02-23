@@ -5,6 +5,7 @@ import SVGIcon from '../../../../images/SVGIcon';
 import axios from 'axios';
 import Loading from '../../../commonComponents/Loading';
 import { baseURL } from '../../../../configs/url.config';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const Notes = ({ applicationId, settings, userState, userType, updateCount }) => {
 	const [currentNote, setCurrentNote] = useState('');
@@ -128,10 +129,10 @@ const Notes = ({ applicationId, settings, userState, userType, updateCount }) =>
 				onSubmit={e => {
 					e.preventDefault();
 					handleSendNote(currentNote);
-				}}>
+				}}> 
 				<div className='messages-textarea'>
-					<textarea
-						className='form-control messages-textarea2'
+					<TextareaAutosize
+						className='form-control messages-textarea2 textarea-darpanel'
 						type='text'
 						value={currentNote}
 						name='name'

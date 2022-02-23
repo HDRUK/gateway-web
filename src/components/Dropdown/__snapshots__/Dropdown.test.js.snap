@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Dropdown component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Dropdown css-1sivg29 css-57mu23-Dropdown show dropdown"
+  >
+    <button
+      aria-expanded="true"
+      aria-haspopup="true"
+      class="dropdown-toggle btn btn-primary"
+      type="button"
+    >
+      relevance
+    </button>
+    <div
+      aria-labelledby=""
+      class="dropdown-menu show"
+      data-popper-escaped="true"
+      data-popper-placement="bottom-start"
+      data-popper-reference-hidden="true"
+      style="position: absolute; top: 0px; left: 0px; margin: 0px; transform: translate(0px, 0px);"
+      x-placement="bottom-start"
+    >
+      <a
+        class="d-flex dropdown-item"
+        href="#"
+        role="button"
+      >
+        <div
+          class="flex-grow"
+        >
+          relevance
+        </div>
+        <span>
+          Selected icon
+        </span>
+      </a>
+      <a
+        class="d-flex dropdown-item"
+        href="#"
+        role="button"
+      >
+        <div
+          class="flex-grow"
+        >
+          recentlyadded
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+`;

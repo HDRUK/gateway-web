@@ -1,0 +1,39 @@
+.ui-LayoutContent {
+	width: 100%;
+	height: 500px;
+
+	* {
+		position: relative;
+
+		&:after {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	&--left {
+		background: #d0d3d4;
+
+		&:after {
+			content: 'Left col';
+		}
+	}
+
+	&--content {
+		background: #e7e9ed;
+
+		&:after {
+			content: 'Content';
+		}
+	}
+
+	&--right {
+		background: #d0d3d4;
+
+		&:after {
+			content: 'Right col';
+		}
+	}
+}

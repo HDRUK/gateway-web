@@ -6,6 +6,7 @@ import { Fragment } from 'react';
 import { Formik } from 'formik';
 import editIcon from '../../images/edit.svg';
 import deleteIcon from '../../images/delete.svg';
+import TextareaAutosize from 'react-textarea-autosize';
 
 class DiscoursePost extends React.Component {
 	readPost() {
@@ -74,10 +75,10 @@ class DiscoursePost extends React.Component {
 						<form onSubmit={handleSubmit}>
 							<span className='form-input-label'>{title}</span>
 							<span className='form-input-label-desc'>{subtitle}</span>
-							<textarea
+							<TextareaAutosize 
 								id='txtComment'
 								name='comment'
-								className={`${styles.txtComment} ${errors.comment && touched.comment ? styles.inputError : ''} form-input`}
+								className={`${styles.txtComment} ${errors.comment && touched.comment ? styles.inputError : 'textarea-discourse'} form-input textarea-discourse`}
 								data-testid='txtComment'
 								onChange={handleChange}
 								onBlur={handleBlur}

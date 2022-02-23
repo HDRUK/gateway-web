@@ -2,6 +2,6 @@
 
 exports[`Given the SearchResultsInfo When it is rendered Should match the snapshot 1`] = `
 <div>
-  searchResultsInfo.withTerm
+  Showing 60 results for 'covid'
 </div>
 `;

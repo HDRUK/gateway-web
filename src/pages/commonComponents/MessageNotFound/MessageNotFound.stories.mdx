@@ -1,0 +1,16 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import MessageNotFound from './MessageNotFound';
+
+<Meta
+	title='Project/MessageNotFound'
+	component={MessageNotFound}
+	args={{
+		word: 'datasets',
+		text: '',
+	}}
+/>
+
+<Canvas>
+	<Story name='Basic'>{props => <MessageNotFound {...props} />}</Story>
+</Canvas>

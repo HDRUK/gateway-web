@@ -7,6 +7,7 @@ import Loading from '../../../commonComponents/Loading';
 import './Messages.scss';
 import { baseURL } from '../../../../configs/url.config';
 import DarHelper from '../../../../utils/DarHelper.util';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const Messages = ({
 	applicationId,
@@ -163,8 +164,8 @@ const Messages = ({
 					handleSendMessage(currentMessage);
 				}}>
 				<div className='messages-textarea'>
-					<textarea
-						className='form-control messages-textarea2'
+					<TextareaAutosize 
+						className='form-control messages-textarea2 textarea-darpanel'
 						type='text'
 						value={currentMessage}
 						name='name'

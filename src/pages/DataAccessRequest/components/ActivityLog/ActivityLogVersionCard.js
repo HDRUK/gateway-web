@@ -84,7 +84,7 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
 													{(log.eventType === DarHelperUtil.activityLogEvents.APPLICATION_APPROVED ||
 														log.eventType === DarHelperUtil.activityLogEvents.APPLICATION_APPROVED_WITH_CONDITIONS ||
 														log.eventType === DarHelperUtil.activityLogEvents.UPDATE_SUBMITTED) && (
-														<VersionAccepted className='versionAccepted' />
+														<VersionAccepted className='versionAccepted' fill='#fff' />
 													)}
 													{(log.eventType === DarHelperUtil.activityLogEvents.UPDATES_SUBMITTED ||
 														log.eventType === DarHelperUtil.activityLogEvents.AMENDMENT_SUBMITTED ||

@@ -5,7 +5,7 @@ import DatasetSearchSort from './DatasetSearchSort';
 const mockSortDropdown = jest.fn();
 const mockOnSort = jest.fn();
 
-jest.mock('../SortDropdown', () => props => {
+jest.mock('../../../../components/SortDropdown', () => props => {
 	mockSortDropdown(props);
 	return <div />;
 });
@@ -18,7 +18,7 @@ const props = {
 	onSort: mockOnSort,
 };
 
-const dropdownItems = ['relevance', 'popularity', 'metadata', 'latest', 'resources'];
+const options = ['relevance', 'popularity', 'metadata', 'latest', 'resources'];
 
 describe('Given the DatasetSearchSort component', () => {
 	afterEach(() => {
@@ -31,10 +31,10 @@ describe('Given the DatasetSearchSort component', () => {
 		});
 
 		it('Then has the correct properties', () => {
-			expect(mockSortDropdown).toHaveBeenCalledWith({
-				dropdownItems,
-				sort: 'sort by',
-				handleSort: mockOnSort,
+			expect(mockSortDropdown.mock.calls[0][0]).toMatchObject({
+				value: 'sort by',
+				defaultValue: 'relevance',
+				options,
 			});
 		});
 	});
@@ -45,10 +45,10 @@ describe('Given the DatasetSearchSort component', () => {
 		});
 
 		it('Then has the correct properties', () => {
-			expect(mockSortDropdown).toHaveBeenCalledWith({
-				dropdownItems,
-				sort: 'metadata',
-				handleSort: mockOnSort,
+			expect(mockSortDropdown.mock.calls[0][0]).toMatchObject({
+				value: '',
+				defaultValue: 'metadata',
+				options,
 			});
 		});
 	});
@@ -59,10 +59,10 @@ describe('Given the DatasetSearchSort component', () => {
 		});
 
 		it('Then has the correct properties', () => {
-			expect(mockSortDropdown).toHaveBeenCalledWith({
-				dropdownItems,
-				sort: 'relevance',
-				handleSort: mockOnSort,
+			expect(mockSortDropdown.mock.calls[0][0]).toMatchObject({
+				value: '',
+				defaultValue: 'relevance',
+				options,
 			});
 		});
 	});

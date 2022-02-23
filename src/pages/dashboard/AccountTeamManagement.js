@@ -14,7 +14,7 @@ import TeamNotificationsConfirmationModal from './Team/TeamNotificationsConfirma
 import { userTypes, tabTypes } from './Team/teamUtil';
 import SVGIcon from '../../images/SVGIcon';
 import './Dashboard.scss';
-import AccountContent from './Components/AccountContent';
+import { LayoutContent } from '../../components/Layout';
 
 const AccountTeamManagement = ({
 	userState = [],
@@ -433,7 +433,7 @@ const AccountTeamManagement = ({
 	return (
 		<Fragment>
 			<Fragment>{!isEmpty(alerts) ? generateAlerts() : ''}</Fragment>
-			<AccountContent>
+			<LayoutContent>
 				<div className='accountHeader dataAccessHeader'>
 					<Col xs={8}>
 						<Row>
@@ -458,12 +458,12 @@ const AccountTeamManagement = ({
 						</Tabs>
 					</Col>
 				</div>
-			</AccountContent>
+			</LayoutContent>
 
 			{activeTabKey === tabTypes.Members && <AccountMembers userState={userState} team={team} teamId={teamId} />}
 
 			{activeTabKey === tabTypes.Notifications && (
-				<AccountContent>
+				<LayoutContent>
 					<div className='col-sm-10'>
 						<div className='accountHeader dataAccessHeader'>
 							<Col xs={12}>
@@ -527,7 +527,7 @@ const AccountTeamManagement = ({
 								})}
 						</div>
 					</div>
-				</AccountContent>
+				</LayoutContent>
 			)}
 			<TeamEmailAlertModal open={alertModal} close={toggleAlertModal} options={alertModalOptions} />
 			<TeamNotificationsConfirmationModal

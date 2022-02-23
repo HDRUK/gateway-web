@@ -1,0 +1,2681 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AccountDatasetsContent component When it is rendered And has data Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-LayoutBox css-1fe7u86"
+  >
+    <div
+      class="css-1sivg29 row"
+    >
+      <div
+        class="col-lg-6"
+      >
+        <div
+          class="ui-LayoutBox css-nxqzw4"
+        >
+          <div
+            class="css-2jpb0u-Input form-group"
+          >
+            <label
+              class="form-label"
+            />
+            <div
+              class="ui-Input ui-SearchInput css-gaftnd-Input input-group"
+            >
+              <div
+                class="css-f50cg4-Input input-group-prepend"
+              >
+                <span
+                  class="icon-mock"
+                >
+                  Icon
+                </span>
+              </div>
+              <input
+                class="form-control"
+                name="search"
+                placeholder="Search within pending approval"
+                value="covid"
+              />
+              <div
+                class="css-e0kkim-Input input-group-append"
+              >
+                <span
+                  class="icon-mock"
+                >
+                  Icon
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-2"
+      />
+      <div
+        class="d-flex justify-content-end col-lg-4"
+      >
+        <div
+          class="ui-SortDropdown css-16k9oib-SortDropdown"
+        >
+          <div
+            class="ui-LayoutBox css-qy5j8w"
+          >
+            <div
+              class="ui-Dropdown css-1quv89l-SortDropdown dropdown"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="true"
+                class="dropdown-toggle btn btn-primary"
+                type="button"
+              >
+                Recent activity
+              </button>
+            </div>
+          </div>
+          <button
+            class="css-11u46hl-SortDropdown btn btn-link"
+            ml="2"
+            type="button"
+          >
+            <span
+              class="ui-SortDropdown__desc"
+            >
+              <span
+                class="icon-mock"
+              >
+                Icon
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style="margin-top: 8px;"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                Test title x
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              <div
+                class="time"
+              >
+                <iconmock />
+                92 days since start
+              </div>
+              
+              <div
+                class="sla sla-gray"
+              >
+                Draft
+              </div>
+                
+              <div
+                class="sla sla-green"
+              >
+                Live
+              </div>
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-50"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-44"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              <div
+                class="accordion"
+                style="width: 100%;"
+              >
+                <button
+                  class="version-list btn btn-link"
+                  data-testid="accordion-toggle"
+                  style="width: 100%; padding: 0px; border: 0px;"
+                  type="button"
+                >
+                  <div
+                    class="version-list"
+                  >
+                    7.0.0
+                     (Draft)
+                    
+                    <svg
+                      class="svg-24"
+                      data-testid="chevronbottom"
+                      height="100%"
+                      style="width: 18px; height: 18px; padding-left: 4px;"
+                      viewBox="0 0 18 18"
+                      width="100%"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <path
+                        d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                        fill="#475da7"
+                      />
+                    </svg>
+                  </div>
+                </button>
+                <div
+                  class="collapse"
+                  style="padding-right: 20px;"
+                >
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    6.0.0
+                    
+                     (Live)
+                    
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    5.0.0
+                    
+                     (Live)
+                    
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    4.0.0
+                    
+                    
+                     (Rejected)
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    3.0.0
+                    
+                    
+                    
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    2.0.0
+                    
+                    
+                     (Rejected)
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    1.0.0
+                    
+                    
+                    
+                    
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              4 November 2021 13:59
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                ActivityLog Test - CR
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              <div
+                class="time"
+              >
+                <iconmock />
+                92 days since submission
+              </div>
+              <div
+                class="sla sla-amber"
+              >
+                <span
+                  class="sla-icons"
+                >
+                  <span
+                    class="icon-mock"
+                  >
+                    Icon
+                  </span>
+                </span>
+                In review
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-38"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-50"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              <div
+                class="accordion"
+                style="width: 100%;"
+              >
+                <button
+                  class="version-list btn btn-link"
+                  data-testid="accordion-toggle"
+                  style="width: 100%; padding: 0px; border: 0px;"
+                  type="button"
+                >
+                  <div
+                    class="version-list"
+                  >
+                    2
+                    
+                     (Pending)
+                    <svg
+                      class="svg-24"
+                      data-testid="chevronbottom"
+                      height="100%"
+                      style="width: 18px; height: 18px; padding-left: 4px;"
+                      viewBox="0 0 18 18"
+                      width="100%"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <path
+                        d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                        fill="#475da7"
+                      />
+                    </svg>
+                  </div>
+                </button>
+                <div
+                  class="collapse"
+                  style="padding-right: 20px;"
+                >
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    4.0.0
+                    
+                    
+                     (Rejected)
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    3.0.0
+                    
+                    
+                    
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    2.0.0
+                    
+                    
+                     (Rejected)
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    1.0.0
+                    
+                    
+                    
+                    
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              4 November 2021 11:20
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                ActivityLog Test Flow Question-diff
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              
+              <div
+                class="sla sla-red"
+              >
+                Rejected
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-38"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-50"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              <div
+                class="accordion"
+                style="width: 100%;"
+              >
+                <button
+                  class="version-list btn btn-link"
+                  data-testid="accordion-toggle"
+                  style="width: 100%; padding: 0px; border: 0px;"
+                  type="button"
+                >
+                  <div
+                    class="version-list"
+                  >
+                    1.0.0
+                    
+                    
+                    <svg
+                      class="svg-24"
+                      data-testid="chevronbottom"
+                      height="100%"
+                      style="width: 18px; height: 18px; padding-left: 4px;"
+                      viewBox="0 0 18 18"
+                      width="100%"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <path
+                        d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                        fill="#475da7"
+                      />
+                    </svg>
+                  </div>
+                </button>
+                <div
+                  class="collapse"
+                  style="padding-right: 20px;"
+                >
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    4.0.0
+                    
+                    
+                     (Rejected)
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    3.0.0
+                    
+                    
+                    
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    2.0.0
+                    
+                    
+                     (Rejected)
+                    
+                  </a>
+                  
+                </div>
+              </div>
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              3 November 2021 14:39
+            </div>
+          </div>
+          <div
+            class="comment"
+          >
+            <h1
+              class="gray700-alt-13"
+            >
+              Reason for rejection
+            </h1>
+            <div
+              class="comment-wrapper"
+            >
+              <div
+                class="comment-item"
+              >
+                <div
+                  class="comment-item-header gray700-alt-13-bold"
+                >
+                  <h2>
+                    Callum Reekie
+                  </h2>
+                  <div
+                    class="gray500-13"
+                  >
+                    03 Nov 2021
+                  </div>
+                </div>
+                <div
+                  class="comment-item-body gray800-14"
+                >
+                  SDg
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                ActivityLog Test Flow
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              
+              <div
+                class="sla sla-red"
+              >
+                Rejected
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-38"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-50"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              <div
+                class="accordion"
+                style="width: 100%;"
+              >
+                <button
+                  class="version-list btn btn-link"
+                  data-testid="accordion-toggle"
+                  style="width: 100%; padding: 0px; border: 0px;"
+                  type="button"
+                >
+                  <div
+                    class="version-list"
+                  >
+                    1.0.0
+                    
+                    
+                    <svg
+                      class="svg-24"
+                      data-testid="chevronbottom"
+                      height="100%"
+                      style="width: 18px; height: 18px; padding-left: 4px;"
+                      viewBox="0 0 18 18"
+                      width="100%"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <path
+                        d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                        fill="#475da7"
+                      />
+                    </svg>
+                  </div>
+                </button>
+                <div
+                  class="collapse"
+                  style="padding-right: 20px;"
+                >
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    4.0.0
+                    
+                    
+                     (Rejected)
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    3.0.0
+                    
+                    
+                    
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    2.0.0
+                    
+                    
+                     (Rejected)
+                    
+                  </a>
+                  
+                </div>
+              </div>
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              3 November 2021 14:15
+            </div>
+          </div>
+          <div
+            class="comment"
+          >
+            <h1
+              class="gray700-alt-13"
+            >
+              Reason for rejection
+            </h1>
+            <div
+              class="comment-wrapper"
+            >
+              <div
+                class="comment-item"
+              >
+                <div
+                  class="comment-item-header gray700-alt-13-bold"
+                >
+                  <h2>
+                    Callum Reekie
+                  </h2>
+                  <div
+                    class="gray500-13"
+                  >
+                    03 Nov 2021
+                  </div>
+                </div>
+                <div
+                  class="comment-item-body gray800-14"
+                >
+                  You have not done something right.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                ActivityLog Test
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              
+              <div
+                class="sla sla-green"
+              >
+                Live
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-67"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+              
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              3 November 2021 14:04
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                ActivityLog Test Dataset-duplicate
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              
+              <div
+                class="sla sla-green"
+              >
+                Live
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-38"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-50"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+              
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              3 November 2021 14:02
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                ActivityLog Test Dataset
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              
+              <div
+                class="sla sla-gray"
+              >
+                Archived
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-38"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-50"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              <div
+                class="accordion"
+                style="width: 100%;"
+              >
+                <button
+                  class="version-list btn btn-link"
+                  data-testid="accordion-toggle"
+                  style="width: 100%; padding: 0px; border: 0px;"
+                  type="button"
+                >
+                  <div
+                    class="version-list"
+                  >
+                    3.0.0
+                    
+                    
+                    <svg
+                      class="svg-24"
+                      data-testid="chevronbottom"
+                      height="100%"
+                      style="width: 18px; height: 18px; padding-left: 4px;"
+                      viewBox="0 0 18 18"
+                      width="100%"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <path
+                        d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                        fill="#475da7"
+                      />
+                    </svg>
+                  </div>
+                </button>
+                <div
+                  class="collapse"
+                  style="padding-right: 20px;"
+                >
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    2.0.0
+                    
+                    
+                    
+                    
+                  </a>
+                  <a
+                    class="version-list"
+                    href="javascript:void(0)"
+                  >
+                    1.0.0
+                    
+                    
+                     (Rejected)
+                    
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              3 November 2021 13:41
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 2 Nov 2021 14:38
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              <div
+                class="time"
+              >
+                <iconmock />
+                93 days since start
+              </div>
+              
+              <div
+                class="sla sla-gray"
+              >
+                Draft
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          />
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+               (Draft)
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              2 November 2021 14:38
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 2 Nov 2021 12:01
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              <div
+                class="time"
+              >
+                <iconmock />
+                94 days since submission
+              </div>
+              <div
+                class="sla sla-amber"
+              >
+                In review
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-100"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-63"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-69"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-100"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-100"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              2.0.0
+              
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              2 November 2021 12:13
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 20 Oct 2021 11:53
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              <div
+                class="time"
+              >
+                <iconmock />
+                0 days since submission
+              </div>
+              <div
+                class="sla sla-amber"
+              >
+                In review
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          />
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              2
+              
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              20 October 2021 11:53
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 12 Oct 2021 16:42
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              <div
+                class="time"
+              >
+                <iconmock />
+                114 days since start
+              </div>
+              
+              <div
+                class="sla sla-gray"
+              >
+                Draft
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          />
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+               (Draft)
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              12 October 2021 16:42
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 6 Oct 2021 17:09
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              <div
+                class="time"
+              >
+                <iconmock />
+                120 days since start
+              </div>
+              
+              <div
+                class="sla sla-gray"
+              >
+                Draft
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          />
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+               (Draft)
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              6 October 2021 17:09
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 29 Sep 2021 11:28
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              <div
+                class="time"
+              >
+                <iconmock />
+                128 days since start
+              </div>
+              
+              <div
+                class="sla sla-gray"
+              >
+                Draft
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          />
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+               (Draft)
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              29 September 2021 11:28
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 2 Sep 2021 16:28
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              <div
+                class="time"
+              >
+                <iconmock />
+                154 days since submission
+              </div>
+              <div
+                class="sla sla-amber"
+              >
+                In review
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-20"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+              
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              29 September 2021 10:30
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 29 Sep 2021 09:09
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              <div
+                class="time"
+              >
+                <iconmock />
+                128 days since start
+              </div>
+              
+              <div
+                class="sla sla-gray"
+              >
+                Draft
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          />
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+               (Draft)
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              29 September 2021 09:09
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 29 Sep 2021 09:07
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              <div
+                class="time"
+              >
+                <iconmock />
+                128 days since start
+              </div>
+              
+              <div
+                class="sla sla-gray"
+              >
+                Draft
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          />
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+               (Draft)
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              29 September 2021 09:07
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 9 Sep 2021 14:26
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              <div
+                class="time"
+              >
+                <iconmock />
+                134 days since submission
+              </div>
+              <div
+                class="sla sla-amber"
+              >
+                In review
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-38"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-44"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+              
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              28 September 2021 15:09
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                New dataset 24 Sep 2021 09:49
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              <div
+                class="time"
+              >
+                <iconmock />
+                133 days since start
+              </div>
+              
+              <div
+                class="sla sla-gray"
+              >
+                Draft
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          />
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+               (Draft)
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              24 September 2021 09:49
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-12"
+      >
+        <div
+          class="layoutCard mb-0"
+        >
+          <div
+            class="datasetHeader mb-0 mt-2"
+          >
+            <div
+              class="datasetHeader-title"
+            >
+              <h1>
+                Callum new SAIL
+              </h1>
+            </div>
+            <div
+              class="datasetHeader-status"
+            >
+              
+              
+              <div
+                class="sla sla-red"
+              >
+                Rejected
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="dataset-completion-wheels"
+          >
+            <div>
+              <div
+                data-testid="Summary-80"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Documentation-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Coverage-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Provenance-38"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Accessibility-44"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Enrichment-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Observations-100"
+              >
+                <iconmock />
+              </div>
+            </div>
+            <div>
+              <div
+                data-testid="Structural Meta Data-0"
+              >
+                <iconmock />
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="box"
+            >
+              Publisher
+            </div>
+            <div
+              class="box"
+            >
+              SAIL
+            </div>
+            <div
+              class="box version-list"
+            >
+              Version
+            </div>
+            <div
+              class="box"
+            >
+              1.0.0
+              
+            </div>
+            <div
+              class="box"
+            >
+              Last activity
+            </div>
+            <div
+              class="box"
+            >
+              3 September 2021 13:51
+            </div>
+          </div>
+          <div
+            class="comment"
+          >
+            <h1
+              class="gray700-alt-13"
+            >
+              Reason for rejection
+            </h1>
+            <div
+              class="comment-wrapper"
+            >
+              <div
+                class="comment-item"
+              >
+                <div
+                  class="comment-item-header gray700-alt-13-bold"
+                >
+                  <h2>
+                    Callum Reekie
+                  </h2>
+                  <div
+                    class="gray500-13"
+                  >
+                    03 Sep 2021
+                  </div>
+                </div>
+                <div
+                  class="comment-item-body gray800-14"
+                >
+                  This isnae good enough!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

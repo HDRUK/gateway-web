@@ -17,6 +17,7 @@ import SVGIcon from '../../images/SVGIcon';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
 import './Paper.scss';
 import googleAnalytics from '../../tracking';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
@@ -457,16 +458,16 @@ const AddEditPaperForm = props => {
 															/3000)
 														</span>
 													</div>
-													<Form.Control
+													<TextareaAutosize
 														data-test-id='abstract'
-														as='textarea'
+														as='textarea' 
 														id='description'
 														name='description'
 														type='text'
 														className={
 															formik.touched.description && formik.errors.description
-																? 'emptyFormInput addFormInput descriptionInput'
-																: 'addFormInput descriptionInput'
+																? 'emptyFormInput addFormInput descriptionInput textarea-addEditForm'
+																: 'addFormInput descriptionInput textarea-addEditForm'
 														}
 														onKeyUp={descriptionCount}
 														onChange={formik.handleChange}
@@ -490,15 +491,15 @@ const AddEditPaperForm = props => {
 															/3000)
 														</span>
 													</div>
-													<Form.Control
+													<TextareaAutosize
 														as='textarea'
 														id='resultsInsights'
 														name='resultsInsights'
 														type='text'
 														className={
 															formik.touched.resultsInsights && formik.errors.resultsInsights
-																? 'emptyFormInput addFormInput descriptionInput'
-																: 'addFormInput descriptionInput'
+																? 'emptyFormInput addFormInput descriptionInput textarea-addEditForm'
+																: 'addFormInput descriptionInput textarea-addEditForm'
 														}
 														onKeyUp={resultsInsightsCount}
 														onChange={formik.handleChange}

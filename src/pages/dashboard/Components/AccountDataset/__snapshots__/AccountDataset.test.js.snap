@@ -3,13 +3,13 @@
 exports[`Given the AccountDataset component When it is rendered And the Make a decision button is clicked Then loads the Make a decision overlay 1`] = `
 <div>
   <div
-    class="row"
+    class="ui-LayoutContent row"
   >
     <div
-      class="col-1"
+      class="ui-LayoutContent--left col-1"
     />
     <div
-      class="col-10"
+      class="ui-LayoutContent--content col-10"
     >
       <div />
       <div />
@@ -34,18 +34,73 @@ exports[`Given the AccountDataset component When it is rendered And the Make a d
           >
             Next
           </button>
+          <div
+            class="show dropdown"
+          >
+            <a
+              href="javascript:void(0)"
+            >
+              <button
+                class="button-secondary "
+              >
+                Make a decision
+              </button>
+            </a>
+            <div
+              aria-labelledby=""
+              class="actionMenuDropdown dropdown-menu show"
+              data-popper-escaped="true"
+              data-popper-placement="bottom-start"
+              data-popper-reference-hidden="true"
+              style="position: absolute; top: 0px; left: 0px; margin: 0px; transform: translate(0px, 0px);"
+              x-placement="bottom-start"
+            >
+              <div
+                class="actionMenuSection"
+              >
+                <div
+                  class="actionMenuHeader"
+                >
+                  <span
+                    class="gray800-14-bold description"
+                  >
+                    Make a decision
+                  </span>
+                </div>
+                <div
+                  class="pointer option"
+                >
+                  <span
+                    class="gray800-14 title"
+                    style="margin-top: 0px;"
+                  >
+                    Approve
+                  </span>
+                </div>
+                <div
+                  class="pointer option"
+                >
+                  <span
+                    class="gray800-14 title"
+                    style="margin-top: 0px;"
+                  >
+                    Reject
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
           <button
-            aria-describedby="make-a-decision-popover"
-            class="btn btn-outline-secondary"
+            class="btn btn-primary"
             type="button"
           >
-            Make a decision
+            View form
           </button>
         </div>
       </div>
     </div>
     <div
-      class="col-1"
+      class="ui-LayoutContent--right col-1"
     />
   </div>
 </div>
@@ -54,13 +109,13 @@ exports[`Given the AccountDataset component When it is rendered And the Make a d
 exports[`Given the AccountDataset component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="row"
+    class="ui-LayoutContent row"
   >
     <div
-      class="col-1"
+      class="ui-LayoutContent--left col-1"
     />
     <div
-      class="col-10"
+      class="ui-LayoutContent--content col-10"
     >
       <div
         class="mt-2 row"
@@ -91,7 +146,7 @@ exports[`Given the AccountDataset component When it is rendered Then matches the
       </div>
     </div>
     <div
-      class="col-1"
+      class="ui-LayoutContent--right col-1"
     />
   </div>
 </div>

@@ -2,12 +2,12 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import queryString from 'query-string';
-import { default as React, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Col, Container, Dropdown, Row, Tab, Tabs, Tooltip } from 'react-bootstrap';
 import 'react-tabs/style/react-tabs.css';
 import { baseURL } from '../../../configs/url.config';
 import SVGIcon from '../../../images/SVGIcon';
-import collectionsService from '../../../services/collections/collections';
+import collectionsService from '../../../services/collections';
 import dataUseRegistersService from '../../../services/data-use-registers';
 import googleAnalytics from '../../../tracking';
 import ActionBar from '../../commonComponents/actionbar/ActionBar';
@@ -15,7 +15,7 @@ import CollectionCard from '../../commonComponents/collectionCard/CollectionCard
 import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../../commonComponents/errorModal/ErrorModal';
 import Loading from '../../commonComponents/Loading';
-import NotFound from '../../commonComponents/NotFound';
+import MessageNotFound from '../../commonComponents/MessageNotFound';
 import RelatedObject from '../../commonComponents/relatedObject/RelatedObject';
 import ResourcePageButtons from '../../commonComponents/resourcePageButtons/ResourcePageButtons';
 import SearchBar from '../../commonComponents/searchBar/SearchBar';
@@ -536,7 +536,7 @@ export const DataUseView = props => {
 												</Col>
 											</Row>
 											{relatedObjectsFiltered.length <= 0 ? (
-												<NotFound word='related resources' />
+												<MessageNotFound word='related resources' />
 											) : (
 												relatedObjectsFiltered.map((object, index) => (
 													<span key={index}>
@@ -555,10 +555,10 @@ export const DataUseView = props => {
 									</Tab>
 									<Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
 										{!collections || collections.length <= 0 ? (
-											<NotFound text='This data use has not been featured on any collections yet.' />
+											<MessageNotFound text='This data use has not been featured on any collections yet.' />
 										) : (
 											<>
-												<NotFound text='This data use appears on the collections below. A collection is a group of resources on the same theme.' />
+												<MessageNotFound text='This data use appears on the collections below. A collection is a group of resources on the same theme.' />
 
 												<Row>
 													{collections.map(collection => (

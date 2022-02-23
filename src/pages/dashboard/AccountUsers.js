@@ -4,10 +4,10 @@ import moment from 'moment';
 
 import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 
-import NotFound from '../commonComponents/NotFound';
+import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
-import AccountContent from './Components/AccountContent';
+import { LayoutContent } from '../../components/Layout';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -54,9 +54,9 @@ class AccountUsers extends React.Component {
 
 		if (isLoading) {
 			return (
-				<AccountContent className='mt-4'>
+				<LayoutContent className='mt-4'>
 					<Loading />
-				</AccountContent>
+				</LayoutContent>
 			);
 		}
 
@@ -72,7 +72,7 @@ class AccountUsers extends React.Component {
 
 		return (
 			<div>
-				<AccountContent>
+				<LayoutContent>
 					<Row className='accountHeader'>
 						<Col sm={12} md={8}>
 							<Row>
@@ -119,7 +119,7 @@ class AccountUsers extends React.Component {
 
 										{userCount <= 0 ? (
 											<Row className='margin-right-15'>
-												<NotFound word='users' />
+												<MessageNotFound word='users' />
 											</Row>
 										) : (
 											data.map(dat => {
@@ -167,7 +167,7 @@ class AccountUsers extends React.Component {
 								return userCount <= 0;
 						}
 					})()}
-				</AccountContent>
+				</LayoutContent>
 			</div>
 		);
 	}

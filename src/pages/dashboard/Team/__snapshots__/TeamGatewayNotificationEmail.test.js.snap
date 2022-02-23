@@ -37,7 +37,7 @@ exports[`Given the TeamGatewayNotificationEmails component When it is rendered a
       <div
         class="black-16-semibold"
       >
-        notifications.teamEmailText
+        Send email notifications to team email address
       </div>
     </div>
   </div>

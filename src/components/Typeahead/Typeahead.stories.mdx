@@ -1,0 +1,51 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Typeahead from './Typeahead';
+
+<Meta title='Core/Typeahead' component={Typeahead} />
+
+<Canvas>
+	<Story name='Basic'>
+		{() => {
+			const [selected, setSelected] = React.useState();
+			const handleChange = values => {
+				setSelected(values);
+			};
+			return <Typeahead options={['United Kingdon,Cambridge', 'United States']} selected={selected} onChange={handleChange} multiple />;
+		}}
+	</Story>
+	<Story name='Async'>
+		{() => {
+			const [state, setState] = React.useState({
+				options: ['United Kingdon,Cambridge', 'United States'],
+				isLoading: false,
+				selected: [],
+			});
+			const handleChange = React.useCallback(
+				selected => {
+					setState({
+						...state,
+						selected,
+					});
+				},
+				[state]
+			);
+			const handleSearch = React.useCallback(async () => {
+				setState({
+					...state,
+					isLoading: true,
+				});
+				await new Promise(resolve => {
+					setTimeout(() => {
+						resolve();
+						setState({
+							...state,
+							isLoading: false,
+							options: ['Option 1', 'Option 2'],
+						});
+					}, 3000);
+				});
+			}, [state]);
+			return <Typeahead {...state} onSearch={handleSearch} multiple async />;
+		}}
+	</Story>
+</Canvas>

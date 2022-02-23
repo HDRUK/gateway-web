@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import queryString from 'query-string';
 import * as Sentry from '@sentry/react';
-import { Row, Col, Tabs, Tab, Container, Alert, Dropdown } from 'react-bootstrap';
-import NotFound from '../commonComponents/NotFound';
-import Uploader from '../commonComponents/Uploader';
-import Loading from '../commonComponents/Loading';
-import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
-import SearchBar from '../commonComponents/searchBar/SearchBar';
-import DiscourseTopic from '../discourse/DiscourseTopic';
-import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
-import UserMessages from '../commonComponents/userMessages/UserMessages';
-import ActionBar from '../commonComponents/actionbar/ActionBar';
-import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
-import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import ErrorModal from '../commonComponents/errorModal';
-import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
+import axios from 'axios';
+import _ from 'lodash';
+import queryString from 'query-string';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Alert, Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
+import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
 import { baseURL } from '../../configs/url.config';
-import SVGIcon from '../../images/SVGIcon';
-import ReactMarkdown from 'react-markdown';
-import _ from 'lodash';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
-import './Paper.scss';
-import { Fragment } from 'react';
+import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
+import ActionBar from '../commonComponents/actionbar/ActionBar';
+import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
+import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
+import ErrorModal from '../commonComponents/errorModal';
+import Loading from '../commonComponents/Loading';
+import MessageNotFound from '../commonComponents/MessageNotFound';
+import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
+import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
+import SearchBar from '../commonComponents/searchBar/SearchBar';
+import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
+import Uploader from '../commonComponents/Uploader';
+import UserMessages from '../commonComponents/userMessages/UserMessages';
+import DiscourseTopic from '../discourse/DiscourseTopic';
+import './Paper.scss';
 
 export const PaperDetail = props => {
 	const [id] = useState('');
@@ -718,7 +717,7 @@ export const PaperDetail = props => {
 												</Col>
 											</Row>
 											{relatedObjectsFiltered.length <= 0 ? (
-												<NotFound word='related resources' />
+												<MessageNotFound word='related resources' />
 											) : (
 												relatedObjectsFiltered.map((object, index) => (
 													<span key={index}>
@@ -737,10 +736,10 @@ export const PaperDetail = props => {
 									</Tab>
 									<Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
 										{!collections || collections.length <= 0 ? (
-											<NotFound text='This paper has not been featured on any collections yet.' />
+											<MessageNotFound text='This paper has not been featured on any collections yet.' />
 										) : (
 											<>
-												<NotFound text='This paper appears on the collections below. A collection is a group of resources on the same theme.' />
+												<MessageNotFound text='This paper appears on the collections below. A collection is a group of resources on the same theme.' />
 
 												<Row>
 													{collections.map(collection => (

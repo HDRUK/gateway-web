@@ -27,7 +27,7 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
               <span
                 class="gray800-14"
               >
-                datetime.submitted
+                Submitted 8 November 2021
               </span>
             </div>
             <div
@@ -45,251 +45,273 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
               </span>
             </div>
           </div>
-          <ul
-            class="css-1rag44v-Timeline"
-          >
-            <li
-              class="css-f5erw7"
+          <div>
+            <h3
+              class="mb-3"
             >
-              <div
-                class="css-z67izj"
+              8 November 2021
+            </h3>
+            <ul
+              class="ui-Timeline css-1sivg29 css-1rag44v-Timeline"
+            >
+              <li
+                class="css-f5erw7"
               >
                 <div
-                  class="timeline-icon css-1vyp46c"
+                  class="css-z67izj"
+                >
+                  <div
+                    class="timeline-icon css-1vyp46c"
+                  >
+                    <div>
+                      <img
+                        alt="Icon"
+                        data-testid="0-datasetVersionApproved"
+                        src="[object Object]"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="css-1pfaqp5"
+                  >
+                    <time
+                      data-testid="event-time-0"
+                      datetime="14:50"
+                    >
+                      14:50
+                    </time>
+                  </div>
+                </div>
+                <div
+                  class="css-obendf"
                 >
                   <div>
-                    <img
-                      alt="Icon"
-                      data-testid="0-datasetVersionApproved"
-                      src="[object Object]"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="css-1pfaqp5"
-                >
-                  <time
-                    data-testid="event-time-0"
-                    datetime="14:50"
-                  >
-                    14:50
-                  </time>
-                </div>
-              </div>
-              <div
-                class="css-obendf"
-              >
-                <div>
-                  <div
-                    class="mb-3"
-                    data-testid="event-status-text-0"
-                  >
-                    datasetVersionApproved
-                  </div>
-                  <blockquote
-                    class="css-1ta6g32-BlockQuote"
-                  >
-                    <h6
-                      class="mb-3 gray800"
+                    <div
+                      class="mb-3"
                     >
-                      comment
-                    </h6>
-                    <p
-                      class="mb-0"
-                    >
-                      Approved with minor changes!
-                    </p>
-                  </blockquote>
-                </div>
-              </div>
-            </li>
-            <li
-              class="css-f5erw7"
-            >
-              <div
-                class="css-z67izj"
-              >
-                <div
-                  class="timeline-icon css-1vyp46c"
-                >
-                  <div>
-                    <img
-                      alt="Icon"
-                      data-testid="1-datasetUpdatesSubmitted"
-                      src="[object Object]"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="css-1pfaqp5"
-                >
-                  <time
-                    data-testid="event-time-1"
-                    datetime="14:50"
-                  >
-                    14:50
-                  </time>
-                </div>
-              </div>
-              <div
-                class="css-obendf"
-              >
-                <div>
-                  <div
-                    class="mb-3"
-                    data-testid="event-status-text-1"
-                  >
-                    datasetUpdatesSubmitted
-                  </div>
-                  <div
-                    data-testid="event-detailed-text-1-0"
-                  >
+                      <b>
+                        Version 2
+                      </b>
+                       of this dataset been approved by admin 
+                      <b>
+                        Callum Reekie
+                      </b>
+                    </div>
                     <blockquote
-                      class="css-1ta6g32-BlockQuote"
+                      class="ui-Blockquote css-1sivg29 css-1ta6g32-BlockQuote"
                     >
                       <h6
                         class="mb-3 gray800"
                       >
-                        Summary
+                        comment
                       </h6>
-                      <ul
-                        class="css-1jupbku-ListInfo"
+                      <p
+                        class="mb-0"
                       >
-                        <li
-                          class="css-oc8kcp"
-                        >
-                          <div
-                            class="css-112bk1i"
-                          >
-                            question
-                          </div>
-                          <div>
-                            Abstract
-                          </div>
-                        </li>
-                        <li
-                          class="css-oc8kcp"
-                        >
-                          <div
-                            class="css-112bk1i"
-                          >
-                            previousAnswer
-                          </div>
-                          <div>
-                            test
-                          </div>
-                        </li>
-                        <li
-                          class="css-oc8kcp"
-                        >
-                          <div
-                            class="css-112bk1i"
-                          >
-                            updatedAnswer
-                          </div>
-                          <div>
-                            I have changed the abstract!
-                          </div>
-                        </li>
-                      </ul>
-                    </blockquote>
-                  </div>
-                  <div
-                    data-testid="event-detailed-text-1-1"
-                  >
-                    <blockquote
-                      class="css-1ta6g32-BlockQuote"
-                    >
-                      <h6
-                        class="mb-3 gray800"
-                      >
-                        Provenance | Temporal
-                      </h6>
-                      <ul
-                        class="css-1jupbku-ListInfo"
-                      >
-                        <li
-                          class="css-oc8kcp"
-                        >
-                          <div
-                            class="css-112bk1i"
-                          >
-                            question
-                          </div>
-                          <div>
-                            Distribution Release Date
-                          </div>
-                        </li>
-                        <li
-                          class="css-oc8kcp"
-                        >
-                          <div
-                            class="css-112bk1i"
-                          >
-                            previousAnswer
-                          </div>
-                          <div />
-                        </li>
-                        <li
-                          class="css-oc8kcp"
-                        >
-                          <div
-                            class="css-112bk1i"
-                          >
-                            updatedAnswer
-                          </div>
-                          <div>
-                            02/11/2021
-                          </div>
-                        </li>
-                      </ul>
+                        Approved with minor changes!
+                      </p>
                     </blockquote>
                   </div>
                 </div>
-              </div>
-            </li>
-            <li
-              class="css-f5erw7"
-            >
-              <div
-                class="css-z67izj"
+              </li>
+              <li
+                class="css-f5erw7"
               >
                 <div
-                  class="timeline-icon css-1vyp46c"
+                  class="css-z67izj"
+                >
+                  <div
+                    class="timeline-icon css-1vyp46c"
+                  >
+                    <div>
+                      <img
+                        alt="Icon"
+                        data-testid="1-datasetUpdatesSubmitted"
+                        src="[object Object]"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="css-1pfaqp5"
+                  >
+                    <time
+                      data-testid="event-time-1"
+                      datetime="14:50"
+                    >
+                      14:50
+                    </time>
+                  </div>
+                </div>
+                <div
+                  class="css-obendf"
                 >
                   <div>
-                    <img
-                      alt="Icon"
-                      data-testid="2-newDatasetVersionSubmitted"
-                      src="[object Object]"
-                    />
+                    <div
+                      class="mb-3"
+                    >
+                      <b>
+                        Updates submitted
+                      </b>
+                       by data custodian 
+                      <b>
+                        Callum Reekie
+                      </b>
+                    </div>
+                    <div
+                      data-testid="event-detailed-text-1-0"
+                    >
+                      <blockquote
+                        class="ui-Blockquote css-1sivg29 css-1ta6g32-BlockQuote"
+                      >
+                        <h6
+                          class="mb-3 gray800"
+                        >
+                          Summary
+                        </h6>
+                        <ul
+                          class="ui-ListInfo css-1sivg29 css-1jupbku-ListInfo"
+                        >
+                          <li
+                            class="css-ifzpa6"
+                          >
+                            <div
+                              class="css-112bk1i"
+                            >
+                              Question
+                            </div>
+                            <div>
+                              Abstract
+                            </div>
+                          </li>
+                          <li
+                            class="css-ifzpa6"
+                          >
+                            <div
+                              class="css-112bk1i"
+                            >
+                              Previous answer
+                            </div>
+                            <div>
+                              test
+                            </div>
+                          </li>
+                          <li
+                            class="css-ifzpa6"
+                          >
+                            <div
+                              class="css-112bk1i"
+                            >
+                              Updated answer
+                            </div>
+                            <div>
+                              I have changed the abstract!
+                            </div>
+                          </li>
+                        </ul>
+                      </blockquote>
+                    </div>
+                    <div
+                      data-testid="event-detailed-text-1-1"
+                    >
+                      <blockquote
+                        class="ui-Blockquote css-1sivg29 css-1ta6g32-BlockQuote"
+                      >
+                        <h6
+                          class="mb-3 gray800"
+                        >
+                          Provenance | Temporal
+                        </h6>
+                        <ul
+                          class="ui-ListInfo css-1sivg29 css-1jupbku-ListInfo"
+                        >
+                          <li
+                            class="css-ifzpa6"
+                          >
+                            <div
+                              class="css-112bk1i"
+                            >
+                              Question
+                            </div>
+                            <div>
+                              Distribution Release Date
+                            </div>
+                          </li>
+                          <li
+                            class="css-ifzpa6"
+                          >
+                            <div
+                              class="css-112bk1i"
+                            >
+                              Previous answer
+                            </div>
+                            <div />
+                          </li>
+                          <li
+                            class="css-ifzpa6"
+                          >
+                            <div
+                              class="css-112bk1i"
+                            >
+                              Updated answer
+                            </div>
+                            <div>
+                              02/11/2021
+                            </div>
+                          </li>
+                        </ul>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="css-f5erw7"
+              >
+                <div
+                  class="css-z67izj"
+                >
+                  <div
+                    class="timeline-icon css-1vyp46c"
+                  >
+                    <div>
+                      <img
+                        alt="Icon"
+                        data-testid="2-newDatasetVersionSubmitted"
+                        src="[object Object]"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="css-1pfaqp5"
+                  >
+                    <time
+                      data-testid="event-time-2"
+                      datetime="14:49"
+                    >
+                      14:49
+                    </time>
                   </div>
                 </div>
                 <div
-                  class="css-1pfaqp5"
+                  class="css-obendf"
                 >
-                  <time
-                    data-testid="event-time-2"
-                    datetime="14:49"
-                  >
-                    14:49
-                  </time>
-                </div>
-              </div>
-              <div
-                class="css-obendf"
-              >
-                <div>
-                  <div
-                    class="mb-3"
-                    data-testid="event-status-text-2"
-                  >
-                    newDatasetVersionSubmitted
+                  <div>
+                    <div
+                      class="mb-3"
+                    >
+                      <b>
+                        Version 2
+                      </b>
+                       of this dataset been submitted by data custodian 
+                      <b>
+                        Callum Reekie
+                      </b>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

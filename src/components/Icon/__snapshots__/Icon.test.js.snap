@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Icon component When it is from a file Then matches the previous snapshot 1`] = `
+<div>
+  <span
+    class="ui-Icon css-1sivg29 css-1cj4fgi-Icon"
+  >
+    <svg />
+  </span>
+</div>
+`;
+
+exports[`Given the Icon component When it is inline Then matches the previous snapshot 1`] = `
+<div>
+  <span
+    class="ui-Icon css-1sivg29 css-1cj4fgi-Icon"
+  >
+    <div />
+  </span>
+</div>
+`;

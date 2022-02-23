@@ -112,7 +112,7 @@ class AddEditCollectionPage extends React.Component {
 
 			if (type === 'dataset' && page > 0) searchURL += '&datasetIndex=' + page;
 			if (type === 'tool' && page > 0) searchURL += '&toolIndex=' + page;
-			if (type === 'datause' && page > 0) searchURL += '&datauseIndex=' + page;
+			if (type === 'datause' && page > 0) searchURL += '&dataUseRegisterIndex=' + page;
 			if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
 			if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
 			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;

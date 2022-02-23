@@ -1,0 +1,65 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+<Meta title='Hooks/useSearch' />
+
+```js
+const SearchComponent = () => {
+	const {
+		goToPage,
+		goToNext,
+		gotToPrevious,
+		getCachedResults,
+		getResults,
+		hasNext,
+		hasPrevious,
+		total,
+		data,
+		params,
+		isLoading,
+		isError,
+		isFecthed,
+	} = useSearch(useSomeReactQuery(), {
+		initialParams: {
+			maxResults: 0,
+			search: '',
+			page: 1,
+		},
+	});
+
+	/**
+	 * @description Gets the cached result or if the result doesn't exist, performs a new search
+	 */
+	useEffect(() => {
+		getCachedResults(
+			{
+				status: key,
+			},
+			key
+		);
+	}, [key]);
+
+	/**
+	 * @description Gets a new set of results
+	 */
+	const handleSubmit = React.useCallback(
+		search => {
+			getResults(
+				{
+					search,
+					status: key,
+					page: 1,
+				},
+				key
+			);
+		},
+		[key]
+	);
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<input name='search' value='dataset' />
+			<input type='submit'>Submit</button>
+		</form>
+	);
+};
+```

@@ -1,0 +1,25 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import Icon from './Icon';
+
+<Meta
+	title='Core/Icon'
+	component={Icon}
+	args={{
+		name: 'tick',
+		...Icon.defaultProps,
+	}}
+	argTypes={{
+		size: {
+			options: ['xxs', 'xs', 'sm', 'md', 'default', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl'],
+			control: { type: 'select' },
+		},
+		color: {
+			control: 'text',
+		},
+	}}
+/>
+
+<Canvas>
+	<Story name='Basic'>{props => <Icon {...props} />}</Story>
+</Canvas>

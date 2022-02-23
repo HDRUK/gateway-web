@@ -1,0 +1,22 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+<Meta title='Hooks/usePersistState' />
+
+```js
+const [cache, updateCache] = usePersistState();
+
+updateCache('inReview', 'Data for inReview');
+updateCache('active', 'Data for active');
+
+React.useEffect(() => {
+	//1: First iteration
+	// cache === {
+	//     inReview: 'Data for inReview'
+	// }
+	//2: Second iteration
+	// cache === {
+	//     inReview: 'Data for inReview',
+	//     active: 'Data for active'
+	// }
+}, [cache]);
+```

@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab, Alert, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
-import NotFound from '../commonComponents/NotFound';
+import MessageNotFound from '../commonComponents/MessageNotFound';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
 import SVGIcon from '../../images/SVGIcon';
@@ -807,7 +807,7 @@ export const CourseDetail = props => {
 												</Col>
 											</Row>
 											{relatedObjectsFiltered.length <= 0 ? (
-												<NotFound word='related resources' />
+												<MessageNotFound word='related resources' />
 											) : (
 												relatedObjectsFiltered.map((object, index) => (
 													<span key={index}>
@@ -826,10 +826,10 @@ export const CourseDetail = props => {
 									</Tab>
 									<Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
 										{!collections || collections.length <= 0 ? (
-											<NotFound text='This course has not been featured on any collections yet.' />
+											<MessageNotFound text='This course has not been featured on any collections yet.' />
 										) : (
 											<>
-												<NotFound text='This course appears on the collections below. A collection is a group of resources on the same theme.' />
+												<MessageNotFound text='This course appears on the collections below. A collection is a group of resources on the same theme.' />
 
 												<Row>
 													{collections.map(collection => (

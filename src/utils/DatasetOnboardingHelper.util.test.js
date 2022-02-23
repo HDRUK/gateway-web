@@ -5,6 +5,7 @@ const updatesSubmitted = {
 		updatedAnswer: '02/11/2021',
 	},
 };
+const locations = ['United Kingdon,Cambridge', 'United States'];
 
 describe('DatasetOnboardingHelper getUpdatesSubmittedLog', () => {
 	it('should return object with `heading` `question` `answers` properties', () => {
@@ -24,5 +25,15 @@ describe('DatasetOnboardingHelper getUpdatesSubmittedLog', () => {
 		expect(log.heading).toEqual('Summary');
 		expect(log.question).toEqual('Temporal');
 		expect(log.answers).toEqual({ previousAnswer: '', updatedAnswer: 'updated answer' });
+	});
+});
+
+describe('DatasetOnboardingHelper getLocationsObj', () => {
+	it('should return an array of object with `location` `hierarchy`', () => {
+		let values = DatasetOnboardingHelper.getLocationsObj(locations);
+		expect(values[0].location).toEqual('Cambridge');
+		expect(values[0].hierarchy).toEqual('United Kingdon,Cambridge');
+		expect(values[1].hierarchy).toEqual('United States');
+		expect(values[1].hierarchy).toEqual('United States');
 	});
 });

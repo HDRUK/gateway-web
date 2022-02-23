@@ -21,7 +21,7 @@ const props = {
 	search: 'search term',
 	updateOnFilterBadge: jest.fn(),
 	onPagination: jest.fn(),
-	maxResult: 40,
+	maxResults: 40,
 	isLoading: false,
 	sort: 'Sort goes here...',
 };

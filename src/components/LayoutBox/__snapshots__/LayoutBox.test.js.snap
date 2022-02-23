@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the LayoutBox component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-LayoutBox css-1sivg29"
+  >
+    Component goes here
+  </div>
+</div>
+`;

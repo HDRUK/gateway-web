@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the SearchInput component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="css-koyxv1-Input form-group"
+  >
+    <label
+      class="form-label"
+    />
+    <div
+      class="ui-Input ui-SearchInput css-1sivg29 css-1r1cho1-Input input-group"
+    >
+      <div
+        class="css-haly75-Input input-group-prepend"
+      >
+        <button
+          fill="green700"
+          name="search"
+        >
+          Icon
+        </button>
+      </div>
+      <input
+        class="form-control"
+        name="search"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -985,6 +985,12 @@ const getUpdatesSubmittedLog = updates => {
 	};
 };
 
+const getLocationsObj = values => {
+	return values.map(item => {
+		return { location: item.split(',').pop(), hierarchy: item };
+	});
+};
+
 export default {
 	questionSetToDuplicate: questionSetToDuplicate,
 	insertSchemaUpdates: insertSchemaUpdates,
@@ -1019,4 +1025,5 @@ export default {
 	calculateTimeDifference: _calculateTimeDifference,
 	buildCompletionWheels: _buildCompletionWheels,
 	getUpdatesSubmittedLog: getUpdatesSubmittedLog,
+	getLocationsObj: getLocationsObj,
 };

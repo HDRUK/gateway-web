@@ -3,6 +3,7 @@ import { Modal } from 'react-bootstrap';
 import _ from 'lodash';
 import WorkflowReviewDecisionHeader from './WorkflowReviewDecisionHeader';
 import './WorkflowReviewDecision.scss';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const WorkflowReviewDecisionModal = ({
 	open,
@@ -109,8 +110,8 @@ const WorkflowReviewDecisionModal = ({
 							<span className='gray800-14'>{generateWordCount()}</span>
 						</div>
 						<div className={errors ? 'form-group was-validated' : 'form-group'}>
-							<textarea
-								className='form-control'
+							<TextareaAutosize 
+								className='form-control textarea-modal'
 								rows='8'
 								type='text'
 								value={comments}

@@ -14,8 +14,8 @@ const getPublisher = (_id, options) => {
 	return getRequest(`${apiURL}/dataset-onboarding/publisher/${_id}`, options);
 };
 
-const postDatasetOnboarding = (_id, data, options) => {
-	return postRequest(`${apiURL}/dataset-onboarding/${_id}`, data, options);
+const postDatasetOnboarding = (data, options) => {
+	return postRequest(`${apiURL}/dataset-onboarding`, data, options);
 };
 
 const postDuplicate = (_id, data, options) => {

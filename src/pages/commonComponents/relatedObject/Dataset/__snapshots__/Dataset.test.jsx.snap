@@ -49,6 +49,7 @@ exports[`Given the Dataset component When it is rendered Then matches the previo
         class="datasetLogoCircle floatRight css-x0fehg-Dataset"
         data-testid="publisher-logo"
       />
+      
     </div>
     <div
       class="pad-left-24 pad-right-24 pad-top-16 col-lg-12 col-sm-12"

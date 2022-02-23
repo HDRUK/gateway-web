@@ -5235,6 +5235,89 @@ const _activeTopicMultipleDatasets = {
 	},
 	datasets: [{ datasetId: '3814fc7e-02af-41ff-af00-4076ca325d5e', publisher: 'ALLIANCE > HQIP' }],
 };
+
+const _contributorsInfo = [
+	{
+		_id:'5e6f984a0a7300dc8f6fb196',
+		id:947228017269611,
+		firstname:'Ciara',
+		lastname:'Ward',
+		orcid:'https://orcid.org/https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/conditionsanddiseases/articles/impactofcoronavirusincarehomesinenglandvivaldi/26mayto19june2020',
+		organisation:'test',
+		showOrganisation:false,
+		showOrcid:true,
+		user:{
+			email:'ciara.ward@paconsulting.com'
+		}
+	},
+	{
+		_id:'5eb2f98d60ac5289acdd2512',
+		id:5385077600698822,
+		firstname:'Paul',
+		lastname:'McCafferty',
+		orcid:'',
+		organisation:'PA Consulting',
+		showOrcid:true,
+		showOrganisation:true,
+		bio:'',
+		sector:'',
+		domain:'',
+		link:''
+	},
+	{
+		_id:'5eddf1593ca18f0915d15648',
+		id:46035149615760184,
+		firstname:'Ciara',
+		lastname:'Test',
+		orcid:'https://orcid.org/test',
+		organisation:'',
+		showOrcid:true,
+		showOrganisation:false,
+		bio:'',
+		sector:'',
+		domain:'',
+		link:''
+	}
+];
+
+const _dropdownCustomProps = {
+	name: 'safepeopleprimaryapplicantfullname',
+	id: 'safepeopleprimaryapplicantfullname',
+	questionSetId: 'primaryapplicant',
+	labelId: 'safepeopleprimaryapplicantfullname-label',
+	value: 'Ciara Ward',
+	disabled: false,
+	required: true,
+	readOnly: false,
+	classes: {
+		form: 'dar-form',
+		select: 'form-control',
+		typeaheadCustom: 'form-control',
+		datePickerCustom: 'form-control',
+		question: 'form-group',
+		questionWrap: 'question-wrap',
+		input: 'form-control',
+		button: 'btn btn-primary',
+		radioListItem: 'dar__radio--item',
+		radioList: 'dar__radio--list list-group',
+		checkboxInput: 'checkbox list-group',
+		checkboxListItem: 'dar__check--item ',
+		checkboxList: 'dar__check list-group',
+		controlButton: 'btn btn-primary pull-right',
+		backButton: 'btn btn-default pull-left',
+		errorMessage: 'alert alert-danger',
+		alertWrap: 'alert-wrap',
+		buttonBar: 'button-bar hidden',
+		actionControl: 'action-control',
+		nested: 'nested',
+		toolTip: 'toolTip',
+		toolTipTop: 'toolTip-top',
+		toolTipText: 'toolTipText',
+		actionCount: 'actionCount',
+		actionNotifications: 'action-notifications'
+	}
+};
+
 module.exports = {
 	toolTitle: __toolTitle,
 	toolReview: __toolReview,
@@ -5266,4 +5349,6 @@ module.exports = {
 	datasetUtilityNotRated: _datasetUtilityNotRated,
 	activeTopic: _activeTopic,
 	activeTopicMultipleDatasets: _activeTopicMultipleDatasets,
+	contributorsInfo: _contributorsInfo,
+	dropdownCustomProps: _dropdownCustomProps,
 };

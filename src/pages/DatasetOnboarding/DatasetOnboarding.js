@@ -7,9 +7,10 @@ import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
+import TypeaheadAsyncCustom from './components/TypeaheadAsyncCustom';
 import TypeaheadCustomKeyValue from './components/TypeaheadCustom/TypeaheadCustomKeyValue';
 import TypeaheadKeywords from './components/TypeaheadKeywords/TypeaheadKeywords';
-import TextareaInputCustom from './components/TextareaInputCustom/TextareaInputCustom';
+import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
 import MultiField from './components/MultiField/MultiField';
@@ -44,7 +45,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import { formSchema } from './formSchema';
 import DatasetOnboardingHelperUtil from '../../utils/DatasetOnboardingHelper.util';
-import ActionBarStatus from '../commonComponents/ActionBarStatus';
+import ActionBarStatus from '../../components/ActionBarStatus';
 import ErrorModal from '../commonComponents/errorModal';
 
 /* export const DatasetOnboarding = props => {
@@ -472,6 +473,7 @@ class DatasetOnboarding extends Component {
 			this.state.jsonSchema.questionSets,
 			this.state.questionAnswers
 		);
+
 		let validationSectionMessages = DatasetOnboardingValidation.buildInvalidSectionMessages(Winterfell, invalidQuestions);
 		let inValidMessages = DatasetOnboardingValidation.buildInvalidMessages(Winterfell, invalidQuestions);
 		let errors = DatasetOnboardingValidation.formatValidationObj(inValidMessages, [...this.state.jsonSchema.questionPanels]);
@@ -1192,6 +1194,7 @@ class DatasetOnboarding extends Component {
 				/>
 			);
 		} else {
+			console.log('this.state.jsonSchema', this.state.jsonSchema);
 			return (
 				<Winterfell
 					schema={this.state.jsonSchema}
@@ -1236,6 +1239,7 @@ class DatasetOnboarding extends Component {
 		const { userState } = this.props;
 
 		Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
+		Winterfell.addInputType('typeaheadAsyncCustom', TypeaheadAsyncCustom);
 		Winterfell.addInputType('typeaheadCustomKeyValue', TypeaheadCustomKeyValue);
 		Winterfell.addInputType('typeaheadKeywords', TypeaheadKeywords);
 		Winterfell.addInputType('datePickerCustom', DatePickerCustom);

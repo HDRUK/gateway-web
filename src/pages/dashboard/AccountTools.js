@@ -2,14 +2,14 @@ import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
-import NotFound from '../commonComponents/NotFound';
+import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import ActionModal from '../commonComponents/ActionModal/ActionModal';
 import googleAnalytics from '../../tracking';
 import { EntityActionButton } from './EntityActionButton.jsx';
 import { PaginationHelper } from '../commonComponents/PaginationHelper';
-import AccountContent from './Components/AccountContent';
+import { LayoutContent } from '../../components/Layout';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -31,7 +31,7 @@ export const AccountTools = props => {
 	const actionModalConfig = {
 		title: 'Reject this Tool?',
 	};
-	const maxResult = 40;
+	const maxResults = 40;
 
 	useEffect(() => {
 		doToolsCall('active', true, 0, true);
@@ -67,7 +67,7 @@ export const AccountTools = props => {
 		if (typeof index === 'undefined') {
 			apiUrl = baseURL + `/api/v1/tools/getList?status=${key}`;
 		} else {
-			apiUrl = baseURL + `/api/v1/tools/getList?status=${key}&offset=${index}&limit=${maxResult}`;
+			apiUrl = baseURL + `/api/v1/tools/getList?status=${key}&offset=${index}&limit=${maxResults}`;
 		}
 
 		axios.get(apiUrl).then(res => {
@@ -95,13 +95,13 @@ export const AccountTools = props => {
 				if (shouldChangeTab()) {
 					setKey('active');
 					doToolsCall('active', true);
-				} else if (!shouldChangeTab() && count - (index + maxResult) <= 0 && count % maxResult === 1) {
+				} else if (!shouldChangeTab() && count - (index + maxResults) <= 0 && count % maxResults === 1) {
 					if (key === 'pending') {
-						setPendingIndex(index - maxResult);
+						setPendingIndex(index - maxResults);
 					} else if (key === 'archive') {
-						setArchiveIndex(index - maxResult);
+						setArchiveIndex(index - maxResults);
 					}
-					doToolsCall(key, true, index - maxResult);
+					doToolsCall(key, true, index - maxResults);
 				} else if (!shouldChangeTab()) {
 					doToolsCall(key, true, index);
 				}
@@ -119,13 +119,13 @@ export const AccountTools = props => {
 				if (shouldChangeTab()) {
 					setKey('active');
 					doToolsCall('active', true);
-				} else if (!shouldChangeTab() && count - (index + maxResult) <= 0 && count % maxResult === 1) {
+				} else if (!shouldChangeTab() && count - (index + maxResults) <= 0 && count % maxResults === 1) {
 					if (key === 'pending') {
-						setPendingIndex(index - maxResult);
+						setPendingIndex(index - maxResults);
 					} else if (key === 'archive') {
-						setArchiveIndex(index - maxResult);
+						setArchiveIndex(index - maxResults);
 					}
-					doToolsCall(key, true, index - maxResult);
+					doToolsCall(key, true, index - maxResults);
 				} else if (!shouldChangeTab()) {
 					doToolsCall(key, true, index);
 				}
@@ -140,9 +140,9 @@ export const AccountTools = props => {
 			})
 			.then(res => {
 				setKey('active');
-				if (activeCount - (activeIndex + maxResult) <= 0 && activeCount % maxResult === 1 && activeCount !== 1) {
-					setActiveIndex(activeIndex - maxResult);
-					doToolsCall(key, true, activeIndex - maxResult);
+				if (activeCount - (activeIndex + maxResults) <= 0 && activeCount % maxResults === 1 && activeCount !== 1) {
+					setActiveIndex(activeIndex - maxResults);
+					doToolsCall(key, true, activeIndex - maxResults);
 				} else {
 					doToolsCall('active', true, activeIndex);
 				}
@@ -159,15 +159,15 @@ export const AccountTools = props => {
 
 	if (isLoading) {
 		return (
-			<AccountContent>
+			<LayoutContent>
 				<Loading data-testid='isLoading' />
-			</AccountContent>
+			</LayoutContent>
 		);
 	}
 
 	return (
 		<Fragment>
-			<AccountContent>
+			<LayoutContent>
 				<Row className='accountHeader'>
 					<Col sm={12} md={8}>
 						<Row>
@@ -235,7 +235,7 @@ export const AccountTools = props => {
 
 										{activeCount <= 0 ? (
 											<Row className='margin-right-15'>
-												<NotFound word='tools' />
+												<MessageNotFound word='tools' />
 											</Row>
 										) : (
 											toolsList.map(tool => {
@@ -295,7 +295,7 @@ export const AccountTools = props => {
 
 										{reviewCount <= 0 ? (
 											<Row className='margin-right-15'>
-												<NotFound word='tools' />
+												<MessageNotFound word='tools' />
 											</Row>
 										) : (
 											toolsList.map(tool => {
@@ -377,7 +377,7 @@ export const AccountTools = props => {
 
 										{rejectedCount <= 0 ? (
 											<Row className='margin-right-15'>
-												<NotFound word='tools' />
+												<MessageNotFound word='tools' />
 											</Row>
 										) : (
 											toolsList.map(tool => {
@@ -430,7 +430,7 @@ export const AccountTools = props => {
 
 										{archiveCount <= 0 ? (
 											<Row className='margin-right-15'>
-												<NotFound word='tools' />
+												<MessageNotFound word='tools' />
 											</Row>
 										) : (
 											toolsList.map(tool => {
@@ -507,53 +507,53 @@ export const AccountTools = props => {
 
 				{!isResultsLoading && (
 					<div className='text-center entityDashboardPagination'>
-						{key === 'active' && activeCount > maxResult ? (
+						{key === 'active' && activeCount > maxResults ? (
 							<PaginationHelper
 								doEntitiesCall={doToolsCall}
 								entityCount={activeCount}
 								statusKey={key}
 								paginationIndex={activeIndex}
 								setPaginationIndex={setActiveIndex}
-								maxResult={maxResult}></PaginationHelper>
+								maxResults={maxResults}></PaginationHelper>
 						) : (
 							''
 						)}
-						{key === 'pending' && reviewCount > maxResult ? (
+						{key === 'pending' && reviewCount > maxResults ? (
 							<PaginationHelper
 								doEntitiesCall={doToolsCall}
 								entityCount={reviewCount}
 								statusKey={key}
 								paginationIndex={pendingIndex}
 								setPaginationIndex={setPendingIndex}
-								maxResult={maxResult}></PaginationHelper>
+								maxResults={maxResults}></PaginationHelper>
 						) : (
 							''
 						)}
-						{key === 'rejected' && rejectedCount > maxResult ? (
+						{key === 'rejected' && rejectedCount > maxResults ? (
 							<PaginationHelper
 								doEntitiesCall={doToolsCall}
 								entityCount={rejectedCount}
 								statusKey={key}
 								paginationIndex={rejectedIndex}
 								setPaginationIndex={setRejectedIndex}
-								maxResult={maxResult}></PaginationHelper>
+								maxResults={maxResults}></PaginationHelper>
 						) : (
 							''
 						)}
-						{key === 'archive' && archiveCount > maxResult ? (
+						{key === 'archive' && archiveCount > maxResults ? (
 							<PaginationHelper
 								doEntitiesCall={doToolsCall}
 								entityCount={archiveCount}
 								statusKey={key}
 								paginationIndex={archiveIndex}
 								setPaginationIndex={setArchiveIndex}
-								maxResult={maxResult}></PaginationHelper>
+								maxResults={maxResults}></PaginationHelper>
 						) : (
 							''
 						)}
 					</div>
 				)}
-			</AccountContent>
+			</LayoutContent>
 		</Fragment>
 	);
 };

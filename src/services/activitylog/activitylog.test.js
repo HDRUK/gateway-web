@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiV2URL } from '../../configs/url.config';
 import { postRequest } from '../../utils/requests';
 import service from './activitylog';
 
@@ -35,7 +35,7 @@ describe('Given the datasets service', () => {
 				option1: true,
 			});
 
-			expect(postRequest).toHaveBeenCalledWith(`${apiURL}/activitylog`, mockBody, {
+			expect(postRequest).toHaveBeenCalledWith(`${apiV2URL}/activitylog`, mockBody, {
 				option1: true,
 			});
 		});

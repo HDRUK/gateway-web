@@ -3,7 +3,7 @@ import axios from 'axios';
 import Loading from '../commonComponents/Loading';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import NotFound from '../commonComponents/NotFound';
+import MessageNotFound from '../commonComponents/MessageNotFound';
 import SVGIcon from '../../images/SVGIcon';
 import './Dashboard.scss';
 
@@ -86,7 +86,7 @@ class YourAccount extends React.Component {
 				<Row>
 					<Col>
 						{newData.length <= 0 ? (
-							<NotFound word='notifications' />
+							<MessageNotFound word='notifications' />
 						) : (
 							newData.map(dat => {
 								if (!dat.tool[0]) {

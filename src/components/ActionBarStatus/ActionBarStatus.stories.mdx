@@ -1,0 +1,24 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import ActionBarStatus from './ActionBarStatus';
+
+<Meta
+	title='Project/ActionBarStatus'
+	component={ActionBarStatus}
+	args={{
+		dataset: {
+			timestamps: {
+				published: '2021-09-28',
+				submitted: '2021-09-22',
+				rejected: '2021-09-23',
+				archived: '2021-09-29',
+			},
+		},
+		status: 'active',
+		totalQuestions: '1 / 45 questions answered',
+	}}
+/>
+
+<Canvas>
+	<Story name='Basic'>{props => <ActionBarStatus {...props} />}</Story>
+</Canvas>

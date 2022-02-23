@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the BlockQuote component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <blockquote
+    class="ui-Blockquote css-1sivg29 css-1ta6g32-BlockQuote"
+  >
+    Content
+  </blockquote>
+</div>
+`;

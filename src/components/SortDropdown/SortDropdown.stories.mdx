@@ -1,0 +1,28 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import SortDropdown from './SortDropdown';
+
+<Meta
+	title='Core/SortDropdown'
+	component={SortDropdown}
+	args={{
+		options: ['recentlyadded', 'relevance'],
+		allowDirection: false,
+		direction: 'asc',
+		value: 'relevance',
+	}}
+	argTypes={{
+		direction: {
+			options: ['asc', 'desc'],
+			control: { type: 'radio' },
+		},
+	}}
+/>
+
+<Canvas>
+	<Story name='Basic'>
+		{props => {
+			return <SortDropdown {...props} width='350px' />;
+		}}
+	</Story>
+</Canvas>

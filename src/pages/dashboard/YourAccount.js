@@ -9,6 +9,7 @@ import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import SVGIcon from '../../images/SVGIcon';
 import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
+import TextareaAutosize from 'react-textarea-autosize';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -614,15 +615,15 @@ const YourAccountForm = props => {
 								</Row>
 								<Row>
 									<Col sm={11} lg={11}>
-										<Form.Control
-											as='textarea'
+										<TextareaAutosize
+											as='textarea' 
 											id='bio'
 											name='bio'
 											type='text'
 											className={
 												formik.touched.bio && formik.errors.bio
-													? 'emptyFormInput addFormInput descriptionInput'
-													: 'addFormInput descriptionInput'
+													? 'emptyFormInput addFormInput descriptionInput textarea-addEditForm'
+													: 'addFormInput descriptionInput textarea-addEditForm'
 											}
 											onChange={formik.handleChange}
 											value={formik.values.bio}

@@ -55,6 +55,8 @@ import SelectDatasetModal from './components/SelectDatasetModal/SelectDatasetMod
 import VersionSelector from '../commonComponents/versionSelector/VersionSelector';
 import googleAnalytics from '../../tracking';
 import ErrorModal from '../commonComponents/errorModal';
+import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
+import DropdownCustom from './components/DropdownCustom/DropdownCustom';
 
 class DataAccessRequest extends Component {
 	constructor(props) {
@@ -243,7 +245,7 @@ class DataAccessRequest extends Component {
 				roles: this.getUserRoles(),
 			});
 		}
-	}
+	}	
 
 	loadMultipleDatasetMode = async datasetIds => {
 		try {
@@ -588,6 +590,23 @@ class DataAccessRequest extends Component {
 	 * @desc Callback from Winterfell sets totalQuestionsAnswered + saveTime
 	 */
 	onFormUpdate = (id = '', questionAnswers = {}) => {
+		// Populate relevant fields when contributor is selected in DropdownCustom
+		if(id === 'safepeopleprimaryapplicantfullname' && typeof questionAnswers.safepeopleprimaryapplicantfullname === 'object'){
+			let contributor = questionAnswers.safepeopleprimaryapplicantfullname;
+
+			questionAnswers.safepeopleprimaryapplicantfullname = `${contributor.firstname} ${contributor.lastname}`;
+			questionAnswers.safepeopleprimaryapplicantorcid = contributor.orcid;
+			(_.has(contributor,'user.email') ? questionAnswers.safepeopleprimaryapplicantemail = contributor.user.email : questionAnswers.safepeopleprimaryapplicantemail ='');
+			questionAnswers.safepeopleprimaryapplicantorganisationname = contributor.organisation;
+
+		} else if(id.includes('safepeopleotherindividualsfullname') && typeof questionAnswers[id] === 'object') {
+			let contributor = questionAnswers[id];
+			let organisation = id.length > 34 ? `safepeopleotherindividualsorganisation`.concat(id.substring(34, id.length)) : 'safepeopleotherindividualsorganisation';
+
+			questionAnswers[id] = `${contributor.firstname} ${contributor.lastname}`;
+			questionAnswers[organisation] = contributor.organisation;
+		}
+
 		if (!_.isEmpty(id) && !_.isEmpty(questionAnswers)) {
 			let { lookup, activePanelId } = this.state;
 			// 1. check for auto complete
@@ -1852,6 +1871,7 @@ class DataAccessRequest extends Component {
 					onQuestionAction={this.onQuestionAction}
 					onUpdate={this.onFormUpdate}
 					onSubmit={this.onFormSubmit}
+					applicationId={this.state._id}
 				/>
 			);
 		}
@@ -1891,11 +1911,14 @@ class DataAccessRequest extends Component {
 		} = this.state;
 		const { userState } = this.props;
 
+
 		const selectedVersion = !_.isEmpty(versions) ? versions.find(v => v.isCurrent).displayTitle : '';
 
-		Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
-		Winterfell.addInputType('datePickerCustom', DatePickerCustom);
+		Winterfell.addInputType('typeaheadCustom', TypeaheadCustom); 
+		Winterfell.addInputType('datePickerCustom', DatePickerCustom); 
 		Winterfell.addInputType('typeaheadUser', TypeaheadUser);
+		Winterfell.addInputType('textareaInputCustom', TextareaInputCustom);
+		Winterfell.addInputType('dropdownCustom', DropdownCustom);
 		Winterfell.validation.default.addValidationMethods({
 			isCustomDate: value => {
 				if (_.isEmpty(value) || _.isNil(value) || moment(value, 'DD/MM/YYYY').isValid()) {
