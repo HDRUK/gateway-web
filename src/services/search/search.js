@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest } from '../../utils/requests';
+import { getRequest, useMutationWithTranslations } from '../../utils/requests';
 
 const getSearch = options => {
 	return getRequest(`${apiURL}/search`, options);

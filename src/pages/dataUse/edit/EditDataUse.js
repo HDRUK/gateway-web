@@ -1,15 +1,14 @@
 import * as Sentry from '@sentry/react';
-import axios from 'axios';
 import { isArray, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { createRef, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { baseURL } from '../../../configs/url.config';
 import dataUseRegistersService from '../../../services/data-use-registers';
-import usersService from '../../../services/users';
 import datasetsService from '../../../services/datasets';
-import toolsService from '../../../services/tools';
 import papersService from '../../../services/papers';
+import searchService from '../../../services/search';
+import toolsService from '../../../services/tools';
+import usersService from '../../../services/users';
 import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../../commonComponents/errorModal/ErrorModal';
 import Loading from '../../commonComponents/Loading';
@@ -58,10 +57,11 @@ const EditDataUse = props => {
 
 	const dataUseRegister = dataUseRegistersService.useGetDataUseRegister();
 	const dataUseResgiters = dataUseRegistersService.useGetDataUseRegisters();
-	const users = usersService.useGetUsers();
-	const tools = toolsService.useGetTools();
-	const papers = papersService.useGetPapers();
-	const datasets = datasetsService.useGetDatasets();
+	const usersRequest = usersService.useGetUsers();
+	const toolsRequest = toolsService.useGetTools();
+	const papersRequest = papersService.useGetPapers();
+	const datasetsRequest = datasetsService.useGetDatasets();
+	const searchRequest = searchService.useGetSearch;
 
 	useEffect(() => {
 		const init = async () => {
@@ -141,13 +141,13 @@ const EditDataUse = props => {
 	};
 
 	const doGetUsersCall = () => {
-		return users.refetch().then(res => {
-			setApplicantsList(res.data.data);
+		return usersRequest.refetch().then(res => {
+			setApplicantsList(res.data.data.data);
 		});
 	};
 
 	const doGetDatasetsCall = () => {
-		return datasets
+		return datasetsRequest
 			.mutateAsync({
 				params: {
 					activeflag: 'active',
@@ -160,7 +160,7 @@ const EditDataUse = props => {
 	};
 
 	const doGetSafeOutputsToolCall = () => {
-		return tools
+		return toolsRequest
 			.mutateAsync({
 				params: {
 					activeflag: 'active',
@@ -173,7 +173,7 @@ const EditDataUse = props => {
 	};
 
 	const doGetSafeOutputsPaperCall = () => {
-		return papers
+		return papersRequest
 			.mutateAsync({
 				params: {
 					activeflag: 'active',
@@ -214,9 +214,10 @@ const EditDataUse = props => {
 			if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
 			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;
 
-			axios
-				.get(baseURL + '/api/v1/search?search=' + encodeURIComponent(searchString) + searchURL, {
+			searchRequest
+				.mutateAsync({
 					params: {
+						search: encodeURIComponent(searchString) + searchURL,
 						form: true,
 						userID: userState[0].id,
 					},

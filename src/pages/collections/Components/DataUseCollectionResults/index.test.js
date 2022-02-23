@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import DataUseCollectionResults from './index';
-import { getRelatedObjectRequest } from '../../../../services/related-object';
+import { getRelatedObjectRequest } from '../../../../services/related-objects/related-objects';
 
-jest.mock('../../../../services/related-object', () => ({ __esModule: true, getRelatedObjectRequest: jest.fn() }));
+jest.mock('../../../../services/related-objects/related-objects', () => ({ __esModule: true, getRelatedObjectRequest: jest.fn() }));
 
 describe('Given the ProjectCollectionResults component', () => {
 	describe('When no results can be viewed', () => {
