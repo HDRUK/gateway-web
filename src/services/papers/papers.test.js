@@ -30,7 +30,7 @@ describe('Given the papers service', () => {
 				option1: true,
 			});
 
-			expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/papers/getList`, {
+			expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/papers`, {
 				option1: true,
 			});
 		});

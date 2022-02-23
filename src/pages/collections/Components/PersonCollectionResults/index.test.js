@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import PersonCollectionResults from './index';
-import { getRelatedObjectRequest } from '../../../../services/related-objects/related-objects';
+import { getRelatedObject } from '../../../../services/related-objects/related-objects';
 
-jest.mock('../../../../services/related-objects/related-objects', () => ({ __esModule: true, getRelatedObjectRequest: jest.fn() }));
+jest.mock('../../../../services/related-objects/related-objects', () => ({ __esModule: true, getRelatedObject: jest.fn() }));
 
 describe('Given the PersonCollectionResults component', () => {
 	describe('When no results can be viewed', () => {
@@ -36,7 +36,7 @@ describe('Given the PersonCollectionResults component', () => {
 		};
 
 		beforeAll(() => {
-			getRelatedObjectRequest.mockReturnValue([relatedPersonObject]);
+			getRelatedObject.mockReturnValue([relatedPersonObject]);
 		});
 
 		test('Then related results will be rendered', () => {

@@ -76,7 +76,7 @@ class RelatedObject extends React.Component {
 		//need to handle error if no id is found
 		this.setState({ isLoading: true });
 
-		relatedObjectService.getRelatedObjectRequest(id, type).then(res => {
+		relatedObjectService.getRelatedObject(id, type).then(res => {
 			this.setState({
 				data: res.data.data[0],
 				isCohortDiscovery: res.data.data[0].isCohortDiscovery || false,

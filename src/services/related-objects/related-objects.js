@@ -2,11 +2,11 @@ import { useMutation } from 'react-query';
 import { apiURL } from '../../configs/url.config';
 import { getRequest } from '../../utils/requests';
 
-const getRelatedObjectRequest = (_id, type, options) => {
+const getRelatedObject = (_id, type, options) => {
 	return getRequest(`${apiURL}/relatedobject/${type}/${_id}`, options);
 };
 
-const getRelatedObjectForCourseRequest = (_id, options) => {
+const getRelatedObjectForCourse = (_id, options) => {
 	return getRequest(`${apiURL}/relatedobject/course/${_id}`, options);
 };
 
@@ -15,15 +15,15 @@ const getLinkedDatasets = (relation, options) => {
 };
 
 const useGetRelatedObjectRequest = (requestOptions, mutateOptions) => {
-	return useMutation(_id => getRelatedObjectForCourseRequest(_id, requestOptions), {
-		mutationKey: 'getRelatedObjectRequest',
+	return useMutation((_id, type) => getRelatedObject(_id, requestOptions), {
+		mutationKey: 'getRelatedObject',
 		...mutateOptions,
 	});
 };
 
-const useGetRelatedObjectForCourseRequest = (requestOptions, mutateOptions) => {
-	return useMutation(_id => getRelatedObjectForCourseRequest(_id, requestOptions), {
-		mutationKey: 'getRelatedObjectForCourseRequest',
+const useGetRelatedObjectForCourse = (requestOptions, mutateOptions) => {
+	return useMutation(_id => getRelatedObjectForCourse(_id, requestOptions), {
+		mutationKey: 'getRelatedObjectForCourse',
 		...mutateOptions,
 	});
 };
@@ -36,10 +36,10 @@ const useGetLinkedDatasets = (requestOptions, mutateOptions) => {
 };
 
 export default {
-	getRelatedObjectRequest,
-	getRelatedObjectForCourseRequest,
+	getRelatedObject,
+	getRelatedObjectForCourse,
 	getLinkedDatasets,
 	useGetRelatedObjectRequest,
-	useGetRelatedObjectForCourseRequest,
+	useGetRelatedObjectForCourse,
 	useGetLinkedDatasets,
 };

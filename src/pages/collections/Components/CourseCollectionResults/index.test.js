@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import CourseCollectionResults from './index';
-import { getRelatedObjectForCourseRequest } from '../../../../services/related-objects/related-objects';
+import { getRelatedObjectForCourse } from '../../../../services/related-objects/related-objects';
 
 jest.mock('../../../../services/related-objects/related-objects', () => ({
 	__esModule: true,
-	getRelatedObjectForCourseRequest: jest.fn(),
+	getRelatedObjectForCourse: jest.fn(),
 }));
 
 describe('Given the CourseCollectionResults component', () => {
@@ -41,7 +41,7 @@ describe('Given the CourseCollectionResults component', () => {
 		};
 
 		beforeAll(() => {
-			getRelatedObjectForCourseRequest.mockResolvedValue([relatedCourseObject]);
+			getRelatedObjectForCourse.mockResolvedValue([relatedCourseObject]);
 		});
 
 		test('Then related results will be rendered', async () => {

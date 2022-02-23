@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { apiURL } from '../../configs/url.config';
 import { getRequest, postRequest } from '../../utils/requests';
-import service from './collection';
+import service from './collections';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -11,7 +11,7 @@ let wrapper;
 
 const queryClient = new QueryClient();
 
-describe('Given the collection service', () => {
+describe('Given the collections service', () => {
 	beforeAll(() => {
 		wrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 	});
