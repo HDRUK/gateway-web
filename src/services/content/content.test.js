@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { getRequest } from '../../utils/requests';
-import { getNon5SafesModalContentRequest } from './content/content';
+import service from './content';
 import { UATCMSURL } from './content.constants';
 
 jest.doMock('../../pages/commonComponents/BaseURL', () => ({
@@ -37,7 +37,7 @@ describe('Given the Content Service', () => {
 			it('Then calls getRequest with the correct arguments', async () => {
 				baseURL.getURLEnv.mockReturnValue('local');
 
-				await getNon5SafesModalContentRequest({
+				await service.getNon5SafesModalContentRequest({
 					option1: true,
 				});
 
@@ -56,7 +56,7 @@ describe('Given the Content Service', () => {
 				baseURL.getCMSURL.mockReturnValue(cmsURL);
 				baseURL.getURLEnv.mockReturnValue('production');
 
-				await getNon5SafesModalContentRequest({
+				await service.getNon5SafesModalContentRequest({
 					option1: true,
 				});
 

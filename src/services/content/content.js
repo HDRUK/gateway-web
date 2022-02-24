@@ -7,7 +7,7 @@ const cmsURL = baseURL.getCMSURL();
 const env = baseURL.getURLEnv();
 const local = 'local';
 
-export const getNon5SafesModalContentRequest = options => {
+const getNon5SafesModalContentRequest = options => {
 	const url = env === local ? UATCMSURL : cmsURL;
 	return getRequest(`${url}/Non5SafesModalContent`, options);
 };
@@ -20,5 +20,6 @@ const useGetNon5SafesModalContentRequest = (requestOptions, queryOptions = { que
 };
 
 export default {
+	getNon5SafesModalContentRequest,
 	useGetNon5SafesModalContentRequest,
 };

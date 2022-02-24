@@ -26,7 +26,7 @@ describe('Given the data-access-request service', () => {
 
 	describe('When getDataAccessRequests is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
-			service.getDataAccessRequests({
+			await service.getDataAccessRequests({
 				option1: true,
 			});
 
