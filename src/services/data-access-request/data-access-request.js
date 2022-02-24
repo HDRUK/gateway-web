@@ -1,6 +1,14 @@
 import { useMutation, useQuery } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../utils/requests';
+import { apiURL } from '../../configs/url.config';
+import {
+	deleteRequest,
+	getRequest,
+	patchRequest,
+	postRequest,
+	putRequest,
+	useMutationWithTranslations,
+	useQueryWithTranslations,
+} from '../../utils/requests';
 
 const getDataAccessRequests = options => {
 	return getRequest(`${apiURL}/data-access-request`, options);
@@ -47,70 +55,78 @@ const deleteDataAccessRequest = (_id, options) => {
 };
 
 const useGetDataAccessRequests = (requestOptions, queryOptions = { queryKey: 'getDataAccessRequests' }) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		...queryOptions,
 		queryFn: () => getDataAccessRequests(requestOptions),
 	});
 };
 
 const useGetDataAccessRequest = (requestOptions, queryOptions = { queryKey: 'getDataAccessRequest' }) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		...queryOptions,
 		queryFn: _id => getDataAccessRequest(_id, requestOptions),
 	});
 };
 
 const useGetDatasets = (requestOptions, queryOptions = { queryKey: 'getDatasets' }) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		...queryOptions,
 		queryFn: () => getDatasets(requestOptions),
 	});
 };
 
-const usePostDataAccessRequest = (requestOptions, mutateOptions = { queryKey: 'postActions' }) => {
-	return useMutation((_id, data) => postDataAccessRequest(_id, data, requestOptions), {
-		mutateOptions,
+const usePostDataAccessRequest = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations((_id, data) => postDataAccessRequest(_id, data, requestOptions), {
+		mutationKey: 'postActions',
+		...mutateOptions,
 	});
 };
 
-const usePostRequestAmendments = (requestOptions, mutateOptions = { queryKey: 'postRequestAmendments' }) => {
-	return useMutation((_id, data) => postRequestAmendments(_id, data, requestOptions), {
-		mutateOptions,
+const usePostRequestAmendments = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations((_id, data) => postRequestAmendments(_id, data, requestOptions), {
+		mutationKey: 'postRequestAmendments',
+		...mutateOptions,
 	});
 };
 
-const usePostActions = (requestOptions, mutateOptions = { queryKey: 'postActions' }) => {
-	return useMutation((_id, data) => postActions(_id, data, requestOptions), {
-		mutateOptions,
+const usePostActions = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations((_id, data) => postActions(_id, data, requestOptions), {
+		mutationKey: 'postActions',
+		...mutateOptions,
 	});
 };
 
-const usePostAmendments = (requestOptions, mutateOptions = { queryKey: 'postAmendments' }) => {
-	return useMutation((_id, data) => postAmendments(_id, data, requestOptions), {
-		mutateOptions,
+const usePostAmendments = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations((_id, data) => postAmendments(_id, data, requestOptions), {
+		mutationKey: 'postAmendments',
+		...mutateOptions,
 	});
 };
 
-const usePostMessages = (requestOptions, mutateOptions = { queryKey: 'postMessages' }) => {
-	return useMutation((_id, data) => postMessages(_id, data, requestOptions), {
-		mutateOptions,
+const usePostMessages = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations((_id, data) => postMessages(_id, data, requestOptions), {
+		mutationKey: 'postMessages',
+		...mutateOptions,
 	});
 };
 
-const usePutDataAccessRequest = (requestOptions, mutateOptions = { queryKey: 'putDataAccessRequest' }) => {
-	return useMutation((_id, data) => putDataAccessRequest(_id, data, requestOptions), {
-		mutateOptions,
+const usePutDataAccessRequest = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations((_id, data) => putDataAccessRequest(_id, data, requestOptions), {
+		mutationKey: 'putDataAccessRequest',
+		...mutateOptions,
 	});
 };
 
-const usePatchDataAccessRequest = (requestOptions, mutateOptions = { queryKey: 'patchDataAccessRequest' }) => {
-	return useMutation((_id, data) => patchDataAccessRequest(_id, data, requestOptions), {
-		mutateOptions,
+const usePatchDataAccessRequest = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations((_id, data) => patchDataAccessRequest(_id, data, requestOptions), {
+		mutationKey: 'patchDataAccessRequest',
+		...mutateOptions,
 	});
 };
 
-const useDeleteDataAccessRequest = (requestOptions, queryOptions = { queryKey: 'deleteDataAccessRequest' }) => {
-	return useQuery({
+const useDeleteDataAccessRequest = (requestOptions, queryOptions) => {
+	return useQueryWithTranslations({
+		queryKey: 'deleteDataAccessRequest',
 		...queryOptions,
 		queryFn: _id => deleteDataAccessRequest(_id, requestOptions),
 	});
