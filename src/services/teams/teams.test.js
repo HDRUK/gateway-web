@@ -24,29 +24,29 @@ describe('Given the teams service', () => {
 		jest.resetAllMocks();
 	});
 
-	// describe('When getMembers is called', () => {
-	// 	it('Then calls getRequest with the correct arguments', async () => {
-	// 		await service.getMembers('1234', {
-	// 			option1: true,
-	// 		});
+	describe('When getMembers is called', () => {
+		it('Then calls getRequest with the correct arguments', async () => {
+			await service.getMembers('1234', {
+				option1: true,
+			});
 
-	// 		expect(getRequest).toHaveBeenCalledWith(`${apiURL}/teams/1234/members`, {
-	// 			option1: true,
-	// 		});
-	// 	});
-	// });
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/teams/1234/members`, {
+				option1: true,
+			});
+		});
+	});
 
-	// describe('When getNotifications is called', () => {
-	// 	it('Then calls getRequest with the correct arguments', async () => {
-	// 		await service.getNotifications('1234', {
-	// 			option1: true,
-	// 		});
+	describe('When getNotifications is called', () => {
+		it('Then calls getRequest with the correct arguments', async () => {
+			await service.getNotifications('1234', {
+				option1: true,
+			});
 
-	// 		expect(getRequest).toHaveBeenCalledWith(`${apiURL}/teams/1234/notifications`, {
-	// 			option1: true,
-	// 		});
-	// 	});
-	// });
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/teams/1234/notifications`, {
+				option1: true,
+			});
+		});
+	});
 
 	describe('When postAdd is called', () => {
 		it('Then calls postRequest with the correct arguments', async () => {

@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { getRequest } from '../../utils/requests';
 import { UATCMSURL } from './content.constants';
 
-const baseURL = require('../pages/commonComponents/BaseURL');
+const baseURL = require('../../pages/commonComponents/BaseURL');
 const cmsURL = baseURL.getCMSURL();
 const env = baseURL.getURLEnv();
 const local = 'local';

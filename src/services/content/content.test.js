@@ -1,14 +1,14 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { getRequest } from '../../utils/requests';
-import { getNon5SafesModalContentRequest } from './content';
+import { getNon5SafesModalContentRequest } from './content/content';
 import { UATCMSURL } from './content.constants';
 
-jest.doMock('../pages/commonComponents/BaseURL', () => ({
+jest.doMock('../../pages/commonComponents/BaseURL', () => ({
 	default: () => {},
 	getCMSURL: jest.fn().mockImplementation(() => {}),
 	getURLEnv: jest.fn().mockImplementation(() => {}),
 }));
-const baseURL = require('../pages/commonComponents/BaseURL');
+const baseURL = require('../../pages/commonComponents/BaseURL');
 
 jest.mock('axios');
 jest.mock('../../utils/requests');

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import ReactMarkdown from 'react-markdown';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import DataSetHelper from '../../../utils/DataSetHelper.util';
-import { getNon5SafesModalContentRequest } from '../../../services/content';
+import contentService from '../../../services/content';
 
 import './DataSetModal.scss';
 
@@ -47,10 +47,10 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
 		if (open) initScreenData();
 
 		const getNon5SafesModalContent = async () => {
-			const content = await getNon5SafesModalContentRequest({ withCredentials: false });
+			const content = await contentService.getNon5SafesModalContentRequest({ withCredentials: false });
 			setNon5SafesData(content.data);
 		};
-		
+
 		getNon5SafesModalContent();
 	}, [open, context]);
 
