@@ -103,7 +103,7 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 	};
 
 	const updataDataUseStatus = (oldStatus, newStatus, rejectionReason = '') => {
-		dataUseRegistersUpdate.mutateAsync(dataUseId, { activeflag: newStatus, rejectionReason }).then(() => {
+		dataUseRegistersUpdate.mutateAsync({ _id: dataUseId, activeflag: newStatus, rejectionReason }).then(() => {
 			if (oldStatus === DarHelperUtil.dataUseRegisterStatus.INREVIEW && newStatus === DarHelperUtil.dataUseRegisterStatus.ACTIVE) {
 				showAlert('Your data use have been successfully approved.');
 				toggleApproveModal();

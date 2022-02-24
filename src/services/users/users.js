@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest, patchRequest } from '../../utils/requests';
+import { getRequest, patchRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getUsers = options => {
 	return getRequest(`${apiURL}/users`, options);
@@ -15,7 +14,7 @@ const patchTerms = (_id, data, options) => {
 };
 
 const useGetUsers = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getUsers',
 		...queryOptions,
 		queryFn: () => getUsers(requestOptions),
@@ -23,14 +22,14 @@ const useGetUsers = (requestOptions, queryOptions) => {
 };
 
 const usePatchRoles = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => patchRoles(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => patchRoles(_id, data, requestOptions), {
 		queryKey: 'patchRoles',
 		...mutateOptions,
 	});
 };
 
 const usePatchTerms = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => patchTerms(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => patchTerms(_id, data, requestOptions), {
 		queryKey: 'patchTerms',
 		...mutateOptions,
 	});

@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest, postRequest, useMutationWithTranslations } from '../../utils/requests';
+import { getRequest, postRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getCollections = (_id, options) => {
 	return getRequest(`${apiURL}/collections/entityid/${_id}`, options);
@@ -26,7 +25,7 @@ const useGetCollections = (requestOptions, mutateOptions) => {
 };
 
 const useGetCollectionRequest = (_id, requestOptions, queryOptions = { queryKey: 'getCollectionRequest' }) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		...queryOptions,
 		queryKey: [queryOptions.queryKey, _id],
 		queryFn: async ({ queryKey }) => getCollectionRequest(queryKey[1], requestOptions),
@@ -34,7 +33,7 @@ const useGetCollectionRequest = (_id, requestOptions, queryOptions = { queryKey:
 };
 
 const useGetCollectionRelatedObjectsRequest = (_id, requestOptions, queryOptions = { queryKey: 'getCollectionRelatedObjectsRequest' }) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		...queryOptions,
 		queryKey: [queryOptions.queryKey, _id],
 		queryFn: async ({ queryKey }) => getCollectionRelatedObjectsRequest(queryKey[1], requestOptions),
@@ -42,7 +41,7 @@ const useGetCollectionRelatedObjectsRequest = (_id, requestOptions, queryOptions
 };
 
 const usePostCollectionCounterUpdateRequest = (requestOptions, mutateOptions) => {
-	return useMutation(data => postCollectionCounterUpdateRequest(data, requestOptions), {
+	return useMutationWithTranslations(data => postCollectionCounterUpdateRequest(data, requestOptions), {
 		mutationKey: 'postCollectionCounterUpdateRequest',
 		...mutateOptions,
 	});

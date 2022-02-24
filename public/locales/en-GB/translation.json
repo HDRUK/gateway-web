@@ -2,7 +2,16 @@
 	"services": {
 		"status": {
 			"404": {
-				"title": "Page not found"
+				"title": "Page not found",
+				"message": "The requested resource could not be found"
+			},
+			"500": {
+				"title": "Server error",
+				"message": "An error was encountered on the server at the requested address"
+			},
+			"401": {
+				"title": "Unauthorised",
+				"message": "The request to this address was unauthorised"
 			}
 		},
 		"errors": {

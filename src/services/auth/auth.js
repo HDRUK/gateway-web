@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest, postRequest } from '../../utils/requests';
+import { getRequest, postRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getStatus = options => {
 	return getRequest(`${apiURL}/auth/status`, options);
@@ -15,7 +14,7 @@ const postRegister = (data, options) => {
 };
 
 const useGetStatus = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getStatus',
 		...queryOptions,
 		queryFn: () => getStatus(requestOptions),
@@ -23,7 +22,7 @@ const useGetStatus = (requestOptions, queryOptions) => {
 };
 
 const useGetLogout = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getLogout',
 		...queryOptions,
 		queryFn: () => getLogout(requestOptions),
@@ -31,7 +30,7 @@ const useGetLogout = (requestOptions, queryOptions) => {
 };
 
 const usePostRegister = (requestOptions, mutateOptions) => {
-	return useMutation(data => postRegister(data, requestOptions), {
+	return useMutationWithTranslations(data => postRegister(data, requestOptions), {
 		mutationKey: 'postRegister',
 		...mutateOptions,
 	});

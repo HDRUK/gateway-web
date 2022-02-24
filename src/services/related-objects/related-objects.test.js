@@ -26,7 +26,19 @@ describe('Given the related objects service', () => {
 
 	describe('When getRelatedObject is called', () => {
 		it('Then calls getRequest with the correct arguments', async () => {
-			await service.getRelatedObject('1234', 'type', {
+			await service.getRelatedObject('1234', {
+				option1: true,
+			});
+
+			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/relatedobject/1234`, {
+				option1: true,
+			});
+		});
+	});
+
+	describe('When getRelatedObjectByType is called', () => {
+		it('Then calls getRequest with the correct arguments', async () => {
+			await service.getRelatedObjectByType('1234', 'type', {
 				option1: true,
 			});
 

@@ -14,15 +14,18 @@ const AccountDatasetsCreate = props => {
 	} = props;
 
 	const { t } = useTranslation();
-	const dataPostDatasetOnboarding = serviceDatasetOnboarding.usePostDatasetOnboarding({ publisherID }, null, {
+	const dataPostDatasetOnboarding = serviceDatasetOnboarding.usePostDatasetOnboarding(null, {
 		enabled: false,
 	});
 
-	const createNewDataset = e => {
-		e.preventDefault();
+	const createNewDataset = React.useCallback(
+		e => {
+			e.preventDefault();
 
-		dataPostDatasetOnboarding.refetch();
-	};
+			dataPostDatasetOnboarding.mutate({ publisherID });
+		},
+		[publisherID]
+	);
 
 	useEffect(() => {
 		if (dataPostDatasetOnboarding.data) {

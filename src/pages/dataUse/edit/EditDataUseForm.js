@@ -181,7 +181,7 @@ const EditFormDataUse = props => {
 			values.relatedObjects = props.relatedObjects;
 			values.datasetTitles = props.data.datasetTitles;
 
-			dataUseRegisterUpdate.mutateAsync(props.data.id, { ...values }).then(() => {
+			dataUseRegisterUpdate.mutateAsync({ _id: props.data.id, ...values }).then(() => {
 				window.location.href = windowUrl + '/datause/' + props.data.id + '/?dataUseEdited=true';
 			});
 		},

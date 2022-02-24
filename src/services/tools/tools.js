@@ -1,6 +1,14 @@
-import { useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { apiURL, apiV2URL } from '../../configs/url.config';
-import { deleteRequest, getRequest, patchRequest, postRequest, putRequest, useMutationWithTranslations } from '../../utils/requests';
+import {
+	deleteRequest,
+	getRequest,
+	patchRequest,
+	postRequest,
+	putRequest,
+	useMutationWithTranslations,
+	useQueryWithTranslations,
+} from '../../utils/requests';
 
 const getTools = options => {
 	return getRequest(`${apiV2URL}/tools`, options);
@@ -61,7 +69,7 @@ const useGetTools = (requestOptions, mutateOptions) => {
 };
 
 const useGetTool = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getTool',
 		...queryOptions,
 		queryFn: _id => getTool(_id, requestOptions),
@@ -69,7 +77,7 @@ const useGetTool = (requestOptions, queryOptions) => {
 };
 
 const useGetToolEdit = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getToolEdit',
 		...queryOptions,
 		queryFn: _id => getToolEdit(_id, requestOptions),
@@ -77,7 +85,7 @@ const useGetToolEdit = (requestOptions, queryOptions) => {
 };
 
 const useGetProjectTag = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getProjectTag',
 		...queryOptions,
 		queryFn: _id => getProjectTag(_id, requestOptions),
@@ -85,42 +93,42 @@ const useGetProjectTag = (requestOptions, queryOptions) => {
 };
 
 const usePostTool = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => postTool(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => postTool(_id, data, requestOptions), {
 		mutationKey: 'postTool',
 		...mutateOptions,
 	});
 };
 
 const usePostReviewAdd = (requestOptions, mutateOptions) => {
-	return useMutation(data => postReviewAdd(data, requestOptions), {
+	return useMutationWithTranslations(data => postReviewAdd(data, requestOptions), {
 		mutationKey: 'postReviewAdd',
 		...mutateOptions,
 	});
 };
 
 const usePostToolsReply = (requestOptions, mutateOptions) => {
-	return useMutation(data => postToolsReply(data, requestOptions), {
+	return useMutationWithTranslations(data => postToolsReply(data, requestOptions), {
 		mutationKey: 'postToolsReply',
 		...mutateOptions,
 	});
 };
 
 const usePutTool = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => putTool(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => putTool(_id, data, requestOptions), {
 		mutationKey: 'putTool',
 		...mutateOptions,
 	});
 };
 
 const usePutReviewApprove = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => putReviewApprove(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => putReviewApprove(_id, data, requestOptions), {
 		mutationKey: 'putReviewApprove',
 		...mutateOptions,
 	});
 };
 
 const usePatchTool = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => patchTool(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => patchTool(_id, data, requestOptions), {
 		mutationKey: 'patchTool',
 		...mutateOptions,
 	});

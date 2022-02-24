@@ -1,6 +1,5 @@
-import { useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest, useMutationWithTranslations } from '../../utils/requests';
+import { getRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getSearch = options => {
 	return getRequest(`${apiURL}/search`, options);
@@ -29,7 +28,7 @@ const useGetSearch = (requestOptions, mutateOptions) => {
 };
 
 const useGetTopic = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getTopic',
 		...queryOptions,
 		queryFn: () => getTopic(requestOptions),
@@ -37,7 +36,7 @@ const useGetTopic = (requestOptions, queryOptions) => {
 };
 
 const useGetFilters = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getFilters',
 		...queryOptions,
 		queryFn: () => getFilters(requestOptions),

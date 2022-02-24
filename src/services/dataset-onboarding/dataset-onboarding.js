@@ -1,6 +1,13 @@
-import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
+import {
+	deleteRequest,
+	getRequest,
+	patchRequest,
+	postRequest,
+	putRequest,
+	useMutationWithTranslations,
+	useQueryWithTranslations,
+} from '../../utils/requests';
 
 const getDatasetOnboardings = options => {
 	return getRequest(`${apiURL}/dataset-onboarding`, options);
@@ -35,7 +42,7 @@ const deleteDatasetOnboarding = (_id, options) => {
 };
 
 const useGetDatasetOnboardings = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getDatasetOnboardings',
 		...queryOptions,
 		queryFn: () => getDatasetOnboardings(requestOptions),
@@ -43,7 +50,7 @@ const useGetDatasetOnboardings = (requestOptions, queryOptions) => {
 };
 
 const useGetDatasetOnboarding = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getDatasetOnboarding',
 		...queryOptions,
 		queryFn: _id => getDatasetOnboarding(_id, requestOptions),
@@ -53,47 +60,42 @@ const useGetDatasetOnboarding = (requestOptions, queryOptions) => {
 const useGetPublisher = (publisherId, requestOptions, mutateOptions) => {
 	const _id = Array.isArray(publisherId) ? publisherId[0] : publisherId;
 
-	return useMutation(
-		params => {
-			return getPublisher(_id, { params }, requestOptions);
-		},
-		{
-			mutationKey: 'getPublisher',
-			...mutateOptions,
-		}
-	);
+	return useMutationWithTranslations(params => getPublisher(_id, { params }, requestOptions), {
+		mutationKey: 'getPublisher',
+		...mutateOptions,
+	});
 };
 
 const usePostDatasetOnboarding = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => postDatasetOnboarding(_id, data, requestOptions), {
-		queryKey: 'postDatasetOnboarding',
+	return useMutationWithTranslations(data => postDatasetOnboarding(data, requestOptions), {
+		mutationKey: 'postDatasetOnboarding',
 		...mutateOptions,
 	});
 };
 
 const usePostDuplicate = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => postDuplicate(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => postDuplicate(_id, data, requestOptions), {
 		mutationKey: 'postDuplicate',
 		...mutateOptions,
 	});
 };
 
 const usePutDatasetOnboarding = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => putDatasetOnboarding(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => putDatasetOnboarding(_id, data, requestOptions), {
 		mutationKey: 'putDatasetOnboarding',
 		...mutateOptions,
 	});
 };
 
 const usePatchDatasetOnboarding = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => patchDatasetOnboarding(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => patchDatasetOnboarding(_id, data, requestOptions), {
 		mutationKey: 'patchDatasetOnboarding',
 		...mutateOptions,
 	});
 };
 
 const useDeleteDatasetOnboarding = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useMutationWithTranslations({
 		queryKey: 'deleteDatasetOnboarding',
 		...queryOptions,
 		queryFn: _id => deleteDatasetOnboarding(_id, requestOptions),

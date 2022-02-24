@@ -58,10 +58,17 @@ const useGetDataUseRegister = (requestOptions, mutateOptions) => {
 };
 
 const usePatchDataUseRegister = (requestOptions, mutateOptions) => {
-	return useMutationWithTranslations((_id, data) => patchDataUseRegister(_id, data, requestOptions), {
-		mutationKey: 'patchDataUseRegister',
-		...mutateOptions,
-	});
+	return useMutationWithTranslations(
+		data => {
+			const { _id, ...outerProps } = data;
+
+			return patchDataUseRegister(_id, outerProps, requestOptions);
+		},
+		{
+			mutationKey: 'patchDataUseRegister',
+			...mutateOptions,
+		}
+	);
 };
 
 const usePatchDataUseRegisterCounter = (requestOptions, mutateOptions) => {

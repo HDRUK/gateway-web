@@ -1,14 +1,13 @@
 import * as Sentry from '@sentry/react';
-import axios from 'axios';
 import _ from 'lodash';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { Alert, Col, Container, Dropdown, Row, Tab, Tabs, Tooltip } from 'react-bootstrap';
 import 'react-tabs/style/react-tabs.css';
-import { baseURL } from '../../../configs/url.config';
 import SVGIcon from '../../../images/SVGIcon';
 import collectionsService from '../../../services/collections';
 import dataUseRegistersService from '../../../services/data-use-registers';
+import relatedObjectsService from '../../../services/related-objects';
 import googleAnalytics from '../../../tracking';
 import ActionBar from '../../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../../commonComponents/collectionCard/CollectionCard';
@@ -57,6 +56,9 @@ export const DataUseView = props => {
 	const dataUseRegisterCounterQuery = dataUseRegistersService.usePatchDataUseRegisterCounter();
 	const dataUseRegisterQuery = dataUseRegistersService.useGetDataUseRegister();
 	const collectionsQuery = collectionsService.useGetCollections();
+
+	const relatedObjectByTypeQuery = relatedObjectsService.useGetRelatedObjectByType();
+	const relatedObjectQuery = relatedObjectsService.useGetRelatedObject();
 
 	let showError = false;
 
@@ -149,7 +151,7 @@ export const DataUseView = props => {
 		if (additionalObjInfo) {
 			const promises = additionalObjInfo.map(async (object, index) => {
 				if (object.objectType === 'course') {
-					await axios.get(baseURL + '/api/v1/relatedobject/course/' + object.objectId).then(res => {
+					return relatedObjectByTypeQuery.mutateAsync(object.objectId, 'course').then(res => {
 						tempObjects.push({
 							name: res.data.data[0].title,
 							id: object.objectId,
@@ -157,7 +159,7 @@ export const DataUseView = props => {
 						});
 					});
 				} else if (object.objectType === 'dataUseRegister') {
-					await axios.get(baseURL + '/api/v1/relatedobject/dataUseRegister/' + object.objectId).then(res => {
+					return relatedObjectByTypeQuery.mutateAsync(object.objectId, 'dataUseRegister').then(res => {
 						tempObjects.push({
 							id: object.objectId,
 							activeflag: res.data.data[0].activeflag,
@@ -165,9 +167,10 @@ export const DataUseView = props => {
 						});
 					});
 				} else {
-					await axios.get(baseURL + '/api/v1/relatedobject/' + object.objectId).then(res => {
+					return relatedObjectQuery.mutateAsync(object.objectId).then(res => {
 						let datasetPublisher;
 						let datasetLogo;
+
 						!_.isEmpty(res.data.data[0].datasetv2) && _.has(res.data.data[0], 'datasetv2.summary.publisher.name')
 							? (datasetPublisher = res.data.data[0].datasetv2.summary.publisher.name)
 							: (datasetPublisher = '');
@@ -189,6 +192,7 @@ export const DataUseView = props => {
 					});
 				}
 			});
+
 			await Promise.all(promises);
 		}
 		return tempObjects;

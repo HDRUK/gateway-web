@@ -1,8 +1,11 @@
-import { useMutation } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest } from '../../utils/requests';
+import { getRequest, useMutationWithTranslations } from '../../utils/requests';
 
-const getRelatedObject = (_id, type, options) => {
+const getRelatedObject = (_id, options) => {
+	return getRequest(`${apiURL}/relatedobject/${_id}`, options);
+};
+
+const getRelatedObjectByType = (_id, type, options) => {
 	return getRequest(`${apiURL}/relatedobject/${type}/${_id}`, options);
 };
 
@@ -14,22 +17,29 @@ const getLinkedDatasets = (relation, options) => {
 	return getRequest(`${apiURL}/relatedobject/linkeddatasets/${relation}`, options);
 };
 
-const useGetRelatedObjectRequest = (requestOptions, mutateOptions) => {
-	return useMutation((_id, type) => getRelatedObject(_id, requestOptions), {
+const useGetRelatedObject = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations((_id, type) => getRelatedObject(_id, type, requestOptions), {
 		mutationKey: 'getRelatedObject',
 		...mutateOptions,
 	});
 };
 
+const useGetRelatedObjectByType = (requestOptions, mutateOptions) => {
+	return useMutationWithTranslations((_id, type) => getRelatedObjectByType(_id, type, requestOptions), {
+		mutationKey: 'getRelatedObjectByType',
+		...mutateOptions,
+	});
+};
+
 const useGetRelatedObjectForCourse = (requestOptions, mutateOptions) => {
-	return useMutation(_id => getRelatedObjectForCourse(_id, requestOptions), {
+	return useMutationWithTranslations(_id => getRelatedObjectForCourse(_id, requestOptions), {
 		mutationKey: 'getRelatedObjectForCourse',
 		...mutateOptions,
 	});
 };
 
 const useGetLinkedDatasets = (requestOptions, mutateOptions) => {
-	return useMutation(relation => getLinkedDatasets(relation, requestOptions), {
+	return useMutationWithTranslations(relation => getLinkedDatasets(relation, requestOptions), {
 		mutationKey: 'getLinkedDatasets',
 		...mutateOptions,
 	});
@@ -37,9 +47,11 @@ const useGetLinkedDatasets = (requestOptions, mutateOptions) => {
 
 export default {
 	getRelatedObject,
+	getRelatedObjectByType,
 	getRelatedObjectForCourse,
 	getLinkedDatasets,
-	useGetRelatedObjectRequest,
+	useGetRelatedObject,
+	useGetRelatedObjectByType,
 	useGetRelatedObjectForCourse,
 	useGetLinkedDatasets,
 };

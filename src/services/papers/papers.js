@@ -1,6 +1,14 @@
 import { useMutation, useQuery } from 'react-query';
 import { apiV2URL, apiURL } from '../../configs/url.config';
-import { deleteRequest, getRequest, patchRequest, postRequest, putRequest, useMutationWithTranslations } from '../../utils/requests';
+import {
+	deleteRequest,
+	getRequest,
+	patchRequest,
+	postRequest,
+	putRequest,
+	useMutationWithTranslations,
+	useQueryWithTranslations,
+} from '../../utils/requests';
 
 const getPapers = options => {
 	return getRequest(`${apiV2URL}/papers`, options);
@@ -45,7 +53,7 @@ const useGetPapers = (requestOptions, mutateOptions) => {
 };
 
 const useGetPaper = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getPaper',
 		...queryOptions,
 		queryFn: _id => getPaper(_id, requestOptions),
@@ -53,7 +61,7 @@ const useGetPaper = (requestOptions, queryOptions) => {
 };
 
 const useGetEdit = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'getEdit',
 		...queryOptions,
 		queryFn: _id => getPaper(_id, requestOptions),
@@ -61,28 +69,28 @@ const useGetEdit = (requestOptions, queryOptions) => {
 };
 
 const usePostPaper = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => postPaper(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => postPaper(_id, data, requestOptions), {
 		mutationKey: 'postPaper',
 		...mutateOptions,
 	});
 };
 
 const usePutPaper = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => putPaper(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => putPaper(_id, data, requestOptions), {
 		mutationKey: 'putPaper',
 		...mutateOptions,
 	});
 };
 
 const usePatchPaper = (requestOptions, mutateOptions) => {
-	return useMutation((_id, data) => patchPaper(_id, data, requestOptions), {
+	return useMutationWithTranslations((_id, data) => patchPaper(_id, data, requestOptions), {
 		mutationKey: 'patchPaper',
 		...mutateOptions,
 	});
 };
 
 const useDeletePaper = (requestOptions, queryOptions) => {
-	return useQuery({
+	return useQueryWithTranslations({
 		queryKey: 'deletePaper',
 		...queryOptions,
 		queryFn: _id => deletePaper(_id, requestOptions),
