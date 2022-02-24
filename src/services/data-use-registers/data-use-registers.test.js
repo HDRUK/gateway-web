@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { apiURL, apiV2URL } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
-import service from './papers';
+import service from './data-use-registers';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -62,80 +62,132 @@ describe('Given the papers service', () => {
 
 	describe('When patchDataUseRegister is called', () => {
 		it('Then calls patchRequest with the correct arguments', async () => {
-			await service.patchDataUseRegister('1234', {
-				option1: true,
-			});
+			await service.patchDataUseRegister(
+				'1234',
+				{ status: 'active' },
+				{
+					option1: true,
+				}
+			);
 
-			expect(patchRequest).toHaveBeenCalledWith(`${apiV2URL}/data-use-registers/1234?isEdit=true`, {
-				option1: true,
-			});
+			expect(patchRequest).toHaveBeenCalledWith(
+				`${apiV2URL}/data-use-registers/1234`,
+				{ status: 'active' },
+				{
+					option1: true,
+				}
+			);
 		});
 	});
 
-	describe('When useGetPapers is called', () => {
-		it('Then calls getPapers with the correct arguments', async () => {
-			const getSpy = jest.spyOn(service, 'getPapers');
-			const rendered = renderHook(() => service.useGetPapers({ option1: true }), { wrapper });
+	describe('When patchDataUseRegisterCounter is called', () => {
+		it('Then calls patchRequest with the correct arguments', async () => {
+			await service.patchDataUseRegisterCounter(
+				{ status: 'active' },
+				{
+					option1: true,
+				}
+			);
 
-			assertServiceRefetchCalled(rendered, getSpy);
+			expect(patchRequest).toHaveBeenCalledWith(
+				`${apiV2URL}/data-use-registers/counter`,
+				{ status: 'active' },
+				{
+					option1: true,
+				}
+			);
 		});
 	});
 
-	describe('When useGetPaper is called', () => {
-		it('Then calls getPaper with the correct arguments', async () => {
-			const getSpy = jest.spyOn(service, 'getPaper');
-			const rendered = renderHook(() => service.useGetPaper({ option1: true }), { wrapper });
+	describe('When postDataUseRegisterCheck is called', () => {
+		it('Then calls postRequest with the correct arguments', async () => {
+			await service.postDataUseRegisterCheck(
+				{ status: 'active' },
+				{
+					option1: true,
+				}
+			);
 
-			assertServiceRefetchCalled(rendered, getSpy, '1234');
+			expect(postRequest).toHaveBeenCalledWith(
+				`${apiV2URL}/data-use-registers/check`,
+				{ status: 'active' },
+				{
+					option1: true,
+				}
+			);
 		});
 	});
 
-	describe('When useGetEdit is called', () => {
-		it('Then calls getPaper with the correct arguments', async () => {
-			const getSpy = jest.spyOn(service, 'getEdit');
-			const rendered = renderHook(() => service.useGetEdit({ option1: true }), { wrapper });
+	describe('When postDataUseRegisterUpload is called', () => {
+		it('Then calls postRequest with the correct arguments', async () => {
+			await service.postDataUseRegisterUpload(
+				{ status: 'active' },
+				{
+					option1: true,
+				}
+			);
 
-			assertServiceRefetchCalled(rendered, getSpy, '1234');
+			expect(postRequest).toHaveBeenCalledWith(
+				`${apiV2URL}/data-use-registers/upload`,
+				{ status: 'active' },
+				{
+					option1: true,
+				}
+			);
 		});
 	});
 
-	describe('When usePostPaper is called', () => {
-		it('Then calls postPaper with the correct arguments', async () => {
-			const postSpy = jest.spyOn(service, 'postPaper');
-			const rendered = renderHook(() => service.usePostPaper({ option1: true }), { wrapper });
+	describe('When useGetDataUseRegisters is called', () => {
+		it('Then calls getDataUseRegisters with the correct arguments', async () => {
+			const getSpy = jest.spyOn(service, 'getDataUseRegisters');
+			const rendered = renderHook(() => service.useGetDataUseRegisters({ option1: true }), { wrapper });
 
-			assertServiceMutateAsyncCalled(rendered, postSpy, '1234', { status: 'archive' });
+			assertServiceMutateAsyncCalled(rendered, getSpy, { option1: true }, { params: { status: 'active' } });
 		});
 	});
 
-	describe('When usePutPaper is called', () => {
-		it('Then calls putPaper with the correct arguments', async () => {
-			const putSpy = jest.spyOn(service, 'putPaper');
-			const rendered = renderHook(() => service.usePutPaper({ option1: true }), { wrapper });
+	describe('When useGetDataUseRegistersByTeam is called', () => {
+		it('Then calls getDataUseRegistersByTeam with the correct arguments', async () => {
+			const getSpy = jest.spyOn(service, 'getDataUseRegistersByTeam');
+			const rendered = renderHook(() => service.useGetDataUseRegistersByTeam({ option1: true }), { wrapper });
 
-			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
+			assertServiceMutateAsyncCalled(rendered, getSpy, 'admin', { option1: true });
 		});
 	});
 
-	describe('When usePatchPaper is called', () => {
-		it('Then calls patchPaper with the correct arguments', async () => {
-			const putSpy = jest.spyOn(service, 'patchPaper');
-			const rendered = renderHook(() => service.usePatchPaper({ option1: true }), { wrapper });
+	describe('When usePatchDataUseRegister is called', () => {
+		it('Then calls patchDataUseRegister with the correct arguments', async () => {
+			const patchSpy = jest.spyOn(service, 'patchDataUseRegister');
+			const rendered = renderHook(() => service.usePatchDataUseRegister({ option1: true }), { wrapper });
 
-			assertServiceMutateAsyncCalled(rendered, putSpy, '1234', { status: 'archive' });
+			assertServiceMutateAsyncCalled(rendered, patchSpy, '1234', { status: 'active' }, { option1: true });
 		});
 	});
 
-	describe('When useDeletePaper is called', () => {
-		it('Then calls deletePaper with the correct arguments', async () => {
-			const deleteSpy = jest.spyOn(service, 'deletePaper');
-			const { waitFor, result } = renderHook(() => service.useDeletePaper({ option1: true }), { wrapper });
+	describe('When usePatchDataUseRegisterCounter is called', () => {
+		it('Then calls patchDataUseRegisterCounter with the correct arguments', async () => {
+			const patchSpy = jest.spyOn(service, 'patchDataUseRegisterCounter');
+			const rendered = renderHook(() => service.usePatchDataUseRegisterCounter({ option1: true }), { wrapper });
 
-			await waitFor(() => result.current.refetch);
+			assertServiceMutateAsyncCalled(rendered, patchSpy, { status: 'active' }, { option1: true });
+		});
+	});
 
-			result.current.refetch('1234').then(() => {
-				expect(deleteSpy).toHaveBeenCalledWith('1234');
-			});
+	describe('When usePostDataUseRegisterCheck is called', () => {
+		it('Then calls postDataUseRegisterCheck with the correct arguments', async () => {
+			const postSpy = jest.spyOn(service, 'postDataUseRegisterCheck');
+			const rendered = renderHook(() => service.usePostDataUseRegisterCheck({ option1: true }), { wrapper });
+
+			assertServiceMutateAsyncCalled(rendered, postSpy, { status: 'active' }, { option1: true });
+		});
+	});
+
+	describe('When usePostDataUseRegisterUpload is called', () => {
+		it('Then calls postDataUseRegisterUpload with the correct arguments', async () => {
+			const postSpy = jest.spyOn(service, 'postDataUseRegisterUpload');
+			const rendered = renderHook(() => service.usePostDataUseRegisterUpload({ option1: true }), { wrapper });
+
+			assertServiceMutateAsyncCalled(rendered, postSpy, { status: 'active' }, { option1: true });
 		});
 	});
 });
