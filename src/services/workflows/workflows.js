@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { deleteRequest, postRequest, putRequest } from '../utils/requests';
+import { apiURL } from '../../configs/url.config';
+import { deleteRequest, postRequest, putRequest } from '../../utils/requests';
 
 const postWorkflow = (data, options) => {
 	return postRequest(`${apiURL}/workflows`, data, options);

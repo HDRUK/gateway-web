@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { getRequest } from '../utils/requests';
+import { apiURL } from '../../configs/url.config';
+import { getRequest } from '../../utils/requests';
 
 const getReviews = options => {
 	return getRequest(`${apiURL}/reviews`, options);

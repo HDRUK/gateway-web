@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { getRequest, postRequest, putRequest } from '../utils/requests';
+import { apiURL } from '../../configs/url.config';
+import { getRequest, postRequest, putRequest } from '../../utils/requests';
 
 const getMembers = (_id, options) => {
 	return getRequest(`${apiURL}/teams/${_id}/members`, options);

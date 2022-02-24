@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { getRequest, postRequest, putRequest } from '../utils/requests';
+import { apiURL } from '../../configs/url.config';
+import { getRequest, postRequest, putRequest } from '../../utils/requests';
 
 const getCourse = (_id, options) => {
 	return getRequest(`${apiURL}/course/${_id}`, options);

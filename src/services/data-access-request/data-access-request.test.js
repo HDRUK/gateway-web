@@ -5,7 +5,7 @@ import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from
 import service from './data-access-request';
 
 jest.mock('axios');
-jest.mock('../utils/requests');
+jest.mock('../../utils/requests');
 
 let wrapper;
 
