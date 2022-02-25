@@ -14,139 +14,139 @@ const closed = jest.fn();
 const handleReject = jest.fn();
 
 describe('Given the AccountDatasetRejectModal component', () => {
-	const props = {
-		id: 'id',
-		open: true,
-		closed,
-		goToNext,
-		handleReject,
-		showGoToNext: true,
-	};
+    const props = {
+        id: 'id',
+        open: true,
+        closed,
+        goToNext,
+        handleReject,
+        showGoToNext: true,
+    };
 
-	describe('When it is rendered', () => {
-		let wrapper;
+    describe('When it is rendered', () => {
+        let wrapper;
 
-		beforeAll(() => {
-			server.listen();
-			containerDiv = createPortalContainer();
-			wrapper = render(<AccountDatasetRejectModal {...props} container={containerDiv} />, {
-				wrapper: Providers,
-			});
-		});
+        beforeAll(() => {
+            server.listen();
+            containerDiv = createPortalContainer();
+            wrapper = render(<AccountDatasetRejectModal {...props} container={containerDiv} />, {
+                wrapper: Providers,
+            });
+        });
 
-		afterEach(() => {
-			server.resetHandlers();
-		});
+        afterEach(() => {
+            server.resetHandlers();
+        });
 
-		afterAll(() => {
-			server.close();
-			removePortalContainer(containerDiv);
-		});
+        afterAll(() => {
+            server.close();
+            removePortalContainer(containerDiv);
+        });
 
-		it('Should match the snapshot', async () => {
-			expect(containerDiv).toMatchSnapshot();
-		});
+        it('Should match the snapshot', async () => {
+            expect(containerDiv).toMatchSnapshot();
+        });
 
-		it('Then the Reject and go to next button should not be disabled', async () => {
-			await waitFor(() => expect(wrapper.getByText('Reject and go to next')).toBeTruthy());
+        it('Then the Reject and go to next button should not be disabled', async () => {
+            await waitFor(() => expect(wrapper.getByText('Reject and go to next')).toBeTruthy());
 
-			const { getByText } = wrapper;
-			const rejectAndGoToNextButton = getByText('Reject and go to next');
-			expect(rejectAndGoToNextButton).not.toHaveAttribute('disabled');
-		});
+            const { getByText } = wrapper;
+            const rejectAndGoToNextButton = getByText('Reject and go to next');
+            expect(rejectAndGoToNextButton).not.toHaveAttribute('disabled');
+        });
 
-		describe('And showGoToNext is false', () => {
-			beforeAll(() => {
-				const { rerender } = wrapper;
-				const newProps = {
-					...props,
-					showGoToNext: false,
-				};
+        describe('And showGoToNext is false', () => {
+            beforeAll(() => {
+                const { rerender } = wrapper;
+                const newProps = {
+                    ...props,
+                    showGoToNext: false,
+                };
 
-				rerender(<AccountDatasetRejectModal {...newProps} container={containerDiv} />, {
-					wrapper: Providers,
-				});
-			});
-			it('Then the Reject and go to next button should be disabled', async () => {
-				await waitFor(() => expect(wrapper.getByText('Reject and go to next')).toBeTruthy());
+                rerender(<AccountDatasetRejectModal {...newProps} container={containerDiv} />, {
+                    wrapper: Providers,
+                });
+            });
+            it('Then the Reject and go to next button should be disabled', async () => {
+                await waitFor(() => expect(wrapper.getByText('Reject and go to next')).toBeTruthy());
 
-				const { getByText } = wrapper;
-				const rejectAndGoToNextButton = getByText('Reject and go to next');
-				expect(rejectAndGoToNextButton).toHaveAttribute('disabled');
-			});
-		});
+                const { getByText } = wrapper;
+                const rejectAndGoToNextButton = getByText('Reject and go to next');
+                expect(rejectAndGoToNextButton).toHaveAttribute('disabled');
+            });
+        });
 
-		describe('And the Reject button is clicked', () => {
-			let button;
+        describe('And the Reject button is clicked', () => {
+            let button;
 
-			beforeAll(async () => {
-				const { rerender } = wrapper;
+            beforeAll(async () => {
+                const { rerender } = wrapper;
 
-				rerender(<AccountDatasetRejectModal {...props} container={containerDiv} />, {
-					wrapper: Providers,
-				});
+                rerender(<AccountDatasetRejectModal {...props} container={containerDiv} />, {
+                    wrapper: Providers,
+                });
 
-				await waitFor(() => expect(wrapper.getByText('Reject and go to next')).toBeTruthy());
+                await waitFor(() => expect(wrapper.getByText('Reject and go to next')).toBeTruthy());
 
-				const { getByTestId, getByLabelText } = wrapper;
+                const { getByTestId, getByLabelText } = wrapper;
 
-				const descriptionInput = getByLabelText('Description', { exact: false });
-				await fireEvent.change(descriptionInput, { target: { value: 'rejected' } });
+                const descriptionInput = getByLabelText('Description', { exact: false });
+                await fireEvent.change(descriptionInput, { target: { value: 'rejected' } });
 
-				button = within(getByTestId('button-container')).getAllByText('Reject')[0];
+                button = within(getByTestId('button-container')).getAllByText('Reject')[0];
 
-				userEvent.click(button);
-			});
+                userEvent.click(button);
+            });
 
-			it('Then submits the dataset rejection request', async () => {
-				await waitFor(() =>
-					expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
-						id: 'id',
-						applicationStatus: 'rejected',
-						applicationStatusDesc: 'rejected',
-					})
-				);
-			});
+            it('Then submits the dataset rejection request', async () => {
+                await waitFor(() =>
+                    expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
+                        id: 'id',
+                        applicationStatus: 'rejected',
+                        applicationStatusDesc: 'rejected',
+                    })
+                );
+            });
 
-			it('Then calls the handleReject prop to close the modal', async () => {
-				await waitFor(() => expect(handleReject).toHaveBeenCalled());
-			});
-		});
+            it('Then calls the handleReject prop to close the modal', async () => {
+                await waitFor(() => expect(handleReject).toHaveBeenCalled());
+            });
+        });
 
-		describe('And the Reject and go to next button is clicked', () => {
-			let button;
+        describe('And the Reject and go to next button is clicked', () => {
+            let button;
 
-			beforeAll(async () => {
-				const { rerender } = wrapper;
+            beforeAll(async () => {
+                const { rerender } = wrapper;
 
-				rerender(<AccountDatasetRejectModal {...props} container={containerDiv} />, {
-					wrapper: Providers,
-				});
+                rerender(<AccountDatasetRejectModal {...props} container={containerDiv} />, {
+                    wrapper: Providers,
+                });
 
-				await waitFor(() => expect(wrapper.getByText('Reject and go to next')).toBeTruthy());
+                await waitFor(() => expect(wrapper.getByText('Reject and go to next')).toBeTruthy());
 
-				const { getByText, getByLabelText } = wrapper;
+                const { getByText, getByLabelText } = wrapper;
 
-				const descriptionInput = getByLabelText('Description', { exact: false });
-				fireEvent.change(descriptionInput, { target: { value: 'rejected' } });
+                const descriptionInput = getByLabelText('Description', { exact: false });
+                fireEvent.change(descriptionInput, { target: { value: 'rejected' } });
 
-				button = getByText('Reject and go to next');
-				fireEvent.click(button);
-			});
+                button = getByText('Reject and go to next');
+                fireEvent.click(button);
+            });
 
-			it('Then submits the dataset rejection request', async () => {
-				await waitFor(() =>
-					expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
-						id: 'id',
-						applicationStatus: 'rejected',
-						applicationStatusDesc: 'rejected',
-					})
-				);
-			});
+            it('Then submits the dataset rejection request', async () => {
+                await waitFor(() =>
+                    expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
+                        id: 'id',
+                        applicationStatus: 'rejected',
+                        applicationStatusDesc: 'rejected',
+                    })
+                );
+            });
 
-			it('Then goes to next dataset', async () => {
-				await waitFor(() => expect(goToNext).toHaveBeenCalled());
-			});
-		});
-	});
+            it('Then goes to next dataset', async () => {
+                await waitFor(() => expect(goToNext).toHaveBeenCalled());
+            });
+        });
+    });
 });
