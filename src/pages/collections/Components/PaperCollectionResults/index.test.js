@@ -6,45 +6,45 @@ import { getRelatedObjectByType } from '../../../../services/related-objects/rel
 jest.mock('../../../../services/related-objects/related-objects', () => ({ __esModule: true, getRelatedObjectByType: jest.fn() }));
 
 describe('Given the PaperCollectionResults component', () => {
-	describe('When no results can be viewed', () => {
-		const searchResults = [
-			{
-				activeFlag: 'review',
-				type: 'course',
-			},
-		];
+    describe('When no results can be viewed', () => {
+        const searchResults = [
+            {
+                activeFlag: 'review',
+                type: 'course',
+            },
+        ];
 
-		test('Then no related results will be rendered', () => {
-			render(<PaperCollectionResults searchResults={searchResults} relatedObjects={[]} />);
-			expect(screen.queryByTestId('related-paper-object')).toBeFalsy();
-		});
-	});
+        test('Then no related results will be rendered', () => {
+            render(<PaperCollectionResults searchResults={searchResults} relatedObjects={[]} />);
+            expect(screen.queryByTestId('related-paper-object')).toBeFalsy();
+        });
+    });
 
-	describe('When results can be viewed', () => {
-		const searchResults = [
-			{
-				type: 'paper',
-				activeflag: 'active',
-				tags: { features: [] },
-			},
-		];
+    describe('When results can be viewed', () => {
+        const searchResults = [
+            {
+                type: 'paper',
+                activeflag: 'active',
+                tags: { features: [] },
+            },
+        ];
 
-		const relatedPaperObject = {
-			id: 'id',
-			authorsNew: 'authorsNew',
-			type: 'paper',
-			name: 'name',
-			journal: 'journal',
-			journalYear: 'journalYear',
-		};
+        const relatedPaperObject = {
+            id: 'id',
+            authorsNew: 'authorsNew',
+            type: 'paper',
+            name: 'name',
+            journal: 'journal',
+            journalYear: 'journalYear',
+        };
 
-		beforeAll(() => {
-			getRelatedObjectByType.mockReturnValue([relatedPaperObject]);
-		});
+        beforeAll(() => {
+            getRelatedObjectByType.mockReturnValue([relatedPaperObject]);
+        });
 
-		test('Then related results will be rendered', async () => {
-			render(<PaperCollectionResults searchResults={searchResults} relatedObjects={[]} />);
-			expect(await screen.findByTestId('related-paper-object')).toBeTruthy();
-		});
-	});
+        test('Then related results will be rendered', async () => {
+            render(<PaperCollectionResults searchResults={searchResults} relatedObjects={[]} />);
+            expect(await screen.findByTestId('related-paper-object')).toBeTruthy();
+        });
+    });
 });

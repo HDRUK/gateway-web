@@ -1,160 +1,160 @@
 {
-	"services": {
-		"status": {
-			"404": {
-				"title": "Page not found",
-				"message": "The requested resource could not be found"
-			},
-			"500": {
-				"title": "Server error",
-				"message": "An error was encountered on the server at the requested address"
-			},
-			"401": {
-				"title": "Unauthorised",
-				"message": "The request to this address was unauthorised"
-			}
-		},
-		"errors": {
-			"datatuses": {
-				"getDataUseRegistersByTeam": {
-					"404": {
-						"message": "There has been an error getting data uses for this team"
-					}
-				}
-			}
-		}
-	},
-	"collection": {
-		"private": {
-			"live": "This private collection is now live. Only those who you share the collection link with will be able to view this page.",
-			"updated": "Done! Your private collection has been updated. Only those who you share the collection link with will be able to view this page."
-		},
-		"public": {
-			"live": "This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.",
-			"updated": "Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users."
-		},
-		"created": "created"
-	},
-	"newDatasetVersionSubmitted": "<b>Version {{versionNumber}}</b> of this dataset been submitted by data custodian <b>{{firstName}} {{lastName}}</b>",
-	"datasetVersionApproved": "<b>Version {{versionNumber}}</b> of this dataset been approved by admin <b>{{firstName}} {{lastName}}</b>",
-	"datasetVersionRejected": "<b>Application rejected</b> by portal admin <b>{{firstName}} {{lastName}}</b>",
-	"datasetVersionArchived": "<b>Version {{versionNumber}}</b> of this dataset been archived by data custodian <b>{{firstName}} {{lastName}}",
-	"datasetVersionUnarchived": "<b>Version {{versionNumber}}</b> of this dataset been unarchived by data custodian <b>{{firstName}} {{lastName}}",
-	"datasetUpdatesSubmitted": "<b>Updates submitted</b> by data custodian <b>{{firstName}} {{lastName}}</b>",
-	"previousAnswer": "Previous answer",
-	"updatedAnswer": "Updated answer",
-	"question": "Question",
-	"datetime": {
-		"submitted": "Submitted {{datetime}}"
-	},
-	"loading": "Loading",
-	"activitylog": {
-		"notfound": "The activity log for this dataset cannot be accessed. It must be set to {{status}}.",
-		"rejection": "Reason for rejection"
-	},
-	"next": "Next",
-	"previous": "Previous",
-	"dataset": {
-		"inReview": "pending approval",
-		"active": "Active",
-		"active,draft": "Active",
-		"rejected": "Rejected",
-		"archive": "Archived",
-		"makeADecision": "Make a decision",
-		"approve": "Approve",
-		"reject": "Reject",
-		"approvalModal": {
-			"title": "Approve this version of this dataset metadata",
-			"description": "If you made any amendments to their application, such as fixing a type, please let the editor know using the description below.",
-			"applicationStatus": "Description (optional)",
-			"buttons": {
-				"cancel": "No, nevermind",
-				"approve": "Approve",
-				"approveAndGoToNext": "Approve and go to next"
-			}
-		},
-		"rejectModal": {
-			"title": "Reject this version of this dataset metadata",
-			"description": "Let the editor know why this submission is being rejected. They will be able to create a new version and make a new submission.",
-			"applicationStatus": "Description",
-			"applicationStatusRequired": "Description cannot be empty",
-			"buttons": {
-				"cancel": "No, nevermind",
-				"reject": "Reject",
-				"rejectAndGoToNext": "Reject and go to next"
-			}
-		},
-		"create": {
-			"description": {
-				"admin": "View, add, edit, archive and check the status of your datasets.",
-				"user": "Approve or reject pending datasets."
-			},
-			"action": "Add a new dataset"
-		}
-	},
-	"datasets": "Datasets",
-	"viewForm": "View form",
-	"search": {
-		"placeholder": "Search within {{type}}",
-		"results": {
-			"notFound": "Could not find any {{type}} matching {{search}}"
-		}
-	},
-	"tabs": {
-		"counts": {
-			"inReview": "Pending approval ({{count}})",
-			"active": "Active ({{count}})",
-			"rejected": "Rejected ({{count}})",
-			"draft": "Draft ({{count}})",
-			"archive": "Archived ({{count}})"
-		}
-	},
-	"sortby": {
-		"selected": {
-			"popularity": "Sort by number of views",
-			"metadata": "Sort by metadata quality",
-			"metadataQuality": "Sort by metadata quality",
-			"resources": "Sort by related resources",
-			"latest": "Sort by latest",
-			"recentActivity": "Sort by recent activity",
-			"recentlyadded": "Sort by recently added",
-			"recentlyPublished": "Sort by recently published",
-			"sortbyyear": "Sort by year",
-			"relevance": "Sort by match to search terms",
-			"alphabetic": "Sort alphabetically"
-		},
-		"options": {
-			"popularity": "Number of views (highest to lowest)",
-			"metadata": "Metadata quality (platinum to bronze)",
-			"metadataQuality": "Metadata quality (platinum to bronze)",
-			"resources": "Related resources (most first)",
-			"latest": "Latest (recently updated first)",
-			"recentActivity": "Recent activity (newest first)",
-			"recentlyadded": "Recently added to collection (newest first)",
-			"recentlyPublished": "Recently published (newest first)",
-			"sortbyyear": "Year (latest first)",
-			"relevance": "Match to search terms (closest first)"
-		},
-		"optionsSortable": {
-			"popularity": "Number of views",
-			"mostViewed": "Most viewed",
-			"metadata": "Metadata quality",
-			"metadataQuality": "Metadata quality",
-			"resources": "Related resources",
-			"latest": "Recent activity",
-			"recentActivity": "Recent activity",
-			"recentlyadded": "Recently published",
-			"recentlyPublished": "Recently published",
-			"sortbyyear": "Year",
-			"relevance": "Match to search terms",
-			"alphabetic": "Alphabetically"
-		}
-	},
-	"notifications": {
-		"teamEmailText": "Send email notifications to team email address"
-	},
-	"searchResultsInfo": {
-		"withTerm": "Showing {{count}} results for '{{searchTerm}}'",
-		"withOutTerm": "Showing {{count}} results"
-	}
+    "services": {
+        "status": {
+            "404": {
+                "title": "Page not found",
+                "message": "The requested resource could not be found"
+            },
+            "500": {
+                "title": "Server error",
+                "message": "An error was encountered on the server at the requested address"
+            },
+            "401": {
+                "title": "Unauthorised",
+                "message": "The request to this address was unauthorised"
+            }
+        },
+        "errors": {
+            "datatuses": {
+                "getDataUseRegistersByTeam": {
+                    "404": {
+                        "message": "There has been an error getting data uses for this team"
+                    }
+                }
+            }
+        }
+    },
+    "collection": {
+        "private": {
+            "live": "This private collection is now live. Only those who you share the collection link with will be able to view this page.",
+            "updated": "Done! Your private collection has been updated. Only those who you share the collection link with will be able to view this page."
+        },
+        "public": {
+            "live": "This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.",
+            "updated": "Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users."
+        },
+        "created": "created"
+    },
+    "newDatasetVersionSubmitted": "<b>Version {{versionNumber}}</b> of this dataset been submitted by data custodian <b>{{firstName}} {{lastName}}</b>",
+    "datasetVersionApproved": "<b>Version {{versionNumber}}</b> of this dataset been approved by admin <b>{{firstName}} {{lastName}}</b>",
+    "datasetVersionRejected": "<b>Application rejected</b> by portal admin <b>{{firstName}} {{lastName}}</b>",
+    "datasetVersionArchived": "<b>Version {{versionNumber}}</b> of this dataset been archived by data custodian <b>{{firstName}} {{lastName}}",
+    "datasetVersionUnarchived": "<b>Version {{versionNumber}}</b> of this dataset been unarchived by data custodian <b>{{firstName}} {{lastName}}",
+    "datasetUpdatesSubmitted": "<b>Updates submitted</b> by data custodian <b>{{firstName}} {{lastName}}</b>",
+    "previousAnswer": "Previous answer",
+    "updatedAnswer": "Updated answer",
+    "question": "Question",
+    "datetime": {
+        "submitted": "Submitted {{datetime}}"
+    },
+    "loading": "Loading",
+    "activitylog": {
+        "notfound": "The activity log for this dataset cannot be accessed. It must be set to {{status}}.",
+        "rejection": "Reason for rejection"
+    },
+    "next": "Next",
+    "previous": "Previous",
+    "dataset": {
+        "inReview": "pending approval",
+        "active": "Active",
+        "active,draft": "Active",
+        "rejected": "Rejected",
+        "archive": "Archived",
+        "makeADecision": "Make a decision",
+        "approve": "Approve",
+        "reject": "Reject",
+        "approvalModal": {
+            "title": "Approve this version of this dataset metadata",
+            "description": "If you made any amendments to their application, such as fixing a type, please let the editor know using the description below.",
+            "applicationStatus": "Description (optional)",
+            "buttons": {
+                "cancel": "No, nevermind",
+                "approve": "Approve",
+                "approveAndGoToNext": "Approve and go to next"
+            }
+        },
+        "rejectModal": {
+            "title": "Reject this version of this dataset metadata",
+            "description": "Let the editor know why this submission is being rejected. They will be able to create a new version and make a new submission.",
+            "applicationStatus": "Description",
+            "applicationStatusRequired": "Description cannot be empty",
+            "buttons": {
+                "cancel": "No, nevermind",
+                "reject": "Reject",
+                "rejectAndGoToNext": "Reject and go to next"
+            }
+        },
+        "create": {
+            "description": {
+                "admin": "View, add, edit, archive and check the status of your datasets.",
+                "user": "Approve or reject pending datasets."
+            },
+            "action": "Add a new dataset"
+        }
+    },
+    "datasets": "Datasets",
+    "viewForm": "View form",
+    "search": {
+        "placeholder": "Search within {{type}}",
+        "results": {
+            "notFound": "Could not find any {{type}} matching {{search}}"
+        }
+    },
+    "tabs": {
+        "counts": {
+            "inReview": "Pending approval ({{count}})",
+            "active": "Active ({{count}})",
+            "rejected": "Rejected ({{count}})",
+            "draft": "Draft ({{count}})",
+            "archive": "Archived ({{count}})"
+        }
+    },
+    "sortby": {
+        "selected": {
+            "popularity": "Sort by number of views",
+            "metadata": "Sort by metadata quality",
+            "metadataQuality": "Sort by metadata quality",
+            "resources": "Sort by related resources",
+            "latest": "Sort by latest",
+            "recentActivity": "Sort by recent activity",
+            "recentlyadded": "Sort by recently added",
+            "recentlyPublished": "Sort by recently published",
+            "sortbyyear": "Sort by year",
+            "relevance": "Sort by match to search terms",
+            "alphabetic": "Sort alphabetically"
+        },
+        "options": {
+            "popularity": "Number of views (highest to lowest)",
+            "metadata": "Metadata quality (platinum to bronze)",
+            "metadataQuality": "Metadata quality (platinum to bronze)",
+            "resources": "Related resources (most first)",
+            "latest": "Latest (recently updated first)",
+            "recentActivity": "Recent activity (newest first)",
+            "recentlyadded": "Recently added to collection (newest first)",
+            "recentlyPublished": "Recently published (newest first)",
+            "sortbyyear": "Year (latest first)",
+            "relevance": "Match to search terms (closest first)"
+        },
+        "optionsSortable": {
+            "popularity": "Number of views",
+            "mostViewed": "Most viewed",
+            "metadata": "Metadata quality",
+            "metadataQuality": "Metadata quality",
+            "resources": "Related resources",
+            "latest": "Recent activity",
+            "recentActivity": "Recent activity",
+            "recentlyadded": "Recently published",
+            "recentlyPublished": "Recently published",
+            "sortbyyear": "Year",
+            "relevance": "Match to search terms",
+            "alphabetic": "Alphabetically"
+        }
+    },
+    "notifications": {
+        "teamEmailText": "Send email notifications to team email address"
+    },
+    "searchResultsInfo": {
+        "withTerm": "Showing {{count}} results for '{{searchTerm}}'",
+        "withOutTerm": "Showing {{count}} results"
+    }
 }
