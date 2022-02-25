@@ -11,9 +11,10 @@
 		"ecmaVersion": 12,
 		"sourceType": "module"
 	},
-	"plugins": ["prettier", "jest"],
+	"plugins": ["prettier"],
 	"rules": {
 		"prettier/prettier": ["error", { "endOfLine": "auto" }],
+		"react/jsx-props-no-spreading": "off",
 		"react/jsx-filename-extension": [
 			1,
 			{
