@@ -1,5 +1,5 @@
 import { apiV2URL } from '../../configs/url.config';
-import { getRequest, patchRequest, postRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
+import { getRequest, patchRequest, postRequest, useMutationWithTranslations } from '../../utils/requests';
 
 const getDataUseRegisters = options => {
 	return getRequest(`${apiV2URL}/data-use-registers`, options);

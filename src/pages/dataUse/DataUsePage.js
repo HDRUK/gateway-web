@@ -8,15 +8,13 @@ import dataUseRegistersService from '../../services/data-use-registers';
 import googleAnalytics from '../../tracking';
 import Loading from '../commonComponents/Loading';
 import MessageNotFound from '../commonComponents/MessageNotFound';
-import DarHelperUtil from './../../utils/DarHelper.util';
+import DarHelperUtil from '../../utils/DarHelper.util';
 import ArchiveModal from './ArchiveModal';
 import './DataUse.scss';
 import Pagination from './DataUsePagination';
 import Table from './DataUseTable';
 import DataUseApproveModal from './modals/DataUseApproveModal';
 import DataUseRejectModal from './modals/DataUseRejectModal';
-
-var baseURL = require('../commonComponents/BaseURL').getURL();
 
 const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 	React.useImperativeHandle(ref, () => ({
@@ -146,13 +144,13 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<LayoutContent>
 				<Row>
 					<Col className='pl-0 pr-0'>
 						{!isEmpty(alert) && (
-							<Alert variant={'success'} className='main-alert'>
-								<SVGIcon name='check' width={24} height={24} fill={'#2C8267'} /> {alert}
+							<Alert variant='success' className='main-alert'>
+								<SVGIcon name='check' width={24} height={24} fill='#2C8267' /> {alert}
 							</Alert>
 						)}
 					</Col>
@@ -192,22 +190,22 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 									title={
 										((team === 'user' || (team !== 'user' && team !== 'admin')) &&
 											tabName === 'Active' &&
-											tabName + ' (' + active.length + ')') ||
+											`${tabName} (${active.length})`) ||
 										((team === 'admin' || (team !== 'user' && team !== 'admin')) &&
 											tabName === 'Pending approval' &&
-											tabName + ' (' + pending.length + ')') ||
-										(team !== 'user' && team !== 'admin' && tabName === 'Rejected' && tabName + ' (' + rejected.length + ')') ||
-										(team !== 'user' && team !== 'admin' && tabName === 'Archived' && tabName + ' (' + archived.length + ')')
+											`${tabName} (${pending.length})`) ||
+										(team !== 'user' && team !== 'admin' && tabName === 'Rejected' && `${tabName} (${rejected.length})`) ||
+										(team !== 'user' && team !== 'admin' && tabName === 'Archived' && `${tabName} (${archived.length})`)
 									}>
 									{(team === 'user' || (team !== 'user' && team !== 'admin')) && tabName === 'Active' && (
-										<Table data={currentActive} active={true} team={team} onClickArchive={onClickArchive} />
+										<Table data={currentActive} active team={team} onClickArchive={onClickArchive} />
 									)}
 									{(team === 'admin' || (team !== 'user' && team !== 'admin')) && tabName === 'Pending approval' && (
-										<Table team={team} data={currentPending} pending={true} onClickApprove={onClickApprove} onClickReject={onClickReject} />
+										<Table team={team} data={currentPending} pending onClickApprove={onClickApprove} onClickReject={onClickReject} />
 									)}
 									{team !== 'user' && team !== 'admin' && tabName === 'Rejected' && <Table team={team} data={currentRejected} />}
 									{team !== 'user' && team !== 'admin' && tabName === 'Archived' && (
-										<Table team={team} data={currentArchived} archived={true} onClickUnarchive={onClickUnarchive} />
+										<Table team={team} data={currentArchived} archived onClickUnarchive={onClickUnarchive} />
 									)}
 
 									{!row.length && <MessageNotFound />}
@@ -233,7 +231,7 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 					</Col>
 				</Row>
 				{showArchiveModal && (
-					<ArchiveModal archive={true} onConfirm={updataDataUseStatus} isVisible={showArchiveModal} toggleModal={toggleArchiveModal} />
+					<ArchiveModal archive onConfirm={updataDataUseStatus} isVisible={showArchiveModal} toggleModal={toggleArchiveModal} />
 				)}
 				{showUnarchiveModal && (
 					<ArchiveModal archive={false} onConfirm={updataDataUseStatus} isVisible={showUnarchiveModal} toggleModal={toggleUnarchiveModal} />
@@ -245,7 +243,7 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
 					<DataUseRejectModal onConfirm={updataDataUseStatus} isVisible={showRejectModal} toggleModal={toggleRejectModal} />
 				)}
 			</LayoutContent>
-		</Fragment>
+		</>
 	);
 });
 export default DataUsePage;

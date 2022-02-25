@@ -1,5 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
-import { apiV2URL, apiURL } from '../../configs/url.config';
+import { apiURL, apiV2URL } from '../../configs/url.config';
 import {
 	deleteRequest,
 	getRequest,

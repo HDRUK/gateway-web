@@ -1,18 +1,15 @@
-import { useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
 import { getRequest, useQueryWithTranslations } from '../../utils/requests';
 
-const getContributorsInfo = (applicationId, options) => {
-	return getRequest(`${apiURL}/data-access-request/prepopulate-contributors/${applicationId}`, options);
-};
+const getContributorsInfo = (applicationId, options) =>
+	getRequest(`${apiURL}/data-access-request/prepopulate-contributors/${applicationId}`, options);
 
-const useGetContributorsInfo = (requestOptions, queryOptions) => {
-	return useQueryWithTranslations({
+const useGetContributorsInfo = (requestOptions, queryOptions) =>
+	useQueryWithTranslations({
 		queryKey: 'getContributorsInfo',
 		...queryOptions,
 		queryFn: () => getContributorsInfo(requestOptions),
 	});
-};
 
 export default {
 	getContributorsInfo,

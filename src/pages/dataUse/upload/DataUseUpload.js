@@ -12,8 +12,6 @@ import dataUseSchema from './DataUseSchema';
 import DataUseSubmitModal from './DataUseSubmitModal';
 import './DataUseUpload.scss';
 
-var baseURL = require('../../commonComponents/BaseURL').getURL();
-
 const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState }, ref) => {
 	React.useImperativeHandle(ref, () => ({
 		toggleSubmitModal,
@@ -167,11 +165,7 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 		}
 	};
 
-	const hasDuplicates = () => {
-		return !!uploadedData.uploadErrors.find(({ error }) => {
-			return error === 'duplicate' || error === 'duplicateRow';
-		});
-	};
+	const hasDuplicates = () => !!uploadedData.uploadErrors.find(({ error }) => error === 'duplicate' || error === 'duplicateRow');
 
 	const toggleDataUseSection = dataUseRegisterIndex => {
 		const newArray = dataUseRegisterIndexes.includes(dataUseRegisterIndex)
@@ -183,47 +177,39 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 
 	const renderApplicants = dataUse => {
 		const dataUseCheck = findDataUseCheck(dataUse);
-		const gatewayApplicantsLinks = dataUseCheck.gatewayApplicants.map(gatewayApplicant => {
-			return (
-				<div>
-					<Link className='data-use-link' to={'/person/' + gatewayApplicant.id} target='_blank'>
-						{`${gatewayApplicant.firstname}  ${gatewayApplicant.lastname}`}
-					</Link>
-				</div>
-			);
-		});
+		const gatewayApplicantsLinks = dataUseCheck.gatewayApplicants.map(gatewayApplicant => (
+			<div>
+				<Link className='data-use-link' to={`/person/${gatewayApplicant.id}`} target='_blank'>
+					{`${gatewayApplicant.firstname}  ${gatewayApplicant.lastname}`}
+				</Link>
+			</div>
+		));
 
-		const namedApplicants = dataUseCheck.nonGatewayApplicants.map(nonGatewayApplicant => {
-			return <div>{nonGatewayApplicant}</div>;
-		});
+		const namedApplicants = dataUseCheck.nonGatewayApplicants.map(nonGatewayApplicant => <div>{nonGatewayApplicant}</div>);
 
 		return [...gatewayApplicantsLinks, ...namedApplicants];
 	};
 
 	const renderDatasets = dataUse => {
 		const dataUseCheck = findDataUseCheck(dataUse);
-		const linkedDatasets = dataUseCheck.linkedDatasets.map(linkedDataset => {
-			return (
-				<div>
-					<Link className='data-use-link' to={'/dataset/' + linkedDataset.pid} target='_blank'>
-						{linkedDataset.name}{' '}
-					</Link>
-				</div>
-			);
-		});
+		const linkedDatasets = dataUseCheck.linkedDatasets.map(linkedDataset => (
+			<div>
+				<Link className='data-use-link' to={`/dataset/${linkedDataset.pid}`} target='_blank'>
+					{linkedDataset.name}{' '}
+				</Link>
+			</div>
+		));
 
-		const namedDatasets = dataUseCheck.namedDatasets.map(namedDataset => {
-			return (
-				<div className='data-use-namedDataset'>
-					<OverlayTrigger placement='top' overlay={<Tooltip>This dataset is not linked on the Gateway</Tooltip>}>
-						<div>
-							<SVGIcon name='attention' width={22} height={22} fill={'#f0bb24'} viewBox='0 -3 22 22' />
-						</div>
-					</OverlayTrigger>{' '}
-					{namedDataset}
-				</div>
-			);
-		});
+		const namedDatasets = dataUseCheck.namedDatasets.map(namedDataset => (
+			<div className='data-use-namedDataset'>
+				<OverlayTrigger placement='top' overlay={<Tooltip>This dataset is not linked on the Gateway</Tooltip>}>
+					<div>
+						<SVGIcon name='attention' width={22} height={22} fill='#f0bb24' viewBox='0 -3 22 22' />
+					</div>
+				</OverlayTrigger>{' '}
+				{namedDataset}
+			</div>
+		));
 
 		return [...linkedDatasets, ...namedDatasets];
 	};
@@ -231,35 +217,29 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 	const renderOutputs = dataUse => {
 		const dataUseCheck = findDataUseCheck(dataUse);
 
-		const gatewayOutputsTools = dataUseCheck.gatewayOutputsTools.map(gatewayOutputsTool => {
-			return (
-				<div>
-					<Link className='data-use-link' to={'/tool/' + gatewayOutputsTool.id} target='_blank'>
-						{gatewayOutputsTool.name}{' '}
-					</Link>
-				</div>
-			);
-		});
+		const gatewayOutputsTools = dataUseCheck.gatewayOutputsTools.map(gatewayOutputsTool => (
+			<div>
+				<Link className='data-use-link' to={`/tool/${gatewayOutputsTool.id}`} target='_blank'>
+					{gatewayOutputsTool.name}{' '}
+				</Link>
+			</div>
+		));
 
-		const gatewayOutputsPapers = dataUseCheck.gatewayOutputsPapers.map(gatewayOutputsPaper => {
-			return (
-				<div>
-					<Link className='data-use-link' to={'/paper/' + gatewayOutputsPaper.id} target='_blank'>
-						{gatewayOutputsPaper.name}{' '}
-					</Link>
-				</div>
-			);
-		});
+		const gatewayOutputsPapers = dataUseCheck.gatewayOutputsPapers.map(gatewayOutputsPaper => (
+			<div>
+				<Link className='data-use-link' to={`/paper/${gatewayOutputsPaper.id}`} target='_blank'>
+					{gatewayOutputsPaper.name}{' '}
+				</Link>
+			</div>
+		));
 
-		const nonGatewayOutputs = dataUseCheck.nonGatewayOutputs.map(nonGatewayOutput => {
-			return (
-				<div>
-					<Link className='data-use-link' to={nonGatewayOutput} target='_blank'>
-						{nonGatewayOutput}{' '}
-					</Link>
-				</div>
-			);
-		});
+		const nonGatewayOutputs = dataUseCheck.nonGatewayOutputs.map(nonGatewayOutput => (
+			<div>
+				<Link className='data-use-link' to={nonGatewayOutput} target='_blank'>
+					{nonGatewayOutput}{' '}
+				</Link>
+			</div>
+		));
 
 		return [...gatewayOutputsTools, ...gatewayOutputsPapers, ...nonGatewayOutputs];
 	};
@@ -278,11 +258,11 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 
 	return (
 		<Row>
-			<Col xs={1}></Col>
+			<Col xs={1} />
 			<Col>
 				{!isEmpty(alert) && (
-					<Alert variant={'success'} className='main-alert'>
-						<SVGIcon name='check' width={24} height={24} fill={'#2C8267'} /> {alert}
+					<Alert variant='success' className='main-alert'>
+						<SVGIcon name='check' width={24} height={24} fill='#2C8267' /> {alert}
 					</Alert>
 				)}
 				<div className='layoutCard p-4'>
@@ -378,7 +358,7 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 												name='chevronbottom'
 												width={16}
 												height={16}
-												fill={'#3c4e8c'}
+												fill='#3c4e8c'
 												className={!dataUseRegisterIndexes.includes(index) ? 'mr-3' : 'flip180 mr-3'}
 											/>
 											{some(filtered, ['column', 'Project title*'])
@@ -577,7 +557,7 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 					recommendedFieldsMissing={recommendedFieldsMissing}
 				/>
 			</Col>
-			<Col xs={1}></Col>
+			<Col xs={1} />
 		</Row>
 	);
 });

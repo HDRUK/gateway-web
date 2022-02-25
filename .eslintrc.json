@@ -20,6 +20,7 @@
 			{
 				"extensions": [".js", ".jsx", ".tsx"]
 			}
-		]
+		],
+		"arrow-body-style": "off"
 	}
 }

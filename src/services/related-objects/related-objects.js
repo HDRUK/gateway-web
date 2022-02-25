@@ -18,7 +18,7 @@ const getLinkedDatasets = (relation, options) => {
 };
 
 const useGetRelatedObject = (requestOptions, mutateOptions) => {
-	return useMutationWithTranslations((_id, type) => getRelatedObject(_id, type, requestOptions), {
+	return useMutationWithTranslations(_id => getRelatedObject(_id, requestOptions), {
 		mutationKey: 'getRelatedObject',
 		...mutateOptions,
 	});

@@ -1,4 +1,3 @@
-import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
 import {
 	deleteRequest,
@@ -54,22 +53,25 @@ const deleteDataAccessRequest = (_id, options) => {
 	return deleteRequest(`${apiURL}/data-access-request/${_id}`, options);
 };
 
-const useGetDataAccessRequests = (requestOptions, queryOptions = { queryKey: 'getDataAccessRequests' }) => {
+const useGetDataAccessRequests = (requestOptions, queryOptions) => {
 	return useQueryWithTranslations({
+		queryKey: 'getDataAccessRequests',
 		...queryOptions,
 		queryFn: () => getDataAccessRequests(requestOptions),
 	});
 };
 
-const useGetDataAccessRequest = (requestOptions, queryOptions = { queryKey: 'getDataAccessRequest' }) => {
+const useGetDataAccessRequest = (requestOptions, queryOptions) => {
 	return useQueryWithTranslations({
+		queryKey: 'getDataAccessRequest',
 		...queryOptions,
 		queryFn: _id => getDataAccessRequest(_id, requestOptions),
 	});
 };
 
-const useGetDatasets = (requestOptions, queryOptions = { queryKey: 'getDatasets' }) => {
+const useGetDatasets = (requestOptions, queryOptions) => {
 	return useQueryWithTranslations({
+		queryKey: 'getDatasets',
 		...queryOptions,
 		queryFn: () => getDatasets(requestOptions),
 	});

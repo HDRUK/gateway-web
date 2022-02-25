@@ -121,7 +121,7 @@ const usePutTool = (requestOptions, mutateOptions) => {
 };
 
 const usePutReviewApprove = (requestOptions, mutateOptions) => {
-	return useMutationWithTranslations((_id, data) => putReviewApprove(_id, data, requestOptions), {
+	return useMutationWithTranslations(data => putReviewApprove(data, requestOptions), {
 		mutationKey: 'putReviewApprove',
 		...mutateOptions,
 	});
