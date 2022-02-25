@@ -12,35 +12,35 @@ let wrapper;
 const queryClient = new QueryClient();
 
 describe('Given the datasets service', () => {
-	beforeAll(() => {
-		wrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
-	});
+    beforeAll(() => {
+        wrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+    });
 
-	afterAll(() => {
-		wrapper.unmount();
-	});
+    afterAll(() => {
+        wrapper.unmount();
+    });
 
-	afterEach(() => {
-		jest.resetAllMocks();
-	});
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
 
-	describe('When getLocations is called', () => {
-		it('Then calls getRequest with the correct arguments', async () => {
-			await service.getLocations('lond', {
-				withCredentials: false,
-			});
+    describe('When getLocations is called', () => {
+        it('Then calls getRequest with the correct arguments', async () => {
+            await service.getLocations('lond', {
+                withCredentials: false,
+            });
 
-			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/locations/lond`, {
-				withCredentials: false,
-			});
-		});
-	});
+            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/locations/lond`, {
+                withCredentials: false,
+            });
+        });
+    });
 
-	describe('When useGetLocations is called', () => {
-		it('Then calls getLocations with the correct arguments', async () => {
-			const getSpy = jest.spyOn(service, 'getLocations');
-			const rendered = renderHook(() => service.useGetLocations('lond', { withCredentials: false }), { wrapper });
-			assertServiceRefetchCalled(rendered, getSpy, 'lond');
-		});
-	});
+    describe('When useGetLocations is called', () => {
+        it('Then calls getLocations with the correct arguments', async () => {
+            const getSpy = jest.spyOn(service, 'getLocations');
+            const rendered = renderHook(() => service.useGetLocations('lond', { withCredentials: false }), { wrapper });
+            assertServiceRefetchCalled(rendered, getSpy, 'lond');
+        });
+    });
 });
