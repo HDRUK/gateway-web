@@ -4,49 +4,49 @@ import CourseCollectionResults from './index';
 import { getRelatedObjectForCourse } from '../../../../services/related-objects/related-objects';
 
 jest.mock('../../../../services/related-objects/related-objects', () => ({
-	__esModule: true,
-	getRelatedObjectForCourse: jest.fn(),
+    __esModule: true,
+    getRelatedObjectForCourse: jest.fn(),
 }));
 
 describe('Given the CourseCollectionResults component', () => {
-	describe('When no results can be viewed', () => {
-		const searchResults = [
-			{
-				activeFlag: 'review',
-				type: 'dataset',
-			},
-		];
+    describe('When no results can be viewed', () => {
+        const searchResults = [
+            {
+                activeFlag: 'review',
+                type: 'dataset',
+            },
+        ];
 
-		test('Then no related results will be rendered', () => {
-			render(<CourseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
-			expect(screen.queryByTestId('related-course-object')).toBeFalsy();
-		});
-	});
+        test('Then no related results will be rendered', () => {
+            render(<CourseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
+            expect(screen.queryByTestId('related-course-object')).toBeFalsy();
+        });
+    });
 
-	describe('When results can be viewed', () => {
-		const searchResults = [
-			{
-				type: 'course',
-				activeflag: 'active',
-				courseOptions: [],
-			},
-		];
+    describe('When results can be viewed', () => {
+        const searchResults = [
+            {
+                type: 'course',
+                activeflag: 'active',
+                courseOptions: [],
+            },
+        ];
 
-		const relatedCourseObject = {
-			id: 'id',
-			type: 'course',
-			title: 'title',
-			provider: 'provider',
-			courseOptions: [],
-		};
+        const relatedCourseObject = {
+            id: 'id',
+            type: 'course',
+            title: 'title',
+            provider: 'provider',
+            courseOptions: [],
+        };
 
-		beforeAll(() => {
-			getRelatedObjectForCourse.mockResolvedValue([relatedCourseObject]);
-		});
+        beforeAll(() => {
+            getRelatedObjectForCourse.mockResolvedValue([relatedCourseObject]);
+        });
 
-		test('Then related results will be rendered', async () => {
-			render(<CourseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
-			expect(await screen.findByTestId('related-course-object')).toBeTruthy();
-		});
-	});
+        test('Then related results will be rendered', async () => {
+            render(<CourseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
+            expect(await screen.findByTestId('related-course-object')).toBeTruthy();
+        });
+    });
 });
