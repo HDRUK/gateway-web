@@ -65,7 +65,7 @@ const AccountDatasetRejectModal = ({ id, open, closed, goToNext, handleReject, s
 							<div className='decisionModal-body--wrap'>
 								<p data-testid='description'>{t('dataset.rejectModal.description')}</p>
 								<Form.Group>
-									<label for='applicationStatusDesc' className='black-14'>
+									<label htmlFor='applicationStatusDesc' className='black-14'>
 										{t('dataset.rejectModal.applicationStatus')}
 										<span>{values.applicationStatusDesc.length}/1500</span>
 									</label>

@@ -1,9 +1,7 @@
 {
 	"env": {
 		"browser": true,
-		"es2021": true,
-		"jest": true,
-		"jest/globals": true
+		"jest": true
 	},
 	"extends": ["airbnb", "prettier"],
 	"parserOptions": {
@@ -15,6 +13,12 @@
 	},
 	"plugins": ["prettier", "jest"],
 	"rules": {
-		"prettier/prettier": ["error"]
+		"prettier/prettier": ["error", { "endOfLine": "auto" }],
+		"react/jsx-filename-extension": [
+			1,
+			{
+				"extensions": [".js", ".jsx", ".tsx"]
+			}
+		]
 	}
 }
