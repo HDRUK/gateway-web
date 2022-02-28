@@ -19,12 +19,12 @@ const postCollectionCounterUpdateRequest = (data, options) => {
 
 const useGetCollections = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(_id => getCollections(_id, requestOptions), {
-        mutationKey: 'getCollections',
+        mutationKey: 'collections.getCollections',
         ...mutateOptions,
     });
 };
 
-const useGetCollectionRequest = (_id, requestOptions, queryOptions = { queryKey: 'getCollectionRequest' }) => {
+const useGetCollectionRequest = (_id, requestOptions, queryOptions = { queryKey: 'collections.getCollectionRequest' }) => {
     return useQueryWithTranslations({
         ...queryOptions,
         queryKey: [queryOptions.queryKey, _id],
@@ -32,7 +32,11 @@ const useGetCollectionRequest = (_id, requestOptions, queryOptions = { queryKey:
     });
 };
 
-const useGetCollectionRelatedObjectsRequest = (_id, requestOptions, queryOptions = { queryKey: 'getCollectionRelatedObjectsRequest' }) => {
+const useGetCollectionRelatedObjectsRequest = (
+    _id,
+    requestOptions,
+    queryOptions = { queryKey: 'collections.getCollectionRelatedObjectsRequest' }
+) => {
     return useQueryWithTranslations({
         ...queryOptions,
         queryKey: [queryOptions.queryKey, _id],
@@ -42,7 +46,7 @@ const useGetCollectionRelatedObjectsRequest = (_id, requestOptions, queryOptions
 
 const usePostCollectionCounterUpdateRequest = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(data => postCollectionCounterUpdateRequest(data, requestOptions), {
-        mutationKey: 'postCollectionCounterUpdateRequest',
+        mutationKey: 'collections.postCollectionCounterUpdateRequest',
         ...mutateOptions,
     });
 };

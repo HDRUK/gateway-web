@@ -21,7 +21,7 @@ const useGetSearch = (requestOptions, mutateOptions) => {
                 ...params,
             }),
         {
-            mutationKey: 'getSearch',
+            mutationKey: 'search.getSearch',
             ...mutateOptions,
         }
     );
@@ -29,7 +29,7 @@ const useGetSearch = (requestOptions, mutateOptions) => {
 
 const useGetTopic = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getTopic',
+        queryKey: 'search.getTopic',
         ...queryOptions,
         queryFn: () => getTopic(requestOptions),
     });
@@ -37,7 +37,7 @@ const useGetTopic = (requestOptions, queryOptions) => {
 
 const useGetFilters = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getFilters',
+        queryKey: 'search.getFilters',
         ...queryOptions,
         queryFn: () => getFilters(requestOptions),
     });

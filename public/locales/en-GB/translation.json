@@ -15,7 +15,7 @@
             }
         },
         "errors": {
-            "datatuses": {
+            "dur": {
                 "getDataUseRegistersByTeam": {
                     "404": {
                         "message": "There has been an error getting data uses for this team"

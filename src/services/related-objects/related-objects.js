@@ -19,28 +19,35 @@ const getLinkedDatasets = (relation, options) => {
 
 const useGetRelatedObject = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(_id => getRelatedObject(_id, requestOptions), {
-        mutationKey: 'getRelatedObject',
+        mutationKey: 'relatedobjects.getRelatedObject',
         ...mutateOptions,
     });
 };
 
 const useGetRelatedObjectByType = (requestOptions, mutateOptions) => {
-    return useMutationWithTranslations((_id, type) => getRelatedObjectByType(_id, type, requestOptions), {
-        mutationKey: 'getRelatedObjectByType',
-        ...mutateOptions,
-    });
+    return useMutationWithTranslations(
+        data => {
+            const { _id, type } = data;
+
+            return getRelatedObjectByType(_id, type, requestOptions);
+        },
+        {
+            mutationKey: 'relatedobjects.getRelatedObjectByType',
+            ...mutateOptions,
+        }
+    );
 };
 
 const useGetRelatedObjectForCourse = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(_id => getRelatedObjectForCourse(_id, requestOptions), {
-        mutationKey: 'getRelatedObjectForCourse',
+        mutationKey: 'relatedobjects.getRelatedObjectForCourse',
         ...mutateOptions,
     });
 };
 
 const useGetLinkedDatasets = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(relation => getLinkedDatasets(relation, requestOptions), {
-        mutationKey: 'getLinkedDatasets',
+        mutationKey: 'relatedobjects.getLinkedDatasets',
         ...mutateOptions,
     });
 };

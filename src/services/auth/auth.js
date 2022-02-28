@@ -15,7 +15,7 @@ const postRegister = (data, options) => {
 
 const useGetStatus = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getStatus',
+        queryKey: 'auth.getStatus',
         ...queryOptions,
         queryFn: () => getStatus(requestOptions),
     });
@@ -23,7 +23,7 @@ const useGetStatus = (requestOptions, queryOptions) => {
 
 const useGetLogout = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getLogout',
+        queryKey: 'auth.getLogout',
         ...queryOptions,
         queryFn: () => getLogout(requestOptions),
     });
@@ -31,7 +31,7 @@ const useGetLogout = (requestOptions, queryOptions) => {
 
 const usePostRegister = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(data => postRegister(data, requestOptions), {
-        mutationKey: 'postRegister',
+        mutationKey: 'auth.postRegister',
         ...mutateOptions,
     });
 };

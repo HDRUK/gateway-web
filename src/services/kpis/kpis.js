@@ -1,13 +1,13 @@
-import { useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest } from '../../utils/requests';
+import { getRequest, useQueryWithTranslations } from '../../utils/requests';
 
 const getKpis = options => {
     return getRequest(`${apiURL}/kpis`, options);
 };
 
-const useGetKpis = (requestOptions, queryOptions = { queryKey: 'getKpis' }) => {
-    return useQuery({
+const useGetKpis = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'kpis.getKpis',
         ...queryOptions,
         queryFn: () => getKpis(requestOptions),
     });

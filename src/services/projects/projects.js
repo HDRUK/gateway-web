@@ -1,6 +1,13 @@
-import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
+import {
+    deleteRequest,
+    getRequest,
+    patchRequest,
+    postRequest,
+    putRequest,
+    useMutationWithTranslations,
+    useQueryWithTranslations,
+} from '../../utils/requests';
 
 const getProjects = options => {
     return getRequest(`${apiURL}/projects/getList`, options);
@@ -26,40 +33,46 @@ const deleteProject = (_id, options) => {
     return deleteRequest(`${apiURL}/projects/${_id}`, options);
 };
 
-const useGetProjects = (requestOptions, queryOptions = { queryKey: 'getProjects' }) => {
-    return useQuery({
+const useGetProjects = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'projects.getProjects',
         ...queryOptions,
         queryFn: () => getProjects(requestOptions),
     });
 };
 
-const useGetProject = (requestOptions, queryOptions = { queryKey: 'getProject' }) => {
-    return useQuery({
+const useGetProject = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'projects.getProject',
         ...queryOptions,
         queryFn: _id => getProject(_id, requestOptions),
     });
 };
 
-const usePostProject = (requestOptions, mutateOptions = { queryKey: 'postProject' }) => {
-    return useMutation((_id, data) => postProject(_id, data, requestOptions), {
-        mutateOptions,
+const usePostProject = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => postProject(_id, data, requestOptions), {
+        mutationKey: 'projects.postProject',
+        ...mutateOptions,
     });
 };
 
-const usePutProject = (requestOptions, mutateOptions = { queryKey: 'putProject' }) => {
-    return useMutation((_id, data) => putProject(_id, data, requestOptions), {
-        mutateOptions,
+const usePutProject = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => putProject(_id, data, requestOptions), {
+        mutationKey: 'projects.putProject',
+        ...mutateOptions,
     });
 };
 
-const usePatchProject = (requestOptions, mutateOptions = { queryKey: 'patchProject' }) => {
-    return useMutation((_id, data) => patchProject(_id, data, requestOptions), {
-        mutateOptions,
+const usePatchProject = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => patchProject(_id, data, requestOptions), {
+        mutationKey: 'projects.patchProject',
+        ...mutateOptions,
     });
 };
 
-const useDeleteProject = (requestOptions, queryOptions = { queryKey: 'deleteProject' }) => {
-    return useQuery({
+const useDeleteProject = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'projects.deleteProject',
         ...queryOptions,
         queryFn: _id => deleteProject(_id, requestOptions),
     });

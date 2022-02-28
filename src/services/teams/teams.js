@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest, postRequest, putRequest } from '../../utils/requests';
+import { getRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getMembers = (_id, options) => {
     return getRequest(`${apiURL}/teams/${_id}/members`, options);
@@ -26,41 +25,47 @@ const putNotifications = (_id, data, options) => {
     return putRequest(`${apiURL}/teams/${_id}/notifications`, data, options);
 };
 
-const useGetMembers = (requestOptions, queryOptions = { queryKey: 'getMembers' }) => {
-    return useQuery({
+const useGetMembers = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'teams.getMembers',
         ...queryOptions,
         queryFn: _id => getMembers(_id, requestOptions),
     });
 };
 
-const useGetNotifications = (requestOptions, queryOptions = { queryKey: 'getNotifications' }) => {
-    return useQuery({
+const useGetNotifications = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'teams.getNotifications',
         ...queryOptions,
         queryFn: _id => getNotifications(_id, requestOptions),
     });
 };
 
-const usePostAdd = (requestOptions, mutateOptions = { queryKey: 'postAdd' }) => {
-    return useMutation(data => postAdd(data, requestOptions), {
-        mutateOptions,
+const usePostAdd = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(data => postAdd(data, requestOptions), {
+        queryKey: 'teams.postAdd',
+        ...mutateOptions,
     });
 };
 
-const usePutTeam = (requestOptions, mutateOptions = { queryKey: 'putDatasetOnboarding' }) => {
-    return useMutation((_id, data) => putTeam(_id, data, requestOptions), {
-        mutateOptions,
+const usePutTeam = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => putTeam(_id, data, requestOptions), {
+        mutationKey: 'teams.putDatasetOnboarding',
+        ...mutateOptions,
     });
 };
 
-const usePutNotificationMessage = (requestOptions, mutateOptions = { queryKey: 'putNotificationMessage' }) => {
-    return useMutation((_id, data) => putNotificationMessage(_id, data, requestOptions), {
-        mutateOptions,
+const usePutNotificationMessage = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => putNotificationMessage(_id, data, requestOptions), {
+        mutationKey: 'teams.putNotificationMessage',
+        ...mutateOptions,
     });
 };
 
-const usePutNotifications = (requestOptions, mutateOptions = { queryKey: 'putNotifications' }) => {
-    return useMutation((_id, data) => putNotifications(_id, data, requestOptions), {
-        mutateOptions,
+const usePutNotifications = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => putNotifications(_id, data, requestOptions), {
+        mutationKey: 'teams.putNotifications',
+        ...mutateOptions,
     });
 };
 

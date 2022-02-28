@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest } from '../../utils/requests';
+import { getRequest, useQueryWithTranslations } from '../../utils/requests';
 
 const getReviews = options => {
     return getRequest(`${apiURL}/reviews`, options);
@@ -14,22 +14,25 @@ const getAdminPending = options => {
     return getRequest(`${apiURL}/reviews/admin/pending`, options);
 };
 
-const useGetReviews = (requestOptions, queryOptions = { queryKey: 'getReviews' }) => {
-    return useQuery({
+const useGetReviews = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'reviews.getReviews',
         ...queryOptions,
         queryFn: () => getReviews(requestOptions),
     });
 };
 
-const useGetPending = (requestOptions, queryOptions = { queryKey: 'getPending' }) => {
-    return useQuery({
+const useGetPending = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'reviews.getPending',
         ...queryOptions,
         queryFn: () => getPending(requestOptions),
     });
 };
 
-const useGetAdminPending = (requestOptions, queryOptions = { queryKey: 'getAdminPending' }) => {
-    return useQuery({
+const useGetAdminPending = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'reviews.getAdminPending',
         ...queryOptions,
         queryFn: () => getAdminPending(requestOptions),
     });

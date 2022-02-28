@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { getRequest, postRequest, putRequest } from '../../utils/requests';
+import { getRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getCourse = (_id, options) => {
     return getRequest(`${apiURL}/course/${_id}`, options);
@@ -18,29 +17,33 @@ const putCourse = (_id, data, options) => {
     return putRequest(`${apiURL}/course/${_id}`, data, options);
 };
 
-const useGetCourse = (requestOptions, queryOptions = { queryKey: 'getCourse' }) => {
-    return useQuery({
+const useGetCourse = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'getCourse',
         ...queryOptions,
         queryFn: _id => getCourse(_id, requestOptions),
     });
 };
 
-const useGetEdit = (requestOptions, queryOptions = { queryKey: 'getEdit' }) => {
-    return useQuery({
+const useGetEdit = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'course.getEdit',
         ...queryOptions,
         queryFn: _id => getEdit(_id, requestOptions),
     });
 };
 
-const usePostCourse = (requestOptions, mutateOptions = { queryKey: 'postCourse' }) => {
-    return useMutation(data => postCourse(data, requestOptions), {
-        mutateOptions,
+const usePostCourse = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(data => postCourse(data, requestOptions), {
+        mutationKey: 'course.postCourse',
+        ...mutateOptions,
     });
 };
 
-const usePutCourse = (requestOptions, mutateOptions = { queryKey: 'putCourse' }) => {
-    return useMutation((_id, data) => putCourse(_id, data, requestOptions), {
-        mutateOptions,
+const usePutCourse = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => putCourse(_id, data, requestOptions), {
+        mutationKey: 'course.putCourse',
+        ...mutateOptions,
     });
 };
 

@@ -37,7 +37,7 @@ const useGetDataUseRegisters = (requestOptions, mutateOptions) => {
                 ...params,
             }),
         {
-            mutationKey: 'getDataUseRegisters',
+            mutationKey: 'dur.getDataUseRegisters',
             ...mutateOptions,
         }
     );
@@ -45,14 +45,14 @@ const useGetDataUseRegisters = (requestOptions, mutateOptions) => {
 
 const useGetDataUseRegistersByTeam = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(team => getDataUseRegistersByTeam(team, requestOptions), {
-        mutationKey: 'getDataUseRegistersByTeam',
+        mutationKey: 'dur.getDataUseRegistersByTeam',
         ...mutateOptions,
     });
 };
 
 const useGetDataUseRegister = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(_id => getDataUseRegister(_id, requestOptions), {
-        mutationKey: 'getDataUseRegister',
+        mutationKey: 'dur.getDataUseRegister',
         ...mutateOptions,
     });
 };
@@ -65,7 +65,7 @@ const usePatchDataUseRegister = (requestOptions, mutateOptions) => {
             return patchDataUseRegister(_id, outerProps, requestOptions);
         },
         {
-            mutationKey: 'patchDataUseRegister',
+            mutationKey: 'dur.patchDataUseRegister',
             ...mutateOptions,
         }
     );
@@ -73,21 +73,21 @@ const usePatchDataUseRegister = (requestOptions, mutateOptions) => {
 
 const usePatchDataUseRegisterCounter = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(data => patchDataUseRegisterCounter(data, requestOptions), {
-        mutationKey: 'patchDataUseRegisterCounter',
+        mutationKey: 'dur.patchDataUseRegisterCounter',
         ...mutateOptions,
     });
 };
 
 const usePostDataUseRegisterCheck = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(data => postDataUseRegisterCheck(data, requestOptions), {
-        mutationKey: 'postDataUseRegisterCheck',
+        mutationKey: 'dur.postDataUseRegisterCheck',
         ...mutateOptions,
     });
 };
 
 const usePostDataUseRegisterUpload = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(data => postDataUseRegisterUpload(data, requestOptions), {
-        mutationKey: 'postDataUseRegisterUpload',
+        mutationKey: 'dur.postDataUseRegisterUpload',
         ...mutateOptions,
     });
 };

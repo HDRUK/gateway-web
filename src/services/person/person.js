@@ -1,6 +1,13 @@
-import { useMutation, useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
-import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
+import {
+    deleteRequest,
+    getRequest,
+    patchRequest,
+    postRequest,
+    putRequest,
+    useMutationWithTranslations,
+    useQueryWithTranslations,
+} from '../../utils/requests';
 
 const getPersons = options => {
     return getRequest(`${apiURL}/person`, options);
@@ -34,52 +41,60 @@ const deletePerson = (_id, options) => {
     return deleteRequest(`${apiURL}/person/${_id}`, options);
 };
 
-const useGetPersons = (requestOptions, queryOptions = { queryKey: 'getPersons' }) => {
-    return useQuery({
+const useGetPersons = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'person.getPersons',
         ...queryOptions,
         queryFn: () => getPersons(requestOptions),
     });
 };
 
-const useGetPerson = (requestOptions, queryOptions = { queryKey: 'getPerson' }) => {
-    return useQuery({
+const useGetPerson = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'person.getPerson',
         ...queryOptions,
         queryFn: _id => getPerson(_id, requestOptions),
     });
 };
 
-const usePostPerson = (requestOptions, mutateOptions = { queryKey: 'postPerson' }) => {
-    return useMutation((_id, data) => postPerson(_id, data, requestOptions), {
-        mutateOptions,
+const usePostPerson = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => postPerson(_id, data, requestOptions), {
+        mutationKey: 'person.postPerson',
+        ...mutateOptions,
     });
 };
 
-const usePutPerson = (requestOptions, mutateOptions = { queryKey: 'putPerson' }) => {
-    return useMutation((_id, data) => putPerson(_id, data, requestOptions), {
-        mutateOptions,
+const usePutPerson = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => putPerson(_id, data, requestOptions), {
+        mutationKey: 'person.putPerson',
+        ...mutateOptions,
     });
 };
 
-const usePutUnsubscribe = (requestOptions, mutateOptions = { queryKey: 'putUnsubscribe' }) => {
-    return useMutation((_id, data) => putUnsubscribe(_id, data, requestOptions), {
-        mutateOptions,
+const usePutUnsubscribe = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => putUnsubscribe(_id, data, requestOptions), {
+        mutationKey: 'person.putUnsubscribe',
+        ...mutateOptions,
     });
 };
 
-const usePatchPerson = (requestOptions, mutateOptions = { queryKey: 'patchPerson' }) => {
-    return useMutation((_id, data) => patchPerson(_id, data, requestOptions), {
-        mutateOptions,
+const usePatchPerson = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => patchPerson(_id, data, requestOptions), {
+        mutationKey: 'person.patchPerson',
+        ...mutateOptions,
     });
 };
 
-const usePatchProfileComplete = (requestOptions, mutateOptions = { queryKey: 'patchProfileComplete' }) => {
-    return useMutation((_id, data) => patchProfileComplete(_id, data, requestOptions), {
-        mutateOptions,
+const usePatchProfileComplete = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations((_id, data) => patchProfileComplete(_id, data, requestOptions), {
+        mutationKey: 'person.patchProfileComplete',
+        ...mutateOptions,
     });
 };
 
-const useDeletePerson = (requestOptions, queryOptions = { queryKey: 'deletePerson' }) => {
-    return useQuery({
+const useDeletePerson = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'person.deletePerson',
         ...queryOptions,
         queryFn: _id => deletePerson(_id, requestOptions),
     });

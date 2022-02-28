@@ -1,4 +1,3 @@
-import { useQuery } from 'react-query';
 import { apiURL, apiV2URL } from '../../configs/url.config';
 import {
     deleteRequest,
@@ -70,7 +69,7 @@ const useGetTools = (requestOptions, mutateOptions) => {
 
 const useGetTool = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getTool',
+        queryKey: 'tools.getTool',
         ...queryOptions,
         queryFn: _id => getTool(_id, requestOptions),
     });
@@ -78,7 +77,7 @@ const useGetTool = (requestOptions, queryOptions) => {
 
 const useGetToolEdit = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getToolEdit',
+        queryKey: 'tools.getToolEdit',
         ...queryOptions,
         queryFn: _id => getToolEdit(_id, requestOptions),
     });
@@ -86,7 +85,7 @@ const useGetToolEdit = (requestOptions, queryOptions) => {
 
 const useGetProjectTag = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getProjectTag',
+        queryKey: 'tools.getProjectTag',
         ...queryOptions,
         queryFn: _id => getProjectTag(_id, requestOptions),
     });
@@ -94,48 +93,49 @@ const useGetProjectTag = (requestOptions, queryOptions) => {
 
 const usePostTool = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => postTool(_id, data, requestOptions), {
-        mutationKey: 'postTool',
+        mutationKey: 'tools.postTool',
         ...mutateOptions,
     });
 };
 
 const usePostReviewAdd = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(data => postReviewAdd(data, requestOptions), {
-        mutationKey: 'postReviewAdd',
+        mutationKey: 'tools.postReviewAdd',
         ...mutateOptions,
     });
 };
 
 const usePostToolsReply = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(data => postToolsReply(data, requestOptions), {
-        mutationKey: 'postToolsReply',
+        mutationKey: 'tools.postToolsReply',
         ...mutateOptions,
     });
 };
 
 const usePutTool = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => putTool(_id, data, requestOptions), {
-        mutationKey: 'putTool',
+        mutationKey: 'tools.putTool',
         ...mutateOptions,
     });
 };
 
 const usePutReviewApprove = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(data => putReviewApprove(data, requestOptions), {
-        mutationKey: 'putReviewApprove',
+        mutationKey: 'tools.putReviewApprove',
         ...mutateOptions,
     });
 };
 
 const usePatchTool = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => patchTool(_id, data, requestOptions), {
-        mutationKey: 'patchTool',
+        mutationKey: 'tools.patchTool',
         ...mutateOptions,
     });
 };
 
-const useDeleteTool = (requestOptions, queryOptions = { queryKey: 'deleteTool' }) => {
-    return useQuery({
+const useDeleteTool = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'tools.deleteTool',
         ...queryOptions,
         queryFn: _id => deleteTool(_id, requestOptions),
     });

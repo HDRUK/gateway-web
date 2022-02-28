@@ -55,7 +55,7 @@ const deleteDataAccessRequest = (_id, options) => {
 
 const useGetDataAccessRequests = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getDataAccessRequests',
+        queryKey: 'dar.getDataAccessRequests',
         ...queryOptions,
         queryFn: () => getDataAccessRequests(requestOptions),
     });
@@ -63,7 +63,7 @@ const useGetDataAccessRequests = (requestOptions, queryOptions) => {
 
 const useGetDataAccessRequest = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getDataAccessRequest',
+        queryKey: 'dar.getDataAccessRequest',
         ...queryOptions,
         queryFn: _id => getDataAccessRequest(_id, requestOptions),
     });
@@ -71,7 +71,7 @@ const useGetDataAccessRequest = (requestOptions, queryOptions) => {
 
 const useGetDatasets = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getDatasets',
+        queryKey: 'dar.getDatasets',
         ...queryOptions,
         queryFn: () => getDatasets(requestOptions),
     });
@@ -79,56 +79,56 @@ const useGetDatasets = (requestOptions, queryOptions) => {
 
 const usePostDataAccessRequest = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => postDataAccessRequest(_id, data, requestOptions), {
-        mutationKey: 'postActions',
+        mutationKey: 'dar.postActions',
         ...mutateOptions,
     });
 };
 
 const usePostRequestAmendments = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => postRequestAmendments(_id, data, requestOptions), {
-        mutationKey: 'postRequestAmendments',
+        mutationKey: 'dar.postRequestAmendments',
         ...mutateOptions,
     });
 };
 
 const usePostActions = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => postActions(_id, data, requestOptions), {
-        mutationKey: 'postActions',
+        mutationKey: 'dar.postActions',
         ...mutateOptions,
     });
 };
 
 const usePostAmendments = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => postAmendments(_id, data, requestOptions), {
-        mutationKey: 'postAmendments',
+        mutationKey: 'dar.postAmendments',
         ...mutateOptions,
     });
 };
 
 const usePostMessages = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => postMessages(_id, data, requestOptions), {
-        mutationKey: 'postMessages',
+        mutationKey: 'dar.postMessages',
         ...mutateOptions,
     });
 };
 
 const usePutDataAccessRequest = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => putDataAccessRequest(_id, data, requestOptions), {
-        mutationKey: 'putDataAccessRequest',
+        mutationKey: 'dar.putDataAccessRequest',
         ...mutateOptions,
     });
 };
 
 const usePatchDataAccessRequest = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => patchDataAccessRequest(_id, data, requestOptions), {
-        mutationKey: 'patchDataAccessRequest',
+        mutationKey: 'dar.patchDataAccessRequest',
         ...mutateOptions,
     });
 };
 
 const useDeleteDataAccessRequest = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'deleteDataAccessRequest',
+        queryKey: 'dar.deleteDataAccessRequest',
         ...queryOptions,
         queryFn: _id => deleteDataAccessRequest(_id, requestOptions),
     });

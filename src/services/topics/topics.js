@@ -43,35 +43,36 @@ const useGetTopics = (requestOptions, queryOptions) => {
 
 const useGetTopic = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getTopic',
+        queryKey: 'topics.getTopic',
         ...queryOptions,
         queryFn: _id => getTopic(_id, requestOptions),
     });
 };
 
-const usePostTopic = (requestOptions, mutateOptions = { queryKey: 'postTopic' }) => {
+const usePostTopic = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => postTopic(_id, data, requestOptions), {
-        mutateOptions,
+        mutationKey: 'topics.postTopic',
+        ...mutateOptions,
     });
 };
 
 const usePutTopic = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => putTopic(_id, data, requestOptions), {
-        queryKey: 'putTopic',
+        mutationKey: 'topics.putTopic',
         ...mutateOptions,
     });
 };
 
 const usePatchTopic = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => patchTopic(_id, data, requestOptions), {
-        mutationKey: 'patchTopic',
+        mutationKey: 'topics.patchTopic',
         ...mutateOptions,
     });
 };
 
 const useDeleteTopic = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'deleteTopic',
+        queryKey: 'topics.deleteTopic',
         ...queryOptions,
         queryFn: _id => deleteTopic(_id, requestOptions),
     });

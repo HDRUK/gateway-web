@@ -6,7 +6,7 @@ const getContributorsInfo = (applicationId, options) =>
 
 const useGetContributorsInfo = (requestOptions, queryOptions) =>
     useQueryWithTranslations({
-        queryKey: 'getContributorsInfo',
+        queryKey: 'contributors.getContributorsInfo',
         ...queryOptions,
         queryFn: () => getContributorsInfo(requestOptions),
     });

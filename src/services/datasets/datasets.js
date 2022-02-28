@@ -17,7 +17,7 @@ const useGetDatasets = (requestOptions, mutateOptions) => {
                 ...params,
             }),
         {
-            mutationKey: 'getDatasets',
+            mutationKey: 'datasets.getDatasets',
             ...mutateOptions,
         }
     );
@@ -25,7 +25,7 @@ const useGetDatasets = (requestOptions, mutateOptions) => {
 
 const useGetDataset = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(_id => getDataset(_id, requestOptions), {
-        mutationKey: 'getDataset',
+        mutationKey: 'datasets.getDataset',
         ...mutateOptions,
     });
 };

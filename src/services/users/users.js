@@ -15,7 +15,7 @@ const patchTerms = (_id, data, options) => {
 
 const useGetUsers = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
-        queryKey: 'getUsers',
+        queryKey: 'users.getUsers',
         ...queryOptions,
         queryFn: () => getUsers(requestOptions),
     });
@@ -23,14 +23,14 @@ const useGetUsers = (requestOptions, queryOptions) => {
 
 const usePatchRoles = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => patchRoles(_id, data, requestOptions), {
-        queryKey: 'patchRoles',
+        mutationKey: 'users.patchRoles',
         ...mutateOptions,
     });
 };
 
 const usePatchTerms = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => patchTerms(_id, data, requestOptions), {
-        queryKey: 'patchTerms',
+        mutationKey: 'users.patchTerms',
         ...mutateOptions,
     });
 };
