@@ -1,4 +1,3 @@
-import { useQuery } from 'react-query';
 import { apiURL } from '../../configs/url.config';
 import { getRequest, useQueryWithTranslations } from '../../utils/requests';
 
