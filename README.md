@@ -52,6 +52,27 @@ npm start
 
 ```
 
+4. Install ESLint, Prettier and MDX extension
+
+N.B you need at least (specified in package dev deps json):
+
+```
+{
+  "eslint": "^7.32.0",
+  "eslint-config-airbnb": "18.2.1",
+  "eslint-config-prettier": "^8.4.0",
+  "eslint-plugin-import": "2.22.1",
+  "eslint-plugin-jest": "^26.1.1",
+  "eslint-plugin-jsx-a11y": "6.4.1",
+  "eslint-plugin-prettier": "^4.0.0",
+  "eslint-plugin-react": "7.21.5",
+  "eslint-plugin-react-hooks": "1.7.0",
+  "prettier": "^2.5.1"
+}
+```
+
+Any issues here should be resolved with just a running a normal `npm i` and **RESTARTING** your editor
+
 ## .env
 
 Skip preflight check needs to be true due to conflict with babel loader versions between storybook and react-scripts. Please create your own .env file with the following content:
