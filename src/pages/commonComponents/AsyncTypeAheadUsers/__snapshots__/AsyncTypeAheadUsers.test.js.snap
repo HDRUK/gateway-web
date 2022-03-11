@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AsyncTypeAheadUsers component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-LayoutBox css-1sivg29"
+  >
+    <div
+      class="css-1r9m6uy-Input form-group"
+    >
+      <label
+        class="css-prhs3j-Input form-label"
+      />
+      <div
+        class="ui-Input ui-Typeahead css-kuqv2w-Input input-group"
+      >
+        <div
+          class="css-f50cg4-Input input-group-prepend"
+        />
+        <div
+          class="rbt"
+          style="outline: none; position: relative;"
+          tabindex="-1"
+        >
+          <div
+            class="rbt-input-multi form-control rbt-input focus"
+            tabindex="-1"
+          >
+            <div
+              class="rbt-input-wrapper"
+            >
+              <div
+                class="rbt-token rbt-token-removeable"
+                option="[object Object]"
+                tabindex="0"
+              >
+                Jack Reacher
+                <button
+                  aria-label="Remove"
+                  class="close rbt-close rbt-token-remove-button"
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                  <span
+                    class="sr-only"
+                  >
+                    Remove
+                  </span>
+                </button>
+              </div>
+              <div
+                class="rbt-token rbt-token-removeable"
+                option="[object Object]"
+                tabindex="0"
+              >
+                Tom Cruise
+                <button
+                  aria-label="Remove"
+                  class="close rbt-close rbt-token-remove-button"
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                  <span
+                    class="sr-only"
+                  >
+                    Remove
+                  </span>
+                </button>
+              </div>
+              <div
+                style="display: flex; flex: 1; height: 100%; position: relative;"
+              >
+                <input
+                  aria-autocomplete="list"
+                  aria-haspopup="listbox"
+                  aria-owns="async-users"
+                  autocomplete="off"
+                  class="rbt-input-main"
+                  placeholder=""
+                  style="background-color: transparent; border: 0px; box-shadow: none; cursor: inherit; outline: none; padding: 0px; width: 100%; z-index: 1;"
+                  type="text"
+                  value=""
+                />
+                <input
+                  aria-hidden="true"
+                  class="rbt-input-hint"
+                  readonly=""
+                  style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 0px 0px 0px 0px; line-height: normal; padding: 0px 0px 0px 0px;"
+                  tabindex="-1"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <ul
+            aria-label="menu-options"
+            class="rbt-menu dropdown-menu show"
+            id="async-users"
+            role="listbox"
+            style="position: absolute; display: block; max-height: 300px; overflow: auto; top: 0px; left: 0px; transform: translate3d(NaNpx, NaNpx, 0); will-change: transform; width: 0px;"
+          >
+            <li
+              class="disabled"
+              role="option"
+            >
+              <a
+                class="dropdown-item disabled"
+                href="#"
+              >
+                No matches found.
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

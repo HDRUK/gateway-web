@@ -74,7 +74,7 @@ describe('Given the TypeaheadAsyncCustom component', () => {
 				expect(wrapper.queryByTestId('searchicon')).toBeNull();
 			});
 
-			it('Then should not have the correct dropdown values', async () => {
+			it('Then should have the correct dropdown values', async () => {
 				await waitFor(() => expect(wrapper.queryByText('United Kingdon,Colchester')).toBeTruthy());
 				await waitFor(() => expect(wrapper.queryByText('Colchester')).toBeTruthy());
 				await waitFor(() => expect(wrapper.queryAllByText('Ireland')).toBeTruthy());

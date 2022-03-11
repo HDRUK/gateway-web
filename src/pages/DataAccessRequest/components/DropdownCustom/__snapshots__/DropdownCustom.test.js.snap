@@ -6,13 +6,13 @@ exports[`Given the DropdownCustom component When it is rendered Then matches the
     class="ui-LayoutBox css-1sivg29"
   >
     <div
-      class="css-2jpb0u-Input form-group"
+      class="css-1r9m6uy-Input form-group"
     >
       <label
-        class="form-label"
+        class="css-prhs3j-Input form-label"
       />
       <div
-        class="ui-Input ui-Typeahead css-gaftnd-Input input-group"
+        class="ui-Input ui-Typeahead css-kuqv2w-Input input-group"
       >
         <div
           class="rbt"
@@ -37,7 +37,7 @@ exports[`Given the DropdownCustom component When it is rendered Then matches the
               aria-hidden="true"
               class="rbt-input-hint"
               readonly=""
-              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: solid solid solid solid; border-width: 2px 2px 2px 2px; font-size: 14px; height: 40px; line-height: normal; padding: 1px 1px 1px 1px;"
+              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: solid solid solid solid; border-width: 2px 2px 2px 2px; font-size: 13px; height: 40px; line-height: normal; padding: 1px 1px 1px 1px;"
               tabindex="-1"
               value=""
             />

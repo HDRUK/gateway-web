@@ -2,20 +2,21 @@ import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { Formik, useFormik, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { Typeahead } from 'react-bootstrap-typeahead';
 import moment from 'moment';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import { isNil, isEmpty } from 'lodash';
-
 import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
 import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorModal';
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
-import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
-import './Tool.scss';
 import TextareaAutosize from 'react-textarea-autosize';
+import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
+import UploaderUtil from '../../utils/Uploader.util';
+import SVGIcon from '../../images/SVGIcon';
+import './Tool.scss';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
@@ -47,7 +48,10 @@ const AddEditToolForm = props => {
 	const [removingOriginalUploader, setRemovingOriginalUploader] = useState(false);
 	const originalUploader = props.isEdit ? props.data.uploader : props.userState[0].id;
 	useEffect(() => {
-		buildListOfUploaders();
+		async function getUploaderData() {
+			setUploadersList(await UploaderUtil.buildListOfUploaders(props.data.authors, props.userState[0]));
+		}
+		getUploaderData();
 	}, []);
 
 	const formik = useFormik({
@@ -109,35 +113,36 @@ const AddEditToolForm = props => {
 		},
 	});
 
-	const buildListOfUploaders = () => {
-		let listOfUploaders = [];
-
-		if (props.isEdit) {
-			props.data.authors.forEach(uploader => {
-				props.combinedUsers.forEach(user => {
-					if (user.id === uploader) {
-						if (props.userState[0].id === user.id) {
-							listOfUploaders.push({ id: user.id, name: user.name + ' (You)' });
-							if (!user.name.includes('(You)')) {
-								user.name = user.name + ' (You)';
-							}
-						} else {
-							listOfUploaders.push({ id: user.id, name: user.name });
-						}
-					}
-				});
-			});
+	const uploaderHandler = selectedOptions => {
+		// 1. Check if removing any uploader
+		const removedUploader = uploadersList.filter(uploader => !selectedOptions.map(selectedOpt => selectedOpt.id).includes(uploader.id))[0];
+		if (!isEmpty(removedUploader)) {
+			// 2. Check if removing original uploader
+			if (removedUploader.id === originalUploader) {
+				setRemovingOriginalUploader(true);
+				setShowRemoveUploaderErrorModal(true);
+			}
+			// 3. Check if removing last uploader
+			else if (isEmpty(selectedOptions)) {
+				setUploaderToBeRemoved(removedUploader);
+				setShowRemoveUploaderErrorModal(true);
+			} else {
+				// 4. If removing a regular uploader show regular remove uploader modal
+				setUploaderToBeRemoved(removedUploader);
+				setShowRemoveUploaderModal(true);
+			}
 		} else {
-			props.combinedUsers.forEach(user => {
-				if (user.id === props.userState[0].id) {
-					listOfUploaders.push({ id: user.id, name: user.name + ' (You)' });
-					if (!user.name.includes('(You)')) {
-						user.name = user.name + ' (You)';
-					}
-				}
-			});
+			// 5. If not removing uploader, user is adding uploader
+			const addedUploader = selectedOptions
+				.filter(selectedOpt => !uploadersList.map(uploader => uploader.id).includes(selectedOpt.id))
+				.map(newUploader => {
+					return { id: newUploader.id, name: newUploader.name };
+				})[0];
+			if (!isEmpty(addedUploader)) {
+				setUploadersList([...uploadersList, addedUploader]);
+			}
 		}
-		setUploadersList(listOfUploaders);
+		return uploadersList;
 	};
 
 	const cancelUploaderRemoval = () => {
@@ -574,50 +579,11 @@ const AddEditToolForm = props => {
 												<Form.Group data-test-id='uploaders'>
 													<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Uploaders</p>
 													<p className='gray700-13 margin-bottom-0'>Uploaders are Gateway members with editing rights on this tool.</p>
-													<Typeahead
-														id='authors'
-														labelKey={authors => `${authors.name}`}
-														defaultSelected={uploadersList}
-														multiple
-														className={
-															formik.touched.authors && formik.errors.authors
-																? 'emptyFormInputTypeAhead addFormInputTypeAhead'
-																: 'addFormInputTypeAhead'
-														}
-														options={props.combinedUsers}
-														selected={uploadersList}
-														onChange={selectedOptions => {
-															// 1. Check if removing any uploader
-															const removedUploader = uploadersList.filter(
-																uploader => !selectedOptions.map(selectedOpt => selectedOpt.id).includes(uploader.id)
-															)[0];
-															if (!isEmpty(removedUploader)) {
-																// 2. Check if removing original uploader
-																if (removedUploader.id === originalUploader) {
-																	setRemovingOriginalUploader(true);
-																	setShowRemoveUploaderErrorModal(true);
-																}
-																// 3. Check if removing last uploader
-																else if (isEmpty(selectedOptions)) {
-																	setUploaderToBeRemoved(removedUploader);
-																	setShowRemoveUploaderErrorModal(true);
-																} else {
-																	// 4. If removing a regular uploader show regular remove uploader modal
-																	setUploaderToBeRemoved(removedUploader);
-																	setShowRemoveUploaderModal(true);
-																}
-															} else {
-																// 5. If not removing uploader, user is adding uploader
-																const addedUploader = selectedOptions
-																	.filter(selectedOpt => !uploadersList.map(uploader => uploader.id).includes(selectedOpt.id))
-																	.map(newUploader => {
-																		return { id: newUploader.id, name: newUploader.name };
-																	})[0];
-																if (!isEmpty(addedUploader)) {
-																	setUploadersList([...uploadersList, addedUploader]);
-																}
-															}
-														}}
+													<AsyncTypeAheadUsers
+														selectedUsers={uploadersList}
+														showAuthor={true}
+														currentUserId={props.userState[0].id}
+														changeHandler={uploaderHandler}
 													/>
 												</Form.Group>
 											</div>

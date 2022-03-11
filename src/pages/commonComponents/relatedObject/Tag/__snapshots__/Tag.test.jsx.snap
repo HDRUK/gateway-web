@@ -3,13 +3,17 @@
 exports[`Given the Tag component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="badge-phenotype"
+    class="badge-phenotype "
     data-testid="badge-test"
   >
-    <span>
-      test
+    <span
+      class=""
+    >
+      <span>
+        test
+      </span>
+      <span />
     </span>
-    <span />
   </div>
 </div>
 `;

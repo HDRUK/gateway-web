@@ -1,24 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Typeahead } from 'react-bootstrap-typeahead';
+import { isNil, isEmpty } from 'lodash';
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import moment from 'moment';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import SVGIcon from '../../images/SVGIcon';
-import ToolTip from '../../images/imageURL-ToolTip.gif';
+import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
+import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorModal';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import googleAnalytics from '../../tracking';
-import './Collections.scss';
 import TextareaAutosize from 'react-textarea-autosize';
+import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
+import UploaderUtil from '../../utils/Uploader.util';
+import SVGIcon from '../../images/SVGIcon';
+import ToolTip from '../../images/imageURL-ToolTip.gif';
+import './Collections.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
 
 const AddEditCollectionForm = props => {
+	const [uploadersList, setUploadersList] = useState([]);
+	const [uploaderToBeRemoved, setUploaderToBeRemoved] = useState({});
+	const [showRemoveUploaderModal, setShowRemoveUploaderModal] = useState(false);
+	const [showRemoveUploaderErrorModal, setShowRemoveUploaderErrorModal] = useState(false);
+	const [removingOriginalUploader, setRemovingOriginalUploader] = useState(false);
+	const originalUploader = props.userState[0].id;
+
+	useEffect(() => {
+		async function getUploaderData() {
+			setUploadersList(await UploaderUtil.buildListOfUploaders(props.data.authors, props.userState[0]));
+		}
+		getUploaderData();
+	}, []);
+
 	// Pass the useFormik() hook initial form values and a submit function that will
 	// be called when the form is submitted
 	const formik = useFormik({
@@ -46,7 +64,7 @@ const AddEditCollectionForm = props => {
 		onSubmit: values => {
 			values.relatedObjects = props.relatedObjects;
 			values.collectionCreator = props.userState[0];
-
+			values.authors = uploadersList.map(uploader => uploader.id);
 			if (props.isEdit) {
 				axios.put(baseURL + '/api/v1/collections/edit/' + props.data.id, values).then(res => {
 					window.location.href = windowUrl + '/collection/' + props.data.id + '/?collectionEdited=true';
@@ -59,33 +77,81 @@ const AddEditCollectionForm = props => {
 		},
 	});
 
-	var listOfAuthors = [];
-
-	if (props.isEdit) {
-		props.data.authors.forEach(author => {
-			props.combinedUsers.forEach(user => {
-				if (user.id === author) {
-					if (props.userState[0].id === user.id) {
-						listOfAuthors.push({ id: user.id, name: user.name + ' (You)' });
-						if (!user.name.includes('(You)')) {
-							user.name = user.name + ' (You)';
+	const buildListOfUploaders = () => {
+		let listOfUploaders = [];
+		if (props.isEdit) {
+			props.data.authors.forEach(uploader => {
+				props.combinedUsers.forEach(user => {
+					if (user.id === uploader) {
+						if (props.userState[0].id === user.id) {
+							listOfUploaders.push({ id: user.id, name: user.name + ' (You)' });
+							if (!user.name.includes('(You)')) {
+								user.name = user.name + ' (You)';
+							}
+						} else {
+							listOfUploaders.push({ id: user.id, name: user.name });
 						}
-					} else {
-						listOfAuthors.push({ id: user.id, name: user.name });
+					}
+				});
+			});
+		} else {
+			props.combinedUsers.forEach(user => {
+				if (user.id === props.userState[0].id) {
+					listOfUploaders.push({ id: user.id, name: user.name + ' (You)' });
+					if (!user.name.includes('(You)')) {
+						user.name = user.name + ' (You)';
 					}
 				}
 			});
-		});
-	} else {
-		props.combinedUsers.forEach(user => {
-			if (user.id === props.userState[0].id) {
-				listOfAuthors.push({ id: user.id, name: user.name + ' (You)' });
-				if (!user.name.includes('(You)')) {
-					user.name = user.name + ' (You)';
-				}
+		}
+		setUploadersList(listOfUploaders);
+	};
+
+	const uploaderHandler = selectedOptions => {
+		// 1. Check if removing any uploader
+		const removedUploader = uploadersList.filter(uploader => !selectedOptions.map(selectedOpt => selectedOpt.id).includes(uploader.id))[0];
+
+		if (!isEmpty(removedUploader)) {
+			// 2. Check if removing original uploader
+			if (removedUploader.id === originalUploader) {
+				setRemovingOriginalUploader(true);
+				setShowRemoveUploaderErrorModal(true);
 			}
-		});
-	}
+			// 3. Check if removing last uploader
+			else if (isEmpty(selectedOptions)) {
+				setUploaderToBeRemoved(removedUploader);
+				setShowRemoveUploaderErrorModal(true);
+			} else {
+				// 4. If removing a regular uploader show regular remove uploader modal
+				setUploaderToBeRemoved(removedUploader);
+				setShowRemoveUploaderModal(true);
+			}
+		} else {
+			// 5. If not removing uploader, user is adding uploader
+			const addedUploader = selectedOptions
+				.filter(selectedOpt => !uploadersList.map(uploader => uploader.id).includes(selectedOpt.id))
+				.map(newUploader => {
+					return { id: newUploader.id, name: newUploader.name };
+				})[0];
+			if (!isEmpty(addedUploader)) {
+				setUploadersList([...uploadersList, addedUploader]);
+			}
+		}
+		return uploadersList;
+	};
+
+	const cancelUploaderRemoval = () => {
+		setUploaderToBeRemoved({});
+		setRemovingOriginalUploader(false);
+		setShowRemoveUploaderModal(false);
+		setShowRemoveUploaderErrorModal(false);
+	};
+
+	const confirmUploaderRemoval = () => {
+		setUploadersList(uploadersList.filter(uploader => uploader.id !== uploaderToBeRemoved.id));
+		setUploaderToBeRemoved({});
+		setShowRemoveUploaderModal(false);
+	};
 
 	function updateReason(id, reason, type, pid) {
 		let inRelatedObject = false;
@@ -125,6 +191,20 @@ const AddEditCollectionForm = props => {
 	return (
 		<div>
 			<Container>
+				<RemoveUploaderModal
+					open={showRemoveUploaderModal}
+					cancelUploaderRemoval={cancelUploaderRemoval}
+					confirmUploaderRemoval={confirmUploaderRemoval}
+					entityType={'collection'}
+					userState={props.userState}
+					uploaderToBeRemoved={uploaderToBeRemoved}></RemoveUploaderModal>
+
+				<RemoveUploaderErrorModal
+					open={showRemoveUploaderErrorModal}
+					cancelUploaderRemoval={cancelUploaderRemoval}
+					entityType={'collection'}
+					uploaderToBeRemoved={uploaderToBeRemoved}
+					removingOriginalUploader={removingOriginalUploader}></RemoveUploaderErrorModal>
 				<Row className='margin-top-32'>
 					<Col sm={1} lg={1} />
 					<Col sm={10} lg={10}>
@@ -164,7 +244,7 @@ const AddEditCollectionForm = props => {
 									<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Description</p>
 									<p className='gray700-13 margin-bottom-0'>Up to 5,000 characters</p>
 									<TextareaAutosize
-										as='textarea' 
+										as='textarea'
 										data-test-id='collection-description'
 										id='description'
 										name='description'
@@ -186,7 +266,13 @@ const AddEditCollectionForm = props => {
 								<Form.Group className='margin-bottom-24'>
 									<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Collection collaborators</p>
 									<p className='gray700-13 margin-bottom-0'>Anyone added will be able to add and remove resources to this collection.</p>
-									<Typeahead
+									<AsyncTypeAheadUsers
+										selectedUsers={uploadersList}
+										showAuthor={true}
+										currentUserId={props.userState[0].id}
+										changeHandler={uploaderHandler}
+									/>
+									{/* <Typeahead
 										id='authors'
 										labelKey={authors => `${authors.name}`}
 										defaultSelected={listOfAuthors}
@@ -200,7 +286,7 @@ const AddEditCollectionForm = props => {
 											});
 											formik.values.authors = tempSelected;
 										}}
-									/>
+									/> */}
 								</Form.Group>
 
 								<Form.Group className='margin-bottom-24' data-test-id='keywords'>

@@ -12,12 +12,14 @@ import ActionBar from '../commonComponents/actionbar/ActionBar';
 import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
 import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorModal';
 import { isPDFLink, removeArrayItem } from '../../utils/GeneralHelper.util';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import SVGIcon from '../../images/SVGIcon';
-import { ReactComponent as InfoSVG } from '../../images/info.svg';
-import './Paper.scss';
 import googleAnalytics from '../../tracking';
 import TextareaAutosize from 'react-textarea-autosize';
+import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
+import UploaderUtil from '../../utils/Uploader.util';
+import { ReactComponent as InfoSVG } from '../../images/info.svg';
+import SVGIcon from '../../images/SVGIcon';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import './Paper.scss';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
@@ -47,7 +49,10 @@ const AddEditPaperForm = props => {
 	const [removingOriginalUploader, setRemovingOriginalUploader] = useState(false);
 	const originalUploader = props.isEdit ? props.data.uploader : props.userState[0].id;
 	useEffect(() => {
-		buildListOfUploaders();
+		async function getUploaderData() {
+			setUploadersList(await UploaderUtil.buildListOfUploaders(props.data.authors, props.userState[0]));
+		}
+		getUploaderData();
 	}, []);
 
 	// Pass the useFormik() hook initial form values and a submit function that will
@@ -121,35 +126,36 @@ const AddEditPaperForm = props => {
 		},
 	});
 
-	const buildListOfUploaders = () => {
-		let listOfUploaders = [];
-
-		if (props.isEdit) {
-			props.data.authors.forEach(uploader => {
-				props.combinedUsers.forEach(user => {
-					if (user.id === uploader) {
-						if (props.userState[0].id === user.id) {
-							listOfUploaders.push({ id: user.id, name: user.name + ' (You)' });
-							if (!user.name.includes('(You)')) {
-								user.name = user.name + ' (You)';
-							}
-						} else {
-							listOfUploaders.push({ id: user.id, name: user.name });
-						}
-					}
-				});
-			});
+	const uploaderHandler = selectedOptions => {
+		// 1. Check if removing any uploader
+		const removedUploader = uploadersList.filter(uploader => !selectedOptions.map(selectedOpt => selectedOpt.id).includes(uploader.id))[0];
+		if (!isEmpty(removedUploader)) {
+			// 2. Check if removing original uploader
+			if (removedUploader.id === originalUploader) {
+				setRemovingOriginalUploader(true);
+				setShowRemoveUploaderErrorModal(true);
+			}
+			// 3. Check if removing last uploader
+			else if (isEmpty(selectedOptions)) {
+				setUploaderToBeRemoved(removedUploader);
+				setShowRemoveUploaderErrorModal(true);
+			} else {
+				// 4. If removing a regular uploader show regular remove uploader modal
+				setUploaderToBeRemoved(removedUploader);
+				setShowRemoveUploaderModal(true);
+			}
 		} else {
-			props.combinedUsers.forEach(user => {
-				if (user.id === props.userState[0].id) {
-					listOfUploaders.push({ id: user.id, name: user.name + ' (You)' });
-					if (!user.name.includes('(You)')) {
-						user.name = user.name + ' (You)';
-					}
-				}
-			});
+			// 5. If not removing uploader, user is adding uploader
+			const addedUploader = selectedOptions
+				.filter(selectedOpt => !uploadersList.map(uploader => uploader.id).includes(selectedOpt.id))
+				.map(newUploader => {
+					return { id: newUploader.id, name: newUploader.name };
+				})[0];
+			if (!isEmpty(addedUploader)) {
+				setUploadersList([...uploadersList, addedUploader]);
+			}
 		}
-		setUploadersList(listOfUploaders);
+		return uploadersList;
 	};
 
 	const cancelUploaderRemoval = () => {
@@ -460,7 +466,7 @@ const AddEditPaperForm = props => {
 													</div>
 													<TextareaAutosize
 														data-test-id='abstract'
-														as='textarea' 
+														as='textarea'
 														id='description'
 														name='description'
 														type='text'
@@ -562,50 +568,11 @@ const AddEditPaperForm = props => {
 												<Form.Group data-test-id='uploaders'>
 													<p className='gray800-14 margin-bottom-0 pad-bottom-4'>Uploaders</p>
 													<p className='gray700-13 margin-bottom-0'>Uploaders are Gateway members with editing rights on this paper.</p>
-													<Typeahead
-														id='authors'
-														labelKey={authors => `${authors.name}`}
-														defaultSelected={uploadersList}
-														multiple
-														className={
-															formik.touched.authors && formik.errors.authors
-																? 'emptyFormInputTypeAhead addFormInputTypeAhead'
-																: 'addFormInputTypeAhead'
-														}
-														options={props.combinedUsers}
-														selected={uploadersList}
-														onChange={selectedOptions => {
-															// 1. Check if removing any uploader
-															const removedUploader = uploadersList.filter(
-																uploader => !selectedOptions.map(selectedOpt => selectedOpt.id).includes(uploader.id)
-															)[0];
-															if (!isEmpty(removedUploader)) {
-																// 2. Check if removing original uploader
-																if (removedUploader.id === originalUploader) {
-																	setRemovingOriginalUploader(true);
-																	setShowRemoveUploaderErrorModal(true);
-																}
-																// 3. Check if removing last uploader
-																else if (isEmpty(selectedOptions)) {
-																	setUploaderToBeRemoved(removedUploader);
-																	setShowRemoveUploaderErrorModal(true);
-																} else {
-																	// 4. If removing a regular uploader show regular remove uploader modal
-																	setUploaderToBeRemoved(removedUploader);
-																	setShowRemoveUploaderModal(true);
-																}
-															} else {
-																// 5. If not removing uploader, user is adding uploader
-																const addedUploader = selectedOptions
-																	.filter(selectedOpt => !uploadersList.map(uploader => uploader.id).includes(selectedOpt.id))
-																	.map(newUploader => {
-																		return { id: newUploader.id, name: newUploader.name };
-																	})[0];
-																if (!isEmpty(addedUploader)) {
-																	setUploadersList([...uploadersList, addedUploader]);
-																}
-															}
-														}}
+													<AsyncTypeAheadUsers
+														selectedUsers={uploadersList}
+														showAuthor={true}
+														currentUserId={props.userState[0].id}
+														changeHandler={uploaderHandler}
 													/>
 												</Form.Group>
 											</div>
