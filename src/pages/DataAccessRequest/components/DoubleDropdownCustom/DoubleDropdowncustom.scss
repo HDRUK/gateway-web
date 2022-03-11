@@ -1,0 +1,130 @@
+@import '../../../../css/variables';
+@import '../../../../css/typography';
+
+.mr-auto.navbar-nav {
+	width: 100% !important;
+}
+@media (min-width: 992px) {
+	.navbar-expand-lg .navbar-nav .dropdown-menu {
+		position: static !important;
+	}
+}
+
+.dropdown-menu.show {
+	border: none !important;
+	margin-left: -14px !important;
+	margin-right: -11px !important;
+}
+
+.dropdown-toggle {
+	background: none !important;
+	border: 2px solid rgba(0, 0, 0, 0.15) !important;
+	margin-left: -14px;
+	width: 200px;
+	height: 42px;
+}
+
+.dropdown-toggle:after {
+	display: none !important;
+}
+
+.dropdown-toggle:focus,
+.dropdown-toggle:active {
+	border: none !important;
+}
+
+.nested-dropdown:after {
+	display: none !important;
+	border: none !important;
+}
+
+.nested-dropdown {
+	cursor: pointer;
+	border: none !important;
+}
+
+.nest-dropdown-arrow {
+	cursor: pointer;
+	position: static;
+	margin-left: 100%;
+}
+
+.main-dropdown-arrow {
+	cursor: pointer;
+	position: static;
+	margin-top: -25px;
+	padding-top: -20px;
+	float: right;
+}
+
+.nested-dropdown-whole {
+	margin-left: 24px;
+}
+
+.nested-dropdown-menu {
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.dropdown-toggle:empty::after,
+.dropdown-toggle::after {
+	color: $indigo !important;
+}
+
+.double-dropdown-input,
+.nested-dropdown {
+	color: $gray-800 !important;
+}
+
+.flip180 {
+	transform: rotateX(180deg);
+	margin-top: -20px;
+}
+
+.dropdown {
+	width: 100% !important;
+}
+
+.double-dropdown-input {
+	width: 105% !important;
+	text-align: left !important;
+	height: auto;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.double-dropdown-input:focus.btn-primary:focus,
+.double-dropdown-input:focus.btn-primary.focus {
+	box-shadow: 0 0 0 2px #3db28c !important;
+}
+
+.selected-options-container {
+	min-height: 22px;
+	display: flex !important;
+	flex-wrap: wrap;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+	color: $gray-900 !important;
+	background-color: white !important;
+}
+
+.dropdown-item:hover {
+	background-color: $gray-light !important;
+}
+
+.nested-dropdown-menu {
+	width: 95% !important;
+}
+
+.nested-dropdown-menu:focus.btn-primary:focus.btn-primary.focus,
+.nested-dropdown-menu:focus.btn-primary.focus.btn-primary.focus,
+.nested-dropdown-menu.btn-primary:focus,
+.nested-dropdown-menu:focus.btn:focus {
+	box-shadow: none !important;
+}
+
+.btn:focus {
+	box-shadow: none !important;
+}

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import randomstring from 'randomstring';
+import i18n from 'i18next';
 
 let autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
 
@@ -190,13 +191,13 @@ let configActionModal = (type = '') => {
 		switch (type.toUpperCase()) {
 			case 'VALIDATIONERRORS':
 				config = {
-					title: 'Mandatory fields missing',
-					subTitle: `You cannot submit this dataset for review until you have completed all the mandatory questions. If you need to submit this dataset without the mandatory answers, please raise a support ticket at the following link:`,
+					title: i18n.t('dataset.validationErrosModal.title'),
+					subTitle: i18n.t('dataset.validationErrosModal.description'),
 					link: 'https://hdruk.atlassian.net/servicedesk/customer/portal/1',
 					description: false,
 					buttons: {
 						confirmSubmission: {
-							label: 'Ok',
+							label: i18n.t('dataset.validationErrosModal.buttons.confirm'),
 							action: 'cancel',
 							class: 'btn btn-primary addButton',
 						},
@@ -205,17 +206,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'VALIDATIONERRORSADMIN':
 				config = {
-					title: 'Mandatory fields missing',
-					subTitle: `Are you sure that you want to submit this version of this dataset for review? There are mandatory fields missing. You cannot edit this form whilst it is pending.`,
+					title: i18n.t('dataset.validationErrosAdminModal.title'),
+					subTitle: i18n.t('dataset.validationErrosAdminModal.description'),
 					description: false,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.validationErrosAdminModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmSubmission: {
-							label: 'Confirm submission',
+							label: i18n.t('dataset.validationErrosAdminModal.buttons.confirm'),
 							action: 'confirmSubmission',
 							class: 'btn btn-primary addButton',
 						},
@@ -224,18 +225,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'SUBMITFORREVIEW':
 				config = {
-					title: 'Sumbit version for review?',
-					subTitle:
-						'Are you sure that you want to submit this version of this dataset for review?\n\nYou cannot edit this form whilst it is pending.',
+					title: i18n.t('dataset.submitForReviewModal.title'),
+					subTitle: i18n.t('dataset.submitForReviewModal.description'),
 					description: false,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.submitForReviewModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmSubmission: {
-							label: 'Confirm submission',
+							label: i18n.t('dataset.submitForReviewModal.buttons.confirm'),
 							action: 'confirmSubmission',
 							class: 'btn btn-primary addButton',
 						},
@@ -244,17 +244,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'CREATENEWVERSION':
 				config = {
-					title: 'Create new version?',
-					subTitle: 'Are you sure that you want to create a new draft version of this dataset?',
+					title: i18n.t('dataset.createNewVersionModal.title'),
+					subTitle: i18n.t('dataset.createNewVersionModal.description'),
 					description: false,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.createNewVersionModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmSubmission: {
-							label: 'Create new version',
+							label: i18n.t('dataset.createNewVersionModal.buttons.confirm'),
 							action: 'confirmNewVersion',
 							class: 'btn btn-primary addButton',
 						},
@@ -263,18 +263,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'ARCHIVE':
 				config = {
-					title: 'Archive this version?',
-					subTitle:
-						'This will remove your dataset from search results, but anyone with a direct link will still be able to access the page with a message explaining that it has been archived.',
+					title: i18n.t('dataset.archiveModal.title'),
+					subTitle: i18n.t('dataset.archiveModal.description'),
 					description: false,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.archiveModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmSubmission: {
-							label: 'Archive this version',
+							label: i18n.t('dataset.archiveModal.buttons.confirm'),
 							action: 'archive',
 							class: 'btn btn-primary addButton',
 						},
@@ -283,18 +282,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'UNARCHIVE':
 				config = {
-					title: 'Un-archive this dataset?',
-					subTitle:
-						'This dataset will appear in search results again. You will be able to create a new version from this dataset once it has been un-archived.',
+					title: i18n.t('dataset.unArchiveModal.title'),
+					subTitle: i18n.t('dataset.unArchiveModal.description'),
 					description: false,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.unArchiveModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmSubmission: {
-							label: 'Un-archive this version',
+							label: i18n.t('dataset.unArchiveModal.buttons.confirm'),
 							action: 'unarchive',
 							class: 'btn btn-primary addButton',
 						},
@@ -303,18 +301,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'APPROVE':
 				config = {
-					title: 'Approve this version of this dataset metadata',
-					subTitle:
-						'If you made any amendments to their application, such as fixing a typo, please let the editor know using the description below.',
+					title: i18n.t('dataset.approvalModal.title'),
+					subTitle: i18n.t('dataset.approvalModal.description'),
 					description: true,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.approvalModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmApproval: {
-							label: 'Approve this version',
+							label: i18n.t('dataset.approvalModal.buttons.confirm'),
 							action: 'confirmApproval',
 							class: 'btn btn-primary addButton',
 						},
@@ -323,18 +320,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'REJECT':
 				config = {
-					title: 'Reject this version of this dataset metadata',
-					subTitle:
-						'Let the editor know why this submission is being rejected. They will be able to create a new version and make a new submission.',
+					title: i18n.t('dataset.rejectModal.title'),
+					subTitle: i18n.t('dataset.rejectModal.description'),
 					description: true,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.rejectModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmReject: {
-							label: 'Reject this version',
+							label: i18n.t('dataset.rejectModal.buttons.confirm'),
 							action: 'confirmRejection',
 							class: 'btn btn-primary addButton',
 						},
@@ -343,18 +339,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'APPROVEWITHCONDITIONS':
 				config = {
-					title: 'Application approval with conditions',
-					subTitle:
-						'Are you sure you want to apprive this application? If so, please provide the conditions of this approval to the applicant',
+					title: i18n.t('dataset.approveWithConditionsModal.title'),
+					subTitle: i18n.t('dataset.approveWithConditionsModal.description'),
 					description: true,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.approveWithConditionsModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmApprovalConditions: {
-							label: 'Confirm approval with conditions',
+							label: i18n.t('dataset.approveWithConditionsModal.buttons.confirm'),
 							action: 'confirmApprovalConditions',
 							class: 'btn btn-primary addButton',
 						},
@@ -363,18 +358,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'DELETEDRAFT':
 				config = {
-					title: 'Delete draft',
-					subTitle:
-						'Are you sure you want to delete this draft dataset? You will no longer be able to view this form and will lose any answers provided. All team members will be notified.',
+					title: i18n.t('dataset.deleteDraftModal.title'),
+					subTitle: i18n.t('dataset.deleteDraftModal.description'),
 					description: false,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.deleteDraftModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmDelete: {
-							label: 'Delete draft',
+							label: i18n.t('dataset.deleteDraftModal.buttons.confirm'),
 							action: 'deleteDraft',
 							class: 'btn btn-primary addButton',
 						},
@@ -383,17 +377,17 @@ let configActionModal = (type = '') => {
 				break;
 			case 'DUPLICATE':
 				config = {
-					title: 'Duplicate this dataset metadata?',
-					subTitle: 'Are you sure you want to duplicate this dataset? All team members will be notified of this duplication.',
+					title: i18n.t('dataset.duplicateModal.title'),
+					subTitle: i18n.t('dataset.duplicateModal.description'),
 					description: false,
 					buttons: {
 						cancel: {
-							label: 'No, nevermind',
+							label: i18n.t('dataset.duplicateModal.buttons.cancel'),
 							action: 'cancel',
 							class: 'button-secondary mr-2',
 						},
 						confirmSubmission: {
-							label: 'Duplicate',
+							label: i18n.t('dataset.duplicateModal.buttons.confirm'),
 							action: 'duplicate',
 							class: 'btn btn-primary addButton',
 						},

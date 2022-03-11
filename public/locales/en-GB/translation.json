@@ -151,6 +151,78 @@
 				"rejectAndGoToNext": "Reject and go to next"
 			}
 		},
+		"validationErrosModal": {
+			"title": "Mandatory fields missing",
+			"description": "You cannot submit this dataset for review until you have completed all the mandatory questions. If you need to submit this dataset without the mandatory answers, please raise a support ticket at the following link:",
+			"buttons": {
+				"confirm": "Ok",
+				"cancel": "No, nevermind"
+			}
+		},
+		"validationErrosAdminModal": {
+			"title": "Mandatory fields missing",
+			"description": "Are you sure that you want to submit this version of this dataset for review? There are mandatory fields missing. You cannot edit this form whilst it is pending.",
+			"buttons": {
+				"confirm": "Ok",
+				"cancel": "No, nevermind"
+			}
+		},
+		"submitForReviewModal": {
+			"title": "Submit version for review?",
+			"description": "Are you sure that you want to submit this version of this dataset for review?\n\nYou cannot edit this form whilst it is pending.'",
+			"buttons": {
+				"confirm": "Confirm submission",
+				"cancel": "No, nevermind"
+			}
+		},
+		"createNewVersionModal": {
+			"title": "Create new version?",
+			"description": "Are you sure that you want to create a new draft version of this dataset?",
+			"buttons": {
+				"confirm": "Create new version",
+				"cancel": "No, nevermind"
+			}
+		},
+		"archiveModal": {
+			"title": "Archive this version?",
+			"description": "This will remove your dataset from search results, but anyone with a direct link will still be able to access the page with a message explaining that it has been archived.",
+			"buttons": {
+				"confirm": "Archive this version",
+				"cancel": "No, nevermind"
+			}
+		},
+		"unArchiveModal": {
+			"title": "Un-archive this dataset?",
+			"description": "This dataset will appear in search results again. You will be able to create a new version from this dataset once it has been un-archived.",
+			"buttons": {
+				"confirm": "Un-archive this version",
+				"cancel": "No, nevermind"
+			}
+		},
+		"approveWithConditionsModal": {
+			"title": "Application approval with conditions",
+			"description": "Are you sure you want to apprive this application? If so, please provide the conditions of this approval to the applicant",
+			"buttons": {
+				"confirm": "Confirm approval with conditions",
+				"cancel": "No, nevermind"
+			}
+		},
+		"deleteDraftModal": {
+			"title": "Delete draft",
+			"description": "Are you sure you want to delete this draft dataset? You will no longer be able to view this form and will lose any answers provided. All team members will be notified.",
+			"buttons": {
+				"confirm": "Delete draft",
+				"cancel": "No, nevermind"
+			}
+		},
+		"duplicateModal": {
+			"title": "Duplicate this dataset metadata?",
+			"description": "Are you sure you want to duplicate this dataset? All team members will be notified of this duplication.",
+			"buttons": {
+				"confirm": "Duplicate",
+				"cancel": "No, nevermind"
+			}
+		},
 		"create": {
 			"description": {
 				"admin": "View, add, edit, archive and check the status of your datasets.",

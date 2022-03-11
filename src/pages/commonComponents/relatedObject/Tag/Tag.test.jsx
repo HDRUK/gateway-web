@@ -33,11 +33,17 @@ describe('Given the Tag component', () => {
 		});
 	});
 	describe('And activeLink is true', () => {
-		it('Then the Tag  should be rendered with links', () => {
+		it('Then the Tag without tagID should be rendered with links', () => {
 			const { rerender } = wrapper;
 			rerender(<Tag {...props} activeLink={true} />);
 			expect(screen.getByTestId(`badge-${props.tagName}`)).toBeTruthy();
 			expect(screen.getByTestId(`badge-${props.tagName}-link`)).toHaveAttribute('href', `${props.url}${props.tagName}`);
+		});
+		it('Then with tagID Tag should be rendered with id links', () => {
+			const { rerender } = wrapper;
+			rerender(<Tag {...props} activeLink={true} tagId='123' />);
+			expect(screen.getByTestId(`badge-${props.tagName}`)).toBeTruthy();
+			expect(screen.getByTestId(`badge-${props.tagName}-link`)).toHaveAttribute('href', `${props.url}1234`);
 		});
 	});
 
