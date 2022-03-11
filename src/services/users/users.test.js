@@ -36,6 +36,30 @@ describe('Given the users service', () => {
         });
     });
 
+    describe('When getUserById is called', () => {
+        it('Then calls getRequest with the correct arguments', async () => {
+            await service.getUserById('123', {
+                option1: true,
+            });
+
+            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/person/123`, {
+                option1: true,
+            });
+        });
+    });
+
+    describe('When searchUsers is called', () => {
+        it('Then calls getRequest with the correct arguments', async () => {
+            await service.searchUsers('test', {
+                option1: true,
+            });
+
+            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/users/search/test`, {
+                option1: true,
+            });
+        });
+    });
+
     describe('When patchRoles is called', () => {
         it('Then calls patchRequest with the correct arguments', async () => {
             await service.patchRoles(
@@ -82,6 +106,24 @@ describe('Given the users service', () => {
             const rendered = renderHook(() => service.useGetUsers({ option1: true }), { wrapper });
 
             assertServiceRefetchCalled(rendered, getSpy);
+        });
+    });
+
+    describe('When useGetUserById is called', () => {
+        it('Then calls getUserById with the correct arguments', async () => {
+            const getSpy = jest.spyOn(service, 'getUserById');
+            const rendered = renderHook(() => service.useGetUsers({ option1: true }), { wrapper });
+
+            assertServiceMutateAsyncCalled(rendered, getSpy, '123');
+        });
+    });
+
+    describe('When useSearchUsers is called', () => {
+        it('Then calls searchUsers with the correct arguments', async () => {
+            const getSpy = jest.spyOn(service, 'searchUsers');
+            const rendered = renderHook(() => service.useSearchUsers({ option1: true }), { wrapper });
+
+            assertServiceMutateAsyncCalled(rendered, getSpy, 'test');
         });
     });
 

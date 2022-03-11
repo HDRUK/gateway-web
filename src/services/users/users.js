@@ -5,6 +5,14 @@ const getUsers = options => {
     return getRequest(`${apiURL}/users`, options);
 };
 
+const getUserById = (id, options) => {
+    return getRequest(`${apiURL}/person/${id}`, options);
+};
+
+const searchUsers = (term, options) => {
+    return getRequest(`${apiURL}/users/search/${term}`, options);
+};
+
 const patchRoles = (_id, data, options) => {
     return patchRequest(`${apiURL}/users/advancedsearch/roles/${_id}`, data, options);
 };
@@ -18,6 +26,20 @@ const useGetUsers = (requestOptions, queryOptions) => {
         queryKey: 'users.getUsers',
         ...queryOptions,
         queryFn: () => getUsers(requestOptions),
+    });
+};
+
+const useGetUserById = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(id => getUserById(id, requestOptions), {
+        mutationKey: 'users.getUserById',
+        ...mutateOptions,
+    });
+};
+
+const useSearchUsers = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(term => searchUsers(term, requestOptions), {
+        mutationKey: 'users.searchUsers',
+        ...mutateOptions,
     });
 };
 
@@ -37,9 +59,13 @@ const usePatchTerms = (requestOptions, mutateOptions) => {
 
 export default {
     getUsers,
+    getUserById,
+    searchUsers,
     patchRoles,
     patchTerms,
     useGetUsers,
+    useGetUserById,
+    useSearchUsers,
     usePatchRoles,
     usePatchTerms,
 };
