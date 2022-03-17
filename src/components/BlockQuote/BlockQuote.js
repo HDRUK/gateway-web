@@ -7,18 +7,18 @@ import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './BlockQuote.styles';
 
 const BlockQuote = ({ children, className, mt, mb, ml, mr, width, minWidth, maxWidth }) => {
-	return (
-		<LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
-			<blockquote css={styles.root} className={cx('ui-Blockquote', className)}>
-				{children}
-			</blockquote>
-		</LayoutBox>
-	);
+    return (
+        <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
+            <blockquote css={styles.root} className={cx('ui-Blockquote', className)}>
+                {children}
+            </blockquote>
+        </LayoutBox>
+    );
 };
 
 BlockQuote.propTypes = {
-	children: PropTypes.node,
-	...PROP_TYPES_LAYOUTBOX,
+    children: PropTypes.node,
+    ...PROP_TYPES_LAYOUTBOX,
 };
 
 export default BlockQuote;

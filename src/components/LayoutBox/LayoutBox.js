@@ -5,9 +5,9 @@ import { addCommonPropTypes } from '../../configs/propTypes';
 import useCommonStyles from '../../hooks/useCommonStyles';
 
 const LayoutBox = ({ children, mt, mb, ml, mr, width, minWidth, maxWidth }) => {
-	const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
+    const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
 
-	return <div className={cx('ui-LayoutBox', commonStyles)}>{children}</div>;
+    return <div className={cx('ui-LayoutBox', commonStyles)}>{children}</div>;
 };
 
 LayoutBox.propTypes = addCommonPropTypes({});

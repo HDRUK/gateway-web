@@ -7,12 +7,11 @@ jest.mock('../../../../services/related-object', () => ({ __esModule: true, getR
 
 describe('Given the PaperCollectionResults component', () => {
     describe('When no results can be viewed', () => {
-        
         const searchResults = [
-            { 
+            {
                 activeFlag: 'review',
-                type: 'course'
-            }
+                type: 'course',
+            },
         ];
 
         test('Then no related results will be rendered', () => {
@@ -23,11 +22,11 @@ describe('Given the PaperCollectionResults component', () => {
 
     describe('When results can be viewed', () => {
         const searchResults = [
-            { 
+            {
                 type: 'paper',
                 activeflag: 'active',
-                tags: { features: [] }
-            }
+                tags: { features: [] },
+            },
         ];
 
         const relatedPaperObject = {
@@ -36,7 +35,7 @@ describe('Given the PaperCollectionResults component', () => {
             type: 'paper',
             name: 'name',
             journal: 'journal',
-            journalYear: 'journalYear'
+            journalYear: 'journalYear',
         };
 
         beforeAll(() => {

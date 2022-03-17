@@ -12,41 +12,41 @@ let wrapper;
 const queryClient = new QueryClient();
 
 const mockBody = {
-	versionIds: ['1234', '5678'],
-	type: 'datasets',
+    versionIds: ['1234', '5678'],
+    type: 'datasets',
 };
 
 describe('Given the datasets service', () => {
-	beforeAll(() => {
-		wrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
-	});
+    beforeAll(() => {
+        wrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+    });
 
-	afterAll(() => {
-		wrapper.unmount();
-	});
+    afterAll(() => {
+        wrapper.unmount();
+    });
 
-	afterEach(() => {
-		jest.resetAllMocks();
-	});
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
 
-	describe('When postActivityLog is called', () => {
-		it('Then calls postRequest with the correct arguments', async () => {
-			await service.postActivityLog(mockBody, {
-				option1: true,
-			});
+    describe('When postActivityLog is called', () => {
+        it('Then calls postRequest with the correct arguments', async () => {
+            await service.postActivityLog(mockBody, {
+                option1: true,
+            });
 
-			expect(postRequest).toHaveBeenCalledWith(`${apiV2URL}/activitylog`, mockBody, {
-				option1: true,
-			});
-		});
-	});
+            expect(postRequest).toHaveBeenCalledWith(`${apiV2URL}/activitylog`, mockBody, {
+                option1: true,
+            });
+        });
+    });
 
-	describe('When usePostActivityLog is called', () => {
-		it('Then calls postActivityLog with the correct arguments', async () => {
-			const postSpy = jest.spyOn(service, 'postActivityLog');
-			const rendered = renderHook(() => service.usePostActivityLog(mockBody, { option1: true }), { wrapper });
+    describe('When usePostActivityLog is called', () => {
+        it('Then calls postActivityLog with the correct arguments', async () => {
+            const postSpy = jest.spyOn(service, 'postActivityLog');
+            const rendered = renderHook(() => service.usePostActivityLog(mockBody, { option1: true }), { wrapper });
 
-			assertServiceMutateAsyncCalled(rendered, postSpy, mockBody);
-		});
-	});
+            assertServiceMutateAsyncCalled(rendered, postSpy, mockBody);
+        });
+    });
 });

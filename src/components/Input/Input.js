@@ -54,14 +54,16 @@ const Input = ({
                 {label && <Form.Label css={styles.label}>{label}</Form.Label>}
                 <InputGroup
                     css={styles.inputGroup({ prepend: domPrependChanged, append: domAppendChanged, variant, size, error })}
-                    className={cx('ui-Input', className)}>
+                    className={cx('ui-Input', className)}
+                >
                     {(iconPrepend || textPrepend) && (
                         <InputGroup.Prepend
                             css={css`
                                 ${styles.decorators};
                                 ${styles.prepend};
                             `}
-                            ref={prependRef}>
+                            ref={prependRef}
+                        >
                             {textPrepend && <InputGroup.Text>{textPrepend}</InputGroup.Text>}
                             {iconPrepend}
                         </InputGroup.Prepend>
@@ -74,7 +76,8 @@ const Input = ({
                                 ${styles.decorators};
                                 ${styles.append};
                             `}
-                            ref={appendRef}>
+                            ref={appendRef}
+                        >
                             {iconAppend}
                             {textAppend && <InputGroup.Text>{textAppend}</InputGroup.Text>}
                         </InputGroup.Append>

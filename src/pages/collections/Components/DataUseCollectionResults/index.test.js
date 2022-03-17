@@ -6,42 +6,42 @@ import { getRelatedObjectRequest } from '../../../../services/related-object';
 jest.mock('../../../../services/related-object', () => ({ __esModule: true, getRelatedObjectRequest: jest.fn() }));
 
 describe('Given the ProjectCollectionResults component', () => {
-	describe('When no results can be viewed', () => {
-		const searchResults = [
-			{
-				activeFlag: 'review',
-				type: 'course',
-			},
-		];
+    describe('When no results can be viewed', () => {
+        const searchResults = [
+            {
+                activeFlag: 'review',
+                type: 'course',
+            },
+        ];
 
-		test('Then no related results will be rendered', () => {
-			render(<DataUseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
-			expect(screen.queryByTestId('related-project-object')).toBeFalsy();
-		});
-	});
+        test('Then no related results will be rendered', () => {
+            render(<DataUseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
+            expect(screen.queryByTestId('related-project-object')).toBeFalsy();
+        });
+    });
 
-	describe('When results can be viewed', () => {
-		const searchResults = [
-			{
-				type: 'project',
-				activeflag: 'active',
-				categories: {},
-				tags: { features: [] },
-			},
-		];
+    describe('When results can be viewed', () => {
+        const searchResults = [
+            {
+                type: 'project',
+                activeflag: 'active',
+                categories: {},
+                tags: { features: [] },
+            },
+        ];
 
-		const relatedProjectObject = {
-			id: 'id',
-			name: 'name',
-		};
+        const relatedProjectObject = {
+            id: 'id',
+            name: 'name',
+        };
 
-		beforeAll(() => {
-			getRelatedObjectRequest.mockReturnValue([relatedProjectObject]);
-		});
+        beforeAll(() => {
+            getRelatedObjectRequest.mockReturnValue([relatedProjectObject]);
+        });
 
-		test('Then related results will be rendered', async () => {
-			render(<DataUseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
-			expect(await screen.findByTestId('related-project-object')).toBeTruthy();
-		});
-	});
+        test('Then related results will be rendered', async () => {
+            render(<DataUseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
+            expect(await screen.findByTestId('related-project-object')).toBeTruthy();
+        });
+    });
 });

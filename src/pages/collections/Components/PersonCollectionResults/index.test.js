@@ -7,12 +7,11 @@ jest.mock('../../../../services/related-object', () => ({ __esModule: true, getR
 
 describe('Given the PersonCollectionResults component', () => {
     describe('When no results can be viewed', () => {
-        
         const searchResults = [
-            { 
+            {
                 activeFlag: 'review',
-                type: 'course'
-            }
+                type: 'course',
+            },
         ];
 
         test('Then no related results will be rendered', () => {
@@ -23,17 +22,17 @@ describe('Given the PersonCollectionResults component', () => {
 
     describe('When results can be viewed', () => {
         const searchResults = [
-            { 
+            {
                 type: 'person',
-                activeflag: 'active'
-            }
+                activeflag: 'active',
+            },
         ];
 
         const relatedPersonObject = {
             id: 'id',
             name: 'name',
             firstname: 'firstname',
-            lastname: 'lastname'
+            lastname: 'lastname',
         };
 
         beforeAll(() => {

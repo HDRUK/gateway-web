@@ -24,7 +24,7 @@ class TypaheadUser extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.className !== prevProps.className) {
-            let classes = `${prevProps.className} ${this.props.className}`;
+            const classes = `${prevProps.className} ${this.props.className}`;
             this.setState({ className: classes });
         }
     }
@@ -35,7 +35,7 @@ class TypaheadUser extends React.Component {
             .then(res => {
                 let id;
                 let value = [];
-                let {
+                const {
                     data: { data },
                 } = res;
                 if (typeof this.props.value !== 'undefined') {
@@ -64,7 +64,7 @@ class TypaheadUser extends React.Component {
     render() {
         return (
             <Typeahead
-                id={'test'}
+                id='test'
                 className={this.state.className}
                 options={this.state.options}
                 onChange={this.handleChange}
@@ -91,9 +91,9 @@ class TypaheadUser extends React.Component {
 TypaheadUser.defaultProps = {
     id: '',
     options: [],
-    onChange: () => { },
-    onFocus: () => { },
-    onBlur: () => { },
+    onChange: () => {},
+    onFocus: () => {},
+    onBlur: () => {},
 };
 
 export default TypaheadUser;

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 // NOTES:
-// All these functions mutate the array that is passed in. Ideally we wouldn't mutate this data. If we moved to a 
+// All these functions mutate the array that is passed in. Ideally we wouldn't mutate this data. If we moved to a
 // more functional programming style then we could avoid this, but for now i've just copied the original functions
 // from the CollectionPage component
 
@@ -22,27 +22,26 @@ export const sortByResources = filteredData => {
 
 export const sortByRelevance = (filteredData, searchCollectionsString) => {
     const getCountOfSearchTerm = field => {
-        if(!field) {
+        if (!field) {
             return 0;
         }
 
-		if (_.isArray(field)) {
-			return field.toString().toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
-		} else {
-			return field.toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
-		}
-	};
+        if (_.isArray(field)) {
+            return field.toString().toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
+        }
+        return field.toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
+    };
 
-    filteredData.forEach(function (data) {
+    filteredData.forEach(data => {
         if (data.type === 'course') {
-            let containsSearchTermCount =
+            const containsSearchTermCount =
                 getCountOfSearchTerm(data.title) +
                 getCountOfSearchTerm(data.description) +
                 getCountOfSearchTerm(data.award) +
                 getCountOfSearchTerm(data.domains);
             data.searchTermInstances = containsSearchTermCount;
         } else if (data.type === 'person') {
-            let containsSearchTermCount =
+            const containsSearchTermCount =
                 getCountOfSearchTerm(data.firstname) + getCountOfSearchTerm(data.lastname) + getCountOfSearchTerm(data.bio);
             data.searchTermInstances = containsSearchTermCount;
         } else if (data.type === 'dataset') {
@@ -53,15 +52,15 @@ export const sortByRelevance = (filteredData, searchCollectionsString) => {
                 abstractOrDescriptionCount = getCountOfSearchTerm(data.description);
             }
 
-            let containsSearchTermCount =
+            const containsSearchTermCount =
                 abstractOrDescriptionCount +
                 getCountOfSearchTerm(data.name) +
                 getCountOfSearchTerm(data.tags.topics) +
                 getCountOfSearchTerm(data.tags.features);
             data.searchTermInstances = containsSearchTermCount;
         } else {
-            //Other entities ie. Tools, Papers, Projects
-            let containsSearchTermCount =
+            // Other entities ie. Tools, Papers, Projects
+            const containsSearchTermCount =
                 getCountOfSearchTerm(data.name) +
                 getCountOfSearchTerm(data.description) +
                 getCountOfSearchTerm(data.tags.topics) +

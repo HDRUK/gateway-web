@@ -4,13 +4,13 @@ import CollectionPage from './CollectionPage';
 import { getCollectionRequest, getCollectionRelatedObjectsRequest } from '../../services/collection';
 import { collectionPageData } from '../../../test/mocks/dataMock';
 
-jest.mock('../../services/collection', () => ({ 
+jest.mock('../../services/collection', () => ({
     __esModule: true,
     default: () => jest.fn().mockImplementation(() => {}),
     getCollectionRequest: jest.fn().mockImplementation(() => {}),
     getCollectionRelatedObjectsRequest: jest.fn().mockImplementation(() => {}),
-    postCollectionCounterUpdateRequest: jest.fn().mockImplementation(() => {}) })
-);
+    postCollectionCounterUpdateRequest: jest.fn().mockImplementation(() => {}),
+}));
 
 const collectionId = 'collectionId';
 const userState = [
@@ -19,27 +19,26 @@ const userState = [
         role: 'Reader',
         id: null,
         name: null,
-    }
+    },
 ];
 const match = {
     params: {
-        collectionId
-    }
+        collectionId,
+    },
 };
 const history = {
-    push: () => {}
+    push: () => {},
 };
 
 describe('Given the CollectionPage component', () => {
     describe('When the collection is loading', () => {
-
         beforeAll(() => {
             render(<CollectionPage userState={userState} match={match} history={history} />);
         });
 
         afterAll(() => {
             cleanup();
-        })
+        });
 
         it('Then the loading spinner should display', () => {
             expect(screen.getByTestId('outerLoadingSpinner')).toBeTruthy();
@@ -104,7 +103,7 @@ describe('Given the CollectionPage component', () => {
             const { projectData } = collectionPageData;
             const relatedProjects = screen.queryAllByTestId('related-project-object');
 
-            relatedProjects.forEach((rp, index) => expect(within(rp).queryByText(projectData[index].name)).toBeTruthy() );
+            relatedProjects.forEach((rp, index) => expect(within(rp).queryByText(projectData[index].name)).toBeTruthy());
         });
     });
 });

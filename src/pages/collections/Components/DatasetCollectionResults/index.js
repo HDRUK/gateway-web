@@ -3,9 +3,12 @@ import _ from 'lodash';
 import RelatedObject from '../../../commonComponents/relatedObject/RelatedObject';
 
 const DatasetCollectionResults = ({ searchResults, relatedObjects, userId }) => {
-    const canViewResults = object => Boolean(object.activeflag === 'active' ||
-        (object.activeflag === 'archive' && object.type === 'dataset') ||
-        (object.type === 'dataset' && object.activeflag === 'review' && object.authors.includes(userId)));
+    const canViewResults = object =>
+        Boolean(
+            object.activeflag === 'active' ||
+                (object.activeflag === 'archive' && object.type === 'dataset') ||
+                (object.type === 'dataset' && object.activeflag === 'review' && object.authors.includes(userId))
+        );
 
     return searchResults.map(object => {
         if (canViewResults(object)) {
@@ -17,9 +20,7 @@ const DatasetCollectionResults = ({ searchResults, relatedObjects, userId }) => 
             let datasetLogo;
             if (object.type === 'dataset') {
                 if (object.activeflag === 'archive') {
-                    return (
-                        <div className='entity-deleted gray800-14'>The dataset '{object.name}' has been deleted by the publisher</div>
-                    );
+                    return <div className='entity-deleted gray800-14'>The dataset '{object.name}' has been deleted by the publisher</div>;
                 }
 
                 !_.isEmpty(object.datasetv2) && _.has(object, 'datasetv2.summary.publisher.name')
@@ -42,7 +43,7 @@ const DatasetCollectionResults = ({ searchResults, relatedObjects, userId }) => 
                     <RelatedObject
                         key={object.id}
                         data={object}
-                        activeLink={true}
+                        activeLink
                         showRelationshipAnswer={showAnswer}
                         collectionReason={reason}
                         collectionUpdated={updated}
@@ -53,7 +54,7 @@ const DatasetCollectionResults = ({ searchResults, relatedObjects, userId }) => 
                 );
             }
         }
-    })
-}
+    });
+};
 
 export default DatasetCollectionResults;

@@ -7,12 +7,11 @@ jest.mock('../../../../services/related-object', () => ({ __esModule: true, getR
 
 describe('Given the CourseCollectionResults component', () => {
     describe('When no results can be viewed', () => {
-        
         const searchResults = [
-            { 
+            {
                 activeFlag: 'review',
-                type: 'dataset'
-            }
+                type: 'dataset',
+            },
         ];
 
         test('Then no related results will be rendered', () => {
@@ -23,11 +22,11 @@ describe('Given the CourseCollectionResults component', () => {
 
     describe('When results can be viewed', () => {
         const searchResults = [
-            { 
+            {
                 type: 'course',
                 activeflag: 'active',
-                courseOptions: []
-            }
+                courseOptions: [],
+            },
         ];
 
         const relatedCourseObject = {
@@ -35,7 +34,7 @@ describe('Given the CourseCollectionResults component', () => {
             type: 'course',
             title: 'title',
             provider: 'provider',
-            courseOptions: []
+            courseOptions: [],
         };
 
         beforeAll(() => {

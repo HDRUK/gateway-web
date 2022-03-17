@@ -7,27 +7,28 @@ import { regExpConfig } from './regex.config';
  * @description Return full URL for either CMS or App
  */
 const _buildUrl = urlType => {
-	// 1. destructure window
-	let {
-		location: { href, origin },
-	} = window;
-	if (href && href.includes('appspot.com')) {
-		return origin;
-	} else if (href && !href.includes('localhost')) {
-		let regArray = _getRegexURL(urlType, href);
-		if (regArray) {
-			let url = regArray[2];
-			//add -api to the sub domain for API requests
-			switch (urlType) {
-				case 'cms':
-					return `https://${url}`;
-				default:
-					return `https://api${url}`;
-			}
-		}
-	} else {
-		return 'http://localhost:3001';
-	}
+    // 1. destructure window
+    const {
+        location: { href, origin },
+    } = window;
+    if (href && href.includes('appspot.com')) {
+        return origin;
+    }
+    if (href && !href.includes('localhost')) {
+        const regArray = _getRegexURL(urlType, href);
+        if (regArray) {
+            const url = regArray[2];
+            // add -api to the sub domain for API requests
+            switch (urlType) {
+                case 'cms':
+                    return `https://${url}`;
+                default:
+                    return `https://api${url}`;
+            }
+        }
+    } else {
+        return 'http://localhost:3001';
+    }
 };
 
 /**
@@ -37,13 +38,13 @@ const _buildUrl = urlType => {
  * @description Returns regex test based on url type
  */
 const _getRegexURL = (urlType, href) => {
-	console.log(`GET REGEX URL ${urlType}`);
-	switch (urlType) {
-		case 'cms':
-			return regExpConfig.cmsUrl.exec(href);
-		default:
-			return regExpConfig.httpUrl.exec(href);
-	}
+    console.log(`GET REGEX URL ${urlType}`);
+    switch (urlType) {
+        case 'cms':
+            return regExpConfig.cmsUrl.exec(href);
+        default:
+            return regExpConfig.httpUrl.exec(href);
+    }
 };
 
 export const baseURL = _buildUrl('http');

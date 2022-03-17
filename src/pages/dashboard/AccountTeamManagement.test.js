@@ -11,37 +11,37 @@ const onTeamManagementTabChangeMock = jest.fn();
 const onClearInnerTabMock = jest.fn();
 
 test('should not render Member,Notifications and Teams Tab', async () => {
-	render(
-		<AccountTeamManagement
-			userState={userState}
-			team='5fc12be363eaab9e68dae76e'
-			innertab=''
-			forwardRef={forwardRefMock}
-			onTeamManagementSave={onTeamManagementSaveMock}
-			onTeamManagementTabChange={onTeamManagementTabChangeMock}
-			onClearInnerTab={onClearInnerTabMock}
-		/>
-	);
-	Object.keys(tabTypes).map(key => {
-		expect(screen.queryByTestId(tabTypes[key])).toBeNull();
-	});
+    render(
+        <AccountTeamManagement
+            userState={userState}
+            team='5fc12be363eaab9e68dae76e'
+            innertab=''
+            forwardRef={forwardRefMock}
+            onTeamManagementSave={onTeamManagementSaveMock}
+            onTeamManagementTabChange={onTeamManagementTabChangeMock}
+            onClearInnerTab={onClearInnerTabMock}
+        />
+    );
+    Object.keys(tabTypes).map(key => {
+        expect(screen.queryByTestId(tabTypes[key])).toBeNull();
+    });
 });
 
 test('should render Member,Notifications and Teams Tab', async () => {
-	render(
-		<AccountTeamManagement
-			userState={userState}
-			team='6107fd7d7cceaa24a67eefe8'
-			innertab=''
-			forwardRef={forwardRefMock}
-			onTeamManagementSave={onTeamManagementSaveMock}
-			onTeamManagementTabChange={onTeamManagementTabChangeMock}
-			onClearInnerTab={onClearInnerTabMock}
-		/>
-	);
-	Object.keys(tabTypes).map(key => {
-		expect(screen.getByTestId(tabTypes[key])).toBeInTheDocument();
-		fireEvent.click(screen.getByTestId(tabTypes[key]));
-		expect(onTeamManagementTabChangeMock).toHaveBeenCalledTimes(1);
-	});
+    render(
+        <AccountTeamManagement
+            userState={userState}
+            team='6107fd7d7cceaa24a67eefe8'
+            innertab=''
+            forwardRef={forwardRefMock}
+            onTeamManagementSave={onTeamManagementSaveMock}
+            onTeamManagementTabChange={onTeamManagementTabChangeMock}
+            onClearInnerTab={onClearInnerTabMock}
+        />
+    );
+    Object.keys(tabTypes).map(key => {
+        expect(screen.getByTestId(tabTypes[key])).toBeInTheDocument();
+        fireEvent.click(screen.getByTestId(tabTypes[key]));
+        expect(onTeamManagementTabChangeMock).toHaveBeenCalledTimes(1);
+    });
 });

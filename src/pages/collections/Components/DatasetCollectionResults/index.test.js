@@ -7,12 +7,11 @@ jest.mock('../../../../services/related-object', () => ({ __esModule: true, getR
 
 describe('Given the DatasetCollectionResults component', () => {
     describe('When no results can be viewed', () => {
-        
         const searchResults = [
-            { 
+            {
                 activeFlag: 'review',
-                type: 'course'
-            }
+                type: 'course',
+            },
         ];
 
         test('Then no related results will be rendered', () => {
@@ -23,15 +22,15 @@ describe('Given the DatasetCollectionResults component', () => {
 
     describe('When results can be viewed', () => {
         const searchResults = [
-            { 
+            {
                 type: 'dataset',
                 activeflag: 'active',
                 datasetfields: {
                     phenotypes: [],
-                    publisher: 'publisher'
+                    publisher: 'publisher',
                 },
-                tags: { features: [] }
-            }
+                tags: { features: [] },
+            },
         ];
 
         const relatedDatasetObject = {
@@ -42,8 +41,8 @@ describe('Given the DatasetCollectionResults component', () => {
             name: 'name',
             datasetfields: {
                 phenotypes: [],
-                publisher: 'publisher'
-            }
+                publisher: 'publisher',
+            },
         };
 
         beforeAll(() => {

@@ -88,8 +88,9 @@
         "eject": "react-scripts eject",
         "snyk-protect": "snyk protect",
         "prepare": "npm run snyk-protect",
-        "lint": "eslint ./src",
-        "lint:fix": "eslint --fix --ext .js,.jsx ./src",
+        "lint": "eslint ./src --ext .js,.jsx",
+        "lint:fix": "eslint ./src --ext .js,.jsx --fix",
+        "prettier:write": "prettier --write \"./src/**/*.{js,jsx}\"",
         "storybook": "start-storybook -p 6006 -s public",
         "build-storybook": "build-storybook -s public"
     },
