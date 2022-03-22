@@ -46,12 +46,12 @@ class DoubleDropdownCustom extends React.Component {
         this.props.onBlur(this.props.value);
     }
 
-    openDropDown() {
-        this.setState({ dropdownMenu: true });
+    openDropDown(dropdownMenu) {
+        this.setState({ dropdownMenu });
     }
 
-    openNestedDropDown() {
-        this.setState({ nestedDropdownMenu: true });
+    openNestedDropDown(nestedDropdownMenu) {
+        this.setState({ nestedDropdownMenu });
     }
 
     render() {
