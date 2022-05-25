@@ -616,7 +616,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                             <main className='gray800-14'>
                                                 <CustomiseGuidance
                                                     activeGuidance={newGuidance[activeQuestion] || activeGuidance}
-                                                    isLocked={helpers.isQuestionLocked(activeQuestion)}
+                                                    isLocked={helpers.isQuestionLocked(questionStatus[activeQuestion])}
                                                     onGuidanceChange={onGuidanceChange}
                                                     activeQuestion={activeQuestion}
                                                 />

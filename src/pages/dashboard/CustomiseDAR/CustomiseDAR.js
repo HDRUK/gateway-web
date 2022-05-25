@@ -1,17 +1,17 @@
 import { has, isEmpty } from 'lodash';
 import moment from 'moment';
+import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Tab, Tabs, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Tab, Tabs, Tooltip } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import queryString from 'query-string';
-import SVGIcon from '../../../images/SVGIcon';
 import Alert from '../../../components/Alert';
+import { LayoutContent } from '../../../components/Layout';
+import SVGIcon from '../../../images/SVGIcon';
 import personService from '../../../services/person';
 import publishersService from '../../../services/publishers';
 import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
 import './CustomiseDAR.scss';
-import { LayoutContent } from '../../../components/Layout';
 
 const renderTooltip = props => (
     <Tooltip className='tool-tip' style={{ width: '240px' }}>

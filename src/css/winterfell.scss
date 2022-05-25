@@ -23,6 +23,18 @@
         min-height: 155px;
     }
 
+    .question-icons {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+    }
+
+    &-parent {
+        .question-icons {
+            top: 52px;
+        }
+    }
+
     .action-control {
         display: flex;
         flex-flow: row;
@@ -96,5 +108,10 @@
             margin-top: 33px;
             display: inline-block;
         }
+    }
+
+    .question-icons {
+        bottom: 19px;
+        top: auto;
     }
 }
