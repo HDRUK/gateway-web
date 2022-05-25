@@ -65,6 +65,9 @@ const QuestionActionTabs = ({
             if (settings.key === '') settings.key = DarHelper.actionKeys.GUIDANCE;
             setActiveSettings(settings);
         }
+
+        setMessagesCount(0);
+        setNotesCount(0);
     }, [settings]);
 
     return (

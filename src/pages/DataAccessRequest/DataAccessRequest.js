@@ -1184,23 +1184,6 @@ class DataAccessRequest extends Component {
                 messagesCount: question.counts.messagesCount,
                 notesCount: question.counts.notesCount,
             });
-        } else {
-            if (!questionSet.counts) {
-                questionSet.counts = { messagesCount: 0, notesCount: 0 };
-            }
-
-            //Update the count based on the messageType
-            if (messageType === 'message') {
-                questionSet.counts.messagesCount = questionSet.counts.messagesCount + 1;
-            } else if (messageType === 'note') {
-                questionSet.counts.notesCount = questionSet.counts.notesCount + 1;
-            }
-
-            this.setState({
-                jsonSchema,
-                messagesCount: questionSet.counts.messagesCount,
-                notesCount: questionSet.counts.notesCount,
-            });
         }
     };
 
