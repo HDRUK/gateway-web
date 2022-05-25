@@ -595,8 +595,6 @@ class DataAccessRequest extends Component {
         // add in the classes for winterfell, important
         jsonSchema = { ...jsonSchema, ...classSchema };
 
-        console.log('jsonSchema', jsonSchema);
-
         return jsonSchema;
     }
 
@@ -646,7 +644,7 @@ class DataAccessRequest extends Component {
             let countedQuestionAnswers = {};
             let totalQuestions = '';
             // 3. total questions answered
-            if (activePanelId === 'about' || activePanelId === 'additionalinformationfiles-files') {
+            if (activePanelId === 'about' || activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
                 countedQuestionAnswers = DarHelper.totalQuestionsAnswered(this);
                 totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered`;
             } else {
@@ -1157,7 +1155,6 @@ class DataAccessRequest extends Component {
     };
 
     updateCount = (questionId, questionSetId, messageType) => {
-        console.log('questionSetId', questionSetId);
         let { jsonSchema } = this.state;
         let questionSet = DarHelper.findQuestionSet(questionSetId, jsonSchema);
 
@@ -1914,8 +1911,6 @@ class DataAccessRequest extends Component {
                 />
             );
         } else {
-            console.log('this.state.questionAnswers', this.state.questionAnswers);
-            console.log('this.state.jsonSchema', this.state.jsonSchema);
             return (
                 <Winterfell
                     schema={this.state.jsonSchema}
@@ -1994,8 +1989,6 @@ class DataAccessRequest extends Component {
                 </Container>
             );
         }
-
-        console.log('this.state.jsonSchema.questionPanels', this.state.jsonSchema.questionPanels);
 
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>

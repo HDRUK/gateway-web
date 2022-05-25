@@ -60,8 +60,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         onClick={e => {
             e.preventDefault();
             onClick(e);
-        }}
-    >
+        }}>
         {children}
     </a>
 ));
@@ -79,377 +78,381 @@ const CustomMenu = React.forwardRef(({ children, style, className, 'aria-labelle
 });
 
 class DatasetOnboarding extends Component {
-	constructor(props) {
-		super(props);
-		this.onFormSubmit = this.onFormSubmit.bind(this);
-		this.onFormUpdate = this.onFormUpdate.bind(this);
-		//this.onHandleDataSetChange = this.onHandleDataSetChange.bind(this);
-		this.searchBar = React.createRef();
+    constructor(props) {
+        super(props);
+        this.onFormSubmit = this.onFormSubmit.bind(this);
+        this.onFormUpdate = this.onFormUpdate.bind(this);
+        //this.onHandleDataSetChange = this.onHandleDataSetChange.bind(this);
+        this.searchBar = React.createRef();
 
-		this.state = {
-			_id: '',
-			activePanelId: '',
-			activeGuidance: '',
-			amendmentIterations: [],
-			jsonSchema: {},
-			questionAnswers: {},
-			structuralMetadataErrors: [],
-			structuralMetadata: [],
-			listOfDatasets: [],
-			applicationStatus: '',
-			searchString: '',
-			totalQuestions: '',
-			validationErrors: {},
-			lastSaved: '',
-			lookup: [],
-			isLoading: true,
-			name: '',
-			datasetVersion: '',
-			activeflag: '',
-			publisher: '',
-			showDrawer: false,
-			showActionModal: false,
-			actionModalConfig: {},
+        this.state = {
+            _id: '',
+            activePanelId: '',
+            activeGuidance: '',
+            amendmentIterations: [],
+            jsonSchema: {},
+            questionAnswers: {},
+            structuralMetadataErrors: [],
+            structuralMetadata: [],
+            listOfDatasets: [],
+            applicationStatus: '',
+            searchString: '',
+            totalQuestions: '',
+            validationErrors: {},
+            lastSaved: '',
+            lookup: [],
+            isLoading: true,
+            name: '',
+            datasetVersion: '',
+            activeflag: '',
+            publisher: '',
+            showDrawer: false,
+            showActionModal: false,
+            actionModalConfig: {},
 
-			readOnly: false,
-			userType: '',
-			answeredAmendments: 0,
-			unansweredAmendments: 0,
-			isWideForm: false,
-			isTableForm: false,
-			activeAccordionCard: 0,
-			allowedNavigation: true,
-			topicContext: {},
-			reviewSections: [],
-			roles: [],
-			inReviewMode: false,
-			updateRequestModal: false,
-			completion: {},
-			isFederated: false,
-		};
+            readOnly: false,
+            userType: '',
+            answeredAmendments: 0,
+            unansweredAmendments: 0,
+            isWideForm: false,
+            isTableForm: false,
+            activeAccordionCard: 0,
+            allowedNavigation: true,
+            topicContext: {},
+            reviewSections: [],
+            roles: [],
+            inReviewMode: false,
+            updateRequestModal: false,
+            completion: {},
+            isFederated: false,
+        };
 
-		this.onChangeDebounced = _.debounce(this.onChangeDebounced, 300);
-	}
+        this.onChangeDebounced = _.debounce(this.onChangeDebounced, 300);
+    }
 
-	applicationState = {
-		CONFIRMAPPROVALCONDITIONS: 'approved with conditions',
-		CONFIRMREJECTION: 'rejected',
-		CONFIRMAPPROVAL: 'approved',
-		ARCHIVE: 'archive',
-		UNARCHIVE: 'unarchive',
-	};
+    applicationState = {
+        CONFIRMAPPROVALCONDITIONS: 'approved with conditions',
+        CONFIRMREJECTION: 'rejected',
+        CONFIRMAPPROVAL: 'approved',
+        ARCHIVE: 'archive',
+        UNARCHIVE: 'unarchive',
+    };
 
-	tabState = {
-		CONFIRMAPPROVALCONDITIONS: 'approved',
-		CONFIRMREJECTION: 'rejected',
-		CONFIRMAPPROVAL: 'approved',
-	};
+    tabState = {
+        CONFIRMAPPROVALCONDITIONS: 'approved',
+        CONFIRMREJECTION: 'rejected',
+        CONFIRMAPPROVAL: 'approved',
+    };
 
-	async componentDidMount() {
-		await this.initPage();
-	}
+    async componentDidMount() {
+        await this.initPage();
+    }
 
-	async componentDidUpdate(prevProps) {
-		if (this.props !== prevProps) {
-			await this.initPage();
-		}
-	}
+    async componentDidUpdate(prevProps) {
+        if (this.props !== prevProps) {
+            await this.initPage();
+        }
+    }
 
-	async initPage() {
-		try {
-			const { id: _id } = this.props.match.params;
-			let countedQuestionAnswers = {},
-				totalQuestions = '';
+    async initPage() {
+        try {
+            const { id: _id } = this.props.match.params;
+            let countedQuestionAnswers = {},
+                totalQuestions = '';
 
-			try {
-				// 1. Make API call to find and return the application form schema and answers matching this Id
-				let response = await axios.get(`${baseURL}/api/v1/dataset-onboarding/${_id}`);
-				// 2. Destructure backend response for this context containing details of DAR including question set and current progress
-				let {
-					data: {
-						data,
-						data: {
-							dataset: { questionAnswers, structuralMetadata },
-						},
-						listOfDatasets,
-					},
-				} = response;
+            try {
+                // 1. Make API call to find and return the application form schema and answers matching this Id
+                let response = await axios.get(`${baseURL}/api/v1/dataset-onboarding/${_id}`);
+                // 2. Destructure backend response for this context containing details of DAR including question set and current progress
+                let {
+                    data: {
+                        data,
+                        data: {
+                            dataset: { questionAnswers, structuralMetadata },
+                        },
+                        listOfDatasets,
+                    },
+                } = response;
 
-				let {
-					data: { publisher: publisherDetails },
-				} = await datasetOnboardingServices.getPublisherDetails(data.dataset.datasetv2.summary.publisher.identifier);
-				
-				if (!_.isEmpty(publisherDetails.federation) && publisherDetails.federation.active) this.setState({ isFederated: true });
+                let {
+                    data: { publisher: publisherDetails },
+                } = await datasetOnboardingServices.getPublisherDetails(data.dataset.datasetv2.summary.publisher.identifier);
 
-				// 3. Set up the DAR
-				this.setScreenData({
-					...data,
-					_id,
-					questionAnswers,
-					structuralMetadata,
-					listOfDatasets,
-					jsonSchema: { ...formSchema },
-					applicationStatus: data.dataset.activeflag,
-				});
-			} catch (error) {
-				this.setState({ isLoading: false });
-				console.error(error);
-			}
+                if (!_.isEmpty(publisherDetails.federation) && publisherDetails.federation.active) this.setState({ isFederated: true });
 
-			countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(this);
-			totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered`;
-			let percentageCompleted = DatasetOnboardingHelperUtil.getCompletionPercentages(this);
-			if (!_.isEmpty(this.state.structuralMetadata) && _.isEmpty(this.state.structuralMetadataErrors))
-				percentageCompleted.updatedCompletion.structural = 100;
-			else percentageCompleted.updatedCompletion.structural = 0;
+                // 3. Set up the DAR
+                this.setScreenData({
+                    ...data,
+                    _id,
+                    questionAnswers,
+                    structuralMetadata,
+                    listOfDatasets,
+                    jsonSchema: { ...formSchema },
+                    applicationStatus: data.dataset.activeflag,
+                });
+            } catch (error) {
+                this.setState({ isLoading: false });
+                console.error(error);
+            }
 
-			// Update state to display question answer count
-			this.setState({
-				totalQuestions,
-				completion: percentageCompleted.updatedCompletion,
-			});
-		} catch (error) {
-			this.setState({ isLoading: false });
-			console.error(error);
-		}
-	}
+            countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(this);
+            totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered`;
+            let percentageCompleted = DatasetOnboardingHelperUtil.getCompletionPercentages(this);
+            if (!_.isEmpty(this.state.structuralMetadata) && _.isEmpty(this.state.structuralMetadataErrors))
+                percentageCompleted.updatedCompletion.structural = 100;
+            else percentageCompleted.updatedCompletion.structural = 0;
 
-	//builder for the data for the form
+            // Update state to display question answer count
+            this.setState({
+                totalQuestions,
+                completion: percentageCompleted.updatedCompletion,
+            });
+        } catch (error) {
+            this.setState({ isLoading: false });
+            console.error(error);
+        }
+    }
 
-	setScreenData = async context => {
-		// 1. Destructure DAR context containing questions and any application progress
-		let {
-			jsonSchema,
-			questionAnswers = {},
-			structuralMetadata = [],
-			listOfDatasets = [],
-			_id,
-			amendmentIterations = [],
-			applicationStatus,
-			dataset,
-			readOnly = false,
-			userType = 'EDITOR',
-			unansweredAmendments = 0,
-			answeredAmendments = 0,
-			inReviewMode = false,
-			reviewSections = [],
-		} = context;
+    //builder for the data for the form
 
-		let { name, datasetVersion, activeflag } = dataset;
+    setScreenData = async context => {
+        // 1. Destructure DAR context containing questions and any application progress
+        let {
+            jsonSchema,
+            questionAnswers = {},
+            structuralMetadata = [],
+            listOfDatasets = [],
+            _id,
+            amendmentIterations = [],
+            applicationStatus,
+            dataset,
+            readOnly = false,
+            userType = 'EDITOR',
+            unansweredAmendments = 0,
+            answeredAmendments = 0,
+            inReviewMode = false,
+            reviewSections = [],
+        } = context;
 
-		let showSubmit = false;
-		let submitButtonText = 'Submit for review';
-		let showCreateNewVersion = false;
-		let showArchive = false;
-		let showUnArchive = false;
-		let showDeleteDraft = false;
+        let { name, datasetVersion, activeflag } = dataset;
 
-		let publisher = dataset.datasetv2.summary.publisher.identifier;
+        let showSubmit = false;
+        let submitButtonText = 'Submit for review';
+        let showCreateNewVersion = false;
+        let showArchive = false;
+        let showUnArchive = false;
+        let showDeleteDraft = false;
 
-		this.setState({ roles: this.getUserRoles() });
-		if (this.state.roles.includes('admin') && applicationStatus === DatasetOnboardingHelper.datasetStatus.inReview) userType = 'ADMIN';
+        let publisher = dataset.datasetv2.summary.publisher.identifier;
 
-		jsonSchema = this.injectStaticContent(jsonSchema, inReviewMode, reviewSections);
-		jsonSchema = this.injectObservations(jsonSchema, questionAnswers);
+        this.setState({ roles: this.getUserRoles() });
+        if (this.state.roles.includes('admin') && applicationStatus === DatasetOnboardingHelper.datasetStatus.inReview) userType = 'ADMIN';
 
-		let isLatestVersion = listOfDatasets[0]._id === _id ? true : false;
-		let isThereALiveVersion = listOfDatasets.filter(x => x.activeflag === 'active').length > 0 ? true : false;
+        jsonSchema = this.injectStaticContent(jsonSchema, inReviewMode, reviewSections);
+        jsonSchema = this.injectObservations(jsonSchema, questionAnswers);
 
-		if (applicationStatus === DatasetOnboardingHelper.datasetStatus.draft) {
-			showSubmit = true;
-			showDeleteDraft = true;
-			//if (isLatestVersion) showArchive = true;
-		} else if (applicationStatus === DatasetOnboardingHelper.datasetStatus.rejected) {
-			if (isLatestVersion) showCreateNewVersion = true;
-			readOnly = true;
-		} else if (applicationStatus === DatasetOnboardingHelper.datasetStatus.archive) {
-			if (!isThereALiveVersion && isLatestVersion) showCreateNewVersion = true;
-			readOnly = true;
-		} else if (applicationStatus !== DatasetOnboardingHelper.datasetStatus.inReview) {
-			if (isLatestVersion) showCreateNewVersion = true;
-			showArchive = true;
-			readOnly = true;
-		}
+        let isLatestVersion = listOfDatasets[0]._id === _id ? true : false;
+        let isThereALiveVersion = listOfDatasets.filter(x => x.activeflag === 'active').length > 0 ? true : false;
 
-		let initialPanel = jsonSchema.formPanels[0].panelId;
+        if (applicationStatus === DatasetOnboardingHelper.datasetStatus.draft) {
+            showSubmit = true;
+            showDeleteDraft = true;
+            //if (isLatestVersion) showArchive = true;
+        } else if (applicationStatus === DatasetOnboardingHelper.datasetStatus.rejected) {
+            if (isLatestVersion) showCreateNewVersion = true;
+            readOnly = true;
+        } else if (applicationStatus === DatasetOnboardingHelper.datasetStatus.archive) {
+            if (!isThereALiveVersion && isLatestVersion) showCreateNewVersion = true;
+            readOnly = true;
+        } else if (applicationStatus !== DatasetOnboardingHelper.datasetStatus.inReview) {
+            if (isLatestVersion) showCreateNewVersion = true;
+            showArchive = true;
+            readOnly = true;
+        }
 
-		if (this.state.isFederated) {
-			readOnly = true
-		}
+        let initialPanel = jsonSchema.formPanels[0].panelId;
 
-		// 9. Set state
-		this.setState({
-			jsonSchema: { ...jsonSchema, ...classSchema },
-			dataset,
-			questionAnswers,
-			structuralMetadata,
-			listOfDatasets,
-			_id,
-			amendmentIterations,
-			applicationStatus,
-			activePanelId: initialPanel,
-			isWideForm: initialPanel === DatasetOnboardingHelper.darStaticPageIds.BEFOREYOUBEGIN,
-			isTableForm: initialPanel === DatasetOnboardingHelper.darStaticPageIds.STRUCTURAL,
-			isLoading: false,
-			name,
-			datasetVersion,
-			activeflag,
-			publisher,
-			readOnly,
-			answeredAmendments,
-			unansweredAmendments,
-			userType,
-			showSubmit,
-			submitButtonText,
-			showCreateNewVersion,
-			showArchive,
-			showUnArchive,
-			showDeleteDraft,
-			inReviewMode,
-			reviewSections,
-		});
-	};
+        if (this.state.isFederated) {
+            readOnly = true;
+        }
 
-	/**
-	 * injectObservations
-	 * @desc Function to inject observation questions into schema
-	 * @returns {jsonSchmea} object
-	 */
-	injectObservations(jsonSchema = {}, questionAnswers = {}) {
-		let { questions } = DatasetOnboardingHelperUtil.findQuestionSet('observations', {
-			...jsonSchema,
-		});
-		let listOfObservationFields = questions.map(x => x.questionId).flat();
+        // 9. Set state
+        this.setState({
+            jsonSchema: { ...jsonSchema, ...classSchema },
+            dataset,
+            questionAnswers,
+            structuralMetadata,
+            listOfDatasets,
+            _id,
+            amendmentIterations,
+            applicationStatus,
+            activePanelId: initialPanel,
+            isWideForm: initialPanel === DatasetOnboardingHelper.darStaticPageIds.BEFOREYOUBEGIN,
+            isTableForm: initialPanel === DatasetOnboardingHelper.darStaticPageIds.STRUCTURAL,
+            isLoading: false,
+            name,
+            datasetVersion,
+            activeflag,
+            publisher,
+            readOnly,
+            answeredAmendments,
+            unansweredAmendments,
+            userType,
+            showSubmit,
+            submitButtonText,
+            showCreateNewVersion,
+            showArchive,
+            showUnArchive,
+            showDeleteDraft,
+            inReviewMode,
+            reviewSections,
+        });
+    };
 
-		let listOfObservationUniqueIds = [];
-		listOfObservationFields.forEach(field => {
-			Object.keys(questionAnswers).some(function (key) {
-				let regex = new RegExp(field.toLowerCase().replace(/\//g, '\\/') + '_', 'g');
-				if (key.toLowerCase().match(regex)) {
-					let [, uniqueId] = key.split('_');
-					if (!_.isEmpty(uniqueId) && !listOfObservationUniqueIds.find(x => x === uniqueId)) {
-						listOfObservationUniqueIds.push(uniqueId);
-					}
-				}
-			});
-		});
+    /**
+     * injectObservations
+     * @desc Function to inject observation questions into schema
+     * @returns {jsonSchmea} object
+     */
+    injectObservations(jsonSchema = {}, questionAnswers = {}) {
+        let { questions } = DatasetOnboardingHelperUtil.findQuestionSet('observations', {
+            ...jsonSchema,
+        });
+        let listOfObservationFields = questions.map(x => x.questionId).flat();
 
-		listOfObservationUniqueIds.forEach(uniqueId => {
-			let duplicateQuestionSet = DatasetOnboardingHelperUtil.questionSetToDuplicate('add-observations', { ...jsonSchema }, uniqueId);
-			jsonSchema = DatasetOnboardingHelperUtil.insertSchemaUpdates('add-observations', duplicateQuestionSet, { ...jsonSchema });
-		});
+        let listOfObservationUniqueIds = [];
+        listOfObservationFields.forEach(field => {
+            Object.keys(questionAnswers).some(function (key) {
+                let regex = new RegExp(field.toLowerCase().replace(/\//g, '\\/') + '_', 'g');
+                if (key.toLowerCase().match(regex)) {
+                    let [, uniqueId] = key.split('_');
+                    if (!_.isEmpty(uniqueId) && !listOfObservationUniqueIds.find(x => x === uniqueId)) {
+                        listOfObservationUniqueIds.push(uniqueId);
+                    }
+                }
+            });
+        });
 
-		return jsonSchema;
-	}
+        listOfObservationUniqueIds.forEach(uniqueId => {
+            let duplicateQuestionSet = DatasetOnboardingHelperUtil.questionSetToDuplicate('add-observations', { ...jsonSchema }, uniqueId);
+            jsonSchema = DatasetOnboardingHelperUtil.insertSchemaUpdates('add-observations', duplicateQuestionSet, { ...jsonSchema });
+        });
 
-	/**
-	 * InjectStaticContent
-	 * @desc Function to inject static 'about' and 'files' pages and panels into schema
-	 * @returns {jsonSchmea} object
-	 */
-	injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = []) {
-		let { pages, formPanels } = { ...jsonSchema };
-		// formPanel {pageId: 'safePeople', panelId:'applicant'}
-		let formPanel = {};
-		let currentPageIdx = 0;
-		// check if About page has been injected
-		let navElementsExist = [...pages].find(page => page.pageId === DatasetOnboardingHelper.darStaticPageIds.BEFOREYOUBEGIN) || false;
-		// 2. About page does not exist
-		if (!navElementsExist) {
-			// Append 'about' & 'files' panel and nav item
-			jsonSchema.pages.unshift(DatasetOnboardingHelper.staticContent.beforeYouBeginPageNav);
-			jsonSchema.pages.push(DatasetOnboardingHelper.staticContent.structuralPageNav);
-			// Add form panel for 'about' & 'files'
-			jsonSchema.formPanels.unshift(DatasetOnboardingHelper.staticContent.beforeYouBeginPanel);
-			jsonSchema.formPanels.push(DatasetOnboardingHelper.staticContent.structuralPanel);
-		}
-		// if activePanel, find active formPanel from formPanels, find pageId index from pages array
-		if (!_.isEmpty(this.state.activePanelId)) {
-			formPanel = [...formPanels].find(p => p.panelId === this.state.activePanelId);
-			currentPageIdx = [...pages].findIndex(page => page.pageId === formPanel.pageId);
-		}
-		// set active page
-		jsonSchema.pages.forEach(element => (element.active = false));
-		jsonSchema.pages[currentPageIdx].active = true;
+        return jsonSchema;
+    }
 
-		// 7. Append review sections to jsonSchema if in review mode
-		jsonSchema.pages = [...jsonSchema.pages].map(page => {
-			let inReview =
-				[...reviewSections].includes(page.pageId.toLowerCase()) ||
-				page.pageId === DatasetOnboardingHelper.darStaticPageIds.BEFOREYOUBEGIN ||
-				page.pageId === DatasetOnboardingHelper.darStaticPageIds.STRUCTURAL;
+    /**
+     * InjectStaticContent
+     * @desc Function to inject static 'about' and 'files' pages and panels into schema
+     * @returns {jsonSchmea} object
+     */
+    injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = []) {
+        let { pages, formPanels } = { ...jsonSchema };
+        // formPanel {pageId: 'safePeople', panelId:'applicant'}
+        let formPanel = {};
+        let currentPageIdx = 0;
+        // check if About page has been injected
+        let navElementsExist = [...pages].find(page => page.pageId === DatasetOnboardingHelper.darStaticPageIds.BEFOREYOUBEGIN) || false;
+        // 2. About page does not exist
+        if (!navElementsExist) {
+            // Append 'about' & 'files' panel and nav item
+            jsonSchema.pages.unshift(DatasetOnboardingHelper.staticContent.beforeYouBeginPageNav);
+            jsonSchema.pages.push(DatasetOnboardingHelper.staticContent.structuralPageNav);
+            // Add form panel for 'about' & 'files'
+            jsonSchema.formPanels.unshift(DatasetOnboardingHelper.staticContent.beforeYouBeginPanel);
+            jsonSchema.formPanels.push(DatasetOnboardingHelper.staticContent.structuralPanel);
+        }
+        // if activePanel, find active formPanel from formPanels, find pageId index from pages array
+        if (!_.isEmpty(this.state.activePanelId)) {
+            formPanel = [...formPanels].find(p => p.panelId === this.state.activePanelId);
+            currentPageIdx = [...pages].findIndex(page => page.pageId === formPanel.pageId);
+        }
+        // set active page
+        jsonSchema.pages.forEach(element => (element.active = false));
+        jsonSchema.pages[currentPageIdx].active = true;
 
-			return { ...page, inReview: inReviewMode && inReview };
-		});
-		// add in the classes for winterfell, important
-		jsonSchema = { ...jsonSchema, ...classSchema };
+        // 7. Append review sections to jsonSchema if in review mode
+        jsonSchema.pages = [...jsonSchema.pages].map(page => {
+            let inReview =
+                [...reviewSections].includes(page.pageId.toLowerCase()) ||
+                page.pageId === DatasetOnboardingHelper.darStaticPageIds.BEFOREYOUBEGIN ||
+                page.pageId === DatasetOnboardingHelper.darStaticPageIds.STRUCTURAL;
 
-		return jsonSchema;
-	}
+            return { ...page, inReview: inReviewMode && inReview };
+        });
+        // add in the classes for winterfell, important
+        jsonSchema = { ...jsonSchema, ...classSchema };
 
-	/**
-	 * [onFormUpdate]
-	 * @param {obj: questionAnswers}
-	 * @desc Callback from Winterfell sets totalQuestionsAnswered + saveTime
-	 */
-	onFormUpdate = (id = '', questionAnswers = {}) => {
-		if (!_.isEmpty(id) && !_.isEmpty(questionAnswers) && !this.state.readOnly) {
-			let { lookup, activePanelId } = this.state;
-			// 1. check for auto complete
-			if (typeof id === 'string') {
-				let [questionId, uniqueId] = id.split('_');
-				let qId = questionId.toLowerCase();
-				let lookupAutoComplete = [...lookup].includes(qId);
-				if (lookupAutoComplete)
-					questionAnswers = DatasetOnboardingHelper.autoComplete(qId, uniqueId, {
-						...questionAnswers,
-					});
-			}
-			// 2. get totalQuestionAnswered
-			let countedQuestionAnswers = {};
-			let totalQuestions = '';
-			// 3. total questions answered
-			if (activePanelId === 'beforeYouBegin' || activePanelId === 'structural') {
-				countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(this);
-				totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered`;
-			} else {
-				countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(this, this.state.activePanelId, questionAnswers);
-				totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered in this section`;
-			}
-			let percentageCompleted = DatasetOnboardingHelperUtil.getCompletionPercentages(this);
-			if (!_.isEmpty(this.state.structuralMetadata) && _.isEmpty(this.state.structuralMetadataErrors))
-				percentageCompleted.updatedCompletion.structural = 100;
-			else percentageCompleted.updatedCompletion.structural = 0;
-			// 4. set totalQuestionAnswered
-			this.setState({ totalQuestions, completion: percentageCompleted.updatedCompletion });
-			// 5. remove blank vals from questionAnswers
-			let data = _.pickBy({ ...this.state.questionAnswers, ...questionAnswers }, _.identity);
-			const lastSaved = DatasetOnboardingHelper.saveTime();
-			// 6. create dataObject
-			let dataObj = { key: 'questionAnswers', data };
-			// 7. Immediately update the state
-			this.setState({ [`${dataObj.key}`]: { ...dataObj.data }, lastSaved });
-			// 8. Execute the debounced onChange method API CALL
-			this.onChangeDebounced(dataObj, id, percentageCompleted.updatedCompletion);
-		}
-	};
+        return jsonSchema;
+    }
 
-	onChangeDebounced = (obj = {}, updatedQuestionId, percentageCompleted) => {
-		try {
-			let { _id: id } = this.state;
-			// 1. deconstruct
-			let { key, data = {} } = obj;
-			// 2. set body params
-			let params = {
-				[`${key}`]: JSON.stringify(data),
-				updatedQuestionId,
-				percentageCompleted,
-			};
-			// 3. API Patch call
-			//axios.patch(`${baseURL}/api/v1/dataset-onboarding/${pid}/${datasetId}`, params).then(response => {
-			axios.patch(`${baseURL}/api/v1/dataset-onboarding/${id}`, params).then(response => {
-				if (response.data.name) this.setState({ name: response.data.name });
-				/* let {
+    /**
+     * [onFormUpdate]
+     * @param {obj: questionAnswers}
+     * @desc Callback from Winterfell sets totalQuestionsAnswered + saveTime
+     */
+    onFormUpdate = (id = '', questionAnswers = {}) => {
+        if (!_.isEmpty(id) && !_.isEmpty(questionAnswers) && !this.state.readOnly) {
+            let { lookup, activePanelId } = this.state;
+            // 1. check for auto complete
+            if (typeof id === 'string') {
+                let [questionId, uniqueId] = id.split('_');
+                let qId = questionId.toLowerCase();
+                let lookupAutoComplete = [...lookup].includes(qId);
+                if (lookupAutoComplete)
+                    questionAnswers = DatasetOnboardingHelper.autoComplete(qId, uniqueId, {
+                        ...questionAnswers,
+                    });
+            }
+            // 2. get totalQuestionAnswered
+            let countedQuestionAnswers = {};
+            let totalQuestions = '';
+            // 3. total questions answered
+            if (activePanelId === 'beforeYouBegin' || activePanelId === 'structural') {
+                countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(this);
+                totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered`;
+            } else {
+                countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(
+                    this,
+                    this.state.activePanelId,
+                    questionAnswers
+                );
+                totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered in this section`;
+            }
+            let percentageCompleted = DatasetOnboardingHelperUtil.getCompletionPercentages(this);
+            if (!_.isEmpty(this.state.structuralMetadata) && _.isEmpty(this.state.structuralMetadataErrors))
+                percentageCompleted.updatedCompletion.structural = 100;
+            else percentageCompleted.updatedCompletion.structural = 0;
+            // 4. set totalQuestionAnswered
+            this.setState({ totalQuestions, completion: percentageCompleted.updatedCompletion });
+            // 5. remove blank vals from questionAnswers
+            let data = _.pickBy({ ...this.state.questionAnswers, ...questionAnswers }, _.identity);
+            const lastSaved = DatasetOnboardingHelper.saveTime();
+            // 6. create dataObject
+            let dataObj = { key: 'questionAnswers', data };
+            // 7. Immediately update the state
+            this.setState({ [`${dataObj.key}`]: { ...dataObj.data }, lastSaved });
+            // 8. Execute the debounced onChange method API CALL
+            this.onChangeDebounced(dataObj, id, percentageCompleted.updatedCompletion);
+        }
+    };
+
+    onChangeDebounced = (obj = {}, updatedQuestionId, percentageCompleted) => {
+        try {
+            let { _id: id } = this.state;
+            // 1. deconstruct
+            let { key, data = {} } = obj;
+            // 2. set body params
+            let params = {
+                [`${key}`]: JSON.stringify(data),
+                updatedQuestionId,
+                percentageCompleted,
+            };
+            // 3. API Patch call
+            //axios.patch(`${baseURL}/api/v1/dataset-onboarding/${pid}/${datasetId}`, params).then(response => {
+            axios.patch(`${baseURL}/api/v1/dataset-onboarding/${id}`, params).then(response => {
+                if (response.data.name) this.setState({ name: response.data.name });
+                /* let {
 					data: { unansweredAmendments = 0, answeredAmendments = 0, jsonSchema = null },
 				} = response;
 				let { applicationStatus } = this.state;
@@ -1110,310 +1113,313 @@ class DatasetOnboarding extends Component {
 		</Tooltip>
 	); */
 
-	/**
-	 * OnUpdateRequest
-	 * @desc When Custodian clicks Submit update request
-	 * 			 will open a modal
-	 */
-	onUpdateRequest = e => {
-		let fullAmendments = {};
-		let updateRequestModal = this.state.updateRequestModal;
-		let { pages, questionPanels, questionSets } = { ...this.state.jsonSchema };
-		// Get the last amendmentIteration in the array
-		let amendmentsIterations = _.last([...this.state.amendmentIterations]);
-		if (!_.isEmpty(amendmentsIterations)) {
-			// get the questionAnswers object {role: {}, lastName: {}}
-			let { questionAnswers } = { ...amendmentsIterations };
-			// get all the questionIds into a iterable array from questionAnswers
-			if (!_.isEmpty(questionAnswers)) {
-				// set up default variables
-				let questionSetId,
-					answer,
-					section,
-					pageId,
-					page,
-					questions,
-					question = '';
-				// reduce over questionanswers object using lodash
-				fullAmendments = _.reduce(
-					questionAnswers,
-					(obj, value, key) => {
-						// currentItem {questionSetId, answer}
-						({ questionSetId, answer } = questionAnswers[key]);
-						// find the active questionPanel ie questionPanels: [{navHeader, pageId, panelId, questionSets:[]}]
-						let activeQuestionPanel = [...questionPanels].find(panel => panel.panelId === questionSetId);
-						// Get the section {navHeader: panelHeader: 'Applicant', pageId: 'safePeople'}
-						({ navHeader: section, pageId } = activeQuestionPanel);
-						// find the active page ie pages: [{pageId: 'safepeople', title: pageTitle: 'Safe People'}]
-						let activePage = [...pages].find(pageItem => pageItem.pageId === pageId);
-						// Get the page title from page item
-						({ title: page } = activePage);
-						// Get the list of questions for questionPanelId from questionSets
-						({ questions } = [...questionSets].find(questionSet => questionSet.questionSetId === questionSetId));
-						// Get question checks for nested questions also
-						({ question } = DatasetOnboardingHelper.getActiveQuestion(questions, key));
-						// Safe People | Applicant
-						let location = `${page} | ${section}`;
-						// build up our object of data for display
-						if (!obj[location]) {
-							obj = { ...obj, [location]: [{ question, answer }] };
-						} else if (obj[location]) {
-							let arr = [...obj[location], { question, answer }];
-							obj[location] = arr;
-						}
-						return obj;
-					},
-					{}
-				);
-			}
-		}
-		this.setState({ updateRequestModal: !updateRequestModal, fullAmendments });
-	};
+    /**
+     * OnUpdateRequest
+     * @desc When Custodian clicks Submit update request
+     * 			 will open a modal
+     */
+    onUpdateRequest = e => {
+        let fullAmendments = {};
+        let updateRequestModal = this.state.updateRequestModal;
+        let { pages, questionPanels, questionSets } = { ...this.state.jsonSchema };
+        // Get the last amendmentIteration in the array
+        let amendmentsIterations = _.last([...this.state.amendmentIterations]);
+        if (!_.isEmpty(amendmentsIterations)) {
+            // get the questionAnswers object {role: {}, lastName: {}}
+            let { questionAnswers } = { ...amendmentsIterations };
+            // get all the questionIds into a iterable array from questionAnswers
+            if (!_.isEmpty(questionAnswers)) {
+                // set up default variables
+                let questionSetId,
+                    answer,
+                    section,
+                    pageId,
+                    page,
+                    questions,
+                    question = '';
+                // reduce over questionanswers object using lodash
+                fullAmendments = _.reduce(
+                    questionAnswers,
+                    (obj, value, key) => {
+                        // currentItem {questionSetId, answer}
+                        ({ questionSetId, answer } = questionAnswers[key]);
+                        // find the active questionPanel ie questionPanels: [{navHeader, pageId, panelId, questionSets:[]}]
+                        let activeQuestionPanel = [...questionPanels].find(panel => panel.panelId === questionSetId);
+                        // Get the section {navHeader: panelHeader: 'Applicant', pageId: 'safePeople'}
+                        ({ navHeader: section, pageId } = activeQuestionPanel);
+                        // find the active page ie pages: [{pageId: 'safepeople', title: pageTitle: 'Safe People'}]
+                        let activePage = [...pages].find(pageItem => pageItem.pageId === pageId);
+                        // Get the page title from page item
+                        ({ title: page } = activePage);
+                        // Get the list of questions for questionPanelId from questionSets
+                        ({ questions } = [...questionSets].find(questionSet => questionSet.questionSetId === questionSetId));
+                        // Get question checks for nested questions also
+                        ({ question } = DatasetOnboardingHelper.getActiveQuestion(questions, key));
+                        // Safe People | Applicant
+                        let location = `${page} | ${section}`;
+                        // build up our object of data for display
+                        if (!obj[location]) {
+                            obj = { ...obj, [location]: [{ question, answer }] };
+                        } else if (obj[location]) {
+                            let arr = [...obj[location], { question, answer }];
+                            obj[location] = arr;
+                        }
+                        return obj;
+                    },
+                    {}
+                );
+            }
+        }
+        this.setState({ updateRequestModal: !updateRequestModal, fullAmendments });
+    };
 
-	toggleUpdateRequestModal = () => {
-		this.setState(prevState => {
-			return {
-				updateRequestModal: !prevState.updateRequestModal,
-			};
-		});
-	};
+    toggleUpdateRequestModal = () => {
+        this.setState(prevState => {
+            return {
+                updateRequestModal: !prevState.updateRequestModal,
+            };
+        });
+    };
 
-	checkUniqueTitle = async title => {
-		let result = await axios.get(`${baseURL}/api/v1/dataset-onboarding/checkUniqueTitle?pid=${this.state.dataset.pid}&&title=${title}`);
-		return result.data.isUniqueTitle;
-	};
+    checkUniqueTitle = async title => {
+        let result = await axios.get(`${baseURL}/api/v1/dataset-onboarding/checkUniqueTitle?pid=${this.state.dataset.pid}&&title=${title}`);
+        return result.data.isUniqueTitle;
+    };
 
-	renderApp = () => {
-		let { activePanelId } = this.state;
-		if (activePanelId === 'beforeYouBegin') {
-			return (
-				<BeforeYouBegin
-					activeAccordionCard={this.state.activeAccordionCard}
-					allowedNavigation={this.state.allowedNavigation}
-					toggleCard={this.toggleCard}
-				/>
-			);
-		} else if (activePanelId === 'structural') {
-			return (
-				//Structural
-				<StructuralMetadata
-					onStructuralMetaDataUpdate={this.onStructuralMetaDataUpdate}
-					structuralMetadata={this.state.structuralMetadata}
-					structuralMetadataErrors={this.state.structuralMetadataErrors}
-					currentVersionId={this.state._id}
-					readOnly={this.state.readOnly}
-					percentageCompleted={this.state.completion}
-				/>
-			);
-		} else {
-			console.log('this.state.jsonSchema', this.state.jsonSchema);
-			return (
-				<Winterfell
-					schema={this.state.jsonSchema}
-					questionAnswers={this.state.questionAnswers}
-					panelId={this.state.activePanelId}
-					disableSubmit={true}
-					readOnly={this.state.readOnly}
-					validationErrors={this.state.validationErrors}
-					renderRequiredAsterisk={() => <span>{'*'}</span>}
-					onQuestionClick={this.onQuestionClick}
-					onQuestionAction={this.onQuestionAction}
-					onUpdate={this.onFormUpdate}
-					onSubmit={this.onFormSubmit}
-				/>
-			);
-		}
-	};
+    renderApp = () => {
+        let { activePanelId } = this.state;
+        if (activePanelId === 'beforeYouBegin') {
+            return (
+                <BeforeYouBegin
+                    activeAccordionCard={this.state.activeAccordionCard}
+                    allowedNavigation={this.state.allowedNavigation}
+                    toggleCard={this.toggleCard}
+                />
+            );
+        } else if (activePanelId === 'structural') {
+            return (
+                //Structural
+                <StructuralMetadata
+                    onStructuralMetaDataUpdate={this.onStructuralMetaDataUpdate}
+                    structuralMetadata={this.state.structuralMetadata}
+                    structuralMetadataErrors={this.state.structuralMetadataErrors}
+                    currentVersionId={this.state._id}
+                    readOnly={this.state.readOnly}
+                    percentageCompleted={this.state.completion}
+                />
+            );
+        } else {
+            return (
+                <Winterfell
+                    schema={this.state.jsonSchema}
+                    questionAnswers={this.state.questionAnswers}
+                    panelId={this.state.activePanelId}
+                    disableSubmit={true}
+                    readOnly={this.state.readOnly}
+                    validationErrors={this.state.validationErrors}
+                    renderRequiredAsterisk={() => <span>{'*'}</span>}
+                    onQuestionClick={this.onQuestionClick}
+                    onQuestionAction={this.onQuestionAction}
+                    onUpdate={this.onFormUpdate}
+                    onSubmit={this.onFormSubmit}
+                />
+            );
+        }
+    };
 
-	render() {
-		const {
-			lastSaved,
-			searchString,
-			totalQuestions,
-			isLoading,
-			activeGuidance,
-			name,
-			datasetVersion,
-			activeflag,
-			listOfDatasets,
-			showDrawer,
-			showActionModal,
-			actionModalConfig,
-			isWideForm,
-			isTableForm,
-			allowedNavigation,
-			applicationStatus,
-			userType,
-			roles,
-			completion,
-			dataset,
-		} = this.state;
-		const { userState } = this.props;
+    render() {
+        const {
+            lastSaved,
+            searchString,
+            totalQuestions,
+            isLoading,
+            activeGuidance,
+            name,
+            datasetVersion,
+            activeflag,
+            listOfDatasets,
+            showDrawer,
+            showActionModal,
+            actionModalConfig,
+            isWideForm,
+            isTableForm,
+            allowedNavigation,
+            applicationStatus,
+            userType,
+            roles,
+            completion,
+            dataset,
+        } = this.state;
+        const { userState } = this.props;
 
-		Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
-		Winterfell.addInputType('typeaheadAsyncCustom', TypeaheadAsyncCustom);
-		Winterfell.addInputType('typeaheadCustomKeyValue', TypeaheadCustomKeyValue);
-		Winterfell.addInputType('typeaheadKeywords', TypeaheadKeywords);
-		Winterfell.addInputType('datePickerCustom', DatePickerCustom);
-		Winterfell.addInputType('typeaheadUser', TypeaheadUser);
-		Winterfell.addInputType('multiField', MultiField);
-		Winterfell.addInputType('textareaInputCustom', TextareaInputCustom);
+        Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
+        Winterfell.addInputType('typeaheadAsyncCustom', TypeaheadAsyncCustom);
+        Winterfell.addInputType('typeaheadCustomKeyValue', TypeaheadCustomKeyValue);
+        Winterfell.addInputType('typeaheadKeywords', TypeaheadKeywords);
+        Winterfell.addInputType('datePickerCustom', DatePickerCustom);
+        Winterfell.addInputType('typeaheadUser', TypeaheadUser);
+        Winterfell.addInputType('multiField', MultiField);
+        Winterfell.addInputType('textareaInputCustom', TextareaInputCustom);
 
-		Winterfell.validation.default.addValidationMethods({
-			isCustomDate: value => {
-				if (_.isEmpty(value) || value === 'Invalid date') return true;
-				return moment(value, 'DD/MM/YYYY').isValid();
-			},
-			isCustomDateRequired: value => {
-				return moment(value, 'DD/MM/YYYY').isValid();
-			},
-			isValidDoiName: value => {
-				return _.isEmpty(value) || !!value.match(/\b(10[.][0-9]{4,}(?:[.][0-9]+)*\/(?:(?!["&\'<>])\S)+)\b/gm);
-			},
-			isAtLeastOneKeywordSelected: value => {
-				return !_.isEmpty(value);
-			},
-			isAtLeastOneSelected: value => {
-				return !_.isEmpty(value);
-			},
-			isURLValid: value => {
-				if (_.isEmpty(value)) return true;
-				return !!value.match(/^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/)?[^\s]*$/i);
-			},
-			isMultiFieldRequired: value => {
-				if (!_.isArray(value)) return !_.isEmpty(value);
-				else {
-					let isNoError = true;
-					value.forEach(entry => {
-						if (_.isEmpty(entry)) isNoError = false;
-					});
-					return isNoError;
-				}
-			},
-			isMultiFieldURLRequired: value => {
-				const isMultiFieldURLRegEx =
-					/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)|in progress$/i;
-				if (!_.isArray(value)) return !_.isEmpty(value) && !!value.match(isMultiFieldURLRegEx);
+        Winterfell.validation.default.addValidationMethods({
+            isCustomDate: value => {
+                if (_.isEmpty(value) || value === 'Invalid date') return true;
+                return moment(value, 'DD/MM/YYYY').isValid();
+            },
+            isCustomDateRequired: value => {
+                return moment(value, 'DD/MM/YYYY').isValid();
+            },
+            isValidDoiName: value => {
+                return _.isEmpty(value) || !!value.match(/\b(10[.][0-9]{4,}(?:[.][0-9]+)*\/(?:(?!["&\'<>])\S)+)\b/gm);
+            },
+            isAtLeastOneKeywordSelected: value => {
+                return !_.isEmpty(value);
+            },
+            isAtLeastOneSelected: value => {
+                return !_.isEmpty(value);
+            },
+            isURLValid: value => {
+                if (_.isEmpty(value)) return true;
+                return !!value.match(/^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/)?[^\s]*$/i);
+            },
+            isMultiFieldRequired: value => {
+                if (!_.isArray(value)) return !_.isEmpty(value);
+                else {
+                    let isNoError = true;
+                    value.forEach(entry => {
+                        if (_.isEmpty(entry)) isNoError = false;
+                    });
+                    return isNoError;
+                }
+            },
+            isMultiFieldURLRequired: value => {
+                const isMultiFieldURLRegEx =
+                    /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)|in progress$/i;
+                if (!_.isArray(value)) return !_.isEmpty(value) && !!value.match(isMultiFieldURLRegEx);
 
-				let isNoError = true;
-				value.forEach(url => {
-					if (!url.match(isMultiFieldURLRegEx)) isNoError = false;
-				});
-				return isNoError;
-			},
-			isMultiFieldURL: value => {
-				if (!_.isArray(value)) return _.isEmpty(value) || !!value.match(/^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/)?[^\s]*$/i);
+                let isNoError = true;
+                value.forEach(url => {
+                    if (!url.match(isMultiFieldURLRegEx)) isNoError = false;
+                });
+                return isNoError;
+            },
+            isMultiFieldURL: value => {
+                if (!_.isArray(value)) return _.isEmpty(value) || !!value.match(/^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/)?[^\s]*$/i);
 
-				let isNoError = true;
-				value.forEach(url => {
-					if (!_.isEmpty(url) && !url.match(/^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/)?[^\s]*$/i)) isNoError = false;
-				});
-				return isNoError;
-			},
-			isAgeRangeValid: value => {
-				return _.isEmpty(value) || !!value.match(/(150|1[0-4][0-9]|[0-9]|[1-8][0-9]|9[0-9])-(150|1[0-4][0-9]|[0-9]|[1-8][0-9]|9[0-9])/i);
-			},
-			isSelectedRequired: value => {
-				return !_.isEmpty(value) && value !== 'undefined';
-			},
-			isTitleUnique: async value => {
-				let isTitleUnique = await this.checkUniqueTitle(value);
-				return isTitleUnique;
-			},
-		});
+                let isNoError = true;
+                value.forEach(url => {
+                    if (!_.isEmpty(url) && !url.match(/^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/)?[^\s]*$/i)) isNoError = false;
+                });
+                return isNoError;
+            },
+            isAgeRangeValid: value => {
+                return (
+                    _.isEmpty(value) ||
+                    !!value.match(/(150|1[0-4][0-9]|[0-9]|[1-8][0-9]|9[0-9])-(150|1[0-4][0-9]|[0-9]|[1-8][0-9]|9[0-9])/i)
+                );
+            },
+            isSelectedRequired: value => {
+                return !_.isEmpty(value) && value !== 'undefined';
+            },
+            isTitleUnique: async value => {
+                let isTitleUnique = await this.checkUniqueTitle(value);
+                return isTitleUnique;
+            },
+        });
 
-		if (isLoading) {
-			return (
-				<Container>
-					<Loading />
-				</Container>
-			);
-		}
+        if (isLoading) {
+            return (
+                <Container>
+                    <Loading />
+                </Container>
+            );
+        }
 
-		return (
-			<Sentry.ErrorBoundary fallback={<ErrorModal />}>
-				<div>
-					<SearchBar
-						ref={this.searchBar}
-						searchString={searchString}
-						doSearchMethod={e => {
-							SearchBarHelperUtil.doSearch(e, this);
-						}}
-						doUpdateSearchString={e => {
-							SearchBarHelperUtil.updateSearchString(e, this);
-						}}
-						doToggleDrawer={e => this.toggleDrawer()}
-						userState={userState}
-					/>
-					<Row className='banner'>
-						<Col sm={12} md={8} className='banner-left'>
-							<span className='white-20-semibold mr-5'>Dataset</span>
-							<span className='white-16-semibold pr-5'>{name}</span>
-							<span className='white-16-semibold pr-5' style={{ display: 'inline-block' }}>
-								<Dropdown>
-									<Dropdown.Toggle as={CustomToggle}>
-										<span className='listOfVersionsButton'>
-											{datasetVersion}
-											{activeflag === 'draft' ? ' (Draft)' : ''}
-											{activeflag === 'active' ? ' (Live)' : ''}
-											{activeflag === 'rejected' ? ' (Rejected)' : ''}
-											{activeflag === 'inReview' ? ' (Pending)' : ''}
-										</span>
-									</Dropdown.Toggle>
-									<Dropdown.Menu as={CustomMenu} className='listOfVersionsDropdown'>
-										{listOfDatasets.map(dat => {
-											return (
-												<Dropdown.Item href={`/dataset-onboarding/${dat._id}`} className='black-14'>
-													{dat.datasetVersion}
-													{dat.activeflag === 'draft' ? ' (Draft)' : ''}
-													{dat.activeflag === 'active' ? ' (Live)' : ''}
-													{dat.activeflag === 'rejected' ? ' (Rejected)' : ''}
-													{dat.activeflag === 'inReview' ? ' (Pending)' : ''}
+        return (
+            <Sentry.ErrorBoundary fallback={<ErrorModal />}>
+                <div>
+                    <SearchBar
+                        ref={this.searchBar}
+                        searchString={searchString}
+                        doSearchMethod={e => {
+                            SearchBarHelperUtil.doSearch(e, this);
+                        }}
+                        doUpdateSearchString={e => {
+                            SearchBarHelperUtil.updateSearchString(e, this);
+                        }}
+                        doToggleDrawer={e => this.toggleDrawer()}
+                        userState={userState}
+                    />
+                    <Row className='banner'>
+                        <Col sm={12} md={8} className='banner-left'>
+                            <span className='white-20-semibold mr-5'>Dataset</span>
+                            <span className='white-16-semibold pr-5'>{name}</span>
+                            <span className='white-16-semibold pr-5' style={{ display: 'inline-block' }}>
+                                <Dropdown>
+                                    <Dropdown.Toggle as={CustomToggle}>
+                                        <span className='listOfVersionsButton'>
+                                            {datasetVersion}
+                                            {activeflag === 'draft' ? ' (Draft)' : ''}
+                                            {activeflag === 'active' ? ' (Live)' : ''}
+                                            {activeflag === 'rejected' ? ' (Rejected)' : ''}
+                                            {activeflag === 'inReview' ? ' (Pending)' : ''}
+                                        </span>
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu as={CustomMenu} className='listOfVersionsDropdown'>
+                                        {listOfDatasets.map(dat => {
+                                            return (
+                                                <Dropdown.Item href={`/dataset-onboarding/${dat._id}`} className='black-14'>
+                                                    {dat.datasetVersion}
+                                                    {dat.activeflag === 'draft' ? ' (Draft)' : ''}
+                                                    {dat.activeflag === 'active' ? ' (Live)' : ''}
+                                                    {dat.activeflag === 'rejected' ? ' (Rejected)' : ''}
+                                                    {dat.activeflag === 'inReview' ? ' (Pending)' : ''}
 
-													{this.state._id === dat._id ? (
-														<SVGIcon
-															className='collectionCheckSvg'
-															name='checkicon'
-															width={16}
-															height={16}
-															viewbox='0 0 16 16'
-															fill={'#2c8267'}
-														/>
-													) : (
-														''
-													)}
-												</Dropdown.Item>
-											);
-										})}
-									</Dropdown.Menu>
-								</Dropdown>
-							</span>
-						</Col>
-						<Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
-							<span className='white-14-semibold'>{DatasetOnboardingHelper.getSavedAgo(lastSaved)}</span>
-							{
-								<a
-									className={`linkButton white-14-semibold ml-2 ${allowedNavigation ? '' : 'disabled'}`}
-									onClick={this.onClickSave}
-									href='javascript:void(0)'>
-									Save now
-								</a>
-							}
-							<CloseButtonSvg width='16px' height='16px' fill='#fff' onClick={e => this.redirectDashboard(e)} />
-						</Col>
-					</Row>
+                                                    {this.state._id === dat._id ? (
+                                                        <SVGIcon
+                                                            className='collectionCheckSvg'
+                                                            name='checkicon'
+                                                            width={16}
+                                                            height={16}
+                                                            viewbox='0 0 16 16'
+                                                            fill={'#2c8267'}
+                                                        />
+                                                    ) : (
+                                                        ''
+                                                    )}
+                                                </Dropdown.Item>
+                                            );
+                                        })}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </span>
+                        </Col>
+                        <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
+                            <span className='white-14-semibold'>{DatasetOnboardingHelper.getSavedAgo(lastSaved)}</span>
+                            {
+                                <a
+                                    className={`linkButton white-14-semibold ml-2 ${allowedNavigation ? '' : 'disabled'}`}
+                                    onClick={this.onClickSave}
+                                    href='javascript:void(0)'>
+                                    Save now
+                                </a>
+                            }
+                            <CloseButtonSvg width='16px' height='16px' fill='#fff' onClick={e => this.redirectDashboard(e)} />
+                        </Col>
+                    </Row>
 
-					<div id='darContainer' className='flex-form'>
-						<div id='darLeftCol' className='scrollable-sticky-column'>
-							{[...this.state.jsonSchema.pages].map((item, idx) => (
-								<div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
-									<div>
-										<span
-											className={`${!this.state.inReviewMode ? 'black-16' : item.inReview ? 'black-16' : 'section-not-inreview'}
+                    <div id='darContainer' className='flex-form'>
+                        <div id='darLeftCol' className='scrollable-sticky-column'>
+                            {[...this.state.jsonSchema.pages].map((item, idx) => (
+                                <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
+                                    <div>
+                                        <span
+                                            className={`${
+                                                !this.state.inReviewMode ? 'black-16' : item.inReview ? 'black-16' : 'section-not-inreview'
+                                            }
 										${item.active ? 'section-header-active' : 'section-header'} 
 										${this.state.allowedNavigation ? '' : 'disabled'}`}
-                                            onClick={e => this.updateNavigation(item)}
-                                        >
+                                            onClick={e => this.updateNavigation(item)}>
                                             <div>
                                                 <div className='completionIconHolder'>
                                                     {item.title === 'Before you begin' ? (
@@ -1426,8 +1432,7 @@ class DatasetOnboarding extends Component {
                                                                 <Tooltip id={`tooltip-top`}>
                                                                     {item.title}: {completion[item.pageId]}%
                                                                 </Tooltip>
-                                                            }
-                                                        >
+                                                            }>
                                                             <div>
                                                                 <StatusDisplay section={item.title} status={completion[item.pageId]} />
                                                             </div>
@@ -1440,7 +1445,6 @@ class DatasetOnboarding extends Component {
                                                     let isSubPanel = false;
                                                     [...this.state.jsonSchema.questionPanels].map((item2, index) => {
                                                         if (item.pageId === item2.pageId && item2.navHeader) {
-                                                            console.log(item.pageId + ' === ' + item2.pageId + ' && ' + item2.navHeader);
                                                             isSubPanel = true;
                                                         }
                                                     });
@@ -1495,80 +1499,83 @@ class DatasetOnboarding extends Component {
                             <div
                                 className={`dar__questions ${this.state.activePanelId === 'beforeYouBegin' ? 'pad-bottom-0' : ''}
 														${this.state.activePanelId === 'structural' ? 'margin-top-0 noPadding' : ''}`}
-								style={{ backgroundColor: '#ffffff' }}>
-								{this.renderApp()}
-							</div>
-						</div>
-						{isWideForm || isTableForm ? null : (
-							<div id='darRightCol' className='scrollable-sticky-column'>
-								<div className='darTab'>
-									<Guidance activeGuidance={activeGuidance} resetGuidance={this.resetGuidance} />
-								</div>
-							</div>
-						)}
-					</div>
+                                style={{ backgroundColor: '#ffffff' }}>
+                                {this.renderApp()}
+                            </div>
+                        </div>
+                        {isWideForm || isTableForm ? null : (
+                            <div id='darRightCol' className='scrollable-sticky-column'>
+                                <div className='darTab'>
+                                    <Guidance activeGuidance={activeGuidance} resetGuidance={this.resetGuidance} />
+                                </div>
+                            </div>
+                        )}
+                    </div>
 
-					<ActionBar userState={userState}>
-						<div className='action-bar'>
-							<div className='action-bar--questions'>
-								<SLA
-									classProperty={DatasetOnboardingHelper.datasetStatusColours[applicationStatus]}
-									text={DatasetOnboardingHelper.datasetSLAText[applicationStatus]}
-								/>
-								<ActionBarStatus status={applicationStatus} totalQuestions={totalQuestions} dataset={dataset} />
-							</div>
-							<div className='action-bar-actions'>
-								<AmendmentCount answeredAmendments={this.state.answeredAmendments} unansweredAmendments={this.state.unansweredAmendments} />
-								{userType.toUpperCase() === 'EDITOR' ? (
-									<ApplicantActionButtons
-										allowedNavigation={allowedNavigation}
-										onNextClick={this.onNextClick}
-										onFormSubmit={this.onFormSubmit}
-										onShowArchiveModal={this.toggleArchiveModal}
-										onShowUnArchiveModal={this.toggleUnArchiveModal}
-										onShowCreateNewVersionModal={this.toggleCreateNewVersionModal}
-										showSubmit={this.state.showSubmit}
-										submitButtonText={this.state.submitButtonText}
-										showCreateNewVersion={this.state.showCreateNewVersion}
-										showArchive={this.state.showArchive}
-										showUnArchive={this.state.showUnArchive}
-										showDeleteDraft={this.state.showDeleteDraft}
-										onShowDeleteDraftModal={this.toggleDeleteDraftModal}
-										onShowDuplicateModal={this.toggleDuplicateModal}
-										isFederated={this.state.isFederated}
-									/>
-								) : (
-									<CustodianActionButtons
-										allowedNavigation={allowedNavigation}
-										onActionClick={this.onCustodianAction}
-										onNextClick={this.onNextClick}
-										roles={roles}
-									/>
-								)}
-							</div>
-						</div>
-					</ActionBar>
+                    <ActionBar userState={userState}>
+                        <div className='action-bar'>
+                            <div className='action-bar--questions'>
+                                <SLA
+                                    classProperty={DatasetOnboardingHelper.datasetStatusColours[applicationStatus]}
+                                    text={DatasetOnboardingHelper.datasetSLAText[applicationStatus]}
+                                />
+                                <ActionBarStatus status={applicationStatus} totalQuestions={totalQuestions} dataset={dataset} />
+                            </div>
+                            <div className='action-bar-actions'>
+                                <AmendmentCount
+                                    answeredAmendments={this.state.answeredAmendments}
+                                    unansweredAmendments={this.state.unansweredAmendments}
+                                />
+                                {userType.toUpperCase() === 'EDITOR' ? (
+                                    <ApplicantActionButtons
+                                        allowedNavigation={allowedNavigation}
+                                        onNextClick={this.onNextClick}
+                                        onFormSubmit={this.onFormSubmit}
+                                        onShowArchiveModal={this.toggleArchiveModal}
+                                        onShowUnArchiveModal={this.toggleUnArchiveModal}
+                                        onShowCreateNewVersionModal={this.toggleCreateNewVersionModal}
+                                        showSubmit={this.state.showSubmit}
+                                        submitButtonText={this.state.submitButtonText}
+                                        showCreateNewVersion={this.state.showCreateNewVersion}
+                                        showArchive={this.state.showArchive}
+                                        showUnArchive={this.state.showUnArchive}
+                                        showDeleteDraft={this.state.showDeleteDraft}
+                                        onShowDeleteDraftModal={this.toggleDeleteDraftModal}
+                                        onShowDuplicateModal={this.toggleDuplicateModal}
+                                        isFederated={this.state.isFederated}
+                                    />
+                                ) : (
+                                    <CustodianActionButtons
+                                        allowedNavigation={allowedNavigation}
+                                        onActionClick={this.onCustodianAction}
+                                        onNextClick={this.onNextClick}
+                                        roles={roles}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    </ActionBar>
 
-					<SideDrawer open={showDrawer} closed={e => this.toggleDrawer()}>
-						<UserMessages
-							userState={userState[0]}
-							closed={e => this.toggleDrawer()}
-							toggleModal={this.toggleModal}
-							drawerIsOpen={this.state.showDrawer}
-							topicContext={this.state.topicContext}
-						/>
-					</SideDrawer>
+                    <SideDrawer open={showDrawer} closed={e => this.toggleDrawer()}>
+                        <UserMessages
+                            userState={userState[0]}
+                            closed={e => this.toggleDrawer()}
+                            toggleModal={this.toggleModal}
+                            drawerIsOpen={this.state.showDrawer}
+                            topicContext={this.state.topicContext}
+                        />
+                    </SideDrawer>
 
-					<ActionModal
-						open={showActionModal}
-						context={actionModalConfig}
-						datasetVersionAction={this.datasetVersionAction}
-						close={this.toggleActionModal}
-					/>
-				</div>
-			</Sentry.ErrorBoundary>
-		);
-	}
+                    <ActionModal
+                        open={showActionModal}
+                        context={actionModalConfig}
+                        datasetVersionAction={this.datasetVersionAction}
+                        close={this.toggleActionModal}
+                    />
+                </div>
+            </Sentry.ErrorBoundary>
+        );
+    }
 }
 
 export default DatasetOnboarding;
