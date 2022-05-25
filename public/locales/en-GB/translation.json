@@ -359,6 +359,9 @@
         "customise": {
             "title": "Customise data access requests",
             "description": "Manage and edit your 'how to request access' information, your data access request form and workflows",
+            "statusWarning": "Please note that both <b>Presubmission Guidance</b> and <b>DAR Application Form</b> must be completed before they can be published.",
+            "lastUpdatedBy": "Last updated by",
+            "lastUpdatedOn": "Last updated on",
             "applicationForm": {
                 "title": "Application Form",
                 "description": "Elements of the data access request form (Five safes form) can be customised as required by <b>{{publisherName}}</b>. You may choose which questions should be turned on/off and edit the accompanying for each question. However, we recommend modifying the guidance only if necessary for your data governance processes, and please note that some questions and guidance are mandatory, for example where the form has been aligned with the National Data Guardian.<br/><br/> Please consider carefully whether additional questions are required, as we are working to standardise the data access process as much as possible. If you would still like to propose addition of a new question, please raise a ticket at <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>https://hdruk.atlassian.net/servicedesk/customer/portal/1</a>"

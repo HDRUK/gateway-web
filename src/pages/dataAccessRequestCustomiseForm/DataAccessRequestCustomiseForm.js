@@ -1,43 +1,36 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import axios from 'axios';
-import queryString from 'query-string';
 import * as Sentry from '@sentry/react';
-import { isEmpty, isNil, reduce, isEqual, cloneDeep, uniq, pluck } from 'lodash';
+import axios from 'axios';
+import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
+import queryString from 'query-string';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Col, Container, Modal, Row } from 'react-bootstrap';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router-dom';
-
+import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
-import { Row, Col, Container, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import Button from '../../components/Button';
+import { baseURL } from '../../configs/url.config';
+import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import helpers from '../../utils/DarHelper.util';
+import ActionBar from '../commonComponents/actionbar/ActionBar';
+import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
-import ActionBar from '../commonComponents/actionbar/ActionBar';
-import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
-import { baseURL } from '../../configs/url.config';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
-import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { classSchema } from './classSchema';
-
+import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
+import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
+import NavDropdown from './components/NavDropdown/NavDropdown';
+import NavItem from './components/NavItem/NavItem';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
-import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
-import NavItem from './components/NavItem/NavItem';
-import NavDropdown from './components/NavDropdown/NavDropdown';
-import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
-import Button from '../../components/Button';
-
-import 'react-tabs/style/react-tabs.css';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import './DataAccessRequestCustomiseForm.scss';
-import Icon from '../../components/Icon';
-import { ReactComponent as TickIcon } from '../../images/icons/tick.svg';
-import { ReactComponent as DotIcon } from '../../images/icons/dot.svg';
-import { useTranslation } from 'react-i18next';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
-import helpers from '../../utils/DarHelper.util';
+import './DataAccessRequestCustomiseForm.scss';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -203,6 +196,7 @@ export const DataAccessRequestCustomiseForm = props => {
         setActivePanelId(panelId);
         setIsWideForm(panelId === 'about' || panelId === 'files');
         setActiveGuidance('');
+        setActiveQuestion('');
     };
 
     const onSubmitClick = async () => {
@@ -604,7 +598,7 @@ export const DataAccessRequestCustomiseForm = props => {
                         <div id='darRightCol' className='scrollable-sticky-column'>
                             <div className='darTab'>
                                 <>
-                                    {activeGuidance ? (
+                                    {activeQuestion ? (
                                         <>
                                             <header>
                                                 <div>
@@ -623,7 +617,9 @@ export const DataAccessRequestCustomiseForm = props => {
                                             </main>
                                         </>
                                     ) : (
-                                        <div className='darTab-guidance'>Hover on a question to edit or view locked guidance</div>
+                                        <div className='darTab-guidance'>
+                                            Hover on a question and click the icon to edit or view locked guidance
+                                        </div>
                                     )}
                                 </>
                             </div>
@@ -640,8 +636,9 @@ export const DataAccessRequestCustomiseForm = props => {
                         </div>
                         <div className='action-bar-actions'>
                             <div className='amendment-count mr-3'>{countOfChanges} unpublished update</div>
-
+                            {console.log()}
                             <Button
+                                disabled={!!countOfChanges < 1}
                                 variant='secondary'
                                 onClick={() => {
                                     setShowConfirmPublishModal(true);
@@ -668,15 +665,6 @@ export const DataAccessRequestCustomiseForm = props => {
                     centered>
                     <div className='removeUploaderModal-header'>
                         <div className='removeUploaderModal-header--wrap'>
-                            <div className='removeUploaderModal-head'>
-                                <h1 className='black-20-semibold'>
-                                    {countOfChanges > 0 ? 'Publish application form' : 'You must make an update before publishing'}
-                                </h1>
-                                <CloseButtonSvg
-                                    className='removeUploaderModal-head--close'
-                                    onClick={() => setShowConfirmPublishModal(false)}
-                                />
-                            </div>
                             <div className='gray700-13 new-line'>
                                 {countOfChanges > 0
                                     ? 'Are you sure you want to publish your updates to this application form? Any applications which are already in process will not be updated.'

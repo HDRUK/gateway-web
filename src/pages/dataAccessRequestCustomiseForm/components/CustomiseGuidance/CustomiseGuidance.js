@@ -33,23 +33,23 @@ const CustomiseGuidance = ({ activeGuidance, isLocked, onGuidanceChange, activeQ
 
     return (
         <>
-            {activeGuidance ? (
+            {isLocked ? (
                 <>
-                    {isLocked ? (
+                    {activeGuidance ? (
                         <ReactMarkdown source={activeGuidance} linkTarget='_blank' />
                     ) : (
-                        editorState && (
-                            <WysiwygEditor
-                                data-testid='wysiwyg-editor'
-                                editorState={editorState}
-                                onEditorStateChange={handleEditorStateChange}
-                                onMarkdownChange={handleGuidanceChange}
-                            />
-                        )
+                        'There is currently no guidance for this question'
                     )}
                 </>
             ) : (
-                <div className='darTab-guidance'>Click on a question guidance to view details</div>
+                editorState && (
+                    <WysiwygEditor
+                        data-testid='wysiwyg-editor'
+                        editorState={editorState}
+                        onEditorStateChange={handleEditorStateChange}
+                        onMarkdownChange={handleGuidanceChange}
+                    />
+                )
             )}
         </>
     );
