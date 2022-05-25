@@ -7,12 +7,13 @@ import FormData from 'form-data';
 import { ReactComponent as UploadSVG } from '../../../../images/upload.svg';
 import { fileStatus } from './files.util';
 import { baseURL } from '../../../../configs/url.config';
+import Typography from '../../../../components/Typography';
 import './Uploads.scss';
 import UploadFiles from './UploadFiles';
 import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
 
-const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
+const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header }) => {
     // 10mb - 10485760
     // 2mb - 2097152
     const maxSize = 10485760;
@@ -68,7 +69,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
     const formatRejectedFiles = rejectedFiles => {
         if (!_.isEmpty(rejectedFiles)) {
             return [...rejectedFiles].map(f => {
-                let { file } = f;
+                const { file } = f;
                 return {
                     error: 'File exceeds limit',
                     fileId: uuidv4(),
@@ -85,8 +86,8 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
 
     const onDescriptionChange = event => {
         event.preventDefault();
-        let { name, value } = event.currentTarget;
-        let [, uniqueId = ''] = name.split('_');
+        const { name, value } = event.currentTarget;
+        const [, uniqueId = ''] = name.split('_');
         if (!_.isEmpty(uniqueId)) {
             const allFiles = [...uploadFiles].map(file => {
                 if (file.fileId === uniqueId) return Object.assign(file, { ...file, description: value });
@@ -104,10 +105,10 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
         const acceptedFiles = [...uploadFiles].filter(f => !_.isEmpty(f.description) && f.status === fileStatus.NEWFILE);
         if (!_.isEmpty(acceptedFiles)) {
             // 2. setup new formData array for axios
-            let formData = new FormData();
+            const formData = new FormData();
             // 3. append our files to formData
             const fileObjects = [...acceptedFiles].map(f => {
-                let { file } = f;
+                const { file } = f;
                 formData.append('assets', file);
                 formData.append('descriptions', f.description);
                 formData.append('ids', f.fileId);
@@ -122,7 +123,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
                 .then(response => {
                     // set submission false
                     setSubmitted(false);
-                    let {
+                    const {
                         data: { mediaFiles = [] },
                     } = response;
                     // update file state
@@ -144,7 +145,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
 
     const downloadFile = async file => {
         if (!_.isEmpty(file)) {
-            let { fileId, name } = file;
+            const { fileId, name } = file;
             await axios
                 .get(`${baseURL}/api/v1/data-access-request/${id}/file/${fileId}`, { responseType: 'blob' })
                 .then(response => {
@@ -165,7 +166,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
 
     const deleteFile = async file => {
         if (!_.isEmpty(file)) {
-            let { fileId } = file;
+            const { fileId } = file;
             const body = {
                 fileId,
             };
@@ -181,7 +182,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
     };
 
     useEffect(() => {
-        let timer = setInterval(() => {
+        const timer = setInterval(() => {
             if (retryCount < maxRetries) {
                 retryCount++;
                 files.forEach(file => {
@@ -224,8 +225,10 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
         maxSize,
     });
     return (
-        <div className='files'>
+        <div className='files dar-form'>
             <div className='files-header'>
+                {description && <h3>{description}</h3>}
+                {header && <h4>{header}</h4>}
                 <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <div className='upload'>

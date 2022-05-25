@@ -1445,7 +1445,6 @@ class DatasetOnboarding extends Component {
                                                     let isSubPanel = false;
                                                     [...this.state.jsonSchema.questionPanels].map((item2, index) => {
                                                         if (item.pageId === item2.pageId && item2.navHeader) {
-                                                            console.log(item.pageId + ' === ' + item2.pageId + ' && ' + item2.navHeader);
                                                             isSubPanel = true;
                                                         }
                                                     });

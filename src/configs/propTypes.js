@@ -7,6 +7,10 @@ export const COMMON_PROP_TYPES = {
     mb: PropTypes.number,
     mt: PropTypes.number,
     width: PropTypes.string,
+    maxWidth: PropTypes.string,
+    minWidth: PropTypes.string,
+    maxHeight: PropTypes.string,
+    minHeight: PropTypes.string,
     className: PropTypes.string,
 };
 

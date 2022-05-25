@@ -1,19 +1,19 @@
 import { has, isEmpty } from 'lodash';
 import moment from 'moment';
+import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import queryString from 'query-string';
-import SVGIcon from '../../../images/SVGIcon';
 import Alert from '../../../components/Alert';
+import { LayoutContent } from '../../../components/Layout';
+import SVGIcon from '../../../images/SVGIcon';
 import personService from '../../../services/person';
 import publishersService from '../../../services/publishers';
-import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
-import './CustomiseDAR.scss';
-import { LayoutContent } from '../../../components/Layout';
-import StatusBadge from './Components/StatusBadge';
 import { stripHtml } from '../../../utils/GeneralHelper.util';
+import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
+import StatusBadge from './Components/StatusBadge';
+import './CustomiseDAR.scss';
 
 const baseURL = require('../../commonComponents/BaseURL').getURL();
 
@@ -26,6 +26,7 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
     const [yourApplicationFormPublisher, setYourApplicationFormPublisher] = useState();
     const [showGuidanceModal, setShowGuidanceModal] = useState();
     const [closeGuidanceMessage, setCloseGuidanceMessage] = useState('');
+    const [alertMessage, setAlertMessage] = useState(alert?.message);
 
     const { publishedDARContent } = queryString.parse(window.location.search);
 
@@ -110,6 +111,10 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
     };
 
     useEffect(() => {
+        setAlertMessage(alert?.message);
+    }, [alert?.message]);
+
+    useEffect(() => {
         getModalData();
     }, [publisherId]);
 
@@ -131,27 +136,38 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
         setCloseGuidanceMessage('');
     };
 
+    const handleCloseAlertMessage = () => {
+        setAlertMessage('');
+    };
+
     return (
         <>
-            {howToRequestAccessStatus === sectionStatuses.ACTIVE && yourAppFormStatus === sectionStatuses.ACTIVE
-                ? closeGuidanceMessage && (
-                      <LayoutContent>
-                          <Alert variant='success' autoclose onClose={handleCloseGuidanceMessage} mb={3}>
-                              {closeGuidanceMessage || alert.message}
-                          </Alert>
-                      </LayoutContent>
-                  )
-                : (howToRequestAccessStatus === sectionStatuses.PENDING || yourAppFormStatus === sectionStatuses.PENDING) && (
-                      <LayoutContent>
-                          <Alert variant='warning' mb={3}>
-                              <p
-                                  dangerouslySetInnerHTML={{
-                                      __html: t('DAR.customise.statusWarning'),
-                                  }}
-                              />
-                          </Alert>
-                      </LayoutContent>
-                  )}
+            {alertMessage && (
+                <LayoutContent>
+                    <Alert variant='success' autoclose onClose={handleCloseAlertMessage} mb={3}>
+                        {alertMessage}
+                    </Alert>
+                </LayoutContent>
+            )}
+
+            {closeGuidanceMessage && (howToRequestAccessStatus === sectionStatuses.ACTIVE || yourAppFormStatus === sectionStatuses.ACTIVE) && (
+                <LayoutContent>
+                    <Alert variant='success' autoclose onClose={handleCloseGuidanceMessage} mb={3}>
+                        {closeGuidanceMessage}
+                    </Alert>
+                </LayoutContent>
+            )}
+
+            {(howToRequestAccessStatus === sectionStatuses.PENDING || yourAppFormStatus === sectionStatuses.PENDING) && (
+                <LayoutContent>
+                    <Alert variant='warning' mb={3}>
+                        <p>
+                            Please note that both <b>Presubmission Guidance</b> and <b>DAR Application Form</b> must be completed before
+                            they can be published.
+                        </p>
+                    </Alert>
+                </LayoutContent>
+            )}
 
             <div className='row justify-content-md-center'>
                 <div className='col-sm-12 col-md-10'>

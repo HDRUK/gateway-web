@@ -28,17 +28,32 @@ const staticContent = {
         index: 0,
         pageId: 'about',
     },
-    filesNav: {
+    filesPageNav: {
         pageId: 'files',
-        active: false,
+        active: true,
         title: 'Files',
         description:
-            'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.',
+            'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.',
     },
     filesPanel: {
         panelId: 'files',
         index: 100,
         pageId: 'files',
+    },
+    additionalFilesPanel: {
+        panelId: 'additionalinformationfiles-files',
+        index: 24,
+        pageId: 'additionalinformationfiles',
+    },
+    additionalFilesQuestionPanel: {
+        questionPanelHeaderText: 'File uploaded',
+        panelHeader:
+            'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.',
+        navHeader: 'Files',
+        panelId: 'additionalinformationfiles-files',
+        questionSets: [],
+        pageId: 'additionalinformationfiles',
+        panelGuidance: 'Please upload all additional documentation as requested in the DAR form.',
     },
 };
 
@@ -109,6 +124,7 @@ const darStatusCounts = {
 const darStaticPageIds = {
     ABOUT: 'about',
     FILES: 'files',
+    ADDITIONALFILES: 'additionalinformationfiles',
 };
 
 const actionKeys = {
