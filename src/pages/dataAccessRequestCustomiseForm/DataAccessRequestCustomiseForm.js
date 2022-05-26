@@ -16,6 +16,7 @@ import { baseURL } from '../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import helpers from '../../utils/DarHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
+import ActionBarMenu from '../commonComponents/ActionBarMenu/ActionBarMenu';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
@@ -79,7 +80,7 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema();
     }, []);
 
-    const getMasterSchema = async () => {
+    const getMasterSchema = async panelId => {
         await axios.get(`${baseURL}/api/v1/publishers/${props.match.params.publisherID}`).then(res => {
             setPublisherDetails(res.data.publisher);
         });
@@ -106,7 +107,7 @@ export const DataAccessRequestCustomiseForm = props => {
         setExistingGuidance(cloneDeep(guidance));
         setCountOfChanges(countOfChanges);
         setExistingCountOfChanges(countOfChanges);
-        setActivePanelId(masterSchema.formPanels[0].panelId);
+        setActivePanelId(panelId || masterSchema.formPanels[0].panelId);
         setIsLoading(false);
     };
 
@@ -377,6 +378,8 @@ export const DataAccessRequestCustomiseForm = props => {
         setActiveQuestionData(null);
     };
 
+    const handleClearUpdates = React.useCallback(() => {}, []);
+
     const onGuidanceChange = (questionId, changedGuidance) => {
         if (typeof newGuidance[questionId] !== 'undefined') {
             newGuidance[questionId] = changedGuidance;
@@ -416,6 +419,18 @@ export const DataAccessRequestCustomiseForm = props => {
 
         setUnpublishedGuidance(unpublishedGuidanceChange);
     };
+
+    const handleClearForm = React.useCallback(async () => {
+        await axios.patch(`${baseURL}/api/v2/questionbank/${schemaId}`);
+
+        getMasterSchema(activePanelId);
+    }, [activePanelId]);
+
+    const handleClearSection = React.useCallback(async () => {
+        await axios.patch(`${baseURL}/api/v2/questionbank/${schemaId}?questionSet=${activePanelId}`);
+
+        getMasterSchema(activePanelId);
+    }, [activePanelId]);
 
     const renderApp = () => {
         if (activePanelId === 'about') {
@@ -630,13 +645,22 @@ export const DataAccessRequestCustomiseForm = props => {
                 <ActionBar userState={userState}>
                     <div className='action-bar'>
                         <div className='action-bar--questions'>
-                            <Button variant='tertiary' onClick={onNextClick}>
-                                Clear updates
-                            </Button>
+                            <ActionBarMenu
+                                label='Clear updates'
+                                options={[
+                                    {
+                                        actions: [{ title: 'Clear updates for Safe People', onClick: handleClearSection }],
+                                    },
+                                    {
+                                        actions: [{ title: 'Clear entire form', onClick: handleClearForm }],
+                                    },
+                                ]}
+                                alignStart
+                            />
+                            {/* <Button variant='tertiary' onClick={handleClearUpdates} disabled={!countOfChanges} /> */}
                         </div>
                         <div className='action-bar-actions'>
                             <div className='amendment-count mr-3'>{countOfChanges} unpublished update</div>
-                            {console.log()}
                             <Button
                                 disabled={!!countOfChanges < 1}
                                 variant='secondary'
