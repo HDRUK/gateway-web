@@ -98,17 +98,31 @@ export const DataAccessRequestCustomiseForm = props => {
             ],
         };
 
+        const jsonSchema = { ...masterSchema, ...classSchema, ...questionActions };
+
+        const newPanelId = panelId || masterSchema.formPanels[0].panelId;
+
+        const pageId = helpers.findPageIdByQuestionSet(newPanelId, jsonSchema);
+
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
-        setJsonSchema({ ...masterSchema, ...classSchema, ...questionActions });
+        setJsonSchema(jsonSchema);
         setQuestionStatus(questionStatus);
         setExistingQuestionStatus(cloneDeep(questionStatus));
         setNewGuidance(guidance);
         setExistingGuidance(cloneDeep(guidance));
         setCountOfChanges(countOfChanges);
         setExistingCountOfChanges(countOfChanges);
-        setActivePanelId(panelId || masterSchema.formPanels[0].panelId);
+        setActivePanelId(newPanelId);
         setIsLoading(false);
+
+        updateNavigation(
+            {
+                pageId,
+                panelId: newPanelId,
+            },
+            jsonSchema
+        );
     };
 
     const onSwitchChange = (questionId, value) => {
@@ -174,15 +188,16 @@ export const DataAccessRequestCustomiseForm = props => {
         setShowDrawer(showEnquiry);
     };
 
-    const updateNavigation = newForm => {
+    const updateNavigation = (newForm, schema) => {
+        const newJsonSchema = schema || jsonSchema;
         // reset scroll to 0, 0
         window.scrollTo(0, 0);
         // copy state pages
-        const pages = [...jsonSchema.pages];
+        const pages = [...newJsonSchema.pages];
         // get the index of new form
         const newPageindex = pages.findIndex(page => page.pageId === newForm.pageId);
         // reset the current state of active to false for all pages
-        const newFormState = [...jsonSchema.pages].map(item => {
+        const newFormState = [...newJsonSchema.pages].map(item => {
             return { ...item, active: false };
         });
         // update actual object model with property of active true
@@ -190,10 +205,10 @@ export const DataAccessRequestCustomiseForm = props => {
         // get set the active panelId
         let { panelId } = newForm;
         if (isEmpty(panelId) || typeof panelId === 'undefined') {
-            ({ panelId } = [...jsonSchema.formPanels].find(p => p.pageId === newFormState[newPageindex].pageId) || '');
+            ({ panelId } = [...newJsonSchema.formPanels].find(p => p.pageId === newFormState[newPageindex].pageId) || '');
         }
 
-        setJsonSchema({ ...jsonSchema, pages: newFormState });
+        setJsonSchema({ ...newJsonSchema, pages: newFormState });
         setActivePanelId(panelId);
         setIsWideForm(panelId === 'about' || panelId === 'files');
         setActiveGuidance('');
@@ -421,13 +436,13 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const handleClearForm = React.useCallback(async () => {
-        await axios.patch(`${baseURL}/api/v2/questionbank/${schemaId}`);
+        // await axios.patch(`${baseURL}/api/v2/questionbank/${schemaId}`);
 
         getMasterSchema(activePanelId);
     }, [activePanelId]);
 
     const handleClearSection = React.useCallback(async () => {
-        await axios.patch(`${baseURL}/api/v2/questionbank/${schemaId}?questionSet=${activePanelId}`);
+        // await axios.patch(`${baseURL}/api/v2/questionbank/${schemaId}?questionSet=${activePanelId}`);
 
         getMasterSchema(activePanelId);
     }, [activePanelId]);
@@ -649,10 +664,10 @@ export const DataAccessRequestCustomiseForm = props => {
                                 label='Clear updates'
                                 options={[
                                     {
-                                        actions: [{ title: 'Clear updates for Safe People', onClick: handleClearSection }],
-                                    },
-                                    {
-                                        actions: [{ title: 'Clear entire form', onClick: handleClearForm }],
+                                        actions: [
+                                            { title: 'Clear updates for Safe People', onClick: handleClearSection },
+                                            { title: 'Clear entire form', onClick: handleClearForm },
+                                        ],
                                     },
                                 ]}
                                 alignStart

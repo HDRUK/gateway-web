@@ -352,6 +352,15 @@ const findQuestionSet = (questionSetId = '', schema = {}) => {
     return {};
 };
 
+const findPageIdByQuestionSet = (questionSetId = '', schema = {}) => {
+    if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
+        const { formPanels } = schema;
+
+        return formPanels.find(q => q.panelId === questionSetId)?.pageId;
+    }
+    return {};
+};
+
 /**
  * [TotalQuestionAnswered]
  * @desc - Sets total questions answered for each section
@@ -663,4 +672,5 @@ export default {
     isQuestionLocked,
     isQuestionOn,
     isQuestionOff,
+    findPageIdByQuestionSet,
 };
