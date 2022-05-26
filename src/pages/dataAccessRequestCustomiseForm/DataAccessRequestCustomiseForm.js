@@ -156,7 +156,7 @@ export const DataAccessRequestCustomiseForm = props => {
         e.preventDefault();
         history.push({
             pathname: `/account`,
-            search: '?tab=customisedataaccessrequests',
+            search: '?tab=customisedataaccessrequests_applicationform',
         });
     };
 
@@ -598,7 +598,7 @@ export const DataAccessRequestCustomiseForm = props => {
                         <div id='darRightCol' className='scrollable-sticky-column'>
                             <div className='darTab'>
                                 <>
-                                    {activeQuestion ? (
+                                    {activeQuestion && activeQuestionData ? (
                                         <>
                                             <header>
                                                 <div>
