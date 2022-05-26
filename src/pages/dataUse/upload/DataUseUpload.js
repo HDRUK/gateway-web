@@ -1,27 +1,27 @@
 import { find, isEmpty, isUndefined, some } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Col, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Col, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { SlideDown } from 'react-slidedown';
 import readXlsxFile from 'read-excel-file';
 import convertToJson from 'read-excel-file/schema';
 import Alert from '../../../components/Alert';
+import Loading from '../../../components/Loading';
 import SVGIcon from '../../../images/SVGIcon';
 import dataUseRegistersService from '../../../services/data-use-registers';
-import dataUseSchema from './DataUseSchema';
-import { useTranslation } from 'react-i18next';
-import Loading from '../../../components/Loading';
 import googleAnalytics from '../../../tracking';
+import ActionBar from '../../commonComponents/actionbar/ActionBar';
+import dataUseSchema from './DataUseSchema';
 import DataUseSubmitModal from './DataUseSubmitModal';
 import './DataUseUpload.scss';
+import DataUseUploadActionButtons from './DataUseUploadActionButtons';
 
-const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState }, ref) => {
-    React.useImperativeHandle(ref, () => ({
-        toggleSubmitModal,
-    }));
+const DataUseUpload = ({ onSubmit, team, dataUsePage, userState }) => {
     const { t } = useTranslation();
+    const history = useHistory();
     const hiddenFileInput = React.useRef(null);
     const maxSize = 10485760;
     const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +32,7 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
     const [dataUseRegisterIndexes, setdataUseRegisterIndexes] = useState([]);
     const [recommendedFieldsMissing, setRecommendedFieldsMissing] = useState(false);
     const [showEmptyError, setShowEmptyError] = useState(false);
+    const [showSubmit, setShowSubmit] = React.useState(true);
 
     const dataUseRegistersUpload = dataUseRegistersService.usePostDataUseRegisterUpload(null, {
         onError: ({ title, message }) => {
@@ -44,6 +45,10 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
             NotificationManager.error(message, title, 10000);
         },
     });
+
+    const handleShowSubmitModal = () => {
+        setIsSubmitModalVisible(true);
+    };
 
     const handleAnalytics = (label, value) => {
         googleAnalytics.recordEvent('Data uses', label, value);
@@ -97,9 +102,11 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 
                             const uploadErrors = [...duplicateErrors, ...errors];
                             setUploadedData({ rows, uploadErrors, checks });
+
                             if (isEmpty(uploadErrors)) {
                                 showAlert(t('datause.upload.successfulCheck'));
                             }
+                            setShowSubmit(true);
                             setIsLoading(false);
                         });
                     }
@@ -138,6 +145,7 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
         setIsSubmitModalVisible(false);
         setSubmitted(true);
         setIsLoading(true);
+
         const payload = {
             teamId: team,
             dataUses: uploadedData.rows,
@@ -145,10 +153,21 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
 
         dataUseRegistersUpload.mutateAsync(payload).then(() => {
             setIsSubmitModalVisible(false);
-            onSubmit();
             setSubmitted(false);
             setIsLoading(false);
-            dataUsePage.current.showAlert(t('datause.upload.SuccessfulUpload'), 'Pending approval');
+            setShowSubmit(false);
+
+            if (onSubmit) onSubmit();
+
+            history.push({
+                pathname: '/account',
+                search: '?tab=datause',
+                state: {
+                    alert: {
+                        message: `Pending approval. ${t('datause.upload.SuccessfulUpload')}`,
+                    },
+                },
+            });
         });
     };
 
@@ -167,10 +186,6 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
     const showAlert = data => {
         setAlert(data);
     };
-
-    const handleAlertAutoClose = React.useCallback(() => {
-        setAlert('');
-    }, []);
 
     const searchForDuplicates = checks => {
         const duplicateErrors = [];
@@ -289,6 +304,10 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
         return dataUseCheck;
     };
 
+    const handleAlertClose = () => {
+        setAlert('');
+    };
+
     return (
         <Row>
             <Col xs={1} />
@@ -301,7 +320,7 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
             ) : (
                 <Col>
                     {!isEmpty(alert) && (
-                        <Alert variant='success' dismissable>
+                        <Alert variant='success' dismissable onClose={handleAlertClose}>
                             {alert}
                         </Alert>
                     )}
@@ -638,11 +657,21 @@ const DataUseUpload = React.forwardRef(({ onSubmit, team, dataUsePage, userState
                         isAdmin={userState[0].teams.some(team => team.type === 'admin')}
                         recommendedFieldsMissing={recommendedFieldsMissing}
                     />
+
+                    {showSubmit && (
+                        <ActionBar userState={userState}>
+                            <div className='action-bar'>
+                                <div className='action-bar-actions'>
+                                    <DataUseUploadActionButtons onSubmit={handleShowSubmitModal} />
+                                </div>
+                            </div>
+                        </ActionBar>
+                    )}
                 </Col>
             )}
             <Col xs={1} />
         </Row>
     );
-});
+};
 
 export default DataUseUpload;

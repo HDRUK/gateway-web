@@ -1,7 +1,7 @@
 import React from 'react';
 import googleAnalytics from '../../../tracking';
 
-const DataUseUploadActionButtons = ({ dataUseUpload }) => {
+const DataUseUploadActionButtons = ({ onSubmit }) => {
     const handleAnalytics = (label, value) => {
         googleAnalytics.recordEvent('Data uses', label, value);
     };
@@ -9,7 +9,7 @@ const DataUseUploadActionButtons = ({ dataUseUpload }) => {
     const handleSubmitDataUses = React.useCallback(() => {
         handleAnalytics('Clicked submit data uses');
 
-        dataUseUpload.current.toggleSubmitModal();
+        onSubmit();
     }, []);
 
     return (

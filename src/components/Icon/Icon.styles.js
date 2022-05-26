@@ -15,8 +15,8 @@ export const root =
             stroke: ${stroke};
             color: ${colors[color]};
             fill: ${colors[fill]};
-            height: ${sizes[size]};
-            width: ${sizes[size]};
+            height: ${size === 'contained' ? '1em' : sizes[size]};
+            width: ${size === 'contained' ? '1em' : sizes[size]};
             justify-content: center;
             align-items: center;
             flex-shrink: 0;

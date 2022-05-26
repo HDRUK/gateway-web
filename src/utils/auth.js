@@ -29,3 +29,15 @@ export const getTeam = props => {
 
     return team;
 };
+
+export const isCustodian = team => {
+    return team !== 'user' && team !== 'admin';
+};
+
+export const isAdmin = team => {
+    return team === 'admin';
+};
+
+export const isUser = team => {
+    return team === 'user';
+};

@@ -1,312 +1,312 @@
 {
-	"services": {
-		"status": {
-			"404": {
-				"title": "Page not found",
-				"message": "The requested resource could not be found"
-			},
-			"500": {
-				"title": "Server error",
-				"message": "An error was encountered on the server at the requested address"
-			},
-			"401": {
-				"title": "Unauthorised",
-				"message": "The request to this address was unauthorised"
-			}
-		},
-		"errors": {
-			"dur": {
-				"getDataUseRegistersByTeam": {
-					"404": {
-						"message": "There has been an error getting data uses for this team"
-					}
-				},
-				"getDataUseRegister": {
-					"404": {
-						"message": "There has been an error getting this data use"
-					}
-				},
-				"patchDataUseRegister": {
-					"404": {
-						"message": "There has been an error updating the data use"
-					}
-				},
-				"postDataUseRegisterCheck": {
-					"404": {
-						"message": "There has been an error checking if this is a duplicate record"
-					}
-				},
-				"postDataUseRegisterUpload": {
-					"404": {
-						"message": "There has been an problem uploading the new data use"
-					}
-				}
-			},
-			"tools": {
-				"getTools": {
-					"404": {
-						"message": "There has been a problem getting the list of tools"
-					}
-				}
-			},
-			"datasets": {
-				"getDatasets": {
-					"404": {
-						"message": "There has been a problem getting the list of datasets"
-					}
-				}
-			},
-			"collections": {
-				"getCollections": {
-					"404": {
-						"message": "There has been a problem getting the list of collections"
-					}
-				}
-			},
-			"search": {
-				"getSearch": {
-					"404": {
-						"message": "There has been a problem getting the search results"
-					}
-				}
-			},
-			"papers": {
-				"getPapers": {
-					"404": {
-						"message": "There has been a problem getting the list of papers"
-					}
-				}
-			},
-			"relatedobjects": {
-				"getRelatedObject": {
-					"404": {
-						"message": "There has been a problem getting the related object"
-					}
-				},
-				"getRelatedObjectByType": {
-					"404": {
-						"message": "There has been a problem getting the related object"
-					}
-				}
-			}
-		}
-	},
-	"collection": {
-		"private": {
-			"live": "This private collection is now live. Only those who you share the collection link with will be able to view this page.",
-			"updated": "Done! Your private collection has been updated. Only those who you share the collection link with will be able to view this page."
-		},
-		"public": {
-			"live": "This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.",
-			"updated": "Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users."
-		},
-		"created": "created"
-	},
-	"newDatasetVersionSubmitted": "<b>Version {{versionNumber}}</b> of this dataset been submitted by data custodian <b>{{firstName}} {{lastName}}</b>",
-	"datasetVersionApproved": "<b>Version {{versionNumber}}</b> of this dataset been approved by admin <b>{{firstName}} {{lastName}}</b>",
-	"datasetVersionRejected": "<b>Application rejected</b> by portal admin <b>{{firstName}} {{lastName}}</b>",
-	"datasetVersionArchived": "<b>Version {{versionNumber}}</b> of this dataset been archived by data custodian <b>{{firstName}} {{lastName}}",
-	"datasetVersionUnarchived": "<b>Version {{versionNumber}}</b> of this dataset been unarchived by data custodian <b>{{firstName}} {{lastName}}",
-	"datasetUpdatesSubmitted": "<b>Updates submitted</b> by data custodian <b>{{firstName}} {{lastName}}</b>",
-	"previousAnswer": "Previous answer",
-	"updatedAnswer": "Updated answer",
-	"question": "Question",
-	"datetime": {
-		"submitted": "Submitted {{datetime}}"
-	},
-	"loading": "Loading",
-	"activitylog": {
-		"notfound": "The activity log for this dataset cannot be accessed. It must be set to {{status}}.",
-		"rejection": "Reason for rejection"
-	},
-	"next": "Next",
-	"previous": "Previous",
-	"dataset": {
-		"inReview": "pending approval",
-		"active": "Active",
-		"active,draft": "Active",
-		"rejected": "Rejected",
-		"archive": "Archived",
-		"makeADecision": "Make a decision",
-		"approve": "Approve",
-		"reject": "Reject",
-		"approvalModal": {
-			"title": "Approve this version of this dataset metadata",
-			"description": "If you made any amendments to their application, such as fixing a type, please let the editor know using the description below.",
-			"applicationStatus": "Description (optional)",
-			"buttons": {
-				"cancel": "No, nevermind",
-				"approve": "Approve",
-				"approveAndGoToNext": "Approve and go to next",
-				"confirm": "Approve this version"
-			}
-		},
-		"rejectModal": {
-			"title": "Reject this version of this dataset metadata",
-			"description": "Let the editor know why this submission is being rejected. They will be able to create a new version and make a new submission.",
-			"applicationStatus": "Description",
-			"applicationStatusRequired": "Description cannot be empty",
-			"buttons": {
-				"cancel": "No, nevermind",
-				"reject": "Reject",
-				"rejectAndGoToNext": "Reject and go to next",
-				"confirm": "Reject this version"
-			}
-		},
-		"validationErrosModal": {
-			"title": "Mandatory fields missing",
-			"description": "You cannot submit this dataset for review until you have completed all the mandatory questions. If you need to submit this dataset without the mandatory answers, please raise a support ticket at the following link:",
-			"buttons": {
-				"confirm": "Ok",
-				"cancel": "No, nevermind"
-			}
-		},
-		"validationErrosAdminModal": {
-			"title": "Mandatory fields missing",
-			"description": "Are you sure that you want to submit this version of this dataset for review? There are mandatory fields missing. You cannot edit this form whilst it is pending.",
-			"buttons": {
-				"confirm": "Ok",
-				"cancel": "No, nevermind"
-			}
-		},
-		"submitForReviewModal": {
-			"title": "Submit version for review?",
-			"description": "Are you sure that you want to submit this version of this dataset for review?\n\nYou cannot edit this form whilst it is pending.'",
-			"buttons": {
-				"confirm": "Confirm submission",
-				"cancel": "No, nevermind"
-			}
-		},
-		"createNewVersionModal": {
-			"title": "Create new version?",
-			"description": "Are you sure that you want to create a new draft version of this dataset?",
-			"buttons": {
-				"confirm": "Create new version",
-				"cancel": "No, nevermind"
-			}
-		},
-		"archiveModal": {
-			"title": "Archive this version?",
-			"description": "This will remove your dataset from search results, but anyone with a direct link will still be able to access the page with a message explaining that it has been archived.",
-			"buttons": {
-				"confirm": "Archive this version",
-				"cancel": "No, nevermind"
-			}
-		},
-		"unArchiveModal": {
-			"title": "Un-archive this dataset?",
-			"description": "This dataset will appear in search results again. You will be able to create a new version from this dataset once it has been un-archived.",
-			"buttons": {
-				"confirm": "Un-archive this version",
-				"cancel": "No, nevermind"
-			}
-		},
-		"approveWithConditionsModal": {
-			"title": "Application approval with conditions",
-			"description": "Are you sure you want to apprive this application? If so, please provide the conditions of this approval to the applicant",
-			"buttons": {
-				"confirm": "Confirm approval with conditions",
-				"cancel": "No, nevermind"
-			}
-		},
-		"deleteDraftModal": {
-			"title": "Delete draft",
-			"description": "Are you sure you want to delete this draft dataset? You will no longer be able to view this form and will lose any answers provided. All team members will be notified.",
-			"buttons": {
-				"confirm": "Delete draft",
-				"cancel": "No, nevermind"
-			}
-		},
-		"duplicateModal": {
-			"title": "Duplicate this dataset metadata?",
-			"description": "Are you sure you want to duplicate this dataset? All team members will be notified of this duplication.",
-			"buttons": {
-				"confirm": "Duplicate",
-				"cancel": "No, nevermind"
-			}
-		},
-		"create": {
-			"description": {
-				"admin": "View, add, edit, archive and check the status of your datasets.",
-				"user": "Approve or reject pending datasets."
-			},
-			"action": "Add a new dataset"
-		}
-	},
-	"datasets": "Datasets",
-	"viewForm": "View form",
-	"search": {
-		"placeholder": "Search within {{type}}",
-		"results": {
-			"notFound": "Could not find any {{type}} matching {{search}}"
-		}
-	},
-	"tabs": {
-		"counts": {
-			"inReview": "Pending approval ({{count}})",
-			"active": "Active ({{count}})",
-			"rejected": "Rejected ({{count}})",
-			"draft": "Draft ({{count}})",
-			"archive": "Archived ({{count}})"
-		}
-	},
-	"sortby": {
-		"selected": {
-			"popularity": "Sort by number of views",
-			"metadata": "Sort by metadata quality",
-			"metadataQuality": "Sort by metadata quality",
-			"resources": "Sort by related resources",
-			"latest": "Sort by latest",
-			"recentActivity": "Sort by recent activity",
-			"recentlyadded": "Sort by recently added",
-			"recentlyPublished": "Sort by recently published",
-			"sortbyyear": "Sort by year",
-			"relevance": "Sort by match to search terms",
-			"alphabetic": "Sort alphabetically"
-		},
-		"options": {
-			"popularity": "Number of views (highest to lowest)",
-			"metadata": "Metadata quality (platinum to bronze)",
-			"metadataQuality": "Metadata quality (platinum to bronze)",
-			"resources": "Related resources (most first)",
-			"latest": "Latest (recently updated first)",
-			"recentActivity": "Recent activity (newest first)",
-			"recentlyadded": "Recently added to collection (newest first)",
-			"recentlyPublished": "Recently published (newest first)",
-			"sortbyyear": "Year (latest first)",
-			"relevance": "Match to search terms (closest first)"
-		},
-		"optionsFilters": {
-			"showAll": "Show all resources ({{n}})",
-			"dataset": "Show data ({{n}})",
-			"tool": "Show tools ({{n}})",
-			"paper": "Show papers ({{n}})",
-			"dataUseRegister": "Show data uses ({{n}})",
-			"course": "Show courses ({{n}})",
-			"people": "Show people ({{n}})"
-		},
-		"optionsSortable": {
-			"popularity": "Number of views",
-			"mostViewed": "Most viewed",
-			"metadata": "Metadata quality",
-			"metadataQuality": "Metadata quality",
-			"resources": "Related resources",
-			"latest": "Recent activity",
-			"recentActivity": "Recent activity",
-			"recentlyadded": "Recently published",
-			"recentlyPublished": "Recently published",
-			"sortbyyear": "Year",
-			"relevance": "Match to search terms",
-			"alphabetic": "Alphabetically"
-		}
-	},
-	"notifications": {
-		"teamEmailText": "Send email notifications to team email address"
-	},
-	"searchResultsInfo": {
-		"withTerm": "Showing {{count}} results for '{{searchTerm}}'",
-		"withOutTerm": "Showing {{count}} results"
-	},
+    "services": {
+        "status": {
+            "404": {
+                "title": "Page not found",
+                "message": "The requested resource could not be found"
+            },
+            "500": {
+                "title": "Server error",
+                "message": "An error was encountered on the server at the requested address"
+            },
+            "401": {
+                "title": "Unauthorised",
+                "message": "The request to this address was unauthorised"
+            }
+        },
+        "errors": {
+            "dur": {
+                "getDataUseRegistersByTeam": {
+                    "404": {
+                        "message": "There has been an error getting data uses for this team"
+                    }
+                },
+                "getDataUseRegister": {
+                    "404": {
+                        "message": "There has been an error getting this data use"
+                    }
+                },
+                "patchDataUseRegister": {
+                    "404": {
+                        "message": "There has been an error updating the data use"
+                    }
+                },
+                "postDataUseRegisterCheck": {
+                    "404": {
+                        "message": "There has been an error checking if this is a duplicate record"
+                    }
+                },
+                "postDataUseRegisterUpload": {
+                    "404": {
+                        "message": "There has been an problem uploading the new data use"
+                    }
+                }
+            },
+            "tools": {
+                "getTools": {
+                    "404": {
+                        "message": "There has been a problem getting the list of tools"
+                    }
+                }
+            },
+            "datasets": {
+                "getDatasets": {
+                    "404": {
+                        "message": "There has been a problem getting the list of datasets"
+                    }
+                }
+            },
+            "collections": {
+                "getCollections": {
+                    "404": {
+                        "message": "There has been a problem getting the list of collections"
+                    }
+                }
+            },
+            "search": {
+                "getSearch": {
+                    "404": {
+                        "message": "There has been a problem getting the search results"
+                    }
+                }
+            },
+            "papers": {
+                "getPapers": {
+                    "404": {
+                        "message": "There has been a problem getting the list of papers"
+                    }
+                }
+            },
+            "relatedobjects": {
+                "getRelatedObject": {
+                    "404": {
+                        "message": "There has been a problem getting the related object"
+                    }
+                },
+                "getRelatedObjectByType": {
+                    "404": {
+                        "message": "There has been a problem getting the related object"
+                    }
+                }
+            }
+        }
+    },
+    "collection": {
+        "private": {
+            "live": "This private collection is now live. Only those who you share the collection link with will be able to view this page.",
+            "updated": "Done! Your private collection has been updated. Only those who you share the collection link with will be able to view this page."
+        },
+        "public": {
+            "live": "This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.",
+            "updated": "Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users."
+        },
+        "created": "created"
+    },
+    "newDatasetVersionSubmitted": "<b>Version {{versionNumber}}</b> of this dataset been submitted by data custodian <b>{{firstName}} {{lastName}}</b>",
+    "datasetVersionApproved": "<b>Version {{versionNumber}}</b> of this dataset been approved by admin <b>{{firstName}} {{lastName}}</b>",
+    "datasetVersionRejected": "<b>Application rejected</b> by portal admin <b>{{firstName}} {{lastName}}</b>",
+    "datasetVersionArchived": "<b>Version {{versionNumber}}</b> of this dataset been archived by data custodian <b>{{firstName}} {{lastName}}",
+    "datasetVersionUnarchived": "<b>Version {{versionNumber}}</b> of this dataset been unarchived by data custodian <b>{{firstName}} {{lastName}}",
+    "datasetUpdatesSubmitted": "<b>Updates submitted</b> by data custodian <b>{{firstName}} {{lastName}}</b>",
+    "previousAnswer": "Previous answer",
+    "updatedAnswer": "Updated answer",
+    "question": "Question",
+    "datetime": {
+        "submitted": "Submitted {{datetime}}"
+    },
+    "loading": "Loading",
+    "activitylog": {
+        "notfound": "The activity log for this dataset cannot be accessed. It must be set to {{status}}.",
+        "rejection": "Reason for rejection"
+    },
+    "next": "Next",
+    "previous": "Previous",
+    "dataset": {
+        "inReview": "pending approval",
+        "active": "Active",
+        "active,draft": "Active",
+        "rejected": "Rejected",
+        "archive": "Archived",
+        "makeADecision": "Make a decision",
+        "approve": "Approve",
+        "reject": "Reject",
+        "approvalModal": {
+            "title": "Approve this version of this dataset metadata",
+            "description": "If you made any amendments to their application, such as fixing a type, please let the editor know using the description below.",
+            "applicationStatus": "Description (optional)",
+            "buttons": {
+                "cancel": "No, nevermind",
+                "approve": "Approve",
+                "approveAndGoToNext": "Approve and go to next",
+                "confirm": "Approve this version"
+            }
+        },
+        "rejectModal": {
+            "title": "Reject this version of this dataset metadata",
+            "description": "Let the editor know why this submission is being rejected. They will be able to create a new version and make a new submission.",
+            "applicationStatus": "Description",
+            "applicationStatusRequired": "Description cannot be empty",
+            "buttons": {
+                "cancel": "No, nevermind",
+                "reject": "Reject",
+                "rejectAndGoToNext": "Reject and go to next",
+                "confirm": "Reject this version"
+            }
+        },
+        "validationErrosModal": {
+            "title": "Mandatory fields missing",
+            "description": "You cannot submit this dataset for review until you have completed all the mandatory questions. If you need to submit this dataset without the mandatory answers, please raise a support ticket at the following link:",
+            "buttons": {
+                "confirm": "Ok",
+                "cancel": "No, nevermind"
+            }
+        },
+        "validationErrosAdminModal": {
+            "title": "Mandatory fields missing",
+            "description": "Are you sure that you want to submit this version of this dataset for review? There are mandatory fields missing. You cannot edit this form whilst it is pending.",
+            "buttons": {
+                "confirm": "Ok",
+                "cancel": "No, nevermind"
+            }
+        },
+        "submitForReviewModal": {
+            "title": "Submit version for review?",
+            "description": "Are you sure that you want to submit this version of this dataset for review?\n\nYou cannot edit this form whilst it is pending.'",
+            "buttons": {
+                "confirm": "Confirm submission",
+                "cancel": "No, nevermind"
+            }
+        },
+        "createNewVersionModal": {
+            "title": "Create new version?",
+            "description": "Are you sure that you want to create a new draft version of this dataset?",
+            "buttons": {
+                "confirm": "Create new version",
+                "cancel": "No, nevermind"
+            }
+        },
+        "archiveModal": {
+            "title": "Archive this version?",
+            "description": "This will remove your dataset from search results, but anyone with a direct link will still be able to access the page with a message explaining that it has been archived.",
+            "buttons": {
+                "confirm": "Archive this version",
+                "cancel": "No, nevermind"
+            }
+        },
+        "unArchiveModal": {
+            "title": "Un-archive this dataset?",
+            "description": "This dataset will appear in search results again. You will be able to create a new version from this dataset once it has been un-archived.",
+            "buttons": {
+                "confirm": "Un-archive this version",
+                "cancel": "No, nevermind"
+            }
+        },
+        "approveWithConditionsModal": {
+            "title": "Application approval with conditions",
+            "description": "Are you sure you want to apprive this application? If so, please provide the conditions of this approval to the applicant",
+            "buttons": {
+                "confirm": "Confirm approval with conditions",
+                "cancel": "No, nevermind"
+            }
+        },
+        "deleteDraftModal": {
+            "title": "Delete draft",
+            "description": "Are you sure you want to delete this draft dataset? You will no longer be able to view this form and will lose any answers provided. All team members will be notified.",
+            "buttons": {
+                "confirm": "Delete draft",
+                "cancel": "No, nevermind"
+            }
+        },
+        "duplicateModal": {
+            "title": "Duplicate this dataset metadata?",
+            "description": "Are you sure you want to duplicate this dataset? All team members will be notified of this duplication.",
+            "buttons": {
+                "confirm": "Duplicate",
+                "cancel": "No, nevermind"
+            }
+        },
+        "create": {
+            "description": {
+                "admin": "View, add, edit, archive and check the status of your datasets.",
+                "user": "Approve or reject pending datasets."
+            },
+            "action": "Add a new dataset"
+        }
+    },
+    "datasets": "Datasets",
+    "viewForm": "View form",
+    "search": {
+        "placeholder": "Search within {{type}}",
+        "results": {
+            "notFound": "Could not find any {{type}} matching {{search}}"
+        }
+    },
+    "tabs": {
+        "counts": {
+            "inReview": "Pending approval ({{count}})",
+            "active": "Active ({{count}})",
+            "rejected": "Rejected ({{count}})",
+            "draft": "Draft ({{count}})",
+            "archive": "Archived ({{count}})"
+        }
+    },
+    "sortby": {
+        "selected": {
+            "popularity": "Sort by number of views",
+            "metadata": "Sort by metadata quality",
+            "metadataQuality": "Sort by metadata quality",
+            "resources": "Sort by related resources",
+            "latest": "Sort by latest",
+            "recentActivity": "Sort by recent activity",
+            "recentlyadded": "Sort by recently added",
+            "recentlyPublished": "Sort by recently published",
+            "sortbyyear": "Sort by year",
+            "relevance": "Sort by match to search terms",
+            "alphabetic": "Sort alphabetically"
+        },
+        "options": {
+            "popularity": "Number of views (highest to lowest)",
+            "metadata": "Metadata quality (platinum to bronze)",
+            "metadataQuality": "Metadata quality (platinum to bronze)",
+            "resources": "Related resources (most first)",
+            "latest": "Latest (recently updated first)",
+            "recentActivity": "Recent activity (newest first)",
+            "recentlyadded": "Recently added to collection (newest first)",
+            "recentlyPublished": "Recently published (newest first)",
+            "sortbyyear": "Year (latest first)",
+            "relevance": "Match to search terms (closest first)"
+        },
+        "optionsFilters": {
+            "showAll": "Show all resources ({{n}})",
+            "dataset": "Show data ({{n}})",
+            "tool": "Show tools ({{n}})",
+            "paper": "Show papers ({{n}})",
+            "dataUseRegister": "Show data uses ({{n}})",
+            "course": "Show courses ({{n}})",
+            "people": "Show people ({{n}})"
+        },
+        "optionsSortable": {
+            "popularity": "Number of views",
+            "mostViewed": "Most viewed",
+            "metadata": "Metadata quality",
+            "metadataQuality": "Metadata quality",
+            "resources": "Related resources",
+            "latest": "Recent activity",
+            "recentActivity": "Recent activity",
+            "recentlyadded": "Recently published",
+            "recentlyPublished": "Recently published",
+            "sortbyyear": "Year",
+            "relevance": "Match to search terms",
+            "alphabetic": "Alphabetically"
+        }
+    },
+    "notifications": {
+        "teamEmailText": "Send email notifications to team email address"
+    },
+    "searchResultsInfo": {
+        "withTerm": "Showing {{count}} results for '{{searchTerm}}'",
+        "withOutTerm": "Showing {{count}} results"
+    },
     "datause": {
         "upload": {
             "successfulCheck": "Your file has been successfully uploaded.",
@@ -325,8 +325,24 @@
             "requiredError": "Error in row {{row}} Mandatory field “{{column}}” is empty",
             "duplicateError": "Error in row {{row}} : Suspected data use duplicate",
             "duplicateRowError": "Error in row {{row}}: Suspected data use duplicate of row {{duplicateRow}}",
-			"pageInfoUser": "Manage your data use register by editing data uses.",
+            "pageInfoUser": "Manage your data use register by editing data uses.",
 			"pageInfoTeam": "Manage your data use register by uploading or editing data uses."
+        },
+        "widget": {
+            "heading": "Data use widget",
+            "description": "A data use widget is a great way of demonstrating transparency of how health data is being used, by connecting users of your website to the Gateway data use register. The widget will enable you to embed a link to the Gateway data use results page, pre-filtered on your organisation's data uses.",
+            "buttonHelp": "Click the button below to see your filtered data uses",
+            "modal": {
+                "accept": "Accept",
+                "cancel": "Cancel"
+            },
+            "howToHeader": "How to start using your widget",
+            "howToDesc": "Below is an interactive example of how your widget could look and be used. Please note that this design is compatible with mobile devices and can be resized to fit anywhere on your website. To start using this widget please accept the terms and conditions by clicking on the 'Get widget' button below.",
+            "getWidgetButton": "Get widget",
+            "tAndCHelp": "By embedding content in your website or app, you are agreeing to the Terms and Conditions",
+            "copyCodeHelp": "Copy the source code and share with your development team to display the widget above on your website",
+            "copyCodeButton": "Copy Code",
+            "copyCodeClipBoard": "Code copied to your clipboard"
         }
     }
 }

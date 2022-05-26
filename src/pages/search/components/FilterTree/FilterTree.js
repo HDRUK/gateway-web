@@ -54,6 +54,8 @@ const FilterTree = ({ node, filters, highlighted, checked, expanded, onCheck, se
                     <span className='checkbox-text'>{clonedItem.label}</span>
                 );
 
+                clonedItem.disabled = !highlighted.includes(clonedItem.value);
+
                 data[i] = clonedItem;
 
                 data[i].children = formatLabels(data[i].children);

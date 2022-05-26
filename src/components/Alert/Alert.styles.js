@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { getComponentVariant } from '../../configs/theme';
 
 export const root =
     ({ variant }) =>
@@ -6,22 +7,18 @@ export const root =
         const {
             font: { size },
             base: { increment },
-            colors,
-            components: {
-                Alert: { variants },
-            },
         } = theme;
 
         return css`
-            background: ${colors[variants[variant].background]};
-            color: ${colors[variants[variant].color]};
-            fill: ${colors[variants[variant].color]};
-            border: 2px solid ${colors[variants[variant].borderColor]};
+            border-width: 2px;
+            border-style: solid;
             padding: ${increment * 3}px;
             display: flex;
             border-radius: 4px;
             line-height: 1;
             font-size: ${size.default};
+
+            ${getComponentVariant('Alert', variant, theme)}
         `;
     };
 

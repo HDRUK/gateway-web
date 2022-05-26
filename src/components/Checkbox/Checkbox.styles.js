@@ -1,20 +1,26 @@
 import { css } from '@emotion/react';
 
 export const root =
-    ({ variant, partial }) =>
+    ({ variant, disabled }) =>
     theme => {
         const {
             colors,
             components: {
-                Checkbox: { height, width, variants },
+                Checkbox: { height, width, variants, fontSize, disabledColor },
             },
         } = theme;
 
         return css`
-            ${mixins.root({ width })}
+            ${mixins.root({ width, disabled })}
+
+            font-size: ${fontSize};
 
             &::before {
                 ${mixins.before({ colors, variants, variant, width, height })}
+            }
+
+            input:disabled + span {
+                color: ${colors[disabledColor]};
             }
 
             input + .ui-Checkbox__label::after {
@@ -44,7 +50,7 @@ export const root =
     };
 
 export const mixins = {
-    root: ({ width }) => `
+    root: ({ width, disabled }) => `
 		position: relative;
 		padding-left: calc(${width} + 0.5rem);
 
@@ -52,9 +58,13 @@ export const mixins = {
 			display: none;
 		}
 
-		&:hover {
+		${
+            !disabled
+                ? `&:hover {
 			cursor: pointer;
-		}
+			}`
+                : ''
+        }
 	`,
     before: ({ colors, variants, variant, width, height }) => `
 		content: '';

@@ -1,0 +1,87 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import SVG from 'react-inlinesvg';
+import tickIcon from '../../images/icons/tick.svg';
+import flowIcon from '../../images/icons/flow.svg';
+import Icon from '../Icon';
+import Button from './Button';
+
+<Meta title='Core/Button' component={Button} />
+
+<Canvas>
+    <Story name='Variants'>
+        {props => (
+            <>
+                <div>
+                    <Button {...props} mb={4} mr={2}>
+                        Primary
+                    </Button>
+                    <Button {...props} mb={4} disabled>
+                        Primary (disabled)
+                    </Button>
+                </div>
+                <div>
+                    <Button {...props} variant='secondary' mb={4} mr={2}>
+                        Secondary
+                    </Button>
+                    <Button {...props} variant='secondary' mb={4} disabled>
+                        Secondary (disabled)
+                    </Button>
+                </div>
+                <div>
+                    <Button {...props} variant='tertiary' mb={4} mr={2}>
+                        Tertiary
+                    </Button>
+                    <Button {...props} variant='tertiary' mb={4} disabled>
+                        Tertiary (disabled)
+                    </Button>
+                </div>
+            </>
+        )}
+    </Story>
+    <Story name='Sizes'>
+        {props => (
+            <>
+                <div>
+                    <Button {...props} mb={4} size='large'>
+                        Primary
+                    </Button>
+                </div>
+                <div>
+                    <Button {...props} mb={4}>
+                        Primary
+                    </Button>
+                </div>
+                <div>
+                    <Button {...props} mb={4} size='small'>
+                        Primary
+                    </Button>
+                </div>
+            </>
+        )}
+    </Story>
+    <Story name='Icons'>
+        {props => (
+            <>
+                <div>
+                    <Button {...props} mb={4} iconLeft={<Icon svg={<SVG src={tickIcon} />} />}>
+                        Icon left
+                    </Button>
+                </div>
+                <div>
+                    <Button {...props} mb={4} iconRight={<Icon svg={<SVG src={flowIcon} />} />}>
+                        Icon right
+                    </Button>
+                </div>
+                <div>
+                    <Button
+                        {...props}
+                        mb={4}
+                        iconLeft={<Icon svg={<SVG src={tickIcon} />} />}
+                        iconRight={<Icon svg={<SVG src={flowIcon} />} />}>
+                        Icon left and right
+                    </Button>
+                </div>
+            </>
+        )}
+    </Story>
+</Canvas>

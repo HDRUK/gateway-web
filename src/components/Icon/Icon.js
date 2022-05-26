@@ -20,7 +20,7 @@ const Icon = ({ svg, size, color, fill, stroke, className, ml, mr, mb, mt, ...ou
 
 Icon.propTypes = addCommonPropTypes({
     svg: PropTypes.node.isRequired,
-    size: PropTypes.oneOf(['xxs', 'xs', 'sm', 'md', 'default', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl']),
+    size: PropTypes.oneOf(['xxs', 'xs', 'sm', 'md', 'default', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', 'contained']),
     color: PropTypes.string,
     fill: PropTypes.string,
     stroke: PropTypes.string,

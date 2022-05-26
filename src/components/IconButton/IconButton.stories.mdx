@@ -1,0 +1,47 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import SVG from 'react-inlinesvg';
+import tickIcon from '../../images/icons/tick.svg';
+import flowIcon from '../../images/icons/flow.svg';
+import Icon from '../Icon';
+import IconButton from './IconButton';
+
+<Meta title='Core/IconButton' component={IconButton} />
+
+<Canvas>
+    <Story name='Variants'>
+        {props => (
+            <>
+                <div>
+                    Primary:
+                    <IconButton {...props} mb={4} icon={<SVG src={tickIcon} />} mr={2} ml={2} />
+                    <IconButton {...props} mb={4} icon={<SVG src={tickIcon} />} disabled ml={2} />
+                </div>
+                <div>
+                    Secondary:
+                    <IconButton variant='secondary' {...props} mb={4} icon={<SVG src={tickIcon} />} mr={2} ml={2} />
+                    <IconButton variant='secondary' {...props} mb={4} icon={<SVG src={tickIcon} />} disabled />
+                </div>
+                <div>
+                    Tertiary:
+                    <IconButton variant='tertiary' {...props} icon={<SVG src={tickIcon} />} mr={2} ml={2} />
+                    <IconButton variant='tertiary' {...props} icon={<SVG src={tickIcon} />} disabled />
+                </div>
+            </>
+        )}
+    </Story>
+    <Story name='Sizes'>
+        {props => (
+            <>
+                <div>
+                    <IconButton {...props} mb={4} size='large' icon={<SVG src={tickIcon} />} />
+                </div>
+                <div>
+                    <IconButton {...props} mb={4} icon={<SVG src={tickIcon} />} />
+                </div>
+                <div>
+                    <IconButton {...props} mb={4} size='small' icon={<SVG src={tickIcon} />} />
+                </div>
+            </>
+        )}
+    </Story>
+</Canvas>
