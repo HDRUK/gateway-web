@@ -7,13 +7,13 @@ import { ReactComponent as DotIcon } from '../../../../images/icons/dot.svg';
 import { ReactComponent as TickIcon } from '../../../../images/icons/tick.svg';
 import helpers from '../../../../utils/DarHelper.util';
 
-const UnpublishedQuestionIcon = ({ question: { questionId, questionStatus }, unpublishedGuidance }) => {
+const UnpublishedQuestionIcon = ({ question: { questionId, questionStatus }, unpublishedGuidance, activeQuestion }) => {
     const { t } = useTranslation();
 
     let tooltipContent;
     let icon;
 
-    if (unpublishedGuidance.includes(questionId)) {
+    if (unpublishedGuidance.includes(questionId) && questionId !== activeQuestion) {
         tooltipContent = t('guidance.editted');
 
         icon = <Icon svg={<TickIcon />} fill='green400' ml={2} data-testid='editted' />;
@@ -36,6 +36,7 @@ UnpublishedQuestionIcon.propTypes = {
         questionStatus: PropTypes.number,
     }).isRequired,
     unpublishedGuidance: PropTypes.arrayOf(PropTypes.string).isRequired,
+    activeQuestion: PropTypes.string.isRequired,
 };
 
 export default UnpublishedQuestionIcon;

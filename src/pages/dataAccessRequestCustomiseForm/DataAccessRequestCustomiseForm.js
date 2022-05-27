@@ -473,7 +473,13 @@ export const DataAccessRequestCustomiseForm = props => {
                     onSwitchChange={onSwitchChange}
                     onQuestionAction={onQuestionAction}
                     onGuidanceChange={onGuidanceChange}
-                    icons={question => <UnpublishedQuestionIcon question={question} unpublishedGuidance={unpublishedGuidance} />}
+                    icons={question => (
+                        <UnpublishedQuestionIcon
+                            question={question}
+                            unpublishedGuidance={unpublishedGuidance}
+                            activeQuestion={activeQuestion}
+                        />
+                    )}
                     // readOnly={true}
                     /* onQuestionClick={onQuestionSetAction}
 					onQuestionAction={onQuestionAction}
