@@ -31,7 +31,6 @@ import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance'
 import 'react-tabs/style/react-tabs.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './DataAccessRequestCustomiseForm.scss';
-import Clock from '../../images/clock.svg'
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -502,11 +501,10 @@ export const DataAccessRequestCustomiseForm = props => {
                         <span className='white-16-semibold pr-5'>{publisherDetails.publisherDetails.name}</span>
                     </Col>
                     <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
-                        <div className='white-14-semibold'>{!isEmpty(lastSaved) ? <div><img src={Clock} />&nbsp;{lastSaved}&nbsp;</div>: ''}</div>
-                        <button className='tertiary' onClick={onClickSave} href='javascript:void(0)'>
+                        <span className='white-14-semibold'>{!isEmpty(lastSaved) ? lastSaved : ''}</span>
+                        <a className='linkButton white-14-semibold ml-2' onClick={onClickSave} href='javascript:void(0)'>
                             Save now
-                        </button>
-                        <span className='close-text' onClick={e => redirectDashboard(e)}>Close</span>
+                        </a>
                         <CloseButtonSvg width='16px' height='16px' fill='#fff' onClick={e => redirectDashboard(e)} />
                     </Col>
                 </Row>
