@@ -31,6 +31,9 @@ import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
 import './DataAccessRequestCustomiseForm.scss';
+import { LayoutContent } from '../../components/Layout';
+import Alert from '../../components/Alert';
+import Close from '../../images/icons/close_blue.svg'
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -69,6 +72,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const [existingCountOfChanges, setExistingCountOfChanges] = useState(0);
     const [showConfirmPublishModal, setShowConfirmPublishModal] = useState(false);
     const [activeQuestionData, setActiveQuestionData] = React.useState();
+    const [showSaveAlert, setShowSaveAlert] = useState(true);
 
     const { t } = useTranslation();
 
@@ -484,6 +488,10 @@ export const DataAccessRequestCustomiseForm = props => {
         }
     };
 
+    const handleClose = () => {
+        setShowSaveAlert(false);
+    }
+
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
     Winterfell.addInputType('datePickerCustom', DatePickerCustom);
     Winterfell.addInputType('typeaheadUser', TypeaheadUser);
@@ -574,6 +582,15 @@ export const DataAccessRequestCustomiseForm = props => {
                                 enabled
                             />
                         </div>
+                        <LayoutContent>
+                            { showSaveAlert ?  
+                            <Alert variant='save'>
+                                <p className='save-info'>
+                                    Every change you make is automatically saved with the latest save time shown in the top right
+                                </p>
+                                <img src={Close} onClick={handleClose}/>
+                            </Alert> : null }
+                        </LayoutContent>
                         <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
                             {jsonSchema.pages
                                 ? [...jsonSchema.pages].map((item, idx) =>

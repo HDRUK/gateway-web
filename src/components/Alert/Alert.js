@@ -7,6 +7,7 @@ import { ReactComponent as CloseIcon } from '../../images/icons/close.svg';
 import { ReactComponent as CheckIcon } from '../../images/icons/tick.svg';
 import { ReactComponent as DangerIcon } from '../../images/icons/danger.svg';
 import { ReactComponent as InfoIcon } from '../../images/icons/info.svg';
+import { ReactComponent as ClockIcon } from '../../images/icons/blue_clock.svg';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 
 import * as styles from './Alert.styles.js';
@@ -59,6 +60,7 @@ const Alert = ({
                         {!icon && variant === 'danger' && <Icon svg={<DangerIcon fill='inherit' />} size='lg' />}
                         {!icon && variant === 'warning' && <Icon svg={<DangerIcon fill='inherit' />} size='lg' />}
                         {!icon && variant === 'info' && <Icon svg={<InfoIcon fill='inherit' />} size='lg' />}
+                        {!icon && variant === 'save' && <Icon svg={<ClockIcon fill='inherit' />} />}
                     </div>
                     <div css={styles.content}>{children}</div>
                     {dismissable && <Icon svg={<CloseIcon fill='inherit' />} onClick={handleClose} role='button' />}
@@ -73,7 +75,7 @@ Alert.propTypes = {
     autocloseDuration: PropTypes.number,
     dismissable: PropTypes.bool,
     onClose: PropTypes.func,
-    variant: PropTypes.oneOf(['success', 'warning', 'info', 'danger']).isRequired,
+    variant: PropTypes.oneOf(['success', 'warning', 'info', 'danger', 'save']).isRequired,
     ...PROP_TYPES_LAYOUTBOX,
 };
 
