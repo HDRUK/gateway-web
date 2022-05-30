@@ -21,13 +21,16 @@ const ActionBarMenu = ({ label, options = [], disabled, buttonClass = 'button-se
     return (
         <>
             {options.length > 0 && options.some(option => option.actions.length > 0) && (
-                <Dropdown>
+                <Dropdown drop='up'>
                     <Dropdown.Toggle as={CustomToggle}>
                         <button className={`${buttonClass} ${disabled ? 'disabled' : ''}`} disabled={disabled}>
                             {label}
                         </button>
                     </Dropdown.Toggle>
-                    <Dropdown.Menu className={`actionMenuDropdown${alignStart ? ' actionMenuDropdown__start' : ''}`}>
+                    <Dropdown.Menu
+                        className={`actionMenuDropdown${alignStart ? ' actionMenuDropdown__start' : ''}`}
+                        flip={false}
+                        align='end'>
                         {options.map(option => {
                             return (
                                 option.actions.length > 0 && (

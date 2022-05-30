@@ -100,6 +100,8 @@ export const DataAccessRequestCustomiseForm = props => {
 
         const jsonSchema = { ...masterSchema, ...classSchema, ...questionActions };
 
+        // console.log('masterSchema, questionStatus, guidance, countOfChanges, schemaId, unpublishedGuidance', questionStatus);
+
         const newPanelId = panelId || masterSchema.formPanels[0].panelId;
 
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, jsonSchema);
@@ -436,10 +438,10 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const handleClearForm = React.useCallback(async () => {
-        // await axios.patch(`${baseURL}/api/v2/questionbank/${schemaId}`);
+        const results = await axios.patch(`${baseURL}/api/v2/questionbank/${publisherDetails._id}`);
 
         getMasterSchema(activePanelId);
-    }, [activePanelId]);
+    }, [activePanelId, publisherDetails._id]);
 
     const handleClearSection = React.useCallback(async () => {
         // await axios.patch(`${baseURL}/api/v2/questionbank/${schemaId}?questionSet=${activePanelId}`);
@@ -447,50 +449,9 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema(activePanelId);
     }, [activePanelId]);
 
-    const renderApp = () => {
-        if (activePanelId === 'about') {
-            /* return (
-			<AboutApplication
-				key={_id}
-				activeAccordionCard={activeAccordionCard}
-				allowedNavigation={allowedNavigation}
-				userType={userType}
-				selectedDatasets={aboutApplication.selectedDatasets}
-				readOnly={readOnly || applicationStatus !== DarHelper.darStatus.inProgress}
-				projectNameValid={projectNameValid}
-				projectName={aboutApplication.projectName}
-				nationalCoreStudiesProjects={nationalCoreStudiesProjects}
-				ncsValid={ncsValid}
-				completedReadAdvice={aboutApplication.completedReadAdvice}
-				completedCommunicateAdvice={aboutApplication.completedCommunicateAdvice}
-				completedApprovalsAdvice={aboutApplication.completedApprovalsAdvice}
-				completedSubmitAdvice={aboutApplication.completedSubmitAdvice}
-				completedInviteCollaborators={aboutApplication.completedInviteCollaborators}
-				completedDatasetSelection={aboutApplication.completedDatasetSelection}
-				isNationalCoreStudies={aboutApplication.isNationalCoreStudies}
-				nationalCoreStudiesProjectId={aboutApplication.nationalCoreStudiesProjectId}
-				context={context}
-				toggleCard={toggleCard}
-				toggleDrawer={toggleDrawer}
-				onHandleDataSetChange={onHandleDataSetChange}
-				onNextStep={onNextStep}
-				onHandleProjectNameBlur={onHandleProjectNameBlur}
-				onHandleProjectNameChange={onHandleProjectNameChange}
-				onHandleProjectIsNCSToggle={onHandleProjectIsNCSToggle}
-				onHandleNCSProjectChange={onHandleNCSProjectChange}
-				renderTooltip={renderTooltip}
-				toggleModal={toggleModal}
-				toggleMrcModal={toggleMrcModal}
-				toggleContributorModal={toggleContributorModal}
-				areDatasetsAmended={areDatasetsAmended}
-				datasetsAmendedBy={datasetsAmendedBy}
-				datasetsAmendedDate={datasetsAmendedDate}
-			/>
-		); */
-        } else if (activePanelId === 'files') {
-            /* return <Uploads onFilesUpdate={onFilesUpdate} id={_id} files={files} readOnly={readOnly} />; */
-        } else {
-            return (
+    const renderApp = React.useCallback(() => {
+        return (
+            activePanelId && (
                 <Winterfell
                     schema={jsonSchema}
                     questionAnswers={questionAnswers}
@@ -504,15 +465,10 @@ export const DataAccessRequestCustomiseForm = props => {
                     onQuestionAction={onQuestionAction}
                     onGuidanceChange={onGuidanceChange}
                     icons={question => <UnpublishedQuestionIcon question={question} unpublishedGuidance={unpublishedGuidance} />}
-                    // readOnly={true}
-                    /* onQuestionClick={onQuestionSetAction}
-					onQuestionAction={onQuestionAction}
-					onUpdate={onFormUpdate}
-					onSubmit={onFormSubmit} */
                 />
-            );
-        }
-    };
+            )
+        );
+    }, [activePanelId, questionStatus, questionAnswers, unpublishedGuidance]);
 
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
     Winterfell.addInputType('datePickerCustom', DatePickerCustom);
@@ -662,6 +618,7 @@ export const DataAccessRequestCustomiseForm = props => {
                         <div className='action-bar--questions'>
                             <ActionBarMenu
                                 label='Clear updates'
+                                buttonClass='button-tertiary'
                                 options={[
                                     {
                                         actions: [
@@ -671,8 +628,8 @@ export const DataAccessRequestCustomiseForm = props => {
                                     },
                                 ]}
                                 alignStart
+                                disabled={!countOfChanges}
                             />
-                            {/* <Button variant='tertiary' onClick={handleClearUpdates} disabled={!countOfChanges} /> */}
                         </div>
                         <div className='action-bar-actions'>
                             <div className='amendment-count mr-3'>{countOfChanges} unpublished update</div>
