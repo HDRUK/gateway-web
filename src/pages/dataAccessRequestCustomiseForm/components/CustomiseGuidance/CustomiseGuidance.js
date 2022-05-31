@@ -33,8 +33,6 @@ const CustomiseGuidance = ({ activeGuidance, isLocked, onGuidanceChange, activeQ
         }
     }, [activeQuestion]);
 
-    console.log('Active panel', activePanel);
-
     if (activePanel?.panelGuidance && !activeQuestion) {
         return <ReactMarkdown source={activePanel.panelGuidance} linkTarget='_blank' />;
     }
