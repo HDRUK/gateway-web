@@ -13,8 +13,8 @@ const patchClearAll = (_id, options) => {
     return patchRequest(`${apiV2URL}/questionbank/${_id}`, options);
 };
 
-const patchClearSection = (_id, questionSetId, options) => {
-    return patchRequest(`${apiV2URL}/questionbank/${_id}?questionSet=${questionSetId}`, options);
+const patchClearSection = (_id, pageId, options) => {
+    return patchRequest(`${apiV2URL}/questionbank/${_id}?page=${pageId}`, options);
 };
 
 const useGetQuestionbankItem = (requestOptions, mutateOptions) => {
@@ -25,7 +25,7 @@ const useGetQuestionbankItem = (requestOptions, mutateOptions) => {
 };
 
 const usePostQuestionbankItem = (requestOptions, mutateOptions) => {
-    return useMutationWithTranslations(({ id, ...outerProps }) => postQuestionbankItem(id, outerProps, requestOptions), {
+    return useMutationWithTranslations(({ id, ...body }) => postQuestionbankItem(id, body, requestOptions), {
         mutationKey: 'questionbank.postQuestionbankItem',
         ...mutateOptions,
     });

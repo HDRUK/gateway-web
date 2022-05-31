@@ -352,13 +352,27 @@ const findQuestionSet = (questionSetId = '', schema = {}) => {
     return {};
 };
 
-const findPageIdByQuestionSet = (questionSetId = '', schema = {}) => {
-    if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
+const findQuestionSetsByPageId = (pageId = '', schema = {}) => {
+    if (!_.isEmpty(pageId) && !_.isEmpty(schema)) {
         const { formPanels } = schema;
 
-        return formPanels.find(q => q.panelId === questionSetId)?.pageId;
+        return [...formPanels].filter(q => q.pageId === pageId);
     }
     return {};
+};
+
+const findPageByQuestionSet = (questionSetId = '', schema = {}) => {
+    if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
+        const { formPanels, pages } = schema;
+
+        const pageId = formPanels.find(q => q.panelId === questionSetId)?.pageId;
+        return pages.find(q => q.pageId === pageId);
+    }
+    return {};
+};
+
+const findPageIdByQuestionSet = (questionSetId = '', schema = {}) => {
+    return findPageByQuestionSet(questionSetId, schema)?.pageId;
 };
 
 /**
@@ -640,6 +654,7 @@ const isQuestionOff = questionStatus => {
 };
 
 export default {
+    findPageByQuestionSet,
     findQuestionSet,
     findQuestion,
     autoComplete,
@@ -673,4 +688,5 @@ export default {
     isQuestionOn,
     isQuestionOff,
     findPageIdByQuestionSet,
+    findQuestionSetsByPageId,
 };
