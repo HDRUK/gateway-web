@@ -135,8 +135,6 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
         };
     }
 
-
-
     return (
         <Modal show={show} onHide={onHide} className={showConfirm || showCancel ? 'modal-md' : 'modal-xl'}>
             <Modal.Header>
@@ -149,7 +147,12 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
                     <span dangerouslySetInnerHTML={{ __html: modalContent.body }} />
                 </p>
                 {!showConfirm && !showCancel && (
-                    <WysiwygEditor data-testid='wysiwyg-editor' editorState={editorState} onEditorStateChange={setEditorState} onMarkdownChange={()=>setDisabled(false)}/>
+                    <WysiwygEditor
+                        data-testid='wysiwyg-editor'
+                        editorState={editorState}
+                        onEditorStateChange={setEditorState}
+                        onMarkdownChange={() => setDisabled(false)}
+                    />
                 )}
             </Modal.Body>
             <Modal.Footer>
