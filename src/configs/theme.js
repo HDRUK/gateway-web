@@ -95,8 +95,8 @@ export const THEME_FONT_SIZES = {
     xxs: '8px',
     xs: '10px',
     sm: '12px',
-    md: '13px',
-    default: '13px',
+    md: '14px',
+    default: '14px',
     lg: '16px',
     xl: '20px',
     '2xl': '24px',
@@ -225,6 +225,19 @@ export const theme = {
             },
         },
         Button: THEME_BUTTON,
+        Cta: {
+            sizes: {
+                small: {
+                    fontSize: THEME_FONT_SIZES.sm,
+                },
+                default: {
+                    fontSize: THEME_FONT_SIZES.md,
+                },
+                large: {
+                    fontSize: THEME_FONT_SIZES.xl,
+                },
+            },
+        },
         IconButton: merge({}, THEME_BUTTON, {
             sizes: {
                 small: {

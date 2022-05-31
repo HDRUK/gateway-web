@@ -10,6 +10,7 @@ import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
+import Typography from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
@@ -34,6 +35,7 @@ import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import './DataAccessRequestCustomiseForm.scss';
 import LayoutBox from '../../components/LayoutBox';
+import Cta from '../../components/Cta';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -539,10 +541,13 @@ export const DataAccessRequestCustomiseForm = props => {
                                 <span className='white-14-semibold'>{lastSaved}</span>
                             </LayoutBox>
                         )}
-                        <Button variant='tertiary' onClick={onClickSave} size='small'>
+                        <Button variant='tertiary' onClick={onClickSave} size='small' mr={5}>
                             Save now
                         </Button>
-                        <CloseButtonSvg width='16px' height='16px' fill='#fff' onClick={redirectDashboard} />
+
+                        <Cta onClick={redirectDashboard} iconRight={<CloseButtonSvg />} color='white' fill='white'>
+                            Close
+                        </Cta>
                     </Col>
                 </Row>
 
