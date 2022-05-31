@@ -1,11 +1,9 @@
 import * as Sentry from '@sentry/react';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Col, Container, Modal, Row } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
