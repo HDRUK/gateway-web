@@ -352,6 +352,29 @@ const findQuestionSet = (questionSetId = '', schema = {}) => {
     return {};
 };
 
+const findQuestionSetsByPageId = (pageId = '', schema = {}) => {
+    if (!_.isEmpty(pageId) && !_.isEmpty(schema)) {
+        const { formPanels } = schema;
+
+        return [...formPanels].filter(q => q.pageId === pageId);
+    }
+    return {};
+};
+
+const findPageByQuestionSet = (questionSetId = '', schema = {}) => {
+    if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
+        const { formPanels, pages } = schema;
+
+        const pageId = formPanels.find(q => q.panelId === questionSetId)?.pageId;
+        return pages.find(q => q.pageId === pageId);
+    }
+    return {};
+};
+
+const findPageIdByQuestionSet = (questionSetId = '', schema = {}) => {
+    return findPageByQuestionSet(questionSetId, schema)?.pageId;
+};
+
 /**
  * [TotalQuestionAnswered]
  * @desc - Sets total questions answered for each section
@@ -668,6 +691,7 @@ const isQuestionOff = questionStatus => {
 };
 
 export default {
+    findPageByQuestionSet,
     findQuestionSet,
     findQuestion,
     autoComplete,
@@ -701,4 +725,6 @@ export default {
     isQuestionOn,
     isQuestionOff,
     injectReadonlyStaticContent,
+    findPageIdByQuestionSet,
+    findQuestionSetsByPageId,
 };
