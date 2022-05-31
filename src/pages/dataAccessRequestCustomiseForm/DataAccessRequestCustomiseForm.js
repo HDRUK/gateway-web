@@ -100,7 +100,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
         const newPanelId = panelId || masterSchema.formPanels[0].panelId;
         const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, newPanelId);
-      
+
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
@@ -109,7 +109,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
-        setJsonSchema(jsonSchema);
+        setJsonSchema({ ...masterSchema, ...classSchema, ...questionActions });
         setQuestionStatus(questionStatus);
         setExistingQuestionStatus(cloneDeep(questionStatus));
         setNewGuidance(guidance);
@@ -206,14 +206,13 @@ export const DataAccessRequestCustomiseForm = props => {
         // update actual object model with property of active true
         newFormState[newPageindex] = { ...pages[newPageindex], active: true };
         // get set the active panelId
-        let { panelId, panelGuidance } = newForm;
+        let { panelId } = newForm;
         if (isEmpty(panelId) || typeof panelId === 'undefined') {
             ({ panelId } = [...newJsonSchema.formPanels].find(p => p.pageId === newFormState[newPageindex].pageId) || '');
         }
 
         setJsonSchema({ ...newJsonSchema, pages: newFormState });
         setActivePanelId(panelId);
-        setIsWideForm(panelId === 'about' || panelId === 'files');
         setActiveGuidance('');
         setActiveQuestion('');
         setActiveQuestionData(null);
@@ -548,7 +547,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <div id='darContainer' className='flex-form'>
                     <div id='darLeftCol' className='scrollable-sticky-column'>
-                        {[...jsonSchema.pages].map((item, idx) => (
+                        {(jsonSchema.pages || []).map((item, idx) => (
                             <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
                                 <div>
                                     <h3
@@ -610,9 +609,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                         <header>
                                             <div>
                                                 <i className='far fa-question-circle mr-2' />
-                                                <p className='gray800-14-bold'>
-                                                    {activeQuestionData?.question || activePanel?.navHeader}
-                                                </p>
+                                                <p className='gray800-14-bold'>{activeQuestionData?.question || activePanel?.navHeader}</p>
                                             </div>
                                             {activeQuestion && (
                                                 <CloseButtonSvg width='16px' height='16px' fill='#475da' onClick={resetGuidance} />

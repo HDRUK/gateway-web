@@ -448,7 +448,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, activePanelId) => {
     let formPanel = {};
     let currentPageIdx = 0;
 
-    const additionalfilesNavElementsExist = [...pages].find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
+    const additionalfilesNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
 
     if (!additionalfilesNavElementsExist) {
         pages.push(staticContent.filesPageNav);
@@ -471,7 +471,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, activePanelId) => {
 
     pages[currentPageIdx].active = true;
 
-    return { ...jsonSchema, ...pages, formPanels, questionPanels };
+    return { ...jsonSchema, pages, formPanels, questionPanels };
 };
 
 let filterInvalidQuestions = questions => {
