@@ -22,6 +22,7 @@ import Loading from '../commonComponents/Loading';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
+import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
 import { classSchema } from './classSchema';
 import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
 import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
@@ -69,6 +70,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const [existingCountOfChanges, setExistingCountOfChanges] = useState(0);
     const [showConfirmPublishModal, setShowConfirmPublishModal] = useState(false);
     const [activeQuestionData, setActiveQuestionData] = React.useState();
+    const [activePanel, setActivePanel] = React.useState();
 
     const { t } = useTranslation();
 
@@ -97,16 +99,19 @@ export const DataAccessRequestCustomiseForm = props => {
             ],
         };
 
+        const { panelId } = masterSchema.formPanels[0];
+        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, panelId);
+
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
-        setJsonSchema({ ...masterSchema, ...classSchema, ...questionActions });
+        setJsonSchema(newJsonSchema);
         setQuestionStatus(questionStatus);
         setExistingQuestionStatus(cloneDeep(questionStatus));
         setNewGuidance(guidance);
         setExistingGuidance(cloneDeep(guidance));
         setCountOfChanges(countOfChanges);
         setExistingCountOfChanges(countOfChanges);
-        setActivePanelId(masterSchema.formPanels[0].panelId);
+        setActivePanelId(panelId);
         setIsLoading(false);
     };
 
@@ -187,7 +192,7 @@ export const DataAccessRequestCustomiseForm = props => {
         // update actual object model with property of active true
         newFormState[newPageindex] = { ...pages[newPageindex], active: true };
         // get set the active panelId
-        let { panelId } = newForm;
+        let { panelId, panelGuidance } = newForm;
         if (isEmpty(panelId) || typeof panelId === 'undefined') {
             ({ panelId } = [...jsonSchema.formPanels].find(p => p.pageId === newFormState[newPageindex].pageId) || '');
         }
@@ -197,6 +202,9 @@ export const DataAccessRequestCustomiseForm = props => {
         setIsWideForm(panelId === 'about' || panelId === 'files');
         setActiveGuidance('');
         setActiveQuestion('');
+        setActiveQuestionData(null);
+
+        setActivePanel(newForm);
     };
 
     const onSubmitClick = async () => {
@@ -418,70 +426,34 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const renderApp = () => {
-        if (activePanelId === 'about') {
-            /* return (
-			<AboutApplication
-				key={_id}
-				activeAccordionCard={activeAccordionCard}
-				allowedNavigation={allowedNavigation}
-				userType={userType}
-				selectedDatasets={aboutApplication.selectedDatasets}
-				readOnly={readOnly || applicationStatus !== DarHelper.darStatus.inProgress}
-				projectNameValid={projectNameValid}
-				projectName={aboutApplication.projectName}
-				nationalCoreStudiesProjects={nationalCoreStudiesProjects}
-				ncsValid={ncsValid}
-				completedReadAdvice={aboutApplication.completedReadAdvice}
-				completedCommunicateAdvice={aboutApplication.completedCommunicateAdvice}
-				completedApprovalsAdvice={aboutApplication.completedApprovalsAdvice}
-				completedSubmitAdvice={aboutApplication.completedSubmitAdvice}
-				completedInviteCollaborators={aboutApplication.completedInviteCollaborators}
-				completedDatasetSelection={aboutApplication.completedDatasetSelection}
-				isNationalCoreStudies={aboutApplication.isNationalCoreStudies}
-				nationalCoreStudiesProjectId={aboutApplication.nationalCoreStudiesProjectId}
-				context={context}
-				toggleCard={toggleCard}
-				toggleDrawer={toggleDrawer}
-				onHandleDataSetChange={onHandleDataSetChange}
-				onNextStep={onNextStep}
-				onHandleProjectNameBlur={onHandleProjectNameBlur}
-				onHandleProjectNameChange={onHandleProjectNameChange}
-				onHandleProjectIsNCSToggle={onHandleProjectIsNCSToggle}
-				onHandleNCSProjectChange={onHandleNCSProjectChange}
-				renderTooltip={renderTooltip}
-				toggleModal={toggleModal}
-				toggleMrcModal={toggleMrcModal}
-				toggleContributorModal={toggleContributorModal}
-				areDatasetsAmended={areDatasetsAmended}
-				datasetsAmendedBy={datasetsAmendedBy}
-				datasetsAmendedDate={datasetsAmendedDate}
-			/>
-		); */
-        } else if (activePanelId === 'files') {
-            /* return <Uploads onFilesUpdate={onFilesUpdate} id={_id} files={files} readOnly={readOnly} />; */
-        } else {
+        if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
-                <Winterfell
-                    schema={jsonSchema}
-                    questionAnswers={questionAnswers}
-                    questionStatus={questionStatus}
-                    panelId={activePanelId}
-                    disableSubmit
-                    disableValidation
-                    renderRequiredAsterisk={() => <span>*</span>}
-                    customiseView
-                    onSwitchChange={onSwitchChange}
-                    onQuestionAction={onQuestionAction}
-                    onGuidanceChange={onGuidanceChange}
-                    icons={question => <UnpublishedQuestionIcon question={question} unpublishedGuidance={unpublishedGuidance} />}
-                    // readOnly={true}
-                    /* onQuestionClick={onQuestionSetAction}
-					onQuestionAction={onQuestionAction}
-					onUpdate={onFormUpdate}
-					onSubmit={onFormSubmit} */
+                <Uploads
+                    onFilesUpdate={() => {}}
+                    files={[]}
+                    disabled
+                    description={activePanel.panelHeader}
+                    header={activePanel.questionPanelHeaderText}
                 />
             );
         }
+
+        return (
+            <Winterfell
+                schema={jsonSchema}
+                questionAnswers={questionAnswers}
+                questionStatus={questionStatus}
+                panelId={activePanelId}
+                disableSubmit
+                disableValidation
+                renderRequiredAsterisk={() => <span>*</span>}
+                customiseView
+                onSwitchChange={onSwitchChange}
+                onQuestionAction={onQuestionAction}
+                onGuidanceChange={onGuidanceChange}
+                icons={question => <UnpublishedQuestionIcon question={question} unpublishedGuidance={unpublishedGuidance} />}
+            />
+        );
     };
 
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
@@ -598,14 +570,18 @@ export const DataAccessRequestCustomiseForm = props => {
                         <div id='darRightCol' className='scrollable-sticky-column'>
                             <div className='darTab'>
                                 <>
-                                    {activeQuestion ? (
+                                    {activePanel?.panelGuidance || activeQuestion ? (
                                         <>
                                             <header>
                                                 <div>
                                                     <i className='far fa-question-circle mr-2' />
-                                                    <p className='gray800-14-bold'>{activeQuestionData.question}</p>
+                                                    <p className='gray800-14-bold'>
+                                                        {activeQuestionData?.question || activePanel?.navHeader}
+                                                    </p>
                                                 </div>
-                                                <CloseButtonSvg width='16px' height='16px' fill='#475da' onClick={resetGuidance} />
+                                                {activeQuestion && (
+                                                    <CloseButtonSvg width='16px' height='16px' fill='#475da' onClick={resetGuidance} />
+                                                )}
                                             </header>
                                             <main className='gray800-14'>
                                                 <CustomiseGuidance
@@ -613,6 +589,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                                     isLocked={helpers.isQuestionLocked(questionStatus[activeQuestion])}
                                                     onGuidanceChange={onGuidanceChange}
                                                     activeQuestion={activeQuestion}
+                                                    activePanel={activePanel}
                                                 />
                                             </main>
                                         </>
@@ -636,7 +613,6 @@ export const DataAccessRequestCustomiseForm = props => {
                         </div>
                         <div className='action-bar-actions'>
                             <div className='amendment-count mr-3'>{countOfChanges} unpublished update</div>
-                            {console.log()}
                             <Button
                                 disabled={!!countOfChanges < 1}
                                 variant='secondary'
