@@ -30,7 +30,7 @@ Icon.propTypes = addCommonPropTypes({
 Icon.defaultProps = {
     size: 'default',
     color: 'inherit',
-    fill: 'inherit',
+    fill: 'none',
     stroke: 'none',
 };
 

@@ -189,6 +189,7 @@ span.toolTipText:after {
     min-height: 70px;
     margin-left: 0px !important;
     align-content: center;
+    align-items: center;
 }
 
 .banner .banner-left {
@@ -200,7 +201,8 @@ span.toolTipText:after {
     text-align: right;
     vertical-align: middle;
     padding-right: 32px !important;
-    svg {
+
+    > svg {
         margin-left: 20px;
         cursor: pointer;
     }
@@ -355,7 +357,7 @@ span.toolTipText:after {
 @media (min-width: 884px) {
     .banner .banner-right span,
     .banner-right a,
-    .banner-right button {
+    .banner-right button:not(.ui-Button) {
         line-height: 30px;
     }
 }

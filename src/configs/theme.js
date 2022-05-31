@@ -108,10 +108,10 @@ export const THEME_FONT_SIZES = {
 export const THEME_BUTTON = {
     sizes: {
         small: {
-            fontSize: THEME_FONT_SIZES.xs,
-            padding: '6px 12px',
+            fontSize: THEME_FONT_SIZES.md,
+            padding: '8px 12px',
         },
-        default: { fontSize: THEME_FONT_SIZES.md, padding: '10px 16px' },
+        default: { fontSize: THEME_FONT_SIZES.md, padding: '11px 16px' },
         large: { fontSize: THEME_FONT_SIZES.lg, padding: '14px 20px' },
     },
     variants: {

@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
 import Button from '../../components/Button';
+import Icon from '../../components/Icon';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
@@ -30,7 +31,9 @@ import NavItem from './components/NavItem/NavItem';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
+import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import './DataAccessRequestCustomiseForm.scss';
+import LayoutBox from '../../components/LayoutBox';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -69,6 +72,8 @@ export const DataAccessRequestCustomiseForm = props => {
     const [existingCountOfChanges, setExistingCountOfChanges] = useState(0);
     const [showConfirmPublishModal, setShowConfirmPublishModal] = useState(false);
     const [activeQuestionData, setActiveQuestionData] = React.useState();
+
+    const patchSchemaRequest = darService.usePatchSchema();
 
     const getMasterSchema = async panelId => {
         const {
@@ -124,6 +129,11 @@ export const DataAccessRequestCustomiseForm = props => {
         );
     };
 
+    const saveTime = () => {
+        const currentTime = moment().format('DD MMM YYYY HH:mm');
+        return `Last saved: ${currentTime}`;
+    };
+
     const onSwitchChange = (questionId, value) => {
         questionStatus[questionId] = value ? 1 : 0;
         setQuestionStatus(questionStatus);
@@ -145,25 +155,23 @@ export const DataAccessRequestCustomiseForm = props => {
         ).length;
 
         setCountOfChanges(numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges);
-        setLastSaved(saveTime);
 
         const params = {
             questionStatus,
             countOfChanges: numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges,
         };
 
-        darService.patchSchema(schemaId, params);
+        patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        setLastSaved(saveTime());
     };
 
     const onClickSave = e => {
         e.preventDefault();
-        setLastSaved(saveTime);
-    };
-
-    const saveTime = () => {
-        const currentTime = moment().format('DD MMM YYYY HH:mm');
-        const lastSaved = `Last saved ${currentTime}`;
-        return lastSaved;
+        setLastSaved(saveTime());
     };
 
     const redirectDashboard = e => {
@@ -391,7 +399,7 @@ export const DataAccessRequestCustomiseForm = props => {
         setActiveQuestionData(null);
     };
 
-    const onGuidanceChange = (questionId, changedGuidance) => {
+    const onGuidanceChange = async (questionId, changedGuidance) => {
         if (typeof newGuidance[questionId] !== 'undefined') {
             newGuidance[questionId] = changedGuidance;
         } else {
@@ -418,7 +426,6 @@ export const DataAccessRequestCustomiseForm = props => {
         const unpublishedGuidanceChange = uniq([...unpublishedGuidance, questionId]);
 
         setCountOfChanges(numberOfChangesGuidance + numberOfChangesQuestions + existingCountOfChanges);
-        setLastSaved(saveTime);
 
         const params = {
             guidance: newGuidance,
@@ -428,6 +435,12 @@ export const DataAccessRequestCustomiseForm = props => {
 
         darService.patchSchema(schemaId, params);
 
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        setLastSaved(saveTime());
         setUnpublishedGuidance(unpublishedGuidanceChange);
     };
 
@@ -519,10 +532,16 @@ export const DataAccessRequestCustomiseForm = props => {
                         <span className='white-16-semibold pr-5'>{publisherDetails.publisherDetails.name}</span>
                     </Col>
                     <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
-                        <span className='white-14-semibold'>{!isEmpty(lastSaved) ? lastSaved : ''}</span>
-                        <a className='linkButton white-14-semibold ml-2' onClick={onClickSave} href='javascript:void(0)'>
+                        {lastSaved && (
+                            <LayoutBox mr={5} display='flex' alignItems='center'>
+                                {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='2xl' mr={2} />}
+                                {patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='2xl' mr={2} />}
+                                <span className='white-14-semibold'>{lastSaved}</span>
+                            </LayoutBox>
+                        )}
+                        <Button variant='tertiary' onClick={onClickSave} size='small'>
                             Save now
-                        </a>
+                        </Button>
                         <CloseButtonSvg width='16px' height='16px' fill='#fff' onClick={redirectDashboard} />
                     </Col>
                 </Row>
