@@ -109,7 +109,6 @@ export const DataAccessRequestCustomiseForm = props => {
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
-        setJsonSchema({ ...masterSchema, ...classSchema, ...questionActions });
         setQuestionStatus(questionStatus);
         setExistingQuestionStatus(cloneDeep(questionStatus));
         setNewGuidance(guidance);
