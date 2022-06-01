@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { WysiwygEditor } from '../../../commonComponents/WysiwygEditor/WysiwygEditor';
 
-const CustomiseGuidance = ({ activeGuidance, isLocked, onGuidanceChange, activeQuestion }) => {
+const CustomiseGuidance = ({ activeGuidance, isLocked, onGuidanceChange, activeQuestion, activePanel }) => {
     const [editorState, setEditorState] = useState(null);
 
     const debounceChange = useCallback(
@@ -27,9 +27,15 @@ const CustomiseGuidance = ({ activeGuidance, isLocked, onGuidanceChange, activeQ
     );
 
     React.useEffect(() => {
-        const contentState = convertFromRaw(markdownToDraft(activeGuidance));
-        setEditorState(EditorState.createWithContent(contentState));
+        if (activeQuestion) {
+            const contentState = convertFromRaw(markdownToDraft(activeGuidance));
+            setEditorState(EditorState.createWithContent(contentState));
+        }
     }, [activeQuestion]);
+
+    if (activePanel?.panelGuidance && !activeQuestion) {
+        return <ReactMarkdown source={activePanel.panelGuidance} linkTarget='_blank' />;
+    }
 
     return (
         <>

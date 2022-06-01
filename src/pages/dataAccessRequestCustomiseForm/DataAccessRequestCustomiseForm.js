@@ -22,6 +22,7 @@ import Loading from '../commonComponents/Loading';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
+import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
 import { classSchema } from './classSchema';
 import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
 import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
@@ -52,7 +53,6 @@ export const DataAccessRequestCustomiseForm = props => {
     );
     const [showDrawer, setShowDrawer] = useState(false);
     const [lastSaved, setLastSaved] = useState('');
-    const [isWideForm, setIsWideForm] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [activeGuidance, setActiveGuidance] = useState('');
     const [activeQuestion, setActiveQuestion] = useState('');
@@ -69,6 +69,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const [existingCountOfChanges, setExistingCountOfChanges] = useState(0);
     const [showConfirmPublishModal, setShowConfirmPublishModal] = useState(false);
     const [activeQuestionData, setActiveQuestionData] = React.useState();
+    const [activePanel, setActivePanel] = React.useState();
 
     const getMasterSchema = async panelId => {
         const {
@@ -97,15 +98,17 @@ export const DataAccessRequestCustomiseForm = props => {
             ],
         };
 
-        const jsonSchema = { ...masterSchema, ...classSchema, ...questionActions };
-
         const newPanelId = panelId || masterSchema.formPanels[0].panelId;
+        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, newPanelId);
 
-        const pageId = helpers.findPageIdByQuestionSet(newPanelId, jsonSchema);
+        const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
-        setJsonSchema(jsonSchema);
+        setJsonSchema(newJsonSchema);
+
+        setUnpublishedGuidance(unpublishedGuidance || []);
+        setSchemaId(schemaId);
         setQuestionStatus(questionStatus);
         setExistingQuestionStatus(cloneDeep(questionStatus));
         setNewGuidance(guidance);
@@ -120,7 +123,7 @@ export const DataAccessRequestCustomiseForm = props => {
                 pageId,
                 panelId: newPanelId,
             },
-            jsonSchema
+            newJsonSchema
         );
     };
 
@@ -209,9 +212,11 @@ export const DataAccessRequestCustomiseForm = props => {
 
         setJsonSchema({ ...newJsonSchema, pages: newFormState });
         setActivePanelId(panelId);
-        setIsWideForm(panelId === 'about' || panelId === 'files');
         setActiveGuidance('');
         setActiveQuestion('');
+        setActiveQuestionData(null);
+
+        setActivePanel(newForm);
     };
 
     const onSubmitClick = async () => {
@@ -446,6 +451,18 @@ export const DataAccessRequestCustomiseForm = props => {
     }, [activePanelId, publisherDetails._id]);
 
     const renderApp = React.useCallback(() => {
+        if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
+            return (
+                <Uploads
+                    onFilesUpdate={() => {}}
+                    files={[]}
+                    disabled
+                    description={activePanel.panelHeader}
+                    header={activePanel.questionPanelHeaderText}
+                />
+            );
+        }
+
         return (
             activePanelId && (
                 <Winterfell
@@ -529,7 +546,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <div id='darContainer' className='flex-form'>
                     <div id='darLeftCol' className='scrollable-sticky-column'>
-                        {[...jsonSchema.pages].map((item, idx) => (
+                        {(jsonSchema.pages || []).map((item, idx) => (
                             <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
                                 <div>
                                     <h3
@@ -553,13 +570,7 @@ export const DataAccessRequestCustomiseForm = props => {
                             </div>
                         ))}
                     </div>
-                    <div id='darCenterCol' className={isWideForm ? 'extended' : ''}>
-                        {/* 
-						{isEmpty(alert) && (
-							<Alert variant={'success'} className='main-alert'>
-								<SVGIcon name='check' width={24} height={24} fill={'#2C8267'} /> {alert.message}
-							</Alert>
-						)} */}
+                    <div id='darCenterCol'>
                         <div id='darDropdownNav'>
                             <NavDropdown
                                 options={{
@@ -589,37 +600,38 @@ export const DataAccessRequestCustomiseForm = props => {
                             {renderApp()}
                         </div>
                     </div>
-                    {isWideForm ? null : (
-                        <div id='darRightCol' className='scrollable-sticky-column'>
-                            <div className='darTab'>
-                                <>
-                                    {activeQuestion && activeQuestionData ? (
-                                        <>
-                                            <header>
-                                                <div>
-                                                    <i className='far fa-question-circle mr-2' />
-                                                    <p className='gray800-14-bold'>{activeQuestionData.question}</p>
-                                                </div>
+                    <div id='darRightCol' className='scrollable-sticky-column'>
+                        <div className='darTab'>
+                            <>
+                                {activePanel?.panelGuidance || activeQuestion ? (
+                                    <>
+                                        <header>
+                                            <div>
+                                                <i className='far fa-question-circle mr-2' />
+                                                <p className='gray800-14-bold'>{activeQuestionData?.question || activePanel?.navHeader}</p>
+                                            </div>
+                                            {activeQuestion && (
                                                 <CloseButtonSvg width='16px' height='16px' fill='#475da' onClick={resetGuidance} />
-                                            </header>
-                                            <main className='gray800-14'>
-                                                <CustomiseGuidance
-                                                    activeGuidance={newGuidance[activeQuestion] || activeGuidance}
-                                                    isLocked={helpers.isQuestionLocked(questionStatus[activeQuestion])}
-                                                    onGuidanceChange={onGuidanceChange}
-                                                    activeQuestion={activeQuestion}
-                                                />
-                                            </main>
-                                        </>
-                                    ) : (
-                                        <div className='darTab-guidance'>
-                                            Hover on a question and click the icon to edit or view locked guidance
-                                        </div>
-                                    )}
-                                </>
-                            </div>
+                                            )}
+                                        </header>
+                                        <main className='gray800-14'>
+                                            <CustomiseGuidance
+                                                activeGuidance={newGuidance[activeQuestion] || activeGuidance}
+                                                isLocked={helpers.isQuestionLocked(questionStatus[activeQuestion])}
+                                                onGuidanceChange={onGuidanceChange}
+                                                activeQuestion={activeQuestion}
+                                                activePanel={activePanel}
+                                            />
+                                        </main>
+                                    </>
+                                ) : (
+                                    <div className='darTab-guidance'>
+                                        Hover on a question and click the icon to edit or view locked guidance
+                                    </div>
+                                )}
+                            </>
                         </div>
-                    )}
+                    </div>
                 </div>
 
                 <ActionBar userState={userState}>
