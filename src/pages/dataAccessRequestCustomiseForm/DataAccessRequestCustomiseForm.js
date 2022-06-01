@@ -36,6 +36,7 @@ import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import './DataAccessRequestCustomiseForm.scss';
 import LayoutBox from '../../components/LayoutBox';
 import Cta from '../../components/Cta';
+import Spinner from '../../components/Spinner/Spinner';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -536,8 +537,8 @@ export const DataAccessRequestCustomiseForm = props => {
                     <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
                         {lastSaved && (
                             <LayoutBox mr={5} display='flex' alignItems='center'>
-                                {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='2xl' mr={2} />}
-                                {patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='2xl' mr={2} />}
+                                {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='xl' mr={2} />}
+                                {patchSchemaRequest.isLoading && <Spinner stroke='white' size='xl' mr={2} />}
                                 <span className='white-14-semibold'>{lastSaved}</span>
                             </LayoutBox>
                         )}

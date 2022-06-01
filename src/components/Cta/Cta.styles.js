@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
-import { getComponentSize, getComponentStylesFromTheme } from '../../configs/theme';
+import { getComponentStylesFromTheme } from '../../configs/theme';
 
 export const root =
-    ({ color, fill, size }) =>
+    ({ color, fill, fontSize }) =>
     theme => {
         const {
             base: { unit, increment },
@@ -15,17 +15,10 @@ export const root =
                 {
                     color,
                     fill,
+                    fontSize,
                 },
                 theme
             )};
-
-            ${getComponentSize('Cta', size, theme)}
-
-            .ui-Icon,
-            svg {
-                height: 1.2em;
-                width: 1.2em;
-            }
 
             &:hover {
                 cursor: pointer;

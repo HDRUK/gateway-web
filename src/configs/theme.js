@@ -13,8 +13,18 @@ export const getCommonStyle = (prop, value) => {
     return !isNil(value) ? `${prop}: ${value};` : '';
 };
 
+export const getStyle = (propParts, value, theme) => {
+    const styleProp = propParts.join('-').toLowerCase();
+
+    if (styleProp === 'font-size') {
+        return `${styleProp}: ${theme.font.size[value]};`;
+    }
+
+    return `${styleProp}: ${value};`;
+};
+
 export const getCommonStyles = (
-    { ml, mr, mb, mt, p, pr, pt, pb, pl, width, maxWidth, minWidth, display, alignItems, justifyContent, flexGrow },
+    { ml, mr, mb, mt, p, pr, pt, pb, pl, width, maxWidth, minWidth, display, alignItems, justifyContent, flexGrow, position },
     theme
 ) => {
     return `
@@ -34,6 +44,7 @@ export const getCommonStyles = (
 		${getCommonStyle('align-items', alignItems)}
         ${getCommonStyle('justify-content', justifyContent)}
         ${getCommonStyle('flex-grow', flexGrow)}
+        ${getCommonStyle('position', position)}
 	`;
 };
 
@@ -41,6 +52,7 @@ export const getComponentStylesFromTheme = (props, theme) => {
     const styles = Object.keys(props).map(prop => {
         const propParts = prop.replace(/([a-z])([A-Z])/g, '$1,$2').split(',');
         const isColor = Object.keys(theme.colors).includes(props[prop]);
+        const value = isColor ? theme.colors[props[prop]] : props[prop];
         const pseudoSelector = propParts[0];
 
         if (pseudoSelector === 'hover' || pseudoSelector === 'disabled' || pseudoSelector === 'focus') {
@@ -48,12 +60,12 @@ export const getComponentStylesFromTheme = (props, theme) => {
 
             return `
                 :${pseudoSelector} {
-                    ${propParts.join('-')}: ${isColor ? theme.colors[props[prop]] : props[prop]};
+                   ${getStyle(propParts, value, theme)}
                 }
             `;
         }
 
-        return `${propParts.join('-')}: ${isColor ? theme.colors[props[prop]] : props[prop]};`;
+        return getStyle(propParts, value, theme);
     });
 
     return styles.join('\n');
@@ -65,6 +77,10 @@ export const getComponentVariant = (component, variant, theme) => {
 
 export const getComponentSize = (component, size, theme) => {
     return getComponentStylesFromTheme(theme.components[component].sizes[size], theme);
+};
+
+export const getFontSizeStyle = (fontSize, theme) => {
+    return getComponentStylesFromTheme({ fontSize }, theme);
 };
 
 export const THEME_INPUT = {
@@ -108,11 +124,11 @@ export const THEME_FONT_SIZES = {
 export const THEME_BUTTON = {
     sizes: {
         small: {
-            fontSize: THEME_FONT_SIZES.md,
+            fontSize: 'md',
             padding: '8px 12px',
         },
-        default: { fontSize: THEME_FONT_SIZES.md, padding: '11px 16px' },
-        large: { fontSize: THEME_FONT_SIZES.lg, padding: '14px 20px' },
+        default: { fontSize: 'md', padding: '11px 16px' },
+        large: { fontSize: 'lg', padding: '14px 20px' },
     },
     variants: {
         primary: {
@@ -228,13 +244,13 @@ export const theme = {
         Cta: {
             sizes: {
                 small: {
-                    fontSize: THEME_FONT_SIZES.sm,
+                    fontSize: 'sm',
                 },
                 default: {
-                    fontSize: THEME_FONT_SIZES.md,
+                    fontSize: 'md',
                 },
                 large: {
-                    fontSize: THEME_FONT_SIZES.xl,
+                    fontSize: 'xl',
                 },
             },
         },

@@ -1,19 +1,17 @@
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
-import Cta from './Cta';
+import Spinner from './Spinner';
 
 const props = {
-    iconLeft: <span>Left</span>,
-    iconRight: <span>Right</span>,
     className: 'additional-classname',
 };
 
 let wrapper;
 
-describe('Given the Alert component', () => {
+describe('Given the Spinner component', () => {
     describe('When it is rendered', () => {
         beforeEach(() => {
-            wrapper = render(<Cta {...props}>Content</Cta>, {
+            wrapper = render(<Spinner {...props} />, {
                 wrapper: Providers,
             });
         });
@@ -24,12 +22,6 @@ describe('Given the Alert component', () => {
 
         it('Then has the correct className', () => {
             expect(wrapper.container.querySelector('.additional-classname')).toBeTruthy();
-        });
-
-        it('Then has the correct icons', async () => {
-            const icons = wrapper.container.querySelectorAll('.ui-Icon');
-            expect(icons[0].textContent).toEqual('Left');
-            expect(icons[1].textContent).toEqual('Right');
         });
     });
 });

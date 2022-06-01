@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { cx } from '@emotion/css';
 import { jsx } from '@emotion/react';
-import PropTypes from 'prop-types';
-import { addCommonPropTypes } from '../../configs/propTypes';
 import useCommonStyles from '../../hooks/useCommonStyles';
+import { PROP_TYPES_ICON } from './Icon.propTypes';
 import * as styles from './Icon.styles.js';
 
 const Icon = ({ svg, size, color, fill, stroke, className, ml, mr, mb, mt, ...outerProps }) => {
@@ -18,19 +17,12 @@ const Icon = ({ svg, size, color, fill, stroke, className, ml, mr, mb, mt, ...ou
     return <span {...iconProps}>{svg}</span>;
 };
 
-Icon.propTypes = addCommonPropTypes({
-    svg: PropTypes.node.isRequired,
-    size: PropTypes.oneOf(['xxs', 'xs', 'sm', 'md', 'default', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', 'contained']),
-    color: PropTypes.string,
-    fill: PropTypes.string,
-    stroke: PropTypes.string,
-    inline: PropTypes.bool,
-});
+Icon.propTypes = PROP_TYPES_ICON;
 
 Icon.defaultProps = {
     size: 'default',
     color: 'inherit',
-    fill: 'none',
+    fill: 'inherit',
     stroke: 'none',
 };
 

@@ -7,6 +7,18 @@ import LayoutBox from '../LayoutBox';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Cta.styles';
 
+const iconSizes = {
+    small: 'sm',
+    default: 'lg',
+    large: '2xl',
+};
+
+const fontSizes = {
+    small: 'xs',
+    default: 'default',
+    large: '2xl',
+};
+
 const Cta = ({ color, children, mt, mb, ml, mr, width, minWidth, maxWidth, iconLeft, iconRight, className, fill, size, ...outerProps }) => {
     return (
         <LayoutBox
@@ -14,10 +26,11 @@ const Cta = ({ color, children, mt, mb, ml, mr, width, minWidth, maxWidth, iconL
             as='a'
             display='flex'
             alignItems='center'
-            css={styles.root({ color, fill, size })}
+            css={styles.root({ color, fill, fontSize: fontSizes[size] })}
             {...outerProps}
             className={cx('ui-Cta', className)}>
-            {iconLeft && <Icon svg={iconLeft} />} {children} {iconRight && <Icon svg={iconRight} />}
+            {iconLeft && <Icon svg={iconLeft} size={iconSizes[size]} />} {children}{' '}
+            {iconRight && <Icon svg={iconRight} size={iconSizes[size]} />}
         </LayoutBox>
     );
 };
@@ -28,6 +41,7 @@ Cta.propTypes = {
     color: PropTypes.string,
     fill: PropTypes.string,
     size: PropTypes.oneOf(['small', 'default', 'large']),
+    onClick: PropTypes.func,
     ...PROP_TYPES_LAYOUTBOX,
 };
 
@@ -37,6 +51,7 @@ Cta.defaultProps = {
     size: 'default',
     fill: 'inherit',
     color: 'inherit',
+    onClick: () => {},
 };
 
 export default Cta;
