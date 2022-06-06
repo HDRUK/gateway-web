@@ -4,15 +4,18 @@ import { jsx } from '@emotion/react';
 import PropTypes from 'prop-types';
 import LayoutBox from '../LayoutBox';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
+import { PROP_TYPES_TYPOGRAPHY } from './Typography.propTypes';
 import * as styles from './Typography.styles';
 
-const Typography = ({ children, color, className, mt, mb, ml, mr, width, minWidth, maxWidth, variant }) => {
-    let tagName = variant;
+const Typography = ({ children, color, className, mt, mb, ml, mr, width, minWidth, maxWidth, variant, as }) => {
+    let tagName = as || variant;
 
-    if (variant === 'body') {
-        tagName = 'p';
-    } else if (variant === 'caption' || variant === 'tiny') {
-        tagName = 'span';
+    if (!as) {
+        if (variant === 'body') {
+            tagName = 'p';
+        } else if (variant === 'caption' || variant === 'tiny') {
+            tagName = 'span';
+        }
     }
 
     return (
@@ -26,17 +29,13 @@ const Typography = ({ children, color, className, mt, mb, ml, mr, width, minWidt
     );
 };
 
-Typography.propTypes = {
-    children: PropTypes.node,
-    variant: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body', 'caption', 'tiny']),
-    color: PropTypes.string,
-    ...PROP_TYPES_LAYOUTBOX,
-};
+Typography.propTypes = PROP_TYPES_TYPOGRAPHY;
 
 Typography.defaultProps = {
     children: null,
     variant: 'body',
-    color: 'inherit',
+    color: null,
+    as: null,
 };
 
 export default Typography;
