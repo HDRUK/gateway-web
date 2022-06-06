@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/react';
+import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
@@ -8,8 +9,10 @@ import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
+import AlertModal from '../../components/AlertModal';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
+import LayoutBox from '../../components/LayoutBox';
 import Typography from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import darService from '../../services/data-access-request';
@@ -24,6 +27,7 @@ import Loading from '../commonComponents/Loading';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
+import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
 import { classSchema } from './classSchema';
 import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
 import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
@@ -58,7 +62,6 @@ export const DataAccessRequestCustomiseForm = props => {
     );
     const [showDrawer, setShowDrawer] = useState(false);
     const [lastSaved, setLastSaved] = useState('');
-    const [isWideForm, setIsWideForm] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [activeGuidance, setActiveGuidance] = useState('');
     const [activeQuestion, setActiveQuestion] = useState('');
@@ -75,6 +78,9 @@ export const DataAccessRequestCustomiseForm = props => {
     const [existingCountOfChanges, setExistingCountOfChanges] = useState(0);
     const [showConfirmPublishModal, setShowConfirmPublishModal] = useState(false);
     const [activeQuestionData, setActiveQuestionData] = React.useState();
+    const [activePanel, setActivePanel] = React.useState();
+    const [showClearModal, setShowClearModal] = React.useState(false);
+    const [showClearSectionModal, setShowClearSectionModal] = React.useState(false);
 
     const patchSchemaRequest = darService.usePatchSchema();
 
@@ -105,15 +111,17 @@ export const DataAccessRequestCustomiseForm = props => {
             ],
         };
 
-        const jsonSchema = { ...masterSchema, ...classSchema, ...questionActions };
-
         const newPanelId = panelId || masterSchema.formPanels[0].panelId;
+        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, newPanelId);
 
-        const pageId = helpers.findPageIdByQuestionSet(newPanelId, jsonSchema);
+        const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
-        setJsonSchema(jsonSchema);
+        setJsonSchema(newJsonSchema);
+
+        setUnpublishedGuidance(unpublishedGuidance || []);
+        setSchemaId(schemaId);
         setQuestionStatus(questionStatus);
         setExistingQuestionStatus(cloneDeep(questionStatus));
         setNewGuidance(guidance);
@@ -128,7 +136,7 @@ export const DataAccessRequestCustomiseForm = props => {
                 pageId,
                 panelId: newPanelId,
             },
-            jsonSchema
+            newJsonSchema
         );
     };
 
@@ -220,9 +228,11 @@ export const DataAccessRequestCustomiseForm = props => {
 
         setJsonSchema({ ...newJsonSchema, pages: newFormState });
         setActivePanelId(panelId);
-        setIsWideForm(panelId === 'about' || panelId === 'files');
         setActiveGuidance('');
         setActiveQuestion('');
+        setActiveQuestionData(null);
+
+        setActivePanel(newForm);
     };
 
     const onSubmitClick = async () => {
@@ -447,10 +457,20 @@ export const DataAccessRequestCustomiseForm = props => {
         setUnpublishedGuidance(unpublishedGuidanceChange);
     };
 
-    const handleClearForm = React.useCallback(async () => {
+    const handleShowClearModal = () => {
+        setShowClearModal(true);
+    };
+
+    const handleShowClearSectionModal = () => {
+        setShowClearSectionModal(true);
+    };
+
+    const handleClear = React.useCallback(async () => {
         await questionbankService.patchClearAll(publisherDetails._id);
 
         getMasterSchema(activePanelId);
+
+        setShowClearModal(false);
     }, [activePanelId, publisherDetails._id]);
 
     const handleClearSection = React.useCallback(async () => {
@@ -459,9 +479,29 @@ export const DataAccessRequestCustomiseForm = props => {
         await questionbankService.patchClearSection(publisherDetails._id, page.pageId);
 
         getMasterSchema(activePanelId);
+
+        setShowClearSectionModal(false);
     }, [activePanelId, publisherDetails._id]);
 
+    const handleModalClose = () => {
+        setShowConfirmPublishModal(false);
+        setShowClearModal(false);
+        setShowClearSectionModal(false);
+    };
+
     const renderApp = React.useCallback(() => {
+        if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
+            return (
+                <Uploads
+                    onFilesUpdate={() => {}}
+                    files={[]}
+                    disabled
+                    description={activePanel.panelHeader}
+                    header={activePanel.questionPanelHeaderText}
+                />
+            );
+        }
+
         return (
             activePanelId && (
                 <Winterfell
@@ -554,7 +594,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <div id='darContainer' className='flex-form'>
                     <div id='darLeftCol' className='scrollable-sticky-column'>
-                        {[...jsonSchema.pages].map((item, idx) => (
+                        {(jsonSchema.pages || []).map((item, idx) => (
                             <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
                                 <div>
                                     <h3
@@ -578,13 +618,7 @@ export const DataAccessRequestCustomiseForm = props => {
                             </div>
                         ))}
                     </div>
-                    <div id='darCenterCol' className={isWideForm ? 'extended' : ''}>
-                        {/* 
-						{isEmpty(alert) && (
-							<Alert variant={'success'} className='main-alert'>
-								<SVGIcon name='check' width={24} height={24} fill={'#2C8267'} /> {alert.message}
-							</Alert>
-						)} */}
+                    <div id='darCenterCol'>
                         <div id='darDropdownNav'>
                             <NavDropdown
                                 options={{
@@ -614,37 +648,38 @@ export const DataAccessRequestCustomiseForm = props => {
                             {renderApp()}
                         </div>
                     </div>
-                    {isWideForm ? null : (
-                        <div id='darRightCol' className='scrollable-sticky-column'>
-                            <div className='darTab'>
-                                <>
-                                    {activeQuestion && activeQuestionData ? (
-                                        <>
-                                            <header>
-                                                <div>
-                                                    <i className='far fa-question-circle mr-2' />
-                                                    <p className='gray800-14-bold'>{activeQuestionData.question}</p>
-                                                </div>
+                    <div id='darRightCol' className='scrollable-sticky-column'>
+                        <div className='darTab'>
+                            <>
+                                {activePanel?.panelGuidance || activeQuestion ? (
+                                    <>
+                                        <header>
+                                            <div>
+                                                <i className='far fa-question-circle mr-2' />
+                                                <p className='gray800-14-bold'>{activeQuestionData?.question || activePanel?.navHeader}</p>
+                                            </div>
+                                            {activeQuestion && (
                                                 <CloseButtonSvg width='16px' height='16px' fill='#475da' onClick={resetGuidance} />
-                                            </header>
-                                            <main className='gray800-14'>
-                                                <CustomiseGuidance
-                                                    activeGuidance={newGuidance[activeQuestion] || activeGuidance}
-                                                    isLocked={helpers.isQuestionLocked(questionStatus[activeQuestion])}
-                                                    onGuidanceChange={onGuidanceChange}
-                                                    activeQuestion={activeQuestion}
-                                                />
-                                            </main>
-                                        </>
-                                    ) : (
-                                        <div className='darTab-guidance'>
-                                            Hover on a question and click the icon to edit or view locked guidance
-                                        </div>
-                                    )}
-                                </>
-                            </div>
+                                            )}
+                                        </header>
+                                        <main className='gray800-14'>
+                                            <CustomiseGuidance
+                                                activeGuidance={newGuidance[activeQuestion] || activeGuidance}
+                                                isLocked={helpers.isQuestionLocked(questionStatus[activeQuestion])}
+                                                onGuidanceChange={onGuidanceChange}
+                                                activeQuestion={activeQuestion}
+                                                activePanel={activePanel}
+                                            />
+                                        </main>
+                                    </>
+                                ) : (
+                                    <div className='darTab-guidance'>
+                                        Hover on a question and click the icon to edit or view locked guidance
+                                    </div>
+                                )}
+                            </>
                         </div>
-                    )}
+                    </div>
                 </div>
 
                 <ActionBar userState={userState}>
@@ -656,8 +691,8 @@ export const DataAccessRequestCustomiseForm = props => {
                                 options={[
                                     {
                                         actions: [
-                                            { title: `Clear updates for ${page.title}`, onClick: handleClearSection },
-                                            { title: 'Clear entire form', onClick: handleClearForm },
+                                            { title: `Clear updates for ${page.title}`, onClick: handleShowClearSectionModal },
+                                            { title: 'Clear entire form', onClick: handleShowClearModal },
                                         ],
                                     },
                                 ]}
@@ -689,34 +724,55 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <Modal
                     data-testid='confirm-publish-modal'
-                    show={showConfirmPublishModal}
-                    size='lg'
+                    show={showConfirmPublishModal || showClearSectionModal || showClearModal}
                     aria-labelledby='contained-modal-title-vcenter'
-                    centered>
+                    size='lg'
+                    centered
+                    onClose={handleModalClose}>
                     <div className='removeUploaderModal-header'>
                         <div className='removeUploaderModal-header--wrap'>
-                            <div className='gray700-13 new-line'>
-                                {countOfChanges > 0
-                                    ? 'Are you sure you want to publish your updates to this application form? Any applications which are already in process will not be updated.'
-                                    : 'No changes have been made to your application form so it cannot be published.'}
-                            </div>
+                            {(showClearSectionModal || showClearModal) && (
+                                <Typography variant='h5'>{t('questionbank.modal.clearUnpublishedUpdates')}</Typography>
+                            )}
+                            <Typography color='grey800' as='div' mb={6}>
+                                {showConfirmPublishModal &&
+                                    (countOfChanges > 0 ? t('questionbank.modal.publishChanges') : t('questionbank.modal.noChanges'))}
+                                {showClearSectionModal && t('questionbank.modal.clearSection')}
+                                {showClearModal && t('questionbank.modal.clear')}
+                            </Typography>
                         </div>
                     </div>
                     <div className='removeUploaderModal-footer'>
-                        {countOfChanges > 0 ? (
-                            <div className='removeUploaderModal-footer--wrap'>
-                                <Button variant='secondary' onClick={() => setShowConfirmPublishModal(false)}>
-                                    No, nevermind
-                                </Button>
-                                <Button onClick={onSubmitClick}>Publish</Button>
-                            </div>
-                        ) : (
-                            <div className='removeUploaderModal-footer--wrap'>
-                                <Button className='button-primary' onClick={() => setShowConfirmPublishModal(false)}>
-                                    Close
-                                </Button>
-                            </div>
-                        )}
+                        <div className='removeUploaderModal-footer--wrap'>
+                            {showConfirmPublishModal &&
+                                (countOfChanges > 0 ? (
+                                    <>
+                                        <Button variant='secondary' onClick={() => setShowConfirmPublishModal(false)}>
+                                            {t('buttons.neverMind')}
+                                        </Button>
+                                        <Button onClick={onSubmitClick}>{t('buttons.publish')}</Button>
+                                    </>
+                                ) : (
+                                    <Button className='button-primary' onClick={() => setShowConfirmPublishModal(false)}>
+                                        {t('buttons.close')}
+                                    </Button>
+                                ))}
+
+                            {(showClearSectionModal || showClearModal) && (
+                                <>
+                                    <Button
+                                        variant='secondary'
+                                        onClick={() =>
+                                            showClearSectionModal ? setShowClearSectionModal(false) : setShowClearModal(false)
+                                        }>
+                                        {t('buttons.neverMind')}
+                                    </Button>
+                                    <Button onClick={showClearSectionModal ? handleClearSection : handleClear}>
+                                        {t('buttons.clearUpdates')}
+                                    </Button>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </Modal>
             </div>

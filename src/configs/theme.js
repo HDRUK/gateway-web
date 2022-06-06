@@ -324,27 +324,27 @@ export const theme = {
                 },
                 h2: {
                     fontSize: THEME_FONT_SIZES['4xl'],
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h3: {
                     fontSize: THEME_FONT_SIZES['3xl'],
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h4: {
                     fontSize: THEME_FONT_SIZES['2xl'],
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h5: {
                     fontSize: THEME_FONT_SIZES.xl,
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h6: {
                     fontSize: THEME_FONT_SIZES.lg,
-                    fontWeight: '400',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 body: {
