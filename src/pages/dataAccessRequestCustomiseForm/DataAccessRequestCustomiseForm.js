@@ -9,12 +9,14 @@ import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
-import AlertModal from '../../components/AlertModal';
 import Button from '../../components/Button';
+import Cta from '../../components/Cta';
 import Icon from '../../components/Icon';
 import LayoutBox from '../../components/LayoutBox';
+import Spinner from '../../components/Spinner/Spinner';
 import Typography from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
 import questionbankService from '../../services/questionbank';
@@ -36,11 +38,7 @@ import NavItem from './components/NavItem/NavItem';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
-import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import './DataAccessRequestCustomiseForm.scss';
-import LayoutBox from '../../components/LayoutBox';
-import Cta from '../../components/Cta';
-import Spinner from '../../components/Spinner/Spinner';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
