@@ -14,20 +14,39 @@ export const getCommonStyle = (prop, value) => {
     return !isNil(value) ? `${prop}: ${value};` : '';
 };
 
-export const getCommonStyles = ({ ml, mr, mb, mt, width, maxWidth, minWidth }, theme) => {
+export const getStyle = (propParts, value, theme) => {
+    const styleProp = propParts.join('-').toLowerCase();
+
+    if (styleProp === 'font-size') {
+        return `${styleProp}: ${theme.font.size[value]};`;
+    }
+
+    return `${styleProp}: ${value};`;
+};
+
+export const getCommonStyles = (
+    { ml, mr, mb, mt, p, pr, pt, pb, pl, width, maxWidth, minWidth, display, alignItems, justifyContent, flexGrow, position },
+    theme
+) => {
     return `
 		${getSpacingStyle('margin-left', ml, theme)}
 		${getSpacingStyle('margin-right', mr, theme)}
 		${getSpacingStyle('margin-bottom', mb, theme)}
 		${getSpacingStyle('margin-top', mt, theme)}
+        ${getSpacingStyle('padding', p, theme)}
+        ${getSpacingStyle('padding-left', pl, theme)}
+		${getSpacingStyle('padding-right', pr, theme)}
+		${getSpacingStyle('padding-bottom', pb, theme)}
+		${getSpacingStyle('padding-top', pt, theme)}
 		${getCommonStyle('width', width)}
 		${getCommonStyle('max-width', maxWidth)}
 		${getCommonStyle('min-width', minWidth)}
+        ${getCommonStyle('display', display)}
+		${getCommonStyle('align-items', alignItems)}
+        ${getCommonStyle('justify-content', justifyContent)}
+        ${getCommonStyle('flex-grow', flexGrow)}
+        ${getCommonStyle('position', position)}
 	`;
-};
-
-export const isPseudoType = value => {
-    ['disabled', 'focus'].includes(value);
 };
 
 const getComponentStyle = (prop, value, theme, important) => {
@@ -83,6 +102,10 @@ export const getComponentGlobals = (component, key, config, theme) => {
     return getComponentStylesFromTheme(validProps, theme);
 };
 
+export const getFontSizeStyle = (fontSize, theme) => {
+    return getComponentStylesFromTheme({ fontSize }, theme);
+};
+
 export const THEME_INPUT = {
     sizes: {
         small: {
@@ -134,8 +157,8 @@ export const THEME_FONT_SIZES = {
     xxs: '8px',
     xs: '10px',
     sm: '12px',
-    md: '13px',
-    default: '13px',
+    md: '14px',
+    default: '14px',
     lg: '16px',
     xl: '20px',
     '2xl': '24px',
@@ -148,9 +171,9 @@ export const THEME_BUTTON = {
     sizes: {
         small: {
             fontSize: THEME_FONT_SIZES.xs,
-            padding: '6px 12px',
+            padding: '8px 12px',
         },
-        default: { fontSize: THEME_FONT_SIZES.md, padding: '10px 16px' },
+        default: { fontSize: THEME_FONT_SIZES.md, padding: '11px 16px' },
         large: { fontSize: THEME_FONT_SIZES.lg, padding: '14px 20px' },
     },
     variants: {
@@ -328,21 +351,33 @@ export const theme = {
             variants: {
                 h1: {
                     fontSize: THEME_FONT_SIZES['5xl'],
+                    fontWeight: '700',
+                    color: 'grey900',
                 },
                 h2: {
                     fontSize: THEME_FONT_SIZES['4xl'],
+                    fontWeight: '500',
+                    color: 'grey900',
                 },
                 h3: {
                     fontSize: THEME_FONT_SIZES['3xl'],
+                    fontWeight: '500',
+                    color: 'grey900',
                 },
                 h4: {
                     fontSize: THEME_FONT_SIZES['2xl'],
+                    fontWeight: '500',
+                    color: 'grey900',
                 },
                 h5: {
                     fontSize: THEME_FONT_SIZES.xl,
+                    fontWeight: '500',
+                    color: 'grey900',
                 },
                 h6: {
                     fontSize: THEME_FONT_SIZES.lg,
+                    fontWeight: '500',
+                    color: 'grey900',
                 },
                 body: {
                     fontSize: THEME_FONT_SIZES.md,
