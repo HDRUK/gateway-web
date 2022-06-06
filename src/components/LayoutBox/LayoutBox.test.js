@@ -6,6 +6,7 @@ let wrapper;
 
 const props = {
     children: 'Component goes here',
+    className: 'additional-classname',
 };
 
 describe('Given the LayoutBox component', () => {
@@ -16,6 +17,10 @@ describe('Given the LayoutBox component', () => {
 
         it('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
+        });
+
+        it('Then has the correct className', () => {
+            expect(wrapper.container.querySelector('.additional-classname')).toBeTruthy();
         });
 
         it('Then has the correct text', () => {

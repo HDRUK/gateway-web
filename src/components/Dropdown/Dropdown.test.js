@@ -9,6 +9,7 @@ const props = {
     options: ['relevance', 'recentlyadded'],
     value: 'relevance',
     iconSelected: <span>Selected icon</span>,
+    className: 'additional-classname',
 };
 
 let wrapper;
@@ -27,6 +28,10 @@ describe('Given the Dropdown component', () => {
 
         it('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
+        });
+
+        it('Then has the correct className', () => {
+            expect(wrapper.container.querySelector('.additional-classname')).toBeTruthy();
         });
 
         it('Then has a selected icon', async () => {

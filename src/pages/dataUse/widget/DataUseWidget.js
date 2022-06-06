@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Button from '../../../components/Button';
 import Checkbox from '../../../components/Checkbox';
 import { LayoutContent } from '../../../components/Layout';
-import Typography from '../../../components/Typography';
+import Typography, { H5, H6, P } from '../../../components/Typography';
 
 const DataUseWidget = () => {
     const { t } = useTranslation();
@@ -19,19 +19,17 @@ const DataUseWidget = () => {
     return (
         <LayoutContent>
             <div className='accountHeader mb-3'>
-                <Typography variant='h5'>{t(`datause.widget.heading`)}</Typography>
-                <Typography>{t(`datause.widget.description`)}</Typography>
+                <H5>{t(`datause.widget.heading`)}</H5>
+                <P>{t(`datause.widget.description`)}</P>
             </div>
             <div className='accountHeader'>
-                <Typography variant='h5' data-testid='howToHeader'>
-                    {t('datause.widget.howToHeader')}
-                </Typography>
-                <Typography mb={3}>{t('datause.widget.howToDesc')}</Typography>
+                <H5 data-testid='howToHeader'>{t('datause.widget.howToHeader')}</H5>
+                <P mb={3}>{t('datause.widget.howToDesc')}</P>
                 <Button mb={3} onClick={clickHandler} data-testid='getWidgetButton' type='button'>
                     {t('datause.widget.getWidgetButton')}
                 </Button>
 
-                <Typography mb={3}>{t('datause.widget.tAndCHelp')}</Typography>
+                <P mb={3}>{t('datause.widget.tAndCHelp')}</P>
                 <Checkbox
                     variant='primary'
                     label='I agree to the HDR Widget Terms and Conditions of use'
@@ -39,10 +37,10 @@ const DataUseWidget = () => {
                     mb={6}
                     disabled
                 />
-                <Typography variant='h6'>{t('datause.widget.heading')}</Typography>
-                <Typography color='grey600'>
+                <H6>{t('datause.widget.heading')}</H6>
+                <P color='grey600'>
                     <i>{t('datause.widget.buttonHelp')}</i>
-                </Typography>
+                </P>
             </div>
         </LayoutContent>
     );

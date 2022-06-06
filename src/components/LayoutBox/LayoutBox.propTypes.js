@@ -11,4 +11,5 @@ export const PROP_TYPES_LAYOUTBOX = addCommonPropTypes({
     pt: PropTypes.number,
     pr: PropTypes.number,
     flexGrow: PropTypes.string,
+    position: PropTypes.string,
 });
