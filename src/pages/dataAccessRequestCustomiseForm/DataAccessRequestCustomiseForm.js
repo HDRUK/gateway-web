@@ -14,7 +14,7 @@ import Cta from '../../components/Cta';
 import Icon from '../../components/Icon';
 import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
-import Typography from '../../components/Typography';
+import Typography, { H5 } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
@@ -729,9 +729,7 @@ export const DataAccessRequestCustomiseForm = props => {
                     onClose={handleModalClose}>
                     <div className='removeUploaderModal-header'>
                         <div className='removeUploaderModal-header--wrap'>
-                            {(showClearSectionModal || showClearModal) && (
-                                <Typography variant='h5'>{t('questionbank.modal.clearUnpublishedUpdates')}</Typography>
-                            )}
+                            {(showClearSectionModal || showClearModal) && <H5>{t('questionbank.modal.clearUnpublishedUpdates')}</H5>}
                             <Typography color='grey800' as='div' mb={6}>
                                 {showConfirmPublishModal &&
                                     (countOfChanges > 0 ? t('questionbank.modal.publishChanges') : t('questionbank.modal.noChanges'))}
