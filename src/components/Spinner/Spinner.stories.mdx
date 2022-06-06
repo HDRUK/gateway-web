@@ -1,0 +1,15 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import SVG from 'react-inlinesvg';
+import Spinner from './Spinner';
+
+<Meta title='Core/Spinner' component={Spinner} />
+
+<Canvas>
+    <Story name='Sizes'>
+        {props => {
+            return ['xxs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl'].map(size => (
+                <Spinner size={size} stroke='purple700' mr={2} />
+            ));
+        }}
+    </Story>
+</Canvas>

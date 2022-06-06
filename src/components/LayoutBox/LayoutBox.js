@@ -27,6 +27,7 @@ const LayoutBox = ({
     alignItems,
     justifyContent,
     flexGrow,
+    position,
     ...outerProps
 }) => {
     const commonStyles = useCommonStyles({
@@ -48,6 +49,7 @@ const LayoutBox = ({
         alignItems,
         justifyContent,
         flexGrow,
+        position,
     });
 
     const Tag = as;

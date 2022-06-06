@@ -1,27 +1,35 @@
 import * as Sentry from '@sentry/react';
-import axios from 'axios';
+import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Col, Container, Modal, Row } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
 import Button from '../../components/Button';
-import { baseURL } from '../../configs/url.config';
+import Cta from '../../components/Cta';
+import Icon from '../../components/Icon';
+import LayoutBox from '../../components/LayoutBox';
+import Spinner from '../../components/Spinner/Spinner';
+import Typography, { H5 } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
+import darService from '../../services/data-access-request';
+import publishersService from '../../services/publishers';
+import questionbankService from '../../services/questionbank';
 import helpers from '../../utils/DarHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
+import ActionBarMenu from '../commonComponents/ActionBarMenu/ActionBarMenu';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
+import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
 import { classSchema } from './classSchema';
 import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
 import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
@@ -55,7 +63,6 @@ export const DataAccessRequestCustomiseForm = props => {
     );
     const [showDrawer, setShowDrawer] = useState(false);
     const [lastSaved, setLastSaved] = useState('');
-    const [isWideForm, setIsWideForm] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [activeGuidance, setActiveGuidance] = useState('');
     const [activeQuestion, setActiveQuestion] = useState('');
@@ -71,28 +78,33 @@ export const DataAccessRequestCustomiseForm = props => {
     const [countOfChanges, setCountOfChanges] = useState({});
     const [existingCountOfChanges, setExistingCountOfChanges] = useState(0);
     const [showConfirmPublishModal, setShowConfirmPublishModal] = useState(false);
-    const [activeQuestionData, setActiveQuestionData] = React.useState();
+    const [activeQuestionData, setActiveQuestionData] = React.useState();    
+    const [activePanel, setActivePanel] = React.useState();
+    const [showClearModal, setShowClearModal] = React.useState(false);
+    const [showClearSectionModal, setShowClearSectionModal] = React.useState(false);
     const [showSaveAlert, setShowSaveAlert] = useState(true);
 
-    const { t } = useTranslation();
+    const patchSchemaRequest = darService.usePatchSchema();
 
-    useEffect(() => {
-        if (window.location.search) {
-            const values = queryString.parse(window.location.search);
-        }
-        getMasterSchema();
-    }, []);
+    const getMasterSchema = async panelId => {
+        const {
+            match: {
+                params: { publisherID },
+            },
+        } = props;
 
-    const getMasterSchema = async () => {
-        await axios.get(`${baseURL}/api/v1/publishers/${props.match.params.publisherID}`).then(res => {
-            setPublisherDetails(res.data.publisher);
-        });
+        const {
+            data: { publisher },
+        } = await publishersService.getPublisher(publisherID);
+
+        setPublisherDetails(publisher);
+
         const {
             data: {
                 result: { masterSchema, questionStatus, guidance, countOfChanges, schemaId, unpublishedGuidance },
                 result,
             },
-        } = await axios.get(`${baseURL}/api/v2/questionbank/${props.match.params.publisherID}`);
+        } = await questionbankService.getQuestionbankItem(publisherID);
 
         const questionActions = {
             questionActions: [
@@ -101,17 +113,38 @@ export const DataAccessRequestCustomiseForm = props => {
             ],
         };
 
+        const newPanelId = panelId || masterSchema.formPanels[0].panelId;
+        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, newPanelId);
+
+        const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
+
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
-        setJsonSchema({ ...masterSchema, ...classSchema, ...questionActions });
+        setJsonSchema(newJsonSchema);
+
+        setUnpublishedGuidance(unpublishedGuidance || []);
+        setSchemaId(schemaId);
         setQuestionStatus(questionStatus);
         setExistingQuestionStatus(cloneDeep(questionStatus));
         setNewGuidance(guidance);
         setExistingGuidance(cloneDeep(guidance));
         setCountOfChanges(countOfChanges);
         setExistingCountOfChanges(countOfChanges);
-        setActivePanelId(masterSchema.formPanels[0].panelId);
+        setActivePanelId(newPanelId);
         setIsLoading(false);
+
+        updateNavigation(
+            {
+                pageId,
+                panelId: newPanelId,
+            },
+            newJsonSchema
+        );
+    };
+
+    const saveTime = () => {
+        const currentTime = moment().format('DD MMM YYYY HH:mm');
+        return `Last saved: ${currentTime}`;
     };
 
     const onSwitchChange = (questionId, value) => {
@@ -135,32 +168,30 @@ export const DataAccessRequestCustomiseForm = props => {
         ).length;
 
         setCountOfChanges(numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges);
-        setLastSaved(saveTime);
 
         const params = {
             questionStatus,
             countOfChanges: numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges,
         };
 
-        axios.patch(`${baseURL}/api/v1/data-access-request/schema/${schemaId}`, params);
+        patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        setLastSaved(saveTime());
     };
 
     const onClickSave = e => {
         e.preventDefault();
-        setLastSaved(saveTime);
-    };
-
-    const saveTime = () => {
-        const currentTime = moment().format('DD MMM YYYY HH:mm');
-        const lastSaved = `Last saved ${currentTime}`;
-        return lastSaved;
+        setLastSaved(saveTime());
     };
 
     const redirectDashboard = e => {
         e.preventDefault();
         history.push({
             pathname: `/account`,
-            search: '?tab=customisedataaccessrequests',
+            search: '?tab=customisedataaccessrequests_applicationform',
         });
     };
 
@@ -177,15 +208,16 @@ export const DataAccessRequestCustomiseForm = props => {
         setShowDrawer(showEnquiry);
     };
 
-    const updateNavigation = newForm => {
+    const updateNavigation = (newForm, schema) => {
+        const newJsonSchema = schema || jsonSchema;
         // reset scroll to 0, 0
         window.scrollTo(0, 0);
         // copy state pages
-        const pages = [...jsonSchema.pages];
+        const pages = [...newJsonSchema.pages];
         // get the index of new form
         const newPageindex = pages.findIndex(page => page.pageId === newForm.pageId);
         // reset the current state of active to false for all pages
-        const newFormState = [...jsonSchema.pages].map(item => {
+        const newFormState = [...newJsonSchema.pages].map(item => {
             return { ...item, active: false };
         });
         // update actual object model with property of active true
@@ -193,18 +225,20 @@ export const DataAccessRequestCustomiseForm = props => {
         // get set the active panelId
         let { panelId } = newForm;
         if (isEmpty(panelId) || typeof panelId === 'undefined') {
-            ({ panelId } = [...jsonSchema.formPanels].find(p => p.pageId === newFormState[newPageindex].pageId) || '');
+            ({ panelId } = [...newJsonSchema.formPanels].find(p => p.pageId === newFormState[newPageindex].pageId) || '');
         }
 
-        setJsonSchema({ ...jsonSchema, pages: newFormState });
+        setJsonSchema({ ...newJsonSchema, pages: newFormState });
         setActivePanelId(panelId);
-        setIsWideForm(panelId === 'about' || panelId === 'files');
         setActiveGuidance('');
         setActiveQuestion('');
+        setActiveQuestionData(null);
+
+        setActivePanel(newForm);
     };
 
     const onSubmitClick = async () => {
-        await axios.post(`${baseURL}/api/v2/questionbank/${schemaId}`);
+        await questionbankService.postQuestionbankItem(schemaId);
 
         history.push({
             pathname: `/account`,
@@ -313,7 +347,6 @@ export const DataAccessRequestCustomiseForm = props => {
 
     const getActiveQuestionGuidance = (questionId = '') => {
         if (!isEmpty(questionId)) {
-            const { questionSets } = jsonSchema;
             const questions = getQuestionsList();
 
             if (!isEmpty(questions)) {
@@ -328,7 +361,7 @@ export const DataAccessRequestCustomiseForm = props => {
         }
     };
 
-    let getActiveQuestion = (questionsArr, questionId) => {
+    const getActiveQuestion = (questionsArr, questionId) => {
         let child;
 
         if (!questionsArr) return;
@@ -374,14 +407,14 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const resetGuidance = () => {
-        // remove active question class
         removeActiveQuestionClass();
-        // reset guidance state
+
         setActiveGuidance('');
         setActiveQuestionData(null);
+        setActiveQuestion('');
     };
 
-    const onGuidanceChange = (questionId, changedGuidance) => {
+    const onGuidanceChange = async (questionId, changedGuidance) => {
         if (typeof newGuidance[questionId] !== 'undefined') {
             newGuidance[questionId] = changedGuidance;
         } else {
@@ -408,7 +441,6 @@ export const DataAccessRequestCustomiseForm = props => {
         const unpublishedGuidanceChange = uniq([...unpublishedGuidance, questionId]);
 
         setCountOfChanges(numberOfChangesGuidance + numberOfChangesQuestions + existingCountOfChanges);
-        setLastSaved(saveTime);
 
         const params = {
             guidance: newGuidance,
@@ -416,55 +448,64 @@ export const DataAccessRequestCustomiseForm = props => {
             unpublishedGuidance: unpublishedGuidanceChange,
         };
 
-        axios.patch(`${baseURL}/api/v1/data-access-request/schema/${schemaId}`, params);
+        darService.patchSchema(schemaId, params);
 
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        setLastSaved(saveTime());
         setUnpublishedGuidance(unpublishedGuidanceChange);
     };
 
-    const renderApp = () => {
-        if (activePanelId === 'about') {
-            /* return (
-			<AboutApplication
-				key={_id}
-				activeAccordionCard={activeAccordionCard}
-				allowedNavigation={allowedNavigation}
-				userType={userType}
-				selectedDatasets={aboutApplication.selectedDatasets}
-				readOnly={readOnly || applicationStatus !== DarHelper.darStatus.inProgress}
-				projectNameValid={projectNameValid}
-				projectName={aboutApplication.projectName}
-				nationalCoreStudiesProjects={nationalCoreStudiesProjects}
-				ncsValid={ncsValid}
-				completedReadAdvice={aboutApplication.completedReadAdvice}
-				completedCommunicateAdvice={aboutApplication.completedCommunicateAdvice}
-				completedApprovalsAdvice={aboutApplication.completedApprovalsAdvice}
-				completedSubmitAdvice={aboutApplication.completedSubmitAdvice}
-				completedInviteCollaborators={aboutApplication.completedInviteCollaborators}
-				completedDatasetSelection={aboutApplication.completedDatasetSelection}
-				isNationalCoreStudies={aboutApplication.isNationalCoreStudies}
-				nationalCoreStudiesProjectId={aboutApplication.nationalCoreStudiesProjectId}
-				context={context}
-				toggleCard={toggleCard}
-				toggleDrawer={toggleDrawer}
-				onHandleDataSetChange={onHandleDataSetChange}
-				onNextStep={onNextStep}
-				onHandleProjectNameBlur={onHandleProjectNameBlur}
-				onHandleProjectNameChange={onHandleProjectNameChange}
-				onHandleProjectIsNCSToggle={onHandleProjectIsNCSToggle}
-				onHandleNCSProjectChange={onHandleNCSProjectChange}
-				renderTooltip={renderTooltip}
-				toggleModal={toggleModal}
-				toggleMrcModal={toggleMrcModal}
-				toggleContributorModal={toggleContributorModal}
-				areDatasetsAmended={areDatasetsAmended}
-				datasetsAmendedBy={datasetsAmendedBy}
-				datasetsAmendedDate={datasetsAmendedDate}
-			/>
-		); */
-        } else if (activePanelId === 'files') {
-            /* return <Uploads onFilesUpdate={onFilesUpdate} id={_id} files={files} readOnly={readOnly} />; */
-        } else {
+    const handleShowClearModal = () => {
+        setShowClearModal(true);
+    };
+
+    const handleShowClearSectionModal = () => {
+        setShowClearSectionModal(true);
+    };
+
+    const handleClear = React.useCallback(async () => {
+        await questionbankService.patchClearAll(publisherDetails._id);
+
+        getMasterSchema(activePanelId);
+
+        setShowClearModal(false);
+    }, [activePanelId, publisherDetails._id]);
+
+    const handleClearSection = React.useCallback(async () => {
+        const page = helpers.findPageByQuestionSet(activePanelId, jsonSchema);
+
+        await questionbankService.patchClearSection(publisherDetails._id, page.pageId);
+
+        getMasterSchema(activePanelId);
+
+        setShowClearSectionModal(false);
+    }, [activePanelId, publisherDetails._id]);
+
+    const handleModalClose = () => {
+        setShowConfirmPublishModal(false);
+        setShowClearModal(false);
+        setShowClearSectionModal(false);
+    };
+
+    const renderApp = React.useCallback(() => {
+        if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
+                <Uploads
+                    onFilesUpdate={() => {}}
+                    files={[]}
+                    disabled
+                    description={activePanel.panelHeader}
+                    header={activePanel.questionPanelHeaderText}
+                />
+            );
+        }
+
+        return (
+            activePanelId && (
                 <Winterfell
                     schema={jsonSchema}
                     questionAnswers={questionAnswers}
@@ -477,16 +518,17 @@ export const DataAccessRequestCustomiseForm = props => {
                     onSwitchChange={onSwitchChange}
                     onQuestionAction={onQuestionAction}
                     onGuidanceChange={onGuidanceChange}
-                    icons={question => <UnpublishedQuestionIcon question={question} unpublishedGuidance={unpublishedGuidance} />}
-                    // readOnly={true}
-                    /* onQuestionClick={onQuestionSetAction}
-					onQuestionAction={onQuestionAction}
-					onUpdate={onFormUpdate}
-					onSubmit={onFormSubmit} */
+                    icons={question => (
+                        <UnpublishedQuestionIcon
+                            question={question}
+                            unpublishedGuidance={unpublishedGuidance}
+                            activeQuestion={activeQuestion}
+                        />
+                    )}
                 />
-            );
-        }
-    };
+            )
+        );
+    }, [activePanelId, questionStatus, questionAnswers, unpublishedGuidance]);
 
     const handleClose = () => {
         setShowSaveAlert(false);
@@ -495,6 +537,7 @@ export const DataAccessRequestCustomiseForm = props => {
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
     Winterfell.addInputType('datePickerCustom', DatePickerCustom);
     Winterfell.addInputType('typeaheadUser', TypeaheadUser);
+
     Winterfell.validation.default.addValidationMethods({
         isCustomDate: value => {
             if (isEmpty(value) || isNil(value) || moment(value, 'DD/MM/YYYY').isValid()) {
@@ -504,6 +547,10 @@ export const DataAccessRequestCustomiseForm = props => {
         },
     });
 
+    useEffect(() => {
+        getMasterSchema();
+    }, []);
+
     if (isLoading) {
         return (
             <Container>
@@ -511,6 +558,8 @@ export const DataAccessRequestCustomiseForm = props => {
             </Container>
         );
     }
+
+    const page = helpers.findPageByQuestionSet(activePanelId, jsonSchema);
 
     return (
         <Sentry.ErrorBoundary fallback={<ErrorModal />}>
@@ -532,17 +581,26 @@ export const DataAccessRequestCustomiseForm = props => {
                         <span className='white-16-semibold pr-5'>{publisherDetails.publisherDetails.name}</span>
                     </Col>
                     <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
-                        <span className='white-14-semibold'>{!isEmpty(lastSaved) ? lastSaved : ''}</span>
-                        <a className='linkButton white-14-semibold ml-2' onClick={onClickSave} href='javascript:void(0)'>
+                        {lastSaved && (
+                            <LayoutBox mr={5} display='flex' alignItems='center'>
+                                {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='xl' mr={2} />}
+                                {patchSchemaRequest.isLoading && <Spinner stroke='white' size='xl' mr={2} />}
+                                <span className='white-14-semibold'>{lastSaved}</span>
+                            </LayoutBox>
+                        )}
+                        <Button variant='tertiary' onClick={onClickSave} size='small' mr={5}>
                             Save now
-                        </a>
-                        <CloseButtonSvg width='16px' height='16px' fill='#fff' onClick={redirectDashboard} />
+                        </Button>
+
+                        <Cta onClick={redirectDashboard} iconRight={<CloseButtonSvg />} color='white' fill='white'>
+                            Close
+                        </Cta>
                     </Col>
                 </Row>
 
                 <div id='darContainer' className='flex-form'>
                     <div id='darLeftCol' className='scrollable-sticky-column'>
-                        {[...jsonSchema.pages].map((item, idx) => (
+                        {(jsonSchema.pages || []).map((item, idx) => (
                             <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
                                 <div>
                                     <h3
@@ -566,13 +624,7 @@ export const DataAccessRequestCustomiseForm = props => {
                             </div>
                         ))}
                     </div>
-                    <div id='darCenterCol' className={isWideForm ? 'extended' : ''}>
-                        {/* 
-						{isEmpty(alert) && (
-							<Alert variant={'success'} className='main-alert'>
-								<SVGIcon name='check' width={24} height={24} fill={'#2C8267'} /> {alert.message}
-							</Alert>
-						)} */}
+                    <div id='darCenterCol'>
                         <div id='darDropdownNav'>
                             <NavDropdown
                                 options={{
@@ -611,49 +663,60 @@ export const DataAccessRequestCustomiseForm = props => {
                             {renderApp()}
                         </div>
                     </div>
-                    {isWideForm ? null : (
-                        <div id='darRightCol' className='scrollable-sticky-column'>
-                            <div className='darTab'>
-                                <>
-                                    {activeQuestion ? (
-                                        <>
-                                            <header>
-                                                <div>
-                                                    <i className='far fa-question-circle mr-2' />
-                                                    <p className='gray800-14-bold'>{activeQuestionData.question}</p>
-                                                </div>
+                    <div id='darRightCol' className='scrollable-sticky-column'>
+                        <div className='darTab'>
+                            <>
+                                {activePanel?.panelGuidance || activeQuestion ? (
+                                    <>
+                                        <header>
+                                            <div>
+                                                <i className='far fa-question-circle mr-2' />
+                                                <p className='gray800-14-bold'>{activeQuestionData?.question || activePanel?.navHeader}</p>
+                                            </div>
+                                            {activeQuestion && (
                                                 <CloseButtonSvg width='16px' height='16px' fill='#475da' onClick={resetGuidance} />
-                                            </header>
-                                            <main className='gray800-14'>
-                                                <CustomiseGuidance
-                                                    activeGuidance={newGuidance[activeQuestion] || activeGuidance}
-                                                    isLocked={helpers.isQuestionLocked(questionStatus[activeQuestion])}
-                                                    onGuidanceChange={onGuidanceChange}
-                                                    activeQuestion={activeQuestion}
-                                                />
-                                            </main>
-                                        </>
-                                    ) : (
-                                        <div className='darTab-guidance'>
-                                            Hover on a question and click the icon to edit or view locked guidance
-                                        </div>
-                                    )}
-                                </>
-                            </div>
+                                            )}
+                                        </header>
+                                        <main className='gray800-14'>
+                                            <CustomiseGuidance
+                                                activeGuidance={newGuidance[activeQuestion] || activeGuidance}
+                                                isLocked={helpers.isQuestionLocked(questionStatus[activeQuestion])}
+                                                onGuidanceChange={onGuidanceChange}
+                                                activeQuestion={activeQuestion}
+                                                activePanel={activePanel}
+                                            />
+                                        </main>
+                                    </>
+                                ) : (
+                                    <div className='darTab-guidance'>
+                                        Hover on a question and click the icon to edit or view locked guidance
+                                    </div>
+                                )}
+                            </>
                         </div>
-                    )}
+                    </div>
                 </div>
 
                 <ActionBar userState={userState}>
                     <div className='action-bar'>
                         <div className='action-bar--questions'>
-                            <Button variant='tertiary' onClick={onNextClick}>
-                                Clear updates
-                            </Button>
+                            <ActionBarMenu
+                                label='Clear updates'
+                                buttonClass='button-tertiary'
+                                options={[
+                                    {
+                                        actions: [
+                                            { title: `Clear updates for ${page.title}`, onClick: handleShowClearSectionModal },
+                                            { title: 'Clear entire form', onClick: handleShowClearModal },
+                                        ],
+                                    },
+                                ]}
+                                alignStart
+                                disabled={!countOfChanges}
+                            />
                         </div>
                         <div className='action-bar-actions'>
                             <div className='amendment-count mr-3'>{countOfChanges} unpublished update</div>
-                            {console.log()}
                             <Button
                                 disabled={!!countOfChanges < 1}
                                 variant='secondary'
@@ -676,34 +739,53 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <Modal
                     data-testid='confirm-publish-modal'
-                    show={showConfirmPublishModal}
-                    size='lg'
+                    show={showConfirmPublishModal || showClearSectionModal || showClearModal}
                     aria-labelledby='contained-modal-title-vcenter'
-                    centered>
+                    size='lg'
+                    centered
+                    onClose={handleModalClose}>
                     <div className='removeUploaderModal-header'>
                         <div className='removeUploaderModal-header--wrap'>
-                            <div className='gray700-13 new-line'>
-                                {countOfChanges > 0
-                                    ? 'Are you sure you want to publish your updates to this application form? Any applications which are already in process will not be updated.'
-                                    : 'No changes have been made to your application form so it cannot be published.'}
-                            </div>
+                            {(showClearSectionModal || showClearModal) && <H5>{t('questionbank.modal.clearUnpublishedUpdates')}</H5>}
+                            <Typography color='grey800' as='div' mb={6}>
+                                {showConfirmPublishModal &&
+                                    (countOfChanges > 0 ? t('questionbank.modal.publishChanges') : t('questionbank.modal.noChanges'))}
+                                {showClearSectionModal && t('questionbank.modal.clearSection')}
+                                {showClearModal && t('questionbank.modal.clear')}
+                            </Typography>
                         </div>
                     </div>
                     <div className='removeUploaderModal-footer'>
-                        {countOfChanges > 0 ? (
-                            <div className='removeUploaderModal-footer--wrap'>
-                                <Button variant='secondary' onClick={() => setShowConfirmPublishModal(false)}>
-                                    No, nevermind
-                                </Button>
-                                <Button onClick={onSubmitClick}>Publish</Button>
-                            </div>
-                        ) : (
-                            <div className='removeUploaderModal-footer--wrap'>
-                                <Button className='button-primary' onClick={() => setShowConfirmPublishModal(false)}>
-                                    Close
-                                </Button>
-                            </div>
-                        )}
+                        <div className='removeUploaderModal-footer--wrap'>
+                            {showConfirmPublishModal &&
+                                (countOfChanges > 0 ? (
+                                    <>
+                                        <Button variant='secondary' onClick={() => setShowConfirmPublishModal(false)}>
+                                            {t('buttons.neverMind')}
+                                        </Button>
+                                        <Button onClick={onSubmitClick}>{t('buttons.publish')}</Button>
+                                    </>
+                                ) : (
+                                    <Button className='button-primary' onClick={() => setShowConfirmPublishModal(false)}>
+                                        {t('buttons.close')}
+                                    </Button>
+                                ))}
+
+                            {(showClearSectionModal || showClearModal) && (
+                                <>
+                                    <Button
+                                        variant='secondary'
+                                        onClick={() =>
+                                            showClearSectionModal ? setShowClearSectionModal(false) : setShowClearModal(false)
+                                        }>
+                                        {t('buttons.neverMind')}
+                                    </Button>
+                                    <Button onClick={showClearSectionModal ? handleClearSection : handleClear}>
+                                        {t('buttons.clearUpdates')}
+                                    </Button>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </Modal>
             </div>
