@@ -159,6 +159,15 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
                 </LayoutContent>
             )}  
 
+
+            {(howToRequestAccessStatus === sectionStatuses.PENDING || yourAppFormStatus === sectionStatuses.PENDING) && (
+                <LayoutContent>
+                    <Alert variant='warning' mb={3}>
+                        {t('DAR.customise.warningAlert')}
+                    </Alert>
+                </LayoutContent>
+            )}
+
             <div className='row justify-content-md-center'>
                 <div className='col-sm-12 col-md-10'>
                     <div className='accountHeader'>
