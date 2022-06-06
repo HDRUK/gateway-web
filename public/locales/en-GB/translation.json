@@ -259,7 +259,8 @@
         "neverMind": "No, nevermind",
         "cancel": "Cancel",
         "confirm": "Confirm",
-        "publish": "Publish"
+        "publish": "Publish",
+        "clearUpdates": "Clear updates"
     },
     "sortby": {
         "selected": {
@@ -386,6 +387,15 @@
                 },
                 "defaultGuidance": "# **Data access requests** \n **Before you submit an application** \n\nNot all enquires progress to the application stage. It may be that the data you need is available through our existing published data.Please read the following information to see if the data you require is available from another source before proceeding with your application.\n\nWe commission approximately 40 national clinical audits and clinical outcome review programmes which make up the National Clinical Audit and Patient Outcomes Programme(NCAPOP).We also commission some projects outside the NCAPOP and we host the National Joint Registry.\n\nThese projects collect data on the quality and outcomes of care in England and Wales. Some projects also collect data in Scotland,Northern Ireland, Isle of Man, Guernsey and Jersey, either under contract to HQIP or separately.\n\nData from these projects is routinely reported and these reports are available on each project website, as well as on our website.The reported data is also placed on the data.gov.uk website.\n\nWe also work to routinely to place outcomes data on the NHS Choices website.Many of these projects link with third party data sets such as Hospital Statistics(HES) and Office for National Statistics(ONS) data which are managed by NHS Digital."
             }
+        }
+    },
+    "questionbank": {
+        "modal": {
+            "clearUnpublishedUpdates": "Clear unpublished updates",
+            "publishChanges": "Are you sure you want to publish your updates to this application form? Any applications which are already in process will not be updated.",
+            "noChanges": "No changes have been made to your application form so it cannot be published.",
+            "clearSection": "Are you sure you want to clear the unpublished updates in this section? You will permenantly lose any changes made by you and other team member in this area since the form was last published.",
+            "clear": "Are you sure you want to clear all the unpublished updates to this form? You will permenantly lose any changes made by you and other team member since this form was last published."
         }
     }
 }

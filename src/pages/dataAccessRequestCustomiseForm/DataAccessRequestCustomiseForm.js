@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/react';
+import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
@@ -9,7 +10,13 @@ import { useHistory } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
 import Button from '../../components/Button';
+import Cta from '../../components/Cta';
+import Icon from '../../components/Icon';
+import LayoutBox from '../../components/LayoutBox';
+import Spinner from '../../components/Spinner/Spinner';
+import Typography, { H5 } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
 import questionbankService from '../../services/questionbank';
@@ -70,6 +77,10 @@ export const DataAccessRequestCustomiseForm = props => {
     const [showConfirmPublishModal, setShowConfirmPublishModal] = useState(false);
     const [activeQuestionData, setActiveQuestionData] = React.useState();
     const [activePanel, setActivePanel] = React.useState();
+    const [showClearModal, setShowClearModal] = React.useState(false);
+    const [showClearSectionModal, setShowClearSectionModal] = React.useState(false);
+
+    const patchSchemaRequest = darService.usePatchSchema();
 
     const getMasterSchema = async panelId => {
         const {
@@ -127,6 +138,11 @@ export const DataAccessRequestCustomiseForm = props => {
         );
     };
 
+    const saveTime = () => {
+        const currentTime = moment().format('DD MMM YYYY HH:mm');
+        return `Last saved: ${currentTime}`;
+    };
+
     const onSwitchChange = (questionId, value) => {
         questionStatus[questionId] = value ? 1 : 0;
         setQuestionStatus(questionStatus);
@@ -148,25 +164,23 @@ export const DataAccessRequestCustomiseForm = props => {
         ).length;
 
         setCountOfChanges(numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges);
-        setLastSaved(saveTime);
 
         const params = {
             questionStatus,
             countOfChanges: numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges,
         };
 
-        darService.patchSchema(schemaId, params);
+        patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        setLastSaved(saveTime());
     };
 
     const onClickSave = e => {
         e.preventDefault();
-        setLastSaved(saveTime);
-    };
-
-    const saveTime = () => {
-        const currentTime = moment().format('DD MMM YYYY HH:mm');
-        const lastSaved = `Last saved ${currentTime}`;
-        return lastSaved;
+        setLastSaved(saveTime());
     };
 
     const redirectDashboard = e => {
@@ -389,14 +403,14 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const resetGuidance = () => {
-        // remove active question class
         removeActiveQuestionClass();
-        // reset guidance state
+
         setActiveGuidance('');
         setActiveQuestionData(null);
+        setActiveQuestion('');
     };
 
-    const onGuidanceChange = (questionId, changedGuidance) => {
+    const onGuidanceChange = async (questionId, changedGuidance) => {
         if (typeof newGuidance[questionId] !== 'undefined') {
             newGuidance[questionId] = changedGuidance;
         } else {
@@ -423,7 +437,6 @@ export const DataAccessRequestCustomiseForm = props => {
         const unpublishedGuidanceChange = uniq([...unpublishedGuidance, questionId]);
 
         setCountOfChanges(numberOfChangesGuidance + numberOfChangesQuestions + existingCountOfChanges);
-        setLastSaved(saveTime);
 
         const params = {
             guidance: newGuidance,
@@ -433,13 +446,29 @@ export const DataAccessRequestCustomiseForm = props => {
 
         darService.patchSchema(schemaId, params);
 
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        setLastSaved(saveTime());
         setUnpublishedGuidance(unpublishedGuidanceChange);
     };
 
-    const handleClearForm = React.useCallback(async () => {
+    const handleShowClearModal = () => {
+        setShowClearModal(true);
+    };
+
+    const handleShowClearSectionModal = () => {
+        setShowClearSectionModal(true);
+    };
+
+    const handleClear = React.useCallback(async () => {
         await questionbankService.patchClearAll(publisherDetails._id);
 
         getMasterSchema(activePanelId);
+
+        setShowClearModal(false);
     }, [activePanelId, publisherDetails._id]);
 
     const handleClearSection = React.useCallback(async () => {
@@ -448,7 +477,15 @@ export const DataAccessRequestCustomiseForm = props => {
         await questionbankService.patchClearSection(publisherDetails._id, page.pageId);
 
         getMasterSchema(activePanelId);
+
+        setShowClearSectionModal(false);
     }, [activePanelId, publisherDetails._id]);
+
+    const handleModalClose = () => {
+        setShowConfirmPublishModal(false);
+        setShowClearModal(false);
+        setShowClearSectionModal(false);
+    };
 
     const renderApp = React.useCallback(() => {
         if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
@@ -536,11 +573,20 @@ export const DataAccessRequestCustomiseForm = props => {
                         <span className='white-16-semibold pr-5'>{publisherDetails.publisherDetails.name}</span>
                     </Col>
                     <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
-                        <span className='white-14-semibold'>{!isEmpty(lastSaved) ? lastSaved : ''}</span>
-                        <a className='linkButton white-14-semibold ml-2' onClick={onClickSave} href='javascript:void(0)'>
+                        {lastSaved && (
+                            <LayoutBox mr={5} display='flex' alignItems='center'>
+                                {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='xl' mr={2} />}
+                                {patchSchemaRequest.isLoading && <Spinner stroke='white' size='xl' mr={2} />}
+                                <span className='white-14-semibold'>{lastSaved}</span>
+                            </LayoutBox>
+                        )}
+                        <Button variant='tertiary' onClick={onClickSave} size='small' mr={5}>
                             Save now
-                        </a>
-                        <CloseButtonSvg width='16px' height='16px' fill='#fff' onClick={redirectDashboard} />
+                        </Button>
+
+                        <Cta onClick={redirectDashboard} iconRight={<CloseButtonSvg />} color='white' fill='white'>
+                            Close
+                        </Cta>
                     </Col>
                 </Row>
 
@@ -643,8 +689,8 @@ export const DataAccessRequestCustomiseForm = props => {
                                 options={[
                                     {
                                         actions: [
-                                            { title: `Clear updates for ${page.title}`, onClick: handleClearSection },
-                                            { title: 'Clear entire form', onClick: handleClearForm },
+                                            { title: `Clear updates for ${page.title}`, onClick: handleShowClearSectionModal },
+                                            { title: 'Clear entire form', onClick: handleShowClearModal },
                                         ],
                                     },
                                 ]}
@@ -676,34 +722,53 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <Modal
                     data-testid='confirm-publish-modal'
-                    show={showConfirmPublishModal}
-                    size='lg'
+                    show={showConfirmPublishModal || showClearSectionModal || showClearModal}
                     aria-labelledby='contained-modal-title-vcenter'
-                    centered>
+                    size='lg'
+                    centered
+                    onClose={handleModalClose}>
                     <div className='removeUploaderModal-header'>
                         <div className='removeUploaderModal-header--wrap'>
-                            <div className='gray700-13 new-line'>
-                                {countOfChanges > 0
-                                    ? 'Are you sure you want to publish your updates to this application form? Any applications which are already in process will not be updated.'
-                                    : 'No changes have been made to your application form so it cannot be published.'}
-                            </div>
+                            {(showClearSectionModal || showClearModal) && <H5>{t('questionbank.modal.clearUnpublishedUpdates')}</H5>}
+                            <Typography color='grey800' as='div' mb={6}>
+                                {showConfirmPublishModal &&
+                                    (countOfChanges > 0 ? t('questionbank.modal.publishChanges') : t('questionbank.modal.noChanges'))}
+                                {showClearSectionModal && t('questionbank.modal.clearSection')}
+                                {showClearModal && t('questionbank.modal.clear')}
+                            </Typography>
                         </div>
                     </div>
                     <div className='removeUploaderModal-footer'>
-                        {countOfChanges > 0 ? (
-                            <div className='removeUploaderModal-footer--wrap'>
-                                <Button variant='secondary' onClick={() => setShowConfirmPublishModal(false)}>
-                                    No, nevermind
-                                </Button>
-                                <Button onClick={onSubmitClick}>Publish</Button>
-                            </div>
-                        ) : (
-                            <div className='removeUploaderModal-footer--wrap'>
-                                <Button className='button-primary' onClick={() => setShowConfirmPublishModal(false)}>
-                                    Close
-                                </Button>
-                            </div>
-                        )}
+                        <div className='removeUploaderModal-footer--wrap'>
+                            {showConfirmPublishModal &&
+                                (countOfChanges > 0 ? (
+                                    <>
+                                        <Button variant='secondary' onClick={() => setShowConfirmPublishModal(false)}>
+                                            {t('buttons.neverMind')}
+                                        </Button>
+                                        <Button onClick={onSubmitClick}>{t('buttons.publish')}</Button>
+                                    </>
+                                ) : (
+                                    <Button className='button-primary' onClick={() => setShowConfirmPublishModal(false)}>
+                                        {t('buttons.close')}
+                                    </Button>
+                                ))}
+
+                            {(showClearSectionModal || showClearModal) && (
+                                <>
+                                    <Button
+                                        variant='secondary'
+                                        onClick={() =>
+                                            showClearSectionModal ? setShowClearSectionModal(false) : setShowClearModal(false)
+                                        }>
+                                        {t('buttons.neverMind')}
+                                    </Button>
+                                    <Button onClick={showClearSectionModal ? handleClearSection : handleClear}>
+                                        {t('buttons.clearUpdates')}
+                                    </Button>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </Modal>
             </div>

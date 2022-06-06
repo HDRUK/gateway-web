@@ -13,8 +13,18 @@ export const getCommonStyle = (prop, value) => {
     return !isNil(value) ? `${prop}: ${value};` : '';
 };
 
+export const getStyle = (propParts, value, theme) => {
+    const styleProp = propParts.join('-').toLowerCase();
+
+    if (styleProp === 'font-size') {
+        return `${styleProp}: ${theme.font.size[value]};`;
+    }
+
+    return `${styleProp}: ${value};`;
+};
+
 export const getCommonStyles = (
-    { ml, mr, mb, mt, p, pr, pt, pb, pl, width, maxWidth, minWidth, display, alignItems, justifyContent, flexGrow },
+    { ml, mr, mb, mt, p, pr, pt, pb, pl, width, maxWidth, minWidth, display, alignItems, justifyContent, flexGrow, position },
     theme
 ) => {
     return `
@@ -34,6 +44,7 @@ export const getCommonStyles = (
 		${getCommonStyle('align-items', alignItems)}
         ${getCommonStyle('justify-content', justifyContent)}
         ${getCommonStyle('flex-grow', flexGrow)}
+        ${getCommonStyle('position', position)}
 	`;
 };
 
@@ -41,6 +52,7 @@ export const getComponentStylesFromTheme = (props, theme) => {
     const styles = Object.keys(props).map(prop => {
         const propParts = prop.replace(/([a-z])([A-Z])/g, '$1,$2').split(',');
         const isColor = Object.keys(theme.colors).includes(props[prop]);
+        const value = isColor ? theme.colors[props[prop]] : props[prop];
         const pseudoSelector = propParts[0];
 
         if (pseudoSelector === 'hover' || pseudoSelector === 'disabled' || pseudoSelector === 'focus') {
@@ -48,12 +60,12 @@ export const getComponentStylesFromTheme = (props, theme) => {
 
             return `
                 :${pseudoSelector} {
-                    ${propParts.join('-')}: ${isColor ? theme.colors[props[prop]] : props[prop]};
+                   ${getStyle(propParts, value, theme)}
                 }
             `;
         }
 
-        return `${propParts.join('-')}: ${isColor ? theme.colors[props[prop]] : props[prop]};`;
+        return getStyle(propParts, value, theme);
     });
 
     return styles.join('\n');
@@ -65,6 +77,10 @@ export const getComponentVariant = (component, variant, theme) => {
 
 export const getComponentSize = (component, size, theme) => {
     return getComponentStylesFromTheme(theme.components[component].sizes[size], theme);
+};
+
+export const getFontSizeStyle = (fontSize, theme) => {
+    return getComponentStylesFromTheme({ fontSize }, theme);
 };
 
 export const THEME_INPUT = {
@@ -95,8 +111,8 @@ export const THEME_FONT_SIZES = {
     xxs: '8px',
     xs: '10px',
     sm: '12px',
-    md: '13px',
-    default: '13px',
+    md: '14px',
+    default: '14px',
     lg: '16px',
     xl: '20px',
     '2xl': '24px',
@@ -108,11 +124,11 @@ export const THEME_FONT_SIZES = {
 export const THEME_BUTTON = {
     sizes: {
         small: {
-            fontSize: THEME_FONT_SIZES.xs,
-            padding: '6px 12px',
+            fontSize: 'md',
+            padding: '8px 12px',
         },
-        default: { fontSize: THEME_FONT_SIZES.md, padding: '10px 16px' },
-        large: { fontSize: THEME_FONT_SIZES.lg, padding: '14px 20px' },
+        default: { fontSize: 'md', padding: '11px 16px' },
+        large: { fontSize: 'lg', padding: '14px 20px' },
     },
     variants: {
         primary: {
@@ -225,6 +241,19 @@ export const theme = {
             },
         },
         Button: THEME_BUTTON,
+        Cta: {
+            sizes: {
+                small: {
+                    fontSize: 'sm',
+                },
+                default: {
+                    fontSize: 'md',
+                },
+                large: {
+                    fontSize: 'xl',
+                },
+            },
+        },
         IconButton: merge({}, THEME_BUTTON, {
             sizes: {
                 small: {
@@ -295,27 +324,27 @@ export const theme = {
                 },
                 h2: {
                     fontSize: THEME_FONT_SIZES['4xl'],
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h3: {
                     fontSize: THEME_FONT_SIZES['3xl'],
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h4: {
                     fontSize: THEME_FONT_SIZES['2xl'],
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h5: {
                     fontSize: THEME_FONT_SIZES.xl,
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h6: {
                     fontSize: THEME_FONT_SIZES.lg,
-                    fontWeight: '400',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 body: {

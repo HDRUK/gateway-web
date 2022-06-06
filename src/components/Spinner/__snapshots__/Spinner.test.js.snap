@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Spinner component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-LayoutBox ui-Spinner additional-classname css-1tuhzuv"
+  >
+    <span
+      class="ui-Icon css-1tuhzuv css-1uw0yso-Spinner"
+    >
+      <iconmock />
+    </span>
+  </div>
+</div>
+`;

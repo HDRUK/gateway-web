@@ -126,9 +126,9 @@ const usePutDataAccessRequest = (requestOptions, mutateOptions) => {
 const usePatchSchema = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(
         data => {
-            const { _id, ...body } = data;
+            const { id, ...body } = data;
 
-            return patchSchema(_id, body, requestOptions);
+            return patchSchema(id, body, requestOptions);
         },
         {
             mutationKey: 'dar.patchDataAccessRequest',
