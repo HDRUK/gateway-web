@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 
 export const PROP_TYPES_TYPOGRAPHY = {
     children: PropTypes.node,

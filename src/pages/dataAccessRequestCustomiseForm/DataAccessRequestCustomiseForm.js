@@ -403,11 +403,11 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const resetGuidance = () => {
-        // remove active question class
         removeActiveQuestionClass();
-        // reset guidance state
+
         setActiveGuidance('');
         setActiveQuestionData(null);
+        setActiveQuestion('');
     };
 
     const onGuidanceChange = async (questionId, changedGuidance) => {
