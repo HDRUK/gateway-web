@@ -17,11 +17,14 @@ const UnpublishedQuestionIcon = ({ question: { questionId, questionStatus }, unp
         tooltipContent = t('guidance.editted');
 
         icon = <Icon svg={<TickIcon />} fill='green400' ml={2} data-testid='editted' />;
+    } else if (((unpublishedGuidance.includes(questionId) && questionId === activeQuestion)) && (!helpers.isQuestionLocked(questionStatus))) {
+        tooltipContent = t('guidance.inEdit');
+        icon = <Icon svg={<DotIcon />} fill='grey400' ml={2} />;
     } else if (!helpers.isQuestionLocked(questionStatus)) {
         tooltipContent = t('guidance.uneditted');
 
         icon = <Icon svg={<DotIcon />} fill='grey400' ml={2} data-testid='uneditted' />;
-    }
+    } 
 
     return icon ? (
         <OverlayTrigger placement='top' overlay={<Tooltip id='tooltip-top'>{tooltipContent}</Tooltip>}>

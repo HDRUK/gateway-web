@@ -123,6 +123,7 @@
     "previous": "Previous",
     "guidance.uneditted": "Guidance uneditted",
     "guidance.editted": "Guidance editted",
+    "guidance.inEdit": "Guidance in edit",
     "dataset": {
         "inReview": "pending approval",
         "active": "Active",
