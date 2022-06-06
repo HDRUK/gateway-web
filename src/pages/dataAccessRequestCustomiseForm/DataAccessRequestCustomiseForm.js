@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/react';
+import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
@@ -8,7 +9,10 @@ import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
+import AlertModal from '../../components/AlertModal';
 import Button from '../../components/Button';
+import LayoutBox from '../../components/LayoutBox';
+import Typography from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
@@ -70,6 +74,8 @@ export const DataAccessRequestCustomiseForm = props => {
     const [showConfirmPublishModal, setShowConfirmPublishModal] = useState(false);
     const [activeQuestionData, setActiveQuestionData] = React.useState();
     const [activePanel, setActivePanel] = React.useState();
+    const [showClearModal, setShowClearModal] = React.useState(false);
+    const [showClearSectionModal, setShowClearSectionModal] = React.useState(false);
 
     const getMasterSchema = async panelId => {
         const {
@@ -436,10 +442,20 @@ export const DataAccessRequestCustomiseForm = props => {
         setUnpublishedGuidance(unpublishedGuidanceChange);
     };
 
-    const handleClearForm = React.useCallback(async () => {
+    const handleShowClearModal = () => {
+        setShowClearModal(true);
+    };
+
+    const handleShowClearSectionModal = () => {
+        setShowClearSectionModal(true);
+    };
+
+    const handleClear = React.useCallback(async () => {
         await questionbankService.patchClearAll(publisherDetails._id);
 
         getMasterSchema(activePanelId);
+
+        setShowClearModal(false);
     }, [activePanelId, publisherDetails._id]);
 
     const handleClearSection = React.useCallback(async () => {
@@ -448,7 +464,15 @@ export const DataAccessRequestCustomiseForm = props => {
         await questionbankService.patchClearSection(publisherDetails._id, page.pageId);
 
         getMasterSchema(activePanelId);
+
+        setShowClearSectionModal(false);
     }, [activePanelId, publisherDetails._id]);
+
+    const handleModalClose = () => {
+        setShowConfirmPublishModal(false);
+        setShowClearModal(false);
+        setShowClearSectionModal(false);
+    };
 
     const renderApp = React.useCallback(() => {
         if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
@@ -643,8 +667,8 @@ export const DataAccessRequestCustomiseForm = props => {
                                 options={[
                                     {
                                         actions: [
-                                            { title: `Clear updates for ${page.title}`, onClick: handleClearSection },
-                                            { title: 'Clear entire form', onClick: handleClearForm },
+                                            { title: `Clear updates for ${page.title}`, onClick: handleShowClearSectionModal },
+                                            { title: 'Clear entire form', onClick: handleShowClearModal },
                                         ],
                                     },
                                 ]}
@@ -676,34 +700,55 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <Modal
                     data-testid='confirm-publish-modal'
-                    show={showConfirmPublishModal}
-                    size='lg'
+                    show={showConfirmPublishModal || showClearSectionModal || showClearModal}
                     aria-labelledby='contained-modal-title-vcenter'
-                    centered>
+                    size='lg'
+                    centered
+                    onClose={handleModalClose}>
                     <div className='removeUploaderModal-header'>
                         <div className='removeUploaderModal-header--wrap'>
-                            <div className='gray700-13 new-line'>
-                                {countOfChanges > 0
-                                    ? 'Are you sure you want to publish your updates to this application form? Any applications which are already in process will not be updated.'
-                                    : 'No changes have been made to your application form so it cannot be published.'}
-                            </div>
+                            {(showClearSectionModal || showClearModal) && (
+                                <Typography variant='h5'>{t('questionbank.modal.clearUnpublishedUpdates')}</Typography>
+                            )}
+                            <Typography color='grey800' as='div' mb={6}>
+                                {showConfirmPublishModal &&
+                                    (countOfChanges > 0 ? t('questionbank.modal.publishChanges') : t('questionbank.modal.noChanges'))}
+                                {showClearSectionModal && t('questionbank.modal.clearSection')}
+                                {showClearModal && t('questionbank.modal.clear')}
+                            </Typography>
                         </div>
                     </div>
                     <div className='removeUploaderModal-footer'>
-                        {countOfChanges > 0 ? (
-                            <div className='removeUploaderModal-footer--wrap'>
-                                <Button variant='secondary' onClick={() => setShowConfirmPublishModal(false)}>
-                                    No, nevermind
-                                </Button>
-                                <Button onClick={onSubmitClick}>Publish</Button>
-                            </div>
-                        ) : (
-                            <div className='removeUploaderModal-footer--wrap'>
-                                <Button className='button-primary' onClick={() => setShowConfirmPublishModal(false)}>
-                                    Close
-                                </Button>
-                            </div>
-                        )}
+                        <div className='removeUploaderModal-footer--wrap'>
+                            {showConfirmPublishModal &&
+                                (countOfChanges > 0 ? (
+                                    <>
+                                        <Button variant='secondary' onClick={() => setShowConfirmPublishModal(false)}>
+                                            {t('buttons.neverMind')}
+                                        </Button>
+                                        <Button onClick={onSubmitClick}>{t('buttons.publish')}</Button>
+                                    </>
+                                ) : (
+                                    <Button className='button-primary' onClick={() => setShowConfirmPublishModal(false)}>
+                                        {t('buttons.close')}
+                                    </Button>
+                                ))}
+
+                            {(showClearSectionModal || showClearModal) && (
+                                <>
+                                    <Button
+                                        variant='secondary'
+                                        onClick={() =>
+                                            showClearSectionModal ? setShowClearSectionModal(false) : setShowClearModal(false)
+                                        }>
+                                        {t('buttons.neverMind')}
+                                    </Button>
+                                    <Button onClick={showClearSectionModal ? handleClearSection : handleClear}>
+                                        {t('buttons.clearUpdates')}
+                                    </Button>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </Modal>
             </div>
