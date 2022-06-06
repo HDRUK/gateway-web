@@ -586,7 +586,7 @@ export const DataAccessRequestCustomiseForm = props => {
                             { showSaveAlert ?  
                             <Alert variant='save'>
                                 <p className='save-info'>
-                                    Every change you make is automatically saved with the latest save time shown in the top right
+                                    {t('DAR.customise.saveAlert')}
                                 </p>
                                 <img src={Close} onClick={handleClose}/>
                             </Alert> : null }
