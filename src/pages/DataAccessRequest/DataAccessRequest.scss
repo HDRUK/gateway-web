@@ -154,10 +154,10 @@
     min-height: 70px;
     margin-left: 0px !important;
     align-content: center;
+    align-items: center;
 }
 
 .banner .banner-left {
-    vertical-align: middle;
     padding-left: 32px !important;
 }
 
@@ -165,7 +165,8 @@
     text-align: right;
     vertical-align: middle;
     padding-right: 32px !important;
-    svg {
+
+    > svg {
         margin-left: 20px;
         cursor: pointer;
     }
@@ -320,7 +321,7 @@
 @media (min-width: 884px) {
     .banner .banner-right span,
     .banner-right a,
-    .banner-right button {
+    .banner-right button:not(.ui-Button) {
         line-height: 30px;
     }
 }
@@ -750,75 +751,6 @@ input[type='checkbox']:after {
     visibility: visible;
     border: solid 2px #d6d6d6;
     content: '';
-}
-
-.actionMenuDropdown {
-    position: relative;
-    left: -87px !important;
-    width: max-content !important;
-    max-height: 314px !important;
-    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03) !important;
-    background-color: $white !important;
-    padding: 20px 16px !important;
-}
-
-.actionMenuHeader {
-    position: sticky;
-    top: 0;
-    background-color: $white;
-    z-index: 1;
-    padding: 0 0 8px 0;
-}
-
-.actionMenuSection {
-    position: relative;
-
-    .description {
-        padding: 0 0 4px 0;
-        display: block;
-        line-height: 14px;
-    }
-
-    .detailedDescription {
-        padding: 4px 0 0 0;
-        display: block;
-        line-height: 13px;
-    }
-
-    .option {
-        padding: 8px 0;
-
-        .title {
-            padding: 0 0 4px 0;
-            display: block;
-            line-height: 14px;
-        }
-
-        .description {
-            padding: 4px 0 0 0;
-            display: block;
-            line-height: 13px;
-        }
-    }
-
-    .option:last-child {
-        padding: 8px 0 0 0;
-    }
-}
-
-.actionMenuSection:not(:first-child) {
-    padding-top: 32px;
-
-    &:after {
-        position: absolute;
-        top: 16px;
-        left: -16px;
-        height: 1px;
-        background: $gray-pale;
-        width: calc(100% + 32px);
-        z-index: 1000;
-        content: '';
-    }
 }
 
 .btn-link-delete {

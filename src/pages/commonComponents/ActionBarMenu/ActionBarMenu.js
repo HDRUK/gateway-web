@@ -1,7 +1,9 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const ActionBarMenu = ({ label, options = [], disabled, buttonClass = 'button-secondary' }) => {
+import './ActionBarMenu.scss';
+
+const ActionBarMenu = ({ label, options = [], disabled, buttonClass = 'button-secondary', alignStart }) => {
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         <a
             href='javascript:void(0)'
@@ -19,24 +21,29 @@ const ActionBarMenu = ({ label, options = [], disabled, buttonClass = 'button-se
     return (
         <>
             {options.length > 0 && options.some(option => option.actions.length > 0) && (
-                <Dropdown>
+                <Dropdown drop='up'>
                     <Dropdown.Toggle as={CustomToggle}>
                         <button className={`${buttonClass} ${disabled ? 'disabled' : ''}`} disabled={disabled}>
                             {label}
                         </button>
                     </Dropdown.Toggle>
-                    <Dropdown.Menu className='actionMenuDropdown'>
+                    <Dropdown.Menu
+                        className={`actionMenuDropdown${alignStart ? ' actionMenuDropdown__start' : ''}`}
+                        flip={false}
+                        align='end'>
                         {options.map(option => {
                             return (
                                 option.actions.length > 0 && (
                                     <>
                                         <div className='actionMenuSection'>
-                                            <div className='actionMenuHeader'>
-                                                <span className='gray800-14-bold description'>{option.description}</span>
-                                                {option.detailedDescription && (
-                                                    <span className='gray700-13 detailedDescription'>{option.detailedDescription}</span>
-                                                )}
-                                            </div>
+                                            {(option.description || option.detailedDescription) && (
+                                                <div className='actionMenuHeader'>
+                                                    <span className='gray800-14-bold description'>{option.description}</span>
+                                                    {option.detailedDescription && (
+                                                        <span className='gray700-13 detailedDescription'>{option.detailedDescription}</span>
+                                                    )}
+                                                </div>
+                                            )}
 
                                             {option.actions.map(action => {
                                                 return (

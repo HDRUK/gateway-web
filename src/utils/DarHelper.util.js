@@ -46,9 +46,9 @@ const staticContent = {
         pageId: 'additionalinformationfiles',
     },
     additionalFilesQuestionPanel: {
-        questionPanelHeaderText: 'File uploaded',
+        questionPanelHeaderText: 'File upload',
         panelHeader:
-            'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.',
+            'Applicants should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.',
         navHeader: 'Files',
         panelId: 'additionalinformationfiles-files',
         questionSets: [],
@@ -352,6 +352,29 @@ const findQuestionSet = (questionSetId = '', schema = {}) => {
     return {};
 };
 
+const findQuestionSetsByPageId = (pageId = '', schema = {}) => {
+    if (!_.isEmpty(pageId) && !_.isEmpty(schema)) {
+        const { formPanels } = schema;
+
+        return [...formPanels].filter(q => q.pageId === pageId);
+    }
+    return {};
+};
+
+const findPageByQuestionSet = (questionSetId = '', schema = {}) => {
+    if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
+        const { formPanels, pages } = schema;
+
+        const pageId = formPanels.find(q => q.panelId === questionSetId)?.pageId;
+        return pages.find(q => q.pageId === pageId);
+    }
+    return {};
+};
+
+const findPageIdByQuestionSet = (questionSetId = '', schema = {}) => {
+    return findPageByQuestionSet(questionSetId, schema)?.pageId;
+};
+
 /**
  * [TotalQuestionAnswered]
  * @desc - Sets total questions answered for each section
@@ -412,6 +435,43 @@ const totalQuestionsAnswered = (component, panelId = '', questionAnswers = {}, j
         }
     }
     return { totalAnsweredQuestions: 0, totalQuestions: 0 };
+};
+
+/**
+ * InjectStaticContent
+ * @desc Function to inject static 'about' and 'files' pages and panels into schema
+ * @returns {jsonSchmea} object
+ */
+const injectReadonlyStaticContent = (jsonSchema = {}, activePanelId) => {
+    const { pages, formPanels, questionPanels } = { ...jsonSchema };
+
+    let formPanel = {};
+    let currentPageIdx = 0;
+
+    const additionalfilesNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
+
+    if (!additionalfilesNavElementsExist) {
+        pages.push(staticContent.filesPageNav);
+        formPanels.push(staticContent.filesPanel);
+    }
+
+    if (additionalfilesNavElementsExist) {
+        formPanels.push(staticContent.additionalFilesPanel);
+        questionPanels.push(staticContent.additionalFilesQuestionPanel);
+    }
+
+    if (!_.isEmpty(activePanelId)) {
+        formPanel = formPanels.find(p => p.panelId === activePanelId);
+        currentPageIdx = pages.findIndex(page => page.pageId === formPanel.pageId);
+    }
+
+    pages.forEach(element => {
+        element.active = false;
+    });
+
+    pages[currentPageIdx].active = true;
+
+    return { ...jsonSchema, pages, formPanels, questionPanels };
 };
 
 let filterInvalidQuestions = questions => {
@@ -631,6 +691,7 @@ const isQuestionOff = questionStatus => {
 };
 
 export default {
+    findPageByQuestionSet,
     findQuestionSet,
     findQuestion,
     autoComplete,
@@ -663,4 +724,7 @@ export default {
     isQuestionLocked,
     isQuestionOn,
     isQuestionOff,
+    injectReadonlyStaticContent,
+    findPageIdByQuestionSet,
+    findQuestionSetsByPageId,
 };

@@ -13,7 +13,7 @@ import UploadFiles from './UploadFiles';
 import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
 
-const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header }) => {
+const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disabled }) => {
     // 10mb - 10485760
     // 2mb - 2097152
     const maxSize = 10485760;
@@ -232,7 +232,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header }) =>
                 <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <div className='upload'>
-                        <button className='button-tertiary'>
+                        <button className='button-tertiary' disabled={disabled}>
                             <UploadSVG /> Select files
                         </button>
                         <span className='gray700-alt-13'>

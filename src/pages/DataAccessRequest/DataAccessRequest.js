@@ -2118,29 +2118,28 @@ class DataAccessRequest extends Component {
                                 {this.renderApp()}
                             </div>
                         </div>
-                        {isWideForm ? null : (
-                            <div id='darRightCol' className='scrollable-sticky-column'>
-                                <div className='darTab'>
-                                    <QuestionActionTabs
-                                        applicationId={this.state._id}
-                                        userState={userState}
-                                        settings={this.state.actionTabSettings}
-                                        activeGuidance={activeGuidance}
-                                        activePanelGuidance={activePanelGuidance}
-                                        onHandleActionTabChange={this.onHandleActionTabChange}
-                                        toggleDrawer={this.toggleDrawer}
-                                        setMessageDescription={this.setMessageDescription}
-                                        userType={userType}
-                                        messagesCount={this.state.messagesCount}
-                                        notesCount={this.state.notesCount}
-                                        isShared={this.state.isShared}
-                                        updateCount={this.updateCount}
-                                        publisher={datasets[0].datasetv2.summary.publisher.name}
-                                        applicationStatus={applicationStatus}
-                                    />
-                                </div>
+
+                        <div id='darRightCol' className='scrollable-sticky-column'>
+                            <div className='darTab'>
+                                <QuestionActionTabs
+                                    applicationId={this.state._id}
+                                    userState={userState}
+                                    settings={this.state.actionTabSettings}
+                                    activeGuidance={activeGuidance}
+                                    activePanelGuidance={activePanelGuidance}
+                                    onHandleActionTabChange={this.onHandleActionTabChange}
+                                    toggleDrawer={this.toggleDrawer}
+                                    setMessageDescription={this.setMessageDescription}
+                                    userType={userType}
+                                    messagesCount={this.state.messagesCount}
+                                    notesCount={this.state.notesCount}
+                                    isShared={this.state.isShared}
+                                    updateCount={this.updateCount}
+                                    publisher={datasets[0].datasetv2.summary.publisher.name}
+                                    applicationStatus={applicationStatus}
+                                />
                             </div>
-                        )}
+                        </div>
                     </div>
 
                     <ActionBar userState={userState}>
