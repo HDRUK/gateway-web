@@ -27,6 +27,7 @@ export const root =
 
         return css`
             ${mixins.button()}
+
             ${getComponentVariant('Button', variant, theme)}
             ${getComponentSize('Button', size, theme)}
 

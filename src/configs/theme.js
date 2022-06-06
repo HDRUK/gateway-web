@@ -179,14 +179,18 @@ export const THEME_BUTTON = {
     variants: {
         primary: {
             background: 'purple500',
-            hoverBackground: 'purple700',
-            disabledBackground: 'purple100',
             borderColor: 'purple500',
-            hoverBorderColor: 'purple700',
-            disabledBorderColor: 'purple100',
-            disabledColor: 'purple200',
             color: 'white',
             fill: 'white',
+            ':hover': {
+                borderColor: 'purple700',
+                background: 'purple700',
+            },
+            ':disabled': {
+                borderColor: 'purple100',
+                color: 'purple200',
+                background: 'purple100',
+            },
         },
         secondary: {
             background: 'white',
