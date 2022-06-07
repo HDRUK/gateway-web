@@ -42,6 +42,8 @@ import './DataAccessRequestCustomiseForm.scss';
 import { LayoutContent } from '../../components/Layout';
 import Alert from '../../components/Alert';
 import Close from '../../images/icons/close_blue.svg'
+import {ReactComponent as Clock} from '../../images/icons/blue_clock.svg';
+
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -82,7 +84,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const [activePanel, setActivePanel] = React.useState();
     const [showClearModal, setShowClearModal] = React.useState(false);
     const [showClearSectionModal, setShowClearSectionModal] = React.useState(false);
-    const [showSaveAlert, setShowSaveAlert] = useState(true);
+    const [showSaveAlert, setShowSaveAlert] = useState(true)
 
     const patchSchemaRequest = darService.usePatchSchema();
 
@@ -636,7 +638,9 @@ export const DataAccessRequestCustomiseForm = props => {
                         </div>
                         <LayoutContent>
                             { showSaveAlert ?  
-                            <Alert variant='save'>
+                            <Alert variant="info" icon={<Clock />}>
+                                {/* icon src={Clock}  */}
+                                &nbsp;
                                 <p className='save-info'>
                                     {t('DAR.customise.saveAlert')}
                                 </p>
