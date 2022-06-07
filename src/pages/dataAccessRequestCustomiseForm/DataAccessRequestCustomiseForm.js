@@ -636,8 +636,9 @@ export const DataAccessRequestCustomiseForm = props => {
                                 enabled
                             />
                         </div>
+                        { showSaveAlert ?
                         <LayoutContent>
-                            { showSaveAlert ?  
+                              
                             <Alert variant="info" icon={<Clock />}>
                                 {/* icon src={Clock}  */}
                                 &nbsp;
@@ -645,8 +646,8 @@ export const DataAccessRequestCustomiseForm = props => {
                                     {t('DAR.customise.saveAlert')}
                                 </p>
                                 <img src={Close} onClick={handleClose}/>
-                            </Alert> : null }
-                        </LayoutContent>
+                            </Alert> 
+                        </LayoutContent>: null }
                         <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
                             {jsonSchema.pages
                                 ? [...jsonSchema.pages].map((item, idx) =>
