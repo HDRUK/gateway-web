@@ -49,11 +49,16 @@ export const getCommonStyles = (
 	`;
 };
 
-const getComponentStyle = (prop, value, theme, important) => {
-    const propParts = prop.split(/(?=[A-Z])/);
+const getComponentStyleValue = (value, theme) => {
     const isColor = Object.keys(theme.colors).includes(value);
 
-    return `${propParts.join('-')}: ${isColor ? theme.colors[value] : value}${important ? ' !important' : ''};`;
+    return isColor ? theme.colors[value] : value;
+};
+
+const getComponentStyle = (prop, value, theme, important) => {
+    const propParts = prop.split(/(?=[A-Z])/);
+
+    return `${propParts.join('-')}: ${getComponentStyleValue(value, theme)}${important ? ' !important' : ''};`;
 };
 
 export const getComponentStylesFromTheme = (props, theme, important) => {
@@ -74,6 +79,18 @@ export const getComponentStylesFromTheme = (props, theme, important) => {
 
 export const getComponentVariant = (component, variant, theme) => {
     return getComponentStylesFromTheme(theme.components[component].variants[variant], theme);
+};
+
+export const pickComponentVariantValue = (component, variant, prop, theme) => {
+    const config = theme.components[component].variants[variant];
+
+    return getComponentStyleValue(config[prop], theme);
+};
+
+export const pickComponentVariantStyle = (component, variant, prop, theme) => {
+    const config = theme.components[component].variants[variant];
+
+    return getComponentStylesFromTheme(config[prop], theme);
 };
 
 export const getComponentSize = (component, size, theme) => {
@@ -313,17 +330,26 @@ export const theme = {
                     color: 'purple500',
                     background: 'none',
                     borderColor: 'transparent',
-                    hoverColor: 'white',
-                    hoverFill: 'white',
-                    disabledFill: 'purple500',
+                    ':hover': {
+                        color: 'white',
+                        fill: 'white',
+                    },
+                    ':disabled': {
+                        fill: 'purple500',
+                    },
                 },
                 secondary: {
                     fill: 'purple500',
                     color: 'purple500',
                     background: 'none',
                     borderColor: 'transparent',
-                    hoverFill: 'white',
-                    disabledFill: 'purple500',
+                    ':hover': {
+                        color: 'white',
+                        fill: 'white',
+                    },
+                    ':disabled': {
+                        fill: 'purple500',
+                    },
                 },
                 tertiary: {
                     fill: 'purple500',
@@ -337,19 +363,26 @@ export const theme = {
             height: '20px',
             width: '20px',
             fontSize: THEME_FONT_SIZES.md,
-            disabledColor: 'grey600',
             variants: {
                 primary: {
                     borderColor: 'grey200',
                     checkedBackground: 'green700',
-                    hoverBackground: 'grey200',
-                    disabledBackground: 'grey100',
+                    ':hover': {
+                        background: 'grey200',
+                    },
+                    ':disabled': {
+                        background: 'grey100',
+                    },
                 },
                 secondary: {
                     borderColor: 'grey200',
                     checkedBackground: 'grey700',
-                    hoverBackground: 'grey200',
-                    disabledBackground: 'grey100',
+                    ':hover': {
+                        background: 'grey200',
+                    },
+                    ':disabled': {
+                        background: 'grey100',
+                    },
                 },
             },
         },

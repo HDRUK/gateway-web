@@ -46,9 +46,9 @@ export const WysiwygEditor = ({
         <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }} className={cx('ui-WysiwygEditor', className)} css={styles.root()}>
             <Editor
                 data-testid='wysiwyg-editor-main'
-                wrapperClassName='demo-wrapper'
-                editorClassName='wysiwyg-wrapper'
-                toolbarClassName='rdw-editor-toolbar'
+                wrapperClassName='ui-WysiwygEditor__wrapper'
+                editorClassName='ui-WysiwygEditor__editor'
+                toolbarClassName='ui-WysiwygEditor__toolbar'
                 editorState={editorState}
                 onEditorStateChange={handleOnEditorStateChange}
                 onContentStateChange={onContentStateChange}

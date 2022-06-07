@@ -1,26 +1,35 @@
 import { css } from '@emotion/react';
+import { getComponentGlobals, pickComponentVariantStyle, pickComponentVariantValue } from '../../configs/theme';
 
 export const root =
-    ({ variant, disabled }) =>
+    ({ variant, disabled, partial }) =>
     theme => {
         const {
-            colors,
+            font,
             components: {
-                Checkbox: { height, width, variants, fontSize, disabledColor },
+                Checkbox: { height, width },
             },
         } = theme;
 
         return css`
             ${mixins.root({ width, disabled })}
 
-            font-size: ${fontSize};
+            font-size: ${font.size.default};
 
             &::before {
-                ${mixins.before({ colors, variants, variant, width, height })}
+                ${mixins.before({ variant, width, height })(theme)}
+                ${disabled && mixins.disabled({ variant })(theme)}
             }
 
+            ${!disabled &&
+            `&:hover {
+				&::before {
+					${pickComponentVariantStyle('Checkbox', variant, ':hover', theme)}
+				}
+			}`}
+
             input:disabled + span {
-                color: ${colors[disabledColor]};
+                ${getComponentGlobals('Input', 'label', { disabled }, theme)}
             }
 
             input + .ui-Checkbox__label::after {
@@ -32,19 +41,8 @@ export const root =
             }
 
             input:checked + .ui-Checkbox__label::after {
-                ${mixins.checked({ colors, variants, variant })}
-            }
-
-            input:checked + .ui-Checkbox__label::after {
-                ${mixins.checked({ colors, variants, variant })}
-            }
-
-            input + .ui-Checkbox__label > span::after {
-                ${mixins.partial({ width, height })}
-            }
-
-            input:disabled + .ui-Checkbox__label::after {
-                ${mixins.disabled({ colors, variants, variant })}
+                ${!partial && mixins.checked({ variant })(theme)}
+                ${partial && mixins.partial({ variant, width, height })(theme)}
             }
         `;
     };
@@ -66,14 +64,17 @@ export const mixins = {
                 : ''
         }
 	`,
-    before: ({ colors, variants, variant, width, height }) => `
+    before:
+        ({ variant, width, height }) =>
+        theme =>
+            `
 		content: '';
 		position: absolute;
 		top: 0;
 		left: 0;
 		border-width: 2px;
 		border-style: solid;
-		border-color: ${colors[variants[variant].borderColor]};
+		border-color: ${pickComponentVariantValue('Checkbox', variant, 'borderColor', theme)};
 		width: ${width};
 		height: ${height};
 	`,
@@ -93,19 +94,23 @@ export const mixins = {
 		width: calc(${width} - 4px);
 		height: calc(${height} - 4px);
 	`,
-    checked: ({ colors, variants, variant }) => `
-		background: ${colors[variants[variant].checkedBackground]};
+    checked:
+        ({ variant }) =>
+        theme =>
+            `
+		background: ${pickComponentVariantValue('Checkbox', variant, 'checkedBackground', theme)};
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	`,
-    partial: ({ width, height }) => `
-		content: '-';
-		font-size: 22px;
-		color: white;
+    partial:
+        ({ variant, width, height }) =>
+        theme =>
+            `
+		border-top: 3px solid ${pickComponentVariantValue('Checkbox', variant, 'checkedBackground', theme)};
 		z-index: 1;
-		left: 0;
-		top: -1px;
+		left: 5px;
+		top: 9px;
 		position: absolute;
 		width: calc(${width} - 10px);
 		height: calc(${height} - 10px);
@@ -113,7 +118,10 @@ export const mixins = {
 		align-items: center;
 		justify-content: center;
 	`,
-    disabled: ({ colors, variants, variant }) => `
-		background: ${colors[variants[variant].backgroundDisabled]};
+    disabled:
+        ({ variant }) =>
+        theme =>
+            `
+		${pickComponentVariantStyle('Checkbox', variant, ':disabled', theme)};
 	`,
 };

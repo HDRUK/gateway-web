@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { pickComponentVariantStyle } from '../../configs/theme';
 import { mixins } from '../Checkbox/Checkbox.styles';
 
 export const root =
@@ -78,12 +79,12 @@ export const root =
                 height: ${height};
             }
 
-            label:hover .rct-icon-uncheck::before {
-                background: ${colors[variants[variant].hoverBackground]};
+            label:hover .rct-icon::before {
+                ${pickComponentVariantStyle('Checkbox', variant, ':hover', theme)}
             }
 
             input + .rct-checkbox .rct-icon::before {
-                ${mixins.before({ colors, variants, variant, width, height })}
+                ${mixins.before({ variant, width, height })(theme)}
             }
 
             input + .rct-checkbox .rct-icon::after {
@@ -96,18 +97,18 @@ export const root =
 
             input + .rct-checkbox .rct-icon-check::after,
             input + .rct-checkbox .rct-icon-half-check::after {
-                ${mixins.checked({ colors, variants, variant })}
+                ${mixins.checked({ variant })(theme)}
             }
 
             input + .rct-checkbox .rct-icon-half-check::after {
-                ${mixins.partial({ width, height })}
+                ${mixins.partial({ variant, width, height })(theme)}
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
 
             input:disabled + .rct-checkbox .rct-icon::after {
-                ${mixins.disabled({ colors, variants, variant })}
+                ${mixins.disabled({ variant })(theme)}
             }
         `;
     };

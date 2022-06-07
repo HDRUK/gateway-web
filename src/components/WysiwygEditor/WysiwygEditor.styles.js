@@ -2,15 +2,10 @@ import { css } from '@emotion/react';
 import { getSize } from '../../configs/theme';
 
 export const root = () => theme => {
-    const {
-        colors,
-        components: {
-            Icon: { sizes },
-        },
-    } = theme;
+    const { colors } = theme;
 
     return css`
-        .wysiwyg-wrapper {
+        .ui-WysiwygEditor__wrapper {
             border: 2px solid ${colors.grey400};
             border-top: none;
             padding: 0px ${getSize(4, theme)};
@@ -18,7 +13,7 @@ export const root = () => theme => {
             max-height: 520px;
         }
 
-        .rdw-editor-toolbar {
+        .ui-WysiwygEditor__toolbar {
             padding: 6px 5px 0;
             border-radius: 2px;
             border: 1px solid ${colors.grey100};
@@ -34,11 +29,6 @@ export const root = () => theme => {
             font-size: 15px;
             margin-bottom: 0px !important;
             user-select: none;
-        }
-
-        .wysiwyg-main-card {
-            margin-bottom: 0px;
-            border-bottom: solid 1px $background;
         }
     `;
 };
