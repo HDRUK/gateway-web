@@ -50,7 +50,7 @@ export const getCommonStyles = (
 };
 
 const getComponentStyle = (prop, value, theme, important) => {
-    const propParts = prop.replace(/([a-z])([A-Z])/g, '$1,$2').split(',');
+    const propParts = prop.split(/(?=[A-Z])/);
     const isColor = Object.keys(theme.colors).includes(value);
 
     return `${propParts.join('-')}: ${isColor ? theme.colors[value] : value}${important ? ' !important' : ''};`;
@@ -61,14 +61,15 @@ export const getComponentStylesFromTheme = (props, theme, important) => {
         return Object.keys(nextProps).map(prop => {
             if (isObject(nextProps[prop])) {
                 return `${prop} {
-                    ${getStyles(nextProps[prop])}
+                    ${getStyles(nextProps[prop]).join('\r\n')}
                 }`;
             }
+
             return getComponentStyle(prop, nextProps[prop], theme, important);
         });
     };
 
-    return getStyles(props).join('\n');
+    return getStyles(props).join('\r\n');
 };
 
 export const getComponentVariant = (component, variant, theme) => {
@@ -84,7 +85,7 @@ export const getComponentGlobals = (component, key, config, theme) => {
     let validProps = {};
 
     Object.keys(props).forEach(prop => {
-        const propParts = prop.replace(/([a-z])([A-Z])/g, '$1,$2').split(',');
+        const propParts = prop.split(/(?=[A-Z])/);
 
         if (config[propParts[0]]) {
             propParts.shift();
@@ -194,26 +195,34 @@ export const THEME_BUTTON = {
         },
         secondary: {
             background: 'white',
-            hoverBackground: 'green400',
-            disabledBackground: 'white',
             borderColor: 'green400',
-            hoverBorderColor: 'green400',
-            disabledBorderColor: 'green200',
             color: 'grey800',
             fill: 'grey800',
-            hoverColor: 'white',
-            disabledColor: 'grey500',
+            ':hover': {
+                color: 'white',
+                borderColor: 'green400',
+                background: 'green400',
+            },
+            ':disabled': {
+                background: 'white',
+                borderColor: 'green200',
+                color: 'grey500',
+            },
         },
         tertiary: {
             background: 'grey200',
-            hoverBackground: 'grey300',
-            disabledBackground: 'grey200',
             borderColor: 'grey200',
-            hoverBorderColor: 'grey300',
             color: 'grey800',
             fill: 'grey800',
-            disabledBorderColor: 'grey200',
-            disabledColor: 'grey500',
+            ':hover': {
+                background: 'grey300',
+                borderColor: 'grey300',
+            },
+            ':disabled': {
+                borderColor: 'grey200',
+                color: 'grey500',
+                background: 'grey200',
+            },
         },
     },
 };
