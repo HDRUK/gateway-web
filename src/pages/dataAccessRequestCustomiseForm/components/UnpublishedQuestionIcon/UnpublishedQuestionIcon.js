@@ -15,12 +15,13 @@ const UnpublishedQuestionIcon = ({ question: { questionId, questionStatus }, unp
 
     if (unpublishedGuidance.includes(questionId) && questionId !== activeQuestion) {
         tooltipContent = t('guidance.edited');
-
-        icon = <Icon svg={<TickIcon />} fill='green400' ml={2} data-testid='edited' />;
+        icon = <Icon svg={<TickIcon />} fill='green400' ml={2} data-testid='editted' />;
+    } else if (((unpublishedGuidance.includes(questionId) && questionId === activeQuestion)) && (!helpers.isQuestionLocked(questionStatus))) {
+        tooltipContent = t('guidance.inEdit');
+        icon = <Icon svg={<DotIcon />} fill='grey400' ml={2} />;
     } else if (!helpers.isQuestionLocked(questionStatus)) {
         tooltipContent = t('guidance.unedited');
-
-        icon = <Icon svg={<DotIcon />} fill='grey400' ml={2} data-testid='unedited' />;
+        icon = <Icon svg={<DotIcon />} fill='grey400' ml={2} data-testid='uneditted' />;
     }
 
     return icon ? (
