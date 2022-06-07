@@ -39,7 +39,7 @@ describe('Given the UnpublishedQuestionIcon component', () => {
                     />
                 );
 
-                expect(wrapper.getByTestId('editted')).toBeTruthy();
+                expect(wrapper.getByTestId('edited')).toBeTruthy();
             });
         });
 
@@ -55,7 +55,7 @@ describe('Given the UnpublishedQuestionIcon component', () => {
                     />
                 );
 
-                expect(wrapper.getByTestId('uneditted')).toBeTruthy();
+                expect(wrapper.getByTestId('unedited')).toBeTruthy();
             });
         });
     });
