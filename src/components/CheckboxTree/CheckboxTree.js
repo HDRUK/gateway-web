@@ -1,16 +1,11 @@
 /** @jsx jsx */
 import { cx } from '@emotion/css';
 import { jsx } from '@emotion/react';
-import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactCheckboxTree from 'react-checkbox-tree';
-import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import { addCommonPropTypes } from '../../configs/propTypes';
-import useCommonStyles from '../../hooks/useCommonStyles';
-import Icon from '../Icon';
-import { ReactComponent as ChevronRight } from '../../images/chevron-right.svg';
-import { ReactComponent as ChevronBottom } from '../../images/chevron-bottom.svg';
+import LayoutBox from '../LayoutBox';
+import CheckboxTreeNode from './CheckboxTreeNode';
 import * as styles from './CheckboxTree.styles';
 
 const CheckboxTree = ({
@@ -22,76 +17,83 @@ const CheckboxTree = ({
     width,
     minWidth,
     maxWidth,
-    icons,
     nodes,
-    checkboxProps: { variant: checkboxVariant },
+    variant,
+    checked,
+    expanded,
+    onCheck,
+    onExpand,
     ...outerProps
 }) => {
-    const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
+    const [checkedValues, setCheckedValues] = React.useState(checked);
+    const [expandedValues, setExpandedValues] = React.useState(expanded);
 
-    const formatNode = node => {
-        if (isEmpty(node.children)) {
-            const { children, ...rest } = node;
-            return rest;
-        }
-        if (node.children) {
-            return {
-                ...node,
-                children: node.children.map(childNodes => {
-                    return formatNode(childNodes);
-                }),
-            };
-        }
-        return node;
-    };
+    const handleCheck = React.useCallback(
+        e => {
+            let changedValues;
 
-    const formattedNodes = React.useMemo(() => {
-        return nodes.map(node => {
-            return formatNode(node);
-        });
-    }, [nodes]);
+            if (e.target.checked) {
+                changedValues = [...checkedValues, e.target.value];
+            } else {
+                changedValues = checkedValues.filter(value => e.target.value !== value);
+            }
+
+            setCheckedValues(changedValues);
+
+            onCheck(e, changedValues);
+        },
+        [checkedValues]
+    );
+
+    const handleExpand = React.useCallback(
+        parentValue => {
+            let changedValues;
+
+            if (!expandedValues.includes(parentValue)) {
+                changedValues = [...expandedValues, parentValue];
+            } else {
+                changedValues = expandedValues.filter(value => parentValue !== value);
+            }
+
+            setExpandedValues(changedValues);
+
+            onExpand(parentValue, changedValues);
+        },
+        [expandedValues]
+    );
 
     return (
-        <div
-            css={styles.root({
-                variant: 'primary',
-                hasLeafIcon: !!icons.leaf,
-                hasParentIcon: !!icons.parentClose || !!icons.parentOpen,
-                checkboxVariant,
-            })}
-            className={cx(className, commonStyles, 'ui-CheckboxTree')}
-        >
-            <ReactCheckboxTree nodes={formattedNodes} icons={icons} {...outerProps} checkModel='all' />
-        </div>
+        <LayoutBox
+            {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}
+            className={cx(className, 'ui-CheckboxTree')}
+            css={styles.root}
+            {...outerProps}>
+            <CheckboxTreeNode
+                onExpand={handleExpand}
+                onCheck={handleCheck}
+                checked={checkedValues}
+                expanded={expandedValues}
+                nodes={nodes}
+            />
+        </LayoutBox>
     );
 };
 
 CheckboxTree.propTypes = addCommonPropTypes({
     nodes: PropTypes.array,
-    icons: PropTypes.shape({
-        expandClose: PropTypes.node,
-        expandOpen: PropTypes.node,
-        parentClose: PropTypes.node,
-        parentOpen: PropTypes.node,
-        leaf: PropTypes.node,
-    }),
-    checkboxProps: PropTypes.shape({
-        variant: PropTypes.oneOf(['primary', 'secondary']).isRequired,
-    }),
+    variant: PropTypes.oneOf(['primary', 'secondary']).isRequired,
     onCheck: PropTypes.func,
+    onExpand: PropTypes.func,
+    checked: PropTypes.arrayOf(PropTypes.string),
+    expanded: PropTypes.arrayOf(PropTypes.string),
 });
 
 CheckboxTree.defaultProps = {
-    icons: {
-        expandClose: <Icon svg={<ChevronRight />} size='lg' color='purple500' />,
-        expandOpen: <Icon svg={<ChevronBottom />} size='lg' color='purple500' />,
-        parentOpen: null,
-        parentClose: null,
-        leaf: null,
-    },
-    checkboxProps: {
-        variant: 'primary',
-    },
+    variant: 'primary',
+    onCheck: () => {},
+    onExpand: () => {},
+    checked: [],
+    expanded: [],
 };
 
 export default CheckboxTree;

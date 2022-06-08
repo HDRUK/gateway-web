@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 export const COMMON_PROP_TYPES = {
+    m: PropTypes.number,
     ml: PropTypes.number,
     mr: PropTypes.number,
     mb: PropTypes.number,

@@ -8,6 +8,7 @@ import { PROP_TYPES_LAYOUTBOX } from './LayoutBox.propTypes';
 const LayoutBox = ({
     children,
     className,
+    m,
     mt,
     mb,
     ml,
@@ -31,6 +32,7 @@ const LayoutBox = ({
     ...outerProps
 }) => {
     const commonStyles = useCommonStyles({
+        m,
         mt,
         mb,
         ml,

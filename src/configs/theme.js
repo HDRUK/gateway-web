@@ -25,10 +25,11 @@ export const getStyle = (propParts, value, theme) => {
 };
 
 export const getCommonStyles = (
-    { ml, mr, mb, mt, p, pr, pt, pb, pl, width, maxWidth, minWidth, display, alignItems, justifyContent, flexGrow, position },
+    { m, ml, mr, mb, mt, p, pr, pt, pb, pl, width, maxWidth, minWidth, display, alignItems, justifyContent, flexGrow, position },
     theme
 ) => {
     return `
+        ${getSpacingStyle('margin', m, theme)}
 		${getSpacingStyle('margin-left', ml, theme)}
 		${getSpacingStyle('margin-right', mr, theme)}
 		${getSpacingStyle('margin-bottom', mb, theme)}
