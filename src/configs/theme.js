@@ -238,12 +238,6 @@ export const theme = {
                     fill: 'red700',
                     borderColor: 'red700',
                 },
-                save: {
-                    background: 'platinum50',
-                    color: 'platinum700',
-                    fill: 'platinum700',
-                    borderColor: 'platinum700',
-                },
             },
         },
         Button: THEME_BUTTON,

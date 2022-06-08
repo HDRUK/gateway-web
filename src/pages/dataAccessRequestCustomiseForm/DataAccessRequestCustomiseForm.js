@@ -14,7 +14,7 @@ import Cta from '../../components/Cta';
 import Icon from '../../components/Icon';
 import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
-import Typography, { H5 } from '../../components/Typography';
+import Typography, { H5, P } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
@@ -41,9 +41,8 @@ import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
 import './DataAccessRequestCustomiseForm.scss';
 import { LayoutContent } from '../../components/Layout';
 import Alert from '../../components/Alert';
-import Close from '../../images/icons/close_blue.svg'
-import {ReactComponent as Clock} from '../../images/icons/blue_clock.svg';
-
+import Close from '../../images/icons/close_blue.svg';
+import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -80,11 +79,11 @@ export const DataAccessRequestCustomiseForm = props => {
     const [countOfChanges, setCountOfChanges] = useState({});
     const [existingCountOfChanges, setExistingCountOfChanges] = useState(0);
     const [showConfirmPublishModal, setShowConfirmPublishModal] = useState(false);
-    const [activeQuestionData, setActiveQuestionData] = React.useState();    
+    const [activeQuestionData, setActiveQuestionData] = React.useState();
     const [activePanel, setActivePanel] = React.useState();
     const [showClearModal, setShowClearModal] = React.useState(false);
     const [showClearSectionModal, setShowClearSectionModal] = React.useState(false);
-    const [showSaveAlert, setShowSaveAlert] = useState(true)
+    const [showSaveAlert, setShowSaveAlert] = useState(true);
 
     const patchSchemaRequest = darService.usePatchSchema();
 
@@ -534,7 +533,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
     const handleClose = () => {
         setShowSaveAlert(false);
-    }
+    };
 
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
     Winterfell.addInputType('datePickerCustom', DatePickerCustom);
@@ -636,18 +635,11 @@ export const DataAccessRequestCustomiseForm = props => {
                                 enabled
                             />
                         </div>
-                        { showSaveAlert ?
-                        <LayoutContent>
-                              
-                            <Alert variant="info" icon={<Clock />}>
-                                {/* icon src={Clock}  */}
-                                &nbsp;
-                                <p className='save-info'>
-                                    {t('DAR.customise.saveAlert')}
-                                </p>
-                                <img src={Close} onClick={handleClose}/>
-                            </Alert> 
-                        </LayoutContent>: null }
+
+                        <Alert variant='info' icon={<Icon svg={<Clock />} size='xl' />} onClose={handleClose} dismissable mb={2} mr={2}>
+                            <P>{t('DAR.customise.saveAlert')}</P>
+                        </Alert>
+
                         <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
                             {jsonSchema.pages
                                 ? [...jsonSchema.pages].map((item, idx) =>
