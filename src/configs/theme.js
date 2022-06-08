@@ -209,6 +209,8 @@ export const theme = {
         teal: '#3db28c',
         yellow700: '#F0BB24',
         yellow50: '#FDFCE6',
+        brown900: '#856505',
+        gold50: '#FFF8E1',
         none: 'none',
     },
     components: {
@@ -227,8 +229,8 @@ export const theme = {
                     borderColor: 'platinum700',
                 },
                 warning: {
-                    background: 'yellow50',
-                    color: 'yellow700',
+                    background: 'gold50',
+                    color: 'brown900',
                     fill: 'yellow700',
                     borderColor: 'yellow700',
                 },
