@@ -23,10 +23,6 @@ p.save-info {
     color: #dc3645;
 }
 
-.save {
-    color: #4682B4;
-}
-
 .alert {
     margin-bottom: 8px !important;
     font-size: 14px;
@@ -38,10 +34,6 @@ p.save-info {
 
     &-success {
         border: 2px solid #3db28c !important;
-    }
-
-    &-save {
-        border: 2px solid #4682B4 !important;
     }
 
     &-danger {
