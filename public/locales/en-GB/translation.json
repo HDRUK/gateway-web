@@ -324,14 +324,13 @@
             "loadingtext": "Uploading...",
             "requiredError": "Error in row {{row}} Mandatory field “{{column}}” is empty",
             "duplicateError": "Error in row {{row}} : Suspected data use duplicate",
-            "duplicateRowError": "Error in row {{row}}: Suspected data use duplicate of row {{duplicateRow}}"
-        },
-        "tabDescription": {
-            "datause": "",
-            "datause_widget": "A data use widget is a great way of demonstrating transparency of how health data is being used, by connecting users of your website to the Gateway data use register. The widget will enable you to embed a link to the Gateway data use results page, pre-filtered on your organisation's data uses."
+            "duplicateRowError": "Error in row {{row}}: Suspected data use duplicate of row {{duplicateRow}}",
+            "pageInfoUser": "Manage your data use register by editing data uses.",
+			"pageInfoTeam": "Manage your data use register by uploading or editing data uses."
         },
         "widget": {
-            "heading": "Data Use Widget",
+            "heading": "Data use widget",
+            "description": "A data use widget is a great way of demonstrating transparency of how health data is being used, by connecting users of your website to the Gateway data use register. The widget will enable you to embed a link to the Gateway data use results page, pre-filtered on your organisation's data uses.",
             "buttonHelp": "Click the button below to see your filtered data uses",
             "modal": {
                 "accept": "Accept",

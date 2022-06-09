@@ -1541,14 +1541,13 @@ class SearchPage extends React.Component {
 
         googleAnalytics.recordEvent('Data Use', `Download Results`, `Search values: ${url}`);
 
-        axios.get(`${baseURL}/api/v2/data-use-registers/${url}`).then(response => {
+        axios.get(`${baseURL}/api/v2/data-use-registers/search?${url}`).then(response => {
             this.formatDataUseRegisterForDownload(response.data.result);
         });
     };
 
     formatDataUseRegisterForDownload(dataUses) {
         let formattedDataUses = [];
-
         dataUses.forEach(dataUse => {
             const gatewayApplicants = dataUse.gatewayApplicantsDetails.map(applicant => {
                 return `${applicant.firstname} ${applicant.lastname} `;

@@ -6,12 +6,27 @@ import { addCommonPropTypes } from '../../configs/propTypes';
 import useCommonStyles from '../../hooks/useCommonStyles';
 import * as styles from './Checkbox.styles';
 
-const Checkbox = ({ className, mt, mb, ml, mr, width, minWidth, maxWidth, variant, partial, label: textLabel, id, ...outerProps }) => {
+const Checkbox = ({
+    className,
+    mt,
+    mb,
+    ml,
+    mr,
+    width,
+    minWidth,
+    maxWidth,
+    variant,
+    partial,
+    label: textLabel,
+    id,
+    disabled,
+    ...outerProps
+}) => {
     const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
 
     return (
-        <label htmlFor={id} css={styles.root({ variant, partial })} className={cx('ui-Checkbox', className, commonStyles)}>
-            <input type='checkbox' id={id} {...outerProps} />
+        <label htmlFor={id} css={styles.root({ variant, partial, disabled })} className={cx('ui-Checkbox', className, commonStyles)}>
+            <input type='checkbox' id={id} {...outerProps} disabled={disabled} />
             <span className='ui-Checkbox__label'>
                 <span>{textLabel}</span>
             </span>

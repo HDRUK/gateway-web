@@ -28,6 +28,7 @@ const CheckboxWrapper = ({ node = {}, highlighted = [], parentKey = '', onHandle
             label={<span className={!highlight && 'checkbox-text'}>{node.label}</span>}
             checked={node.checked}
             onChange={onHandleChange}
+            disabled={!highlight}
         />
     );
 };

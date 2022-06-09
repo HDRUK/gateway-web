@@ -33,9 +33,6 @@ import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import ActivityLog from '../DataAccessRequest/components/ActivityLog/ActivityLog';
 import ActivityLogActionButtons from '../DataAccessRequest/components/ActivityLog/ActivityLogActionButtons';
-import DataUsePage from '../dataUse/DataUsePage';
-import DataUseUpload from '../dataUse/upload/DataUseUpload';
-import DataUseUploadActionButtons from '../dataUse/upload/DataUseUploadActionButtons';
 import AccountAnalyticsDashboard from './AccountAnalyticsDashboard';
 import AccountCollections from './AccountCollections';
 import AccountCourses from './AccountCourses';
@@ -120,7 +117,6 @@ class Account extends Component {
         isSubmitting: false,
         teamManagementInternalTab: 'Notifications',
         accountUpdated: false,
-        showDataUseUploadPage: false,
         dataaccessrequest: {},
         publisherDetails: {},
     };
@@ -468,7 +464,6 @@ class Account extends Component {
                 activeKey: tab.tabId,
                 alert: !_.isEmpty(alert) ? alert : {},
                 activeAccordion,
-                showDataUseUploadPage: false,
                 dataaccessrequest: {},
             });
             // 6. push state
@@ -507,12 +502,6 @@ class Account extends Component {
 
     onClearInnerTab = () => {
         this.setState({ innertab: '' });
-    };
-
-    toggleDataUseUploadPage = () => {
-        this.setState(prevState => {
-            return { showDataUseUploadPage: !prevState.showDataUseUploadPage };
-        });
     };
 
     setDataAccessRequest = (dar = {}) => {
@@ -584,7 +573,6 @@ class Account extends Component {
             isSubmitting,
             teamManagementTab,
             accountUpdated,
-            showDataUseUploadPage,
             dataaccessrequest,
             publisherDetails,
         } = this.state;
@@ -864,15 +852,8 @@ class Account extends Component {
                                         />
                                     )}
 
-                                    {(tabId === 'datause' || tabId === 'datause_widget') && !showDataUseUploadPage && (
-                                        <AccountDataUse
-                                            tabId={tabId}
-                                            team={team}
-                                            onClickDataUseUpload={this.toggleDataUseUploadPage}
-                                            ref={this.dataUsePage}
-                                            onSelectTab={this.toggleNav}
-                                            publisherDetails={publisherDetails}
-                                        />
+                                    {(tabId === 'datause' || tabId === 'datause_widget') && (
+                                        <AccountDataUse tabId={tabId} team={team} publisherDetails={publisherDetails} />
                                     )}
 
                                     {allowWorkflow && this.userHasRole(team, 'manager') && tabId === 'workflows' && (
@@ -941,16 +922,6 @@ class Account extends Component {
                                         'Save'
                                     )}
                                 </button>
-                            </div>
-                        </ActionBar>
-                    )}
-
-                    {showDataUseUploadPage && (
-                        <ActionBar userState={userState}>
-                            <div className='action-bar'>
-                                <div className='action-bar-actions'>
-                                    <DataUseUploadActionButtons dataUseUpload={this.dataUseUpload} />
-                                </div>
                             </div>
                         </ActionBar>
                     )}

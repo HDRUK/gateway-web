@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 
 export const root =
-    ({ variant, partial }) =>
+    ({ variant, disabled }) =>
     theme => {
         const {
             colors,
@@ -11,7 +11,7 @@ export const root =
         } = theme;
 
         return css`
-            ${mixins.root({ width })}
+            ${mixins.root({ width, disabled })}
 
             font-size: ${fontSize};
 
@@ -50,7 +50,7 @@ export const root =
     };
 
 export const mixins = {
-    root: ({ width }) => `
+    root: ({ width, disabled }) => `
 		position: relative;
 		padding-left: calc(${width} + 0.5rem);
 
@@ -58,9 +58,13 @@ export const mixins = {
 			display: none;
 		}
 
-		&:hover {
+		${
+            !disabled
+                ? `&:hover {
 			cursor: pointer;
-		}
+			}`
+                : ''
+        }
 	`,
     before: ({ colors, variants, variant, width, height }) => `
 		content: '';

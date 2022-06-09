@@ -803,7 +803,7 @@ export const formSchema = {
                         options: [
                             'GENERAL RESEARCH USE',
                             'COMMERCIAL RESEARCH USE',
-                            'GENETICS STUDIES ONLY',
+                            'GENETIC STUDIES ONLY',
                             'NO GENERAL METHODS RESEARCH',
                             'NO RESTRICTION',
                             'GEOGRAPHICAL RESTRICTIONS',

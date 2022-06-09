@@ -1,10 +1,10 @@
 import { isEmpty } from 'lodash';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Row, Tab, Tabs } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import { LayoutContent } from '../../components/Layout';
 import Alert from '../../components/Alert';
-import SVGIcon from '../../images/SVGIcon';
+import { LayoutContent } from '../../components/Layout';
 import dataUseRegistersService from '../../services/data-use-registers';
 import googleAnalytics from '../../tracking';
 import DarHelperUtil from '../../utils/DarHelper.util';
@@ -17,11 +17,8 @@ import Table from './DataUseTable';
 import DataUseApproveModal from './modals/DataUseApproveModal';
 import DataUseRejectModal from './modals/DataUseRejectModal';
 
-const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
-    React.useImperativeHandle(ref, () => ({
-        showAlert,
-    }));
-
+const DataUsePage = ({ onClickDataUseUpload, team }) => {
+    const { t } = useTranslation();
     const [row, setRow] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(40);
@@ -111,22 +108,26 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
         setActiveTab(tab);
     };
 
+    const closeAlert = () => {
+        setAlert('');
+    };
+
     const updataDataUseStatus = (oldStatus, newStatus, rejectionReason = '') => {
         dataUseRegistersUpdate.mutateAsync({ _id: dataUseId, activeflag: newStatus, rejectionReason }).then(() => {
             if (oldStatus === DarHelperUtil.dataUseRegisterStatus.INREVIEW && newStatus === DarHelperUtil.dataUseRegisterStatus.ACTIVE) {
-                showAlert('Your data use have been successfully approved.');
+                showAlert('Your data use has been successfully approved.');
                 toggleApproveModal();
             } else if (
                 oldStatus === DarHelperUtil.dataUseRegisterStatus.ARCHIVED &&
                 newStatus === DarHelperUtil.dataUseRegisterStatus.ACTIVE
             ) {
-                showAlert('Your data use have been successfully unarchived.');
+                showAlert('Your data use has been successfully unarchived.');
                 toggleUnarchiveModal();
             } else if (newStatus === DarHelperUtil.dataUseRegisterStatus.REJECTED) {
-                showAlert('Your data use have been successfully rejected.');
+                showAlert('Your data use has been successfully rejected.');
                 toggleRejectModal();
             } else if (newStatus === DarHelperUtil.dataUseRegisterStatus.ARCHIVED) {
-                showAlert('Your data use have been successfully archived.');
+                showAlert('Your data use has been successfully archived.');
                 toggleArchiveModal();
             }
         });
@@ -160,23 +161,22 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
     return (
         <>
             <LayoutContent>
-                <Row>
-                    <Col className='mb-1'>
-                        {!isEmpty(alert) && (
-                            <Alert variant='success' dismissable>
-                                {alert}
-                            </Alert>
-                        )}
-                    </Col>
-                </Row>
+                {!isEmpty(alert) && (
+                    <Alert variant='success' dismissable onClose={closeAlert} mb={1}>
+                        {alert}
+                    </Alert>
+                )}
+
                 <div className='accountHeader'>
                     <Row>
                         <Col sm={12} md={8}>
                             <div>
-                                <span className='black-20'>Data uses</span>
+                                <span className='black-20'>Dashboard</span>
                             </div>
                             <div>
-                                <span className='gray700-13 '>Manage your data use register by uploading or editing data uses.</span>
+                                <span className='gray700-13 '>
+                                    {team === 'user' ? t('datause.upload.pageInfoUser') : t('datause.upload.pageInfoTeam')}
+                                </span>
                             </div>
                         </Col>
                         <Col sm={12} md={4} style={{ textAlign: 'right' }}>
@@ -187,7 +187,8 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
                                     handleAnalytics('Clicked upload data use', 'Dashboard button');
 
                                     onClickDataUseUpload();
-                                }}>
+                                }}
+                                hidden={team === 'user' ? 'hidden' : ''}>
                                 + Upload
                             </Button>
                         </Col>
@@ -280,6 +281,6 @@ const DataUsePage = React.forwardRef(({ onClickDataUseUpload, team }, ref) => {
             </LayoutContent>
         </>
     );
-});
+};
 
 export default DataUsePage;

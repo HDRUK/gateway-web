@@ -1,26 +1,61 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
-import { find, remove, isEmpty } from 'lodash';
+import { find, remove, isEmpty, isUndefined } from 'lodash';
 import PropTypes from 'prop-types';
 import { Menu, MenuItem } from 'react-bootstrap-typeahead';
 import Typeahead from '../../../components/Typeahead/Typeahead';
 import serviceUsers from '../../../services/users/users';
-import serviceAuth from '../../../services/auth/auth';
 import UploaderUtil from '../../../utils/Uploader.util';
+import useDebounce from '../../../hooks/useDebounce';
 import Icon from '../../../components/Icon';
 import { ReactComponent as SearchIcon } from '../../../images/search.svg';
+import { ReactComponent as GreenTick } from '../../../images/tick.svg';
 import * as styles from './AsyncTypeAheadUsers.styles';
 
 function AsyncTypeAheadUsers(props) {
+    const [value, setValue] = useState('');
+    const debouncedValue = useDebounce(value, 500);
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
     const [selected, setSelected] = useState([]);
+    const [recentlyAdded, setRecentlyadded] = useState([]);
     const [showRecentlyAdded, setShowRecentlyAdded] = useState(false);
+    const handleSearch = async () => {
+        if (value.length > 2) {
+            setIsLoading(true);
+            const users = await serviceUsers.searchUsers(value);
+            setOptions(users.data.data);
+            setShowRecentlyAdded(false);
+            setIsLoading(false);
+        }
+    };
+
+    const handleOnFocus = async e => {
+        if (!isUndefined(e) && e.type === 'focus' && isEmpty(recentlyAdded)) {
+            const response = await serviceUsers.getUsers();
+            const { data } = response.data;
+            const currentUserInfo = remove(data, { id: props.currentUserId });
+            if (!isEmpty(currentUserInfo)) {
+                data.unshift(currentUserInfo[0]);
+            }
+            setOptions(data);
+            setRecentlyadded(data);
+            setShowRecentlyAdded(true);
+        } else {
+            setShowRecentlyAdded(true);
+            setOptions(recentlyAdded);
+        }
+    };
 
     useEffect(() => {
         props.selectedUsers && props.getUsersInfo ? getUsersInfo(props.selectedUsers) : setSelected(props.selectedUsers);
-    }, [props.selectedUsers]);
+        if (value) {
+            handleSearch();
+        } else {
+            handleOnFocus();
+        }
+    }, [props.selectedUsers, debouncedValue]);
 
     const getUsersInfo = async contributors => {
         const selectedUsers = await Promise.all(
@@ -36,14 +71,14 @@ function AsyncTypeAheadUsers(props) {
         setSelected(selectedUsers);
     };
 
-    const handleChange = options => {
+    const handleChange = optionValues => {
         if (props.showAuthor) {
-            props.changeHandler(options);
+            props.changeHandler(optionValues);
         } else {
-            props.changeHandler(options);
-            if (options.length) {
-                setSelected(options);
-                props.changeHandler(options);
+            props.changeHandler(optionValues);
+            if (optionValues.length) {
+                setSelected(optionValues);
+                props.changeHandler(optionValues);
             } else {
                 setSelected([]);
                 props.changeHandler([]);
@@ -51,26 +86,8 @@ function AsyncTypeAheadUsers(props) {
         }
     };
 
-    const handleInputChange = async value => {
-        if (value.length > 2) {
-            const users = await serviceUsers.searchUsers(value);
-            setOptions(users.data.data);
-            setShowRecentlyAdded(false);
-        } else {
-            handleOnFocus();
-        }
-    };
-
-    const handleOnFocus = async () => {
-        const response = await serviceUsers.getUsers();
-        const { data } = response.data;
-
-        const currentUserInfo = remove(data, { id: props.currentUserId });
-        if (!isEmpty(currentUserInfo)) {
-            data.unshift(currentUserInfo[0]);
-        }
-        setOptions(data);
-        setShowRecentlyAdded(true);
+    const handleInputChange = inputValue => {
+        setValue(inputValue);
     };
     const filterBy = () => true;
 
@@ -105,7 +122,7 @@ function AsyncTypeAheadUsers(props) {
 
                             {find(selected, { id: result.id }) && (
                                 <span className='icon' data-testid={`icon-${index}`}>
-                                    <Icon name='check' fill='green600' color='green600' ml={1} size='xl' />
+                                    <Icon ml={1} size='xl' svg={<GreenTick />} />
                                 </span>
                             )}
                         </MenuItem>

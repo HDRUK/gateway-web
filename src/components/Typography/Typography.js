@@ -36,7 +36,7 @@ Typography.propTypes = {
 Typography.defaultProps = {
     children: null,
     variant: 'body',
-    color: 'inherit',
+    color: null,
 };
 
 export default Typography;
