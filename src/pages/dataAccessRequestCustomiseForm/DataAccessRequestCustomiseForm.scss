@@ -2,6 +2,11 @@
 @import '../../css/typography';
 @import '../../css/mixins';
 
+p.save-info {
+    display: inline;
+    margin-right: 3px;
+}
+
 .react-datepicker-wrapper {
     margin-bottom: 4px;
 }

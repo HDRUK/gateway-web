@@ -15,6 +15,7 @@ import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
 import StatusBadge from './Components/StatusBadge';
 import './CustomiseDAR.scss';
 
+
 const baseURL = require('../../commonComponents/BaseURL').getURL();
 
 const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShowConfirmPublishModal, activeTab, onSelectTab, alert }) => {
@@ -156,15 +157,13 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
                         {closeGuidanceMessage}
                     </Alert>
                 </LayoutContent>
-            )}
+            )}  
+
 
             {(howToRequestAccessStatus === sectionStatuses.PENDING || yourAppFormStatus === sectionStatuses.PENDING) && (
                 <LayoutContent>
                     <Alert variant='warning' mb={3}>
-                        <p>
-                            Please note that both <b>Presubmission Guidance</b> and <b>DAR Application Form</b> must be completed before
-                            they can be published.
-                        </p>
+                        {t('DAR.customise.warningAlert')}
                     </Alert>
                 </LayoutContent>
             )}
