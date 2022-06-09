@@ -14,6 +14,8 @@ import { stripHtml } from '../../../utils/GeneralHelper.util';
 import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
 import StatusBadge from './Components/StatusBadge';
 import './CustomiseDAR.scss';
+import googleAnalytics from '../../../tracking';
+
 
 
 const baseURL = require('../../commonComponents/BaseURL').getURL();
@@ -141,6 +143,10 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
         setAlertMessage('');
     };
 
+    const handleAnalytics = (label, value) => {
+        googleAnalytics.recordEvent('Question Bank', label, value);
+    };
+
     return (
         <>
             {alertMessage && (
@@ -178,10 +184,10 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
                     </div>
                     <div className='tabsBackground mb-3'>
                         <Tabs className='dataAccessTabs gray700-13' activeKey={activeTab} onSelect={handleSelectTab}>
-                            <Tab eventKey='customisedataaccessrequests_guidance' title={t('tabs.presubmissionGuidance')}>
+                            <Tab eventKey='customisedataaccessrequests_guidance' title={t('tabs.presubmissionGuidance')} onClick={() => handleAnalytics('Clicked on Presubmission Guidance card', 'Presubmission Guidance' )}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='customisedataaccessrequests_applicationform' title={t('tabs.applicationForm')}>
+                            <Tab eventKey='customisedataaccessrequests_applicationform' title={t('tabs.applicationForm')} onClick={() => handleAnalytics('Clicked on Application Form', 'Application Form')}>
                                 {' '}
                             </Tab>
                         </Tabs>
