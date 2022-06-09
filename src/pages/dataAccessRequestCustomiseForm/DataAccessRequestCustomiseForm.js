@@ -38,7 +38,7 @@ import NavItem from './components/NavItem/NavItem';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
-import googleAnalytics from '../../tracking';
+import handleAnalytics from './handleAnalytics';
 import './DataAccessRequestCustomiseForm.scss';
 
 export const DataAccessRequestCustomiseForm = props => {
@@ -486,10 +486,6 @@ export const DataAccessRequestCustomiseForm = props => {
         setShowConfirmPublishModal(false);
         setShowClearModal(false);
         setShowClearSectionModal(false);
-    };
-
-    const handleAnalytics = (label, value) => {
-        googleAnalytics.recordEvent('Question Bank', label, value);
     };
 
     const renderApp = React.useCallback(() => {
