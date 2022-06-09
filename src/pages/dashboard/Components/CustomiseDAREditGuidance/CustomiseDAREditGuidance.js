@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import publishersService from '../../../../services/publishers';
 import { WysiwygEditor } from '../../../commonComponents/WysiwygEditor/WysiwygEditor';
+import handleAnalytics from '../../../dataAccessRequestCustomiseForm/handleAnalytics';
 import './CustomiseDAREditGuidance.scss';
 
 const baseURL = require('../../../commonComponents/BaseURL').getURL();
@@ -46,6 +47,7 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
                     You have successfully updated and published the ${publisherDetails.name} application form and ‘How to request access’ information
                 `);
             });
+        handleAnalytics('Clicked Publish button', 'Presubmission guidance');
     }, [publisherDetails._id, editorState.getCurrentContent()]);
 
     const handlePublish = React.useCallback(() => {

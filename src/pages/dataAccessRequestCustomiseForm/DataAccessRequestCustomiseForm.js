@@ -38,6 +38,7 @@ import NavItem from './components/NavItem/NavItem';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
+import handleAnalytics from './handleAnalytics';
 import './DataAccessRequestCustomiseForm.scss';
 
 export const DataAccessRequestCustomiseForm = props => {
@@ -235,7 +236,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
     const onSubmitClick = async () => {
         await questionbankService.postQuestionbankItem(schemaId);
-
+        handleAnalytics('Clicked Publish button', 'Application form');
         history.push({
             pathname: `/account`,
             search: '?tab=customisedataaccessrequests_applicationform',
