@@ -2,17 +2,10 @@ import React from 'react';
 import { Accordion } from 'react-bootstrap';
 import Icon from '../../../../components/Icon';
 import DashboardSubNavItem from '../DashboardSubNavItem';
-import googleAnalytics from '../../../../tracking';
+import handleAnalytics from '../../../dataAccessRequestCustomiseForm/handleAnalytics';
+import { id } from 'date-fns/locale';
 
 const DashboardNavItem = ({ activeKey, tabId, eventKey, onSelect, onClick, data }) => {
-
-    const handleAnalytics = (label, value) => {
-        googleAnalytics.recordEvent('Question Bank', label, value);
-    };
-
-    const handleClick = (id, text) => {
-        handleAnalytics(id, text)
-    }
 
     return (
         <Accordion activeKey={activeKey} onSelect={onSelect}>
@@ -23,7 +16,7 @@ const DashboardNavItem = ({ activeKey, tabId, eventKey, onSelect, onClick, data 
             <Accordion.Collapse eventKey={eventKey}>
                 <div>
                     {data.children.map(({ id, text }) => (
-                        <DashboardSubNavItem active={tabId === id} onClick={() => handleClick}>
+                        <DashboardSubNavItem active={tabId === id} onClick={() => handleAnalytics(`Clicked on ${id}`, text)}>
                             {text}
                         </DashboardSubNavItem>
                     ))}

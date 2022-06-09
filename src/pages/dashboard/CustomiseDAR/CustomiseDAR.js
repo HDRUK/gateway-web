@@ -14,7 +14,7 @@ import { stripHtml } from '../../../utils/GeneralHelper.util';
 import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
 import StatusBadge from './Components/StatusBadge';
 import './CustomiseDAR.scss';
-import googleAnalytics from '../../../tracking';
+import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
 
 
 
@@ -141,10 +141,6 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
 
     const handleCloseAlertMessage = () => {
         setAlertMessage('');
-    };
-
-    const handleAnalytics = (label, value) => {
-        googleAnalytics.recordEvent('Question Bank', label, value);
     };
 
     return (
