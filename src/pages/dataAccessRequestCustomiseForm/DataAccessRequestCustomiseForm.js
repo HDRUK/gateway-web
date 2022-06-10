@@ -475,6 +475,7 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema(activePanelId);
 
         setShowClearModal(false);
+        handleAnalytics('Clearing updates', 'Entire form');
     }, [activePanelId, publisherDetails._id]);
 
     const handleClearSection = React.useCallback(async () => {
@@ -485,6 +486,7 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema(activePanelId);
 
         setShowClearSectionModal(false);
+        handleAnalytics('Clearing updates', page.title);
     }, [activePanelId, publisherDetails._id]);
 
     const handleModalClose = () => {
