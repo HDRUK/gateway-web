@@ -133,6 +133,8 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
         setShowGuidanceModal(false);
 
         onSelectTab(tabId);
+
+        handleAnalytics(`Clicked on ${tabId}`, tabId)
     };
 
     const handleCloseGuidanceMessage = () => {
@@ -180,10 +182,10 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
                     </div>
                     <div className='tabsBackground mb-3'>
                         <Tabs className='dataAccessTabs gray700-13' activeKey={activeTab} onSelect={handleSelectTab}>
-                            <Tab eventKey='customisedataaccessrequests_guidance' title={t('tabs.presubmissionGuidance')} onClick={() => handleAnalytics('Clicked on Presubmission Guidance card', 'Presubmission Guidance' )}>
+                            <Tab eventKey='customisedataaccessrequests_guidance' title={t('tabs.presubmissionGuidance')}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='customisedataaccessrequests_applicationform' title={t('tabs.applicationForm')} onClick={() => handleAnalytics('Clicked on Application Form', 'Application Form')}>
+                            <Tab eventKey='customisedataaccessrequests_applicationform' title={t('tabs.applicationForm')}>
                                 {' '}
                             </Tab>
                         </Tabs>

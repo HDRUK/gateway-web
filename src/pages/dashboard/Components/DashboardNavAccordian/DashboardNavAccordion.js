@@ -16,7 +16,7 @@ const DashboardNavItem = ({ activeKey, tabId, eventKey, onSelect, onClick, data 
             <Accordion.Collapse eventKey={eventKey}>
                 <div>
                     {data.children.map(({ id, text }) => (
-                        <DashboardSubNavItem active={tabId === id} onClick={() => handleAnalytics(`Clicked on ${id}`, text)}>
+                        <DashboardSubNavItem active={tabId === id} onClick={() => {onClick(id); handleAnalytics(`Clicked on ${id}`, text)}}>
                             {text}
                         </DashboardSubNavItem>
                     ))}
