@@ -459,6 +459,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
         setLastSaved(saveTime());
         setUnpublishedGuidance(unpublishedGuidanceChange);
+        handleAnalytics('Updating Guidance', questionId);
     };
 
     const handleShowClearModal = () => {
