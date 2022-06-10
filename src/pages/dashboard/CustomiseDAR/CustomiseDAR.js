@@ -14,6 +14,8 @@ import { stripHtml } from '../../../utils/GeneralHelper.util';
 import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
 import StatusBadge from './Components/StatusBadge';
 import './CustomiseDAR.scss';
+import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
+
 
 
 const baseURL = require('../../commonComponents/BaseURL').getURL();
@@ -131,6 +133,8 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
         setShowGuidanceModal(false);
 
         onSelectTab(tabId);
+
+        handleAnalytics(`Clicked on ${tabId}`, tabId)
     };
 
     const handleCloseGuidanceMessage = () => {

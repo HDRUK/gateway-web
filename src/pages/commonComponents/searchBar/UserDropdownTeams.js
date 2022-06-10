@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
+import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
 
 const CustomToggleInner = React.forwardRef(({ children, onClick }, ref) => (
     <a
@@ -85,7 +86,8 @@ const UserDropdownTeams = props => {
                                         </Dropdown.Item>
                                         <Dropdown.Item
                                             href={`/account?tab=customisedataaccessrequests_guidance&team=${team._id}`}
-                                            className='black-14 user-dropdown-item'>
+                                            className='black-14 user-dropdown-item'
+                                            onClick={() => handleAnalytics('Clicked profile dropdown', 'Edit DAR form')}>
                                             Edit DAR Form
                                         </Dropdown.Item>
                                     </>
