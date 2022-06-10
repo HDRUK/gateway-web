@@ -13,15 +13,24 @@ export const getCommonStyle = (prop, value) => {
     return !isNil(value) ? `${prop}: ${value};` : '';
 };
 
-export const getCommonStyles = ({ ml, mr, mb, mt, width, maxWidth, minWidth }, theme) => {
+export const getCommonStyles = (
+    { ml, mr, mb, mt, width, maxWidth, minWidth, display, alignItems, justifyContent, position, flexGrow },
+    theme
+) => {
     return `
 		${getSpacingStyle('margin-left', ml, theme)}
 		${getSpacingStyle('margin-right', mr, theme)}
 		${getSpacingStyle('margin-bottom', mb, theme)}
 		${getSpacingStyle('margin-top', mt, theme)}
+
 		${getCommonStyle('width', width)}
 		${getCommonStyle('max-width', maxWidth)}
 		${getCommonStyle('min-width', minWidth)}
+        ${getCommonStyle('display', display)}
+		${getCommonStyle('align-items', alignItems)}
+        ${getCommonStyle('justify-content', justifyContent)}
+        ${getCommonStyle('flex-grow', flexGrow)}
+		${getCommonStyle('position', position)}
 	`;
 };
 
@@ -181,6 +190,7 @@ export const theme = {
         teal: '#3db28c',
         yellow700: '#F0BB24',
         yellow50: '#FDFCE6',
+        orange100: '#FDDFC0',
         none: 'none',
     },
     components: {

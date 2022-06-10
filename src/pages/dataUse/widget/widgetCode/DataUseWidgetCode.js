@@ -7,31 +7,28 @@ import PropTypes from 'prop-types';
 import Typography from '../../../../components/Typography';
 import Button from '../../../../components/Button';
 import styles from './DataUseWidgetCode.styles';
+import LayoutBox from '../../../../components/LayoutBox';
 
 const DataUseWidgetCode = ({ codeString, copyToClipBoard }) => {
     const { t } = useTranslation();
     const tooltip = <Tooltip id='tooltip'>{t('datause.widget.copyCodeClipBoard')}</Tooltip>;
     return (
-        <div className='row'>
-            <div className='col-12'>
-                <Typography variant='h6' mb={3}>
-                    {t('datause.widget.copyCodeHelp')}
-                </Typography>{' '}
+        <div>
+            <Typography variant='h6' mb={4}>
+                {t('datause.widget.copyCodeHelp')}
+            </Typography>{' '}
+            <div css={styles}>
+                <pre>
+                    <code>{codeString}</code>
+                </pre>
             </div>
-            <div className='col-12'>
-                <div css={styles}>
-                    <pre>
-                        <code>{codeString}</code>
-                    </pre>
-                </div>
-            </div>
-            <div className='col-12'>
-                <OverlayTrigger placement='bottom' overlay={tooltip} trigger='click'>
-                    <Button className='float-right' onClick={copyToClipBoard} type='button' mt={2}>
+            <OverlayTrigger placement='bottom' overlay={tooltip} trigger='click'>
+                <LayoutBox display='flex' justifyContent='flex-end'>
+                    <Button onClick={copyToClipBoard} type='button' mt={2}>
                         {t('datause.widget.copyCodeButton')}
                     </Button>
-                </OverlayTrigger>
-            </div>
+                </LayoutBox>
+            </OverlayTrigger>
         </div>
     );
 };

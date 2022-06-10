@@ -326,7 +326,7 @@
             "duplicateError": "Error in row {{row}} : Suspected data use duplicate",
             "duplicateRowError": "Error in row {{row}}: Suspected data use duplicate of row {{duplicateRow}}",
             "pageInfoUser": "Manage your data use register by editing data uses.",
-			"pageInfoTeam": "Manage your data use register by uploading or editing data uses."
+            "pageInfoTeam": "Manage your data use register by uploading or editing data uses."
         },
         "widget": {
             "heading": "Data use widget",
@@ -337,7 +337,7 @@
                 "cancel": "Cancel"
             },
             "howToHeader": "How to start using your widget",
-            "howToDesc": "Below is an interactive example of how your widget could look and be used. Please note that this design is compatible with mobile devices and can be resized to fit anywhere on your website. To start using this widget please accept the terms and conditions by clicking on the 'Get widget' button below.",
+            "howToDesc": "Below is an interactive example of how your widget could look and be used. Please note that this design is compatible with mobile devices and can be resized to fit anywhere on your website. To start using this widget please accept the terms and condition by clicking on the 'Get widget' button below.",
             "getWidgetButton": "Get widget",
             "tAndCHelp": "By embedding content in your website or app, you are agreeing to the Terms and Conditions",
             "copyCodeHelp": "Copy the source code and share with your development team to display the widget above on your website",

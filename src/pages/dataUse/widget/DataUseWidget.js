@@ -8,7 +8,7 @@ import useScript from '../../../hooks/useScript';
 import DataUseWidgetCode from './widgetCode';
 import AcceptModal from './AcceptModal';
 
-const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets?module`;
+const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets@0.1.0/dist/hdruk-data-uses.js`;
 const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherName, accepted }) => {
     const { t } = useTranslation();
     useScript(WIDGET_MODULE);
@@ -45,21 +45,22 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherNa
                 <Button mb={3} onClick={clickHandler} disabled={checked} data-testid='getWidgetButton' type='button'>
                     {t('datause.widget.getWidgetButton')}
                 </Button>
-
                 <Typography>{t('datause.widget.tAndCHelp')}</Typography>
                 <Checkbox
                     variant='primary'
                     label='I agree to the HDR Widget Terms and Conditions of use'
-                    id='termCo  nditions'
-                    mb={4}
+                    id='termConditions'
+                    mb={7}
                     disabled={checked}
                     checked={checked}
                 />
-                <Typography variant='h6'>{t('datause.widget.heading')}</Typography>
+                <Typography variant='h6' mb={1}>
+                    {t('datause.widget.heading')}
+                </Typography>
                 <Typography color='grey600'>
                     <i>{t('datause.widget.buttonHelp')}</i>
                 </Typography>
-                <hdruk-data-uses custodianName={publisherName} />
+                <hdruk-data-uses publisher={publisherName} />
                 <br />
                 {checked && <DataUseWidgetCode codeString={codeString} copyToClipBoard={copyToClipBoardHandler} />}
                 <AcceptModal open={state.showAcceptModal} closed={modalCloseHandler} acceptHandler={acceptHandler} />
