@@ -368,6 +368,8 @@
                 "title": "Application Form",
                 "description": "Elements of the data access request form (Five safes form) can be customised as required by <b>{{publisherName}}</b>. You may choose which questions should be turned on/off and edit the accompanying for each question. However, we recommend modifying the guidance only if necessary for your data governance processes, and please note that some questions and guidance are mandatory, for example where the form has been aligned with the National Data Guardian.<br/><br/> Please consider carefully whether additional questions are required, as we are working to standardise the data access process as much as possible. If you would still like to propose addition of a new question, please raise a ticket at <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>https://hdruk.atlassian.net/servicedesk/customer/portal/1</a>"
             },
+            "saveAlert": "Every change you make is automatically saved with the latest save time shown in the top right",
+            "warningAlert": "Please note that both Presubmission Guidance and DAR Application Form must be completed before they can be published.",
             "presubmissionGuidance": {
                 "title": "Presubmission guidance for data applicants",
                 "description": "The 'How to request access' information will be displayed to all users at the beginning of their access journey. To ensure that they are prepared for the process, include all necessary information such as; what to do before they submit an application",
