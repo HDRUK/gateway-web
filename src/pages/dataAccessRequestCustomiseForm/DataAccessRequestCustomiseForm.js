@@ -182,6 +182,7 @@ export const DataAccessRequestCustomiseForm = props => {
         });
 
         setLastSaved(saveTime());
+        handleAnalytics(`Question ${questionId} switched`, value ? 'On' : 'Off');
     };
 
     const onClickSave = e => {
