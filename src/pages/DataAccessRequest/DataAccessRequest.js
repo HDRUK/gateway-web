@@ -280,8 +280,6 @@ class DataAccessRequest extends Component {
                 },
             } = response;
 
-            console.log('response', response);
-
             // 3. Set up the DAR
             this.setScreenData({
                 jsonSchema,
@@ -869,13 +867,19 @@ class DataAccessRequest extends Component {
             const newFormState = [...this.state.jsonSchema.pages].map(item => {
                 return { ...item, active: false };
             });
+
             // update actual object model with property of active true
             newFormState[newPageindex] = { ...pages[newPageindex], active: true };
 
             // get set the active panelId
             ({ panelId } = newForm);
+
             if (_.isEmpty(panelId) || typeof panelId == 'undefined') {
-                ({ panelId } = [...this.state.jsonSchema.formPanels].find(p => p.pageId === newFormState[newPageindex].pageId) || '');
+                const filteredPanels = [...this.state.jsonSchema.formPanels].filter((p, i) => {
+                    return p.pageId === newFormState[newPageindex].pageId && this.state.questionSetStatus[p.panelId] !== 0;
+                });
+
+                ({ panelId } = filteredPanels[0]);
             }
 
             let countedQuestionAnswers = {};
@@ -1994,8 +1998,6 @@ class DataAccessRequest extends Component {
                 </Container>
             );
         }
-
-        console.log('questionSetStatus', this.state.questionSetStatus, this.state.jsonSchema);
 
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
