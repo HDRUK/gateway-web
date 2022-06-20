@@ -1,65 +1,62 @@
-import React, { Component, Fragment } from 'react';
-import { Container, Row, Col, Modal, Alert, Tooltip, Button } from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
-import Winterfell from 'winterfell';
-import queryString from 'query-string';
-import _ from 'lodash';
 import axios from 'axios';
+import _ from 'lodash';
+import moment from 'moment';
+import queryString from 'query-string';
+import React, { Component, Fragment } from 'react';
+import { Alert, Button, Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import ReactMarkdown from 'react-markdown';
-import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
-import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
-import TypeaheadMultiUser from './components/TypeaheadUser/TypeaheadMultiUser';
-import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
-import SearchBar from '../commonComponents/searchBar/SearchBar';
+import 'react-tabs/style/react-tabs.css';
+import Winterfell from 'winterfell';
+import { baseURL } from '../../configs/url.config';
+import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import SVGIcon from '../../images/SVGIcon';
+import googleAnalytics from '../../tracking';
+import DarHelper from '../../utils/DarHelper.util';
+import DarValidation from '../../utils/DarValidation.util';
+import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
+import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
+import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
+import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
-import QuestionActionTabs from './components/QuestionActionTabs';
-import NavItem from './components/NavItem/NavItem';
-import NavDropdown from './components/NavDropdown/NavDropdown';
-import WorkflowReviewStepsModal from '../commonComponents/workflowReviewStepsModal/WorkflowReviewStepsModal';
+import SearchBar from '../commonComponents/searchBar/SearchBar';
+import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
+import SLA from '../commonComponents/sla/SLA';
+import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
+import UserMessages from '../commonComponents/userMessages/UserMessages';
+import VersionSelector from '../commonComponents/versionSelector/VersionSelector';
 import ActivePhaseModal from '../commonComponents/workflowActivePhase/ActivePhaseModal';
 import WorkflowReviewDecisionModal from '../commonComponents/workflowReviewDecision/WorkflowReviewDecisionModal';
-import DarValidation from '../../utils/DarValidation.util';
-import DarHelper from '../../utils/DarHelper.util';
-import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
+import WorkflowReviewStepsModal from '../commonComponents/workflowReviewStepsModal/WorkflowReviewStepsModal';
 import { classSchema } from './classSchema';
-import { baseURL } from '../../configs/url.config';
-import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
-import UserMessages from '../commonComponents/userMessages/UserMessages';
-import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import 'react-tabs/style/react-tabs.css';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import './DataAccessRequest.scss';
-import SVGIcon from '../../images/SVGIcon';
-import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
-import moment from 'moment';
+import AboutApplication from './components/AboutApplication/AboutApplication';
+import ActionModal from './components/ActionModal/ActionModal';
+import ActionNotAllowedModal from './components/ActionNotAllowedModal/ActionNotAllowedModal';
+import AmendApplicationModal from './components/AmendApplicationModal/AmendApplicationModal';
 import AmendmentCount from './components/AmendmentCount/AmendmentCount';
 import ApplicantActionButtons from './components/ApplicantActionButtons/ApplicantActionButtons';
-import CustodianActionButtons from './components/CustodianActionButtons/CustodianActionButtons';
-import ActionModal from './components/ActionModal/ActionModal';
-import ContributorModal from './components/ContributorModal/ContributorModal';
 import AssignWorkflowModal from './components/AssignWorkflowModal/AssignWorkflowModal';
-import SLA from '../commonComponents/sla/SLA';
-import AboutApplication from './components/AboutApplication/AboutApplication';
-import Uploads from './components/Uploads/Uploads';
-import UpdateRequestModal from './components/UpdateRequestModal/UpdateRequestModal';
-import MissingFieldsModal from './components/MissingFieldsModal/MissingFieldsModal';
 import ConfirmSubmissionModal from './components/ConfirmSubmissionModal/ConfirmSubmissionModal';
-import SubmitAmendmentModal from './components/SubmitAmendmentModal/SubmitAmendmentModal';
+import ContributorModal from './components/ContributorModal/ContributorModal';
+import CustodianActionButtons from './components/CustodianActionButtons/CustodianActionButtons';
+import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
 import DeleteDraftModal from './components/DeleteDraftModal/DeleteDraftModal';
-import AmendApplicationModal from './components/AmendApplicationModal/AmendApplicationModal';
+import DoubleDropdownCustom from './components/DoubleDropdownCustom/DoubleDropdownCustom';
+import DropdownCustom from './components/DropdownCustom/DropdownCustom';
 import DuplicateApplicationModal from './components/DuplicateApplicationModal/DuplicateApplicationModal';
 import MinorVersionBlockedModal from './components/MinorVersionBlockedModal/MinorVersionBlockedModal';
-import ActionNotAllowedModal from './components/ActionNotAllowedModal/ActionNotAllowedModal';
+import MissingFieldsModal from './components/MissingFieldsModal/MissingFieldsModal';
+import NavItem from './components/NavItem/NavItem';
+import QuestionActionTabs from './components/QuestionActionTabs';
 import SelectDatasetModal from './components/SelectDatasetModal/SelectDatasetModal';
-import VersionSelector from '../commonComponents/versionSelector/VersionSelector';
-import googleAnalytics from '../../tracking';
-import ErrorModal from '../commonComponents/errorModal';
-import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
-import DropdownCustom from './components/DropdownCustom/DropdownCustom';
-import DoubleDropdownCustom from './components/DoubleDropdownCustom/DoubleDropdownCustom';
-
-import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
+import SubmitAmendmentModal from './components/SubmitAmendmentModal/SubmitAmendmentModal';
+import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
+import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
+import UpdateRequestModal from './components/UpdateRequestModal/UpdateRequestModal';
+import Uploads from './components/Uploads/Uploads';
+import './DataAccessRequest.scss';
 
 class DataAccessRequest extends Component {
     constructor(props) {
@@ -278,9 +275,12 @@ class DataAccessRequest extends Component {
                         versions,
                         isLatestMinorVersion,
                         formType,
+                        questionSetStatus,
                     },
                 },
             } = response;
+
+            console.log('response', response);
 
             // 3. Set up the DAR
             this.setScreenData({
@@ -302,6 +302,7 @@ class DataAccessRequest extends Component {
                 versions,
                 isLatestMinorVersion,
                 formType,
+                questionSetStatus,
             });
         } catch (err) {
             this.setState({ isLoading: false });
@@ -333,6 +334,7 @@ class DataAccessRequest extends Component {
                         applicationType,
                         isLatestMinorVersion,
                         formType,
+                        questionSetStatus,
                     },
                 },
             } = response;
@@ -356,6 +358,7 @@ class DataAccessRequest extends Component {
                 applicationType,
                 isLatestMinorVersion,
                 formType,
+                questionSetStatus,
             });
         } catch (err) {
             this.setState({ isLoading: false });
@@ -411,6 +414,7 @@ class DataAccessRequest extends Component {
             formType,
             areDatasetsAmended = false,
             dateSubmitted = '',
+            questionSetStatus,
         } = context;
         let {
             datasetfields: { publisher },
@@ -536,6 +540,7 @@ class DataAccessRequest extends Component {
             areDatasetsAmended,
             datasetsAmendedBy: `${firstname} ${lastname}`,
             datasetsAmendedDate: dateSubmitted,
+            questionSetStatus,
         });
     };
 
@@ -1990,6 +1995,8 @@ class DataAccessRequest extends Component {
             );
         }
 
+        console.log('questionSetStatus', this.state.questionSetStatus, this.state.jsonSchema);
+
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <div>
@@ -2069,6 +2076,7 @@ class DataAccessRequest extends Component {
                                                     activePanelId={this.state.activePanelId}
                                                     enabled={allowedNavigation}
                                                     notForReview={!item.inReview && this.state.inReviewMode}
+                                                    questionSetStatus={this.state.questionSetStatus || {}}
                                                 />
                                             </ul>
                                         )}
