@@ -14,6 +14,18 @@
     background: $teal;
 }
 
+.questionset-heading {
+    display: flex;
+
+    h4 {
+        flex-grow: 1;
+    }
+
+    label {
+        margin-right: 25px;
+    }
+}
+
 .question-wrap {
     position: relative;
     margin-bottom: 0;
