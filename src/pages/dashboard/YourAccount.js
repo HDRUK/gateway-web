@@ -10,6 +10,7 @@ import './Dashboard.scss';
 import SVGIcon from '../../images/SVGIcon';
 import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
 import TextareaAutosize from 'react-textarea-autosize';
+import Checkbox from '../../components/Checkbox'
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -860,7 +861,7 @@ const YourAccountForm = props => {
 
                             <Form.Group className='pb-2'>
                                 <Row className='mt-2'>
-                                    <Form.Control
+                                    <Checkbox
                                         type='checkbox'
                                         className='checker'
                                         id='terms'
@@ -909,7 +910,7 @@ const YourAccountForm = props => {
                                         Feedback
                                     </Col>
                                     <Col md={1} sm={2} xs={3}>
-                                        <Form.Control
+                                        <Checkbox
                                             type='checkbox'
                                             className='checker'
                                             id='feedback'
@@ -932,7 +933,7 @@ const YourAccountForm = props => {
                                         News
                                     </Col>
                                     <Col md={1} sm={2} xs={3}>
-                                        <Form.Control
+                                        <Checkbox
                                             type='checkbox'
                                             className='checker'
                                             id='news'
