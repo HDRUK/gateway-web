@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { getComponentGlobals, pickComponentVariantStyle, pickComponentVariantValue } from '../../configs/theme';
+import { getGlobals, pickComponentVariantStyle, pickComponentVariantValue } from '../../configs/theme';
 
 export const root =
     ({ variant, disabled, partial }) =>
@@ -29,7 +29,7 @@ export const root =
 			}`}
 
             input:disabled + span {
-                ${getComponentGlobals('Input', 'label', { disabled }, theme)}
+                ${getGlobals('Input', 'label', { disabled }, theme)}
             }
 
             input + .ui-Checkbox__label::after {

@@ -23,7 +23,7 @@ const Cta = ({ color, children, mt, mb, ml, mr, width, minWidth, maxWidth, iconL
     return (
         <LayoutBox
             {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}
-            as='a'
+            as='button'
             display='flex'
             alignItems='center'
             css={styles.root({ color, fill, fontSize: fontSizes[size] })}

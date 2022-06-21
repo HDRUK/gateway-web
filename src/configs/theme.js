@@ -25,7 +25,30 @@ export const getStyle = (propParts, value, theme) => {
 };
 
 export const getCommonStyles = (
-    { m, ml, mr, mb, mt, p, pr, pt, pb, pl, width, maxWidth, minWidth, display, alignItems, justifyContent, flexGrow, position },
+    {
+        m,
+        ml,
+        mr,
+        mb,
+        mt,
+        p,
+        pr,
+        pt,
+        pb,
+        pl,
+        top,
+        left,
+        bottom,
+        right,
+        width,
+        maxWidth,
+        minWidth,
+        display,
+        alignItems,
+        justifyContent,
+        flexGrow,
+        position,
+    },
     theme
 ) => {
     return `
@@ -38,7 +61,7 @@ export const getCommonStyles = (
         ${getSpacingStyle('padding-left', pl, theme)}
 		${getSpacingStyle('padding-right', pr, theme)}
 		${getSpacingStyle('padding-bottom', pb, theme)}
-		${getSpacingStyle('padding-top', pt, theme)}
+        ${getSpacingStyle('padding-top', pt, theme)}
 		${getCommonStyle('width', width)}
 		${getCommonStyle('max-width', maxWidth)}
 		${getCommonStyle('min-width', minWidth)}
@@ -47,16 +70,31 @@ export const getCommonStyles = (
         ${getCommonStyle('justify-content', justifyContent)}
         ${getCommonStyle('flex-grow', flexGrow)}
         ${getCommonStyle('position', position)}
+        ${getCommonStyle('top', top)}
+        ${getCommonStyle('bottom', bottom)}
+        ${getCommonStyle('left', left)}
+        ${getCommonStyle('right', right)}
 	`;
 };
 
 const getComponentStyleValue = (value, theme) => {
     const isColor = Object.keys(theme.colors).includes(value);
+    const isFontSize = Object.keys(theme.font.size).includes(value);
 
-    return isColor ? theme.colors[value] : value;
+    if (isColor) {
+        return theme.colors[value];
+    } else if (isFontSize) {
+        return theme.font.size[value];
+    }
+
+    return value;
 };
 
-const getComponentStyle = (prop, value, theme, important) => {
+export const getColor = (value, theme) => {
+    return getComponentStyleValue(value, theme);
+};
+
+export const getComponentStyle = (prop, value, theme, important) => {
     const propParts = prop.split(/(?=[A-Z])/);
 
     return `${propParts.join('-')}: ${getComponentStyleValue(value, theme)}${important ? ' !important' : ''};`;
@@ -98,8 +136,13 @@ export const getComponentSize = (component, size, theme) => {
     return getComponentStylesFromTheme(theme.components[component].sizes[size], theme);
 };
 
-export const getComponentGlobals = (component, key, config, theme) => {
+export const getComponentGlobals = (component, theme) => {
+    return getComponentStylesFromTheme(theme.components[component].globals, theme);
+};
+
+export const getGlobals = (component, key, config, theme) => {
     const props = theme.components[component].globals[key];
+
     let validProps = {};
 
     Object.keys(props).forEach(prop => {
@@ -317,6 +360,22 @@ export const theme = {
             },
         },
         Button: THEME_BUTTON,
+        Card: {
+            globals: {
+                boxShadow: '1px 1px 3px 0 rgb(0 0 0 / 9%)',
+                backgroundColor: 'white',
+            },
+        },
+        CardHeader: {
+            globals: {
+                borderColor: 'grey200',
+            },
+        },
+        CardFooter: {
+            globals: {
+                borderColor: 'grey200',
+            },
+        },
         IconButton: merge({}, THEME_BUTTON, {
             sizes: {
                 small: {

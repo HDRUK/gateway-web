@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { getComponentGlobals, getComponentStylesFromTheme, getSpacingStyle } from '../../configs/theme';
+import { getGlobals, getComponentStylesFromTheme, getSpacingStyle } from '../../configs/theme';
 
 export const mixins = {
     input:
@@ -34,7 +34,7 @@ export const mixins = {
         theme =>
             css`
                 ${getSpacingStyle('margin-bottom', 1, theme)}
-                ${getComponentGlobals(component, 'label', { disabled }, theme)}
+                ${getGlobals(component, 'label', { disabled }, theme)}
             `,
     formGroup: ({
         font: {

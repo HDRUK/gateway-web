@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Alert component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-LayoutBox css-1k6rz1e"
+  >
+    <div
+      class="ui-Alert css-dtd0fn-Alert"
+    >
+      <div
+        class="ui-Alert__icon css-1x7ex26-Alert"
+      >
+        <span
+          class="ui-Icon css-1k6rz1e css-1nyc6qc-Icon"
+        >
+          <iconmock
+            fill="inherit"
+          />
+        </span>
+      </div>
+      <div
+        class="css-ungsl1-Alert"
+      >
+        Content
+      </div>
+    </div>
+  </div>
+</div>
+`;

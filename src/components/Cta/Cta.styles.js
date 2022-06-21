@@ -10,6 +10,8 @@ export const root =
 
         return css`
             gap: ${increment * 2}${unit};
+            background: none;
+            border: none;
 
             ${getComponentStylesFromTheme(
                 {
