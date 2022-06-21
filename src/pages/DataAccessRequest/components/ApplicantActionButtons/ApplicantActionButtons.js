@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
+import Button from '../../../../components/Button';
+import googleAnalytics from '../../../../tracking';
 import DarHelper from '../../../../utils/DarHelper.util';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
-import googleAnalytics from '../../../../tracking';
-import Button from '../../../../components/Button';
 
 const ApplicantActionButtons = ({
     allowedNavigation = false,
