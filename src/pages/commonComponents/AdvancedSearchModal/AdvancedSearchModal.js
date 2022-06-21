@@ -11,6 +11,7 @@ import dataUtilityImage from '../../../images/data-utility.png';
 import googleAnalytics from '../../../tracking';
 
 const baseURL = require('../BaseURL').getURL();
+
 const GENERAL_ACCESS = 'GENERAL_ACCESS';
 const BANNED = 'BANNED';
 const urlEnv = require('../BaseURL').getURLEnv();
@@ -21,42 +22,52 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
     const [showTermsandConditionsModal, setShowTermsAndConditionsModal] = useState(false);
     const handleClose = action => closed(action);
 
+    const redirectRquest = () => {
+        if (urlEnv === 'prod') {
+            googleAnalytics.recordVirtualPageView('Cohort discovery tool');
+            googleAnalytics.recordEvent('Datasets', 'Clicked search using cohort discovery', 'Opened cohort discovery tool');
+            window.location.assign('https://rquest.prod.healthdatagateway.org/bcrquest/');
+        } else {
+            window.location.assign('https://rquest.test.healthdatagateway.org/bcrquest/');
+        }
+    };
+
     const accessRQuest = async () => {
         const approvedUser = await authorisedForAdvancedSearch();
         if (approvedUser && userState.acceptedAdvancedSearchTerms) {
             console.log('Redirecting to RQuest');
-            if (urlEnv === 'prod') {
-                googleAnalytics.recordVirtualPageView('Cohort discovery tool');
-                googleAnalytics.recordEvent('Datasets', 'Clicked search using cohort discovery', 'Opened cohort discovery tool');
-                window.location.assign('https://rquest.prod.healthdatagateway.org/bcrquest/');
-            } else {
-                window.location.assign('https://rquest.test.healthdatagateway.org/bcrquest/');
-            }
-        } else {
+            redirectRquest();
+        } else if (approvedUser && !userState.acceptedAdvancedSearchTerms) {
             determineModalToShow(approvedUser);
+        } else {
+            redirectRquest();
         }
     };
 
     const authorisedForAdvancedSearch = async () => {
-        if (userState.advancedSearchRoles.includes(BANNED)) {
-            return false;
-        } else if (userState.advancedSearchRoles.includes(GENERAL_ACCESS)) {
-            return true;
-        } else if (userState.provider === 'oidc') {
-            //if user is from open athens but not authorised and not banned, assign them an advanced search role
-            let authorised = false;
-            await axios
-                .patch(baseURL + '/api/v1/users/advancedSearch/roles/' + userState.id)
-                .then(res => {
-                    authorised = true;
-                    let newUserState = userState;
-                    newUserState.advancedSearchRoles = res.data.response.advancedSearchRoles;
-                    setUserState(newUserState);
-                })
-                .catch(err => {
-                    console.error(err.message);
-                });
-            return authorised;
+        if (userState.advancedSearchRoles && userState.provider) {
+            if (userState.advancedSearchRoles.includes(BANNED)) {
+                return false;
+            }
+            if (userState.advancedSearchRoles.includes(GENERAL_ACCESS)) {
+                return true;
+            }
+            if (userState.provider === 'oidc') {
+                // if user is from open athens but not authorised and not banned, assign them an advanced search role
+                let authorised = false;
+                await axios
+                    .patch(`${baseURL}/api/v1/users/advancedSearch/roles/${userState.id}`)
+                    .then(res => {
+                        authorised = true;
+                        const newUserState = userState;
+                        newUserState.advancedSearchRoles = res.data.response.advancedSearchRoles;
+                        setUserState(newUserState);
+                    })
+                    .catch(err => {
+                        console.error(err.message);
+                    });
+                return authorised;
+            }
         } else {
             return false;
         }
@@ -74,12 +85,12 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
 
     const updateUserAcceptedAdvancedSearchTerms = async () => {
         await axios
-            .patch(baseURL + '/api/v1/users/advancedSearch/terms/' + userState.id, {
+            .patch(`${baseURL}/api/v1/users/advancedSearch/terms/${userState.id}`, {
                 acceptedAdvancedSearchTerms: true,
             })
             .then(res => {
                 // Update the state so that if user moves away from page they are still authorised
-                let newUserState = userState;
+                const newUserState = userState;
                 newUserState.acceptedAdvancedSearchTerms = res.data.response.acceptedAdvancedSearchTerms;
                 setUserState(newUserState);
                 accessRQuest();
@@ -125,8 +136,7 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
                 className='advanced-search-modal'
                 size='lg'
                 aria-labelledby='contained-modal-title-vcenter'
-                centered
-            >
+                centered>
                 <Modal.Header closeButton>
                     <div>
                         <div className='advanced-search-modal-header ml-3'>
@@ -143,7 +153,7 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
                     isBeta
                     bodyText='Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets for now, with more added every month.'
                     learnMoreLink='https://www.healthdatagateway.org/about/cohort-discovery'
-                    loggedIn={userState.loggedIn}
+                    loggedIn
                     buttonText='Search using cohort discovery'
                     signedOutText='You must be signed in to use cohort discovery'
                     showLoginModal={showLoginModal}
@@ -179,12 +189,12 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
                 open={showTermsandConditionsModal}
                 close={() => toggleShowTermsandConditionsModal()}
                 updateUserAcceptedAdvancedSearchTerms={() => updateUserAcceptedAdvancedSearchTerms()}
-            ></AdvancedSearchTermsandConditionsModal>
+            />
             <AdvancedSearchRequestAccessModal
                 open={showRequestAccessModal}
                 close={() => toggleShowRequestAccessModal()}
                 userId={userState.id}
-            ></AdvancedSearchRequestAccessModal>
+            />
         </>
     );
 };
