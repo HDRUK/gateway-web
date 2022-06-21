@@ -836,15 +836,8 @@ class DataAccessRequest extends Component {
     };
 
     onNextPanel = () => {
-        // 1. Copy formpanels
-        let formPanels = [...this.state.jsonSchema.formPanels];
-        // 2. Get activeIdx
-        let activeIdx = formPanels.findIndex(p => p.panelId === this.state.activePanelId);
-        // 3. Increment idx
-        let nextIdx = ++activeIdx;
-        // 4. Get activePanel - make sure newIdx doesnt exceed panels length
-        let { panelId, pageId } = formPanels[nextIdx > formPanels.length - 1 ? 0 : nextIdx];
-        // 5. Update the navigationState
+        const { panelId, pageId } = DarHelper.findNextPanel(this.state.activePanelId, this.state.questionSetStatus, this.state.jsonSchema);
+
         this.updateNavigation({ panelId, pageId });
     };
 
@@ -2186,6 +2179,13 @@ class DataAccessRequest extends Component {
                                         applicationStatus={applicationStatus}
                                         onDuplicateClick={this.toggleDuplicateApplicationModal}
                                         onShowAmendApplicationModal={this.toggleAmendApplicationModal}
+                                        hasNext={
+                                            !!DarHelper.findNextPanel(
+                                                this.state.activePanelId,
+                                                this.state.questionSetStatus,
+                                                this.state.jsonSchema
+                                            )
+                                        }
                                     />
                                 ) : (
                                     <CustodianActionButtons
@@ -2203,6 +2203,13 @@ class DataAccessRequest extends Component {
                                         hasRecommended={this.state.hasRecommended}
                                         applicationStatus={applicationStatus}
                                         roles={roles}
+                                        hasNext={
+                                            !!DarHelper.findNextPanel(
+                                                this.state.activePanelId,
+                                                this.state.questionSetStatus,
+                                                this.state.jsonSchema
+                                            )
+                                        }
                                     />
                                 )}
                             </div>

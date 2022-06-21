@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import DarHelper from '../../../../utils/DarHelper.util';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 import googleAnalytics from '../../../../tracking';
+import Button from '../../../../components/Button';
 
 const CustodianActionButtons = ({
     activeParty = '',
@@ -18,6 +19,7 @@ const CustodianActionButtons = ({
     unansweredAmendments = 0,
     onUpdateRequest,
     onWorkflowReviewDecisionClick,
+    hasNext,
 }) => {
     const showRecommendationDropdown =
         applicationStatus === DarHelper.darStatus.inReview &&
@@ -130,38 +132,35 @@ const CustodianActionButtons = ({
             <ActionBarMenu label='Make a decision' options={availableDecisionOptions} />
 
             {showAssignWorkflow && (
-                <button
-                    className='button-secondary'
+                <Button
+                    variant='secondary'
                     onClick={e => {
                         onActionClick('AssignWorkflow');
                         googleAnalytics.recordVirtualPageView('assign workflow modal');
-                    }}
-                >
+                    }}>
                     Assign a workflow
-                </button>
+                </Button>
             )}
 
             {showSendUpdateRequest && (
-                <button
-                    className='button-secondary'
+                <Button
+                    variant='secondary'
                     onClick={e => {
                         onUpdateRequest(e);
                         googleAnalytics.recordVirtualPageView('send update request modal');
-                    }}
-                >
+                    }}>
                     Send update request
-                </button>
+                </Button>
             )}
 
-            <button
-                className={`button-primary ${allowedNavigation ? '' : 'disabled'}`}
+            <Button
                 onClick={e => {
                     onNextClick();
                     googleAnalytics.recordEvent('Data access request', 'Clicked next', 'Navigate to next page');
                 }}
-            >
+                disabled={!allowedNavigation || !hasNext}>
                 Next
-            </button>
+            </Button>
         </Fragment>
     );
 };

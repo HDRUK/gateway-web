@@ -355,6 +355,26 @@ const changeStatusByQuestionSetId = (value, questionSetId, schema) => {
     return questionStatus;
 };
 
+const findNextPanel = (currentPanelId, questionSetStatus = {}, { formPanels }) => {
+    console.log('currentPanelId, questionSetStatus', currentPanelId, questionSetStatus, formPanels);
+    const activePanel = formPanels.find(p => p.panelId === currentPanelId);
+
+    console.log('activePanel', activePanel);
+
+    const filteredPanels = formPanels.filter(p => {
+        return questionSetStatus[p.panelId] !== 0;
+    });
+
+    console.log('filteredPanels', filteredPanels);
+
+    const activePanelIndex = filteredPanels.findIndex(p => p.panelId === currentPanelId);
+    console.log('activePanelIndex', activePanelIndex);
+
+    if (activePanelIndex + 1 < filteredPanels.length) {
+        return filteredPanels[activePanelIndex + 1];
+    }
+};
+
 const findQuestionSetByQuestionId = (questionId = '', schema = {}) => {
     if (!_.isEmpty(questionId) && !_.isEmpty(schema)) {
         const { questionSets } = schema;
@@ -750,4 +770,5 @@ export default {
     findQuestionSetsByPageId,
     changeStatusByQuestionSetId,
     findQuestionSetByQuestionId,
+    findNextPanel,
 };
