@@ -862,9 +862,10 @@ const YourAccountForm = props => {
                             <Form.Group className='pb-2'>
                                 <Row className='mt-2'>
                                     <Checkbox
-                                        type='checkbox'
                                         className='checker'
+                                        variant='primary'
                                         id='terms'
+                                        mb={6}            
                                         name='terms'
                                         default={profileComplete ? formik.values.emailNotifications : false}
                                         checked={formik.values.terms}
@@ -911,9 +912,11 @@ const YourAccountForm = props => {
                                     </Col>
                                     <Col md={1} sm={2} xs={3}>
                                         <Checkbox
+                                            variant='primary'
+                                            id='feedback'
+                                            mb={6}            
                                             type='checkbox'
                                             className='checker'
-                                            id='feedback'
                                             name='feedback'
                                             checked={formik.values.feedback}
                                             onChange={formik.handleChange}
@@ -934,7 +937,8 @@ const YourAccountForm = props => {
                                     </Col>
                                     <Col md={1} sm={2} xs={3}>
                                         <Checkbox
-                                            type='checkbox'
+                                            variant='primary'
+                                            mb={6} 
                                             className='checker'
                                             id='news'
                                             name='news'
