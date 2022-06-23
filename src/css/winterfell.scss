@@ -21,8 +21,17 @@
         flex-grow: 1;
     }
 
-    label {
-        margin-right: 25px;
+    .question-switch {
+        display: flex;
+        align-items: center;
+        margin: 0 30px 0 0;
+        font-size: 14px;
+
+        label {
+            display: flex;
+            align-items: center;
+            margin: 0 8px 0 0;
+        }
     }
 }
 

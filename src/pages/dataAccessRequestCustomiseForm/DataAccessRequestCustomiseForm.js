@@ -44,6 +44,7 @@ import { LayoutContent } from '../../components/Layout';
 import Alert from '../../components/Alert';
 import Close from '../../images/icons/close_blue.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
+import { Trans } from 'react-i18next';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -109,6 +110,8 @@ export const DataAccessRequestCustomiseForm = props => {
             },
         } = await questionbankService.getQuestionbankItem(publisherID);
 
+        console.log('Got master', questionStatus, questionSetStatus);
+
         const questionActions = {
             questionActions: [
                 { key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 },
@@ -120,6 +123,9 @@ export const DataAccessRequestCustomiseForm = props => {
         const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, newPanelId);
 
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
+
+        console.log('questionSet', questionStatus);
+        console.log('questionSetStatus', questionSetStatus);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
@@ -163,6 +169,9 @@ export const DataAccessRequestCustomiseForm = props => {
             ...questionSetStatus,
             [questionSetId]: !checked ? 0 : 1,
         };
+
+        console.log('newQuestionStatus', checked, questionStatus, newQuestionStatus);
+        console.log('newQuestionSetStatus', checked, questionSetStatus, newQuestionSetStatus);
 
         const numberOfChangesQuestions = reduce(
             newQuestionStatus,
@@ -582,6 +591,24 @@ export const DataAccessRequestCustomiseForm = props => {
                     onQuestionAction={onQuestionAction}
                     onGuidanceChange={onGuidanceChange}
                     onQuestionsetSwitchChange={onQuestionsetSwitchChange}
+                    messageOptionalQuestionSet={({ on }) => {
+                        const includedExcluded = on ? 'INCLUDED' : 'EXCLUDED';
+
+                        return (
+                            <Alert variant='info' mb={3} mt={1}>
+                                {on && (
+                                    <Trans i18nKey='DAR.customise.optionalQuestionsIncluded'>
+                                        ,<strong>{{ includedExcluded }}</strong>
+                                    </Trans>
+                                )}
+                                {!on && (
+                                    <Trans i18nKey='DAR.customise.optionalQuestionsExcluded'>
+                                        ,<strong>{{ includedExcluded }}</strong>
+                                    </Trans>
+                                )}
+                            </Alert>
+                        );
+                    }}
                     icons={question => (
                         <UnpublishedQuestionIcon
                             question={question}
@@ -699,8 +726,8 @@ export const DataAccessRequestCustomiseForm = props => {
                             />
                         </div>
 
-                        <Alert variant='info' icon={<Icon svg={<Clock />} size='xl' />} onClose={handleClose} dismissable mb={2} mr={2}>
-                            <P>{t('DAR.customise.saveAlert')}</P>
+                        <Alert variant='info' icon={<Icon svg={<Clock />} size='lg' />} onClose={handleClose} dismissable mb={2} mr={2}>
+                            {t('DAR.customise.saveAlert')}
                         </Alert>
 
                         <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
