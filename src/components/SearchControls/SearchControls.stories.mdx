@@ -3,18 +3,18 @@ import { Meta, Story, Canvas } from '@storybook/addon-docs';
 import SearchControls from './SearchControls';
 
 <Meta
-	title='Core/SearchControls'
-	component={SearchControls}
-	args={{
-		type: 'dataset',
-		sortProps: { options: ['relevance', 'recentlyadded'], value: 'relevance' },
-		inputProps: {
-			value: 'covid 19',
-		},
-		width: '900px',
-	}}
+    title='Core/Organisms/SearchControls'
+    component={SearchControls}
+    args={{
+        type: 'dataset',
+        sortProps: { options: ['relevance', 'recentlyadded'], value: 'relevance' },
+        inputProps: {
+            value: 'covid 19',
+        },
+        width: '900px',
+    }}
 />
 
 <Canvas>
-	<Story name='Basic'>{props => <SearchControls {...props} />}</Story>
+    <Story name='Basic'>{props => <SearchControls {...props} />}</Story>
 </Canvas>

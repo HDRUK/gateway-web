@@ -1,3 +1,3 @@
-import Alert from './Alert';
+import Card from './Card';
 
-export default Alert;
+export default Card;

@@ -376,6 +376,12 @@ export const theme = {
                 borderColor: 'grey200',
             },
         },
+        Dimmer: {
+            globals: {
+                backgroundColor: 'rgba(0,0,0,.85)',
+                color: 'white',
+            },
+        },
         IconButton: merge({}, THEME_BUTTON, {
             sizes: {
                 small: {
