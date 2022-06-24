@@ -146,17 +146,17 @@ const AccountTeams = () => {
                                 href=''
                                 className='addButton'
                                 onClick={() => createTeam()}>
-
                                 + Add a new team
                             </Button>
                         </Col>
                     </Row>
                     <Row className='subHeader mt-3 gray800-14-bold'>
                         <Col sm={2}>Updated</Col>
-                        <Col sm={3}>Data custodian</Col>
-                        <Col sm={3}>Team manager(s)</Col>
+                        <Col sm={2}>Data custodian</Col>
+                        <Col sm={2}>Team manager(s)</Col>
                         <Col sm={2}>Members</Col>
-                        <Col sm={2} />
+                        <Col sm={2}>Question Bank Enabled?</Col>
+                        <Col sm={2}>Actions</Col>
                     </Row>
                     <Row>
                         <Col sm={12} lg={12}>

@@ -9,19 +9,23 @@ const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }
             <Col sm={12} lg={2}>
                 {moment(updatedAt).format('D MMMM YYYY HH:mm')}
             </Col>
-            <Col sm={12} lg={3}>
+            <Col sm={12} lg={2}>
                 {publisher.name}
             </Col>
-            <Col sm={12} lg={3}>
+            <Col sm={12} lg={2}>
                 {teamManagers &&
                     teamManagers.length > 0 &&
                     teamManagers.map((teamManager, index) => {
-                        teamManagerNames +=
-                            teamManager.firstname + ' ' + teamManager.lastname + (teamManagers.length === index + 1 ? '' : ', ');
+                        teamManagerNames += `${teamManager.firstname} ${teamManager.lastname}${
+                            teamManagers.length === index + 1 ? '' : ', '
+                        }`;
                     })}
                 <p className='gray800-14'>
                     {teamManagerNames ? teamManagerNames.substr(0, 35) + (teamManagerNames.length > 35 ? '...' : '') : ''}
                 </p>
+            </Col>
+            <Col sm={12} lg={2}>
+                <p>{membersCount}</p>
             </Col>
             <Col sm={12} lg={2}>
                 <p>{membersCount}</p>
