@@ -1,8 +1,13 @@
 import React from 'react';
 import { Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
+import InlineSVG from 'react-inlinesvg/esm';
+import Icon from '../../../components/Icon';
+import iconTick from '../../../images/tick.svg';
+import iconRejected from '../../../images/Application_rejected.svg';
 
 const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }) => {
+    const questionBankStatusIcon = publisher?.questionBank?.enabled ? iconTick : iconRejected;
     let teamManagerNames = '';
     return (
         <Row className='entryBox gray800-14'>
@@ -25,10 +30,12 @@ const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }
                 </p>
             </Col>
             <Col sm={12} lg={2}>
-                <p>{membersCount}</p>
+                <p className='text-center'>{membersCount}</p>
             </Col>
             <Col sm={12} lg={2}>
-                <p>{membersCount}</p>
+                <p className='text-center'>
+                    <Icon mr={2} size='2xl' svg={<InlineSVG src={questionBankStatusIcon} />} />
+                </p>
             </Col>
             <Col sm={12} lg={2}>
                 <DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
