@@ -1,0 +1,31 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import SVG from 'react-inlinesvg';
+import closeIcon from '../../images/close-alt.svg';
+import Icon from '../Icon';
+import Cta from './Cta';
+
+<Meta title='Core/Molecules/Cta' component={Cta} />
+
+<Canvas>
+    <Story name='Sizes'>
+        {props => (
+            <>
+                <div>
+                    <Cta {...props} mb={4} size='large' iconRight={<SVG src={closeIcon} />} color='grey800' fill='grey800'>
+                        Large
+                    </Cta>
+                </div>
+                <div>
+                    <Cta {...props} mb={4} iconRight={<SVG src={closeIcon} />}>
+                        Default
+                    </Cta>
+                </div>
+                <div>
+                    <Cta {...props} size='small' iconRight={<SVG src={closeIcon} />}>
+                        Small
+                    </Cta>
+                </div>
+            </>
+        )}
+    </Story>
+</Canvas>
