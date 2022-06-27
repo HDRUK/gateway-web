@@ -28,6 +28,10 @@ const LayoutBox = ({
     justifyContent,
     flexGrow,
     position,
+    top,
+    left,
+    bottom,
+    right,
     ...outerProps
 }) => {
     const commonStyles = useCommonStyles({
@@ -50,6 +54,10 @@ const LayoutBox = ({
         justifyContent,
         flexGrow,
         position,
+        top,
+        left,
+        bottom,
+        right,
     });
 
     const Tag = as;

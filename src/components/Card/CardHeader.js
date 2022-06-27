@@ -7,7 +7,7 @@ import * as styles from './Card.styles.js';
 const CardHeader = ({ className, children, ...outerProps }) => {
     return (
         <div css={styles.cardHeader()} className={cx(className, 'ui-CardHeader')} {...outerProps}>
-            <H5>{children}</H5>
+            <H5 mb={0}>{children}</H5>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { getColor, getComponentGlobals, getSize } from '../../configs/theme';
+import { getComponentGlobals, getSize } from '../../configs/theme';
 
 export const root = () => theme => {
     return css`

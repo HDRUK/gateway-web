@@ -14,15 +14,43 @@ export const getCommonStyle = (prop, value) => {
 };
 
 export const getCommonStyles = (
-    { ml, mr, mb, mt, width, maxWidth, minWidth, display, alignItems, justifyContent, position, flexGrow },
+    {
+        m,
+        ml,
+        mr,
+        mb,
+        mt,
+        p,
+        pr,
+        pt,
+        pb,
+        pl,
+        top,
+        left,
+        bottom,
+        right,
+        width,
+        maxWidth,
+        minWidth,
+        display,
+        alignItems,
+        justifyContent,
+        flexGrow,
+        position,
+    },
     theme
 ) => {
     return `
+        ${getSpacingStyle('margin', m, theme)}
 		${getSpacingStyle('margin-left', ml, theme)}
 		${getSpacingStyle('margin-right', mr, theme)}
 		${getSpacingStyle('margin-bottom', mb, theme)}
 		${getSpacingStyle('margin-top', mt, theme)}
-
+        ${getSpacingStyle('padding', p, theme)}
+        ${getSpacingStyle('padding-left', pl, theme)}
+		${getSpacingStyle('padding-right', pr, theme)}
+		${getSpacingStyle('padding-bottom', pb, theme)}
+        ${getSpacingStyle('padding-top', pt, theme)}
 		${getCommonStyle('width', width)}
 		${getCommonStyle('max-width', maxWidth)}
 		${getCommonStyle('min-width', minWidth)}
@@ -30,7 +58,11 @@ export const getCommonStyles = (
 		${getCommonStyle('align-items', alignItems)}
         ${getCommonStyle('justify-content', justifyContent)}
         ${getCommonStyle('flex-grow', flexGrow)}
-		${getCommonStyle('position', position)}
+        ${getCommonStyle('position', position)}
+        ${getCommonStyle('top', top)}
+        ${getCommonStyle('bottom', bottom)}
+        ${getCommonStyle('left', left)}
+        ${getCommonStyle('right', right)}
 	`;
 };
 
