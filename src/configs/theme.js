@@ -223,6 +223,28 @@ export const theme = {
             },
         },
         Button: THEME_BUTTON,
+        Card: {
+            globals: {
+                boxShadow: '1px 1px 3px 0 rgb(0 0 0 / 9%)',
+                backgroundColor: 'white',
+            },
+        },
+        CardHeader: {
+            globals: {
+                borderColor: 'grey200',
+            },
+        },
+        CardFooter: {
+            globals: {
+                borderColor: 'grey200',
+            },
+        },
+        Dimmer: {
+            globals: {
+                backgroundColor: 'rgba(0,0,0,.85)',
+                color: 'white',
+            },
+        },
         IconButton: merge({}, THEME_BUTTON, {
             sizes: {
                 small: {
