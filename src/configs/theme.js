@@ -64,6 +64,10 @@ export const getComponentSize = (component, size, theme) => {
     return getComponentStylesFromTheme(theme.components[component].sizes[size], theme);
 };
 
+export const getComponentGlobals = (component, theme) => {
+    return getComponentStylesFromTheme(theme.components[component].globals, theme);
+};
+
 export const THEME_INPUT = {
     sizes: {
         small: {
