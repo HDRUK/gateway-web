@@ -344,10 +344,45 @@ const findQuestion = (questionId = '', questionsArr = []) => {
     }
 };
 
+const changeStatusByQuestionSetId = (value, questionSetId, schema) => {
+    const questionSet = findQuestionSet(questionSetId, schema);
+    const questionStatus = {};
+
+    questionSet.questions.forEach(question => {
+        questionStatus[question.questionId] = value;
+    });
+
+    return questionStatus;
+};
+
+const findNextPanel = (currentPanelId, questionSetStatus = {}, { formPanels }) => {
+    const filteredPanels = formPanels.filter(p => {
+        return questionSetStatus[p.panelId] !== 0;
+    });
+
+    const activePanelIndex = filteredPanels.findIndex(p => p.panelId === currentPanelId);
+
+    if (activePanelIndex + 1 < filteredPanels.length) {
+        return filteredPanels[activePanelIndex + 1];
+    }
+
+    return null;
+};
+
+const findQuestionSetByQuestionId = (questionId = '', schema = {}) => {
+    if (!_.isEmpty(questionId) && !_.isEmpty(schema)) {
+        const { questionSets } = schema;
+
+        return questionSets.find(questionSet => {
+            return questionSet.questions.find(question => question.questionId === questionId);
+        });
+    }
+};
+
 const findQuestionSet = (questionSetId = '', schema = {}) => {
     if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
         const { questionSets } = schema;
-        return [...questionSets].find(q => q.questionSetId === questionSetId);
+        return questionSets.find(q => q.questionSetId === questionSetId);
     }
     return {};
 };
@@ -727,4 +762,7 @@ export default {
     injectReadonlyStaticContent,
     findPageIdByQuestionSet,
     findQuestionSetsByPageId,
+    changeStatusByQuestionSetId,
+    findQuestionSetByQuestionId,
+    findNextPanel,
 };

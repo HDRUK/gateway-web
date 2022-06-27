@@ -61,7 +61,11 @@ const Alert = ({
                         {!icon && variant === 'info' && <Icon svg={<InfoIcon fill='inherit' />} size='lg' />}
                     </div>
                     <div css={styles.content}>{children}</div>
-                    {dismissable && <Icon svg={<CloseIcon fill='inherit' />} onClick={handleClose} role='button' size='xl' />}
+                    {dismissable && (
+                        <div css={styles.dismiss} className='ui-Alert__dismiss'>
+                            <Icon svg={<CloseIcon fill='inherit' />} onClick={handleClose} role='button' size='lg' />
+                        </div>
+                    )}
                 </div>
             </LayoutBox>
         )

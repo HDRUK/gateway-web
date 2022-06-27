@@ -44,6 +44,7 @@ import { LayoutContent } from '../../components/Layout';
 import Alert from '../../components/Alert';
 import Close from '../../images/icons/close_blue.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
+import { Trans } from 'react-i18next';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -74,6 +75,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const [jsonSchema, setJsonSchema] = useState({});
     const [questionAnswers] = useState({});
     const [questionStatus, setQuestionStatus] = useState({});
+    const [questionSetStatus, setQuestionSetStatus] = useState({});
     const [existingQuestionStatus, setExistingQuestionStatus] = useState({});
     const [newGuidance, setNewGuidance] = useState({});
     const [existingGuidance, setExistingGuidance] = useState({});
@@ -103,10 +105,12 @@ export const DataAccessRequestCustomiseForm = props => {
 
         const {
             data: {
-                result: { masterSchema, questionStatus, guidance, countOfChanges, schemaId, unpublishedGuidance },
+                result: { masterSchema, questionStatus, questionSetStatus, guidance, countOfChanges, schemaId, unpublishedGuidance },
                 result,
             },
         } = await questionbankService.getQuestionbankItem(publisherID);
+
+        console.log('Got master', questionStatus, questionSetStatus);
 
         const questionActions = {
             questionActions: [
@@ -120,6 +124,9 @@ export const DataAccessRequestCustomiseForm = props => {
 
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
+        console.log('questionSet', questionStatus);
+        console.log('questionSetStatus', questionSetStatus);
+
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
         setJsonSchema(newJsonSchema);
@@ -127,6 +134,7 @@ export const DataAccessRequestCustomiseForm = props => {
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
         setQuestionStatus(questionStatus);
+        setQuestionSetStatus(questionSetStatus);
         setExistingQuestionStatus(cloneDeep(questionStatus));
         setNewGuidance(guidance);
         setExistingGuidance(cloneDeep(guidance));
@@ -149,9 +157,65 @@ export const DataAccessRequestCustomiseForm = props => {
         return `Last saved: ${currentTime}`;
     };
 
+    const onQuestionsetSwitchChange = async (checked, questionSetId) => {
+        const newJsonSchema = { ...jsonSchema };
+
+        const newQuestionStatus = {
+            ...questionStatus,
+            ...helpers.changeStatusByQuestionSetId(checked ? 1 : 0, questionSetId, newJsonSchema),
+        };
+
+        const newQuestionSetStatus = {
+            ...questionSetStatus,
+            [questionSetId]: !checked ? 0 : 1,
+        };
+
+        console.log('newQuestionStatus', checked, questionStatus, newQuestionStatus);
+        console.log('newQuestionSetStatus', checked, questionSetStatus, newQuestionSetStatus);
+
+        const numberOfChangesQuestions = reduce(
+            newQuestionStatus,
+            (result, value, key) => {
+                return isEqual(value, existingQuestionStatus[key]) ? result : result.concat(key);
+            },
+            []
+        ).length;
+
+        const params = {
+            questionStatus: newQuestionStatus,
+            countOfChanges: numberOfChangesQuestions + existingCountOfChanges,
+            questionSetStatus: newQuestionSetStatus,
+        };
+
+        setCountOfChanges(params.countOfChanges);
+        setJsonSchema(newJsonSchema);
+        setQuestionStatus(newQuestionStatus);
+        setQuestionSetStatus(newQuestionSetStatus);
+
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        setLastSaved(saveTime());
+        handleAnalytics(`Question Set ${questionSetId} switched`, checked ? 'On' : 'Off');
+    };
+
     const onSwitchChange = (questionId, value) => {
+        const newJsonSchema = { ...jsonSchema };
+        const questionSet = helpers.findQuestionSetByQuestionId(questionId, newJsonSchema);
+
         questionStatus[questionId] = value ? 1 : 0;
+
+        const activeQuestions = questionSet.questions.filter(({ questionId }) => !!questionStatus[questionId]);
+
+        const newQuestionSetStatus = {
+            ...questionSetStatus,
+            [questionSet.questionSetId]: activeQuestions.length ? 1 : 0,
+        };
+
         setQuestionStatus(questionStatus);
+        setQuestionSetStatus(newQuestionSetStatus);
 
         const numberOfChangesQuestions = reduce(
             questionStatus,
@@ -173,6 +237,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
         const params = {
             questionStatus,
+            questionSetStatus: newQuestionSetStatus,
             countOfChanges: numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges,
         };
 
@@ -516,6 +581,7 @@ export const DataAccessRequestCustomiseForm = props => {
                     schema={jsonSchema}
                     questionAnswers={questionAnswers}
                     questionStatus={questionStatus}
+                    questionSetStatus={questionSetStatus}
                     panelId={activePanelId}
                     disableSubmit
                     disableValidation
@@ -524,6 +590,25 @@ export const DataAccessRequestCustomiseForm = props => {
                     onSwitchChange={onSwitchChange}
                     onQuestionAction={onQuestionAction}
                     onGuidanceChange={onGuidanceChange}
+                    onQuestionsetSwitchChange={onQuestionsetSwitchChange}
+                    messageOptionalQuestionSet={({ on }) => {
+                        const includedExcluded = on ? 'INCLUDED' : 'EXCLUDED';
+
+                        return (
+                            <Alert variant='info' mb={3} mt={1}>
+                                {on && (
+                                    <Trans i18nKey='DAR.customise.optionalQuestionsIncluded'>
+                                        ,<strong>{{ includedExcluded }}</strong>
+                                    </Trans>
+                                )}
+                                {!on && (
+                                    <Trans i18nKey='DAR.customise.optionalQuestionsExcluded'>
+                                        ,<strong>{{ includedExcluded }}</strong>
+                                    </Trans>
+                                )}
+                            </Alert>
+                        );
+                    }}
                     icons={question => (
                         <UnpublishedQuestionIcon
                             question={question}
@@ -534,7 +619,7 @@ export const DataAccessRequestCustomiseForm = props => {
                 />
             )
         );
-    }, [activePanelId, questionStatus, questionAnswers, unpublishedGuidance]);
+    }, [activePanelId, questionStatus, questionSetStatus, questionAnswers, unpublishedGuidance]);
 
     const handleClose = () => {
         setShowSaveAlert(false);
@@ -641,8 +726,8 @@ export const DataAccessRequestCustomiseForm = props => {
                             />
                         </div>
 
-                        <Alert variant='info' icon={<Icon svg={<Clock />} size='xl' />} onClose={handleClose} dismissable mb={2} mr={2}>
-                            <P>{t('DAR.customise.saveAlert')}</P>
+                        <Alert variant='info' icon={<Icon svg={<Clock />} size='lg' />} onClose={handleClose} dismissable mb={2} mr={2}>
+                            {t('DAR.customise.saveAlert')}
                         </Alert>
 
                         <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
