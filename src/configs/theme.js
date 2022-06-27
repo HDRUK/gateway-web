@@ -34,10 +34,29 @@ export const getCommonStyles = (
 	`;
 };
 
+const getComponentStyleValue = (value, theme) => {
+    const isColor = Object.keys(theme.colors).includes(value);
+    const isFontSize = Object.keys(theme.font.size).includes(value);
+
+    if (isColor) {
+        return theme.colors[value];
+    }
+    if (isFontSize) {
+        return theme.font.size[value];
+    }
+
+    return value;
+};
+
+export const getComponentStyle = (prop, value, theme, important) => {
+    const propParts = prop.split(/(?=[A-Z])/);
+
+    return `${propParts.join('-')}: ${getComponentStyleValue(value, theme)}${important ? ' !important' : ''};`;
+};
+
 export const getComponentStylesFromTheme = (props, theme) => {
     const styles = Object.keys(props).map(prop => {
         const propParts = prop.replace(/([a-z])([A-Z])/g, '$1,$2').split(',');
-        const isColor = Object.keys(theme.colors).includes(props[prop]);
         const pseudoSelector = propParts[0];
 
         if (pseudoSelector === 'hover' || pseudoSelector === 'disabled' || pseudoSelector === 'focus') {
@@ -45,12 +64,12 @@ export const getComponentStylesFromTheme = (props, theme) => {
 
             return `
                 :${pseudoSelector} {
-                    ${propParts.join('-')}: ${isColor ? theme.colors[props[prop]] : props[prop]};
+                    ${propParts.join('-')}: ${getComponentStyleValue(props[prop], theme)};
                 }
             `;
         }
 
-        return `${propParts.join('-')}: ${isColor ? theme.colors[props[prop]] : props[prop]};`;
+        return `${propParts.join('-')}: ${getComponentStyleValue(props[prop], theme)};`;
     });
 
     return styles.join('\n');
