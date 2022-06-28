@@ -110,8 +110,6 @@ export const DataAccessRequestCustomiseForm = props => {
             },
         } = await questionbankService.getQuestionbankItem(publisherID);
 
-        console.log('Got master', questionStatus, questionSetStatus);
-
         const questionActions = {
             questionActions: [
                 { key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 },
@@ -169,9 +167,6 @@ export const DataAccessRequestCustomiseForm = props => {
             ...questionSetStatus,
             [questionSetId]: !checked ? 0 : 1,
         };
-
-        console.log('newQuestionStatus', checked, questionStatus, newQuestionStatus);
-        console.log('newQuestionSetStatus', checked, questionSetStatus, newQuestionSetStatus);
 
         const numberOfChangesQuestions = reduce(
             newQuestionStatus,
