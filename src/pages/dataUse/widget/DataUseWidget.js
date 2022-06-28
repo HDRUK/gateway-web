@@ -11,22 +11,29 @@ import AcceptModal from './AcceptModal';
 import publishersService from '../../../services/publishers';
 
 const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets@0.1.0/dist/hdruk-data-uses.js`;
-const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherName, accepted }) => {
+const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDetails }) => {
     const { t } = useTranslation();
     useScript(WIDGET_MODULE);
-    const [checked, setChecked] = useState(accepted || false);
-    const [disabled, setDisabled] = useState(false);
+    const [checked, setChecked] = useState(false);
+    const [disabled, setDisabled] = useState(true);
     const [state, setState] = useState({
         showAcceptModal: false,
     });
 
-    const patchPublisherDataUseRequest = publishersService.usePatchPublisherDetails({
+    const accepted = publisherDetails?.dataUse?.widget?.accepted;
+
+    React.useEffect(() => {
+        setChecked(accepted);
+        setDisabled(accepted);
+    }, [accepted]);
+
+    const patchPublisherDataUseRequest = publishersService.usePatchPublisherDataUseWidget({
         onError: ({ title, message }) => {
             NotificationManager.error(message, title, 10000);
         },
     });
 
-    const codeString = `<script type="module" src="${WIDGET_MODULE}"></script>\n<hdruk-data-uses publisher="${publisherName}"/>`;
+    const codeString = `<script type="module" src="${WIDGET_MODULE}"></script>\n<hdruk-data-uses publisher="${publisherDetails.name}"/>`;
 
     const clickHandler = () => {
         setState({ ...state, showAcceptModal: true });
@@ -44,17 +51,21 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherNa
     const copyToClipBoardHandler = async () => {
         navigator.clipboard.writeText(codeString);
 
-        // await patchPublisherDataUseRequest.mutateAsync({
-        //     _id: 1,
-        //     dataUse: {
-        //         widget: {
-        //             termsConditions: {
-        //                 accepted: true,
-        //                 acceptedByUserId: 1,
-        //             },
-        //         },
-        //     },
-        // });
+        console.log({
+            _id: team,
+            data: {
+                accepted: true,
+                acceptedByUserId: userState[0].id,
+            },
+        });
+
+        await patchPublisherDataUseRequest.mutateAsync({
+            _id: team,
+            data: {
+                accepted: true,
+                acceptedByUserId: userState[0].id,
+            },
+        });
 
         setDisabled(true);
     };
@@ -83,10 +94,10 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherNa
                 <Typography color='grey600'>
                     <i>{t('datause.widget.buttonHelp')}</i>
                 </Typography>
-                <hdruk-data-uses publisher={publisherName} />
+                <hdruk-data-uses publisher={publisherDetails.name} />
                 <br />
                 {checked && <DataUseWidgetCode codeString={codeString} copyToClipBoard={copyToClipBoardHandler} />}
-                <AcceptModal open={state.showAcceptModal} closed={modalCloseHandler} acceptHandler={acceptHandler} />
+                <AcceptModal open={state.showAcceptModal} onClose={modalCloseHandler} onAccept={acceptHandler} />
             </div>
         </LayoutContent>
     );

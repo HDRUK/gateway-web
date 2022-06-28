@@ -1,15 +1,9 @@
 import { css } from '@emotion/react';
 
-export const footer = css`
-    margin-top: 10px;
-`;
-
-export const body = css`
-    border: 1px solid #a3a3a3;
-    border-radius: 5px;
+export const markdown = css`
+    padding: 15px;
+    border: 1px solid #eee;
+    font-size: 1em;
+    overflow-y: auto;
     height: 400px;
-`;
-
-export const innerBody = css`
-    padding: 15px 15px 15px 15px;
 `;

@@ -1,25 +1,28 @@
-import { apiV2URL } from '../../configs/url.config';
+import { apiURL } from '../../configs/url.config';
 import { patchRequest, useMutationWithTranslations } from '../../utils/requests';
 
-const patchPublisherDetails = (_id, data, options) => {
-    return patchRequest(`${apiV2URL}/publishers/${_id}/details`, data, options);
+const patchPublisherDataUseWidget = (_id, data, options) => {
+    console.log(`${apiURL}/publishers/${_id}/dataUseWidget`);
+    return patchRequest(`${apiURL}/publishers/${_id}/dataUseWidget`, data, options);
 };
 
-const usePatchPublisherDetails = (requestOptions, mutateOptions) => {
+const usePatchPublisherDataUseWidget = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(
         data => {
             const { _id, ...outerProps } = data;
 
-            return patchPublisherDetails(_id, outerProps, requestOptions);
+            console.log('DATA', `${apiURL}/publishers/${_id}/dataUseWidget`);
+
+            return patchPublisherDataUseWidget(_id, outerProps.data, requestOptions);
         },
         {
-            mutationKey: 'publishers.patchPublisherDetails',
+            mutationKey: 'publishers.patchPublisherDataUseWidget',
             ...mutateOptions,
         }
     );
 };
 
 export default {
-    patchPublisherDetails,
-    usePatchPublisherDetails,
+    patchPublisherDataUseWidget,
+    usePatchPublisherDataUseWidget,
 };

@@ -37,6 +37,10 @@ export const getCommonStyles = (
         justifyContent,
         flexGrow,
         position,
+        height,
+        minHeight,
+        maxHeight,
+        overflowY,
     },
     theme
 ) => {
@@ -51,6 +55,9 @@ export const getCommonStyles = (
 		${getSpacingStyle('padding-right', pr, theme)}
 		${getSpacingStyle('padding-bottom', pb, theme)}
         ${getSpacingStyle('padding-top', pt, theme)}
+        ${getCommonStyle('height', height)}
+        ${getCommonStyle('max-height', maxHeight)}
+		${getCommonStyle('min-height', minHeight)}
 		${getCommonStyle('width', width)}
 		${getCommonStyle('max-width', maxWidth)}
 		${getCommonStyle('min-width', minWidth)}
@@ -63,6 +70,8 @@ export const getCommonStyles = (
         ${getCommonStyle('bottom', bottom)}
         ${getCommonStyle('left', left)}
         ${getCommonStyle('right', right)}
+        ${getCommonStyle('overflow-y', overflowY)}
+        
 	`;
 };
 
@@ -296,8 +305,7 @@ export const theme = {
         },
         Dimmer: {
             globals: {
-                backgroundColor: 'rgba(0,0,0,.85)',
-                color: 'white',
+                backgroundColor: 'rgba(0,0,0,0.15)',
             },
         },
         IconButton: merge({}, THEME_BUTTON, {

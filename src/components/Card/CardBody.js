@@ -2,13 +2,12 @@
 import { jsx } from '@emotion/react';
 import { cx } from '@emotion/css';
 import * as styles from './Card.styles.js';
-import LayoutBox from '../LayoutBox';
 
 const CardBody = ({ className, children, ...outerProps }) => {
     return (
-        <LayoutBox className={cx(className, 'ui-CardBody')} {...outerProps}>
-            <div css={styles.cardBody()}>{children}</div>
-        </LayoutBox>
+        <div className={cx(className, 'ui-CardBody')} css={styles.cardBody()} {...outerProps}>
+            {children}
+        </div>
     );
 };
 

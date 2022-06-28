@@ -56,7 +56,7 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
             )}
 
             {tabId === 'datause_widget' && isCustodian(team) && (
-                <DataUseWidget userState={userState} team={team} publisherName={publisherDetails.name} />
+                <DataUseWidget userState={userState} team={team} publisherDetails={publisherDetails} />
             )}
         </>
     );
