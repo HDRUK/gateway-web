@@ -5,10 +5,9 @@ import TextareaAutosize from 'react-textarea-autosize';
 class TextareaInputCustom extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             value: this.props.value,
-            length: this.props.length,
+            length: this.props?.options[0] || this.props.length,
             readOnly: props.readOnly || false,
         };
     }
