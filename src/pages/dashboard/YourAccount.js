@@ -914,7 +914,6 @@ const YourAccountForm = props => {
                                     </Col>
                                     <Col md={11} sm={10} xs={9}>
                                         <Checkbox
-                                            variant='primary'
                                             mb={6}
                                             id='news'
                                             name='news'
