@@ -887,24 +887,19 @@ const YourAccountForm = props => {
                             <Form.Group>
                                 <Row className='mt-2 gray800-14'>
                                     <span className='divider-lines' />
-                                    <Col md={1} sm={2} xs={3}>
-                                        Feedback
-                                    </Col>
-                                    <Col md={1} sm={2} xs={3}>
+                                    <Col xs={1}>Feedback</Col>
+                                    <Col xs={11}>
                                         <Checkbox
-                                            variant='primary'
                                             id='feedback'
                                             mb={6}
                                             type='checkbox'
-                                            className='checker'
                                             name='feedback'
                                             checked={formik.values.feedback}
                                             onChange={formik.handleChange}
                                             data-test-id='user-account-feedback'
+                                            label='I am happy to be contacted to share and give feedback on my experience with the Gateway'
+                                            ml={4}
                                         />
-                                    </Col>
-                                    <Col md={10} sm={8} xs={6} className='gray800-14 pl-0'>
-                                        I am happy to be contacted to share and give feedback on my experience with the Gateway
                                     </Col>
                                 </Row>
                             </Form.Group>
@@ -912,29 +907,30 @@ const YourAccountForm = props => {
                             <Form.Group>
                                 <Row className='mt-2 gray800-14'>
                                     <span className='divider-lines' />
-                                    <Col md={1} sm={2} xs={3}>
-                                        News
-                                    </Col>
-                                    <Col md={1} sm={2} xs={3}>
+                                    <Col xs={1}>News</Col>
+                                    <Col xs={11}>
                                         <Checkbox
                                             variant='primary'
                                             mb={6}
-                                            className='checker'
                                             id='news'
                                             name='news'
                                             checked={formik.values.news}
                                             onChange={formik.handleChange}
                                             data-test-id='user-account-news'
+                                            ml={4}
+                                            label={
+                                                <>
+                                                    I want to receive news, updates and curated marketing from the
+                                                    Gateway&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <a
+                                                        target='_blank'
+                                                        rel='noopener noreferrer'
+                                                        href='https://mailchi.mp/hdruk.ac.uk/explore-and-access-the-uks-health-research-datasets'>
+                                                        Show me an example
+                                                    </a>
+                                                </>
+                                            }
                                         />
-                                    </Col>
-                                    <Col md={10} sm={8} xs={6} className='gray800-14 pl-0'>
-                                        I want to receive news, updates and curated marketing from the Gateway&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a
-                                            target='_blank'
-                                            rel='noopener noreferrer'
-                                            href='https://mailchi.mp/hdruk.ac.uk/explore-and-access-the-uks-health-research-datasets'>
-                                            Show me an example
-                                        </a>
                                     </Col>
                                 </Row>
                             </Form.Group>
