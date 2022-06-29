@@ -62,7 +62,7 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherNa
                 <Typography color='grey600'>
                     <i>{t('datause.widget.buttonHelp')}</i>
                 </Typography>
-                <hdruk-data-uses publisher={publisherName} apiURL={widgetAPIURL} baseURL={baseURL} />
+                <hdruk-data-uses publisher={publisherName} apiURL={widgetAPIURL} baseURL={window.location.origin} />
                 <br />
                 {checked && <DataUseWidgetCode codeString={codeString} copyToClipBoard={copyToClipBoardHandler} />}
                 <AcceptModal open={state.showAcceptModal} closed={modalCloseHandler} acceptHandler={acceptHandler} />
