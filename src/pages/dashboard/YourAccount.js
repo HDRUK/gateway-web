@@ -10,7 +10,7 @@ import './Dashboard.scss';
 import SVGIcon from '../../images/SVGIcon';
 import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
 import TextareaAutosize from 'react-textarea-autosize';
-import Checkbox from '../../components/Checkbox'
+import Checkbox from '../../components/Checkbox';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -264,7 +264,7 @@ const YourAccountForm = props => {
             orcid: props.data.orcid || '',
             feedback: optInFeedback || false,
             news: optInNews || false,
-            terms: initialTerms || false,
+            terms: initialTerms || profileComplete,
             sector: props.data.sector || '',
             organisation: props.data.organisation || '',
             showOrgVal: props.showOrgVal,
@@ -364,8 +364,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setFirstNameHover(true)}
-                                        onMouseLeave={() => setFirstNameHover(false)}
-                                    >
+                                        onMouseLeave={() => setFirstNameHover(false)}>
                                         {inFirstNameHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>{mandatoryShowFieldMsg}</span>
@@ -410,8 +409,7 @@ const YourAccountForm = props => {
                                         onMouseEnter={() => setLastNameHover(true)}
                                         onMouseLeave={() => {
                                             setLastNameHover(false);
-                                        }}
-                                    >
+                                        }}>
                                         {inLastNameHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>{mandatoryShowFieldMsg}</span>
@@ -451,8 +449,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setEmailHover(true)}
-                                        onMouseLeave={() => setEmailHover(false)}
-                                    >
+                                        onMouseLeave={() => setEmailHover(false)}>
                                         {inEmailHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>{mandatoryHideFieldMsg}</span>
@@ -508,15 +505,13 @@ const YourAccountForm = props => {
                                             onBlur={() => formik.setFieldTouched('sector', true)}
                                             touched={formik.touched.sector}
                                             onSelect={selected => handleSectorSelect(selected)}
-                                            id='user-account-sector'
-                                        >
+                                            id='user-account-sector'>
                                             {sectorSelect.map((sec, i) => (
                                                 <Dropdown.Item
                                                     className='gray800-14 width-100'
                                                     key={sec}
                                                     eventKey={sec}
-                                                    data-test-id={`user-account-sector-option-${i}`}
-                                                >
+                                                    data-test-id={`user-account-sector-option-${i}`}>
                                                     {sec}
                                                 </Dropdown.Item>
                                             ))}
@@ -527,8 +522,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setSectorHover(true)}
-                                        onMouseLeave={() => setSectorHover(false)}
-                                    >
+                                        onMouseLeave={() => setSectorHover(false)}>
                                         {inSectorHover && (
                                             <div className='accountClassToolTip accountSectorToolTip'>
                                                 <span className='white-13-semibold'>
@@ -541,8 +535,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleSector();
-                                            }}
-                                        >
+                                            }}>
                                             {showingSector ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -594,8 +587,7 @@ const YourAccountForm = props => {
                                                 lg={1}
                                                 className='eyeColumn'
                                                 onMouseEnter={() => setOrgHover(true)}
-                                                onMouseLeave={() => setOrgHover(false)}
-                                            >
+                                                onMouseLeave={() => setOrgHover(false)}>
                                                 {inOrgHover && (
                                                     <div className='accountClassToolTip accountSectorToolTip'>
                                                         <span className='white-13-semibold'>
@@ -608,8 +600,7 @@ const YourAccountForm = props => {
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         toggleOrg();
-                                                    }}
-                                                >
+                                                    }}>
                                                     {showingOrg ? (
                                                         <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                                     ) : (
@@ -680,8 +671,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setBioHover(true)}
-                                        onMouseLeave={() => setBioHover(false)}
-                                    >
+                                        onMouseLeave={() => setBioHover(false)}>
                                         {inBioHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>
@@ -694,8 +684,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleBio();
-                                            }}
-                                        >
+                                            }}>
                                             {showingBio ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -735,8 +724,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setDomainHover(true)}
-                                        onMouseLeave={() => setDomainHover(false)}
-                                    >
+                                        onMouseLeave={() => setDomainHover(false)}>
                                         {inDomainHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>
@@ -749,8 +737,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleDomain();
-                                            }}
-                                        >
+                                            }}>
                                             {showingDomain ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -785,8 +772,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setLinkHover(true)}
-                                        onMouseLeave={() => setLinkHover(false)}
-                                    >
+                                        onMouseLeave={() => setLinkHover(false)}>
                                         {inLinkHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>
@@ -799,8 +785,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleLink();
-                                            }}
-                                        >
+                                            }}>
                                             {showingLink ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -833,8 +818,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setOrcidHover(true)}
-                                        onMouseLeave={() => setOrcidHover(false)}
-                                    >
+                                        onMouseLeave={() => setOrcidHover(false)}>
                                         {inOrcidHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>
@@ -847,8 +831,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleOrcid();
-                                            }}
-                                        >
+                                            }}>
                                             {showingOrcid ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -860,36 +843,33 @@ const YourAccountForm = props => {
                             </Form.Group>
 
                             <Form.Group className='pb-2'>
-                                <Row className='mt-2'>
-                                    <Checkbox
-                                        className='checker'
-                                        variant='primary'
-                                        id='terms'
-                                        mb={6}            
-                                        name='terms'
-                                        default={profileComplete ? formik.values.emailNotifications : false}
-                                        checked={formik.values.terms}
-                                        onChange={formik.handleChange}
-                                        data-test-id='user-account-terms-conditions'
-                                    />
-                                    <span className='gray800-14 ml-4 margin-top-2'>
-                                        I agree to the HDRUK{' '}
-                                        <a
-                                            href='https://www.hdruk.ac.uk/infrastructure/gateway/terms-and-conditions/'
-                                            target='_blank'
-                                            rel='noopener noreferrer'
-                                            data-test-id='user-account-terms-conditions-link'
-                                        >
-                                            Terms and Conditions
-                                        </a>
-                                    </span>
-                                </Row>
+                                <Checkbox
+                                    id='terms'
+                                    mb={6}
+                                    mt={2}
+                                    name='terms'
+                                    checked={formik.values.terms}
+                                    onChange={formik.handleChange}
+                                    label={
+                                        <>
+                                            {' '}
+                                            I agree to the HDRUK{' '}
+                                            <a
+                                                href='https://www.hdruk.ac.uk/infrastructure/gateway/terms-and-conditions/'
+                                                target='_blank'
+                                                rel='noopener noreferrer'
+                                                data-test-id='user-account-terms-conditions-link'>
+                                                Terms and Conditions
+                                            </a>
+                                        </>
+                                    }
+                                    data-test-id='user-account-terms-conditions'
+                                />
                                 <Row className='mt-2'>
                                     {formik.touched.terms && formik.errors.terms ? (
                                         <div
                                             className='errorMessages margin-left-16'
-                                            data-test-id='user-account-terms-conditions-validation'
-                                        >
+                                            data-test-id='user-account-terms-conditions-validation'>
                                             {formik.errors.terms}
                                         </div>
                                     ) : null}
@@ -914,7 +894,7 @@ const YourAccountForm = props => {
                                         <Checkbox
                                             variant='primary'
                                             id='feedback'
-                                            mb={6}            
+                                            mb={6}
                                             type='checkbox'
                                             className='checker'
                                             name='feedback'
@@ -938,7 +918,7 @@ const YourAccountForm = props => {
                                     <Col md={1} sm={2} xs={3}>
                                         <Checkbox
                                             variant='primary'
-                                            mb={6} 
+                                            mb={6}
                                             className='checker'
                                             id='news'
                                             name='news'
@@ -952,8 +932,7 @@ const YourAccountForm = props => {
                                         <a
                                             target='_blank'
                                             rel='noopener noreferrer'
-                                            href='https://mailchi.mp/hdruk.ac.uk/explore-and-access-the-uks-health-research-datasets'
-                                        >
+                                            href='https://mailchi.mp/hdruk.ac.uk/explore-and-access-the-uks-health-research-datasets'>
                                             Show me an example
                                         </a>
                                     </Col>
@@ -967,8 +946,7 @@ const YourAccountForm = props => {
                                     <a
                                         target='_blank'
                                         rel='noopener noreferrer'
-                                        href='https://www.hdruk.ac.uk/infrastructure/gateway/privacy-policy/'
-                                    >
+                                        href='https://www.hdruk.ac.uk/infrastructure/gateway/privacy-policy/'>
                                         privacy policy
                                     </a>{' '}
                                     aims to give you information on how Health Data Research UK collects and processes your personal data
@@ -986,8 +964,7 @@ const YourAccountForm = props => {
                             onClick={e => {
                                 window.location.href = `/person/${props.userdata.id}`;
                             }}
-                            data-test-id='user-account-view-profile'
-                        >
+                            data-test-id='user-account-view-profile'>
                             View my profile
                         </Button>
                         <Button variant='primary' type='submit' className='addButton' data-test-id='user-account-save-changes'>
