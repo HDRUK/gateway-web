@@ -8,7 +8,7 @@ import useScript from '../../../hooks/useScript';
 import DataUseWidgetCode from './widgetCode';
 import AcceptModal from './AcceptModal';
 
-const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets@0.1.0/dist/hdruk-data-uses.js`;
+const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets/dist/hdruk-data-uses.js`;
 const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherName, accepted }) => {
     const { t } = useTranslation();
     useScript(WIDGET_MODULE);
