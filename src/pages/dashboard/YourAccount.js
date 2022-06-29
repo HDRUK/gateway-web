@@ -887,8 +887,10 @@ const YourAccountForm = props => {
                             <Form.Group>
                                 <Row className='mt-2 gray800-14'>
                                     <span className='divider-lines' />
-                                    <Col xs={1}>Feedback</Col>
-                                    <Col xs={11}>
+                                    <Col md={1} sm={2} xs={3}>
+                                        Feedback
+                                    </Col>
+                                    <Col md={11} sm={10} xs={9}>
                                         <Checkbox
                                             id='feedback'
                                             mb={6}
@@ -907,8 +909,10 @@ const YourAccountForm = props => {
                             <Form.Group>
                                 <Row className='mt-2 gray800-14'>
                                     <span className='divider-lines' />
-                                    <Col xs={1}>News</Col>
-                                    <Col xs={11}>
+                                    <Col md={1} sm={2} xs={3}>
+                                        News
+                                    </Col>
+                                    <Col md={11} sm={10} xs={9}>
                                         <Checkbox
                                             variant='primary'
                                             mb={6}
