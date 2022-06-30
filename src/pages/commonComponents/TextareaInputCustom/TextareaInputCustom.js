@@ -4,6 +4,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 class TextareaInputCustom extends React.Component {
     constructor(props) {
+        console.log('PROPS', props);
         super(props);
         this.state = {
             value: this.props.value,
@@ -47,7 +48,7 @@ class TextareaInputCustom extends React.Component {
                     required={this.props.required ? 'required' : undefined}
                     onChange={this.handleChange.bind(this)}
                     onBlur={this.props.onBlur.bind(null, this.state.value)}
-                    maxLength={this.props.length}
+                    maxLength={this.state.length}
                 />
             </>
         );
