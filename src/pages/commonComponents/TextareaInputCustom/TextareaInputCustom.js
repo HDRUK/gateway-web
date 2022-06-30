@@ -48,7 +48,7 @@ class TextareaInputCustom extends React.Component {
                     required={this.props.required ? 'required' : undefined}
                     onChange={this.handleChange.bind(this)}
                     onBlur={this.props.onBlur.bind(null, this.state.value)}
-                    maxLength={this.props.length}
+                    maxLength={this.state.length}
                 />
             </>
         );
