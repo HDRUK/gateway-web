@@ -9,8 +9,11 @@ import useScript from '../../../hooks/useScript';
 import DataUseWidgetCode from './widgetCode';
 import AcceptModal from './AcceptModal';
 import publishersService from '../../../services/publishers';
+import Card from '../../../components/Card';
+import CardBody from '../../../components/Card/CardBody';
 
 const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets@0.1.0/dist/hdruk-data-uses.js`;
+
 const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDetails }) => {
     const { t } = useTranslation();
     useScript(WIDGET_MODULE);
@@ -51,14 +54,6 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDe
     const copyToClipBoardHandler = async () => {
         navigator.clipboard.writeText(codeString);
 
-        console.log({
-            _id: team,
-            data: {
-                accepted: true,
-                acceptedByUserId: userState[0].id,
-            },
-        });
-
         await patchPublisherDataUseRequest.mutateAsync({
             _id: team,
             data: {
@@ -72,33 +67,41 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDe
 
     return (
         <LayoutContent>
-            <div className='accountHeader'>
-                <Typography variant='h5' data-testid='howToHeader'>
-                    {t('datause.widget.howToHeader')}
-                </Typography>
-                <Typography mb={3}>{t('datause.widget.howToDesc')}</Typography>
-                <Button mb={3} onClick={clickHandler} disabled={checked} data-testid='getWidgetButton' type='button'>
-                    {t('datause.widget.getWidgetButton')}
-                </Button>
-                <Typography>{t('datause.widget.tAndCHelp')}</Typography>
-                <Checkbox
-                    label='I agree to the HDR Widget Terms and Conditions of use'
-                    id='termConditions'
-                    mb={7}
-                    disabled={disabled}
-                    checked={checked}
-                />
-                <Typography variant='h6' mb={1}>
-                    {t('datause.widget.heading')}
-                </Typography>
-                <Typography color='grey600'>
-                    <i>{t('datause.widget.buttonHelp')}</i>
-                </Typography>
-                <hdruk-data-uses publisher={publisherDetails.name} />
-                <br />
-                {checked && <DataUseWidgetCode codeString={codeString} copyToClipBoard={copyToClipBoardHandler} />}
-                <AcceptModal open={state.showAcceptModal} onClose={modalCloseHandler} onAccept={acceptHandler} />
-            </div>
+            <Card mb={4}>
+                <CardBody>
+                    <Typography variant='h5'>{t('datause.widget.title')}</Typography>
+                    <Typography>{t('datause.widget.description')}</Typography>
+                </CardBody>
+            </Card>
+            <Card>
+                <CardBody>
+                    <Typography variant='h5' data-testid='howToHeader'>
+                        {t('datause.widget.howToHeader')}
+                    </Typography>
+                    <Typography mb={3}>{t('datause.widget.howToDesc')}</Typography>
+                    <Button mb={3} onClick={clickHandler} disabled={checked} data-testid='getWidgetButton' type='button'>
+                        {t('datause.widget.getWidgetButton')}
+                    </Button>
+                    <Typography>{t('datause.widget.tAndCHelp')}</Typography>
+                    <Checkbox
+                        label='I agree to the HDR Widget Terms and Conditions of use'
+                        id='termConditions'
+                        mb={7}
+                        disabled={disabled}
+                        checked={checked}
+                    />
+                    <Typography variant='h6' mb={1}>
+                        {t('datause.widget.heading')}
+                    </Typography>
+                    <Typography color='grey600'>
+                        <i>{t('datause.widget.buttonHelp')}</i>
+                    </Typography>
+                    <hdruk-data-uses publisher={publisherDetails.name} />
+                    <br />
+                    {checked && <DataUseWidgetCode codeString={codeString} copyToClipBoard={copyToClipBoardHandler} />}
+                    <AcceptModal open={state.showAcceptModal} onClose={modalCloseHandler} onAccept={acceptHandler} />
+                </CardBody>
+            </Card>
         </LayoutContent>
     );
 };
