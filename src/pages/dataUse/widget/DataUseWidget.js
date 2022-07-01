@@ -14,8 +14,12 @@ import CardBody from '../../../components/Card/CardBody';
 
 const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets@0.1.0/dist/hdruk-data-uses.js`;
 
-const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDetails }) => {
+import { apiURL, baseURL } from '../../../configs/url.config';
+
+const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets/dist/hdruk-data-uses.js`;
+const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherName, accepted }) => {
     const { t } = useTranslation();
+    const widgetAPIURL = `${apiURL}/search?search=&datausedatacustodian=${publisherName}&tab=Datauses`;
     useScript(WIDGET_MODULE);
     const [checked, setChecked] = useState(false);
     const [disabled, setDisabled] = useState(true);
@@ -24,8 +28,6 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDe
     });
 
     const accepted = publisherDetails?.dataUse?.widget?.accepted;
-
-    console.log('publisherDetails', publisherDetails);
 
     React.useEffect(() => {
         setChecked(accepted);
@@ -75,8 +77,6 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDe
 
         setDisabled(true);
     };
-
-    console.log('DISABLED', disabled);
 
     return (
         <LayoutContent>
