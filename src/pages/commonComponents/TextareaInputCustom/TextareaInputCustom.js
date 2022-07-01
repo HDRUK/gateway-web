@@ -34,7 +34,6 @@ class TextareaInputCustom extends React.Component {
                         (<span id='currentCount'>{this.state.value ? this.state.value.length : 0}</span>/{this.state.length})
                     </span>
                 </div>
-
                 <TextareaAutosize
                     type='text'
                     name={this.props.name}
@@ -47,7 +46,7 @@ class TextareaInputCustom extends React.Component {
                     required={this.props.required ? 'required' : undefined}
                     onChange={this.handleChange.bind(this)}
                     onBlur={this.props.onBlur.bind(null, this.state.value)}
-                    maxLength={this.props.length}
+                    maxLength={this.state.length}
                 />
             </>
         );
