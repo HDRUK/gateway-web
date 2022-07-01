@@ -296,6 +296,8 @@ export const theme = {
         CardHeader: {
             globals: {
                 borderColor: 'grey200',
+                fontSize: 'lg',
+                fontWeight: 600,
             },
         },
         CardFooter: {

@@ -9,10 +9,9 @@ import Card from '../Card';
 import Dimmer from '../Dimmer';
 import LayoutBox from '../LayoutBox';
 import Cta from '../Cta';
-import Icon from '../Icon';
 import { ReactComponent as CloseIcon } from '../../images/close-alt.svg';
 
-const Modal = ({ children, className, width, dismissable, onClose, open, height, ...outerProps }) => {
+const Modal = ({ children, className, width, dismissable, onClose, open, height, position, ...outerProps }) => {
     const [show, setShow] = React.useState(true);
 
     const handleClose = React.useCallback(() => {
@@ -26,17 +25,11 @@ const Modal = ({ children, className, width, dismissable, onClose, open, height,
     }, [open]);
 
     return show ? (
-        <Dimmer onClick={handleClose}>
+        <Dimmer onClick={handleClose} contentAlignment={position}>
             <Card {...outerProps} className={cx(className, 'ui-Modal')} width={width} height={height}>
                 {dismissable && (
-                    <LayoutBox display='flex' justifyContent='flex-end' position='absolute' top='6px' right='6px'>
-                        <Cta
-                            size='large'
-                            iconRight={<Icon svg={<CloseIcon />} size='lg' />}
-                            color='purple700'
-                            fill='purple700'
-                            onClick={handleClose}
-                        />
+                    <LayoutBox display='flex' justifyContent='flex-end' position='absolute' top='16px' right='16px'>
+                        <Cta iconRight={<CloseIcon />} color='purple700' fill='purple700' onClick={handleClose} />
                     </LayoutBox>
                 )}
                 {children}

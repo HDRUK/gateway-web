@@ -12,6 +12,7 @@ export const root =
             gap: ${increment * 2}${unit};
             background: none;
             border: none;
+            padding: 0;
 
             ${getComponentStylesFromTheme(
                 {

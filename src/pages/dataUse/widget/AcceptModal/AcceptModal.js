@@ -38,7 +38,7 @@ const AcceptModal = ({ open, onClose, onAccept }) => {
             </ModalHeader>
             <ModalBody>
                 <div onScroll={onScroll} ref={listInnerRef} css={styles.markdown}>
-                    <ReactMarkdown source={leaglText} />
+                    <ReactMarkdown source={leaglText} className='react-markdown' />
                 </div>
             </ModalBody>
             <ModalFooter>

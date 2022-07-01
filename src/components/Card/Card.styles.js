@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { getComponentGlobals, getSize } from '../../configs/theme';
+import { getComponentGlobals, getComponentStyle, getSize } from '../../configs/theme';
 
 export const root = () => theme => {
     return css`
@@ -7,21 +7,21 @@ export const root = () => theme => {
         width: 100%;
         position: relative;
 
-        ${getComponentGlobals('Card', theme)}
+        ${getComponentGlobals('Card', theme)};
     `;
 };
 
 export const cardHeader = () => theme =>
     css`
         border-bottom: 1px solid;
-        padding: ${getSize(6, theme)};
+        padding: ${getSize(7, theme)};
 
         ${getComponentGlobals('CardHeader', theme)}
     `;
 
 export const cardBody = () => theme =>
     css`
-        padding: ${getSize(6, theme)};
+        padding: ${getSize(7, theme)};
     `;
 
 export const cardFooter = () => theme =>

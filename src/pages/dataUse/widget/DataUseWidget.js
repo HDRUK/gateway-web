@@ -69,7 +69,7 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDe
         <LayoutContent>
             <Card mb={4}>
                 <CardBody>
-                    <Typography variant='h5'>{t('datause.widget.title')}</Typography>
+                    <Typography variant='h5'>{t('datause.widget.heading')}</Typography>
                     <Typography>{t('datause.widget.description')}</Typography>
                 </CardBody>
             </Card>
