@@ -9,6 +9,7 @@ import * as styles from './AcceptModal.styles';
 import { ModalBody, ModalFooter, ModalHeader, Modal } from '../../../../components/Modal';
 import Button from '../../../../components/Button';
 import LayoutBox from '../../../../components/LayoutBox';
+import Typography from '../../../../components/Typography';
 
 const AcceptModal = ({ open, onClose, onAccept }) => {
     const { t } = useTranslation();
@@ -31,7 +32,9 @@ const AcceptModal = ({ open, onClose, onAccept }) => {
         <Modal open={open} onClose={onClose} dismissable height='500px'>
             <ModalHeader>
                 HEALTH DATA RESEARCH UK
-                <h3>{t('datause.widget.heading')}</h3>
+                <Typography variant='h6' mb={0}>
+                    {t('datause.widget.heading')}
+                </Typography>
             </ModalHeader>
             <ModalBody>
                 <div onScroll={onScroll} ref={listInnerRef} css={styles.markdown}>
