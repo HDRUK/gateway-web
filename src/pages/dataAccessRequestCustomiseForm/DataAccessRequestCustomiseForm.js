@@ -587,7 +587,7 @@ export const DataAccessRequestCustomiseForm = props => {
                     onGuidanceChange={onGuidanceChange}
                     onQuestionsetSwitchChange={onQuestionsetSwitchChange}
                     messageOptionalQuestionSet={({ on }) => {
-                        const includedExcluded = on ? 'INCLUDED' : 'EXCLUDED';
+                        const includedExcluded = on ? 'INCLUDED' : 'NOT INCLUDED';
 
                         return (
                             <Alert variant='info' mb={3} mt={1}>

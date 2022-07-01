@@ -369,8 +369,8 @@
                 "description": "Elements of the data access request form (Five safes form) can be customised as required by <b>{{publisherName}}</b>. You may choose which questions should be turned on/off and edit the accompanying for each question. However, we recommend modifying the guidance only if necessary for your data governance processes, and please note that some questions and guidance are mandatory, for example where the form has been aligned with the National Data Guardian.<br/><br/> Please consider carefully whether additional questions are required, as we are working to standardise the data access process as much as possible. If you would still like to propose addition of a new question, please raise a ticket at <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>https://hdruk.atlassian.net/servicedesk/customer/portal/1</a>"
             },
             "saveAlert": "Every change you make is automatically saved with the latest save time shown in the top right",
-            "optionalQuestionsIncluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To exclude this section, simply click the switch above and it will not be visible to the applicants.",
-            "optionalQuestionsExcluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To include this section, simply click the switch above and it will be visible to the applicants.",
+            "optionalQuestionsIncluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To exclude this section, simply click the switch above and it will not be visible to the applicants",
+            "optionalQuestionsExcluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To include this section, simply click the switch above and customise each question as required",
             "warningAlert": "Please note that both Presubmission Guidance and DAR Application Form must be completed before they can be published.",
             "presubmissionGuidance": {
                 "title": "Presubmission guidance for data applicants",
