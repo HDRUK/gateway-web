@@ -22,13 +22,13 @@ const DataUseWidgetCode = ({ codeString, copyToClipBoard }) => {
                     <code>{codeString}</code>
                 </pre>
             </div>
-            <OverlayTrigger placement='bottom' overlay={tooltip} trigger='click'>
-                <LayoutBox display='flex' justifyContent='flex-end'>
+            <LayoutBox display='flex' justifyContent='flex-end'>
+                <OverlayTrigger placement='bottom' overlay={tooltip} trigger='click' rootClose>
                     <Button onClick={copyToClipBoard} type='button' mt={2}>
                         {t('datause.widget.copyCodeButton')}
                     </Button>
-                </LayoutBox>
-            </OverlayTrigger>
+                </OverlayTrigger>
+            </LayoutBox>
         </div>
     );
 };

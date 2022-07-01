@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import { LayoutContent } from '../../../components/Layout';
-import Typography from '../../../components/Typography';
 import Button from '../../../components/Button';
-import Checkbox from '../../../components/Checkbox';
-import useScript from '../../../hooks/useScript';
-import DataUseWidgetCode from './widgetCode';
-import AcceptModal from './AcceptModal';
-import publishersService from '../../../services/publishers';
 import Card from '../../../components/Card';
 import CardBody from '../../../components/Card/CardBody';
+import Checkbox from '../../../components/Checkbox';
+import { LayoutContent } from '../../../components/Layout';
+import Typography from '../../../components/Typography';
+import useScript from '../../../hooks/useScript';
+import publishersService from '../../../services/publishers';
+import AcceptModal from './AcceptModal';
+import DataUseWidgetCode from './widgetCode';
 
-const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets@0.1.0/dist/hdruk-data-uses.js`;
-
-import { apiURL, baseURL } from '../../../configs/url.config';
+import { apiURL } from '../../../configs/url.config';
 
 const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets/dist/hdruk-data-uses.js`;
-const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherName, accepted }) => {
+
+const DataUseWidget = ({ userState, team, publisherDetails }) => {
     const { t } = useTranslation();
-    const widgetAPIURL = `${apiURL}/search?search=&datausedatacustodian=${publisherName}&tab=Datauses`;
+    const widgetAPIURL = `${apiURL}/search?search=&datausedatacustodian=${publisherDetails.name}&tab=Datauses`;
     useScript(WIDGET_MODULE);
     const [checked, setChecked] = useState(false);
     const [disabled, setDisabled] = useState(true);
@@ -27,11 +26,15 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherNa
         showAcceptModal: false,
     });
 
+    console.log('publisherDetails', publisherDetails);
+
     const accepted = publisherDetails?.dataUse?.widget?.accepted;
 
     React.useEffect(() => {
-        setChecked(accepted);
-        setDisabled(!accepted);
+        if (accepted) {
+            setChecked(accepted);
+            setDisabled(accepted);
+        }
     }, [accepted]);
 
     const patchPublisherDataUseRequest = publishersService.usePatchPublisherDataUseWidget({
@@ -67,13 +70,15 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherNa
     const copyToClipBoardHandler = async () => {
         navigator.clipboard.writeText(codeString);
 
-        await patchPublisherDataUseRequest.mutateAsync({
-            _id: team,
-            data: {
-                accepted: true,
-                acceptedByUserId: userState[0].id,
-            },
-        });
+        if (!accepted) {
+            await patchPublisherDataUseRequest.mutateAsync({
+                _id: team,
+                data: {
+                    accepted: true,
+                    acceptedByUserId: userState[0].id,
+                },
+            });
+        }
 
         setDisabled(true);
     };
@@ -110,7 +115,7 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherNa
                     <Typography color='grey600'>
                         <i>{t('datause.widget.buttonHelp')}</i>
                     </Typography>
-                    <hdruk-data-uses publisher={publisherDetails.name} />
+                    <hdruk-data-uses publisher={publisherDetails.name} apiURL={widgetAPIURL} baseURL={window.location.origin} />
                     <br />
                     {checked && <DataUseWidgetCode codeString={codeString} copyToClipBoard={copyToClipBoardHandler} />}
                     <AcceptModal open={state.showAcceptModal} onClose={modalCloseHandler} onAccept={acceptHandler} />
