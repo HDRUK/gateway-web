@@ -81,7 +81,7 @@
         "snyk": "^1.685.0",
         "uniqid": "^5.2.0",
         "uuid": "^8.3.1",
-        "winterfell": "github:HDRUK/Winterfell#story/GAT-922",
+        "winterfell": "file:../Winterfell",
         "yup": "^0.28.1"
     },
     "scripts": {
