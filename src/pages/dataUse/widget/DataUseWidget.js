@@ -25,9 +25,11 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDe
 
     const accepted = publisherDetails?.dataUse?.widget?.accepted;
 
+    console.log('publisherDetails', publisherDetails);
+
     React.useEffect(() => {
         setChecked(accepted);
-        setDisabled(accepted);
+        setDisabled(!accepted);
     }, [accepted]);
 
     const patchPublisherDataUseRequest = publishersService.usePatchPublisherDataUseWidget({
@@ -49,6 +51,15 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDe
     const acceptHandler = () => {
         setState({ ...state, showAcceptModal: false });
         setChecked(true);
+        setDisabled(false);
+    };
+
+    const handleChangeTCs = ({ target: { checked } }) => {
+        setChecked(checked);
+
+        if (!checked) {
+            setDisabled(true);
+        }
     };
 
     const copyToClipBoardHandler = async () => {
@@ -64,6 +75,8 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDe
 
         setDisabled(true);
     };
+
+    console.log('DISABLED', disabled);
 
     return (
         <LayoutContent>
@@ -89,6 +102,7 @@ const DataUseWidget = ({ userState, team, onClickDataUseUpload, ref, publisherDe
                         mb={7}
                         disabled={disabled}
                         checked={checked}
+                        onChange={handleChangeTCs}
                     />
                     <Typography variant='h6' mb={1}>
                         {t('datause.widget.heading')}

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
@@ -27,6 +27,12 @@ const AcceptModal = ({ open, onClose, onAccept }) => {
             }
         }
     };
+
+    React.useEffect(() => {
+        if (open) {
+            setAcceptStatus(true);
+        }
+    }, [open]);
 
     return (
         <Modal open={open} onClose={onClose} dismissable height='500px'>

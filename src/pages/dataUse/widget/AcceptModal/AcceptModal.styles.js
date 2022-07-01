@@ -6,8 +6,4 @@ export const markdown = css`
     font-size: 14px;
     overflow-y: auto;
     height: 400px;
-
-    h1 {
-        font-size: 16px;
-    }
 `;
