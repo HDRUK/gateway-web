@@ -352,7 +352,7 @@ export const formSchema = {
                         '- An HTML account of the data that **provides context and scope** of the data, **limited to 3000 characters, and/or a resolvable URL** that describes the dataset.\n- Additional information can be recorded and included using media.',
                     input: {
                         type: 'textareaInputCustom',
-                        options: ['3,000'],
+                        options: [3000],
                     },
                     validations: [
                         {
@@ -507,7 +507,7 @@ export const formSchema = {
                         '- Please indicate if the dataset is representative of the patient pathway and any limitations the dataset may have with respect to pathway coverage.\n- This could include if the dataset is from a single speciality or area, a single tier of care, linked across two tiers (e.g. primary and secondary care), or an integrated care record covering the whole patient pathway.',
                     input: {
                         type: 'textareaInputCustom',
-                        options: ['3,000'],
+                        options: [3000],
                     },
                     validations: [
                         {
@@ -911,7 +911,7 @@ export const formSchema = {
                         'Please provide a brief description of the data access services that are available including:\n- environment that is currently available to researchers\n- additional consultancy and services\n- any indication of costs associated\n\nIf no environment is currently available, please indicate the current plans and timelines when and how data will be made available to researchers.\n\nNote: This value will be used as default access environment for all datasets submitted by the organisation. However, there will be the opportunity to overwrite this value for each dataset.',
                     input: {
                         type: 'textareaInputCustom',
-                        options: ['5,000'],
+                        options: [5000],
                     },
                     validations: [
                         {
@@ -1208,7 +1208,7 @@ export const formSchema = {
                         '- Data Controller means a person/entity who (either alone or jointly or in common with other persons/entities) determines the purposes for which and the way any Data Subject data, specifically personal data or are to be processed.\n- Notes: For most organisations this will be the same as the publisher of the dataset. If this is not the case, please indicate that there is a different controller.\n- If there is a different controller please complete the Data Processor attribute to indicate that the publisher is a Processor rather than the data controller.\n- In some cases, there may be multiple data controllers i.e. GP data. If this is the case please indicate the fact in a free-text field and describe the data sharing arrangement or a link to it, so that this can be understood by research users.\n- **Example**: NHS DIGITAL',
                     input: {
                         type: 'textareaInputCustom',
-                        options: ['5,000'],
+                        options: [5000],
                     },
                     validations: [
                         {
@@ -1225,7 +1225,7 @@ export const formSchema = {
                         '- A Data Processor, in relation to any Data Subject data, specifically personal data, means any person/entity (other than an employee of the data controller) who processes the data on behalf of the data controller.\n- Notes: Required to complete if the Publisher is the Data Processor rather than the data controller.\n- If the Publisher is also the Data Controller please provide “Not Applicable”.\n- **Examples**:\n- Not Applicable\n- SAIL',
                     input: {
                         type: 'textareaInputCustom',
-                        options: ['5,000'],
+                        options: [5000],
                     },
                     validations: [
                         {
