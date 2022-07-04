@@ -142,7 +142,8 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
     const handleCloseAlertMessage = () => {
         setAlertMessage('');
     };
-    return publisherDetails?.questionBank?.enabled ? (
+
+    return publisherDetails.publisherDetails?.questionBank?.enabled ? (
         <>
             {alertMessage && (
                 <LayoutContent>

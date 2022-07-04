@@ -156,7 +156,6 @@ class Account extends Component {
         showConfirmPublishModal: false,
         showHowToRequestAccessEditor: false,
         publisherDetails: {},
-        questionBankEnabled: false,
     };
 
     constructor(props) {
@@ -267,7 +266,6 @@ class Account extends Component {
                             allowWorkflow: publisherDetails.workflowEnabled,
                             allowAccessRequestManagement: publisherDetails.allowAccessRequestManagement,
                             publisherDetails: publisherDetails.publisherDetails,
-                            questionBankEnabled: publisherDetails?.questionBank?.enabled,
                         });
                     });
                 }
@@ -818,7 +816,7 @@ class Account extends Component {
                                                         data={ACCORDIAN_DAR_MENU}
                                                     />
                                                 </div>
-                                                {this.questionBankEnabled && (
+                                                {publisherDetails?.questionBank?.enabled && (
                                                     <div
                                                         className={this.getNavActiveClass([
                                                             'customisedataaccessrequests_guidance',
