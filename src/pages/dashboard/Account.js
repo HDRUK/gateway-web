@@ -816,20 +816,22 @@ class Account extends Component {
                                                         data={ACCORDIAN_DAR_MENU}
                                                     />
                                                 </div>
-                                                <div
-                                                    className={this.getNavActiveClass([
-                                                        'customisedataaccessrequests_guidance',
-                                                        'customisedataaccessrequests_applicationform',
-                                                    ])}>
-                                                    <DashboardNavAccordian
-                                                        onSelect={this.accordionClick}
-                                                        onClick={this.toggleNav}
-                                                        tabId={tabId}
-                                                        activeKey={activeAccordion}
-                                                        eventKey='1'
-                                                        data={ACCORDIAN_CUSTOM_DAR_MENU}
-                                                    />
-                                                </div>
+                                                {publisherDetails?.questionBank?.enabled && (
+                                                    <div
+                                                        className={this.getNavActiveClass([
+                                                            'customisedataaccessrequests_guidance',
+                                                            'customisedataaccessrequests_applicationform',
+                                                        ])}>
+                                                        <DashboardNavAccordian
+                                                            onSelect={this.accordionClick}
+                                                            onClick={this.toggleNav}
+                                                            tabId={tabId}
+                                                            activeKey={activeAccordion}
+                                                            eventKey='1'
+                                                            data={ACCORDIAN_CUSTOM_DAR_MENU}
+                                                        />
+                                                    </div>
+                                                )}
                                             </>
                                         )}
 
