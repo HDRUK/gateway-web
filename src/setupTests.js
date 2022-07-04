@@ -23,6 +23,16 @@ global.render = render;
 global.mount = mount;
 global.fireEvent = rtl.fireEvent;
 
+global.assertServiceMutateAsyncCalledWithDifferentArgs = async (rendered, mock, mutateArgs, spyArgs) => {
+    const { waitFor, result } = rendered;
+
+    await waitFor(() => result.current.mutateAsync);
+
+    result.current.mutateAsync(mutateArgs).then(() => {
+        expect(mock).toHaveBeenCalledWith(spyArgs);
+    });
+};
+
 global.assertServiceMutateAsyncCalled = async (rendered, mock, ...args) => {
     const { waitFor, result } = rendered;
 
