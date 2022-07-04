@@ -14,15 +14,50 @@ export const getCommonStyle = (prop, value) => {
 };
 
 export const getCommonStyles = (
-    { ml, mr, mb, mt, width, maxWidth, minWidth, display, alignItems, justifyContent, position, flexGrow },
+    {
+        m,
+        ml,
+        mr,
+        mb,
+        mt,
+        p,
+        pr,
+        pt,
+        pb,
+        pl,
+        top,
+        left,
+        bottom,
+        right,
+        width,
+        maxWidth,
+        minWidth,
+        display,
+        alignItems,
+        justifyContent,
+        flexGrow,
+        position,
+        height,
+        minHeight,
+        maxHeight,
+        overflowY,
+    },
     theme
 ) => {
     return `
+        ${getSpacingStyle('margin', m, theme)}
 		${getSpacingStyle('margin-left', ml, theme)}
 		${getSpacingStyle('margin-right', mr, theme)}
 		${getSpacingStyle('margin-bottom', mb, theme)}
 		${getSpacingStyle('margin-top', mt, theme)}
-
+        ${getSpacingStyle('padding', p, theme)}
+        ${getSpacingStyle('padding-left', pl, theme)}
+		${getSpacingStyle('padding-right', pr, theme)}
+		${getSpacingStyle('padding-bottom', pb, theme)}
+        ${getSpacingStyle('padding-top', pt, theme)}
+        ${getCommonStyle('height', height)}
+        ${getCommonStyle('max-height', maxHeight)}
+		${getCommonStyle('min-height', minHeight)}
 		${getCommonStyle('width', width)}
 		${getCommonStyle('max-width', maxWidth)}
 		${getCommonStyle('min-width', minWidth)}
@@ -30,14 +65,39 @@ export const getCommonStyles = (
 		${getCommonStyle('align-items', alignItems)}
         ${getCommonStyle('justify-content', justifyContent)}
         ${getCommonStyle('flex-grow', flexGrow)}
-		${getCommonStyle('position', position)}
+        ${getCommonStyle('position', position)}
+        ${getCommonStyle('top', top)}
+        ${getCommonStyle('bottom', bottom)}
+        ${getCommonStyle('left', left)}
+        ${getCommonStyle('right', right)}
+        ${getCommonStyle('overflow-y', overflowY)}
+        
 	`;
+};
+
+const getComponentStyleValue = (value, theme) => {
+    const isColor = Object.keys(theme.colors).includes(value);
+    const isFontSize = Object.keys(theme.font.size).includes(value);
+
+    if (isColor) {
+        return theme.colors[value];
+    }
+    if (isFontSize) {
+        return theme.font.size[value];
+    }
+
+    return value;
+};
+
+export const getComponentStyle = (prop, value, theme, important) => {
+    const propParts = prop.split(/(?=[A-Z])/);
+
+    return `${propParts.join('-')}: ${getComponentStyleValue(value, theme)}${important ? ' !important' : ''};`;
 };
 
 export const getComponentStylesFromTheme = (props, theme) => {
     const styles = Object.keys(props).map(prop => {
         const propParts = prop.replace(/([a-z])([A-Z])/g, '$1,$2').split(',');
-        const isColor = Object.keys(theme.colors).includes(props[prop]);
         const pseudoSelector = propParts[0];
 
         if (pseudoSelector === 'hover' || pseudoSelector === 'disabled' || pseudoSelector === 'focus') {
@@ -45,12 +105,12 @@ export const getComponentStylesFromTheme = (props, theme) => {
 
             return `
                 :${pseudoSelector} {
-                    ${propParts.join('-')}: ${isColor ? theme.colors[props[prop]] : props[prop]};
+                    ${propParts.join('-')}: ${getComponentStyleValue(props[prop], theme)};
                 }
             `;
         }
 
-        return `${propParts.join('-')}: ${isColor ? theme.colors[props[prop]] : props[prop]};`;
+        return `${propParts.join('-')}: ${getComponentStyleValue(props[prop], theme)};`;
     });
 
     return styles.join('\n');
@@ -62,6 +122,10 @@ export const getComponentVariant = (component, variant, theme) => {
 
 export const getComponentSize = (component, size, theme) => {
     return getComponentStylesFromTheme(theme.components[component].sizes[size], theme);
+};
+
+export const getComponentGlobals = (component, theme) => {
+    return getComponentStylesFromTheme(theme.components[component].globals, theme);
 };
 
 export const THEME_INPUT = {
@@ -223,6 +287,29 @@ export const theme = {
             },
         },
         Button: THEME_BUTTON,
+        Card: {
+            globals: {
+                boxShadow: '1px 1px 3px 0 rgb(0 0 0 / 9%)',
+                backgroundColor: 'white',
+            },
+        },
+        CardHeader: {
+            globals: {
+                borderColor: 'grey200',
+                fontSize: 'lg',
+                fontWeight: 600,
+            },
+        },
+        CardFooter: {
+            globals: {
+                borderColor: 'grey200',
+            },
+        },
+        Dimmer: {
+            globals: {
+                backgroundColor: 'rgba(0,0,0,0.15)',
+            },
+        },
         IconButton: merge({}, THEME_BUTTON, {
             sizes: {
                 small: {
