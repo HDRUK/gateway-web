@@ -10,11 +10,19 @@ import Switch from './Switch';
         {props => {
             const [checked, setChecked] = useState(false);
             return (
-                <Switch
-                    {...props}
-                    label={`Switch (${checked ? 'Checked' : 'Unchecked'})`}
-                    onChange={({ target: { checked } }) => setChecked(checked)}
-                />
+                <div>
+                    <div>
+                        <Switch
+                            {...props}
+                            label={`Switch (${checked ? 'Checked' : 'Unchecked'})`}
+                            onChange={({ target: { checked } }) => setChecked(checked)}
+                            mb={4}
+                        />
+                    </div>
+                    <div>
+                        <Switch {...props} label={`Disabled`} disabled />
+                    </div>
+                </div>
             );
         }}
     </Story>

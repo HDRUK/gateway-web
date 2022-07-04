@@ -1,44 +1,47 @@
 import { css } from '@emotion/react';
+import { getColorStyle, getComponentGlobals } from '../../configs/theme';
 
 export const root =
     ({ disabled }) =>
     theme => {
-        const {
-            components: {
-                Switch: { background, checkedBackground, disabledBackground },
-                SwitchControl: { background },
-            },
-        } = theme;
+        const { width, height, checkedBackground, background, disabledBackground, disabledColor } = getComponentGlobals('Switch', theme);
+        const { background: controlBackground } = getComponentGlobals('SwitchControl', theme);
 
         return css`
             position: relative;
             cursor: pointer;
+            min-height: ${height};
 
             input {
                 display: none;
             }
 
-            & > .ui-SwitchControl {
-                position: relative;
+            ${disabled && getColorStyle('color', disabledColor, theme)}
+
+            .ui-SwitchControl {
                 padding-left: 50px;
-                padding-top: 4px;
+                ${getColorStyle('background', controlBackground, theme)}
+
+                span {
+                    padding-top: 4px;
+                }
             }
 
             input + .ui-SwitchControl::before {
-                background: #dc3645;
-                width: 42px;
-                height: 24px;
+                ${getColorStyle('background', background, theme)};
+                width: ${width};
+                height: ${height};
                 content: '';
                 position: absolute;
                 left: 0;
                 top: 0;
-                border-radius: 21px;
+                border-radius: calc(${height} / 2);
             }
 
             input + .ui-SwitchControl::after {
                 background: #fff;
-                width: 18px;
-                height: 18px;
+                width: calc(${height} - 6px);
+                height: calc(${height} - 6px);
                 content: '';
                 position: absolute;
                 left: 0;
@@ -49,12 +52,16 @@ export const root =
             }
 
             input:checked + .ui-SwitchControl::before {
-                background: #2c8267;
+                ${getColorStyle('background', checkedBackground, theme)};
             }
 
             input:checked + .ui-SwitchControl::after {
-                transform: translateX(21px);
+                transform: translateX(calc(${width} / 2));
                 transition: background-color 0.25s ease 0s, transform 0.25s ease 0s, box-shadow 0.15s ease 0s;
+            }
+
+            input:disabled + .ui-SwitchControl::before {
+                ${getColorStyle('background', disabledBackground, theme)};
             }
         `;
     };
