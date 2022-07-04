@@ -1,16 +1,20 @@
 import { css } from '@emotion/react';
-import { getColorStyle, getComponentGlobals } from '../../configs/theme';
+import { getColorStyle, getComponentGlobals, getFontSizeStyle } from '../../configs/theme';
 
 export const root =
     ({ disabled }) =>
     theme => {
-        const { width, height, checkedBackground, background, disabledBackground, disabledColor } = getComponentGlobals('Switch', theme);
+        const { width, height, checkedBackground, background, disabledBackground, disabledColor, fontSize } = getComponentGlobals(
+            'Switch',
+            theme
+        );
         const { background: controlBackground } = getComponentGlobals('SwitchControl', theme);
 
         return css`
             position: relative;
             cursor: pointer;
             min-height: ${height};
+            ${getFontSizeStyle(fontSize, theme)}
 
             input {
                 display: none;

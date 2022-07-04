@@ -322,7 +322,7 @@ export const theme = {
             globals: {
                 height: '24px',
                 width: '42px',
-                fontSize: THEME_FONT_SIZES.md,
+                fontSize: 'md',
                 background: 'red700',
                 checkedBackground: 'green700',
                 disabledBackground: 'grey200',

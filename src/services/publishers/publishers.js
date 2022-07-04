@@ -9,6 +9,10 @@ const patchModalContent = (_id, data, options) => {
     return patchRequest(`${apiURL}/publishers/dataRequestModalContent/${_id}`, data, options);
 };
 
+const patchQuestionBank = (_id, data, options) => {
+    return patchRequest(`${apiURL}/publishers/${_id}/questionbank`, data, options);
+};
+
 const useGetPublisher = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(
         _id => {
@@ -35,9 +39,24 @@ const usePatchModalContent = (requestOptions, mutateOptions) => {
     );
 };
 
+const usePatchQuestionBank = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(
+        data => {
+            const { _id, ...outerProps } = data;
+
+            return patchQuestionBank(_id, outerProps, requestOptions);
+        },
+        {
+            mutationKey: 'publishers.patchQuestionBank',
+            ...mutateOptions,
+        }
+    );
+};
+
 export default {
     getPublisher,
     patchModalContent,
     useGetPublisher,
     usePatchModalContent,
+    usePatchQuestionBank,
 };

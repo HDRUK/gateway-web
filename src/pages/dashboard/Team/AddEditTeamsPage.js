@@ -7,6 +7,9 @@ import { useFormik } from 'formik';
 import Loading from '../../commonComponents/Loading';
 import '../Dashboard.scss';
 import { LayoutContent } from '../../../components/Layout';
+import LayoutBox from '../../../components/LayoutBox';
+import Switch from '../../../components/Switch';
+import publishersService from '../../../services/publishers';
 
 const baseURL = require('../../commonComponents/BaseURL').getURL();
 
@@ -20,10 +23,13 @@ const AddEditTeamsPage = ({
     setAlertFunction,
 }) => {
     // state
+    const [questionBank, setQuestionBank] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [combinedTeamManagers, setCombinedTeamManagers] = useState({});
 
     const memberOfSelect = ['ALLIANCE', 'HUB', 'OTHER', 'NCS'];
+
+    const questionBankRequest = publishersService.usePatchQuestionBank();
 
     const handleMemberOfSelect = key => {
         formik.setFieldValue('memberOf', key);
@@ -85,6 +91,18 @@ const AddEditTeamsPage = ({
         },
     });
 
+    const handleEnableQuestionBank = React.useCallback(
+        ({ target: { checked } }) => {
+            questionBankRequest.mutateAsync({
+                _id: editViewID,
+                enabled: checked,
+            });
+
+            setQuestionBank(checked);
+        },
+        [editViewID]
+    );
+
     // lifecycle hook
     useEffect(() => {
         getTeamManagerData();
@@ -105,10 +123,23 @@ const AddEditTeamsPage = ({
     return (
         <LayoutContent>
             <Row className='accountHeader'>
-                <Col sm={12} md={12}>
-                    <Row>
+                <LayoutBox display='flex' alignItems='flex-end' width='100%'>
+                    <LayoutBox flexGrow={1}>
                         <span className='black-20'>{editTeamsView ? 'Edit ' : 'Add '} team details</span>
-                    </Row>
+                    </LayoutBox>
+                    <LayoutBox display='flex' justifyContent='flex-end'>
+                        <Switch
+                            label={
+                                <>
+                                    Question Bank <strong>disabled</strong>
+                                </>
+                            }
+                            onChange={handleEnableQuestionBank}
+                            checked={questionBank}
+                        />
+                    </LayoutBox>
+                </LayoutBox>
+                <Col sm={12} md={12}>
                     <Row>
                         <span className='gray700-13 '>
                             {editTeamsView ? 'Edit ' : 'Add '} the details of the data custodian team you wish to add to the Gateway
