@@ -28,3 +28,8 @@ export const addCommonPropTypes = propTypes => {
         ...COMMON_PROP_TYPES,
     };
 };
+
+export const COMMON_COMPONENT_PROPS = {
+    className: PropTypes.string,
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+};

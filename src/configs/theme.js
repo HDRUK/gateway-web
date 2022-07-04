@@ -310,6 +310,17 @@ export const theme = {
                 },
             },
         },
+        Switch: {
+            globals: {
+                height: '42px',
+                width: '24px',
+                fontSize: THEME_FONT_SIZES.md,
+                background: 'red700',
+                checkedBackground: 'green700',
+                disabledBackground: 'grey100',
+                controlBackround: 'white',
+            },
+        },
         Icon: {
             sizes: THEME_FONT_SIZES,
         },
