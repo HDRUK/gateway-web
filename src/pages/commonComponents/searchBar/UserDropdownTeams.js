@@ -32,7 +32,6 @@ const CustomSubMenu = React.forwardRef(({ children, style, className, show, 'ari
 
 const UserDropdownTeams = props => {
     const [teams] = useState(props.teams);
-    console.log(teams, '++++++');
 
     const userHasRole = (teamId, role) => {
         const team = teams.filter(t => {
