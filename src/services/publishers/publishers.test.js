@@ -53,8 +53,7 @@ describe('Given the projects service', () => {
                 rendered,
                 patchSpy,
                 [{ _id: '1234', accepted: true }],
-                ['1234', { accepted: true }, { option1: true }],
-                { params: { status: 'active' } }
+                ['1234', { accepted: true }, { option1: true }]
             );
         });
     });
