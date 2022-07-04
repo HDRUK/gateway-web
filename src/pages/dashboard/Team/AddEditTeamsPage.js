@@ -21,9 +21,10 @@ const AddEditTeamsPage = ({
     editViewOrgName,
     editViewTeamManagers,
     setAlertFunction,
+    questionBankEnabled,
 }) => {
     // state
-    const [questionBank, setQuestionBank] = useState(false);
+    const [questionBank, setQuestionBank] = useState(questionBankEnabled);
     const [isLoading, setLoading] = useState(false);
     const [combinedTeamManagers, setCombinedTeamManagers] = useState({});
 
@@ -67,8 +68,16 @@ const AddEditTeamsPage = ({
             contactPoint: Yup.string().email('Please enter a valid email'),
         }),
 
-        onSubmit: values => {
+        onSubmit: async values => {
             setLoading(true);
+
+            console.log('questionBank', editViewID, questionBank);
+
+            await questionBankRequest.mutateAsync({
+                _id: editViewID,
+                enabled: questionBank,
+            });
+
             if (editTeamsView) {
                 axios.put(`${baseURL}/api/v1/teams/${editViewID}`, values).then(res => {
                     const alert = {
@@ -91,17 +100,9 @@ const AddEditTeamsPage = ({
         },
     });
 
-    const handleEnableQuestionBank = React.useCallback(
-        ({ target: { checked } }) => {
-            questionBankRequest.mutateAsync({
-                _id: editViewID,
-                enabled: checked,
-            });
-
-            setQuestionBank(checked);
-        },
-        [editViewID]
-    );
+    const handleEnableQuestionBank = React.useCallback(({ target: { checked } }) => {
+        setQuestionBank(checked);
+    }, []);
 
     // lifecycle hook
     useEffect(() => {
@@ -110,13 +111,9 @@ const AddEditTeamsPage = ({
 
     if (isLoading) {
         return (
-            <Row>
-                <Col xs={1} />
-                <Col xs={10}>
-                    <Loading data-testid='isLoading' />
-                </Col>
-                <Col xs={1} />
-            </Row>
+            <LayoutContent>
+                <Loading data-testid='isLoading' />
+            </LayoutContent>
         );
     }
 
@@ -131,7 +128,7 @@ const AddEditTeamsPage = ({
                         <Switch
                             label={
                                 <>
-                                    Question Bank <strong>disabled</strong>
+                                    Question Bank <strong>{questionBank ? 'enabled' : 'disabled'}</strong>
                                 </>
                             }
                             onChange={handleEnableQuestionBank}

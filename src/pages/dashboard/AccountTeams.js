@@ -26,6 +26,7 @@ const AccountTeams = () => {
     const [editViewMemberOf, setEditViewMemberOf] = useState('');
     const [editViewOrgName, setEditViewOrgName] = useState('');
     const [editViewTeamManagers, setEditViewTeamManagers] = useState([]);
+    const [questionBankEnabled, setQuestionBankEnabled] = useState(false);
     const [alert, setAlert] = useState();
     const [activeTabKey] = useState(tabTypes.Teams);
 
@@ -71,6 +72,7 @@ const AccountTeams = () => {
     };
 
     const editTeam = (publisher, teamManagers) => {
+        setQuestionBankEnabled(publisher.publisherDetails.questionBank?.enabled);
         setEditViewID(publisher._id);
         setEditViewMemberOf(publisher.publisherDetails.memberOf);
         setEditViewOrgName(publisher.publisherDetails.name);
@@ -188,6 +190,7 @@ const AccountTeams = () => {
                     editViewMemberOf={editViewMemberOf}
                     editViewOrgName={editViewOrgName}
                     editViewTeamManagers={editViewTeamManagers}
+                    questionBankEnabled={questionBankEnabled}
                     setAlertFunction={setAlertFunction}
                 />
             )}
