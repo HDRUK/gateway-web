@@ -156,6 +156,7 @@ class Account extends Component {
         showConfirmPublishModal: false,
         showHowToRequestAccessEditor: false,
         publisherDetails: {},
+        questionBankEnabled: false,
     };
 
     constructor(props) {
@@ -266,6 +267,7 @@ class Account extends Component {
                             allowWorkflow: publisherDetails.workflowEnabled,
                             allowAccessRequestManagement: publisherDetails.allowAccessRequestManagement,
                             publisherDetails: publisherDetails.publisherDetails,
+                            questionBankEnabled: publisherDetails?.questionBank?.enabled,
                         });
                     });
                 }
@@ -816,20 +818,22 @@ class Account extends Component {
                                                         data={ACCORDIAN_DAR_MENU}
                                                     />
                                                 </div>
-                                                <div
-                                                    className={this.getNavActiveClass([
-                                                        'customisedataaccessrequests_guidance',
-                                                        'customisedataaccessrequests_applicationform',
-                                                    ])}>
-                                                    <DashboardNavAccordian
-                                                        onSelect={this.accordionClick}
-                                                        onClick={this.toggleNav}
-                                                        tabId={tabId}
-                                                        activeKey={activeAccordion}
-                                                        eventKey='1'
-                                                        data={ACCORDIAN_CUSTOM_DAR_MENU}
-                                                    />
-                                                </div>
+                                                {this.questionBankEnabled && (
+                                                    <div
+                                                        className={this.getNavActiveClass([
+                                                            'customisedataaccessrequests_guidance',
+                                                            'customisedataaccessrequests_applicationform',
+                                                        ])}>
+                                                        <DashboardNavAccordian
+                                                            onSelect={this.accordionClick}
+                                                            onClick={this.toggleNav}
+                                                            tabId={tabId}
+                                                            activeKey={activeAccordion}
+                                                            eventKey='1'
+                                                            data={ACCORDIAN_CUSTOM_DAR_MENU}
+                                                        />
+                                                    </div>
+                                                )}
                                             </>
                                         )}
 
