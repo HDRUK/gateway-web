@@ -16,8 +16,6 @@ import StatusBadge from './Components/StatusBadge';
 import './CustomiseDAR.scss';
 import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
 
-
-
 const baseURL = require('../../commonComponents/BaseURL').getURL();
 
 const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShowConfirmPublishModal, activeTab, onSelectTab, alert }) => {
@@ -134,7 +132,7 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
 
         onSelectTab(tabId);
 
-        handleAnalytics(`Clicked on ${tabId}`, tabId)
+        handleAnalytics(`Clicked on ${tabId}`, tabId);
     };
 
     const handleCloseGuidanceMessage = () => {
@@ -145,7 +143,7 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
         setAlertMessage('');
     };
 
-    return (
+    return publisherDetails.publisherDetails?.questionBank?.enabled ? (
         <>
             {alertMessage && (
                 <LayoutContent>
@@ -161,8 +159,7 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
                         {closeGuidanceMessage}
                     </Alert>
                 </LayoutContent>
-            )}  
-
+            )}
 
             {(howToRequestAccessStatus === sectionStatuses.PENDING || yourAppFormStatus === sectionStatuses.PENDING) && (
                 <LayoutContent>
@@ -290,6 +287,10 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
                 />
             )}
         </>
+    ) : (
+        <LayoutContent>
+            <div className='accountHeader'>Customise Data Access Request not enabled</div>
+        </LayoutContent>
     );
 };
 
