@@ -9,6 +9,10 @@ export const getSpacingStyle = (prop, value, theme) => {
     return typeof value === 'number' ? `${prop}: ${getSize(value, theme)};` : '';
 };
 
+export const getColorStyle = (prop, value, theme) => {
+    return `${prop}: ${theme.colors[value]};`;
+};
+
 export const getCommonStyle = (prop, value) => {
     return !isNil(value) ? `${prop}: ${value};` : '';
 };
@@ -81,6 +85,10 @@ export const getComponentSize = (component, size, theme) => {
 
 export const getFontSizeStyle = (fontSize, theme) => {
     return getComponentStylesFromTheme({ fontSize }, theme);
+};
+
+export const getComponentGlobals = (component, theme) => {
+    return theme.components[component].globals;
 };
 
 export const THEME_INPUT = {
@@ -308,6 +316,22 @@ export const theme = {
                     hoverBackground: 'grey200',
                     disabledBackground: 'grey100',
                 },
+            },
+        },
+        Switch: {
+            globals: {
+                height: '24px',
+                width: '42px',
+                fontSize: 'md',
+                background: 'red700',
+                checkedBackground: 'green700',
+                disabledBackground: 'grey200',
+                disabledColor: 'grey600',
+            },
+        },
+        SwitchControl: {
+            globals: {
+                background: 'white',
             },
         },
         Icon: {
