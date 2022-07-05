@@ -7,6 +7,7 @@ import { Col, Container, Modal, Row } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router-dom';
+import { NotificationManager } from 'react-notifications';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
 import Button from '../../components/Button';
@@ -187,10 +188,17 @@ export const DataAccessRequestCustomiseForm = props => {
         setQuestionStatus(newQuestionStatus);
         setQuestionSetStatus(newQuestionSetStatus);
 
-        await patchSchemaRequest.mutateAsync({
-            id: schemaId,
-            ...params,
-        });
+        await patchSchemaRequest.mutateAsync(
+            {
+                id: schemaId,
+                ...params,
+            },
+            {
+                onError: ({ title, message }) => {
+                    NotificationManager.error(message, title, 10000);
+                },
+            }
+        );
 
         setLastSaved(saveTime());
         handleAnalytics(`Question Set ${questionSetId} switched`, checked ? 'On' : 'Off');
@@ -236,10 +244,17 @@ export const DataAccessRequestCustomiseForm = props => {
             countOfChanges: numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges,
         };
 
-        patchSchemaRequest.mutateAsync({
-            id: schemaId,
-            ...params,
-        });
+        patchSchemaRequest.mutateAsync(
+            {
+                id: schemaId,
+                ...params,
+            },
+            {
+                onError: ({ title, message }) => {
+                    NotificationManager.error(message, title, 10000);
+                },
+            }
+        );
 
         setLastSaved(saveTime());
         handleAnalytics(`Question ${questionId} switched`, value ? 'On' : 'Off');

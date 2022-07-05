@@ -131,7 +131,7 @@ const usePatchSchema = (requestOptions, mutateOptions) => {
             return patchSchema(id, body, requestOptions);
         },
         {
-            mutationKey: 'dar.patchDataAccessRequest',
+            mutationKey: 'dar.patchDataAccessSchemaRequest',
             ...mutateOptions,
         }
     );
