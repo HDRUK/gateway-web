@@ -7,7 +7,7 @@ import iconTick from '../../../images/tick.svg';
 import iconRejected from '../../../images/Application_rejected.svg';
 
 const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }) => {
-    const questionBankEnabled = publisher.publisherDetails.questionBank?.enabled;
+    const questionBankEnabled = publisher?.publisherDetails?.questionBank?.enabled;
     const questionBankStatusIcon = questionBankEnabled ? iconTick : iconRejected;
 
     let teamManagerNames = '';
