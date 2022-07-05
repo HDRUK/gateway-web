@@ -7,7 +7,7 @@ import iconTick from '../../../images/tick.svg';
 import iconRejected from '../../../images/Application_rejected.svg';
 
 const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }) => {
-    const questionBankStatusIcon = publisher?.questionBank?.enabled ? iconTick : iconRejected;
+    const questionBankStatusIcon = publisher?.publisherDetails?.questionBank?.enabled ? iconTick : iconRejected;
     let teamManagerNames = '';
     return (
         <Row className='entryBox gray800-14'>
