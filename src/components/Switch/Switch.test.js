@@ -12,7 +12,7 @@ const props = {
     onChange: jest.fn(),
 };
 
-describe('Given the Checkbox component', () => {
+describe('Given the Switch component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
             wrapper = render(<Switch {...props} />, {
