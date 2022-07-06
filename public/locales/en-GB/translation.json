@@ -15,6 +15,14 @@
             }
         },
         "errors": {
+            "dar": {
+                "patchDataAccessSchemaRequest": {
+                    "500": {
+                        "title": "Auto save failed",
+                        "message": "There has been an error updating data access request schema"
+                    }
+                }
+            },
             "dur": {
                 "getDataUseRegistersByTeam": {
                     "404": {
