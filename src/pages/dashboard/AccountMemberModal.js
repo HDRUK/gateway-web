@@ -1,14 +1,14 @@
 /* eslint-disable prefer-destructuring */
-import React, { Fragment, useState, useEffect } from 'react';
+import { FieldArray, Formik, useFormik } from 'formik';
 import PropTypes from 'prop-types';
-import { Col, Modal, Row, Dropdown, Form } from 'react-bootstrap';
-import { Formik, useFormik, FieldArray } from 'formik';
-import * as Yup from 'yup';
+import React, { useEffect, useState } from 'react';
+import { Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
+import * as Yup from 'yup';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
-import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
 import serviceAuth from '../../services/auth/auth';
 import serviceTeam from '../../services/teams';
+import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
 import './AccountMemberModal.scss';
 
 const AccountMemberModal = ({ open, close, teamId, onMemberAdded }) => {

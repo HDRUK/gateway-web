@@ -1,21 +1,21 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-let autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
+const autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
 
-let userTypes = {
+const userTypes = {
     CUSTODIAN: 'custodian',
     APPLICANT: 'applicant',
 };
 
-let amendmentStatuses = {
+const amendmentStatuses = {
     AWAITINGUPDATES: { text: 'Awaiting updates', icon: 'cycle' },
     UPDATESSUBMITTED: { text: 'Updates submitted', icon: 'check' },
     UPDATESREQUESTED: { text: 'Updates requested', icon: 'flag' },
     UPDATESRECEIVED: { text: 'Updates received', icon: 'flag' },
 };
 
-let staticContent = {
+const staticContent = {
     aboutPageNav: {
         pageId: 'about',
         active: true,
@@ -28,27 +28,42 @@ let staticContent = {
         index: 0,
         pageId: 'about',
     },
-    filesNav: {
+    filesPageNav: {
         pageId: 'files',
-        active: false,
+        active: true,
         title: 'Files',
         description:
-            'Applicant should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.',
+            'Preparation is key to a successful data access request. You need to be able to demonstrate how you will ensure safe use of patient data and the potential for public benefit. The steps below are intended to help you get off to a good start.',
     },
     filesPanel: {
         panelId: 'files',
         index: 100,
         pageId: 'files',
     },
+    additionalFilesPanel: {
+        panelId: 'additionalinformationfiles-files',
+        index: 24,
+        pageId: 'additionalinformationfiles',
+    },
+    additionalFilesQuestionPanel: {
+        questionPanelHeaderText: 'File upload',
+        panelHeader:
+            'Applicants should add any files requested here, as well as any additional files that could support the application. A description should be included to clarify the purpose of each document.',
+        navHeader: 'Files',
+        panelId: 'additionalinformationfiles-files',
+        questionSets: [],
+        pageId: 'additionalinformationfiles',
+        panelGuidance: 'Please upload all additional documentation as requested in the DAR form.',
+    },
 };
 
-let darCommentTitle = {
+const darCommentTitle = {
     approved: 'Conditions',
     'approved with conditions': 'Conditions',
     rejected: 'Reason for rejection',
 };
 
-let darStatus = {
+const darStatus = {
     all: 'all',
     inProgress: 'inProgress',
     submitted: 'submitted',
@@ -58,7 +73,7 @@ let darStatus = {
     rejected: 'rejected',
 };
 
-let darApplicationTypes = {
+const darApplicationTypes = {
     inProgress: 'inProgress',
     initial: 'initial',
     resubmission: 'resubmission',
@@ -68,7 +83,7 @@ let darApplicationTypes = {
     update: 'update',
 };
 
-let darSLAText = {
+const darSLAText = {
     inProgress: 'Pre-submission',
     submitted: 'Submitted',
     inReview: 'In review',
@@ -77,13 +92,13 @@ let darSLAText = {
     rejected: 'Rejected',
 };
 
-let darAmendmentSLAText = {
+const darAmendmentSLAText = {
     inProgress: 'Pre-submission amendment',
     submitted: 'Amendment submitted',
     inReview: 'Amendment in review',
 };
 
-let darStatusColours = {
+const darStatusColours = {
     inProgress: 'gray',
     submitted: 'indigo',
     inReview: 'amber',
@@ -96,7 +111,7 @@ let darStatusColours = {
  * [applicationState acts like enum for generating Counts DAR dashboard]
  *
  */
-let darStatusCounts = {
+const darStatusCounts = {
     all: 'allCount',
     inProgress: 'preSubmissionCount',
     submitted: 'submittedCount',
@@ -106,12 +121,13 @@ let darStatusCounts = {
     rejected: 'rejectedCount',
 };
 
-let darStaticPageIds = {
+const darStaticPageIds = {
     ABOUT: 'about',
     FILES: 'files',
+    ADDITIONALFILES: 'additionalinformationfiles',
 };
 
-let actionKeys = {
+const actionKeys = {
     GUIDANCE: 'guidance',
     REQUESTAMENDMENT: 'requestAmendment',
     CANCELREQUEST: 'cancelRequest',
@@ -175,9 +191,9 @@ const dataUseRegisterStatus = {
  * @param   {[data]}}  [DAR Objects]
  * @return  {{counts}} [return counts]
  */
-let generateStatusCounts = (data = []) => {
+const generateStatusCounts = (data = []) => {
     // 1. declare obj structure even if no data
-    let counts = {
+    const counts = {
         allCount: 0,
         approvedCount: 0,
         rejectedCount: 0,
@@ -189,9 +205,9 @@ let generateStatusCounts = (data = []) => {
 
     if (!_.isEmpty(data)) {
         // 2. reduce over data from API to generate structure as above counts
-        let totalCounts = [...data].reduce((obj, item, i) => {
+        const totalCounts = [...data].reduce((obj, item, i) => {
             // 3. take out applicationStatus ie, inProgress, submitted etc..
-            let { applicationStatus } = item;
+            const { applicationStatus } = item;
             // 4. if the applicationStatus not in our obj, set to 1 with key
             if (!obj[darStatusCounts[applicationStatus]]) {
                 obj[darStatusCounts[applicationStatus]] = 1;
@@ -199,7 +215,7 @@ let generateStatusCounts = (data = []) => {
                 // 5. if found increment the count
                 obj[darStatusCounts[applicationStatus]] = ++obj[darStatusCounts[applicationStatus]];
             }
-            obj['allCount'] = ++i;
+            obj.allCount = ++i;
             // 6. return obj as count format
             return obj;
         }, {});
@@ -209,7 +225,7 @@ let generateStatusCounts = (data = []) => {
     return counts;
 };
 
-let configActionModal = (type = '') => {
+const configActionModal = (type = '') => {
     let config = {};
     if (!_.isEmpty(type)) {
         switch (type.toUpperCase()) {
@@ -280,14 +296,15 @@ let configActionModal = (type = '') => {
     return config;
 };
 
-let autoComplete = (questionId, uniqueId, questionAnswers) => {
+const autoComplete = (questionId, uniqueId, questionAnswers) => {
     let questionList = {};
-    let lookupArr = [...autoCompleteLookUps[`${questionId}`]];
-    let activeQuestionId = typeof uniqueId !== 'undefined' ? `${questionId}_${uniqueId}` : questionId;
-    let answerObj = questionAnswers[`${activeQuestionId}`];
+    const lookupArr = [...autoCompleteLookUps[`${questionId}`]];
+    const activeQuestionId = typeof uniqueId !== 'undefined' ? `${questionId}_${uniqueId}` : questionId;
+    const answerObj = questionAnswers[`${activeQuestionId}`];
 
     lookupArr.map(val => {
-        let key, value;
+        let key;
+        let value;
         value = answerObj[val] || '';
         key = val;
         if (typeof uniqueId !== 'undefined') key = `${key}_${uniqueId}`;
@@ -301,7 +318,7 @@ let autoComplete = (questionId, uniqueId, questionAnswers) => {
     return { ...questionAnswers, ...questionList };
 };
 
-let findQuestion = (questionId = '', questionsArr = []) => {
+const findQuestion = (questionId = '', questionsArr = []) => {
     // 1. Define child object to allow recursive calls
     let child;
     // 2. Exit from function if no children are present
@@ -327,29 +344,87 @@ let findQuestion = (questionId = '', questionsArr = []) => {
     }
 };
 
-let findQuestionSet = (questionSetId = '', schema = {}) => {
+const changeStatusByQuestionSetId = (value, questionSetId, schema) => {
+    const questionSet = findQuestionSet(questionSetId, schema);
+    const questionStatus = {};
+
+    questionSet.questions.forEach(question => {
+        questionStatus[question.questionId] = value;
+    });
+
+    return questionStatus;
+};
+
+const findNextPanel = (currentPanelId, questionSetStatus = {}, { formPanels }) => {
+    const filteredPanels = formPanels.filter(p => {
+        return questionSetStatus[p.panelId] !== 0;
+    });
+
+    const activePanelIndex = filteredPanels.findIndex(p => p.panelId === currentPanelId);
+
+    if (activePanelIndex + 1 < filteredPanels.length) {
+        return filteredPanels[activePanelIndex + 1];
+    }
+
+    return null;
+};
+
+const findQuestionSetByQuestionId = (questionId = '', schema = {}) => {
+    if (!_.isEmpty(questionId) && !_.isEmpty(schema)) {
+        const { questionSets } = schema;
+
+        return questionSets.find(questionSet => {
+            return questionSet.questions.find(question => question.questionId === questionId);
+        });
+    }
+};
+
+const findQuestionSet = (questionSetId = '', schema = {}) => {
     if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
-        let { questionSets } = schema;
-        return [...questionSets].find(q => q.questionSetId === questionSetId);
+        const { questionSets } = schema;
+        return questionSets.find(q => q.questionSetId === questionSetId);
     }
     return {};
+};
+
+const findQuestionSetsByPageId = (pageId = '', schema = {}) => {
+    if (!_.isEmpty(pageId) && !_.isEmpty(schema)) {
+        const { formPanels } = schema;
+
+        return [...formPanels].filter(q => q.pageId === pageId);
+    }
+    return {};
+};
+
+const findPageByQuestionSet = (questionSetId = '', schema = {}) => {
+    if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
+        const { formPanels, pages } = schema;
+
+        const pageId = formPanels.find(q => q.panelId === questionSetId)?.pageId;
+        return pages.find(q => q.pageId === pageId);
+    }
+    return {};
+};
+
+const findPageIdByQuestionSet = (questionSetId = '', schema = {}) => {
+    return findPageByQuestionSet(questionSetId, schema)?.pageId;
 };
 
 /**
  * [TotalQuestionAnswered]
  * @desc - Sets total questions answered for each section
  */
-let totalQuestionsAnswered = (component, panelId = '', questionAnswers = {}, jsonSchema = {}) => {
+const totalQuestionsAnswered = (component, panelId = '', questionAnswers = {}, jsonSchema = {}) => {
     let totalQuestions = 0;
     let totalAnsweredQuestions = 0;
 
     if (_.isEmpty(panelId)) {
         const formPanels = [...component.state.jsonSchema.formPanels];
-        let applicationQuestionAnswers = formPanels.reduce(
+        const applicationQuestionAnswers = formPanels.reduce(
             (acc, val) => {
-                let countObj = totalQuestionsAnswered(component, val.panelId);
-                acc[0] = acc[0] + countObj.totalAnsweredQuestions;
-                acc[1] = acc[1] + countObj.totalQuestions;
+                const countObj = totalQuestionsAnswered(component, val.panelId);
+                acc[0] += countObj.totalAnsweredQuestions;
+                acc[1] += countObj.totalQuestions;
                 return acc;
             },
             [0, 0]
@@ -358,44 +433,80 @@ let totalQuestionsAnswered = (component, panelId = '', questionAnswers = {}, jso
             totalAnsweredQuestions: applicationQuestionAnswers[0],
             totalQuestions: applicationQuestionAnswers[1],
         };
-    } else {
-        if (_.isEmpty(questionAnswers)) ({ questionAnswers } = { ...component.state });
-        // 1. deconstruct schema
-        if (_.isEmpty(jsonSchema)) {
-            ({ jsonSchema } = { ...component.state });
-        }
-        let { questionPanels = [], questionSets = [] } = jsonSchema;
-        // 2. omits out blank null, undefined, and [] values from this.state.answers
-        questionAnswers = _.pickBy({ ...questionAnswers }, v => v !== null && v !== undefined && v.length !== 0);
-        // 3. find the relevant questionSetIds within the panel
-        const qPanel = questionPanels.find(qp => qp.panelId === panelId);
-        if (!_.isNil(qPanel)) {
-            const { questionSets: panelQuestionSets = [] } = qPanel;
-            const qsIds = panelQuestionSets.map(qs => qs.questionSetId);
-            // 4. find the relevant questionSets
-            const qsets = questionSets.filter(qs => qsIds.includes(qs.questionSetId));
-            // 5. ensure at least one was found
-            if (!_.isEmpty(qsets)) {
-                // 6. iterate through each question set to calculate answered and unanswered
-                for (const questionSet of qsets) {
-                    // 7. get questions
-                    const { questions = [] } = questionSet;
-                    // 8. filter out buttons added as questions
-                    const filteredQuestions = filterInvalidQuestions(questions);
-                    // 9. Iterate through each top-level question
-                    for (const question of filteredQuestions) {
-                        // 10. Recursively gather question status from each question path
-                        const conditionalQuestions = getRecursiveQuestionCounts(question, questionAnswers);
-                        totalQuestions += conditionalQuestions.questionCount;
-                        totalAnsweredQuestions += conditionalQuestions.answerCount;
-                    }
-                }
-                // 11. Return question totals
-                return { totalAnsweredQuestions, totalQuestions };
-            }
-        }
-        return { totalAnsweredQuestions: 0, totalQuestions: 0 };
     }
+    if (_.isEmpty(questionAnswers)) ({ questionAnswers } = { ...component.state });
+    // 1. deconstruct schema
+    if (_.isEmpty(jsonSchema)) {
+        ({ jsonSchema } = { ...component.state });
+    }
+    const { questionPanels = [], questionSets = [] } = jsonSchema;
+    // 2. omits out blank null, undefined, and [] values from this.state.answers
+    questionAnswers = _.pickBy({ ...questionAnswers }, v => v !== null && v !== undefined && v.length !== 0);
+    // 3. find the relevant questionSetIds within the panel
+    const qPanel = questionPanels.find(qp => qp.panelId === panelId);
+    if (!_.isNil(qPanel)) {
+        const { questionSets: panelQuestionSets = [] } = qPanel;
+        const qsIds = panelQuestionSets.map(qs => qs.questionSetId);
+        // 4. find the relevant questionSets
+        const qsets = questionSets.filter(qs => qsIds.includes(qs.questionSetId));
+        // 5. ensure at least one was found
+        if (!_.isEmpty(qsets)) {
+            // 6. iterate through each question set to calculate answered and unanswered
+            for (const questionSet of qsets) {
+                // 7. get questions
+                const { questions = [] } = questionSet;
+                // 8. filter out buttons added as questions
+                const filteredQuestions = filterInvalidQuestions(questions);
+                // 9. Iterate through each top-level question
+                for (const question of filteredQuestions) {
+                    // 10. Recursively gather question status from each question path
+                    const conditionalQuestions = getRecursiveQuestionCounts(question, questionAnswers);
+                    totalQuestions += conditionalQuestions.questionCount;
+                    totalAnsweredQuestions += conditionalQuestions.answerCount;
+                }
+            }
+            // 11. Return question totals
+            return { totalAnsweredQuestions, totalQuestions };
+        }
+    }
+    return { totalAnsweredQuestions: 0, totalQuestions: 0 };
+};
+
+/**
+ * InjectStaticContent
+ * @desc Function to inject static 'about' and 'files' pages and panels into schema
+ * @returns {jsonSchmea} object
+ */
+const injectReadonlyStaticContent = (jsonSchema = {}, activePanelId) => {
+    const { pages, formPanels, questionPanels } = { ...jsonSchema };
+
+    let formPanel = {};
+    let currentPageIdx = 0;
+
+    const additionalfilesNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
+
+    if (!additionalfilesNavElementsExist) {
+        pages.push(staticContent.filesPageNav);
+        formPanels.push(staticContent.filesPanel);
+    }
+
+    if (additionalfilesNavElementsExist) {
+        formPanels.push(staticContent.additionalFilesPanel);
+        questionPanels.push(staticContent.additionalFilesQuestionPanel);
+    }
+
+    if (!_.isEmpty(activePanelId)) {
+        formPanel = formPanels.find(p => p.panelId === activePanelId);
+        currentPageIdx = pages.findIndex(page => page.pageId === formPanel.pageId);
+    }
+
+    pages.forEach(element => {
+        element.active = false;
+    });
+
+    pages[currentPageIdx].active = true;
+
+    return { ...jsonSchema, pages, formPanels, questionPanels };
 };
 
 let filterInvalidQuestions = questions => {
@@ -407,8 +518,8 @@ let filterInvalidQuestions = questions => {
 };
 
 let getRecursiveQuestionCounts = (question, questionAnswers) => {
-    let questionCount = 0,
-        answerCount = 0;
+    let questionCount = 0;
+    let answerCount = 0;
     // 1. Count parent question
     questionCount++;
     // 2. Count parent question if it has been answered
@@ -472,9 +583,9 @@ let getRecursiveQuestionCounts = (question, questionAnswers) => {
  * [saveTime]
  * @desc Sets the lastSaved state on a field
  */
-let saveTime = () => {
-    let currentTime = moment().format('DD MMM YYYY HH:mm');
-    let lastSaved = `Last saved ${currentTime}`;
+const saveTime = () => {
+    const currentTime = moment().format('DD MMM YYYY HH:mm');
+    const lastSaved = `Last saved ${currentTime}`;
     return lastSaved;
 };
 
@@ -482,12 +593,12 @@ let saveTime = () => {
  * [getSavedAgo]
  * @desc Returns the saved time for DAR
  */
-let getSavedAgo = lastSaved => {
+const getSavedAgo = lastSaved => {
     if (!_.isEmpty(lastSaved)) return lastSaved;
-    else return ``;
+    return ``;
 };
 
-let getActiveQuestion = (questionsArr, questionId) => {
+const getActiveQuestion = (questionsArr, questionId) => {
     let child;
 
     if (!questionsArr) return;
@@ -511,7 +622,7 @@ let getActiveQuestion = (questionsArr, questionId) => {
     }
 };
 
-let calcAccordionClasses = (active, allowedNavigation) => {
+const calcAccordionClasses = (active, allowedNavigation) => {
     let classes = ['black-16'];
     if (!allowedNavigation) classes = [...classes, 'disabled'];
 
@@ -520,7 +631,7 @@ let calcAccordionClasses = (active, allowedNavigation) => {
     return classes;
 };
 
-let createTopicContext = (datasets = []) => {
+const createTopicContext = (datasets = []) => {
     if (_.isEmpty(datasets)) {
         return {
             datasets: [],
@@ -530,15 +641,15 @@ let createTopicContext = (datasets = []) => {
             allowNewMessage: false,
         };
     }
-    let dataRequestModalContent = {},
-        allowsMessaging = false,
-        requiresModal = false,
-        allowNewMessage = false;
-    let { publisherObj = {}, contactPoint = '', publisher = '' } = datasets[0];
+    let dataRequestModalContent = {};
+    let allowsMessaging = false;
+    let requiresModal = false;
+    let allowNewMessage = false;
+    const { publisherObj = {}, contactPoint = '', publisher = '' } = datasets[0];
     if (!_.isEmpty(publisherObj)) {
         dataRequestModalContent = publisherObj.dataRequestModalContent;
         allowsMessaging = publisherObj.allowsMessaging;
-        requiresModal = !_.isEmpty(publisherObj.dataRequestModalContent) ? true : false;
+        requiresModal = !_.isEmpty(publisherObj.dataRequestModalContent);
         allowNewMessage = publisherObj.allowsMessaging;
     }
     return {
@@ -548,7 +659,7 @@ let createTopicContext = (datasets = []) => {
         dataRequestModalContent,
         datasets:
             datasets.map(dataset => {
-                let { datasetId } = dataset;
+                const { datasetId } = dataset;
                 return { datasetId, publisher };
             }) || [],
         tags: datasets.map(dataset => dataset.name) || [],
@@ -559,16 +670,16 @@ let createTopicContext = (datasets = []) => {
     };
 };
 
-let createModalContext = (datasets = []) => {
-    let dataRequestModalContent = {},
-        allowsMessaging = false,
-        requiresModal = false,
-        allowNewMessage = false;
-    let { publisherObj = {}, contactPoint = '', publisher = '' } = datasets[0];
+const createModalContext = (datasets = []) => {
+    let dataRequestModalContent = {};
+    let allowsMessaging = false;
+    let requiresModal = false;
+    let allowNewMessage = false;
+    const { publisherObj = {}, contactPoint = '', publisher = '' } = datasets[0];
     if (!_.isEmpty(publisherObj)) {
         dataRequestModalContent = publisherObj.dataRequestModalContent;
         allowsMessaging = publisherObj.allowsMessaging;
-        requiresModal = !_.isEmpty(publisherObj.dataRequestModalContent) ? true : false;
+        requiresModal = !_.isEmpty(publisherObj.dataRequestModalContent);
         allowNewMessage = publisherObj.allowsMessaging;
     }
     return {
@@ -588,12 +699,12 @@ let createModalContext = (datasets = []) => {
  * @param   {[object]}  schema  [schema]
  * @return  {[object]}          [return schema]
  */
-let removeStaticPages = (schema = {}) => {
-    let { pages, formPanels } = { ...schema };
+const removeStaticPages = (schema = {}) => {
+    const { pages, formPanels } = { ...schema };
     // filter pageId within pages
-    let originalPages = _.uniqBy(pages, 'pageId');
+    const originalPages = _.uniqBy(pages, 'pageId');
     // unique panelId within form panels
-    let originalFormPanels = _.uniqBy(formPanels, 'panelId');
+    const originalFormPanels = _.uniqBy(formPanels, 'panelId');
     // return updated schema
     return {
         ...schema,
@@ -602,34 +713,56 @@ let removeStaticPages = (schema = {}) => {
     };
 };
 
+const isQuestionLocked = questionStatus => {
+    return questionStatus === 2;
+};
+
+const isQuestionOn = questionStatus => {
+    return questionStatus === 1;
+};
+
+const isQuestionOff = questionStatus => {
+    return questionStatus === 0;
+};
+
 export default {
-    findQuestionSet: findQuestionSet,
-    findQuestion: findQuestion,
-    autoComplete: autoComplete,
-    totalQuestionsAnswered: totalQuestionsAnswered,
-    saveTime: saveTime,
-    getSavedAgo: getSavedAgo,
-    getActiveQuestion: getActiveQuestion,
-    calcAccordionClasses: calcAccordionClasses,
-    createTopicContext: createTopicContext,
-    createModalContext: createModalContext,
-    configActionModal: configActionModal,
-    generateStatusCounts: generateStatusCounts,
-    staticContent: staticContent,
-    darStatus: darStatus,
-    darStatusColours: darStatusColours,
-    darSLAText: darSLAText,
-    darAmendmentSLAText: darAmendmentSLAText,
-    darCommentTitle: darCommentTitle,
-    darStaticPageIds: darStaticPageIds,
-    darApplicationTypes: darApplicationTypes,
-    actionKeys: actionKeys,
-    amendmentModes: amendmentModes,
-    flagIcons: flagIcons,
-    flagPanelIcons: flagPanelIcons,
-    userTypes: userTypes,
-    amendmentStatuses: amendmentStatuses,
-    removeStaticPages: removeStaticPages,
-    activityLogEvents: activityLogEvents,
-    dataUseRegisterStatus: dataUseRegisterStatus,
+    findPageByQuestionSet,
+    findQuestionSet,
+    findQuestion,
+    autoComplete,
+    totalQuestionsAnswered,
+    saveTime,
+    getSavedAgo,
+    getActiveQuestion,
+    calcAccordionClasses,
+    createTopicContext,
+    createModalContext,
+    configActionModal,
+    generateStatusCounts,
+    staticContent,
+    darStatus,
+    darStatusColours,
+    darSLAText,
+    darAmendmentSLAText,
+    darCommentTitle,
+    darStaticPageIds,
+    darApplicationTypes,
+    actionKeys,
+    amendmentModes,
+    flagIcons,
+    flagPanelIcons,
+    userTypes,
+    amendmentStatuses,
+    removeStaticPages,
+    activityLogEvents,
+    dataUseRegisterStatus,
+    isQuestionLocked,
+    isQuestionOn,
+    isQuestionOff,
+    injectReadonlyStaticContent,
+    findPageIdByQuestionSet,
+    findQuestionSetsByPageId,
+    changeStatusByQuestionSetId,
+    findQuestionSetByQuestionId,
+    findNextPanel,
 };

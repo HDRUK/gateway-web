@@ -169,3 +169,5 @@ export const filterBranches = (filters, iteratee, children = 'children') => {
 
     return filteredNodes;
 };
+
+export const stripHtml = text => text.replace(/<\/?.+?>/gi, '');
