@@ -9,6 +9,7 @@ export const mixins = {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        line-height: 1em;
 
         .ui-Icon,
         svg {

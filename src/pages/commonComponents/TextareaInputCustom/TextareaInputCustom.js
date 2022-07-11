@@ -4,6 +4,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 class TextareaInputCustom extends React.Component {
     constructor(props) {
+        console.log('PROPS', props);
         super(props);
         this.state = {
             value: this.props.value,
@@ -34,7 +35,6 @@ class TextareaInputCustom extends React.Component {
                         (<span id='currentCount'>{this.state.value ? this.state.value.length : 0}</span>/{this.state.length})
                     </span>
                 </div>
-
                 <TextareaAutosize
                     type='text'
                     name={this.props.name}

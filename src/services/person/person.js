@@ -49,12 +49,16 @@ const useGetPersons = (requestOptions, queryOptions) => {
     });
 };
 
-const useGetPerson = (requestOptions, queryOptions) => {
-    return useQueryWithTranslations({
-        queryKey: 'person.getPerson',
-        ...queryOptions,
-        queryFn: _id => getPerson(_id, requestOptions),
-    });
+const useGetPerson = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(
+        _id => {
+            return getPerson(_id, requestOptions);
+        },
+        {
+            mutationKey: 'person.getPerson',
+            ...mutateOptions,
+        }
+    );
 };
 
 const usePostPerson = (requestOptions, mutateOptions) => {

@@ -49,6 +49,10 @@ const patchDataAccessRequest = (_id, data, options) => {
     return patchRequest(`${apiURL}/data-access-request/${_id}`, data, options);
 };
 
+const patchSchema = (_id, data, options) => {
+    return patchRequest(`${apiURL}/data-access-request/schema/${_id}`, data, options);
+};
+
 const deleteDataAccessRequest = (_id, options) => {
     return deleteRequest(`${apiURL}/data-access-request/${_id}`, options);
 };
@@ -119,6 +123,20 @@ const usePutDataAccessRequest = (requestOptions, mutateOptions) => {
     });
 };
 
+const usePatchSchema = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(
+        data => {
+            const { id, ...body } = data;
+
+            return patchSchema(id, body, requestOptions);
+        },
+        {
+            mutationKey: 'dar.patchDataAccessSchemaRequest',
+            ...mutateOptions,
+        }
+    );
+};
+
 const usePatchDataAccessRequest = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => patchDataAccessRequest(_id, data, requestOptions), {
         mutationKey: 'dar.patchDataAccessRequest',
@@ -145,6 +163,7 @@ export default {
     postAmendments,
     putDataAccessRequest,
     patchDataAccessRequest,
+    patchSchema,
     deleteDataAccessRequest,
     useGetDataAccessRequests,
     useGetDataAccessRequest,
@@ -156,5 +175,6 @@ export default {
     usePostMessages,
     usePutDataAccessRequest,
     usePatchDataAccessRequest,
+    usePatchSchema,
     useDeleteDataAccessRequest,
 };

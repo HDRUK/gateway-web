@@ -7,6 +7,7 @@ const mockOnSort = jest.fn();
 const props = {
     onSort: mockOnSort,
     options: ['relevance', 'recentlyadded'],
+    className: 'additional-classname',
 };
 
 let wrapper;
@@ -27,6 +28,10 @@ describe('Given the SortDropdown component', () => {
 
         it('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
+        });
+
+        it('Then has the correct className', () => {
+            expect(wrapper.container.querySelector('.additional-classname')).toBeTruthy();
         });
 
         describe('When it is selected', () => {

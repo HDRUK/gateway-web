@@ -2,8 +2,8 @@ import React from 'react';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import axios from 'axios';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { baseURL } from '../../../../configs/url.config';
 import _ from 'lodash';
+import { baseURL } from '../../../../configs/url.config';
 
 class TypaheadMultiUser extends React.Component {
     constructor(props) {
@@ -26,10 +26,10 @@ class TypaheadMultiUser extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        let { options } = { ...this.state };
+        const { options } = { ...this.state };
 
         if (this.props.selectedContributors !== prevProps.selectedContributors) {
-            let value = [...options].filter(user => {
+            const value = [...options].filter(user => {
                 const userId = _.isEmpty(this.props.team) ? user.id : user._id;
                 return this.props.selectedContributors.includes(userId);
             });
@@ -37,7 +37,7 @@ class TypaheadMultiUser extends React.Component {
         }
 
         if (this.props.typeaheadClass !== prevProps.typeaheadClass) {
-            let typeaheadClass = this.props.typeaheadClass;
+            const { typeaheadClass } = this.props;
             this.setState({ typeaheadClass: `addFormInputTypeAhead ${typeaheadClass}` });
         }
     }
@@ -56,7 +56,7 @@ class TypaheadMultiUser extends React.Component {
                                 return user.id !== this.props.currentUserId;
                             });
                         }
-                        let value = [...data].filter(user => {
+                        const value = [...data].filter(user => {
                             return this.props.selectedContributors.includes(user.id);
                         });
 
@@ -71,18 +71,18 @@ class TypaheadMultiUser extends React.Component {
                 axios
                     .get(`${baseURL}/api/v1/teams/${this.state.team}/members`)
                     .then(res => {
-                        let {
+                        const {
                             data: { members },
                         } = res;
                         // map out new array and include name key for typeahead
-                        let membersLists = members.map(member => {
+                        const membersLists = members.map(member => {
                             return {
                                 ...member,
                                 name: `${member.firstname} ${member.lastname}`,
                             };
                         });
                         // find _.id in membersList arr
-                        let value = [...membersLists].filter(user => {
+                        const value = [...membersLists].filter(user => {
                             return this.props.selectedContributors.includes(user._id);
                         });
                         this.setState({ options: membersLists, value });
@@ -97,8 +97,8 @@ class TypaheadMultiUser extends React.Component {
 
     handleChange(e) {
         let value;
-        let selected = [...e];
-        let { options } = this.state;
+        const selected = [...e];
+        const { options } = this.state;
 
         if (_.isEmpty(this.state.team)) {
             this.props.onHandleContributorChange(selected);
@@ -107,13 +107,12 @@ class TypaheadMultiUser extends React.Component {
             });
             this.setState({ value });
         } else {
-            let userIds = selected.map(u => u._id);
+            const userIds = selected.map(u => u._id);
             this.props.onHandleContributorChange(userIds);
         }
     }
 
     render() {
-        console.log(`typeaheadClass: ${this.state.typeaheadClass}`);
         return (
             <Typeahead
                 id={this.state.typeaheadId}
@@ -125,7 +124,7 @@ class TypaheadMultiUser extends React.Component {
                 selected={this.state.value}
                 disabled={this.state.readOnly}
                 minLength={3}
-                inputProps={{ required: !_.isEmpty(this.props.typeaheadClass) ? true : false }}
+                inputProps={{ required: !_.isEmpty(this.props.typeaheadClass) }}
                 filterBy={['name']}
                 multiple
                 renderMenuItemChildren={(option, props) => (

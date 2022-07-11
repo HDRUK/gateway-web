@@ -1,0 +1,32 @@
+@import '../../../css/variables';
+
+.wysiwyg-wrapper {
+	border: solid 2px $gray-400;
+	border-top: none;
+	padding: 0px 16px;
+	min-height: 400px;
+	max-height: 520px;
+}
+
+.rdw-editor-toolbar {
+	padding: 6px 5px 0;
+	border-radius: 2px;
+	border: 1px solid #f1f1f1;
+
+	border-top: solid 2px $gray-400 !important;
+	border-left: solid 2px $gray-400 !important;
+	border-right: solid 2px $gray-400 !important;
+
+	display: flex;
+	justify-content: flex-start;
+	background: white;
+	flex-wrap: wrap;
+	font-size: 15px;
+	margin-bottom: 0px !important;
+	user-select: none;
+}
+
+.wysiwyg-main-card {
+	margin-bottom: 0px;
+	border-bottom: solid 1px $background;
+}
