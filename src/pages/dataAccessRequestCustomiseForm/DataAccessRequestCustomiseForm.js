@@ -119,7 +119,11 @@ export const DataAccessRequestCustomiseForm = props => {
         };
 
         const newPanelId = panelId || masterSchema.formPanels[0].panelId;
-        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, newPanelId);
+        const newJsonSchema = helpers.injectReadonlyStaticContent(
+            { ...masterSchema, ...classSchema, ...questionActions },
+            newPanelId,
+            publisher.publisherDetails
+        );
 
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
