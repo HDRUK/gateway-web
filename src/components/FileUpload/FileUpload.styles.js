@@ -1,6 +1,12 @@
 import { css } from '@emotion/react';
 import { getColorStyle, getSpacingStyle } from '../../configs/theme';
 
+export const root = () => css`
+    input {
+        visibility: hidden;
+    }
+`;
+
 export const table = theme => {
     return css`
         width: 100%;
@@ -23,3 +29,13 @@ export const table = theme => {
         }
     `;
 };
+
+export const nameColumn = () => css`
+    width: 100px;
+    white-space: nowrap;
+`;
+
+export const actionsColumn = () => css`
+    width: 1px;
+    white-space: nowrap;
+`;
