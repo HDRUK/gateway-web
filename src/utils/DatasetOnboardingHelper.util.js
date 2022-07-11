@@ -3,21 +3,21 @@ import moment from 'moment';
 import randomstring from 'randomstring';
 import i18n from 'i18next';
 
-let autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
+const autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
 
-let userTypes = {
+const userTypes = {
     CUSTODIAN: 'custodian',
     APPLICANT: 'applicant',
 };
 
-let amendmentStatuses = {
+const amendmentStatuses = {
     AWAITINGUPDATES: { text: 'Awaiting updates', icon: 'cycle' },
     UPDATESSUBMITTED: { text: 'Updates submitted', icon: 'check' },
     UPDATESREQUESTED: { text: 'Updates requested', icon: 'flag' },
     UPDATESRECEIVED: { text: 'Updates received', icon: 'flag' },
 };
 
-let staticContent = {
+const staticContent = {
     aboutPageNav: {
         pageId: 'about',
         active: true,
@@ -68,13 +68,13 @@ let staticContent = {
     },
 };
 
-let darCommentTitle = {
+const darCommentTitle = {
     approved: 'Conditions',
     'approved with conditions': 'Conditions',
     rejected: 'Reason for rejection',
 };
 
-let datasetStatus = {
+const datasetStatus = {
     draft: 'draft',
     archive: 'archive',
     inReview: 'inReview',
@@ -83,7 +83,7 @@ let datasetStatus = {
     'approved with conditions': 'approved',
 };
 
-let datasetSLAText = {
+const datasetSLAText = {
     draft: 'Draft',
     archive: 'Archived',
     inReview: 'In review',
@@ -91,7 +91,7 @@ let datasetSLAText = {
     rejected: 'Rejected',
 };
 
-let datasetStatusColours = {
+const datasetStatusColours = {
     draft: 'gray',
     archive: 'gray',
     inReview: 'amber',
@@ -103,7 +103,7 @@ let datasetStatusColours = {
  * [applicationState acts like enum for generating Counts DAR dashboard]
  *
  */
-let darStatusCounts = {
+const darStatusCounts = {
     all: 'allCount',
     inProgress: 'preSubmissionCount',
     submitted: 'submittedCount',
@@ -113,14 +113,14 @@ let darStatusCounts = {
     rejected: 'rejectedCount',
 };
 
-let darStaticPageIds = {
+const darStaticPageIds = {
     ABOUT: 'about',
     FILES: 'files',
     BEFOREYOUBEGIN: 'beforeYouBegin',
     STRUCTURAL: 'structural',
 };
 
-let actionKeys = {
+const actionKeys = {
     GUIDANCE: 'guidance',
     REQUESTAMENDMENT: 'requestAmendment',
     CANCELREQUEST: 'cancelRequest',
@@ -151,9 +151,9 @@ const flagPanelIcons = {
  * @param   {[data]}}  [DAR Objects]
  * @return  {{counts}} [return counts]
  */
-let generateStatusCounts = (data = []) => {
+const generateStatusCounts = (data = []) => {
     // 1. declare obj structure even if no data
-    let counts = {
+    const counts = {
         allCount: 0,
         approvedCount: 0,
         rejectedCount: 0,
@@ -165,9 +165,9 @@ let generateStatusCounts = (data = []) => {
 
     if (!_.isEmpty(data)) {
         // 2. reduce over data from API to generate structure as above counts
-        let totalCounts = [...data].reduce((obj, item, i) => {
+        const totalCounts = [...data].reduce((obj, item, i) => {
             // 3. take out applicationStatus ie, inProgress, submitted etc..
-            let { applicationStatus } = item;
+            const { applicationStatus } = item;
             // 4. if the applicationStatus not in our obj, set to 1 with key
             if (!obj[darStatusCounts[applicationStatus]]) {
                 obj[darStatusCounts[applicationStatus]] = 1;
@@ -175,7 +175,7 @@ let generateStatusCounts = (data = []) => {
                 // 5. if found increment the count
                 obj[darStatusCounts[applicationStatus]] = ++obj[darStatusCounts[applicationStatus]];
             }
-            obj['allCount'] = ++i;
+            obj.allCount = ++i;
             // 6. return obj as count format
             return obj;
         }, {});
@@ -185,7 +185,7 @@ let generateStatusCounts = (data = []) => {
     return counts;
 };
 
-let configActionModal = (type = '') => {
+const configActionModal = (type = '') => {
     let config = {};
     if (!_.isEmpty(type)) {
         switch (type.toUpperCase()) {
@@ -402,14 +402,15 @@ let configActionModal = (type = '') => {
     return config;
 };
 
-let autoComplete = (questionId, uniqueId, questionAnswers) => {
+const autoComplete = (questionId, uniqueId, questionAnswers) => {
     let questionList = {};
-    let lookupArr = [...autoCompleteLookUps[`${questionId}`]];
-    let activeQuestionId = typeof uniqueId !== 'undefined' ? `${questionId}_${uniqueId}` : questionId;
-    let answerObj = questionAnswers[`${activeQuestionId}`];
+    const lookupArr = [...autoCompleteLookUps[`${questionId}`]];
+    const activeQuestionId = typeof uniqueId !== 'undefined' ? `${questionId}_${uniqueId}` : questionId;
+    const answerObj = questionAnswers[`${activeQuestionId}`];
 
     lookupArr.map(val => {
-        let key, value;
+        let key;
+        let value;
         value = answerObj[val] || '';
         key = val;
         if (typeof uniqueId !== 'undefined') key = `${key}_${uniqueId}`;
@@ -423,19 +424,19 @@ let autoComplete = (questionId, uniqueId, questionAnswers) => {
     return { ...questionAnswers, ...questionList };
 };
 
-let questionSetToDuplicate = (questionSetId, schema, uniqueID) => {
-    let { questionSets } = schema;
+const questionSetToDuplicate = (questionSetId, schema, uniqueID) => {
+    const { questionSets } = schema;
     // 1. find questionSet
-    let qSet = findQuestionSet(questionSetId, schema);
+    const qSet = findQuestionSet(questionSetId, schema);
     if (!_.isEmpty(qSet)) {
         // 2. find the questionSet to duplicate for the qSet
-        let {
+        const {
             questions: [question],
         } = { ...qSet };
         // 3. duplicate questionSet ensure we take a copy
-        let qSetDuplicate = [...questionSets].find(q => q.questionSetId === question.input.panelId);
+        const qSetDuplicate = [...questionSets].find(q => q.questionSetId === question.input.panelId);
         // 5. modify the questions array questionIds
-        let qSetModified = modifyQuestionIds(qSetDuplicate, uniqueID);
+        const qSetModified = modifyQuestionIds(qSetDuplicate, uniqueID);
         // 6. return the modified questionSet
         return qSetModified;
     }
@@ -450,7 +451,7 @@ let modifyQuestionIds = (questionSet, existingUniqueId) => {
     // 1.loop over each qObj and if questionId update
     let questionsModified = [...questions].reduce((arr, qValue) => {
         // 2. ensure we copy the original question deep
-        let question = _.cloneDeep(qValue);
+        const question = _.cloneDeep(qValue);
         // 3. if there is a questionId update
         if (!_.isUndefined(question.questionId)) {
             question.questionId = `${qValue.questionId}_${uniqueId}`;
@@ -479,25 +480,25 @@ let modifyQuestionIds = (questionSet, existingUniqueId) => {
     ];
     return {
         ...questionSet,
-        questionSetId: questionSetId,
+        questionSetId,
         questions: questionsModified,
     };
 };
 
 let modifyNestedQuestionIds = (questionsArr, uniqueId) => {
     let child;
-    let qArr = [...questionsArr];
+    const qArr = [...questionsArr];
 
     if (!questionsArr) return;
 
-    for (let questionObj of qArr) {
+    for (const questionObj of qArr) {
         // 1. test each option obj if have conditionals and a length
         if (typeof questionObj.conditionalQuestions !== 'undefined' && questionObj.conditionalQuestions.length > 0) {
             // 2. for each option in conditional questions loop
             questionObj.conditionalQuestions.forEach(option => {
                 // 3. test if option has a questionId and if so modify
                 if (!_.isUndefined(option.questionId)) {
-                    option['questionId'] = `${option.questionId}_${uniqueId}`;
+                    option.questionId = `${option.questionId}_${uniqueId}`;
                 }
                 // 4. test the input for options and if options defined means it is another recursive loop call
                 if (typeof questionObj.input === 'object' && typeof questionObj.input.options !== 'undefined') {
@@ -510,33 +511,33 @@ let modifyNestedQuestionIds = (questionsArr, uniqueId) => {
     }
 };
 
-let insertSchemaUpdates = (questionSetId, duplicateQuestionSet, schema) => {
+const insertSchemaUpdates = (questionSetId, duplicateQuestionSet, schema) => {
     let { questionPanels, questionSets } = { ...schema };
     // 1. update the questionSets with our new duplicatedQuestion
     questionSets = [...questionSets, duplicateQuestionSet];
 
-    let qSet = findQuestionSet(questionSetId, schema);
+    const qSet = findQuestionSet(questionSetId, schema);
 
     if (!_.isEmpty(qSet)) {
         // 2. find the questionSet to duplicate for the qSet
-        let {
+        const {
             questions: [question],
         } = qSet;
         // 3. get the questionSetId that we need to insert into our questionPanel
         if (!_.isUndefined(question.input.panelId)) {
-            let {
+            const {
                 input: { panelId },
             } = question;
             // 4. find question panel
-            let questionPanel = findQuestionPanel(panelId, questionPanels) || {};
+            const questionPanel = findQuestionPanel(panelId, questionPanels) || {};
             if (!_.isEmpty(questionPanel)) {
-                let { questionSets } = questionPanel;
+                const { questionSets } = questionPanel;
                 // 5. new questionSet to be pushed
-                let questionSet = {
+                const questionSet = {
                     index: 5,
                     questionSetId: duplicateQuestionSet.questionSetId,
                 };
-                let idx = questionSets.length - 1;
+                const idx = questionSets.length - 1;
                 // 6. push into preliminary position
                 questionSets.splice(idx, 0, questionSet);
             }
@@ -550,8 +551,9 @@ let insertSchemaUpdates = (questionSetId, duplicateQuestionSet, schema) => {
     return { ...schema };
 };
 
-let removeQuestionReferences = (questionSetId, questionId, schema) => {
-    let questionSet, question;
+const removeQuestionReferences = (questionSetId, questionId, schema) => {
+    let questionSet;
+    let question;
     let { questionPanels, questionSets } = { ...schema };
     // 1. find questionSet in questionSets
     questionSet = findQuestionSet(questionSetId, schema);
@@ -559,7 +561,7 @@ let removeQuestionReferences = (questionSetId, questionId, schema) => {
     question = findQuestion(questionId, questionSet);
     if (!_.isEmpty(question)) {
         // 3. extract panelId
-        let {
+        const {
             input: { panelId },
         } = question;
         // 4. remove from questionSet
@@ -580,10 +582,10 @@ let removeQuestionReferences = (questionSetId, questionId, schema) => {
     return schema;
 };
 
-let removeQuestionAnswers = (questionId = '', questionAnswers = {}) => {
+const removeQuestionAnswers = (questionId = '', questionAnswers = {}) => {
     if (!_.isEmpty(questionId) && !_.isEmpty(questionAnswers)) {
-        let [id] = questionId.split('_');
-        if (typeof id != 'undefined') {
+        const [id] = questionId.split('_');
+        if (typeof id !== 'undefined') {
             Object.keys(questionAnswers).forEach(key => {
                 if (key.includes(id)) {
                     questionAnswers[key] = '';
@@ -596,7 +598,7 @@ let removeQuestionAnswers = (questionId = '', questionAnswers = {}) => {
 
 let findQuestion = (questionId = '', questionSet = []) => {
     if (!_.isEmpty(questionId) && !_.isEmpty(questionSet)) {
-        let { questions } = questionSet;
+        const { questions } = questionSet;
         if (!_.isEmpty(questions)) {
             return questions.find(q => q.questionId === questionId);
         }
@@ -606,7 +608,7 @@ let findQuestion = (questionId = '', questionSet = []) => {
 
 let findQuestionSet = (questionSetId = '', schema = {}) => {
     if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
-        let { questionSets } = schema;
+        const { questionSets } = schema;
         return [...questionSets].find(q => q.questionSetId === questionSetId);
     }
     return {};
@@ -632,14 +634,14 @@ let removeQuestionSet = (questionSetObj = {}, panelId = '', questionSetId = '') 
     return questionSetObj;
 };
 
-let getCompletionPercentages = component => {
-    var updatedCompletion = _.cloneDeep(component.state.completion);
+const getCompletionPercentages = component => {
+    const updatedCompletion = _.cloneDeep(component.state.completion);
 
     const formPanels = [...component.state.jsonSchema.formPanels];
-    let listOfPanelsWithParent = [];
+    const listOfPanelsWithParent = [];
 
     formPanels.forEach(val => {
-        let countObj = totalQuestionsAnswered(component, val.panelId);
+        const countObj = totalQuestionsAnswered(component, val.panelId);
         if (countObj.totalQuestions !== 0)
             updatedCompletion[val.panelId] = Math.round((countObj.totalAnsweredQuestions / countObj.totalQuestions) * 100);
         if (val.panelId !== val.pageId)
@@ -650,7 +652,7 @@ let getCompletionPercentages = component => {
             });
     });
 
-    let parentPanels = [];
+    const parentPanels = [];
     listOfPanelsWithParent.forEach(item => {
         if (!parentPanels.find(x => x === item.parent)) {
             parentPanels.push(item.parent);
@@ -663,8 +665,8 @@ let getCompletionPercentages = component => {
 
         listOfPanelsWithParent.forEach(panel => {
             if (panel.parent === parent) {
-                parentTotalQuestions = parentTotalQuestions + panel.totalAnswered;
-                parentTotalAnswered = parentTotalAnswered + panel.totalQuestions;
+                parentTotalQuestions += panel.totalAnswered;
+                parentTotalAnswered += panel.totalQuestions;
             }
         });
         if (parentTotalQuestions !== 0) updatedCompletion[parent] = Math.round((parentTotalQuestions / parentTotalAnswered) * 100);
@@ -686,11 +688,11 @@ let totalQuestionsAnswered = (component, panelId = '', questionAnswers = {}, jso
 
     if (_.isEmpty(panelId)) {
         const formPanels = [...component.state.jsonSchema.formPanels];
-        let applicationQuestionAnswers = formPanels.reduce(
+        const applicationQuestionAnswers = formPanels.reduce(
             (acc, val) => {
-                let countObj = totalQuestionsAnswered(component, val.panelId);
-                acc[0] = acc[0] + countObj.totalAnsweredQuestions;
-                acc[1] = acc[1] + countObj.totalQuestions;
+                const countObj = totalQuestionsAnswered(component, val.panelId);
+                acc[0] += countObj.totalAnsweredQuestions;
+                acc[1] += countObj.totalQuestions;
                 return acc;
             },
             [0, 0]
@@ -700,44 +702,43 @@ let totalQuestionsAnswered = (component, panelId = '', questionAnswers = {}, jso
             totalAnsweredQuestions: applicationQuestionAnswers[0],
             totalQuestions: applicationQuestionAnswers[1],
         };
-    } else {
-        if (_.isEmpty(questionAnswers)) ({ questionAnswers } = { ...component.state });
-        // 1. deconstruct schema
-        if (_.isEmpty(jsonSchema)) {
-            ({ jsonSchema } = { ...component.state });
-        }
-        let { questionPanels = [], questionSets = [] } = jsonSchema;
-        // 2. omits out blank null, undefined, and [] values from this.state.answers
-        questionAnswers = _.pickBy({ ...questionAnswers }, v => v !== null && (v !== undefined) & (v !== '') && checkForArray(v));
-        // 3. find the relevant questionSetIds within the panel
-        const qPanel = questionPanels.find(qp => qp.panelId === panelId);
-        if (!_.isNil(qPanel)) {
-            const { questionSets: panelQuestionSets = [] } = qPanel;
-            const qsIds = panelQuestionSets.map(qs => qs.questionSetId);
-            // 4. find the relevant questionSets
-            const qsets = questionSets.filter(qs => qsIds.includes(qs.questionSetId));
-            // 5. ensure at least one was found
-            if (!_.isEmpty(qsets)) {
-                // 6. iterate through each question set to calculate answered and unanswered
-                for (const questionSet of qsets) {
-                    // 7. get questions
-                    const { questions = [] } = questionSet;
-                    // 8. filter out buttons added as questions
-                    const filteredQuestions = filterInvalidQuestions(questions);
-                    // 9. Iterate through each top-level question
-                    for (const question of filteredQuestions) {
-                        // 10. Recursively gather question status from each question path
-                        const conditionalQuestions = getRecursiveQuestionCounts(question, questionAnswers);
-                        totalQuestions += conditionalQuestions.questionCount;
-                        totalAnsweredQuestions += conditionalQuestions.answerCount;
-                    }
-                }
-                // 11. Return question totals
-                return { totalAnsweredQuestions, totalQuestions };
-            }
-        }
-        return { totalAnsweredQuestions: 0, totalQuestions: 0 };
     }
+    if (_.isEmpty(questionAnswers)) ({ questionAnswers } = { ...component.state });
+    // 1. deconstruct schema
+    if (_.isEmpty(jsonSchema)) {
+        ({ jsonSchema } = { ...component.state });
+    }
+    const { questionPanels = [], questionSets = [] } = jsonSchema;
+    // 2. omits out blank null, undefined, and [] values from this.state.answers
+    questionAnswers = _.pickBy({ ...questionAnswers }, v => v !== null && (v !== undefined) & (v !== '') && checkForArray(v));
+    // 3. find the relevant questionSetIds within the panel
+    const qPanel = questionPanels.find(qp => qp.panelId === panelId);
+    if (!_.isNil(qPanel)) {
+        const { questionSets: panelQuestionSets = [] } = qPanel;
+        const qsIds = panelQuestionSets.map(qs => qs.questionSetId);
+        // 4. find the relevant questionSets
+        const qsets = questionSets.filter(qs => qsIds.includes(qs.questionSetId));
+        // 5. ensure at least one was found
+        if (!_.isEmpty(qsets)) {
+            // 6. iterate through each question set to calculate answered and unanswered
+            for (const questionSet of qsets) {
+                // 7. get questions
+                const { questions = [] } = questionSet;
+                // 8. filter out buttons added as questions
+                const filteredQuestions = filterInvalidQuestions(questions);
+                // 9. Iterate through each top-level question
+                for (const question of filteredQuestions) {
+                    // 10. Recursively gather question status from each question path
+                    const conditionalQuestions = getRecursiveQuestionCounts(question, questionAnswers);
+                    totalQuestions += conditionalQuestions.questionCount;
+                    totalAnsweredQuestions += conditionalQuestions.answerCount;
+                }
+            }
+            // 11. Return question totals
+            return { totalAnsweredQuestions, totalQuestions };
+        }
+    }
+    return { totalAnsweredQuestions: 0, totalQuestions: 0 };
 };
 
 let checkForArray = arr => {
@@ -748,8 +749,10 @@ let checkForArray = arr => {
                 return true;
             }
             return false;
-        } else return false;
-    } else return true;
+        }
+        return false;
+    }
+    return true;
 };
 
 let filterInvalidQuestions = questions => {
@@ -761,8 +764,8 @@ let filterInvalidQuestions = questions => {
 };
 
 let getRecursiveQuestionCounts = (question, questionAnswers) => {
-    let questionCount = 0,
-        answerCount = 0;
+    let questionCount = 0;
+    let answerCount = 0;
     // 1. Count parent question
     questionCount++;
     // 2. Count parent question if it has been answered
@@ -826,9 +829,9 @@ let getRecursiveQuestionCounts = (question, questionAnswers) => {
  * [saveTime]
  * @desc Sets the lastSaved state on a field
  */
-let saveTime = () => {
-    let currentTime = moment().format('DD MMM YYYY HH:mm');
-    let lastSaved = `Last saved ${currentTime}`;
+const saveTime = () => {
+    const currentTime = moment().format('DD MMM YYYY HH:mm');
+    const lastSaved = `Last saved ${currentTime}`;
     return lastSaved;
 };
 
@@ -836,12 +839,12 @@ let saveTime = () => {
  * [getSavedAgo]
  * @desc Returns the saved time for DAR
  */
-let getSavedAgo = lastSaved => {
+const getSavedAgo = lastSaved => {
     if (!_.isEmpty(lastSaved)) return lastSaved;
-    else return ``;
+    return ``;
 };
 
-let getActiveQuestion = (questionsArr, questionId) => {
+const getActiveQuestion = (questionsArr, questionId) => {
     let child;
 
     if (!questionsArr) return;
@@ -865,7 +868,7 @@ let getActiveQuestion = (questionsArr, questionId) => {
     }
 };
 
-let calcAccordionClasses = (active, allowedNavigation) => {
+const calcAccordionClasses = (active, allowedNavigation) => {
     let classes = ['black-16'];
     if (!allowedNavigation) classes = [...classes, 'disabled'];
 
@@ -874,7 +877,7 @@ let calcAccordionClasses = (active, allowedNavigation) => {
     return classes;
 };
 
-let createTopicContext = (datasets = []) => {
+const createTopicContext = (datasets = []) => {
     if (_.isEmpty(datasets)) {
         return {
             datasets: [],
@@ -884,15 +887,15 @@ let createTopicContext = (datasets = []) => {
             allowNewMessage: false,
         };
     }
-    let dataRequestModalContent = {},
-        allowsMessaging = false,
-        requiresModal = false,
-        allowNewMessage = false;
-    let { publisherObj = {}, contactPoint = '', publisher = '' } = datasets[0];
+    let dataRequestModalContent = {};
+    let allowsMessaging = false;
+    let requiresModal = false;
+    let allowNewMessage = false;
+    const { publisherObj = {}, contactPoint = '', publisher = '' } = datasets[0];
     if (!_.isEmpty(publisherObj)) {
         dataRequestModalContent = publisherObj.dataRequestModalContent;
         allowsMessaging = publisherObj.allowsMessaging;
-        requiresModal = !_.isEmpty(publisherObj.dataRequestModalContent) ? true : false;
+        requiresModal = !_.isEmpty(publisherObj.dataRequestModalContent);
         allowNewMessage = publisherObj.allowsMessaging;
     }
     return {
@@ -902,7 +905,7 @@ let createTopicContext = (datasets = []) => {
         dataRequestModalContent,
         datasets:
             datasets.map(dataset => {
-                let { datasetId } = dataset;
+                const { datasetId } = dataset;
                 return { datasetId, publisher };
             }) || [],
         tags: datasets.map(dataset => dataset.name) || [],
@@ -913,16 +916,16 @@ let createTopicContext = (datasets = []) => {
     };
 };
 
-let createModalContext = (datasets = []) => {
-    let dataRequestModalContent = {},
-        allowsMessaging = false,
-        requiresModal = false,
-        allowNewMessage = false;
-    let { publisherObj = {}, contactPoint = '', publisher = '' } = datasets[0];
+const createModalContext = (datasets = []) => {
+    let dataRequestModalContent = {};
+    let allowsMessaging = false;
+    let requiresModal = false;
+    let allowNewMessage = false;
+    const { publisherObj = {}, contactPoint = '', publisher = '' } = datasets[0];
     if (!_.isEmpty(publisherObj)) {
         dataRequestModalContent = publisherObj.dataRequestModalContent;
         allowsMessaging = publisherObj.allowsMessaging;
-        requiresModal = !_.isEmpty(publisherObj.dataRequestModalContent) ? true : false;
+        requiresModal = !_.isEmpty(publisherObj.dataRequestModalContent);
         allowNewMessage = publisherObj.allowsMessaging;
     }
     return {
@@ -942,12 +945,12 @@ let createModalContext = (datasets = []) => {
  * @param   {[object]}  schema  [schema]
  * @return  {[object]}          [return schema]
  */
-let removeStaticPages = (schema = {}) => {
-    let { pages, formPanels } = { ...schema };
+const removeStaticPages = (schema = {}) => {
+    const { pages, formPanels } = { ...schema };
     // filter pageId within pages
-    let originalPages = _.uniqBy(pages, 'pageId');
+    const originalPages = _.uniqBy(pages, 'pageId');
     // unique panelId within form panels
-    let originalFormPanels = _.uniqBy(formPanels, 'panelId');
+    const originalFormPanels = _.uniqBy(formPanels, 'panelId');
     // return updated schema
     return {
         ...schema,
@@ -964,8 +967,8 @@ const _buildCompletionWheels = completionObj => {
 };
 
 const _calculateTimeDifference = startTime => {
-    let start = moment(startTime);
-    let end = moment();
+    const start = moment(startTime);
+    const end = moment();
     return end.diff(start, 'days');
 };
 
@@ -986,38 +989,38 @@ const getLocationsObj = values => {
 };
 
 export default {
-    questionSetToDuplicate: questionSetToDuplicate,
-    insertSchemaUpdates: insertSchemaUpdates,
-    removeQuestionReferences: removeQuestionReferences,
-    findQuestionSet: findQuestionSet,
-    findQuestion: findQuestion,
-    removeQuestionAnswers: removeQuestionAnswers,
-    autoComplete: autoComplete,
-    totalQuestionsAnswered: totalQuestionsAnswered,
-    getCompletionPercentages: getCompletionPercentages,
-    saveTime: saveTime,
-    getSavedAgo: getSavedAgo,
-    getActiveQuestion: getActiveQuestion,
-    calcAccordionClasses: calcAccordionClasses,
-    createTopicContext: createTopicContext,
-    createModalContext: createModalContext,
-    configActionModal: configActionModal,
-    generateStatusCounts: generateStatusCounts,
-    staticContent: staticContent,
-    datasetStatus: datasetStatus,
-    datasetStatusColours: datasetStatusColours,
-    datasetSLAText: datasetSLAText,
-    darCommentTitle: darCommentTitle,
-    darStaticPageIds: darStaticPageIds,
-    actionKeys: actionKeys,
-    amendmentModes: amendmentModes,
-    flagIcons: flagIcons,
-    flagPanelIcons: flagPanelIcons,
-    userTypes: userTypes,
-    amendmentStatuses: amendmentStatuses,
-    removeStaticPages: removeStaticPages,
+    questionSetToDuplicate,
+    insertSchemaUpdates,
+    removeQuestionReferences,
+    findQuestionSet,
+    findQuestion,
+    removeQuestionAnswers,
+    autoComplete,
+    totalQuestionsAnswered,
+    getCompletionPercentages,
+    saveTime,
+    getSavedAgo,
+    getActiveQuestion,
+    calcAccordionClasses,
+    createTopicContext,
+    createModalContext,
+    configActionModal,
+    generateStatusCounts,
+    staticContent,
+    datasetStatus,
+    datasetStatusColours,
+    datasetSLAText,
+    darCommentTitle,
+    darStaticPageIds,
+    actionKeys,
+    amendmentModes,
+    flagIcons,
+    flagPanelIcons,
+    userTypes,
+    amendmentStatuses,
+    removeStaticPages,
     calculateTimeDifference: _calculateTimeDifference,
     buildCompletionWheels: _buildCompletionWheels,
-    getUpdatesSubmittedLog: getUpdatesSubmittedLog,
-    getLocationsObj: getLocationsObj,
+    getUpdatesSubmittedLog,
+    getLocationsObj,
 };

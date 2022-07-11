@@ -7,6 +7,10 @@ export const COMMON_PROP_TYPES = {
     mb: PropTypes.number,
     mt: PropTypes.number,
     width: PropTypes.string,
+    maxWidth: PropTypes.string,
+    minWidth: PropTypes.string,
+    maxHeight: PropTypes.string,
+    minHeight: PropTypes.string,
     className: PropTypes.string,
 };
 
@@ -23,4 +27,9 @@ export const addCommonPropTypes = propTypes => {
         ...propTypes,
         ...COMMON_PROP_TYPES,
     };
+};
+
+export const COMMON_COMPONENT_PROPS = {
+    className: PropTypes.string,
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };

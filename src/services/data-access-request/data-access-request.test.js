@@ -200,6 +200,26 @@ describe('Given the data-access-request service', () => {
         });
     });
 
+    describe('When patchSchema is called', () => {
+        it('Then calls patchRequest with the correct arguments', async () => {
+            await service.patchSchema(
+                '1234',
+                {
+                    status: 'archive',
+                },
+                { option1: true }
+            );
+
+            expect(patchRequest).toHaveBeenCalledWith(
+                `${apiURL}/data-access-request/schema/1234`,
+                {
+                    status: 'archive',
+                },
+                { option1: true }
+            );
+        });
+    });
+
     describe('When deleteDataAccessRequest is called', () => {
         it('Then calls deleteRequest with the correct arguments', async () => {
             await service.deleteDataAccessRequest('1234', {
@@ -297,6 +317,15 @@ describe('Given the data-access-request service', () => {
         it('Then calls patchDataAccessRequest with the correct arguments', async () => {
             const patchSpy = jest.spyOn(service, 'patchDataAccessRequest');
             const rendered = renderHook(() => service.usePatchDataAccessRequest({ option1: true }), { wrapper });
+
+            assertServiceMutateAsyncCalled(rendered, patchSpy, '1234', { status: 'archive' });
+        });
+    });
+
+    describe('When usePatchSchema is called', () => {
+        it('Then calls patchSchema with the correct arguments', async () => {
+            const patchSpy = jest.spyOn(service, 'patchSchema');
+            const rendered = renderHook(() => service.usePatchSchema({ option1: true }), { wrapper });
 
             assertServiceMutateAsyncCalled(rendered, patchSpy, '1234', { status: 'archive' });
         });

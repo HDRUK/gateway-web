@@ -1,0 +1,201 @@
+@import '../../../../css/variables';
+@import '../../../../css/typography';
+
+.duplicateApplicationModal {
+	box-sizing: border-box;
+
+	.modal-dialog {
+		max-width: 940px !important;
+		max-height: 836px !important;
+		transform: translate(0%, 0%) !important;
+	}
+
+	.active-duplicate {
+		border: 3px solid #3db28c !important;
+	}
+
+	&-header {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 32px 32px 0 32px;
+
+		h1 {
+			width: 90%;
+		}
+
+		&-description {
+			margin-top: 8px;
+			font-size: 14px !important;
+			color: #3c3c3b;
+		}
+
+		&--close {
+			position: absolute;
+			top: 16px;
+			right: 16px;
+			width: 16px;
+			height: 16px;
+			fill: $indigo;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+
+	&-body {
+		background-color: #f6f7f8;
+		margin-top: 16px;
+
+		&-newappbutton {
+			width: 100%;
+			height: 132px;
+			flex-shrink: 0;
+			border-color: #475da7;
+			border-style: dashed;
+			background-color: #ffffff;
+			color: #475da7;
+			font-size: 20px;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			justify-content: center;
+			margin-bottom: 8px;
+
+			.newAppButtonIcon {
+				margin-top: 5px;
+			}
+
+			.newAppButtonText {
+				margin-top: 17px;
+			}
+		}
+
+		&:focus {
+			border-color: #475da7;
+			border-style: solid;
+		}
+
+		&-newappbuttonselected {
+			width: 100%;
+			height: 132px;
+			flex-shrink: 0;
+			border-color: #3db28c !important;
+
+			border-style: solid;
+			background-color: #ffffff;
+			color: #3db28c !important;
+			font-size: 20px;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			justify-content: center;
+			margin-bottom: 8px;
+
+			.newAppButtonIcon {
+				margin-top: -10px;
+			}
+
+			&:focus {
+				outline-color: #3db28c !important ;
+			}
+		}
+
+		&-presubmittedappbutton {
+			width: 100%;
+			box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.1);
+			background: $white;
+			margin-bottom: 8px;
+			margin-top: 8px;
+			border: none;
+			padding: 24px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+
+			&-header {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+			}
+
+			&-body {
+				margin-top: 10px;
+				display: grid;
+				width: 100%;
+				grid-template-columns: 15% 85%;
+				align-items: center;
+
+				.box-header {
+					opacity: 0.7;
+					text-align: left;
+					margin-bottom: 2px;
+					margin-top: 2px;
+					color: #3c3c3b !important;
+					font-size: 14px;
+					display: flex;
+				}
+				.box-field {
+					display: flex;
+					margin-bottom: 2px;
+					margin-top: 2px;
+					text-align: left;
+					color: #3c3c3b !important;
+					font-size: 14px;
+				}
+			}
+
+			.title {
+				color: #3c3c3b !important;
+				font-size: 20px;
+				text-align: left;
+			}
+			.status {
+				display: flex;
+				justify-content: flex-end;
+				min-width: 280px;
+			}
+		}
+
+		&-applications {
+			display: flex;
+			flex-direction: column;
+			overflow-y: auto;
+			margin-top: 24px;
+			margin-left: 32px;
+			margin-right: 32px;
+			height: 500px;
+		}
+	}
+
+	&-footer {
+		display: flex;
+		width: 100%;
+		background: #ffffff;
+		border-top: 1px solid #e7e9ed;
+
+		&--wrap {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding: 16px;
+		}
+	}
+	&-alert {
+		margin-top: 24px;
+		display: flex;
+		padding-left: 10px !important;
+		padding-top: 10px !important;
+
+		&--icon {
+			display: flex;
+			align-items: center;
+
+			&--svg {
+				display: flex !important;
+				align-items: center !important;
+			}
+		}
+	}
+}

@@ -1,11 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { Modal } from 'react-bootstrap';
 import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { Modal } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
-import DataSetHelper from '../../../utils/DataSetHelper.util';
 import contentService from '../../../services/content';
-
+import DataSetHelper from '../../../utils/DataSetHelper.util';
 import './DataSetModal.scss';
 
 const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginModal }) => {
@@ -57,8 +56,6 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
 
         getNon5SafesModalContent();
     }, [open, context]);
-
-    console.log('screenData.dataRequestModalContent', screenData.dataRequestModalContent);
 
     return (
         <>

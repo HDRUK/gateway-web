@@ -1,15 +1,15 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { Row, Col, Button, Pagination, Alert } from 'react-bootstrap';
 import axios from 'axios';
-import Loading from '../commonComponents/Loading';
-import { baseURL } from '../../configs/url.config';
-import { tabTypes } from './Team/teamUtil';
-import SVGIcon from '../../images/SVGIcon';
-import './Dashboard.scss';
-import TeamInfo from './Team/TeamInfo';
 import _ from 'lodash';
-import AddEditTeamsPage from './Team/AddEditTeamsPage';
+import React, { useEffect, useState } from 'react';
+import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
 import { LayoutContent } from '../../components/Layout';
+import { baseURL } from '../../configs/url.config';
+import SVGIcon from '../../images/SVGIcon';
+import Loading from '../commonComponents/Loading';
+import './Dashboard.scss';
+import AddEditTeamsPage from './Team/AddEditTeamsPage';
+import TeamInfo from './Team/TeamInfo';
+import { tabTypes } from './Team/teamUtil';
 
 const maxResults = 40;
 
@@ -26,6 +26,7 @@ const AccountTeams = () => {
     const [editViewMemberOf, setEditViewMemberOf] = useState('');
     const [editViewOrgName, setEditViewOrgName] = useState('');
     const [editViewTeamManagers, setEditViewTeamManagers] = useState([]);
+    const [questionBankEnabled, setQuestionBankEnabled] = useState(false);
     const [alert, setAlert] = useState();
     const [activeTabKey] = useState(tabTypes.Teams);
 
@@ -71,6 +72,7 @@ const AccountTeams = () => {
     };
 
     const editTeam = (publisher, teamManagers) => {
+        setQuestionBankEnabled(publisher.publisherDetails.questionBank?.enabled);
         setEditViewID(publisher._id);
         setEditViewMemberOf(publisher.publisherDetails.memberOf);
         setEditViewOrgName(publisher.publisherDetails.name);
@@ -146,17 +148,18 @@ const AccountTeams = () => {
                                 href=''
                                 className='addButton'
                                 onClick={() => createTeam()}>
-
                                 + Add a new team
                             </Button>
                         </Col>
                     </Row>
                     <Row className='subHeader mt-3 gray800-14-bold'>
                         <Col sm={2}>Updated</Col>
-                        <Col sm={3}>Data custodian</Col>
-                        <Col sm={3}>Team manager(s)</Col>
-                        <Col sm={2}>Members</Col>
-                        <Col sm={2} />
+                        <Col sm={2}>Data custodian</Col>
+                        <Col sm={2}>Team manager(s)</Col>
+                        <Col sm={2} className='text-center'>
+                            Members
+                        </Col>
+                        <Col sm={2}>Question Bank Enabled?</Col>
                     </Row>
                     <Row>
                         <Col sm={12} lg={12}>
@@ -187,6 +190,7 @@ const AccountTeams = () => {
                     editViewMemberOf={editViewMemberOf}
                     editViewOrgName={editViewOrgName}
                     editViewTeamManagers={editViewTeamManagers}
+                    questionBankEnabled={questionBankEnabled}
                     setAlertFunction={setAlertFunction}
                 />
             )}

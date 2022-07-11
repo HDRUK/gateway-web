@@ -9,6 +9,10 @@ const getNotifications = (_id, options) => {
     return getRequest(`${apiURL}/teams/${_id}/notifications`, options);
 };
 
+const addMembers = (_id, data, options) => {
+    return postRequest(`${apiURL}/teams/${_id}/members`, data, options);
+};
+
 const postAdd = (data, options) => {
     return postRequest(`${apiURL}/teams/add`, data, options);
 };
@@ -55,6 +59,13 @@ const usePutTeam = (requestOptions, mutateOptions) => {
     });
 };
 
+const useAddMembers = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(({ id, data }) => addMembers(id, data, requestOptions), {
+        mutationKey: 'teams.addMembers',
+        ...mutateOptions,
+    });
+};
+
 const usePutNotificationMessage = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations((_id, data) => putNotificationMessage(_id, data, requestOptions), {
         mutationKey: 'teams.putNotificationMessage',
@@ -72,6 +83,7 @@ const usePutNotifications = (requestOptions, mutateOptions) => {
 export default {
     getMembers,
     getNotifications,
+    addMembers,
     postAdd,
     putTeam,
     putNotificationMessage,
@@ -80,6 +92,7 @@ export default {
     useGetNotifications,
     usePostAdd,
     usePutTeam,
+    useAddMembers,
     usePutNotificationMessage,
     usePutNotifications,
 };

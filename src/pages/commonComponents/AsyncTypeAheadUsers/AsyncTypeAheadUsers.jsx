@@ -1,16 +1,16 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
-import React, { useState, useEffect } from 'react';
-import { find, remove, isEmpty, isUndefined } from 'lodash';
+import { find, isEmpty, isUndefined, remove } from 'lodash';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { Menu, MenuItem } from 'react-bootstrap-typeahead';
-import Typeahead from '../../../components/Typeahead/Typeahead';
-import serviceUsers from '../../../services/users/users';
-import UploaderUtil from '../../../utils/Uploader.util';
-import useDebounce from '../../../hooks/useDebounce';
 import Icon from '../../../components/Icon';
+import Typeahead from '../../../components/Typeahead/Typeahead';
+import useDebounce from '../../../hooks/useDebounce';
 import { ReactComponent as SearchIcon } from '../../../images/search.svg';
 import { ReactComponent as GreenTick } from '../../../images/tick.svg';
+import serviceUsers from '../../../services/users/users';
+import UploaderUtil from '../../../utils/Uploader.util';
 import * as styles from './AsyncTypeAheadUsers.styles';
 
 function AsyncTypeAheadUsers(props) {

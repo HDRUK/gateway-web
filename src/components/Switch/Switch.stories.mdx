@@ -1,0 +1,29 @@
+import { useState } from 'react';
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import Switch from './Switch';
+
+<Meta title='Core/Switch' component={Switch} />
+
+<Canvas>
+    <Story name='Variants'>
+        {props => {
+            const [checked, setChecked] = useState(false);
+            return (
+                <div>
+                    <div>
+                        <Switch
+                            {...props}
+                            label={`Switch (${checked ? 'Checked' : 'Unchecked'})`}
+                            onChange={({ target: { checked } }) => setChecked(checked)}
+                            mb={4}
+                        />
+                    </div>
+                    <div>
+                        <Switch {...props} label={`Disabled`} disabled />
+                    </div>
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>

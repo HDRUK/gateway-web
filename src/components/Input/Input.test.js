@@ -16,6 +16,7 @@ const props = {
     onDebounce: jest.fn(),
     onChange: jest.fn(),
     label: 'Sample label',
+    className: 'additional-classname',
 };
 
 let wrapper;
@@ -30,6 +31,10 @@ describe('Given the Input component', () => {
 
         it('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
+        });
+
+        it('Then has the correct className', () => {
+            expect(wrapper.container.querySelector('.additional-classname')).toBeTruthy();
         });
 
         it('Then has a label', () => {
