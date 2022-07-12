@@ -46,6 +46,7 @@ import Alert from '../../components/Alert';
 import Close from '../../images/icons/close_blue.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { Trans } from 'react-i18next';
+import users from '../../services/users/users';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -119,7 +120,13 @@ export const DataAccessRequestCustomiseForm = props => {
         };
 
         const newPanelId = panelId || masterSchema.formPanels[0].panelId;
-        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, newPanelId);
+
+        const newJsonSchema = helpers.injectReadonlyStaticContent(
+            { ...masterSchema, ...classSchema, ...questionActions },
+            newPanelId,
+            publisher.publisherDetails,
+            userState
+        );
 
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
