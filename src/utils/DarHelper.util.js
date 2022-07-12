@@ -515,7 +515,7 @@ const injectExportConfigContent = (jsonSchema, pages, formPanels, questionPanels
  * @desc Function to inject static 'about' and 'files' pages and panels into schema
  * @returns {jsonSchmea} object
  */
-const injectReadonlyStaticContent = (jsonSchema = {}, activePanelId, publisherDetails) => {
+const injectReadonlyStaticContent = (jsonSchema = {}, activePanelId, publisherDetails, userState) => {
     const { pages, formPanels, questionPanels } = { ...jsonSchema };
 
     let formPanel = {};
@@ -543,7 +543,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, activePanelId, publisherDe
     });
 
     pages[currentPageIdx].active = true;
-    injectExportConfigContent(jsonSchema, pages, formPanels, questionPanels, publisherDetails);
+    userState[0].role === 'Admin' && injectExportConfigContent(jsonSchema, pages, formPanels, questionPanels, publisherDetails);
     return { ...jsonSchema, pages, formPanels, questionPanels };
 };
 
