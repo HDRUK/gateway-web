@@ -71,15 +71,8 @@ const AddEditTeamsPage = ({
         onSubmit: async values => {
             setLoading(true);
 
-            console.log('questionBank', editViewID, questionBank);
-
-            await questionBankRequest.mutateAsync({
-                _id: editViewID,
-                enabled: questionBank,
-            });
-
             if (editTeamsView) {
-                axios.put(`${baseURL}/api/v1/teams/${editViewID}`, values).then(res => {
+                await axios.put(`${baseURL}/api/v1/teams/${editViewID}`, values).then(res => {
                     const alert = {
                         message: "You have editted the data custodian team '" + `${editViewMemberOf} > ${editViewOrgName}` + "'",
                     };
@@ -88,15 +81,23 @@ const AddEditTeamsPage = ({
                     cancelAddEdit();
                 });
             } else {
-                axios.post(`${baseURL}/api/v1/teams/add`, values).then(res => {
+                await axios.post(`${baseURL}/api/v1/teams/add`, values).then(res => {
                     const alert = {
                         message: "You have added the data custodian team '" + `${values.name}` + "'",
                     };
+                    editViewID = res.data._id;
                     setAlertFunction(alert);
                     setLoading(false);
                     cancelAddEdit();
                 });
             }
+
+            console.log('questionBank', editViewID, questionBank);
+
+            await questionBankRequest.mutateAsync({
+                _id: editViewID,
+                enabled: questionBank,
+            });
         },
     });
 
