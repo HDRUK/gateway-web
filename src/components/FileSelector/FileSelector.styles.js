@@ -13,8 +13,12 @@ export const table = theme => {
 
         th,
         td {
-            ${getSpacingStyle('padding', 2, theme)};
+            ${getSpacingStyle('padding', 3, theme)};
             vertical-align: middle;
+        }
+
+        tr td:last-child {
+            padding-right: 0;
         }
 
         thead tr {
