@@ -869,7 +869,7 @@ class DataAccessRequest extends Component {
 
             if (_.isEmpty(panelId) || typeof panelId == 'undefined') {
                 const filteredPanels = [...this.state.jsonSchema.formPanels].filter((p, i) => {
-                    return p.pageId === newFormState[newPageindex].pageId && this.state.questionSetStatus[p.panelId] !== 0;
+                    return p.pageId === newFormState[newPageindex].pageId;
                 });
 
                 ({ panelId } = filteredPanels[0]);
