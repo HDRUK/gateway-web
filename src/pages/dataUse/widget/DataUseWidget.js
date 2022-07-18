@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import Button from '../../../components/Button';
@@ -27,6 +28,7 @@ const DataUseWidget = ({ userState, team, publisherDetails }) => {
     });
 
     console.log('publisherDetails', publisherDetails);
+    const widgetComp = <hdruk-data-uses publisher={publisherDetails.name} apiURL={widgetAPIURL} baseURL={window.location.origin} />;
 
     const accepted = publisherDetails?.dataUse?.widget?.accepted;
 
@@ -43,7 +45,7 @@ const DataUseWidget = ({ userState, team, publisherDetails }) => {
         },
     });
 
-    const codeString = `<script type="module" src="${WIDGET_MODULE}"></script>\n<hdruk-data-uses publisher="${publisherDetails.name}"/>`;
+    const codeString = `<script type="module" src="${WIDGET_MODULE}"></script>\n${ReactDOMServer.renderToString(widgetComp)}`;
 
     const clickHandler = () => {
         setState({ ...state, showAcceptModal: true });
@@ -115,7 +117,7 @@ const DataUseWidget = ({ userState, team, publisherDetails }) => {
                     <Typography color='grey600'>
                         <i>{t('datause.widget.buttonHelp')}</i>
                     </Typography>
-                    <hdruk-data-uses publisher={publisherDetails.name} apiURL={widgetAPIURL} baseURL={window.location.origin} />
+                    {widgetComp}
                     <br />
                     {checked && <DataUseWidgetCode codeString={codeString} copyToClipBoard={copyToClipBoardHandler} />}
                     <AcceptModal open={state.showAcceptModal} onClose={modalCloseHandler} onAccept={acceptHandler} />
