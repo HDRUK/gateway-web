@@ -12,18 +12,11 @@ import Button from '../Button';
             return (
                 <LayoutBox width='600px'>
                     <FileSelector
-                        actions={({ fileList }) => {
+                        actions={({ fileList, readAsText }) => {
                             if (fileList.length) {
-                                var reader = new FileReader();
-                                reader.readAsText(fileList[0], 'UTF-8');
-                                reader.onload = function (evt) {
-                                    console.log(evt.target.result);
-                                    try {
-                                        console.log('JSON', JSON.parse(evt.target.result));
-                                    } catch (e) {
-                                        alert('there was an error: ' + e);
-                                    }
-                                };
+                                readAsText(fileList[0]).then(result => {
+                                    console.log('RESULT', JSON.parse(result));
+                                });
                             }
                             return fileList.length ? <Button>Upload</Button> : null;
                         }}

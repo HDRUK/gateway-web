@@ -8,6 +8,8 @@ import Typography, { H5 } from '../Typography';
 import LayoutBox from '../LayoutBox';
 import Icon from '../Icon';
 
+import { ReactComponent as UploadIcon } from '../../images/icons/upload.svg';
+import { ReactComponent as RemoveIcon } from '../../images/icons/close.svg';
 import { ReactComponent as JsonIcon } from '../../images/icons/json.svg';
 
 const FileSelector = ({ children, fileTypes, maxFileSize, noFilesMessage, multiple, actions }) => {
@@ -33,11 +35,36 @@ const FileSelector = ({ children, fileTypes, maxFileSize, noFilesMessage, multip
         setFileList(files);
     };
 
+    const reset = useCallback(() => {
+        if (fileRef.current) fileRef.current.value = '';
+
+        setFileList([]);
+    }, [fileRef.current]);
+
+    const readAsText = useCallback(async file => {
+        const reader = new FileReader();
+        reader.readAsText(file, 'UTF-8');
+
+        return new Promise((resolve, reject) => {
+            reader.onload = e => {
+                try {
+                    resolve(e.target.result);
+                } catch (err) {
+                    reject(err);
+                }
+            };
+        });
+    }, []);
+
     return (
         <div css={styles.root}>
             <input type='file' ref={fileRef} accept={`.${fileTypes.join(', .')}`} onChange={handleFileChange} multiple={multiple} />
             <LayoutBox display='flex' alignItems='center' mb={10}>
-                <Button variant='tertiary' mr={3} onClick={handleSelectClick}>
+                <Button
+                    variant='tertiary'
+                    mr={3}
+                    onClick={handleSelectClick}
+                    iconLeft={<Icon svg={<UploadIcon />} fill='purple500' size='lg' />}>
                     Select file
                 </Button>
                 <Typography color='grey600' variant='caption'>
@@ -72,7 +99,10 @@ const FileSelector = ({ children, fileTypes, maxFileSize, noFilesMessage, multip
                                         </td>
                                         <td>{name}</td>
                                         <td css={styles.actionsColumn}>
-                                            <Button variant='tertiary' onClick={() => handleRemoveFile(name)}>
+                                            <Button
+                                                variant='tertiary'
+                                                onClick={() => handleRemoveFile(name)}
+                                                iconLeft={<Icon svg={<RemoveIcon />} fill='purple500' size='sm' />}>
                                                 Remove
                                             </Button>
                                         </td>
@@ -84,8 +114,8 @@ const FileSelector = ({ children, fileTypes, maxFileSize, noFilesMessage, multip
                 </>
             )}
             {actions && (
-                <LayoutBox display='flex' justifyContent='flex-end' mt={10}>
-                    {actions({ fileList })}
+                <LayoutBox display='flex' justifyContent='flex-end' mt={3}>
+                    {actions({ fileList, readAsText, reset })}
                 </LayoutBox>
             )}
         </div>
@@ -95,7 +125,7 @@ const FileSelector = ({ children, fileTypes, maxFileSize, noFilesMessage, multip
 FileSelector.defaultProps = {
     fileTypes: ['json'],
     maxFileSize: 10000000,
-    noFilesMessage: 'No files have been uploaded',
+    noFilesMessage: null,
     multiple: false,
 };
 

@@ -4,6 +4,8 @@ import { getColorStyle, getSpacingStyle } from '../../configs/theme';
 export const root = () => css`
     input {
         visibility: hidden;
+        position: absolute;
+        z-index: 0;
     }
 `;
 

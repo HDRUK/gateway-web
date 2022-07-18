@@ -477,13 +477,16 @@ const totalQuestionsAnswered = (component, panelId = '', questionAnswers = {}, j
  * @desc Function to inject static 'about' and 'files' pages and panels into schema
  * @returns {jsonSchmea} object
  */
-const injectReadonlyStaticContent = (jsonSchema = {}, activePanelId) => {
+const injectReadonlyStaticContent = (jsonSchema = {}) => {
     const { pages, formPanels, questionPanels } = { ...jsonSchema };
 
-    let formPanel = {};
-    let currentPageIdx = 0;
-
     const additionalfilesNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
+    const aboutNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ABOUT);
+
+    if (!aboutNavElementsExist) {
+        pages.unshift(staticContent.aboutPageNav);
+        formPanels.unshift(staticContent.aboutPanel);
+    }
 
     if (!additionalfilesNavElementsExist) {
         pages.push(staticContent.filesPageNav);
@@ -494,17 +497,6 @@ const injectReadonlyStaticContent = (jsonSchema = {}, activePanelId) => {
         formPanels.push(staticContent.additionalFilesPanel);
         questionPanels.push(staticContent.additionalFilesQuestionPanel);
     }
-
-    if (!_.isEmpty(activePanelId)) {
-        formPanel = formPanels.find(p => p.panelId === activePanelId);
-        currentPageIdx = pages.findIndex(page => page.pageId === formPanel.pageId);
-    }
-
-    pages.forEach(element => {
-        element.active = false;
-    });
-
-    pages[currentPageIdx].active = true;
 
     return { ...jsonSchema, pages, formPanels, questionPanels };
 };
