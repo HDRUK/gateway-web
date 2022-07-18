@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { getComponentSize, getComponentVariant } from '../../configs/theme';
+import { getComponentSize, getComponentVariant, getSize } from '../../configs/theme';
 
 export const mixins = {
     button: () =>
@@ -10,28 +10,18 @@ export const mixins = {
         align-items: center;
         justify-content: center;
         line-height: 1em;
-
-        .ui-Icon,
-        svg {
-            height: 1em;
-            width: 1em;
-        }
 `,
 };
 
 export const root =
     ({ variant, size }) =>
     theme => {
-        const {
-            base: { unit, increment },
-        } = theme;
-
         return css`
             ${mixins.button()}
             ${getComponentVariant('Button', variant, theme)}
             ${getComponentSize('Button', size, theme)}
 
             border-radius: 4px;
-            gap: ${increment * 1.5}${unit};
+            gap: ${getSize(1, theme)};
         `;
     };

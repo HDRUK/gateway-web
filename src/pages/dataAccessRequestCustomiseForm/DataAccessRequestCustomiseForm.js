@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import { t } from 'i18next';
-import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
+import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq, xorWith, xor, differenceWith, toPairs, fromPairs } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Col, Container, Modal, Row } from 'react-bootstrap';
@@ -46,6 +46,14 @@ import Alert from '../../components/Alert';
 import Close from '../../images/icons/close_blue.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { Trans } from 'react-i18next';
+import AboutApplication from './components/AboutApplication/AboutApplication';
+
+const questionActions = {
+    questionActions: [
+        { key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 },
+        { key: 'guidanceLocked', icon: 'far fa-eye', color: '#475da7', toolTip: 'View locked guidance', order: 1 },
+    ],
+};
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -111,20 +119,10 @@ export const DataAccessRequestCustomiseForm = props => {
             },
         } = await questionbankService.getQuestionbankItem(publisherID);
 
-        const questionActions = {
-            questionActions: [
-                { key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 },
-                { key: 'guidanceLocked', icon: 'far fa-eye', color: '#475da7', toolTip: 'View locked guidance', order: 1 },
-            ],
-        };
-
-        const newPanelId = panelId || masterSchema.formPanels[0].panelId;
-        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, newPanelId);
+        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions });
+        const newPanelId = panelId || newJsonSchema.formPanels[0].panelId;
 
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
-
-        console.log('questionSet', questionStatus);
-        console.log('questionSetStatus', questionSetStatus);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
@@ -330,21 +328,7 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const onNextClick = () => {
-        // 1. If in the about panel, we go to the next step.  Otherwise next panel.
-        if (activePanelId === 'about') {
-            // 2. Pass no completed bool value to go to next step without modifying completed status
-            this.onNextStep();
-            // 3. If we have reached the end of the about accordion, reset active accordion so all are closed
-            if (this.state.activeAccordionCard >= 6) {
-                this.setState({
-                    activeAccordionCard: -1,
-                });
-                // 4. Move to the next step
-                onNextPanel();
-            }
-        } else {
-            onNextPanel();
-        }
+        onNextPanel();
     };
 
     const onNextPanel = () => {
@@ -358,49 +342,6 @@ export const DataAccessRequestCustomiseForm = props => {
         const { panelId, pageId } = formPanels[nextIdx > formPanels.length - 1 ? 0 : nextIdx];
         // 5. Update the navigationState
         updateNavigation({ panelId, pageId });
-    };
-
-    const onNextStep = async completed => {
-        // 1. Deconstruct current state
-        /* let { aboutApplication, activeAccordionCard } = this.state;
-		// 2. If a completed flag has been passed, update step during navigation
-		if (!_.isUndefined(completed)) {
-			switch (activeAccordionCard) {
-				case 0:
-					aboutApplication.completedDatasetSelection = completed;
-					break;
-				case 1:
-					// Do nothing, valid state for project name step handled by existence of text
-					break;
-				case 2:
-					aboutApplication.completedInviteCollaborators = completed;
-					break;
-				case 3:
-					aboutApplication.completedReadAdvice = completed;
-					break;
-				case 4:
-					aboutApplication.completedCommunicateAdvice = completed;
-					break;
-				case 5:
-					aboutApplication.completedApprovalsAdvice = completed;
-					break;
-				case 6:
-					aboutApplication.completedSubmitAdvice = completed;
-					break;
-				default:
-					console.error('Invalid step passed');
-					break;
-			}
-		}
-		// 3. Update application
-		let dataObj = { key: 'aboutApplication', data: aboutApplication };
-		await this.updateApplication(dataObj);
-
-		// 4. Set new state
-		this.setState({
-			activeAccordionCard: ++activeAccordionCard,
-			aboutApplication,
-		}); */
     };
 
     const onQuestionAction = async (e = '', questionSetId = '', questionId = '', key = '') => {
@@ -526,8 +467,6 @@ export const DataAccessRequestCustomiseForm = props => {
             unpublishedGuidance: unpublishedGuidanceChange,
         };
 
-        darService.patchSchema(schemaId, params);
-
         await patchSchemaRequest.mutateAsync({
             id: schemaId,
             ...params,
@@ -572,7 +511,92 @@ export const DataAccessRequestCustomiseForm = props => {
         setShowClearSectionModal(false);
     };
 
+    const handleImportUpload = async (
+        { questionStatus: uploadQuestionStatus, questionSetStatus: uploadQuestionSetStatus, jsonSchema: uploadJsonSchema },
+        { reset }
+    ) => {
+        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...uploadJsonSchema, ...classSchema, ...questionActions });
+        const newPanelId = newJsonSchema.formPanels[0].panelId;
+
+        const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
+
+        let flattenedNewGuidance = [];
+        newJsonSchema.questionSets.forEach(({ questions }) => {
+            flattenedNewGuidance = flattenedNewGuidance.concat(questions.map(question => [question.questionId, question.guidance]));
+        });
+
+        let flattenedGuidance = [];
+        jsonSchema.questionSets.forEach(({ questions }) => {
+            flattenedGuidance = flattenedGuidance.concat(questions.map(question => [question.questionId, question.guidance]));
+        });
+
+        const updatedGuidance = fromPairs(differenceWith(flattenedNewGuidance, flattenedGuidance, isEqual));
+        const updatedQuestionStatus = fromPairs(differenceWith(toPairs(uploadQuestionStatus), toPairs(questionStatus), isEqual));
+        const updatedQuestionSetStatus = fromPairs(differenceWith(toPairs(uploadQuestionSetStatus), toPairs(questionSetStatus), isEqual));
+
+        const params = {
+            countOfChanges:
+                Object.keys(updatedGuidance).length +
+                Object.keys(updatedQuestionStatus).length +
+                Object.keys(updatedQuestionSetStatus).length,
+            unpublishedGuidance: Object.keys(updatedGuidance),
+            guidance: updatedGuidance,
+            questionStatus: updatedQuestionStatus,
+            questionSetStatus: updatedQuestionSetStatus,
+        };
+
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        reset();
+
+        setUnpublishedGuidance(unpublishedGuidance);
+        setJsonSchema(newJsonSchema);
+        setQuestionStatus(questionStatus);
+        setQuestionSetStatus(questionSetStatus);
+        setExistingQuestionStatus(cloneDeep(questionStatus));
+        setNewGuidance(updatedGuidance);
+        setExistingGuidance(cloneDeep(updatedGuidance));
+        setCountOfChanges(params.countOfChanges);
+        setExistingCountOfChanges(params.countOfChanges);
+        setActivePanelId(newPanelId);
+
+        updateNavigation(
+            {
+                pageId,
+                panelId: newPanelId,
+            },
+            newJsonSchema
+        );
+    };
+
+    const handleSuccessClose = React.useCallback(() => {
+        patchSchemaRequest.reset();
+    }, []);
+
     const renderApp = React.useCallback(() => {
+        if (patchSchemaRequest.isLoading) {
+            return <Loading />;
+        }
+        if (activePanelId === 'about') {
+            return (
+                <AboutApplication
+                    sections={[
+                        'Select the datasets you need',
+                        'Name your application',
+                        'Invite contributors',
+                        'Read the advice from the data custodian',
+                        'Communicate with the data custodian',
+                        'Check what approvals you might need',
+                        'Understand what happens after you submit the application',
+                    ]}
+                    onUpload={handleImportUpload}
+                />
+            );
+        }
+
         if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
                 <Uploads
@@ -629,7 +653,7 @@ export const DataAccessRequestCustomiseForm = props => {
                 />
             )
         );
-    }, [activePanelId, questionStatus, questionSetStatus, questionAnswers, unpublishedGuidance]);
+    }, [activePanelId, questionStatus, questionSetStatus, questionAnswers, unpublishedGuidance, patchSchemaRequest.isLoading]);
 
     const handleClose = () => {
         setShowSaveAlert(false);
@@ -739,6 +763,12 @@ export const DataAccessRequestCustomiseForm = props => {
                         <Alert variant='info' icon={<Icon svg={<Clock />} size='lg' />} onClose={handleClose} dismissable mb={2} mr={2}>
                             {t('DAR.customise.saveAlert')}
                         </Alert>
+
+                        {patchSchemaRequest.isSuccess && (
+                            <Alert variant='success' dismissable onClose={handleSuccessClose} mb={2} mr={2}>
+                                {t('DAR.customise.uploadAlert')}
+                            </Alert>
+                        )}
 
                         <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
                             {jsonSchema.pages
