@@ -120,9 +120,9 @@ export const DataAccessRequestCustomiseForm = props => {
         };
 
         const newPanelId = panelId || masterSchema.formPanels[0].panelId;
-
         const newJsonSchema = helpers.injectReadonlyStaticContent(
             { ...masterSchema, ...classSchema, ...questionActions },
+            { questionStatus, questionSetStatus, guidance },
             newPanelId,
             publisher.publisherDetails,
             userState
