@@ -126,14 +126,20 @@ export const DataAccessRequestCustomiseForm = props => {
         const {
             data: {
                 result: { masterSchema, questionStatus, questionSetStatus, guidance, countOfChanges, schemaId, unpublishedGuidance },
-                result,
             },
         } = await questionbankService.getQuestionbankItem(publisherID);
 
-        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions });
-        const newPanelId = panelId || newJsonSchema.formPanels[0].panelId;
+        const newJsonSchema = helpers.injectReadonlyStaticContent(
+            { ...masterSchema, ...classSchema, ...questionActions },
+            { questionStatus, questionSetStatus, guidance },
+            publisher.publisherDetails,
+            userState
+        );
 
+        const newPanelId = panelId || newJsonSchema.formPanels[0].panelId;
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
+
+        console.log('newPanelId', newPanelId);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
@@ -529,7 +535,12 @@ export const DataAccessRequestCustomiseForm = props => {
             },
         } = await questionbankService.getQuestionbankItem(publisherDetails._id);
 
-        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...uploadJsonSchema, ...classSchema, ...questionActions });
+        const newJsonSchema = helpers.injectReadonlyStaticContent(
+            { ...uploadJsonSchema, ...classSchema, ...questionActions },
+            {},
+            publisherDetails,
+            userState
+        );
         const newPanelId = newJsonSchema.formPanels[0].panelId;
 
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
@@ -548,6 +559,16 @@ export const DataAccessRequestCustomiseForm = props => {
             questionSetStatus: uploadQuestionSetStatus,
         };
 
+        console.log('params', {
+            countOfChanges:
+                Object.keys(updatedGuidance).length +
+                Object.keys(updatedQuestionStatus).length +
+                Object.keys(updatedQuestionSetStatus).length,
+            guidance: updatedGuidance,
+            questionStatus: uploadQuestionStatus,
+            questionSetStatus: uploadQuestionSetStatus,
+        });
+
         await patchSchemaRequest.mutateAsync({
             id: schemaId,
             ...params,
@@ -560,9 +581,9 @@ export const DataAccessRequestCustomiseForm = props => {
 
         setUnpublishedGuidance(unpublishedGuidance);
         setJsonSchema(newJsonSchema);
-        setQuestionStatus(updatedQuestionStatus);
-        setQuestionSetStatus(updatedQuestionSetStatus);
-        setExistingQuestionStatus(cloneDeep(updatedQuestionStatus));
+        setQuestionStatus(uploadQuestionStatus);
+        setQuestionSetStatus(uploadQuestionSetStatus);
+        setExistingQuestionStatus(cloneDeep(uploadQuestionStatus));
         setNewGuidance(updatedGuidance);
         setExistingGuidance(cloneDeep(updatedGuidance));
         setCountOfChanges(params.countOfChanges);

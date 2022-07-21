@@ -1,5 +1,7 @@
+import React from 'react';
 import _ from 'lodash';
 import moment from 'moment';
+import Button from '../components/Button';
 
 const autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
 
@@ -54,6 +56,22 @@ const staticContent = {
         questionSets: [],
         pageId: 'additionalinformationfiles',
         panelGuidance: 'Please upload all additional documentation as requested in the DAR form.',
+    },
+    exportConfigFile: {
+        title: 'Export DAR config file',
+        pageId: 'export',
+        description: `You can export your Data Access Request(DAR) configuration file at any time but in the interest of completeness, we recommend completing customisation of all sections of the DAR before export`,
+    },
+    exportConfigFilePanel: {
+        panelId: 'export',
+        index: 1000,
+        pageId: 'export',
+    },
+    exportConfigFileQuestionPanel: {
+        navHeader: '',
+        panelId: 'export',
+        questionSets: [],
+        pageId: 'export',
     },
 };
 
@@ -472,12 +490,35 @@ const totalQuestionsAnswered = (component, panelId = '', questionAnswers = {}, j
     return { totalAnsweredQuestions: 0, totalQuestions: 0 };
 };
 
+const clickExportHandler = (schema, publisherDetails) => {
+    const currentDate = moment().format('YYYY-MM-DD');
+    const fileName = `dar-${publisherDetails.name.replaceAll(' ', '-').toLowerCase()}-${currentDate}.json`;
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(schema))}`;
+    const link = document.createElement('a');
+    link.href = jsonString;
+    link.download = fileName;
+    link.click();
+};
+const injectExportConfigContent = (jsonSchema, pages, formPanels, questionPanels, publisherDetails) => {
+    staticContent.exportConfigFileQuestionPanel.navHeader = (
+        <>
+            {staticContent.exportConfigFile.description}
+            <Button onClick={() => clickExportHandler(jsonSchema, publisherDetails)}>Export DAR config file</Button>
+        </>
+    );
+    pages.push(staticContent.exportConfigFile);
+    formPanels.push(staticContent.exportConfigFilePanel);
+    questionPanels.push(staticContent.exportConfigFileQuestionPanel);
+
+    return { ...pages, ...formPanels, ...questionPanels };
+};
+
 /**
  * InjectStaticContent
  * @desc Function to inject static 'about' and 'files' pages and panels into schema
  * @returns {jsonSchmea} object
  */
-const injectReadonlyStaticContent = (jsonSchema = {}) => {
+const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, publisherDetails, userState) => {
     const { pages, formPanels, questionPanels } = { ...jsonSchema };
 
     const additionalfilesNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
@@ -496,6 +537,12 @@ const injectReadonlyStaticContent = (jsonSchema = {}) => {
     if (additionalfilesNavElementsExist) {
         formPanels.push(staticContent.additionalFilesPanel);
         questionPanels.push(staticContent.additionalFilesQuestionPanel);
+    }
+
+    console.log('injecting userState', userState);
+
+    if (userState[0].role === 'Admin') {
+        injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels, publisherDetails);
     }
 
     return { ...jsonSchema, pages, formPanels, questionPanels };
