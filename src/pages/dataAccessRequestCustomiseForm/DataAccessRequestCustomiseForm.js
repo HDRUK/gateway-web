@@ -1,27 +1,32 @@
 import * as Sentry from '@sentry/react';
 import { t } from 'i18next';
-import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq, xorWith, xor, differenceWith, toPairs, fromPairs } from 'lodash';
+import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Col, Container, Modal, Row } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { Trans } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
-import { useHistory } from 'react-router-dom';
 import { NotificationManager } from 'react-notifications';
+import { useHistory, useLocation } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
+import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import Cta from '../../components/Cta';
 import Icon from '../../components/Icon';
 import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
-import Typography, { H5, P } from '../../components/Typography';
+import Typography, { H5 } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
 import questionbankService from '../../services/questionbank';
+import { getTeam } from '../../utils/auth';
 import helpers from '../../utils/DarHelper.util';
+import { diffObjects } from '../../utils/GeneralHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../commonComponents/ActionBarMenu/ActionBarMenu';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -32,6 +37,7 @@ import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
 import { classSchema } from './classSchema';
+import AboutApplication from './components/AboutApplication/AboutApplication';
 import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
 import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
 import NavDropdown from './components/NavDropdown/NavDropdown';
@@ -39,14 +45,8 @@ import NavItem from './components/NavItem/NavItem';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
-import handleAnalytics from './handleAnalytics';
 import './DataAccessRequestCustomiseForm.scss';
-import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
-import Close from '../../images/icons/close_blue.svg';
-import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
-import { Trans } from 'react-i18next';
-import AboutApplication from './components/AboutApplication/AboutApplication';
+import handleAnalytics from './handleAnalytics';
 
 const questionActions = {
     questionActions: [
@@ -96,8 +96,19 @@ export const DataAccessRequestCustomiseForm = props => {
     const [showClearModal, setShowClearModal] = React.useState(false);
     const [showClearSectionModal, setShowClearSectionModal] = React.useState(false);
     const [showSaveAlert, setShowSaveAlert] = useState(true);
+    const [isUploading, setIsUploading] = useState(false);
+    const [isUploaded, setIsUploaded] = useState(false);
 
-    const patchSchemaRequest = darService.usePatchSchema();
+    const location = useLocation();
+    const team = getTeam({ location });
+
+    const patchSchemaRequest = darService.usePatchSchema(null, {
+        onError: ({ title, message }) => {
+            setIsUploading(false);
+
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
     const getMasterSchema = async panelId => {
         const {
@@ -186,23 +197,16 @@ export const DataAccessRequestCustomiseForm = props => {
         setQuestionStatus(newQuestionStatus);
         setQuestionSetStatus(newQuestionSetStatus);
 
-        await patchSchemaRequest.mutateAsync(
-            {
-                id: schemaId,
-                ...params,
-            },
-            {
-                onError: ({ title, message }) => {
-                    NotificationManager.error(message, title, 10000);
-                },
-            }
-        );
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
 
         setLastSaved(saveTime());
         handleAnalytics(`Question Set ${questionSetId} switched`, checked ? 'On' : 'Off');
     };
 
-    const onSwitchChange = (questionId, value) => {
+    const onSwitchChange = async (questionId, value) => {
         const newJsonSchema = { ...jsonSchema };
         const questionSet = helpers.findQuestionSetByQuestionId(questionId, newJsonSchema);
 
@@ -242,17 +246,10 @@ export const DataAccessRequestCustomiseForm = props => {
             countOfChanges: numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges,
         };
 
-        patchSchemaRequest.mutateAsync(
-            {
-                id: schemaId,
-                ...params,
-            },
-            {
-                onError: ({ title, message }) => {
-                    NotificationManager.error(message, title, 10000);
-                },
-            }
-        );
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
 
         setLastSaved(saveTime());
         handleAnalytics(`Question ${questionId} switched`, value ? 'On' : 'Off');
@@ -491,6 +488,7 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema(activePanelId);
 
         setShowClearModal(false);
+
         handleAnalytics('Clearing updates', 'Entire form');
     }, [activePanelId, publisherDetails._id]);
 
@@ -502,6 +500,7 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema(activePanelId);
 
         setShowClearSectionModal(false);
+
         handleAnalytics('Clearing updates', page.title);
     }, [activePanelId, publisherDetails._id]);
 
@@ -512,37 +511,41 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const handleImportUpload = async (
-        { questionStatus: uploadQuestionStatus, questionSetStatus: uploadQuestionSetStatus, jsonSchema: uploadJsonSchema },
+        {
+            questionStatus: uploadQuestionStatus,
+            questionSetStatus: uploadQuestionSetStatus,
+            guidance: uploadGuidance,
+            jsonSchema: uploadJsonSchema,
+        },
         { reset }
     ) => {
+        setIsUploading(true);
+
+        await questionbankService.patchClearAll(publisherDetails._id);
+
+        const {
+            data: {
+                result: { questionStatus, questionSetStatus, guidance },
+            },
+        } = await questionbankService.getQuestionbankItem(publisherDetails._id);
+
         const newJsonSchema = helpers.injectReadonlyStaticContent({ ...uploadJsonSchema, ...classSchema, ...questionActions });
         const newPanelId = newJsonSchema.formPanels[0].panelId;
 
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
-        let flattenedNewGuidance = [];
-        newJsonSchema.questionSets.forEach(({ questions }) => {
-            flattenedNewGuidance = flattenedNewGuidance.concat(questions.map(question => [question.questionId, question.guidance]));
-        });
-
-        let flattenedGuidance = [];
-        jsonSchema.questionSets.forEach(({ questions }) => {
-            flattenedGuidance = flattenedGuidance.concat(questions.map(question => [question.questionId, question.guidance]));
-        });
-
-        const updatedGuidance = fromPairs(differenceWith(flattenedNewGuidance, flattenedGuidance, isEqual));
-        const updatedQuestionStatus = fromPairs(differenceWith(toPairs(uploadQuestionStatus), toPairs(questionStatus), isEqual));
-        const updatedQuestionSetStatus = fromPairs(differenceWith(toPairs(uploadQuestionSetStatus), toPairs(questionSetStatus), isEqual));
+        const updatedGuidance = diffObjects(guidance, uploadGuidance);
+        const updatedQuestionStatus = diffObjects(questionStatus, uploadQuestionStatus);
+        const updatedQuestionSetStatus = diffObjects(questionSetStatus, uploadQuestionSetStatus);
 
         const params = {
             countOfChanges:
                 Object.keys(updatedGuidance).length +
                 Object.keys(updatedQuestionStatus).length +
                 Object.keys(updatedQuestionSetStatus).length,
-            unpublishedGuidance: Object.keys(updatedGuidance),
             guidance: updatedGuidance,
-            questionStatus: updatedQuestionStatus,
-            questionSetStatus: updatedQuestionSetStatus,
+            questionStatus: uploadQuestionStatus,
+            questionSetStatus: uploadQuestionSetStatus,
         };
 
         await patchSchemaRequest.mutateAsync({
@@ -550,13 +553,16 @@ export const DataAccessRequestCustomiseForm = props => {
             ...params,
         });
 
+        setIsUploaded(true);
+        setIsUploading(false);
+
         reset();
 
         setUnpublishedGuidance(unpublishedGuidance);
         setJsonSchema(newJsonSchema);
-        setQuestionStatus(questionStatus);
-        setQuestionSetStatus(questionSetStatus);
-        setExistingQuestionStatus(cloneDeep(questionStatus));
+        setQuestionStatus(updatedQuestionStatus);
+        setQuestionSetStatus(updatedQuestionSetStatus);
+        setExistingQuestionStatus(cloneDeep(updatedQuestionStatus));
         setNewGuidance(updatedGuidance);
         setExistingGuidance(cloneDeep(updatedGuidance));
         setCountOfChanges(params.countOfChanges);
@@ -573,13 +579,16 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const handleSuccessClose = React.useCallback(() => {
+        setIsUploaded(false);
+
         patchSchemaRequest.reset();
     }, []);
 
     const renderApp = React.useCallback(() => {
-        if (patchSchemaRequest.isLoading) {
+        if (isUploading) {
             return <Loading />;
         }
+
         if (activePanelId === 'about') {
             return (
                 <AboutApplication
@@ -593,6 +602,8 @@ export const DataAccessRequestCustomiseForm = props => {
                         'Understand what happens after you submit the application',
                     ]}
                     onUpload={handleImportUpload}
+                    userState={userState}
+                    team={team}
                 />
             );
         }
@@ -653,7 +664,7 @@ export const DataAccessRequestCustomiseForm = props => {
                 />
             )
         );
-    }, [activePanelId, questionStatus, questionSetStatus, questionAnswers, unpublishedGuidance, patchSchemaRequest.isLoading]);
+    }, [activePanelId, questionStatus, questionSetStatus, questionAnswers, unpublishedGuidance, isUploading]);
 
     const handleClose = () => {
         setShowSaveAlert(false);
@@ -764,7 +775,7 @@ export const DataAccessRequestCustomiseForm = props => {
                             {t('DAR.customise.saveAlert')}
                         </Alert>
 
-                        {patchSchemaRequest.isSuccess && (
+                        {isUploaded && (
                             <Alert variant='success' dismissable onClose={handleSuccessClose} mb={2} mr={2}>
                                 {t('DAR.customise.uploadAlert')}
                             </Alert>
@@ -852,7 +863,6 @@ export const DataAccessRequestCustomiseForm = props => {
                                 }}>
                                 Publish
                             </Button>
-
                             <Button onClick={onNextClick}>Next</Button>
                         </div>
                     </div>{' '}
