@@ -47,6 +47,9 @@ import Close from '../../images/icons/close_blue.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { Trans } from 'react-i18next';
 import users from '../../services/users/users';
+import DoubleDropdownCustom from '../DataAccessRequest/components/DoubleDropdownCustom/DoubleDropdownCustom';
+import DropdownCustom from '../DataAccessRequest/components/DropdownCustom/DropdownCustom';
+import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -645,6 +648,9 @@ export const DataAccessRequestCustomiseForm = props => {
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
     Winterfell.addInputType('datePickerCustom', DatePickerCustom);
     Winterfell.addInputType('typeaheadUser', TypeaheadUser);
+    Winterfell.addInputType('textareaInputCustom', TextareaInputCustom);
+    Winterfell.addInputType('dropdownCustom', DropdownCustom);
+    Winterfell.addInputType('doubleDropdownCustom', DoubleDropdownCustom);
 
     Winterfell.validation.default.addValidationMethods({
         isCustomDate: value => {
