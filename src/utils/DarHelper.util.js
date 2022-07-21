@@ -518,13 +518,16 @@ const injectExportConfigContent = (jsonSchema, pages, formPanels, questionPanels
  * @desc Function to inject static 'about' and 'files' pages and panels into schema
  * @returns {jsonSchmea} object
  */
-const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, activePanelId, publisherDetails, userState) => {
+const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, publisherDetails, userState) => {
     const { pages, formPanels, questionPanels } = { ...jsonSchema };
 
-    let formPanel = {};
-    let currentPageIdx = 0;
-
     const additionalfilesNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
+    const aboutNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ABOUT);
+
+    if (!aboutNavElementsExist) {
+        pages.unshift(staticContent.aboutPageNav);
+        formPanels.unshift(staticContent.aboutPanel);
+    }
 
     if (!additionalfilesNavElementsExist) {
         pages.push(staticContent.filesPageNav);
@@ -536,19 +539,12 @@ const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, act
         questionPanels.push(staticContent.additionalFilesQuestionPanel);
     }
 
-    if (!_.isEmpty(activePanelId)) {
-        formPanel = formPanels.find(p => p.panelId === activePanelId);
-        currentPageIdx = pages.findIndex(page => page.pageId === formPanel.pageId);
+    console.log('injecting userState', userState);
+
+    if (userState[0].role === 'Admin') {
+        injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels, publisherDetails);
     }
 
-    pages.forEach(element => {
-        element.active = false;
-    });
-
-    pages[currentPageIdx].active = true;
-
-    userState[0].role === 'Admin' &&
-        injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels, publisherDetails);
     return { ...jsonSchema, pages, formPanels, questionPanels };
 };
 

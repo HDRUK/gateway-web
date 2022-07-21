@@ -5,23 +5,28 @@ import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Col, Container, Modal, Row } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { Trans } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
-import { useHistory } from 'react-router-dom';
 import { NotificationManager } from 'react-notifications';
+import { useHistory, useLocation } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
+import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import Cta from '../../components/Cta';
 import Icon from '../../components/Icon';
 import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
-import Typography, { H5, P } from '../../components/Typography';
+import Typography, { H5 } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
 import questionbankService from '../../services/questionbank';
+import { getTeam } from '../../utils/auth';
 import helpers from '../../utils/DarHelper.util';
+import { diffObjects } from '../../utils/GeneralHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../commonComponents/ActionBarMenu/ActionBarMenu';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -32,6 +37,7 @@ import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
 import { classSchema } from './classSchema';
+import AboutApplication from './components/AboutApplication/AboutApplication';
 import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
 import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
 import NavDropdown from './components/NavDropdown/NavDropdown';
@@ -39,14 +45,15 @@ import NavItem from './components/NavItem/NavItem';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
-import handleAnalytics from './handleAnalytics';
 import './DataAccessRequestCustomiseForm.scss';
-import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
-import Close from '../../images/icons/close_blue.svg';
-import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
-import { Trans } from 'react-i18next';
-import users from '../../services/users/users';
+import handleAnalytics from './handleAnalytics';
+
+const questionActions = {
+    questionActions: [
+        { key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 },
+        { key: 'guidanceLocked', icon: 'far fa-eye', color: '#475da7', toolTip: 'View locked guidance', order: 1 },
+    ],
+};
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -89,8 +96,19 @@ export const DataAccessRequestCustomiseForm = props => {
     const [showClearModal, setShowClearModal] = React.useState(false);
     const [showClearSectionModal, setShowClearSectionModal] = React.useState(false);
     const [showSaveAlert, setShowSaveAlert] = useState(true);
+    const [isUploading, setIsUploading] = useState(false);
+    const [isUploaded, setIsUploaded] = useState(false);
 
-    const patchSchemaRequest = darService.usePatchSchema();
+    const location = useLocation();
+    const team = getTeam({ location });
+
+    const patchSchemaRequest = darService.usePatchSchema(null, {
+        onError: ({ title, message }) => {
+            setIsUploading(false);
+
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
     const getMasterSchema = async panelId => {
         const {
@@ -108,30 +126,20 @@ export const DataAccessRequestCustomiseForm = props => {
         const {
             data: {
                 result: { masterSchema, questionStatus, questionSetStatus, guidance, countOfChanges, schemaId, unpublishedGuidance },
-                result,
             },
         } = await questionbankService.getQuestionbankItem(publisherID);
 
-        const questionActions = {
-            questionActions: [
-                { key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 },
-                { key: 'guidanceLocked', icon: 'far fa-eye', color: '#475da7', toolTip: 'View locked guidance', order: 1 },
-            ],
-        };
-
-        const newPanelId = panelId || masterSchema.formPanels[0].panelId;
         const newJsonSchema = helpers.injectReadonlyStaticContent(
             { ...masterSchema, ...classSchema, ...questionActions },
             { questionStatus, questionSetStatus, guidance },
-            newPanelId,
             publisher.publisherDetails,
             userState
         );
 
+        const newPanelId = panelId || newJsonSchema.formPanels[0].panelId;
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
-        console.log('questionSet', questionStatus);
-        console.log('questionSetStatus', questionSetStatus);
+        console.log('newPanelId', newPanelId);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
@@ -195,23 +203,16 @@ export const DataAccessRequestCustomiseForm = props => {
         setQuestionStatus(newQuestionStatus);
         setQuestionSetStatus(newQuestionSetStatus);
 
-        await patchSchemaRequest.mutateAsync(
-            {
-                id: schemaId,
-                ...params,
-            },
-            {
-                onError: ({ title, message }) => {
-                    NotificationManager.error(message, title, 10000);
-                },
-            }
-        );
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
 
         setLastSaved(saveTime());
         handleAnalytics(`Question Set ${questionSetId} switched`, checked ? 'On' : 'Off');
     };
 
-    const onSwitchChange = (questionId, value) => {
+    const onSwitchChange = async (questionId, value) => {
         const newJsonSchema = { ...jsonSchema };
         const questionSet = helpers.findQuestionSetByQuestionId(questionId, newJsonSchema);
 
@@ -251,17 +252,10 @@ export const DataAccessRequestCustomiseForm = props => {
             countOfChanges: numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges,
         };
 
-        patchSchemaRequest.mutateAsync(
-            {
-                id: schemaId,
-                ...params,
-            },
-            {
-                onError: ({ title, message }) => {
-                    NotificationManager.error(message, title, 10000);
-                },
-            }
-        );
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
 
         setLastSaved(saveTime());
         handleAnalytics(`Question ${questionId} switched`, value ? 'On' : 'Off');
@@ -337,21 +331,7 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const onNextClick = () => {
-        // 1. If in the about panel, we go to the next step.  Otherwise next panel.
-        if (activePanelId === 'about') {
-            // 2. Pass no completed bool value to go to next step without modifying completed status
-            this.onNextStep();
-            // 3. If we have reached the end of the about accordion, reset active accordion so all are closed
-            if (this.state.activeAccordionCard >= 6) {
-                this.setState({
-                    activeAccordionCard: -1,
-                });
-                // 4. Move to the next step
-                onNextPanel();
-            }
-        } else {
-            onNextPanel();
-        }
+        onNextPanel();
     };
 
     const onNextPanel = () => {
@@ -365,49 +345,6 @@ export const DataAccessRequestCustomiseForm = props => {
         const { panelId, pageId } = formPanels[nextIdx > formPanels.length - 1 ? 0 : nextIdx];
         // 5. Update the navigationState
         updateNavigation({ panelId, pageId });
-    };
-
-    const onNextStep = async completed => {
-        // 1. Deconstruct current state
-        /* let { aboutApplication, activeAccordionCard } = this.state;
-		// 2. If a completed flag has been passed, update step during navigation
-		if (!_.isUndefined(completed)) {
-			switch (activeAccordionCard) {
-				case 0:
-					aboutApplication.completedDatasetSelection = completed;
-					break;
-				case 1:
-					// Do nothing, valid state for project name step handled by existence of text
-					break;
-				case 2:
-					aboutApplication.completedInviteCollaborators = completed;
-					break;
-				case 3:
-					aboutApplication.completedReadAdvice = completed;
-					break;
-				case 4:
-					aboutApplication.completedCommunicateAdvice = completed;
-					break;
-				case 5:
-					aboutApplication.completedApprovalsAdvice = completed;
-					break;
-				case 6:
-					aboutApplication.completedSubmitAdvice = completed;
-					break;
-				default:
-					console.error('Invalid step passed');
-					break;
-			}
-		}
-		// 3. Update application
-		let dataObj = { key: 'aboutApplication', data: aboutApplication };
-		await this.updateApplication(dataObj);
-
-		// 4. Set new state
-		this.setState({
-			activeAccordionCard: ++activeAccordionCard,
-			aboutApplication,
-		}); */
     };
 
     const onQuestionAction = async (e = '', questionSetId = '', questionId = '', key = '') => {
@@ -533,8 +470,6 @@ export const DataAccessRequestCustomiseForm = props => {
             unpublishedGuidance: unpublishedGuidanceChange,
         };
 
-        darService.patchSchema(schemaId, params);
-
         await patchSchemaRequest.mutateAsync({
             id: schemaId,
             ...params,
@@ -559,6 +494,7 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema(activePanelId);
 
         setShowClearModal(false);
+
         handleAnalytics('Clearing updates', 'Entire form');
     }, [activePanelId, publisherDetails._id]);
 
@@ -570,6 +506,7 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema(activePanelId);
 
         setShowClearSectionModal(false);
+
         handleAnalytics('Clearing updates', page.title);
     }, [activePanelId, publisherDetails._id]);
 
@@ -579,7 +516,119 @@ export const DataAccessRequestCustomiseForm = props => {
         setShowClearSectionModal(false);
     };
 
+    const handleImportUpload = async (
+        {
+            questionStatus: uploadQuestionStatus,
+            questionSetStatus: uploadQuestionSetStatus,
+            guidance: uploadGuidance,
+            jsonSchema: uploadJsonSchema,
+        },
+        { reset }
+    ) => {
+        setIsUploading(true);
+
+        await questionbankService.patchClearAll(publisherDetails._id);
+
+        const {
+            data: {
+                result: { questionStatus, questionSetStatus, guidance },
+            },
+        } = await questionbankService.getQuestionbankItem(publisherDetails._id);
+
+        const newJsonSchema = helpers.injectReadonlyStaticContent(
+            { ...uploadJsonSchema, ...classSchema, ...questionActions },
+            {},
+            publisherDetails,
+            userState
+        );
+        const newPanelId = newJsonSchema.formPanels[0].panelId;
+
+        const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
+
+        const updatedGuidance = diffObjects(guidance, uploadGuidance);
+        const updatedQuestionStatus = diffObjects(questionStatus, uploadQuestionStatus);
+        const updatedQuestionSetStatus = diffObjects(questionSetStatus, uploadQuestionSetStatus);
+
+        const params = {
+            countOfChanges:
+                Object.keys(updatedGuidance).length +
+                Object.keys(updatedQuestionStatus).length +
+                Object.keys(updatedQuestionSetStatus).length,
+            guidance: updatedGuidance,
+            questionStatus: uploadQuestionStatus,
+            questionSetStatus: uploadQuestionSetStatus,
+        };
+
+        console.log('params', {
+            countOfChanges:
+                Object.keys(updatedGuidance).length +
+                Object.keys(updatedQuestionStatus).length +
+                Object.keys(updatedQuestionSetStatus).length,
+            guidance: updatedGuidance,
+            questionStatus: uploadQuestionStatus,
+            questionSetStatus: uploadQuestionSetStatus,
+        });
+
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        setIsUploaded(true);
+        setIsUploading(false);
+
+        reset();
+
+        setUnpublishedGuidance(unpublishedGuidance);
+        setJsonSchema(newJsonSchema);
+        setQuestionStatus(uploadQuestionStatus);
+        setQuestionSetStatus(uploadQuestionSetStatus);
+        setExistingQuestionStatus(cloneDeep(uploadQuestionStatus));
+        setNewGuidance(updatedGuidance);
+        setExistingGuidance(cloneDeep(updatedGuidance));
+        setCountOfChanges(params.countOfChanges);
+        setExistingCountOfChanges(params.countOfChanges);
+        setActivePanelId(newPanelId);
+
+        updateNavigation(
+            {
+                pageId,
+                panelId: newPanelId,
+            },
+            newJsonSchema
+        );
+    };
+
+    const handleSuccessClose = React.useCallback(() => {
+        setIsUploaded(false);
+
+        patchSchemaRequest.reset();
+    }, []);
+
     const renderApp = React.useCallback(() => {
+        if (isUploading) {
+            return <Loading />;
+        }
+
+        if (activePanelId === 'about') {
+            return (
+                <AboutApplication
+                    sections={[
+                        'Select the datasets you need',
+                        'Name your application',
+                        'Invite contributors',
+                        'Read the advice from the data custodian',
+                        'Communicate with the data custodian',
+                        'Check what approvals you might need',
+                        'Understand what happens after you submit the application',
+                    ]}
+                    onUpload={handleImportUpload}
+                    userState={userState}
+                    team={team}
+                />
+            );
+        }
+
         if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
                 <Uploads
@@ -636,7 +685,7 @@ export const DataAccessRequestCustomiseForm = props => {
                 />
             )
         );
-    }, [activePanelId, questionStatus, questionSetStatus, questionAnswers, unpublishedGuidance]);
+    }, [activePanelId, questionStatus, questionSetStatus, questionAnswers, unpublishedGuidance, isUploading]);
 
     const handleClose = () => {
         setShowSaveAlert(false);
@@ -747,6 +796,12 @@ export const DataAccessRequestCustomiseForm = props => {
                             {t('DAR.customise.saveAlert')}
                         </Alert>
 
+                        {isUploaded && (
+                            <Alert variant='success' dismissable onClose={handleSuccessClose} mb={2} mr={2}>
+                                {t('DAR.customise.uploadAlert')}
+                            </Alert>
+                        )}
+
                         <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
                             {jsonSchema.pages
                                 ? [...jsonSchema.pages].map((item, idx) =>
@@ -829,7 +884,6 @@ export const DataAccessRequestCustomiseForm = props => {
                                 }}>
                                 Publish
                             </Button>
-
                             <Button onClick={onNextClick}>Next</Button>
                         </div>
                     </div>{' '}

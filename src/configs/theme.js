@@ -118,7 +118,7 @@ export const THEME_INPUT = {
 export const THEME_FONT_SIZES = {
     xxs: '8px',
     xs: '10px',
-    sm: '12px',
+    sm: '13px',
     md: '14px',
     default: '14px',
     lg: '16px',
