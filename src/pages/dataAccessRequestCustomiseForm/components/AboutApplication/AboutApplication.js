@@ -6,8 +6,9 @@ import { H5, H6, P } from '../../../../components/Typography';
 import { ReactComponent as LockedIcon } from '../../../../images/icons/locked.svg';
 import LayoutBox from '../../../../components/LayoutBox';
 import Button from '../../../../components/Button';
+import { isPublisherAdmin } from '../../../../utils/auth';
 
-const AboutApplication = ({ sections, onUpload }) => {
+const AboutApplication = ({ userState, team, sections, onUpload }) => {
     const [fileText, setFileText] = useState('');
 
     const handleUpload = useCallback(
@@ -19,27 +20,29 @@ const AboutApplication = ({ sections, onUpload }) => {
 
     return (
         <div className='aboutAccordion'>
-            <Card>
-                <LayoutBox pl={5} pr={5} mb={6}>
-                    <H5>Import Data Access Request configuration file</H5>
-                    <P color='grey800'>
-                        You can now import youre Data Access Request (DAR) configuration file to populate the DAR from one environment to
-                        another without loss of data integrity.
-                    </P>
-                    <FileSelector
-                        actions={({ fileList, readAsText, reset }) => {
-                            if (fileList.length) {
-                                readAsText(fileList[0]).then(text => {
-                                    setFileText(text);
-                                });
-                            }
+            {isPublisherAdmin(userState, team) && (
+                <Card>
+                    <LayoutBox pl={5} pr={5} mb={6}>
+                        <H5>Import Data Access Request configuration file</H5>
+                        <P color='grey800'>
+                            You can now import youre Data Access Request (DAR) configuration file to populate the DAR from one environment
+                            to another without loss of data integrity.
+                        </P>
+                        <FileSelector
+                            actions={({ fileList, readAsText, reset }) => {
+                                if (fileList.length) {
+                                    readAsText(fileList[0]).then(text => {
+                                        setFileText(text);
+                                    });
+                                }
 
-                            return fileList.length ? <Button onClick={() => handleUpload({ reset })}>Upload</Button> : null;
-                        }}
-                        noFilesMessage='No files have been selected'
-                    />
-                </LayoutBox>
-            </Card>
+                                return fileList.length ? <Button onClick={() => handleUpload({ reset })}>Upload</Button> : null;
+                            }}
+                            noFilesMessage='No files have been selected'
+                        />
+                    </LayoutBox>
+                </Card>
+            )}
             <Accordion disabled>
                 {sections.map((section, i) => (
                     <Card>

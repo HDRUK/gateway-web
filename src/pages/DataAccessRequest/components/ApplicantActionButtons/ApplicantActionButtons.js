@@ -1,4 +1,3 @@
-import React, { Fragment } from 'react';
 import Button from '../../../../components/Button';
 import googleAnalytics from '../../../../tracking';
 import DarHelper from '../../../../utils/DarHelper.util';
@@ -69,10 +68,9 @@ const ApplicantActionButtons = ({
         option.actions = option.actions.filter(action => action.isVisible);
         return option;
     });
-    console.log('Has next', hasNext);
 
     return (
-        <Fragment>
+        <>
             <ActionBarMenu
                 label='Manage application'
                 options={availableOptions}
@@ -100,7 +98,7 @@ const ApplicantActionButtons = ({
                 disabled={!allowedNavigation || !hasNext}>
                 Next
             </Button>
-        </Fragment>
+        </>
     );
 };
 
