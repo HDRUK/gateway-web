@@ -143,6 +143,7 @@ const darStaticPageIds = {
     ABOUT: 'about',
     FILES: 'files',
     ADDITIONALFILES: 'additionalinformationfiles',
+    EXPORT: 'export',
 };
 
 const actionKeys = {
@@ -503,7 +504,9 @@ const injectExportConfigContent = (jsonSchema, pages, formPanels, questionPanels
     staticContent.exportConfigFileQuestionPanel.navHeader = (
         <>
             {staticContent.exportConfigFile.description}
-            <Button onClick={() => clickExportHandler(jsonSchema, publisherDetails)}>Export DAR config file</Button>
+            <Button onClick={() => clickExportHandler(jsonSchema, publisherDetails)} mt={2}>
+                Export DAR config file
+            </Button>
         </>
     );
     pages.push(staticContent.exportConfigFile);
@@ -523,6 +526,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, pub
 
     const additionalfilesNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
     const aboutNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ABOUT);
+    const exportExists = pages.find(page => page.pageId === darStaticPageIds.EXPORT);
 
     if (!aboutNavElementsExist) {
         pages.unshift(staticContent.aboutPageNav);
@@ -539,9 +543,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, pub
         questionPanels.push(staticContent.additionalFilesQuestionPanel);
     }
 
-    console.log('injecting userState', userState);
-
-    if (userState[0].role === 'Admin') {
+    if (userState[0].role === 'Admin' && !exportExists) {
         injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels, publisherDetails);
     }
 
