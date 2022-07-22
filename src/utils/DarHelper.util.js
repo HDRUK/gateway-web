@@ -504,7 +504,9 @@ const injectExportConfigContent = (jsonSchema, pages, formPanels, questionPanels
     staticContent.exportConfigFileQuestionPanel.navHeader = (
         <>
             {staticContent.exportConfigFile.description}
-            <Button onClick={() => clickExportHandler(jsonSchema, publisherDetails)}>Export DAR config file</Button>
+            <Button onClick={() => clickExportHandler(jsonSchema, publisherDetails)} mt={2}>
+                Export DAR config file
+            </Button>
         </>
     );
     pages.push(staticContent.exportConfigFile);

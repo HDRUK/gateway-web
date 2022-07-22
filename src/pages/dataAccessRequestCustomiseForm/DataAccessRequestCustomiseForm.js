@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
-import { Col, Container, Modal, Row } from 'react-bootstrap';
+import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Trans } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
@@ -14,17 +14,18 @@ import Winterfell from 'winterfell';
 import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import Cta from '../../components/Cta';
+import FileSelector from '../../components/FileSelector';
 import Icon from '../../components/Icon';
 import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
-import Typography, { H5 } from '../../components/Typography';
+import Typography, { H5, P } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
 import questionbankService from '../../services/questionbank';
-import { getTeam } from '../../utils/auth';
+import { getTeam, isPublisherAdmin } from '../../utils/auth';
 import helpers from '../../utils/DarHelper.util';
 import { diffObjects } from '../../utils/GeneralHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
@@ -38,6 +39,7 @@ import UserMessages from '../commonComponents/userMessages/UserMessages';
 import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
 import { classSchema } from './classSchema';
 import AboutApplication from './components/AboutApplication/AboutApplication';
+import AboutApplicationImport from './components/AboutApplicationImport/AboutApplicationImport';
 import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
 import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
 import NavDropdown from './components/NavDropdown/NavDropdown';
@@ -559,16 +561,6 @@ export const DataAccessRequestCustomiseForm = props => {
             questionSetStatus: uploadQuestionSetStatus,
         };
 
-        console.log('params', {
-            countOfChanges:
-                Object.keys(updatedGuidance).length +
-                Object.keys(updatedQuestionStatus).length +
-                Object.keys(updatedQuestionSetStatus).length,
-            guidance: updatedGuidance,
-            questionStatus: uploadQuestionStatus,
-            questionSetStatus: uploadQuestionSetStatus,
-        });
-
         await patchSchemaRequest.mutateAsync({
             id: schemaId,
             ...params,
@@ -622,9 +614,6 @@ export const DataAccessRequestCustomiseForm = props => {
                         'Check what approvals you might need',
                         'Understand what happens after you submit the application',
                     ]}
-                    onUpload={handleImportUpload}
-                    userState={userState}
-                    team={team}
                 />
             );
         }
@@ -802,14 +791,36 @@ export const DataAccessRequestCustomiseForm = props => {
                             </Alert>
                         )}
 
+                        {activePanelId === 'about' && (
+                            <>
+                                <Card>
+                                    <LayoutBox p={5}>
+                                        <H5>Data Applicant’s View</H5>
+                                        <P color='grey800' mb={0}>
+                                            This is what the data applicant will see when they begin the full data access request. Please
+                                            note that this section `Before you begin` cannot be customised.
+                                        </P>
+                                    </LayoutBox>
+                                </Card>
+                                <Card>
+                                    <LayoutBox p={5}>
+                                        <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
+                                    </LayoutBox>
+                                </Card>
+                            </>
+                        )}
+
                         <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
                             {jsonSchema.pages
                                 ? [...jsonSchema.pages].map((item, idx) =>
                                       item.active ? (
-                                          <Fragment key={`pageContent-${idx}`}>
-                                              <p className='black-20-semibold mb-0'>{item.active ? item.title : ''}</p>
-                                              <ReactMarkdown className='gray800-14' source={item.description} />
-                                          </Fragment>
+                                          <Typography
+                                              key={`pageContent-${idx}`}
+                                              color={activePanelId === 'about' ? 'grey500' : 'inherit'}
+                                              as='div'>
+                                              <H5 color='inherit'>{item.active ? item.title : ''}</H5>
+                                              <ReactMarkdown source={item.description} />
+                                          </Typography>
                                       ) : (
                                           ''
                                       )
@@ -817,7 +828,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                 : ''}
                         </div>
                         <div
-                            className={`dar__questions ${activePanelId === 'about' ? 'pad-bottom-0' : ''}`}
+                            className={`dar__questions ${activePanelId === 'about' ? 'p-0 mb-0' : ''}`}
                             style={{ backgroundColor: '#ffffff' }}>
                             {renderApp()}
                         </div>
