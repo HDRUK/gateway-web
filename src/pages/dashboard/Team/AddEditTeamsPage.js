@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import axios from 'axios';
@@ -70,8 +70,6 @@ const AddEditTeamsPage = ({
 
         onSubmit: async values => {
             setLoading(true);
-
-            console.log('questionBank', editViewID, questionBank);
 
             await questionBankRequest.mutateAsync({
                 _id: editViewID,

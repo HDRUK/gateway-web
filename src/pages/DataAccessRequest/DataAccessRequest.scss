@@ -655,7 +655,7 @@ input[type='radio']:disabled {
     height: 32px;
     border: solid 2px $gray-400;
     border-radius: 100%;
-    display: flex;
+    display: inline-flex;
     flex-flow: column nowrap !important;
     justify-content: center;
     align-items: center;
