@@ -32,7 +32,7 @@ const AboutApplicationImport = ({ userState, team, onUpload }) => {
 
                     return fileList.length ? <Button onClick={() => handleUpload({ reset })}>Upload</Button> : null;
                 }}
-                noFilesMessage='No files have been selected'
+                noFilesMessage='No files have been uploaded yet'
             />
         </>
     ) : null;
