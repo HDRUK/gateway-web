@@ -19,7 +19,7 @@ const AboutApplicationImport = ({ userState, team, onUpload }) => {
         <>
             <H5>Import Data Access Request configuration file</H5>
             <P color='grey800'>
-                You can now import youre Data Access Request (DAR) configuration file to populate the DAR from one environment to another
+                You can now import your Data Access Request (DAR) configuration file to populate the DAR from one environment to another
                 without loss of data integrity.
             </P>
             <FileSelector
