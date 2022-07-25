@@ -15,7 +15,7 @@ const AboutApplicationImport = ({ userState, team, onUpload }) => {
         [fileText]
     );
 
-    return isPublisherAdmin(userState, team) ? (
+    return (
         <>
             <H5>Import Data Access Request configuration file</H5>
             <P color='grey800'>
@@ -35,7 +35,7 @@ const AboutApplicationImport = ({ userState, team, onUpload }) => {
                 noFilesMessage='No files have been uploaded yet'
             />
         </>
-    ) : null;
+    );
 };
 
 export default AboutApplicationImport;
