@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import FileSelector from '../../../../components/FileSelector';
 import { H5, P } from '../../../../components/Typography';
-import LayoutBox from '../../../../components/LayoutBox';
 import Button from '../../../../components/Button';
-import { isPublisherAdmin } from '../../../../utils/auth';
 
 const AboutApplicationImport = ({ userState, team, onUpload }) => {
     const [fileText, setFileText] = useState('');
