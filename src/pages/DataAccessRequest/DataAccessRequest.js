@@ -332,7 +332,7 @@ class DataAccessRequest extends Component {
                         applicationType,
                         isLatestMinorVersion,
                         formType,
-                        questionSetStatus,
+                        questionSetStatus = {},
                     },
                 },
             } = response;
@@ -412,7 +412,7 @@ class DataAccessRequest extends Component {
             formType,
             areDatasetsAmended = false,
             dateSubmitted = '',
-            questionSetStatus,
+            questionSetStatus = {},
         } = context;
         let {
             datasetfields: { publisher },
@@ -2071,7 +2071,7 @@ class DataAccessRequest extends Component {
                                                     activePanelId={this.state.activePanelId}
                                                     enabled={allowedNavigation}
                                                     notForReview={!item.inReview && this.state.inReviewMode}
-                                                    questionSetStatus={this.state.questionSetStatus || {}}
+                                                    questionSetStatus={this.state.questionSetStatus}
                                                 />
                                             </ul>
                                         )}

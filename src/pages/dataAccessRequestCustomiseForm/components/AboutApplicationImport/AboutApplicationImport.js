@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import FileSelector from '../../../../components/FileSelector';
 import { H5, P } from '../../../../components/Typography';
-import LayoutBox from '../../../../components/LayoutBox';
 import Button from '../../../../components/Button';
-import { isPublisherAdmin } from '../../../../utils/auth';
 
 const AboutApplicationImport = ({ userState, team, onUpload }) => {
     const [fileText, setFileText] = useState('');
@@ -15,7 +13,7 @@ const AboutApplicationImport = ({ userState, team, onUpload }) => {
         [fileText]
     );
 
-    return isPublisherAdmin(userState, team) ? (
+    return (
         <>
             <H5>Import Data Access Request configuration file</H5>
             <P color='grey800'>
@@ -35,7 +33,7 @@ const AboutApplicationImport = ({ userState, team, onUpload }) => {
                 noFilesMessage='No files have been uploaded yet'
             />
         </>
-    ) : null;
+    );
 };
 
 export default AboutApplicationImport;

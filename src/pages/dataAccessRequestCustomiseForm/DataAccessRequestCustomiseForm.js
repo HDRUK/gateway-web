@@ -802,11 +802,13 @@ export const DataAccessRequestCustomiseForm = props => {
                                         </P>
                                     </LayoutBox>
                                 </Card>
-                                <Card>
-                                    <LayoutBox p={5}>
-                                        <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
-                                    </LayoutBox>
-                                </Card>
+                                {isPublisherAdmin(userState, team) && (
+                                    <Card>
+                                        <LayoutBox p={5}>
+                                            <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
+                                        </LayoutBox>
+                                    </Card>
+                                )}
                             </>
                         )}
 
