@@ -11,6 +11,8 @@ import './Uploads.scss';
 import UploadFiles from './UploadFiles';
 import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
+import Button from '../../../../components/Button';
+import Icon from '../../../../components/Icon';
 
 const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
     // 10mb - 10485760
@@ -229,9 +231,9 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
                 <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <div className='upload'>
-                        <button className='button-tertiary'>
-                            <UploadSVG /> Select files
-                        </button>
+                        <Button variant='tertiary' iconLeft={<Icon svg={<UploadSVG />} size='lg' />} mr={3}>
+                            Select files
+                        </Button>
                         <span className='gray700-alt-13'>
                             PDF, CSV, TXT, Powerpoint, Word, Excel, Keynote, Pages, Numbers, JPG or PNG.
                             <br />

@@ -125,6 +125,7 @@
             display: flex;
             flex-flow: row nowrap;
             align-items: center;
+            overflow: hidden;
 
             svg {
                 margin-right: 20px;
@@ -166,18 +167,6 @@
             flex-flow: row nowrap;
             justify-content: flex-end;
             padding: 15px 0;
-        }
-    }
-
-    button {
-        margin-right: 12px;
-        display: flex;
-        flex-flow: row;
-        align-items: center;
-        svg {
-            margin-right: 10px;
-            width: 18px;
-            height: 18px;
         }
     }
 }
@@ -232,6 +221,7 @@
             width: 20px;
             height: 20px;
             fill: $red;
+            margin-top: 4px;
         }
     }
 }
