@@ -722,7 +722,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
                         <span className='white-16-semibold pr-5'>{publisherDetails.publisherDetails.name}</span>
                     </Col>
-                    <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right text-white'>
+                    <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
                         {lastSaved && (
                             <LayoutBox mr={5} display='flex' alignItems='center'>
                                 {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='xl' mr={2} />}
