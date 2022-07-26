@@ -6,6 +6,7 @@ import { ReactComponent as SmallAttentionSVG } from '../../../../images/attentio
 import { concatFileName, fileStatus, readableFileSize } from './files.util';
 import FileLoading from './FileLoading';
 import Button from '../../../../components/Button';
+import AlertMessage from '../../../../components/AlertMessage';
 
 export const UploadFiles = ({ uploadFiles, submitted, isLoading, onUploadFiles, onRemoveFile, onDescriptionChange }) => {
     const descriptionRequired = file => {
@@ -50,9 +51,7 @@ export const UploadFiles = ({ uploadFiles, submitted, isLoading, onUploadFiles, 
                                 </div>
                                 <div className='column upload-files-desc'>
                                     {file.status === fileStatus.ERROR ? (
-                                        <div className='error-alert'>
-                                            <SmallAttentionSVG /> {file.error}
-                                        </div>
+                                        <AlertMessage variant='danger'>{file.error}</AlertMessage>
                                     ) : (
                                         <div className='upload-files-desc--control'>
                                             <div className='upload-files-desc--wrap'>

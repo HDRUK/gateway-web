@@ -28,19 +28,41 @@ export const getStyle = (propParts, value, theme) => {
 };
 
 export const getCommonStyles = (
-    { ml, mr, mb, mt, p, pr, pt, pb, pl, width, maxWidth, minWidth, display, alignItems, justifyContent, flexGrow, position },
+    {
+        ml,
+        mr,
+        mb,
+        mt,
+        p,
+        pr,
+        pt,
+        pb,
+        pl,
+        mx,
+        my,
+        px,
+        py,
+        width,
+        maxWidth,
+        minWidth,
+        display,
+        alignItems,
+        justifyContent,
+        flexGrow,
+        position,
+    },
     theme
 ) => {
     return `
-		${getSpacingStyle('margin-left', ml, theme)}
-		${getSpacingStyle('margin-right', mr, theme)}
-		${getSpacingStyle('margin-bottom', mb, theme)}
-		${getSpacingStyle('margin-top', mt, theme)}
+		${getSpacingStyle('margin-left', ml || mx, theme)}
+		${getSpacingStyle('margin-right', mr || mx, theme)}
+		${getSpacingStyle('margin-bottom', mb || my, theme)}
+		${getSpacingStyle('margin-top', mt || my, theme)}
         ${getSpacingStyle('padding', p, theme)}
-        ${getSpacingStyle('padding-left', pl, theme)}
-		${getSpacingStyle('padding-right', pr, theme)}
-		${getSpacingStyle('padding-bottom', pb, theme)}
-		${getSpacingStyle('padding-top', pt, theme)}
+        ${getSpacingStyle('padding-left', pl || px, theme)}
+		${getSpacingStyle('padding-right', pr || px, theme)}
+		${getSpacingStyle('padding-bottom', pb || py, theme)}
+		${getSpacingStyle('padding-top', pt || py, theme)}
 		${getCommonStyle('width', width)}
 		${getCommonStyle('max-width', maxWidth)}
 		${getCommonStyle('min-width', minWidth)}
@@ -79,16 +101,20 @@ export const getComponentVariant = (component, variant, theme) => {
     return getComponentStylesFromTheme(theme.components[component].variants[variant], theme);
 };
 
+export const getComponentGlobals = (component, theme) => {
+    return theme.components[component].globals;
+};
+
+export const getComponentGlobalStyles = (component, theme) => {
+    return getComponentStylesFromTheme(getComponentGlobals(component, theme), theme);
+};
+
 export const getComponentSize = (component, size, theme) => {
     return getComponentStylesFromTheme(theme.components[component].sizes[size], theme);
 };
 
 export const getFontSizeStyle = (fontSize, theme) => {
     return getComponentStylesFromTheme({ fontSize }, theme);
-};
-
-export const getComponentGlobals = (component, theme) => {
-    return theme.components[component].globals;
 };
 
 export const THEME_INPUT = {
@@ -190,13 +216,16 @@ export const theme = {
         inherit: 'inherit',
         purple500: '#475DA7',
         platinum50: '#E3F4FB',
+        brown900: '#856505',
         platinum700: '#4682B4',
+        platinum900: '#34537C',
         green50: '#E2F3F0',
         green200: '#8CD1BF',
         green400: '#3DB28C',
         grey500: '#B3B8BD',
         green600: '#329276',
         green700: '#2c8267',
+        green900: '#1C553F',
         grey: '#F6F7F8',
         grey100: '#F6F7F8',
         grey200: '#EEE',
@@ -210,6 +239,7 @@ export const theme = {
         red50: '#FFECF1',
         red600: '#EF3F4B',
         red700: '#DC3645',
+        red900: '#C02531',
         purple: '#475da7',
         purple100: '#C6CEE5',
         purple200: '#A2AED3',
@@ -217,7 +247,6 @@ export const theme = {
         teal: '#3db28c',
         yellow700: '#F0BB24',
         yellow50: '#FDFCE6',
-        brown900: '#856505',
         gold50: '#FFF8E1',
         none: 'none',
     },
@@ -332,6 +361,29 @@ export const theme = {
         SwitchControl: {
             globals: {
                 background: 'white',
+            },
+        },
+        AlertMessage: {
+            globals: {
+                fontSize: 'sm',
+            },
+            variants: {
+                success: {
+                    color: 'green900',
+                    fill: 'green900',
+                },
+                info: {
+                    color: 'platinum900',
+                    fill: 'platinum900',
+                },
+                warning: {
+                    color: 'brown900',
+                    fill: 'brown900',
+                },
+                danger: {
+                    color: 'red900',
+                    fill: 'red900',
+                },
             },
         },
         Icon: {

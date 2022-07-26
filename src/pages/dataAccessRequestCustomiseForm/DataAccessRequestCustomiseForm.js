@@ -14,7 +14,6 @@ import Winterfell from 'winterfell';
 import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import Cta from '../../components/Cta';
-import FileSelector from '../../components/FileSelector';
 import Icon from '../../components/Icon';
 import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
@@ -36,7 +35,7 @@ import Loading from '../commonComponents/Loading';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
-import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
+import Uploads from './components/Uploads/Uploads';
 import { classSchema } from './classSchema';
 import AboutApplication from './components/AboutApplication/AboutApplication';
 import AboutApplicationImport from './components/AboutApplicationImport/AboutApplicationImport';
@@ -620,13 +619,11 @@ export const DataAccessRequestCustomiseForm = props => {
 
         if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
-                <Uploads
-                    onFilesUpdate={() => {}}
-                    files={[]}
-                    disabled
-                    description={activePanel.panelHeader}
-                    header={activePanel.questionPanelHeaderText}
-                />
+                <Card>
+                    <LayoutBox px={5}>
+                        <Uploads />
+                    </LayoutBox>
+                </Card>
             );
         }
 

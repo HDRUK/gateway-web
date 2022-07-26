@@ -10,6 +10,7 @@ import { ReactComponent as SmallAttentionSVG } from '../../../../images/attentio
 import { ReactComponent as TrashSVG } from '../../../../images/trash-alt-solid.svg';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import { SUPPORT_CREATE_URL } from '../../../../configs/constants';
+import AlertMessage from '../../../../components/AlertMessage';
 
 export const AllFiles = ({ files, downloadFile, deleteFile, readOnly }) => {
     const { t } = useTranslation();
@@ -91,21 +92,13 @@ export const AllFiles = ({ files, downloadFile, deleteFile, readOnly }) => {
                                 </div>
                                 <div className='column all-files-desc'>
                                     {status === fileStatus.ERROR ? (
-                                        <div className='error-alert'>
-                                            <SmallAttentionSVG />
-                                            <div>
-                                                <Trans i18nKey='DAR.upload.virus.error'>
-                                                    {{ name }},<a href={SUPPORT_CREATE_URL} target='_blank' />
-                                                </Trans>
-                                            </div>
-                                        </div>
+                                        <AlertMessage variant='danger'>
+                                            <Trans i18nKey='DAR.upload.virus.error'>
+                                                {{ name }},<a href={SUPPORT_CREATE_URL} target='_blank' />
+                                            </Trans>
+                                        </AlertMessage>
                                     ) : status === fileStatus.QUARANTINED ? (
-                                        <div className='error-alert'>
-                                            <div>
-                                                <SmallAttentionSVG />
-                                                {t('DAR.upload.virus.quarantined', { name })}
-                                            </div>
-                                        </div>
+                                        <AlertMessage variant='danger'>{t('DAR.upload.virus.quarantined', { name })}</AlertMessage>
                                     ) : (
                                         <>{description}</>
                                     )}
