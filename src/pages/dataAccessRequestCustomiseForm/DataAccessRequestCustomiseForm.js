@@ -46,7 +46,6 @@ import NavItem from './components/NavItem/NavItem';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
-import './DataAccessRequestCustomiseForm.scss';
 import handleAnalytics from './handleAnalytics';
 
 const questionActions = {
@@ -723,7 +722,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
                         <span className='white-16-semibold pr-5'>{publisherDetails.publisherDetails.name}</span>
                     </Col>
-                    <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
+                    <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right text-white'>
                         {lastSaved && (
                             <LayoutBox mr={5} display='flex' alignItems='center'>
                                 {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='xl' mr={2} />}
