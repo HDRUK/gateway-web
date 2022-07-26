@@ -50,7 +50,6 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
     const onDropRejected = rejectedFiles => {
         const rejected = formatRejectedFiles(rejectedFiles);
         const newFiles = [...uploadFiles, ...rejected];
-        console.log('newFiles', newFiles);
         setUploadFiles(newFiles);
     };
 
