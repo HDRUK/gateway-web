@@ -21,7 +21,7 @@ const AlertMessage = ({ className, children, ml, mr, mb, mt, m, width, minWidth,
     });
 
     return (
-        <div {...outerProps} className={cx(commonStyles, className, 'ui-Message')} css={[commonStyles, styles.root({ variant })]}>
+        <div {...outerProps} className={cx(commonStyles, className, 'ui-AlertMessage')} css={[commonStyles, styles.root({ variant })]}>
             <span css={[styles.icon()]}>
                 {icon}
                 {!icon && variant === 'success' && <Icon svg={<CheckIcon fill='inherit' />} />}
