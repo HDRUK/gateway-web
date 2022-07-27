@@ -14,7 +14,6 @@ import Winterfell from 'winterfell';
 import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import Cta from '../../components/Cta';
-import FileSelector from '../../components/FileSelector';
 import Icon from '../../components/Icon';
 import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
@@ -36,7 +35,7 @@ import Loading from '../commonComponents/Loading';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
-import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
+import Uploads from './components/Uploads/Uploads';
 import { classSchema } from './classSchema';
 import AboutApplication from './components/AboutApplication/AboutApplication';
 import AboutApplicationImport from './components/AboutApplicationImport/AboutApplicationImport';
@@ -47,7 +46,6 @@ import NavItem from './components/NavItem/NavItem';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
-import './DataAccessRequestCustomiseForm.scss';
 import handleAnalytics from './handleAnalytics';
 
 const questionActions = {
@@ -620,13 +618,11 @@ export const DataAccessRequestCustomiseForm = props => {
 
         if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
-                <Uploads
-                    onFilesUpdate={() => {}}
-                    files={[]}
-                    disabled
-                    description={activePanel.panelHeader}
-                    header={activePanel.questionPanelHeaderText}
-                />
+                <Card>
+                    <LayoutBox px={5}>
+                        <Uploads />
+                    </LayoutBox>
+                </Card>
             );
         }
 
@@ -726,7 +722,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
                         <span className='white-16-semibold pr-5'>{publisherDetails.publisherDetails.name}</span>
                     </Col>
-                    <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
+                    <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right text-white'>
                         {lastSaved && (
                             <LayoutBox mr={5} display='flex' alignItems='center'>
                                 {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='xl' mr={2} />}
@@ -802,11 +798,13 @@ export const DataAccessRequestCustomiseForm = props => {
                                         </P>
                                     </LayoutBox>
                                 </Card>
-                                <Card>
-                                    <LayoutBox p={5}>
-                                        <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
-                                    </LayoutBox>
-                                </Card>
+                                {isPublisherAdmin(userState, team) && (
+                                    <Card>
+                                        <LayoutBox p={5}>
+                                            <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
+                                        </LayoutBox>
+                                    </Card>
+                                )}
                             </>
                         )}
 

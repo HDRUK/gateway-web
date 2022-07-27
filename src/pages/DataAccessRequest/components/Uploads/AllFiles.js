@@ -1,22 +1,25 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
+import Image from 'react-bootstrap/Image';
+import { Button, Modal } from 'react-bootstrap';
+import { Trans, useTranslation } from 'react-i18next';
 import { concatFileName, fileStatus, readableFileSize } from './files.util';
 import { ReactComponent as PaperSVG } from '../../../../images/paper.svg';
 import { ReactComponent as ArrowDownSVG } from '../../../../images/arrow-down.svg';
-import { ReactComponent as SmallAttentionSVG } from '../../../../images/small-attention.svg';
 import { ReactComponent as TrashSVG } from '../../../../images/trash-alt-solid.svg';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
-import Image from 'react-bootstrap/Image';
-import { Button, Modal } from 'react-bootstrap';
+import { SUPPORT_CREATE_URL } from '../../../../configs/constants';
+import AlertMessage from '../../../../components/AlertMessage';
 
 export const AllFiles = ({ files, downloadFile, deleteFile, readOnly }) => {
+    const { t } = useTranslation();
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [fileToDelete, setFileToDelete] = useState({});
 
     const getOwner = file => {
-        let { owner } = file;
+        const { owner } = file;
         if (!_.isEmpty(owner)) {
-            let { firstname = '', lastname = '' } = owner;
+            const { firstname = '', lastname = '' } = owner;
             return `${firstname} ${lastname}`;
         }
         return '-';
@@ -24,36 +27,34 @@ export const AllFiles = ({ files, downloadFile, deleteFile, readOnly }) => {
 
     const renderScan = () => {
         return (
-            <Fragment>
+            <>
                 <div className='all-files-spinner'>
                     <Image width='100px' height='100px' src={require('../../../../images/spinner.gif')} />
                 </div>
-            </Fragment>
+            </>
         );
     };
 
     const renderDownload = file => {
         if (file.status === fileStatus.ERROR) {
             return '';
-        } else {
-            return (
-                <div className='all-files-download' onClick={e => downloadFile(file)}>
-                    <ArrowDownSVG />
-                </div>
-            );
         }
+        return (
+            <div className='all-files-download' onClick={e => downloadFile(file)}>
+                <ArrowDownSVG />
+            </div>
+        );
     };
 
     const renderDelete = file => {
         if (file.status === fileStatus.ERROR) {
             return '';
-        } else {
-            return (
-                <div className='all-files-download' onClick={e => renderDeleteModal(true, file)}>
-                    <TrashSVG />
-                </div>
-            );
         }
+        return (
+            <div className='all-files-download' onClick={e => renderDeleteModal(true, file)}>
+                <TrashSVG />
+            </div>
+        );
     };
 
     const postDelete = file => {
@@ -74,47 +75,45 @@ export const AllFiles = ({ files, downloadFile, deleteFile, readOnly }) => {
                 <div className='column gray800-14-bold'>File description</div>
                 <div className='column gray800-14-bold'>Uploaded by</div>
             </div>
-            <Fragment>
+            <>
                 {files.length > 0 &&
-                    files.map((file, index) => (
-                        <div className='all-files file-table' key={`all-files-${index}`}>
-                            <div className='column all-files-file'>
-                                <PaperSVG />
-                                <div className='all-files-file--meta'>
-                                    <span>{concatFileName(file)}</span>
-                                    <span className='gray700-alt-13'>{readableFileSize(file)}</span>
+                    files.map((file, index) => {
+                        const { name, status, description } = file;
+
+                        return (
+                            <div className='all-files file-table' key={`all-files-${index}`}>
+                                <div className='column all-files-file'>
+                                    <PaperSVG />
+                                    <div className='all-files-file--meta'>
+                                        <span>{concatFileName(file)}</span>
+                                        <span className='gray700-alt-13'>{readableFileSize(file)}</span>
+                                    </div>
+                                </div>
+                                <div className='column all-files-desc'>
+                                    {status === fileStatus.ERROR ? (
+                                        <AlertMessage variant='danger'>
+                                            <Trans i18nKey='DAR.upload.virus.error'>
+                                                {{ name }},<a href={SUPPORT_CREATE_URL} target='_blank' />
+                                            </Trans>
+                                        </AlertMessage>
+                                    ) : status === fileStatus.QUARANTINED ? (
+                                        <AlertMessage variant='danger'>{t('DAR.upload.virus.quarantined', { name })}</AlertMessage>
+                                    ) : (
+                                        <>{description}</>
+                                    )}
+                                </div>
+                                <div className='column all-files-user'>
+                                    {status === fileStatus.ERROR || status === fileStatus.QUARANTINED ? '' : getOwner(file)}
+                                    {status === fileStatus.SCANNED
+                                        ? renderDownload(file)
+                                        : status === fileStatus.NEWFILE || status === fileStatus.UPLOADED
+                                        ? renderScan()
+                                        : ''}
+                                    {status === fileStatus.SCANNED && !readOnly ? renderDelete(file) : ''}
                                 </div>
                             </div>
-                            <div className='column all-files-desc'>
-                                {file.status === fileStatus.ERROR ? (
-                                    <Fragment>
-                                        <div className='error-alert'>
-                                            <SmallAttentionSVG />
-                                            An unexpected error has occurred
-                                        </div>
-                                    </Fragment>
-                                ) : file.status === fileStatus.QUARANTINED ? (
-                                    <Fragment>
-                                        <div className='error-alert'>
-                                            <SmallAttentionSVG />
-                                            This file is infected and has been quarantined
-                                        </div>
-                                    </Fragment>
-                                ) : (
-                                    <Fragment>{file.description}</Fragment>
-                                )}
-                            </div>
-                            <div className='column all-files-user'>
-                                {file.status === fileStatus.ERROR || file.status === fileStatus.QUARANTINED ? '' : getOwner(file)}
-                                {file.status === fileStatus.SCANNED
-                                    ? renderDownload(file)
-                                    : file.status === fileStatus.NEWFILE || file.status === fileStatus.UPLOADED
-                                    ? renderScan()
-                                    : ''}
-                                {file.status === fileStatus.SCANNED && !readOnly ? renderDelete(file) : ''}
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
 
                 <Modal
                     show={showDeleteModal}
@@ -123,8 +122,7 @@ export const AllFiles = ({ files, downloadFile, deleteFile, readOnly }) => {
                     }}
                     aria-labelledby='contained-modal-title-vcenter'
                     centered
-                    className='workflowModal'
-                >
+                    className='workflowModal'>
                     <div className='workflowModal-header'>
                         <h1 className='black-20-semibold'>Confirm action?</h1>
                         <CloseButtonSvg className='workflowModal-header--close' onClick={() => renderDeleteModal(false)} />
@@ -141,14 +139,13 @@ export const AllFiles = ({ files, downloadFile, deleteFile, readOnly }) => {
                                 className='white-14-semibold'
                                 onClick={() => {
                                     postDelete(fileToDelete);
-                                }}
-                            >
+                                }}>
                                 Yes, confirm action
                             </Button>
                         </div>
                     </div>
                 </Modal>
-            </Fragment>
+            </>
         </div>
     );
 };

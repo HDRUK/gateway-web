@@ -2,9 +2,10 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import { has, isEmpty, isNil, isUndefined } from 'lodash';
 import React, { Component, Fragment } from 'react';
-import { Alert, Button, Col, Container, Dropdown, OverlayTrigger, Row, Tab, Tabs, Tooltip } from 'react-bootstrap/';
+import { Button, Col, Container, Dropdown, OverlayTrigger, Row, Tab, Tabs, Tooltip } from 'react-bootstrap/';
 import Linkify from 'react-linkify';
 import 'react-tabs/style/react-tabs.css';
+import Alert from '../../components/Alert';
 import { ReactComponent as MetadataBronze } from '../../images/bronzeNew.svg';
 import { ReactComponent as GoldStar } from '../../images/cd-star.svg';
 import { ReactComponent as MetadataGold } from '../../images/goldNew.svg';
@@ -886,14 +887,8 @@ class DatasetDetail extends Component {
                         <Row className='mt-4'>
                             <Col sm={1} />
                             <Col sm={10}>
-                                {this.state.showCitationSuccess && (
-                                    <Alert variant='success' className='citation-banner green-banner'>
-                                        <Row>
-                                            <Col>Citation has been copied to clipboard.</Col>
-                                        </Row>
-                                    </Alert>
-                                )}
-                                {alert ? <Alert variant={alert.type}>{alert.message}</Alert> : null}
+                                {this.state.showCitationSuccess && <Alert variant='success'>Citation has been copied to clipboard.</Alert>}
+                                {alert && <Alert variant={alert.type}>{alert.message}</Alert>}
                                 <div className='rectangle'>
                                     <Row>
                                         <Col xs={1} md={1}>
