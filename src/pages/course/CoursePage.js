@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import queryString from 'query-string';
-import { Container, Row, Col, Tabs, Tab, Alert, Dropdown } from 'react-bootstrap';
+import { Container, Row, Col, Tabs, Tab, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import MessageNotFound from '../commonComponents/MessageNotFound';
@@ -21,8 +21,10 @@ import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import './Course.scss';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import googleAnalytics from '../../tracking';
+import { LayoutContent } from '../../components/Layout';
+import Alert from '../../components/Alert';
 
-let baseURL = require('../commonComponents/BaseURL').getURL();
+const baseURL = require('../commonComponents/BaseURL').getURL();
 
 export const CourseDetail = props => {
     const [courseData, setCourseData] = useState([]);
@@ -52,10 +54,10 @@ export const CourseDetail = props => {
         ]
     );
 
-    //componentDidMount - on loading of course detail page
+    // componentDidMount - on loading of course detail page
     useEffect(() => {
-        if (!!window.location.search) {
-            let values = queryString.parse(window.location.search);
+        if (window.location.search) {
+            const values = queryString.parse(window.location.search);
             setCourseAdded(values.courseAdded);
             setCourseEdited(values.courseEdited);
         }
@@ -68,20 +70,20 @@ export const CourseDetail = props => {
     const getCourseDataFromDb = async () => {
         setIsLoading(true);
         await axios
-            .get(baseURL + '/api/v1/course/' + props.match.params.courseID)
+            .get(`${baseURL}/api/v1/course/${props.match.params.courseID}`)
             .then(async res => {
                 if (_.isNil(res.data)) {
                     window.localStorage.setItem('redirectMsg', `Course not found for Id: ${props.match.params.courseID}`);
                     props.history.push({ pathname: '/search?search=', search: '' });
                 } else {
-                    let localCourseData = res.data.data[0];
+                    const localCourseData = res.data.data[0];
                     document.title = localCourseData.title.trim();
 
-                    let counter = !localCourseData.counter ? 1 : localCourseData.counter + 1;
+                    const counter = !localCourseData.counter ? 1 : localCourseData.counter + 1;
                     updateCounter(props.match.params.courseID, counter);
 
                     if (!_.isUndefined(localCourseData.relatedObjects)) {
-                        let localAdditionalInfo = await getAdditionalObjectInfo(localCourseData.relatedObjects);
+                        const localAdditionalInfo = await getAdditionalObjectInfo(localCourseData.relatedObjects);
                         await populateRelatedObjects(localCourseData, localAdditionalInfo);
                     }
 
@@ -96,13 +98,13 @@ export const CourseDetail = props => {
 
     const populateCollections = localCourseData => {
         setIsLoading(true);
-        axios.get(baseURL + '/api/v1/collections/entityid/' + localCourseData.id).then(res => {
+        axios.get(`${baseURL}/api/v1/collections/entityid/${localCourseData.id}`).then(res => {
             setCollections(res.data.data || []);
         });
     };
 
     const doSearch = e => {
-        //fires on enter on searchbar
+        // fires on enter on searchbar
         if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(searchString)}`;
     };
 
@@ -115,15 +117,15 @@ export const CourseDetail = props => {
     };
 
     const updateCounter = (id, counter) => {
-        axios.post(baseURL + '/api/v1/coursecounter/update', { id, counter });
+        axios.post(`${baseURL}/api/v1/coursecounter/update`, { id, counter });
     };
 
     const getAdditionalObjectInfo = async additionalObjInfo => {
-        let tempObjects = [];
+        const tempObjects = [];
         if (additionalObjInfo) {
             const promises = additionalObjInfo.map(async (object, index) => {
                 if (object.objectType === 'course') {
-                    await axios.get(baseURL + '/api/v1/relatedobject/course/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/course/${object.objectId}`).then(res => {
                         tempObjects.push({
                             name: res.data.data[0].title,
                             id: object.objectId,
@@ -131,7 +133,7 @@ export const CourseDetail = props => {
                         });
                     });
                 } else if (object.objectType === 'dataUseRegister') {
-                    await axios.get(baseURL + '/api/v1/relatedobject/dataUseRegister/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/dataUseRegister/${object.objectId}`).then(res => {
                         tempObjects.push({
                             id: object.objectId,
                             activeflag: res.data.data[0].activeflag,
@@ -139,7 +141,7 @@ export const CourseDetail = props => {
                         });
                     });
                 } else {
-                    await axios.get(baseURL + '/api/v1/relatedobject/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/${object.objectId}`).then(res => {
                         let datasetPublisher;
                         let datasetLogo;
 
@@ -158,8 +160,8 @@ export const CourseDetail = props => {
                             id: object.objectId,
                             authors: res.data.data[0].authors,
                             activeflag: res.data.data[0].activeflag,
-                            datasetPublisher: datasetPublisher,
-                            datasetLogo: datasetLogo,
+                            datasetPublisher,
+                            datasetLogo,
                         });
                     });
                 }
@@ -170,17 +172,17 @@ export const CourseDetail = props => {
     };
 
     const populateRelatedObjects = async (localCourseData, localAdditionalInfo) => {
-        let tempRelatedObjects = [];
+        const tempRelatedObjects = [];
         if (localCourseData.relatedObjects && localAdditionalInfo) {
             localCourseData.relatedObjects.forEach(relatedObject =>
                 localAdditionalInfo.forEach(item => {
                     if (relatedObject.objectId === item.id && item.activeflag === 'active') {
-                        relatedObject['datasetPublisher'] = item.datasetPublisher;
-                        relatedObject['datasetLogo'] = item.datasetLogo;
-                        relatedObject['name'] = item.name || '';
-                        relatedObject['firstname'] = item.firstname || '';
-                        relatedObject['lastname'] = item.lastname || '';
-                        relatedObject['projectTitle'] = item.projectTitle || '';
+                        relatedObject.datasetPublisher = item.datasetPublisher;
+                        relatedObject.datasetLogo = item.datasetLogo;
+                        relatedObject.name = item.name || '';
+                        relatedObject.firstname = item.firstname || '';
+                        relatedObject.lastname = item.lastname || '';
+                        relatedObject.projectTitle = item.projectTitle || '';
 
                         tempRelatedObjects.push(relatedObject);
                     }
@@ -221,7 +223,7 @@ export const CourseDetail = props => {
             setSorting('showAll');
             const filteredRelatedResourceItems = await filterRelatedResourceItems(relatedObjects, relatedObjectsSearchValue);
 
-            let tempFilteredData = filteredRelatedResourceItems.filter(dat => {
+            const tempFilteredData = filteredRelatedResourceItems.filter(dat => {
                 return dat !== '';
             });
             setRelatedObjectsFiltered(tempFilteredData);
@@ -242,9 +244,8 @@ export const CourseDetail = props => {
                     : false)
             ) {
                 return object;
-            } else {
-                return '';
             }
+            return '';
         });
 
     const handleSort = async sort => {
@@ -284,46 +285,28 @@ export const CourseDetail = props => {
                     userState={userState}
                 />
                 <Container className='margin-bottom-48'>
-                    {courseAdded ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='success' className='mt-3'>
-                                    Done! Someone will review your course and let you know when it goes live
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {courseAdded && (
+                        <LayoutContent>
+                            <Alert variant='success' mt={3}>
+                                Done! Someone will review your course and let you know when it goes live
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {courseEdited ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='success' className='mt-3'>
-                                    Done! Your course has been updated
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {courseEdited && (
+                        <LayoutContent>
+                            <Alert variant='success' mt={3}>
+                                Done! Your course has been updated
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {courseData.activeflag === 'review' ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='warning' className='mt-3'>
-                                    Your course is pending review. Only you can see this page.
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {courseData.activeflag === 'review' && (
+                        <LayoutContent>
+                            <Alert variant='warning' mt={3}>
+                                Your course is pending review. Only you can see this page.
+                            </Alert>
+                        </LayoutContent>
                     )}
 
                     <Row className='mt-4'>
@@ -347,19 +330,14 @@ export const CourseDetail = props => {
                                 <Row className='margin-top-16'>
                                     <Col xs={12}>
                                         <span className='badge-course'>
-                                            <SVGIcon
-                                                name='educationicon'
-                                                fill={'#ffffff'}
-                                                className='badgeSvg mr-2'
-                                                viewBox='-2 -2 22 22'
-                                            />
+                                            <SVGIcon name='educationicon' fill='#ffffff' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
                                             <span>Course</span>
                                         </span>
 
                                         {courseData.award
                                             ? courseData.award.map(award => {
                                                   return (
-                                                      <a href={'/search?search=&tab=Courses&courseaward=' + award}>
+                                                      <a href={`/search?search=&tab=Courses&courseaward=${award}`}>
                                                           <div className='badge-tag'>{award}</div>
                                                       </a>
                                                   );
@@ -369,7 +347,7 @@ export const CourseDetail = props => {
                                         {courseData.domains
                                             ? courseData.domains.map(domain => {
                                                   return (
-                                                      <a href={'/search?search=&tab=Courses&coursedomains=' + domain}>
+                                                      <a href={`/search?search=&tab=Courses&coursedomains=${domain}`}>
                                                           <div className='badge-tag'>{domain}</div>
                                                       </a>
                                                   );
@@ -400,9 +378,8 @@ export const CourseDetail = props => {
                                     onSelect={key => {
                                         googleAnalytics.recordVirtualPageView(`${key} tab`);
                                         googleAnalytics.recordEvent('Courses', `Clicked ${key} tab`, `Viewing ${key}`);
-                                    }}
-                                >
-                                    <Tab eventKey='About' title={'About'}>
+                                    }}>
+                                    <Tab eventKey='About' title='About'>
                                         <Row>
                                             <Col sm={12} lg={12}>
                                                 <div className='rectangle'>
@@ -413,8 +390,7 @@ export const CourseDetail = props => {
                                                         <Col
                                                             sm={12}
                                                             data-test-id='course-description'
-                                                            className='gray800-14 hdruk-section-body'
-                                                        >
+                                                            className='gray800-14 hdruk-section-body'>
                                                             <ReactMarkdown source={courseData.description} />
                                                         </Col>
                                                     </Row>
@@ -457,8 +433,7 @@ export const CourseDetail = props => {
                                                                 href={courseData.link}
                                                                 rel='noopener noreferrer'
                                                                 target='_blank'
-                                                                className='purple-14 text-break'
-                                                            >
+                                                                className='purple-14 text-break'>
                                                                 {courseData.link}
                                                             </a>
                                                         </Col>
@@ -477,11 +452,10 @@ export const CourseDetail = props => {
                                                         </Col>
                                                         <Col sm={10} className='purple-14 overflowWrap'>
                                                             <a
-                                                                href={'/person/' + courseData.creator[0].id}
+                                                                href={`/person/${courseData.creator[0].id}`}
                                                                 rel='noopener noreferrer'
                                                                 target='_blank'
-                                                                className='purple-14'
-                                                            >
+                                                                className='purple-14'>
                                                                 {courseData.creator[0].firstname} {courseData.creator[0].lastname}
                                                             </a>
                                                         </Col>
@@ -524,7 +498,7 @@ export const CourseDetail = props => {
                                                             ) : (
                                                                 courseData.keywords.map(keyword => {
                                                                     return (
-                                                                        <a href={'/search?search=&tab=Courses&coursekeywords=' + keyword}>
+                                                                        <a href={`/search?search=&tab=Courses&coursekeywords=${keyword}`}>
                                                                             <div className='badge-tag'>{keyword}</div>
                                                                         </a>
                                                                     );
@@ -542,7 +516,7 @@ export const CourseDetail = props => {
                                                             ) : (
                                                                 courseData.domains.map(domain => {
                                                                     return (
-                                                                        <a href={'/search?search=&tab=Courses&coursedomains=' + domain}>
+                                                                        <a href={`/search?search=&tab=Courses&coursedomains=${domain}`}>
                                                                             <div className='badge-tag'>{domain}</div>
                                                                         </a>
                                                                     );
@@ -578,8 +552,7 @@ export const CourseDetail = props => {
                                                                         <Col
                                                                             sm={10}
                                                                             className='gray-deep-14 overflowWrap'
-                                                                            data-test-id='course-duration'
-                                                                        >
+                                                                            data-test-id='course-duration'>
                                                                             {courseOption.studyMode} | {courseOption.studyDurationNumber}{' '}
                                                                             {courseOption.studyDurationMeasure}
                                                                         </Col>
@@ -603,8 +576,7 @@ export const CourseDetail = props => {
                                                                                     <Col
                                                                                         sm={10}
                                                                                         className='gray-deep-14 overflowWrap'
-                                                                                        data-test-id='course-fees'
-                                                                                    >
+                                                                                        data-test-id='course-fees'>
                                                                                         {fee.feeDescription} | £{fee.feeAmount}{' '}
                                                                                         {fee.feePer ? (
                                                                                             <>per {fee.feePer.toLowerCase()}</>
@@ -645,11 +617,7 @@ export const CourseDetail = props => {
                                                                 courseData.entries.map((entry, index) =>
                                                                     entry.level && entry.subject ? (
                                                                         <a
-                                                                            href={
-                                                                                '/search?search=&tab=Courses&courseentrylevel=' +
-                                                                                entry.level
-                                                                            }
-                                                                        >
+                                                                            href={`/search?search=&tab=Courses&courseentrylevel=${entry.level}`}>
                                                                             <div className='badge-version'>
                                                                                 <span data-test-id='entry-level'>{entry.level}</span>
                                                                                 <span data-test-id='entry-subject'>{entry.subject}</span>
@@ -657,11 +625,7 @@ export const CourseDetail = props => {
                                                                         </a>
                                                                     ) : entry.level && !entry.subject ? (
                                                                         <a
-                                                                            href={
-                                                                                '/search?search=&tab=Courses&courseentrylevel=' +
-                                                                                entry.level
-                                                                            }
-                                                                        >
+                                                                            href={`/search?search=&tab=Courses&courseentrylevel=${entry.level}`}>
                                                                             <div className='badge-tag'>
                                                                                 <span>{entry.level}</span>
                                                                             </div>
@@ -697,7 +661,7 @@ export const CourseDetail = props => {
                                                             ) : (
                                                                 courseData.award.map(award => {
                                                                     return (
-                                                                        <a href={'/search?search=&tab=Courses&courseaward=' + award}>
+                                                                        <a href={`/search?search=&tab=Courses&courseaward=${award}`}>
                                                                             <div className='badge-tag'>{award}</div>
                                                                         </a>
                                                                     );
@@ -714,11 +678,7 @@ export const CourseDetail = props => {
                                                                 <span className='gray800-14-opacity'>Not specified</span>
                                                             ) : (
                                                                 <a
-                                                                    href={
-                                                                        '/search?search=&tab=Courses&courseframework=' +
-                                                                        courseData.competencyFramework
-                                                                    }
-                                                                >
+                                                                    href={`/search?search=&tab=Courses&courseframework=${courseData.competencyFramework}`}>
                                                                     <div className='badge-tag'>{courseData.competencyFramework}</div>
                                                                 </a>
                                                             )}
@@ -733,11 +693,7 @@ export const CourseDetail = props => {
                                                                 <span className='gray800-14-opacity'>Not specified</span>
                                                             ) : (
                                                                 <a
-                                                                    href={
-                                                                        '/search?search=&tab=Courses&coursepriority=' +
-                                                                        courseData.nationalPriority
-                                                                    }
-                                                                >
+                                                                    href={`/search?search=&tab=Courses&coursepriority=${courseData.nationalPriority}`}>
                                                                     <div className='badge-tag'>{courseData.nationalPriority}</div>
                                                                 </a>
                                                             )}
@@ -756,7 +712,7 @@ export const CourseDetail = props => {
                                             onUpdateDiscoursePostCount={updateDiscoursePostCount}
                                         />
                                     </Tab>
-                                    <Tab eventKey='Related resources' title={'Related resources (' + relatedObjects.length + ')'}>
+                                    <Tab eventKey='Related resources' title={`Related resources (${relatedObjects.length})`}>
                                         <>
                                             <Row>
                                                 <Col lg={8}>
@@ -766,7 +722,7 @@ export const CourseDetail = props => {
                                                                 name='searchicon'
                                                                 width={20}
                                                                 height={20}
-                                                                fill={'#2c8267'}
+                                                                fill='#2c8267'
                                                                 stroke='none'
                                                                 type='submit'
                                                             />
@@ -789,8 +745,7 @@ export const CourseDetail = props => {
                                                         <Dropdown.Toggle
                                                             variant='info'
                                                             id='dropdown-menu-align-right'
-                                                            className='gray800-14'
-                                                        >
+                                                            className='gray800-14'>
                                                             {(() => {
                                                                 if (sorting !== 'showAll')
                                                                     return `Show ${
@@ -801,21 +756,20 @@ export const CourseDetail = props => {
                                                                             : `${sorting}s`
                                                                     } (
 																	${relatedResourcesSort.filter(dat => dat.objectType === sorting).length})`;
-                                                                else return `Show all resources (${relatedResourcesSort.length})`;
+                                                                return `Show all resources (${relatedResourcesSort.length})`;
                                                             })()}
                                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
                                                             <Row
-                                                                key={`ddl-item-showall`}
+                                                                key='ddl-item-showall'
                                                                 className={
                                                                     sorting === 'showAll'
                                                                         ? 'sort-dropdown-item sort-dropdown-item-selected sortingDropdown'
                                                                         : 'sort-dropdown-item sortingDropdown'
-                                                                }
-                                                            >
+                                                                }>
                                                                 <Col xs={12} className='p-0'>
-                                                                    <Dropdown.Item eventKey={'showAll'} className='gray800-14'>
+                                                                    <Dropdown.Item eventKey='showAll' className='gray800-14'>
                                                                         Show all resources ({relatedResourcesSort.length})
                                                                     </Dropdown.Item>
                                                                 </Col>
@@ -831,7 +785,7 @@ export const CourseDetail = props => {
                                                                                 fill: '#3db28c',
                                                                                 marginTop: '5px',
                                                                             }}
-                                                                            fill={'#3db28c'}
+                                                                            fill='#3db28c'
                                                                             stroke='none'
                                                                         />
                                                                     ) : null}
@@ -847,8 +801,7 @@ export const CourseDetail = props => {
                                                                                 sorting === item
                                                                                     ? 'sort-dropdown-item sort-dropdown-item-selected sortingDropdown'
                                                                                     : 'sort-dropdown-item sortingDropdown'
-                                                                            }
-                                                                        >
+                                                                            }>
                                                                             <Col xs={12} className='p-0'>
                                                                                 <Dropdown.Item eventKey={item} className='gray800-14'>
                                                                                     Show{' '}
@@ -878,7 +831,7 @@ export const CourseDetail = props => {
                                                                                             fill: '#3db28c',
                                                                                             marginTop: '5px',
                                                                                         }}
-                                                                                        fill={'#3db28c'}
+                                                                                        fill='#3db28c'
                                                                                         stroke='none'
                                                                                     />
                                                                                 ) : null}
@@ -901,8 +854,8 @@ export const CourseDetail = props => {
                                                         <RelatedObject
                                                             relatedObject={object}
                                                             objectType={object.objectType}
-                                                            activeLink={true}
-                                                            showRelationshipAnswer={true}
+                                                            activeLink
+                                                            showRelationshipAnswer
                                                             datasetPublisher={object.datasetPublisher}
                                                             datasetLogo={object.datasetLogo}
                                                         />
@@ -911,7 +864,7 @@ export const CourseDetail = props => {
                                             )}
                                         </>
                                     </Tab>
-                                    <Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
+                                    <Tab eventKey='Collections' title={`Collections (${collections.length})`}>
                                         {!collections || collections.length <= 0 ? (
                                             <MessageNotFound text='This course has not been featured on any collections yet.' />
                                         ) : (
