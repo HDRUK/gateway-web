@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import queryString from 'query-string';
-import { Container, Row, Col, Tabs, Tab, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import moment from 'moment';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import MessageNotFound from '../commonComponents/MessageNotFound';
@@ -21,8 +21,10 @@ import ErrorModal from '../commonComponents/errorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import googleAnalytics from '../../tracking';
+import { LayoutContent } from '../../components/Layout';
+import Alert from '../../components/Alert';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+const baseURL = require('../commonComponents/BaseURL').getURL();
 
 export const ProjectDetail = props => {
     const [id] = useState('');
@@ -49,17 +51,17 @@ export const ProjectDetail = props => {
         ]
     );
 
-    //componentDidMount - on loading of project detail page
+    // componentDidMount - on loading of project detail page
     useEffect(() => {
-        if (!!window.location.search) {
-            let values = queryString.parse(window.location.search);
+        if (window.location.search) {
+            const values = queryString.parse(window.location.search);
             setProjectAdded(values.projectAdded);
             setProjectEdited(values.projectEdited);
         }
         getProjectDataFromDb();
     }, []);
 
-    //componentDidUpdate - on render of project detail page were id is different
+    // componentDidUpdate - on render of project detail page were id is different
     useEffect(() => {
         if (props.match.params.projectID !== id && id !== '' && !isLoading) {
             getProjectDataFromDb();
@@ -69,7 +71,7 @@ export const ProjectDetail = props => {
     const getProjectDataFromDb = () => {
         setIsLoading(true);
         axios
-            .get(baseURL + '/api/v1/projects/' + props.match.params.projectID)
+            .get(`${baseURL}/api/v1/projects/${props.match.params.projectID}`)
             .then(async res => {
                 if (_.isNil(res.data)) {
                     window.localStorage.setItem('redirectMsg', `Project not found for Id: ${props.match.params.projectID}`);
@@ -78,11 +80,11 @@ export const ProjectDetail = props => {
                     const localProjectData = res.data.data[0];
                     document.title = localProjectData.name.trim();
 
-                    let counter = !localProjectData.counter ? 1 : localProjectData.counter + 1;
+                    const counter = !localProjectData.counter ? 1 : localProjectData.counter + 1;
                     updateCounter(props.match.params.projectID, counter);
 
                     if (!_.isUndefined(localProjectData.relatedObjects)) {
-                        let localAdditionalObjInfo = await getAdditionalObjectInfo(localProjectData.relatedObjects);
+                        const localAdditionalObjInfo = await getAdditionalObjectInfo(localProjectData.relatedObjects);
                         await populateRelatedObjects(localProjectData, localAdditionalObjInfo);
                     }
                     setProjectData(localProjectData);
@@ -96,13 +98,13 @@ export const ProjectDetail = props => {
 
     const popluateCollections = localProjectData => {
         setIsLoading(true);
-        axios.get(baseURL + '/api/v1/collections/entityid/' + localProjectData.id).then(res => {
+        axios.get(`${baseURL}/api/v1/collections/entityid/${localProjectData.id}`).then(res => {
             setCollections(res.data.data || []);
         });
     };
 
     const doSearch = e => {
-        //fires on enter on searchbar
+        // fires on enter on searchbar
         if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(searchString)}`;
     };
 
@@ -115,22 +117,22 @@ export const ProjectDetail = props => {
     };
 
     const updateCounter = (id, counter) => {
-        axios.post(baseURL + '/api/v1/counter/update', { id, counter });
+        axios.post(`${baseURL}/api/v1/counter/update`, { id, counter });
     };
 
     const getAdditionalObjectInfo = async additionalObjInfo => {
-        let tempObjects = [];
+        const tempObjects = [];
         if (additionalObjInfo) {
             const promises = additionalObjInfo.map(async (object, index) => {
                 if (object.objectType === 'course') {
-                    await axios.get(baseURL + '/api/v1/relatedobject/course/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/course/${object.objectId}`).then(res => {
                         tempObjects.push({
                             id: object.objectId,
                             activeflag: res.data.data[0].activeflag,
                         });
                     });
                 } else {
-                    await axios.get(baseURL + '/api/v1/relatedobject/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/${object.objectId}`).then(res => {
                         let datasetPublisher;
                         let datasetLogo;
 
@@ -146,8 +148,8 @@ export const ProjectDetail = props => {
                             id: object.objectId,
                             authors: res.data.data[0].authors,
                             activeflag: res.data.data[0].activeflag,
-                            datasetPublisher: datasetPublisher,
-                            datasetLogo: datasetLogo,
+                            datasetPublisher,
+                            datasetLogo,
                         });
                     });
                 }
@@ -158,13 +160,13 @@ export const ProjectDetail = props => {
     };
 
     const populateRelatedObjects = (localProjectData, localAdditionalObjInfo) => {
-        let tempRelatedObjects = [];
+        const tempRelatedObjects = [];
         if (localProjectData.relatedObjects && localAdditionalObjInfo) {
             localProjectData.relatedObjects.map(object =>
                 localAdditionalObjInfo.forEach(item => {
                     if (object.objectId === item.id && item.activeflag === 'active') {
-                        object['datasetPublisher'] = item.datasetPublisher;
-                        object['datasetLogo'] = item.datasetLogo;
+                        object.datasetPublisher = item.datasetPublisher;
+                        object.datasetLogo = item.datasetLogo;
 
                         tempRelatedObjects.push(object);
                     }
@@ -215,46 +217,28 @@ export const ProjectDetail = props => {
                     userState={userState}
                 />
                 <Container className='margin-bottom-48'>
-                    {projectAdded ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='success' className='mt-3'>
-                                    Done! Someone will review your project and let you know when it goes live
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {projectAdded && (
+                        <LayoutContent>
+                            <Alert variant='success' mt={3}>
+                                Done! Someone will review your project and let you know when it goes live
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {projectEdited ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='success' className='mt-3'>
-                                    Done! Your project has been updated
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {projectEdited && (
+                        <LayoutContent>
+                            <Alert variant='success' mt={3}>
+                                Done! Your project has been updated
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {projectData.activeflag === 'review' ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='warning' className='mt-3' data-test-id='project-pending-banner'>
-                                    Your project is pending review. Only you can see this page.
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {projectData.activeflag === 'review' && (
+                        <LayoutContent>
+                            <Alert variant='warning' mt={3}>
+                                Your project is pending review. Only you can see this page.
+                            </Alert>
+                        </LayoutContent>
                     )}
 
                     <Row className='mt-4'>
@@ -271,7 +255,7 @@ export const ProjectDetail = props => {
                                         <span className='badge-project'>
                                             <SVGIcon
                                                 name='newestprojecticon'
-                                                fill={'#472505'}
+                                                fill='#472505'
                                                 className='badgeSvg mr-2'
                                                 viewBox='-2 -2 22 22'
                                             />
@@ -279,7 +263,7 @@ export const ProjectDetail = props => {
                                         </span>
 
                                         {!_.isNil(projectData.categories) && (
-                                            <a href={'/search?search=&tab=Projects&projectcategories=' + projectData.categories.category}>
+                                            <a href={`/search?search=&tab=Projects&projectcategories=${projectData.categories.category}`}>
                                                 <div className='badge-tag'>{projectData.categories.category}</div>
                                             </a>
                                         )}
@@ -308,9 +292,8 @@ export const ProjectDetail = props => {
                                     onSelect={key => {
                                         googleAnalytics.recordVirtualPageView(`${key} tab`);
                                         googleAnalytics.recordEvent('Projects', `Clicked ${key} tab`, `Viewing ${key}`);
-                                    }}
-                                >
-                                    <Tab eventKey='About' title={'About'}>
+                                    }}>
+                                    <Tab eventKey='About' title='About'>
                                         <Row className='mt-2'>
                                             <Col sm={12} lg={12}>
                                                 <div className='rectangle'>
@@ -321,8 +304,7 @@ export const ProjectDetail = props => {
                                                         <Col
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
-                                                            data-test-id='project-description'
-                                                        >
+                                                            data-test-id='project-description'>
                                                             <ReactMarkdown source={projectData.description} />
                                                         </Col>
                                                     </Row>
@@ -341,8 +323,7 @@ export const ProjectDetail = props => {
                                                             <Col
                                                                 sm={12}
                                                                 className='gray800-14 hdruk-section-body'
-                                                                data-test-id='project-results'
-                                                            >
+                                                                data-test-id='project-results'>
                                                                 <ReactMarkdown source={projectData.resultsInsights} />
                                                             </Col>
                                                         </Row>
@@ -368,8 +349,7 @@ export const ProjectDetail = props => {
                                                                 href={projectData.link}
                                                                 rel='noopener noreferrer'
                                                                 target='_blank'
-                                                                className='purple-14 text-break'
-                                                            >
+                                                                className='purple-14 text-break'>
                                                                 {projectData.link}
                                                             </a>
                                                         </Col>
@@ -414,8 +394,7 @@ export const ProjectDetail = props => {
                                                             <Col
                                                                 sm={10}
                                                                 className='gray800-14 overflowWrap'
-                                                                data-test-id='project-leadResearcher'
-                                                            >
+                                                                data-test-id='project-leadResearcher'>
                                                                 {projectData.leadResearcher}
                                                             </Col>
                                                         </Row>
@@ -428,11 +407,7 @@ export const ProjectDetail = props => {
                                                         </Col>
                                                         <Col sm={10} className='gray800-14' data-test-id='project-type'>
                                                             <a
-                                                                href={
-                                                                    '/search?search=&tab=Projects&projectcategories=' +
-                                                                    projectData.categories.category
-                                                                }
-                                                            >
+                                                                href={`/search?search=&tab=Projects&projectcategories=${projectData.categories.category}`}>
                                                                 <div className='badge-tag'>{projectData.categories.category}</div>
                                                             </a>
                                                         </Col>
@@ -448,9 +423,8 @@ export const ProjectDetail = props => {
                                                                 projectData.tags.features.map((keyword, i) => {
                                                                     return (
                                                                         <a
-                                                                            href={'/search?search=&tab=Projects&projectfeatures=' + keyword}
-                                                                            data-test-id={`keywords-${i}`}
-                                                                        >
+                                                                            href={`/search?search=&tab=Projects&projectfeatures=${keyword}`}
+                                                                            data-test-id={`keywords-${i}`}>
                                                                             <div className='badge-tag'>{keyword}</div>
                                                                         </a>
                                                                     );
@@ -469,9 +443,8 @@ export const ProjectDetail = props => {
                                                                 projectData.tags.topics.map((domain, i) => {
                                                                     return (
                                                                         <a
-                                                                            href={'/search?search=&tab=Projects&projecttopics=' + domain}
-                                                                            data-test-id={`domain-${i}`}
-                                                                        >
+                                                                            href={`/search?search=&tab=Projects&projecttopics=${domain}`}
+                                                                            data-test-id={`domain-${i}`}>
                                                                             <div className='badge-tag'>{domain}</div>
                                                                         </a>
                                                                     );
@@ -492,7 +465,7 @@ export const ProjectDetail = props => {
                                             onUpdateDiscoursePostCount={updateDiscoursePostCount}
                                         />
                                     </Tab>
-                                    <Tab eventKey='Related resources' title={'Related resources (' + relatedObjects.length + ')'}>
+                                    <Tab eventKey='Related resources' title={`Related resources (${relatedObjects.length})`}>
                                         {relatedObjects.length <= 0 ? (
                                             <MessageNotFound word='related resources' />
                                         ) : (
@@ -500,15 +473,15 @@ export const ProjectDetail = props => {
                                                 <RelatedObject
                                                     relatedObject={object}
                                                     objectType={object.objectType}
-                                                    activeLink={true}
-                                                    showRelationshipAnswer={true}
+                                                    activeLink
+                                                    showRelationshipAnswer
                                                     datasetPublisher={object.datasetPublisher}
                                                     datasetLogo={object.datasetLogo}
                                                 />
                                             ))
                                         )}
                                     </Tab>
-                                    <Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
+                                    <Tab eventKey='Collections' title={`Collections (${collections.length})`}>
                                         {!collections || collections.length <= 0 ? (
                                             <MessageNotFound text='This project has not been featured on any collections yet.' />
                                         ) : (

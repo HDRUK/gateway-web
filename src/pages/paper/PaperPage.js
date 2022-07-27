@@ -3,9 +3,11 @@ import axios from 'axios';
 import _ from 'lodash';
 import queryString from 'query-string';
 import React, { Fragment, useEffect, useState } from 'react';
-import { Alert, Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
+import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
+import Alert from '../../components/Alert';
+import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
 import SVGIcon from '../../images/SVGIcon';
@@ -55,17 +57,17 @@ export const PaperDetail = props => {
         ]
     );
 
-    //componentDidMount - on loading of page detail page
+    // componentDidMount - on loading of page detail page
     useEffect(() => {
-        if (!!window.location.search) {
-            let values = queryString.parse(window.location.search);
+        if (window.location.search) {
+            const values = queryString.parse(window.location.search);
             setPaperAdded(values.toolAdded);
             setPaperEdited(values.toolEdited);
         }
         getPaperDataFromDb();
     }, []);
 
-    //componentDidUpdate - on render of page detail page were id is different
+    // componentDidUpdate - on render of page detail page were id is different
     useEffect(() => {
         if (props.match.params.toolID !== id && id !== '' && !isLoading) {
             getPaperDataFromDb();
@@ -75,7 +77,7 @@ export const PaperDetail = props => {
     const getPaperDataFromDb = () => {
         setIsLoading(true);
         axios
-            .get(baseURL + '/api/v1/papers/' + props.match.params.paperID)
+            .get(`${baseURL}/api/v1/papers/${props.match.params.paperID}`)
             .then(async res => {
                 if (_.isNil(res.data)) {
                     window.localStorage.setItem('redirectMsg', `Paper not found for Id: ${props.match.params.paperID}`);
@@ -84,11 +86,11 @@ export const PaperDetail = props => {
                     const localPaperData = res.data.data[0];
                     document.title = localPaperData.name.trim();
 
-                    let counter = !localPaperData.counter ? 1 : localPaperData.counter + 1;
+                    const counter = !localPaperData.counter ? 1 : localPaperData.counter + 1;
                     updateCounter(props.match.params.paperID, counter);
 
                     if (!_.isUndefined(localPaperData.relatedObjects)) {
-                        let localAdditionalObjInfo = await getAdditionalObjectInfo(localPaperData.relatedObjects);
+                        const localAdditionalObjInfo = await getAdditionalObjectInfo(localPaperData.relatedObjects);
                         await populateRelatedObjects(localPaperData, localAdditionalObjInfo);
                     }
                     setPaperData(localPaperData);
@@ -102,13 +104,13 @@ export const PaperDetail = props => {
 
     const populateCollections = localPaperData => {
         setIsLoading(true);
-        axios.get(baseURL + '/api/v1/collections/entityid/' + localPaperData.id).then(res => {
+        axios.get(`${baseURL}/api/v1/collections/entityid/${localPaperData.id}`).then(res => {
             setCollections(res.data.data || []);
         });
     };
 
     const doSearch = e => {
-        //fires on enter on searchbar
+        // fires on enter on searchbar
         if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(searchString)}`;
     };
 
@@ -117,7 +119,7 @@ export const PaperDetail = props => {
     };
 
     const updateCounter = (id, counter) => {
-        axios.post(baseURL + '/api/v1/counter/update', { id, counter });
+        axios.post(`${baseURL}/api/v1/counter/update`, { id, counter });
     };
 
     const updateDiscoursePostCount = count => {
@@ -125,11 +127,11 @@ export const PaperDetail = props => {
     };
 
     const getAdditionalObjectInfo = async additionalObjInfo => {
-        let tempObjects = [];
+        const tempObjects = [];
         if (additionalObjInfo) {
             const promises = additionalObjInfo.map(async (object, index) => {
                 if (object.objectType === 'course') {
-                    await axios.get(baseURL + '/api/v1/relatedobject/course/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/course/${object.objectId}`).then(res => {
                         tempObjects.push({
                             name: res.data.data[0].title,
                             id: object.objectId,
@@ -137,7 +139,7 @@ export const PaperDetail = props => {
                         });
                     });
                 } else if (object.objectType === 'dataUseRegister') {
-                    await axios.get(baseURL + '/api/v1/relatedobject/dataUseRegister/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/dataUseRegister/${object.objectId}`).then(res => {
                         tempObjects.push({
                             id: object.objectId,
                             activeflag: res.data.data[0].activeflag,
@@ -145,7 +147,7 @@ export const PaperDetail = props => {
                         });
                     });
                 } else {
-                    await axios.get(baseURL + '/api/v1/relatedobject/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/${object.objectId}`).then(res => {
                         let datasetPublisher;
                         let datasetLogo;
 
@@ -164,8 +166,8 @@ export const PaperDetail = props => {
                             id: object.objectId,
                             authors: res.data.data[0].authors,
                             activeflag: res.data.data[0].activeflag,
-                            datasetPublisher: datasetPublisher,
-                            datasetLogo: datasetLogo,
+                            datasetPublisher,
+                            datasetLogo,
                         });
                     });
                 }
@@ -176,18 +178,18 @@ export const PaperDetail = props => {
     };
 
     const populateRelatedObjects = (localPaperData, localAdditionalObjInfo) => {
-        let tempRelatedObjects = [];
+        const tempRelatedObjects = [];
 
         if (localPaperData.relatedObjects && localAdditionalObjInfo) {
             localPaperData.relatedObjects.map(object =>
                 localAdditionalObjInfo.forEach(item => {
                     if (object.objectId === item.id && item.activeflag === 'active') {
-                        object['datasetPublisher'] = item.datasetPublisher;
-                        object['datasetLogo'] = item.datasetLogo;
-                        object['name'] = item.name || '';
-                        object['firstname'] = item.firstname || '';
-                        object['lastname'] = item.lastname || '';
-                        object['projectTitle'] = item.projectTitle || '';
+                        object.datasetPublisher = item.datasetPublisher;
+                        object.datasetLogo = item.datasetLogo;
+                        object.name = item.name || '';
+                        object.firstname = item.firstname || '';
+                        object.lastname = item.lastname || '';
+                        object.projectTitle = item.projectTitle || '';
 
                         tempRelatedObjects.push(object);
                     }
@@ -231,7 +233,7 @@ export const PaperDetail = props => {
             setSorting('showAll');
             const filteredRelatedResourceItems = await filterRelatedResourceItems(relatedObjects, relatedObjectsSearchValue);
 
-            let tempFilteredData = filteredRelatedResourceItems.filter(dat => {
+            const tempFilteredData = filteredRelatedResourceItems.filter(dat => {
                 return dat !== '';
             });
             setRelatedObjectsFiltered(tempFilteredData);
@@ -252,9 +254,8 @@ export const PaperDetail = props => {
                     : false)
             ) {
                 return object;
-            } else {
-                return '';
             }
+            return '';
         });
 
     const handleSort = async sort => {
@@ -294,53 +295,35 @@ export const PaperDetail = props => {
                     doToggleDrawer={toggleDrawer}
                 />
                 <Container className='margin-bottom-48'>
-                    {paperAdded ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert data-test-id='paper-added-banner' variant='success' className='mt-3'>
-                                    Done! Someone will review your tool and let you know when it goes live
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {paperAdded && (
+                        <LayoutContent>
+                            <Alert variant='success' mt={3}>
+                                Done! Someone will review your tool and let you know when it goes live
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {paperEdited ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='success' className='mt-3'>
-                                    Done! Your tool has been updated
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {paperEdited && (
+                        <LayoutContent>
+                            <Alert variant='success' mt={3}>
+                                Done! Your tool has been updated
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {paperData.activeflag === 'review' ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert data-test-id='paper-pending-banner' variant='warning' className='mt-3'>
-                                    Your paper is pending review. Only you can see this page.
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {paperData.activeflag === 'review' && (
+                        <LayoutContent>
+                            <Alert variant='warning' mt={3}>
+                                Your paper is pending review. Only you can see this page.
+                            </Alert>
+                        </LayoutContent>
                     )}
 
                     {paperData.isPreprint ? (
                         <Row className='mt-4'>
                             <Col sm={1} lg={1} />
                             <Col sm={10} lg={10}>
-                                <Alert variant='warning' className='mt-3' data-testid='preprintAlert'>
+                                <Alert variant='warning' mt={3}>
                                     This article is a preprint. It may not have been peer reviewed.
                                     <span onMouseEnter={handleMouseHover} onMouseLeave={handleMouseHover} className='floatRight'>
                                         <InfoSVG />
@@ -378,7 +361,7 @@ export const PaperDetail = props => {
                                 <Row className='margin-top-16'>
                                     <Col>
                                         <span className='badge-paper'>
-                                            <SVGIcon name='projecticon' fill={'#3c3c3b'} className='badgeSvg mr-2' viewBox='-2 0 18 18' />
+                                            <SVGIcon name='projecticon' fill='#3c3c3b' className='badgeSvg mr-2' viewBox='-2 0 18 18' />
                                             <span>Paper</span>
                                         </span>
                                     </Col>
@@ -404,9 +387,8 @@ export const PaperDetail = props => {
                                     onSelect={key => {
                                         googleAnalytics.recordVirtualPageView(`${key} tab`);
                                         googleAnalytics.recordEvent('Papers', `Clicked ${key} tab`, `Viewing ${key}`);
-                                    }}
-                                >
-                                    <Tab eventKey='about' title={'About'}>
+                                    }}>
+                                    <Tab eventKey='about' title='About'>
                                         <Row className='mt-2'>
                                             <Col>
                                                 <div className='rectangle'>
@@ -428,8 +410,7 @@ export const PaperDetail = props => {
                                                                             href={paperDoi}
                                                                             rel='noopener noreferrer'
                                                                             target='_blank'
-                                                                            className='purple-14 text-break paper-links'
-                                                                        >
+                                                                            className='purple-14 text-break paper-links'>
                                                                             {paperDoi}
                                                                         </a>
                                                                     ))
@@ -438,8 +419,7 @@ export const PaperDetail = props => {
                                                                         href={paperData.link}
                                                                         rel='noopener noreferrer'
                                                                         target='_blank'
-                                                                        className='purple-14 text-break'
-                                                                    >
+                                                                        className='purple-14 text-break'>
                                                                         {paperData.link}
                                                                     </a>
                                                                 )}
@@ -451,8 +431,7 @@ export const PaperDetail = props => {
                                                                             href={paperPdf}
                                                                             rel='noopener noreferrer'
                                                                             target='_blank'
-                                                                            className='purple-14 text-break paper-links'
-                                                                        >
+                                                                            className='purple-14 text-break paper-links'>
                                                                             {paperPdf}
                                                                         </a>
                                                                     ))}
@@ -464,8 +443,7 @@ export const PaperDetail = props => {
                                                                             href={paperHtml}
                                                                             rel='noopener noreferrer'
                                                                             target='_blank'
-                                                                            className='purple-14 text-break paper-links'
-                                                                        >
+                                                                            className='purple-14 text-break paper-links'>
                                                                             {paperHtml}
                                                                         </a>
                                                                     ))}
@@ -475,7 +453,7 @@ export const PaperDetail = props => {
                                                     {paperData.isPreprint ? (
                                                         ''
                                                     ) : (
-                                                        <Fragment>
+                                                        <>
                                                             <Row className='mt-2'>
                                                                 <Col sm={2}>
                                                                     <span className='gray800-14'>Journal</span>
@@ -496,7 +474,7 @@ export const PaperDetail = props => {
                                                                     </span>
                                                                 </Col>
                                                             </Row>
-                                                        </Fragment>
+                                                        </>
                                                     )}
                                                     {paperData.authorsNew ? (
                                                         <Row className='mt-2'>
@@ -536,12 +514,7 @@ export const PaperDetail = props => {
                                                                                   <a
                                                                                       data-test-id={`keywords-${i}`}
                                                                                       className='gray800-14'
-                                                                                      href={
-                                                                                          '/search?search=&tab=Papers&paperfeatures=' +
-                                                                                          feature +
-                                                                                          '&type=all'
-                                                                                      }
-                                                                                  >
+                                                                                      href={`/search?search=&tab=Papers&paperfeatures=${feature}&type=all`}>
                                                                                       {feature}
                                                                                   </a>
                                                                               </div>
@@ -564,12 +537,7 @@ export const PaperDetail = props => {
                                                                                   <a
                                                                                       data-test-id={`domain-${i}`}
                                                                                       className='gray800-14'
-                                                                                      href={
-                                                                                          '/search?search=&tab=Papers&papertopics=' +
-                                                                                          topic +
-                                                                                          '&type=all'
-                                                                                      }
-                                                                                  >
+                                                                                      href={`/search?search=&tab=Papers&papertopics=${topic}&type=all`}>
                                                                                       {topic}
                                                                                   </a>
                                                                               </div>
@@ -613,8 +581,7 @@ export const PaperDetail = props => {
                                                             <Col>
                                                                 <span
                                                                     data-test-id='paper-results'
-                                                                    className='gray800-14 hdruk-section-body'
-                                                                >
+                                                                    className='gray800-14 hdruk-section-body'>
                                                                     <ReactMarkdown source={paperData.resultsInsights} />
                                                                 </span>
                                                             </Col>
@@ -635,7 +602,7 @@ export const PaperDetail = props => {
                                             onUpdateDiscoursePostCount={updateDiscoursePostCount}
                                         />
                                     </Tab>
-                                    <Tab eventKey='Related resources' title={'Related resources (' + relatedObjects.length + ')'}>
+                                    <Tab eventKey='Related resources' title={`Related resources (${relatedObjects.length})`}>
                                         <>
                                             <Row>
                                                 <Col lg={8}>
@@ -645,7 +612,7 @@ export const PaperDetail = props => {
                                                                 name='searchicon'
                                                                 width={20}
                                                                 height={20}
-                                                                fill={'#2c8267'}
+                                                                fill='#2c8267'
                                                                 stroke='none'
                                                                 type='submit'
                                                             />
@@ -668,8 +635,7 @@ export const PaperDetail = props => {
                                                         <Dropdown.Toggle
                                                             variant='info'
                                                             id='dropdown-menu-align-right'
-                                                            className='gray800-14'
-                                                        >
+                                                            className='gray800-14'>
                                                             {(() => {
                                                                 if (sorting !== 'showAll')
                                                                     return `Show ${
@@ -680,21 +646,20 @@ export const PaperDetail = props => {
                                                                             : `${sorting}s`
                                                                     } (
 																	${relatedResourcesSort.filter(dat => dat.objectType === sorting).length})`;
-                                                                else return `Show all resources (${relatedResourcesSort.length})`;
+                                                                return `Show all resources (${relatedResourcesSort.length})`;
                                                             })()}
                                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
                                                             <Row
-                                                                key={`ddl-item-showall`}
+                                                                key='ddl-item-showall'
                                                                 className={
                                                                     sorting === 'showAll'
                                                                         ? 'sort-dropdown-item sort-dropdown-item-selected sortingDropdown'
                                                                         : 'sort-dropdown-item sortingDropdown'
-                                                                }
-                                                            >
+                                                                }>
                                                                 <Col xs={12} className='p-0'>
-                                                                    <Dropdown.Item eventKey={'showAll'} className='gray800-14'>
+                                                                    <Dropdown.Item eventKey='showAll' className='gray800-14'>
                                                                         Show all resources ({relatedResourcesSort.length})
                                                                     </Dropdown.Item>
                                                                 </Col>
@@ -710,7 +675,7 @@ export const PaperDetail = props => {
                                                                                 fill: '#3db28c',
                                                                                 marginTop: '5px',
                                                                             }}
-                                                                            fill={'#3db28c'}
+                                                                            fill='#3db28c'
                                                                             stroke='none'
                                                                         />
                                                                     ) : null}
@@ -726,8 +691,7 @@ export const PaperDetail = props => {
                                                                                 sorting === item
                                                                                     ? 'sort-dropdown-item sort-dropdown-item-selected sortingDropdown'
                                                                                     : 'sort-dropdown-item sortingDropdown'
-                                                                            }
-                                                                        >
+                                                                            }>
                                                                             <Col xs={12} className='p-0'>
                                                                                 <Dropdown.Item eventKey={item} className='gray800-14'>
                                                                                     Show{' '}
@@ -757,7 +721,7 @@ export const PaperDetail = props => {
                                                                                             fill: '#3db28c',
                                                                                             marginTop: '5px',
                                                                                         }}
-                                                                                        fill={'#3db28c'}
+                                                                                        fill='#3db28c'
                                                                                         stroke='none'
                                                                                     />
                                                                                 ) : null}
@@ -780,8 +744,8 @@ export const PaperDetail = props => {
                                                         <RelatedObject
                                                             relatedObject={object}
                                                             objectType={object.objectType}
-                                                            activeLink={true}
-                                                            showRelationshipAnswer={true}
+                                                            activeLink
+                                                            showRelationshipAnswer
                                                             datasetPublisher={object.datasetPublisher}
                                                             datasetLogo={object.datasetLogo}
                                                         />
@@ -790,7 +754,7 @@ export const PaperDetail = props => {
                                             )}
                                         </>
                                     </Tab>
-                                    <Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
+                                    <Tab eventKey='Collections' title={`Collections (${collections.length})`}>
                                         {!collections || collections.length <= 0 ? (
                                             <MessageNotFound text='This paper has not been featured on any collections yet.' />
                                         ) : (

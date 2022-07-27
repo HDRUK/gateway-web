@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
-import { Row, Col, Tabs, Tab, Alert } from 'react-bootstrap';
+import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as Clock } from '../../../images/clock.svg';
 import Loading from '../../commonComponents/Loading';
@@ -15,6 +15,8 @@ import { baseURL } from '../../../configs/url.config';
 import DarHelperUtil from '../../../utils/DarHelper.util';
 import VersionSelector from '../../commonComponents/versionSelector/VersionSelector';
 import './DataAccessRequests.scss';
+import Alert from '../../../components/Alert';
+import { LayoutContent } from '../../../components/Layout';
 
 class DataAccessRequestsNew extends React.Component {
     durationLookups = ['inProgress', 'submitted', 'inReview'];
@@ -166,30 +168,22 @@ class DataAccessRequestsNew extends React.Component {
         let {
             alert: { message = '' },
         } = this.state;
+
         return (
-            <Row className='mt-3'>
-                <Col xs={1}></Col>
-                <Col xs={10}>
-                    <Alert variant={'success'} className='col-sm-12 main-alert'>
-                        <SVGIcon name='check' width={18} height={18} fill={'#2C8267'} /> {message}
-                    </Alert>
-                </Col>
-                <Col xs={1}></Col>
-            </Row>
+            <LayoutContent>
+                <Alert variant='success' mt={3}>
+                    {message}
+                </Alert>
+            </LayoutContent>
         );
     };
 
     generatePreSubmissionWarning = () => {
         return (
-            <Row className='mt-3'>
-                <Col>
-                    <Alert variant={'warning'} className='col-sm-12 main-alert'>
-                        <i class='fas fa-exclamation-circle ' />
-                        &nbsp;The applicant has not completed these applications yet. The applicant may give you access in order to clarify
-                        some questions.
-                    </Alert>
-                </Col>
-            </Row>
+            <Alert variant='warning' mt={3}>
+                The applicant has not completed these applications yet. The applicant may give you access in order to clarify some
+                questions.
+            </Alert>
         );
     };
 
