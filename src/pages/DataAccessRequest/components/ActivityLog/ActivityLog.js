@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Alert from '../../../../components/Alert';
 import { baseURL } from '../../../../configs/url.config';
-import SVGIcon from '../../../../images/SVGIcon';
 import DarHelperUtil from '../../../../utils/DarHelper.util';
 // import VersionSelector from '../../../commonComponents/versionSelector/VersionSelector';
 import SLA from '../../../commonComponents/sla/SLA';

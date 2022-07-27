@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
-import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as Clock } from '../../../images/clock.svg';
 import Loading from '../../commonComponents/Loading';
 import SLA from '../../commonComponents/sla/SLA';
@@ -342,8 +341,8 @@ class DataAccessRequestsNew extends React.Component {
         }
 
         return (
-            <Fragment>
-                <Fragment>{!_.isEmpty(alert) && !_.isNil(alert.message) ? this.generateAlert() : ''}</Fragment>
+            <>
+                <>{!_.isEmpty(alert) && !_.isNil(alert.message) ? this.generateAlert() : ''}</>
                 <Row>
                     <Col xs={1}></Col>
                     <div className='col-sm-10'>
@@ -504,7 +503,7 @@ class DataAccessRequestsNew extends React.Component {
                     workflow={this.state.workflow}
                 />
                 ​
-            </Fragment>
+            </>
         );
     }
 }

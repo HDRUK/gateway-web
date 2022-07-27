@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
@@ -12,7 +12,6 @@ import FieldRepeater from '../commonComponents/FieldRepeater/FieldRepeater';
 import TeamEmailAlertModal from './Team/TeamEmailAlertModal';
 import TeamNotificationsConfirmationModal from './Team/TeamNotificationsConfirmationModal';
 import { userTypes, tabTypes } from './Team/teamUtil';
-import SVGIcon from '../../images/SVGIcon';
 import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
 import Alert from '../../components/Alert';

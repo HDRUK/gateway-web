@@ -258,7 +258,12 @@ const StructuralMetadata = ({
                     <input type='file' id='input' accept='.xls,.xlsx' hidden ref={hiddenFileInput} onChange={onChange} />
                     <p className='black-20-semibold margin-bottom-16'>Upload</p>
                     <div className='upload'>
-                        <Button variant='tertiary' iconLeft={<Icon svg={<UploadSVG />} size='lg' />} disabled={readOnly} mr={3}>
+                        <Button
+                            variant='tertiary'
+                            iconLeft={<Icon svg={<UploadSVG />} size='lg' />}
+                            disabled={readOnly}
+                            mr={3}
+                            onClick={handleClick}>
                             Select file
                         </Button>
                         <span className='gray700-alt-13'>Excel or xls. Max 10MB per file.</span>

@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { ReactComponent as PaperSVG } from '../../../../images/paper.svg';
 import { ReactComponent as CloseSVG } from '../../../../images/close-alt.svg';
-import { ReactComponent as SmallAttentionSVG } from '../../../../images/attention.svg';
 import { concatFileName, fileStatus, readableFileSize } from './files.util';
 import FileLoading from './FileLoading';
 import Button from '../../../../components/Button';

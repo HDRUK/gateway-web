@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { Button, Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import SVGIcon from '../../../../images/SVGIcon';
 import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
 import googleAnalytics from '../../../../tracking';
 import Alert from '../../../../components/Alert';

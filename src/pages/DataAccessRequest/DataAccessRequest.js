@@ -12,7 +12,6 @@ import Winterfell from 'winterfell';
 import Alert from '../../components/Alert';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
-import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 import DarHelper from '../../utils/DarHelper.util';
 import DarValidation from '../../utils/DarValidation.util';

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
 import Image from 'react-bootstrap/Image';
 import { Button, Modal } from 'react-bootstrap';
@@ -6,7 +6,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { concatFileName, fileStatus, readableFileSize } from './files.util';
 import { ReactComponent as PaperSVG } from '../../../../images/paper.svg';
 import { ReactComponent as ArrowDownSVG } from '../../../../images/arrow-down.svg';
-import { ReactComponent as SmallAttentionSVG } from '../../../../images/attention.svg';
 import { ReactComponent as TrashSVG } from '../../../../images/trash-alt-solid.svg';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import { SUPPORT_CREATE_URL } from '../../../../configs/constants';
