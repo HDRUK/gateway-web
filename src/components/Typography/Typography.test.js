@@ -4,16 +4,24 @@ import Typography from '.';
 
 let wrapper;
 
+const props = {
+    className: 'additional-classname',
+};
+
 describe('Given the Typography component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<Typography>Content</Typography>, {
+            wrapper = render(<Typography {...props}>Content</Typography>, {
                 wrapper: Providers,
             });
         });
 
         it('Then has the correct tag', () => {
             expect(wrapper.getByText('Content')).toBeTruthy();
+        });
+
+        it('Then has the correct className', () => {
+            expect(wrapper.container.querySelector('.additional-classname')).toBeTruthy();
         });
 
         it('Then has the correct content', () => {

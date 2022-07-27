@@ -1,0 +1,58 @@
+@import '../../../../css/variables';
+@import '../../../../css/typography';
+
+.minorVersionBlockedModal {
+	box-sizing: border-box;
+
+	.modal-dialog {
+		max-width: 620px;
+		max-height: 208px;
+		transform: translate(0%, 50%) !important;
+	}
+
+	&-header {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		padding: 32px 32px 0 32px;
+
+		h1 {
+			width: 90%;
+		}
+
+		&--close {
+			position: absolute;
+			top: 17px;
+			right: 25px;
+			width: 16px;
+			height: 16px;
+			fill: $indigo;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+
+	&-body {
+		width: 100%;
+		margin: 0px 24px 32px 0px;
+		padding: 0px 64px 0px 32px;
+		@include font-source(14px, $gray-800, $font-weight-semibold);
+	}
+
+	&-footer {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-end;
+		align-items: center;
+		width: 100%;
+		padding: 0px 0 32px 0;
+		background: $white;
+
+		&--wrap {
+			display: flex;
+			flex-flow: row nowrap;
+			padding: 0 32px;
+		}
+	}
+}

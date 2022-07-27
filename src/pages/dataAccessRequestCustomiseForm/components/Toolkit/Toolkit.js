@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import '../DataAccessRequest.scss';
+import '../DataAccessRequestCustomiseForm.scss';
 
 function Toolkit() {
     const [show, setShow] = useState(false);

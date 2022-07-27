@@ -6,6 +6,7 @@ import React, { Component, Fragment, useState } from 'react';
 import { Dropdown, Nav } from 'react-bootstrap';
 import { Route, withRouter } from 'react-router-dom';
 import 'react-web-tabs/dist/react-web-tabs.css';
+import Icon from '../../components/Icon';
 import { DashboardProvider } from '../../context/DashboardContext';
 import { ReactComponent as CheckSVG } from '../../images/check.svg';
 import { ReactComponent as ChevronRightSvg } from '../../images/chevron-bottom.svg';
@@ -13,6 +14,7 @@ import { ReactComponent as BarChartIcon } from '../../images/icons/bar-chart.svg
 import { ReactComponent as BookmarkIcon } from '../../images/icons/bookmark.svg';
 import { ReactComponent as CommentsIcon } from '../../images/icons/comments.svg';
 import { ReactComponent as CoursesIcon } from '../../images/icons/courses.svg';
+import { ReactComponent as EditFolderIcon } from '../../images/icons/edit-folder.svg';
 import { ReactComponent as FlowIcon } from '../../images/icons/flow.svg';
 import { ReactComponent as HelpIcon } from '../../images/icons/help.svg';
 import { ReactComponent as PapersIcon } from '../../images/icons/papers.svg';
@@ -46,6 +48,7 @@ import AccountDatasets from './Components/AccountDatasets';
 import AccountDataUse from './Components/AccountDataUse';
 import DashboardNavAccordian from './Components/DashboardNavAccordian';
 import DashboardNavItem from './Components/DashboardNavItem';
+import CustomiseDAR from './CustomiseDAR/CustomiseDAR';
 import './Dashboard.scss';
 import DataAccessRequests from './DataAccessRequests/DataAccessRequests';
 import ReviewTools from './ReviewTools';
@@ -79,6 +82,34 @@ const CustomMenu = React.forwardRef(({ children, style, className, 'aria-labelle
         </div>
     );
 });
+
+const TEAM_USERS_MENU = [
+    {
+        id: 'dashboard',
+        children: 'Dashboard',
+        icon: <BarChartIcon />,
+    },
+    {
+        id: 'youraccount',
+        children: 'Account',
+        icon: <UserIcon />,
+    },
+    {
+        id: 'tools',
+        children: 'Tools',
+        icon: <ToolsIcon />,
+    },
+    {
+        id: 'review',
+        children: 'Reviews',
+        icon: <CommentsIcon />,
+    },
+    { id: 'datause', children: 'Data Uses', icon: <FlowIcon /> },
+    { id: 'papers', children: 'Papers', icon: <PapersIcon /> },
+    { id: 'courses', children: 'Courses', icon: <CoursesIcon /> },
+    { id: 'dataaccessrequests', children: 'Data access requests', icon: <UsersIcon /> },
+    { id: 'collections', children: 'Collections', icon: <BookmarkIcon /> },
+];
 
 class Account extends Component {
     // callback declare
@@ -118,6 +149,8 @@ class Account extends Component {
         teamManagementInternalTab: 'Notifications',
         accountUpdated: false,
         dataaccessrequest: {},
+        showConfirmPublishModal: false,
+        showHowToRequestAccessEditor: false,
         publisherDetails: {},
     };
 
@@ -200,6 +233,11 @@ class Account extends Component {
 
                 if (values.tab === 'dataaccessrequests' || values.tab === 'workflows') {
                     activeAccordion = '0';
+                } else if (
+                    values.tab === 'customisedataaccessrequests_applicationform' ||
+                    values.tab === 'customisedataaccessrequests_guidance'
+                ) {
+                    activeAccordion = '1';
                 } else if (values.tab === 'datause' || values.tab === 'datause_widget') {
                     activeAccordion = '2';
                 }
@@ -218,7 +256,6 @@ class Account extends Component {
                 if (team !== 'user' && team !== 'admin') {
                     await axios.get(baseURL + `/api/v1/publishers/${team}`).then(res => {
                         let publisherDetails = res.data.publisher;
-                        console.log(publisherDetails);
                         if (!publisherDetails.allowAccessRequestManagement && values.tab === 'dataaccessrequests')
                             this.setState({ tabId: 'teamManagement' });
                         this.setState({
@@ -555,6 +592,12 @@ class Account extends Component {
         return isActive ? 'activeCard' : 'accountNav';
     };
 
+    handleCustomiseDARSelectTab = tabId => {
+        this.setState({
+            tabId,
+        });
+    };
+
     render() {
         const {
             searchString,
@@ -574,6 +617,8 @@ class Account extends Component {
             teamManagementTab,
             accountUpdated,
             dataaccessrequest,
+            showConfirmPublishModal,
+            showHowToRequestAccessEditor,
             publisherDetails,
         } = this.state;
 
@@ -622,6 +667,21 @@ class Account extends Component {
                           },
                       ]
                     : []),
+            ],
+        };
+
+        const ACCORDIAN_CUSTOM_DAR_MENU = {
+            text: 'Edit DAR Form',
+            icon: <EditFolderIcon />,
+            children: [
+                {
+                    text: 'Presubmission Guidance',
+                    id: 'customisedataaccessrequests_guidance',
+                },
+                {
+                    text: 'Application Form',
+                    id: 'customisedataaccessrequests_applicationform',
+                },
             ],
         };
 
@@ -728,16 +788,39 @@ class Account extends Component {
                                         </DashboardNavItem>
 
                                         {allowAccessRequestManagement && this.userHasRole(team, ['manager', 'reviewer']) && (
-                                            <div className={this.getNavActiveClass(['dataaccessrequests', 'workflows', 'addeditworkflow'])}>
-                                                <DashboardNavAccordian
-                                                    onSelect={this.accordionClick}
-                                                    onClick={this.toggleNav}
-                                                    tabId={tabId}
-                                                    activeKey={activeAccordion}
-                                                    eventKey='0'
-                                                    data={ACCORDIAN_DAR_MENU}
-                                                />
-                                            </div>
+                                            <>
+                                                <div
+                                                    className={this.getNavActiveClass([
+                                                        'dataaccessrequests',
+                                                        'workflows',
+                                                        'addeditworkflow',
+                                                    ])}>
+                                                    <DashboardNavAccordian
+                                                        onSelect={this.accordionClick}
+                                                        onClick={this.toggleNav}
+                                                        tabId={tabId}
+                                                        activeKey={activeAccordion}
+                                                        eventKey='0'
+                                                        data={ACCORDIAN_DAR_MENU}
+                                                    />
+                                                </div>
+                                                {publisherDetails?.questionBank?.enabled && (
+                                                    <div
+                                                        className={this.getNavActiveClass([
+                                                            'customisedataaccessrequests_guidance',
+                                                            'customisedataaccessrequests_applicationform',
+                                                        ])}>
+                                                        <DashboardNavAccordian
+                                                            onSelect={this.accordionClick}
+                                                            onClick={this.toggleNav}
+                                                            tabId={tabId}
+                                                            activeKey={activeAccordion}
+                                                            eventKey='1'
+                                                            data={ACCORDIAN_CUSTOM_DAR_MENU}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </>
                                         )}
 
                                         {this.userHasRole(team, ['manager', 'metadata_editor']) && (
@@ -859,6 +942,24 @@ class Account extends Component {
                                     {allowWorkflow && this.userHasRole(team, 'manager') && tabId === 'workflows' && (
                                         <WorkflowDashboard userState={userState} team={team} />
                                     )}
+
+                                    {(this.userHasRole(team, ['manager']) || team === 'admin') &&
+                                        (tabId === 'customisedataaccessrequests_applicationform' ||
+                                            tabId === 'customisedataaccessrequests_guidance') && (
+                                            <CustomiseDAR
+                                                userState={userState}
+                                                publisherId={team}
+                                                showConfirmPublishModal={showConfirmPublishModal}
+                                                setShowConfirmPublishModal={show => this.setState({ showConfirmPublishModal: show })}
+                                                showHowToRequestAccessEditor={showHowToRequestAccessEditor}
+                                                setShowHowToRequestAccessEditor={show =>
+                                                    this.setState({ showHowToRequestAccessEditor: show })
+                                                }
+                                                activeTab={tabId}
+                                                onSelectTab={this.handleCustomiseDARSelectTab}
+                                                alert={alert}
+                                            />
+                                        )}
 
                                     {tabId === 'teamManagement' && (
                                         <AccountTeamManagement

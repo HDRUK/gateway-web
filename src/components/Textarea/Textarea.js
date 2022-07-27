@@ -24,6 +24,8 @@ const Textarea = ({
     width,
     minWidth,
     maxWidth,
+    minHeight,
+    maxHeight,
     inputRef,
     id,
     rows,
@@ -33,8 +35,8 @@ const Textarea = ({
     return (
         <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
             <Form.Group controlId={id} className={cx('ui-Textarea', className)} css={styles.formGroup}>
-                <Form.Label css={styles.label}>{label}</Form.Label>
-                <InputGroup css={styles.inputGroup({ variant, rows, error })}>
+                {label && <Form.Label css={styles.label}>{label}</Form.Label>}
+                <InputGroup css={styles.inputGroup({ variant, rows, error, minHeight, maxHeight })}>
                     {!!maxCharCount && (
                         <div className='ui-TextArea__charCount' css={styles.charCount}>
                             {value.length} {charCountDescription}
@@ -59,6 +61,7 @@ Textarea.defaultProps = {
     charCountDescription: 'character limit',
     value: '',
     rows: 5,
+    maxHeight: 'auto',
     ...PROP_TYPES_LAYOUTBOX,
 };
 

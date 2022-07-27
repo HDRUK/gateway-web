@@ -1,0 +1,121 @@
+@import '../../../../css/variables';
+@import '../../../../css/typography';
+
+
+.updateRequest {
+  box-sizing: border-box;
+
+  .modal-dialog {
+    max-width: 620px;
+    transform: translate(0%, 50%) !important;
+  }
+
+  &-header {
+      display: flex;
+      flex-flow: column nowrap;    
+      width: 100%;    
+      padding: 32px 32px 0 32px;
+
+      &--wrap {
+          padding-bottom: 12px;
+
+          p {
+              margin-bottom: 0;
+              color: $gray-800;
+              font-size: 14px;
+          }
+      
+      }
+  }
+
+  &-head {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    &--close {
+        width: 20px;
+        height: 20px;
+        fill: $indigo;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+  }
+
+  &-body {
+    width: 100%;
+    padding: 12px 32px 16px 32px;
+    height: 300px;
+    overflow-y: scroll;
+    border-bottom: 1px solid #e7e9ed;
+
+    label {
+        display: flex;
+        width: 100%;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        margin: 0;
+    }
+
+    &--item {
+        padding: 16px;
+
+        h2 {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+  &-footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    background: $white;
+
+    &--wrap {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 16px;
+
+        button {
+            margin-left: 8px;
+        }
+    }
+}
+
+.request-wrap {
+  h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-size: 16px !important;
+  }
+
+  h6:first-child {
+    margin-top: 0;
+  }
+}
+
+
+.request-section {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  /* grid-gap: 10px; */
+  margin-bottom: 10px; 
+  div {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  div:nth-child(even) {
+    color: #3c3c3b;
+  }
+  div:nth-child(odd) {
+    color: rgba(34, 34, 34, 0.7);
+  }
+}
+
+}

@@ -26,6 +26,7 @@ class DatePickerCustom extends React.Component {
 
         if (this.props.value !== value) this.setState({ date: value });
     }
+
     handleChange(e) {
         this.setState(
             {
@@ -34,9 +35,11 @@ class DatePickerCustom extends React.Component {
             this.props.onChange.bind(null, !_.isNil(e) ? moment(e).format('DD/MM/YYYY') : e)
         );
     }
+
     handleFocus(e) {
         this.props.onFocus();
     }
+
     handleBlur(e) {
         this.props.onBlur(this.props.value);
     }

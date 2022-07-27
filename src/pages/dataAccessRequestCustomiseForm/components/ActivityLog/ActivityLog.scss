@@ -1,0 +1,128 @@
+.activityLogLayoutCard {
+	padding: 24px;
+}
+
+.activity-log-version-status {
+	align-items: flex-start !important;
+}
+
+.version-log-body {
+	padding-left: 24px;
+	padding-right: 24px;
+	padding-top: 24px;
+	padding-bottom: 24px;
+}
+
+.activity-log {
+	display: flex;
+	align-items: center;
+}
+
+.activity-log-item {
+	margin-bottom: 10px;
+}
+
+.activity-log-text {
+	margin-left: 24px;
+}
+
+.activity-log-arrow {
+	margin-left: 8px;
+	flex-grow: 1;
+}
+
+.activity-log-detail {
+	background-color: #f6f7f8;
+	padding: 16px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.activity-log-details {
+	display: flex;
+	flex-direction: column;
+	margin-left: 95px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	font-size: 14px;
+	color: #3c3c3b;
+}
+
+.activity-log-detail-row {
+	display: flex;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.activity-log-detail-header {
+	font-size: 13px;
+	color: #848e97;
+	padding-bottom: 2px;
+}
+
+.activity-log-detail-row-question {
+	min-width: 150px;
+	opacity: 0.7;
+}
+
+.activity-log-detail-link {
+	color: #475da7;
+}
+
+.activity-log-time {
+	margin-left: 16px;
+	font-size: 13px;
+	color: #53575a !important;
+}
+
+.versionCreated {
+	height: 24px;
+	width: 24px;
+	margin-top: 7px;
+}
+
+.versionAccepted {
+	border-radius: 100%;
+	height: 24px;
+	width: 24px;
+	background-color: #3db28c;
+	border: solid 2px #3db28c;
+	fill: #ffffff;
+	margin-top: 7px;
+}
+
+.layoutCardVersionUpdated {
+	margin-bottom: -5px !important;
+	position: relative !important;
+}
+
+.version-submitted {
+	display: flex;
+	align-items: center;
+
+	.line {
+		border-bottom: 1px solid #e7e9ed;
+		flex-grow: 1;
+	}
+	.version {
+		margin-left: 2px;
+		margin-right: 2px;
+		color: #848e97;
+		font-size: 13px;
+		text-align: center;
+	}
+}
+
+.header-version-number {
+	margin-bottom: -7px !important;
+}
+
+.activity-log-key {
+	color: #2d2d2d;
+	margin-bottom: 5px;
+}
+
+.activity-log-delete-event {
+	font-size: 14px !important;
+	margin-left: 5px;
+}
