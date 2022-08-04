@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
-import { Alert, Button, Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import SVGIcon from '../../../../images/SVGIcon';
 import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
 import googleAnalytics from '../../../../tracking';
+import Alert from '../../../../components/Alert';
 
 const AccountDatasetsCreate = props => {
     const {
@@ -43,11 +43,7 @@ const AccountDatasetsCreate = props => {
 
     return (
         <>
-            {message && (
-                <Alert variant='success' className='col-sm-12 main-alert'>
-                    <SVGIcon name='check' width={18} height={18} fill='#2C8267' /> {message}
-                </Alert>
-            )}
+            {message && <Alert variant='success'>{message}</Alert>}
             <div className='accountHeader'>
                 <Row>
                     <Col sm={12} md={8}>
@@ -69,8 +65,7 @@ const AccountDatasetsCreate = props => {
                                     googleAnalytics.recordEvent('Datasets', 'Add a new dataset', 'Datasets dashboard button clicked');
 
                                     createNewDataset(e);
-                                }}
-                            >
+                                }}>
                                 + {t('dataset.create.action')}
                             </Button>
                         )}

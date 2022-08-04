@@ -4,7 +4,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import { filesize } from 'humanize';
 import * as styles from './FileSelector.styles';
 import Button from '../Button';
-import Typography, { H5 } from '../Typography';
+import Typography, { Caption, H5 } from '../Typography';
 import LayoutBox from '../LayoutBox';
 import Icon from '../Icon';
 
@@ -12,7 +12,7 @@ import { ReactComponent as UploadIcon } from '../../images/icons/upload.svg';
 import { ReactComponent as RemoveIcon } from '../../images/icons/close.svg';
 import { ReactComponent as JsonIcon } from '../../images/icons/json.svg';
 
-const FileSelector = ({ children, fileTypes, maxFileSize, noFilesMessage, multiple, actions }) => {
+const FileSelector = ({ children, fileTypes, maxFileSize, noFilesMessage, multiple, actions, disabled }) => {
     const fileRef = useRef(null);
     const [fileList, setFileList] = useState([]);
 
@@ -64,13 +64,19 @@ const FileSelector = ({ children, fileTypes, maxFileSize, noFilesMessage, multip
                     variant='tertiary'
                     mr={3}
                     onClick={handleSelectClick}
-                    iconLeft={<Icon svg={<UploadIcon />} fill='purple500' size='lg' />}>
+                    iconLeft={<Icon svg={<UploadIcon />} fill='purple500' size='lg' />}
+                    disabled={disabled}
+                    width='170px'>
                     Select file
                 </Button>
-                <Typography color='grey600' variant='caption'>
-                    <div>File type: {fileTypes.join(',')}</div>
-                    <div>Max size: {filesize(maxFileSize, 1000, 0)} per file</div>
-                </Typography>
+                <div>
+                    <div>
+                        <Caption color='grey600'>File type(s): {fileTypes.join(', ').replace(/,([^,]*)$/, ' and $1')}</Caption>
+                    </div>
+                    <div>
+                        <Caption color='grey600'>Max size: {filesize(maxFileSize, 1000, 0)} per file</Caption>
+                    </div>
+                </div>
             </LayoutBox>
             {!fileList.length && (
                 <LayoutBox display='flex' justifyContent='center'>

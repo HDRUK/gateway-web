@@ -7,7 +7,7 @@ import DarHelper from '../../../../utils/DarHelper.util';
 import SVGIcon from '../../../../images/SVGIcon';
 import { ReactComponent as InfoSVG } from '../../../../images/info.svg';
 import TypeaheadDataset from '../TypeaheadDataset/TypeaheadDataset';
-import AlertBox from '../AlertBox/AlertBox';
+import Alert from '../../../../components/Alert';
 
 const AboutApplication = props => {
     const {
@@ -113,7 +113,7 @@ const AboutApplication = props => {
                                     )}
                                 </div>
                             </div>
-                            {areDatasetsAmended && <AlertBox text={datasetsAmendedMessage} status='WARNING' />}
+                            {areDatasetsAmended && <Alert variant='warning'>{datasetsAmendedMessage}</Alert>}
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>

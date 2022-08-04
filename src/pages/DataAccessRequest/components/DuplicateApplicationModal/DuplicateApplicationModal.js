@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Alert } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import moment from 'moment';
+import _ from 'lodash';
+import axios from 'axios';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import './DuplicateApplicationModal.scss';
 import SVGIcon from '../../../../images/SVGIcon';
 import SLA from '../../../commonComponents/sla/SLA';
 import DarHelperUtil from '../../../../utils/DarHelper.util';
 import TimeDuration from '../../../commonComponents/timeDuration/TimeDuration';
-import axios from 'axios';
 import { baseURL } from '../../../../configs/url.config';
-import moment from 'moment';
-import _ from 'lodash';
+import Alert from '../../../../components/Alert';
 
 const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, showDatasetModal, appToCloneId }) => {
     const [applicationsToCloneInto, setApplicationsToCloneInto] = useState([]);
-    let [isNewApplication, setIsNewApplication] = useState(false);
-    let [applicationId, setApplicationId] = useState(null);
+    const [isNewApplication, setIsNewApplication] = useState(false);
+    const [applicationId, setApplicationId] = useState(null);
 
     useEffect(() => {
         axios.get(`${baseURL}/api/v1/data-access-request?applicationStatus=inProgress`).then(res => {
-            let appInProgressToCloneInto = res.data.data.filter(app => app._id !== appToCloneId);
+            const appInProgressToCloneInto = res.data.data.filter(app => app._id !== appToCloneId);
             setApplicationsToCloneInto(appInProgressToCloneInto);
         });
     }, []);
@@ -48,24 +49,15 @@ const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, s
                     Only applications with matching form processes will be available to duplicate into. All applicants and contributors will
                     be notified of this duplication.
                 </div>
-                <Alert variant='warning' className='duplicateApplicationModal-alert'>
-                    <div className='duplicateApplicationModal-alert--icon'>
-                        <SVGIcon
-                            name='attention'
-                            width={16}
-                            height={16}
-                            fill={'#f0bb24'}
-                            className='duplicateApplicationModal-alert--icon--svg'
-                        />
-                    </div>
-                    <div>By selecting a pre-submission application, any already existing answers will be overridden.</div>
+                <Alert variant='warning' mt={6}>
+                    By selecting a pre-submission application, any already existing answers will be overridden.
                 </Alert>
             </div>
             <div className='duplicateApplicationModal-body'>
                 <div className='duplicateApplicationModal-body-applications'>
                     {isNewApplication ? (
                         <button className='duplicateApplicationModal-body-newappbuttonselected'>
-                            <SVGIcon className='newAppButtonIcon' name='check' width={51} height={51} fill={' #3db28c'} />
+                            <SVGIcon className='newAppButtonIcon' name='check' width={51} height={51} fill=' #3db28c' />
                             <div className='newAppButtonText'>Create new application</div>
                         </button>
                     ) : (
@@ -74,15 +66,14 @@ const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, s
                             onClick={() => {
                                 setIsNewApplication(true);
                                 setApplicationId(null);
-                            }}
-                        >
-                            <SVGIcon className='newAppButtonIcon' name='plusChunky' width={20} height={20} fill={'#475da7'} />
+                            }}>
+                            <SVGIcon className='newAppButtonIcon' name='plusChunky' width={20} height={20} fill='#475da7' />
                             <div className='newAppButtonText'>Create new application</div>{' '}
                         </button>
                     )}
 
                     {applicationsToCloneInto.map((request, i) => {
-                        let {
+                        const {
                             datasets = [],
                             updatedAt,
                             applicants = '',
@@ -101,8 +92,7 @@ const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, s
                                 onClick={() => {
                                     setApplicationId(_id);
                                     setIsNewApplication(false);
-                                }}
-                            >
+                                }}>
                                 <div className='duplicateApplicationModal-body-presubmittedappbutton-header'>
                                     <div className='title'>
                                         <h1>{projectName}</h1>
@@ -150,8 +140,7 @@ const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, s
                         className='button-primary'
                         onClick={e => {
                             isNewApplication ? onShowDatasetModal() : duplicateApplication(applicationId, []);
-                        }}
-                    >
+                        }}>
                         Duplicate application
                     </button>
                 </div>
@@ -162,8 +151,8 @@ const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, s
 
 const renderDuration = createdAt => {
     let diff = 0;
-    let start = moment(createdAt);
-    let end = moment();
+    const start = moment(createdAt);
+    const end = moment();
     diff = end.diff(start, 'days');
     return <TimeDuration text={`${diff} days since start`} />;
 };

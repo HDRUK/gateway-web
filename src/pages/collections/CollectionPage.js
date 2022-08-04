@@ -3,7 +3,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
-import { Alert, Col, Container, Pagination, Row, Tab, Tabs } from 'react-bootstrap';
+import { Col, Container, Pagination, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
@@ -33,6 +33,7 @@ import PersonCollectionResults from './Components/PersonCollectionResults';
 import ToolCollectionResults from './Components/ToolCollectionResults';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import { MAXRESULTS } from './constants';
+import Alert from '../../components/Alert';
 
 export const CollectionPage = props => {
     const { t } = useTranslation();
@@ -286,48 +287,28 @@ export const CollectionPage = props => {
                 />
                 <div className='collectionHeader pixelGapTop pixelGapBottom'>
                     <Container>
-                        {collectionAdded ? (
-                            <Row>
-                                <Col sm={1} lg={1} />
-                                <Col sm={10} lg={10} className='pad-left-0'>
-                                    <Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
-                                        {collectionData.publicflag ? `${t('collection.public.live')}` : `${t('collection.private.live')}`}
-                                    </Alert>
-                                </Col>
-                                <Col sm={1} lg={10} />
-                            </Row>
-                        ) : (
-                            ''
+                        {collectionAdded && (
+                            <LayoutContent>
+                                <Alert variant='success' mb={3}>
+                                    {collectionData.publicflag ? `${t('collection.public.live')}` : `${t('collection.private.live')}`}
+                                </Alert>
+                            </LayoutContent>
                         )}
 
-                        {collectionEdited ? (
-                            <Row>
-                                <Col sm={1} lg={1} />
-                                <Col sm={10} lg={10}>
-                                    <Alert data-test-id='collection-added-banner' variant='success' className='mb-3'>
-                                        {collectionData.publicflag
-                                            ? `${t('collection.public.updated')}`
-                                            : `${t('collection.private.updated')}`}
-                                    </Alert>
-                                </Col>
-                                <Col sm={1} lg={10} />
-                            </Row>
-                        ) : (
-                            ''
+                        {collectionEdited && (
+                            <LayoutContent>
+                                <Alert variant='success' mb={3}>
+                                    {collectionData.publicflag ? `${t('collection.public.updated')}` : `${t('collection.private.updated')}`}
+                                </Alert>
+                            </LayoutContent>
                         )}
 
-                        {collectionData.activeflag === 'archive' ? (
-                            <Row>
-                                <Col sm={1} lg={1} />
-                                <Col sm={10} lg={10}>
-                                    <Alert variant='danger' className='mb-3'>
-                                        This collection has been archived
-                                    </Alert>
-                                </Col>
-                                <Col sm={1} lg={10} />
-                            </Row>
-                        ) : (
-                            ''
+                        {collectionData.activeflag === 'archive' && (
+                            <LayoutContent>
+                                <Alert variant='danger' mt={3}>
+                                    This collection has been archived
+                                </Alert>
+                            </LayoutContent>
                         )}
 
                         <Row>
@@ -435,8 +416,7 @@ export const CollectionPage = props => {
                         googleAnalytics.recordVirtualPageView(`${key} tab`);
                         googleAnalytics.recordEvent('Collections', `Clicked ${key} tab`, `Viewing ${key}`);
                     }}
-                    data-testid='collectionPageTabs'
-                >
+                    data-testid='collectionPageTabs'>
                     <Tab eventKey='dataset' title={`Datasets (${datasetCount})`} />
                     <Tab eventKey='tool' title={`Tools (${toolCount})`} />
                     <Tab eventKey='paper' title={`Papers (${paperCount})`} />
