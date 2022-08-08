@@ -141,8 +141,6 @@ export const DataAccessRequestCustomiseForm = props => {
         const newPanelId = panelId || newJsonSchema.formPanels[0].panelId;
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
-        console.log('newPanelId', newPanelId);
-
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
         setJsonSchema(newJsonSchema);
@@ -537,8 +535,6 @@ export const DataAccessRequestCustomiseForm = props => {
             },
         } = await questionbankService.getQuestionbankItem(publisherDetails._id);
 
-        console.log('uploadJsonSchema', uploadJsonSchema);
-
         const newJsonSchema = helpers.injectReadonlyStaticContent(
             { ...uploadJsonSchema, ...classSchema, ...questionActions },
             {},
@@ -787,8 +783,6 @@ export const DataAccessRequestCustomiseForm = props => {
                                     </>
                                 );
                             }
-
-                            console.log('ITEM', item, jsonSchema.questionPanels);
 
                             return (
                                 <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
