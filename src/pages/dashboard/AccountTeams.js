@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
 import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
-import SVGIcon from '../../images/SVGIcon';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import AddEditTeamsPage from './Team/AddEditTeamsPage';
@@ -125,13 +124,7 @@ const AccountTeams = () => {
         <>
             {viewTeams ? (
                 <LayoutContent>
-                    {!_.isEmpty(alert) && (
-                        <Row className='teams-alert'>
-                            <Alert variant='success' className='main-alert teams-alert'>
-                                <SVGIcon name='check' width={24} height={24} fill='#2C8267' /> {alert.message}
-                            </Alert>
-                        </Row>
-                    )}
+                    {!_.isEmpty(alert) && <Alert variant='success'>{alert.message}</Alert>}
                     <Row className='accountHeader'>
                         <Col sm={12} md={8}>
                             <Row>

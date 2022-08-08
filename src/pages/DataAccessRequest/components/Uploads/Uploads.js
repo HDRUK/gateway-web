@@ -4,6 +4,8 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import FormData from 'form-data';
+import { t } from 'i18next';
+import { filesize } from 'humanize';
 import { ReactComponent as UploadSVG } from '../../../../images/upload.svg';
 import { fileStatus } from './files.util';
 import { baseURL } from '../../../../configs/url.config';
@@ -12,6 +14,8 @@ import './Uploads.scss';
 import UploadFiles from './UploadFiles';
 import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
+import Button from '../../../../components/Button';
+import Icon from '../../../../components/Icon';
 
 const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disabled }) => {
     // 10mb - 10485760
@@ -69,9 +73,11 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
     const formatRejectedFiles = rejectedFiles => {
         if (!_.isEmpty(rejectedFiles)) {
             return [...rejectedFiles].map(f => {
-                const { file } = f;
+                const { file, errors } = f;
+                const type = errors.find(({ code }) => code === 'file-invalid-type') ? 'file-invalid-type' : errors[0].code;
+
                 return {
-                    error: 'File exceeds limit',
+                    error: t(`DAR.upload.${type}`, { size: filesize(maxSize).replace('.00', '') }),
                     fileId: uuidv4(),
                     description: '',
                     size: file.size,
@@ -214,7 +220,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
         return () => {
             clearInterval(timer);
         };
-    });
+    }, []);
 
     // dropzone setup
     const { getRootProps, getInputProps } = useDropzone({
@@ -223,6 +229,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
         onDropRejected,
         minSize: 0,
         maxSize,
+        accept: ['.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.key', '.pages', '.numbers', '.png', '.jpg', '.jpeg', '.csv', '.txt'],
     });
     return (
         <div className='files dar-form'>
@@ -232,9 +239,9 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
                 <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <div className='upload'>
-                        <button className='button-tertiary' disabled={disabled}>
-                            <UploadSVG /> Select files
-                        </button>
+                        <Button variant='tertiary' iconLeft={<Icon svg={<UploadSVG />} size='lg' />} disabled={disabled} mr={3}>
+                            Select files
+                        </Button>
                         <span className='gray700-alt-13'>
                             PDF, CSV, TXT, Powerpoint, Word, Excel, Keynote, Pages, Numbers, JPG or PNG.
                             <br />

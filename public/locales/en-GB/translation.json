@@ -366,6 +366,14 @@
         }
     },
     "DAR": {
+        "upload": {
+            "virus": {
+                "error": "Virus scan failed! Your file, {{name}}, could not be scanned for viruses but you can still submit your application without it. To try and upload the file again, click “Select files” above. If the problem persists, please <2>Raise a Support Ticket</2>.",
+                "quarantined": " Virus detected! Your file {{name}} has been quarantined but you can still submit your application without it. You can try to upload the file again or please try a different version of the file"
+            },
+            "file-too-large": "File exceeds {{size}} limit",
+            "file-invalid-type": "File type not supported"
+        },
         "customise": {
             "title": "Customise data access requests",
             "description": "Manage and edit your 'how to request access' information, your data access request form and workflows",

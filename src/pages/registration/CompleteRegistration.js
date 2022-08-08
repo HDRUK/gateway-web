@@ -4,7 +4,7 @@ import * as Sentry from '@sentry/react';
 import { useFormik } from 'formik';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import * as Yup from 'yup';
-import { Row, Col, Container, Button, Alert, Form, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Row, Col, Container, Button, Form, DropdownButton, Dropdown } from 'react-bootstrap';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
@@ -15,6 +15,7 @@ import googleAnalytics from '../../tracking';
 import 'react-tabs/style/react-tabs.css';
 import SVGIcon from '../../images/SVGIcon';
 import TextareaAutosize from 'react-textarea-autosize';
+import Alert from '../../components/Alert';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
@@ -337,12 +338,10 @@ const YourAccountForm = props => {
 
     return (
         <div>
-            {props.isUpdated ? (
-                <Alert variant='success' className='mt-3'>
+            {props.isUpdated && (
+                <Alert variant='success' mt={3}>
                     Done! Your account details have been updated
                 </Alert>
-            ) : (
-                ''
             )}
             <Row className='mt-2'>
                 <Col>
@@ -385,8 +384,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setFirstNameHover(true)}
-                                        onMouseLeave={() => setFirstNameHover(false)}
-                                    >
+                                        onMouseLeave={() => setFirstNameHover(false)}>
                                         {inFirstNameHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>{mandatoryShowFieldMsg}</span>
@@ -427,8 +425,7 @@ const YourAccountForm = props => {
                                         onMouseEnter={() => setLastNameHover(true)}
                                         onMouseLeave={() => {
                                             setLastNameHover(false);
-                                        }}
-                                    >
+                                        }}>
                                         {inLastNameHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>{mandatoryShowFieldMsg}</span>
@@ -465,8 +462,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setEmailHover(true)}
-                                        onMouseLeave={() => setEmailHover(false)}
-                                    >
+                                        onMouseLeave={() => setEmailHover(false)}>
                                         {inEmailHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>{mandatoryHideFieldMsg}</span>
@@ -520,8 +516,7 @@ const YourAccountForm = props => {
                                             value={formik.values.sector}
                                             onBlur={() => formik.setFieldTouched('sector', true)}
                                             touched={formik.touched.sector}
-                                            onSelect={selected => handleSectorSelect(selected)}
-                                        >
+                                            onSelect={selected => handleSectorSelect(selected)}>
                                             {sectorSelect.map((sec, i) => (
                                                 <Dropdown.Item className='gray800-14 width-100' key={sec} eventKey={sec}>
                                                     {sec}
@@ -534,8 +529,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setSectorHover(true)}
-                                        onMouseLeave={() => setSectorHover(false)}
-                                    >
+                                        onMouseLeave={() => setSectorHover(false)}>
                                         {inSectorHover && (
                                             <div className='accountClassToolTip accountSectorToolTip'>
                                                 <span className='white-13-semibold'>
@@ -548,8 +542,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleSector();
-                                            }}
-                                        >
+                                            }}>
                                             {showingSector ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -600,8 +593,7 @@ const YourAccountForm = props => {
                                                 lg={1}
                                                 className='eyeColumn'
                                                 onMouseEnter={() => setOrgHover(true)}
-                                                onMouseLeave={() => setOrgHover(false)}
-                                            >
+                                                onMouseLeave={() => setOrgHover(false)}>
                                                 {inOrgHover && (
                                                     <div className='accountClassToolTip accountSectorToolTip'>
                                                         <span className='white-13-semibold'>
@@ -615,8 +607,7 @@ const YourAccountForm = props => {
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         toggleOrg();
-                                                    }}
-                                                >
+                                                    }}>
                                                     {showingOrg ? (
                                                         <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                                     ) : (
@@ -684,8 +675,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleBio();
-                                            }}
-                                        >
+                                            }}>
                                             {showingBio ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -725,8 +715,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setDomainHover(true)}
-                                        onMouseLeave={() => setDomainHover(false)}
-                                    >
+                                        onMouseLeave={() => setDomainHover(false)}>
                                         {inDomainHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>
@@ -739,8 +728,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleDomain();
-                                            }}
-                                        >
+                                            }}>
                                             {showingDomain ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -774,8 +762,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setLinkHover(true)}
-                                        onMouseLeave={() => setLinkHover(false)}
-                                    >
+                                        onMouseLeave={() => setLinkHover(false)}>
                                         {inLinkHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>
@@ -788,8 +775,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleLink();
-                                            }}
-                                        >
+                                            }}>
                                             {showingLink ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -821,8 +807,7 @@ const YourAccountForm = props => {
                                         lg={1}
                                         className='eyeColumn'
                                         onMouseEnter={() => setOrcidHover(true)}
-                                        onMouseLeave={() => setOrcidHover(false)}
-                                    >
+                                        onMouseLeave={() => setOrcidHover(false)}>
                                         {inOrcidHover && (
                                             <div className='accountClassToolTip'>
                                                 <span className='white-13-semibold'>
@@ -835,8 +820,7 @@ const YourAccountForm = props => {
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleOrcid();
-                                            }}
-                                        >
+                                            }}>
                                             {showingOrcid ? (
                                                 <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} className={'pointer'} />
                                             ) : (
@@ -862,8 +846,7 @@ const YourAccountForm = props => {
                                         <a
                                             href='https://www.hdruk.ac.uk/infrastructure/gateway/terms-and-conditions/'
                                             target='_blank'
-                                            rel='noopener noreferrer'
-                                        >
+                                            rel='noopener noreferrer'>
                                             Terms and Conditions
                                         </a>
                                     </span>
@@ -928,8 +911,7 @@ const YourAccountForm = props => {
                                 <a
                                     target='_blank'
                                     rel='noopener noreferrer'
-                                    href='https://mailchi.mp/hdruk.ac.uk/explore-and-access-the-uks-health-research-datasets'
-                                >
+                                    href='https://mailchi.mp/hdruk.ac.uk/explore-and-access-the-uks-health-research-datasets'>
                                     Show me an example
                                 </a>
                             </Col>
@@ -943,8 +925,7 @@ const YourAccountForm = props => {
                             <a
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                href='https://www.hdruk.ac.uk/infrastructure/gateway/privacy-policy/'
-                            >
+                                href='https://www.hdruk.ac.uk/infrastructure/gateway/privacy-policy/'>
                                 privacy policy
                             </a>{' '}
                             aims to give you information on how Health Data Research UK collects and processes your personal data through
