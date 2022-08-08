@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Trans } from 'react-i18next';
@@ -537,6 +537,8 @@ export const DataAccessRequestCustomiseForm = props => {
             },
         } = await questionbankService.getQuestionbankItem(publisherDetails._id);
 
+        console.log('uploadJsonSchema', uploadJsonSchema);
+
         const newJsonSchema = helpers.injectReadonlyStaticContent(
             { ...uploadJsonSchema, ...classSchema, ...questionActions },
             {},
@@ -680,6 +682,30 @@ export const DataAccessRequestCustomiseForm = props => {
         setShowSaveAlert(false);
     };
 
+    const handleExport = useCallback(() => {
+        const { pages, formPanels, questionPanels, questionSets, ...outerSchema } = jsonSchema;
+
+        const currentDate = moment().format('YYYY-MM-DD');
+        const fileName = `dar-${publisherDetails.name.replaceAll(' ', '-').toLowerCase()}-${currentDate}.json`;
+        const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+            JSON.stringify({
+                jsonSchema: {
+                    pages,
+                    formPanels,
+                    questionPanels,
+                    questionSets,
+                },
+                ...outerSchema,
+                questionStatus,
+                questionSetStatus,
+            })
+        )}`;
+        const link = document.createElement('a');
+        link.href = jsonString;
+        link.download = fileName;
+        link.click();
+    }, [jsonSchema, publisherDetails, questionStatus, questionSetStatus]);
+
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
     Winterfell.addInputType('datePickerCustom', DatePickerCustom);
     Winterfell.addInputType('typeaheadUser', TypeaheadUser);
@@ -746,29 +772,49 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <div id='darContainer' className='flex-form'>
                     <div id='darLeftCol' className='scrollable-sticky-column'>
-                        {(jsonSchema.pages || []).map((item, idx) => (
-                            <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
-                                <div>
-                                    <h3
-                                        className={`black-16 ${item.active ? 'section-header-active' : 'section-header'} `}
-                                        onClick={e => updateNavigation(item)}>
-                                        <span>{item.title}</span>
-                                    </h3>
-                                    {item.active && (
-                                        <ul className='list-unstyled section-subheader'>
-                                            <NavItem
-                                                parentForm={item}
-                                                questionPanels={jsonSchema.questionPanels}
-                                                onFormSwitchPanel={updateNavigation}
-                                                activePanelId={activePanelId}
-                                                enabled
-                                                notForReview={false}
-                                            />
-                                        </ul>
-                                    )}
+                        {(jsonSchema.pages || []).map((item, idx) => {
+                            let navHeader;
+
+                            if (item.pageId === 'export') {
+                                const panel = jsonSchema.questionPanels.find(panel => panel.panelId === 'export');
+
+                                navHeader = (
+                                    <>
+                                        {panel.navDescription}
+                                        <Button onClick={handleExport} mt={2}>
+                                            {panel.navHeader}
+                                        </Button>
+                                    </>
+                                );
+                            }
+
+                            console.log('ITEM', item, jsonSchema.questionPanels);
+
+                            return (
+                                <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
+                                    <div>
+                                        <h3
+                                            className={`black-16 ${item.active ? 'section-header-active' : 'section-header'} `}
+                                            onClick={e => updateNavigation(item)}>
+                                            <span>{item.title}</span>
+                                        </h3>
+                                        {item.active && (
+                                            <ul className='list-unstyled section-subheader'>
+                                                <NavItem
+                                                    parentForm={item}
+                                                    questionPanels={jsonSchema.questionPanels}
+                                                    onFormSwitchPanel={updateNavigation}
+                                                    activePanelId={activePanelId}
+                                                    enabled
+                                                    notForReview={false}
+                                                    navHeader={navHeader}
+                                                />
+                                            </ul>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                     <div id='darCenterCol'>
                         <div id='darDropdownNav'>
