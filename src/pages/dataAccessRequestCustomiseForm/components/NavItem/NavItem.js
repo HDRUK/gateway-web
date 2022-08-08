@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import DarHelper from '../../../../utils/DarHelper.util';
 import '../../../DataAccessRequest/DataAccessRequest.scss';
 
-const NavItem = ({ parentForm, questionPanels, onFormSwitchPanel, activePanelId, enabled, notForReview }) => {
+const NavItem = ({ parentForm, questionPanels, onFormSwitchPanel, activePanelId, enabled, notForReview, navHeader }) => {
     const onClickItem = (e, panel) => {
         e.preventDefault();
         if (enabled) {
@@ -14,6 +14,7 @@ const NavItem = ({ parentForm, questionPanels, onFormSwitchPanel, activePanelId,
     const buildNavItem = () => {
         const qPanels = [...questionPanels];
         const baseClasses = 'dar-nav-item text-size-small ';
+
         if (!isEmpty(qPanels)) {
             return qPanels.map((item, index) => {
                 if (parentForm.pageId === item.pageId && item.navHeader) {
@@ -22,7 +23,7 @@ const NavItem = ({ parentForm, questionPanels, onFormSwitchPanel, activePanelId,
 
                     return (
                         <li className={classes} style={{ cursor: 'pointer' }} key={index} onClick={e => onClickItem(e, item)}>
-                            <span>{item.navHeader}</span>
+                            <span>{navHeader || item.navHeader}</span>
                             <span>{item.flag && <i className={DarHelper.flagPanelIcons[item.flag]} />}</span>
                         </li>
                     );
