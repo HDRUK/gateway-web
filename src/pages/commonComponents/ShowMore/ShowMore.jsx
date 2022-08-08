@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Collapsable } from 'hdruk-react-core';
 
+import { t } from 'i18next';
 import { ReactComponent as ArrowDown } from '../../../images/icons/arrow-down.svg';
 import { ReactComponent as ArrowUp } from '../../../images/icons/arrow-up.svg';
 
@@ -20,7 +21,15 @@ const ShowMore = ({ children, initialHeight }) => {
             toggle={
                 <a onClick={handleShowMore} className='show-more'>
                     <span className='purple-14'>
-                        Show {!showMore ? 'more' : 'less'} {showMore ? <ArrowUp /> : <ArrowDown />}
+                        {showMore ? (
+                            <>
+                                {t('show.less')} <ArrowUp />
+                            </>
+                        ) : (
+                            <>
+                                {t('show.more')} <ArrowDown />
+                            </>
+                        )}
                     </span>
                 </a>
             }>
