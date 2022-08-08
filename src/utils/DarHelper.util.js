@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import moment from 'moment';
-import Button from '../components/Button';
+import { Button } from 'hdruk-react-core';
 
 const autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Dropdown as BootstrapDropdown } from 'react-bootstrap';
 import { ReactComponent as CheckIcon } from '../../images/check.svg';
 import Icon from '../Icon';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Dropdown.styles';
 
@@ -44,7 +44,7 @@ const Dropdown = ({
     );
 
     return (
-        <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
+        <Box {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
             <BootstrapDropdown className={cx('ui-Dropdown', className)} {...outerProps} css={styles.root({ variant, size })}>
                 <BootstrapDropdown.Toggle variant={variant}>{selectedOption && selectedOption.label}</BootstrapDropdown.Toggle>
                 <BootstrapDropdown.Menu>
@@ -60,7 +60,7 @@ const Dropdown = ({
                     })}
                 </BootstrapDropdown.Menu>
             </BootstrapDropdown>
-        </LayoutBox>
+        </Box>
     );
 };
 

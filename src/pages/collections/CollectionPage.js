@@ -7,8 +7,8 @@ import { Col, Container, Pagination, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
+import { Box } from 'hdruk-react-core';
 import { LayoutContent } from '../../components/Layout';
-import LayoutBox from '../../components/LayoutBox';
 import SearchControls from '../../components/SearchControls';
 import SVGIcon from '../../images/SVGIcon';
 import collectionsService from '../../services/collections';
@@ -473,9 +473,9 @@ export const CollectionPage = props => {
                     <Col sm={1} lg={1} />
                     <Col sm={10} lg={10}>
                         {!key && (
-                            <LayoutBox mt={2}>
+                            <Box mt={2}>
                                 <MessageNotFound />
-                            </LayoutBox>
+                            </Box>
                         )}
                         {key === 'dataset' ? (
                             <DatasetCollectionResults

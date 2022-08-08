@@ -7,7 +7,7 @@ import { Row, Col, Alert, Table } from 'react-bootstrap';
 import { ReactComponent as UploadSVG } from '../../../../images/upload.svg';
 import { baseURL } from '../../../../configs/url.config';
 import './StructuralMetadata.scss';
-import Button from '../../../../components/Button';
+import { Button } from 'hdruk-react-core';
 import Icon from '../../../../components/Icon';
 
 const StructuralMetadata = ({

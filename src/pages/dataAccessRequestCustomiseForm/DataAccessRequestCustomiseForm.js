@@ -11,13 +11,10 @@ import { NotificationManager } from 'react-notifications';
 import { useHistory, useLocation } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
+import { Button, Box, P, H5, Typography, Cta } from 'hdruk-react-core';
 import Alert from '../../components/Alert';
-import Button from '../../components/Button';
-import Cta from '../../components/Cta';
 import Icon from '../../components/Icon';
-import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
-import Typography, { H5, P } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
@@ -619,9 +616,9 @@ export const DataAccessRequestCustomiseForm = props => {
         if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
                 <Card>
-                    <LayoutBox px={5}>
+                    <Box px={5}>
                         <Uploads />
-                    </LayoutBox>
+                    </Box>
                 </Card>
             );
         }
@@ -724,17 +721,17 @@ export const DataAccessRequestCustomiseForm = props => {
                     </Col>
                     <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right text-white'>
                         {lastSaved && (
-                            <LayoutBox mr={5} display='flex' alignItems='center'>
+                            <Box mr={5} display='flex' alignItems='center'>
                                 {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='xl' mr={2} />}
                                 {patchSchemaRequest.isLoading && <Spinner stroke='white' size='xl' mr={2} />}
                                 <span className='white-14-semibold'>{lastSaved}</span>
-                            </LayoutBox>
+                            </Box>
                         )}
                         <Button variant='tertiary' onClick={onClickSave} size='small' mr={5}>
                             Save now
                         </Button>
 
-                        <Cta onClick={redirectDashboard} iconRight={<CloseButtonSvg />} color='white' fill='white'>
+                        <Cta onClick={redirectDashboard} iconRight={<CloseButtonSvg width='1.3em' fill='white' />} color='white'>
                             Close
                         </Cta>
                     </Col>
@@ -790,19 +787,19 @@ export const DataAccessRequestCustomiseForm = props => {
                         {activePanelId === 'about' && (
                             <>
                                 <Card>
-                                    <LayoutBox p={5}>
+                                    <Box p={5}>
                                         <H5>Data Applicant’s View</H5>
                                         <P color='grey800' mb={0}>
                                             This is what the data applicant will see when they begin the full data access request. Please
                                             note that this section `Before you begin` cannot be customised.
                                         </P>
-                                    </LayoutBox>
+                                    </Box>
                                 </Card>
                                 {isPublisherAdmin(userState, team) && (
                                     <Card>
-                                        <LayoutBox p={5}>
+                                        <Box p={5}>
                                             <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
-                                        </LayoutBox>
+                                        </Box>
                                     </Card>
                                 )}
                             </>

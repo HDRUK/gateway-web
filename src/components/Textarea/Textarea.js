@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Form, InputGroup } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
 import { addCommonPropTypes } from '../../configs/propTypes';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Textarea.styles';
 
@@ -33,7 +33,7 @@ const Textarea = ({
     ...outerProps
 }) => {
     return (
-        <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
+        <Box {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
             <Form.Group controlId={id} className={cx('ui-Textarea', className)} css={styles.formGroup}>
                 {label && <Form.Label css={styles.label}>{label}</Form.Label>}
                 <InputGroup css={styles.inputGroup({ variant, rows, error, minHeight, maxHeight })}>
@@ -51,7 +51,7 @@ const Textarea = ({
                 </InputGroup>
                 {error && <div className='errorMessages'>{error}</div>}
             </Form.Group>
-        </LayoutBox>
+        </Box>
     );
 };
 
