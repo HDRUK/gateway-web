@@ -49,8 +49,6 @@ class DatePickerCustom extends React.Component {
     }
 
     render() {
-        console.log('PROPS', this.props);
-
         return (
             <DatePicker
                 disabled={this.props.readOnly || false}

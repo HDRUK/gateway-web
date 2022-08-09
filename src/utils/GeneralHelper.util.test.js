@@ -1,4 +1,4 @@
-import { filterBranches, findAllByKey, isEditMode, iterateDeep, dateFormats, getParams } from './GeneralHelper.util';
+import { filterBranches, findAllByKey, isEditMode, iterateDeep, dateFormats, getParams, stripHtml } from './GeneralHelper.util';
 
 describe('Test GeneralHelper getUpdatesSubmittedLog', () => {
     it('should test isEditMode fn valid url', () => {
@@ -151,5 +151,12 @@ describe('getParams function', () => {
             tab: '',
             test: 'one',
         });
+    });
+});
+
+describe('stripHtml function', () => {
+    it('should return correct string without html tags ', () => {
+        const text = stripHtml('<p>This is a <b>test</b> string</p>');
+        expect(text).toEqual(`This is a test string`);
     });
 });

@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import { groupBy, isEmpty, startCase } from 'lodash';
 import moment from 'moment';
-import { ReactComponent as VersionCreated } from '../../../../images/Versions_created.svg';
-import { ReactComponent as VersionAccepted } from '../../../../images/check.svg';
-import { ReactComponent as ApplicationRejected } from '../../../../images/Application_rejected.svg';
-import { ReactComponent as Workflow } from '../../../../images/Workflows.svg';
-import { ReactComponent as Collaborators } from '../../../../images/Collaborators.svg';
-import { ReactComponent as UpdateRequested } from '../../../../images/Updates_requested.svg';
+import React, { useState } from 'react';
+import { SlideDown } from 'react-slidedown';
 import { ReactComponent as ActionRequired } from '../../../../images/Action_required.svg';
+import { ReactComponent as ApplicationRejected } from '../../../../images/Application_rejected.svg';
+import { ReactComponent as VersionAccepted } from '../../../../images/check.svg';
+import { ReactComponent as Clock } from '../../../../images/clock.svg';
+import { ReactComponent as Collaborators } from '../../../../images/Collaborators.svg';
 import { ReactComponent as ManualEvent } from '../../../../images/Manual_input.svg';
 import { ReactComponent as Message } from '../../../../images/Messages.svg';
 import { ReactComponent as Notes } from '../../../../images/Notes.svg';
 import SVGIcon from '../../../../images/SVGIcon';
-import { SlideDown } from 'react-slidedown';
-import { groupBy, isEmpty, startCase } from 'lodash';
+import { ReactComponent as UpdateRequested } from '../../../../images/Updates_requested.svg';
+import { ReactComponent as VersionCreated } from '../../../../images/Versions_created.svg';
+import { ReactComponent as Workflow } from '../../../../images/Workflows.svg';
 import DarHelperUtil from '../../../../utils/DarHelper.util';
 import SLA from '../../../commonComponents/sla/SLA';
-import { ReactComponent as Clock } from '../../../../images/clock.svg';
 import './ActivityLog.scss';
 
 const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
@@ -46,7 +46,7 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
                         <div className='header-version-number'>
                             <h1>
                                 {applicationType && applicationType !== DarHelperUtil.darApplicationTypes.initial
-                                    ? versionNumber + ' | ' + startCase(applicationType)
+                                    ? `${versionNumber} | ${startCase(applicationType)}`
                                     : versionNumber}
                             </h1>
                         </div>
@@ -61,13 +61,11 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
                         <div className='header-version-status activity-log-version-status'>
                             {renderDuration(applicationStatus, dateSubmitted, applicationType, version, timeWithApplicants)}
 
-                            {
-                                <SLA
-                                    classProperty={DarHelperUtil.darStatusColours[applicationStatus]}
-                                    text={DarHelperUtil.darSLAText[applicationStatus]}
-                                    applicationType={applicationType}
-                                />
-                            }
+                            <SLA
+                                classProperty={DarHelperUtil.darStatusColours[applicationStatus]}
+                                text={DarHelperUtil.darSLAText[applicationStatus]}
+                                applicationType={applicationType}
+                            />
                         </div>
                     )}
                 </div>
@@ -136,7 +134,7 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
                                                             name='chevronbottom'
                                                             width={16}
                                                             height={16}
-                                                            fill={'#3c4e8c'}
+                                                            fill='#3c4e8c'
                                                             className={!activityLogIds.includes(log._id) ? '' : 'flip180'}
                                                         />
                                                     </div>
@@ -145,8 +143,7 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
                                                     <div className='activity-log-delete-event'>
                                                         <button
                                                             className={`btn-link btn-link-delete `}
-                                                            onClick={e => onDeleteEventClick(log._id)}
-                                                        >
+                                                            onClick={e => onDeleteEventClick(log._id)}>
                                                             Delete event
                                                         </button>
                                                     </div>
@@ -210,22 +207,20 @@ const renderDuration = (applicationStatus, dateSubmitted, applicationType, versi
             diff = calculateTimeDifference(dateUpdateCreated);
             sinceText = 'since start';
         }
-    } else {
-        if (applicationStatus === DarHelperUtil.darStatus.inProgress) {
-            sinceText = 'since start';
-            diff = calculateTimeDifference(createdAt);
-        } else if (applicationStatus === DarHelperUtil.darStatus.submitted || applicationStatus === DarHelperUtil.darStatus.inReview) {
-            sinceText = applicationType === DarHelperUtil.darApplicationTypes.initial ? 'since submission' : 'since resubmission';
-            diff = calculateTimeDifference(dateSubmitted);
-        } else if (
-            applicationStatus === DarHelperUtil.darStatus.approved ||
-            applicationStatus === DarHelperUtil.darStatus['approved with conditions'] ||
-            applicationStatus === DarHelperUtil.darStatus.rejected
-        ) {
-            if (!isEmpty(decisionDuration.toString())) {
-                sinceText = 'total';
-                diff = decisionDuration;
-            }
+    } else if (applicationStatus === DarHelperUtil.darStatus.inProgress) {
+        sinceText = 'since start';
+        diff = calculateTimeDifference(createdAt);
+    } else if (applicationStatus === DarHelperUtil.darStatus.submitted || applicationStatus === DarHelperUtil.darStatus.inReview) {
+        sinceText = applicationType === DarHelperUtil.darApplicationTypes.initial ? 'since submission' : 'since resubmission';
+        diff = calculateTimeDifference(dateSubmitted);
+    } else if (
+        applicationStatus === DarHelperUtil.darStatus.approved ||
+        applicationStatus === DarHelperUtil.darStatus['approved with conditions'] ||
+        applicationStatus === DarHelperUtil.darStatus.rejected
+    ) {
+        if (!isEmpty(decisionDuration.toString())) {
+            sinceText = 'total';
+            diff = decisionDuration;
         }
     }
 
@@ -236,14 +231,13 @@ const renderDuration = (applicationStatus, dateSubmitted, applicationType, versi
                 <b>{diff} days</b>&nbsp;{sinceText} | {timeWithApplicants} spent with applicants{' '}
             </div>
         );
-    } else {
-        return '';
     }
+    return '';
 };
 
 const calculateTimeDifference = startTime => {
-    let start = moment(startTime);
-    let end = moment();
+    const start = moment(startTime);
+    const end = moment();
     return end.diff(start, 'days');
 };
 

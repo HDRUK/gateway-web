@@ -13,8 +13,6 @@ export const patchRequest = (url, data, options) => axios.patch(url, data, optio
 export const deleteRequest = (url, options) => axios.delete(url, options);
 
 const onErrorWithTranslation = (err, variables, context, onError, t, i18n, key) => {
-    console.log('ERR', err.response, variables);
-
     const messageKey = `services.errors.${key}.${err.response.status}.message`;
     const titleKey = `services.errors.${key}.${err.response.status}.title`;
 

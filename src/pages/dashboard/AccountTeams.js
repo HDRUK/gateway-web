@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
 import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
-import SVGIcon from '../../images/SVGIcon';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import AddEditTeamsPage from './Team/AddEditTeamsPage';
@@ -26,6 +25,7 @@ const AccountTeams = () => {
     const [editViewMemberOf, setEditViewMemberOf] = useState('');
     const [editViewOrgName, setEditViewOrgName] = useState('');
     const [editViewTeamManagers, setEditViewTeamManagers] = useState([]);
+    const [questionBankEnabled, setQuestionBankEnabled] = useState(false);
     const [alert, setAlert] = useState();
     const [activeTabKey] = useState(tabTypes.Teams);
 
@@ -71,6 +71,7 @@ const AccountTeams = () => {
     };
 
     const editTeam = (publisher, teamManagers) => {
+        setQuestionBankEnabled(publisher.publisherDetails.questionBank?.enabled);
         setEditViewID(publisher._id);
         setEditViewMemberOf(publisher.publisherDetails.memberOf);
         setEditViewOrgName(publisher.publisherDetails.name);
@@ -123,13 +124,7 @@ const AccountTeams = () => {
         <>
             {viewTeams ? (
                 <LayoutContent>
-                    {!_.isEmpty(alert) && (
-                        <Row className='teams-alert'>
-                            <Alert variant='success' className='main-alert teams-alert'>
-                                <SVGIcon name='check' width={24} height={24} fill='#2C8267' /> {alert.message}
-                            </Alert>
-                        </Row>
-                    )}
+                    {!_.isEmpty(alert) && <Alert variant='success'>{alert.message}</Alert>}
                     <Row className='accountHeader'>
                         <Col sm={12} md={8}>
                             <Row>
@@ -146,17 +141,18 @@ const AccountTeams = () => {
                                 href=''
                                 className='addButton'
                                 onClick={() => createTeam()}>
-
                                 + Add a new team
                             </Button>
                         </Col>
                     </Row>
                     <Row className='subHeader mt-3 gray800-14-bold'>
                         <Col sm={2}>Updated</Col>
-                        <Col sm={3}>Data custodian</Col>
-                        <Col sm={3}>Team manager(s)</Col>
-                        <Col sm={2}>Members</Col>
-                        <Col sm={2} />
+                        <Col sm={2}>Data custodian</Col>
+                        <Col sm={2}>Team manager(s)</Col>
+                        <Col sm={2} className='text-center'>
+                            Members
+                        </Col>
+                        <Col sm={2}>Question Bank Enabled?</Col>
                     </Row>
                     <Row>
                         <Col sm={12} lg={12}>
@@ -187,6 +183,7 @@ const AccountTeams = () => {
                     editViewMemberOf={editViewMemberOf}
                     editViewOrgName={editViewOrgName}
                     editViewTeamManagers={editViewTeamManagers}
+                    questionBankEnabled={questionBankEnabled}
                     setAlertFunction={setAlertFunction}
                 />
             )}

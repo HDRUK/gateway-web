@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import publishersService from '../../../../services/publishers';
 import { WysiwygEditor } from '../../../commonComponents/WysiwygEditor/WysiwygEditor';
+import handleAnalytics from '../../../dataAccessRequestCustomiseForm/handleAnalytics';
 import './CustomiseDAREditGuidance.scss';
 
 const baseURL = require('../../../commonComponents/BaseURL').getURL();
@@ -23,6 +24,7 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
     const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
     const [showConfirm, setShowConfirm] = useState(false);
     const [showCancel, setShowCancel] = useState(false);
+    const [disabled, setDisabled] = useState(true);
 
     const publishersRequest = publishersService.usePatchModalContent(null, {
         onError: ({ title, message }) => {
@@ -45,6 +47,7 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
                     You have successfully updated and published the ${publisherDetails.name} application form and ‘How to request access’ information
                 `);
             });
+        handleAnalytics('Clicked Publish button', 'Presubmission guidance');
     }, [publisherDetails._id, editorState.getCurrentContent()]);
 
     const handlePublish = React.useCallback(() => {
@@ -77,6 +80,7 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
         ),
         confirm: (
             <Button
+                disabled={disabled}
                 data-testid='publish-guidance'
                 variant='primary'
                 className='publishButton white-14-semibold'
@@ -145,7 +149,12 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
                     <span dangerouslySetInnerHTML={{ __html: modalContent.body }} />
                 </p>
                 {!showConfirm && !showCancel && (
-                    <WysiwygEditor data-testid='wysiwyg-editor' editorState={editorState} onEditorStateChange={setEditorState} />
+                    <WysiwygEditor
+                        data-testid='wysiwyg-editor'
+                        editorState={editorState}
+                        onEditorStateChange={setEditorState}
+                        onMarkdownChange={() => setDisabled(false)}
+                    />
                 )}
             </Modal.Body>
             <Modal.Footer>

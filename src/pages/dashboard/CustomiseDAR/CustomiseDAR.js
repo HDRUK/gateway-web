@@ -1,21 +1,25 @@
 import { has, isEmpty } from 'lodash';
 import moment from 'moment';
+import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Tab, Tabs } from 'react-bootstrap';
+import { Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import queryString from 'query-string';
-import SVGIcon from '../../../images/SVGIcon';
 import Alert from '../../../components/Alert';
+import { LayoutContent } from '../../../components/Layout';
+import SVGIcon from '../../../images/SVGIcon';
 import personService from '../../../services/person';
 import publishersService from '../../../services/publishers';
+import { stripHtml } from '../../../utils/GeneralHelper.util';
 import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
+import StatusBadge from './Components/StatusBadge';
 import './CustomiseDAR.scss';
-import { LayoutContent } from '../../../components/Layout';
+import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
 
 const baseURL = require('../../commonComponents/BaseURL').getURL();
 
 const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShowConfirmPublishModal, activeTab, onSelectTab, alert }) => {
+    const { t } = useTranslation();
     const [publisherDetails, setPublisherDetails] = useState({});
     const [howToRequestAccessStatus, setHowToRequestAccessStatus] = useState();
     const [yourAppFormStatus, setYourAppFormStatus] = useState();
@@ -23,6 +27,7 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
     const [yourApplicationFormPublisher, setYourApplicationFormPublisher] = useState();
     const [showGuidanceModal, setShowGuidanceModal] = useState();
     const [closeGuidanceMessage, setCloseGuidanceMessage] = useState('');
+    const [alertMessage, setAlertMessage] = useState(alert?.message);
 
     const { publishedDARContent } = queryString.parse(window.location.search);
 
@@ -37,9 +42,6 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
             NotificationManager.error(message, title, 10000);
         },
     });
-
-    const { t } = useTranslation();
-
     const sectionStatuses = {
         ACTIVE: 'Live',
         INACTIVE: 'Inactive',
@@ -110,6 +112,10 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
     };
 
     useEffect(() => {
+        setAlertMessage(alert?.message);
+    }, [alert?.message]);
+
+    useEffect(() => {
         getModalData();
     }, [publisherId]);
 
@@ -125,18 +131,32 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
         setShowGuidanceModal(false);
 
         onSelectTab(tabId);
+
+        handleAnalytics(`Clicked on ${tabId}`, tabId);
     };
 
     const handleCloseGuidanceMessage = () => {
         setCloseGuidanceMessage('');
     };
 
-    return (
+    const handleCloseAlertMessage = () => {
+        setAlertMessage('');
+    };
+
+    return publisherDetails.publisherDetails?.questionBank?.enabled ? (
         <>
-            {(closeGuidanceMessage || alert.message) && (
+            {alertMessage && (
+                <LayoutContent>
+                    <Alert variant='success' autoclose onClose={handleCloseAlertMessage} mb={3}>
+                        {alertMessage}
+                    </Alert>
+                </LayoutContent>
+            )}
+
+            {closeGuidanceMessage && (howToRequestAccessStatus === sectionStatuses.ACTIVE || yourAppFormStatus === sectionStatuses.ACTIVE) && (
                 <LayoutContent>
                     <Alert variant='success' autoclose onClose={handleCloseGuidanceMessage} mb={3}>
-                        {closeGuidanceMessage || alert.message}
+                        {closeGuidanceMessage}
                     </Alert>
                 </LayoutContent>
             )}
@@ -144,9 +164,7 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
             {(howToRequestAccessStatus === sectionStatuses.PENDING || yourAppFormStatus === sectionStatuses.PENDING) && (
                 <LayoutContent>
                     <Alert variant='warning' mb={3}>
-                        {howToRequestAccessStatus === sectionStatuses.PENDING
-                            ? `The ‘How to request access’ information for ${publisherDetails.name} applications is pending going live until the appication form is published`
-                            : `The application form for ${publisherDetails.name} applications is pending going live until the ‘How to request access’ information is published`}
+                        {t('DAR.customise.warningAlert')}
                     </Alert>
                 </LayoutContent>
             )}
@@ -176,22 +194,23 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
                                 <h1 className='black-20-semibold mb-3'>
                                     <SVGIcon name='info' fill='#475da7' className='accountSvgs mr-2' />
                                     <span className='ml-3'>{t('DAR.customise.presubmissionGuidance.title')}</span>
-                                    <div className={`status-chip sla-${sectionStatusColours[howToRequestAccessStatus]}`}>
-                                        {howToRequestAccessStatus}
-                                    </div>
+                                    <StatusBadge
+                                        sectionStatus={howToRequestAccessStatus}
+                                        statusOptions={sectionStatuses}
+                                        statusClass={sectionStatusColours[howToRequestAccessStatus]}
+                                        toolTipText={stripHtml(t('DAR.customise.statusWarning'))}
+                                    />
                                 </h1>
                                 <div className='main-header-desc'>
                                     <div className='soft-black-14'>{t('DAR.customise.presubmissionGuidance.description')}</div>
                                     <div className='customise-dar-body'>
-                                        {publisherDetails.dataRequestModalContentUpdatedBy ? (
+                                        {publisherDetails.dataRequestModalContentUpdatedBy && (
                                             <>
-                                                <span className='box gray200-14'>Published by</span>
+                                                <span className='box gray200-14'>{t('DAR.customise.lastUpdatedBy')}</span>
                                                 <span className='box gray800-14'>{howToRequestAccessPublisher}</span>
                                             </>
-                                        ) : (
-                                            ''
                                         )}
-                                        <span className='box gray200-14'>Last activity</span>
+                                        <span className='box gray200-14'>{t('DAR.customise.lastUpdatedOn')}</span>
                                         <span className='box gray800-14'>
                                             {publisherDetails.dataRequestModalContentUpdatedOn
                                                 ? moment(publisherDetails.dataRequestModalContentUpdatedOn).format('DD MMM YYYY HH:mm')
@@ -208,32 +227,35 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
                                 <h1 className='black-20-semibold mb-3'>
                                     <SVGIcon name='dataaccessicon' fill='#475da7' className='accountSvgs mr-2' />
                                     <span className='ml-3'>{t('DAR.customise.applicationForm.title')}</span>
-                                    <div className={`status-chip sla-${sectionStatusColours[yourAppFormStatus]}`}>{yourAppFormStatus}</div>
+                                    <StatusBadge
+                                        sectionStatus={yourAppFormStatus}
+                                        statusOptions={sectionStatuses}
+                                        statusClass={sectionStatusColours[yourAppFormStatus]}
+                                        toolTipText={stripHtml(t('DAR.customise.statusWarning'))}
+                                    />
                                 </h1>
                                 <div className='main-header-desc'>
                                     <div className='soft-black-14'>
                                         <p
                                             dangerouslySetInnerHTML={{
                                                 __html: t('DAR.customise.applicationForm.description', {
-                                                    publisherName: publisherDetails.publisherDetails.name,
+                                                    publisherName: publisherDetails?.publisherDetails?.name,
                                                 }),
                                             }}
                                         />
                                     </div>
                                     <div className='customise-dar-body'>
-                                        {publisherDetails.applicationFormUpdatedBy ? (
+                                        {publisherDetails.applicationFormUpdatedBy && (
                                             <>
-                                                <span className='box gray200-14'>Updated by</span>
+                                                <span className='box gray200-14'>{t('DAR.customise.lastUpdatedBy')}</span>
                                                 <span className='box gray800-14'>
                                                     {publisherDetails.applicationFormUpdatedBy
                                                         ? yourApplicationFormPublisher
                                                         : 'No customisations made'}
                                                 </span>
                                             </>
-                                        ) : (
-                                            ''
                                         )}
-                                        <span className='box gray200-14'>Last activity</span>
+                                        <span className='box gray200-14'>{t('DAR.customise.lastUpdatedOn')}</span>
                                         <span className='box gray800-14'>
                                             {publisherDetails.applicationFormUpdatedOn
                                                 ? moment(publisherDetails.applicationFormUpdatedOn).format('DD MMM YYYY HH:mm')
@@ -265,6 +287,10 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
                 />
             )}
         </>
+    ) : (
+        <LayoutContent>
+            <div className='accountHeader'>Customise Data Access Request not enabled</div>
+        </LayoutContent>
     );
 };
 

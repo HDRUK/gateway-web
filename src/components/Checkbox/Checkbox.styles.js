@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 
 export const root =
-    ({ variant, disabled }) =>
+    ({ variant, disabled, partial }) =>
     theme => {
         const {
             colors,
@@ -40,7 +40,7 @@ export const root =
             }
 
             input + .ui-Checkbox__label > span::after {
-                ${mixins.partial({ width, height })}
+                ${partial && mixins.partial({ width, height })}
             }
 
             input:disabled + .ui-Checkbox__label::after {
@@ -100,7 +100,7 @@ export const mixins = {
 		justify-content: center;
 	`,
     partial: ({ width, height }) => `
-		content: '-';
+		content: '';
 		font-size: 22px;
 		color: white;
 		z-index: 1;

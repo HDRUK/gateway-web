@@ -1,22 +1,22 @@
 .customise-dar-body {
-	display: grid;
-	grid-template-columns: 100px 17fr;
-	margin-bottom: -10px;
-	padding-top: 10px;
-	padding-bottom: 0px;
+    display: grid;
+    grid-template-columns: 120px 17fr;
+    margin-bottom: -10px;
+    padding-top: 10px;
+    padding-bottom: 0px;
 }
 
 .super-header {
-	width: 100%;
+    width: 100%;
 }
 
 .status-chip {
-	float: right !important;
+    float: right !important;
 }
 
 .customise-dar-pending-banner {
-	display: flex;
-	align-items: center;
-	padding-top: 4px !important;
-	padding-bottom: 4px !important;
+    display: flex;
+    align-items: center;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
 }

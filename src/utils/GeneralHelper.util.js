@@ -169,3 +169,22 @@ export const filterBranches = (filters, iteratee, children = 'children') => {
 
     return filteredNodes;
 };
+
+export const diffObjects = (a, b) => {
+    const compare = {
+        ...a,
+        ...b,
+    };
+
+    const diff = {};
+
+    Object.keys(compare).forEach(key => {
+        if (compare[key] !== a[key]) {
+            diff[key] = b[key];
+        }
+    });
+
+    return diff;
+};
+
+export const stripHtml = text => text.replace(/<\/?.+?>/gi, '');

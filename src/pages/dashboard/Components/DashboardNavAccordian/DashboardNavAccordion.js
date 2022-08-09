@@ -2,8 +2,11 @@ import React from 'react';
 import { Accordion } from 'react-bootstrap';
 import Icon from '../../../../components/Icon';
 import DashboardSubNavItem from '../DashboardSubNavItem';
+import handleAnalytics from '../../../dataAccessRequestCustomiseForm/handleAnalytics';
+import { id } from 'date-fns/locale';
 
 const DashboardNavItem = ({ activeKey, tabId, eventKey, onSelect, onClick, data }) => {
+
     return (
         <Accordion activeKey={activeKey} onSelect={onSelect}>
             <Accordion.Toggle variant='link' className='verticalNavBar gray700-13 navLinkButton' eventKey={eventKey}>
@@ -13,7 +16,7 @@ const DashboardNavItem = ({ activeKey, tabId, eventKey, onSelect, onClick, data 
             <Accordion.Collapse eventKey={eventKey}>
                 <div>
                     {data.children.map(({ id, text }) => (
-                        <DashboardSubNavItem active={tabId === id} onClick={() => onClick(id)}>
+                        <DashboardSubNavItem active={tabId === id} onClick={() => {onClick(id); handleAnalytics(`Clicked on ${id}`, text)}}>
                             {text}
                         </DashboardSubNavItem>
                     ))}

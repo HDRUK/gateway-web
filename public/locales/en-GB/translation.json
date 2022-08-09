@@ -15,6 +15,14 @@
             }
         },
         "errors": {
+            "dar": {
+                "patchDataAccessSchemaRequest": {
+                    "500": {
+                        "title": "Auto save failed",
+                        "message": "There has been an error updating data access request schema"
+                    }
+                }
+            },
             "dur": {
                 "getDataUseRegistersByTeam": {
                     "404": {
@@ -121,6 +129,9 @@
     },
     "next": "Next",
     "previous": "Previous",
+    "guidance.inEdit": "Guidance in edit",
+    "guidance.unedited": "Guidance unedited",
+    "guidance.edited": "Guidance edited",
     "dataset": {
         "inReview": "pending approval",
         "active": "Active",
@@ -256,7 +267,8 @@
         "neverMind": "No, nevermind",
         "cancel": "Cancel",
         "confirm": "Confirm",
-        "publish": "Publish"
+        "publish": "Publish",
+        "clearUpdates": "Clear updates"
     },
     "sortby": {
         "selected": {
@@ -354,13 +366,29 @@
         }
     },
     "DAR": {
+        "upload": {
+            "virus": {
+                "error": "Virus scan failed! Your file, {{name}}, could not be scanned for viruses but you can still submit your application without it. To try and upload the file again, click “Select files” above. If the problem persists, please <2>Raise a Support Ticket</2>.",
+                "quarantined": " Virus detected! Your file {{name}} has been quarantined but you can still submit your application without it. You can try to upload the file again or please try a different version of the file"
+            },
+            "file-too-large": "File exceeds {{size}} limit",
+            "file-invalid-type": "File type not supported"
+        },
         "customise": {
             "title": "Customise data access requests",
             "description": "Manage and edit your 'how to request access' information, your data access request form and workflows",
+            "statusWarning": "Please note that both <b>Presubmission Guidance</b> and <b>DAR Application Form</b> must be completed before they can be published.",
+            "lastUpdatedBy": "Last updated by",
+            "lastUpdatedOn": "Last updated on",
             "applicationForm": {
                 "title": "Application Form",
                 "description": "Elements of the data access request form (Five safes form) can be customised as required by <b>{{publisherName}}</b>. You may choose which questions should be turned on/off and edit the accompanying for each question. However, we recommend modifying the guidance only if necessary for your data governance processes, and please note that some questions and guidance are mandatory, for example where the form has been aligned with the National Data Guardian.<br/><br/> Please consider carefully whether additional questions are required, as we are working to standardise the data access process as much as possible. If you would still like to propose addition of a new question, please raise a ticket at <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>https://hdruk.atlassian.net/servicedesk/customer/portal/1</a>"
             },
+            "saveAlert": "Every change you make is automatically saved with the latest save time shown in the top right",
+            "uploadAlert": "You have successfully imported the DAR config file. Please check all sections to ensure everything is correct",
+            "optionalQuestionsIncluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To exclude this section, simply click the switch above and it will not be visible to the applicants",
+            "optionalQuestionsExcluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To include this section, simply click the switch above and customise each question as required",
+            "warningAlert": "Please note that both Presubmission Guidance and DAR Application Form must be completed before they can be published.",
             "presubmissionGuidance": {
                 "title": "Presubmission guidance for data applicants",
                 "description": "The 'How to request access' information will be displayed to all users at the beginning of their access journey. To ensure that they are prepared for the process, include all necessary information such as; what to do before they submit an application",
@@ -380,6 +408,15 @@
                 },
                 "defaultGuidance": "# **Data access requests** \n **Before you submit an application** \n\nNot all enquires progress to the application stage. It may be that the data you need is available through our existing published data.Please read the following information to see if the data you require is available from another source before proceeding with your application.\n\nWe commission approximately 40 national clinical audits and clinical outcome review programmes which make up the National Clinical Audit and Patient Outcomes Programme(NCAPOP).We also commission some projects outside the NCAPOP and we host the National Joint Registry.\n\nThese projects collect data on the quality and outcomes of care in England and Wales. Some projects also collect data in Scotland,Northern Ireland, Isle of Man, Guernsey and Jersey, either under contract to HQIP or separately.\n\nData from these projects is routinely reported and these reports are available on each project website, as well as on our website.The reported data is also placed on the data.gov.uk website.\n\nWe also work to routinely to place outcomes data on the NHS Choices website.Many of these projects link with third party data sets such as Hospital Statistics(HES) and Office for National Statistics(ONS) data which are managed by NHS Digital."
             }
+        }
+    },
+    "questionbank": {
+        "modal": {
+            "clearUnpublishedUpdates": "Clear unpublished updates",
+            "publishChanges": "Are you sure you want to publish your updates to this application form? Any applications which are already in process will not be updated.",
+            "noChanges": "No changes have been made to your application form so it cannot be published.",
+            "clearSection": "Are you sure you want to clear the unpublished updates in this section? You will permenantly lose any changes made by you and other team member in this area since the form was last published.",
+            "clear": "Are you sure you want to clear all the unpublished updates to this form? You will permenantly lose any changes made by you and other team member since this form was last published."
         }
     }
 }

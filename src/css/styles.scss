@@ -394,6 +394,13 @@ a.nav-item.nav-link.active {
     }
 }
 
+.badge {
+    &-tag:hover {
+        background-color: $gray-400;
+    }
+}
+
+
 .iconHolder {
     text-align: right;
     padding-top: 5px;
@@ -727,6 +734,10 @@ textarea:focus {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
 }
 
 .btn-outline-secondary {

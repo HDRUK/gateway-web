@@ -2,15 +2,15 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { Accordion, Card, OverlayTrigger } from 'react-bootstrap';
+import moment from 'moment';
 import DarHelper from '../../../../utils/DarHelper.util';
 import SVGIcon from '../../../../images/SVGIcon';
 import { ReactComponent as InfoSVG } from '../../../../images/info.svg';
 import TypeaheadDataset from '../TypeaheadDataset/TypeaheadDataset';
-import AlertBox from '../AlertBox/AlertBox';
-import moment from 'moment';
+import Alert from '../../../../components/Alert';
 
 const AboutApplication = props => {
-    let {
+    const {
         key,
         activeAccordionCard,
         allowedNavigation,
@@ -58,11 +58,10 @@ const AboutApplication = props => {
                         as={Card.Header}
                         className={DarHelper.calcAccordionClasses(activeAccordionCard === 0, allowedNavigation)}
                         eventKey='0'
-                        onClick={e => toggleCard(e, 0)}
-                    >
+                        onClick={e => toggleCard(e, 0)}>
                         {completedDatasetSelection ? (
                             <div className='stepNumber completed'>
-                                <SVGIcon name='check' width={24} height={24} fill={'#ffffff'} />
+                                <SVGIcon name='check' width={24} height={24} fill='#ffffff' />
                             </div>
                         ) : (
                             <div className={`stepNumber ${activeAccordionCard === 0 ? 'active' : ''}`}>1</div>
@@ -77,8 +76,7 @@ const AboutApplication = props => {
                                 <Link
                                     id='messageLink'
                                     className={allowedNavigation && userType.toUpperCase() !== 'CUSTODIAN' ? '' : 'disabled'}
-                                    onClick={e => toggleDrawer()}
-                                >
+                                    onClick={e => toggleDrawer()}>
                                     send a message to the data custodian
                                 </Link>{' '}
                                 to clarify. The custodian will help you understand if the data you would like to access can be used to
@@ -92,7 +90,7 @@ const AboutApplication = props => {
                                 <div className='form-group'>
                                     <TypeaheadDataset
                                         key={key}
-                                        selectedDatasets={selectedDatasets}
+                                        selectedDatasets={selectedDatasets || []}
                                         onHandleDataSetChange={e => onHandleDataSetChange(e)}
                                         readOnly={readOnly}
                                         allowAllCustodians={false}
@@ -109,14 +107,13 @@ const AboutApplication = props => {
                                             disabled={!allowedNavigation}
                                             onClick={e => {
                                                 onNextStep(allowedNavigation);
-                                            }}
-                                        >
+                                            }}>
                                             Confirm
                                         </button>
                                     )}
                                 </div>
                             </div>
-                            {areDatasetsAmended && <AlertBox text={datasetsAmendedMessage} status='WARNING' />}
+                            {areDatasetsAmended && <Alert variant='warning'>{datasetsAmendedMessage}</Alert>}
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
@@ -125,11 +122,10 @@ const AboutApplication = props => {
                         as={Card.Header}
                         className={DarHelper.calcAccordionClasses(activeAccordionCard === 1, allowedNavigation)}
                         eventKey='1'
-                        onClick={e => toggleCard(e, 1)}
-                    >
+                        onClick={e => toggleCard(e, 1)}>
                         {projectNameValid && ncsValid && !_.isEmpty(projectName) ? (
                             <div className='stepNumber completed'>
-                                <SVGIcon name='check' width={24} height={24} fill={'#ffffff'} />
+                                <SVGIcon name='check' width={24} height={24} fill='#ffffff' />
                             </div>
                         ) : (
                             <div className={`stepNumber ${activeAccordionCard === 0 ? 'active' : ''}`}>2</div>
@@ -169,18 +165,19 @@ const AboutApplication = props => {
                                         This application is part of a National Core Studies project
                                     </span>
 
-                                    <OverlayTrigger
-                                        placement='top'
-                                        delay={{ show: 250, hide: 400 }}
-                                        overlay={renderTooltip(
-                                            'We use this information for overall reporting on the efficiency of the programme.'
-                                        )}
-                                    >
-                                        <InfoSVG className='margin-left-8 pointer' />
-                                    </OverlayTrigger>
+                                    {renderTooltip && (
+                                        <OverlayTrigger
+                                            placement='top'
+                                            delay={{ show: 250, hide: 400 }}
+                                            overlay={renderTooltip(
+                                                'We use this information for overall reporting on the efficiency of the programme.'
+                                            )}>
+                                            <InfoSVG className='margin-left-8 pointer' />
+                                        </OverlayTrigger>
+                                    )}
                                 </div>
                                 {isNationalCoreStudies ? (
-                                    <Fragment>
+                                    <>
                                         <div className='margin-top-24'>
                                             <span>National Core Studies project</span>
                                             <OverlayTrigger
@@ -188,8 +185,7 @@ const AboutApplication = props => {
                                                 delay={{ show: 250, hide: 400 }}
                                                 overlay={renderTooltip(
                                                     'Projects must be added to the Gateway first using the appropriate tags associated with the National Core Studies.'
-                                                )}
-                                            >
+                                                )}>
                                                 <InfoSVG className='margin-left-8 pointer' viewBox='0 0 24 16' />
                                             </OverlayTrigger>
                                         </div>
@@ -199,8 +195,7 @@ const AboutApplication = props => {
                                                 className='form-input-dropdown'
                                                 value={nationalCoreStudiesProjectId}
                                                 onChange={e => onHandleNCSProjectChange(e.target.value)}
-                                                disabled={readOnly}
-                                            >
+                                                disabled={readOnly}>
                                                 <option key='' value=''>
                                                     Select a project
                                                 </option>
@@ -214,7 +209,7 @@ const AboutApplication = props => {
                                                 <div className='errorMessages'>You must indicate a project or untick the option above</div>
                                             ) : null}
                                         </div>
-                                    </Fragment>
+                                    </>
                                 ) : null}
                                 <div className='panConfirm d-flex justify-content-end'>
                                     {userType.toUpperCase() === 'APPLICANT' && !readOnly && (
@@ -222,8 +217,7 @@ const AboutApplication = props => {
                                             type='input'
                                             className={`button-primary ${allowedNavigation ? '' : 'disabled'}`}
                                             disabled={!allowedNavigation}
-                                            onClick={e => onNextStep(allowedNavigation)}
-                                        >
+                                            onClick={e => onNextStep(allowedNavigation)}>
                                             Confirm
                                         </button>
                                     )}
@@ -237,11 +231,10 @@ const AboutApplication = props => {
                         as={Card.Header}
                         className={DarHelper.calcAccordionClasses(activeAccordionCard === 2, allowedNavigation)}
                         eventKey='2'
-                        onClick={e => toggleCard(e, 2)}
-                    >
+                        onClick={e => toggleCard(e, 2)}>
                         {completedInviteCollaborators ? (
                             <div className='stepNumber completed'>
-                                <SVGIcon name='check' width={24} height={24} fill={'#ffffff'} />
+                                <SVGIcon name='check' width={24} height={24} fill='#ffffff' />
                             </div>
                         ) : (
                             <div className={`stepNumber ${activeAccordionCard === 0 ? 'active' : ''}`}>3</div>
@@ -250,7 +243,7 @@ const AboutApplication = props => {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey='2'>
                         <Card.Body className='gray800-14'>
-                            <Fragment>
+                            <>
                                 <div className='margin-bottom-16'>
                                     Applications are often a team effort, so you can add others to help. Contributors can exchange private
                                     notes, make edits, message the data custodian, invite others and submit the application. If they’re
@@ -273,7 +266,7 @@ const AboutApplication = props => {
                                     />
                                     <span className='dar-form-check-label'>I have completed this step</span>
                                 </div>
-                            </Fragment>
+                            </>
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
@@ -282,11 +275,10 @@ const AboutApplication = props => {
                         as={Card.Header}
                         className={DarHelper.calcAccordionClasses(activeAccordionCard === 3, allowedNavigation)}
                         eventKey='3'
-                        onClick={e => toggleCard(e, 3)}
-                    >
+                        onClick={e => toggleCard(e, 3)}>
                         {completedReadAdvice ? (
                             <div className='stepNumber completed'>
-                                <SVGIcon name='check' width={24} height={24} fill={'#ffffff'} />
+                                <SVGIcon name='check' width={24} height={24} fill='#ffffff' />
                             </div>
                         ) : (
                             <div className={`stepNumber ${activeAccordionCard === 0 ? 'active' : ''}`}>4</div>
@@ -295,7 +287,7 @@ const AboutApplication = props => {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey='3'>
                         <Card.Body className='gray800-14'>
-                            <Fragment>
+                            <>
                                 <div className='margin-bottom-16'>
                                     Please make sure you have read the advice provided by the data custodian on how to request access to
                                     their datasets.
@@ -320,13 +312,12 @@ const AboutApplication = props => {
                                                     ...context,
                                                     showActionButtons: false,
                                                 });
-                                            }}
-                                        >
+                                            }}>
                                             how to request access
                                         </Link>
                                     </span>
                                 </div>
-                            </Fragment>
+                            </>
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
@@ -335,11 +326,10 @@ const AboutApplication = props => {
                         as={Card.Header}
                         className={DarHelper.calcAccordionClasses(activeAccordionCard === 4, allowedNavigation)}
                         eventKey='4'
-                        onClick={e => toggleCard(e, 4)}
-                    >
+                        onClick={e => toggleCard(e, 4)}>
                         {completedCommunicateAdvice ? (
                             <div className='stepNumber completed'>
-                                <SVGIcon name='check' width={24} height={24} fill={'#ffffff'} />
+                                <SVGIcon name='check' width={24} height={24} fill='#ffffff' />
                             </div>
                         ) : (
                             <div className={`stepNumber ${activeAccordionCard === 0 ? 'active' : ''}`}>5</div>
@@ -348,7 +338,7 @@ const AboutApplication = props => {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey='4'>
                         <Card.Body className='gray800-14'>
-                            <Fragment>
+                            <>
                                 <div className='margin-bottom-16'>
                                     The earlier you get in touch, the better. If you've not done so yet, we recommend sending a message with
                                     a brief description of your project and the data you are interested in. The data custodian will help you
@@ -365,12 +355,12 @@ const AboutApplication = props => {
                                         id='chkCommunicateAdvice'
                                         checked={completedCommunicateAdvice}
                                         className='dar-form-check'
-                                        disabled={readOnly ? true : false}
+                                        disabled={!!readOnly}
                                         onChange={e => onNextStep(e.target.checked)}
                                     />
                                     <span className='dar-form-check-label'>I have completed this step</span>
                                 </div>
-                            </Fragment>
+                            </>
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
@@ -379,11 +369,10 @@ const AboutApplication = props => {
                         as={Card.Header}
                         className={DarHelper.calcAccordionClasses(activeAccordionCard === 5, allowedNavigation)}
                         eventKey='5'
-                        onClick={e => toggleCard(e, 5)}
-                    >
+                        onClick={e => toggleCard(e, 5)}>
                         {completedApprovalsAdvice ? (
                             <div className='stepNumber completed'>
-                                <SVGIcon name='check' width={24} height={24} fill={'#ffffff'} />
+                                <SVGIcon name='check' width={24} height={24} fill='#ffffff' />
                             </div>
                         ) : (
                             <div className={`stepNumber ${activeAccordionCard === 0 ? 'active' : ''}`}>6</div>
@@ -392,7 +381,7 @@ const AboutApplication = props => {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey='5'>
                         <Card.Body className='gray800-14'>
-                            <Fragment>
+                            <>
                                 <div className='margin-bottom-16'>
                                     <p>
                                         Before requesting access to health data, you might need to demonstrate that everyone involved in the
@@ -411,8 +400,7 @@ const AboutApplication = props => {
                                             id='approvedResearcherLink'
                                             target='_blank'
                                             rel='noopener noreferrer'
-                                            href='https://www.ons.gov.uk/aboutus/whatwedo/statistics/requestingstatistics/approvedresearcherscheme#becoming-an-approved-researcher-through-the-ons-approved-researcher-scheme'
-                                        >
+                                            href='https://www.ons.gov.uk/aboutus/whatwedo/statistics/requestingstatistics/approvedresearcherscheme#becoming-an-approved-researcher-through-the-ons-approved-researcher-scheme'>
                                             Becoming an approved researcher through the ONS approved researcher scheme
                                         </a>
                                     </p>
@@ -421,8 +409,7 @@ const AboutApplication = props => {
                                             id='infoGovernanceLink'
                                             target='_blank'
                                             rel='noopener noreferrer'
-                                            href='https://web.www.healthdatagateway.org/collection/4782731178031727'
-                                        >
+                                            href='https://web.www.healthdatagateway.org/collection/4782731178031727'>
                                             Information governance training recognised by some data custodians
                                         </a>
                                     </p>
@@ -438,8 +425,7 @@ const AboutApplication = props => {
                                             id='dsptLink'
                                             target='_blank'
                                             rel='noopener noreferrer'
-                                            href='https://www.dsptoolkit.nhs.uk/Account/Register'
-                                        >
+                                            href='https://www.dsptoolkit.nhs.uk/Account/Register'>
                                             DSPT
                                         </a>
                                     </p>
@@ -458,12 +444,12 @@ const AboutApplication = props => {
                                         id='chkApprovalAdvice'
                                         checked={completedApprovalsAdvice}
                                         className='dar-form-check'
-                                        disabled={readOnly ? true : false}
+                                        disabled={!!readOnly}
                                         onChange={e => onNextStep(e.target.checked)}
                                     />
                                     <span className='dar-form-check-label'>I have completed this step</span>
                                 </div>
-                            </Fragment>
+                            </>
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
@@ -472,11 +458,10 @@ const AboutApplication = props => {
                         as={Card.Header}
                         className={DarHelper.calcAccordionClasses(activeAccordionCard === 6, allowedNavigation)}
                         eventKey='6'
-                        onClick={e => toggleCard(e, 6)}
-                    >
+                        onClick={e => toggleCard(e, 6)}>
                         {completedSubmitAdvice ? (
                             <div className='stepNumber completed'>
-                                <SVGIcon name='check' width={24} height={24} fill={'#ffffff'} />
+                                <SVGIcon name='check' width={24} height={24} fill='#ffffff' />
                             </div>
                         ) : (
                             <div className={`stepNumber ${activeAccordionCard === 0 ? 'active' : ''}`}>7</div>
@@ -485,7 +470,7 @@ const AboutApplication = props => {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey='6'>
                         <Card.Body className='gray800-14'>
-                            <Fragment>
+                            <>
                                 <div className='margin-bottom-16'>After you have completed the form, you can submit the application.</div>
                                 <div className='margin-bottom-16'>
                                     <ul>
@@ -510,12 +495,12 @@ const AboutApplication = props => {
                                         id='chkSubmitAdvice'
                                         checked={completedSubmitAdvice}
                                         className='dar-form-check'
-                                        disabled={readOnly ? true : false}
+                                        disabled={!!readOnly}
                                         onChange={e => onNextStep(e.target.checked)}
                                     />
                                     <span className='dar-form-check-label'>I have completed this step</span>
                                 </div>
-                            </Fragment>
+                            </>
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>

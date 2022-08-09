@@ -3,7 +3,7 @@ import { jsx } from '@emotion/react';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '../Icon';
-import { ReactComponent as CloseIcon } from '../../images/icons/close.svg';
+import { ReactComponent as CloseIcon } from '../../images/icons/clear.svg';
 import { ReactComponent as CheckIcon } from '../../images/icons/tick.svg';
 import { ReactComponent as DangerIcon } from '../../images/icons/danger.svg';
 import { ReactComponent as InfoIcon } from '../../images/icons/info.svg';
@@ -38,16 +38,16 @@ const Alert = ({
     }, []);
 
     React.useEffect(() => {
-        const showTimeout = setTimeout(() => {
-            if (autoclose && show) {
+        if (show && autoclose) {
+            const showTimeout = setTimeout(() => {
                 handleClose();
-            }
-        }, autocloseDuration);
+            }, autocloseDuration);
 
-        return () => {
-            clearTimeout(showTimeout);
-        };
-    }, [show, dismissable]);
+            return () => {
+                clearTimeout(showTimeout);
+            };
+        }
+    }, [show, autoclose]);
 
     return (
         show && (
@@ -61,7 +61,11 @@ const Alert = ({
                         {!icon && variant === 'info' && <Icon svg={<InfoIcon fill='inherit' />} size='lg' />}
                     </div>
                     <div css={styles.content}>{children}</div>
-                    {dismissable && <Icon svg={<CloseIcon fill='inherit' />} onClick={handleClose} role='button' />}
+                    {dismissable && (
+                        <div css={styles.dismiss} className='ui-Alert__dismiss'>
+                            <Icon svg={<CloseIcon fill='inherit' />} onClick={handleClose} role='button' size='lg' />
+                        </div>
+                    )}
                 </div>
             </LayoutBox>
         )
@@ -79,7 +83,7 @@ Alert.propTypes = {
 
 Alert.defaultProps = {
     autoclose: false,
-    autocloseDuration: 5000,
+    autocloseDuration: 10000,
     dismissable: false,
     className: 'ui-Alert',
     onClose: () => {},

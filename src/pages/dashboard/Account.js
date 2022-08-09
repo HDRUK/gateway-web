@@ -6,7 +6,6 @@ import React, { Component, Fragment, useState } from 'react';
 import { Dropdown, Nav } from 'react-bootstrap';
 import { Route, withRouter } from 'react-router-dom';
 import 'react-web-tabs/dist/react-web-tabs.css';
-import Icon from '../../components/Icon';
 import { DashboardProvider } from '../../context/DashboardContext';
 import { ReactComponent as CheckSVG } from '../../images/check.svg';
 import { ReactComponent as ChevronRightSvg } from '../../images/chevron-bottom.svg';
@@ -25,7 +24,7 @@ import { ReactComponent as UserIcon } from '../../images/icons/user.svg';
 import { ReactComponent as UsersIcon } from '../../images/icons/users.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
-import { getTeam, isAdmin, isCustodian, isUser } from '../../utils/auth';
+import { getTeam, isAdmin, isCustodian, isPublisherAdmin, isUser } from '../../utils/auth';
 import { isRouteMatch } from '../../utils/router';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -35,9 +34,6 @@ import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import ActivityLog from '../DataAccessRequest/components/ActivityLog/ActivityLog';
 import ActivityLogActionButtons from '../DataAccessRequest/components/ActivityLog/ActivityLogActionButtons';
-import DataUsePage from '../dataUse/DataUsePage';
-import DataUseUpload from '../dataUse/upload/DataUseUpload';
-import DataUseUploadActionButtons from '../dataUse/upload/DataUseUploadActionButtons';
 import AccountAnalyticsDashboard from './AccountAnalyticsDashboard';
 import AccountCollections from './AccountCollections';
 import AccountCourses from './AccountCourses';
@@ -151,7 +147,6 @@ class Account extends Component {
         isSubmitting: false,
         teamManagementInternalTab: 'Notifications',
         accountUpdated: false,
-        showDataUseUploadPage: false,
         dataaccessrequest: {},
         showConfirmPublishModal: false,
         showHowToRequestAccessEditor: false,
@@ -505,7 +500,6 @@ class Account extends Component {
                 activeKey: tab.tabId,
                 alert: !_.isEmpty(alert) ? alert : {},
                 activeAccordion,
-                showDataUseUploadPage: false,
                 dataaccessrequest: {},
             });
             // 6. push state
@@ -544,12 +538,6 @@ class Account extends Component {
 
     onClearInnerTab = () => {
         this.setState({ innertab: '' });
-    };
-
-    toggleDataUseUploadPage = () => {
-        this.setState(prevState => {
-            return { showDataUseUploadPage: !prevState.showDataUseUploadPage };
-        });
     };
 
     setDataAccessRequest = (dar = {}) => {
@@ -627,7 +615,6 @@ class Account extends Component {
             isSubmitting,
             teamManagementTab,
             accountUpdated,
-            showDataUseUploadPage,
             dataaccessrequest,
             showConfirmPublishModal,
             showHowToRequestAccessEditor,
@@ -705,10 +692,10 @@ class Account extends Component {
                     text: 'Dashboard',
                     id: 'datause',
                 },
-                {
-                    text: 'Data use widget',
-                    id: 'datause_widget',
-                },
+                // {
+                //     text: 'Data use widget',
+                //     id: 'datause_widget',
+                // },
             ],
         };
 
@@ -816,20 +803,22 @@ class Account extends Component {
                                                         data={ACCORDIAN_DAR_MENU}
                                                     />
                                                 </div>
-                                                <div
-                                                    className={this.getNavActiveClass([
-                                                        'customisedataaccessrequests_guidance',
-                                                        'customisedataaccessrequests_applicationform',
-                                                    ])}>
-                                                    <DashboardNavAccordian
-                                                        onSelect={this.accordionClick}
-                                                        onClick={this.toggleNav}
-                                                        tabId={tabId}
-                                                        activeKey={activeAccordion}
-                                                        eventKey='1'
-                                                        data={ACCORDIAN_CUSTOM_DAR_MENU}
-                                                    />
-                                                </div>
+                                                {publisherDetails?.questionBank?.enabled && (
+                                                    <div
+                                                        className={this.getNavActiveClass([
+                                                            'customisedataaccessrequests_guidance',
+                                                            'customisedataaccessrequests_applicationform',
+                                                        ])}>
+                                                        <DashboardNavAccordian
+                                                            onSelect={this.accordionClick}
+                                                            onClick={this.toggleNav}
+                                                            tabId={tabId}
+                                                            activeKey={activeAccordion}
+                                                            eventKey='1'
+                                                            data={ACCORDIAN_CUSTOM_DAR_MENU}
+                                                        />
+                                                    </div>
+                                                )}
                                             </>
                                         )}
 
@@ -945,22 +934,15 @@ class Account extends Component {
                                         />
                                     )}
 
-                                    {(tabId === 'datause' || tabId === 'datause_widget') && !showDataUseUploadPage && (
-                                        <AccountDataUse
-                                            tabId={tabId}
-                                            team={team}
-                                            onClickDataUseUpload={this.toggleDataUseUploadPage}
-                                            ref={this.dataUsePage}
-                                            onSelectTab={this.toggleNav}
-                                            publisherDetails={publisherDetails}
-                                        />
+                                    {(tabId === 'datause' || tabId === 'datause_widget') && (
+                                        <AccountDataUse tabId={tabId} team={team} publisherDetails={publisherDetails} />
                                     )}
 
                                     {allowWorkflow && this.userHasRole(team, 'manager') && tabId === 'workflows' && (
                                         <WorkflowDashboard userState={userState} team={team} />
                                     )}
 
-                                    {(this.userHasRole(team, ['manager']) || team === 'admin') &&
+                                    {(this.userHasRole(team, ['manager']) || isPublisherAdmin(userState, team)) &&
                                         (tabId === 'customisedataaccessrequests_applicationform' ||
                                             tabId === 'customisedataaccessrequests_guidance') && (
                                             <CustomiseDAR
@@ -1040,16 +1022,6 @@ class Account extends Component {
                                         'Save'
                                     )}
                                 </button>
-                            </div>
-                        </ActionBar>
-                    )}
-
-                    {showDataUseUploadPage && (
-                        <ActionBar userState={userState}>
-                            <div className='action-bar'>
-                                <div className='action-bar-actions'>
-                                    <DataUseUploadActionButtons dataUseUpload={this.dataUseUpload} />
-                                </div>
                             </div>
                         </ActionBar>
                     )}
