@@ -4,10 +4,12 @@ import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
-import { Alert, Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
+import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 import Rating from 'react-rating';
 import 'react-tabs/style/react-tabs.css';
+import Alert from '../../components/Alert';
+import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
 import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg';
@@ -60,10 +62,10 @@ export const ToolDetail = props => {
     const [collections, setCollections] = useState([]);
     const [searchBar] = useState(React.createRef());
 
-    //componentDidMount - on loading of tool detail page
+    // componentDidMount - on loading of tool detail page
     useEffect(() => {
-        if (!!window.location.search) {
-            let values = queryString.parse(window.location.search);
+        if (window.location.search) {
+            const values = queryString.parse(window.location.search);
             setToolAdded(values.toolAdded);
             setToolEdited(values.toolEdited);
             setReviewAdded(values.reviewAdded);
@@ -72,7 +74,7 @@ export const ToolDetail = props => {
         getToolDataFromDb();
     }, []);
 
-    //componentDidUpdate - on render of tool detail page were id is different
+    // componentDidUpdate - on render of tool detail page were id is different
     useEffect(() => {
         if (props.match.params.toolID !== id && id !== '' && !isLoading) {
             getToolDataFromDb();
@@ -82,7 +84,7 @@ export const ToolDetail = props => {
     const getToolDataFromDb = () => {
         setIsLoading(true);
         axios
-            .get(baseURL + '/api/v1/tools/' + props.match.params.toolID)
+            .get(`${baseURL}/api/v1/tools/${props.match.params.toolID}`)
             .then(async res => {
                 if (_.isNil(res.data)) {
                     window.localStorage.setItem('redirectMsg', `Tool not found for Id: ${props.match.params.toolID}`);
@@ -91,11 +93,11 @@ export const ToolDetail = props => {
                     const localToolData = res.data.data[0];
                     document.title = localToolData.name.trim();
 
-                    let counter = !localToolData.counter ? 1 : localToolData.counter + 1;
+                    const counter = !localToolData.counter ? 1 : localToolData.counter + 1;
                     updateCounter(props.match.params.toolID, counter);
 
                     if (!_.isUndefined(localToolData.relatedObjects)) {
-                        let localAdditionalObjInfo = await getAdditionalObjectInfo(localToolData.relatedObjects);
+                        const localAdditionalObjInfo = await getAdditionalObjectInfo(localToolData.relatedObjects);
                         await populateRelatedObjects(localToolData, localAdditionalObjInfo);
                     }
 
@@ -111,13 +113,13 @@ export const ToolDetail = props => {
 
     const populateCollections = localToolData => {
         setIsLoading(true);
-        axios.get(baseURL + '/api/v1/collections/entityid/' + localToolData.id).then(res => {
+        axios.get(`${baseURL}/api/v1/collections/entityid/${localToolData.id}`).then(res => {
             setCollections(res.data.data || []);
         });
     };
 
     const doSearch = e => {
-        //fires on enter on searchbar
+        // fires on enter on searchbar
         if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(searchString)}`;
     };
 
@@ -125,17 +127,17 @@ export const ToolDetail = props => {
         setSearchString(searchString);
     };
 
-    //Update the page view counter
+    // Update the page view counter
     const updateCounter = (id, counter) => {
-        axios.post(baseURL + '/api/v1/counter/update', { id, counter });
+        axios.post(`${baseURL}/api/v1/counter/update`, { id, counter });
     };
 
     const getAdditionalObjectInfo = async addtionalObjInfo => {
-        let tempObjects = [];
+        const tempObjects = [];
         if (addtionalObjInfo) {
             const promises = addtionalObjInfo.map(async (object, index) => {
                 if (object.objectType === 'course') {
-                    await axios.get(baseURL + '/api/v1/relatedobject/course/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/course/${object.objectId}`).then(res => {
                         tempObjects.push({
                             name: res.data.data[0].title,
                             id: object.objectId,
@@ -143,7 +145,7 @@ export const ToolDetail = props => {
                         });
                     });
                 } else if (object.objectType === 'dataUseRegister') {
-                    await axios.get(baseURL + '/api/v1/relatedobject/dataUseRegister/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/dataUseRegister/${object.objectId}`).then(res => {
                         tempObjects.push({
                             id: object.objectId,
                             activeflag: res.data.data[0].activeflag,
@@ -151,7 +153,7 @@ export const ToolDetail = props => {
                         });
                     });
                 } else {
-                    await axios.get(baseURL + '/api/v1/relatedobject/' + object.objectId).then(res => {
+                    await axios.get(`${baseURL}/api/v1/relatedobject/${object.objectId}`).then(res => {
                         let datasetPublisher;
                         let datasetLogo;
 
@@ -170,8 +172,8 @@ export const ToolDetail = props => {
                             id: object.objectId,
                             authors: res.data.data[0].authors,
                             activeflag: res.data.data[0].activeflag,
-                            datasetPublisher: datasetPublisher,
-                            datasetLogo: datasetLogo,
+                            datasetPublisher,
+                            datasetLogo,
                         });
                     });
                 }
@@ -182,17 +184,17 @@ export const ToolDetail = props => {
     };
 
     const populateRelatedObjects = (localToolData, localAdditionalObjInfo) => {
-        let tempRelatedObjects = [];
+        const tempRelatedObjects = [];
         if (localToolData.relatedObjects && localAdditionalObjInfo) {
             localToolData.relatedObjects.map(object =>
                 localAdditionalObjInfo.forEach(item => {
                     if (object.objectId === item.id && item.activeflag === 'active') {
-                        object['datasetPublisher'] = item.datasetPublisher;
-                        object['datasetLogo'] = item.datasetLogo;
-                        object['name'] = item.name || '';
-                        object['firstname'] = item.firstname || '';
-                        object['lastname'] = item.lastname || '';
-                        object['projectTitle'] = item.projectTitle || '';
+                        object.datasetPublisher = item.datasetPublisher;
+                        object.datasetLogo = item.datasetLogo;
+                        object.name = item.name || '';
+                        object.firstname = item.firstname || '';
+                        object.lastname = item.lastname || '';
+                        object.projectTitle = item.projectTitle || '';
 
                         tempRelatedObjects.push(object);
                     }
@@ -236,7 +238,7 @@ export const ToolDetail = props => {
             setSorting('showAll');
             const filteredRelatedResourceItems = await filterRelatedResourceItems(relatedObjects, relatedObjectsSearchValue);
 
-            let tempFilteredData = filteredRelatedResourceItems.filter(dat => {
+            const tempFilteredData = filteredRelatedResourceItems.filter(dat => {
                 return dat !== '';
             });
             setRelatedObjectsFiltered(tempFilteredData);
@@ -257,9 +259,8 @@ export const ToolDetail = props => {
                     : false)
             ) {
                 return object;
-            } else {
-                return '';
             }
+            return '';
         });
 
     const handleSort = async sort => {
@@ -290,7 +291,7 @@ export const ToolDetail = props => {
     let ratingsTotal = 0;
     if (reviewData && reviewData.length) {
         reviewData.forEach(review => {
-            ratingsTotal = ratingsTotal + review.rating;
+            ratingsTotal += review.rating;
         });
     }
     const ratingsCount = reviewData ? reviewData.length : 0;
@@ -308,75 +309,46 @@ export const ToolDetail = props => {
                     doToggleDrawer={toggleDrawer}
                 />
                 <Container className='margin-bottom-48'>
-                    {toolAdded ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert data-test-id='tool-added-banner' variant='success' className='mt-3'>
-                                    Done! Someone will review your tool and let you know when it goes live
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {toolAdded && (
+                        <LayoutContent>
+                            <Alert variant='success' mt={3}>
+                                Done! Someone will review your tool and let you know when it goes live
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {toolEdited ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='success' className='mt-3'>
-                                    Done! Your tool has been updated
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {toolEdited && (
+                        <LayoutContent>
+                            <Alert variant='success' mt={3}>
+                                Done! Your tool has been updated
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {toolData.activeflag === 'review' ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert data-test-id='tool-pending-banner' variant='warning' className='mt-3'>
-                                    Your tool is pending review. Only you can see this page.
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {toolData.activeflag === 'review' && (
+                        <LayoutContent>
+                            <Alert variant='warning' mt={3}>
+                                Your tool is pending review. Only you can see this page.
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {reviewAdded ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='warning' className='mt-3'>
-                                    Done! Your review is pending review.
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {reviewAdded && (
+                        <LayoutContent>
+                            <Alert variant='warning' mt={3}>
+                                Done! Your review is pending review.
+                            </Alert>
+                        </LayoutContent>
                     )}
 
-                    {replyAdded ? (
-                        <Row className=''>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10}>
-                                <Alert variant='success' className='mt-3'>
-                                    Done! Your reply has been added.
-                                </Alert>
-                            </Col>
-                            <Col sm={1} lg={10} />
-                        </Row>
-                    ) : (
-                        ''
+                    {replyAdded && (
+                        <LayoutContent>
+                            <Alert variant='success' mt={3}>
+                                Done! Your reply has been added.
+                            </Alert>
+                        </LayoutContent>
                     )}
+
                     <Row className='mt-4'>
                         <Col sm={1} lg={1} />
                         <Col sm={10} lg={10}>
@@ -403,10 +375,10 @@ export const ToolDetail = props => {
                                                 />
                                                 <span style={{ paddingLeft: '20px' }}>
                                                     {!!ratingsTotal && ratingsCount === 1
-                                                        ? ratingsCount + ' review'
-                                                        : ratingsCount + ' reviews'}
+                                                        ? `${ratingsCount} review`
+                                                        : `${ratingsCount} reviews`}
                                                     <span className='reviewTitleGap'>·</span>
-                                                    {avgRating === 0 ? 'No average rating' : Math.round(avgRating * 10) / 10 + ' average'}
+                                                    {avgRating === 0 ? 'No average rating' : `${Math.round(avgRating * 10) / 10} average`}
                                                 </span>
                                             </div>
                                         </Col>
@@ -415,11 +387,11 @@ export const ToolDetail = props => {
                                 <Row className='margin-top-16'>
                                     <Col xs={12}>
                                         <span className='badge-tool'>
-                                            <SVGIcon name='newtoolicon' fill={'#ffffff'} className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
+                                            <SVGIcon name='newtoolicon' fill='#ffffff' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
                                             <span>Tool</span>
                                         </span>
 
-                                        <a href={'/search?search=&tab=Tools&toolcategories=' + toolData.categories.category}>
+                                        <a href={`/search?search=&tab=Tools&toolcategories=${toolData.categories.category}`}>
                                             <div className='badge-tag'>{toolData.categories.category}</div>
                                         </a>
                                     </Col>
@@ -447,9 +419,8 @@ export const ToolDetail = props => {
                                     onSelect={key => {
                                         googleAnalytics.recordVirtualPageView(`${key} tab`);
                                         googleAnalytics.recordEvent('Tools', `Clicked ${key} tab`, `Viewing ${key}`);
-                                    }}
-                                >
-                                    <Tab eventKey='About' title={'About'}>
+                                    }}>
+                                    <Tab eventKey='About' title='About'>
                                         <Row className='mt-2'>
                                             <Col sm={12} lg={12}>
                                                 <div className='rectangle'>
@@ -460,8 +431,7 @@ export const ToolDetail = props => {
                                                         <Col
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
-                                                            data-test-id='tool-description'
-                                                        >
+                                                            data-test-id='tool-description'>
                                                             <ReactMarkdown source={toolData.description} />
                                                         </Col>
                                                     </Row>
@@ -504,8 +474,7 @@ export const ToolDetail = props => {
                                                                 rel='noopener noreferrer'
                                                                 data-test-id='tool-page-url'
                                                                 target='_blank'
-                                                                className='purple-14 text-break'
-                                                            >
+                                                                className='purple-14 text-break'>
                                                                 {toolData.link}
                                                             </a>
                                                         </Col>
@@ -562,11 +531,7 @@ export const ToolDetail = props => {
                                                         </Col>
                                                         <Col sm={10} className='gray800-14'>
                                                             <a
-                                                                href={
-                                                                    '/search?search=&tab=Tools&toolcategories=' +
-                                                                    toolData.categories.category
-                                                                }
-                                                            >
+                                                                href={`/search?search=&tab=Tools&toolcategories=${toolData.categories.category}`}>
                                                                 <div data-test-id='tool-type' className='badge-tag'>
                                                                     {toolData.categories.category}
                                                                 </div>
@@ -583,27 +548,18 @@ export const ToolDetail = props => {
                                                                 : toolData.programmingLanguage.map((obj, i) => {
                                                                       return obj.version !== '' ? (
                                                                           <a
-                                                                              href={
-                                                                                  '/search?search=&tab=Tools&toolprogrammingLanguage=' +
-                                                                                  obj.programmingLanguage
-                                                                              }
-                                                                          >
+                                                                              href={`/search?search=&tab=Tools&toolprogrammingLanguage=${obj.programmingLanguage}`}>
                                                                               <div
                                                                                   className='badge-version'
                                                                                   key={i}
-                                                                                  data-test-id='tool-implementation'
-                                                                              >
+                                                                                  data-test-id='tool-implementation'>
                                                                                   <span>{obj.programmingLanguage}</span>
                                                                                   <span>{obj.version}</span>
                                                                               </div>
                                                                           </a>
                                                                       ) : (
                                                                           <a
-                                                                              href={
-                                                                                  '/search?search=&tab=Tools&toolprogrammingLanguage=' +
-                                                                                  obj.programmingLanguage
-                                                                              }
-                                                                          >
+                                                                              href={`/search?search=&tab=Tools&toolprogrammingLanguage=${obj.programmingLanguage}`}>
                                                                               <div className='badge-tag' key={i}>
                                                                                   <span>{obj.programmingLanguage}</span>
                                                                               </div>
@@ -622,7 +578,7 @@ export const ToolDetail = props => {
                                                             ) : (
                                                                 toolData.tags.features.map(keyword => {
                                                                     return (
-                                                                        <a href={'/search?search=&tab=Tools&toolfeatures=' + keyword}>
+                                                                        <a href={`/search?search=&tab=Tools&toolfeatures=${keyword}`}>
                                                                             <div className='badge-tag'>{keyword}</div>
                                                                         </a>
                                                                     );
@@ -640,7 +596,7 @@ export const ToolDetail = props => {
                                                             ) : (
                                                                 toolData.tags.topics.map(domain => {
                                                                     return (
-                                                                        <a href={'/search?search=&tab=Tools&tooltopics=' + domain}>
+                                                                        <a href={`/search?search=&tab=Tools&tooltopics=${domain}`}>
                                                                             <div className='badge-tag'>{domain}</div>
                                                                         </a>
                                                                     );
@@ -652,7 +608,7 @@ export const ToolDetail = props => {
                                             </Col>
                                         </Row>
                                     </Tab>
-                                    <Tab eventKey='Reviews' title={'Reviews (' + reviewData.length + ')'}>
+                                    <Tab eventKey='Reviews' title={`Reviews (${reviewData.length})`}>
                                         <Reviews data={toolData} userState={userState} reviewData={reviewData} />
                                     </Tab>
                                     <Tab eventKey='Discussion' title={`Discussion (${discoursePostCount})`}>
@@ -663,7 +619,7 @@ export const ToolDetail = props => {
                                             onUpdateDiscoursePostCount={updateDiscoursePostCount}
                                         />
                                     </Tab>
-                                    <Tab eventKey='Related resources' title={'Related resources (' + relatedObjects.length + ')'}>
+                                    <Tab eventKey='Related resources' title={`Related resources (${relatedObjects.length})`}>
                                         <>
                                             <Row>
                                                 <Col lg={8}>
@@ -673,7 +629,7 @@ export const ToolDetail = props => {
                                                                 name='searchicon'
                                                                 width={20}
                                                                 height={20}
-                                                                fill={'#2c8267'}
+                                                                fill='#2c8267'
                                                                 stroke='none'
                                                                 type='submit'
                                                             />
@@ -696,8 +652,7 @@ export const ToolDetail = props => {
                                                         <Dropdown.Toggle
                                                             variant='info'
                                                             id='dropdown-menu-align-right'
-                                                            className='gray800-14'
-                                                        >
+                                                            className='gray800-14'>
                                                             {(() => {
                                                                 if (sorting !== 'showAll')
                                                                     return `Show ${
@@ -708,21 +663,20 @@ export const ToolDetail = props => {
                                                                             : `${sorting}s`
                                                                     } (
 																	${relatedResourcesSort.filter(dat => dat.objectType === sorting).length})`;
-                                                                else return `Show all resources (${relatedResourcesSort.length})`;
+                                                                return `Show all resources (${relatedResourcesSort.length})`;
                                                             })()}
                                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
                                                             <Row
-                                                                key={`ddl-item-showall`}
+                                                                key='ddl-item-showall'
                                                                 className={
                                                                     sorting === 'showAll'
                                                                         ? 'sort-dropdown-item sort-dropdown-item-selected sortingDropdown'
                                                                         : 'sort-dropdown-item sortingDropdown'
-                                                                }
-                                                            >
+                                                                }>
                                                                 <Col xs={12} className='p-0'>
-                                                                    <Dropdown.Item eventKey={'showAll'} className='gray800-14'>
+                                                                    <Dropdown.Item eventKey='showAll' className='gray800-14'>
                                                                         Show all resources ({relatedResourcesSort.length})
                                                                     </Dropdown.Item>
                                                                 </Col>
@@ -738,7 +692,7 @@ export const ToolDetail = props => {
                                                                                 fill: '#3db28c',
                                                                                 marginTop: '5px',
                                                                             }}
-                                                                            fill={'#3db28c'}
+                                                                            fill='#3db28c'
                                                                             stroke='none'
                                                                         />
                                                                     ) : null}
@@ -754,8 +708,7 @@ export const ToolDetail = props => {
                                                                                 sorting === item
                                                                                     ? 'sort-dropdown-item sort-dropdown-item-selected sortingDropdown'
                                                                                     : 'sort-dropdown-item sortingDropdown'
-                                                                            }
-                                                                        >
+                                                                            }>
                                                                             <Col xs={12} className='p-0'>
                                                                                 <Dropdown.Item eventKey={item} className='gray800-14'>
                                                                                     Show{' '}
@@ -785,7 +738,7 @@ export const ToolDetail = props => {
                                                                                             fill: '#3db28c',
                                                                                             marginTop: '5px',
                                                                                         }}
-                                                                                        fill={'#3db28c'}
+                                                                                        fill='#3db28c'
                                                                                         stroke='none'
                                                                                     />
                                                                                 ) : null}
@@ -808,8 +761,8 @@ export const ToolDetail = props => {
                                                         <RelatedObject
                                                             relatedObject={object}
                                                             objectType={object.objectType}
-                                                            activeLink={true}
-                                                            showRelationshipAnswer={true}
+                                                            activeLink
+                                                            showRelationshipAnswer
                                                             datasetPublisher={object.datasetPublisher}
                                                             datasetLogo={object.datasetLogo}
                                                         />
@@ -818,7 +771,7 @@ export const ToolDetail = props => {
                                             )}
                                         </>
                                     </Tab>
-                                    <Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>
+                                    <Tab eventKey='Collections' title={`Collections (${collections.length})`}>
                                         {!collections || collections.length <= 0 ? (
                                             <MessageNotFound text='This tool has not been featured on any collections yet.' />
                                         ) : (
