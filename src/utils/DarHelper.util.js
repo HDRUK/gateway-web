@@ -491,24 +491,10 @@ const totalQuestionsAnswered = (component, panelId = '', questionAnswers = {}, j
     return { totalAnsweredQuestions: 0, totalQuestions: 0 };
 };
 
-const clickExportHandler = (schema, publisherDetails) => {
-    const currentDate = moment().format('YYYY-MM-DD');
-    const fileName = `dar-${publisherDetails.name.replaceAll(' ', '-').toLowerCase()}-${currentDate}.json`;
-    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(schema))}`;
-    const link = document.createElement('a');
-    link.href = jsonString;
-    link.download = fileName;
-    link.click();
-};
-const injectExportConfigContent = (jsonSchema, pages, formPanels, questionPanels, publisherDetails) => {
-    staticContent.exportConfigFileQuestionPanel.navHeader = (
-        <>
-            {staticContent.exportConfigFile.description}
-            <Button onClick={() => clickExportHandler(jsonSchema, publisherDetails)} mt={2}>
-                Export DAR config file
-            </Button>
-        </>
-    );
+const injectExportConfigContent = (jsonSchema, pages, formPanels, questionPanels) => {
+    staticContent.exportConfigFileQuestionPanel.navHeader = 'Export DAR config file';
+    staticContent.exportConfigFileQuestionPanel.navDescription = staticContent.exportConfigFile.description;
+
     pages.push(staticContent.exportConfigFile);
     formPanels.push(staticContent.exportConfigFilePanel);
     questionPanels.push(staticContent.exportConfigFileQuestionPanel);
@@ -544,7 +530,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, pub
     }
 
     if (userState[0].role === 'Admin' && !exportExists) {
-        injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels, publisherDetails);
+        injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels);
     }
 
     return { ...jsonSchema, pages, formPanels, questionPanels };
