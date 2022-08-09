@@ -8,7 +8,6 @@ const AboutApplicationImport = ({ userState, team, onUpload }) => {
 
     const handleUpload = useCallback(
         helpers => {
-            console.log('JSON.parse(fileText)', JSON.parse(fileText));
             if (fileText) onUpload(JSON.parse(fileText), helpers);
         },
         [fileText]
