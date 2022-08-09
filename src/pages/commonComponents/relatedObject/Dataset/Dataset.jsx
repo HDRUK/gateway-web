@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
+import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect, useCallback } from 'react';
 import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
@@ -12,6 +13,7 @@ import RemoveButton from '../RemoveButton/RemoveButton';
 import Title from '../Title/Title';
 import Description from '../Description/Description';
 import Tag from '../Tag/Tag';
+import ToolTip from '../../../../components/ToolTip/ToolTip';
 import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
 import { dataset } from './constants';
 import * as styles from './Dataset.styles';
@@ -35,16 +37,19 @@ const Dataset = ({
     const getPublisherDetails = useCallback(() => {
         const publisher = { name: '', label: '', showShield: false };
         if (!isEmpty(data.datasetv2)) {
+            console.log(data);
             const name = data.datasetv2.summary.publisher.name.toUpperCase();
             publisher.name = name;
             publisher.label = name;
             publisher.showShield = !isNil(data.datasetv2.summary.publisher.memberOf);
+            publisher.memberOf = data.datasetv2.summary.publisher.memberOf;
         } else {
             const name = data.datasetfields.publisher;
             const publisherName = name.includes('>') ? name.split(' > ')[1].toUpperCase() : name.toUpperCase();
             publisher.name = publisherName;
             publisher.label = publisherName;
             publisher.showShield = false;
+            publisher.memberOf = name.includes('>') && name.split(' > ')[0];
         }
         return publisher;
     }, [data.datasetv2, data.datasetfields.publisher]);
@@ -98,11 +103,7 @@ const Dataset = ({
                         }}
                     />
                     <br />
-                    {publisherDetails.showShield && (
-                        <span>
-                            <SVGIcon name='shield' fill='#475da7' className='svg-16 mr-2' viewBox='0 0 16 16' />
-                        </span>
-                    )}
+
                     <span
                         className={activeLink ? 'gray800-14 underlined' : 'gray800-14'}
                         css={styles.pointer}
@@ -112,11 +113,17 @@ const Dataset = ({
                                 parentKey: 'publisher',
                             })
                         }
-                        data-testid={`publisher-${publisherDetails.name}`}
-                    >
+                        data-testid={`publisher-${publisherDetails.name}`}>
                         {' '}
                         {publisherDetails.name}{' '}
                     </span>
+                    {publisherDetails.showShield && (
+                        <ToolTip text={`Member of ${publisherDetails.memberOf}`}>
+                            <span>
+                                <SVGIcon name='shield' fill='#475da7' className='svg-16 mr-2' viewBox='0 0 16 16' />
+                            </span>
+                        </ToolTip>
+                    )}
                 </Col>
                 <Col sm={2} lg={2} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
                     {!isEmpty(publisherLogo) && (
@@ -137,8 +144,7 @@ const Dataset = ({
                             tagName='Cohort Discovery'
                             tagType='project'
                             updateOnFilterBadgeHandler={updateOnFilterBadge}
-                            showTagType={false}
-                        >
+                            showTagType={false}>
                             <SVGIcon
                                 name='cohorticon'
                                 fill='#472505'
