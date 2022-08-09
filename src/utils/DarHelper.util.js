@@ -510,8 +510,6 @@ const injectExportConfigContent = (jsonSchema, pages, formPanels, questionPanels
 const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, publisherDetails, userState) => {
     const { pages, formPanels, questionPanels } = { ...jsonSchema };
 
-    console.log('jsonSchema', jsonSchema);
-
     const additionalfilesNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
     const aboutNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ABOUT);
     const exportExists = pages.find(page => page.pageId === darStaticPageIds.EXPORT);
