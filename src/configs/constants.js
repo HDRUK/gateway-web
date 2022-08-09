@@ -1,4 +1,6 @@
 export const DISPLAY_DATE_STANDARD = 'd MMMM yyyy';
+export const DISPLAY_DATE_SLASH = 'dd/MM/yyyy';
+
 export const TEXTAREA_ROWS = 8;
 
 export const DATASETS_STATUS_ACTIVE = 'active,draft';

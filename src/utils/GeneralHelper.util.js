@@ -41,11 +41,11 @@ export const stripMarkdown = (value = '', truncate = 0) => {
     return value;
 };
 
-export const dateFormats = timestamp => {
+export const dateFormats = (timestamp, dateFormat = DISPLAY_DATE_STANDARD) => {
     const date = new Date(timestamp);
 
     return {
-        dateOnly: format(date, DISPLAY_DATE_STANDARD),
+        dateOnly: format(date, dateFormat),
         timeOnly: format(date, 'HH:mm'),
     };
 };

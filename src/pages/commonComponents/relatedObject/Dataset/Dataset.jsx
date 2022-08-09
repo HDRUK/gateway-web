@@ -2,12 +2,13 @@
 import { jsx } from '@emotion/react';
 import React, { useState, useEffect, useCallback } from 'react';
 import queryString from 'query-string';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
 import { cx } from '@emotion/css';
+import { useTranslation } from 'react-i18next';
 import googleAnalytics from '../../../../tracking';
-import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
+import { dateFormats, stripMarkdown } from '../../../../utils/GeneralHelper.util';
 import RemoveButton from '../RemoveButton/RemoveButton';
 import Title from '../Title/Title';
 import Description from '../Description/Description';
@@ -21,7 +22,9 @@ import * as styles from './Dataset.styles';
 import '../../CommonComponents.scss';
 import '../RelatedObject.scss';
 import ShowMore from '../../ShowMore';
-import SVGIcon from '../../../../images/SVGIcon';
+import Typography from '../../../../components/Typography';
+import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
+import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
 
 const Dataset = ({
     data,
@@ -36,6 +39,8 @@ const Dataset = ({
     onClick,
 }) => {
     const [publisherDetails, setPublisherDetails] = useState({ name: '', label: '' });
+
+    const { t } = useTranslation();
 
     const getPublisherDetails = useCallback(() => {
         const publisher = { name: '', label: '', showShield: false };
@@ -127,6 +132,12 @@ const Dataset = ({
                             </ToolTip>
                         )}
                     </span>
+                    <Typography variant='subtitle1' mt={2} mb={1}>
+                        {t('dataset.dateAdded')} {dateFormats(data.latestUpdate, DISPLAY_DATE_SLASH).dateOnly}
+                        <Tooltip text={t('dataset.dateAddedTooltip')}>
+                            <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' />
+                        </Tooltip>
+                    </Typography>
                 </Col>
                 <Col sm={2} lg={2} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
                     {!isEmpty(publisherLogo) && (
@@ -138,7 +149,7 @@ const Dataset = ({
                     )}
                     {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
                 </Col>
-                <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
+                <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>
                     <ShowMore>
                         <div>
                             <Tag tagName={dataset.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>

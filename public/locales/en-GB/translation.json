@@ -135,6 +135,8 @@
     "guidance.unedited": "Guidance unedited",
     "guidance.edited": "Guidance edited",
     "dataset": {
+        "dateAdded": "Added to the Gateway:",
+        "dateAddedTooltip": "Date when the information about this dataset was added to our database",
         "inReview": "pending approval",
         "active": "Active",
         "active,draft": "Active",
@@ -291,7 +293,7 @@
             "metadata": "Metadata quality (platinum to bronze)",
             "metadataQuality": "Metadata quality (platinum to bronze)",
             "resources": "Related resources (most first)",
-            "latest": "Latest (recently updated first)",
+            "latest": "Most recently added",
             "recentActivity": "Recent activity (newest first)",
             "recentlyadded": "Recently added to collection (newest first)",
             "recentlyPublished": "Recently published (newest first)",

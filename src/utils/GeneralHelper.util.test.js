@@ -1,3 +1,4 @@
+import { DISPLAY_DATE_SLASH } from '../configs/constants';
 import { filterBranches, findAllByKey, isEditMode, iterateDeep, dateFormats, getParams, stripHtml } from './GeneralHelper.util';
 
 describe('Test GeneralHelper getUpdatesSubmittedLog', () => {
@@ -21,6 +22,14 @@ describe('dateFormats function', () => {
         const dateFormat = dateFormats('2021-11-08T14:49:41.225Z');
         expect(dateFormat).toHaveProperty('timeOnly', '14:49');
         expect(dateFormat).toHaveProperty('dateOnly', '8 November 2021');
+    });
+    it('should return date in default format', () => {
+        const dateFormat = dateFormats('2021-11-08T14:49:41.225Z');
+        expect(dateFormat).toHaveProperty('dateOnly', '8 November 2021');
+    });
+    it('should return date in specified format', () => {
+        const dateFormat = dateFormats('2021-11-08T14:49:41.225Z', DISPLAY_DATE_SLASH);
+        expect(dateFormat).toHaveProperty('dateOnly', '08/11/2021');
     });
 });
 

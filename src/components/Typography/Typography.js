@@ -1,9 +1,7 @@
 /** @jsx jsx */
 import { cx } from '@emotion/css';
 import { jsx } from '@emotion/react';
-import PropTypes from 'prop-types';
 import { Box } from 'hdruk-react-core';
-import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import { PROP_TYPES_TYPOGRAPHY } from './Typography.propTypes';
 import * as styles from './Typography.styles';
 
@@ -16,6 +14,10 @@ const Typography = ({ children, color, className, mt, mb, ml, mr, width, minWidt
         } else if (variant === 'caption' || variant === 'tiny') {
             tagName = 'span';
         }
+    }
+
+    if (variant === 'subtitle1' && !as) {
+        tagName = 'p';
     }
 
     return (
