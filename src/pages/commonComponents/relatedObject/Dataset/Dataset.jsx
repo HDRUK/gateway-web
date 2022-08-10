@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/react';
 import React, { useState, useEffect, useCallback } from 'react';
 import queryString from 'query-string';
-import { Row, Col, Tooltip } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
 import { cx } from '@emotion/css';
@@ -132,11 +132,11 @@ const Dataset = ({
                             </ToolTip>
                         )}
                     </span>
-                    <Typography variant='subtitle1' mt={2} mb={1}>
-                        {t('dataset.dateAdded')} {dateFormats(data.latestUpdate, DISPLAY_DATE_SLASH).dateOnly}
-                        <Tooltip text={t('dataset.dateAddedTooltip')}>
-                            <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' />
-                        </Tooltip>
+                    <Typography className='d-flex align-items-center' variant='subtitle1' mt={1} mb={1}>
+                        {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, DISPLAY_DATE_SLASH).dateOnly}
+                        <ToolTip text={t('dataset.dateUpdatedTooltip')}>
+                            <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
+                        </ToolTip>
                     </Typography>
                 </Col>
                 <Col sm={2} lg={2} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
