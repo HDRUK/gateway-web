@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
-import classnames from 'classnames';
+import { cx } from '@emotion/css';
 import googleAnalytics from '../../../../tracking';
 import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
 import RemoveButton from '../RemoveButton/RemoveButton';
@@ -110,7 +110,7 @@ const Dataset = ({
                     <br />
 
                     <span
-                        className={classnames(publisherNameClasses, { underlined: !!activeLink })}
+                        className={cx(publisherNameClasses, { underlined: !!activeLink })}
                         css={styles.pointer}
                         onClick={() =>
                             updateOnFilterBadge('publisher', {
