@@ -14,7 +14,7 @@ function ToolTip({ text, placement, ...outerProps }) {
 }
 
 ToolTip.propTypes = {
-    text: PropTypes.string,
+    text: PropTypes.node,
     placement: PropTypes.string,
 };
 
