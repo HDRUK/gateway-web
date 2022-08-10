@@ -5,14 +5,19 @@ import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
+import { cx } from '@emotion/css';
 import googleAnalytics from '../../../../tracking';
 import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
-import SVGIcon from '../../../../images/SVGIcon';
 import RemoveButton from '../RemoveButton/RemoveButton';
 import Title from '../Title/Title';
 import Description from '../Description/Description';
 import Tag from '../Tag/Tag';
+import ToolTip from '../../../../components/ToolTip/ToolTip';
+import Icon from '../../../../components/Icon';
 import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
+import { ReactComponent as Shield } from '../../../../images/shield.svg';
+import { ReactComponent as DatasetIcon } from '../../../../images/dataset.svg';
+import { ReactComponent as Star } from '../../../../images/star.svg';
 import { dataset } from './constants';
 import * as styles from './Dataset.styles';
 import '../../CommonComponents.scss';
@@ -39,12 +44,14 @@ const Dataset = ({
             publisher.name = name;
             publisher.label = name;
             publisher.showShield = !isNil(data.datasetv2.summary.publisher.memberOf);
+            publisher.memberOf = data.datasetv2.summary.publisher.memberOf;
         } else {
             const name = data.datasetfields.publisher;
             const publisherName = name.includes('>') ? name.split(' > ')[1].toUpperCase() : name.toUpperCase();
             publisher.name = publisherName;
             publisher.label = publisherName;
             publisher.showShield = false;
+            publisher.memberOf = name.includes('>') && name.split(' > ')[0];
         }
         return publisher;
     }, [data.datasetv2, data.datasetfields.publisher]);
@@ -82,6 +89,9 @@ const Dataset = ({
         : [];
     const searchTerm = queryString.parse(window.location.search).search ? queryString.parse(window.location.search).search : '';
     const phenotypesSearched = data.datasetfields.phenotypes.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
+
+    const publisherNameClasses = 'gray800-14 d-flex align-items-center';
+
     return (
         <>
             <Row data-testid='related-dataset-object' className='noMargin'>
@@ -98,13 +108,9 @@ const Dataset = ({
                         }}
                     />
                     <br />
-                    {publisherDetails.showShield && (
-                        <span>
-                            <SVGIcon name='shield' fill='#475da7' className='svg-16 mr-2' viewBox='0 0 16 16' />
-                        </span>
-                    )}
+
                     <span
-                        className={activeLink ? 'gray800-14 underlined' : 'gray800-14'}
+                        className={cx(publisherNameClasses, { underlined: !!activeLink })}
                         css={styles.pointer}
                         onClick={() =>
                             updateOnFilterBadge('publisher', {
@@ -112,10 +118,14 @@ const Dataset = ({
                                 parentKey: 'publisher',
                             })
                         }
-                        data-testid={`publisher-${publisherDetails.name}`}
-                    >
+                        data-testid={`publisher-${publisherDetails.name}`}>
                         {' '}
                         {publisherDetails.name}{' '}
+                        {publisherDetails.showShield && (
+                            <ToolTip text={`Member of ${publisherDetails.memberOf}`}>
+                                <Icon svg={<Shield fill='inherit' />} size='2xl' ml={1} />
+                            </ToolTip>
+                        )}
                     </span>
                 </Col>
                 <Col sm={2} lg={2} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
@@ -130,23 +140,15 @@ const Dataset = ({
                 </Col>
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
                     <Tag tagName={dataset.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
-                        <SVGIcon name='dataseticon' fill='#113328' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
+                        <Icon svg={<DatasetIcon fill='#113328' />} size='xs' mr={1} />
                     </Tag>
                     {isCohortDiscovery && (
                         <Tag
                             tagName='Cohort Discovery'
                             tagType='project'
                             updateOnFilterBadgeHandler={updateOnFilterBadge}
-                            showTagType={false}
-                        >
-                            <SVGIcon
-                                name='cohorticon'
-                                fill='#472505'
-                                className='badgeSvg mr-2'
-                                width='22'
-                                height='22'
-                                viewBox='0 0 10 10'
-                            />
+                            showTagType={false}>
+                            <Icon svg={<Star fill='#472505' />} size='xs' mr={1} />
                         </Tag>
                     )}
 

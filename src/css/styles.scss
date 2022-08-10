@@ -400,6 +400,11 @@ a.nav-item.nav-link.active {
     }
 }
 
+.badge {
+    &-version:hover {
+        background-color: $gray-400;
+    }
+}
 
 .iconHolder {
     text-align: right;
