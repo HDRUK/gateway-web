@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
 import { cx } from '@emotion/css';
 import { useTranslation } from 'react-i18next';
+import { Box } from 'hdruk-react-core';
 import googleAnalytics from '../../../../tracking';
 import { dateFormats, stripMarkdown } from '../../../../utils/GeneralHelper.util';
 import RemoveButton from '../RemoveButton/RemoveButton';
@@ -95,8 +96,6 @@ const Dataset = ({
     const searchTerm = queryString.parse(window.location.search).search ? queryString.parse(window.location.search).search : '';
     const phenotypesSearched = data.datasetfields.phenotypes.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
 
-    const publisherNameClasses = 'gray800-14 d-flex align-items-center';
-
     return (
         <>
             <Row data-testid='related-dataset-object' className='noMargin'>
@@ -114,8 +113,12 @@ const Dataset = ({
                     />
                     <br />
 
-                    <span
-                        className={cx(publisherNameClasses, { underlined: !!activeLink })}
+                    <Box
+                        as={Typography}
+                        mb={1}
+                        display='flex'
+                        alignItems='center'
+                        className={cx('gray800-14', { underlined: !!activeLink })}
                         css={styles.pointer}
                         onClick={() =>
                             updateOnFilterBadge('publisher', {
@@ -131,13 +134,13 @@ const Dataset = ({
                                 <Icon svg={<Shield fill='inherit' />} size='2xl' ml={1} />
                             </ToolTip>
                         )}
-                    </span>
-                    <Typography className='d-flex align-items-center' variant='subtitle1' mt={1} mb={1}>
+                    </Box>
+                    <Box as={Typography} variant='subtitle1' display='flex' alignItems='center' mt={1} mb={1}>
                         {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, DISPLAY_DATE_SLASH).dateOnly}
                         <ToolTip text={t('dataset.dateUpdatedTooltip')}>
                             <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
                         </ToolTip>
-                    </Typography>
+                    </Box>
                 </Col>
                 <Col sm={2} lg={2} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
                     {!isEmpty(publisherLogo) && (
