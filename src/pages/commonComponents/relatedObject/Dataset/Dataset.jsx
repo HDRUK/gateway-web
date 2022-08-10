@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
+import classnames from 'classnames';
 import googleAnalytics from '../../../../tracking';
 import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
 import RemoveButton from '../RemoveButton/RemoveButton';
@@ -88,6 +89,9 @@ const Dataset = ({
         : [];
     const searchTerm = queryString.parse(window.location.search).search ? queryString.parse(window.location.search).search : '';
     const phenotypesSearched = data.datasetfields.phenotypes.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
+
+    const publisherNameClasses = 'gray800-14 d-flex align-items-center';
+
     return (
         <>
             <Row data-testid='related-dataset-object' className='noMargin'>
@@ -106,7 +110,7 @@ const Dataset = ({
                     <br />
 
                     <span
-                        className={activeLink ? 'gray800-14 underlined' : 'gray800-14'}
+                        className={classnames(publisherNameClasses, { underlined: !!activeLink })}
                         css={styles.pointer}
                         onClick={() =>
                             updateOnFilterBadge('publisher', {
@@ -119,7 +123,7 @@ const Dataset = ({
                         {publisherDetails.name}{' '}
                         {publisherDetails.showShield && (
                             <ToolTip text={`Member of ${publisherDetails.memberOf}`}>
-                                <Icon svg={<Shield fill='inherit' />} size='xl' />
+                                <Icon svg={<Shield fill='inherit' />} size='2xl' ml={1} />
                             </ToolTip>
                         )}
                     </span>
