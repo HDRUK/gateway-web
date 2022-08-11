@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Button from '../../../components/Button';
+import { H5, H6, P, Button } from 'hdruk-react-core';
+
 import Checkbox from '../../../components/Checkbox';
 import { LayoutContent } from '../../../components/Layout';
-import Typography, { H5, H6, P } from '../../../components/Typography';
 
 const DataUseWidget = () => {
     const { t } = useTranslation();

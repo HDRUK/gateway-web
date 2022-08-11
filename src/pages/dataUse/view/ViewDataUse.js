@@ -6,9 +6,9 @@ import { Col, Container, Row, Tab, Tabs, Tooltip } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import 'react-tabs/style/react-tabs.css';
+import { Box } from 'hdruk-react-core';
 import Alert from '../../../components/Alert';
 import { LayoutContent } from '../../../components/Layout';
-import LayoutBox from '../../../components/LayoutBox';
 import SearchControls from '../../../components/SearchControls';
 import SVGIcon from '../../../images/SVGIcon';
 import collectionsService from '../../../services/collections';
@@ -499,9 +499,9 @@ export const DataUseView = props => {
                                                     sortProps={dropdownProps}
                                                 />
                                                 {relatedObjectsFiltered.length <= 0 ? (
-                                                    <LayoutBox mt={2}>
+                                                    <Box mt={2}>
                                                         <MessageNotFound word='related resources' />
-                                                    </LayoutBox>
+                                                    </Box>
                                                 ) : (
                                                     relatedObjectsFiltered.map((object, index) => (
                                                         <span key={index}>
