@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
-import classnames from 'classnames';
+import { cx } from '@emotion/css';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 import { Col, Container, Dropdown, Row } from 'react-bootstrap';
@@ -37,8 +37,7 @@ const CustomToggle = React.forwardRef(({ children, onClick, subToggle }, ref) =>
             e.preventDefault();
             onClick(e);
         }}
-        className={subToggle ? 'dropdown-sub-menu' : 'user-dropdown-menu'}
-    >
+        className={subToggle ? 'dropdown-sub-menu' : 'user-dropdown-menu'}>
         {children}
     </a>
 ));
@@ -328,7 +327,7 @@ class SearchBar extends React.Component {
         return (
             <Fragment>
                 {showUatBanner === true && <UatBanner currentEnv={currentEnv} />}
-                <nav className={classnames('navbarShown', { navbarHidden: !this.state.visible })}>
+                <nav className={cx('navbarShown', { navbarHidden: !this.state.visible })}>
                     <div className='searchBarBackground' id='desktopSearchBar'>
                         <Row className='whiteBackground'>
                             <Col lg={7} className='pr-0 pl-2'>
@@ -361,8 +360,7 @@ class SearchBar extends React.Component {
                                                 'Navigated to latest news',
                                                 'Clicked search bar navigation link'
                                             );
-                                        }}
-                                    >
+                                        }}>
                                         News
                                     </a>
                                 </div>
@@ -377,8 +375,7 @@ class SearchBar extends React.Component {
                                                 'Navigated to discourse',
                                                 'Clicked search bar navigation link'
                                             );
-                                        }}
-                                    >
+                                        }}>
                                         Community
                                     </a>
                                 </div>
@@ -419,8 +416,7 @@ class SearchBar extends React.Component {
                                                         onClick={() => {
                                                             this.props.doToggleDrawer();
                                                         }}
-                                                        data-test-id='imgMessageBadge'
-                                                    >
+                                                        data-test-id='imgMessageBadge'>
                                                         <NotificationBadge
                                                             count={this.state.messageCount}
                                                             style={{ backgroundColor: '#29235c' }}
@@ -481,8 +477,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -496,8 +491,7 @@ class SearchBar extends React.Component {
                                                                                                             '/' +
                                                                                                             dat.tool[0].id
                                                                                                         }
-                                                                                                        className='notificationInfo'
-                                                                                                    >
+                                                                                                        className='notificationInfo'>
                                                                                                         {dat.messageDescription}
                                                                                                     </a>
                                                                                                 </div>
@@ -513,8 +507,7 @@ class SearchBar extends React.Component {
                                                                                                             '/' +
                                                                                                             dat.course[0].id
                                                                                                         }
-                                                                                                        className='notificationInfo'
-                                                                                                    >
+                                                                                                        className='notificationInfo'>
                                                                                                         {dat.messageDescription}
                                                                                                     </a>
                                                                                                 </div>
@@ -553,8 +546,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -562,8 +554,7 @@ class SearchBar extends React.Component {
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
                                                                                                     href={`/account?tab=workflows`}
-                                                                                                    className='notificationInfo'
-                                                                                                >
+                                                                                                    className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
@@ -599,8 +590,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -608,8 +598,7 @@ class SearchBar extends React.Component {
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
                                                                                                     href={`/data-access-request/${dat.messageDataRequestID}`}
-                                                                                                    className='notificationInfo'
-                                                                                                >
+                                                                                                    className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
@@ -645,8 +634,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -686,8 +674,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -695,8 +682,7 @@ class SearchBar extends React.Component {
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
                                                                                                     href={`/account?tab=dataaccessrequests`}
-                                                                                                    className='notificationInfo'
-                                                                                                >
+                                                                                                    className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
@@ -732,8 +718,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -775,8 +760,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -784,8 +768,7 @@ class SearchBar extends React.Component {
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
                                                                                                     href={`/data-access-request/${dat.messageDataRequestID}`}
-                                                                                                    class='notificationInfo'
-                                                                                                >
+                                                                                                    class='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
@@ -821,8 +804,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -864,8 +846,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -907,8 +888,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -916,8 +896,7 @@ class SearchBar extends React.Component {
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
                                                                                                     href={`/account?tab=teamManagement&team=${dat.publisherName}`}
-                                                                                                    class='notificationInfo'
-                                                                                                >
+                                                                                                    class='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
@@ -953,8 +932,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -964,8 +942,7 @@ class SearchBar extends React.Component {
                                                                                                     href={
                                                                                                         '/collection/' + dat.messageObjectID
                                                                                                     }
-                                                                                                    className='notificationInfo'
-                                                                                                >
+                                                                                                    className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
@@ -1001,8 +978,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -1012,8 +988,7 @@ class SearchBar extends React.Component {
                                                                                                     href={
                                                                                                         '/account?tab=datasets&team=admin'
                                                                                                     }
-                                                                                                    className='notificationInfo'
-                                                                                                >
+                                                                                                    className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
@@ -1049,8 +1024,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -1058,8 +1032,7 @@ class SearchBar extends React.Component {
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
                                                                                                     href={`/dataset/${dat.datasetID}`}
-                                                                                                    className='notificationInfo'
-                                                                                                >
+                                                                                                    className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
@@ -1095,8 +1068,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -1104,8 +1076,7 @@ class SearchBar extends React.Component {
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
                                                                                                     href={`/account?tab=datasets&team=${dat.datasetID}`}
-                                                                                                    className='notificationInfo'
-                                                                                                >
+                                                                                                    className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
@@ -1141,8 +1112,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -1184,8 +1154,7 @@ class SearchBar extends React.Component {
                                                                                             dat.isRead === 'true' || clearMessage
                                                                                                 ? 'notificationReadBackground'
                                                                                                 : ''
-                                                                                        }
-                                                                                    >
+                                                                                        }>
                                                                                         <Col xs={10}>
                                                                                             <div className='notificationDate'>
                                                                                                 {messageDateString + '\n'}
@@ -1199,8 +1168,7 @@ class SearchBar extends React.Component {
                                                                                                             '/' +
                                                                                                             dat.tool[0].id
                                                                                                         }
-                                                                                                        className='notificationInfo'
-                                                                                                    >
+                                                                                                        className='notificationInfo'>
                                                                                                         {dat.messageDescription}
                                                                                                     </a>
                                                                                                 </div>
@@ -1216,8 +1184,7 @@ class SearchBar extends React.Component {
                                                                                                             '/' +
                                                                                                             dat.course[0].id
                                                                                                         }
-                                                                                                        className='notificationInfo'
-                                                                                                    >
+                                                                                                        className='notificationInfo'>
                                                                                                         {dat.messageDescription}
                                                                                                     </a>
                                                                                                 </div>
@@ -1292,12 +1259,10 @@ class SearchBar extends React.Component {
                                                                         <Dropdown.Toggle
                                                                             data-test-id='ddUserNavigationToggle'
                                                                             subToggle={true}
-                                                                            as={CustomToggle}
-                                                                        >
+                                                                            as={CustomToggle}>
                                                                             <span
                                                                                 className='black-14'
-                                                                                data-test-id='ddUserNavigationSubMenu'
-                                                                            >
+                                                                                data-test-id='ddUserNavigationSubMenu'>
                                                                                 {userState[0].name}
                                                                             </span>
                                                                             <span className='addNewDropDownGap'></span>
@@ -1305,8 +1270,7 @@ class SearchBar extends React.Component {
                                                                         </Dropdown.Toggle>
                                                                         <Dropdown.Menu as={CustomSubMenu}>
                                                                             <UserDropdownItems
-                                                                                isAdmin={userState[0].role === 'Admin'}
-                                                                            ></UserDropdownItems>
+                                                                                isAdmin={userState[0].role === 'Admin'}></UserDropdownItems>
                                                                         </Dropdown.Menu>
                                                                     </Fragment>
                                                                 ) : (
@@ -1317,8 +1281,7 @@ class SearchBar extends React.Component {
                                                                             </span>
                                                                         </Dropdown.Item>
                                                                         <UserDropdownItems
-                                                                            isAdmin={userState[0].role === 'Admin'}
-                                                                        ></UserDropdownItems>
+                                                                            isAdmin={userState[0].role === 'Admin'}></UserDropdownItems>
                                                                     </Fragment>
                                                                 )}
                                                             </Dropdown>
@@ -1327,8 +1290,7 @@ class SearchBar extends React.Component {
                                                             <Dropdown.Item
                                                                 onClick={this.logout}
                                                                 className='black-14 user-dropdown-item'
-                                                                data-test-id='optLogout'
-                                                            >
+                                                                data-test-id='optLogout'>
                                                                 Sign out
                                                             </Dropdown.Item>
                                                         </Dropdown.Menu>
@@ -1346,8 +1308,7 @@ class SearchBar extends React.Component {
                                                                 this.showLoginModal();
                                                             }}
                                                             onMouseEnter={this.handleMouseHover}
-                                                            onMouseLeave={this.handleMouseHover}
-                                                        >
+                                                            onMouseLeave={this.handleMouseHover}>
                                                             {' '}
                                                             Sign in | Sign up{' '}
                                                         </span>
@@ -1374,8 +1335,7 @@ class SearchBar extends React.Component {
                                             {showUatBanner === true && (
                                                 <Dropdown.Item
                                                     href='https://discourse.healthdatagateway.org/t/using-the-uat-environment/451'
-                                                    target='_blank'
-                                                >
+                                                    target='_blank'>
                                                     <span className='uatMobileSearchBarBanner uatBannerText'>
                                                         {currentEnv}
                                                         <span className='floatRight'>Read more</span>
@@ -1438,8 +1398,7 @@ class SearchBar extends React.Component {
                                                                     <Dropdown.Toggle
                                                                         data-test-id='ddUserNavigationToggle'
                                                                         subToggle={true}
-                                                                        as={CustomToggle}
-                                                                    >
+                                                                        as={CustomToggle}>
                                                                         <span className='black-14' data-test-id='ddUserNavigationSubMenu'>
                                                                             {userState[0].name}
                                                                         </span>
@@ -1452,8 +1411,7 @@ class SearchBar extends React.Component {
                                                                     </Dropdown.Toggle>
                                                                     <Dropdown.Menu as={CustomSubMenu}>
                                                                         <UserDropdownItems
-                                                                            isAdmin={userState[0].role === 'Admin'}
-                                                                        ></UserDropdownItems>
+                                                                            isAdmin={userState[0].role === 'Admin'}></UserDropdownItems>
                                                                     </Dropdown.Menu>
                                                                 </Fragment>
                                                             </Dropdown>
@@ -1462,8 +1420,7 @@ class SearchBar extends React.Component {
                                                             <Dropdown.Item
                                                                 onClick={this.logout}
                                                                 className='black-14 user-dropdown-item'
-                                                                data-test-id='optLogout'
-                                                            >
+                                                                data-test-id='optLogout'>
                                                                 Sign out
                                                             </Dropdown.Item>
                                                         </>
@@ -1475,8 +1432,7 @@ class SearchBar extends React.Component {
                                                                 className='black-14'
                                                                 onClick={e => {
                                                                     this.showLoginModal();
-                                                                }}
-                                                            >
+                                                                }}>
                                                                 Sign / Create account
                                                             </Dropdown.Item>
                                                         </>
@@ -1523,8 +1479,7 @@ class SearchBar extends React.Component {
                                                             <Dropdown>
                                                                 <Dropdown.Toggle
                                                                     as={CustomToggle}
-                                                                    ref={nodeMobile => (this.nodeMobile = nodeMobile)}
-                                                                >
+                                                                    ref={nodeMobile => (this.nodeMobile = nodeMobile)}>
                                                                     <NotificationBadge
                                                                         count={this.state.count}
                                                                         style={{ backgroundColor: '#29235c' }}
@@ -1569,8 +1524,7 @@ class SearchBar extends React.Component {
                                                                                                 dat.isRead === 'true' || clearMessage
                                                                                                     ? 'notificationReadBackground'
                                                                                                     : ''
-                                                                                            }
-                                                                                        >
+                                                                                            }>
                                                                                             <Col xs={10}>
                                                                                                 <div className='notificationDate'>
                                                                                                     {messageDateString + '\n'}
@@ -1583,8 +1537,7 @@ class SearchBar extends React.Component {
                                                                                                             '/' +
                                                                                                             dat.tool.id
                                                                                                         }
-                                                                                                        className='notificationInfo'
-                                                                                                    >
+                                                                                                        className='notificationInfo'>
                                                                                                         {dat.messageDescription}
                                                                                                     </a>
                                                                                                 </div>
@@ -1620,8 +1573,7 @@ class SearchBar extends React.Component {
                                                                                                 dat.isRead === 'true' || clearMessage
                                                                                                     ? 'notificationReadBackground'
                                                                                                     : ''
-                                                                                            }
-                                                                                        >
+                                                                                            }>
                                                                                             <Col xs={10}>
                                                                                                 <div className='notificationDate'>
                                                                                                     {messageDateString + '\n'}
@@ -1629,8 +1581,7 @@ class SearchBar extends React.Component {
                                                                                                 <div className='notificationInfoHolder'>
                                                                                                     <a
                                                                                                         href='javascript:void(0)'
-                                                                                                        class='notificationInfo'
-                                                                                                    >
+                                                                                                        class='notificationInfo'>
                                                                                                         {dat.messageDescription}
                                                                                                     </a>
                                                                                                 </div>
@@ -1667,8 +1618,7 @@ class SearchBar extends React.Component {
                                                                                                     dat.isRead === 'true' || clearMessage
                                                                                                         ? 'notificationReadBackground'
                                                                                                         : ''
-                                                                                                }
-                                                                                            >
+                                                                                                }>
                                                                                                 <Col xs={10}>
                                                                                                     <div className='notificationDate'>
                                                                                                         {messageDateString + '\n'}
@@ -1682,8 +1632,7 @@ class SearchBar extends React.Component {
                                                                                                                     '/' +
                                                                                                                     dat.tool[0].id
                                                                                                                 }
-                                                                                                                className='notificationInfo'
-                                                                                                            >
+                                                                                                                className='notificationInfo'>
                                                                                                                 {dat.messageDescription}
                                                                                                             </a>
                                                                                                         </div>
@@ -1721,8 +1670,7 @@ class SearchBar extends React.Component {
                                                                                                     dat.isRead === 'true' || clearMessage
                                                                                                         ? 'notificationReadBackground'
                                                                                                         : ''
-                                                                                                }
-                                                                                            >
+                                                                                                }>
                                                                                                 <Col xs={10}>
                                                                                                     <div className='notificationDate'>
                                                                                                         {messageDateString + '\n'}
@@ -1731,8 +1679,7 @@ class SearchBar extends React.Component {
                                                                                                         {dat.tool[0] === undefined ? (
                                                                                                             <a
                                                                                                                 href={'/'}
-                                                                                                                className='notificationInfo'
-                                                                                                            >
+                                                                                                                className='notificationInfo'>
                                                                                                                 {dat.messageDescription}
                                                                                                             </a>
                                                                                                         ) : (
@@ -1743,8 +1690,7 @@ class SearchBar extends React.Component {
                                                                                                                     '/' +
                                                                                                                     dat.tool[0].id
                                                                                                                 }
-                                                                                                                className='notificationInfo'
-                                                                                                            >
+                                                                                                                className='notificationInfo'>
                                                                                                                 {dat.messageDescription}
                                                                                                             </a>
                                                                                                         )}
