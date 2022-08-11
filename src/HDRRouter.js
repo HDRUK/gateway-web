@@ -204,8 +204,6 @@ class HDRRouter extends Component {
             );
         }
 
-        console.log('merge(theme, DEFAULT_THEME)', merge(theme, DEFAULT_THEME));
-
         return (
             <Suspense fallback={'loading'}>
                 <AuthProvider value={{ userState }}>
