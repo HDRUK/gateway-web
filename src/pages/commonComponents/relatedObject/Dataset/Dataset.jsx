@@ -26,6 +26,7 @@ import ShowMore from '../../ShowMore';
 import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
 import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
 import SVGIcon from '../../../../images/SVGIcon';
+import { QualityScore } from '../../../../components';
 
 const Dataset = ({
     data,
@@ -39,6 +40,7 @@ const Dataset = ({
     isLocked,
     onClick,
 }) => {
+    console.log(': ', data);
     const [publisherDetails, setPublisherDetails] = useState({ name: '', label: '' });
 
     const { t } = useTranslation();
@@ -143,13 +145,12 @@ const Dataset = ({
                     </Box>
                 </Col>
                 <Col sm={2} lg={2} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
-                    {!isEmpty(publisherLogo) && (
-                        <div
-                            className='datasetLogoCircle floatRight'
-                            css={styles.publisherLogoCSS(publisherLogo)}
-                            data-testid='publisher-logo'
-                        />
-                    )}
+                    <QualityScore
+                        rating={data.datasetfields.metadataquality.weighted_quality_rating}
+                        score={data.datasetfields.metadataquality.weighted_quality_score}
+                        completenessPercent={data.datasetfields.metadataquality.weighted_completeness_percent}
+                        errorPercent={data.datasetfields.metadataquality.weighted_error_percent}
+                    />
                     {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
                 </Col>
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>

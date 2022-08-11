@@ -422,5 +422,10 @@
             "clearSection": "Are you sure you want to clear the unpublished updates in this section? You will permenantly lose any changes made by you and other team member in this area since the form was last published.",
             "clear": "Are you sure you want to clear all the unpublished updates to this form? You will permenantly lose any changes made by you and other team member since this form was last published."
         }
+    },
+    "components": {
+        "QualityScore": {
+            "tooltip": "<p>Metadata richness score: {{score}}</p><p>The score relates to the amount of information available about the dataset, and not to the quality of the actual datasets.</p><p>Click to read more about how the score is calculated.</p><p>{{completeness_percent}} Weighted completeness %<br />{{error_percent}} Weighted error %</p>"
+        }
     }
 }

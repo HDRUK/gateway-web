@@ -1,3 +1,3 @@
-import Cta from './Cta';
+import Spinner from './Spinner';
 
-export default Cta;
+export default Spinner;
