@@ -1302,7 +1302,6 @@ class SearchBar extends React.Component {
                                                     <>
                                                         <Button
                                                             variant='secondary'
-                                                            className='black-14'
                                                             id='myBtn'
                                                             data-test-id='btnLogin'
                                                             style={{ cursor: 'pointer' }}
@@ -1311,7 +1310,6 @@ class SearchBar extends React.Component {
                                                             }}
                                                             onMouseEnter={this.handleMouseHover}
                                                             onMouseLeave={this.handleMouseHover}>
-                                                            {' '}
                                                             Sign in
                                                         </Button>
                                                     </>
