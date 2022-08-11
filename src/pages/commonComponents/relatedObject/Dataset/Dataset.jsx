@@ -27,6 +27,7 @@ import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
 import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
 import SVGIcon from '../../../../images/SVGIcon';
 import { QualityScore } from '../../../../components';
+import SVGIcon from '../../../../images/SVGIcon';
 
 const Dataset = ({
     data,
