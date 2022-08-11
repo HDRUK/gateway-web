@@ -23,13 +23,18 @@ describe('dateFormats function', () => {
         expect(dateFormat).toHaveProperty('timeOnly', '14:49');
         expect(dateFormat).toHaveProperty('dateOnly', '8 November 2021');
     });
-    it('should return date in default format', () => {
+    it('should return date and time in default format', () => {
         const dateFormat = dateFormats('2021-11-08T14:49:41.225Z');
+        expect(dateFormat).toHaveProperty('timeOnly', '14:49');
         expect(dateFormat).toHaveProperty('dateOnly', '8 November 2021');
     });
     it('should return date in specified format', () => {
-        const dateFormat = dateFormats('2021-11-08T14:49:41.225Z', DISPLAY_DATE_SLASH);
+        const dateFormat = dateFormats('2021-11-08T14:49:41.225Z', { dateFormat: DISPLAY_DATE_SLASH });
         expect(dateFormat).toHaveProperty('dateOnly', '08/11/2021');
+    });
+    it('should return time in specified format', () => {
+        const dateFormat = dateFormats('2021-11-08T14:49:41.225Z', { timeFormat: 'HH:mm:ss' });
+        expect(dateFormat).toHaveProperty('timeOnly', '14:49:41');
     });
 });
 

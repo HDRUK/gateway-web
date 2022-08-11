@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import removeMd from 'remove-markdown';
 import { format } from 'date-fns';
-import { DISPLAY_DATE_STANDARD } from '../configs/constants';
+import { DISPLAY_DATE_STANDARD, DISPLAY_TIME_STANDARD } from '../configs/constants';
 
 export const isEditMode = (url = '') => {
     if (!_.isEmpty(url)) {
@@ -41,12 +41,13 @@ export const stripMarkdown = (value = '', truncate = 0) => {
     return value;
 };
 
-export const dateFormats = (timestamp, dateFormat = DISPLAY_DATE_STANDARD) => {
+export const dateFormats = (timestamp, formats = {}) => {
+    const { dateFormat = DISPLAY_DATE_STANDARD, timeFormat = DISPLAY_TIME_STANDARD } = formats;
     const date = new Date(timestamp);
 
     return {
         dateOnly: format(date, dateFormat),
-        timeOnly: format(date, 'HH:mm'),
+        timeOnly: format(date, timeFormat),
     };
 };
 

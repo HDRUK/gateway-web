@@ -136,7 +136,7 @@ const Dataset = ({
                         )}
                     </Box>
                     <Box as={Typography} variant='subtitle1' display='flex' alignItems='center' mt={1} mb={1}>
-                        {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, DISPLAY_DATE_SLASH).dateOnly}
+                        {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
                         <ToolTip text={t('dataset.dateUpdatedTooltip')}>
                             <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
                         </ToolTip>
