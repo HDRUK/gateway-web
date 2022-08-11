@@ -290,8 +290,8 @@
         },
         "options": {
             "popularity": "Number of views (highest to lowest)",
-            "metadata": "Metadata quality (platinum to bronze)",
-            "metadataQuality": "Metadata quality (platinum to bronze)",
+            "metadata": "Metadata richness score",
+            "metadataQuality": "Metadata richness score",
             "resources": "Related resources (most first)",
             "latest": "Metadata last updated",
             "recentActivity": "Recent activity (newest first)",
