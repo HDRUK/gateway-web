@@ -31,7 +31,6 @@ import { QualityScore } from '../../../../components';
 const Dataset = ({
     data,
     activeLink,
-    publisherLogo,
     onSearchPage,
     showRelationshipQuestion,
     isCohortDiscovery,
@@ -40,7 +39,6 @@ const Dataset = ({
     isLocked,
     onClick,
 }) => {
-    console.log(': ', data);
     const [publisherDetails, setPublisherDetails] = useState({ name: '', label: '' });
 
     const { t } = useTranslation();
