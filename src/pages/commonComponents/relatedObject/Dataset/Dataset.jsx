@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
 import { cx } from '@emotion/css';
 import { useTranslation } from 'react-i18next';
-import { Box } from 'hdruk-react-core';
+import { Box, Typography } from 'hdruk-react-core';
 import googleAnalytics from '../../../../tracking';
 import { dateFormats, stripMarkdown } from '../../../../utils/GeneralHelper.util';
 import RemoveButton from '../RemoveButton/RemoveButton';
@@ -23,9 +23,9 @@ import * as styles from './Dataset.styles';
 import '../../CommonComponents.scss';
 import '../RelatedObject.scss';
 import ShowMore from '../../ShowMore';
-import Typography from '../../../../components/Typography';
 import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
 import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
+import SVGIcon from '../../../../images/SVGIcon';
 
 const Dataset = ({
     data,
