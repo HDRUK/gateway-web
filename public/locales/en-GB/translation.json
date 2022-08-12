@@ -100,11 +100,17 @@
             "users": {
                 "patchRoles": {
                     "404": {
+                        "message": "There resource for updating the roles could not be found"
+                    },
+                    "500": {
                         "message": "There has been a problem updating the roles"
                     }
                 },
                 "patchTerms": {
                     "404": {
+                        "message": "The resource for updating the terms and conditions could not be found"
+                    },
+                    "500": {
                         "message": "There has been a problem updating the terms and conditions"
                     }
                 }
