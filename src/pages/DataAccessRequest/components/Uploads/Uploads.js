@@ -6,15 +6,14 @@ import axios from 'axios';
 import FormData from 'form-data';
 import { t } from 'i18next';
 import { filesize } from 'humanize';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as UploadSVG } from '../../../../images/upload.svg';
 import { fileStatus } from './files.util';
 import { baseURL } from '../../../../configs/url.config';
-import Typography from '../../../../components/Typography';
 import './Uploads.scss';
 import UploadFiles from './UploadFiles';
 import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
-import Button from '../../../../components/Button';
 import Icon from '../../../../components/Icon';
 
 const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disabled }) => {

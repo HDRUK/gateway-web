@@ -10,7 +10,7 @@ import { ReactComponent as InfoIcon } from '../../images/icons/info.svg';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 
 import * as styles from './Alert.styles.js';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 
 const Alert = ({
     icon,
@@ -51,7 +51,7 @@ const Alert = ({
 
     return (
         show && (
-            <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
+            <Box {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
                 <div css={styles.root({ variant })} {...outerProps}>
                     <div css={styles.icon} className='ui-Alert__icon'>
                         {icon}
@@ -67,7 +67,7 @@ const Alert = ({
                         </div>
                     )}
                 </div>
-            </LayoutBox>
+            </Box>
         )
     );
 };

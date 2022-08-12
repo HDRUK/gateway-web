@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import Loading from '../../commonComponents/Loading';
 import '../Dashboard.scss';
 import { LayoutContent } from '../../../components/Layout';
-import LayoutBox from '../../../components/LayoutBox';
+import { Box } from 'hdruk-react-core';
 import Switch from '../../../components/Switch';
 import publishersService from '../../../services/publishers';
 
@@ -118,11 +118,11 @@ const AddEditTeamsPage = ({
     return (
         <LayoutContent>
             <Row className='accountHeader'>
-                <LayoutBox display='flex' alignItems='flex-end' width='100%'>
-                    <LayoutBox flexGrow={1}>
+                <Box display='flex' alignItems='flex-end' width='100%'>
+                    <Box flexGrow={1}>
                         <span className='black-20'>{editTeamsView ? 'Edit ' : 'Add '} team details</span>
-                    </LayoutBox>
-                    <LayoutBox display='flex' justifyContent='flex-end'>
+                    </Box>
+                    <Box display='flex' justifyContent='flex-end'>
                         <Switch
                             label={
                                 <>
@@ -132,8 +132,8 @@ const AddEditTeamsPage = ({
                             onChange={handleEnableQuestionBank}
                             checked={questionBank}
                         />
-                    </LayoutBox>
-                </LayoutBox>
+                    </Box>
+                </Box>
                 <Col sm={12} md={12}>
                     <Row>
                         <span className='gray700-13 '>

@@ -4,14 +4,13 @@ import moment from 'moment';
 import { isEmpty, isBoolean } from 'lodash';
 import { onLoad } from '@sentry/react';
 import TextareaAutosize from 'react-textarea-autosize';
+import { Button, Box } from 'hdruk-react-core';
 import ShareFormModal from './ShareFormModal';
 import Loading from '../../../commonComponents/Loading';
 import './Messages.scss';
 import { baseURL } from '../../../../configs/url.config';
 import DarHelper from '../../../../utils/DarHelper.util';
-import Button from '../../../../components/Button';
 import Textarea from '../../../../components/Textarea/Textarea';
-import LayoutBox from '../../../../components/LayoutBox';
 
 const Messages = ({
     applicationId,
@@ -175,7 +174,7 @@ const Messages = ({
                     <div ref={messagesEndRef} id='messageEndRef' />
                 </div>
             </div>
-            <LayoutBox
+            <Box
                 p={3}
                 display='flex'
                 as='form'
@@ -183,13 +182,13 @@ const Messages = ({
                     e.preventDefault();
                     handleSendMessage(currentMessage);
                 }}>
-                <LayoutBox flexGrow='1'>
+                <Box flexGrow='1'>
                     <Textarea autosize value={currentMessage} onChange={handleChangeMessage} mb={0} width='100%' minHeight='42px' />
-                </LayoutBox>
+                </Box>
                 <Button variant='secondary' type='submit' disabled={sendButtonDisabled} ml={2}>
                     Send
                 </Button>
-            </LayoutBox>
+            </Box>
             {showShareFormModal && (
                 <ShareFormModal
                     open={showShareFormModal}
