@@ -3,12 +3,12 @@
 exports[`Given the Spinner component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox ui-Spinner additional-classname css-1tuhzuv"
+    class="ui-Spinner additional-classname ui-Box css-dalwfp-B"
   >
     <span
       class="ui-Icon css-1tuhzuv css-1uw0yso-Spinner"
     >
-      <iconmock />
+      <icon-mock />
     </span>
   </div>
 </div>

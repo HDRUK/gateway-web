@@ -1,18 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given the Checkbox component When it is rendered Then matches the previous snapshot 1`] = `
+exports[`Given the Switch component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <label
-    class="ui-Checkbox additional-classname css-1tuhzuv css-1efynz2-Checkbox"
+    class="additional-classname css-1tuhzuv ui-Switch css-cfh2l4-Switch"
     for="sampleLabel"
   >
     <input
       id="sampleLabel"
       type="checkbox"
       value="sampelValue"
+      variant="primary"
     />
     <span
-      class="ui-Checkbox__label"
+      class="ui-SwitchControl"
     >
       <span>
         Sample label

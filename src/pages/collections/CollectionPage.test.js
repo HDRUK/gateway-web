@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, waitForElementToBeRemoved, cleanup, screen, within } from '@testing-library/react';
-import CollectionPage from './CollectionPage';
-import { getCollectionRequest, getCollectionRelatedObjectsRequest } from '../../services/collection';
+import { CollectionPage } from './CollectionPage';
+import service from '../../services/collections';
 import { collectionPageData } from '../../../test/mocks/dataMock';
 
 jest.mock('../../services/collection', () => ({
@@ -52,8 +52,8 @@ describe('Given the CollectionPage component', () => {
     describe('When the collection has loaded', () => {
         beforeAll(async () => {
             const { projectData } = collectionPageData;
-            getCollectionRequest.mockResolvedValue({ data: collectionPageData });
-            getCollectionRelatedObjectsRequest.mockResolvedValue({ data: { data: projectData } });
+            service.getCollectionRequest.mockResolvedValue({ data: collectionPageData });
+            service.getCollectionRelatedObjectsRequest.mockResolvedValue({ data: { data: projectData } });
 
             render(<CollectionPage userState={userState} match={match} history={history} />);
 
@@ -61,8 +61,8 @@ describe('Given the CollectionPage component', () => {
         });
 
         afterAll(() => {
-            getCollectionRequest.mockReset();
-            getCollectionRelatedObjectsRequest.mockReset();
+            service.getCollectionRequest.mockReset();
+            service.getCollectionRelatedObjectsRequest.mockReset();
             cleanup();
         });
 

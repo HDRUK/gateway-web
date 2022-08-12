@@ -6,6 +6,7 @@
         "\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js",
         "public/(.*)": "<rootDir>/public/$1"
     },
+    "transformIgnorePatterns": ["<rootDir>/node_modules/(?!lodash-es)"],
     "modulePaths": ["<rootDir>/public"],
     "coveragePathIgnorePatterns": [
         "mockData.js",

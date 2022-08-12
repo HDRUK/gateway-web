@@ -6,7 +6,6 @@ import { dateFormats } from '../../../../utils/GeneralHelper.util';
 import ActivityLogCard from './ActivityLogCard';
 import mockData from './mockData';
 import { server } from '../../../../services/mockServer';
-import { MatcherFunction } from '@testing-library/react';
 
 const props = {
     ...mockData,
