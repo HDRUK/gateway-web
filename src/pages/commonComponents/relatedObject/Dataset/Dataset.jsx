@@ -1,27 +1,27 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
-import React, { useState, useEffect, useCallback } from 'react';
-import queryString from 'query-string';
-import { Row, Col } from 'react-bootstrap';
-import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash';
 import { cx } from '@emotion/css';
-import googleAnalytics from '../../../../tracking';
-import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
-import RemoveButton from '../RemoveButton/RemoveButton';
-import Title from '../Title/Title';
-import Description from '../Description/Description';
-import Tag from '../Tag/Tag';
-import ToolTip from '../../../../components/ToolTip/ToolTip';
+import { isEmpty, isNil } from 'lodash';
+import PropTypes from 'prop-types';
+import queryString from 'query-string';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import Icon from '../../../../components/Icon';
+import ToolTip from '../../../../components/ToolTip/ToolTip';
 import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
 import { ReactComponent as Shield } from '../../../../images/shield.svg';
-import { ReactComponent as DatasetIcon } from '../../../../images/dataset.svg';
-import { ReactComponent as Star } from '../../../../images/star.svg';
+import SVGIcon from '../../../../images/SVGIcon';
+import googleAnalytics from '../../../../tracking';
+import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
+import '../../CommonComponents.scss';
+import ShowMore from '../../ShowMore';
+import Description from '../Description/Description';
+import '../RelatedObject.scss';
+import RemoveButton from '../RemoveButton/RemoveButton';
+import Tag from '../Tag/Tag';
+import Title from '../Title/Title';
 import { dataset } from './constants';
 import * as styles from './Dataset.styles';
-import '../../CommonComponents.scss';
-import '../RelatedObject.scss';
 
 const Dataset = ({
     data,
@@ -36,6 +36,7 @@ const Dataset = ({
     onClick,
 }) => {
     const [publisherDetails, setPublisherDetails] = useState({ name: '', label: '' });
+    const [showMore, setShowMore] = useState(false);
 
     const getPublisherDetails = useCallback(() => {
         const publisher = { name: '', label: '', showShield: false };
@@ -70,6 +71,10 @@ const Dataset = ({
             return stripMarkdown(data.datasetfields.abstract);
         }
     };
+
+    const handleShowMore = useCallback(() => {
+        setShowMore(!showMore);
+    }, [showMore]);
 
     if (data.type === 'dataset' && data.activeflag === 'archive') {
         return (
@@ -139,64 +144,75 @@ const Dataset = ({
                     {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
                 </Col>
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
-                    <Tag tagName={dataset.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
-                        <Icon svg={<DatasetIcon fill='#113328' />} size='xs' mr={1} />
-                    </Tag>
-                    {isCohortDiscovery && (
-                        <Tag
-                            tagName='Cohort Discovery'
-                            tagType='project'
-                            updateOnFilterBadgeHandler={updateOnFilterBadge}
-                            showTagType={false}>
-                            <Icon svg={<Star fill='#472505' />} size='xs' mr={1} />
-                        </Tag>
-                    )}
+                    <ShowMore>
+                        <div>
+                            <Tag tagName={dataset.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
+                                <SVGIcon name='dataseticon' fill='#113328' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
+                            </Tag>
+                            {isCohortDiscovery && (
+                                <Tag
+                                    tagName='Cohort Discovery'
+                                    tagType='project'
+                                    updateOnFilterBadgeHandler={updateOnFilterBadge}
+                                    showTagType={false}>
+                                    <SVGIcon
+                                        name='cohorticon'
+                                        fill='#472505'
+                                        className='badgeSvg mr-2'
+                                        width='22'
+                                        height='22'
+                                        viewBox='0 0 10 10'
+                                    />
+                                </Tag>
+                            )}
 
-                    {phenotypesSearched && phenotypesSearched.length > 0 && (
-                        <Tag
-                            key='phenotypes-searched'
-                            tagName={phenotypesSearched[0].name}
-                            activeLink={activeLink}
-                            onSearchPage={onSearchPage}
-                            updateOnFilterBadgeHandler={updateOnFilterBadge}
-                            showTagType
-                            {...dataset.PHENOTYPES}
-                        />
-                    )}
+                            {phenotypesSearched && phenotypesSearched.length > 0 && (
+                                <Tag
+                                    key='phenotypes-searched'
+                                    tagName={phenotypesSearched[0].name}
+                                    activeLink={activeLink}
+                                    onSearchPage={onSearchPage}
+                                    updateOnFilterBadgeHandler={updateOnFilterBadge}
+                                    showTagType
+                                    {...dataset.PHENOTYPES}
+                                />
+                            )}
 
-                    {phenotypesSelected &&
-                        phenotypesSelected.map((phenotype, index) => {
-                            if (
-                                data.datasetfields.phenotypes.find(
-                                    phenotypeCheck => phenotypeCheck.name.toLowerCase() === phenotype.toLowerCase()
-                                )
-                            ) {
-                                return (
+                            {phenotypesSelected &&
+                                phenotypesSelected.map((phenotype, index) => {
+                                    if (
+                                        data.datasetfields.phenotypes.find(
+                                            phenotypeCheck => phenotypeCheck.name.toLowerCase() === phenotype.toLowerCase()
+                                        )
+                                    ) {
+                                        return (
+                                            <Tag
+                                                key={`phenotypes-selected-${index}`}
+                                                tagName={phenotype}
+                                                activeLink={activeLink}
+                                                onSearchPage={onSearchPage}
+                                                updateOnFilterBadgeHandler={updateOnFilterBadge}
+                                                showTagType
+                                                {...dataset.PHENOTYPES}
+                                            />
+                                        );
+                                    }
+                                    return null;
+                                })}
+
+                            {data.tags.features &&
+                                data.tags.features.map((feature, index) => (
                                     <Tag
-                                        key={`phenotypes-selected-${index}`}
-                                        tagName={phenotype}
+                                        key={`tag-${index}`}
+                                        tagName={feature}
                                         activeLink={activeLink}
                                         onSearchPage={onSearchPage}
                                         updateOnFilterBadgeHandler={updateOnFilterBadge}
-                                        showTagType
-                                        {...dataset.PHENOTYPES}
+                                        {...dataset.FEATURES}
                                     />
-                                );
-                            }
-                            return null;
-                        })}
-
-                    {data.tags.features &&
-                        data.tags.features.map((feature, index) => (
-                            <Tag
-                                key={`tag-${index}`}
-                                tagName={feature}
-                                activeLink={activeLink}
-                                onSearchPage={onSearchPage}
-                                updateOnFilterBadgeHandler={updateOnFilterBadge}
-                                {...dataset.FEATURES}
-                            />
-                        ))}
+                                ))}
+                        </div>
+                    </ShowMore>
                 </Col>
                 {!showRelationshipQuestion && <Description type={data.type} description={getDescription()} />}
             </Row>

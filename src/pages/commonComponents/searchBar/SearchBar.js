@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Col, Container, Dropdown, Row } from 'react-bootstrap';
 import NotificationBadge from 'react-notification-badge';
 import { NotificationManager } from 'react-notifications';
+import { Button } from 'hdruk-react-core';
 import { cmsURL } from '../../../configs/url.config';
 import { ReactComponent as WhiteArrowDownSvg } from '../../../images/arrowDownWhite.svg';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
@@ -1299,8 +1300,8 @@ class SearchBar extends React.Component {
                                             } else {
                                                 return (
                                                     <>
-                                                        <span
-                                                            className={isHovering ? 'black-14 textUnderline' : 'black-14'}
+                                                        <Button
+                                                            variant='secondary'
                                                             id='myBtn'
                                                             data-test-id='btnLogin'
                                                             style={{ cursor: 'pointer' }}
@@ -1309,9 +1310,8 @@ class SearchBar extends React.Component {
                                                             }}
                                                             onMouseEnter={this.handleMouseHover}
                                                             onMouseLeave={this.handleMouseHover}>
-                                                            {' '}
-                                                            Sign in | Sign up{' '}
-                                                        </span>
+                                                            Sign in
+                                                        </Button>
                                                     </>
                                                 );
                                             }

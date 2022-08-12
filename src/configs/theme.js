@@ -106,6 +106,7 @@ export const getComponentGlobals = (component, theme) => {
 };
 
 export const getComponentGlobalStyles = (component, theme) => {
+    console.log('PROPS', theme);
     return getComponentStylesFromTheme(getComponentGlobals(component, theme), theme);
 };
 
@@ -279,7 +280,6 @@ export const theme = {
                 },
             },
         },
-        Button: THEME_BUTTON,
         Cta: {
             sizes: {
                 small: {

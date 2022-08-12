@@ -234,6 +234,8 @@ class DatasetOnboarding extends Component {
             reviewSections = [],
         } = context;
 
+        console.log('Settign screen data', questionAnswers);
+
         let { name, datasetVersion, activeflag } = dataset;
 
         let showSubmit = false;
@@ -248,8 +250,12 @@ class DatasetOnboarding extends Component {
         this.setState({ roles: this.getUserRoles() });
         if (this.state.roles.includes('admin') && applicationStatus === DatasetOnboardingHelper.datasetStatus.inReview) userType = 'ADMIN';
 
+        console.log('Before observations', questionAnswers);
+
         jsonSchema = this.injectStaticContent(jsonSchema, inReviewMode, reviewSections);
         jsonSchema = this.injectObservations(jsonSchema, questionAnswers);
+
+        console.log('After observations', questionAnswers);
 
         let isLatestVersion = listOfDatasets[0]._id === _id ? true : false;
         let isThereALiveVersion = listOfDatasets.filter(x => x.activeflag === 'active').length > 0 ? true : false;
@@ -570,6 +576,7 @@ class DatasetOnboarding extends Component {
      * @desc - Update the navigation state sidebar
      */
     updateNavigation = (newForm, validationErrors = {}) => {
+        console.log('newForm', newForm);
         if (this.state.allowedNavigation) {
             // reset scroll to 0, 0
             window.scrollTo(0, 0);
@@ -1128,6 +1135,9 @@ class DatasetOnboarding extends Component {
             // get the questionAnswers object {role: {}, lastName: {}}
             let { questionAnswers } = { ...amendmentsIterations };
             // get all the questionIds into a iterable array from questionAnswers
+
+            console.log('onUpdateRequest', questionAnswers);
+
             if (!_.isEmpty(questionAnswers)) {
                 // set up default variables
                 let questionSetId,
@@ -1209,21 +1219,9 @@ class DatasetOnboarding extends Component {
                 />
             );
         } else {
-            return (
-                <Winterfell
-                    schema={this.state.jsonSchema}
-                    questionAnswers={this.state.questionAnswers}
-                    panelId={this.state.activePanelId}
-                    disableSubmit={true}
-                    readOnly={this.state.readOnly}
-                    validationErrors={this.state.validationErrors}
-                    renderRequiredAsterisk={() => <span>{'*'}</span>}
-                    onQuestionClick={this.onQuestionClick}
-                    onQuestionAction={this.onQuestionAction}
-                    onUpdate={this.onFormUpdate}
-                    onSubmit={this.onFormSubmit}
-                />
-            );
+            console.log('questionAnswers', this.state.questionAnswers);
+
+            return <pre>{JSON.stringify(this.state.questionAnswers, null, 2)}</pre>;
         }
     };
 

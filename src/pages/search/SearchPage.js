@@ -4,10 +4,11 @@ import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
-import { Alert, Button, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
+import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
+import { FeatureContent, Tag, Button, Box, Icon, Typography } from 'hdruk-react-core';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
-import SVGIcon from '../../images/SVGIcon';
+import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, iterateDeep } from '../../utils/GeneralHelper.util';
 import AdvancedSearchModal from '../commonComponents/AdvancedSearchModal/AdvancedSearchModal';
@@ -37,7 +38,9 @@ import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
 import searchService from '../../services/search/search';
 import { getParams } from '../../utils/GeneralHelper.util';
+import cohortDiscoveryImage from '../../images/feature-cohort-discovery.png';
 import './Search.scss';
+import { Trans } from 'react-i18next';
 
 let baseURL = require('../commonComponents/BaseURL').getURL();
 const typeMapper = {
@@ -1848,81 +1851,71 @@ class SearchPage extends React.Component {
                                     })()}
                                 </Col>
                                 <Col lg={8} className='saved-buttons'>
-                                    {this.state.key === 'Datauses' && (
-                                        <>
-                                            <Button
-                                                variant='light'
-                                                className='saved-preference button-tertiary'
-                                                onClick={() => this.onClickDownloadResults()}>
-                                                {' '}
-                                                Download Results
+                                    <Box display='inline-flex' gap={2} py={4}>
+                                        {this.state.key === 'Datauses' && (
+                                            <>
+                                                <Button variant='tertiary' onClick={this.onClickDownloadResults}>
+                                                    Download Results
+                                                </Button>
+                                                <CSVLink
+                                                    data={dataUseRegisterFullData}
+                                                    filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
+                                                    className='hidden'
+                                                    ref={this.csvLink}
+                                                    target='_blank'
+                                                />
+                                            </>
+                                        )}
+
+                                        {this.state.saveSuccess ? (
+                                            <Button variant='primaryAlt' disabled iconLeft={<Icon svg={<TickSvg />} fill='green300' />}>
+                                                Saved
                                             </Button>
-                                            <CSVLink
-                                                data={dataUseRegisterFullData}
-                                                filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
-                                                className='hidden'
-                                                ref={this.csvLink}
-                                                target='_blank'
+                                        ) : this.state.userState[0].loggedIn === false ? (
+                                            <Button variant='secondary' onClick={this.showLoginModal}>
+                                                Save
+                                            </Button>
+                                        ) : (
+                                            <Button variant='secondary' onClick={() => this.setState({ showSavedModal: true })}>
+                                                Save
+                                            </Button>
+                                        )}
+
+                                        {this.state.showSavedModal && (
+                                            <SaveModal
+                                                show={this.state.showSavedModal}
+                                                onHide={this.hideSavedModal}
+                                                onSaveHide={this.hideNoSaveSearchModal}
+                                                saveSuccess={this.showSuccessMessage}
+                                                saveName={this.showSavedName}
+                                                search={this.state.search}
+                                                filters={preferenceFilters}
+                                                sort={perferenceSort}
+                                                tab={this.state.key}
                                             />
-                                        </>
-                                    )}
+                                        )}
 
-                                    {this.state.saveSuccess ? (
-                                        <Button variant='success' className='saved-disabled button-teal button-teal' disabled>
-                                            <SVGIcon width='15px' height='15px' name='tick' fill={'#fff'} /> Saved
-                                        </Button>
-                                    ) : this.state.userState[0].loggedIn === false ? (
                                         <Button
-                                            variant='outline-success'
-                                            className='saved button-teal'
-                                            onClick={() => this.showLoginModal()}>
-                                            Save
+                                            variant='tertiary'
+                                            onClick={
+                                                this.state.userState[0].loggedIn === false
+                                                    ? () => this.showLoginModal()
+                                                    : () => this.setState({ showSavedPreferencesModal: true })
+                                            }>
+                                            Saved preferences
                                         </Button>
-                                    ) : (
-                                        <Button
-                                            variant='outline-success'
-                                            className='saved button-teal'
-                                            onClick={() => this.setState({ showSavedModal: true })}>
-                                            Save
-                                        </Button>
-                                    )}
+                                        {this.state.showSavedPreferencesModal && (
+                                            <SavedPreferencesModal
+                                                show={this.state.showSavedPreferencesModal}
+                                                onHide={this.hideSavedPreferencesModal}
+                                                viewMatchesLink={this.viewMatches}
+                                                viewSaved={this.saveFiltersUpdate}
+                                                activeTab={key}
+                                            />
+                                        )}
 
-                                    {this.state.showSavedModal && (
-                                        <SaveModal
-                                            show={this.state.showSavedModal}
-                                            onHide={this.hideSavedModal}
-                                            onSaveHide={this.hideNoSaveSearchModal}
-                                            saveSuccess={this.showSuccessMessage}
-                                            saveName={this.showSavedName}
-                                            search={this.state.search}
-                                            filters={preferenceFilters}
-                                            sort={perferenceSort}
-                                            tab={this.state.key}
-                                        />
-                                    )}
-
-                                    <Button
-                                        variant='light'
-                                        className='saved-preference button-tertiary'
-                                        onClick={
-                                            this.state.userState[0].loggedIn === false
-                                                ? () => this.showLoginModal()
-                                                : () => this.setState({ showSavedPreferencesModal: true })
-                                        }>
-                                        {' '}
-                                        Saved preferences
-                                    </Button>
-                                    {this.state.showSavedPreferencesModal && (
-                                        <SavedPreferencesModal
-                                            show={this.state.showSavedPreferencesModal}
-                                            onHide={this.hideSavedPreferencesModal}
-                                            viewMatchesLink={this.viewMatches}
-                                            viewSaved={this.saveFiltersUpdate}
-                                            activeTab={key}
-                                        />
-                                    )}
-
-                                    {sortMenu}
+                                        {sortMenu}
+                                    </Box>
                                 </Col>
                             </Row>
                             <Row>
@@ -1945,6 +1938,65 @@ class SearchPage extends React.Component {
                                         <Filter {...filterProps} />
                                     </SearchFilters>
                                 )}
+                                <FeatureContent
+                                    variant='vertical'
+                                    header={
+                                        <>
+                                            <Trans i18nKey='search.advanced.cohortDiscovery.title' />
+                                            <Tag variant='success' ml={2}>
+                                                <Trans i18nKey='beta' />
+                                            </Tag>
+                                        </>
+                                    }
+                                    body={
+                                        <Typography>
+                                            <Trans i18nKey='search.advanced.cohortDiscovery.description' />
+                                        </Typography>
+                                    }
+                                    media={<img src={cohortDiscoveryImage} />}
+                                    actions={
+                                        <>
+                                            <Button variant='secondary' mb={3}>
+                                                <Trans i18nKey='search.advanced.cohortDiscovery.action' />
+                                            </Button>
+                                            <a href='https://www.healthdatagateway.org/about/cohort-discovery' target='_blank'>
+                                                <Typography color='purple500'>
+                                                    <Trans i18nKey='learn.more' />
+                                                </Typography>
+                                            </a>
+                                        </>
+                                    }
+                                    mb={5}
+                                />
+                                <FeatureContent
+                                    variant='vertical'
+                                    header={
+                                        <>
+                                            <Trans i18nKey='search.advanced.dataUtilityWizard.title' />
+                                            <Tag variant='success' ml={2}>
+                                                <Trans i18nKey='beta' />
+                                            </Tag>
+                                        </>
+                                    }
+                                    body={
+                                        <Typography>
+                                            <Trans i18nKey='search.advanced.dataUtilityWizard.description' />
+                                        </Typography>
+                                    }
+                                    media={<img src={cohortDiscoveryImage} />}
+                                    actions={
+                                        <>
+                                            <Button variant='secondary' mb={3}>
+                                                <Trans i18nKey='search.advanced.dataUtilityWizard.action' />
+                                            </Button>
+                                            <a href='https://www.healthdatagateway.org/about/data-utility-wizard' target='_blank'>
+                                                <Typography color='purple500'>
+                                                    <Trans i18nKey='learn.more' />
+                                                </Typography>
+                                            </a>
+                                        </>
+                                    }
+                                />
                             </Col>
                             <Col sm={12} md={12} lg={9} className='mt-2 mb-5'>
                                 {key === 'Datasets' && (
