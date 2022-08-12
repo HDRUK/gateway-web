@@ -5,13 +5,12 @@ import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { FeatureContent, Tag, Button, Box, Icon, Typography } from 'hdruk-react-core';
+import { Button, Box, Icon } from 'hdruk-react-core';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
 import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, iterateDeep } from '../../utils/GeneralHelper.util';
-import AdvancedSearchModal from '../commonComponents/AdvancedSearchModal/AdvancedSearchModal';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
@@ -33,14 +32,14 @@ import Filter from './components/Filter';
 import FilterSelection from './components/FilterSelection';
 import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort';
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
-import SearchFilters from './components/SearchFilters';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
 import searchService from '../../services/search/search';
 import { getParams } from '../../utils/GeneralHelper.util';
-import cohortDiscoveryImage from '../../images/feature-cohort-discovery.png';
+import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
+import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
+
 import './Search.scss';
-import { Trans } from 'react-i18next';
 
 let baseURL = require('../commonComponents/BaseURL').getURL();
 const typeMapper = {
@@ -108,7 +107,6 @@ class SearchPage extends React.Component {
         isResultsLoading: true,
         showDrawer: false,
         showModal: false,
-        showAdvancedSearchModal: false,
         showSavedPreferencesModal: false,
         showSavedModal: false,
         context: {},
@@ -179,15 +177,6 @@ class SearchPage extends React.Component {
 
     showSavedName = data => {
         this.setState({ showSavedName: data });
-    };
-
-    toggleAdvancedSearchModal = () => {
-        if (!this.state.showAdvancedSearchModal) {
-            googleAnalytics.recordVirtualPageView('Advanced search modal');
-        }
-        this.setState(prevState => {
-            return { showAdvancedSearchModal: !prevState.showAdvancedSearchModal };
-        });
     };
 
     openDataUtilityWizard(activeStep) {
@@ -1766,10 +1755,8 @@ class SearchPage extends React.Component {
             paperSort,
             personSort,
             collectionSort,
-
             showDrawer,
             showModal,
-            showAdvancedSearchModal,
             context,
             activeDataUtilityWizardStep,
 
@@ -1934,69 +1921,19 @@ class SearchPage extends React.Component {
                         <Row>
                             <Col sm={12} md={12} lg={3} className='mt-1 mb-5'>
                                 {key !== 'People' && (
-                                    <SearchFilters onAdvancedSearchClick={this.toggleAdvancedSearchModal}>
+                                    <div className='saved-filterHolder'>
                                         <Filter {...filterProps} />
-                                    </SearchFilters>
+                                    </div>
                                 )}
-                                <FeatureContent
-                                    variant='vertical'
-                                    header={
-                                        <>
-                                            <Trans i18nKey='search.advanced.cohortDiscovery.title' />
-                                            <Tag variant='success' ml={2}>
-                                                <Trans i18nKey='beta' />
-                                            </Tag>
-                                        </>
-                                    }
-                                    body={
-                                        <Typography>
-                                            <Trans i18nKey='search.advanced.cohortDiscovery.description' />
-                                        </Typography>
-                                    }
-                                    media={<img src={cohortDiscoveryImage} />}
-                                    actions={
-                                        <>
-                                            <Button variant='secondary' mb={3}>
-                                                <Trans i18nKey='search.advanced.cohortDiscovery.action' />
-                                            </Button>
-                                            <a href='https://www.healthdatagateway.org/about/cohort-discovery' target='_blank'>
-                                                <Typography color='purple500'>
-                                                    <Trans i18nKey='learn.more' />
-                                                </Typography>
-                                            </a>
-                                        </>
-                                    }
-                                    mb={5}
-                                />
-                                <FeatureContent
-                                    variant='vertical'
-                                    header={
-                                        <>
-                                            <Trans i18nKey='search.advanced.dataUtilityWizard.title' />
-                                            <Tag variant='success' ml={2}>
-                                                <Trans i18nKey='beta' />
-                                            </Tag>
-                                        </>
-                                    }
-                                    body={
-                                        <Typography>
-                                            <Trans i18nKey='search.advanced.dataUtilityWizard.description' />
-                                        </Typography>
-                                    }
-                                    media={<img src={cohortDiscoveryImage} />}
-                                    actions={
-                                        <>
-                                            <Button variant='secondary' mb={3}>
-                                                <Trans i18nKey='search.advanced.dataUtilityWizard.action' />
-                                            </Button>
-                                            <a href='https://www.healthdatagateway.org/about/data-utility-wizard' target='_blank'>
-                                                <Typography color='purple500'>
-                                                    <Trans i18nKey='learn.more' />
-                                                </Typography>
-                                            </a>
-                                        </>
-                                    }
-                                />
+                                {key === 'Datasets' && (
+                                    <>
+                                        <Box mb={5}>
+                                            <AdvancedSearchCohortDiscovery userProps={userState[0]} showLoginModal={this.showLoginModal} />
+                                        </Box>
+
+                                        <AdvancedSearchDataUtilityWizard onClick={this.openDataUtilityWizard} />
+                                    </>
+                                )}
                             </Col>
                             <Col sm={12} md={12} lg={9} className='mt-2 mb-5'>
                                 {key === 'Datasets' && (
@@ -2084,13 +2021,6 @@ class SearchPage extends React.Component {
                             drawerIsOpen={this.state.showDrawer}
                         />
                     </SideDrawer>
-
-                    <AdvancedSearchModal
-                        open={showAdvancedSearchModal}
-                        closed={this.toggleAdvancedSearchModal}
-                        userProps={userState[0]}
-                        startDataUtilityWizardJourney={this.openDataUtilityWizard}
-                    />
 
                     <DataUtilityWizardModal
                         open={this.state.showDataUtilityWizardModal}

@@ -11,6 +11,7 @@ import dataUtilityImage from '../../../images/data-utility.png';
 import googleAnalytics from '../../../tracking';
 
 const baseURL = require('../BaseURL').getURL();
+
 const GENERAL_ACCESS = 'GENERAL_ACCESS';
 const BANNED = 'BANNED';
 const urlEnv = require('../BaseURL').getURLEnv();
@@ -23,6 +24,7 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
 
     const accessRQuest = async () => {
         const approvedUser = await authorisedForAdvancedSearch();
+        console.log('approvedUser', approvedUser);
         if (approvedUser && userState.acceptedAdvancedSearchTerms) {
             console.log('Redirecting to RQuest');
             if (urlEnv === 'prod') {
@@ -40,16 +42,18 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
     const authorisedForAdvancedSearch = async () => {
         if (userState.advancedSearchRoles.includes(BANNED)) {
             return false;
-        } else if (userState.advancedSearchRoles.includes(GENERAL_ACCESS)) {
+        }
+        if (userState.advancedSearchRoles.includes(GENERAL_ACCESS)) {
             return true;
-        } else if (userState.provider === 'oidc') {
-            //if user is from open athens but not authorised and not banned, assign them an advanced search role
+        }
+        if (userState.provider === 'oidc') {
+            // if user is from open athens but not authorised and not banned, assign them an advanced search role
             let authorised = false;
             await axios
-                .patch(baseURL + '/api/v1/users/advancedSearch/roles/' + userState.id)
+                .patch(`${baseURL}/api/v1/users/advancedSearch/roles/${userState.id}`)
                 .then(res => {
                     authorised = true;
-                    let newUserState = userState;
+                    const newUserState = userState;
                     newUserState.advancedSearchRoles = res.data.response.advancedSearchRoles;
                     setUserState(newUserState);
                 })
@@ -57,9 +61,8 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
                     console.error(err.message);
                 });
             return authorised;
-        } else {
-            return false;
         }
+        return false;
     };
 
     const determineModalToShow = approvedUser => {
@@ -74,12 +77,12 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
 
     const updateUserAcceptedAdvancedSearchTerms = async () => {
         await axios
-            .patch(baseURL + '/api/v1/users/advancedSearch/terms/' + userState.id, {
+            .patch(`${baseURL}/api/v1/users/advancedSearch/terms/${userState.id}`, {
                 acceptedAdvancedSearchTerms: true,
             })
             .then(res => {
                 // Update the state so that if user moves away from page they are still authorised
-                let newUserState = userState;
+                const newUserState = userState;
                 newUserState.acceptedAdvancedSearchTerms = res.data.response.acceptedAdvancedSearchTerms;
                 setUserState(newUserState);
                 accessRQuest();
@@ -125,8 +128,7 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
                 className='advanced-search-modal'
                 size='lg'
                 aria-labelledby='contained-modal-title-vcenter'
-                centered
-            >
+                centered>
                 <Modal.Header closeButton>
                     <div>
                         <div className='advanced-search-modal-header ml-3'>
@@ -179,12 +181,12 @@ const AdvancedSearchModal = ({ open, closed, userProps, startDataUtilityWizardJo
                 open={showTermsandConditionsModal}
                 close={() => toggleShowTermsandConditionsModal()}
                 updateUserAcceptedAdvancedSearchTerms={() => updateUserAcceptedAdvancedSearchTerms()}
-            ></AdvancedSearchTermsandConditionsModal>
+            />
             <AdvancedSearchRequestAccessModal
                 open={showRequestAccessModal}
                 close={() => toggleShowRequestAccessModal()}
                 userId={userState.id}
-            ></AdvancedSearchRequestAccessModal>
+            />
         </>
     );
 };
