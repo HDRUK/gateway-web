@@ -16,13 +16,12 @@ import ToolTip from '../../../../components/ToolTip/ToolTip';
 import Icon from '../../../../components/Icon';
 import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
 import { ReactComponent as Shield } from '../../../../images/shield.svg';
-import { ReactComponent as DatasetIcon } from '../../../../images/dataset.svg';
-import { ReactComponent as Star } from '../../../../images/star.svg';
 import { dataset } from './constants';
 import * as styles from './Dataset.styles';
 import '../../CommonComponents.scss';
 import '../RelatedObject.scss';
 import ShowMore from '../../ShowMore';
+import SVGIcon from '../../../../images/SVGIcon';
 
 const Dataset = ({
     data,
@@ -37,7 +36,6 @@ const Dataset = ({
     onClick,
 }) => {
     const [publisherDetails, setPublisherDetails] = useState({ name: '', label: '' });
-    const [showMore, setShowMore] = useState(false);
 
     const getPublisherDetails = useCallback(() => {
         const publisher = { name: '', label: '', showShield: false };
@@ -72,10 +70,6 @@ const Dataset = ({
             return stripMarkdown(data.datasetfields.abstract);
         }
     };
-
-    const handleShowMore = useCallback(() => {
-        setShowMore(!showMore);
-    }, [showMore]);
 
     if (data.type === 'dataset' && data.activeflag === 'archive') {
         return (
@@ -145,7 +139,6 @@ const Dataset = ({
                     {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
                 </Col>
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
-
                     <ShowMore>
                         <div>
                             <Tag tagName={dataset.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
