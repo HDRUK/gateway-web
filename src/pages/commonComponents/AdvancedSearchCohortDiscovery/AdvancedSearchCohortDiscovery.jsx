@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { Button, FeatureContent, Tag, Typography } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { NotificationManager } from 'react-notifications';
 import googleAnalytics from '../../../tracking';
 import mediaUrl from '../../../images/feature-cohort-discovery.png';
 import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS } from '../../../configs/constants';
-
+import usersService from '../../../services/users';
 import AdvancedSearchRequestAccessModal from '../../dashboard/AdvancedSearchRequestAccessModal';
 import AdvancedSearchTermsandConditionsModal from '../../dashboard/AdvancedSearchTAndCsModal';
 
@@ -21,23 +22,37 @@ const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
 
     const { loggedIn, advancedSearchRoles } = userState;
 
+    const patchRolesRequest = usersService.usePatchRoles(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
+
+    const patchTermsRequest = usersService.usePatchTerms(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
+
     const authorisedForAdvancedSearch = async () => {
         if (advancedSearchRoles.includes(ADVANCED_SEARCH_ROLE_GENERAL_ACCESS)) {
             return true;
         }
         if (userState.provider === 'oidc') {
-            let authorised = false;
-
-            await axios.patch(`${baseURL}/api/v1/users/advancedSearch/roles/${userState.id}`).then(res => {
-                authorised = true;
-
-                setUserState({
-                    ...userState,
-                    advancedSearchRoles: res.data.response.advancedSearchRoles,
-                });
+            const {
+                data: {
+                    response: { advancedSearchRoles },
+                },
+            } = await patchRolesRequest.mutateAsync({
+                _id: userState.id,
             });
 
-            return authorised;
+            setUserState({
+                ...userState,
+                advancedSearchRoles,
+            });
+
+            return true;
         }
 
         return false;
@@ -62,16 +77,19 @@ const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
     }, []);
 
     const handleAcceptedTerms = useCallback(async () => {
-        await axios
-            .patch(`${baseURL}/api/v1/users/advancedSearch/terms/${userState.id}`, {
-                acceptedAdvancedSearchTerms: true,
-            })
-            .then(res => {
-                setUserState({
-                    ...userState,
-                    advancedSearchRoles: res.data.response.advancedSearchRoles,
-                });
-            });
+        const {
+            data: {
+                response: { advancedSearchRoles },
+            },
+        } = await patchTermsRequest.mutateAsync({
+            _id: userState.id,
+            acceptedAdvancedSearchTerms: true,
+        });
+
+        setUserState({
+            ...userState,
+            advancedSearchRoles,
+        });
     }, []);
 
     return (

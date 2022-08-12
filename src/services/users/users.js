@@ -44,17 +44,31 @@ const useSearchUsers = (requestOptions, mutateOptions) => {
 };
 
 const usePatchRoles = (requestOptions, mutateOptions) => {
-    return useMutationWithTranslations((_id, data) => patchRoles(_id, data, requestOptions), {
-        mutationKey: 'users.patchRoles',
-        ...mutateOptions,
-    });
+    return useMutationWithTranslations(
+        data => {
+            const { _id, ...outerProps } = data;
+
+            return patchRoles(_id, outerProps, requestOptions);
+        },
+        {
+            mutationKey: 'users.patchRoles',
+            ...mutateOptions,
+        }
+    );
 };
 
 const usePatchTerms = (requestOptions, mutateOptions) => {
-    return useMutationWithTranslations((_id, data) => patchTerms(_id, data, requestOptions), {
-        mutationKey: 'users.patchTerms',
-        ...mutateOptions,
-    });
+    return useMutationWithTranslations(
+        data => {
+            const { _id, ...outerProps } = data;
+
+            return patchTerms(_id, outerProps, requestOptions);
+        },
+        {
+            mutationKey: 'users.patchRoles',
+            ...mutateOptions,
+        }
+    );
 };
 
 export default {

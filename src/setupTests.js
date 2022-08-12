@@ -33,6 +33,16 @@ global.assertServiceMutateAsyncCalled = async (rendered, mock, ...args) => {
     });
 };
 
+global.assertServiceMutateAsyncCalledWithArgs = async (rendered, mock, asyncArgs, serviceArgs) => {
+    const { waitFor, result } = rendered;
+
+    await waitFor(() => result.current.mutateAsync);
+
+    result.current.mutateAsync(asyncArgs).then(() => {
+        expect(mock).toHaveBeenCalledWith(serviceArgs);
+    });
+};
+
 global.assertServiceRefetchCalled = async (rendered, mock, ...args) => {
     const { waitFor, result } = rendered;
 
