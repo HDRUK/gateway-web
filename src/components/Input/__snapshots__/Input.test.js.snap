@@ -3,10 +3,10 @@
 exports[`Given the Input component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-Box css-sljqgp"
   >
     <div
-      class="css-1bab3f0-Input form-group"
+      class="css-f3m9lf-Input form-group"
     >
       <label
         class="css-bfnmbh-Input form-label"
@@ -14,7 +14,7 @@ exports[`Given the Input component When it is rendered Then matches the previous
         Sample label
       </label>
       <div
-        class="ui-Input css-v63lc4-Input input-group"
+        class="ui-Input additional-classname css-ola6vk-Input input-group"
       >
         <div
           class="css-1h9gu1e-Input input-group-prepend"
@@ -25,7 +25,7 @@ exports[`Given the Input component When it is rendered Then matches the previous
             Prepend text
           </span>
           <span
-            class="ui-Icon css-1sivg29 css-1nyc6qc-Icon"
+            class="ui-Icon css-1tuhzuv css-18xv0v4-Icon"
           >
             loading
           </span>
@@ -38,7 +38,7 @@ exports[`Given the Input component When it is rendered Then matches the previous
           class="css-175jcob-Input input-group-append"
         >
           <span
-            class="ui-Icon css-1sivg29 css-1nyc6qc-Icon"
+            class="ui-Icon css-1tuhzuv css-18xv0v4-Icon"
           >
             tick
           </span>

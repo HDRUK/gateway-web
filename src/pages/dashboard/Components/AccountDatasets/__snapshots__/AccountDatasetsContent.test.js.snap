@@ -3,7 +3,7 @@
 exports[`Given the AccountDatasetsContent component When it is rendered And has data Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-1xbisdu-B"
+    class="ui-Box css-1edroft"
   >
     <div
       class="css-1tuhzuv row"
@@ -12,7 +12,7 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
         class="col-lg-6"
       >
         <div
-          class="ui-Box css-ichth-B"
+          class="ui-Box css-sljqgp"
         >
           <div
             class="css-f3m9lf-Input form-group"
@@ -49,7 +49,7 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
           class="ui-SortDropdown css-13ymzsx-SortDropdown"
         >
           <div
-            class="ui-Box css-7xgj08-B"
+            class="ui-Box css-sljqgp"
           >
             <div
               class="ui-Dropdown css-cfbowp-SortDropdown dropdown"
@@ -1484,7 +1484,7 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
                 class="time"
               >
                 <icon-mock />
-                282 days since start
+                283 days since start
               </div>
               
               <div

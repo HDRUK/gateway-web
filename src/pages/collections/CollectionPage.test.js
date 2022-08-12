@@ -4,7 +4,7 @@ import { CollectionPage } from './CollectionPage';
 import service from '../../services/collections';
 import { collectionPageData } from '../../../test/mocks/dataMock';
 
-jest.mock('../../services/collection', () => ({
+jest.mock('../../services/collections', () => ({
     __esModule: true,
     default: () => jest.fn().mockImplementation(() => {}),
     getCollectionRequest: jest.fn().mockImplementation(() => {}),

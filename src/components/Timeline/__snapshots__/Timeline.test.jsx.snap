@@ -3,26 +3,26 @@
 exports[`Given the Timeline component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-Box css-sljqgp"
   >
     <ul
-      class="ui-Timeline additional-classname css-1rag44v-Timeline"
+      class="ui-Timeline additional-classname css-1q9wqza-Timeline"
     >
       <li
-        class="css-2thmyz-Timeline"
+        class="css-rdpgf6"
       >
         <div
-          class="css-1joet7c-Timeline"
+          class="css-tibvs0"
         >
           <div
-            class="timeline-icon css-ltao01-Timeline"
+            class="timeline-icon css-xcyt8m"
           >
             <div>
               Icon 1
             </div>
           </div>
           <div
-            class="css-ja54hi-Timeline"
+            class="css-9q9mcc"
           >
             <time
               data-testid="event-time-0"
@@ -33,26 +33,26 @@ exports[`Given the Timeline component When it is rendered Then matches the previ
           </div>
         </div>
         <div
-          class="css-1sdr2xt-Timeline"
+          class="css-1a8jukm"
         >
           Content 1
         </div>
       </li>
       <li
-        class="css-2thmyz-Timeline"
+        class="css-rdpgf6"
       >
         <div
-          class="css-1joet7c-Timeline"
+          class="css-tibvs0"
         >
           <div
-            class="timeline-icon css-ltao01-Timeline"
+            class="timeline-icon css-xcyt8m"
           >
             <div>
               Icon 2
             </div>
           </div>
           <div
-            class="css-ja54hi-Timeline"
+            class="css-9q9mcc"
           >
             <time
               data-testid="event-time-1"
@@ -63,7 +63,7 @@ exports[`Given the Timeline component When it is rendered Then matches the previ
           </div>
         </div>
         <div
-          class="css-1sdr2xt-Timeline"
+          class="css-1a8jukm"
         >
           Content 2
         </div>

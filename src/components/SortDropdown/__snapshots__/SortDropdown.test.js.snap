@@ -6,7 +6,7 @@ exports[`Given the SortDropdown component When it is rendered Then matches the p
     class="ui-SortDropdown additional-classname css-13ymzsx-SortDropdown"
   >
     <div
-      class="ui-Box css-ichth-B"
+      class="ui-Box css-sljqgp"
     >
       <div
         class="ui-Dropdown css-cfbowp-SortDropdown show dropdown"
@@ -61,7 +61,7 @@ exports[`Given the SortDropdown component When it is rendered When it allows sor
     class="ui-SortDropdown additional-classname css-13ymzsx-SortDropdown"
   >
     <div
-      class="ui-Box css-ichth-B"
+      class="ui-Box css-sljqgp"
     >
       <div
         class="ui-Dropdown css-cfbowp-SortDropdown dropdown"

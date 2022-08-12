@@ -3,7 +3,7 @@
 exports[`Given the Spinner component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Spinner additional-classname ui-Box css-dalwfp-B"
+    class="ui-Spinner additional-classname ui-Box css-sljqgp"
   >
     <span
       class="ui-Icon css-1tuhzuv css-1uw0yso-Spinner"

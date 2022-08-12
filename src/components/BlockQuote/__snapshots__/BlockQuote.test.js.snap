@@ -3,10 +3,10 @@
 exports[`Given the BlockQuote component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-Box css-sljqgp"
   >
     <blockquote
-      class="ui-Blockquote css-1ta6g32-BlockQuote"
+      class="ui-Blockquote additional-classname css-2npyuv-BlockQuote"
     >
       Content
     </blockquote>
