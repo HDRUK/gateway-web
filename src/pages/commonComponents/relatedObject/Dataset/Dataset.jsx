@@ -90,6 +90,17 @@ const Dataset = ({
         );
     }
 
+    const {
+        datasetfields: {
+            metadataquality: {
+                weighted_quality_rating: metaRating,
+                weighted_quality_score: metaScore,
+                weighted_completeness_percent: metaCompleteness,
+                weighted_error_percent: metaError,
+            },
+        },
+    } = data;
+
     const phenotypesSelected = queryString.parse(window.location.search).phenotypes
         ? queryString.parse(window.location.search).phenotypes.split('::')
         : [];
@@ -145,10 +156,10 @@ const Dataset = ({
                 <Col sm={3} lg={3} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
                     <Box display='flex' justifyContent='end'>
                         <QualityScore
-                            rating={data.datasetfields.metadataquality.weighted_quality_rating}
-                            score={data.datasetfields.metadataquality.weighted_quality_score}
-                            completenessPercent={data.datasetfields.metadataquality.weighted_completeness_percent}
-                            errorPercent={data.datasetfields.metadataquality.weighted_error_percent}
+                            rating={metaRating}
+                            score={metaScore}
+                            completenessPercent={metaCompleteness}
+                            errorPercent={metaError}
                         />
                         {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
                     </Box>

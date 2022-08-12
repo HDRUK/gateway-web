@@ -804,6 +804,17 @@ class DatasetDetail extends Component {
             );
         }
 
+        const {
+            datasetfields: {
+                metadataquality: {
+                    weighted_quality_rating: metaRating,
+                    weighted_quality_score: metaScore,
+                    weighted_completeness_percent: metaCompleteness,
+                    weighted_error_percent: metaError,
+                },
+            },
+        } = data;
+
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <Fragment>
@@ -876,10 +887,10 @@ class DatasetDetail extends Component {
                                         </Col>
                                         <Col xs={4} md={2} className='text-right'>
                                             <QualityScore
-                                                rating={data.datasetfields.metadataquality.weighted_quality_rating}
-                                                score={data.datasetfields.metadataquality.weighted_quality_score}
-                                                completenessPercent={data.datasetfields.metadataquality.weighted_completeness_percent}
-                                                errorPercent={data.datasetfields.metadataquality.weighted_error_percent}
+                                                rating={metaRating}
+                                                score={metaScore}
+                                                completenessPercent={metaCompleteness}
+                                                errorPercent={metaError}
                                             />
                                         </Col>
                                     </Row>
