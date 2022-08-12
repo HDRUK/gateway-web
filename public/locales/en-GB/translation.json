@@ -96,6 +96,18 @@
                         "message": "There has been a problem getting the related object"
                     }
                 }
+            },
+            "users": {
+                "patchRoles": {
+                    "404": {
+                        "message": "There has been a problem updating the roles"
+                    }
+                },
+                "patchTerms": {
+                    "404": {
+                        "message": "There has been a problem updating the terms and conditions"
+                    }
+                }
             }
         }
     },

@@ -65,7 +65,7 @@ const usePatchTerms = (requestOptions, mutateOptions) => {
             return patchTerms(_id, outerProps, requestOptions);
         },
         {
-            mutationKey: 'users.patchRoles',
+            mutationKey: 'users.patchTerms',
             ...mutateOptions,
         }
     );
