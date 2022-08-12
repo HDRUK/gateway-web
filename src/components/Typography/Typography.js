@@ -16,10 +16,6 @@ const Typography = ({ children, color, className, mt, mb, ml, mr, width, minWidt
         }
     }
 
-    if (variant === 'subtitle1' && !as) {
-        tagName = 'p';
-    }
-
     return (
         <Box
             {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}

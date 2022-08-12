@@ -433,11 +433,6 @@ export const theme = {
                     fontSize: THEME_FONT_SIZES.sm,
                     lineHeight: '16px',
                 },
-                subtitle1: {
-                    fontSize: THEME_FONT_SIZES.sm,
-                    lineHeight: '18px',
-                    color: 'green600',
-                },
                 tiny: {
                     fontSize: THEME_FONT_SIZES.xs,
                     lineHeight: '14px',
