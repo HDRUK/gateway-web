@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs';
 
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import QualityScore from './QualityScore';
 
 <Meta title='Core/QualityScore' component={QualityScore} />
@@ -17,9 +17,9 @@ import QualityScore from './QualityScore';
                         { rating: 'Gold', score: 85 },
                         { rating: 'Platinum', score: 95 },
                     ].map(data => (
-                        <LayoutBox width='100px' mb={4} display='flex' justifyContent='center'>
+                        <Box mb={4} display='flex' justifyContent='start'>
                             <QualityScore rating={data.rating} score={data.score} completenessPercent={94.63} errorPercent={8.72} />
-                        </LayoutBox>
+                        </Box>
                     ))}
                 </>
             );
