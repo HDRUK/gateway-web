@@ -106,7 +106,6 @@ export const getComponentGlobals = (component, theme) => {
 };
 
 export const getComponentGlobalStyles = (component, theme) => {
-    console.log('PROPS', theme);
     return getComponentStylesFromTheme(getComponentGlobals(component, theme), theme);
 };
 
