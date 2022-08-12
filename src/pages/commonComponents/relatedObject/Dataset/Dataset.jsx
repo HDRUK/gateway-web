@@ -25,12 +25,12 @@ import '../RelatedObject.scss';
 import ShowMore from '../../ShowMore';
 import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
 import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
+import { QualityScore } from '../../../../components';
 import SVGIcon from '../../../../images/SVGIcon';
 
 const Dataset = ({
     data,
     activeLink,
-    publisherLogo,
     onSearchPage,
     showRelationshipQuestion,
     isCohortDiscovery,
@@ -90,6 +90,17 @@ const Dataset = ({
         );
     }
 
+    const {
+        datasetfields: {
+            metadataquality: {
+                weighted_quality_rating: metaRating,
+                weighted_quality_score: metaScore,
+                weighted_completeness_percent: metaCompleteness,
+                weighted_error_percent: metaError,
+            },
+        },
+    } = data;
+
     const phenotypesSelected = queryString.parse(window.location.search).phenotypes
         ? queryString.parse(window.location.search).phenotypes.split('::')
         : [];
@@ -99,7 +110,7 @@ const Dataset = ({
     return (
         <>
             <Row data-testid='related-dataset-object' className='noMargin'>
-                <Col sm={10} lg={10} className='pad-left-24'>
+                <Col sm={9} lg={9} className='pad-left-24'>
                     <Title
                         id={data.pid}
                         name={data.name}
@@ -142,15 +153,16 @@ const Dataset = ({
                         </ToolTip>
                     </Box>
                 </Col>
-                <Col sm={2} lg={2} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
-                    {!isEmpty(publisherLogo) && (
-                        <div
-                            className='datasetLogoCircle floatRight'
-                            css={styles.publisherLogoCSS(publisherLogo)}
-                            data-testid='publisher-logo'
+                <Col sm={3} lg={3} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
+                    <Box display='flex' justifyContent='end'>
+                        <QualityScore
+                            rating={metaRating}
+                            score={metaScore}
+                            completenessPercent={metaCompleteness}
+                            errorPercent={metaError}
                         />
-                    )}
-                    {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
+                        {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
+                    </Box>
                 </Col>
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>
                     <ShowMore>

@@ -1,0 +1,28 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import { Box } from 'hdruk-react-core';
+import QualityScore from './QualityScore';
+
+<Meta title='Core/QualityScore' component={QualityScore} />
+
+<Canvas>
+    <Story name='Ratings'>
+        {props => {
+            return (
+                <>
+                    {[
+                        { rating: 'Not Rated', score: 55 },
+                        { rating: 'Bronze', score: 65 },
+                        { rating: 'Silver', score: 75 },
+                        { rating: 'Gold', score: 85 },
+                        { rating: 'Platinum', score: 95 },
+                    ].map(data => (
+                        <Box mb={4} display='flex' justifyContent='start'>
+                            <QualityScore rating={data.rating} score={data.score} completenessPercent={94.63} errorPercent={8.72} />
+                        </Box>
+                    ))}
+                </>
+            );
+        }}
+    </Story>
+</Canvas>
