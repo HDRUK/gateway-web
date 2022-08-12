@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { Box } from 'hdruk-react-core';
 import { ReactComponent as MetadataBronze } from '../../images/bronzeNew.svg';
 import { ReactComponent as MetadataGold } from '../../images/goldNew.svg';
 import { ReactComponent as MetadataNotRated } from '../../images/notRatedNew.svg';
@@ -42,7 +43,9 @@ const QualityScore = ({ rating, score, completenessPercent, errorPercent }) => {
                 target='_blank'
                 rel='noopener noreferrer'
                 href='https://github.com/HDRUK/datasets/tree/master/reports#hdr-uk-data-documentation-scores'>
-                <IconComponent />
+                <Box width='103px' display='flex' justifyContent='center'>
+                    <IconComponent />
+                </Box>
             </a>
         </ToolTip>
     );

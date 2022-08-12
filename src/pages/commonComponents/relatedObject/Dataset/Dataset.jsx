@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
+import { Box } from 'hdruk-react-core';
 import { cx } from '@emotion/css';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from 'hdruk-react-core';
@@ -99,7 +100,7 @@ const Dataset = ({
     return (
         <>
             <Row data-testid='related-dataset-object' className='noMargin'>
-                <Col sm={10} lg={10} className='pad-left-24'>
+                <Col sm={9} lg={9} className='pad-left-24'>
                     <Title
                         id={data.pid}
                         name={data.name}
@@ -142,14 +143,16 @@ const Dataset = ({
                         </ToolTip>
                     </Box>
                 </Col>
-                <Col sm={2} lg={2} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
-                    <QualityScore
-                        rating={data.datasetfields.metadataquality.weighted_quality_rating}
-                        score={data.datasetfields.metadataquality.weighted_quality_score}
-                        completenessPercent={data.datasetfields.metadataquality.weighted_completeness_percent}
-                        errorPercent={data.datasetfields.metadataquality.weighted_error_percent}
-                    />
-                    {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
+                <Col sm={3} lg={3} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
+                    <Box display='flex' justifyContent='end'>
+                        <QualityScore
+                            rating={data.datasetfields.metadataquality.weighted_quality_rating}
+                            score={data.datasetfields.metadataquality.weighted_quality_score}
+                            completenessPercent={data.datasetfields.metadataquality.weighted_completeness_percent}
+                            errorPercent={data.datasetfields.metadataquality.weighted_error_percent}
+                        />
+                        {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
+                    </Box>
                 </Col>
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>
                     <ShowMore>
