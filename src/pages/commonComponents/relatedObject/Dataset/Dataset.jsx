@@ -5,7 +5,6 @@ import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
-import { Box } from 'hdruk-react-core';
 import { cx } from '@emotion/css';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from 'hdruk-react-core';
