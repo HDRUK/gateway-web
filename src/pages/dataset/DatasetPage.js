@@ -811,7 +811,7 @@ class DatasetDetail extends Component {
                     weighted_quality_score: metaScore,
                     weighted_completeness_percent: metaCompleteness,
                     weighted_error_percent: metaError,
-                },
+                } = {},
             },
         } = data;
 
