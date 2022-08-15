@@ -165,7 +165,7 @@ const Dataset = ({
                     </Box>
                 </Col>
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>
-                    <ShowMore>
+                    <ShowMore initialHeight='27px'>
                         <div>
                             <Tag tagName={dataset.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
                                 <SVGIcon name='dataseticon' fill='#113328' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />

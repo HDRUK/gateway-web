@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Collapsable } from 'hdruk-react-core';
+import { Collapsable, Icon } from 'hdruk-react-core';
 
 import { t } from 'i18next';
+import { Button } from 'react-bootstrap';
 import { ReactComponent as ArrowDown } from '../../../images/icons/arrow-down.svg';
 import { ReactComponent as ArrowUp } from '../../../images/icons/arrow-up.svg';
 
@@ -19,19 +20,21 @@ const ShowMore = ({ children, initialHeight }) => {
             open={showMore}
             initialHeight={initialHeight}
             toggle={
-                <a onClick={handleShowMore} className='show-more'>
+                <Button onClick={handleShowMore} variant='link' className='show-more'>
                     <span className='purple-14'>
                         {showMore ? (
                             <>
-                                {t('show.less')} <ArrowUp />
+                                {t('hide')}
+                                <Icon svg={<ArrowUp fill='inherit' />} size='xxs' ml={1} />
                             </>
                         ) : (
                             <>
-                                {t('show.more')} <ArrowDown />
+                                {t('show')}
+                                <Icon svg={<ArrowDown fill='inherit' />} size='xxs' ml={1} />
                             </>
                         )}
                     </span>
-                </a>
+                </Button>
             }>
             <div>{children}</div>
         </Collapsable>
