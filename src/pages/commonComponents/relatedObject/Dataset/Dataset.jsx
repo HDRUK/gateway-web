@@ -97,7 +97,7 @@ const Dataset = ({
                 weighted_quality_score: metaScore,
                 weighted_completeness_percent: metaCompleteness,
                 weighted_error_percent: metaError,
-            },
+            } = {},
         },
     } = data;
 
