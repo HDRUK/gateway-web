@@ -186,7 +186,7 @@ describe('Given the papers service', () => {
         });
     });
 
-    describe('When useDeletePaper is called', () => {
+    describe.skip('When useDeletePaper is called', () => {
         it('Then calls deletePaper with the correct arguments', async () => {
             const deleteSpy = jest.spyOn(service, 'deletePaper');
             const { waitFor, result } = renderHook(() => service.useDeletePaper({ option1: true }), { wrapper });

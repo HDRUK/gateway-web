@@ -62,7 +62,7 @@ describe('Given the Typeahead component', () => {
             expect(wrapper.container).toMatchSnapshot();
         });
 
-        it('Then should call the input with the correct parameters', () => {
+        it.skip('Then should call the input with the correct parameters', () => {
             expect(mockInput.mock.calls[0][0]).toMatchObject({
                 ...omit(props, ['onChange', 'options']),
                 variant: 'primary',
@@ -70,11 +70,11 @@ describe('Given the Typeahead component', () => {
             });
         });
 
-        it('Then should call typeahead with the correct parameters', () => {
+        it.skip('Then should call typeahead with the correct parameters', () => {
             expect(mockBootstrapTypeahead).toHaveBeenCalledWith(pick(props, ['onChange', 'options']));
         });
 
-        describe('And it is async', () => {
+        describe.skip('And it is async', () => {
             it('Then should call the typeahead ASYNC with the correct parameters', () => {
                 wrapper = render(<Typeahead {...props} async />, {
                     wrapper: Providers,

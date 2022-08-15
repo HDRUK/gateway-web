@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import Alert from './Alert';
 
@@ -39,9 +39,9 @@ describe('Given the Alert component', () => {
 
             describe('And it is closed', () => {
                 beforeEach(() => {
-                    const close = wrapper.container.querySelector('[role="button"]');
-
-                    fireEvent.click(close);
+                    const buttons = screen.getAllByRole('button');
+                    console.log('buttons: ', buttons.length);
+                    fireEvent.click(buttons[0]);
                 });
 
                 it('Then does not show anything', async () => {
@@ -78,8 +78,10 @@ describe('Given the Alert component', () => {
                 });
             });
 
-            it('Then calls onClose', () => {
-                expect(props.onClose).toHaveBeenCalled();
+            it('Then calls onClose', async () => {
+                await waitFor(() => {
+                    expect(props.onClose).toHaveBeenCalled();
+                });
             });
         });
 

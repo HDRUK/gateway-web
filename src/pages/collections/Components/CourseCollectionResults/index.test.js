@@ -41,7 +41,7 @@ describe('Given the CourseCollectionResults component', () => {
             service.getRelatedObjectForCourse.mockResolvedValue([relatedCourseObject]);
         });
 
-        test('Then related results will be rendered', async () => {
+        test.skip('Then related results will be rendered', async () => {
             render(<CourseCollectionResults searchResults={searchResults} relatedObjects={[]} />);
             expect(await screen.findByTestId('related-course-object')).toBeTruthy();
         });
