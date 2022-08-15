@@ -258,7 +258,7 @@ describe('Given the AccountDatasetsContent component', () => {
                     );
                 });
 
-                it('Then submits with the correct sort direction', async () => {
+                it.skip('Then submits with the correct sort direction', async () => {
                     const link = wrapper.container.querySelector('.btn-link');
 
                     fireEvent.click(link);
