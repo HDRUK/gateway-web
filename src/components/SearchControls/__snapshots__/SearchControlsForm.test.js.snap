@@ -3,7 +3,7 @@
 exports[`Given the SearchControlsForm component When it is rendered And it is not loading Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-sljqgp"
+    class="ui-Box css-ichth-B"
   >
     <div
       class="css-1tuhzuv row"
@@ -12,7 +12,7 @@ exports[`Given the SearchControlsForm component When it is rendered And it is no
         class="col-lg-6"
       >
         <div
-          class="ui-Box css-sljqgp"
+          class="ui-Box css-ichth-B"
         >
           <div
             class="css-f3m9lf-Input form-group"
@@ -61,7 +61,7 @@ exports[`Given the SearchControlsForm component When it is rendered And it is no
           class="ui-SortDropdown css-13ymzsx-SortDropdown"
         >
           <div
-            class="ui-Box css-sljqgp"
+            class="ui-Box css-ichth-B"
           >
             <div
               class="ui-Dropdown css-cfbowp-SortDropdown dropdown"

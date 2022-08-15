@@ -3,7 +3,7 @@
 exports[`Given the Textarea component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-sljqgp"
+    class="ui-Box css-ichth-B"
   >
     <div
       class="ui-Textarea additional-classname css-1r4a1n6-Textarea form-group"
