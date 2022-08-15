@@ -6,8 +6,10 @@ import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
 import { cx } from '@emotion/css';
+import { useTranslation } from 'react-i18next';
+import { Box, Typography } from 'hdruk-react-core';
 import googleAnalytics from '../../../../tracking';
-import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
+import { dateFormats, stripMarkdown } from '../../../../utils/GeneralHelper.util';
 import RemoveButton from '../RemoveButton/RemoveButton';
 import Title from '../Title/Title';
 import Description from '../Description/Description';
@@ -16,18 +18,19 @@ import ToolTip from '../../../../components/ToolTip/ToolTip';
 import Icon from '../../../../components/Icon';
 import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
 import { ReactComponent as Shield } from '../../../../images/shield.svg';
-import { ReactComponent as DatasetIcon } from '../../../../images/dataset.svg';
-import { ReactComponent as Star } from '../../../../images/star.svg';
 import { dataset } from './constants';
 import * as styles from './Dataset.styles';
 import '../../CommonComponents.scss';
 import '../RelatedObject.scss';
 import ShowMore from '../../ShowMore';
+import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
+import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
+import { QualityScore } from '../../../../components';
+import SVGIcon from '../../../../images/SVGIcon';
 
 const Dataset = ({
     data,
     activeLink,
-    publisherLogo,
     onSearchPage,
     showRelationshipQuestion,
     isCohortDiscovery,
@@ -37,7 +40,8 @@ const Dataset = ({
     onClick,
 }) => {
     const [publisherDetails, setPublisherDetails] = useState({ name: '', label: '' });
-    const [showMore, setShowMore] = useState(false);
+
+    const { t } = useTranslation();
 
     const getPublisherDetails = useCallback(() => {
         const publisher = { name: '', label: '', showShield: false };
@@ -73,10 +77,6 @@ const Dataset = ({
         }
     };
 
-    const handleShowMore = useCallback(() => {
-        setShowMore(!showMore);
-    }, [showMore]);
-
     if (data.type === 'dataset' && data.activeflag === 'archive') {
         return (
             <Row className='noMargin pad-left-24'>
@@ -90,18 +90,27 @@ const Dataset = ({
         );
     }
 
+    const {
+        datasetfields: {
+            metadataquality: {
+                weighted_quality_rating: metaRating,
+                weighted_quality_score: metaScore,
+                weighted_completeness_percent: metaCompleteness,
+                weighted_error_percent: metaError,
+            } = {},
+        },
+    } = data;
+
     const phenotypesSelected = queryString.parse(window.location.search).phenotypes
         ? queryString.parse(window.location.search).phenotypes.split('::')
         : [];
     const searchTerm = queryString.parse(window.location.search).search ? queryString.parse(window.location.search).search : '';
     const phenotypesSearched = data.datasetfields.phenotypes.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
 
-    const publisherNameClasses = 'gray800-14 d-flex align-items-center';
-
     return (
         <>
             <Row data-testid='related-dataset-object' className='noMargin'>
-                <Col sm={10} lg={10} className='pad-left-24'>
+                <Col sm={9} lg={9} className='pad-left-24'>
                     <Title
                         id={data.pid}
                         name={data.name}
@@ -115,8 +124,12 @@ const Dataset = ({
                     />
                     <br />
 
-                    <span
-                        className={cx(publisherNameClasses, { underlined: !!activeLink })}
+                    <Box
+                        as={Typography}
+                        mb={1}
+                        display='flex'
+                        alignItems='center'
+                        className={cx('gray800-14', { underlined: !!activeLink })}
                         css={styles.pointer}
                         onClick={() =>
                             updateOnFilterBadge('publisher', {
@@ -132,20 +145,26 @@ const Dataset = ({
                                 <Icon svg={<Shield fill='inherit' />} size='2xl' ml={1} />
                             </ToolTip>
                         )}
-                    </span>
+                    </Box>
+                    <Box as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
+                        {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
+                        <ToolTip text={t('dataset.dateUpdatedTooltip')}>
+                            <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
+                        </ToolTip>
+                    </Box>
                 </Col>
-                <Col sm={2} lg={2} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
-                    {!isEmpty(publisherLogo) && (
-                        <div
-                            className='datasetLogoCircle floatRight'
-                            css={styles.publisherLogoCSS(publisherLogo)}
-                            data-testid='publisher-logo'
+                <Col sm={3} lg={3} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
+                    <Box display='flex' justifyContent='end'>
+                        <QualityScore
+                            rating={metaRating}
+                            score={metaScore}
+                            completenessPercent={metaCompleteness}
+                            errorPercent={metaError}
                         />
-                    )}
-                    {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
+                        {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
+                    </Box>
                 </Col>
-                <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
-
+                <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>
                     <ShowMore>
                         <div>
                             <Tag tagName={dataset.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
