@@ -40,7 +40,6 @@ describe('Given the Alert component', () => {
             describe('And it is closed', () => {
                 beforeEach(() => {
                     const buttons = screen.getAllByRole('button');
-                    console.log('buttons: ', buttons.length);
                     fireEvent.click(buttons[0]);
                 });
 
