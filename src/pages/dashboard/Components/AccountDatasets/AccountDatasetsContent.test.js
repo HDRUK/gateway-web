@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { act, render, waitFor } from '@testing-library/react';
 import React from 'react';
+import { advanceTo, clear } from 'jest-date-mock';
 import * as SearchControls from '../../../../components/SearchControls';
 import { STATUS_INREVIEW } from '../../../../configs/constants';
 import { mockGetPublisher } from '../../../../services/dataset-onboarding/mockMsw';
@@ -46,9 +47,16 @@ let wrapper;
 describe('Given the AccountDatasetsContent component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
+            advanceTo(new Date(2022, 8, 14, 0, 0, 0));
+
             wrapper = render(<AccountDatasetsContent {...props} />, {
                 wrapper: Providers,
             });
+        });
+
+        afterAll(() => {
+            clear();
+            Date.now();
         });
 
         it('The should call SearchResults with the correct arguments', () => {

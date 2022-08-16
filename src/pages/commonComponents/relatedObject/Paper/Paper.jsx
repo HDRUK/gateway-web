@@ -39,7 +39,7 @@ const Paper = ({ data, activeLink, onSearchPage, showRelationshipQuestion, updat
             {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
         </Col>
         <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
-            <ShowMore>
+            <ShowMore initialHeight={30}>
                 <Tag tagName={paper.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
                     <SVGIcon name='newprojecticon' fill='#3c3c3b' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
                 </Tag>
