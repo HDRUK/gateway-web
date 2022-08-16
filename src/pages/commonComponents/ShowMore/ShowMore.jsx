@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Collapsable, Icon } from 'hdruk-react-core';
@@ -11,6 +11,18 @@ import './ShowMore.scss';
 
 const ShowMore = ({ children, initialHeight }) => {
     const [showMore, setShowMore] = useState(false);
+    const [shouldShowButton, setShouldShowButton] = useState(true);
+
+    const ref = useRef(null);
+
+    const toggleButtonVisibility = () => {
+        setShouldShowButton(!(ref.current.clientHeight > initialHeight));
+    };
+
+    useEffect(() => {
+        toggleButtonVisibility();
+        window.addEventListener('resize', toggleButtonVisibility);
+    }, []);
 
     const handleShowMore = () => {
         setShowMore(!showMore);
@@ -19,36 +31,38 @@ const ShowMore = ({ children, initialHeight }) => {
     return (
         <Collapsable
             open={showMore}
-            initialHeight={initialHeight}
+            initialHeight={`${initialHeight}px`}
             toggle={
-                <Button onClick={handleShowMore} variant='link' className='show-more'>
-                    <span className='purple-14'>
-                        {showMore ? (
-                            <>
-                                {t('hide')}
-                                <Icon svg={<ArrowUp fill='inherit' />} size='xxs' ml={1} />
-                            </>
-                        ) : (
-                            <>
-                                {t('show')}
-                                <Icon svg={<ArrowDown fill='inherit' />} size='xxs' ml={1} />
-                            </>
-                        )}
-                    </span>
-                </Button>
+                !shouldShowButton && (
+                    <Button style={{ padding: 0 }} onClick={handleShowMore} variant='link' className='show-more'>
+                        <span className='purple-14'>
+                            {showMore ? (
+                                <>
+                                    {t('hide')}
+                                    <Icon svg={<ArrowUp fill='inherit' />} size='xxs' ml={1} />
+                                </>
+                            ) : (
+                                <>
+                                    {t('show')}
+                                    <Icon svg={<ArrowDown fill='inherit' />} size='xxs' ml={1} />
+                                </>
+                            )}
+                        </span>
+                    </Button>
+                )
             }>
-            <div>{children}</div>
+            <div ref={ref}>{children}</div>
         </Collapsable>
     );
 };
 
 ShowMore.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-    initialHeight: PropTypes.string,
+    initialHeight: PropTypes.number,
 };
 
 ShowMore.defaultProps = {
-    initialHeight: '25px',
+    initialHeight: 25,
 };
 
 export default ShowMore;

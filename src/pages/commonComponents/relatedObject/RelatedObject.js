@@ -205,7 +205,7 @@ class RelatedObject extends React.Component {
                                             )}
                                         </Col>
                                         <Col className='pad-left-24 pad-right-24 pad-top-16'>
-                                            <ShowMore>
+                                            <ShowMore initialHeight={30}>
                                                 <span className='badge-datause'>
                                                     <SVGIcon
                                                         name='datauseicon'
