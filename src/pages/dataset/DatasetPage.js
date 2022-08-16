@@ -863,7 +863,7 @@ class DatasetDetail extends Component {
                                                 mb={1}
                                                 display='flex'
                                                 alignItems='center'
-                                                className={cx('gray800-14')}
+                                                className='gray800-14'
                                                 data-testid={`publisher-${v2data.summary.publisher.name}`}>
                                                 {v2data.summary.publisher.memberOf && (
                                                     <ToolTip
