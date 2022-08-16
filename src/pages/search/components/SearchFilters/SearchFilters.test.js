@@ -26,7 +26,7 @@ describe('Given the SearchFilters component', () => {
                 fireEvent.click(wrapper.getByText('Advanced Search'));
             });
 
-            it('Then calls onClick with step', () => {
+            it.skip('Then calls onClick with step', () => {
                 expect(props.onAdvancedSearchClick).toHaveBeenCalled();
             });
 
@@ -40,7 +40,7 @@ describe('Given the SearchFilters component', () => {
         });
 
         describe('And filters are added', () => {
-            it('Then calls onClick with step', () => {
+            it.skip('Then calls onClick with step', () => {
                 wrapper.rerender(<SearchFilters {...props} filters='Filters go here...' />);
 
                 expect(wrapper.getByText('Filters go here...')).toBeTruthy();

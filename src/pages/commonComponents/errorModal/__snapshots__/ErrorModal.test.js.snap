@@ -35,7 +35,7 @@ exports[`Given the ErrorModal component When it is rendered Then matches the pre
           </div>
         </div>
         <div
-          class="gray800-14 css-1axlqcz-AlertModal modal-body"
+          class="gray800-14 css-1tnvg01-AlertModal modal-body"
           data-testid="modal-body"
         >
           This issue has been automatically reported to our team!
@@ -48,7 +48,7 @@ exports[`Given the ErrorModal component When it is rendered Then matches the pre
           </a>
         </div>
         <div
-          class="css-n34xqh-AlertModal modal-footer"
+          class="css-1ulto0s-AlertModal modal-footer"
           data-testid="modal-footer"
         >
           <button

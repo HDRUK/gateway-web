@@ -27,10 +27,6 @@ describe('Give a FilterTree component', () => {
             });
         });
 
-        it('Then matches the previous snapshot', () => {
-            expect(wrapper.container).toMatchSnapshot();
-        });
-
         it('Then has the correct nodes highlighted', () => {
             expect(wrapper.getByText('UK')).toBeTruthy();
             expect(wrapper.getByText('Wales')).toBeTruthy();

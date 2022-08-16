@@ -138,13 +138,13 @@ const Dataset = ({
                             })
                         }
                         data-testid={`publisher-${publisherDetails.name}`}>
-                        {' '}
-                        {publisherDetails.name}{' '}
                         {publisherDetails.showShield && (
-                            <ToolTip text={`Member of ${publisherDetails.memberOf}`}>
+                            <ToolTip text={`Member of ${publisherDetails.memberOf}`} placement='bottom-start'>
                                 <Icon svg={<Shield fill='inherit' />} size='2xl' ml={1} />
                             </ToolTip>
                         )}
+                        &nbsp;
+                        {publisherDetails.name}
                     </Box>
                     <Box as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
                         {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
@@ -165,7 +165,7 @@ const Dataset = ({
                     </Box>
                 </Col>
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>
-                    <ShowMore>
+                    <ShowMore initialHeight={30}>
                         <div>
                             <Tag tagName={dataset.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
                                 <SVGIcon name='dataseticon' fill='#113328' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />

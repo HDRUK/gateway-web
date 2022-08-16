@@ -12,6 +12,7 @@ import { AuthProvider } from './context/AuthContext';
 import i18n from './i18n';
 import { mockUser } from './services/auth/mockData';
 import { theme } from './configs/theme';
+import 'jest-date-mock';
 
 Enzyme.configure({
     adapter: new Adapter(),
@@ -97,5 +98,5 @@ global.document.createRange = () => ({
 
 Object.defineProperty(window, 'location', {
     writable: true,
-    value: { assign: jest.fn() },
+    value: { href: 'https://www.healthdatagateway.org', assign: jest.fn() },
 });

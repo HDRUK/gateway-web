@@ -2,6 +2,7 @@
 import { jsx } from '@emotion/react';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Box } from 'hdruk-react-core';
 import Icon from '../Icon';
 import { ReactComponent as CloseIcon } from '../../images/icons/clear.svg';
 import { ReactComponent as CheckIcon } from '../../images/icons/tick.svg';
@@ -10,7 +11,6 @@ import { ReactComponent as InfoIcon } from '../../images/icons/info.svg';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 
 import * as styles from './Alert.styles.js';
-import { Box } from 'hdruk-react-core';
 
 const Alert = ({
     icon,

@@ -122,8 +122,8 @@
     "datetime": {
         "submitted": "Submitted {{datetime}}"
     },
-    "show.more": "Show more",
-    "show.less": "Show less",
+    "show": "Show",
+    "hide": "Hide",
     "loading": "Loading",
     "activitylog": {
         "notfound": "The activity log for this dataset cannot be accessed. It must be set to {{status}}.",

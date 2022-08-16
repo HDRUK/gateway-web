@@ -11,7 +11,7 @@ exports[`Given the AlertMessage component When it is rendered Then matches the p
       <span
         class="ui-Icon css-1tuhzuv css-18xv0v4-Icon"
       >
-        <iconmock
+        <icon-mock
           fill="inherit"
         />
       </span>

@@ -1,7 +1,11 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/react';
+import { cx } from '@emotion/css';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import { has, isEmpty, isNil, isUndefined } from 'lodash';
 import React, { Component, Fragment } from 'react';
+import { Box, Typography } from 'hdruk-react-core';
 import { Button, Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap/';
 import Linkify from 'react-linkify';
 import 'react-tabs/style/react-tabs.css';
@@ -32,6 +36,9 @@ import DatasetAboutCard from './components/DatasetAboutCard';
 import DataUtitlityFramework from './components/DataUtilityFramework';
 import TechnicalDetailsPage from './components/TechnicalDetailsPage';
 import TechnicalMetadata from './components/TechnicalMetadata';
+import ToolTip from '../../components/ToolTip';
+import Icon from '../../components/Icon';
+import { ReactComponent as Shield } from '../../images/shield.svg';
 import './Dataset.scss';
 import DatasetSchema from './DatasetSchema';
 
@@ -851,39 +858,23 @@ class DatasetDetail extends Component {
                                         <Col xs={7} md={9} className='datasetTitle'>
                                             <span className='black-16'> {data.name} </span>
                                             <br />
-                                            <span>
-                                                {!isEmpty(v2data.summary.publisher.memberOf) ? (
-                                                    <>
-                                                        <span
-                                                            onMouseEnter={this.handleMouseHoverShield}
-                                                            onMouseLeave={this.handleMouseHoverShield}>
-                                                            <SVGIcon
-                                                                name='shield'
-                                                                fill={'#475da7'}
-                                                                className='svg-16 mr-2'
-                                                                viewBox='0 0 16 16'
-                                                            />
-                                                        </span>
-
-                                                        {this.state.isHoveringShield && (
-                                                            <div className='dataShieldToolTip'>
-                                                                <span className='white-13-semibold'>
-                                                                    {v2data.summary.publisher.memberOf.charAt(0).toUpperCase() +
-                                                                        v2data.summary.publisher.memberOf.slice(1).toLowerCase()}{' '}
-                                                                    member
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                    </>
-                                                ) : (
-                                                    ''
+                                            <Box
+                                                as={Typography}
+                                                mb={1}
+                                                display='flex'
+                                                alignItems='center'
+                                                className='gray800-14'
+                                                data-testid={`publisher-${v2data.summary.publisher.name}`}>
+                                                {v2data.summary.publisher.memberOf && (
+                                                    <ToolTip
+                                                        text={`Member of ${v2data.summary.publisher.memberOf}`}
+                                                        placement='bottom-start'>
+                                                        <Icon svg={<Shield fill='inherit' />} size='2xl' ml={1} mt={1} />
+                                                    </ToolTip>
                                                 )}
-                                                {!isEmpty(v2data.summary.publisher.name) ? (
-                                                    <span className='gray800-14'>{v2data.summary.publisher.name}</span>
-                                                ) : (
-                                                    <span className='gray800-14-opacity'>Not specified</span>
-                                                )}
-                                            </span>
+                                                &nbsp;
+                                                {v2data.summary.publisher.name}
+                                            </Box>
                                         </Col>
                                         <Col xs={4} md={2} className='text-right'>
                                             <QualityScore
