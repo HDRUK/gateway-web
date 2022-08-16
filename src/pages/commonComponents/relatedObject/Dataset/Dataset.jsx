@@ -140,13 +140,13 @@ const Dataset = ({
                         data-testid={`publisher-${publisherDetails.name}`}>
                         {publisherDetails.showShield && (
                             <ToolTip text={`Member of ${publisherDetails.memberOf}`} placement='bottom-start'>
-                                <Icon svg={<Shield fill='inherit' />} size='2xl' ml={1} />
+                                <Icon svg={<Shield fill='inherit' />} size='2xl' />
                             </ToolTip>
                         )}
                         &nbsp;
                         {publisherDetails.name}
                     </Box>
-                    <Box as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
+                    <Box ml={1} as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
                         {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
                         <ToolTip text={t('dataset.dateUpdatedTooltip')}>
                             <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
