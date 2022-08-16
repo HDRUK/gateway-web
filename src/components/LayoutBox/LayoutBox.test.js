@@ -12,7 +12,7 @@ const props = {
 describe('Given the LayoutBox component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<Box {...props} />, { wrapper: Providers });
+            wrapper = render(<LayoutBox {...props} />, { wrapper: Providers });
         });
 
         it('Then matches the previous snapshot', () => {

@@ -131,7 +131,7 @@ describe('Given the request helpers', () => {
     });
 
     describe('When useQueryWithTranslations is called', () => {
-        it('Then rewrites the error function to have translations', async () =>
+        it.skip('Then rewrites the error function to have translations', async () =>
             expect(
                 new Promise(resolves => {
                     const { result } = renderHook(

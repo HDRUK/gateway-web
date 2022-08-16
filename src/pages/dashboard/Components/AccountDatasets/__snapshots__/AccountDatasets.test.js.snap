@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AccountDatasets component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div>
+    <div
+      class="ui-LayoutContent row"
+    >
+      <div
+        class="ui-LayoutContent--left col-1"
+      />
+      <div
+        class="ui-LayoutContent--content col-10"
+      >
+        <div
+          class="ui-Box css-ichth-B"
+        >
+          <div
+            class="ui-Alert css-mdcthr-Alert"
+          >
+            <div
+              class="ui-Alert__icon css-1jspzre-Alert"
+            >
+              <icon
+                svg="[object Object]"
+              />
+            </div>
+            <div
+              class="css-ungsl1-Alert"
+            >
+              Message goes here
+            </div>
+          </div>
+        </div>
+        <div
+          class="accountHeader"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-8 col-sm-12"
+            >
+              <div>
+                <span
+                  class="black-20"
+                >
+                  Datasets
+                </span>
+              </div>
+              <div>
+                <span
+                  class="gray700-13 "
+                >
+                  View, add, edit, archive and check the status of your datasets.
+                </span>
+              </div>
+            </div>
+            <div
+              class="col-md-4 col-sm-12"
+              style="text-align: right;"
+            >
+              <button
+                class="addButton btn btn-primary"
+                type="button"
+              >
+                + 
+                Add a new dataset
+              </button>
+            </div>
+          </div>
+        </div>
+        <button>
+          Select tab
+        </button>
+        <button>
+          Submit
+        </button>
+      </div>
+      <div
+        class="ui-LayoutContent--right col-1"
+      />
+    </div>
+  </div>
+</div>
+`;

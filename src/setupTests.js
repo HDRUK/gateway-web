@@ -97,5 +97,5 @@ global.document.createRange = () => ({
 
 Object.defineProperty(window, 'location', {
     writable: true,
-    value: { assign: jest.fn() },
+    value: { href: 'https://www.healthdatagateway.org', assign: jest.fn() },
 });

@@ -214,6 +214,9 @@ exports[`Given the SearchResults component When it is rendered Then matches the 
     <div
       class="mt-2 row"
       data-testid="loader"
+      subtext="...sorry, this is taking longer than usual"
+      text="Loading..."
+      timeout="5000"
     >
       <div
         class="col"
@@ -234,7 +237,10 @@ exports[`Given the SearchResults component When it is rendered Then matches the 
             class="gray800-14"
             style="text-align: center;"
           >
-            Loading...
+            <p>
+              Loading...
+            </p>
+            <p />
           </div>
         </div>
       </div>
