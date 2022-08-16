@@ -7,6 +7,7 @@ import { t } from 'i18next';
 import { Button } from 'react-bootstrap';
 import { ReactComponent as ArrowDown } from '../../../images/icons/arrow-down.svg';
 import { ReactComponent as ArrowUp } from '../../../images/icons/arrow-up.svg';
+import './ShowMore.scss';
 
 const ShowMore = ({ children, initialHeight }) => {
     const [showMore, setShowMore] = useState(false);
