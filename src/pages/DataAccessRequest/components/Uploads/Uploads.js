@@ -229,7 +229,23 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
         onDropRejected,
         minSize: 0,
         maxSize,
-        accept: ['.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.key', '.pages', '.numbers', '.png', '.jpg', '.jpeg', '.csv', '.txt'],
+        accept: [
+            '.pdf',
+            '.doc',
+            '.docx',
+            '.ppt',
+            '.pptx',
+            '.xls',
+            '.xlsx',
+            '.key',
+            '.pages',
+            '.numbers',
+            '.png',
+            '.jpg',
+            '.jpeg',
+            '.csv',
+            '.txt',
+        ],
     });
     return (
         <div className='files dar-form'>
