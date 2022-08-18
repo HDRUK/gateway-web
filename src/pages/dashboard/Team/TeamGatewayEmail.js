@@ -30,17 +30,17 @@ const TeamGatewayEmail = ({ id, teamId, userState = [], userHasRole, memberNotif
                     />
                 </div>
                 <div className='tm-title'>
-                    <div className='black-16-semibold'>Send email notifications to my gateway email address</div>
+                    <div className='black-16-semibold'>Send email notifications to my Gateway email address</div>
                     {teamId && isManager() && (
                         <div className='gray700-14'>
-                            You will need to add a team email to be able to save switching off notifications to your own gateway email.
+                            You will need to add a team email to be able to save switching off notifications to your own Gateway email.
                         </div>
                     )}
                 </div>
             </div>
             <div className='form-group mt-3'>
                 <label className='gray700-14' htmlFor='EmailAddress'>
-                    My gateway email
+                    My Gateway email
                 </label>
                 <input
                     type='email'
