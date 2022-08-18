@@ -139,7 +139,7 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
                                 fireEvent.click(button);
                             });
 
-                            it('Then shows the terms and conditions modal', async () => {
+                            it('Then redirects to the correct place', async () => {
                                 await waitFor(() =>
                                     expect(window.location.assign).toHaveBeenCalledWith(
                                         'https://rquest.test.healthdatagateway.org/bcrquest/'
