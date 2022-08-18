@@ -3,12 +3,11 @@ import isEmpty from 'lodash';
 import '../Messages/Messages.scss';
 import axios from 'axios';
 import TextareaAutosize from 'react-textarea-autosize';
+import { Box, Button } from 'hdruk-react-core';
 import SVGIcon from '../../../../images/SVGIcon';
 import Loading from '../../../commonComponents/Loading';
 import { baseURL } from '../../../../configs/url.config';
-import LayoutBox from '../../../../components/LayoutBox';
 import Textarea from '../../../../components/Textarea/Textarea';
-import Button from '../../../../components/Button';
 
 const Notes = ({ applicationId, settings, userState, userType, updateCount, count, onLoad }) => {
     const [currentNote, setCurrentNote] = useState('');
@@ -144,7 +143,7 @@ const Notes = ({ applicationId, settings, userState, userType, updateCount, coun
                     <div ref={notesEndRef} id='messageEndRef' />
                 </div>
             </div>
-            <LayoutBox
+            <Box
                 p={3}
                 display='flex'
                 as='form'
@@ -152,13 +151,13 @@ const Notes = ({ applicationId, settings, userState, userType, updateCount, coun
                     e.preventDefault();
                     handleSendNote(currentNote);
                 }}>
-                <LayoutBox flexGrow='1'>
+                <Box flexGrow='1'>
                     <Textarea autosize value={currentNote} onChange={handleChangeNote} mb={0} width='100%' minHeight='42px' />
-                </LayoutBox>
+                </Box>
                 <Button variant='secondary' type='submit' disabled={addButtonDisabled} ml={2}>
                     Send
                 </Button>
-            </LayoutBox>
+            </Box>
         </>
     );
 };

@@ -56,7 +56,7 @@ exports[`Given the DatasetAboutCard component When it is rendered Then matches t
                 class="col-sm-1"
               >
                 <span>
-                  <iconmock
+                  <icon-mock
                     id="datasetTooltipSvg"
                   />
                 </span>
@@ -100,7 +100,7 @@ exports[`Given the DatasetAboutCard component When it is rendered Then matches t
                 class="col-sm-1"
               >
                 <span>
-                  <iconmock
+                  <icon-mock
                     id="datasetTooltipSvg"
                   />
                 </span>

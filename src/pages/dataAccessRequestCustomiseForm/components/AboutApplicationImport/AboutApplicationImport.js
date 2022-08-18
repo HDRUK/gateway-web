@@ -1,14 +1,12 @@
 import React, { useCallback, useState } from 'react';
+import { H5, P, Button } from 'hdruk-react-core';
 import FileSelector from '../../../../components/FileSelector';
-import { H5, P } from '../../../../components/Typography';
-import Button from '../../../../components/Button';
 
 const AboutApplicationImport = ({ userState, team, onUpload }) => {
     const [fileText, setFileText] = useState('');
 
     const handleUpload = useCallback(
         helpers => {
-            console.log('JSON.parse(fileText)', JSON.parse(fileText));
             if (fileText) onUpload(JSON.parse(fileText), helpers);
         },
         [fileText]
@@ -17,7 +15,7 @@ const AboutApplicationImport = ({ userState, team, onUpload }) => {
     return (
         <>
             <H5>Import Data Access Request configuration file</H5>
-            <P color='grey800'>
+            <P color='grey800' mb={4}>
                 You can now import your Data Access Request (DAR) configuration file to populate the DAR from one environment to another
                 without loss of data integrity.
             </P>

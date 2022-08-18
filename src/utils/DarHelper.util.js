@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import moment from 'moment';
-import Button from '../components/Button';
+import { Button } from 'hdruk-react-core';
 
 const autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
 
@@ -509,8 +509,6 @@ const injectExportConfigContent = (jsonSchema, pages, formPanels, questionPanels
  */
 const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, publisherDetails, userState) => {
     const { pages, formPanels, questionPanels } = { ...jsonSchema };
-
-    console.log('jsonSchema', jsonSchema);
 
     const additionalfilesNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ADDITIONALFILES);
     const aboutNavElementsExist = pages.find(page => page.pageId === darStaticPageIds.ABOUT);

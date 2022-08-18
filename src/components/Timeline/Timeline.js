@@ -2,13 +2,13 @@
 import { cx } from '@emotion/css';
 import { jsx } from '@emotion/react';
 import PropTypes from 'prop-types';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Timeline.styles';
 
 const Timeline = ({ data, className, mt, mb, ml, mr, width, minWidth, maxWidth }) => {
     return (
-        <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
+        <Box {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
             <ul css={styles.root} className={cx('ui-Timeline', className)}>
                 {data.map((item, i) => (
                     <li css={styles.listItem} key={`${i}-item`}>
@@ -26,7 +26,7 @@ const Timeline = ({ data, className, mt, mb, ml, mr, width, minWidth, maxWidth }
                     </li>
                 ))}
             </ul>
-        </LayoutBox>
+        </Box>
     );
 };
 

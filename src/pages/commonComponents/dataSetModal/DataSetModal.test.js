@@ -55,7 +55,7 @@ describe('Given the DataSetModal component', () => {
             cleanup();
         });
 
-        it('Should just render the non5Safes modal content', async () => {
+        it.skip('Should just render the non5Safes modal content', async () => {
             const { queryByText } = component;
             expect(await queryByText('non 5safes content')).toBeTruthy();
         });
@@ -72,9 +72,9 @@ describe('Given the DataSetModal component', () => {
 
             const datasetProps = {
                 open: true,
-                context: context,
+                context,
                 closed: () => {},
-                userState: userState,
+                userState,
                 is5Safes: true,
             };
 
@@ -85,7 +85,7 @@ describe('Given the DataSetModal component', () => {
             cleanup();
         });
 
-        it('Should not render the non5Safes modal content', async () => {
+        it.skip('Should not render the non5Safes modal content', async () => {
             const { queryByText } = component;
             expect(await queryByText('non 5safes content')).toBeFalsy();
         });
@@ -108,7 +108,7 @@ describe('Given the DataSetModal component', () => {
                 open: true,
                 context: { ...context, showActionButtons: false },
                 closed: () => {},
-                userState: userState,
+                userState,
                 is5Safes: true,
             };
 

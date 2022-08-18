@@ -2,8 +2,8 @@ import pluralize from 'pluralize';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { Box } from 'hdruk-react-core';
 import Icon from '../../../../components/Icon';
-import LayoutBox from '../../../../components/LayoutBox';
 import SearchControls from '../../../../components/SearchControls';
 import { DATASETS_STATUS_ACTIVE, STATUS_ARCHIVE, STATUS_INREVIEW, STATUS_REJECTED } from '../../../../configs/constants';
 import DatasetCard from '../../../commonComponents/DatasetCard';
@@ -116,9 +116,9 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
             <SearchResults
                 data={data}
                 errorMessage={({ type }) => (
-                    <LayoutBox mt={2}>
+                    <Box mt={2}>
                         <MessageNotFound word={pluralize(type)} />
-                    </LayoutBox>
+                    </Box>
                 )}
                 results={data =>
                     data.map(dataset => (

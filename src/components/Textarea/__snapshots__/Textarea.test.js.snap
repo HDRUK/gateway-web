@@ -3,10 +3,10 @@
 exports[`Given the Textarea component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-330onz"
+    class="ui-Box css-ichth-B"
   >
     <div
-      class="ui-Textarea function () { [native code] } css-1t5t23s-Textarea form-group"
+      class="ui-Textarea additional-classname css-1r4a1n6-Textarea form-group"
     >
       <label
         class="css-8ro76h-Textarea form-label"
@@ -14,16 +14,16 @@ exports[`Given the Textarea component When it is rendered Then matches the previ
         Sample label
       </label>
       <div
-        class="css-cen5ui-Textarea input-group"
+        class="css-v8dvh9-Textarea input-group"
       >
         <div
-          class="ui-TextArea__charCount css-z83g30-Textarea"
+          class="ui-TextArea__charCount css-25vzsz-Textarea"
         >
           11
            
           sample description
           <span
-            class="css-cj1eqa-Textarea"
+            class="css-ghohkr-Textarea"
           >
              
             (

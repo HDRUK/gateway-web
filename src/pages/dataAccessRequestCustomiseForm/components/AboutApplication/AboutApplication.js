@@ -1,7 +1,7 @@
 import React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
+import { H6 } from 'hdruk-react-core';
 import Icon from '../../../../components/Icon';
-import { H6 } from '../../../../components/Typography';
 import { ReactComponent as LockedIcon } from '../../../../images/icons/locked.svg';
 
 const AboutApplication = ({ sections }) => {

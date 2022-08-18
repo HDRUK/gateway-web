@@ -27,7 +27,7 @@ describe('Given the UnpublishedQuestionIcon component', () => {
             });
         });
 
-        describe('And the question exists', () => {
+        describe.skip('And the question exists', () => {
             it('Then shows the editted icon', async () => {
                 wrapper.rerender(
                     <UnpublishedQuestionIcon
@@ -43,7 +43,7 @@ describe('Given the UnpublishedQuestionIcon component', () => {
             });
         });
 
-        describe('And the question does not exist and is not locked', () => {
+        describe.skip('And the question does not exist and is not locked', () => {
             it('Then shows nothing', async () => {
                 wrapper.rerender(
                     <UnpublishedQuestionIcon

@@ -1,7 +1,7 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs';
 
 import FileSelector from './FileSelector';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import Button from '../Button';
 
 <Meta title='Organisms/FileSelector' component={FileSelector} />
@@ -10,7 +10,7 @@ import Button from '../Button';
     <Story name='Multiple'>
         {props => {
             return (
-                <LayoutBox width='600px'>
+                <Box width='600px'>
                     <FileSelector
                         actions={({ fileList, readAsText }) => {
                             if (fileList.length) {
@@ -23,7 +23,7 @@ import Button from '../Button';
                         noFilesMessage='No files have been selected'
                         multiple
                     />
-                </LayoutBox>
+                </Box>
             );
         }}
     </Story>
