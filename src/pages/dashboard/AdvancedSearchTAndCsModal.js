@@ -16,8 +16,6 @@ const AdvancedSearchTAndCsModal = ({ open, close, updateUserAcceptedAdvancedSear
         }),
 
         onSubmit: async () => {
-            console.log('******************* submitting');
-
             // Append role to user in db
             await updateUserAcceptedAdvancedSearchTerms();
         },
