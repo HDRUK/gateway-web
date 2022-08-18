@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Button, FeatureContent, Tag, Typography } from 'hdruk-react-core';
+import { Box, Button, FeatureContent, Tag, Typography } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import googleAnalytics from '../../../tracking';
 import mediaUrl from '../../../images/feature-data-utility-wizard.png';
@@ -19,12 +19,12 @@ const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
         <FeatureContent
             variant='vertical'
             header={
-                <>
-                    {t('search.advanced.dataUtilityWizard.title')}
+                <Box display='flex' width='100%' alignItems='center'>
+                    <Box flexGrow='1'>{t('search.advanced.dataUtilityWizard.title')}</Box>
                     <Tag variant='success' ml={2}>
-                        {t('beta')}
+                        {t('beta').toLocaleUpperCase()}
                     </Tag>
-                </>
+                </Box>
             }
             body={<Typography>{t('search.advanced.dataUtilityWizard.description')}</Typography>}
             media={<img src={mediaUrl} alt={t('search.advanced.dataUtilityWizard.mediaAlt')} />}
@@ -38,6 +38,7 @@ const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
                     </a>
                 </>
             }
+            width='100%'
         />
     );
 };

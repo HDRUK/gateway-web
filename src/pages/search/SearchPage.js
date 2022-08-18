@@ -1927,7 +1927,7 @@ class SearchPage extends React.Component {
                                 )}
                                 {key === 'Datasets' && (
                                     <>
-                                        <Box mb={5}>
+                                        <Box my={5}>
                                             <AdvancedSearchCohortDiscovery userProps={userState[0]} showLoginModal={this.showLoginModal} />
                                         </Box>
 

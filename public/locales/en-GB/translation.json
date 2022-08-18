@@ -144,6 +144,8 @@
     "learn.more": "Learn more",
     "show.more": "Show more",
     "show.less": "Show less",
+    "show": "Show",
+    "hide": "Hide",
     "loading": "Loading",
     "activitylog": {
         "notfound": "The activity log for this dataset cannot be accessed. It must be set to {{status}}.",
@@ -155,6 +157,8 @@
     "guidance.unedited": "Guidance unedited",
     "guidance.edited": "Guidance edited",
     "dataset": {
+        "dateUpdated": "Metadata last updated:",
+        "dateUpdatedTooltip": "The last date when the information about this dataset was updated",
         "inReview": "pending approval",
         "active": "Active",
         "active,draft": "Active",
@@ -322,10 +326,10 @@
         },
         "options": {
             "popularity": "Number of views (highest to lowest)",
-            "metadata": "Metadata quality (platinum to bronze)",
-            "metadataQuality": "Metadata quality (platinum to bronze)",
+            "metadata": "Metadata richness score",
+            "metadataQuality": "Metadata richness score",
             "resources": "Related resources (most first)",
-            "latest": "Latest (recently updated first)",
+            "latest": "Metadata last updated",
             "recentActivity": "Recent activity (newest first)",
             "recentlyadded": "Recently added to collection (newest first)",
             "recentlyPublished": "Recently published (newest first)",
@@ -453,6 +457,11 @@
             "noChanges": "No changes have been made to your application form so it cannot be published.",
             "clearSection": "Are you sure you want to clear the unpublished updates in this section? You will permenantly lose any changes made by you and other team member in this area since the form was last published.",
             "clear": "Are you sure you want to clear all the unpublished updates to this form? You will permenantly lose any changes made by you and other team member since this form was last published."
+        }
+    },
+    "components": {
+        "QualityScore": {
+            "tooltip": "<p>Metadata richness score: {{score}}</p><p>The score relates to the amount of information available about the dataset, and not to the quality of the actual datasets.</p><p>Click to read more about how the score is calculated.</p><p>{{completeness_percent}} Weighted completeness %<br />{{error_percent}} Weighted error %</p>"
         }
     }
 }

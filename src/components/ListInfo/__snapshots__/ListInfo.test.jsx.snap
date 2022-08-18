@@ -3,16 +3,16 @@
 exports[`Given the ListInfo component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-Box css-ichth-B"
   >
     <ul
-      class="ui-ListInfo additional-classname css-1jupbku-ListInfo"
+      class="ui-ListInfo additional-classname css-10bz5jl-ListInfo"
     >
       <li
-        class="css-y6xtl4-ListInfo"
+        class="css-91yyrw-ListInfo"
       >
         <div
-          class="css-33n8h-ListInfo"
+          class="css-t8jsbp-ListInfo"
         >
           Label 1
         </div>
@@ -21,10 +21,10 @@ exports[`Given the ListInfo component When it is rendered Then matches the previ
         </div>
       </li>
       <li
-        class="css-y6xtl4-ListInfo"
+        class="css-91yyrw-ListInfo"
       >
         <div
-          class="css-33n8h-ListInfo"
+          class="css-t8jsbp-ListInfo"
         >
           Label 2
         </div>

@@ -15,9 +15,8 @@ jest.mock('./AccountDatasetsTabs', () => props => {
     return (
         <button
             onClick={() => {
-                props.onSelectTab(STATUS_INREVIEW);
-            }}
-        >
+                props.onSelectTab('inReview');
+            }}>
             Select tab
         </button>
     );
@@ -34,8 +33,7 @@ jest.mock('./AccountDatasetsContent', () => props => {
                     sortBy: 'metadataQuality',
                     sortDirection: 'desc',
                 });
-            }}
-        >
+            }}>
             Submit
         </button>
     );

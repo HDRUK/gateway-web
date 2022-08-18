@@ -35,32 +35,32 @@ describe('Given the Tag component', () => {
     describe('And activeLink is true', () => {
         it('Then the Tag without tagID should be rendered with links', () => {
             const { rerender } = wrapper;
-            rerender(<Tag {...props} activeLink={true} />);
+            rerender(<Tag {...props} activeLink />);
             expect(screen.getByTestId(`badge-${props.tagName}`)).toBeTruthy();
             expect(screen.getByTestId(`badge-${props.tagName}-link`)).toHaveAttribute('href', `${props.url}${props.tagName}`);
         });
         it('Then with tagID Tag should be rendered with id links', () => {
             const { rerender } = wrapper;
-            rerender(<Tag {...props} activeLink={true} tagId='123' />);
+            rerender(<Tag {...props} activeLink tagId='123' />);
             expect(screen.getByTestId(`badge-${props.tagName}`)).toBeTruthy();
-            expect(screen.getByTestId(`badge-${props.tagName}-link`)).toHaveAttribute('href', `${props.url}1234`);
+            expect(screen.getByTestId(`badge-${props.tagName}-link`)).toHaveAttribute('href', `${props.url}123`);
         });
     });
 
     describe('And showTagType is true', () => {
         it('Then the Tag  should be rendered with the prefix as TagType ', () => {
             const { rerender } = wrapper;
-            rerender(<Tag {...props} activeLink={true} showTagType={true} />);
+            rerender(<Tag {...props} activeLink showTagType />);
             expect(screen.getByTestId(`badge-${props.tagName}`)).toBeTruthy();
             expect(screen.getByTestId(`badge-${props.tagName}-link`)).toHaveTextContent(`${toTitleCase(props.tagType)}: ${props.tagName}`);
         });
     });
 
     describe('And activeLink and onSearchPage is true', () => {
-        let updateOnFilterBadgeHandler = props.updateOnFilterBadgeHandler;
+        const { updateOnFilterBadgeHandler } = props;
         it('Then Tag  should be rendered without links', () => {
             const { rerender } = wrapper;
-            rerender(<Tag {...props} activeLink={true} onSearchPage={true} />);
+            rerender(<Tag {...props} activeLink onSearchPage />);
             expect(screen.getByTestId(`badge-${props.tagName}`)).toBeTruthy();
             expect(screen.queryByTestId(`badge-${props.tagName}-link`)).toBeNull();
         });

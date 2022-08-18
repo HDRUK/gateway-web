@@ -3,18 +3,18 @@
 exports[`Given the Alert component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1k6rz1e"
+    class="ui-Box css-ichth-B"
   >
     <div
-      class="ui-Alert css-dtd0fn-Alert"
+      class="ui-Alert css-mdcthr-Alert"
     >
       <div
-        class="ui-Alert__icon css-1x7ex26-Alert"
+        class="ui-Alert__icon css-1jspzre-Alert"
       >
         <span
-          class="ui-Icon css-1k6rz1e css-1nyc6qc-Icon"
+          class="ui-Icon css-1tuhzuv css-18xv0v4-Icon"
         >
-          <iconmock
+          <icon-mock
             fill="inherit"
           />
         </span>

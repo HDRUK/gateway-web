@@ -8,7 +8,7 @@ exports[`Given the Remove Button component When it is rendered Then matches the 
     type="button"
   >
     <svg
-      class="mr-2 css-1cyke48-RemoveButton"
+      class="mr-2 css-1trfrvv-RemoveButton"
       data-testid="closeicon"
       height="100%"
       viewBox="0 0 18 18"

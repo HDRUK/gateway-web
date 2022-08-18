@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, FeatureContent, Tag, Typography } from 'hdruk-react-core';
+import { Box, Button, FeatureContent, Tag, Typography } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
@@ -20,7 +20,7 @@ const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
     const [showModalTCs, setShowModalTCs] = useState();
     const [showModalAccess, setShowModalAccess] = useState();
 
-    const { loggedIn, advancedSearchRoles } = userState;
+    const { loggedIn, advancedSearchRoles, acceptedAdvancedSearchTerms } = userState;
 
     const patchRolesRequest = usersService.usePatchRoles(null, {
         onError: ({ title, message }) => {
@@ -35,7 +35,7 @@ const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
     });
 
     const authorisedForAdvancedSearch = async () => {
-        if (advancedSearchRoles.includes(ADVANCED_SEARCH_ROLE_GENERAL_ACCESS)) {
+        if (advancedSearchRoles && advancedSearchRoles.includes(ADVANCED_SEARCH_ROLE_GENERAL_ACCESS)) {
             return true;
         }
         if (userState.provider === 'oidc') {
@@ -74,7 +74,7 @@ const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
         } else {
             setShowModalAccess(true);
         }
-    }, []);
+    }, [userState]);
 
     const handleAcceptedTerms = useCallback(async () => {
         const {
@@ -89,29 +89,44 @@ const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
         setUserState({
             ...userState,
             advancedSearchRoles,
+            acceptedAdvancedSearchTerms: true,
         });
-    }, []);
+    }, [userState]);
+
+    useEffect(() => {
+        setUserState(userProps);
+    }, [userProps]);
 
     return (
         <>
             <FeatureContent
                 variant='vertical'
                 header={
-                    <>
-                        {t('search.advanced.cohortDiscovery.title')}
+                    <Box display='flex' width='100%' alignItems='center'>
+                        <Box flexGrow='1'>{t('search.advanced.cohortDiscovery.title')}</Box>
                         <Tag variant='success' ml={2}>
-                            {t('beta')}
+                            {t('beta').toLocaleUpperCase()}
                         </Tag>
-                    </>
+                    </Box>
                 }
                 body={<Typography>{t('search.advanced.cohortDiscovery.description')}</Typography>}
                 media={<img src={mediaUrl} alt={t('search.advanced.cohortDiscovery.mediaAlt')} />}
                 actions={
                     <>
-                        <Button variant='secondary' mb={3} onClick={!loggedIn ? showLoginModal : handleRequestAccess}>
-                            {loggedIn && t('search.advanced.cohortDiscovery.action')}
-                            {!loggedIn && t('search.advanced.cohortDiscovery.actionLoggedOut')}
-                        </Button>
+                        {!loggedIn && (
+                            <Button variant='secondary' mb={3} onClick={showLoginModal}>
+                                {t('search.advanced.cohortDiscovery.actionLoggedOut')}
+                            </Button>
+                        )}
+                        {loggedIn && (
+                            <Button
+                                variant='secondary'
+                                mb={3}
+                                onClick={handleRequestAccess}
+                                data-testid={acceptedAdvancedSearchTerms ? 'accepted-action' : 'action'}>
+                                {t('search.advanced.cohortDiscovery.action')}
+                            </Button>
+                        )}
                         <a href='https://www.healthdatagateway.org/about/cohort-discovery' target='_blank' rel='noreferrer'>
                             <Typography color='purple500'>{t('learn.more')}</Typography>
                         </a>

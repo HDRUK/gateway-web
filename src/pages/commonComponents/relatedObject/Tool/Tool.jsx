@@ -50,7 +50,7 @@ const Tool = ({ data, activeLink, onSearchPage, showRelationshipQuestion, update
             {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
         </Col>
         <Col className='pad-left-24 pad-right-24 pad-top-16'>
-            <ShowMore>
+            <ShowMore initialHeight={30}>
                 <Tag tagName={tool.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
                     <SVGIcon name='newtoolicon' fill='#ffffff' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
                 </Tag>
