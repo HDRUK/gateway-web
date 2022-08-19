@@ -100,7 +100,7 @@
             "users": {
                 "patchRoles": {
                     "404": {
-                        "message": "There resource for updating the roles could not be found"
+                        "message": "The resource for updating the roles could not be found"
                     },
                     "500": {
                         "message": "There has been a problem updating the roles"
@@ -142,8 +142,6 @@
     },
     "beta": "Beta",
     "learn.more": "Learn more",
-    "show.more": "Show more",
-    "show.less": "Show less",
     "show": "Show",
     "hide": "Hide",
     "loading": "Loading",
