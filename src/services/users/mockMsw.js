@@ -1,4 +1,5 @@
 import { rest } from 'msw';
+import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS } from '../../configs/constants';
 import { apiURL } from '../../configs/url.config';
 
 export const mswGetUsers = rest.get(`${apiURL}/users`, (req, res, ctx) => {
@@ -35,4 +36,26 @@ export const mswSearchUsers = rest.get(`${apiURL}/users/search/jack`, (req, res,
     );
 });
 
-export default [mswGetUsers, mswGetUserByID, mswSearchUsers];
+export const mswPatchRoles = rest.patch(`${apiURL}/users/advancedsearch/roles/1234`, (req, res, ctx) => {
+    return res(
+        ctx.status(200),
+        ctx.json({
+            response: {
+                advancedSearchRoles: [ADVANCED_SEARCH_ROLE_GENERAL_ACCESS],
+            },
+        })
+    );
+});
+
+export const mswPatchTerms = rest.patch(`${apiURL}/users/advancedsearch/terms/1234`, (req, res, ctx) => {
+    return res(
+        ctx.status(200),
+        ctx.json({
+            response: {
+                advancedSearchRoles: [ADVANCED_SEARCH_ROLE_GENERAL_ACCESS],
+            },
+        })
+    );
+});
+
+export default [mswGetUsers, mswGetUserByID, mswSearchUsers, mswPatchRoles, mswPatchTerms];

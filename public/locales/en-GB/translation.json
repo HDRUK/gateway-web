@@ -96,6 +96,24 @@
                         "message": "There has been a problem getting the related object"
                     }
                 }
+            },
+            "users": {
+                "patchRoles": {
+                    "404": {
+                        "message": "The resource for updating the roles could not be found"
+                    },
+                    "500": {
+                        "message": "There has been a problem updating the roles"
+                    }
+                },
+                "patchTerms": {
+                    "404": {
+                        "message": "The resource for updating the terms and conditions could not be found"
+                    },
+                    "500": {
+                        "message": "There has been a problem updating the terms and conditions"
+                    }
+                }
             }
         }
     },
@@ -122,6 +140,8 @@
     "datetime": {
         "submitted": "Submitted {{datetime}}"
     },
+    "beta": "Beta",
+    "learn.more": "Learn more",
     "show": "Show",
     "hide": "Hide",
     "loading": "Loading",
@@ -254,6 +274,20 @@
         "placeholder": "Search within {{type}}",
         "results": {
             "notFound": "Could not find any {{type}} matching {{search}}"
+        },
+        "advanced": {
+            "cohortDiscovery": {
+                "title": "Cohort Discovery",
+                "description": "Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.",
+                "action": "Search using Cohort Discovery",
+                "actionLoggedOut": "You must be signed in to use cohort discovery",
+                "mediaAlt": "Cohort Discovery feature image"
+            },
+            "dataUtilityWizard": {
+                "title": "Data Utility Wizard",
+                "description": "A tool to help refine your search to only datasets that meet your data utility requirements.",
+                "action": "Search using Data Utility Wizard"
+            }
         }
     },
     "tabs": {

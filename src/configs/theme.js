@@ -279,7 +279,6 @@ export const theme = {
                 },
             },
         },
-        Button: THEME_BUTTON,
         Cta: {
             sizes: {
                 small: {
