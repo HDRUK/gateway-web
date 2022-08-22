@@ -1,0 +1,20 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+<Meta title='Hooks/useRetryAsync' />
+
+```js
+const retry = useRetryAsync({
+    onIterationComplete: (urls, values) => {
+        if (values[0].data && values[1].data) {
+            retry.reset();
+        }
+    },
+    onComplete: mediaFiles => {
+        setLoading(false);
+    },
+});
+
+React.useEffect(() => {
+    retry.init([() => axios.get('/api/v1/1234/status'), () => axios.get('/api/v1/5678/status')]);
+});
+```

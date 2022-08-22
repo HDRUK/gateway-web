@@ -16,7 +16,7 @@ import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
 import Button from '../../../../components/Button';
 import Icon from '../../../../components/Icon';
-import useRetry from './useRetry';
+import useRetryAsync from '../../../../hooks/useRetryAsync/useRetryAsync';
 
 const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disabled }) => {
     const maxSize = 10485760;
@@ -25,6 +25,21 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
     const [uploadFiles, setUploadFiles] = useState([]);
     const [submitted, setSubmitted] = useState(false);
     const [isLoading, setLoading] = useState(false);
+
+    const retry = useRetryAsync({
+        onIterationComplete: (files, values) => {
+            console.log('Files', files, values);
+
+            // If everything has been returned successfully, retry.reset
+        },
+        onComplete: mediaFiles => {
+            console.log('mediaFiles', mediaFiles);
+            onFilesUpdate(mediaFiles, false);
+            setUploadFiles([]);
+
+            setLoading(false);
+        },
+    });
 
     const onRemoveFile = file => {
         const newFiles = [...uploadFiles].filter(f => {
@@ -103,18 +118,25 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
     };
 
     const onUploadFiles = async () => {
+        // retryCount = 0;
         setSubmitted(true);
-
+        // 1. filter out files that have description and newFile to upload
         const acceptedFiles = [...uploadFiles].filter(f => !_.isEmpty(f.description) && f.status === fileStatus.NEWFILE);
-
         if (!_.isEmpty(acceptedFiles)) {
+            // 2. setup new formData array for axios
             const formData = new FormData();
+            // 3. append our files to formData
+            const fileObjects = [...acceptedFiles].map(f => {
+                const { file } = f;
+                formData.append('assets', file);
+                formData.append('descriptions', f.description);
+                formData.append('ids', f.fileId);
+            });
+            // 4. Set up headers for axios
             const config = {
                 headers: { 'Content-Type': 'multipart/form-data' },
             };
-
             setLoading(true);
-
             await axios
                 .post(`${baseURL}/api/v1/data-access-request/${id}/upload`, formData, config)
                 .then(response => {
@@ -125,12 +147,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
                     } = response;
                     // update file state
                     if (!_.isEmpty(mediaFiles)) {
-                        // returned files and initialFilesLoad = false
-                        onFilesUpdate(mediaFiles, false);
-                        // wipe upload false
-                        setUploadFiles([]);
-                        // set loading false
-                        setLoading(false);
+                        retry.init(getStatusRequests(mediaFiles), mediaFiles);
                     }
                 })
                 .catch(err => {
@@ -178,10 +195,19 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
         }
     };
 
-    const retry = useRetry(30);
+    const getStatusRequests = files => {
+        console.log('REQUESTS', files);
+
+        return files.map(
+            ({ fileId }) =>
+                () =>
+                    axios.get(`${baseURL}/api/v1/data-access-request/${id}/file/${fileId}/status`)
+        );
+    };
 
     useEffect(() => {
-        retry.init([({ fileId }) => axios.get(`${baseURL}/api/v1/data-access-request/${id}/file/${fileId}`)]);
+        console.log('FIRST', files);
+        retry.initOnce(getStatusRequests(files), files);
     }, []);
 
     // dropzone setup
