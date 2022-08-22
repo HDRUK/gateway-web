@@ -20,7 +20,6 @@ import useRetryAsync from '../../../../hooks/useRetryAsync/useRetryAsync';
 
 const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disabled }) => {
     const maxSize = 10485760;
-    const maxRetries = 30;
 
     const [uploadFiles, setUploadFiles] = useState([]);
     const [submitted, setSubmitted] = useState(false);
@@ -28,16 +27,22 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
 
     const retry = useRetryAsync({
         onIterationComplete: (files, values) => {
-            console.log('Files', files, values);
+            values.forEach(
+                (
+                    {
+                        value: {
+                            data: { status },
+                        },
+                    },
+                    i
+                ) => {
+                    if (status === fileStatus.SCANNED || status === fileStatus.QUARANTINED || status === fileStatus.ERROR) {
+                        files[i].status = status;
 
-            // If everything has been returned successfully, retry.reset
-        },
-        onComplete: mediaFiles => {
-            console.log('mediaFiles', mediaFiles);
-            onFilesUpdate(mediaFiles, false);
-            setUploadFiles([]);
-
-            setLoading(false);
+                        onFilesUpdate(files, false);
+                    }
+                }
+            );
         },
     });
 
@@ -147,6 +152,11 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
                     } = response;
                     // update file state
                     if (!_.isEmpty(mediaFiles)) {
+                        onFilesUpdate(mediaFiles, false);
+
+                        setUploadFiles([]);
+                        setLoading(false);
+
                         retry.init(getStatusRequests(mediaFiles), mediaFiles);
                     }
                 })
@@ -196,8 +206,6 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
     };
 
     const getStatusRequests = files => {
-        console.log('REQUESTS', files);
-
         return files.map(
             ({ fileId }) =>
                 () =>
@@ -206,7 +214,6 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
     };
 
     useEffect(() => {
-        console.log('FIRST', files);
         retry.initOnce(getStatusRequests(files), files);
     }, []);
 
