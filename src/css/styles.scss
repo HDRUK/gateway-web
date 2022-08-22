@@ -1,6 +1,9 @@
+@use 'sass:map';
+
 @import './variables';
 @import './typography';
 @import './mixins';
+@import './winterfell';
 
 * {
     -webkit-font-smoothing: antialiased;
@@ -29,6 +32,28 @@ a {
     margin: 0;
     padding: 0;
     height: 100%;
+}
+
+button,
+[role='button'] {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.modal-sm,
+.modal-xl {
+    left: 50% !important;
+    transform: translateX(-50%);
+}
+
+.modal-xl .modal-dialog,
+.modal-xl .modal-content {
+    max-width: none;
+}
+
+.modal-xl {
+    max-width: 1140px !important;
 }
 
 button,
@@ -369,6 +394,18 @@ a.nav-item.nav-link.active {
     }
 }
 
+.badge {
+    &-tag:hover {
+        background-color: $gray-400;
+    }
+}
+
+.badge {
+    &-version:hover {
+        background-color: $gray-400;
+    }
+}
+
 .iconHolder {
     text-align: right;
     padding-top: 5px;
@@ -702,6 +739,10 @@ textarea:focus {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
 }
 
 .btn-outline-secondary {
@@ -1654,11 +1695,60 @@ button a {
     padding: 8px 12px;
 }
 
-.react-markdown {
-    font-size: 14px;
+.loader,
+.loader:after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+}
 
-    h1 {
-        text-transform: uppercase;
-        font-size: 15px !important;
+.loader {
+    margin: 60px auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-left: 1.1em solid #ffffff;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+}
+
+@-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
     }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.textarea-modal {
+    min-height: 180px;
+}
+
+.textarea-discourse {
+    min-height: 155px;
+}
+
+.textarea-addEditForm {
+    min-height: 186px;
+    padding: 8px 12px;
 }

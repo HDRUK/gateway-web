@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, { Suspense, useCallback, useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { Button } from 'hdruk-react-core';
 import { LayoutContent } from '../../../../components/Layout';
 import { useAuth } from '../../../../context/AuthContext';
 import serviceActivityLog from '../../../../services/activitylog/activitylog';
@@ -57,7 +57,7 @@ const AccountDataset = props => {
     };
 
     const updateButtonStates = ({ currentIndex, total }) => {
-        let buttonState = {
+        const buttonState = {
             showNext: Boolean(currentIndex < total - 1),
             showPrevious: currentIndex > 0,
         };
@@ -67,8 +67,6 @@ const AccountDataset = props => {
                 ...buttonState,
                 statusError: true,
             });
-
-            return;
         } else {
             setState({
                 ...buttonState,
@@ -212,7 +210,8 @@ const AccountDataset = props => {
             NotificationManager.error('The accessed dataset does not exist', 'Page not found', 10000);
 
             return <Redirect to='/account?tab=datasets' />;
-        } else if (statusError) {
+        }
+        if (statusError) {
             NotificationManager.error('The status of the dataset must be in review', 'Invalid status', 10000);
 
             return <Redirect to='/account?tab=datasets' />;
@@ -231,7 +230,7 @@ const AccountDataset = props => {
                     title={currentDataset.name}
                     publisher={currentDataset.datasetv2.summary.publisher.name}
                     version={currentDataset.datasetVersion}
-                    isDraft={true}
+                    isDraft
                     datasetStatus={currentDataset.activeflag}
                     timeStamps={currentDataset.timestamps}
                     completion={currentDataset.percentageCompleted}
@@ -244,12 +243,12 @@ const AccountDataset = props => {
                 <ActionBar userState={userState}>
                     <div className='action-bar-actions'>
                         {showPrevious && !statusError && (
-                            <Button variant='light' onClick={() => handlePaginationClick(-1)}>
+                            <Button variant='tertiary' onClick={() => handlePaginationClick(-1)}>
                                 {t('previous')}
                             </Button>
                         )}
                         {showNext && !statusError && (
-                            <Button variant='light' onClick={() => handlePaginationClick(1)}>
+                            <Button variant='tertiary' onClick={() => handlePaginationClick(1)}>
                                 {t('next')}
                             </Button>
                         )}

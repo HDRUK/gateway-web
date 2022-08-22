@@ -17,6 +17,10 @@ const LayoutBox = ({
     pb,
     pl,
     pr,
+    px,
+    py,
+    mx,
+    my,
     width,
     minWidth,
     maxWidth,
@@ -28,12 +32,6 @@ const LayoutBox = ({
     justifyContent,
     flexGrow,
     position,
-    top,
-    left,
-    bottom,
-    right,
-    height,
-    overflowY,
     ...outerProps
 }) => {
     const commonStyles = useCommonStyles({
@@ -46,6 +44,10 @@ const LayoutBox = ({
         pr,
         pb,
         pl,
+        px,
+        py,
+        mx,
+        my,
         width,
         minWidth,
         maxWidth,
@@ -56,12 +58,6 @@ const LayoutBox = ({
         justifyContent,
         flexGrow,
         position,
-        top,
-        left,
-        bottom,
-        right,
-        height,
-        overflowY,
     });
 
     const Tag = as;

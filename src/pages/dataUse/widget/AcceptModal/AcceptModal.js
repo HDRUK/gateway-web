@@ -4,10 +4,10 @@ import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import { Button } from 'hdruk-react-core';
 import leaglText from './TermsAndConditions';
 import * as styles from './AcceptModal.styles';
 import { ModalBody, ModalFooter, ModalHeader, Modal } from '../../../../components/Modal';
-import Button from '../../../../components/Button';
 import LayoutBox from '../../../../components/LayoutBox';
 import Typography from '../../../../components/Typography';
 

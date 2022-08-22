@@ -48,3 +48,8 @@ export const userHasRole = (userState, teamId, role) => {
     })[0];
     return team && team.roles.some(r => role.includes(r));
 };
+export const isPublisherAdmin = (userState, publisherId) => {
+    return userState[0].teams.find(team => {
+        return publisherId === team._id && team.isAdmin;
+    });
+};

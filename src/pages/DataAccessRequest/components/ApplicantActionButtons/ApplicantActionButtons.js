@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Button } from 'hdruk-react-core';
+import googleAnalytics from '../../../../tracking';
 import DarHelper from '../../../../utils/DarHelper.util';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
-import googleAnalytics from '../../../../tracking';
 
 const ApplicantActionButtons = ({
     allowedNavigation = false,
@@ -15,6 +16,7 @@ const ApplicantActionButtons = ({
     applicationStatus,
     onDuplicateClick,
     onShowAmendApplicationModal,
+    hasNext,
 }) => {
     const options = [
         {
@@ -69,7 +71,7 @@ const ApplicantActionButtons = ({
     });
 
     return (
-        <Fragment>
+        <>
             <ActionBarMenu
                 label='Manage application'
                 options={availableOptions}
@@ -78,27 +80,26 @@ const ApplicantActionButtons = ({
             />
 
             {showSubmit && (
-                <button
-                    className={`button-secondary ${allowedNavigation ? '' : 'disabled'}`}
+                <Button
+                    variant='secondary'
                     onClick={() => {
                         onSubmitClick();
                         googleAnalytics.recordVirtualPageView('submit application modal');
                     }}
-                >
+                    disabled={!allowedNavigation}>
                     {submitButtonText}
-                </button>
+                </Button>
             )}
 
-            <button
-                className={`button-primary ${allowedNavigation ? '' : 'disabled'}`}
+            <Button
                 onClick={() => {
                     onNextClick();
                     googleAnalytics.recordEvent('Data access request', 'Clicked next', 'Navigate to next page');
                 }}
-            >
+                disabled={!allowedNavigation || !hasNext}>
                 Next
-            </button>
-        </Fragment>
+            </Button>
+        </>
     );
 };
 

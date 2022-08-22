@@ -100,7 +100,7 @@ export const mixins = {
 		justify-content: center;
 	`,
     partial: ({ width, height }) => `
-		content: '-';
+		content: '';
 		font-size: 22px;
 		color: white;
 		z-index: 1;

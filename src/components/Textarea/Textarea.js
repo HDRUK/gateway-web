@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Form, InputGroup } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
 import { addCommonPropTypes } from '../../configs/propTypes';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Textarea.styles';
 
@@ -24,6 +24,8 @@ const Textarea = ({
     width,
     minWidth,
     maxWidth,
+    minHeight,
+    maxHeight,
     inputRef,
     id,
     rows,
@@ -31,10 +33,10 @@ const Textarea = ({
     ...outerProps
 }) => {
     return (
-        <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
+        <Box {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
             <Form.Group controlId={id} className={cx('ui-Textarea', className)} css={styles.formGroup}>
-                <Form.Label css={styles.label}>{label}</Form.Label>
-                <InputGroup css={styles.inputGroup({ variant, rows, error })}>
+                {label && <Form.Label css={styles.label}>{label}</Form.Label>}
+                <InputGroup css={styles.inputGroup({ variant, rows, error, minHeight, maxHeight })}>
                     {!!maxCharCount && (
                         <div className='ui-TextArea__charCount' css={styles.charCount}>
                             {value.length} {charCountDescription}
@@ -49,7 +51,7 @@ const Textarea = ({
                 </InputGroup>
                 {error && <div className='errorMessages'>{error}</div>}
             </Form.Group>
-        </LayoutBox>
+        </Box>
     );
 };
 
@@ -59,6 +61,7 @@ Textarea.defaultProps = {
     charCountDescription: 'character limit',
     value: '',
     rows: 5,
+    maxHeight: 'auto',
     ...PROP_TYPES_LAYOUTBOX,
 };
 

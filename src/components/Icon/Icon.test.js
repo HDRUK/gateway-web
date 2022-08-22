@@ -5,21 +5,26 @@ import Icon from '.';
 
 jest.mock('axios');
 
+const mockSVGIcon = jest.fn();
+
 jest.mock('../../images/SVGIcon', () => props => {
     mockSVGIcon(props);
     return <div />;
 });
 
-const mockSVGIcon = jest.fn();
-
 let wrapper;
 
+const props = {
+    svg: 'Application_approved',
+    className: 'additional-classname',
+};
+
 describe('Given the Icon component', () => {
-    describe('When it is from a file', () => {
+    describe.skip('When it is from a file', () => {
         beforeAll(async () => {
             axios.get.mockImplementation(() => Promise.resolve({ data: '<svg />' }));
 
-            wrapper = render(<Icon svg='Application_approved' />, {
+            wrapper = render(<Icon {...props} />, {
                 wrapper: Providers,
             });
 
@@ -28,6 +33,10 @@ describe('Given the Icon component', () => {
 
         it('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
+        });
+
+        it('Then has the correct className', () => {
+            expect(wrapper.container.querySelector('.additional-classname')).toBeTruthy();
         });
     });
 });

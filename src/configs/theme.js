@@ -9,13 +9,26 @@ export const getSpacingStyle = (prop, value, theme) => {
     return typeof value === 'number' ? `${prop}: ${getSize(value, theme)};` : '';
 };
 
+export const getColorStyle = (prop, value, theme) => {
+    return `${prop}: ${theme.colors[value]};`;
+};
+
 export const getCommonStyle = (prop, value) => {
     return !isNil(value) ? `${prop}: ${value};` : '';
 };
 
+export const getStyle = (propParts, value, theme) => {
+    const styleProp = propParts.join('-').toLowerCase();
+
+    if (styleProp === 'font-size') {
+        return `${styleProp}: ${theme.font.size[value]};`;
+    }
+
+    return `${styleProp}: ${value};`;
+};
+
 export const getCommonStyles = (
     {
-        m,
         ml,
         mr,
         mb,
@@ -25,10 +38,10 @@ export const getCommonStyles = (
         pt,
         pb,
         pl,
-        top,
-        left,
-        bottom,
-        right,
+        mx,
+        my,
+        px,
+        py,
         width,
         maxWidth,
         minWidth,
@@ -37,27 +50,19 @@ export const getCommonStyles = (
         justifyContent,
         flexGrow,
         position,
-        height,
-        minHeight,
-        maxHeight,
-        overflowY,
     },
     theme
 ) => {
     return `
-        ${getSpacingStyle('margin', m, theme)}
-		${getSpacingStyle('margin-left', ml, theme)}
-		${getSpacingStyle('margin-right', mr, theme)}
-		${getSpacingStyle('margin-bottom', mb, theme)}
-		${getSpacingStyle('margin-top', mt, theme)}
+		${getSpacingStyle('margin-left', ml || mx, theme)}
+		${getSpacingStyle('margin-right', mr || mx, theme)}
+		${getSpacingStyle('margin-bottom', mb || my, theme)}
+		${getSpacingStyle('margin-top', mt || my, theme)}
         ${getSpacingStyle('padding', p, theme)}
-        ${getSpacingStyle('padding-left', pl, theme)}
-		${getSpacingStyle('padding-right', pr, theme)}
-		${getSpacingStyle('padding-bottom', pb, theme)}
-        ${getSpacingStyle('padding-top', pt, theme)}
-        ${getCommonStyle('height', height)}
-        ${getCommonStyle('max-height', maxHeight)}
-		${getCommonStyle('min-height', minHeight)}
+        ${getSpacingStyle('padding-left', pl || px, theme)}
+		${getSpacingStyle('padding-right', pr || px, theme)}
+		${getSpacingStyle('padding-bottom', pb || py, theme)}
+		${getSpacingStyle('padding-top', pt || py, theme)}
 		${getCommonStyle('width', width)}
 		${getCommonStyle('max-width', maxWidth)}
 		${getCommonStyle('min-width', minWidth)}
@@ -66,38 +71,14 @@ export const getCommonStyles = (
         ${getCommonStyle('justify-content', justifyContent)}
         ${getCommonStyle('flex-grow', flexGrow)}
         ${getCommonStyle('position', position)}
-        ${getCommonStyle('top', top)}
-        ${getCommonStyle('bottom', bottom)}
-        ${getCommonStyle('left', left)}
-        ${getCommonStyle('right', right)}
-        ${getCommonStyle('overflow-y', overflowY)}
-        
 	`;
-};
-
-const getComponentStyleValue = (value, theme) => {
-    const isColor = Object.keys(theme.colors).includes(value);
-    const isFontSize = Object.keys(theme.font.size).includes(value);
-
-    if (isColor) {
-        return theme.colors[value];
-    }
-    if (isFontSize) {
-        return theme.font.size[value];
-    }
-
-    return value;
-};
-
-export const getComponentStyle = (prop, value, theme, important) => {
-    const propParts = prop.split(/(?=[A-Z])/);
-
-    return `${propParts.join('-')}: ${getComponentStyleValue(value, theme)}${important ? ' !important' : ''};`;
 };
 
 export const getComponentStylesFromTheme = (props, theme) => {
     const styles = Object.keys(props).map(prop => {
         const propParts = prop.replace(/([a-z])([A-Z])/g, '$1,$2').split(',');
+        const isColor = Object.keys(theme.colors).includes(props[prop]);
+        const value = isColor ? theme.colors[props[prop]] : props[prop];
         const pseudoSelector = propParts[0];
 
         if (pseudoSelector === 'hover' || pseudoSelector === 'disabled' || pseudoSelector === 'focus') {
@@ -105,12 +86,12 @@ export const getComponentStylesFromTheme = (props, theme) => {
 
             return `
                 :${pseudoSelector} {
-                    ${propParts.join('-')}: ${getComponentStyleValue(props[prop], theme)};
+                   ${getStyle(propParts, value, theme)}
                 }
             `;
         }
 
-        return `${propParts.join('-')}: ${getComponentStyleValue(props[prop], theme)};`;
+        return getStyle(propParts, value, theme);
     });
 
     return styles.join('\n');
@@ -120,12 +101,20 @@ export const getComponentVariant = (component, variant, theme) => {
     return getComponentStylesFromTheme(theme.components[component].variants[variant], theme);
 };
 
+export const getComponentGlobals = (component, theme) => {
+    return theme.components[component].globals;
+};
+
+export const getComponentGlobalStyles = (component, theme) => {
+    return getComponentStylesFromTheme(getComponentGlobals(component, theme), theme);
+};
+
 export const getComponentSize = (component, size, theme) => {
     return getComponentStylesFromTheme(theme.components[component].sizes[size], theme);
 };
 
-export const getComponentGlobals = (component, theme) => {
-    return getComponentStylesFromTheme(theme.components[component].globals, theme);
+export const getFontSizeStyle = (fontSize, theme) => {
+    return getComponentStylesFromTheme({ fontSize }, theme);
 };
 
 export const THEME_INPUT = {
@@ -155,9 +144,9 @@ export const THEME_INPUT = {
 export const THEME_FONT_SIZES = {
     xxs: '8px',
     xs: '10px',
-    sm: '12px',
-    md: '13px',
-    default: '13px',
+    sm: '13px',
+    md: '14px',
+    default: '14px',
     lg: '16px',
     xl: '20px',
     '2xl': '24px',
@@ -169,11 +158,11 @@ export const THEME_FONT_SIZES = {
 export const THEME_BUTTON = {
     sizes: {
         small: {
-            fontSize: THEME_FONT_SIZES.xs,
-            padding: '6px 12px',
+            fontSize: 'md',
+            padding: '8px 12px',
         },
-        default: { fontSize: THEME_FONT_SIZES.md, padding: '10px 16px' },
-        large: { fontSize: THEME_FONT_SIZES.lg, padding: '14px 20px' },
+        default: { fontSize: 'md', padding: '11px 16px' },
+        large: { fontSize: 'lg', padding: '14px 20px' },
     },
     variants: {
         primary: {
@@ -227,13 +216,16 @@ export const theme = {
         inherit: 'inherit',
         purple500: '#475DA7',
         platinum50: '#E3F4FB',
+        brown900: '#856505',
         platinum700: '#4682B4',
+        platinum900: '#34537C',
         green50: '#E2F3F0',
         green200: '#8CD1BF',
         green400: '#3DB28C',
         grey500: '#B3B8BD',
         green600: '#329276',
         green700: '#2c8267',
+        green900: '#1C553F',
         grey: '#F6F7F8',
         grey100: '#F6F7F8',
         grey200: '#EEE',
@@ -247,6 +239,7 @@ export const theme = {
         red50: '#FFECF1',
         red600: '#EF3F4B',
         red700: '#DC3645',
+        red900: '#C02531',
         purple: '#475da7',
         purple100: '#C6CEE5',
         purple200: '#A2AED3',
@@ -254,7 +247,7 @@ export const theme = {
         teal: '#3db28c',
         yellow700: '#F0BB24',
         yellow50: '#FDFCE6',
-        orange100: '#FDDFC0',
+        gold50: '#FFF8E1',
         none: 'none',
     },
     components: {
@@ -273,8 +266,8 @@ export const theme = {
                     borderColor: 'platinum700',
                 },
                 warning: {
-                    background: 'yellow50',
-                    color: 'yellow700',
+                    background: 'gold50',
+                    color: 'brown900',
                     fill: 'yellow700',
                     borderColor: 'yellow700',
                 },
@@ -286,28 +279,17 @@ export const theme = {
                 },
             },
         },
-        Button: THEME_BUTTON,
-        Card: {
-            globals: {
-                boxShadow: '1px 1px 3px 0 rgb(0 0 0 / 9%)',
-                backgroundColor: 'white',
-            },
-        },
-        CardHeader: {
-            globals: {
-                borderColor: 'grey200',
-                fontSize: 'lg',
-                fontWeight: 600,
-            },
-        },
-        CardFooter: {
-            globals: {
-                borderColor: 'grey200',
-            },
-        },
-        Dimmer: {
-            globals: {
-                backgroundColor: 'rgba(0,0,0,0.15)',
+        Cta: {
+            sizes: {
+                small: {
+                    fontSize: 'sm',
+                },
+                default: {
+                    fontSize: 'md',
+                },
+                large: {
+                    fontSize: 'xl',
+                },
             },
         },
         IconButton: merge({}, THEME_BUTTON, {
@@ -364,6 +346,45 @@ export const theme = {
                 },
             },
         },
+        Switch: {
+            globals: {
+                height: '24px',
+                width: '42px',
+                fontSize: 'md',
+                background: 'red700',
+                checkedBackground: 'green700',
+                disabledBackground: 'grey200',
+                disabledColor: 'grey600',
+            },
+        },
+        SwitchControl: {
+            globals: {
+                background: 'white',
+            },
+        },
+        AlertMessage: {
+            globals: {
+                fontSize: 'sm',
+            },
+            variants: {
+                success: {
+                    color: 'green900',
+                    fill: 'green900',
+                },
+                info: {
+                    color: 'platinum900',
+                    fill: 'platinum900',
+                },
+                warning: {
+                    color: 'brown900',
+                    fill: 'brown900',
+                },
+                danger: {
+                    color: 'red900',
+                    fill: 'red900',
+                },
+            },
+        },
         Icon: {
             sizes: THEME_FONT_SIZES,
         },
@@ -380,27 +401,27 @@ export const theme = {
                 },
                 h2: {
                     fontSize: THEME_FONT_SIZES['4xl'],
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h3: {
                     fontSize: THEME_FONT_SIZES['3xl'],
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h4: {
                     fontSize: THEME_FONT_SIZES['2xl'],
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h5: {
                     fontSize: THEME_FONT_SIZES.xl,
-                    fontWeight: '700',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 h6: {
                     fontSize: THEME_FONT_SIZES.lg,
-                    fontWeight: '400',
+                    fontWeight: '500',
                     color: 'grey900',
                 },
                 body: {

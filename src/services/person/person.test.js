@@ -172,9 +172,9 @@ describe('Given the person service', () => {
     describe('When useGetPerson is called', () => {
         it('Then calls getPerson with the correct arguments', async () => {
             const getSpy = jest.spyOn(service, 'getPerson');
-            const rendered = renderHook(() => service.useGetPerson({ option1: true }), { wrapper });
+            const rendered = renderHook(() => service.useGetPerson('1234', { option1: true }), { wrapper });
 
-            assertServiceRefetchCalled(rendered, getSpy, '1234');
+            assertServiceMutateAsyncCalled(rendered, getSpy, '1234', { option1: true });
         });
     });
 

@@ -56,7 +56,7 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
                 <DataUsePage userState={userState} team={team} onClickDataUseUpload={handleClickUpload} />
             )}
 
-            {tabId === 'datause_widget' && isCustodian(team) && isManager && (
+            {tabId === 'datause_widget' && isCustodian(team) && isManager && publisherDetails?.dataUse?.widget?.enabled && (
                 <DataUseWidget userState={userState} team={team} publisherDetails={publisherDetails} />
             )}
         </>

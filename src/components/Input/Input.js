@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce';
 import React, { useCallback, useRef } from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 import useDOMChanged from '../../hooks/useDOMChanged';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_INPUT } from './Input.propTypes';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Input.styles';
@@ -49,21 +49,19 @@ const Input = ({
     }, []);
 
     return (
-        <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
+        <Box {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
             <Form.Group controlId={id} css={styles.formGroup}>
                 {label && <Form.Label css={styles.label}>{label}</Form.Label>}
                 <InputGroup
                     css={styles.inputGroup({ prepend: domPrependChanged, append: domAppendChanged, variant, size, error })}
-                    className={cx('ui-Input', className)}
-                >
+                    className={cx('ui-Input', className)}>
                     {(iconPrepend || textPrepend) && (
                         <InputGroup.Prepend
                             css={css`
                                 ${styles.decorators};
                                 ${styles.prepend};
                             `}
-                            ref={prependRef}
-                        >
+                            ref={prependRef}>
                             {textPrepend && <InputGroup.Text>{textPrepend}</InputGroup.Text>}
                             {iconPrepend}
                         </InputGroup.Prepend>
@@ -76,8 +74,7 @@ const Input = ({
                                 ${styles.decorators};
                                 ${styles.append};
                             `}
-                            ref={appendRef}
-                        >
+                            ref={appendRef}>
                             {iconAppend}
                             {textAppend && <InputGroup.Text>{textAppend}</InputGroup.Text>}
                         </InputGroup.Append>
@@ -85,7 +82,7 @@ const Input = ({
                 </InputGroup>
                 {error && <div className='errorMessages'>{error}</div>}
             </Form.Group>
-        </LayoutBox>
+        </Box>
     );
 };
 

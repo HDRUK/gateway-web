@@ -14,6 +14,7 @@ import Description from '../Description/Description';
 import Tag from '../Tag/Tag';
 import { course } from './constants';
 import '../../CommonComponents.scss';
+import ShowMore from '../../ShowMore';
 
 const Course = ({ data, activeLink, onSearchPage, showRelationshipQuestion, updateOnFilterBadge, removeButton, onClick }) => {
     const renderCourseDetails = () => {
@@ -70,33 +71,35 @@ const Course = ({ data, activeLink, onSearchPage, showRelationshipQuestion, upda
                 {showRelationshipQuestion && <RemoveButton removeButtonHandler={removeButton} />}
             </Col>
             <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
-                <Tag tagName={course.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
-                    <SVGIcon name='educationicon' fill='#ffffff' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
-                </Tag>
+                <ShowMore initialHeight={30}>
+                    <Tag tagName={course.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
+                        <SVGIcon name='educationicon' fill='#ffffff' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
+                    </Tag>
 
-                {data.award &&
-                    data.award.map((award, index) => (
-                        <Tag
-                            key={`${award}-${index}`}
-                            tagName={award}
-                            activeLink={activeLink}
-                            onSearchPage={onSearchPage}
-                            updateOnFilterBadgeHandler={updateOnFilterBadge}
-                            {...course.AWARDS}
-                        />
-                    ))}
+                    {data.award &&
+                        data.award.map((award, index) => (
+                            <Tag
+                                key={`${award}-${index}`}
+                                tagName={award}
+                                activeLink={activeLink}
+                                onSearchPage={onSearchPage}
+                                updateOnFilterBadgeHandler={updateOnFilterBadge}
+                                {...course.AWARDS}
+                            />
+                        ))}
 
-                {data.domains &&
-                    data.domains.map((domain, index) => (
-                        <Tag
-                            key={`${domain}-${index}`}
-                            tagName={domain}
-                            activeLink={activeLink}
-                            onSearchPage={onSearchPage}
-                            updateOnFilterBadgeHandler={updateOnFilterBadge}
-                            {...course.DOMAINS}
-                        />
-                    ))}
+                    {data.domains &&
+                        data.domains.map((domain, index) => (
+                            <Tag
+                                key={`${domain}-${index}`}
+                                tagName={domain}
+                                activeLink={activeLink}
+                                onSearchPage={onSearchPage}
+                                updateOnFilterBadgeHandler={updateOnFilterBadge}
+                                {...course.DOMAINS}
+                            />
+                        ))}
+                </ShowMore>
             </Col>
             {!showRelationshipQuestion && <Description type={data.type} description={stripMarkdown(data.description, 255)} />}
         </Row>

@@ -15,7 +15,7 @@ export const root =
             padding: ${increment * 3}px;
             display: flex;
             border-radius: 4px;
-            line-height: 1;
+            line-height: 20px;
             font-size: ${size.default};
 
             ${getComponentVariant('Alert', variant, theme)}
@@ -24,6 +24,11 @@ export const root =
 
 export const icon = ({ base: { increment } }) => css`
     margin-right: ${increment * 2}px;
+    margin-top: 2px;
+`;
+
+export const dismiss = () => css`
+    margin-top: 2px;
 `;
 
 export const content = () => css`

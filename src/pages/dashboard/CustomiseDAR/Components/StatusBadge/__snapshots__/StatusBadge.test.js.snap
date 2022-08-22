@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Status component When it is rendered Then should match the snapshot 1`] = `
+<div>
+  <div
+    class="status-chip sla-test"
+  >
+    Pending
+  </div>
+</div>
+`;

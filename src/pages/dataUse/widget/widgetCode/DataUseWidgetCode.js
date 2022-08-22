@@ -4,8 +4,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { Button } from 'hdruk-react-core';
 import Typography from '../../../../components/Typography';
-import Button from '../../../../components/Button';
 import styles from './DataUseWidgetCode.styles';
 import LayoutBox from '../../../../components/LayoutBox';
 

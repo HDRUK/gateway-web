@@ -1,18 +1,19 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/react';
+import { cx } from '@emotion/css';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import { has, isEmpty, isNil, isUndefined } from 'lodash';
 import React, { Component, Fragment } from 'react';
-import { Alert, Button, Col, Container, Dropdown, OverlayTrigger, Row, Tab, Tabs, Tooltip } from 'react-bootstrap/';
+import { Box, Typography } from 'hdruk-react-core';
+import { Button, Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap/';
 import Linkify from 'react-linkify';
 import 'react-tabs/style/react-tabs.css';
-import { ReactComponent as MetadataBronze } from '../../images/bronzeNew.svg';
+import Alert from '../../components/Alert';
+import { QualityScore } from '../../components';
 import { ReactComponent as GoldStar } from '../../images/cd-star.svg';
-import { ReactComponent as MetadataGold } from '../../images/goldNew.svg';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
 import { ReactComponent as InfoFillSVG } from '../../images/infofill.svg';
-import { ReactComponent as MetadataNotRated } from '../../images/notRatedNew.svg';
-import { ReactComponent as MetadataPlatinum } from '../../images/platinumNew.svg';
-import { ReactComponent as MetadataSilver } from '../../images/silverNew.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 import DataSetHelper from '../../utils/DataSetHelper.util';
@@ -35,6 +36,9 @@ import DatasetAboutCard from './components/DatasetAboutCard';
 import DataUtitlityFramework from './components/DataUtilityFramework';
 import TechnicalDetailsPage from './components/TechnicalDetailsPage';
 import TechnicalMetadata from './components/TechnicalMetadata';
+import ToolTip from '../../components/ToolTip';
+import Icon from '../../components/Icon';
+import { ReactComponent as Shield } from '../../images/shield.svg';
 import './Dataset.scss';
 import DatasetSchema from './DatasetSchema';
 
@@ -807,67 +811,16 @@ class DatasetDetail extends Component {
             );
         }
 
-        function Metadata() {
-            var rating = 'Not Rated';
-
-            if (data.datasetfields.metadataquality && !isNil(data.datasetfields.metadataquality.weighted_quality_rating)) {
-                rating = data.datasetfields.metadataquality.weighted_quality_rating;
-            } else {
-                return (
-                    <Fragment>
-                        <div style={{ lineHeight: 1 }}>
-                            <MetadataNotRated className='' />
-                        </div>
-                    </Fragment>
-                );
-            }
-
-            const renderTooltip = props => (
-                <Tooltip className='metadataOverlay' {...props}>
-                    Metadata richness score: {Math.trunc(data.datasetfields.metadataquality.weighted_quality_score)}
-                    <br />
-                    <br />
-                    The score relates to the amount of information available about the dataset, and not to the quality of the actual
-                    datasets.
-                    <br />
-                    <br />
-                    Click to read more about how the score is calculated.
-                    <br />
-                    <br />
-                    {Math.trunc(data.datasetfields.metadataquality.weighted_completeness_percent)} Weighted completeness %
-                    <br />
-                    {Math.trunc(data.datasetfields.metadataquality.weighted_error_percent)} Weighted error %
-                </Tooltip>
-            );
-
-            return (
-                <Fragment>
-                    <OverlayTrigger placement='bottom' delay={{ show: 100, hide: 400 }} overlay={renderTooltip}>
-                        <div
-                            className='text-center'
-                            onClick={() =>
-                                window.open(
-                                    'https://github.com/HDRUK/datasets/tree/master/reports#hdr-uk-data-documentation-scores',
-                                    '_blank',
-                                    'noopener, noreferrer'
-                                )
-                            }>
-                            <div style={{ cursor: 'pointer' }}>
-                                <div style={{ lineHeight: 1 }}>
-                                    {(() => {
-                                        if (rating === 'Not Rated') return <MetadataNotRated />;
-                                        else if (rating === 'Bronze') return <MetadataBronze />;
-                                        else if (rating === 'Silver') return <MetadataSilver />;
-                                        else if (rating === 'Gold') return <MetadataGold />;
-                                        else if (rating === 'Platinum') return <MetadataPlatinum />;
-                                    })()}
-                                </div>
-                            </div>
-                        </div>
-                    </OverlayTrigger>
-                </Fragment>
-            );
-        }
+        const {
+            datasetfields: {
+                metadataquality: {
+                    weighted_quality_rating: metaRating,
+                    weighted_quality_score: metaScore,
+                    weighted_completeness_percent: metaCompleteness,
+                    weighted_error_percent: metaError,
+                } = {},
+            },
+        } = data;
 
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
@@ -886,14 +839,8 @@ class DatasetDetail extends Component {
                         <Row className='mt-4'>
                             <Col sm={1} />
                             <Col sm={10}>
-                                {this.state.showCitationSuccess && (
-                                    <Alert variant='success' className='citation-banner green-banner'>
-                                        <Row>
-                                            <Col>Citation has been copied to clipboard.</Col>
-                                        </Row>
-                                    </Alert>
-                                )}
-                                {alert ? <Alert variant={alert.type}>{alert.message}</Alert> : null}
+                                {this.state.showCitationSuccess && <Alert variant='success'>Citation has been copied to clipboard.</Alert>}
+                                {alert && <Alert variant={alert.type}>{alert.message}</Alert>}
                                 <div className='rectangle'>
                                     <Row>
                                         <Col xs={1} md={1}>
@@ -911,42 +858,31 @@ class DatasetDetail extends Component {
                                         <Col xs={7} md={9} className='datasetTitle'>
                                             <span className='black-16'> {data.name} </span>
                                             <br />
-                                            <span>
-                                                {!isEmpty(v2data.summary.publisher.memberOf) ? (
-                                                    <>
-                                                        <span
-                                                            onMouseEnter={this.handleMouseHoverShield}
-                                                            onMouseLeave={this.handleMouseHoverShield}>
-                                                            <SVGIcon
-                                                                name='shield'
-                                                                fill={'#475da7'}
-                                                                className='svg-16 mr-2'
-                                                                viewBox='0 0 16 16'
-                                                            />
-                                                        </span>
-
-                                                        {this.state.isHoveringShield && (
-                                                            <div className='dataShieldToolTip'>
-                                                                <span className='white-13-semibold'>
-                                                                    {v2data.summary.publisher.memberOf.charAt(0).toUpperCase() +
-                                                                        v2data.summary.publisher.memberOf.slice(1).toLowerCase()}{' '}
-                                                                    member
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                    </>
-                                                ) : (
-                                                    ''
+                                            <Box
+                                                as={Typography}
+                                                mb={1}
+                                                display='flex'
+                                                alignItems='center'
+                                                className='gray800-14'
+                                                data-testid={`publisher-${v2data.summary.publisher.name}`}>
+                                                {v2data.summary.publisher.memberOf && (
+                                                    <ToolTip
+                                                        text={`Member of ${v2data.summary.publisher.memberOf}`}
+                                                        placement='bottom-start'>
+                                                        <Icon svg={<Shield fill='inherit' />} size='2xl' ml={1} mt={1} />
+                                                    </ToolTip>
                                                 )}
-                                                {!isEmpty(v2data.summary.publisher.name) ? (
-                                                    <span className='gray800-14'>{v2data.summary.publisher.name}</span>
-                                                ) : (
-                                                    <span className='gray800-14-opacity'>Not specified</span>
-                                                )}
-                                            </span>
+                                                &nbsp;
+                                                {v2data.summary.publisher.name}
+                                            </Box>
                                         </Col>
                                         <Col xs={4} md={2} className='text-right'>
-                                            <Metadata />
+                                            <QualityScore
+                                                rating={metaRating}
+                                                score={metaScore}
+                                                completenessPercent={metaCompleteness}
+                                                errorPercent={metaError}
+                                            />
                                         </Col>
                                     </Row>
                                     <Row className='mt-2'>

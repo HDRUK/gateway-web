@@ -2,9 +2,9 @@ import axios from 'axios';
 import { isEmpty, isUndefined } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Alert, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
+import Alert from '../../../../components/Alert';
 import { baseURL } from '../../../../configs/url.config';
-import SVGIcon from '../../../../images/SVGIcon';
 import DarHelperUtil from '../../../../utils/DarHelper.util';
 // import VersionSelector from '../../../commonComponents/versionSelector/VersionSelector';
 import SLA from '../../../commonComponents/sla/SLA';
@@ -162,11 +162,7 @@ const ActivityLog = React.forwardRef(({ dataaccessrequest, team, onClickStartRev
                 <Col xs={1} />
                 <Col>
                     <div className='col-md-12'>
-                        {!isEmpty(alert) && (
-                            <Alert variant='success' className='main-alert'>
-                                <SVGIcon name='check' width={24} height={24} fill='#2C8267' /> {alert}
-                            </Alert>
-                        )}
+                        {!isEmpty(alert) && <Alert variant='success'>{alert}</Alert>}
                         <div className='layoutCard'>
                             <div className='header-version'>
                                 <div className='header-version-title'>

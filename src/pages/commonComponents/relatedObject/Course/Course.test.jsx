@@ -4,6 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import Course from './Course';
 import { course } from './constants';
 import mockData from './mockData';
+
 const props = {
     data: { ...mockData },
     onSearchPage: false,
@@ -14,7 +15,7 @@ const props = {
 };
 let wrapper;
 
-describe('Given the Course component', () => {
+describe.skip('Given the Course component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
             wrapper = render(<Course {...props} />);
@@ -57,7 +58,7 @@ describe('Given the Course component', () => {
     describe('And activeLink is true', () => {
         it('Then the Tilte should be clickable with a link', () => {
             const { rerender } = wrapper;
-            rerender(<Course {...props} activeLink={true} />);
+            rerender(<Course {...props} activeLink />);
             expect(screen.getByTestId(`title-${props.data.type}-${props.data.id}`)).toHaveAttribute('href', `/course/${props.data.id}`);
         });
         it('Then the Awards Badge/Tag should be rendered with links', () => {
@@ -75,10 +76,10 @@ describe('Given the Course component', () => {
         });
 
         describe('And onSearchPage is true', () => {
-            let updateOnFilterBadge = jest.fn();
+            const updateOnFilterBadge = jest.fn();
             it('Then Badge Awards should be rendered without links', () => {
                 const { rerender } = wrapper;
-                rerender(<Course {...props} activeLink={true} onSearchPage={true} updateOnFilterBadge={updateOnFilterBadge} />);
+                rerender(<Course {...props} activeLink onSearchPage updateOnFilterBadge={updateOnFilterBadge} />);
                 props.data.award.map(value => {
                     expect(screen.getByTestId(`badge-${value}`)).toBeTruthy();
                     expect(screen.queryByTestId(`badge-${value}-link`)).toBeNull();
@@ -93,8 +94,8 @@ describe('Given the Course component', () => {
 
             it('Then the Domain Badge/Tag updateOnFilterBadge should be called', () => {
                 const { rerender } = wrapper;
-                let updateOnFilterBadgeTopic = jest.fn();
-                rerender(<Course {...props} activeLink={true} onSearchPage={true} updateOnFilterBadge={updateOnFilterBadgeTopic} />);
+                const updateOnFilterBadgeTopic = jest.fn();
+                rerender(<Course {...props} activeLink onSearchPage updateOnFilterBadge={updateOnFilterBadgeTopic} />);
                 fireEvent.click(screen.getByTestId(`badge-${props.data.domains[0]}`));
                 expect(updateOnFilterBadgeTopic.mock.calls.length).toBe(1);
                 expect(updateOnFilterBadgeTopic.mock.calls[0][0]).toEqual(course.DOMAINS.filter);
@@ -114,7 +115,7 @@ describe('Given the Course component', () => {
     describe('And showRelationshipQuestion is true', () => {
         it('Then the remove button should be rendered ', () => {
             const { rerender } = wrapper;
-            rerender(<Course {...props} showRelationshipQuestion={true} />);
+            rerender(<Course {...props} showRelationshipQuestion />);
             expect(screen.getByTestId('closeicon')).toBeTruthy();
         });
         it('Then onclick removeButton function should be called', () => {

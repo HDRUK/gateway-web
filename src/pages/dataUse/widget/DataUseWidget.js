@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import Button from '../../../components/Button';
+import { H5, H6, P, Button } from 'hdruk-react-core';
 import Card from '../../../components/Card';
 import CardBody from '../../../components/Card/CardBody';
 import Checkbox from '../../../components/Checkbox';

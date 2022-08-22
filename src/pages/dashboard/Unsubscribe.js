@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Container, Alert } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
 import './Dashboard.scss';
+import Alert from '../../components/Alert';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -109,7 +110,7 @@ class Unsubscribe extends Component {
                             <Row>
                                 <Col sm={1} lg={1} />
                                 <Col sm={10} lg={10}>
-                                    <Alert variant={error ? 'danger' : 'success'} className='mt-3'>
+                                    <Alert variant={error ? 'danger' : 'success'} mt={3}>
                                         {this.state.msg}
                                     </Alert>
                                 </Col>

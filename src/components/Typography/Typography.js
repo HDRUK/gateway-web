@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { cx } from '@emotion/css';
 import { jsx } from '@emotion/react';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_TYPOGRAPHY } from './Typography.propTypes';
 import * as styles from './Typography.styles';
 
@@ -17,13 +17,13 @@ const Typography = ({ children, color, className, mt, mb, ml, mr, width, minWidt
     }
 
     return (
-        <LayoutBox
+        <Box
             {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}
             as={tagName}
             className={cx('ui-Typography', className)}
             css={styles.root({ variant, color })}>
             {children}
-        </LayoutBox>
+        </Box>
     );
 };
 

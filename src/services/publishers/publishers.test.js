@@ -11,7 +11,7 @@ let wrapper;
 
 const queryClient = new QueryClient();
 
-describe('Given the projects service', () => {
+describe('Given the person service', () => {
     beforeAll(() => {
         wrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
     });
@@ -24,37 +24,53 @@ describe('Given the projects service', () => {
         jest.resetAllMocks();
     });
 
-    describe('When patchPublisherDataUseWidget is called', () => {
+    describe('When getPublisher is called', () => {
+        it('Then calls getRequest with the correct arguments', async () => {
+            await service.getPublisher('1234', {
+                option1: true,
+            });
+
+            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/publishers/1234`, {
+                option1: true,
+            });
+        });
+    });
+
+    describe('When patchModalContent is called', () => {
         it('Then calls patchRequest with the correct arguments', async () => {
-            await service.patchPublisherDataUseWidget(
+            await service.patchModalContent(
                 '1234',
+                { status: 'archive ' },
                 {
-                    accepted: true,
-                },
-                { option1: true }
+                    option1: true,
+                }
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/publishers/1234/dataUseWidget`,
+                `${apiURL}/publishers/dataRequestModalContent/1234`,
+                { status: 'archive ' },
                 {
-                    accepted: true,
-                },
-                { option1: true }
+                    option1: true,
+                }
             );
         });
     });
 
-    describe('When usePatchPublisherDataUseWidget is called', () => {
-        it('Then calls patchProject with the correct arguments', async () => {
-            const patchSpy = jest.spyOn(service, 'patchPublisherDataUseWidget');
-            const rendered = renderHook(() => service.usePatchPublisherDataUseWidget({ option1: true }), { wrapper });
+    describe('When useGetPublisher is called', () => {
+        it('Then calls getPersons with the correct arguments', async () => {
+            const getSpy = jest.spyOn(service, 'getPublisher');
+            const rendered = renderHook(() => service.useGetPublisher('1234', { wrapper }));
 
-            assertServiceMutateAsyncCalledWithDifferentArgs(
-                rendered,
-                patchSpy,
-                [{ _id: '1234', accepted: true }],
-                ['1234', { accepted: true }, { option1: true }]
-            );
+            assertServiceRefetchCalled(rendered, getSpy, '1234');
+        });
+    });
+
+    describe('When usePatchModalContent is called', () => {
+        it('Then calls patchModalContent with the correct arguments', async () => {
+            const patchSpy = jest.spyOn(service, 'patchModalContent');
+            const rendered = renderHook(() => service.usePatchModalContent({ _id: '1234', option1: true }), { wrapper });
+
+            assertServiceMutateAsyncCalled(rendered, patchSpy, '1234', { status: 'archive' });
         });
     });
 });
