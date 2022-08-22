@@ -16,14 +16,12 @@ import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
 import Button from '../../../../components/Button';
 import Icon from '../../../../components/Icon';
+import useRetry from './useRetry';
 
 const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disabled }) => {
-    // 10mb - 10485760
-    // 2mb - 2097152
     const maxSize = 10485760;
     const maxRetries = 30;
-    let retryCount = 0;
-    // name, size, location, id
+
     const [uploadFiles, setUploadFiles] = useState([]);
     const [submitted, setSubmitted] = useState(false);
     const [isLoading, setLoading] = useState(false);
@@ -105,25 +103,18 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
     };
 
     const onUploadFiles = async () => {
-        retryCount = 0;
         setSubmitted(true);
-        // 1. filter out files that have description and newFile to upload
+
         const acceptedFiles = [...uploadFiles].filter(f => !_.isEmpty(f.description) && f.status === fileStatus.NEWFILE);
+
         if (!_.isEmpty(acceptedFiles)) {
-            // 2. setup new formData array for axios
             const formData = new FormData();
-            // 3. append our files to formData
-            const fileObjects = [...acceptedFiles].map(f => {
-                const { file } = f;
-                formData.append('assets', file);
-                formData.append('descriptions', f.description);
-                formData.append('ids', f.fileId);
-            });
-            // 4. Set up headers for axios
             const config = {
                 headers: { 'Content-Type': 'multipart/form-data' },
             };
+
             setLoading(true);
+
             await axios
                 .post(`${baseURL}/api/v1/data-access-request/${id}/upload`, formData, config)
                 .then(response => {
@@ -187,39 +178,10 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
         }
     };
 
+    const retry = useRetry(30);
+
     useEffect(() => {
-        const timer = setInterval(() => {
-            if (retryCount < maxRetries) {
-                retryCount++;
-                files.forEach(file => {
-                    if (file.status === fileStatus.NEWFILE || file.status === fileStatus.UPLOADED) {
-                        axios
-                            .get(`${baseURL}/api/v1/data-access-request/${id}/file/${file.fileId}/status`)
-                            .then(response => {
-                                file.status = response.data.status;
-                                if (
-                                    file.status === fileStatus.SCANNED ||
-                                    file.status === fileStatus.QUARANTINED ||
-                                    file.status === fileStatus.ERROR
-                                ) {
-                                    onFilesUpdate(files, false);
-                                    retryCount = 0;
-                                    clearInterval(timer);
-                                }
-                            })
-                            .catch(err => {
-                                console.error(err.message);
-                                clearInterval(timer);
-                            });
-                    }
-                });
-            } else {
-                clearInterval(timer);
-            }
-        }, 10000);
-        return () => {
-            clearInterval(timer);
-        };
+        retry.init([({ fileId }) => axios.get(`${baseURL}/api/v1/data-access-request/${id}/file/${fileId}`)]);
     }, []);
 
     // dropzone setup
