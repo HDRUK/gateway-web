@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { createBrowserHistory } from 'history';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
-import _ from 'lodash';
+import _, { merge } from 'lodash';
 import Container from 'react-bootstrap/Container';
 import SSOPage from './pages/sso/SSOPage';
 import ToolPage from './pages/tool/ToolPage';
@@ -35,6 +35,7 @@ import ErrorModal from './pages/commonComponents/errorModal/ErrorModal';
 import DatasetOnboarding from './pages/DatasetOnboarding/DatasetOnboarding';
 import { GuardedRoute } from './pages/commonComponents/GuardedRoute';
 import AdvancedSearchTAndCs from './pages/dashboard/AdvancedSearchTAndCs';
+import { DEFAULT_THEME } from 'hdruk-react-core';
 import { ThemeProvider } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthProvider } from './context/AuthContext';
@@ -207,7 +208,7 @@ class HDRRouter extends Component {
             <Suspense fallback={'loading'}>
                 <AuthProvider value={{ userState }}>
                     <QueryClientProvider client={queryClient}>
-                        <ThemeProvider theme={theme}>
+                        <ThemeProvider theme={merge(theme, DEFAULT_THEME)}>
                             <Router>
                                 <NotificationContainer />
                                 <LoginModal userState={userState} />
@@ -251,11 +252,11 @@ class HDRRouter extends Component {
                                             path='/dashboard'
                                             render={props => <PublicAnalyticsDashboard {...props} userState={userState} />}
                                         />
-										<GuardedRoute
-											path='/data-access-request/customiseForm/:publisherID'
-											component={DataAccessRequestCustomiseForm}
-											userState={userState}
-										/>
+                                        <GuardedRoute
+                                            path='/data-access-request/customiseForm/:publisherID'
+                                            component={DataAccessRequestCustomiseForm}
+                                            userState={userState}
+                                        />
                                         <GuardedRoute path='/dataset-onboarding/:id' component={DatasetOnboarding} userState={userState} />
                                         <GuardedRoute
                                             path='/data-access-request/dataset/:datasetId'

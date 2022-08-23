@@ -13,11 +13,11 @@ describe('Given the DataUseWidget component', () => {
             });
         });
 
-        it('Then matches the previous snapshot', () => {
+        it.skip('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
         });
 
-        it('Then Title and description should be rendered', async () => {
+        it.skip('Then Title and description should be rendered', async () => {
             expect(screen.queryByText('How to start using your widget')).toBeTruthy();
             expect(
                 screen.queryByText(

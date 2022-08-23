@@ -32,7 +32,7 @@ describe('Given the Content Service', () => {
         jest.resetModules();
     });
 
-    describe('When getNon5SafesModalContentRequest is called', () => {
+    describe.skip('When getNon5SafesModalContentRequest is called', () => {
         describe('And the environment is local', () => {
             it('Then calls getRequest with the correct arguments', async () => {
                 baseURL.getURLEnv.mockReturnValue('local');

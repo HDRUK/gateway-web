@@ -90,7 +90,7 @@ describe('Given the users service', () => {
             const patchSpy = jest.spyOn(service, 'patchRoles');
             const rendered = renderHook(() => service.usePatchRoles({ option1: true }), { wrapper });
 
-            assertServiceMutateAsyncCalled(rendered, patchSpy, '1234', { status: 'archive' });
+            assertServiceMutateAsyncCalledWithArgs(rendered, patchSpy, { _id: '1234', status: 'active' }, ['1234', { status: 'active' }]);
         });
     });
 
@@ -99,7 +99,7 @@ describe('Given the users service', () => {
             const patchSpy = jest.spyOn(service, 'patchTerms');
             const rendered = renderHook(() => service.usePatchTerms({ option1: true }), { wrapper });
 
-            assertServiceMutateAsyncCalled(rendered, patchSpy, '1234', { status: 'archive' });
+            assertServiceMutateAsyncCalledWithArgs(rendered, patchSpy, { _id: '1234', status: 'active' }, ['1234', { status: 'active' }]);
         });
     });
 });

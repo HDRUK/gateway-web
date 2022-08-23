@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamManagement from './AccountTeamManagement';
-import { userState } from './__tests__/mockData';
+import { userState } from './mockData';
 import { tabTypes } from './Team/teamUtil';
 
 const forwardRefMock = jest.fn();

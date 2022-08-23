@@ -10,6 +10,7 @@ import Course from './Course/Course';
 import Person from './Person/Person';
 import relatedObjectService from '../../../services/related-objects';
 import './RelatedObject.scss';
+import ShowMore from '../ShowMore';
 
 var cmsURL = require('../BaseURL').getCMSURL();
 const env = require('../BaseURL').getURLEnv();
@@ -147,8 +148,7 @@ class RelatedObject extends React.Component {
                             !this.props.showRelationshipQuestion &&
                             !this.props.showRelationshipAnswer &&
                             this.props.doAddToTempRelatedObjects(data.type === 'dataset' ? data.datasetid : data.id, data.type, data.pid)
-                        }
-                    >
+                        }>
                         {data.activeflag === 'review' ? (
                             <Row>
                                 <Col sm={12} lg={12}>
@@ -186,8 +186,7 @@ class RelatedObject extends React.Component {
                                                     className='purple-bold-16'
                                                     style={{ cursor: 'pointer' }}
                                                     href={'/datause/' + data.id}
-                                                    onClick={onClick}
-                                                >
+                                                    onClick={onClick}>
                                                     {data.projectTitle}
                                                 </a>
                                             ) : (
@@ -206,13 +205,21 @@ class RelatedObject extends React.Component {
                                             )}
                                         </Col>
                                         <Col className='pad-left-24 pad-right-24 pad-top-16'>
-                                            <span className='badge-datause'>
-                                                <SVGIcon name='datauseicon' fill={'#fff'} className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
-                                                <span>Data use</span>
-                                            </span>
-                                            {data.keywords.map(word => (
-                                                <span className='badge-tag'>{word}</span>
-                                            ))}
+                                            <ShowMore initialHeight={30}>
+                                                <span className='badge-datause'>
+                                                    <SVGIcon
+                                                        name='datauseicon'
+                                                        fill={'#fff'}
+                                                        className='badgeSvg mr-2'
+                                                        viewBox='-2 -2 22 22'
+                                                    />
+                                                    <span>Data use</span>
+                                                </span>
+
+                                                {data.keywords.map(word => (
+                                                    <span className='badge-tag'>{word}</span>
+                                                ))}
+                                            </ShowMore>
                                             <Row className='pad-top-16'>
                                                 <Col md={3} className='gray800-14-opacity'>
                                                     Datasets

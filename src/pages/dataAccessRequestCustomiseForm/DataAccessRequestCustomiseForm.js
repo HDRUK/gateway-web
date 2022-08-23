@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Trans } from 'react-i18next';
@@ -11,13 +11,10 @@ import { NotificationManager } from 'react-notifications';
 import { useHistory, useLocation } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
+import { Button, Box, P, H5, Typography, Cta } from 'hdruk-react-core';
 import Alert from '../../components/Alert';
-import Button from '../../components/Button';
-import Cta from '../../components/Cta';
 import Icon from '../../components/Icon';
-import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
-import Typography, { H5, P } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
@@ -138,8 +135,6 @@ export const DataAccessRequestCustomiseForm = props => {
 
         const newPanelId = panelId || newJsonSchema.formPanels[0].panelId;
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
-
-        console.log('newPanelId', newPanelId);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
@@ -619,9 +614,9 @@ export const DataAccessRequestCustomiseForm = props => {
         if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
                 <Card>
-                    <LayoutBox px={5}>
+                    <Box px={5}>
                         <Uploads />
-                    </LayoutBox>
+                    </Box>
                 </Card>
             );
         }
@@ -676,6 +671,30 @@ export const DataAccessRequestCustomiseForm = props => {
         setShowSaveAlert(false);
     };
 
+    const handleExport = useCallback(() => {
+        const { pages, formPanels, questionPanels, questionSets, ...outerSchema } = jsonSchema;
+
+        const currentDate = moment().format('YYYY-MM-DD');
+        const fileName = `dar-${publisherDetails.name.replaceAll(' ', '-').toLowerCase()}-${currentDate}.json`;
+        const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+            JSON.stringify({
+                jsonSchema: {
+                    pages,
+                    formPanels,
+                    questionPanels,
+                    questionSets,
+                },
+                ...outerSchema,
+                questionStatus,
+                questionSetStatus,
+            })
+        )}`;
+        const link = document.createElement('a');
+        link.href = jsonString;
+        link.download = fileName;
+        link.click();
+    }, [jsonSchema, publisherDetails, questionStatus, questionSetStatus]);
+
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
     Winterfell.addInputType('datePickerCustom', DatePickerCustom);
     Winterfell.addInputType('typeaheadUser', TypeaheadUser);
@@ -724,17 +743,17 @@ export const DataAccessRequestCustomiseForm = props => {
                     </Col>
                     <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right text-white'>
                         {lastSaved && (
-                            <LayoutBox mr={5} display='flex' alignItems='center'>
+                            <Box mr={5} display='flex' alignItems='center'>
                                 {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='xl' mr={2} />}
                                 {patchSchemaRequest.isLoading && <Spinner stroke='white' size='xl' mr={2} />}
                                 <span className='white-14-semibold'>{lastSaved}</span>
-                            </LayoutBox>
+                            </Box>
                         )}
                         <Button variant='tertiary' onClick={onClickSave} size='small' mr={5}>
                             Save now
                         </Button>
 
-                        <Cta onClick={redirectDashboard} iconRight={<CloseButtonSvg />} color='white' fill='white'>
+                        <Cta onClick={redirectDashboard} iconRight={<CloseButtonSvg width='1.3em' fill='white' />} color='white'>
                             Close
                         </Cta>
                     </Col>
@@ -742,29 +761,47 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <div id='darContainer' className='flex-form'>
                     <div id='darLeftCol' className='scrollable-sticky-column'>
-                        {(jsonSchema.pages || []).map((item, idx) => (
-                            <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
-                                <div>
-                                    <h3
-                                        className={`black-16 ${item.active ? 'section-header-active' : 'section-header'} `}
-                                        onClick={e => updateNavigation(item)}>
-                                        <span>{item.title}</span>
-                                    </h3>
-                                    {item.active && (
-                                        <ul className='list-unstyled section-subheader'>
-                                            <NavItem
-                                                parentForm={item}
-                                                questionPanels={jsonSchema.questionPanels}
-                                                onFormSwitchPanel={updateNavigation}
-                                                activePanelId={activePanelId}
-                                                enabled
-                                                notForReview={false}
-                                            />
-                                        </ul>
-                                    )}
+                        {(jsonSchema.pages || []).map((item, idx) => {
+                            let navHeader;
+
+                            if (item.pageId === 'export') {
+                                const panel = jsonSchema.questionPanels.find(panel => panel.panelId === 'export');
+
+                                navHeader = (
+                                    <>
+                                        {panel.navDescription}
+                                        <Button onClick={handleExport} mt={2}>
+                                            {panel.navHeader}
+                                        </Button>
+                                    </>
+                                );
+                            }
+
+                            return (
+                                <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
+                                    <div>
+                                        <h3
+                                            className={`black-16 ${item.active ? 'section-header-active' : 'section-header'} `}
+                                            onClick={e => updateNavigation(item)}>
+                                            <span>{item.title}</span>
+                                        </h3>
+                                        {item.active && (
+                                            <ul className='list-unstyled section-subheader'>
+                                                <NavItem
+                                                    parentForm={item}
+                                                    questionPanels={jsonSchema.questionPanels}
+                                                    onFormSwitchPanel={updateNavigation}
+                                                    activePanelId={activePanelId}
+                                                    enabled
+                                                    notForReview={false}
+                                                    navHeader={navHeader}
+                                                />
+                                            </ul>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                     <div id='darCenterCol'>
                         <div id='darDropdownNav'>
@@ -790,19 +827,19 @@ export const DataAccessRequestCustomiseForm = props => {
                         {activePanelId === 'about' && (
                             <>
                                 <Card>
-                                    <LayoutBox p={5}>
+                                    <Box p={5}>
                                         <H5>Data Applicant’s View</H5>
                                         <P color='grey800' mb={0}>
                                             This is what the data applicant will see when they begin the full data access request. Please
                                             note that this section `Before you begin` cannot be customised.
                                         </P>
-                                    </LayoutBox>
+                                    </Box>
                                 </Card>
                                 {isPublisherAdmin(userState, team) && (
                                     <Card>
-                                        <LayoutBox p={5}>
+                                        <Box p={5}>
                                             <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
-                                        </LayoutBox>
+                                        </Box>
                                     </Card>
                                 )}
                             </>

@@ -394,6 +394,18 @@ a.nav-item.nav-link.active {
     }
 }
 
+.badge {
+    &-tag:hover {
+        background-color: $gray-400;
+    }
+}
+
+.badge {
+    &-version:hover {
+        background-color: $gray-400;
+    }
+}
+
 .iconHolder {
     text-align: right;
     padding-top: 5px;

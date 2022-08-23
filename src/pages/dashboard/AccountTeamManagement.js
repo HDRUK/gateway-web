@@ -452,7 +452,7 @@ const AccountTeamManagement = ({
                                 <Row>
                                     <div className='black-20-semibold'>Email notifications</div>
                                     <div className='gray700-14'>
-                                        Team related email notifications will automatically be sent to each team members gateway log in
+                                        Team related email notifications will automatically be sent to each team members Gateway log in
                                         email. Data custodian managers can choose to send notifications to additional email accounts.
                                     </div>
                                 </Row>

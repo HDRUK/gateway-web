@@ -3,22 +3,22 @@
 exports[`Given the SearchControlsForm component When it is rendered And it is not loading Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-Box css-ichth-B"
   >
     <div
-      class="css-1sivg29 row"
+      class="css-1tuhzuv row"
     >
       <div
         class="col-lg-6"
       >
         <div
-          class="ui-LayoutBox css-1sivg29"
+          class="ui-Box css-ichth-B"
         >
           <div
-            class="css-1bab3f0-Input form-group"
+            class="css-f3m9lf-Input form-group"
           >
             <div
-              class="ui-Input ui-SearchInput css-v63lc4-Input input-group"
+              class="ui-Input ui-SearchInput css-ola6vk-Input input-group"
             >
               <div
                 class="css-1h9gu1e-Input input-group-prepend"
@@ -58,13 +58,13 @@ exports[`Given the SearchControlsForm component When it is rendered And it is no
         class="d-flex justify-content-end col-lg-4"
       >
         <div
-          class="ui-SortDropdown css-16k9oib-SortDropdown"
+          class="ui-SortDropdown css-13ymzsx-SortDropdown"
         >
           <div
-            class="ui-LayoutBox css-1sivg29"
+            class="ui-Box css-ichth-B"
           >
             <div
-              class="ui-Dropdown css-v2dfip-SortDropdown dropdown"
+              class="ui-Dropdown css-cfbowp-SortDropdown dropdown"
             >
               <button
                 aria-expanded="false"

@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AccountDatasetsCreate component When it is rendered And "Add new dataset" is clicked Then calls preventDefault 1`] = `
+<div>
+  <div
+    class="ui-Box css-ichth-B"
+  >
+    <div
+      class="ui-Alert css-mdcthr-Alert"
+    >
+      <div
+        class="ui-Alert__icon css-1jspzre-Alert"
+      >
+        <span
+          class="ui-Icon css-1tuhzuv css-18xv0v4-Icon"
+        >
+          <icon-mock
+            fill="inherit"
+          />
+        </span>
+      </div>
+      <div
+        class="css-ungsl1-Alert"
+      >
+        Sample message
+      </div>
+    </div>
+  </div>
+  <div
+    class="accountHeader"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-8 col-sm-12"
+      >
+        <div>
+          <span
+            class="black-20"
+          >
+            Datasets
+          </span>
+        </div>
+        <div>
+          <span
+            class="gray700-13 "
+          >
+            Approve or reject pending datasets.
+          </span>
+        </div>
+      </div>
+      <div
+        class="col-md-4 col-sm-12"
+        style="text-align: right;"
+      >
+        <button
+          class="addButton btn btn-primary"
+          type="button"
+        >
+          + 
+          Add a new dataset
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Given the AccountDatasetsCreate component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Box css-ichth-B"
+  >
+    <div
+      class="ui-Alert css-mdcthr-Alert"
+    >
+      <div
+        class="ui-Alert__icon css-1jspzre-Alert"
+      >
+        <span
+          class="ui-Icon css-1tuhzuv css-18xv0v4-Icon"
+        >
+          <icon-mock
+            fill="inherit"
+          />
+        </span>
+      </div>
+      <div
+        class="css-ungsl1-Alert"
+      >
+        Sample message
+      </div>
+    </div>
+  </div>
+  <div
+    class="accountHeader"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-8 col-sm-12"
+      >
+        <div>
+          <span
+            class="black-20"
+          >
+            Datasets
+          </span>
+        </div>
+        <div>
+          <span
+            class="gray700-13 "
+          >
+            Approve or reject pending datasets.
+          </span>
+        </div>
+      </div>
+      <div
+        class="col-md-4 col-sm-12"
+        style="text-align: right;"
+      >
+        <button
+          class="addButton btn btn-primary"
+          type="button"
+        >
+          + 
+          Add a new dataset
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
