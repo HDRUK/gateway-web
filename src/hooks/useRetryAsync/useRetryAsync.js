@@ -42,7 +42,7 @@ const useRetryAsync = ({ maxRetries = 10, pauseDuration = 10000, onIterationComp
 
     useEffect(() => {
         if (requests.length > 0 && count > -1 && count < maxRetries) {
-            poll(requests);
+            poll();
         }
     }, [requests, count]);
 
