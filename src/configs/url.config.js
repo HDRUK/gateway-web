@@ -51,7 +51,7 @@ export const getWidgetAPI = () => {
     const { href } = window.location;
     let widgetAPIURL = 'https://dev-datause-widget.dev.hdruk.dev';
     if (href.includes('.www.')) {
-        widgetAPIURL = 'https://prod-datause-widget.healthdatagateway.org';
+        widgetAPIURL = 'https://datause-widget.healthdatagateway.org';
     } else if (href.includes('.uat.')) {
         widgetAPIURL = 'https://uat-datause-widget.healthdatagateway.org';
     }
