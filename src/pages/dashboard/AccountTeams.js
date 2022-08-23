@@ -154,7 +154,8 @@ const AccountTeams = () => {
                         <Col sm={2} className='text-center'>
                             Members
                         </Col>
-                        <Col sm={2}>Question Bank Enabled?</Col>
+                        <Col sm={1}>Question Bank Enabled?</Col>
+                        <Col sm={1}>Data use widget Enabled?</Col>
                     </Row>
                     <Row>
                         <Col sm={12} lg={12}>
