@@ -27,7 +27,6 @@ import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
 import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
 import { QualityScore } from '../../../../components';
 import SVGIcon from '../../../../images/SVGIcon';
-import axios from 'axios';
 
 const Dataset = ({
     data,
