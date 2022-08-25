@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Col, Container, Dropdown, Row } from 'react-bootstrap';
 import NotificationBadge from 'react-notification-badge';
 import { NotificationManager } from 'react-notifications';
-import Button from '../../../components/Button';
+import { Button } from 'hdruk-react-core';
 import { cmsURL } from '../../../configs/url.config';
 import { ReactComponent as WhiteArrowDownSvg } from '../../../images/arrowDownWhite.svg';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';

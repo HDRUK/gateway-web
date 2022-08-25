@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered And the action is clicked Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-FeatureContentVertical ui-Card css-7mw3b3"
+    role="article"
+  >
+    <div
+      class="ui-CardBody css-1eq1p65"
+    >
+      <div
+        class="css-5ijvz8"
+      >
+        <h5
+          class="ui-Typography css-e1pajs-Component"
+        >
+          <div
+            class="ui-Box css-cm7hpa-W"
+          >
+            Cohort Discovery
+            <span
+              class="ui-Tag css-2vcu8n"
+            >
+              Beta
+            </span>
+          </div>
+        </h5>
+        <div
+          class="css-1cn2qtu"
+        >
+          <img
+            alt="Cohort Discovery feature image"
+            src=""
+          />
+        </div>
+        <div
+          class="ui-Box css-6thaoi-W"
+        >
+          <p
+            class="ui-Typography css-j8pp3b-Component"
+          >
+            Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.
+          </p>
+        </div>
+        <div
+          class="ui-Box css-cm7hpa-W"
+        >
+          <button
+            class="ui-Button css-cbr18b-H"
+            type="button"
+          >
+             
+            You must be signed in to use cohort discovery
+             
+          </button>
+          <a
+            href="https://www.healthdatagateway.org/about/cohort-discovery"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <p
+              class="ui-Typography css-j8pp3b-Component"
+            >
+              Learn more
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button>
+    Yes, I agree
+  </button>
+</div>
+`;

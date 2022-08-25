@@ -13,6 +13,8 @@ import i18n from './i18n';
 import { mockUser } from './services/auth/mockData';
 import { theme } from './configs/theme';
 import 'jest-date-mock';
+import { DEFAULT_THEME } from 'hdruk-react-core';
+import { merge } from 'lodash';
 
 Enzyme.configure({
     adapter: new Adapter(),
@@ -31,6 +33,16 @@ global.assertServiceMutateAsyncCalled = async (rendered, mock, ...args) => {
 
     result.current.mutateAsync(args).then(() => {
         expect(mock).toHaveBeenCalledWith(args);
+    });
+};
+
+global.assertServiceMutateAsyncCalledWithArgs = async (rendered, mock, asyncArgs, serviceArgs) => {
+    const { waitFor, result } = rendered;
+
+    await waitFor(() => result.current.mutateAsync);
+
+    result.current.mutateAsync(asyncArgs).then(() => {
+        expect(mock).toHaveBeenCalledWith(serviceArgs);
     });
 };
 
@@ -55,6 +67,23 @@ global.removePortalContainer = div => {
     div.parentNode.removeChild(div);
 };
 
+global.redefineWindow = () => {
+    const oldWindowLocation = window.location;
+
+    delete window.location;
+
+    window.location = Object.defineProperties(
+        {},
+        {
+            ...Object.getOwnPropertyDescriptors(oldWindowLocation),
+            assign: {
+                configurable: true,
+                value: jest.fn(),
+            },
+        }
+    );
+};
+
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
@@ -67,7 +96,7 @@ global.Providers = ({ children }) => {
     return (
         <I18nextProvider i18n={i18n}>
             <Suspense fallback='Loading'>
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={merge(theme, DEFAULT_THEME)}>
                     <AuthProvider value={{ userState: mockUser.data }}>
                         <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
                     </AuthProvider>
