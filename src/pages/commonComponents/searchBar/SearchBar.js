@@ -384,29 +384,8 @@ class SearchBar extends React.Component {
 
                             <Col lg={5} className='text-right'>
                                 <div className='nav-wrapper'>
-                                    <div className='navBarSearchBarSpacing'>
-                                        <Container>
-                                            <Row className='searchBarRow'>
-                                                <Col>
-                                                    <SearchInput
-                                                        onChange={this.onSearch}
-                                                        onKeyDown={this.props.doSearchMethod}
-                                                        value={textValue}
-                                                        onReset={this.props.onClearMethod}
-                                                        variant='secondary'
-                                                    />
-                                                </Col>
-                                            </Row>
-                                        </Container>
-                                    </div>
-                                    <div>
-                                        <Container>
-                                            <Row>
-                                                <Col className='pl-0 pr-0'>
-                                                    <AddNewEntity loggedIn={userState[0].loggedIn} />
-                                                </Col>
-                                            </Row>
-                                        </Container>
+                                    <div className='addNewEntityWrapper'>
+                                        <AddNewEntity loggedIn={userState[0].loggedIn} />
                                     </div>
                                     {(() => {
                                         if (userState[0].loggedIn === true) {
@@ -1342,37 +1321,6 @@ class SearchBar extends React.Component {
                                                     </span>
                                                 </Dropdown.Item>
                                             )}
-
-                                            <span className='searchBarInputGrey searchBarInputMobile'>
-                                                <span className='searchInputIconGrey'>
-                                                    <SVGIcon
-                                                        name='searchicon'
-                                                        width={20}
-                                                        height={20}
-                                                        fill={'#2c8267'}
-                                                        stroke='none'
-                                                        type='submit'
-                                                    />
-                                                </span>
-                                                <span>
-                                                    <input
-                                                        data-testid='searchbar'
-                                                        type='text'
-                                                        placeholder=''
-                                                        id='searchInputSpanGrey'
-                                                        onChange={this.onSearch}
-                                                        onKeyDown={this.doSearchMobile}
-                                                        value={textValue}
-                                                    />
-                                                </span>
-                                                {this.props.searchString !== '' && this.props.searchString !== undefined ? (
-                                                    <span className='searchInputClearGrey' data-testid='searchbar-clear-btn'>
-                                                        <span style={{ cursor: 'pointer' }} onClick={this.props.onClearMethod}>
-                                                            <ClearButtonSvg />
-                                                        </span>
-                                                    </span>
-                                                ) : null}
-                                            </span>
 
                                             <div>
                                                 <CmsDropdown dropdownUrl='exploreDropdown' isMobile={true} />
