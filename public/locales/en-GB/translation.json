@@ -364,6 +364,7 @@
         "teamEmailText": "Send email notifications to team email address"
     },
     "searchResultsInfo": {
+        "searchFilters": "Search filters",
         "withTerm": "Showing {{count}} results for '{{searchTerm}}'",
         "withOutTerm": "Showing {{count}} results"
     },

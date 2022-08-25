@@ -5,9 +5,10 @@ import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { Button, Box, Icon } from 'hdruk-react-core';
+import { Button, Box, Icon, H5 } from 'hdruk-react-core';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
+import { withTranslation } from 'react-i18next';
 import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, iterateDeep } from '../../utils/GeneralHelper.util';
@@ -1836,6 +1837,7 @@ class SearchPage extends React.Component {
                                 <Col className='title' lg={4}>
                                     {(() => {
                                         let { search } = queryString.parse(window.location.search);
+                                        // Kymme 1
                                         return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
                                     })()}
                                 </Col>
@@ -1919,6 +1921,19 @@ class SearchPage extends React.Component {
                             </Row>
                         </Container>
                     </div>
+                    <Container>
+                        <Row>
+                            <Col sm={12} md={12} lg={3}>
+                                <Box mb='3' mt={5}>
+                                    <H5 color='grey700'>{this.props.t('searchResultsInfo.searchFilters')}</H5>
+                                </Box>
+                            </Col>
+                            <Col sm={12} md={12} lg={9}>
+                                <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />
+                            </Col>
+                        </Row>
+                    </Container>
+                    {/* Kymme 2 */}
                     <Container>
                         <Row>
                             <Col sm={12} md={12} lg={3} className='mt-1 mb-5'>
@@ -2048,4 +2063,4 @@ class SearchPage extends React.Component {
     }
 }
 
-export default SearchPage;
+export default withTranslation()(SearchPage);
