@@ -282,7 +282,7 @@
                 "title": "Cohort Discovery",
                 "description": "Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.",
                 "action": "Search using Cohort Discovery",
-                "actionLoggedOut": "You must be signed in to use cohort discovery",
+                "actionLoggedOut": "Sign in to use Cohort Discovery",
                 "mediaAlt": "Cohort Discovery feature image"
             },
             "dataUtilityWizard": {
