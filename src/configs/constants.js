@@ -11,3 +11,5 @@ export const STATUS_REJECTED = 'rejected';
 export const STATUS_ARCHIVE = 'archive';
 
 export const SUPPORT_CREATE_URL = 'https://hdruk.atlassian.net/servicedesk/customer/portal/1/group/1/create/1';
+
+export const ADVANCED_SEARCH_ROLE_GENERAL_ACCESS = 'GENERAL_ACCESS';

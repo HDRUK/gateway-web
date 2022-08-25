@@ -16,21 +16,20 @@ const AdvancedSearchTAndCsModal = ({ open, close, updateUserAcceptedAdvancedSear
         }),
 
         onSubmit: async () => {
-            //Append role to user in db
+            // Append role to user in db
             await updateUserAcceptedAdvancedSearchTerms();
         },
     });
 
     return (
-        <Fragment>
+        <>
             <Modal
                 show={open}
                 onHide={close}
                 size='lg'
                 aria-labelledby='contained-modal-title-vcenter'
                 centered
-                className='advancedSearchTAndCModal'
-            >
+                className='advancedSearchTAndCModal'>
                 <Form onSubmit={formik.handleSubmit}>
                     <div className='advancedSearchTAndCModal-header'>
                         <div className='advancedSearchTAndCModal-header--wrap'>
@@ -41,7 +40,7 @@ const AdvancedSearchTAndCsModal = ({ open, close, updateUserAcceptedAdvancedSear
                             <Modal.Body>
                                 <p>PLEASE READ THESE TERMS OF USE CAREFULLY BEFORE ACCEPTING THEM</p>
 
-                                <AdvancedSearchTAndCsContent showFormValidation={true} formik={formik}></AdvancedSearchTAndCsContent>
+                                <AdvancedSearchTAndCsContent showFormValidation formik={formik} />
                             </Modal.Body>
                         </div>
                     </div>
@@ -57,16 +56,15 @@ const AdvancedSearchTAndCsModal = ({ open, close, updateUserAcceptedAdvancedSear
                                 className='button-primary'
                                 onClick={() => {
                                     const elmnt = document.getElementById('accept-terms');
-                                    elmnt.scrollIntoView();
-                                }}
-                            >
+                                    if (elmnt && elmnt.scrollIntoView) elmnt.scrollIntoView();
+                                }}>
                                 Yes, I agree
                             </button>
                         </div>
                     </div>
                 </Form>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 
