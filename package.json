@@ -24,7 +24,7 @@
         "form-data": "^3.0.0",
         "formik": "^2.1.4",
         "hdruk-gateway-widgets": "^0.0.6",
-        "hdruk-react-core": "^0.2.8",
+        "hdruk-react-core": "^0.2.12",
         "history": "^5.1.0",
         "humanize": "^0.0.9",
         "i18next": "^21.3.3",

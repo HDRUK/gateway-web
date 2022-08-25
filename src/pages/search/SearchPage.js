@@ -5,10 +5,13 @@ import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { Button, Box, Icon } from 'hdruk-react-core';
+import { Button, Box, Icon, Input } from 'hdruk-react-core';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
+import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
+import { ReactComponent as SearchSvg } from '../../images/search.svg';
+import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, iterateDeep } from '../../utils/GeneralHelper.util';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -139,6 +142,7 @@ class SearchPage extends React.Component {
         showDataUtilityWizardModal: false,
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
+        searchFieldValue: '',
     };
 
     constructor(props) {
@@ -149,6 +153,9 @@ class SearchPage extends React.Component {
         }
         this.state.userState = props.userState;
         this.state.search = !_.isEmpty(search) ? search : props.location.search;
+
+        this.state.searchFieldValue = search;
+
         this.searchBar = React.createRef();
         this.updateFilterStates = this.updateFilterStates.bind(this);
         this.doSearchCall = this.doSearchCall.bind(this);
@@ -1719,6 +1726,26 @@ class SearchPage extends React.Component {
         };
     }
 
+    handleSearch = e => {
+        e.preventDefault();
+        // const data = new FormData(e.target);
+        console.log(this.state.search);
+
+        window.location.href = `/search?search=${this.state.searchFieldValue}&tab=${this.state.key}`;
+    };
+
+    handleSearchChange = ({ target: { value } }) => {
+        this.setState({
+            searchFieldValue: value,
+        });
+    };
+
+    handleSearchReset = () => {
+        this.setState({
+            searchFieldValue: '',
+        });
+    };
+
     render() {
         let {
             summary: {
@@ -1792,6 +1819,8 @@ class SearchPage extends React.Component {
         const filtersSelectionProps = this.getFiltersSelectionProps(preferenceFilters);
         const searchProps = this.getSearchProps(showSort, sortMenu, maxResults);
 
+        console.log('This ', this.state.search);
+
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <div>
@@ -1830,12 +1859,46 @@ class SearchPage extends React.Component {
                         )}
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
+                            <Row className='filters filter-search'>
+                                <Col lg={12}>
+                                    <form onSubmit={this.handleSearch}>
+                                        <Box display='flex' justifyContent='center' width='100%' p={6}>
+                                            <Box flexGrow='1' display='inline-flex'>
+                                                <ColourLogoSvg />
+                                            </Box>
+                                            <Box width='647px' mt={1}>
+                                                <Input
+                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                    iconRight={
+                                                        !!this.state.searchFieldValue && (
+                                                            <Icon
+                                                                svg={<ClearSvg />}
+                                                                fill='grey400'
+                                                                onClick={this.handleSearchReset}
+                                                                role='button'
+                                                            />
+                                                        )
+                                                    }
+                                                    value={this.state.searchFieldValue}
+                                                    onChange={this.handleSearchChange}
+                                                />
+                                            </Box>
+                                            <Box flexGrow='1' mt={1}>
+                                                <Button type='submit'>Search</Button>
+                                            </Box>
+                                        </Box>
+                                    </form>
+                                </Col>
+                            </Row>
+
                             <Row className='filters filter-save'>
-                                <Col className='title' lg={4}>
-                                    {(() => {
-                                        let { search } = queryString.parse(window.location.search);
-                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
-                                    })()}
+                                <Col lg={4}>
+                                    <Box display='flex' alignItems='center' height='100%'>
+                                        {(() => {
+                                            let { search } = queryString.parse(window.location.search);
+                                            return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
+                                        })()}
+                                    </Box>
                                 </Col>
                                 <Col lg={8} className='saved-buttons'>
                                     <Box display='inline-flex' gap={2} py={4}>

@@ -2,581 +2,519 @@
 @import '../../../css/mixins';
 
 body.modal-open {
-	overflow: hidden;
+    overflow: hidden;
 }
 
 .navbarShown {
-	width: 100%;
-	position: fixed;
-	top: 0;
-	transition: top 0.3s;
-	z-index: 999;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    transition: top 0.3s;
+    z-index: 999;
 }
 
 .navbarHidden {
-	top: -500px !important;
+    top: -500px !important;
 }
 
 .searchBarBackground {
-	width: 100%;
-	background-color: $white;
+    width: 100%;
+    background-color: $white;
 }
 
 .whiteBackground {
-	min-height: 80px;
-	background-color: $white;
-	box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
+    min-height: 80px;
+    background-color: $white;
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.09);
 }
 
 .navBarLoginSpacing {
-	padding: 0px 24px 0px 0px;
+    padding: 0px 24px 0px 0px;
 
-	@include mq('desktop', max) {
-		padding: 0px 16px 0px 0px;
-	}
+    @include mq('desktop', max) {
+        padding: 0px 16px 0px 0px;
+    }
 }
 
 .navBarNotificationSpacing {
-	padding: 0px 16px;
-	margin: auto;
+    padding: 0px 16px;
+    margin: auto;
 }
 
 // Internet Explorer
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-	.navBarNotificationSpacing {
-		padding: 0px 16px;
-		margin: auto;
-		width: 30%;
-	}
+    .navBarNotificationSpacing {
+        padding: 0px 16px;
+        margin: auto;
+        width: 30%;
+    }
 }
 
 // Internet Explorer
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-	.navBarNotificationSpacing {
-		padding: 0px 16px;
-		margin: auto;
-		width: 30%;
-	}
+    .navBarNotificationSpacing {
+        padding: 0px 16px;
+        margin: auto;
+        width: 30%;
+    }
 }
 
 @media (min-width: 1286px) {
-	.navBarLogoSpacing {
-		vertical-align: middle;
-		display: inline-block;
-	}
+    .navBarLogoSpacing {
+        vertical-align: middle;
+        display: inline-block;
+    }
 
-	.navBarLinkSpacing {
-		vertical-align: middle;
-		display: inline-block;
-		margin-top: 12px;
-		padding: 0px 0px 0px 24px;
-	}
+    .navBarLinkSpacing {
+        vertical-align: middle;
+        display: inline-block;
+        margin-top: 12px;
+        padding: 0px 0px 0px 24px;
+    }
 
-	.navBarBellNotificationSpacing {
-		padding: 0px 16px 0px 0px;
-		margin: auto !important;
-	}
+    .navBarBellNotificationSpacing {
+        padding: 0px 16px 0px 0px;
+        margin: auto !important;
+    }
 
-	.navBarSearchBarSpacing {
-		text-align: left;
-		margin: auto;
-		min-width: 150px;
-	}
+    .desktopLoginMenu {
+        width: 375px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 400px;
+    }
 
-	.searchBarInputGrey {
-		border: 0;
-		background-color: #f6f7f8;
-		display: flex;
-		align-content: center;
-		border-radius: 4px;
-		padding: 5px;
-		width: 100%;
-	}
-
-	#searchInputSpanGrey {
-		display: inline-block;
-		width: 80%;
-		outline: none;
-		border: 0;
-		font-size: 16px;
-		background-color: #f8f6f6;
-		color: $gray-800;
-		padding-top: 7px;
-	}
-
-	.desktopLoginMenu {
-		width: 375px;
-		overflow-x: hidden;
-		overflow-y: scroll;
-		max-height: 400px;
-	}
-
-	.desktopNotificationMenu {
-		overflow-x: hidden;
-		overflow-y: scroll;
-		max-height: 400px;
-		width: 400px;
-		top: 28px !important;
-		word-wrap: break-word;
-	}
+    .desktopNotificationMenu {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 400px;
+        width: 400px;
+        top: 28px !important;
+        word-wrap: break-word;
+    }
 }
 
 @media (max-width: 1285px) {
-	.navBarLogoSpacing {
-		vertical-align: middle;
-		display: inline-block;
-	}
+    .navBarLogoSpacing {
+        vertical-align: middle;
+        display: inline-block;
+    }
 
-	.navBarLinkSpacing {
-		vertical-align: middle;
-		display: inline-block;
-		margin-top: 12px;
-		padding: 0px 0px 0px 15px;
-	}
+    .navBarLinkSpacing {
+        vertical-align: middle;
+        display: inline-block;
+        margin-top: 12px;
+        padding: 0px 0px 0px 15px;
+    }
 
-	.navBarBellNotificationSpacing {
-		padding: 0px 16px 0px 0px;
-		display: flex;
-		flex-flow: row;
-		justify-content: center;
-		align-items: center;
-		align-self: stretch;
-		height: 100%;
-		margin: auto;
-	}
+    .navBarBellNotificationSpacing {
+        padding: 0px 16px 0px 0px;
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+        height: 100%;
+        margin: auto;
+    }
 
-	.navBarSearchBarSpacing {
-		width: 50%;
-		text-align: left;
-		margin: auto;
-		min-width: 150px;
-	}
+    .navBarSearchBarSpacing {
+        width: 50%;
+        text-align: left;
+        margin: auto;
+        min-width: 150px;
+    }
 
-	.searchBarInputGrey {
-		border: 0;
-		background-color: #f6f7f8;
-		display: inline-block;
-		border-radius: 4px;
-		padding: 5px;
-		width: 100%;
-	}
+    .desktopLoginMenu {
+        width: 200px;
+    }
 
-	#searchInputSpanGrey {
-		display: inline-block;
-		width: 70%;
-		outline: none;
-		border: 0;
-		font-size: 16px;
-		background-color: #f6f7f8;
-		color: $gray-800;
-		padding-top: 7px;
-	}
+    .desktopNotificationMenu {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 400px;
+        width: 400px;
+        word-wrap: break-word;
+        top: 28px !important;
+    }
+}
 
-	.desktopLoginMenu {
-		width: 200px;
-	}
-
-	.desktopNotificationMenu {
-		overflow-x: hidden;
-		overflow-y: scroll;
-		max-height: 400px;
-		width: 400px;
-		word-wrap: break-word;
-		top: 28px !important;
-	}
+.addNewEntityWrapper {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
 }
 
 .navBarSearchIconHolder {
-	@include mq('tablet-wide', max) {
-		float: right;
-		background-color: #f6f7f8;
-		padding: 10px 10px 5px 10px;
-		border-radius: 15px;
-		margin-top: 20px;
-	}
+    @include mq('tablet-wide', max) {
+        float: right;
+        background-color: #f6f7f8;
+        padding: 10px 10px 5px 10px;
+        border-radius: 15px;
+        margin-top: 20px;
+    }
 }
 
 @media (max-width: 991px) {
-	.navBarLogoSpacing {
-		vertical-align: middle;
-		display: inline-block;
-	}
+    .navBarLogoSpacing {
+        vertical-align: middle;
+        display: inline-block;
+    }
 
-	.navBarLinkSpacing {
-		margin-top: 12px;
-		padding: 0px 0px 0px 5px;
-	}
+    .navBarLinkSpacing {
+        margin-top: 12px;
+        padding: 0px 0px 0px 5px;
+    }
 
-	.navBarSearchBarSpacing {
-		width: 100%;
-		text-align: left;
-		margin: auto;
-		min-width: 150px;
-	}
+    .navBarSearchBarSpacing {
+        width: 100%;
+        text-align: left;
+        margin: auto;
+        min-width: 150px;
+    }
 
-	.navBarSearchIconHolderAlt {
-		float: right;
-		background-color: #f6f7f8;
-		padding: 10px 10px 5px 10px;
-		border-radius: 15px;
-		margin-top: 20px;
-		margin-right: 25px;
-	}
+    .navBarSearchIconHolderAlt {
+        float: right;
+        background-color: #f6f7f8;
+        padding: 10px 10px 5px 10px;
+        border-radius: 15px;
+        margin-top: 20px;
+        margin-right: 25px;
+    }
 
-	.searchBarInputGrey {
-		border: 0;
-		background-color: #f6f7f8;
-		display: flex;
-		border-radius: 4px;
-		margin-top: 16px;
-		padding: 5px;
-		width: 100%;
-	}
+    .mobileLoginMenu {
+        width: 300px;
+        top: 16px !important;
+        left: -5px !important;
+        max-height: 500px;
+        overflow-y: scroll;
+    }
 
-	#searchInputSpanGrey {
-		display: inline-block;
-		width: 70%;
-		outline: none;
-		border: 0;
-		font-size: 16px;
-		background-color: #f6f7f8;
-		color: $gray-800;
-		padding-top: 7px;
-	}
-
-	.mobileLoginMenu {
-		width: 300px;
-		top: 16px !important;
-		left: -5px !important;
-		max-height: 500px;
-		overflow-y: scroll;
-	}
-
-	.mobileNotificationMenu {
-		top: 28px !important;
-		transform: translate3d(-290px, 24px, 0px) !important;
-		padding: 0 !important;
-		width: 320px;
-		max-height: 400px;
-		overflow-x: hidden;
-		overflow-y: scroll;
-		word-wrap: break-word;
-	}
+    .mobileNotificationMenu {
+        top: 28px !important;
+        transform: translate3d(-290px, 24px, 0px) !important;
+        padding: 0 !important;
+        width: 320px;
+        max-height: 400px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        word-wrap: break-word;
+    }
 }
 
 .nav-wrapper {
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
-	justify-content: space-between;
-	width: 100%;
-	height: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
 }
 
 .searchInputIconGrey {
-	float: left;
-	min-width: 40px;
-	padding: 10px 0px 0px 12px;
+    float: left;
+    min-width: 40px;
+    padding: 10px 0px 0px 12px;
 }
 
 .searchInputClearGrey {
-	float: right;
-	padding: 8px 10px 0px 0px;
+    float: right;
+    padding: 8px 10px 0px 0px;
 }
 
 #notificationsBell:hover {
-	background-size: 40px, 40px;
-	background: $gray-300;
-	@include rounded(70px);
+    background-size: 40px, 40px;
+    background: $gray-300;
+    @include rounded(70px);
 }
 
 .notificationsBell {
-	background-size: 40px, 40px;
-	width: 40px;
+    background-size: 40px, 40px;
+    width: 40px;
 }
 
 .notificationsBellBadge {
-	top: -13px !important;
-	right: -30px !important;
-	background-color: #29235c !important;
+    top: -13px !important;
+    right: -30px !important;
+    background-color: #29235c !important;
 }
 
 .messagesBadge {
-	top: -1px !important;
-	right: -15px !important;
-	background-color: #29235c !important;
+    top: -1px !important;
+    right: -15px !important;
+    background-color: #29235c !important;
 }
 
 .desktopLoginMenu {
-	transform: translate(0px, 52px) !important;
+    transform: translate(0px, 52px) !important;
 }
 
 .desktopNotificationMenu {
-	transform: translate(0px, 22px) !important;
-	padding: 0 !important;
+    transform: translate(0px, 22px) !important;
+    padding: 0 !important;
 }
 
 .noNotifications {
-	width: 100%;
-	box-shadow: 1px 1px 3px 0 #00000017;
-	background-color: $white;
-	padding-top: 40%;
-	padding-right: 20px;
-	padding-bottom: 40%;
-	padding-left: 20px;
+    width: 100%;
+    box-shadow: 1px 1px 3px 0 #00000017;
+    background-color: $white;
+    padding-top: 40%;
+    padding-right: 20px;
+    padding-bottom: 40%;
+    padding-left: 20px;
 }
 
 .notificationReadBackground {
-	background-color: #f6f7f8;
+    background-color: #f6f7f8;
 }
 
 .notificationDate {
-	padding: 10px 0px 5px 15px;
-	font-size: 13px;
-	font-weight: 500;
-	color: rgba(83, 87, 90, 0.8);
+    padding: 10px 0px 5px 15px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(83, 87, 90, 0.8);
 }
 
 .notificationInfoHolder {
-	padding: 0px 0px 10px 15px;
+    padding: 0px 0px 10px 15px;
 }
 
 .notificationInfo {
-	overflow: hidden;
-	font-size: 14px;
-	color: $gray-800;
+    overflow: hidden;
+    font-size: 14px;
+    color: $gray-800;
 }
 
 .offlineNotificationGap {
-	vertical-align: middle;
-	display: inline-block;
-	margin-top: 15px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-top: 15px;
 }
 
 .hamBurgerHolder {
-	margin: 27px 0px 0px 27px;
+    margin: 27px 0px 0px 27px;
 }
 
 #desktopSearchBar {
-	display: block;
-	@include mq('tablet-wide', max) {
-		display: none;
-	}
+    display: block;
+    @include mq('tablet-wide', max) {
+        display: none;
+    }
 }
 
 #mobileSearchBar {
-	display: none;
-	@include mq('tablet-wide', max) {
-		display: block;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-	}
+    display: none;
+    @include mq('tablet-wide', max) {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
 }
 
 .dropdown-subitem {
-	font-size: 14px;
-	color: $gray-800;
-	margin-top: -10px;
-	padding: 3px 23px 0px 24px;
+    font-size: 14px;
+    color: $gray-800;
+    margin-top: -10px;
+    padding: 3px 23px 0px 24px;
 }
 
 .dropdown-subitem:hover {
-	color: #191919;
-	text-decoration: none;
-	background-color: $gray-light;
+    color: #191919;
+    text-decoration: none;
+    background-color: $gray-light;
 }
 
 .cmsDropdownTitle:hover {
-	font-weight: bold;
-	text-decoration: none;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .helpDropdownHeader,
 .dropdown-item-container .dropdown-header,
 .explore-right-container .dropdown-header {
-	font-size: 16px !important;
-	color: $gray-dark !important;
+    font-size: 16px !important;
+    color: $gray-dark !important;
 }
 
 .cmsDropdown .dropdown-item,
 .cmsDropdownMenu .dropdown-item {
-	font-size: 14px;
-	white-space: break-spaces;
-	color: #3c3c3b;
+    font-size: 14px;
+    white-space: break-spaces;
+    color: #3c3c3b;
 }
 .cmsDropdown .dropdown-item:hover,
 .cmsDropdownMenu .dropdown-item:hover {
-	width: auto;
+    width: auto;
 }
 
 .dropdown-button {
-	background-color: $gray-200;
-	border: none;
-	width: 57%;
-	color: $indigo;
-	font-size: 14px;
-	// float: right;
-	margin-right: 15px;
-	text-align: center;
-	padding: 10px;
-	margin-top: auto;
-	align-self: flex-end;
+    background-color: $gray-200;
+    border: none;
+    width: 57%;
+    color: $indigo;
+    font-size: 14px;
+    // float: right;
+    margin-right: 15px;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+    align-self: flex-end;
 
-	@include mq('tablet-wide', max) {
-		align-self: flex-start;
-		margin-left: 24px;
-	}
+    @include mq('tablet-wide', max) {
+        align-self: flex-start;
+        margin-left: 24px;
+    }
 }
 .dropdown-button:focus {
-	outline: none;
+    outline: none;
 }
 
 .dropdown-item-container:hover {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .viewAllCollectionsLink {
-	color: $indigo;
+    color: $indigo;
 }
 .viewAllCollectionsLink:hover {
-	color: $indigo;
-	text-decoration: none;
+    color: $indigo;
+    text-decoration: none;
 }
 
 .divider {
-	border-left: 1px solid #d8d8d8;
-	height: 95%;
-	position: absolute;
-	left: 55%;
+    border-left: 1px solid #d8d8d8;
+    height: 95%;
+    position: absolute;
+    left: 55%;
 
-	@include mq('tablet-wide', max) {
-		border: none;
-	}
+    @include mq('tablet-wide', max) {
+        border: none;
+    }
 }
 
 .cmsDropdown {
-	@include mq('tablet-wide', max) {
-		padding: 8px 24px !important;
-	}
+    @include mq('tablet-wide', max) {
+        padding: 8px 24px !important;
+    }
 }
 
 .cmsDropdown .cmsDropdownMenu {
-	margin-top: 8px;
-	min-width: 300px;
+    margin-top: 8px;
+    min-width: 300px;
 }
 
 .cmsDropdownMenu .list-unstyled {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .explore-container {
-	display: flex;
-	min-width: 600px;
-	@include mq('tablet-wide', max) {
-		display: block;
-		min-width: 0px;
-	}
+    display: flex;
+    min-width: 600px;
+    @include mq('tablet-wide', max) {
+        display: block;
+        min-width: 0px;
+    }
 }
 
 .explore-left-container {
-	width: 55%;
-	@include mq('tablet-wide', max) {
-		width: 100%;
-	}
+    width: 55%;
+    @include mq('tablet-wide', max) {
+        width: 100%;
+    }
 }
 
 .explore-right-container {
-	display: flex;
-	flex-direction: column;
-	width: 45%;
-	@include mq('tablet-wide', max) {
-		width: 100%;
-		border-top: 1px solid #d8d8d8;
-		margin-top: 8px;
-	}
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    @include mq('tablet-wide', max) {
+        width: 100%;
+        border-top: 1px solid #d8d8d8;
+        margin-top: 8px;
+    }
 }
 
 .floatRightChevron {
-	float: right;
+    float: right;
 }
 
 .navBarAvatarSpacing {
-	padding: 0px 8px;
-	margin: auto;
+    padding: 0px 8px;
+    margin: auto;
 }
 
 .dropdown-sub-menu {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 4px 16px 4px 16px;
-	@include mq('tablet-wide', max) {
-		padding: 8px 24px;
-	}
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 16px 4px 16px;
+    @include mq('tablet-wide', max) {
+        padding: 8px 24px;
+    }
 }
 
 .user-dropdown-menu {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .user-dropdown-item {
-	padding: 4px 16px 4px 16px !important;
-	@include mq('tablet-wide', max) {
-		padding: 4px 24px !important;
-	}
+    padding: 4px 16px 4px 16px !important;
+    @include mq('tablet-wide', max) {
+        padding: 4px 24px !important;
+    }
 }
 
 .navBarMessageSpacing {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .notificationBadgeMobile {
-	top: -18px !important;
-	right: -30px !important;
+    top: -18px !important;
+    right: -30px !important;
 }
 
 .messageBadgeMobile {
-	top: -8px !important;
-	right: -15px !important;
+    top: -8px !important;
+    right: -15px !important;
 }
 
 .searchBarInputMobile {
-	margin: 10px;
-	max-width: 275px;
+    margin: 10px;
+    max-width: 275px;
 }
 
 .notificationOverallStyle {
-	display: flex;
-	flex-wrap: nowrap !important;
-	justify-content: space-evenly;
-	margin-left: -5px !important;
-	@include mq('tablet-wide', max) {
-		margin-left: 90px !important;
-	}
-	@include mq('tablet-small', max) {
-		margin-left: 60px !important;
-	}
-	@include mq('phablet', max) {
-		margin-left: 5px !important;
-	}
-	@include mq('phone', max) {
-		margin-left: -15px !important;
-	}
+    display: flex;
+    flex-wrap: nowrap !important;
+    justify-content: space-evenly;
+    margin-left: -5px !important;
+    @include mq('tablet-wide', max) {
+        margin-left: 90px !important;
+    }
+    @include mq('tablet-small', max) {
+        margin-left: 60px !important;
+    }
+    @include mq('phablet', max) {
+        margin-left: 5px !important;
+    }
+    @include mq('phone', max) {
+        margin-left: -15px !important;
+    }
 }
 
 .searchBarRow {
-	padding-left: 0px;
+    padding-left: 0px;
 }
 
 .logoSVGMobile {
-	display: flex;
-	align-items: center;
-	padding-left: 0px !important;
-	@include mq('phablet', max) {
-		padding-left: 15px !important;
-	}
+    display: flex;
+    align-items: center;
+    padding-left: 0px !important;
+    @include mq('phablet', max) {
+        padding-left: 15px !important;
+    }
 }
