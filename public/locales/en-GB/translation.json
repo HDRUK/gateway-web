@@ -137,6 +137,8 @@
     "dataset": {
         "dateUpdated": "Metadata last updated:",
         "dateUpdatedTooltip": "The last date when the information about this dataset was updated",
+        "publishingFrequency": "Publishing frequency: ",
+        "publishingFrequencyTooltip": "The frequency of publishing new data for this dataset",
         "inReview": "pending approval",
         "active": "Active",
         "active,draft": "Active",
