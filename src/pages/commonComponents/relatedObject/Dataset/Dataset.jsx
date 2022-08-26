@@ -153,7 +153,7 @@ const Dataset = ({
                         </ToolTip>
                     </Box>
                 </Col>
-                <Col sm={3} lg={3} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
+                <Col sm={6} lg={3} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
                     <Box display='flex' justifyContent='end'>
                         <QualityScore
                             rating={metaRating}
@@ -163,7 +163,15 @@ const Dataset = ({
                         />
                         {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
                     </Box>
+                    <Box ml={1} as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
+                        {t('dataset.publishingFrequency')} 
+                        {data.datasetv2.provenance.temporal.accrualPeriodicity}
+                        <ToolTip text={t('dataset.publishingFrequencyTooltip')}>
+                            <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
+                        </ToolTip>
+                    </Box>
                 </Col>
+                
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>
                     <ShowMore initialHeight={30}>
                         <div>
