@@ -5,7 +5,7 @@ import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { Button, Box, Icon, H5 } from 'hdruk-react-core';
+import { Button, Box, Icon, H6, P } from 'hdruk-react-core';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
@@ -1834,13 +1834,7 @@ class SearchPage extends React.Component {
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-save'>
-                                <Col className='title' lg={4}>
-                                    {(() => {
-                                        let { search } = queryString.parse(window.location.search);
-                                        // Kymme 1
-                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
-                                    })()}
-                                </Col>
+                                <Col className='title' lg={4} />
                                 <Col lg={8} className='saved-buttons'>
                                     <Box display='inline-flex' gap={2} py={4}>
                                         {this.state.key === 'Datauses' && (
@@ -1904,8 +1898,6 @@ class SearchPage extends React.Component {
                                                 activeTab={key}
                                             />
                                         )}
-
-                                        {sortMenu}
                                     </Box>
                                 </Col>
                             </Row>
@@ -1922,18 +1914,27 @@ class SearchPage extends React.Component {
                         </Container>
                     </div>
                     <Container>
-                        <Row>
-                            <Col sm={12} md={12} lg={3}>
-                                <Box mb='3' mt={5}>
-                                    <H5 color='grey700'>{this.props.t('searchResultsInfo.searchFilters')}</H5>
+                        <Row className='flex-row-reverse'>
+                            <Col sm={12} md={12} lg={4}>
+                                <Box display='flex' justifyContent='end' alignItems='center' mt={3} mb={1}>
+                                    <P color='grey800' mr='2'>
+                                        {this.props.t('searchResultsInfo.sortedBy')}
+                                    </P>
+                                    {sortMenu}
                                 </Box>
                             </Col>
-                            <Col sm={12} md={12} lg={9}>
-                                <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />
+                            <Col sm={12} md={12} lg={5}>
+                                <Box mt={1} display='flex' alignItems='center' height='100%'>
+                                    <SearchResultsInfo count={datasetIndex + 1} total={this.getCountByKey(key)} searchTerm={search} />
+                                </Box>
+                            </Col>
+                            <Col sm={12} md={12} lg={3}>
+                                <Box mt={6}>
+                                    <H6 color='grey700'>{this.props.t('searchResultsInfo.searchFilters')}</H6>
+                                </Box>
                             </Col>
                         </Row>
                     </Container>
-                    {/* Kymme 2 */}
                     <Container>
                         <Row>
                             <Col sm={12} md={12} lg={3} className='mt-1 mb-5'>

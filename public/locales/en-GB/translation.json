@@ -364,9 +364,10 @@
         "teamEmailText": "Send email notifications to team email address"
     },
     "searchResultsInfo": {
+        "sortedBy": "Sorted by:",
         "searchFilters": "Search filters",
-        "withTerm": "Showing {{count}} results for '{{searchTerm}}'",
-        "withOutTerm": "Showing {{count}} results"
+        "withOutTerm": "Showing {{count}} of {{total}} results",
+        "for": " for "
     },
     "datause": {
         "upload": {
