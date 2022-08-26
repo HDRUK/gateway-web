@@ -10,6 +10,7 @@ import Dimmer from '../Dimmer';
 import LayoutBox from '../LayoutBox';
 import Cta from '../Cta';
 import { ReactComponent as CloseIcon } from '../../images/close-alt.svg';
+import * as styles from './Modal.styles';
 
 const Modal = ({ children, className, width, dismissable, onClose, open, height, position, ...outerProps }) => {
     const [show, setShow] = React.useState(true);
@@ -26,9 +27,9 @@ const Modal = ({ children, className, width, dismissable, onClose, open, height,
 
     return show ? (
         <Dimmer onClick={handleClose} contentAlignment={position}>
-            <Card {...outerProps} className={cx(className, 'ui-Modal')} width={width} height={height}>
+            <Card {...outerProps} className={cx(className, 'ui-Modal')} css={styles.card} width={width} height={height}>
                 {dismissable && (
-                    <LayoutBox display='flex' justifyContent='flex-end' position='absolute' top='16px' right='16px'>
+                    <LayoutBox css={styles.closeButton} display='flex' justifyContent='flex-end' position='absolute'>
                         <Cta iconRight={<CloseIcon />} color='purple700' fill='purple700' onClick={handleClose} />
                     </LayoutBox>
                 )}
@@ -44,7 +45,7 @@ Modal.propTypes = {
     dismissable: PropTypes.bool,
     onClose: PropTypes.func,
     width: PropTypes.string,
-    height: PropTypes.string,
+    maxHeight: PropTypes.string,
     position: PropTypes.oneOf(['top', 'center']),
     ...PROP_TYPES_LAYOUTBOX,
 };
@@ -52,7 +53,7 @@ Modal.propTypes = {
 Modal.defaultProps = {
     dismissable: true,
     width: '600px',
-    height: null,
+    maxHeight: null,
     position: 'top',
     onClose: () => {},
 };
