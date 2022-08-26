@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { WysiwygEditor } from '../../../commonComponents/WysiwygEditor/WysiwygEditor';
 
-const CustomiseGuidance = ({ activeGuidance, isLocked, onGuidanceChange, activeQuestion, activePanel }) => {
+const CustomiseGuidance = ({ activeGuidance, onGuidanceChange, activeQuestion, activePanel }) => {
     const [editorState, setEditorState] = useState(null);
 
     const debounceChange = useCallback(
