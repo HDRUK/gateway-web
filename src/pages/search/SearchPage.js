@@ -40,6 +40,7 @@ import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCoh
 import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 
 import './Search.scss';
+import { BackToTop } from '../../components';
 
 let baseURL = require('../commonComponents/BaseURL').getURL();
 const typeMapper = {
@@ -1795,6 +1796,7 @@ class SearchPage extends React.Component {
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <div>
+                    <BackToTop scrollOffset={300} className='backToTop' />
                     <SearchBar
                         ref={this.searchBar}
                         search={search}
