@@ -1925,15 +1925,11 @@ class SearchPage extends React.Component {
                                         <Filter {...filterProps} />
                                     </div>
                                 )}
-                                {key === 'Datasets' && (
-                                    <>
-                                        <Box my={5}>
-                                            <AdvancedSearchCohortDiscovery userProps={userState[0]} showLoginModal={this.showLoginModal} />
-                                        </Box>
+                                <Box my={5}>
+                                    <AdvancedSearchCohortDiscovery userProps={userState[0]} showLoginModal={this.showLoginModal} />
+                                </Box>
 
-                                        <AdvancedSearchDataUtilityWizard onClick={this.openDataUtilityWizard} />
-                                    </>
-                                )}
+                                <AdvancedSearchDataUtilityWizard onClick={this.openDataUtilityWizard} />
                             </Col>
                             <Col sm={12} md={12} lg={9} className='mt-2 mb-5'>
                                 {key === 'Datasets' && (
