@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Alert component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Dimmer css-wc4l3l-Dimmer"
+  >
+    Content
+  </div>
+</div>
+`;
