@@ -3,18 +3,19 @@ import { useHistory } from 'react-router-dom';
 import Alert from '../../../../components/Alert';
 import { LayoutContent } from '../../../../components/Layout';
 import { useAuth } from '../../../../context/AuthContext';
-import { isCustodian } from '../../../../utils/auth';
+import { isCustodian, userHasRole } from '../../../../utils/auth';
 import DataUsePage from '../../../dataUse/DataUsePage';
 import DataUseUpload from '../../../dataUse/upload/DataUseUpload';
 import DataUseWidget from '../../../dataUse/widget/DataUseWidget';
+import { userTypes } from '../../Team/teamUtil';
 
 const AccountDataUse = ({ tabId, team, publisherDetails }) => {
     const { userState } = useAuth();
     const history = useHistory();
-
     const {
         location: { state: historyState },
     } = history;
+    const isManager = userHasRole(userState, team, userTypes.MANAGER);
 
     const [dataUseUpload, setDataUseUpload] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState(false);
@@ -55,8 +56,8 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
                 <DataUsePage userState={userState} team={team} onClickDataUseUpload={handleClickUpload} />
             )}
 
-            {tabId === 'datause_widget' && isCustodian(team) && (
-                <DataUseWidget userState={userState} team={team} publisherName={publisherDetails.name} />
+            {tabId === 'datause_widget' && isCustodian(team) && isManager && publisherDetails?.dataUse?.widget?.enabled && (
+                <DataUseWidget userState={userState} team={team} publisherDetails={publisherDetails} />
             )}
         </>
     );

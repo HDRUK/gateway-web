@@ -1,0 +1,14 @@
+import { useState } from 'react';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import Dimmer from './Dimmer';
+
+<Meta title='Core/Atoms/Dimmer' component={Dimmer} />
+
+<Canvas>
+    <Story name='Basic'>
+        {props => {
+            return <Dimmer>Content here</Dimmer>;
+        }}
+    </Story>
+</Canvas>
