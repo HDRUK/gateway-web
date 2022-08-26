@@ -8,7 +8,9 @@ import iconRejected from '../../../images/Application_rejected.svg';
 
 const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }) => {
     const questionBankEnabled = publisher?.publisherDetails?.questionBank?.enabled;
+    const dataUseWidgetEnabled = publisher?.publisherDetails?.dataUse?.widget?.enabled;
     const questionBankStatusIcon = questionBankEnabled ? iconTick : iconRejected;
+    const dataUseWidgetStatusIcon = dataUseWidgetEnabled ? iconTick : iconRejected;
 
     let teamManagerNames = '';
 
@@ -35,9 +37,14 @@ const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }
             <Col sm={12} lg={2}>
                 <p className='text-center'>{membersCount}</p>
             </Col>
-            <Col sm={12} lg={2}>
+            <Col sm={12} lg={1}>
                 <p className='text-center'>
                     <Icon mr={2} size='2xl' svg={<InlineSVG src={questionBankStatusIcon} />} />
+                </p>
+            </Col>
+            <Col sm={12} lg={1}>
+                <p className='text-center'>
+                    <Icon mr={2} size='2xl' svg={<InlineSVG src={dataUseWidgetStatusIcon} />} />
                 </p>
             </Col>
             <Col sm={12} lg={2}>
