@@ -164,14 +164,18 @@ const Dataset = ({
                         {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
                     </Box>
                     <Box ml={1} as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
-                        {t('dataset.publishingFrequency')} 
-                        {data.datasetv2.provenance.temporal.accrualPeriodicity}
-                        <ToolTip text={t('dataset.publishingFrequencyTooltip')}>
-                            <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
-                        </ToolTip>
+                        {data.datasetv2.provenance?.temporal?.accrualPeriodicity && (
+                            <>
+                                {t('dataset.publishingFrequency')}
+                                {data.datasetv2.provenance.temporal.accrualPeriodicity}
+                                <ToolTip text={t('dataset.publishingFrequencyTooltip')}>
+                                    <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
+                                </ToolTip>
+                            </>
+                        )}
                     </Box>
                 </Col>
-                
+
                 <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>
                     <ShowMore initialHeight={30}>
                         <div>
