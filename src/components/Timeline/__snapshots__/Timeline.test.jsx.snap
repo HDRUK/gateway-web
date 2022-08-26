@@ -3,7 +3,7 @@
 exports[`Given the Timeline component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-ichth-B"
+    class="ui-Box css-672p6m"
   >
     <ul
       class="ui-Timeline additional-classname css-1q9wqza-Timeline"

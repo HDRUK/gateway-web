@@ -6,10 +6,10 @@ exports[`Given the SortDropdown component When it is rendered Then matches the p
     class="ui-SortDropdown additional-classname css-13ymzsx-SortDropdown"
   >
     <div
-      class="ui-Box css-ichth-B"
+      class="ui-Box css-672p6m"
     >
       <div
-        class="ui-Dropdown css-cfbowp-SortDropdown show dropdown"
+        class="ui-Dropdown css-cewc3p-SortDropdown show dropdown"
       >
         <button
           aria-expanded="true"
@@ -61,10 +61,10 @@ exports[`Given the SortDropdown component When it is rendered When it allows sor
     class="ui-SortDropdown additional-classname css-13ymzsx-SortDropdown"
   >
     <div
-      class="ui-Box css-ichth-B"
+      class="ui-Box css-672p6m"
     >
       <div
-        class="ui-Dropdown css-cfbowp-SortDropdown dropdown"
+        class="ui-Dropdown css-cewc3p-SortDropdown dropdown"
       >
         <button
           aria-expanded="false"

@@ -3,31 +3,39 @@
 exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered And the action is clicked Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-FeatureContentVertical ui-Card css-7mw3b3"
+    class="ui-FeatureContentVertical ui-Card css-1b4nj03-En"
     role="article"
   >
     <div
-      class="ui-CardBody css-1eq1p65"
+      class="ui-CardBody css-d18448-Wn"
     >
       <div
         class="css-5ijvz8"
       >
         <h5
-          class="ui-Typography css-e1pajs-Component"
+          class="ui-Typography css-er4lk4-Component"
         >
           <div
-            class="ui-Box css-cm7hpa-W"
+            class="ui-Box css-672p6m"
           >
-            Cohort Discovery
-            <span
-              class="ui-Tag css-2vcu8n"
+            <div
+              class="ui-Box css-672p6m"
             >
-              Beta
-            </span>
+              <div
+                class="ui-Box css-672p6m"
+              >
+                Cohort Discovery
+              </div>
+              <span
+                class="ui-Tag css-v2u436"
+              >
+                BETA
+              </span>
+            </div>
           </div>
         </h5>
         <div
-          class="css-1cn2qtu"
+          class="css-94pk7g"
         >
           <img
             alt="Cohort Discovery feature image"
@@ -35,19 +43,19 @@ exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered A
           />
         </div>
         <div
-          class="ui-Box css-6thaoi-W"
+          class="ui-Box css-672p6m"
         >
           <p
-            class="ui-Typography css-j8pp3b-Component"
+            class="ui-Typography css-7ctxla-Component"
           >
             Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.
           </p>
         </div>
         <div
-          class="ui-Box css-cm7hpa-W"
+          class="ui-Box css-672p6m"
         >
           <button
-            class="ui-Button css-cbr18b-H"
+            class="ui-Button css-1wpvbqr"
             type="button"
           >
              
@@ -60,7 +68,7 @@ exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered A
             target="_blank"
           >
             <p
-              class="ui-Typography css-j8pp3b-Component"
+              class="ui-Typography css-7ctxla-Component"
             >
               Learn more
             </p>

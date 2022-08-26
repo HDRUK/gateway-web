@@ -52,7 +52,7 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
               8 November 2021
             </h3>
             <div
-              class="ui-Box css-ichth-B"
+              class="ui-Box css-672p6m"
             >
               <ul
                 class="ui-Timeline css-1q9wqza-Timeline"
@@ -101,7 +101,7 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
                         </b>
                       </div>
                       <div
-                        class="ui-Box css-ichth-B"
+                        class="ui-Box css-672p6m"
                       >
                         <blockquote
                           class="ui-Blockquote css-2npyuv-BlockQuote"
@@ -168,7 +168,7 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
                         data-testid="event-detailed-text-1-0"
                       >
                         <div
-                          class="ui-Box css-ichth-B"
+                          class="ui-Box css-672p6m"
                         >
                           <blockquote
                             class="ui-Blockquote css-2npyuv-BlockQuote"
@@ -179,7 +179,7 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
                               Summary
                             </h6>
                             <div
-                              class="ui-Box css-ichth-B"
+                              class="ui-Box css-672p6m"
                             >
                               <ul
                                 class="ui-ListInfo css-10bz5jl-ListInfo"
@@ -229,7 +229,7 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
                         data-testid="event-detailed-text-1-1"
                       >
                         <div
-                          class="ui-Box css-ichth-B"
+                          class="ui-Box css-672p6m"
                         >
                           <blockquote
                             class="ui-Blockquote css-2npyuv-BlockQuote"
@@ -240,7 +240,7 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
                               Provenance | Temporal
                             </h6>
                             <div
-                              class="ui-Box css-ichth-B"
+                              class="ui-Box css-672p6m"
                             >
                               <ul
                                 class="ui-ListInfo css-10bz5jl-ListInfo"
