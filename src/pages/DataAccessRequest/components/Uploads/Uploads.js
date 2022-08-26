@@ -15,17 +15,35 @@ import UploadFiles from './UploadFiles';
 import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
 import Icon from '../../../../components/Icon';
+import useRetryAsync from '../../../../hooks/useRetryAsync/useRetryAsync';
 
 const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disabled }) => {
-    // 10mb - 10485760
-    // 2mb - 2097152
     const maxSize = 10485760;
-    const maxRetries = 30;
-    let retryCount = 0;
-    // name, size, location, id
+
     const [uploadFiles, setUploadFiles] = useState([]);
     const [submitted, setSubmitted] = useState(false);
     const [isLoading, setLoading] = useState(false);
+
+    const retry = useRetryAsync({
+        onIterationComplete: (files, values) => {
+            values.forEach(
+                (
+                    {
+                        value: {
+                            data: { status },
+                        },
+                    },
+                    i
+                ) => {
+                    if (status === fileStatus.SCANNED || status === fileStatus.QUARANTINED || status === fileStatus.ERROR) {
+                        files[i].status = status;
+
+                        onFilesUpdate(files, false);
+                    }
+                }
+            );
+        },
+    });
 
     const onRemoveFile = file => {
         const newFiles = [...uploadFiles].filter(f => {
@@ -104,7 +122,6 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
     };
 
     const onUploadFiles = async () => {
-        retryCount = 0;
         setSubmitted(true);
         // 1. filter out files that have description and newFile to upload
         const acceptedFiles = [...uploadFiles].filter(f => !_.isEmpty(f.description) && f.status === fileStatus.NEWFILE);
@@ -133,12 +150,12 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
                     } = response;
                     // update file state
                     if (!_.isEmpty(mediaFiles)) {
-                        // returned files and initialFilesLoad = false
                         onFilesUpdate(mediaFiles, false);
-                        // wipe upload false
+
                         setUploadFiles([]);
-                        // set loading false
                         setLoading(false);
+
+                        retry.init(getStatusRequests(mediaFiles), mediaFiles);
                     }
                 })
                 .catch(err => {
@@ -186,39 +203,16 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
         }
     };
 
+    const getStatusRequests = files => {
+        return files.map(
+            ({ fileId }) =>
+                () =>
+                    axios.get(`${baseURL}/api/v1/data-access-request/${id}/file/${fileId}/status`)
+        );
+    };
+
     useEffect(() => {
-        const timer = setInterval(() => {
-            if (retryCount < maxRetries) {
-                retryCount++;
-                files.forEach(file => {
-                    if (file.status === fileStatus.NEWFILE || file.status === fileStatus.UPLOADED) {
-                        axios
-                            .get(`${baseURL}/api/v1/data-access-request/${id}/file/${file.fileId}/status`)
-                            .then(response => {
-                                file.status = response.data.status;
-                                if (
-                                    file.status === fileStatus.SCANNED ||
-                                    file.status === fileStatus.QUARANTINED ||
-                                    file.status === fileStatus.ERROR
-                                ) {
-                                    onFilesUpdate(files, false);
-                                    retryCount = 0;
-                                    clearInterval(timer);
-                                }
-                            })
-                            .catch(err => {
-                                console.error(err.message);
-                                clearInterval(timer);
-                            });
-                    }
-                });
-            } else {
-                clearInterval(timer);
-            }
-        }, 10000);
-        return () => {
-            clearInterval(timer);
-        };
+        retry.initOnce(getStatusRequests(files), files);
     }, []);
 
     // dropzone setup
@@ -228,7 +222,23 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
         onDropRejected,
         minSize: 0,
         maxSize,
-        accept: ['.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.key', '.pages', '.numbers', '.png', '.jpg', '.jpeg', '.csv', '.txt'],
+        accept: [
+            '.pdf',
+            '.doc',
+            '.docx',
+            '.ppt',
+            '.pptx',
+            '.xls',
+            '.xlsx',
+            '.key',
+            '.pages',
+            '.numbers',
+            '.png',
+            '.jpg',
+            '.jpeg',
+            '.csv',
+            '.txt',
+        ],
     });
     return (
         <div className='files dar-form'>
