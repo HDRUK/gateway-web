@@ -5,5 +5,5 @@ export const markdown = css`
     border: 1px solid #eee;
     font-size: 14px;
     overflow-y: auto;
-    height: 400px;
+    height: 250px;
 `;
