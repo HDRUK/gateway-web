@@ -1621,6 +1621,10 @@ button a {
     overflow-wrap: break-word !important;
 }
 
+.sentence-break {
+    word-break: break-word;
+}
+
 .paper-links {
     display: block;
 }

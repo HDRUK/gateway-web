@@ -42,7 +42,9 @@ export const stripMarkdown = (value = '', truncate = 0) => {
 };
 
 export const dateFormats = (timestamp, formats = {}) => {
+    if (!timestamp) return {};
     const { dateFormat = DISPLAY_DATE_STANDARD, timeFormat = DISPLAY_TIME_STANDARD } = formats;
+
     const date = new Date(timestamp);
 
     return {
