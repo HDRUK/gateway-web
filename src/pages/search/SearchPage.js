@@ -1865,10 +1865,10 @@ class SearchPage extends React.Component {
                                 <Col lg={12}>
                                     <form onSubmit={this.handleSearch}>
                                         <Box display='flex' justifyContent='center' width='100%' p={6}>
-                                            <Box flexGrow='1' display='inline-flex'>
+                                            <Box width='150px' display='inline-flex'>
                                                 <ColourLogoSvg />
                                             </Box>
-                                            <Box width='647px' mt={1}>
+                                            <Box mt={1} flexGrow='1'>
                                                 <Input
                                                     iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
                                                     iconRight={
@@ -1885,7 +1885,7 @@ class SearchPage extends React.Component {
                                                     onChange={this.handleSearchChange}
                                                 />
                                             </Box>
-                                            <Box flexGrow='1' mt={1}>
+                                            <Box width='175px' mt={1}>
                                                 <Button type='submit'>Search</Button>
                                             </Box>
                                         </Box>
