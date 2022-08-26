@@ -8,7 +8,7 @@ exports[`Given the QualityScore component When it is rendered Then matches the p
     target="_blank"
   >
     <div
-      class="ui-Box css-ichth-B"
+      class="ui-Box css-672p6m"
     >
       <icon-mock />
     </div>
