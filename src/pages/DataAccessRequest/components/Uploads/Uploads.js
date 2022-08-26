@@ -122,7 +122,6 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disa
     };
 
     const onUploadFiles = async () => {
-        // retryCount = 0;
         setSubmitted(true);
         // 1. filter out files that have description and newFile to upload
         const acceptedFiles = [...uploadFiles].filter(f => !_.isEmpty(f.description) && f.status === fileStatus.NEWFILE);
