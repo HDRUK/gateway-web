@@ -366,7 +366,7 @@
     "searchResultsInfo": {
         "sortedBy": "Sorted by:",
         "searchFilters": "Search filters",
-        "withOutTerm": "Showing {{count}} of {{total}} results",
+        "withOutTerm": "Showing {{count}} results",
         "for": " for "
     },
     "datause": {

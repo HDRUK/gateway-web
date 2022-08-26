@@ -1925,7 +1925,10 @@ class SearchPage extends React.Component {
                             </Col>
                             <Col sm={12} md={12} lg={5}>
                                 <Box mt={1} display='flex' alignItems='center' height='100%'>
-                                    <SearchResultsInfo count={datasetIndex + 1} total={this.getCountByKey(key)} searchTerm={search} />
+                                    {(() => {
+                                        let { search } = queryString.parse(window.location.search);
+                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
+                                    })()}
                                 </Box>
                             </Col>
                             <Col sm={12} md={12} lg={3}>
