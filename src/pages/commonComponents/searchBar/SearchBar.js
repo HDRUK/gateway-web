@@ -84,14 +84,12 @@ class SearchBar extends React.Component {
         messageCount: 0,
         prevScrollpos: window.pageYOffset,
         visible: true,
-        isHovering: false,
         isLoading: true,
     };
 
     constructor(props) {
         super(props);
         this.state.userState = props.userState;
-        this.handleMouseHover = this.handleMouseHover.bind(this);
     }
 
     componentDidMount() {
@@ -233,16 +231,6 @@ class SearchBar extends React.Component {
             NotificationManager.warning(window.localStorage.getItem('redirectMsg'), 'Page not found', 10000);
             window.localStorage.removeItem('redirectMsg');
         }
-    }
-
-    handleMouseHover() {
-        this.setState(this.toggleHoverState);
-    }
-
-    toggleHoverState(state) {
-        return {
-            isHovering: !state.isHovering,
-        };
     }
 
     getLink = (publisherName = '') => {
@@ -1255,9 +1243,7 @@ class SearchBar extends React.Component {
                                                             style={{ cursor: 'pointer' }}
                                                             onClick={e => {
                                                                 this.showLoginModal();
-                                                            }}
-                                                            onMouseEnter={this.handleMouseHover}
-                                                            onMouseLeave={this.handleMouseHover}>
+                                                            }}>
                                                             Sign in
                                                         </Button>
                                                     </>
