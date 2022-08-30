@@ -1730,8 +1730,6 @@ class SearchPage extends React.Component {
 
     handleSearch = e => {
         e.preventDefault();
-        // const data = new FormData(e.target);
-        console.log(this.state.search);
 
         window.location.href = `/search?search=${this.state.searchFieldValue}&tab=${this.state.key}`;
     };
@@ -1810,7 +1808,7 @@ class SearchPage extends React.Component {
                 {key === 'Datasets' && <DatasetSearchSort onSort={this.handleSort} sort={datasetSort} search={search} />}
                 {key === 'Datauses' && <DataUsesSearchSort onSort={this.handleSort} sort={dataUseRegisterSort} search={search} />}
                 {key === 'Collections' && <CollectionsSearchSort onSort={this.handleSort} sort={collectionSort} search={search} />}
-                {key === 'Papers' && >apersSearchSort onSort={this.handleSort} sort={paperSort} search={search} />}
+                {key === 'Papers' && <PapersSearchSort onSort={this.handleSort} sort={paperSort} search={search} />}
                 {key === 'People' && <PeopleSearchSort onSort={this.handleSort} sort={personSort} search={search} />}
             </div>
         );
@@ -1820,8 +1818,6 @@ class SearchPage extends React.Component {
         const filterProps = this.getFilterProps(key);
         const filtersSelectionProps = this.getFiltersSelectionProps(preferenceFilters);
         const searchProps = this.getSearchProps(showSort, sortMenu, maxResults);
-
-        console.log('This ', this.state.search);
 
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
