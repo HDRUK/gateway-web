@@ -1934,7 +1934,7 @@ class SearchPage extends React.Component {
                                 </Box>
                             </Col>
                             <Col sm={12} md={12} lg={3}>
-                                <Box mt={6}>
+                                <Box mt={6} mb={4}>
                                     <H6 color='grey700'>{this.props.t('searchResultsInfo.searchFilters')}</H6>
                                 </Box>
                             </Col>
