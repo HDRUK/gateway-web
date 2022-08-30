@@ -1917,9 +1917,11 @@ class SearchPage extends React.Component {
                         <Row className='flex-row-reverse'>
                             <Col sm={12} md={12} lg={4}>
                                 <Box display='flex' justifyContent='end' alignItems='center' mt={3} mb={1}>
-                                    <P color='grey800' mr='2'>
-                                        {this.props.t('searchResultsInfo.sortedBy')}
-                                    </P>
+                                    {key !== 'Courses' && (
+                                        <P color='grey800' mr='2'>
+                                            {this.props.t('searchResultsInfo.sortedBy')}
+                                        </P>
+                                    )}
                                     {sortMenu}
                                 </Box>
                             </Col>
@@ -1946,15 +1948,11 @@ class SearchPage extends React.Component {
                                         <Filter {...filterProps} />
                                     </div>
                                 )}
-                                {key === 'Datasets' && (
-                                    <>
-                                        <Box my={5}>
-                                            <AdvancedSearchCohortDiscovery userProps={userState[0]} showLoginModal={this.showLoginModal} />
-                                        </Box>
+                                <Box my={5}>
+                                    <AdvancedSearchCohortDiscovery userProps={userState[0]} showLoginModal={this.showLoginModal} />
+                                </Box>
 
-                                        <AdvancedSearchDataUtilityWizard onClick={this.openDataUtilityWizard} />
-                                    </>
-                                )}
+                                <AdvancedSearchDataUtilityWizard onClick={this.openDataUtilityWizard} />
                             </Col>
                             <Col sm={12} md={12} lg={9} className='mt-2 mb-5'>
                                 {key === 'Datasets' && (

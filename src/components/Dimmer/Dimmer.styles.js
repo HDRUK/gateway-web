@@ -23,11 +23,6 @@ export const root =
                 align-items: center;
             `}
 
-            ${contentAlignment === 'top' &&
-            `
-                padding-top: 137px;
-            `}
-
             ${getComponentGlobals('Dimmer', theme)}
         `;
     };

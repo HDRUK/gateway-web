@@ -35,7 +35,7 @@ const AcceptModal = ({ open, onClose, onAccept }) => {
     }, [open]);
 
     return (
-        <Modal open={open} onClose={onClose} dismissable height='500px'>
+        <Modal open={open} onClose={onClose} dismissable>
             <ModalHeader>
                 HEALTH DATA RESEARCH UK
                 <Typography variant='h6' mb={0}>
