@@ -45,7 +45,7 @@ Modal.propTypes = {
     dismissable: PropTypes.bool,
     onClose: PropTypes.func,
     width: PropTypes.string,
-    maxHeight: PropTypes.string,
+    height: PropTypes.string,
     position: PropTypes.oneOf(['top', 'center']),
     ...PROP_TYPES_LAYOUTBOX,
 };
@@ -53,7 +53,7 @@ Modal.propTypes = {
 Modal.defaultProps = {
     dismissable: true,
     width: '600px',
-    maxHeight: null,
+    height: null,
     position: 'top',
     onClose: () => {},
 };
