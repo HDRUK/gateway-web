@@ -38,6 +38,9 @@ import searchService from '../../services/search/search';
 import { getParams } from '../../utils/GeneralHelper.util';
 import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
 import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
+import SVGIcon from '../../images/SVGIcon';
+import NewSavedPreferencesModal from '../commonComponents/newSavedPreferencesModal/NewSavedPreferencesModal';
+
 
 import './Search.scss';
 
@@ -107,8 +110,8 @@ class SearchPage extends React.Component {
         isResultsLoading: true,
         showDrawer: false,
         showModal: false,
-        showSavedPreferencesModal: false,
-        showSavedModal: false,
+        // showSavedPreferencesModal: false,
+        // showSavedModal: false,
         context: {},
         userState: [
             {
@@ -139,6 +142,8 @@ class SearchPage extends React.Component {
         showDataUtilityWizardModal: false,
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
+        closed: true,
+        showNewSavedPreferencesModal: false
     };
 
     constructor(props) {
@@ -156,6 +161,10 @@ class SearchPage extends React.Component {
         this.toggleDataUtilityBanner = this.toggleDataUtilityBanner.bind(this);
         this.onWizardStepChange = this.onWizardStepChange.bind(this);
         this.csvLink = React.createRef();
+    }
+
+    showNewSavedPreferencesModal = () => {
+        this.setState({ showNewSavedPreferencesModal: true, closed: false })
     }
 
     hideSavedPreferencesModal = () => {
@@ -1445,7 +1454,7 @@ class SearchPage extends React.Component {
 
     saveFiltersUpdate = async viewSaved => {
         await this.getFilters(viewSaved.tab);
-        this.setState({ showSavedPreferencesModal: false });
+        this.setState({ showNewSavedPreferencesModal: false });
         // 1. v2 take copy of data
         let filtersV2DatasetsData = !_.isNil(this.state.filtersV2Datasets) ? [...this.state.filtersV2Datasets] : [];
         let filtersV2ToolsData = !_.isNil(this.state.filtersV2Tools) ? [...this.state.filtersV2Tools] : [];
@@ -1823,22 +1832,17 @@ class SearchPage extends React.Component {
                             <SearchUtilityBanner onClick={this.openDataUtilityWizard} step={activeDataUtilityWizardStep} />
                         )}
 
-                        {this.state.saveSuccess && !this.state.showSavedModal && (
+                        {this.state.saveSuccess && !this.state.showNewSavedPreferencesModal && (
                             <Alert variant='primary' className='blue-banner saved-preference-banner'>
                                 Saved preference: "{this.state.showSavedName}"
                             </Alert>
                         )}
 
-                        <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
+                        <Container className={this.state.saveSuccess && !this.state.showNewSavedPreferencesModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-save'>
-                                <Col className='title' lg={4}>
-                                    {(() => {
-                                        let { search } = queryString.parse(window.location.search);
-                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
-                                    })()}
-                                </Col>
-                                <Col lg={8} className='saved-buttons'>
-                                    <Box display='inline-flex' gap={2} py={4}>
+                                
+                                <Col lg={12} className='saved-buttons'>
+                                <Box display='inline-flex' gap={2} py={4}>
                                         {this.state.key === 'Datauses' && (
                                             <>
                                                 <Button variant='tertiary' onClick={this.onClickDownloadResults}>
@@ -1853,26 +1857,29 @@ class SearchPage extends React.Component {
                                                 />
                                             </>
                                         )}
-
-                                        {this.state.saveSuccess ? (
-                                            <Button variant='primaryAlt' disabled iconLeft={<Icon svg={<TickSvg />} fill='green300' />}>
-                                                Saved
-                                            </Button>
-                                        ) : this.state.userState[0].loggedIn === false ? (
-                                            <Button variant='secondary' onClick={this.showLoginModal}>
-                                                Save
-                                            </Button>
-                                        ) : (
-                                            <Button variant='secondary' onClick={() => this.setState({ showSavedModal: true })}>
-                                                Save
-                                            </Button>
-                                        )}
-
-                                        {this.state.showSavedModal && (
-                                            <SaveModal
-                                                show={this.state.showSavedModal}
-                                                onHide={this.hideSavedModal}
-                                                onSaveHide={this.hideNoSaveSearchModal}
+                                        <Button
+                                            variant='tertiary' className='arrow' aria-haspopup="true" 
+                                            onClick={
+                                                        this.state.userState[0].loggedIn === false
+                                                            ? () => this.showLoginModal()
+                                                            : () => this.showNewSavedPreferencesModal() 
+                                                    }> 
+                                            Save                                           
+                                            <SVGIcon
+                                                width='35px'
+                                                height='35px'
+                                                name='arrow-down'
+                                                fill='#3C3C3B'
+                                                className={this.state.closed ? '' : 'flip180'}
+                                            />
+                                        </Button>
+                                        {this.state.showNewSavedPreferencesModal && (
+                                            <NewSavedPreferencesModal
+                                                show={this.state.showNewSavedPreferencesModal}
+                                                onHide={this.hideNewSavedPreferencesModal}
+                                                viewMatchesLink={this.viewMatches}
+                                                viewSaved={this.saveFiltersUpdate}
+                                                activeTab={key}
                                                 saveSuccess={this.showSuccessMessage}
                                                 saveName={this.showSavedName}
                                                 search={this.state.search}
@@ -1881,31 +1888,9 @@ class SearchPage extends React.Component {
                                                 tab={this.state.key}
                                             />
                                         )}
-
-                                        <Button
-                                            variant='tertiary'
-                                            onClick={
-                                                this.state.userState[0].loggedIn === false
-                                                    ? () => this.showLoginModal()
-                                                    : () => this.setState({ showSavedPreferencesModal: true })
-                                            }>
-                                            Saved preferences
-                                        </Button>
-                                        {this.state.showSavedPreferencesModal && (
-                                            <SavedPreferencesModal
-                                                show={this.state.showSavedPreferencesModal}
-                                                onHide={this.hideSavedPreferencesModal}
-                                                viewMatchesLink={this.viewMatches}
-                                                viewSaved={this.saveFiltersUpdate}
-                                                activeTab={key}
-                                            />
-                                        )}
-
-                                        {sortMenu}
                                     </Box>
+                                    
                                 </Col>
-                            </Row>
-                            <Row>
                                 {key !== 'People' && (
                                     <FilterSelection
                                         {...filtersSelectionProps}
@@ -1914,7 +1899,16 @@ class SearchPage extends React.Component {
                                         savedSearches={true}
                                     />
                                 )}
+                                <Col className='title' lg={9}>
+                                    {(() => {
+                                        let { search } = queryString.parse(window.location.search);
+                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
+                                    })()}
+                                </Col>
+                                {sortMenu}
+
                             </Row>
+                            
                         </Container>
                     </div>
                     <Container>
