@@ -41,7 +41,6 @@ import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchD
 import SVGIcon from '../../images/SVGIcon';
 import NewSavedPreferencesModal from '../commonComponents/newSavedPreferencesModal/NewSavedPreferencesModal';
 
-
 import './Search.scss';
 
 let baseURL = require('../commonComponents/BaseURL').getURL();
@@ -110,8 +109,6 @@ class SearchPage extends React.Component {
         isResultsLoading: true,
         showDrawer: false,
         showModal: false,
-        // showSavedPreferencesModal: false,
-        // showSavedModal: false,
         context: {},
         userState: [
             {
@@ -143,7 +140,7 @@ class SearchPage extends React.Component {
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
         closed: true,
-        showNewSavedPreferencesModal: false
+        shouldShowNewSavedPreferencesModal: false,
     };
 
     constructor(props) {
@@ -164,11 +161,11 @@ class SearchPage extends React.Component {
     }
 
     showNewSavedPreferencesModal = () => {
-        this.setState({ showNewSavedPreferencesModal: true, closed: false })
-    }
+        this.setState({ shouldShowNewSavedPreferencesModal: true, closed: false });
+    };
 
     hideSavedPreferencesModal = () => {
-        this.setState({ showSavedPreferencesModal: false });
+        this.setState({ shouldShowNewSavedPreferencesModal: false });
     };
 
     hideSavedModal = () => {
@@ -1454,7 +1451,7 @@ class SearchPage extends React.Component {
 
     saveFiltersUpdate = async viewSaved => {
         await this.getFilters(viewSaved.tab);
-        this.setState({ showNewSavedPreferencesModal: false });
+        this.setState({ shouldShowNewSavedPreferencesModal: false });
         // 1. v2 take copy of data
         let filtersV2DatasetsData = !_.isNil(this.state.filtersV2Datasets) ? [...this.state.filtersV2Datasets] : [];
         let filtersV2ToolsData = !_.isNil(this.state.filtersV2Tools) ? [...this.state.filtersV2Tools] : [];
@@ -1832,17 +1829,21 @@ class SearchPage extends React.Component {
                             <SearchUtilityBanner onClick={this.openDataUtilityWizard} step={activeDataUtilityWizardStep} />
                         )}
 
-                        {this.state.saveSuccess && !this.state.showNewSavedPreferencesModal && (
+                        {this.state.saveSuccess && !this.state.shouldShowNewSavedPreferencesModal && (
                             <Alert variant='primary' className='blue-banner saved-preference-banner'>
                                 Saved preference: "{this.state.showSavedName}"
                             </Alert>
                         )}
 
-                        <Container className={this.state.saveSuccess && !this.state.showNewSavedPreferencesModal && 'container-saved-preference-banner'}>
+                        <Container
+                            className={
+                                this.state.saveSuccess &&
+                                !this.state.shouldShowNewSavedPreferencesModal &&
+                                'container-saved-preference-banner'
+                            }>
                             <Row className='filters filter-save'>
-                                
                                 <Col lg={12} className='saved-buttons'>
-                                <Box display='inline-flex' gap={2} py={4}>
+                                    <Box display='inline-flex' gap={2} py={4}>
                                         {this.state.key === 'Datauses' && (
                                             <>
                                                 <Button variant='tertiary' onClick={this.onClickDownloadResults}>
@@ -1858,13 +1859,15 @@ class SearchPage extends React.Component {
                                             </>
                                         )}
                                         <Button
-                                            variant='tertiary' className='arrow' aria-haspopup="true" 
+                                            variant='tertiary'
+                                            className='arrow'
+                                            aria-haspopup='true'
                                             onClick={
-                                                        this.state.userState[0].loggedIn === false
-                                                            ? () => this.showLoginModal()
-                                                            : () => this.showNewSavedPreferencesModal() 
-                                                    }> 
-                                            Save                                           
+                                                this.state.userState[0].loggedIn === false
+                                                    ? () => this.showLoginModal()
+                                                    : () => this.showNewSavedPreferencesModal()
+                                            }>
+                                            Save
                                             <SVGIcon
                                                 width='35px'
                                                 height='35px'
@@ -1873,10 +1876,11 @@ class SearchPage extends React.Component {
                                                 className={this.state.closed ? '' : 'flip180'}
                                             />
                                         </Button>
-                                        {this.state.showNewSavedPreferencesModal && (
+
+                                        {this.state.shouldShowNewSavedPreferencesModal && (
                                             <NewSavedPreferencesModal
-                                                show={this.state.showNewSavedPreferencesModal}
-                                                onHide={this.hideNewSavedPreferencesModal}
+                                                show={this.state.shouldShowNewSavedPreferencesModal}
+                                                onHide={this.hideSavedPreferencesModal}
                                                 viewMatchesLink={this.viewMatches}
                                                 viewSaved={this.saveFiltersUpdate}
                                                 activeTab={key}
@@ -1889,7 +1893,6 @@ class SearchPage extends React.Component {
                                             />
                                         )}
                                     </Box>
-                                    
                                 </Col>
                                 {key !== 'People' && (
                                     <FilterSelection
@@ -1906,9 +1909,7 @@ class SearchPage extends React.Component {
                                     })()}
                                 </Col>
                                 {sortMenu}
-
                             </Row>
-                            
                         </Container>
                     </div>
                     <Container>

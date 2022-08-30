@@ -2,22 +2,21 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import './SaveModal.scss';
-import React, { Component, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, Row, Col, Tab, Tabs } from 'react-bootstrap';
 import './SavedPreferencesModal.scss';
 
-var baseURL = require('../../commonComponents/BaseURL').getURL();
+const baseURL = require('../BaseURL').getURL();
 
-const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props }) => {
-    const [, setClose] = useState(null);
-    const [, setSaveSuccess] = useState(props.saveSuccess);
+const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, saveName, saveSuccess, search, filters, sort, tab }) => {
     const [data, setData] = useState([]);
     const [dataLink, setDataLink] = useState(data);
     const [activeCard, setActiveCard] = useState('');
     const [showButtons, setShowButtons] = useState(false);
 
     useEffect(() => {
-        axios.get(baseURL + '/api/v1/search-preferences').then(res => {
+        axios.get(`${baseURL}/api/v1/search-preferences`).then(res => {
             setData(res.data.data);
         });
     }, []);
@@ -48,15 +47,14 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props
     const papersTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'Papers').length;
     const peopleTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'People').length;
 
-
     const formik = useFormik({
         initialValues: {
             name: '',
             filterCriteria: {
-                searchTerm: props.search || '',
-                filters: props.filters || [],
-                tab: props.tab || '',
-                sort: props.sort || '',
+                searchTerm: search || '',
+                filters: filters || [],
+                tab: tab || '',
+                sort: sort || '',
             },
         },
 
@@ -66,24 +64,22 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props
 
         onSubmit: values => {
             axios
-                .post(baseURL + '/api/v1/search-preferences', values)
+                .post(`${baseURL}/api/v1/search-preferences`, values)
                 .then(res => {
-                    setClose(props.onHide);
-                    props.saveName(res.data.response.name);
-                    setSaveSuccess(props.saveSuccess);
+                    onHide();
+                    saveName(res.data.response.name);
+                    saveSuccess();
                 })
                 .catch(err => {
                     return err;
                 });
         },
 
-    handleClick() {
-        
-    },
-
+        handleClick() {},
     });
+
     return (
-        <Modal show={props.show} onHide={props.onSaveHide} className='save-modal-preferences'>
+        <Modal show={show} onHide={onHide} className='save-modal-preferences'>
             <Modal.Header closeButton>
                 <h5 className='black-20-semibold'>Save</h5>
             </Modal.Header>
@@ -104,28 +100,25 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props
                 />
                 {formik.touched.name && formik.errors.name ? <div className='errorMessages'>{formik.errors.name}</div> : null}
                 <span className='black-20'>Your search preferences</span>
-                    <br />
-                    <p className='gray800-14'>
-                        View saved preferences across all resources on the Gateway. To create a new preference, apply your desired filters
-                        on the resources search results page and select 'save'.
-                    </p>
-                    <Tabs defaultActiveKey={activeTab} className='save-tabsBackground saved-preferences-tabs gray700-13'>
-                        {tabs.map(tabName => (
-                            <Tab
-                                eventKey={tabName}
-                                key={tabName}
-                                title={
-                                    tabName +
-                                    ' ' +
-                                    ((tabName === 'Datasets' && '(' + datasetsTotal + ')') ||
-                                        (tabName === 'Tools' && '(' + toolsTotal + ')') ||
-                                        (tabName === 'Datauses' && '(' + datausesTotal + ')') ||
-                                        (tabName === 'Collections' && '(' + collectionsTotal + ')') ||
-                                        (tabName === 'Courses' && '(' + coursesTotal + ')') ||
-                                        (tabName === 'Papers' && '(' + papersTotal + ')') ||
-                                        (tabName === 'People' && '(' + peopleTotal + ')'))
-                                }
-                            >
+                <br />
+                <p className='gray800-14'>
+                    View saved preferences across all resources on the Gateway. To create a new preference, apply your desired filters on
+                    the resources search results page and select 'save'.
+                </p>
+                <Tabs defaultActiveKey={activeTab} className='save-tabsBackground saved-preferences-tabs gray700-13'>
+                    {tabs.map(tabName => (
+                        <Tab
+                            eventKey={tabName}
+                            key={tabName}
+                            title={`${tabName} ${
+                                (tabName === 'Datasets' && `(${datasetsTotal})`) ||
+                                (tabName === 'Tools' && `(${toolsTotal})`) ||
+                                (tabName === 'Datauses' && `(${datausesTotal})`) ||
+                                (tabName === 'Collections' && `(${collectionsTotal})`) ||
+                                (tabName === 'Courses' && `(${coursesTotal})`) ||
+                                (tabName === 'Papers' && `(${papersTotal})`) ||
+                                (tabName === 'People' && `(${peopleTotal})`)
+                            }`}>
                             {data.filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, '')).length > 0 ? (
                                 data
                                     .filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, ''))
@@ -141,8 +134,7 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props
                                                 setShowButtons(true);
                                                 setDataLink(savedData);
                                                 setActiveCard(savedData._id);
-                                            }}
-                                        >
+                                            }}>
                                             <h5 className='black-20-semibold'>{savedData.name}</h5>
                                             <p className='black-14'>
                                                 Search term:{' '}
@@ -168,9 +160,9 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props
                                     </Col>
                                 </Row>
                             )}
-                    </Tab>
-                ))}
-            </Tabs>
+                        </Tab>
+                    ))}
+                </Tabs>
             </Modal.Body>
 
             <Modal.Footer className='saved-preference-modal-footer'>
@@ -192,6 +184,19 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props
             </Modal.Footer>
         </Modal>
     );
+};
+
+NewSavedPreferencesModal.propTypes = {
+    show: PropTypes.bool.isRequired,
+    onHide: PropTypes.func.isRequired,
+    viewSaved: PropTypes.func.isRequired,
+    saveSuccess: PropTypes.func.isRequired,
+    saveName: PropTypes.func.isRequired,
+    activeTab: PropTypes.number.isRequired,
+    search: PropTypes.string.isRequired, // update with correct type
+    filters: PropTypes.number.isRequired, // update with correct type
+    sort: PropTypes.number.isRequired, // update with correct type
+    tab: PropTypes.number.isRequired, // update with correct type
 };
 
 export default NewSavedPreferencesModal;
