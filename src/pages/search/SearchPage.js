@@ -1864,7 +1864,7 @@ class SearchPage extends React.Component {
                                             <Box width='150px' display='inline-flex'>
                                                 <ColourLogoSvg />
                                             </Box>
-                                            <Box mt={1} flexGrow='1'>
+                                            <Box mt={1} flexGrow='1' mr={1}>
                                                 <Input
                                                     iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
                                                     iconRight={
