@@ -23,7 +23,7 @@ const SearchInput = ({ value, onReset, ...outerProps }) => {
             name='search'
             inputRef={inputRef}
             iconPrepend={<Icon svg={<SearchIcon />} fill='green700' size='lg' />}
-            iconAppend={!!value && <Icon svg={<ClearIcon />} color='purple500' size='lg' role='button' onClick={handleReset} />}
+            iconAppend={!!value && <Icon svg={<ClearIcon />} fill='purple500' size='lg' role='button' onClick={handleReset} />}
             value={value}
             {...outerProps}
         />

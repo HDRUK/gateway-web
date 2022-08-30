@@ -1,17 +1,23 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
+import { Box, Button, H6, Icon, Input, P } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { Button, Box, Icon, H6, P } from 'hdruk-react-core';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
+import { ReactComponent as ClearSvg } from '../../images/clear.svg';
+import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
+import { ReactComponent as SearchSvg } from '../../images/search.svg';
+import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
-import { findAllByKey, iterateDeep } from '../../utils/GeneralHelper.util';
+import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
+import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
+import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
@@ -35,13 +41,9 @@ import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort'
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
-import searchService from '../../services/search/search';
-import { getParams } from '../../utils/GeneralHelper.util';
-import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
-import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 
-import './Search.scss';
 import { BackToTop } from '../../components';
+import './Search.scss';
 
 let baseURL = require('../commonComponents/BaseURL').getURL();
 const typeMapper = {
@@ -141,6 +143,7 @@ class SearchPage extends React.Component {
         showDataUtilityWizardModal: false,
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
+        searchFieldValue: '',
     };
 
     constructor(props) {
@@ -151,6 +154,9 @@ class SearchPage extends React.Component {
         }
         this.state.userState = props.userState;
         this.state.search = !_.isEmpty(search) ? search : props.location.search;
+
+        this.state.searchFieldValue = search;
+
         this.searchBar = React.createRef();
         this.updateFilterStates = this.updateFilterStates.bind(this);
         this.doSearchCall = this.doSearchCall.bind(this);
@@ -1721,6 +1727,24 @@ class SearchPage extends React.Component {
         };
     }
 
+    handleSearch = e => {
+        e.preventDefault();
+
+        window.location.href = `/search?search=${encodeURIComponent(this.state.searchFieldValue)}&tab=${this.state.key}`;
+    };
+
+    handleSearchChange = ({ target: { value } }) => {
+        this.setState({
+            searchFieldValue: value,
+        });
+    };
+
+    handleSearchReset = () => {
+        this.setState({
+            searchFieldValue: '',
+        });
+    };
+
     render() {
         let {
             summary: {
@@ -1833,6 +1857,38 @@ class SearchPage extends React.Component {
                         )}
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
+                            <Row className='filters filter-search'>
+                                <Col lg={12}>
+                                    <form onSubmit={this.handleSearch}>
+                                        <Box display='flex' justifyContent='center' width='100%' p={6}>
+                                            <Box width='150px' display='inline-flex'>
+                                                <ColourLogoSvg />
+                                            </Box>
+                                            <Box mt={1} flexGrow='1' mr={1}>
+                                                <Input
+                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                    iconRight={
+                                                        !!this.state.searchFieldValue && (
+                                                            <Icon
+                                                                svg={<ClearSvg />}
+                                                                fill='grey400'
+                                                                onClick={this.handleSearchReset}
+                                                                role='button'
+                                                            />
+                                                        )
+                                                    }
+                                                    value={this.state.searchFieldValue}
+                                                    onChange={this.handleSearchChange}
+                                                />
+                                            </Box>
+                                            <Box width='175px' mt={1}>
+                                                <Button type='submit'>Search</Button>
+                                            </Box>
+                                        </Box>
+                                    </form>
+                                </Col>
+                            </Row>
+
                             <Row className='filters filter-save'>
                                 <Col className='title' lg={4} />
                                 <Col lg={8} className='saved-buttons'>
