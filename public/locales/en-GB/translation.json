@@ -157,6 +157,8 @@
     "dataset": {
         "dateUpdated": "Metadata last updated:",
         "dateUpdatedTooltip": "The last date when the information about this dataset was updated",
+        "publishingFrequency": "Publishing frequency: ",
+        "publishingFrequencyTooltip": "The frequency of publishing new data for this dataset",
         "inReview": "pending approval",
         "active": "Active",
         "active,draft": "Active",
@@ -280,7 +282,7 @@
                 "title": "Cohort Discovery",
                 "description": "Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.",
                 "action": "Search using Cohort Discovery",
-                "actionLoggedOut": "You must be signed in to use cohort discovery",
+                "actionLoggedOut": "Sign in to use Cohort Discovery",
                 "mediaAlt": "Cohort Discovery feature image"
             },
             "dataUtilityWizard": {
@@ -362,8 +364,10 @@
         "teamEmailText": "Send email notifications to team email address"
     },
     "searchResultsInfo": {
-        "withTerm": "Showing {{count}} results for '{{searchTerm}}'",
-        "withOutTerm": "Showing {{count}} results"
+        "sortedBy": "Sorted by:",
+        "searchFilters": "Search filters",
+        "withOutTerm": "Showing {{count}} results",
+        "for": " for "
     },
     "datause": {
         "upload": {

@@ -4,10 +4,11 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import NotificationManager from 'react-notifications';
+import { Box } from 'hdruk-react-core';
 import Loading from '../../commonComponents/Loading';
 import '../Dashboard.scss';
 import { LayoutContent } from '../../../components/Layout';
-import { Box } from 'hdruk-react-core';
 import Switch from '../../../components/Switch';
 import publishersService from '../../../services/publishers';
 
@@ -22,15 +23,22 @@ const AddEditTeamsPage = ({
     editViewTeamManagers,
     setAlertFunction,
     questionBankEnabled,
+    dataUseWidgetEnabled,
 }) => {
     // state
     const [questionBank, setQuestionBank] = useState(questionBankEnabled);
+    const [dataUseWidget, setDataUseWidget] = useState(dataUseWidgetEnabled);
     const [isLoading, setLoading] = useState(false);
     const [combinedTeamManagers, setCombinedTeamManagers] = useState({});
 
     const memberOfSelect = ['ALLIANCE', 'HUB', 'OTHER', 'NCS'];
 
     const questionBankRequest = publishersService.usePatchQuestionBank();
+    const dataUseWidgetRequest = publishersService.usePatchPublisherDataUseWidget({
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
     const handleMemberOfSelect = key => {
         formik.setFieldValue('memberOf', key);
@@ -76,6 +84,13 @@ const AddEditTeamsPage = ({
                 enabled: questionBank,
             });
 
+            await dataUseWidgetRequest.mutateAsync({
+                _id: editViewID,
+                data: {
+                    enabled: dataUseWidget,
+                },
+            });
+
             if (editTeamsView) {
                 axios.put(`${baseURL}/api/v1/teams/${editViewID}`, values).then(res => {
                     const alert = {
@@ -100,6 +115,10 @@ const AddEditTeamsPage = ({
 
     const handleEnableQuestionBank = React.useCallback(({ target: { checked } }) => {
         setQuestionBank(checked);
+    }, []);
+
+    const handleEnableDataUseWidget = React.useCallback(({ target: { checked } }) => {
+        setDataUseWidget(checked);
     }, []);
 
     // lifecycle hook
@@ -131,6 +150,16 @@ const AddEditTeamsPage = ({
                             }
                             onChange={handleEnableQuestionBank}
                             checked={questionBank}
+                        />
+                        &nbsp;
+                        <Switch
+                            label={
+                                <>
+                                    Data use widget <strong>{dataUseWidget ? 'enabled' : 'disabled'}</strong>
+                                </>
+                            }
+                            onChange={handleEnableDataUseWidget}
+                            checked={dataUseWidget}
                         />
                     </Box>
                 </Box>
