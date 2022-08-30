@@ -1818,8 +1818,6 @@ class SearchPage extends React.Component {
         const filtersSelectionProps = this.getFiltersSelectionProps(preferenceFilters);
         const searchProps = this.getSearchProps(showSort, sortMenu, maxResults);
 
-        console.log('This ', this.state.search);
-
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <div>
