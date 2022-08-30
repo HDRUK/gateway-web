@@ -1730,7 +1730,7 @@ class SearchPage extends React.Component {
     handleSearch = e => {
         e.preventDefault();
 
-        window.location.href = `/search?search=${this.state.searchFieldValue}&tab=${this.state.key}`;
+        window.location.href = `/search?search=${encodeURIComponent(this.state.searchFieldValue)}&tab=${this.state.key}`;
     };
 
     handleSearchChange = ({ target: { value } }) => {
