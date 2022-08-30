@@ -1,20 +1,23 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
+import { Box, Button, H6, Icon, Input, P } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { Button, Box, Icon, Input, H6, P } from 'hdruk-react-core';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
-import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { withTranslation } from 'react-i18next';
+import { ReactComponent as ClearSvg } from '../../images/clear.svg';
+import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
 import { ReactComponent as SearchSvg } from '../../images/search.svg';
-import { ReactComponent as ClearSvg } from '../../images/clear.svg';
+import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
-import { findAllByKey, iterateDeep } from '../../utils/GeneralHelper.util';
+import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
+import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
+import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
@@ -38,13 +41,9 @@ import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort'
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
-import searchService from '../../services/search/search';
-import { getParams } from '../../utils/GeneralHelper.util';
-import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
-import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 
-import './Search.scss';
 import { BackToTop } from '../../components';
+import './Search.scss';
 
 let baseURL = require('../commonComponents/BaseURL').getURL();
 const typeMapper = {
@@ -1865,7 +1864,7 @@ class SearchPage extends React.Component {
                                             <Box width='150px' display='inline-flex'>
                                                 <ColourLogoSvg />
                                             </Box>
-                                            <Box mt={1} flexGrow='1'>
+                                            <Box mt={1} flexGrow='1' mr={1}>
                                                 <Input
                                                     iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
                                                     iconRight={
