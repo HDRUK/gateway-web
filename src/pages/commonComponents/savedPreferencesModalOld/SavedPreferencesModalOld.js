@@ -1,20 +1,16 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import './SaveModal.scss';
-import React, { Component, useState, useEffect } from 'react';
-import { Modal, Form, Button, Row, Col, Tab, Tabs } from 'react-bootstrap';
+import { Modal, Button, Row, Col, Tab, Tabs } from 'react-bootstrap';
+import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import './SavedPreferencesModal.scss';
 
-var baseURL = require('../../commonComponents/BaseURL').getURL();
+var baseURL = require('../BaseURL').getURL();
 
-const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props }) => {
-    const [, setClose] = useState(null);
-    const [, setSaveSuccess] = useState(props.saveSuccess);
+const SavedPreferencesModal = ({ show, onHide, viewSaved, activeTab }) => {
     const [data, setData] = useState([]);
+    const [showButtons, setShowButtons] = useState(false);
     const [dataLink, setDataLink] = useState(data);
     const [activeCard, setActiveCard] = useState('');
-    const [showButtons, setShowButtons] = useState(false);
 
     useEffect(() => {
         axios.get(baseURL + '/api/v1/search-preferences').then(res => {
@@ -48,84 +44,38 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props
     const papersTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'Papers').length;
     const peopleTotal = data.filter(a => a.name).filter(a => a.filterCriteria.tab === 'People').length;
 
-
-    const formik = useFormik({
-        initialValues: {
-            name: '',
-            filterCriteria: {
-                searchTerm: props.search || '',
-                filters: props.filters || [],
-                tab: props.tab || '',
-                sort: props.sort || '',
-            },
-        },
-
-        validationSchema: Yup.object({
-            name: Yup.string().required('This cannot be empty'),
-        }),
-
-        onSubmit: values => {
-            axios
-                .post(baseURL + '/api/v1/search-preferences', values)
-                .then(res => {
-                    setClose(props.onHide);
-                    props.saveName(res.data.response.name);
-                    setSaveSuccess(props.saveSuccess);
-                })
-                .catch(err => {
-                    return err;
-                });
-        },
-
-    handleClick() {
-        
-    },
-
-    });
     return (
-        <Modal show={props.show} onHide={props.onSaveHide} className='save-modal-preferences'>
-            <Modal.Header closeButton>
-                <h5 className='black-20-semibold'>Save</h5>
-            </Modal.Header>
-            <Modal.Body style={{ 'max-height': 'calc(100vh - 450px)', 'overflow-y': 'auto', 'background-color': '#f6f7f8' }}>
-                <p className='black-14'>
-                    Are you sure you want to save this search preference? If yes, please provide a title for this search.
-                </p>
-                <label className='black-14'>Title</label>
-                <Form.Control
-                    data-test-id='saved-preference-name'
-                    id='name'
-                    name='name'
-                    type='text'
-                    className={formik.touched.name && formik.errors.name && 'save-modal-input'}
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                    onBlur={formik.handleBlur}
-                />
-                {formik.touched.name && formik.errors.name ? <div className='errorMessages'>{formik.errors.name}</div> : null}
-                <span className='black-20'>Your search preferences</span>
+        <Modal show={show} onHide={onHide} dialogClassName='save-modal-preferences'>
+            <Modal.Header>
+                <Modal.Title>
+                    <span className='black-20'>Search preferences</span>
                     <br />
                     <p className='gray800-14'>
                         View saved preferences across all resources on the Gateway. To create a new preference, apply your desired filters
                         on the resources search results page and select 'save'.
                     </p>
-                    <Tabs defaultActiveKey={activeTab} className='save-tabsBackground saved-preferences-tabs gray700-13'>
-                        {tabs.map(tabName => (
-                            <Tab
-                                eventKey={tabName}
-                                key={tabName}
-                                title={
-                                    tabName +
-                                    ' ' +
-                                    ((tabName === 'Datasets' && '(' + datasetsTotal + ')') ||
-                                        (tabName === 'Tools' && '(' + toolsTotal + ')') ||
-                                        (tabName === 'Datauses' && '(' + datausesTotal + ')') ||
-                                        (tabName === 'Collections' && '(' + collectionsTotal + ')') ||
-                                        (tabName === 'Courses' && '(' + coursesTotal + ')') ||
-                                        (tabName === 'Papers' && '(' + papersTotal + ')') ||
-                                        (tabName === 'People' && '(' + peopleTotal + ')'))
-                                }
-                            >
+                </Modal.Title>
+                <CloseButtonSvg className='modal-close pointer' onClick={onHide} width='16px' height='16px' fill='#475DA7' />
+            </Modal.Header>
+
+            <Tabs defaultActiveKey={activeTab} className='save-tabsBackground saved-preferences-tabs gray700-13'>
+                {tabs.map(tabName => (
+                    <Tab
+                        eventKey={tabName}
+                        key={tabName}
+                        title={
+                            tabName +
+                            ' ' +
+                            ((tabName === 'Datasets' && '(' + datasetsTotal + ')') ||
+                                (tabName === 'Tools' && '(' + toolsTotal + ')') ||
+                                (tabName === 'Datauses' && '(' + datausesTotal + ')') ||
+                                (tabName === 'Collections' && '(' + collectionsTotal + ')') ||
+                                (tabName === 'Courses' && '(' + coursesTotal + ')') ||
+                                (tabName === 'Papers' && '(' + papersTotal + ')') ||
+                                (tabName === 'People' && '(' + peopleTotal + ')'))
+                        }
+                    >
+                        <Modal.Body style={{ 'max-height': 'calc(100vh - 450px)', 'overflow-y': 'auto', 'background-color': '#f6f7f8' }}>
                             {data.filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, '')).length > 0 ? (
                                 data
                                     .filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, ''))
@@ -168,10 +118,10 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props
                                     </Col>
                                 </Row>
                             )}
+                        </Modal.Body>
                     </Tab>
                 ))}
             </Tabs>
-            </Modal.Body>
 
             <Modal.Footer className='saved-preference-modal-footer'>
                 <Col>
@@ -194,4 +144,4 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, ...props
     );
 };
 
-export default NewSavedPreferencesModal;
+export default SavedPreferencesModal;

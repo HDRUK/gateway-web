@@ -15,7 +15,7 @@ import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
-import SavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
+import SavedPreferencesModal from '../commonComponents/savedPreferencesModalOld/SavedPreferencesModalOld';
 import SaveModal from '../commonComponents/saveModal/SaveModal';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SearchResults from '../commonComponents/SearchResults';
@@ -39,7 +39,7 @@ import { getParams } from '../../utils/GeneralHelper.util';
 import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
 import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 import SVGIcon from '../../images/SVGIcon';
-import NewSavedPreferencesModal from '../commonComponents/newSavedPreferencesModal/NewSavedPreferencesModal';
+import NewSavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
 
 
 import './Search.scss';
