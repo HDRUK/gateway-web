@@ -1729,8 +1729,6 @@ class SearchPage extends React.Component {
 
     handleSearch = e => {
         e.preventDefault();
-        // const data = new FormData(e.target);
-        console.log(this.state.search);
 
         window.location.href = `/search?search=${this.state.searchFieldValue}&tab=${this.state.key}`;
     };
@@ -1819,8 +1817,6 @@ class SearchPage extends React.Component {
         const filterProps = this.getFilterProps(key);
         const filtersSelectionProps = this.getFiltersSelectionProps(preferenceFilters);
         const searchProps = this.getSearchProps(showSort, sortMenu, maxResults);
-
-        console.log('This ', this.state.search);
 
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
