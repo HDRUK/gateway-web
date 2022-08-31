@@ -109,8 +109,8 @@ const Dataset = ({
 
     return (
         <>
-            <Row data-testid='related-dataset-object' className='noMargin'>
-                <Col sm={9} lg={9} className='pad-left-24'>
+            <Row data-testid='related-dataset-object' className=' pad-left-24 pad-right-24'>
+                <Col xs={7} sm={9}>
                     <Title
                         id={data.pid}
                         name={data.name}
@@ -146,14 +146,8 @@ const Dataset = ({
                         &nbsp;
                         {publisherDetails.name}
                     </Box>
-                    <Box ml={1} as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
-                        {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
-                        <ToolTip text={t('dataset.dateUpdatedTooltip')}>
-                            <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
-                        </ToolTip>
-                    </Box>
                 </Col>
-                <Col sm={3} lg={3} className={isLocked ? 'lockSVG pad-right-24' : 'pad-right-24'}>
+                <Col xs={5} sm={3} className={isLocked ? 'lockSVG' : ''}>
                     <Box display='flex' justifyContent='end'>
                         <QualityScore
                             rating={metaRating}
@@ -164,7 +158,41 @@ const Dataset = ({
                         {showRelationshipQuestion ? isLocked ? <LockSVG /> : <RemoveButton removeButtonHandler={removeButton} /> : ''}
                     </Box>
                 </Col>
-                <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-8'>
+            </Row>
+            <Row className='pad-left-24 pad-right-24'>
+                <Col sm={12} md={6}>
+                    <Box ml={1} as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
+                        {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
+                        <ToolTip text={t('dataset.dateUpdatedTooltip')}>
+                            <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
+                        </ToolTip>
+                    </Box>
+                </Col>
+                <Col sm={12} md={6} className={isLocked ? 'lockSVG ' : ''}>
+                    <Box
+                        ml={1}
+                        as={Typography}
+                        color='green600'
+                        variant='caption'
+                        display='flex'
+                        alignItems='center'
+                        css={styles.publishingFrequencyContainer}
+                        mt={1}
+                        mb={1}>
+                        {data.datasetv2.provenance?.temporal?.accrualPeriodicity && (
+                            <>
+                                {t('dataset.publishingFrequency')}
+                                {data.datasetv2.provenance.temporal.accrualPeriodicity}
+                                <ToolTip placement='left' text={t('dataset.publishingFrequencyTooltip')}>
+                                    <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
+                                </ToolTip>
+                            </>
+                        )}
+                    </Box>
+                </Col>
+            </Row>
+            <Row className='pad-left-24 pad-right-24'>
+                <Col sm={12} lg={12} className='pad-top-8'>
                     <ShowMore initialHeight={30}>
                         <div>
                             <Tag tagName={dataset.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>

@@ -2,6 +2,7 @@ import ActionBarStatus from './ActionBarStatus';
 import Alert from './Alert';
 import AlertMessage from './AlertMessage';
 import AlertModal from './AlertModal';
+import BackToTop from './BackToTop';
 import BlockQuote from './BlockQuote';
 import Button from './Button';
 import Checkbox from './Checkbox';
@@ -33,6 +34,7 @@ export {
     Alert,
     AlertMessage,
     AlertModal,
+    BackToTop,
     BlockQuote,
     Button,
     Checkbox,

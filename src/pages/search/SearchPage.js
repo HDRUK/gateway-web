@@ -1,16 +1,23 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
+import { Box, Button, H6, Icon, Input, P } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { Button, Box, Icon } from 'hdruk-react-core';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
+import { withTranslation } from 'react-i18next';
+import { ReactComponent as ClearSvg } from '../../images/clear.svg';
+import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
+import { ReactComponent as SearchSvg } from '../../images/search.svg';
+import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
-import { findAllByKey, iterateDeep } from '../../utils/GeneralHelper.util';
+import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
+import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
+import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
@@ -33,14 +40,14 @@ import FilterSelection from './components/FilterSelection';
 import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort';
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
-import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
-import searchService from '../../services/search/search';
+import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort'import searchService from '../../services/search/search';
 import { getParams } from '../../utils/GeneralHelper.util';
 import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
 import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 import SVGIcon from '../../images/SVGIcon';
-import NewSavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
+import NewSavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal'
 
+import { BackToTop } from '../../components';
 import './Search.scss';
 
 let baseURL = require('../commonComponents/BaseURL').getURL();
@@ -141,6 +148,7 @@ class SearchPage extends React.Component {
         activeDataUtilityWizardStep: 1,
         closed: true,
         shouldShowNewSavedPreferencesModal: false,
+        searchFieldValue: '',
     };
 
     constructor(props) {
@@ -151,6 +159,9 @@ class SearchPage extends React.Component {
         }
         this.state.userState = props.userState;
         this.state.search = !_.isEmpty(search) ? search : props.location.search;
+
+        this.state.searchFieldValue = search;
+
         this.searchBar = React.createRef();
         this.updateFilterStates = this.updateFilterStates.bind(this);
         this.doSearchCall = this.doSearchCall.bind(this);
@@ -1725,6 +1736,24 @@ class SearchPage extends React.Component {
         };
     }
 
+    handleSearch = e => {
+        e.preventDefault();
+
+        window.location.href = `/search?search=${encodeURIComponent(this.state.searchFieldValue)}&tab=${this.state.key}`;
+    };
+
+    handleSearchChange = ({ target: { value } }) => {
+        this.setState({
+            searchFieldValue: value,
+        });
+    };
+
+    handleSearchReset = () => {
+        this.setState({
+            searchFieldValue: '',
+        });
+    };
+
     render() {
         let {
             summary: {
@@ -1801,6 +1830,7 @@ class SearchPage extends React.Component {
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <div>
+                    <BackToTop scrollOffset={300} className='backToTop' />
                     <SearchBar
                         ref={this.searchBar}
                         search={search}
@@ -1843,6 +1873,42 @@ class SearchPage extends React.Component {
                             }>
                             <Row className='filters filter-save'>
                                 <Col lg={12} className='saved-buttons'>
+                        <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
+                            <Row className='filters filter-search'>
+                                <Col lg={12}>
+                                    <form onSubmit={this.handleSearch}>
+                                        <Box display='flex' justifyContent='center' width='100%' p={6}>
+                                            <Box width='150px' display='inline-flex'>
+                                                <ColourLogoSvg />
+                                            </Box>
+                                            <Box mt={1} flexGrow='1' mr={1}>
+                                                <Input
+                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                    iconRight={
+                                                        !!this.state.searchFieldValue && (
+                                                            <Icon
+                                                                svg={<ClearSvg />}
+                                                                fill='grey400'
+                                                                onClick={this.handleSearchReset}
+                                                                role='button'
+                                                            />
+                                                        )
+                                                    }
+                                                    value={this.state.searchFieldValue}
+                                                    onChange={this.handleSearchChange}
+                                                />
+                                            </Box>
+                                            <Box width='175px' mt={1}>
+                                                <Button type='submit'>Search</Button>
+                                            </Box>
+                                        </Box>
+                                    </form>
+                                </Col>
+                            </Row>
+
+                            <Row className='filters filter-save'>
+                                <Col className='title' lg={4} />
+                                <Col lg={8} className='saved-buttons'>
                                     <Box display='inline-flex' gap={2} py={4}>
                                         {this.state.key === 'Datauses' && (
                                             <>
@@ -1913,6 +1979,33 @@ class SearchPage extends React.Component {
                         </Container>
                     </div>
                     <Container>
+                        <Row className='flex-row-reverse'>
+                            <Col sm={12} md={12} lg={4}>
+                                <Box display='flex' justifyContent='end' alignItems='center' mt={3} mb={1}>
+                                    {key !== 'Courses' && (
+                                        <P color='grey800' mr='2'>
+                                            {this.props.t('searchResultsInfo.sortedBy')}
+                                        </P>
+                                    )}
+                                    {sortMenu}
+                                </Box>
+                            </Col>
+                            <Col sm={12} md={12} lg={5}>
+                                <Box mt={1} display='flex' alignItems='center' height='100%'>
+                                    {(() => {
+                                        let { search } = queryString.parse(window.location.search);
+                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
+                                    })()}
+                                </Box>
+                            </Col>
+                            <Col sm={12} md={12} lg={3}>
+                                <Box mt={6} mb={4}>
+                                    <H6 color='grey700'>{this.props.t('searchResultsInfo.searchFilters')}</H6>
+                                </Box>
+                            </Col>
+                        </Row>
+                    </Container>
+                    <Container>
                         <Row>
                             <Col sm={12} md={12} lg={3} className='mt-1 mb-5'>
                                 {key !== 'People' && (
@@ -1920,15 +2013,11 @@ class SearchPage extends React.Component {
                                         <Filter {...filterProps} />
                                     </div>
                                 )}
-                                {key === 'Datasets' && (
-                                    <>
-                                        <Box my={5}>
-                                            <AdvancedSearchCohortDiscovery userProps={userState[0]} showLoginModal={this.showLoginModal} />
-                                        </Box>
+                                <Box my={5}>
+                                    <AdvancedSearchCohortDiscovery userProps={userState[0]} showLoginModal={this.showLoginModal} />
+                                </Box>
 
-                                        <AdvancedSearchDataUtilityWizard onClick={this.openDataUtilityWizard} />
-                                    </>
-                                )}
+                                <AdvancedSearchDataUtilityWizard onClick={this.openDataUtilityWizard} />
                             </Col>
                             <Col sm={12} md={12} lg={9} className='mt-2 mb-5'>
                                 {key === 'Datasets' && (
@@ -2041,4 +2130,4 @@ class SearchPage extends React.Component {
     }
 }
 
-export default SearchPage;
+export default withTranslation()(SearchPage);

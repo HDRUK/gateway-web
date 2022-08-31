@@ -42,6 +42,12 @@ export const isUser = team => {
     return team === 'user';
 };
 
+export const userHasRole = (userState, teamId, role) => {
+    const team = userState[0]?.teams.filter(t => {
+        return t._id === teamId;
+    })[0];
+    return team && team.roles.some(r => role.includes(r));
+};
 export const isPublisherAdmin = (userState, publisherId) => {
     return userState[0].teams.find(team => {
         return publisherId === team._id && team.isAdmin;

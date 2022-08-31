@@ -26,6 +26,7 @@ const AccountTeams = () => {
     const [editViewOrgName, setEditViewOrgName] = useState('');
     const [editViewTeamManagers, setEditViewTeamManagers] = useState([]);
     const [questionBankEnabled, setQuestionBankEnabled] = useState(false);
+    const [dataUseWidgetEnabled, setDataUseWidgetEnabled] = useState(false);
     const [alert, setAlert] = useState();
     const [activeTabKey] = useState(tabTypes.Teams);
 
@@ -72,6 +73,7 @@ const AccountTeams = () => {
 
     const editTeam = (publisher, teamManagers) => {
         setQuestionBankEnabled(publisher.publisherDetails.questionBank?.enabled);
+        setDataUseWidgetEnabled(publisher.publisherDetails.dataUse?.widget?.enabled);
         setEditViewID(publisher._id);
         setEditViewMemberOf(publisher.publisherDetails.memberOf);
         setEditViewOrgName(publisher.publisherDetails.name);
@@ -152,7 +154,8 @@ const AccountTeams = () => {
                         <Col sm={2} className='text-center'>
                             Members
                         </Col>
-                        <Col sm={2}>Question Bank Enabled?</Col>
+                        <Col sm={1}>Question Bank Enabled?</Col>
+                        <Col sm={1}>Data use widget Enabled?</Col>
                     </Row>
                     <Row>
                         <Col sm={12} lg={12}>
@@ -184,6 +187,7 @@ const AccountTeams = () => {
                     editViewOrgName={editViewOrgName}
                     editViewTeamManagers={editViewTeamManagers}
                     questionBankEnabled={questionBankEnabled}
+                    dataUseWidgetEnabled={dataUseWidgetEnabled}
                     setAlertFunction={setAlertFunction}
                 />
             )}
