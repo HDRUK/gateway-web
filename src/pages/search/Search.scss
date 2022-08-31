@@ -516,13 +516,17 @@
     text-align: right;
 }
 
-.filter-save {
+.filter-search {
     margin-top: 32px;
+}
+
+.filter-search,
+.filter-save {
     border-bottom: 1px solid #e7e9ed;
 }
 
 .saved-filterHolder {
-    margin-top: 4px;
+    margin-top: 10px;
 }
 
 .saved-search-arrow {
