@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the DataUseWidgetCode component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="row"
+  >
+    <div
+      class="col-12"
+    >
+      <h6
+        class="ui-LayoutBox ui-Typography css-18e1tcr-Typography css-2lztm6"
+      >
+        Copy the source code and share with your development team to display the widget above on your website
+      </h6>
+       
+    </div>
+    <div
+      class="col-12"
+    >
+      <pre
+        style="display: block; overflow-x: auto; padding: 0.5em; background: rgb(240, 240, 240); color: rgb(68, 68, 68);"
+      >
+        <code
+          class="language-html"
+          style="white-space: pre;"
+        >
+          <span
+            style="color: rgb(136, 0, 0); font-weight: bold;"
+          >
+            &lt;test/&gt;
+          </span>
+        </code>
+      </pre>
+    </div>
+    <div
+      class="col-12"
+    >
+      <button
+        class="ui-LayoutBox float-right css-kp49dp-Button css-1k6rz1e"
+        type="button"
+      >
+        Copy Code
+      </button>
+    </div>
+  </div>
+</div>
+`;

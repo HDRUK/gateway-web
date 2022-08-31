@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { WysiwygEditor } from '../../../commonComponents/WysiwygEditor/WysiwygEditor';
 
-const CustomiseGuidance = ({ activeGuidance, isLocked, onGuidanceChange, activeQuestion, activePanel }) => {
+const CustomiseGuidance = ({ activeGuidance, onGuidanceChange, activeQuestion, activePanel }) => {
     const [editorState, setEditorState] = useState(null);
 
     const debounceChange = useCallback(
@@ -39,24 +39,16 @@ const CustomiseGuidance = ({ activeGuidance, isLocked, onGuidanceChange, activeQ
 
     return (
         <>
-            {isLocked ? (
-                <>
-                    {activeGuidance ? (
-                        <ReactMarkdown source={activeGuidance} linkTarget='_blank' />
-                    ) : (
-                        'There is currently no guidance for this question'
-                    )}
-                </>
-            ) : (
-                editorState && (
-                    <WysiwygEditor
-                        data-testid='wysiwyg-editor'
-                        editorState={editorState}
-                        onEditorStateChange={handleEditorStateChange}
-                        onMarkdownChange={handleGuidanceChange}
-                    />
-                )
-            )}
+            {activeGuidance
+                ? editorState && (
+                      <WysiwygEditor
+                          data-testid='wysiwyg-editor'
+                          editorState={editorState}
+                          onEditorStateChange={handleEditorStateChange}
+                          onMarkdownChange={handleGuidanceChange}
+                      />
+                  )
+                : 'There is currently no guidance for this question'}
         </>
     );
 };

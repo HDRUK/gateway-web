@@ -16,7 +16,7 @@ const ShowMore = ({ children, initialHeight }) => {
     const ref = useRef(null);
 
     const toggleButtonVisibility = () => {
-        setShouldShowButton(!(ref.current.clientHeight > initialHeight));
+        setShouldShowButton(!(ref?.current?.clientHeight > initialHeight));
     };
 
     useEffect(() => {

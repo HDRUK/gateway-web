@@ -1,22 +1,20 @@
-import React, { Fragment, useState } from 'react';
-import axios from 'axios';
 import { cx } from '@emotion/css';
+import axios from 'axios';
+import { Button } from 'hdruk-react-core';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
-import { Col, Container, Dropdown, Row } from 'react-bootstrap';
+import React, { Fragment, useState } from 'react';
+import { Col, Dropdown, Row } from 'react-bootstrap';
 import NotificationBadge from 'react-notification-badge';
 import { NotificationManager } from 'react-notifications';
-import { Button } from 'hdruk-react-core';
 import { cmsURL } from '../../../configs/url.config';
 import { ReactComponent as WhiteArrowDownSvg } from '../../../images/arrowDownWhite.svg';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
-import { ReactComponent as ClearButtonSvg } from '../../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../../images/colour.svg';
 import { ReactComponent as ColourLogoSvgMobile } from '../../../images/colourMobile.svg';
 import { ReactComponent as HamBurgerSvg } from '../../../images/hamburger.svg';
 import SVGIcon from '../../../images/SVGIcon';
 import googleAnalytics from '../../../tracking';
-import SearchInput from '../../../components/SearchInput';
 import UatBanner from '../uatBanner/UatBanner';
 import '../uatBanner/UatBanner.scss';
 import AddNewEntity from './AddNewEntity';
@@ -72,7 +70,6 @@ class SearchBar extends React.Component {
     _isMounted = false;
 
     state = {
-        textValue: '',
         userState: [
             {
                 loggedIn: false,
@@ -87,16 +84,12 @@ class SearchBar extends React.Component {
         messageCount: 0,
         prevScrollpos: window.pageYOffset,
         visible: true,
-        isHovering: false,
         isLoading: true,
     };
 
     constructor(props) {
         super(props);
         this.state.userState = props.userState;
-        // set default textValue from props - for between tabs
-        this.state.textValue = props.search;
-        this.handleMouseHover = this.handleMouseHover.bind(this);
     }
 
     componentDidMount() {
@@ -117,12 +110,6 @@ class SearchBar extends React.Component {
         this._isMounted = false;
         window.removeEventListener('scroll', this.handleScroll);
         document.removeEventListener('mousedown', this.handleClick);
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.search !== this.props.search) {
-            this.setState(() => ({ textValue: this.props.search }));
-        }
     }
 
     handleScroll = () => {
@@ -148,26 +135,6 @@ class SearchBar extends React.Component {
 
             window.location.reload();
         });
-    };
-
-    handleSearchReset = () => {
-        this.setState({ textValue: '' });
-
-        if (this.props.doUpdateSearchString) {
-            this.props.doUpdateSearchString('');
-        }
-    };
-
-    onSearch = e => {
-        this.setState({ textValue: e.target.value });
-
-        if (this.props.doUpdateSearchString) {
-            this.props.doUpdateSearchString(e.target.value);
-        }
-    };
-
-    doSearchMobile = e => {
-        if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(this.state.textValue)}`;
     };
 
     doMessagesCall() {
@@ -266,16 +233,6 @@ class SearchBar extends React.Component {
         }
     }
 
-    handleMouseHover() {
-        this.setState(this.toggleHoverState);
-    }
-
-    toggleHoverState(state) {
-        return {
-            isHovering: !state.isHovering,
-        };
-    }
-
     getLink = (publisherName = '') => {
         if (!isEmpty(publisherName)) return `/account?tab=dataaccessrequests&team=${publisherName}`;
 
@@ -308,7 +265,7 @@ class SearchBar extends React.Component {
     };
 
     render() {
-        const { userState, newData, isLoading, clearMessage, isHovering, textValue } = this.state;
+        const { userState, newData, isLoading, clearMessage } = this.state;
         if (isLoading) {
             return <></>;
         }
@@ -384,29 +341,8 @@ class SearchBar extends React.Component {
 
                             <Col lg={5} className='text-right'>
                                 <div className='nav-wrapper'>
-                                    <div className='navBarSearchBarSpacing'>
-                                        <Container>
-                                            <Row className='searchBarRow'>
-                                                <Col>
-                                                    <SearchInput
-                                                        onChange={this.onSearch}
-                                                        onKeyDown={this.props.doSearchMethod}
-                                                        value={textValue}
-                                                        onReset={this.props.onClearMethod}
-                                                        variant='secondary'
-                                                    />
-                                                </Col>
-                                            </Row>
-                                        </Container>
-                                    </div>
-                                    <div>
-                                        <Container>
-                                            <Row>
-                                                <Col className='pl-0 pr-0'>
-                                                    <AddNewEntity loggedIn={userState[0].loggedIn} />
-                                                </Col>
-                                            </Row>
-                                        </Container>
+                                    <div className='addNewEntityWrapper'>
+                                        <AddNewEntity loggedIn={userState[0].loggedIn} />
                                     </div>
                                     {(() => {
                                         if (userState[0].loggedIn === true) {
@@ -1307,9 +1243,7 @@ class SearchBar extends React.Component {
                                                             style={{ cursor: 'pointer' }}
                                                             onClick={e => {
                                                                 this.showLoginModal();
-                                                            }}
-                                                            onMouseEnter={this.handleMouseHover}
-                                                            onMouseLeave={this.handleMouseHover}>
+                                                            }}>
                                                             Sign in
                                                         </Button>
                                                     </>
@@ -1342,37 +1276,6 @@ class SearchBar extends React.Component {
                                                     </span>
                                                 </Dropdown.Item>
                                             )}
-
-                                            <span className='searchBarInputGrey searchBarInputMobile'>
-                                                <span className='searchInputIconGrey'>
-                                                    <SVGIcon
-                                                        name='searchicon'
-                                                        width={20}
-                                                        height={20}
-                                                        fill={'#2c8267'}
-                                                        stroke='none'
-                                                        type='submit'
-                                                    />
-                                                </span>
-                                                <span>
-                                                    <input
-                                                        data-testid='searchbar'
-                                                        type='text'
-                                                        placeholder=''
-                                                        id='searchInputSpanGrey'
-                                                        onChange={this.onSearch}
-                                                        onKeyDown={this.doSearchMobile}
-                                                        value={textValue}
-                                                    />
-                                                </span>
-                                                {this.props.searchString !== '' && this.props.searchString !== undefined ? (
-                                                    <span className='searchInputClearGrey' data-testid='searchbar-clear-btn'>
-                                                        <span style={{ cursor: 'pointer' }} onClick={this.props.onClearMethod}>
-                                                            <ClearButtonSvg />
-                                                        </span>
-                                                    </span>
-                                                ) : null}
-                                            </span>
 
                                             <div>
                                                 <CmsDropdown dropdownUrl='exploreDropdown' isMobile={true} />
