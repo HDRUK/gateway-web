@@ -5,18 +5,15 @@ import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { Button, Box, Icon } from 'hdruk-react-core';
+import { Button, Box } from 'hdruk-react-core';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
-import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, iterateDeep } from '../../utils/GeneralHelper.util';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
-import SavedPreferencesModal from '../commonComponents/savedPreferencesModalOld/SavedPreferencesModalOld';
-import SaveModal from '../commonComponents/saveModal/SaveModal';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SearchResults from '../commonComponents/SearchResults';
 import SearchResultsInfo from '../commonComponents/SearchResultsInfo';
@@ -39,7 +36,7 @@ import { getParams } from '../../utils/GeneralHelper.util';
 import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
 import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 import SVGIcon from '../../images/SVGIcon';
-import NewSavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
+import SavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
 
 import './Search.scss';
 
@@ -140,7 +137,7 @@ class SearchPage extends React.Component {
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
         closed: true,
-        shouldShowNewSavedPreferencesModal: false,
+        shouldShowSavedPreferencesModal: false,
     };
 
     constructor(props) {
@@ -160,12 +157,12 @@ class SearchPage extends React.Component {
         this.csvLink = React.createRef();
     }
 
-    showNewSavedPreferencesModal = () => {
-        this.setState({ shouldShowNewSavedPreferencesModal: true, closed: false });
+    showSavedPreferencesModal = () => {
+        this.setState({ shouldShowSavedPreferencesModal: true, closed: false });
     };
 
     hideSavedPreferencesModal = () => {
-        this.setState({ shouldShowNewSavedPreferencesModal: false });
+        this.setState({ shouldShowSavedPreferencesModal: false });
     };
 
     hideSavedModal = () => {
@@ -1451,7 +1448,7 @@ class SearchPage extends React.Component {
 
     saveFiltersUpdate = async viewSaved => {
         await this.getFilters(viewSaved.tab);
-        this.setState({ shouldShowNewSavedPreferencesModal: false });
+        this.setState({ shouldShowSavedPreferencesModal: false });
         // 1. v2 take copy of data
         let filtersV2DatasetsData = !_.isNil(this.state.filtersV2Datasets) ? [...this.state.filtersV2Datasets] : [];
         let filtersV2ToolsData = !_.isNil(this.state.filtersV2Tools) ? [...this.state.filtersV2Tools] : [];
@@ -1829,7 +1826,7 @@ class SearchPage extends React.Component {
                             <SearchUtilityBanner onClick={this.openDataUtilityWizard} step={activeDataUtilityWizardStep} />
                         )}
 
-                        {this.state.saveSuccess && !this.state.shouldShowNewSavedPreferencesModal && (
+                        {this.state.saveSuccess && !this.state.shouldShowSavedPreferencesModal && (
                             <Alert variant='primary' className='blue-banner saved-preference-banner'>
                                 Saved preference: "{this.state.showSavedName}"
                             </Alert>
@@ -1838,7 +1835,7 @@ class SearchPage extends React.Component {
                         <Container
                             className={
                                 this.state.saveSuccess &&
-                                !this.state.shouldShowNewSavedPreferencesModal &&
+                                !this.state.shouldShowSavedPreferencesModal &&
                                 'container-saved-preference-banner'
                             }>
                             <Row className='filters filter-save'>
@@ -1865,7 +1862,7 @@ class SearchPage extends React.Component {
                                             onClick={
                                                 this.state.userState[0].loggedIn === false
                                                     ? () => this.showLoginModal()
-                                                    : () => this.showNewSavedPreferencesModal()
+                                                    : () => this.showSavedPreferencesModal()
                                             }>
                                             Save
                                             <SVGIcon
@@ -1877,9 +1874,9 @@ class SearchPage extends React.Component {
                                             />
                                         </Button>
 
-                                        {this.state.shouldShowNewSavedPreferencesModal && (
-                                            <NewSavedPreferencesModal
-                                                show={this.state.shouldShowNewSavedPreferencesModal}
+                                        {this.state.shouldShowSavedPreferencesModal && (
+                                            <SavedPreferencesModal
+                                                show={this.state.shouldShowSavedPreferencesModal}
                                                 onHide={this.hideSavedPreferencesModal}
                                                 viewMatchesLink={this.viewMatches}
                                                 viewSaved={this.saveFiltersUpdate}
