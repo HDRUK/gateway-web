@@ -38,10 +38,7 @@ import FilterSelection from './components/FilterSelection';
 import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort';
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
-import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort'import searchService from '../../services/search/search';
-import { getParams } from '../../utils/GeneralHelper.util';
-import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
-import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
+import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
 import SVGIcon from '../../images/SVGIcon';
 import SavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
 
@@ -1862,14 +1859,6 @@ class SearchPage extends React.Component {
                             </Alert>
                         )}
 
-                        <Container
-                            className={
-                                this.state.saveSuccess &&
-                                !this.state.shouldShowSavedPreferencesModal &&
-                                'container-saved-preference-banner'
-                            }>
-                            <Row className='filters filter-save'>
-                                <Col lg={12} className='saved-buttons'>
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-search'>
                                 <Col lg={12}>
@@ -1965,13 +1954,6 @@ class SearchPage extends React.Component {
                                         savedSearches={true}
                                     />
                                 )}
-                                <Col className='title' lg={9}>
-                                    {(() => {
-                                        let { search } = queryString.parse(window.location.search);
-                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
-                                    })()}
-                                </Col>
-                                {sortMenu}
                             </Row>
                         </Container>
                     </div>
