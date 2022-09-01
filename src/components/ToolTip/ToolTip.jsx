@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import './tooltip.css'
 
 const renderTooltip = text => <Tooltip id='button-tooltip'>{text}</Tooltip>;
 
