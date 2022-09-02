@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import './SaveModal.scss';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, Row, Col, Tab, Tabs } from 'react-bootstrap';
@@ -9,7 +8,7 @@ import './SavedPreferencesModal.scss';
 
 const baseURL = require('../BaseURL').getURL();
 
-const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, saveName, saveSuccess, search, filters, sort, tab }) => {
+const SavedPreferencesModalOld = ({ show, onHide, viewSaved, activeTab, saveName, saveSuccess, search, filters, sort, tab }) => {
     const [data, setData] = useState([]);
     const [showButtons, setShowButtons] = useState(false);
     const [dataLink, setDataLink] = useState(data);
@@ -186,7 +185,7 @@ const NewSavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, saveName
     );
 };
 
-NewSavedPreferencesModal.propTypes = {
+SavedPreferencesModalOld.propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
     viewSaved: PropTypes.func.isRequired,
@@ -199,4 +198,4 @@ NewSavedPreferencesModal.propTypes = {
     tab: PropTypes.number.isRequired, // update with correct type
 };
 
-export default NewSavedPreferencesModal;
+export default SavedPreferencesModalOld;
