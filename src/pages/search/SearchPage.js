@@ -38,10 +38,7 @@ import FilterSelection from './components/FilterSelection';
 import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort';
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
-import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort'import searchService from '../../services/search/search';
-import { getParams } from '../../utils/GeneralHelper.util';
-import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
-import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
+import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
 import SVGIcon from '../../images/SVGIcon';
 import SavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
 
@@ -1868,8 +1865,11 @@ class SearchPage extends React.Component {
                                 !this.state.shouldShowSavedPreferencesModal &&
                                 'container-saved-preference-banner'
                             }>
+                        </Container>
                             <Row className='filters filter-save'>
                                 <Col lg={12} className='saved-buttons'>
+                                </Col>
+                            </Row>
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-search'>
                                 <Col lg={12}>
@@ -1974,8 +1974,11 @@ class SearchPage extends React.Component {
                                 {sortMenu}
                             </Row>
                         </Container>
+
+
                     </div>
                     <Container>
+
                         <Row className='flex-row-reverse'>
                             <Col sm={12} md={12} lg={4}>
                                 <Box display='flex' justifyContent='end' alignItems='center' mt={3} mb={1}>

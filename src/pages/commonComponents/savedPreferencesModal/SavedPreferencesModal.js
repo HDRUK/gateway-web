@@ -186,7 +186,7 @@ const SavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, saveName, s
     );
 };
 
-NewSavedPreferencesModal.propTypes = {
+SavedPreferencesModal.propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
     viewSaved: PropTypes.func.isRequired,
