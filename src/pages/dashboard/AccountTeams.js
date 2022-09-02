@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Box } from 'hdruk-react-core';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
@@ -126,7 +127,13 @@ const AccountTeams = () => {
         <>
             {viewTeams ? (
                 <LayoutContent>
-                    {!_.isEmpty(alert) && <Alert variant='success'>{alert.message}</Alert>}
+                    <Row className='w-100'>
+                        {!_.isEmpty(alert) && (
+                            <Box flexGrow='1'>
+                                <Alert variant='success'>{alert.message}</Alert>
+                            </Box>
+                        )}
+                    </Row>
                     <Row className='accountHeader'>
                         <Col sm={12} md={8}>
                             <Row>
