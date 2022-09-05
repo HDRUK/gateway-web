@@ -1818,6 +1818,8 @@ class SearchPage extends React.Component {
         const filtersSelectionProps = this.getFiltersSelectionProps(preferenceFilters);
         const searchProps = this.getSearchProps(showSort, sortMenu, maxResults);
 
+        console.log('This ', this.state.search);
+
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <div>
@@ -1886,6 +1888,17 @@ class SearchPage extends React.Component {
                                             </Box>
                                         </Box>
                                     </form>
+                                </Col>
+                            </Row>
+
+                            <Row className='filters filter-save'>
+                                <Col lg={4}>
+                                    <Box display='flex' alignItems='center' height='100%'>
+                                        {(() => {
+                                            let { search } = queryString.parse(window.location.search);
+                                            return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
+                                        })()}
+                                    </Box>
                                 </Col>
                             </Row>
 
