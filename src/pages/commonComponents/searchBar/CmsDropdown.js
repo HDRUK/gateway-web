@@ -5,6 +5,7 @@ import { Dropdown } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 
 const baseURL = require('../BaseURL');
+
 const cmsURL = baseURL.getCMSURL();
 const env = baseURL.getURLEnv();
 const local = 'local';
@@ -17,10 +18,9 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         onClick={e => {
             e.preventDefault();
             onClick(e);
-        }}
-    >
+        }}>
         {children}
-        <SVGIcon name='chevronbottom' fill={'#475DA7'} className='svg-16 floatRightChevron' />
+        <SVGIcon name='chevronbottom' fill='#475DA7' className='svg-16 floatRightChevron' />
     </a>
 ));
 
@@ -54,9 +54,8 @@ export const CmsDropdown = props => {
     const [dropdownLinks, setDropdownLinks] = useState('');
     const [isMobile] = useState(props.isMobile);
 
-    //componentDidMount - on loading of page detail page
     useEffect(() => {
-        let url = env === local ? 'https://uatbeta.healthdatagateway.org' : cmsURL;
+        const url = env === local ? 'https://uatbeta.healthdatagateway.org' : cmsURL;
 
         axios
             .get(`${url}/${dropdownUrl}`, { withCredentials: false })
@@ -67,14 +66,14 @@ export const CmsDropdown = props => {
     }, []);
 
     const getDropdownTitle = dropdownUrl => {
-        let dropdownUrls = new Map([
+        const dropdownUrls = new Map([
             ['exploreDropdown', 'Explore'],
             ['helpDropdown', 'Help'],
             ['usageDataDropdown', 'Usage Data'],
             ['aboutUsDropdown', 'About Us'],
         ]);
 
-        let dropdownTitle = dropdownUrls.get(dropdownUrl.trim());
+        const dropdownTitle = dropdownUrls.get(dropdownUrl.trim());
 
         return dropdownTitle;
     };
@@ -82,7 +81,7 @@ export const CmsDropdown = props => {
     return (
         <Dropdown className='cmsDropdown'>
             <Dropdown.Toggle as={CustomToggle}>
-                <span className='black-14'>{getDropdownTitle(dropdownUrl)}</span>
+                <span>{getDropdownTitle(dropdownUrl)}</span>
             </Dropdown.Toggle>
 
             <Dropdown.Menu as={isMobile === true ? CustomSubMenu : CustomMenu} className='cmsDropdownMenu'>
