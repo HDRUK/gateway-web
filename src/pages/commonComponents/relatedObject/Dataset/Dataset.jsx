@@ -4,10 +4,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash';
+import { isEmpty, isNil, capitalize } from 'lodash';
 import { cx } from '@emotion/css';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from 'hdruk-react-core';
+import { Box, Caption, Typography } from 'hdruk-react-core';
 import googleAnalytics from '../../../../tracking';
 import { dateFormats, stripMarkdown } from '../../../../utils/GeneralHelper.util';
 import RemoveButton from '../RemoveButton/RemoveButton';
@@ -264,6 +264,19 @@ const Dataset = ({
                     </ShowMore>
                 </Col>
                 {!showRelationshipQuestion && <Description type={data.type} description={getDescription()} />}
+            </Row>
+            <Row className='pad-left-24 pad-right-24 pad-bottom-16'>
+                <Col sm={12} lg={6} />
+                <Col sm={12} lg={6}>
+                    <Box display='flex' justifyContent='start' css={styles.typicalTimeToAccess}>
+                        <Caption color='grey600' mr='1'>
+                            {t('dataset.typicalTimeToAccess')}
+                        </Caption>
+                        <Caption color='grey600' css={styles.deliveryLeadTime}>
+                            {capitalize(data.datasetv2.accessibility.access.deliveryLeadTime)}
+                        </Caption>
+                    </Box>
+                </Col>
             </Row>
         </>
     );
