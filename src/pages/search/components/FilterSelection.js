@@ -30,8 +30,8 @@ const FilterSelection = ({ selectedCount, selectedItems, onHandleClearSelection,
                                 onClick={e => clearSelection(e)}
                             >
                                 {savedSearches ? 'Clear Filters' : 'Clear All'}
+                                
                             </div>
-
                             <button className='saved-search-arrow' onClick={() => (!closed ? setClosed(true) : setClosed(false))}>
                                 <SVGIcon
                                     width='20px'
@@ -42,6 +42,7 @@ const FilterSelection = ({ selectedCount, selectedItems, onHandleClearSelection,
                                 />
                             </button>
                         </>
+
                     ) : (
                         ''
                     )}
@@ -56,8 +57,9 @@ const FilterSelection = ({ selectedCount, selectedItems, onHandleClearSelection,
                                     onHandleClearSelection={onHandleClearSelection}
                                 />
                             ))}
+
                     </div>
-                ) : null}
+                ) : null}                
             </div>
         </Fragment>
     );

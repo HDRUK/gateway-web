@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { Box, Button, H6, Icon, Input, P, InputGroup } from 'hdruk-react-core';
+import { Box, Button, H6, Icon, Input, P } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
@@ -39,7 +39,8 @@ import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
 import SVGIcon from '../../images/SVGIcon';
-import NewSavedPreferencesModal from '../commonComponents/newSavedPreferencesModal/NewSavedPreferencesModal';
+import SavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
+
 import { BackToTop } from '../../components';
 import './Search.scss';
 
@@ -109,8 +110,6 @@ class SearchPage extends React.Component {
         isResultsLoading: true,
         showDrawer: false,
         showModal: false,
-        // showSavedPreferencesModal: false,
-        // showSavedModal: false,
         context: {},
         userState: [
             {
@@ -142,8 +141,7 @@ class SearchPage extends React.Component {
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
         closed: true,
-        showNewSavedPreferencesModal: false,
-        searchFieldValue: '',
+        shouldShowSavedPreferencesModal: false,
     };
 
     constructor(props) {
@@ -166,12 +164,12 @@ class SearchPage extends React.Component {
         this.csvLink = React.createRef();
     }
 
-    showNewSavedPreferencesModal = () => {
-        this.setState({ showNewSavedPreferencesModal: true, closed: false })
-    }
+    showSavedPreferencesModal = () => {
+        this.setState({ shouldShowSavedPreferencesModal: true, closed: false });
+    };
 
     hideSavedPreferencesModal = () => {
-        this.setState({ showSavedPreferencesModal: false });
+        this.setState({ shouldShowSavedPreferencesModal: false });
     };
 
     hideSavedModal = () => {
@@ -1457,7 +1455,7 @@ class SearchPage extends React.Component {
 
     saveFiltersUpdate = async viewSaved => {
         await this.getFilters(viewSaved.tab);
-        this.setState({ showNewSavedPreferencesModal: false });
+        this.setState({ shouldShowSavedPreferencesModal: false });
         // 1. v2 take copy of data
         let filtersV2DatasetsData = !_.isNil(this.state.filtersV2Datasets) ? [...this.state.filtersV2Datasets] : [];
         let filtersV2ToolsData = !_.isNil(this.state.filtersV2Tools) ? [...this.state.filtersV2Tools] : [];
@@ -1854,49 +1852,46 @@ class SearchPage extends React.Component {
                             <SearchUtilityBanner onClick={this.openDataUtilityWizard} step={activeDataUtilityWizardStep} />
                         )}
 
-                        {this.state.saveSuccess && !this.state.showNewSavedPreferencesModal && (
+                        {this.state.saveSuccess && !this.state.shouldShowSavedPreferencesModal && (
                             <Alert variant='primary' className='blue-banner saved-preference-banner'>
                                 Saved preference: "{this.state.showSavedName}"
                             </Alert>
                         )}
 
-                            
-<Container className={this.state.saveSuccess && !this.state.showNewSavedPreferencesModal && 'container-saved-preference-banner'}>               
-                            <Row className='filters filter-search'>
-                                <Col lg={12}>
-                                    <form onSubmit={this.handleSearch}>
-                                        <Box display='grid' gridTemplateColumns='150px 1fr 175px' gridTemplateRows='1fr' width='100%' p={6}>
-                                            <Box width='150px' display='inline-flex'>
-                                                <ColourLogoSvg />
-                                            </Box>
-                                            <Box mt={1} flexGrow='1' mr={1}>
-                                                <InputGroup>
-                                                    <Input
-                                                        iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
-                                                        iconRight={
-                                                            !!this.state.searchFieldValue && (
-                                                                <Icon
-                                                                    svg={<ClearSvg />}
-                                                                    fill='grey400'
-                                                                    onClick={this.handleSearchReset}
-                                                                    role='button'
-                                                                />
-                                                            )
-                                                        }
-                                                        value={this.state.searchFieldValue}
-                                                        onChange={this.handleSearchChange}
-                                                    />
-                                                    <Button type='submit'>Search</Button>
-                                                </InputGroup>
-                                            </Box>
+                        <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
+                            <Col lg={12}>
+                                <form onSubmit={this.handleSearch}>
+                                    <Box display='flex' justifyContent='center' width='100%' p={6}>
+                                        <Box width='150px' display='inline-flex'>
+                                            <ColourLogoSvg />
                                         </Box>
-                                    </form>
-                                </Col>
-                            </Row>
-
+                                        <Box mt={1} flexGrow='1' mr={1}>
+                                            <Input
+                                                iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                iconRight={
+                                                    !!this.state.searchFieldValue && (
+                                                        <Icon
+                                                            svg={<ClearSvg />}
+                                                            fill='grey400'
+                                                            onClick={this.handleSearchReset}
+                                                            role='button'
+                                                        />
+                                                    )
+                                                }
+                                                value={this.state.searchFieldValue}
+                                                onChange={this.handleSearchChange}
+                                            />
+                                        </Box>
+                                        <Box width='175px' mt={1}>
+                                            <Button type='submit'>Search</Button>
+                                        </Box>
+                                    </Box>
+                                </form>
+                            </Col>
+                            </Container>
+                            <Container>
                             <Row className='filters filter-save'>
-                                <Col className='title' lg={4} />
-                                <Col lg={8} className='saved-buttons'>
+                                <Col className='saved-buttons'>
                                     <Box display='inline-flex' gap={2} py={4}>
                                         {this.state.key === 'Datauses' && (
                                             <>
@@ -1912,14 +1907,32 @@ class SearchPage extends React.Component {
                                                 />
                                             </>
                                         )}
-                                        <Button
-                                            variant='tertiary' className='arrow' aria-haspopup="true" 
+                                        
+
+                                        
+                                    </Box>
+                                    {key !== 'People' && (
+                                        <FilterSelection
+                                            {...filtersSelectionProps}
+                                            onHandleClearSelection={this.handleClearSelection}
+                                            onHandleClearAll={this.handleClearAll}
+                                            savedSearches={true}
+                                        />
+                                    )}
+                                    </Col>
+
+                                    <Col className='save-modal-button'>
+
+                                    <Button
+                                            variant='tertiary'
+                                            className='arrow'
+                                            aria-haspopup='true'
                                             onClick={
-                                                        this.state.userState[0].loggedIn === false
-                                                            ? () => this.showLoginModal()
-                                                            : () => this.showNewSavedPreferencesModal() 
-                                                    }> 
-                                            Save                                           
+                                                this.state.userState[0].loggedIn === false
+                                                    ? () => this.showLoginModal()
+                                                    : () => this.showSavedPreferencesModal()
+                                            }>
+                                            Save
                                             <SVGIcon
                                                 width='35px'
                                                 height='35px'
@@ -1928,10 +1941,10 @@ class SearchPage extends React.Component {
                                                 className={this.state.closed ? '' : 'flip180'}
                                             />
                                         </Button>
-                                        {this.state.showNewSavedPreferencesModal && (
-                                            <NewSavedPreferencesModal
-                                                show={this.state.showNewSavedPreferencesModal}
-                                                onHide={this.hideNewSavedPreferencesModal}
+                                        {this.state.shouldShowSavedPreferencesModal && (
+                                            <SavedPreferencesModal
+                                                show={this.state.shouldShowSavedPreferencesModal}
+                                                onHide={this.hideSavedPreferencesModal}
                                                 viewMatchesLink={this.viewMatches}
                                                 viewSaved={this.saveFiltersUpdate}
                                                 activeTab={key}
@@ -1943,25 +1956,13 @@ class SearchPage extends React.Component {
                                                 tab={this.state.key}
                                             />
                                         )}
-                                    </Box>
                                     
+                                
                                 </Col>
-                                {key !== 'People' && (
-                                    <FilterSelection
-                                        {...filtersSelectionProps}
-                                        onHandleClearSelection={this.handleClearSelection}
-                                        onHandleClearAll={this.handleClearAll}
-                                        savedSearches={true}
-                                    />
-                                )}
-                                {/* <Col className='title' lg={9}>
-                                    {(() => {
-                                        let { search } = queryString.parse(window.location.search);
-                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
-                                    })()}
-                                </Col>
-                                {sortMenu} */}
 
+
+                                
+                                
                             </Row>
                             
                         </Container>
@@ -1985,12 +1986,14 @@ class SearchPage extends React.Component {
                                         return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
                                     })()}
                                 </Box>
+                                
                             </Col>
                             <Col sm={12} md={12} lg={3}>
                                 <Box mt={6} mb={4}>
                                     <H6 color='grey700'>{this.props.t('searchResultsInfo.searchFilters')}</H6>
                                 </Box>
                             </Col>
+                            
                         </Row>
                     </Container>
                     <Container>
