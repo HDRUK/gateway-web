@@ -1890,17 +1890,6 @@ class SearchPage extends React.Component {
                             </Row>
 
                             <Row className='filters filter-save'>
-                                <Col lg={4}>
-                                    <Box display='flex' alignItems='center' height='100%'>
-                                        {(() => {
-                                            let { search } = queryString.parse(window.location.search);
-                                            return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
-                                        })()}
-                                    </Box>
-                                </Col>
-                            </Row>
-
-                            <Row className='filters filter-save'>
                                 <Col className='title' lg={4} />
                                 <Col lg={8} className='saved-buttons'>
                                     <Box display='inline-flex' gap={2} py={4}>
