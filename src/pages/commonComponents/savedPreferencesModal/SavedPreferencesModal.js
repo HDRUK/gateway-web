@@ -100,16 +100,16 @@ const SavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, saveName, s
                 {formik.touched.name && formik.errors.name ? <div className='errorMessages'>{formik.errors.name}</div> : null}
                 <br />
                 <span className='black-10'>Your search preferences</span>
-                <br />
-                <p className='gray800-14'>
+                    <br />
+                    <p className='gray800-14'>
                     View saved preferences across all resources on the Gateway. To create a new preference, apply your desired filters on
                     the resources search results page and select 'save'.
-                </p>
-                <Tabs defaultActiveKey={activeTab} className='save-tabsBackground saved-preferences-tabs gray700-13'>
-                    {tabs.map(tabName => (
-                        <Tab
-                            eventKey={tabName}
-                            key={tabName}
+                    </p>
+            <Tabs defaultActiveKey={activeTab} className='save-tabsBackground saved-preferences-tabs gray700-13'>
+                {tabs.map(tabName => (
+                    <Tab
+                        eventKey={tabName}
+                        key={tabName}
                             title={`${tabName} ${
                                 (tabName === 'Datasets' && `(${datasetsTotal})`) ||
                                 (tabName === 'Tools' && `(${toolsTotal})`) ||
@@ -160,9 +160,9 @@ const SavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, saveName, s
                                     </Col>
                                 </Row>
                             )}
-                        </Tab>
-                    ))}
-                </Tabs>
+                    </Tab>
+                ))}
+            </Tabs>
             </Modal.Body>
 
             <Modal.Footer className='saved-preference-modal-footer'>

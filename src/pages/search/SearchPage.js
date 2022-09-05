@@ -1907,9 +1907,6 @@ class SearchPage extends React.Component {
                                                 />
                                             </>
                                         )}
-                                        
-
-                                        
                                     </Box>
                                     {key !== 'People' && (
                                         <FilterSelection
@@ -1919,52 +1916,8 @@ class SearchPage extends React.Component {
                                             savedSearches={true}
                                         />
                                     )}
-                                    </Col>
-
-                                    <Col className='save-modal-button'>
-
-                                    <Button
-                                            variant='tertiary'
-                                            className='arrow'
-                                            aria-haspopup='true'
-                                            onClick={
-                                                this.state.userState[0].loggedIn === false
-                                                    ? () => this.showLoginModal()
-                                                    : () => this.showSavedPreferencesModal()
-                                            }>
-                                            Save
-                                            <SVGIcon
-                                                width='35px'
-                                                height='35px'
-                                                name='arrow-down'
-                                                fill='#3C3C3B'
-                                                className={this.state.closed ? '' : 'flip180'}
-                                            />
-                                        </Button>
-                                        {this.state.shouldShowSavedPreferencesModal && (
-                                            <SavedPreferencesModal
-                                                show={this.state.shouldShowSavedPreferencesModal}
-                                                onHide={this.hideSavedPreferencesModal}
-                                                viewMatchesLink={this.viewMatches}
-                                                viewSaved={this.saveFiltersUpdate}
-                                                activeTab={key}
-                                                saveSuccess={this.showSuccessMessage}
-                                                saveName={this.showSavedName}
-                                                search={this.state.search}
-                                                filters={preferenceFilters}
-                                                sort={perferenceSort}
-                                                tab={this.state.key}
-                                            />
-                                        )}
-                                    
-                                
                                 </Col>
-
-
-                                
-                                
                             </Row>
-                            
                         </Container>
                     </div>
                     <Container>
