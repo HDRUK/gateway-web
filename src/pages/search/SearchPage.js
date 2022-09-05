@@ -11,7 +11,6 @@ import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
-import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
 import { ReactComponent as SearchSvg } from '../../images/search.svg';
 import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
@@ -1860,41 +1859,39 @@ class SearchPage extends React.Component {
                         )}
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
-                            <Row className='filters filter-search'>
-                                <Col lg={12}>
-                                    <form onSubmit={this.handleSearch}>
-                                        <Box display='flex' justifyContent='center' width='100%' p={6}>
-                                            <Box width='150px' display='inline-flex'>
-                                                <ColourLogoSvg />
-                                            </Box>
-                                            <Box mt={1} flexGrow='1' mr={1}>
-                                                <Input
-                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
-                                                    iconRight={
-                                                        !!this.state.searchFieldValue && (
-                                                            <Icon
-                                                                svg={<ClearSvg />}
-                                                                fill='grey400'
-                                                                onClick={this.handleSearchReset}
-                                                                role='button'
-                                                            />
-                                                        )
-                                                    }
-                                                    value={this.state.searchFieldValue}
-                                                    onChange={this.handleSearchChange}
-                                                />
-                                            </Box>
-                                            <Box width='175px' mt={1}>
-                                                <Button type='submit'>Search</Button>
-                                            </Box>
+                            <Col lg={12}>
+                                <form onSubmit={this.handleSearch}>
+                                    <Box display='flex' justifyContent='center' width='100%' p={6}>
+                                        <Box width='150px' display='inline-flex'>
+                                            <ColourLogoSvg />
                                         </Box>
-                                    </form>
-                                </Col>
-                            </Row>
-
+                                        <Box mt={1} flexGrow='1' mr={1}>
+                                            <Input
+                                                iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                iconRight={
+                                                    !!this.state.searchFieldValue && (
+                                                        <Icon
+                                                            svg={<ClearSvg />}
+                                                            fill='grey400'
+                                                            onClick={this.handleSearchReset}
+                                                            role='button'
+                                                        />
+                                                    )
+                                                }
+                                                value={this.state.searchFieldValue}
+                                                onChange={this.handleSearchChange}
+                                            />
+                                        </Box>
+                                        <Box width='175px' mt={1}>
+                                            <Button type='submit'>Search</Button>
+                                        </Box>
+                                    </Box>
+                                </form>
+                            </Col>
+                            </Container>
+                            <Container>
                             <Row className='filters filter-save'>
-                                <Col className='title' lg={4} />
-                                <Col lg={8} className='saved-buttons'>
+                                <Col className='saved-buttons'>
                                     <Box display='inline-flex' gap={2} py={4}>
                                         {this.state.key === 'Datauses' && (
                                             <>
@@ -1910,7 +1907,23 @@ class SearchPage extends React.Component {
                                                 />
                                             </>
                                         )}
-                                        <Button
+                                        
+
+                                        
+                                    </Box>
+                                    {key !== 'People' && (
+                                        <FilterSelection
+                                            {...filtersSelectionProps}
+                                            onHandleClearSelection={this.handleClearSelection}
+                                            onHandleClearAll={this.handleClearAll}
+                                            savedSearches={true}
+                                        />
+                                    )}
+                                    </Col>
+
+                                    <Col className='save-modal-button'>
+
+                                    <Button
                                             variant='tertiary'
                                             className='arrow'
                                             aria-haspopup='true'
@@ -1928,7 +1941,6 @@ class SearchPage extends React.Component {
                                                 className={this.state.closed ? '' : 'flip180'}
                                             />
                                         </Button>
-
                                         {this.state.shouldShowSavedPreferencesModal && (
                                             <SavedPreferencesModal
                                                 show={this.state.shouldShowSavedPreferencesModal}
@@ -1944,23 +1956,18 @@ class SearchPage extends React.Component {
                                                 tab={this.state.key}
                                             />
                                         )}
-                                    </Box>
+                                    
+                                
                                 </Col>
-                                {key !== 'People' && (
-                                    <FilterSelection
-                                        {...filtersSelectionProps}
-                                        onHandleClearSelection={this.handleClearSelection}
-                                        onHandleClearAll={this.handleClearAll}
-                                        savedSearches={true}
-                                    />
-                                )}
+
+
+                                
+                                
                             </Row>
+                            
                         </Container>
-
-
                     </div>
                     <Container>
-
                         <Row className='flex-row-reverse'>
                             <Col sm={12} md={12} lg={4}>
                                 <Box display='flex' justifyContent='end' alignItems='center' mt={3} mb={1}>
@@ -1979,12 +1986,14 @@ class SearchPage extends React.Component {
                                         return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
                                     })()}
                                 </Box>
+                                
                             </Col>
                             <Col sm={12} md={12} lg={3}>
                                 <Box mt={6} mb={4}>
                                     <H6 color='grey700'>{this.props.t('searchResultsInfo.searchFilters')}</H6>
                                 </Box>
                             </Col>
+                            
                         </Row>
                     </Container>
                     <Container>

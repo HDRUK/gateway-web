@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import './SaveModal.scss';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, Row, Col, Tab, Tabs } from 'react-bootstrap';
@@ -83,7 +82,7 @@ const SavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, saveName, s
             <Modal.Header closeButton>
                 <h5 className='black-20-semibold'>Save</h5>
             </Modal.Header>
-            <Modal.Body style={{ 'max-height': 'calc(100vh - 450px)', 'overflow-y': 'auto', 'background-color': '#f6f7f8' }}>
+            <Modal.Body style={{ 'max-height': 'calc(100vh - 150px)', 'overflow-y': 'auto', 'background-color': '#f6f7f8' }}>
                 <p className='black-14'>
                     Are you sure you want to save this search preference? If yes, please provide a title for this search.
                 </p>
@@ -99,7 +98,8 @@ const SavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, saveName, s
                     onBlur={formik.handleBlur}
                 />
                 {formik.touched.name && formik.errors.name ? <div className='errorMessages'>{formik.errors.name}</div> : null}
-                <span className='black-20'>Your search preferences</span>
+                <br />
+                <span className='black-10'>Your search preferences</span>
                 <br />
                 <p className='gray800-14'>
                     View saved preferences across all resources on the Gateway. To create a new preference, apply your desired filters on
@@ -171,6 +171,9 @@ const SavedPreferencesModal = ({ show, onHide, viewSaved, activeTab, saveName, s
                         Cancel
                     </Button>
                 </Col>
+                <Button type='submit' className='save-search-button' onClick={formik.handleSubmit}>
+                    Save
+                </Button>
                 {showButtons && (
                     <Col className='text-right'>
                         <Button variant='outline-success' className='saved delete-button button-teal' onClick={() => deleteSavedSearch()}>
@@ -193,10 +196,7 @@ SavedPreferencesModal.propTypes = {
     saveSuccess: PropTypes.func.isRequired,
     saveName: PropTypes.func.isRequired,
     activeTab: PropTypes.number.isRequired,
-    search: PropTypes.string.isRequired, // update with correct type
-    filters: PropTypes.number.isRequired, // update with correct type
-    sort: PropTypes.number.isRequired, // update with correct type
-    tab: PropTypes.number.isRequired, // update with correct type
+    search: PropTypes.string.isRequired, 
 };
 
 export default SavedPreferencesModal;
