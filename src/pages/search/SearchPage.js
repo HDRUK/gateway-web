@@ -1859,17 +1859,6 @@ class SearchPage extends React.Component {
                             </Alert>
                         )}
 
-                        <Container
-                            className={
-                                this.state.saveSuccess &&
-                                !this.state.shouldShowSavedPreferencesModal &&
-                                'container-saved-preference-banner'
-                            }>
-                        </Container>
-                            <Row className='filters filter-save'>
-                                <Col lg={12} className='saved-buttons'>
-                                </Col>
-                            </Row>
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-search'>
                                 <Col lg={12}>
@@ -1965,13 +1954,6 @@ class SearchPage extends React.Component {
                                         savedSearches={true}
                                     />
                                 )}
-                                <Col className='title' lg={9}>
-                                    {(() => {
-                                        let { search } = queryString.parse(window.location.search);
-                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
-                                    })()}
-                                </Col>
-                                {sortMenu}
                             </Row>
                         </Container>
 
