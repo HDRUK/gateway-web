@@ -8,16 +8,17 @@ import { regExpConfig } from './regex.config';
  */
 const _buildUrl = urlType => {
     // 1. destructure window
-    let {
+    const {
         location: { href, origin },
     } = window;
     if (href && href.includes('appspot.com')) {
         return origin;
-    } else if (href && !href.includes('localhost')) {
-        let regArray = _getRegexURL(urlType, href);
+    }
+    if (href && !href.includes('localhost')) {
+        const regArray = _getRegexURL(urlType, href);
         if (regArray) {
-            let url = regArray[2];
-            //add -api to the sub domain for API requests
+            const url = regArray[2];
+            // add -api to the sub domain for API requests
             switch (urlType) {
                 case 'cms':
                     return `https://${url}`;
@@ -35,15 +36,28 @@ const _buildUrl = urlType => {
  *
  * @param {urlType[string], href{[string]}}
  * @description Returns regex test based on url type
- */
-const _getRegexURL = (urlType, href) => {
-    console.log(`GET REGEX URL ${urlType}`);
+ */ const _getRegexURL = (urlType, href) => {
     switch (urlType) {
         case 'cms':
             return regExpConfig.cmsUrl.exec(href);
         default:
             return regExpConfig.httpUrl.exec(href);
     }
+};
+
+export const getWidgetAPI = () => {
+    const { href } = window.location;
+    let widgetAPIURL = 'https://dev-datause-widget.dev.hdruk.dev';
+    if (href.includes('.www.')) {
+        widgetAPIURL = 'https://datause-widget.healthdatagateway.org';
+    }
+    if (href.includes('.uat.')) {
+        widgetAPIURL = 'https://uat-datause-widget.healthdatagateway.org';
+    }
+    if (href.includes('.preprod.')) {
+        widgetAPIURL = 'https://preprod-datause-widget.preprod.hdruk.dev/';
+    }
+    return widgetAPIURL;
 };
 
 export const baseURL = _buildUrl('http');

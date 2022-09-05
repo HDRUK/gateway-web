@@ -4,13 +4,13 @@ exports[`Given the TypeaheadAsyncCustom component When it is rendered without de
 <div>
   <div>
     <div
-      class="ui-Box css-ichth-B"
+      class="ui-Box css-672p6m"
     >
       <div
         class="css-f3m9lf-Input form-group"
       >
         <div
-          class="ui-Input ui-Typeahead css-8952g6-TypeaheadAsyncCustom input-group"
+          class="ui-Input ui-Typeahead css-1oponl2-TypeaheadAsyncCustom input-group"
         >
           <div
             class="css-1h9gu1e-Input input-group-prepend"

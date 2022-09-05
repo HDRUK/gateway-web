@@ -3,7 +3,7 @@
 exports[`Given the AccountDatasetsContent component When it is rendered And has data Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-1xbisdu-B"
+    class="ui-Box css-672p6m"
   >
     <div
       class="css-1tuhzuv row"
@@ -12,13 +12,13 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
         class="col-lg-6"
       >
         <div
-          class="ui-Box css-ichth-B"
+          class="ui-Box css-672p6m"
         >
           <div
             class="css-f3m9lf-Input form-group"
           >
             <div
-              class="ui-Input ui-SearchInput css-ola6vk-Input input-group"
+              class="ui-Input ui-SearchInput css-uxo7bh-Input input-group"
             >
               <div
                 class="css-1h9gu1e-Input input-group-prepend"
@@ -49,10 +49,10 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
           class="ui-SortDropdown css-13ymzsx-SortDropdown"
         >
           <div
-            class="ui-Box css-ichth-B"
+            class="ui-Box css-672p6m"
           >
             <div
-              class="ui-Dropdown css-cfbowp-SortDropdown dropdown"
+              class="ui-Dropdown css-cewc3p-SortDropdown dropdown"
             >
               <button
                 aria-expanded="false"

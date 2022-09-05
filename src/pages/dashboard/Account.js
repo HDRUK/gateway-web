@@ -512,7 +512,7 @@ class Account extends Component {
     };
 
     userHasRole(teamId, role) {
-        const team = this.state.userState[0].teams.filter(t => {
+        const team = this?.state?.userState[0]?.teams.filter(t => {
             return t._id === teamId;
         })[0];
         return team && team.roles.some(r => role.includes(r));
@@ -692,12 +692,15 @@ class Account extends Component {
                     text: 'Dashboard',
                     id: 'datause',
                 },
-                // {
-                //     text: 'Data use widget',
-                //     id: 'datause_widget',
-                // },
             ],
         };
+
+        this.userHasRole(team, ['manager']) &&
+            publisherDetails.dataUse?.widget?.enabled &&
+            ACCORDIAN_DUR_MENU.children.push({
+                text: 'Data use widget',
+                id: 'datause_widget',
+            });
 
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
