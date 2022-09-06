@@ -12,6 +12,7 @@ import { withTranslation } from 'react-i18next';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { ReactComponent as SearchSvg } from '../../images/search.svg';
+import { ReactComponent as ArrowDownSvg } from '../../images/icons/arrow-down.svg';
 import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
@@ -38,8 +39,7 @@ import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort'
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
-import SVGIcon from '../../images/SVGIcon';
-import SavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
+import SavedPreferences from '../commonComponents/savedPreferences/SavedPreferences';
 
 import { BackToTop } from '../../components';
 import './Search.scss';
@@ -140,8 +140,7 @@ class SearchPage extends React.Component {
         showDataUtilityWizardModal: false,
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
-        closed: true,
-        shouldShowSavedPreferencesModal: false,
+        shouldShowSavedPreferences: false,
     };
 
     constructor(props) {
@@ -164,12 +163,8 @@ class SearchPage extends React.Component {
         this.csvLink = React.createRef();
     }
 
-    showSavedPreferencesModal = () => {
-        this.setState({ shouldShowSavedPreferencesModal: true, closed: false });
-    };
-
-    hideSavedPreferencesModal = () => {
-        this.setState({ shouldShowSavedPreferencesModal: false });
+    toggleSavedPreferences = () => {
+        this.setState({ shouldShowSavedPreferences: !this.state.shouldShowSavedPreferences });
     };
 
     hideSavedModal = () => {
@@ -1455,7 +1450,7 @@ class SearchPage extends React.Component {
 
     saveFiltersUpdate = async viewSaved => {
         await this.getFilters(viewSaved.tab);
-        this.setState({ shouldShowSavedPreferencesModal: false });
+        this.setState({ shouldShowSavedPreferences: false });
         // 1. v2 take copy of data
         let filtersV2DatasetsData = !_.isNil(this.state.filtersV2Datasets) ? [...this.state.filtersV2Datasets] : [];
         let filtersV2ToolsData = !_.isNil(this.state.filtersV2Tools) ? [...this.state.filtersV2Tools] : [];
@@ -1852,72 +1847,109 @@ class SearchPage extends React.Component {
                             <SearchUtilityBanner onClick={this.openDataUtilityWizard} step={activeDataUtilityWizardStep} />
                         )}
 
-                        {this.state.saveSuccess && !this.state.shouldShowSavedPreferencesModal && (
+                        {this.state.saveSuccess && !this.state.shouldShowSavedPreferences && (
                             <Alert variant='primary' className='blue-banner saved-preference-banner'>
                                 Saved preference: "{this.state.showSavedName}"
                             </Alert>
                         )}
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
-                            <Col lg={12}>
-                                <form onSubmit={this.handleSearch}>
-                                    <Box display='flex' justifyContent='center' width='100%' p={6}>
-                                        <Box width='150px' display='inline-flex'>
-                                            <ColourLogoSvg />
-                                        </Box>
-                                        <Box mt={1} flexGrow='1' mr={1}>
-                                            <Input
-                                                iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
-                                                iconRight={
-                                                    !!this.state.searchFieldValue && (
-                                                        <Icon
-                                                            svg={<ClearSvg />}
-                                                            fill='grey400'
-                                                            onClick={this.handleSearchReset}
-                                                            role='button'
-                                                        />
-                                                    )
-                                                }
-                                                value={this.state.searchFieldValue}
-                                                onChange={this.handleSearchChange}
-                                            />
-                                        </Box>
-                                        <Box width='175px' mt={1}>
-                                            <Button type='submit'>Search</Button>
-                                        </Box>
-                                    </Box>
-                                </form>
-                            </Col>
-                            </Container>
-                            <Container>
-                            <Row className='filters filter-save'>
-                                <Col className='saved-buttons'>
-                                    <Box display='inline-flex' gap={2} py={4}>
-                                        {this.state.key === 'Datauses' && (
-                                            <>
-                                                <Button variant='tertiary' onClick={this.onClickDownloadResults}>
-                                                    Download Results
-                                                </Button>
-                                                <CSVLink
-                                                    data={dataUseRegisterFullData}
-                                                    filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
-                                                    className='hidden'
-                                                    ref={this.csvLink}
-                                                    target='_blank'
+                            <Row className='filters filter-search'>
+                                <Col lg={10}>
+                                    <form onSubmit={this.handleSearch}>
+                                        <Box display='flex' justifyContent='center' width='100%' pt={8} pl={6} pb={6}>
+                                            <Box display='inline-flex' mr={6}>
+                                                <ColourLogoSvg />
+                                            </Box>
+                                            <Box flexGrow='1' mr={1}>
+                                                <Input
+                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                    iconRight={
+                                                        !!this.state.searchFieldValue && (
+                                                            <Icon
+                                                                svg={<ClearSvg />}
+                                                                fill='grey400'
+                                                                onClick={this.handleSearchReset}
+                                                                role='button'
+                                                            />
+                                                        )
+                                                    }
+                                                    value={this.state.searchFieldValue}
+                                                    onChange={this.handleSearchChange}
                                                 />
-                                            </>
-                                        )}
-                                    </Box>
-                                    {key !== 'People' && (
-                                        <FilterSelection
-                                            {...filtersSelectionProps}
-                                            onHandleClearSelection={this.handleClearSelection}
-                                            onHandleClearAll={this.handleClearAll}
-                                            savedSearches={true}
-                                        />
-                                    )}
+                                            </Box>
+                                            <Box>
+                                                <Button type='submit'>Search</Button>
+                                            </Box>
+                                        </Box>
+                                    </form>
                                 </Col>
                             </Row>
+
+                            <Row className='filters'>
+                                <Col lg={10}>
+                                    <Box display='flex' pt={4} pl={6} pb={4}>
+                                        <Box flexGrow='1'>
+                                            {key !== 'People' && (
+                                                <FilterSelection
+                                                    {...filtersSelectionProps}
+                                                    onHandleClearSelection={this.handleClearSelection}
+                                                    onHandleClearAll={this.handleClearAll}
+                                                    savedSearches={true}
+                                                />
+                                            )}
+                                        </Box>
+                                        <Box display='inline-flex'>
+                                            {this.state.key === 'Datauses' && (
+                                                <>
+                                                    <Button mr={2} variant='tertiary' onClick={this.onClickDownloadResults}>
+                                                        Download Results
+                                                    </Button>
+                                                    <CSVLink
+                                                        data={dataUseRegisterFullData}
+                                                        filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
+                                                        className='hidden'
+                                                        ref={this.csvLink}
+                                                        target='_blank'
+                                                    />
+                                                </>
+                                            )}
+                                            <Button
+                                                variant='tertiary'
+                                                aria-haspopup='true'
+                                                iconRight={
+                                                    <Icon
+                                                        svg={<ArrowDownSvg />}
+                                                        fill='grey800'
+                                                        className={this.state.shouldShowSavedPreferences ? '' : 'flip180'}
+                                                    />
+                                                }
+                                                onClick={
+                                                    this.state.userState[0].loggedIn === false
+                                                        ? () => this.showLoginModal()
+                                                        : () => this.toggleSavedPreferences()
+                                                }>
+                                                Save
+                                            </Button>
+                                        </Box>
+                                    </Box>
+                                </Col>
+                                <Col lg={2} />
+                            </Row>
+                            {this.state.shouldShowSavedPreferences && (
+                                <SavedPreferences
+                                    onHide={this.toggleSavedPreferences}
+                                    viewMatchesLink={this.viewMatches}
+                                    viewSaved={this.saveFiltersUpdate}
+                                    activeTab={key}
+                                    saveSuccess={this.showSuccessMessage}
+                                    saveName={this.showSavedName}
+                                    search={this.state.search}
+                                    filters={preferenceFilters}
+                                    sort={perferenceSort}
+                                    tab={this.state.key}
+                                />
+                            )}
                         </Container>
                     </div>
                     <Container>
@@ -1939,14 +1971,12 @@ class SearchPage extends React.Component {
                                         return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
                                     })()}
                                 </Box>
-                                
                             </Col>
                             <Col sm={12} md={12} lg={3}>
                                 <Box mt={6} mb={4}>
                                     <H6 color='grey700'>{this.props.t('searchResultsInfo.searchFilters')}</H6>
                                 </Box>
                             </Col>
-                            
                         </Row>
                     </Container>
                     <Container>
