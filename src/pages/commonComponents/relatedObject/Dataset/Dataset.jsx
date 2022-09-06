@@ -27,6 +27,7 @@ import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
 import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
 import { QualityScore } from '../../../../components';
 import SVGIcon from '../../../../images/SVGIcon';
+import DeliveryLeadTime from './modules/DeliveryLeadTime';
 
 const Dataset = ({
     data,
@@ -268,14 +269,10 @@ const Dataset = ({
             <Row className='pad-left-24 pad-right-24 pad-bottom-16'>
                 <Col sm={12} lg={6} />
                 <Col sm={12} lg={6}>
-                    <Box display='flex' justifyContent='start' css={styles.typicalTimeToAccess}>
-                        <Caption color='grey600' mr='1'>
-                            {t('dataset.typicalTimeToAccess')}
-                        </Caption>
-                        <Caption color='grey600' css={styles.deliveryLeadTime}>
-                            {capitalize(data.datasetv2.accessibility.access.deliveryLeadTime)}
-                        </Caption>
-                    </Box>
+                    <DeliveryLeadTime
+                        label={t('dataset.typicalTimeToAccess')}
+                        deliveryLeadTime={data.datasetv2.accessibility.access.deliveryLeadTime}
+                    />
                 </Col>
             </Row>
         </>
