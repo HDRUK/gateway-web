@@ -4,7 +4,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import './tooltip.css'
 
-const renderTooltip = text => <Tooltip id='button-tooltip'>{text}</Tooltip>;
+const renderTooltip = text => <Tooltip class='accrualPeriodicity_tooltip'>{text}</Tooltip>;
 
 function ToolTip({ text, placement, ...outerProps }) {
     return (
