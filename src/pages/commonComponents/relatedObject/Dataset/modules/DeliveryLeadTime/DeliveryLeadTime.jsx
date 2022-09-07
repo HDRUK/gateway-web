@@ -12,7 +12,7 @@ const DeliveryLeadTime = ({ deliveryLeadTime, label }) => {
                 {label}
             </Caption>
             <Caption weight='bold' color='grey600'>
-                {capitalize(deliveryLeadTime)}
+                {deliveryLeadTime ? capitalize(deliveryLeadTime) : 'Not specified'}
             </Caption>
         </Box>
     );
