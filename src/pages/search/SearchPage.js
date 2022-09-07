@@ -1855,12 +1855,14 @@ class SearchPage extends React.Component {
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-search'>
-                                <Col lg={10}>
+                                <Col lg={2} className='logo-container'>
+                                    <Box display='flex' justifyContent='end' alignItems='center' style={{ height: '100%' }}>
+                                        <ColourLogoSvg />
+                                    </Box>
+                                </Col>
+                                <Col lg={8} sm={12}>
                                     <form onSubmit={this.handleSearch}>
-                                        <Box display='flex' justifyContent='center' width='100%' pt={8} pl={6} pb={6}>
-                                            <Box display='inline-flex' mr={6}>
-                                                <ColourLogoSvg />
-                                            </Box>
+                                        <Box display='flex' justifyContent='center' width='100%' pt={8} pb={6}>
                                             <Box flexGrow='1' mr={1}>
                                                 <Input
                                                     iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}

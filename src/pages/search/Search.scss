@@ -585,12 +585,8 @@
     cursor: pointer;
 }
 
-@media (max-width: $bp-medium) {
-    .filters form > .ui-Box {
-        display: block;
-
-        > .ui-Box:first-child {
-            display: none;
-        }
+@media (max-width: 991px) {
+    .logo-container {
+        display: none;
     }
 }

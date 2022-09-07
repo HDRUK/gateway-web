@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Tab, Tabs } from 'react-bootstrap';
 import './SavedPreferences.scss';
-import { Button, H6, H5, Box, P, Input } from 'hdruk-react-core';
+import { Caption, Button, H6, H5, Box, P, Input } from 'hdruk-react-core';
 
 const baseURL = require('../BaseURL').getURL();
 
@@ -68,7 +68,7 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
             (tabName === 'Papers' && `(${papersTotal})`) ||
             (tabName === 'People' && `(${peopleTotal})`)
         }`;
-        return <P>{title}</P>;
+        return <Caption>{title}</Caption>;
     };
 
     const formik = useFormik({
@@ -106,8 +106,8 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
         <>
             <Row className='filters saved-preferences'>
                 <Col lg={2} />
-                <Col lg={8} style={{ paddingLeft: 0 }}>
-                    <Box pt={4} pr={4} pb={4}>
+                <Col lg={8}>
+                    <Box pt={4} pb={4}>
                         <H5 mb={2}>Save</H5>
                         <P mb={2}>Are you sure you want to save this search preference? If yes, please provide a title for this search.</P>
                         <Box display='flex' mb={6}>
@@ -128,7 +128,9 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
                                 <Button onClick={formik.handleSubmit}>Save</Button>
                             </Box>
                         </Box>
-                        <H6 mb={2}>Your search preferences</H6>
+                        <H6 mb={2} weight='bold'>
+                            Your search preferences
+                        </H6>
                         <P>
                             {`View saved preferences across all resources on the Gateway. To create a new preference, apply your desired filters on the
                 resources search results page and select 'save'.`}
@@ -138,7 +140,7 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
             </Row>
             <Row className='filters saved-preferences-row'>
                 <Col lg={2} />
-                <Col lg={8} mt={2} style={{ paddingLeft: '0px' }}>
+                <Col lg={8} mt={2}>
                     <Tabs onSelect={() => resetTabs()} defaultActiveKey={activeTab} className='saved-preferences-tab'>
                         {tabs.map(tabName => (
                             <Tab eventKey={tabName} key={tabName} title={getTabTitle(tabName)}>
@@ -147,6 +149,7 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
                                         .filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, ''))
                                         .map(savedData => (
                                             <Box
+                                                mb={4}
                                                 key={savedData._id}
                                                 tabIndex={0}
                                                 onKeyDown={() => {
