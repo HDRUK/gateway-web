@@ -46,10 +46,7 @@ import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
 import handleAnalytics from './handleAnalytics';
 
 const questionActions = {
-    questionActions: [
-        { key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 },
-        { key: 'guidanceLocked', icon: 'far fa-eye', color: '#475da7', toolTip: 'View locked guidance', order: 1 },
-    ],
+    questionActions: [{ key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 }],
 };
 
 export const DataAccessRequestCustomiseForm = props => {
