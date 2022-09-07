@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { Box, Button, H6, Icon, Input, P } from 'hdruk-react-core';
+import { Box, Button, H6, Icon, InputGroup, Input, P } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
@@ -1862,8 +1862,8 @@ class SearchPage extends React.Component {
                                 </Col>
                                 <Col lg={8} sm={12}>
                                     <form onSubmit={this.handleSearch}>
-                                        <Box display='flex' justifyContent='center' width='100%' pt={8} pb={6}>
-                                            <Box flexGrow='1' mr={1}>
+                                        <Box mt={1} flexGrow='1' pt={8} pb={6}>
+                                            <InputGroup>
                                                 <Input
                                                     iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
                                                     iconRight={
@@ -1879,10 +1879,8 @@ class SearchPage extends React.Component {
                                                     value={this.state.searchFieldValue}
                                                     onChange={this.handleSearchChange}
                                                 />
-                                            </Box>
-                                            <Box>
                                                 <Button type='submit'>Search</Button>
-                                            </Box>
+                                            </InputGroup>
                                         </Box>
                                     </form>
                                 </Col>

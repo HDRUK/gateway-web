@@ -83,7 +83,7 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
         },
 
         validationSchema: Yup.object({
-            name: Yup.string().required('This cannot be empty'),
+            name: Yup.string().required('Please provide a title for your search'),
         }),
 
         onSubmit: values => {
