@@ -164,7 +164,7 @@ class SearchPage extends React.Component {
     }
 
     toggleSavedPreferences = () => {
-        this.setState({ shouldShowSavedPreferences: !this.state.shouldShowSavedPreferences });
+        this.setState({ shouldShowSavedPreferences: Boolean(!this.state.shouldShowSavedPreferences) });
     };
 
     hideSavedModal = () => {

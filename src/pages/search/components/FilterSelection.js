@@ -1,5 +1,4 @@
-import React, { Fragment, useState } from 'react';
-import { Box } from 'hdruk-react-core';
+import React, { useState } from 'react';
 import FilterChip from './FilterChip';
 import { FilterCount } from './FilterCount';
 import SVGIcon from '../../../images/SVGIcon';
@@ -11,7 +10,6 @@ const FilterSelection = ({ selectedCount, selectedItems, onHandleClearSelection,
     };
 
     const [closed, setClosed] = useState(true);
-    const [shouldShowSavedPreferencesModal, setShouldShowSavedPreferenceModal] = useState(false);
 
     return (
         <div className={savedSearches ? 'saved-filters' : ''}>
