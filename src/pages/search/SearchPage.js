@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { Box, Button, H6, Icon, Input, P } from 'hdruk-react-core';
+import { Box, Button, H6, Icon, Input, P, InputGroup } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
@@ -1860,29 +1860,29 @@ class SearchPage extends React.Component {
                             <Row className='filters filter-search'>
                                 <Col lg={12}>
                                     <form onSubmit={this.handleSearch}>
-                                        <Box display='flex' justifyContent='center' width='100%' p={6}>
+                                        <Box display='grid' gridTemplateColumns='150px 1fr 175px' gridTemplateRows='1fr' width='100%' p={6}>
                                             <Box width='150px' display='inline-flex'>
                                                 <ColourLogoSvg />
                                             </Box>
                                             <Box mt={1} flexGrow='1' mr={1}>
-                                                <Input
-                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
-                                                    iconRight={
-                                                        !!this.state.searchFieldValue && (
-                                                            <Icon
-                                                                svg={<ClearSvg />}
-                                                                fill='grey400'
-                                                                onClick={this.handleSearchReset}
-                                                                role='button'
-                                                            />
-                                                        )
-                                                    }
-                                                    value={this.state.searchFieldValue}
-                                                    onChange={this.handleSearchChange}
-                                                />
-                                            </Box>
-                                            <Box width='175px' mt={1}>
-                                                <Button type='submit'>Search</Button>
+                                                <InputGroup>
+                                                    <Input
+                                                        iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                        iconRight={
+                                                            !!this.state.searchFieldValue && (
+                                                                <Icon
+                                                                    svg={<ClearSvg />}
+                                                                    fill='grey400'
+                                                                    onClick={this.handleSearchReset}
+                                                                    role='button'
+                                                                />
+                                                            )
+                                                        }
+                                                        value={this.state.searchFieldValue}
+                                                        onChange={this.handleSearchChange}
+                                                    />
+                                                    <Button type='submit'>Search</Button>
+                                                </InputGroup>
                                             </Box>
                                         </Box>
                                     </form>
