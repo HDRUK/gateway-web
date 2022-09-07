@@ -12,7 +12,7 @@ import { withTranslation } from 'react-i18next';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { ReactComponent as SearchSvg } from '../../images/search.svg';
-import { ReactComponent as ArrowDownSvg } from '../../images/icons/arrow-down.svg';
+import { ReactComponent as ArrowUpSvg } from '../../images/icons/arrow-up.svg';
 import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
@@ -1919,7 +1919,7 @@ class SearchPage extends React.Component {
                                                 aria-haspopup='true'
                                                 iconRight={
                                                     <Icon
-                                                        svg={<ArrowDownSvg />}
+                                                        svg={<ArrowUpSvg />}
                                                         fill='grey800'
                                                         className={this.state.shouldShowSavedPreferences ? '' : 'flip180'}
                                                     />
