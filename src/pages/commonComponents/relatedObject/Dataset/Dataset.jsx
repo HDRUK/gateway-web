@@ -177,7 +177,7 @@ const Dataset = ({
                         variant='caption'
                         display='flex'
                         alignItems='center'
-                        css={styles.publishingFrequencyContainer}
+                        justifyContent={{ sm: 'end' }}
                         mt={1}
                         mb={1}>
                         {data.datasetv2.provenance?.temporal?.accrualPeriodicity && (
