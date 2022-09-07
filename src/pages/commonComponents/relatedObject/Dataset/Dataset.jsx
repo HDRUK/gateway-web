@@ -27,6 +27,7 @@ import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
 import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
 import { QualityScore } from '../../../../components';
 import SVGIcon from '../../../../images/SVGIcon';
+import DeliveryLeadTime from './modules/DeliveryLeadTime';
 
 const Dataset = ({
     data,
@@ -176,7 +177,7 @@ const Dataset = ({
                         variant='caption'
                         display='flex'
                         alignItems='center'
-                        css={styles.publishingFrequencyContainer}
+                        justifyContent={{ sm: 'end' }}
                         mt={1}
                         mb={1}>
                         {data.datasetv2.provenance?.temporal?.accrualPeriodicity && (
@@ -264,6 +265,15 @@ const Dataset = ({
                     </ShowMore>
                 </Col>
                 {!showRelationshipQuestion && <Description type={data.type} description={getDescription()} />}
+            </Row>
+            <Row className='pad-left-24 pad-right-24 pad-bottom-16'>
+                <Col sm={12} lg={6} />
+                <Col sm={12} lg={6}>
+                    <DeliveryLeadTime
+                        label={t('dataset.typicalTimeToAccess')}
+                        deliveryLeadTime={data.datasetv2.accessibility.access.deliveryLeadTime}
+                    />
+                </Col>
             </Row>
         </>
     );
