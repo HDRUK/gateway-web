@@ -468,9 +468,14 @@ body.modal-open {
 }
 
 .user-dropdown-item {
-    padding: 4px 16px 4px 16px !important;
+    padding: 4px 16px !important;
+
     @include mq('tablet-wide', max) {
         padding: 4px 24px !important;
+    }
+
+    &__add {
+        padding: 1px 16px !important;
     }
 }
 
