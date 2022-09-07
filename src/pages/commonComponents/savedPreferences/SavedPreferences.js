@@ -45,7 +45,7 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
     const deleteSavedSearch = () => {
         axios.delete(`${baseURL}/api/v1/search-preferences/${activeCard}`).then(() => {
             setData(data.filter(e => e._id !== activeCard));
-            setActiveCard('');
+            resetTabs();
         });
     };
     const tabs = ['Datasets', 'Tools', 'Datauses', 'Collections', 'Courses', 'Papers', 'People'];
