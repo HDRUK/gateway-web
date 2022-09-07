@@ -17,7 +17,6 @@ import SVGIcon from '../../../images/SVGIcon';
 import googleAnalytics from '../../../tracking';
 import UatBanner from '../uatBanner/UatBanner';
 import '../uatBanner/UatBanner.scss';
-import AddNewEntity from './AddNewEntity';
 import CmsDropdown from './CmsDropdown';
 import './SearchBar.scss';
 import UserDropdownItems from './UserDropdownItems';
@@ -341,9 +340,6 @@ class SearchBar extends React.Component {
 
                             <Col lg={5} className='text-right'>
                                 <div className='nav-wrapper'>
-                                    <div className='addNewEntityWrapper'>
-                                        <AddNewEntity loggedIn={userState[0].loggedIn} />
-                                    </div>
                                     {(() => {
                                         if (userState[0].loggedIn === true) {
                                             return (
