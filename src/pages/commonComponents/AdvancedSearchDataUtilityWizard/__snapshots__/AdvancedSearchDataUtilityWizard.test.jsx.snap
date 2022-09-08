@@ -3,31 +3,31 @@
 exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-FeatureContentVertical ui-Card css-1b4nj03-En"
+    class="ui-FeatureContentVertical ui-Card emotion-0"
     role="article"
   >
     <div
-      class="ui-CardBody css-d18448-Wn"
+      class="ui-CardBody emotion-1"
     >
       <div
-        class="css-5ijvz8"
+        class="emotion-2"
       >
         <h5
-          class="ui-Typography css-er4lk4-Component"
+          class="ui-Typography emotion-3"
         >
           <div
-            class="ui-Box css-672p6m"
+            class="ui-Box emotion-4"
           >
             <div
-              class="ui-Box css-672p6m"
+              class="ui-Box emotion-5"
             >
               <div
-                class="ui-Box css-672p6m"
+                class="ui-Box emotion-6"
               >
                 Data Utility Wizard
               </div>
               <span
-                class="ui-Tag css-v2u436"
+                class="ui-Tag emotion-7"
               >
                 BETA
               </span>
@@ -35,7 +35,7 @@ exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered
           </div>
         </h5>
         <div
-          class="css-94pk7g"
+          class="emotion-8"
         >
           <img
             alt="search.advanced.dataUtilityWizard.mediaAlt"
@@ -43,19 +43,19 @@ exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered
           />
         </div>
         <div
-          class="ui-Box css-672p6m"
+          class="ui-Box emotion-9"
         >
           <p
-            class="ui-Typography css-7ctxla-Component"
+            class="ui-Typography emotion-10"
           >
             A tool to help refine your search to only datasets that meet your data utility requirements.
           </p>
         </div>
         <div
-          class="ui-Box css-672p6m"
+          class="ui-Box emotion-11"
         >
           <button
-            class="ui-Button css-1wpvbqr"
+            class="ui-Button emotion-12"
             type="button"
           >
              
@@ -68,7 +68,7 @@ exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered
             target="_blank"
           >
             <p
-              class="ui-Typography css-7ctxla-Component"
+              class="ui-Typography emotion-13"
             >
               Learn more
             </p>

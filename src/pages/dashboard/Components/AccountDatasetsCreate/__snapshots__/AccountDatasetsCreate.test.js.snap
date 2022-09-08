@@ -3,16 +3,16 @@
 exports[`Given the AccountDatasetsCreate component When it is rendered And "Add new dataset" is clicked Then calls preventDefault 1`] = `
 <div>
   <div
-    class="ui-Box css-672p6m"
+    class="ui-Box emotion-0"
   >
     <div
-      class="ui-Alert css-mdcthr-Alert"
+      class="ui-Alert emotion-1"
     >
       <div
-        class="ui-Alert__icon css-1jspzre-Alert"
+        class="ui-Alert__icon emotion-2"
       >
         <span
-          class="ui-Icon css-1tuhzuv css-18xv0v4-Icon"
+          class="ui-Icon emotion-3 emotion-4"
         >
           <icon-mock
             fill="inherit"
@@ -20,7 +20,7 @@ exports[`Given the AccountDatasetsCreate component When it is rendered And "Add 
         </span>
       </div>
       <div
-        class="css-ungsl1-Alert"
+        class="emotion-5"
       >
         Sample message
       </div>
@@ -70,16 +70,16 @@ exports[`Given the AccountDatasetsCreate component When it is rendered And "Add 
 exports[`Given the AccountDatasetsCreate component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-672p6m"
+    class="ui-Box emotion-0"
   >
     <div
-      class="ui-Alert css-mdcthr-Alert"
+      class="ui-Alert emotion-1"
     >
       <div
-        class="ui-Alert__icon css-1jspzre-Alert"
+        class="ui-Alert__icon emotion-2"
       >
         <span
-          class="ui-Icon css-1tuhzuv css-18xv0v4-Icon"
+          class="ui-Icon emotion-3 emotion-4"
         >
           <icon-mock
             fill="inherit"
@@ -87,7 +87,7 @@ exports[`Given the AccountDatasetsCreate component When it is rendered Then matc
         </span>
       </div>
       <div
-        class="css-ungsl1-Alert"
+        class="emotion-5"
       >
         Sample message
       </div>

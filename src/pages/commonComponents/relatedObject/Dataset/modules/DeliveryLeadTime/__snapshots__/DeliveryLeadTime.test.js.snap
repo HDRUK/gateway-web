@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the DeliveryLeadTime component When it is rendered should match the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Box emotion-0"
+    data-testid="deliveryLeadTime"
+  >
+    <span
+      class="ui-Typography emotion-1"
+    >
+      Typical time to access: 
+    </span>
+    <span
+      class="ui-Typography emotion-2"
+    >
+      Variable
+    </span>
+  </div>
+</div>
+`;

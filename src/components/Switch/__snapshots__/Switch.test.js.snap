@@ -3,7 +3,7 @@
 exports[`Given the Switch component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <label
-    class="additional-classname css-1tuhzuv ui-Switch css-cfh2l4-Switch"
+    class="additional-classname emotion-0 ui-Switch emotion-1"
     for="sampleLabel"
   >
     <input
