@@ -185,7 +185,7 @@ const Dataset = ({
                             <>
                                 {t('dataset.publishingFrequency')}
                                 {data.datasetv2.provenance.temporal.accrualPeriodicity}
-                                <ToolTip placement='bottom-start' text={t('dataset.publishingFrequencyTooltip')}>
+                                <ToolTip placement='bottom-end' maxWidth='550px' text={t('dataset.publishingFrequencyTooltip')}>
                                     <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
                                 </ToolTip>
                             </>
