@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the NumberOfViews component When it is rendered should match the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Box emotion-0"
+    data-testid="numberOfViews"
+  >
+    <span
+      class="ui-Typography emotion-1"
+    >
+      Viewed
+       
+    </span>
+    <span
+      class="ui-Typography emotion-2"
+    >
+      23
+    </span>
+    <span
+      class="ui-Typography emotion-1"
+    >
+       
+      times
+    </span>
+  </div>
+</div>
+`;

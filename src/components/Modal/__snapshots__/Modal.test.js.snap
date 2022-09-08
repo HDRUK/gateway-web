@@ -3,44 +3,44 @@
 exports[`Given the Modal component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Dimmer css-t1lyrf-Dimmer"
+    class="ui-Dimmer emotion-0"
   >
     <div
-      class="ui-LayoutBox css-1m30tkv"
+      class="ui-LayoutBox emotion-1"
     >
       <div
-        class="ui-Modal ui-Card css-qqktxm-Card"
+        class="ui-Modal ui-Card emotion-2"
       >
         <div
-          class="ui-LayoutBox css-1pjjxvx"
+          class="ui-LayoutBox emotion-3 emotion-4"
         >
-          <button
-            class="ui-LayoutBox ui-Cta css-1ahlma1-Cta css-l4ytru"
+          <a
+            class="ui-Cta ui-Box emotion-5"
           >
              
              
             <span
-              class="ui-Icon css-7gpj3f css-jh808c-Icon"
+              class="ui-Icon emotion-6 emotion-7"
             >
-              <iconmock />
+              <icon-mock />
             </span>
-          </button>
+          </a>
         </div>
         <div
-          class="ui-ModalHeader ui-CardHeader css-15f034b-CardHeader"
+          class="ui-ModalHeader ui-CardHeader emotion-8"
         >
           Header
         </div>
         <div
-          class="ui-ModalBody ui-CardBody css-1q6nqwm-CardBody"
+          class="ui-ModalBody ui-CardBody emotion-9"
         >
           Body
         </div>
         <div
-          class="ui-ModalFooter ui-CardFooter css-ulm7py-CardFooter"
+          class="ui-ModalFooter ui-CardFooter emotion-10"
         >
           <div
-            class="ui-LayoutBox css-6gjyu9"
+            class="ui-LayoutBox emotion-11"
           >
             Footer
           </div>

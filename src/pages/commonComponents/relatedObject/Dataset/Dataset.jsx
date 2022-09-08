@@ -28,6 +28,7 @@ import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info
 import { QualityScore } from '../../../../components';
 import SVGIcon from '../../../../images/SVGIcon';
 import DeliveryLeadTime from './modules/DeliveryLeadTime';
+import NumberOfViews from './modules/NumberOfViews';
 
 const Dataset = ({
     data,
@@ -267,12 +268,11 @@ const Dataset = ({
                 {!showRelationshipQuestion && <Description type={data.type} description={getDescription()} />}
             </Row>
             <Row className='pad-left-24 pad-right-24 pad-bottom-16'>
-                <Col sm={12} lg={6} />
                 <Col sm={12} lg={6}>
-                    <DeliveryLeadTime
-                        label={t('dataset.typicalTimeToAccess')}
-                        deliveryLeadTime={data.datasetv2.accessibility.access.deliveryLeadTime}
-                    />
+                    <NumberOfViews count={data.counter} />
+                </Col>
+                <Col sm={12} lg={6}>
+                    <DeliveryLeadTime deliveryLeadTime={data.datasetv2?.accessibility?.access?.deliveryLeadTime} />
                 </Col>
             </Row>
         </>

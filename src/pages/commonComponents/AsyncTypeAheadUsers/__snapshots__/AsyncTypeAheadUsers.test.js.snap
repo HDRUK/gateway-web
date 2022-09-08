@@ -3,19 +3,19 @@
 exports[`Given the AsyncTypeAheadUsers component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-672p6m"
+    class="ui-Box emotion-0"
   >
     <div
-      class="css-f3m9lf-Input form-group"
+      class="emotion-1 form-group"
     >
       <div
-        class="ui-Input ui-Typeahead css-s1hm5-AsyncTypeAheadUsers input-group"
+        class="ui-Input ui-Typeahead emotion-2 input-group"
       >
         <div
-          class="css-1h9gu1e-Input input-group-prepend"
+          class="emotion-3 input-group-prepend"
         >
           <span
-            class="ui-Icon css-1tuhzuv css-1akhlxj-Icon"
+            class="ui-Icon emotion-4 emotion-5"
           >
             <icon-mock />
           </span>
