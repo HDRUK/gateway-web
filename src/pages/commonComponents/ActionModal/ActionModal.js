@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
-import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
+import { ReactComponent as CloseButtonSvg } from 'images/close-alt.svg';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import './ActionModal.scss';
@@ -16,7 +16,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
         showActionModal: false,
     });
 
-    let {
+    const {
         title = '',
         subTitle = 'Let the person who added this know know why their submission is being rejected, especially if there’s anything in particular they should correct before re-submitting.',
         buttons = {
@@ -40,13 +40,13 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
         // 2. status = { cancel, confirmApprovalConditions, confirmApproval, confirmRejection }
         if (!_.isEmpty(action)) {
             // 3. convert to uppercase better consistency
-            let type = action.toUpperCase();
+            const type = action.toUpperCase();
             // 4. deconstruct properties
-            let { statusDesc } = formState;
+            const { statusDesc } = formState;
             switch (type) {
                 case 'CONFIRMREJECTION':
                     // 5. check state is valid / invalid
-                    let isInvalid = isFormInvalid();
+                    const isInvalid = isFormInvalid();
                     // 6. is valid pass back to DAR
                     if (!isInvalid) {
                         if (typeof entityKey === 'undefined') {
@@ -67,7 +67,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
     };
 
     const handleChange = event => {
-        let { name, value } = event.currentTarget;
+        const { name, value } = event.currentTarget;
         setCount(value.length);
         setFormState({
             ...formState,
@@ -83,7 +83,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
     };
 
     const isFormInvalid = () => {
-        let { statusDesc } = formState;
+        const { statusDesc } = formState;
         setFormState({
             ...formState,
             submitted: true,
@@ -99,7 +99,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
     };
 
     return (
-        <Fragment>
+        <>
             <Modal show={open} onHide={close} size='lg' aria-labelledby='contained-modal-title-vcenter' centered className='actionModal'>
                 <div className='actionModal-header'>
                     <div className='actionModal-header--wrap'>
@@ -125,7 +125,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
                                 onChange={handleChange}
                                 value={formState.statusDesc}
                                 rows='8'
-                            ></TextareaAutosize>
+                            />
                             <div className='invalid-feedback'>{formState.invalidMessage}</div>
                         </div>
                     </form>
@@ -143,7 +143,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

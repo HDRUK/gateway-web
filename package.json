@@ -24,7 +24,7 @@
         "form-data": "^3.0.0",
         "formik": "^2.1.4",
         "hdruk-gateway-widgets": "^0.0.6",
-        "hdruk-react-core": "^0.2.16",
+        "hdruk-react-core": "^0.2.20",
         "history": "^5.1.0",
         "humanize": "^0.0.9",
         "i18next": "^21.3.3",
@@ -131,6 +131,7 @@
     "jest": {},
     "devDependencies": {
         "@babel/preset-env": "^7.10.2",
+        "@emotion/jest": "^11.10.0",
         "@storybook/addon-actions": "^6.3.8",
         "@storybook/addon-essentials": "^6.3.8",
         "@storybook/addon-links": "^6.3.8",

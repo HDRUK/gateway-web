@@ -13,20 +13,20 @@ exports[`Given the AccountDatasets component When it is rendered Then matches th
         class="ui-LayoutContent--content col-10"
       >
         <div
-          class="ui-Box css-672p6m"
+          class="ui-Box emotion-0"
         >
           <div
-            class="ui-Alert css-mdcthr-Alert"
+            class="ui-Alert emotion-1"
           >
             <div
-              class="ui-Alert__icon css-1jspzre-Alert"
+              class="ui-Alert__icon emotion-2"
             >
               <icon
                 svg="[object Object]"
               />
             </div>
             <div
-              class="css-ungsl1-Alert"
+              class="emotion-3"
             >
               Message goes here
             </div>
