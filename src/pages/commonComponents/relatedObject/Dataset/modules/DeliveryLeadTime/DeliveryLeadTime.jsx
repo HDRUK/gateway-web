@@ -10,7 +10,7 @@ const DeliveryLeadTime = ({ deliveryLeadTime }) => {
     const { t } = useTranslation();
 
     return (
-        <Box display='flex' justifyContent={{ sm: 'start', md: 'end' }}>
+        <Box data-testid='deliveryLeadTime' display='flex' justifyContent={{ sm: 'start', md: 'end' }}>
             <Caption color='grey600' mr='1'>
                 {t('dataset.typicalTimeToAccess')}
             </Caption>

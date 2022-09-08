@@ -3,7 +3,7 @@
 exports[`Given the CheckboxTree component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="additional-classname css-1tuhzuv ui-CheckboxTree css-x4741z-CheckboxTree"
+    class="additional-classname emotion-0 ui-CheckboxTree emotion-1"
   />
 </div>
 `;

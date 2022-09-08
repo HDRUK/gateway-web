@@ -9,7 +9,7 @@ const NumberOfViews = ({ count }) => {
     const { t } = useTranslation();
 
     return (
-        <Box display='flex'>
+        <Box data-testid='numberOfViews' display='flex'>
             <Caption color='grey600'>{t('dataset.numberOfViews.viewed')}&nbsp;</Caption>
             <Caption weight='bold' color='grey600'>
                 {count}

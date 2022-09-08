@@ -3,13 +3,13 @@
 exports[`Given the SortDropdown component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-SortDropdown additional-classname css-13ymzsx-SortDropdown"
+    class="ui-SortDropdown additional-classname emotion-0"
   >
     <div
-      class="ui-Box css-672p6m"
+      class="ui-Box emotion-1"
     >
       <div
-        class="ui-Dropdown css-cewc3p-SortDropdown show dropdown"
+        class="ui-Dropdown emotion-2 show dropdown"
       >
         <button
           aria-expanded="true"
@@ -58,13 +58,13 @@ exports[`Given the SortDropdown component When it is rendered Then matches the p
 exports[`Given the SortDropdown component When it is rendered When it allows sort direction Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-SortDropdown additional-classname css-13ymzsx-SortDropdown"
+    class="ui-SortDropdown additional-classname emotion-0"
   >
     <div
-      class="ui-Box css-672p6m"
+      class="ui-Box emotion-1"
     >
       <div
-        class="ui-Dropdown css-cewc3p-SortDropdown dropdown"
+        class="ui-Dropdown emotion-2 dropdown"
       >
         <button
           aria-expanded="false"
@@ -75,7 +75,7 @@ exports[`Given the SortDropdown component When it is rendered When it allows sor
       </div>
     </div>
     <button
-      class="css-sedex9-SortDropdown btn btn-link"
+      class="emotion-3 btn btn-link"
       ml="2"
       type="button"
     >
@@ -83,7 +83,7 @@ exports[`Given the SortDropdown component When it is rendered When it allows sor
         class="ui-SortDropdown__asc"
       >
         <span
-          class="ui-Icon css-1tuhzuv css-jh808c-Icon"
+          class="ui-Icon emotion-4 emotion-5"
         >
           <icon-mock />
         </span>
