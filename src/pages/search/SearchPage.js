@@ -1859,19 +1859,14 @@ class SearchPage extends React.Component {
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-search'>
-                                <Col lg={2} className='logo-container'>
-                                    <Box display='flex' justifyContent='end' alignItems='center' style={{ height: '100%' }}>
-                                        <ColourLogoSvg />
-                                    </Box>
-                                </Col>
-                                <Col lg={8} sm={12}>
+                                <Col>
                                     <form onSubmit={this.handleSearch}>
                                         <Box
                                             display={{
                                                 xxs: 'block',
                                                 md: 'grid',
                                             }}
-                                            gridTemplateColumns='150px 1fr 175px'
+                                            gridTemplateColumns='150px 1fr 158px'
                                             gridTemplateRows='1fr'
                                             width='100%'
                                             p={6}>
@@ -1883,7 +1878,7 @@ class SearchPage extends React.Component {
                                                 }}>
                                                 <ColourLogoSvg />
                                             </Box>
-                                            <Box mt={1} flexGrow='1' mr={1}>
+                                            <Box mt={1} mr={1}>
                                                 <InputGroup>
                                                     <Input
                                                         iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
@@ -1903,6 +1898,7 @@ class SearchPage extends React.Component {
                                                     <Button type='submit'>Search</Button>
                                                 </InputGroup>
                                             </Box>
+                                            <div />
                                         </Box>
                                     </form>
                                 </Col>
