@@ -1,6 +1,6 @@
 import { cx } from '@emotion/css';
 import axios from 'axios';
-import { Button } from 'hdruk-react-core';
+import { Button, Box } from 'hdruk-react-core';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useState } from 'react';
@@ -17,7 +17,6 @@ import SVGIcon from '../../../images/SVGIcon';
 import googleAnalytics from '../../../tracking';
 import UatBanner from '../uatBanner/UatBanner';
 import '../uatBanner/UatBanner.scss';
-import AddNewEntity from './AddNewEntity';
 import CmsDropdown from './CmsDropdown';
 import './SearchBar.scss';
 import UserDropdownItems from './UserDropdownItems';
@@ -288,12 +287,12 @@ class SearchBar extends React.Component {
                 <nav className={cx('navbarShown', { navbarHidden: !this.state.visible })}>
                     <div className='searchBarBackground' id='desktopSearchBar'>
                         <Row className='whiteBackground'>
-                            <Col lg={7} className='pr-0 pl-2'>
-                                <div className='navBarLogoSpacing'>
+                            <Box className='pr-0 pl-2' flexGrow='1' display='flex' alignItems='center' gap={6}>
+                                <Box mt={1} ml={6}>
                                     <a style={{ cursor: 'pointer' }} href={cmsURL}>
-                                        <ColourLogoSvg className='ml-4 mt-3' />
+                                        <ColourLogoSvg />
                                     </a>
-                                </div>
+                                </Box>
 
                                 <div className='navBarLinkSpacing'>
                                     <CmsDropdown dropdownUrl='exploreDropdown' />
@@ -337,23 +336,15 @@ class SearchBar extends React.Component {
                                         Community
                                     </a>
                                 </div>
-                            </Col>
+                            </Box>
 
-                            <Col lg={5} className='text-right'>
+                            <div className='text-right'>
                                 <div className='nav-wrapper'>
-                                    <div className='addNewEntityWrapper'>
-                                        <AddNewEntity loggedIn={userState[0].loggedIn} />
-                                    </div>
                                     {(() => {
                                         if (userState[0].loggedIn === true) {
                                             return (
-                                                <Fragment key='userNotifications'>
-                                                    <div
-                                                        className='navBarNotificationSpacing'
-                                                        onClick={() => {
-                                                            this.props.doToggleDrawer();
-                                                        }}
-                                                        data-test-id='imgMessageBadge'>
+                                                <Box display='flex' alignItems='center' gap={8}>
+                                                    <div onClick={this.props.doToggleDrawer} data-test-id='imgMessageBadge'>
                                                         <NotificationBadge
                                                             count={this.state.messageCount}
                                                             style={{ backgroundColor: '#29235c' }}
@@ -368,7 +359,7 @@ class SearchBar extends React.Component {
                                                             className={'pointer'}
                                                         />
                                                     </div>
-                                                    <div className='navBarBellNotificationSpacing' data-test-id='imgNotificationBadge'>
+                                                    <div data-test-id='imgNotificationBadge'>
                                                         <Dropdown>
                                                             <Dropdown.Toggle as={CustomToggle} ref={node => (this.node = node)}>
                                                                 <NotificationBadge
@@ -1164,14 +1155,7 @@ class SearchBar extends React.Component {
                                                             <span className='initials'>{this.getUserInitials(userState[0].name)}</span>
                                                         </div>
                                                     </div>
-                                                </Fragment>
-                                            );
-                                        } else {
-                                            return (
-                                                <div className='offlineNotificationGap'>
-                                                    <WhiteArrowDownSvg width={50} height={50} />
-                                                    {this.checkRedirectToast()}
-                                                </div>
+                                                </Box>
                                             );
                                         }
                                     })()}
@@ -1252,14 +1236,14 @@ class SearchBar extends React.Component {
                                         })()}
                                     </div>
                                 </div>
-                            </Col>
+                            </div>
                         </Row>
                     </div>
 
                     <div id='mobileSearchBar' className={!this.state.visible ? 'navbarHidden' : ''}>
                         <div className='searchBarBackground'>
-                            <Row className='whiteBackground'>
-                                <Col xs={2}>
+                            <Box backgroundColor='white' display='flex' alignItems='center' px={5} py={2} height='80px'>
+                                <Box>
                                     <Dropdown>
                                         <Dropdown.Toggle as={CustomToggle}>
                                             <HamBurgerSvg className='hamBurgerHolder' />
@@ -1344,23 +1328,35 @@ class SearchBar extends React.Component {
                                             })()}
                                         </Dropdown.Menu>
                                     </Dropdown>
-                                </Col>
+                                </Box>
 
                                 {(() => {
                                     if (userState[0].loggedIn === true) {
                                         return (
                                             <>
-                                                <Col xs={6} className='logoSVGMobile'>
-                                                    <div id='mobileSearchBarHidden'>
-                                                        <div className='navBarLogoSpacing'>
-                                                            <a href={cmsURL}>
-                                                                <ColourLogoSvgMobile className='ml-4 mt-3' />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </Col>
-                                                <Row className='notificationOverallStyle'>
-                                                    <Col xs={4} className='navBarMessageSpacing'>
+                                                <Box
+                                                    flexGrow='1'
+                                                    ml={6}
+                                                    pt={2}
+                                                    display={{
+                                                        xxs: 'none',
+                                                        sm: 'flex',
+                                                    }}
+                                                    alignItems='center'>
+                                                    <a href={cmsURL} className='mobileLogoWrapper'>
+                                                        <ColourLogoSvgMobile />
+                                                    </a>
+                                                </Box>
+                                                <Box
+                                                    display='flex'
+                                                    alignItems='center'
+                                                    justifyContent='flex-end'
+                                                    gap={6}
+                                                    flexGrow={{
+                                                        xxs: '1',
+                                                        sm: 0,
+                                                    }}>
+                                                    <Box xs={4} className='navBarMessageSpacing'>
                                                         <div onClick={this.props.doToggleDrawer} data-test-id='imgMessageBadge'>
                                                             <NotificationBadge
                                                                 count={this.state.messageCount}
@@ -1376,50 +1372,143 @@ class SearchBar extends React.Component {
                                                                 className={'pointer'}
                                                             />
                                                         </div>
-                                                    </Col>
-                                                    <Col xs={4} className='text-right'>
-                                                        <div className='navBarBellNotificationSpacing'>
-                                                            <Dropdown>
-                                                                <Dropdown.Toggle
-                                                                    as={CustomToggle}
-                                                                    ref={nodeMobile => (this.nodeMobile = nodeMobile)}>
-                                                                    <NotificationBadge
-                                                                        count={this.state.count}
-                                                                        style={{ backgroundColor: '#29235c' }}
-                                                                        className='notificationBadgeMobile'
-                                                                    />
-                                                                    <SVGIcon
-                                                                        name='bell'
-                                                                        fill={'#475da7'}
-                                                                        width={20}
-                                                                        height={20}
-                                                                        id='notificationsBell'
-                                                                        className='notificationsBell'
-                                                                        style={{ cursor: 'pointer' }}
-                                                                    />
-                                                                    {/* <NotificationsBellSvg width={50} height={50} id="notificationsBell" className={this.state.dropdownOpen ? "notificationsBell" : null} style={{ cursor: 'pointer' }} /> */}
-                                                                </Dropdown.Toggle>
+                                                    </Box>
+                                                    <Box>
+                                                        <Dropdown>
+                                                            <Dropdown.Toggle
+                                                                as={CustomToggle}
+                                                                ref={nodeMobile => (this.nodeMobile = nodeMobile)}>
+                                                                <NotificationBadge
+                                                                    count={this.state.count}
+                                                                    style={{ backgroundColor: '#29235c' }}
+                                                                    className='notificationBadgeMobile'
+                                                                />
+                                                                <SVGIcon
+                                                                    name='bell'
+                                                                    fill={'#475da7'}
+                                                                    width={20}
+                                                                    height={20}
+                                                                    id='notificationsBell'
+                                                                    className='notificationsBell'
+                                                                    style={{ cursor: 'pointer' }}
+                                                                />
+                                                                {/* <NotificationsBellSvg width={50} height={50} id="notificationsBell" className={this.state.dropdownOpen ? "notificationsBell" : null} style={{ cursor: 'pointer' }} /> */}
+                                                            </Dropdown.Toggle>
 
-                                                                <Dropdown.Menu as={CustomMenu} className='mobileNotificationMenu'>
-                                                                    {newData.length <= 0 ? (
-                                                                        <div className='noNotifications'>
-                                                                            <div className='gray800-14' style={{ textAlign: 'center' }}>
-                                                                                <p>
-                                                                                    <b>No notifications yet</b>
-                                                                                </p>
-                                                                                <p>
-                                                                                    We'll let you know when something important happens to
-                                                                                    your content or account.
-                                                                                </p>
-                                                                            </div>
+                                                            <Dropdown.Menu as={CustomMenu} className='mobileNotificationMenu'>
+                                                                {newData.length <= 0 ? (
+                                                                    <div className='noNotifications'>
+                                                                        <div className='gray800-14' style={{ textAlign: 'center' }}>
+                                                                            <p>
+                                                                                <b>No notifications yet</b>
+                                                                            </p>
+                                                                            <p>
+                                                                                We'll let you know when something important happens to your
+                                                                                content or account.
+                                                                            </p>
                                                                         </div>
-                                                                    ) : (
-                                                                        newData.slice(0, 48).map((dat, index) => {
-                                                                            let messageDateString = moment(dat.createdDate).format(
-                                                                                'D MMMM YYYY HH:mm'
-                                                                            );
+                                                                    </div>
+                                                                ) : (
+                                                                    newData.slice(0, 48).map((dat, index) => {
+                                                                        let messageDateString = moment(dat.createdDate).format(
+                                                                            'D MMMM YYYY HH:mm'
+                                                                        );
 
-                                                                            if (dat.messageType === 'add') {
+                                                                        if (dat.messageType === 'add') {
+                                                                            return (
+                                                                                <Fragment key={`notification-${index}`}>
+                                                                                    <Row
+                                                                                        className={
+                                                                                            dat.isRead === 'true' || clearMessage
+                                                                                                ? 'notificationReadBackground'
+                                                                                                : ''
+                                                                                        }>
+                                                                                        <Col xs={10}>
+                                                                                            <div className='notificationDate'>
+                                                                                                {messageDateString + '\n'}
+                                                                                            </div>
+                                                                                            <div className='notificationInfoHolder'>
+                                                                                                <a
+                                                                                                    href={
+                                                                                                        '/' +
+                                                                                                        dat.tool.type +
+                                                                                                        '/' +
+                                                                                                        dat.tool.id
+                                                                                                    }
+                                                                                                    className='notificationInfo'>
+                                                                                                    {dat.messageDescription}
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </Col>
+                                                                                        <Col xs={2}>
+                                                                                            {dat.isRead === 'false' && !clearMessage ? (
+                                                                                                <SVGIcon
+                                                                                                    name='newnotificationicon'
+                                                                                                    width={20}
+                                                                                                    height={20}
+                                                                                                    visble='true'
+                                                                                                    style={{
+                                                                                                        float: 'right',
+                                                                                                        fill: '#3db28c',
+                                                                                                        paddingRight: '0px',
+                                                                                                        marginRight: '10px',
+                                                                                                        marginTop: '5px',
+                                                                                                    }}
+                                                                                                    fill={'#3db28c'}
+                                                                                                    stroke='none'
+                                                                                                />
+                                                                                            ) : null}
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                    <Dropdown.Divider style={{ margin: '0px' }} />
+                                                                                </Fragment>
+                                                                            );
+                                                                        } else if (dat.messageType === 'data access request') {
+                                                                            return (
+                                                                                <Fragment key={`notification-${index}`}>
+                                                                                    <Row
+                                                                                        className={
+                                                                                            dat.isRead === 'true' || clearMessage
+                                                                                                ? 'notificationReadBackground'
+                                                                                                : ''
+                                                                                        }>
+                                                                                        <Col xs={10}>
+                                                                                            <div className='notificationDate'>
+                                                                                                {messageDateString + '\n'}
+                                                                                            </div>
+                                                                                            <div className='notificationInfoHolder'>
+                                                                                                <a
+                                                                                                    href='javascript:void(0)'
+                                                                                                    class='notificationInfo'>
+                                                                                                    {dat.messageDescription}
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </Col>
+                                                                                        <Col xs={2}>
+                                                                                            {dat.isRead === 'false' && !clearMessage ? (
+                                                                                                <SVGIcon
+                                                                                                    name='newnotificationicon'
+                                                                                                    width={20}
+                                                                                                    height={20}
+                                                                                                    visble='true'
+                                                                                                    style={{
+                                                                                                        float: 'right',
+                                                                                                        fill: '#3db28c',
+                                                                                                        paddingRight: '0px',
+                                                                                                        marginRight: '10px',
+                                                                                                        marginTop: '5px',
+                                                                                                    }}
+                                                                                                    fill={'#3db28c'}
+                                                                                                    stroke='none'
+                                                                                                />
+                                                                                            ) : null}
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                    <Dropdown.Divider style={{ margin: '0px' }} />
+                                                                                </Fragment>
+                                                                            );
+                                                                        } else {
+                                                                            if (dat.messageTo === 0) {
                                                                                 return (
                                                                                     <Fragment key={`notification-${index}`}>
                                                                                         <Row
@@ -1432,62 +1521,20 @@ class SearchBar extends React.Component {
                                                                                                 <div className='notificationDate'>
                                                                                                     {messageDateString + '\n'}
                                                                                                 </div>
-                                                                                                <div className='notificationInfoHolder'>
-                                                                                                    <a
-                                                                                                        href={
-                                                                                                            '/' +
-                                                                                                            dat.tool.type +
-                                                                                                            '/' +
-                                                                                                            dat.tool.id
-                                                                                                        }
-                                                                                                        className='notificationInfo'>
-                                                                                                        {dat.messageDescription}
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                            </Col>
-                                                                                            <Col xs={2}>
-                                                                                                {dat.isRead === 'false' && !clearMessage ? (
-                                                                                                    <SVGIcon
-                                                                                                        name='newnotificationicon'
-                                                                                                        width={20}
-                                                                                                        height={20}
-                                                                                                        visble='true'
-                                                                                                        style={{
-                                                                                                            float: 'right',
-                                                                                                            fill: '#3db28c',
-                                                                                                            paddingRight: '0px',
-                                                                                                            marginRight: '10px',
-                                                                                                            marginTop: '5px',
-                                                                                                        }}
-                                                                                                        fill={'#3db28c'}
-                                                                                                        stroke='none'
-                                                                                                    />
-                                                                                                ) : null}
-                                                                                            </Col>
-                                                                                        </Row>
-                                                                                        <Dropdown.Divider style={{ margin: '0px' }} />
-                                                                                    </Fragment>
-                                                                                );
-                                                                            } else if (dat.messageType === 'data access request') {
-                                                                                return (
-                                                                                    <Fragment key={`notification-${index}`}>
-                                                                                        <Row
-                                                                                            className={
-                                                                                                dat.isRead === 'true' || clearMessage
-                                                                                                    ? 'notificationReadBackground'
-                                                                                                    : ''
-                                                                                            }>
-                                                                                            <Col xs={10}>
-                                                                                                <div className='notificationDate'>
-                                                                                                    {messageDateString + '\n'}
-                                                                                                </div>
-                                                                                                <div className='notificationInfoHolder'>
-                                                                                                    <a
-                                                                                                        href='javascript:void(0)'
-                                                                                                        class='notificationInfo'>
-                                                                                                        {dat.messageDescription}
-                                                                                                    </a>
-                                                                                                </div>
+                                                                                                {dat.tool.length && (
+                                                                                                    <div className='notificationInfoHolder'>
+                                                                                                        <a
+                                                                                                            href={
+                                                                                                                '/' +
+                                                                                                                dat.tool[0].type +
+                                                                                                                '/' +
+                                                                                                                dat.tool[0].id
+                                                                                                            }
+                                                                                                            className='notificationInfo'>
+                                                                                                            {dat.messageDescription}
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                )}
                                                                                             </Col>
                                                                                             <Col xs={2}>
                                                                                                 {dat.isRead === 'false' && !clearMessage ? (
@@ -1513,126 +1560,71 @@ class SearchBar extends React.Component {
                                                                                     </Fragment>
                                                                                 );
                                                                             } else {
-                                                                                if (dat.messageTo === 0) {
-                                                                                    return (
-                                                                                        <Fragment key={`notification-${index}`}>
-                                                                                            <Row
-                                                                                                className={
-                                                                                                    dat.isRead === 'true' || clearMessage
-                                                                                                        ? 'notificationReadBackground'
-                                                                                                        : ''
-                                                                                                }>
-                                                                                                <Col xs={10}>
-                                                                                                    <div className='notificationDate'>
-                                                                                                        {messageDateString + '\n'}
-                                                                                                    </div>
-                                                                                                    {dat.tool.length && (
-                                                                                                        <div className='notificationInfoHolder'>
-                                                                                                            <a
-                                                                                                                href={
-                                                                                                                    '/' +
-                                                                                                                    dat.tool[0].type +
-                                                                                                                    '/' +
-                                                                                                                    dat.tool[0].id
-                                                                                                                }
-                                                                                                                className='notificationInfo'>
-                                                                                                                {dat.messageDescription}
-                                                                                                            </a>
-                                                                                                        </div>
+                                                                                return (
+                                                                                    <Fragment key={`notification-${index}`}>
+                                                                                        <Row
+                                                                                            className={
+                                                                                                dat.isRead === 'true' || clearMessage
+                                                                                                    ? 'notificationReadBackground'
+                                                                                                    : ''
+                                                                                            }>
+                                                                                            <Col xs={10}>
+                                                                                                <div className='notificationDate'>
+                                                                                                    {messageDateString + '\n'}
+                                                                                                </div>
+                                                                                                <div className='notificationInfoHolder'>
+                                                                                                    {dat.tool[0] === undefined ? (
+                                                                                                        <a
+                                                                                                            href={'/'}
+                                                                                                            className='notificationInfo'>
+                                                                                                            {dat.messageDescription}
+                                                                                                        </a>
+                                                                                                    ) : (
+                                                                                                        <a
+                                                                                                            href={
+                                                                                                                '/' +
+                                                                                                                dat.tool[0].type +
+                                                                                                                '/' +
+                                                                                                                dat.tool[0].id
+                                                                                                            }
+                                                                                                            className='notificationInfo'>
+                                                                                                            {dat.messageDescription}
+                                                                                                        </a>
                                                                                                     )}
-                                                                                                </Col>
-                                                                                                <Col xs={2}>
-                                                                                                    {dat.isRead === 'false' &&
-                                                                                                    !clearMessage ? (
-                                                                                                        <SVGIcon
-                                                                                                            name='newnotificationicon'
-                                                                                                            width={20}
-                                                                                                            height={20}
-                                                                                                            visble='true'
-                                                                                                            style={{
-                                                                                                                float: 'right',
-                                                                                                                fill: '#3db28c',
-                                                                                                                paddingRight: '0px',
-                                                                                                                marginRight: '10px',
-                                                                                                                marginTop: '5px',
-                                                                                                            }}
-                                                                                                            fill={'#3db28c'}
-                                                                                                            stroke='none'
-                                                                                                        />
-                                                                                                    ) : null}
-                                                                                                </Col>
-                                                                                            </Row>
-                                                                                            <Dropdown.Divider style={{ margin: '0px' }} />
-                                                                                        </Fragment>
-                                                                                    );
-                                                                                } else {
-                                                                                    return (
-                                                                                        <Fragment key={`notification-${index}`}>
-                                                                                            <Row
-                                                                                                className={
-                                                                                                    dat.isRead === 'true' || clearMessage
-                                                                                                        ? 'notificationReadBackground'
-                                                                                                        : ''
-                                                                                                }>
-                                                                                                <Col xs={10}>
-                                                                                                    <div className='notificationDate'>
-                                                                                                        {messageDateString + '\n'}
-                                                                                                    </div>
-                                                                                                    <div className='notificationInfoHolder'>
-                                                                                                        {dat.tool[0] === undefined ? (
-                                                                                                            <a
-                                                                                                                href={'/'}
-                                                                                                                className='notificationInfo'>
-                                                                                                                {dat.messageDescription}
-                                                                                                            </a>
-                                                                                                        ) : (
-                                                                                                            <a
-                                                                                                                href={
-                                                                                                                    '/' +
-                                                                                                                    dat.tool[0].type +
-                                                                                                                    '/' +
-                                                                                                                    dat.tool[0].id
-                                                                                                                }
-                                                                                                                className='notificationInfo'>
-                                                                                                                {dat.messageDescription}
-                                                                                                            </a>
-                                                                                                        )}
-                                                                                                        {/* <a href={'/' + dat.tool[0].type + '/' + dat.tool[0].id} className="notificationInfo">{dat.messageDescription}</a> */}
-                                                                                                    </div>
-                                                                                                </Col>
-                                                                                                <Col xs={2}>
-                                                                                                    {dat.isRead === 'false' &&
-                                                                                                    !clearMessage ? (
-                                                                                                        <SVGIcon
-                                                                                                            name='newnotificationicon'
-                                                                                                            width={20}
-                                                                                                            height={20}
-                                                                                                            visble='true'
-                                                                                                            style={{
-                                                                                                                float: 'right',
-                                                                                                                fill: '#3db28c',
-                                                                                                                paddingRight: '0px',
-                                                                                                                marginRight: '10px',
-                                                                                                                marginTop: '5px',
-                                                                                                            }}
-                                                                                                            fill={'#3db28c'}
-                                                                                                            stroke='none'
-                                                                                                        />
-                                                                                                    ) : null}
-                                                                                                </Col>
-                                                                                            </Row>
-                                                                                            <Dropdown.Divider style={{ margin: '0px' }} />
-                                                                                        </Fragment>
-                                                                                    );
-                                                                                }
+                                                                                                    {/* <a href={'/' + dat.tool[0].type + '/' + dat.tool[0].id} className="notificationInfo">{dat.messageDescription}</a> */}
+                                                                                                </div>
+                                                                                            </Col>
+                                                                                            <Col xs={2}>
+                                                                                                {dat.isRead === 'false' && !clearMessage ? (
+                                                                                                    <SVGIcon
+                                                                                                        name='newnotificationicon'
+                                                                                                        width={20}
+                                                                                                        height={20}
+                                                                                                        visble='true'
+                                                                                                        style={{
+                                                                                                            float: 'right',
+                                                                                                            fill: '#3db28c',
+                                                                                                            paddingRight: '0px',
+                                                                                                            marginRight: '10px',
+                                                                                                            marginTop: '5px',
+                                                                                                        }}
+                                                                                                        fill={'#3db28c'}
+                                                                                                        stroke='none'
+                                                                                                    />
+                                                                                                ) : null}
+                                                                                            </Col>
+                                                                                        </Row>
+                                                                                        <Dropdown.Divider style={{ margin: '0px' }} />
+                                                                                    </Fragment>
+                                                                                );
                                                                             }
-                                                                        })
-                                                                    )}
-                                                                </Dropdown.Menu>
-                                                            </Dropdown>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
+                                                                        }
+                                                                    })
+                                                                )}
+                                                            </Dropdown.Menu>
+                                                        </Dropdown>
+                                                    </Box>
+                                                </Box>
                                             </>
                                         );
                                     } else {
@@ -1649,7 +1641,7 @@ class SearchBar extends React.Component {
                                         );
                                     }
                                 })()}
-                            </Row>
+                            </Box>
                         </div>
                     </div>
                 </nav>

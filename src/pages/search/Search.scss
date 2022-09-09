@@ -585,8 +585,6 @@
     cursor: pointer;
 }
 
-@media (max-width: 991px) {
-    .logo-container {
-        display: none;
-    }
+.filter-search form {
+    width: 100%;
 }

@@ -36,47 +36,7 @@ body.modal-open {
     }
 }
 
-.navBarNotificationSpacing {
-    padding: 0px 16px;
-    margin: auto;
-}
-
-// Internet Explorer
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-    .navBarNotificationSpacing {
-        padding: 0px 16px;
-        margin: auto;
-        width: 30%;
-    }
-}
-
-// Internet Explorer
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-    .navBarNotificationSpacing {
-        padding: 0px 16px;
-        margin: auto;
-        width: 30%;
-    }
-}
-
 @media (min-width: 1286px) {
-    .navBarLogoSpacing {
-        vertical-align: middle;
-        display: inline-block;
-    }
-
-    .navBarLinkSpacing {
-        vertical-align: middle;
-        display: inline-block;
-        margin-top: 12px;
-        padding: 0px 0px 0px 24px;
-    }
-
-    .navBarBellNotificationSpacing {
-        padding: 0px 16px 0px 0px;
-        margin: auto !important;
-    }
-
     .desktopLoginMenu {
         width: 375px;
         overflow-x: hidden;
@@ -95,36 +55,6 @@ body.modal-open {
 }
 
 @media (max-width: 1285px) {
-    .navBarLogoSpacing {
-        vertical-align: middle;
-        display: inline-block;
-    }
-
-    .navBarLinkSpacing {
-        vertical-align: middle;
-        display: inline-block;
-        margin-top: 12px;
-        padding: 0px 0px 0px 15px;
-    }
-
-    .navBarBellNotificationSpacing {
-        padding: 0px 16px 0px 0px;
-        display: flex;
-        flex-flow: row;
-        justify-content: center;
-        align-items: center;
-        align-self: stretch;
-        height: 100%;
-        margin: auto;
-    }
-
-    .navBarSearchBarSpacing {
-        width: 50%;
-        text-align: left;
-        margin: auto;
-        min-width: 150px;
-    }
-
     .desktopLoginMenu {
         width: 200px;
     }
@@ -156,32 +86,6 @@ body.modal-open {
 }
 
 @media (max-width: 991px) {
-    .navBarLogoSpacing {
-        vertical-align: middle;
-        display: inline-block;
-    }
-
-    .navBarLinkSpacing {
-        margin-top: 12px;
-        padding: 0px 0px 0px 5px;
-    }
-
-    .navBarSearchBarSpacing {
-        width: 100%;
-        text-align: left;
-        margin: auto;
-        min-width: 150px;
-    }
-
-    .navBarSearchIconHolderAlt {
-        float: right;
-        background-color: #f6f7f8;
-        padding: 10px 10px 5px 10px;
-        border-radius: 15px;
-        margin-top: 20px;
-        margin-right: 25px;
-    }
-
     .mobileLoginMenu {
         width: 300px;
         top: 16px !important;
@@ -206,7 +110,8 @@ body.modal-open {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 8px;
     width: 100%;
     height: 100%;
 }
@@ -226,11 +131,6 @@ body.modal-open {
     background-size: 40px, 40px;
     background: $gray-300;
     @include rounded(70px);
-}
-
-.notificationsBell {
-    background-size: 40px, 40px;
-    width: 40px;
 }
 
 .notificationsBellBadge {
@@ -283,16 +183,6 @@ body.modal-open {
     overflow: hidden;
     font-size: 14px;
     color: $gray-800;
-}
-
-.offlineNotificationGap {
-    vertical-align: middle;
-    display: inline-block;
-    margin-top: 15px;
-}
-
-.hamBurgerHolder {
-    margin: 27px 0px 0px 27px;
 }
 
 #desktopSearchBar {
@@ -447,11 +337,6 @@ body.modal-open {
     float: right;
 }
 
-.navBarAvatarSpacing {
-    padding: 0px 8px;
-    margin: auto;
-}
-
 .dropdown-sub-menu {
     display: flex;
     align-items: center;
@@ -468,15 +353,15 @@ body.modal-open {
 }
 
 .user-dropdown-item {
-    padding: 4px 16px 4px 16px !important;
+    padding: 4px 16px !important;
+
     @include mq('tablet-wide', max) {
         padding: 4px 24px !important;
     }
-}
 
-.navBarMessageSpacing {
-    display: flex;
-    align-items: center;
+    &__add {
+        padding: 1px 16px !important;
+    }
 }
 
 .notificationBadgeMobile {

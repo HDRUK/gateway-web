@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { Box, Button, H6, Icon, InputGroup, Input, P } from 'hdruk-react-core';
+import { Box, Button, H6, Icon, Input, P, InputGroup } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
@@ -279,14 +279,10 @@ class SearchPage extends React.Component {
         }
     }
 
-    doSearch = e => {
-        // fires on enter on searchbar
-        if (e.key === 'Enter') {
-            // reload window and test for search if entered
-            this.setState({ isResultsLoading: true }, () => {
-                this.clearFilterStates();
-            });
-        }
+    doSearch = () => {
+        this.setState({ isResultsLoading: true }, () => {
+            this.clearFilterStates();
+        });
     };
 
     doClear = e => {
@@ -566,7 +562,7 @@ class SearchPage extends React.Component {
         });
     };
 
-    doSearchCall(skipHistory, textSearch = '') {
+    doSearchCall(skipHistory, textSearch) {
         let searchURL = '';
         let filtersDatasetsV2 = [];
         let filtersV2Tools = [];
@@ -633,7 +629,8 @@ class SearchPage extends React.Component {
             if (this.state.key) searchURL += '&tab=' + this.state.key;
 
             this.props.history.push(
-                `${window.location.pathname}?search=${encodeURIComponent(textSearch ? textSearch : this.state.search)}` + searchURL
+                `${window.location.pathname}?search=${encodeURIComponent(textSearch !== undefined ? textSearch : this.state.search)}` +
+                    searchURL
             );
         }
         if (this.state.key !== 'People') {
@@ -642,7 +639,9 @@ class SearchPage extends React.Component {
 
             searchService
                 .getSearchFilters({
-                    params: getParams(`search=${encodeURIComponent(textSearch ? textSearch : this.state.search)}${searchURL}`),
+                    params: getParams(
+                        `search=${encodeURIComponent(textSearch !== undefined ? textSearch : this.state.search)}${searchURL}`
+                    ),
                 })
                 .then(res => {
                     let filters = this.getFilterState(res);
@@ -683,7 +682,7 @@ class SearchPage extends React.Component {
         // search call brings back search results and now filters highlighting for v2
         searchService
             .getSearch({
-                params: getParams(`search=${encodeURIComponent(textSearch ? textSearch : this.state.search)}${searchURL}`),
+                params: getParams(`search=${encodeURIComponent(textSearch !== undefined ? textSearch : this.state.search)}${searchURL}`),
             })
             .then(res => {
                 // get the correct entity type from our mapper via the selected tab ie..'Dataset, Tools'
@@ -1727,7 +1726,14 @@ class SearchPage extends React.Component {
     handleSearch = e => {
         e.preventDefault();
 
-        window.location.href = `/search?search=${encodeURIComponent(this.state.searchFieldValue)}&tab=${this.state.key}`;
+        this.setState(
+            {
+                search: this.state.searchFieldValue,
+            },
+            () => {
+                this.doSearch();
+            }
+        );
     };
 
     handleSearchChange = ({ target: { value } }) => {
@@ -1737,9 +1743,15 @@ class SearchPage extends React.Component {
     };
 
     handleSearchReset = () => {
-        this.setState({
-            searchFieldValue: '',
-        });
+        this.setState(
+            {
+                search: '',
+                searchFieldValue: '',
+            },
+            () => {
+                this.doSearch();
+            }
+        );
     };
 
     render() {
@@ -1819,15 +1831,7 @@ class SearchPage extends React.Component {
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <div>
                     <BackToTop scrollOffset={300} className='backToTop' />
-                    <SearchBar
-                        ref={this.searchBar}
-                        search={search}
-                        doSearchMethod={this.doSearch}
-                        onClearMethod={this.doClear}
-                        doUpdateSearchString={this.updateSearchString}
-                        doToggleDrawer={this.toggleDrawer}
-                        userState={userState}
-                    />
+                    <SearchBar ref={this.searchBar} doToggleDrawer={this.toggleDrawer} userState={userState} />
 
                     <div className='searchTabsHolder'>
                         <div>
@@ -1855,32 +1859,44 @@ class SearchPage extends React.Component {
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-search'>
-                                <Col lg={2} className='logo-container'>
-                                    <Box display='flex' justifyContent='end' alignItems='center' style={{ height: '100%' }}>
-                                        <ColourLogoSvg />
-                                    </Box>
-                                </Col>
-                                <Col lg={8} sm={12}>
+                                <Col>
                                     <form onSubmit={this.handleSearch}>
-                                        <Box mt={1} flexGrow='1' pt={8} pb={6}>
-                                            <InputGroup>
-                                                <Input
-                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
-                                                    iconRight={
-                                                        !!this.state.searchFieldValue && (
-                                                            <Icon
-                                                                svg={<ClearSvg />}
-                                                                fill='grey400'
-                                                                onClick={this.handleSearchReset}
-                                                                role='button'
-                                                            />
-                                                        )
-                                                    }
-                                                    value={this.state.searchFieldValue}
-                                                    onChange={this.handleSearchChange}
-                                                />
-                                                <Button type='submit'>Search</Button>
-                                            </InputGroup>
+                                        <Box
+                                            display={{
+                                                xxs: 'block',
+                                                md: 'grid',
+                                            }}
+                                            gridTemplateColumns='150px 1fr 158px'
+                                            gridTemplateRows='1fr'
+                                            width='100%'
+                                            p={6}>
+                                            <Box
+                                                display={{
+                                                    xxs: 'none',
+                                                    md: 'inline-flex',
+                                                }}>
+                                                <ColourLogoSvg />
+                                            </Box>
+                                            <Box mt={1}>
+                                                <InputGroup>
+                                                    <Input
+                                                        iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                        iconRight={
+                                                            !!this.state.searchFieldValue && (
+                                                                <Icon
+                                                                    svg={<ClearSvg />}
+                                                                    fill='grey400'
+                                                                    onClick={this.handleSearchReset}
+                                                                    role='button'
+                                                                />
+                                                            )
+                                                        }
+                                                        value={this.state.searchFieldValue}
+                                                        onChange={this.handleSearchChange}
+                                                    />
+                                                    <Button type='submit'>Search</Button>
+                                                </InputGroup>
+                                            </Box>
                                         </Box>
                                     </form>
                                 </Col>
