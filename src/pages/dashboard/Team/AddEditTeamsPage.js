@@ -79,37 +79,41 @@ const AddEditTeamsPage = ({
         onSubmit: async values => {
             setLoading(true);
 
+            let publisherId = editViewID;
+            let alertText;
+
+            if (editTeamsView) {
+                await axios.put(`${baseURL}/api/v1/teams/${editViewID}`, values);
+
+                alertText = {
+                    message: "You have editted the data custodian team '" + `${editViewMemberOf} > ${editViewOrgName}` + "'",
+                };
+            } else {
+                const newTeam = await axios.post(`${baseURL}/api/v1/teams/add`, values);
+
+                alertText = {
+                    message: "You have added the data custodian team '" + `${values.name}` + "'",
+                };
+
+                publisherId = newTeam.data._id;
+            }
+
             await questionBankRequest.mutateAsync({
-                _id: editViewID,
+                _id: publisherId,
                 enabled: questionBank,
             });
 
             await dataUseWidgetRequest.mutateAsync({
-                _id: editViewID,
+                _id: publisherId,
                 data: {
                     enabled: dataUseWidget,
                 },
             });
 
-            if (editTeamsView) {
-                axios.put(`${baseURL}/api/v1/teams/${editViewID}`, values).then(res => {
-                    const alert = {
-                        message: "You have editted the data custodian team '" + `${editViewMemberOf} > ${editViewOrgName}` + "'",
-                    };
-                    setAlertFunction(alert);
-                    setLoading(false);
-                    cancelAddEdit();
-                });
-            } else {
-                axios.post(`${baseURL}/api/v1/teams/add`, values).then(res => {
-                    const alert = {
-                        message: "You have added the data custodian team '" + `${values.name}` + "'",
-                    };
-                    setAlertFunction(alert);
-                    setLoading(false);
-                    cancelAddEdit();
-                });
-            }
+            setLoading(false);
+            setAlertFunction(alertText);
+
+            cancelAddEdit();
         },
     });
 
@@ -141,7 +145,7 @@ const AddEditTeamsPage = ({
                     <Box flexGrow={1}>
                         <span className='black-20'>{editTeamsView ? 'Edit ' : 'Add '} team details</span>
                     </Box>
-                    <Box display='flex' justifyContent='flex-end'>
+                    <Box display='flex' justifyContent='flex-end' gap={3}>
                         <Switch
                             label={
                                 <>
@@ -151,7 +155,6 @@ const AddEditTeamsPage = ({
                             onChange={handleEnableQuestionBank}
                             checked={questionBank}
                         />
-                        &nbsp;
                         <Switch
                             label={
                                 <>
