@@ -1,12 +1,22 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs';
 import ToolTip from './ToolTip';
+import { Button } from 'hdruk-react-core';
 
 <Meta title='Core/ToolTip' component={ToolTip} />
 
 <Canvas>
     <Story name='Basic'>
+        <ToolTip text='Sample Tooltip' placement='top' width='200px'>
+            <Button mr={2}>Top position</Button>
+        </ToolTip>
+        <ToolTip text='Sample Tooltip' placement='bottom'>
+            <Button mr={2}>Bottom position</Button>
+        </ToolTip>
+        <ToolTip text='Sample Tooltip' placement='left'>
+            <Button mr={2}>Left position</Button>
+        </ToolTip>
         <ToolTip text='Sample Tooltip' placement='right'>
-            <p>Hover over me</p>
+            <Button>Right position</Button>
         </ToolTip>
     </Story>
 </Canvas>

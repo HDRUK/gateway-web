@@ -576,13 +576,3 @@
 .data-utility-link {
     cursor: pointer;
 }
-
-@media (max-width: $bp-medium) {
-    .filters form > .ui-Box {
-        display: block;
-
-        > .ui-Box:first-child {
-            display: none;
-        }
-    }
-}

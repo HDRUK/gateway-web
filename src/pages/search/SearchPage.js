@@ -1864,8 +1864,21 @@ class SearchPage extends React.Component {
                             <Row className='filters filter-search'>
                                 <Col lg={12}>
                                     <form onSubmit={this.handleSearch}>
-                                        <Box display='grid' gridTemplateColumns='150px 1fr 175px' gridTemplateRows='1fr' width='100%' p={6}>
-                                            <Box width='150px' display='inline-flex'>
+                                        <Box
+                                            display={{
+                                                xxs: 'block',
+                                                md: 'grid',
+                                            }}
+                                            gridTemplateColumns='150px 1fr 175px'
+                                            gridTemplateRows='1fr'
+                                            width='100%'
+                                            p={6}>
+                                            <Box
+                                                width='150px'
+                                                display={{
+                                                    xxs: 'none',
+                                                    md: 'inline-flex',
+                                                }}>
                                                 <ColourLogoSvg />
                                             </Box>
                                             <Box mt={1} flexGrow='1' mr={1}>
