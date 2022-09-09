@@ -1892,7 +1892,7 @@ class SearchPage extends React.Component {
                             <Row className='filters filter-categories'>
                                 <Col>
                                     <Tabs
-                                        className='tabsBackground tabsBackground__searchPage gray700-13'
+                                        className='tabsBackground tabsBackground__searchPage gray700-14'
                                         activeKey={key}
                                         onSelect={this.handleSelect}>
                                         <Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'} />

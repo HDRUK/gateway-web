@@ -278,7 +278,7 @@ button,
     }
 
     .active {
-        border-bottom: 4px solid #3db28c !important;
+        border-bottom: 3px solid #3db28c !important;
         border-radius: 0 !important;
     }
 }
@@ -530,6 +530,9 @@ input[type='radio']:checked:after {
 .tabsBackground__searchPage {
     box-shadow: none;
     background-color: transparent !important;
+    .nav-link {
+        padding: 0.7rem 1rem;
+    }
 }
 
 .tab-content {
