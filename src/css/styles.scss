@@ -527,6 +527,11 @@ input[type='radio']:checked:after {
     }
 }
 
+.tabsBackground__searchPage {
+    box-shadow: none;
+    background-color: transparent !important;
+}
+
 .tab-content {
     margin-top: 1px;
 }

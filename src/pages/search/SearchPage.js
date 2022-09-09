@@ -1833,19 +1833,6 @@ class SearchPage extends React.Component {
                     <BackToTop scrollOffset={300} className='backToTop' />
                     <SearchBar ref={this.searchBar} doToggleDrawer={this.toggleDrawer} userState={userState} />
 
-                    <div className='searchTabsHolder'>
-                        <div>
-                            <Tabs className='tabsBackground gray700-13' activeKey={key} onSelect={this.handleSelect}>
-                                <Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'} />
-                                <Tab eventKey='Tools' title={'Tools (' + toolCount + ')'} />
-                                <Tab eventKey='Datauses' title={'Data uses (' + dataUseRegisterCount + ')'} />
-                                <Tab eventKey='Collections' title={'Collections (' + collectionCount + ')'} />
-                                <Tab eventKey='Courses' title={'Courses (' + courseCount + ')'} />
-                                <Tab eventKey='Papers' title={'Papers (' + paperCount + ')'} />
-                                <Tab eventKey='People' title={'People (' + personCount + ')'} />
-                            </Tabs>
-                        </div>
-                    </div>
                     <div className='container'>
                         {this.state.showDataUtilityBanner && (
                             <SearchUtilityBanner onClick={this.openDataUtilityWizard} step={activeDataUtilityWizardStep} />
@@ -1902,6 +1889,22 @@ class SearchPage extends React.Component {
                                 </Col>
                             </Row>
 
+                            <Row className='filters filter-categories'>
+                                <Col>
+                                    <Tabs
+                                        className='tabsBackground tabsBackground__searchPage gray700-13'
+                                        activeKey={key}
+                                        onSelect={this.handleSelect}>
+                                        <Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'} />
+                                        <Tab eventKey='Tools' title={'Tools (' + toolCount + ')'} />
+                                        <Tab eventKey='Datauses' title={'Data uses (' + dataUseRegisterCount + ')'} />
+                                        <Tab eventKey='Collections' title={'Collections (' + collectionCount + ')'} />
+                                        <Tab eventKey='Courses' title={'Courses (' + courseCount + ')'} />
+                                        <Tab eventKey='Papers' title={'Papers (' + paperCount + ')'} />
+                                        <Tab eventKey='People' title={'People (' + personCount + ')'} />
+                                    </Tabs>
+                                </Col>
+                            </Row>
                             <Row className='filters'>
                                 <Col lg={10}>
                                     <Box display='flex' pt={4} pl={6} pb={4}>
