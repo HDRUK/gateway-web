@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { Box, Button, H6, Icon, InputGroup, Input, P } from 'hdruk-react-core';
+import { Box, Button, H6, Icon, Input, P, InputGroup } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
