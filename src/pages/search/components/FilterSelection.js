@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Caption, Box, Icon, Button } from 'hdruk-react-core';
 import FilterChip from './FilterChip';
 import { FilterCount } from './FilterCount';
-import SVGIcon from '../../../images/SVGIcon';
+import { ReactComponent as ChevronBottomIcon } from '../../../images/chevron-bottom.svg';
 
 const FilterSelection = ({ selectedCount, selectedItems, onHandleClearSelection, onHandleClearAll, savedSearches }) => {
     const clearSelection = e => {
@@ -12,14 +13,12 @@ const FilterSelection = ({ selectedCount, selectedItems, onHandleClearSelection,
     const [closed, setClosed] = useState(true);
 
     return (
-        <div className={savedSearches ? 'saved-filters' : ''}>
-            <div className='filters-header'>
-                <div className={savedSearches ? 'filters-title black-16-semibold' : 'filters-title gray500-13'}>
-                    Filters applied
-                    <div className='filters-title__count'>
-                        <FilterCount count={selectedCount} />
-                    </div>
-                </div>
+        <Box display='flex' flexDirection='column'>
+            <Box display='flex' alignItems='center'>
+                <Caption>Filters applied</Caption>
+                <Box mr={2} className='filters-title__count'>
+                    <FilterCount count={selectedCount} />
+                </Box>
                 {selectedCount > 0 ? (
                     <>
                         <div
@@ -29,14 +28,24 @@ const FilterSelection = ({ selectedCount, selectedItems, onHandleClearSelection,
                             onClick={e => clearSelection(e)}>
                             {savedSearches ? 'Clear Filters' : 'Clear All'}
                         </div>
-                        <button className='saved-search-arrow' onClick={() => (!closed ? setClosed(true) : setClosed(false))}>
-                            <SVGIcon width='20px' height='20px' name='chevronbottom' fill='#475da7' className={closed ? 'flip180' : ''} />
-                        </button>
+                        <Button
+                            ml={1}
+                            variant='secondaryAlt'
+                            iconLeft={
+                                <Icon
+                                    className={closed ? 'flip180' : ''}
+                                    fill='#475da7'
+                                    size='xl'
+                                    svg={<ChevronBottomIcon fill='inherit' />}
+                                />
+                            }
+                            onClick={() => (!closed ? setClosed(true) : setClosed(false))}
+                        />
                     </>
                 ) : (
                     ''
                 )}
-            </div>
+            </Box>
             {closed ? (
                 <div className='filters-body'>
                     {selectedItems.length > 0 &&
@@ -45,7 +54,7 @@ const FilterSelection = ({ selectedCount, selectedItems, onHandleClearSelection,
                         ))}
                 </div>
             ) : null}
-        </div>
+        </Box>
     );
 };
 

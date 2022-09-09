@@ -105,107 +105,148 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
     return (
         <>
             <Row className='filters saved-preferences'>
-                <Col lg={2} />
-                <Col lg={8}>
-                    <Box pt={4} pb={4}>
-                        <H5 mb={2}>Save</H5>
-                        <P mb={2}>Are you sure you want to save this search preference? If yes, please provide a title for this search.</P>
-                        <Box display='flex' mb={6}>
-                            <Box flexGrow='1' mr={2}>
-                                <Input
-                                    label='Title'
-                                    data-test-id='saved-preference-name'
-                                    id='name'
-                                    name='name'
-                                    type='text'
-                                    onChange={formik.handleChange}
-                                    value={formik.values.name}
-                                    onBlur={formik.handleBlur}
-                                    error={formik.errors.name}
-                                />
+                <Col>
+                    <Box
+                        display={{
+                            xxs: 'block',
+                            md: 'grid',
+                        }}
+                        gridTemplateColumns='150px 1fr 158px'
+                        gridTemplateRows='1fr'
+                        width='100%'
+                        p={6}>
+                        <Box />
+                        <Box>
+                            <H5 mb={2}>Save</H5>
+                            <P mb={2}>
+                                Are you sure you want to save this search preference? If yes, please provide a title for this search.
+                            </P>
+                            <Box display='flex' mb={6}>
+                                <Box flexGrow='1' mr={2}>
+                                    <Input
+                                        label='Title'
+                                        data-test-id='saved-preference-name'
+                                        id='name'
+                                        name='name'
+                                        type='text'
+                                        onChange={formik.handleChange}
+                                        value={formik.values.name}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.errors.name}
+                                    />
+                                </Box>
+                                <Box mt={8}>
+                                    <Button onClick={formik.handleSubmit}>Save</Button>
+                                </Box>
                             </Box>
-                            <Box mt={8}>
-                                <Button onClick={formik.handleSubmit}>Save</Button>
-                            </Box>
-                        </Box>
-                        <H6 mb={2} weight='bold'>
-                            Your search preferences
-                        </H6>
-                        <P>
-                            {`View saved preferences across all resources on the Gateway. To create a new preference, apply your desired filters on the
+                            <H6 mb={2} weight='bold'>
+                                Your search preferences
+                            </H6>
+                            <P>
+                                {`View saved preferences across all resources on the Gateway. To create a new preference, apply your desired filters on the
                 resources search results page and select 'save'.`}
-                        </P>
+                            </P>
+                        </Box>
                     </Box>
                 </Col>
             </Row>
             <Row className='filters saved-preferences-row'>
-                <Col lg={2} />
-                <Col lg={8} mt={2}>
-                    <Tabs onSelect={() => resetTabs()} defaultActiveKey={activeTab} className='saved-preferences-tab'>
-                        {tabs.map(tabName => (
-                            <Tab eventKey={tabName} key={tabName} title={getTabTitle(tabName)}>
-                                {data.filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, '')).length > 0 ? (
-                                    data
-                                        .filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, ''))
-                                        .map(savedData => (
-                                            <Box
-                                                mb={4}
-                                                key={savedData._id}
-                                                tabIndex={0}
-                                                onKeyDown={() => {
-                                                    selectPreference(savedData);
-                                                }}
-                                                role='button'
-                                                className={
-                                                    activeCard === savedData._id
-                                                        ? 'filters saved-card-selected saved-card-click'
-                                                        : 'filters saved-card saved-card-click'
-                                                }
-                                                onClick={() => {
-                                                    selectPreference(savedData);
-                                                }}>
-                                                <H5>{savedData.name}</H5>
-                                                <P>
-                                                    Search term:{' '}
-                                                    {savedData.filterCriteria && savedData.filterCriteria.searchTerm === '' ? (
-                                                        'N/A'
-                                                    ) : (
-                                                        <P>{`"${savedData.filterCriteria.searchTerm}"`}</P>
-                                                    )}
-                                                </P>
-                                                <P>
-                                                    Filters applied: {savedData.filterCriteria.filters.length > 0 ? '' : 'N/A'}
-                                                    <br />
-                                                    {savedData.filterCriteria.filters.map(savedDataFilter => (
-                                                        <div className='filters-chip saved-filter-chip'>{savedDataFilter.label}</div>
-                                                    ))}
-                                                </P>
+                <Col>
+                    <Box
+                        display={{
+                            xxs: 'block',
+                            md: 'grid',
+                        }}
+                        gridTemplateColumns='150px 1fr 158px'
+                        gridTemplateRows='1fr'
+                        width='100%'
+                        pl={6}
+                        pb={2}
+                        pr={6}>
+                        <Box />
+                        <Box>
+                            <Tabs onSelect={() => resetTabs()} defaultActiveKey={activeTab} className='saved-preferences-tab'>
+                                {tabs.map(tabName => (
+                                    <Tab eventKey={tabName} key={tabName} title={getTabTitle(tabName)}>
+                                        {data.filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, '')).length > 0 ? (
+                                            data
+                                                .filter(tabNames => tabNames.filterCriteria.tab === tabName.replace(/ /g, ''))
+                                                .map(savedData => (
+                                                    <Box
+                                                        key={savedData._id}
+                                                        tabIndex={0}
+                                                        onKeyDown={() => {
+                                                            selectPreference(savedData);
+                                                        }}
+                                                        role='button'
+                                                        className={
+                                                            activeCard === savedData._id
+                                                                ? 'filters saved-card-selected saved-card-click'
+                                                                : 'filters saved-card saved-card-click'
+                                                        }
+                                                        onClick={() => {
+                                                            selectPreference(savedData);
+                                                        }}>
+                                                        <H5>{savedData.name}</H5>
+                                                        <P>
+                                                            Search term:{' '}
+                                                            {savedData.filterCriteria && savedData.filterCriteria.searchTerm === '' ? (
+                                                                'N/A'
+                                                            ) : (
+                                                                <P>{`"${savedData.filterCriteria.searchTerm}"`}</P>
+                                                            )}
+                                                        </P>
+                                                        <P>
+                                                            Filters applied: {savedData.filterCriteria.filters.length > 0 ? '' : 'N/A'}
+                                                            <br />
+                                                            {savedData.filterCriteria.filters.map(savedDataFilter => (
+                                                                <div className='filters-chip saved-filter-chip'>
+                                                                    {savedDataFilter.label}
+                                                                </div>
+                                                            ))}
+                                                        </P>
+                                                    </Box>
+                                                ))
+                                        ) : (
+                                            <Box mt={14} mb={14} display='flex' justifyContent='center'>
+                                                <P color='grey600'>No preferences have been saved for {tabName}</P>
                                             </Box>
-                                        ))
-                                ) : (
-                                    <Box mt={14} mb={14} display='flex' justifyContent='center'>
-                                        <P color='grey600'>No preferences have been saved for {tabName}</P>
-                                    </Box>
-                                )}
-                            </Tab>
-                        ))}
-                    </Tabs>
-                </Col>
-            </Row>
-            <Row className='filters'>
-                <Col lg={10}>
-                    {showButtons && (
-                        <Box flexGrow='1' display='flex' justifyContent='flex-end' mt={4} mb={4}>
-                            <Button mr={2} variant='secondary' onClick={() => deleteSavedSearch()}>
-                                Delete
-                            </Button>
-                            <Button className='view-button' onClick={() => viewSavedSearch()}>
-                                View matches
-                            </Button>
+                                        )}
+                                    </Tab>
+                                ))}
+                            </Tabs>
                         </Box>
-                    )}
+                    </Box>
                 </Col>
             </Row>
+            {showButtons && (
+                <Row className='filters'>
+                    <Col>
+                        <Box
+                            display={{
+                                xxs: 'block',
+                                md: 'grid',
+                            }}
+                            gridTemplateColumns='150px 1fr 158px'
+                            gridTemplateRows='1fr'
+                            width='100%'
+                            pl={6}
+                            pb={2}
+                            pr={6}
+                            pt={2}>
+                            <Box />
+                            <Box flexGrow='1' display='flex' justifyContent='flex-end'>
+                                <Button mr={2} variant='secondary' onClick={() => deleteSavedSearch()}>
+                                    Delete
+                                </Button>
+                                <Button className='view-button' onClick={() => viewSavedSearch()}>
+                                    View matches
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Col>
+                </Row>
+            )}
         </>
     );
 };
