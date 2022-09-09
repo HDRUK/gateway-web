@@ -1866,25 +1866,43 @@ class SearchPage extends React.Component {
                                 </Col>
                                 <Col lg={8} sm={12}>
                                     <form onSubmit={this.handleSearch}>
-                                        <Box mt={1} flexGrow='1' pt={8} pb={6}>
-                                            <InputGroup>
-                                                <Input
-                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
-                                                    iconRight={
-                                                        !!this.state.searchFieldValue && (
-                                                            <Icon
-                                                                svg={<ClearSvg />}
-                                                                fill='grey400'
-                                                                onClick={this.handleSearchReset}
-                                                                role='button'
-                                                            />
-                                                        )
-                                                    }
-                                                    value={this.state.searchFieldValue}
-                                                    onChange={this.handleSearchChange}
-                                                />
-                                                <Button type='submit'>Search</Button>
-                                            </InputGroup>
+                                        <Box
+                                            display={{
+                                                xxs: 'block',
+                                                md: 'grid',
+                                            }}
+                                            gridTemplateColumns='150px 1fr 175px'
+                                            gridTemplateRows='1fr'
+                                            width='100%'
+                                            p={6}>
+                                            <Box
+                                                width='150px'
+                                                display={{
+                                                    xxs: 'none',
+                                                    md: 'inline-flex',
+                                                }}>
+                                                <ColourLogoSvg />
+                                            </Box>
+                                            <Box mt={1} flexGrow='1' mr={1}>
+                                                <InputGroup>
+                                                    <Input
+                                                        iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                        iconRight={
+                                                            !!this.state.searchFieldValue && (
+                                                                <Icon
+                                                                    svg={<ClearSvg />}
+                                                                    fill='grey400'
+                                                                    onClick={this.handleSearchReset}
+                                                                    role='button'
+                                                                />
+                                                            )
+                                                        }
+                                                        value={this.state.searchFieldValue}
+                                                        onChange={this.handleSearchChange}
+                                                    />
+                                                    <Button type='submit'>Search</Button>
+                                                </InputGroup>
+                                            </Box>
                                         </Box>
                                     </form>
                                 </Col>
