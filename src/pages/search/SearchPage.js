@@ -11,8 +11,8 @@ import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
-import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
 import { ReactComponent as SearchSvg } from '../../images/search.svg';
+import { ReactComponent as ArrowUpSvg } from '../../images/icons/arrow-up.svg';
 import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
@@ -22,8 +22,6 @@ import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
-import SavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
-import SaveModal from '../commonComponents/saveModal/SaveModal';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SearchResults from '../commonComponents/SearchResults';
 import SearchResultsInfo from '../commonComponents/SearchResultsInfo';
@@ -41,6 +39,7 @@ import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort'
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
+import SavedPreferences from '../commonComponents/savedPreferences/SavedPreferences';
 
 import { BackToTop } from '../../components';
 import './Search.scss';
@@ -111,8 +110,6 @@ class SearchPage extends React.Component {
         isResultsLoading: true,
         showDrawer: false,
         showModal: false,
-        showSavedPreferencesModal: false,
-        showSavedModal: false,
         context: {},
         userState: [
             {
@@ -143,7 +140,7 @@ class SearchPage extends React.Component {
         showDataUtilityWizardModal: false,
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
-        searchFieldValue: '',
+        shouldShowSavedPreferences: false,
     };
 
     constructor(props) {
@@ -166,8 +163,8 @@ class SearchPage extends React.Component {
         this.csvLink = React.createRef();
     }
 
-    hideSavedPreferencesModal = () => {
-        this.setState({ showSavedPreferencesModal: false });
+    toggleSavedPreferences = () => {
+        this.setState({ shouldShowSavedPreferences: Boolean(!this.state.shouldShowSavedPreferences) });
     };
 
     hideSavedModal = () => {
@@ -1452,7 +1449,7 @@ class SearchPage extends React.Component {
 
     saveFiltersUpdate = async viewSaved => {
         await this.getFilters(viewSaved.tab);
-        this.setState({ showSavedPreferencesModal: false });
+        this.setState({ shouldShowSavedPreferences: false });
         // 1. v2 take copy of data
         let filtersV2DatasetsData = !_.isNil(this.state.filtersV2Datasets) ? [...this.state.filtersV2Datasets] : [];
         let filtersV2ToolsData = !_.isNil(this.state.filtersV2Tools) ? [...this.state.filtersV2Tools] : [];
@@ -1854,7 +1851,7 @@ class SearchPage extends React.Component {
                             <SearchUtilityBanner onClick={this.openDataUtilityWizard} step={activeDataUtilityWizardStep} />
                         )}
 
-                        {this.state.saveSuccess && !this.state.showSavedModal && (
+                        {this.state.saveSuccess && !this.state.shouldShowSavedPreferences && (
                             <Alert variant='primary' className='blue-banner saved-preference-banner'>
                                 Saved preference: "{this.state.showSavedName}"
                             </Alert>
@@ -1862,7 +1859,12 @@ class SearchPage extends React.Component {
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-search'>
-                                <Col lg={12}>
+                                <Col lg={2} className='logo-container'>
+                                    <Box display='flex' justifyContent='end' alignItems='center' style={{ height: '100%' }}>
+                                        <ColourLogoSvg />
+                                    </Box>
+                                </Col>
+                                <Col lg={8} sm={12}>
                                     <form onSubmit={this.handleSearch}>
                                         <Box
                                             display={{
@@ -1906,84 +1908,70 @@ class SearchPage extends React.Component {
                                 </Col>
                             </Row>
 
-                            <Row className='filters filter-save'>
-                                <Col className='title' lg={4} />
-                                <Col lg={8} className='saved-buttons'>
-                                    <Box display='inline-flex' gap={2} py={4}>
-                                        {this.state.key === 'Datauses' && (
-                                            <>
-                                                <Button variant='tertiary' onClick={this.onClickDownloadResults}>
-                                                    Download Results
-                                                </Button>
-                                                <CSVLink
-                                                    data={dataUseRegisterFullData}
-                                                    filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
-                                                    className='hidden'
-                                                    ref={this.csvLink}
-                                                    target='_blank'
+                            <Row className='filters'>
+                                <Col lg={10}>
+                                    <Box display='flex' pt={4} pl={6} pb={4}>
+                                        <Box flexGrow='1'>
+                                            {key !== 'People' && (
+                                                <FilterSelection
+                                                    {...filtersSelectionProps}
+                                                    onHandleClearSelection={this.handleClearSelection}
+                                                    onHandleClearAll={this.handleClearAll}
+                                                    savedSearches={true}
                                                 />
-                                            </>
-                                        )}
-
-                                        {this.state.saveSuccess ? (
-                                            <Button variant='primaryAlt' disabled iconLeft={<Icon svg={<TickSvg />} fill='green300' />}>
-                                                Saved
-                                            </Button>
-                                        ) : this.state.userState[0].loggedIn === false ? (
-                                            <Button variant='secondary' onClick={this.showLoginModal}>
+                                            )}
+                                        </Box>
+                                        <Box display='inline-flex'>
+                                            {this.state.key === 'Datauses' && (
+                                                <>
+                                                    <Button mr={2} variant='tertiary' onClick={this.onClickDownloadResults}>
+                                                        Download Results
+                                                    </Button>
+                                                    <CSVLink
+                                                        data={dataUseRegisterFullData}
+                                                        filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
+                                                        className='hidden'
+                                                        ref={this.csvLink}
+                                                        target='_blank'
+                                                    />
+                                                </>
+                                            )}
+                                            <Button
+                                                variant='tertiary'
+                                                aria-haspopup='true'
+                                                iconRight={
+                                                    <Icon
+                                                        svg={<ArrowUpSvg />}
+                                                        fill='grey800'
+                                                        className={this.state.shouldShowSavedPreferences ? '' : 'flip180'}
+                                                    />
+                                                }
+                                                onClick={
+                                                    this.state.userState[0].loggedIn === false
+                                                        ? () => this.showLoginModal()
+                                                        : () => this.toggleSavedPreferences()
+                                                }>
                                                 Save
                                             </Button>
-                                        ) : (
-                                            <Button variant='secondary' onClick={() => this.setState({ showSavedModal: true })}>
-                                                Save
-                                            </Button>
-                                        )}
-
-                                        {this.state.showSavedModal && (
-                                            <SaveModal
-                                                show={this.state.showSavedModal}
-                                                onHide={this.hideSavedModal}
-                                                onSaveHide={this.hideNoSaveSearchModal}
-                                                saveSuccess={this.showSuccessMessage}
-                                                saveName={this.showSavedName}
-                                                search={this.state.search}
-                                                filters={preferenceFilters}
-                                                sort={perferenceSort}
-                                                tab={this.state.key}
-                                            />
-                                        )}
-
-                                        <Button
-                                            variant='tertiary'
-                                            onClick={
-                                                this.state.userState[0].loggedIn === false
-                                                    ? () => this.showLoginModal()
-                                                    : () => this.setState({ showSavedPreferencesModal: true })
-                                            }>
-                                            Saved preferences
-                                        </Button>
-                                        {this.state.showSavedPreferencesModal && (
-                                            <SavedPreferencesModal
-                                                show={this.state.showSavedPreferencesModal}
-                                                onHide={this.hideSavedPreferencesModal}
-                                                viewMatchesLink={this.viewMatches}
-                                                viewSaved={this.saveFiltersUpdate}
-                                                activeTab={key}
-                                            />
-                                        )}
+                                        </Box>
                                     </Box>
                                 </Col>
+                                <Col lg={2} />
                             </Row>
-                            <Row>
-                                {key !== 'People' && (
-                                    <FilterSelection
-                                        {...filtersSelectionProps}
-                                        onHandleClearSelection={this.handleClearSelection}
-                                        onHandleClearAll={this.handleClearAll}
-                                        savedSearches={true}
-                                    />
-                                )}
-                            </Row>
+                            {this.state.shouldShowSavedPreferences && (
+                                <SavedPreferences
+                                    onHide={this.toggleSavedPreferences}
+                                    viewMatchesLink={this.viewMatches}
+                                    viewSaved={this.saveFiltersUpdate}
+                                    activeTab={key}
+                                    saveSuccess={this.showSuccessMessage}
+                                    saveName={this.showSavedName}
+                                    search={this.state.search}
+                                    filters={preferenceFilters}
+                                    sort={perferenceSort}
+                                    tab={this.state.key}
+                                />
+                            )}
                         </Container>
                     </div>
                     <Container>

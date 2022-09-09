@@ -326,9 +326,16 @@ body.modal-open {
     background-color: $gray-light;
 }
 
-.cmsDropdownTitle:hover {
-    font-weight: bold;
-    text-decoration: none;
+.cmsDropdownTitle {
+    border-bottom: 2px solid transparent;
+    color: $gray-700;
+    font-size: 14px;
+
+    &:hover {
+        color: $gray-800;
+        text-decoration: none;
+        border-bottom-color: $teal;
+    }
 }
 
 .helpDropdownHeader,
@@ -342,7 +349,7 @@ body.modal-open {
 .cmsDropdownMenu .dropdown-item {
     font-size: 14px;
     white-space: break-spaces;
-    color: #3c3c3b;
+    color: $gray-800;
 }
 .cmsDropdown .dropdown-item:hover,
 .cmsDropdownMenu .dropdown-item:hover {
