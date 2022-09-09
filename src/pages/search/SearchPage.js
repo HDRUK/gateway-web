@@ -1871,7 +1871,6 @@ class SearchPage extends React.Component {
                                             width='100%'
                                             p={6}>
                                             <Box
-                                                width='150px'
                                                 display={{
                                                     xxs: 'none',
                                                     md: 'inline-flex',
@@ -1898,7 +1897,6 @@ class SearchPage extends React.Component {
                                                     <Button type='submit'>Search</Button>
                                                 </InputGroup>
                                             </Box>
-                                            <div />
                                         </Box>
                                     </form>
                                 </Col>
