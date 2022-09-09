@@ -86,27 +86,6 @@ body.modal-open {
 }
 
 @media (max-width: 991px) {
-    .navBarLinkSpacing {
-        margin-top: 12px;
-        padding: 0px 0px 0px 5px;
-    }
-
-    .navBarSearchBarSpacing {
-        width: 100%;
-        text-align: left;
-        margin: auto;
-        min-width: 150px;
-    }
-
-    .navBarSearchIconHolderAlt {
-        float: right;
-        background-color: #f6f7f8;
-        padding: 10px 10px 5px 10px;
-        border-radius: 15px;
-        margin-top: 20px;
-        margin-right: 25px;
-    }
-
     .mobileLoginMenu {
         width: 300px;
         top: 16px !important;
@@ -204,12 +183,6 @@ body.modal-open {
     overflow: hidden;
     font-size: 14px;
     color: $gray-800;
-}
-
-.offlineNotificationGap {
-    vertical-align: middle;
-    display: inline-block;
-    margin-top: 15px;
 }
 
 #desktopSearchBar {
