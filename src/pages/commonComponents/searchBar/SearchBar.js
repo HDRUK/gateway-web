@@ -1,6 +1,6 @@
 import { cx } from '@emotion/css';
 import axios from 'axios';
-import { Button } from 'hdruk-react-core';
+import { Button, Box } from 'hdruk-react-core';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { Fragment, useState } from 'react';
@@ -287,12 +287,12 @@ class SearchBar extends React.Component {
                 <nav className={cx('navbarShown', { navbarHidden: !this.state.visible })}>
                     <div className='searchBarBackground' id='desktopSearchBar'>
                         <Row className='whiteBackground'>
-                            <Col lg={7} className='pr-0 pl-2'>
-                                <div className='navBarLogoSpacing'>
+                            <Box className='pr-0 pl-2' flexGrow='1' display='flex' alignItems='center' gap={6}>
+                                <Box mt={1} ml={6}>
                                     <a style={{ cursor: 'pointer' }} href={cmsURL}>
-                                        <ColourLogoSvg className='ml-4 mt-3' />
+                                        <ColourLogoSvg />
                                     </a>
-                                </div>
+                                </Box>
 
                                 <div className='navBarLinkSpacing'>
                                     <CmsDropdown dropdownUrl='exploreDropdown' />
@@ -336,19 +336,17 @@ class SearchBar extends React.Component {
                                         Community
                                     </a>
                                 </div>
-                            </Col>
+                            </Box>
 
-                            <Col lg={5} className='text-right'>
+                            <div className='text-right'>
                                 <div className='nav-wrapper'>
                                     {(() => {
                                         if (userState[0].loggedIn === true) {
                                             return (
-                                                <Fragment key='userNotifications'>
+                                                <Box display='flex' alignItems='center' gap={8}>
                                                     <div
                                                         className='navBarNotificationSpacing'
-                                                        onClick={() => {
-                                                            this.props.doToggleDrawer();
-                                                        }}
+                                                        onClick={this.props.doToggleDrawer}
                                                         data-test-id='imgMessageBadge'>
                                                         <NotificationBadge
                                                             count={this.state.messageCount}
@@ -1160,7 +1158,7 @@ class SearchBar extends React.Component {
                                                             <span className='initials'>{this.getUserInitials(userState[0].name)}</span>
                                                         </div>
                                                     </div>
-                                                </Fragment>
+                                                </Box>
                                             );
                                         } else {
                                             return (
@@ -1248,14 +1246,14 @@ class SearchBar extends React.Component {
                                         })()}
                                     </div>
                                 </div>
-                            </Col>
+                            </div>
                         </Row>
                     </div>
 
                     <div id='mobileSearchBar' className={!this.state.visible ? 'navbarHidden' : ''}>
                         <div className='searchBarBackground'>
-                            <Row className='whiteBackground'>
-                                <Col xs={2}>
+                            <Box backgroundColor='white' display='flex' alignItems='center' px={5} py={2} height='80px'>
+                                <Box>
                                     <Dropdown>
                                         <Dropdown.Toggle as={CustomToggle}>
                                             <HamBurgerSvg className='hamBurgerHolder' />
@@ -1340,23 +1338,35 @@ class SearchBar extends React.Component {
                                             })()}
                                         </Dropdown.Menu>
                                     </Dropdown>
-                                </Col>
+                                </Box>
 
                                 {(() => {
                                     if (userState[0].loggedIn === true) {
                                         return (
                                             <>
-                                                <Col xs={6} className='logoSVGMobile'>
-                                                    <div id='mobileSearchBarHidden'>
-                                                        <div className='navBarLogoSpacing'>
-                                                            <a href={cmsURL}>
-                                                                <ColourLogoSvgMobile className='ml-4 mt-3' />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </Col>
-                                                <Row className='notificationOverallStyle'>
-                                                    <Col xs={4} className='navBarMessageSpacing'>
+                                                <Box
+                                                    flexGrow='1'
+                                                    ml={6}
+                                                    pt={2}
+                                                    display={{
+                                                        xxs: 'none',
+                                                        sm: 'flex',
+                                                    }}
+                                                    alignItems='center'>
+                                                    <a href={cmsURL} className='mobileLogoWrapper'>
+                                                        <ColourLogoSvgMobile />
+                                                    </a>
+                                                </Box>
+                                                <Box
+                                                    display='flex'
+                                                    alignItems='center'
+                                                    justifyContent='flex-end'
+                                                    gap={6}
+                                                    flexGrow={{
+                                                        xxs: '1',
+                                                        sm: 0,
+                                                    }}>
+                                                    <Box xs={4} className='navBarMessageSpacing'>
                                                         <div onClick={this.props.doToggleDrawer} data-test-id='imgMessageBadge'>
                                                             <NotificationBadge
                                                                 count={this.state.messageCount}
@@ -1372,8 +1382,8 @@ class SearchBar extends React.Component {
                                                                 className={'pointer'}
                                                             />
                                                         </div>
-                                                    </Col>
-                                                    <Col xs={4} className='text-right'>
+                                                    </Box>
+                                                    <Box>
                                                         <div className='navBarBellNotificationSpacing'>
                                                             <Dropdown>
                                                                 <Dropdown.Toggle
@@ -1627,8 +1637,8 @@ class SearchBar extends React.Component {
                                                                 </Dropdown.Menu>
                                                             </Dropdown>
                                                         </div>
-                                                    </Col>
-                                                </Row>
+                                                    </Box>
+                                                </Box>
                                             </>
                                         );
                                     } else {
@@ -1645,7 +1655,7 @@ class SearchBar extends React.Component {
                                         );
                                     }
                                 })()}
-                            </Row>
+                            </Box>
                         </div>
                     </div>
                 </nav>

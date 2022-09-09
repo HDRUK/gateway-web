@@ -1877,7 +1877,7 @@ class SearchPage extends React.Component {
                                                 }}>
                                                 <ColourLogoSvg />
                                             </Box>
-                                            <Box mt={1} mr={1}>
+                                            <Box mt={1}>
                                                 <InputGroup>
                                                     <Input
                                                         iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
