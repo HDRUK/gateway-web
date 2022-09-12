@@ -1833,19 +1833,6 @@ class SearchPage extends React.Component {
                     <BackToTop scrollOffset={300} className='backToTop' />
                     <SearchBar ref={this.searchBar} doToggleDrawer={this.toggleDrawer} userState={userState} />
 
-                    <div className='searchTabsHolder'>
-                        <div>
-                            <Tabs className='tabsBackground gray700-13' activeKey={key} onSelect={this.handleSelect}>
-                                <Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'} />
-                                <Tab eventKey='Tools' title={'Tools (' + toolCount + ')'} />
-                                <Tab eventKey='Datauses' title={'Data uses (' + dataUseRegisterCount + ')'} />
-                                <Tab eventKey='Collections' title={'Collections (' + collectionCount + ')'} />
-                                <Tab eventKey='Courses' title={'Courses (' + courseCount + ')'} />
-                                <Tab eventKey='Papers' title={'Papers (' + paperCount + ')'} />
-                                <Tab eventKey='People' title={'People (' + personCount + ')'} />
-                            </Tabs>
-                        </div>
-                    </div>
                     <div className='container'>
                         {this.state.showDataUtilityBanner && (
                             <SearchUtilityBanner onClick={this.openDataUtilityWizard} step={activeDataUtilityWizardStep} />
@@ -1902,55 +1889,82 @@ class SearchPage extends React.Component {
                                 </Col>
                             </Row>
 
+                            <Row className='filters filter-categories'>
+                                <Col>
+                                    <Tabs
+                                        className='tabsBackground tabsBackground__searchPage gray700-14'
+                                        activeKey={key}
+                                        onSelect={this.handleSelect}>
+                                        <Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'} />
+                                        <Tab eventKey='Tools' title={'Tools (' + toolCount + ')'} />
+                                        <Tab eventKey='Datauses' title={'Data uses (' + dataUseRegisterCount + ')'} />
+                                        <Tab eventKey='Collections' title={'Collections (' + collectionCount + ')'} />
+                                        <Tab eventKey='Courses' title={'Courses (' + courseCount + ')'} />
+                                        <Tab eventKey='Papers' title={'Papers (' + paperCount + ')'} />
+                                        <Tab eventKey='People' title={'People (' + personCount + ')'} />
+                                    </Tabs>
+                                </Col>
+                            </Row>
                             <Row className='filters'>
-                                <Col lg={10}>
-                                    <Box display='flex' pt={4} pl={6} pb={4}>
-                                        <Box flexGrow='1'>
-                                            {key !== 'People' && (
-                                                <FilterSelection
-                                                    {...filtersSelectionProps}
-                                                    onHandleClearSelection={this.handleClearSelection}
-                                                    onHandleClearAll={this.handleClearAll}
-                                                    savedSearches={true}
-                                                />
-                                            )}
-                                        </Box>
-                                        <Box display='inline-flex'>
-                                            {this.state.key === 'Datauses' && (
-                                                <>
-                                                    <Button mr={2} variant='tertiary' onClick={this.onClickDownloadResults}>
-                                                        Download Results
-                                                    </Button>
-                                                    <CSVLink
-                                                        data={dataUseRegisterFullData}
-                                                        filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
-                                                        className='hidden'
-                                                        ref={this.csvLink}
-                                                        target='_blank'
+                                <Col>
+                                    <Box
+                                        display={{
+                                            xxs: 'block',
+                                            md: 'grid',
+                                        }}
+                                        gridTemplateColumns='1fr 158px'
+                                        pt={3}
+                                        pb={3}
+                                        pr={6}
+                                        pl={6}
+                                        width='100%'>
+                                        <Box display='flex'>
+                                            <Box flexGrow='1' display='flex' alignItems='center'>
+                                                {key !== 'People' && (
+                                                    <FilterSelection
+                                                        {...filtersSelectionProps}
+                                                        onHandleClearSelection={this.handleClearSelection}
+                                                        onHandleClearAll={this.handleClearAll}
+                                                        savedSearches={true}
                                                     />
-                                                </>
-                                            )}
-                                            <Button
-                                                variant='tertiary'
-                                                aria-haspopup='true'
-                                                iconRight={
-                                                    <Icon
-                                                        svg={<ArrowUpSvg />}
-                                                        fill='grey800'
-                                                        className={this.state.shouldShowSavedPreferences ? '' : 'flip180'}
-                                                    />
-                                                }
-                                                onClick={
-                                                    this.state.userState[0].loggedIn === false
-                                                        ? () => this.showLoginModal()
-                                                        : () => this.toggleSavedPreferences()
-                                                }>
-                                                Save
-                                            </Button>
+                                                )}
+                                            </Box>
+                                            <Box display='inline-flex'>
+                                                {this.state.key === 'Datauses' && (
+                                                    <>
+                                                        <Button mr={2} variant='tertiary' onClick={this.onClickDownloadResults}>
+                                                            Download Results
+                                                        </Button>
+                                                        <CSVLink
+                                                            data={dataUseRegisterFullData}
+                                                            filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
+                                                            className='hidden'
+                                                            ref={this.csvLink}
+                                                            target='_blank'
+                                                        />
+                                                    </>
+                                                )}
+                                                <Button
+                                                    variant='tertiary'
+                                                    aria-haspopup='true'
+                                                    iconRight={
+                                                        <Icon
+                                                            svg={<ArrowUpSvg />}
+                                                            fill='grey800'
+                                                            className={this.state.shouldShowSavedPreferences ? '' : 'flip180'}
+                                                        />
+                                                    }
+                                                    onClick={
+                                                        this.state.userState[0].loggedIn === false
+                                                            ? () => this.showLoginModal()
+                                                            : () => this.toggleSavedPreferences()
+                                                    }>
+                                                    Save
+                                                </Button>
+                                            </Box>
                                         </Box>
                                     </Box>
                                 </Col>
-                                <Col lg={2} />
                             </Row>
                             {this.state.shouldShowSavedPreferences && (
                                 <SavedPreferences
