@@ -1,8 +1,8 @@
 import React, { useState, Fragment } from 'react';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
-import { ReactComponent as CloseButtonSvg } from 'images/close-alt.svg';
 import TextareaAutosize from 'react-textarea-autosize';
+import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 
 import './ActionModal.scss';
 

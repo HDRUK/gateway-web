@@ -278,7 +278,7 @@ button,
     }
 
     .active {
-        border-bottom: 4px solid #3db28c !important;
+        border-bottom: 3px solid #3db28c !important;
         border-radius: 0 !important;
     }
 }
@@ -524,6 +524,14 @@ input[type='radio']:checked:after {
     &-shadow-bottom {
         @extend .tabsBackground;
         box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.09);
+    }
+}
+
+.tabsBackground__searchPage {
+    box-shadow: none;
+    background-color: transparent !important;
+    .nav-link {
+        padding: 0.7rem 1rem;
     }
 }
 

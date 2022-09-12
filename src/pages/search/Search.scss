@@ -528,6 +528,7 @@
     margin-top: 32px;
 }
 
+.filter-categories,
 .filter-search,
 .filter-save {
     border-bottom: 1px solid #e7e9ed;
@@ -585,8 +586,6 @@
     cursor: pointer;
 }
 
-@media (max-width: 991px) {
-    .logo-container {
-        display: none;
-    }
+.filter-search form {
+    width: 100%;
 }

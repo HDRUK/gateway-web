@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Box, Caption } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 
-const NumberOfViews = ({ count }) => {
+const NumberOfViews = ({ count = 0 }) => {
     const { t } = useTranslation();
 
     return (
