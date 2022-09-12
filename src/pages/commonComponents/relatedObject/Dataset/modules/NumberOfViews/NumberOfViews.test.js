@@ -22,5 +22,9 @@ describe('Given the NumberOfViews component', () => {
         it('should display the correct counter and label', () => {
             expect(screen.getByTestId('numberOfViews')).toHaveTextContent('Viewed 23 times');
         });
+        it('should display the correct counter and label', () => {
+            render(<NumberOfViews count={undefined} />);
+            expect(screen.getByTestId('numberOfViews')).toHaveTextContent('Viewed 0 times');
+        });
     });
 });
