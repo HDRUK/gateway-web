@@ -3,10 +3,8 @@ import { jsx } from '@emotion/react';
 import { cx } from '@emotion/css';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Card, Dimmer } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
-
-import Card from '../Card';
-import Dimmer from '../Dimmer';
 import LayoutBox from '../LayoutBox';
 import Cta from '../Cta';
 import { ReactComponent as CloseIcon } from '../../images/close-alt.svg';
