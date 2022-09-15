@@ -45,6 +45,10 @@ import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
 import handleAnalytics from './handleAnalytics';
 
+import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
+import DropdownCustom from '../DataAccessRequest/components/DropdownCustom/DropdownCustom';
+import DoubleDropdownCustom from '../DataAccessRequest/components/DoubleDropdownCustom/DoubleDropdownCustom';
+
 const questionActions = {
     questionActions: [{ key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 }],
 };
@@ -695,6 +699,9 @@ export const DataAccessRequestCustomiseForm = props => {
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
     Winterfell.addInputType('datePickerCustom', DatePickerCustom);
     Winterfell.addInputType('typeaheadUser', TypeaheadUser);
+    Winterfell.addInputType('textareaInputCustom', TextareaInputCustom);
+    Winterfell.addInputType('dropdownCustom', DropdownCustom);
+    Winterfell.addInputType('doubleDropdownCustom', DoubleDropdownCustom);
 
     Winterfell.validation.default.addValidationMethods({
         isCustomDate: value => {
