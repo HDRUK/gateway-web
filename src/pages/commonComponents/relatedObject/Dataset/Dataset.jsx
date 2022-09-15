@@ -131,20 +131,22 @@ const Dataset = ({
                         alignItems='center'
                         className={cx('gray800-14', { underlined: !!activeLink })}
                         css={styles.pointer}
-                        onClick={() =>
-                            updateOnFilterBadge('publisher', {
-                                label: publisherDetails.label,
-                                parentKey: 'publisher',
-                            })
-                        }
                         data-testid={`publisher-${publisherDetails.name}`}>
                         {publisherDetails.showShield && (
                             <ToolTip text={`Member of ${publisherDetails.memberOf}`} placement='bottom-start'>
-                                <Icon svg={<Shield fill='inherit' />} size='2xl' />
+                                <Icon mr={1} svg={<Shield fill='inherit' />} size='2xl' />
                             </ToolTip>
                         )}
-                        &nbsp;
-                        {publisherDetails.name}
+                        <a
+                            role='button'
+                            onClick={() =>
+                                updateOnFilterBadge('publisher', {
+                                    label: publisherDetails.label,
+                                    parentKey: 'publisher',
+                                })
+                            }>
+                            {publisherDetails.name}
+                        </a>
                     </Box>
                 </Col>
                 <Col xs={5} sm={3} className={isLocked ? 'lockSVG' : ''}>
