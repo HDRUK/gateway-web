@@ -2,12 +2,13 @@ import * as Sentry from '@sentry/react';
 import _, { isEmpty } from 'lodash';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
-import { Alert, Col, Container, Row, Tab, Tabs, Tooltip } from 'react-bootstrap';
+import { Col, Container, Row, Tab, Tabs, Tooltip } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import 'react-tabs/style/react-tabs.css';
+import { Box } from 'hdruk-react-core';
+import Alert from '../../../components/Alert';
 import { LayoutContent } from '../../../components/Layout';
-import LayoutBox from '../../../components/LayoutBox';
 import SearchControls from '../../../components/SearchControls';
 import SVGIcon from '../../../images/SVGIcon';
 import collectionsService from '../../../services/collections';
@@ -383,32 +384,36 @@ export const DataUseView = props => {
                 <Container className='margin-bottom-48'>
                     {dataUseAdded && (
                         <LayoutContent>
-                            <Alert data-test-id='datause-added-banner' variant='success' className='mt-3'>
+                            <Alert variant='success' mt={3}>
                                 Done! Someone will review your data use and let you know when it goes live
                             </Alert>
                         </LayoutContent>
                     )}
+
                     {dataUseEdited && (
                         <LayoutContent>
-                            <Alert variant='success' className='mt-3'>
+                            <Alert variant='success' mt={3}>
                                 Done! Your data use has been updated
                             </Alert>
                         </LayoutContent>
                     )}
+
                     {dataUseData.activeflag === 'inReview' && (
                         <LayoutContent>
-                            <Alert data-test-id='datause-pending-banner' variant='warning' className='mt-3'>
+                            <Alert variant='warning' mt={3}>
                                 Your data use is pending review. Only you can see this page.
                             </Alert>
                         </LayoutContent>
                     )}
+
                     {dataUseData.activeflag === 'archived' && (
                         <LayoutContent>
-                            <Alert data-test-id='datause-pending-banner' variant='warning' className='mt-3'>
+                            <Alert variant='warning' mt={3}>
                                 Your data use is archived. Only you can see this page.
                             </Alert>
                         </LayoutContent>
                     )}
+
                     <Row className='mt-4'>
                         <Col sm={1} lg={1} />
                         <Col sm={10} lg={10}>
@@ -437,8 +442,7 @@ export const DataUseView = props => {
                                                         className='badge-tag badge-datause-bold'
                                                         onClick={() => {
                                                             handleAnalytics('Clicked on datausekeywords', keyword);
-                                                        }}
-                                                    >
+                                                        }}>
                                                         {keyword}
                                                     </a>
                                                 ))}
@@ -468,8 +472,7 @@ export const DataUseView = props => {
                                             googleAnalytics.recordVirtualPageView(`${key} tab`);
 
                                             handleAnalytics(`Clicked ${key} tab`, `Viewing ${key}`);
-                                        }}
-                                    >
+                                        }}>
                                         <Tab eventKey='about' title='About'>
                                             <About data={dataUseData} />
                                         </Tab>
@@ -496,9 +499,9 @@ export const DataUseView = props => {
                                                     sortProps={dropdownProps}
                                                 />
                                                 {relatedObjectsFiltered.length <= 0 ? (
-                                                    <LayoutBox mt={2}>
+                                                    <Box mt={2}>
                                                         <MessageNotFound word='related resources' />
-                                                    </LayoutBox>
+                                                    </Box>
                                                 ) : (
                                                     relatedObjectsFiltered.map((object, index) => (
                                                         <span key={index}>

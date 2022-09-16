@@ -6,7 +6,6 @@ import React, { Component, Fragment, useState } from 'react';
 import { Dropdown, Nav } from 'react-bootstrap';
 import { Route, withRouter } from 'react-router-dom';
 import 'react-web-tabs/dist/react-web-tabs.css';
-import Icon from '../../components/Icon';
 import { DashboardProvider } from '../../context/DashboardContext';
 import { ReactComponent as CheckSVG } from '../../images/check.svg';
 import { ReactComponent as ChevronRightSvg } from '../../images/chevron-bottom.svg';
@@ -25,7 +24,7 @@ import { ReactComponent as UserIcon } from '../../images/icons/user.svg';
 import { ReactComponent as UsersIcon } from '../../images/icons/users.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
-import { getTeam, isAdmin, isCustodian, isUser } from '../../utils/auth';
+import { getTeam, isAdmin, isCustodian, isPublisherAdmin, isUser } from '../../utils/auth';
 import { isRouteMatch } from '../../utils/router';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -513,7 +512,7 @@ class Account extends Component {
     };
 
     userHasRole(teamId, role) {
-        const team = this.state.userState[0].teams.filter(t => {
+        const team = this?.state?.userState[0]?.teams.filter(t => {
             return t._id === teamId;
         })[0];
         return team && team.roles.some(r => role.includes(r));
@@ -693,12 +692,15 @@ class Account extends Component {
                     text: 'Dashboard',
                     id: 'datause',
                 },
-                // {
-                //     text: 'Data use widget',
-                //     id: 'datause_widget',
-                // },
             ],
         };
+
+        this.userHasRole(team, ['manager']) &&
+            publisherDetails.dataUse?.widget?.enabled &&
+            ACCORDIAN_DUR_MENU.children.push({
+                text: 'Data use widget',
+                id: 'datause_widget',
+            });
 
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
@@ -943,7 +945,7 @@ class Account extends Component {
                                         <WorkflowDashboard userState={userState} team={team} />
                                     )}
 
-                                    {(this.userHasRole(team, ['manager']) || team === 'admin') &&
+                                    {(this.userHasRole(team, ['manager']) || isPublisherAdmin(userState, team)) &&
                                         (tabId === 'customisedataaccessrequests_applicationform' ||
                                             tabId === 'customisedataaccessrequests_guidance') && (
                                             <CustomiseDAR

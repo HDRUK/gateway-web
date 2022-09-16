@@ -13,25 +13,24 @@ exports[`Given the AccountDatasets component When it is rendered Then matches th
         class="ui-LayoutContent--content col-10"
       >
         <div
-          class="fade col-sm-12 main-alert alert alert-success show"
-          role="alert"
+          class="ui-Box css-672p6m"
         >
-          <svg
-            class=""
-            data-testid="check"
-            height="18"
-            viewBox="0 0 24 22"
-            width="18"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <div
+            class="ui-Alert css-mdcthr-Alert"
           >
-            <path
-              d="M9.988 17c-.265 0-.52-.105-.707-.292l-3-3c-.38-.393-.374-1.016.012-1.402.386-.386 1.01-.391 1.402-.012l2.2 2.2 6.303-8.107c.339-.437.967-.516 1.404-.176.436.339.515.967.176 1.404l-7 9c-.176.227-.441.368-.728.386h-.062z"
-              fill="#2C8267"
-            />
-          </svg>
-           
-          Message goes here
+            <div
+              class="ui-Alert__icon css-1jspzre-Alert"
+            >
+              <icon
+                svg="[object Object]"
+              />
+            </div>
+            <div
+              class="css-ungsl1-Alert"
+            >
+              Message goes here
+            </div>
+          </div>
         </div>
         <div
           class="accountHeader"

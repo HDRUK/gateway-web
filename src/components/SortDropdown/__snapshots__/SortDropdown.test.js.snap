@@ -3,13 +3,13 @@
 exports[`Given the SortDropdown component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-SortDropdown css-16k9oib-SortDropdown"
+    class="ui-SortDropdown additional-classname css-13ymzsx-SortDropdown"
   >
     <div
-      class="ui-LayoutBox css-1sivg29"
+      class="ui-Box css-672p6m"
     >
       <div
-        class="ui-Dropdown css-v2dfip-SortDropdown show dropdown"
+        class="ui-Dropdown css-cewc3p-SortDropdown show dropdown"
       >
         <button
           aria-expanded="true"
@@ -58,13 +58,13 @@ exports[`Given the SortDropdown component When it is rendered Then matches the p
 exports[`Given the SortDropdown component When it is rendered When it allows sort direction Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-SortDropdown css-16k9oib-SortDropdown"
+    class="ui-SortDropdown additional-classname css-13ymzsx-SortDropdown"
   >
     <div
-      class="ui-LayoutBox css-1sivg29"
+      class="ui-Box css-672p6m"
     >
       <div
-        class="ui-Dropdown css-v2dfip-SortDropdown dropdown"
+        class="ui-Dropdown css-cewc3p-SortDropdown dropdown"
       >
         <button
           aria-expanded="false"
@@ -75,7 +75,7 @@ exports[`Given the SortDropdown component When it is rendered When it allows sor
       </div>
     </div>
     <button
-      class="css-11u46hl-SortDropdown btn btn-link"
+      class="css-sedex9-SortDropdown btn btn-link"
       ml="2"
       type="button"
     >
@@ -83,9 +83,9 @@ exports[`Given the SortDropdown component When it is rendered When it allows sor
         class="ui-SortDropdown__asc"
       >
         <span
-          class="ui-Icon css-1sivg29 css-2483bc-Icon"
+          class="ui-Icon css-1tuhzuv css-jh808c-Icon"
         >
-          <iconmock />
+          <icon-mock />
         </span>
       </span>
     </button>

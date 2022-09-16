@@ -2,8 +2,8 @@
 import { cx } from '@emotion/css';
 import { jsx } from '@emotion/react';
 import PropTypes from 'prop-types';
+import { Box } from 'hdruk-react-core';
 import Icon from '../Icon';
-import LayoutBox from '../LayoutBox';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Cta.styles';
 
@@ -21,7 +21,7 @@ const fontSizes = {
 
 const Cta = ({ color, children, mt, mb, ml, mr, width, minWidth, maxWidth, iconLeft, iconRight, className, fill, size, ...outerProps }) => {
     return (
-        <LayoutBox
+        <Box
             {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}
             as='a'
             display='flex'
@@ -31,7 +31,7 @@ const Cta = ({ color, children, mt, mb, ml, mr, width, minWidth, maxWidth, iconL
             className={cx('ui-Cta', className)}>
             {iconLeft && <Icon svg={iconLeft} size={iconSizes[size]} />} {children}{' '}
             {iconRight && <Icon svg={iconRight} size={iconSizes[size]} />}
-        </LayoutBox>
+        </Box>
     );
 };
 

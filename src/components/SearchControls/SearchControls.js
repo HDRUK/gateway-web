@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import SearchControlsForm from './SearchControlsForm';
 
@@ -24,7 +24,7 @@ const SearchControls = ({
     if (isLoading) return null;
 
     return (
-        <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
+        <Box {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
             <Formik
                 initialValues={{
                     search: inputProps && !!inputProps.value ? inputProps.value : '',
@@ -33,11 +33,10 @@ const SearchControls = ({
                 }}
                 onSubmit={onSubmit}
                 innerRef={formRef}
-                enableReinitialize={enableReinitialize}
-            >
+                enableReinitialize={enableReinitialize}>
                 <SearchControlsForm sortProps={sortProps} inputProps={inputProps} {...outerProps} />
             </Formik>
-        </LayoutBox>
+        </Box>
     );
 };
 

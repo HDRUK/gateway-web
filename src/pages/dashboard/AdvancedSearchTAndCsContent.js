@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import './AdvancedSearchRequestAccessModal.scss';
 import { Form } from 'react-bootstrap';
 
 const AdvancedSearchTAndCsContent = props => {
-    const formik = props.formik;
+    const { formik } = props;
 
     return (
-        <Fragment className='advancedSearchTAndCModal'>
+        <div className='advancedSearchTAndCModal'>
             <div className={props.showFormValidation ? 'relatedModalBackground' : ''}>
                 <p>Click on the links below to go straight to more information on each area:</p>
                 <div className='termsLinks'>
@@ -92,8 +92,7 @@ const AdvancedSearchTAndCsContent = props => {
                                 className='link'
                                 href='https://www.hdruk.ac.uk/terms-and-conditions/cookies/'
                                 target='_blank'
-                                rel='noopener noreferrer'
-                            >
+                                rel='noopener noreferrer'>
                                 Cookie Policy
                             </a>
                             , which sets out information about the cookies on our site.
@@ -349,6 +348,7 @@ const AdvancedSearchTAndCsContent = props => {
                                 default={false}
                                 checked={formik.values.terms}
                                 onChange={formik.handleChange}
+                                data-testid='terms'
                             />
                             <div id='accept-terms' className='gray800-14 advancedSearchAcceptTerms'>
                                 I have read and understood the HDR Discovery Tool Terms of Use
@@ -366,7 +366,7 @@ const AdvancedSearchTAndCsContent = props => {
                     ''
                 )}
             </div>
-        </Fragment>
+        </div>
     );
 };
 

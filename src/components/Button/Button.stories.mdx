@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs';
 import SVG from 'react-inlinesvg';
-import tickIcon from '../../images/icons/tick.svg';
+import uploadIcon from '../../images/icons/upload.svg';
 import flowIcon from '../../images/icons/flow.svg';
 import Icon from '../Icon';
 import Button from './Button';
@@ -63,12 +63,12 @@ import Button from './Button';
         {props => (
             <>
                 <div>
-                    <Button {...props} mb={4} iconLeft={<Icon svg={<SVG src={tickIcon} />} />}>
+                    <Button {...props} mb={4} iconLeft={<SVG src={uploadIcon} />}>
                         Icon left
                     </Button>
                 </div>
                 <div>
-                    <Button {...props} mb={4} iconRight={<Icon svg={<SVG src={flowIcon} />} />}>
+                    <Button {...props} mb={4} iconRight={<SVG src={flowIcon} />}>
                         Icon right
                     </Button>
                 </div>
@@ -76,7 +76,7 @@ import Button from './Button';
                     <Button
                         {...props}
                         mb={4}
-                        iconLeft={<Icon svg={<SVG src={tickIcon} />} />}
+                        iconLeft={<Icon svg={<SVG src={uploadIcon} />} />}
                         iconRight={<Icon svg={<SVG src={flowIcon} />} />}>
                         Icon left and right
                     </Button>

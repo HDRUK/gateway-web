@@ -1,0 +1,29 @@
+import { useState } from 'react';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import Modal from './Modal';
+import Button from '../Button';
+import ModalHeader from './ModalHeader';
+import ModalBody from './ModalBody';
+import ModalFooter from './ModalFooter';
+
+<Meta title='Core/Organisms/Modal' component={Modal} />
+
+<Canvas>
+    <Story name='Basic'>
+        {props => {
+            return (
+                <Modal open dismissable>
+                    <ModalHeader>Header</ModalHeader>
+                    <ModalBody>Body</ModalBody>
+                    <ModalFooter>
+                        <Button variant='tertiary' mr={2}>
+                            Cancel
+                        </Button>
+                        <Button>Submit</Button>
+                    </ModalFooter>
+                </Modal>
+            );
+        }}
+    </Story>
+</Canvas>

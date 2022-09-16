@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-FeatureContentVertical ui-Card css-1b4nj03-En"
+    role="article"
+  >
+    <div
+      class="ui-CardBody css-d18448-Wn"
+    >
+      <div
+        class="css-5ijvz8"
+      >
+        <h5
+          class="ui-Typography css-er4lk4-Component"
+        >
+          <div
+            class="ui-Box css-672p6m"
+          >
+            <div
+              class="ui-Box css-672p6m"
+            >
+              <div
+                class="ui-Box css-672p6m"
+              >
+                Data Utility Wizard
+              </div>
+              <span
+                class="ui-Tag css-v2u436"
+              >
+                BETA
+              </span>
+            </div>
+          </div>
+        </h5>
+        <div
+          class="css-94pk7g"
+        >
+          <img
+            alt="search.advanced.dataUtilityWizard.mediaAlt"
+            src=""
+          />
+        </div>
+        <div
+          class="ui-Box css-672p6m"
+        >
+          <p
+            class="ui-Typography css-7ctxla-Component"
+          >
+            A tool to help refine your search to only datasets that meet your data utility requirements.
+          </p>
+        </div>
+        <div
+          class="ui-Box css-672p6m"
+        >
+          <button
+            class="ui-Button css-1wpvbqr"
+            type="button"
+          >
+             
+            Search using Data Utility Wizard
+             
+          </button>
+          <a
+            href="https://www.healthdatagateway.org/about/data-utility-wizard"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <p
+              class="ui-Typography css-7ctxla-Component"
+            >
+              Learn more
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered And the action is clicked Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-FeatureContentVertical ui-Card css-1b4nj03-En"
+    role="article"
+  >
+    <div
+      class="ui-CardBody css-d18448-Wn"
+    >
+      <div
+        class="css-5ijvz8"
+      >
+        <h5
+          class="ui-Typography css-er4lk4-Component"
+        >
+          <div
+            class="ui-Box css-672p6m"
+          >
+            <div
+              class="ui-Box css-672p6m"
+            >
+              <div
+                class="ui-Box css-672p6m"
+              >
+                Cohort Discovery
+              </div>
+              <span
+                class="ui-Tag css-v2u436"
+              >
+                BETA
+              </span>
+            </div>
+          </div>
+        </h5>
+        <div
+          class="css-94pk7g"
+        >
+          <img
+            alt="Cohort Discovery feature image"
+            src=""
+          />
+        </div>
+        <div
+          class="ui-Box css-672p6m"
+        >
+          <p
+            class="ui-Typography css-7ctxla-Component"
+          >
+            Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.
+          </p>
+        </div>
+        <div
+          class="ui-Box css-672p6m"
+        >
+          <button
+            class="ui-Button css-1wpvbqr"
+            type="button"
+          >
+             
+            You must be signed in to use cohort discovery
+             
+          </button>
+          <a
+            href="https://www.healthdatagateway.org/about/cohort-discovery"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <p
+              class="ui-Typography css-7ctxla-Component"
+            >
+              Learn more
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button>
+    Yes, I agree
+  </button>
+</div>
+`;

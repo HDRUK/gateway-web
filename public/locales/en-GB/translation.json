@@ -96,6 +96,24 @@
                         "message": "There has been a problem getting the related object"
                     }
                 }
+            },
+            "users": {
+                "patchRoles": {
+                    "404": {
+                        "message": "The resource for updating the roles could not be found"
+                    },
+                    "500": {
+                        "message": "There has been a problem updating the roles"
+                    }
+                },
+                "patchTerms": {
+                    "404": {
+                        "message": "The resource for updating the terms and conditions could not be found"
+                    },
+                    "500": {
+                        "message": "There has been a problem updating the terms and conditions"
+                    }
+                }
             }
         }
     },
@@ -122,6 +140,10 @@
     "datetime": {
         "submitted": "Submitted {{datetime}}"
     },
+    "beta": "Beta",
+    "learn.more": "Learn more",
+    "show": "Show",
+    "hide": "Hide",
     "loading": "Loading",
     "activitylog": {
         "notfound": "The activity log for this dataset cannot be accessed. It must be set to {{status}}.",
@@ -133,6 +155,10 @@
     "guidance.unedited": "Guidance unedited",
     "guidance.edited": "Guidance edited",
     "dataset": {
+        "dateUpdated": "Metadata last updated:",
+        "dateUpdatedTooltip": "The last date when the information about this dataset was updated",
+        "publishingFrequency": "Publishing frequency: ",
+        "publishingFrequencyTooltip": "The frequency of publishing new data for this dataset",
         "inReview": "pending approval",
         "active": "Active",
         "active,draft": "Active",
@@ -250,6 +276,20 @@
         "placeholder": "Search within {{type}}",
         "results": {
             "notFound": "Could not find any {{type}} matching {{search}}"
+        },
+        "advanced": {
+            "cohortDiscovery": {
+                "title": "Cohort Discovery",
+                "description": "Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.",
+                "action": "Search using Cohort Discovery",
+                "actionLoggedOut": "Sign in to use Cohort Discovery",
+                "mediaAlt": "Cohort Discovery feature image"
+            },
+            "dataUtilityWizard": {
+                "title": "Data Utility Wizard",
+                "description": "A tool to help refine your search to only datasets that meet your data utility requirements.",
+                "action": "Search using Data Utility Wizard"
+            }
         }
     },
     "tabs": {
@@ -286,10 +326,10 @@
         },
         "options": {
             "popularity": "Number of views (highest to lowest)",
-            "metadata": "Metadata quality (platinum to bronze)",
-            "metadataQuality": "Metadata quality (platinum to bronze)",
+            "metadata": "Metadata richness score",
+            "metadataQuality": "Metadata richness score",
             "resources": "Related resources (most first)",
-            "latest": "Latest (recently updated first)",
+            "latest": "Metadata last updated",
             "recentActivity": "Recent activity (newest first)",
             "recentlyadded": "Recently added to collection (newest first)",
             "recentlyPublished": "Recently published (newest first)",
@@ -324,8 +364,10 @@
         "teamEmailText": "Send email notifications to team email address"
     },
     "searchResultsInfo": {
-        "withTerm": "Showing {{count}} results for '{{searchTerm}}'",
-        "withOutTerm": "Showing {{count}} results"
+        "sortedBy": "Sorted by:",
+        "searchFilters": "Search filters",
+        "withOutTerm": "Showing {{count}} results",
+        "for": " for "
     },
     "datause": {
         "upload": {
@@ -340,7 +382,7 @@
             "fileSizeLimit": "File exceeds 10MB limit",
             "errorLoading": "There was an error loading the file",
             "errors": "There are errors in the data you uploaded. Please correct these and try again. Errors are listed below.",
-            "warning": "Warning! Uploading a new file will delete any data uses that have not yet been submitted for admin checks by the gateway team.",
+            "warning": "Warning! Uploading a new file will delete any data uses that have not yet been submitted for admin checks by the Gateway team.",
             "loadingtext": "Uploading...",
             "requiredError": "Error in row {{row}} Mandatory field “{{column}}” is empty",
             "duplicateError": "Error in row {{row}} : Suspected data use duplicate",
@@ -366,6 +408,14 @@
         }
     },
     "DAR": {
+        "upload": {
+            "virus": {
+                "error": "Virus scan failed! Your file, {{name}}, could not be scanned for viruses but you can still submit your application without it. To try and upload the file again, click “Select files” above. If the problem persists, please <2>Raise a Support Ticket</2>.",
+                "quarantined": " Virus detected! Your file {{name}} has been quarantined but you can still submit your application without it. You can try to upload the file again or please try a different version of the file"
+            },
+            "file-too-large": "File exceeds {{size}} limit",
+            "file-invalid-type": "File type not supported"
+        },
         "customise": {
             "title": "Customise data access requests",
             "description": "Manage and edit your 'how to request access' information, your data access request form and workflows",
@@ -377,6 +427,7 @@
                 "description": "Elements of the data access request form (Five safes form) can be customised as required by <b>{{publisherName}}</b>. You may choose which questions should be turned on/off and edit the accompanying for each question. However, we recommend modifying the guidance only if necessary for your data governance processes, and please note that some questions and guidance are mandatory, for example where the form has been aligned with the National Data Guardian.<br/><br/> Please consider carefully whether additional questions are required, as we are working to standardise the data access process as much as possible. If you would still like to propose addition of a new question, please raise a ticket at <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>https://hdruk.atlassian.net/servicedesk/customer/portal/1</a>"
             },
             "saveAlert": "Every change you make is automatically saved with the latest save time shown in the top right",
+            "uploadAlert": "You have successfully imported the DAR config file. Please check all sections to ensure everything is correct",
             "optionalQuestionsIncluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To exclude this section, simply click the switch above and it will not be visible to the applicants",
             "optionalQuestionsExcluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To include this section, simply click the switch above and customise each question as required",
             "warningAlert": "Please note that both Presubmission Guidance and DAR Application Form must be completed before they can be published.",
@@ -408,6 +459,11 @@
             "noChanges": "No changes have been made to your application form so it cannot be published.",
             "clearSection": "Are you sure you want to clear the unpublished updates in this section? You will permenantly lose any changes made by you and other team member in this area since the form was last published.",
             "clear": "Are you sure you want to clear all the unpublished updates to this form? You will permenantly lose any changes made by you and other team member since this form was last published."
+        }
+    },
+    "components": {
+        "QualityScore": {
+            "tooltip": "<p>Metadata richness score: {{score}}</p><p>The score relates to the amount of information available about the dataset, and not to the quality of the actual datasets.</p><p>Click to read more about how the score is calculated.</p><p>{{completeness_percent}} Weighted completeness %<br />{{error_percent}} Weighted error %</p>"
         }
     }
 }

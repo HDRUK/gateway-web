@@ -2,26 +2,28 @@ import * as Sentry from '@sentry/react';
 import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useEffect, useState } from 'react';
-import { Col, Container, Modal, Row } from 'react-bootstrap';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { Trans } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
-import { useHistory } from 'react-router-dom';
 import { NotificationManager } from 'react-notifications';
+import { useHistory, useLocation } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
-import Button from '../../components/Button';
-import Cta from '../../components/Cta';
+import { Button, Box, P, H5, Typography, Cta } from 'hdruk-react-core';
+import Alert from '../../components/Alert';
 import Icon from '../../components/Icon';
-import LayoutBox from '../../components/LayoutBox';
 import Spinner from '../../components/Spinner/Spinner';
-import Typography, { H5, P } from '../../components/Typography';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
 import questionbankService from '../../services/questionbank';
+import { getTeam, isPublisherAdmin } from '../../utils/auth';
 import helpers from '../../utils/DarHelper.util';
+import { diffObjects } from '../../utils/GeneralHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../commonComponents/ActionBarMenu/ActionBarMenu';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -30,8 +32,10 @@ import Loading from '../commonComponents/Loading';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
-import Uploads from '../DataAccessRequest/components/Uploads/Uploads';
+import Uploads from './components/Uploads/Uploads';
 import { classSchema } from './classSchema';
+import AboutApplication from './components/AboutApplication/AboutApplication';
+import AboutApplicationImport from './components/AboutApplicationImport/AboutApplicationImport';
 import CustomiseGuidance from './components/CustomiseGuidance/CustomiseGuidance';
 import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
 import NavDropdown from './components/NavDropdown/NavDropdown';
@@ -40,15 +44,14 @@ import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UnpublishedQuestionIcon from './components/UnpublishedQuestionIcon';
 import handleAnalytics from './handleAnalytics';
-import './DataAccessRequestCustomiseForm.scss';
-import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
-import Close from '../../images/icons/close_blue.svg';
-import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
-import { Trans } from 'react-i18next';
+
 import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
 import DropdownCustom from '../DataAccessRequest/components/DropdownCustom/DropdownCustom';
 import DoubleDropdownCustom from '../DataAccessRequest/components/DoubleDropdownCustom/DoubleDropdownCustom';
+
+const questionActions = {
+    questionActions: [{ key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 }],
+};
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
@@ -91,8 +94,19 @@ export const DataAccessRequestCustomiseForm = props => {
     const [showClearModal, setShowClearModal] = React.useState(false);
     const [showClearSectionModal, setShowClearSectionModal] = React.useState(false);
     const [showSaveAlert, setShowSaveAlert] = useState(true);
+    const [isUploading, setIsUploading] = useState(false);
+    const [isUploaded, setIsUploaded] = useState(false);
 
-    const patchSchemaRequest = darService.usePatchSchema();
+    const location = useLocation();
+    const team = getTeam({ location });
+
+    const patchSchemaRequest = darService.usePatchSchema(null, {
+        onError: ({ title, message }) => {
+            setIsUploading(false);
+
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
     const getMasterSchema = async panelId => {
         const {
@@ -110,24 +124,18 @@ export const DataAccessRequestCustomiseForm = props => {
         const {
             data: {
                 result: { masterSchema, questionStatus, questionSetStatus, guidance, countOfChanges, schemaId, unpublishedGuidance },
-                result,
             },
         } = await questionbankService.getQuestionbankItem(publisherID);
 
-        const questionActions = {
-            questionActions: [
-                { key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 },
-                { key: 'guidanceLocked', icon: 'far fa-eye', color: '#475da7', toolTip: 'View locked guidance', order: 1 },
-            ],
-        };
+        const newJsonSchema = helpers.injectReadonlyStaticContent(
+            { ...masterSchema, ...classSchema, ...questionActions },
+            { questionStatus, questionSetStatus, guidance },
+            publisher.publisherDetails,
+            userState
+        );
 
-        const newPanelId = panelId || masterSchema.formPanels[0].panelId;
-        const newJsonSchema = helpers.injectReadonlyStaticContent({ ...masterSchema, ...classSchema, ...questionActions }, newPanelId);
-
+        const newPanelId = panelId || newJsonSchema.formPanels[0].panelId;
         const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
-
-        console.log('questionSet', questionStatus);
-        console.log('questionSetStatus', questionSetStatus);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
@@ -191,23 +199,16 @@ export const DataAccessRequestCustomiseForm = props => {
         setQuestionStatus(newQuestionStatus);
         setQuestionSetStatus(newQuestionSetStatus);
 
-        await patchSchemaRequest.mutateAsync(
-            {
-                id: schemaId,
-                ...params,
-            },
-            {
-                onError: ({ title, message }) => {
-                    NotificationManager.error(message, title, 10000);
-                },
-            }
-        );
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
 
         setLastSaved(saveTime());
         handleAnalytics(`Question Set ${questionSetId} switched`, checked ? 'On' : 'Off');
     };
 
-    const onSwitchChange = (questionId, value) => {
+    const onSwitchChange = async (questionId, value) => {
         const newJsonSchema = { ...jsonSchema };
         const questionSet = helpers.findQuestionSetByQuestionId(questionId, newJsonSchema);
 
@@ -247,17 +248,10 @@ export const DataAccessRequestCustomiseForm = props => {
             countOfChanges: numberOfChangesQuestions + numberOfChangesGuidance + existingCountOfChanges,
         };
 
-        patchSchemaRequest.mutateAsync(
-            {
-                id: schemaId,
-                ...params,
-            },
-            {
-                onError: ({ title, message }) => {
-                    NotificationManager.error(message, title, 10000);
-                },
-            }
-        );
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
 
         setLastSaved(saveTime());
         handleAnalytics(`Question ${questionId} switched`, value ? 'On' : 'Off');
@@ -333,21 +327,7 @@ export const DataAccessRequestCustomiseForm = props => {
     };
 
     const onNextClick = () => {
-        // 1. If in the about panel, we go to the next step.  Otherwise next panel.
-        if (activePanelId === 'about') {
-            // 2. Pass no completed bool value to go to next step without modifying completed status
-            this.onNextStep();
-            // 3. If we have reached the end of the about accordion, reset active accordion so all are closed
-            if (this.state.activeAccordionCard >= 6) {
-                this.setState({
-                    activeAccordionCard: -1,
-                });
-                // 4. Move to the next step
-                onNextPanel();
-            }
-        } else {
-            onNextPanel();
-        }
+        onNextPanel();
     };
 
     const onNextPanel = () => {
@@ -361,49 +341,6 @@ export const DataAccessRequestCustomiseForm = props => {
         const { panelId, pageId } = formPanels[nextIdx > formPanels.length - 1 ? 0 : nextIdx];
         // 5. Update the navigationState
         updateNavigation({ panelId, pageId });
-    };
-
-    const onNextStep = async completed => {
-        // 1. Deconstruct current state
-        /* let { aboutApplication, activeAccordionCard } = this.state;
-		// 2. If a completed flag has been passed, update step during navigation
-		if (!_.isUndefined(completed)) {
-			switch (activeAccordionCard) {
-				case 0:
-					aboutApplication.completedDatasetSelection = completed;
-					break;
-				case 1:
-					// Do nothing, valid state for project name step handled by existence of text
-					break;
-				case 2:
-					aboutApplication.completedInviteCollaborators = completed;
-					break;
-				case 3:
-					aboutApplication.completedReadAdvice = completed;
-					break;
-				case 4:
-					aboutApplication.completedCommunicateAdvice = completed;
-					break;
-				case 5:
-					aboutApplication.completedApprovalsAdvice = completed;
-					break;
-				case 6:
-					aboutApplication.completedSubmitAdvice = completed;
-					break;
-				default:
-					console.error('Invalid step passed');
-					break;
-			}
-		}
-		// 3. Update application
-		let dataObj = { key: 'aboutApplication', data: aboutApplication };
-		await this.updateApplication(dataObj);
-
-		// 4. Set new state
-		this.setState({
-			activeAccordionCard: ++activeAccordionCard,
-			aboutApplication,
-		}); */
     };
 
     const onQuestionAction = async (e = '', questionSetId = '', questionId = '', key = '') => {
@@ -529,8 +466,6 @@ export const DataAccessRequestCustomiseForm = props => {
             unpublishedGuidance: unpublishedGuidanceChange,
         };
 
-        darService.patchSchema(schemaId, params);
-
         await patchSchemaRequest.mutateAsync({
             id: schemaId,
             ...params,
@@ -555,6 +490,7 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema(activePanelId);
 
         setShowClearModal(false);
+
         handleAnalytics('Clearing updates', 'Entire form');
     }, [activePanelId, publisherDetails._id]);
 
@@ -566,6 +502,7 @@ export const DataAccessRequestCustomiseForm = props => {
         getMasterSchema(activePanelId);
 
         setShowClearSectionModal(false);
+
         handleAnalytics('Clearing updates', page.title);
     }, [activePanelId, publisherDetails._id]);
 
@@ -575,16 +512,113 @@ export const DataAccessRequestCustomiseForm = props => {
         setShowClearSectionModal(false);
     };
 
+    const handleImportUpload = async (
+        {
+            questionStatus: uploadQuestionStatus,
+            questionSetStatus: uploadQuestionSetStatus,
+            guidance: uploadGuidance,
+            jsonSchema: uploadJsonSchema,
+        },
+        { reset }
+    ) => {
+        setIsUploading(true);
+
+        await questionbankService.patchClearAll(publisherDetails._id);
+
+        const {
+            data: {
+                result: { questionStatus, questionSetStatus, guidance },
+            },
+        } = await questionbankService.getQuestionbankItem(publisherDetails._id);
+
+        const newJsonSchema = helpers.injectReadonlyStaticContent(
+            { ...uploadJsonSchema, ...classSchema, ...questionActions },
+            {},
+            publisherDetails,
+            userState
+        );
+        const newPanelId = newJsonSchema.formPanels[0].panelId;
+
+        const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
+
+        const updatedGuidance = diffObjects(guidance, uploadGuidance);
+        const updatedQuestionStatus = diffObjects(questionStatus, uploadQuestionStatus);
+        const updatedQuestionSetStatus = diffObjects(questionSetStatus, uploadQuestionSetStatus);
+
+        const params = {
+            countOfChanges:
+                Object.keys(updatedGuidance).length +
+                Object.keys(updatedQuestionStatus).length +
+                Object.keys(updatedQuestionSetStatus).length,
+            guidance: updatedGuidance,
+            questionStatus: uploadQuestionStatus,
+            questionSetStatus: uploadQuestionSetStatus,
+        };
+
+        await patchSchemaRequest.mutateAsync({
+            id: schemaId,
+            ...params,
+        });
+
+        setIsUploaded(true);
+        setIsUploading(false);
+
+        reset();
+
+        setUnpublishedGuidance(unpublishedGuidance);
+        setJsonSchema(newJsonSchema);
+        setQuestionStatus(uploadQuestionStatus);
+        setQuestionSetStatus(uploadQuestionSetStatus);
+        setExistingQuestionStatus(cloneDeep(uploadQuestionStatus));
+        setNewGuidance(updatedGuidance);
+        setExistingGuidance(cloneDeep(updatedGuidance));
+        setCountOfChanges(params.countOfChanges);
+        setExistingCountOfChanges(params.countOfChanges);
+        setActivePanelId(newPanelId);
+
+        updateNavigation(
+            {
+                pageId,
+                panelId: newPanelId,
+            },
+            newJsonSchema
+        );
+    };
+
+    const handleSuccessClose = React.useCallback(() => {
+        setIsUploaded(false);
+
+        patchSchemaRequest.reset();
+    }, []);
+
     const renderApp = React.useCallback(() => {
+        if (isUploading) {
+            return <Loading />;
+        }
+
+        if (activePanelId === 'about') {
+            return (
+                <AboutApplication
+                    sections={[
+                        'Select the datasets you need',
+                        'Name your application',
+                        'Invite contributors',
+                        'Read the advice from the data custodian',
+                        'Communicate with the data custodian',
+                        'Check what approvals you might need',
+                        'Understand what happens after you submit the application',
+                    ]}
+                />
+            );
+        }
+
         if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
-                <Uploads
-                    onFilesUpdate={() => {}}
-                    files={[]}
-                    disabled
-                    description={activePanel.panelHeader}
-                    header={activePanel.questionPanelHeaderText}
-                />
+                <Card>
+                    <Box px={5}>
+                        <Uploads />
+                    </Box>
+                </Card>
             );
         }
 
@@ -632,11 +666,35 @@ export const DataAccessRequestCustomiseForm = props => {
                 />
             )
         );
-    }, [activePanelId, questionStatus, questionSetStatus, questionAnswers, unpublishedGuidance]);
+    }, [activePanelId, questionStatus, questionSetStatus, questionAnswers, unpublishedGuidance, isUploading]);
 
     const handleClose = () => {
         setShowSaveAlert(false);
     };
+
+    const handleExport = useCallback(() => {
+        const { pages, formPanels, questionPanels, questionSets, ...outerSchema } = jsonSchema;
+
+        const currentDate = moment().format('YYYY-MM-DD');
+        const fileName = `dar-${publisherDetails.name.replaceAll(' ', '-').toLowerCase()}-${currentDate}.json`;
+        const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+            JSON.stringify({
+                jsonSchema: {
+                    pages,
+                    formPanels,
+                    questionPanels,
+                    questionSets,
+                },
+                ...outerSchema,
+                questionStatus,
+                questionSetStatus,
+            })
+        )}`;
+        const link = document.createElement('a');
+        link.href = jsonString;
+        link.download = fileName;
+        link.click();
+    }, [jsonSchema, publisherDetails, questionStatus, questionSetStatus]);
 
     Winterfell.addInputType('typeaheadCustom', TypeaheadCustom);
     Winterfell.addInputType('datePickerCustom', DatePickerCustom);
@@ -687,19 +745,19 @@ export const DataAccessRequestCustomiseForm = props => {
 
                         <span className='white-16-semibold pr-5'>{publisherDetails.publisherDetails.name}</span>
                     </Col>
-                    <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
+                    <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right text-white'>
                         {lastSaved && (
-                            <LayoutBox mr={5} display='flex' alignItems='center'>
+                            <Box mr={5} display='flex' alignItems='center'>
                                 {!patchSchemaRequest.isLoading && <Icon svg={<ClockIcon />} stroke='white' size='xl' mr={2} />}
                                 {patchSchemaRequest.isLoading && <Spinner stroke='white' size='xl' mr={2} />}
                                 <span className='white-14-semibold'>{lastSaved}</span>
-                            </LayoutBox>
+                            </Box>
                         )}
                         <Button variant='tertiary' onClick={onClickSave} size='small' mr={5}>
                             Save now
                         </Button>
 
-                        <Cta onClick={redirectDashboard} iconRight={<CloseButtonSvg />} color='white' fill='white'>
+                        <Cta onClick={redirectDashboard} iconRight={<CloseButtonSvg width='1.3em' fill='white' />} color='white'>
                             Close
                         </Cta>
                     </Col>
@@ -707,29 +765,47 @@ export const DataAccessRequestCustomiseForm = props => {
 
                 <div id='darContainer' className='flex-form'>
                     <div id='darLeftCol' className='scrollable-sticky-column'>
-                        {(jsonSchema.pages || []).map((item, idx) => (
-                            <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
-                                <div>
-                                    <h3
-                                        className={`black-16 ${item.active ? 'section-header-active' : 'section-header'} `}
-                                        onClick={e => updateNavigation(item)}>
-                                        <span>{item.title}</span>
-                                    </h3>
-                                    {item.active && (
-                                        <ul className='list-unstyled section-subheader'>
-                                            <NavItem
-                                                parentForm={item}
-                                                questionPanels={jsonSchema.questionPanels}
-                                                onFormSwitchPanel={updateNavigation}
-                                                activePanelId={activePanelId}
-                                                enabled
-                                                notForReview={false}
-                                            />
-                                        </ul>
-                                    )}
+                        {(jsonSchema.pages || []).map((item, idx) => {
+                            let navHeader;
+
+                            if (item.pageId === 'export') {
+                                const panel = jsonSchema.questionPanels.find(panel => panel.panelId === 'export');
+
+                                navHeader = (
+                                    <>
+                                        {panel.navDescription}
+                                        <Button onClick={handleExport} mt={2}>
+                                            {panel.navHeader}
+                                        </Button>
+                                    </>
+                                );
+                            }
+
+                            return (
+                                <div key={`navItem-${idx}`} className={`${item.active ? 'active-border' : ''}`}>
+                                    <div>
+                                        <h3
+                                            className={`black-16 ${item.active ? 'section-header-active' : 'section-header'} `}
+                                            onClick={e => updateNavigation(item)}>
+                                            <span>{item.title}</span>
+                                        </h3>
+                                        {item.active && (
+                                            <ul className='list-unstyled section-subheader'>
+                                                <NavItem
+                                                    parentForm={item}
+                                                    questionPanels={jsonSchema.questionPanels}
+                                                    onFormSwitchPanel={updateNavigation}
+                                                    activePanelId={activePanelId}
+                                                    enabled
+                                                    notForReview={false}
+                                                    navHeader={navHeader}
+                                                />
+                                            </ul>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                     <div id='darCenterCol'>
                         <div id='darDropdownNav'>
@@ -746,14 +822,44 @@ export const DataAccessRequestCustomiseForm = props => {
                             {t('DAR.customise.saveAlert')}
                         </Alert>
 
+                        {isUploaded && (
+                            <Alert variant='success' dismissable onClose={handleSuccessClose} mb={2} mr={2}>
+                                {t('DAR.customise.uploadAlert')}
+                            </Alert>
+                        )}
+
+                        {activePanelId === 'about' && (
+                            <>
+                                <Card>
+                                    <Box p={5}>
+                                        <H5>Data Applicant’s View</H5>
+                                        <P color='grey800' mb={0}>
+                                            This is what the data applicant will see when they begin the full data access request. Please
+                                            note that this section `Before you begin` cannot be customised.
+                                        </P>
+                                    </Box>
+                                </Card>
+                                {isPublisherAdmin(userState, team) && (
+                                    <Card>
+                                        <Box p={5}>
+                                            <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
+                                        </Box>
+                                    </Card>
+                                )}
+                            </>
+                        )}
+
                         <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
                             {jsonSchema.pages
                                 ? [...jsonSchema.pages].map((item, idx) =>
                                       item.active ? (
-                                          <Fragment key={`pageContent-${idx}`}>
-                                              <p className='black-20-semibold mb-0'>{item.active ? item.title : ''}</p>
-                                              <ReactMarkdown className='gray800-14' source={item.description} />
-                                          </Fragment>
+                                          <Typography
+                                              key={`pageContent-${idx}`}
+                                              color={activePanelId === 'about' ? 'grey500' : 'inherit'}
+                                              as='div'>
+                                              <H5 color='inherit'>{item.active ? item.title : ''}</H5>
+                                              <ReactMarkdown source={item.description} />
+                                          </Typography>
                                       ) : (
                                           ''
                                       )
@@ -761,7 +867,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                 : ''}
                         </div>
                         <div
-                            className={`dar__questions ${activePanelId === 'about' ? 'pad-bottom-0' : ''}`}
+                            className={`dar__questions ${activePanelId === 'about' ? 'p-0 mb-0' : ''}`}
                             style={{ backgroundColor: '#ffffff' }}>
                             {renderApp()}
                         </div>
@@ -828,7 +934,6 @@ export const DataAccessRequestCustomiseForm = props => {
                                 }}>
                                 Publish
                             </Button>
-
                             <Button onClick={onNextClick}>Next</Button>
                         </div>
                     </div>{' '}

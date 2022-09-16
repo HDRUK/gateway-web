@@ -4,14 +4,14 @@ import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import React, { Component, Fragment } from 'react';
-import { Alert, Button, Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
+import { Button, Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
+import Alert from '../../components/Alert';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
-import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 import DarHelper from '../../utils/DarHelper.util';
 import DarValidation from '../../utils/DarValidation.util';
@@ -332,7 +332,7 @@ class DataAccessRequest extends Component {
                         applicationType,
                         isLatestMinorVersion,
                         formType,
-                        questionSetStatus,
+                        questionSetStatus = {},
                     },
                 },
             } = response;
@@ -412,7 +412,7 @@ class DataAccessRequest extends Component {
             formType,
             areDatasetsAmended = false,
             dateSubmitted = '',
-            questionSetStatus,
+            questionSetStatus = {},
         } = context;
         let {
             datasetfields: { publisher },
@@ -2071,7 +2071,7 @@ class DataAccessRequest extends Component {
                                                     activePanelId={this.state.activePanelId}
                                                     enabled={allowedNavigation}
                                                     notForReview={!item.inReview && this.state.inReviewMode}
-                                                    questionSetStatus={this.state.questionSetStatus || {}}
+                                                    questionSetStatus={this.state.questionSetStatus}
                                                 />
                                             </ul>
                                         )}
@@ -2081,16 +2081,9 @@ class DataAccessRequest extends Component {
                         </div>
                         <div id='darCenterCol' className={isWideForm ? 'extended' : ''}>
                             {this.state.reviewWarning && (
-                                <Alert variant='warning' className=''>
-                                    <SVGIcon name='attention' width={24} height={24} fill={'#f0bb24'} viewBox='2 -9 22 22'></SVGIcon>
-                                    You are not assigned to this section but can still view the form
-                                </Alert>
+                                <Alert variant='warning'>You are not assigned to this section but can still view the form</Alert>
                             )}
-                            {!_.isEmpty(alert) && (
-                                <Alert variant={'success'} className='main-alert'>
-                                    <SVGIcon name='check' width={24} height={24} fill={'#2C8267'} /> {alert.message}
-                                </Alert>
-                            )}
+                            {!_.isEmpty(alert) && <Alert variant='success'>{alert.message}</Alert>}
                             {/* <div id='darDropdownNav'>
                                 <NavDropdown
                                     options={{

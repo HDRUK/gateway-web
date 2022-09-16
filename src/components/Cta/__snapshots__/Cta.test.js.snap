@@ -7,6 +7,10 @@ exports[`Given the Alert component When it is rendered Then matches the previous
   >
     <span
       class="ui-Icon css-rm889d css-j9cl-Icon"
+    class="ui-Cta additional-classname ui-Box css-g3s3l0-Cta"
+  >
+    <span
+      class="ui-Icon css-1tuhzuv css-jh808c-Icon"
     >
       <span>
         Left
@@ -16,7 +20,7 @@ exports[`Given the Alert component When it is rendered Then matches the previous
     Content
      
     <span
-      class="ui-Icon css-rm889d css-j9cl-Icon"
+      class="ui-Icon css-1tuhzuv css-jh808c-Icon"
     >
       <span>
         Right

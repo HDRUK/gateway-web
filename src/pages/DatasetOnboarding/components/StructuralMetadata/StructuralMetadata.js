@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { isEmpty, some, find } from 'lodash';
 import axios from 'axios';
-import { ReactComponent as UploadSVG } from '../../../../images/upload.svg';
 import readXlsxFile from 'read-excel-file';
 import { Link } from 'react-router-dom';
 import { Row, Col, Alert, Table } from 'react-bootstrap';
+import { ReactComponent as UploadSVG } from '../../../../images/upload.svg';
 import { baseURL } from '../../../../configs/url.config';
 import './StructuralMetadata.scss';
+import { Button } from 'hdruk-react-core';
+import Icon from '../../../../components/Icon';
 
 const StructuralMetadata = ({
     onStructuralMetaDataUpdate,
@@ -21,7 +23,7 @@ const StructuralMetadata = ({
     const maxSize = 10485760;
     const [newStructuralMetaData, setNewStructuralMetaData] = useState(structuralMetadata);
     const [newStructuralMetaDataErrors, setNewStructuralMetaDataErrors] = useState(structuralMetadataErrors);
-    const [showOverrideWarning, setShowOverrideWarning] = useState(!isEmpty(structuralMetadata) ? true : false);
+    const [showOverrideWarning, setShowOverrideWarning] = useState(!isEmpty(structuralMetadata));
     const [showSuccessfullyUploaded, setShowSuccessfullyUploaded] = useState(false);
 
     const schema = {
@@ -92,9 +94,9 @@ const StructuralMetadata = ({
                     } else if (errors.length > 0) {
                         setNewStructuralMetaDataErrors(errors);
                     } else {
-                        let listOfDuplicateRows = [];
+                        const listOfDuplicateRows = [];
                         rows.forEach((row, index) => {
-                            let foundDuplicates = rows.filter(x => x.tableName === row.tableName && x.columnName === row.columnName);
+                            const foundDuplicates = rows.filter(x => x.tableName === row.tableName && x.columnName === row.columnName);
 
                             if (foundDuplicates.length > 1) {
                                 foundDuplicates.every(duplicate => {
@@ -126,7 +128,7 @@ const StructuralMetadata = ({
 
                             percentageCompleted.structural = 100;
 
-                            let params = {
+                            const params = {
                                 rows: JSON.stringify(rows),
                                 key: 'structuralMetadata',
                                 percentageCompleted,
@@ -164,47 +166,46 @@ const StructuralMetadata = ({
                         <br />
                     </>
                 );
-            } else {
-                return (
-                    <>
-                        Error in row {errors.row}: "{errors.column}" is "{errors.value}" and should be "True" or "False"
-                        <br />
-                    </>
-                );
             }
-        } else {
-            if (errors.error === 'tooLong20000') {
-                return (
-                    <>
-                        Error in row {errors.row}: "{errors.column}" too long at {errors.value.length} characters (only 20000 characters are
-                        allowed)
-                        <br />
-                    </>
-                );
-            } else if (errors.error === 'tooLong255') {
-                return (
-                    <>
-                        Error in row {errors.row}: "{errors.column}" too long at {errors.value.length} characters (only 255 characters are
-                        allowed)
-                        <br />
-                    </>
-                );
-            } else if (errors.error === 'duplicate') {
-                return (
-                    <>
-                        Error in row {errors.row}: "{errors.value}" is a duplicate column name
-                        <br />
-                    </>
-                );
-            } else {
-                return (
-                    <>
-                        Error in row {errors.row}: "{errors.column}" is empty and should have content
-                        <br />
-                    </>
-                );
-            }
+            return (
+                <>
+                    Error in row {errors.row}: "{errors.column}" is "{errors.value}" and should be "True" or "False"
+                    <br />
+                </>
+            );
         }
+        if (errors.error === 'tooLong20000') {
+            return (
+                <>
+                    Error in row {errors.row}: "{errors.column}" too long at {errors.value.length} characters (only 20000 characters are
+                    allowed)
+                    <br />
+                </>
+            );
+        }
+        if (errors.error === 'tooLong255') {
+            return (
+                <>
+                    Error in row {errors.row}: "{errors.column}" too long at {errors.value.length} characters (only 255 characters are
+                    allowed)
+                    <br />
+                </>
+            );
+        }
+        if (errors.error === 'duplicate') {
+            return (
+                <>
+                    Error in row {errors.row}: "{errors.value}" is a duplicate column name
+                    <br />
+                </>
+            );
+        }
+        return (
+            <>
+                Error in row {errors.row}: "{errors.column}" is empty and should have content
+                <br />
+            </>
+        );
     };
 
     return (
@@ -257,9 +258,14 @@ const StructuralMetadata = ({
                     <input type='file' id='input' accept='.xls,.xlsx' hidden ref={hiddenFileInput} onChange={onChange} />
                     <p className='black-20-semibold margin-bottom-16'>Upload</p>
                     <div className='upload'>
-                        <button className='button-tertiary' onClick={handleClick} disabled={readOnly}>
-                            <UploadSVG /> Select file...
-                        </button>
+                        <Button
+                            variant='tertiary'
+                            iconLeft={<Icon svg={<UploadSVG />} size='lg' />}
+                            disabled={readOnly}
+                            mr={3}
+                            onClick={handleClick}>
+                            Select file
+                        </Button>
                         <span className='gray700-alt-13'>Excel or xls. Max 10MB per file.</span>
                     </div>
                 </div>
@@ -368,8 +374,7 @@ const StructuralMetadata = ({
                                     <td
                                         className={
                                             some(filtered, ['column', 'Table Description']) ? 'invalid-info table-cell' : 'table-cell'
-                                        }
-                                    >
+                                        }>
                                         {some(filtered, ['column', 'Table Description'])
                                             ? find(filtered, ['column', 'Table Description']).value
                                             : data.tableDescription}
@@ -382,8 +387,7 @@ const StructuralMetadata = ({
                                     <td
                                         className={
                                             some(filtered, ['column', 'Column Description']) ? 'invalid-info table-cell' : 'table-cell'
-                                        }
-                                    >
+                                        }>
                                         {some(filtered, ['column', 'Column Description'])
                                             ? find(filtered, ['column', 'Column Description']).value
                                             : data.columnDescription}

@@ -1,13 +1,14 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import NotificationManager from 'react-notifications';
+import { Box } from 'hdruk-react-core';
 import Loading from '../../commonComponents/Loading';
 import '../Dashboard.scss';
 import { LayoutContent } from '../../../components/Layout';
-import LayoutBox from '../../../components/LayoutBox';
 import Switch from '../../../components/Switch';
 import publishersService from '../../../services/publishers';
 
@@ -22,15 +23,22 @@ const AddEditTeamsPage = ({
     editViewTeamManagers,
     setAlertFunction,
     questionBankEnabled,
+    dataUseWidgetEnabled,
 }) => {
     // state
     const [questionBank, setQuestionBank] = useState(questionBankEnabled);
+    const [dataUseWidget, setDataUseWidget] = useState(dataUseWidgetEnabled);
     const [isLoading, setLoading] = useState(false);
     const [combinedTeamManagers, setCombinedTeamManagers] = useState({});
 
     const memberOfSelect = ['ALLIANCE', 'HUB', 'OTHER', 'NCS'];
 
     const questionBankRequest = publishersService.usePatchQuestionBank();
+    const dataUseWidgetRequest = publishersService.usePatchPublisherDataUseWidget({
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
     const handleMemberOfSelect = key => {
         formik.setFieldValue('memberOf', key);
@@ -71,38 +79,50 @@ const AddEditTeamsPage = ({
         onSubmit: async values => {
             setLoading(true);
 
+            let publisherId = editViewID;
+            let alertText;
+
             if (editTeamsView) {
-                await axios.put(`${baseURL}/api/v1/teams/${editViewID}`, values).then(res => {
-                    const alert = {
-                        message: "You have editted the data custodian team '" + `${editViewMemberOf} > ${editViewOrgName}` + "'",
-                    };
-                    setAlertFunction(alert);
-                    setLoading(false);
-                    cancelAddEdit();
-                });
+                await axios.put(`${baseURL}/api/v1/teams/${editViewID}`, values);
+
+                alertText = {
+                    message: "You have editted the data custodian team '" + `${editViewMemberOf} > ${editViewOrgName}` + "'",
+                };
             } else {
-                await axios.post(`${baseURL}/api/v1/teams/add`, values).then(res => {
-                    const alert = {
-                        message: "You have added the data custodian team '" + `${values.name}` + "'",
-                    };
-                    editViewID = res.data._id;
-                    setAlertFunction(alert);
-                    setLoading(false);
-                    cancelAddEdit();
-                });
+                const newTeam = await axios.post(`${baseURL}/api/v1/teams/add`, values);
+
+                alertText = {
+                    message: "You have added the data custodian team '" + `${values.name}` + "'",
+                };
+
+                publisherId = newTeam.data._id;
             }
 
-            console.log('questionBank', editViewID, questionBank);
-
             await questionBankRequest.mutateAsync({
-                _id: editViewID,
+                _id: publisherId,
                 enabled: questionBank,
             });
+
+            await dataUseWidgetRequest.mutateAsync({
+                _id: publisherId,
+                data: {
+                    enabled: dataUseWidget,
+                },
+            });
+
+            setLoading(false);
+            setAlertFunction(alertText);
+
+            cancelAddEdit();
         },
     });
 
     const handleEnableQuestionBank = React.useCallback(({ target: { checked } }) => {
         setQuestionBank(checked);
+    }, []);
+
+    const handleEnableDataUseWidget = React.useCallback(({ target: { checked } }) => {
+        setDataUseWidget(checked);
     }, []);
 
     // lifecycle hook
@@ -121,11 +141,11 @@ const AddEditTeamsPage = ({
     return (
         <LayoutContent>
             <Row className='accountHeader'>
-                <LayoutBox display='flex' alignItems='flex-end' width='100%'>
-                    <LayoutBox flexGrow={1}>
+                <Box display='flex' alignItems='flex-end' width='100%'>
+                    <Box flexGrow={1}>
                         <span className='black-20'>{editTeamsView ? 'Edit ' : 'Add '} team details</span>
-                    </LayoutBox>
-                    <LayoutBox display='flex' justifyContent='flex-end'>
+                    </Box>
+                    <Box display='flex' justifyContent='flex-end' gap={3}>
                         <Switch
                             label={
                                 <>
@@ -135,8 +155,17 @@ const AddEditTeamsPage = ({
                             onChange={handleEnableQuestionBank}
                             checked={questionBank}
                         />
-                    </LayoutBox>
-                </LayoutBox>
+                        <Switch
+                            label={
+                                <>
+                                    Data use widget <strong>{dataUseWidget ? 'enabled' : 'disabled'}</strong>
+                                </>
+                            }
+                            onChange={handleEnableDataUseWidget}
+                            checked={dataUseWidget}
+                        />
+                    </Box>
+                </Box>
                 <Col sm={12} md={12}>
                     <Row>
                         <span className='gray700-13 '>

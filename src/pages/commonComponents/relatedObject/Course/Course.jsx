@@ -14,6 +14,7 @@ import Description from '../Description/Description';
 import Tag from '../Tag/Tag';
 import { course } from './constants';
 import '../../CommonComponents.scss';
+import ShowMore from '../../ShowMore';
 
 const Course = ({ data, activeLink, onSearchPage, showRelationshipQuestion, updateOnFilterBadge, removeButton, onClick }) => {
     const renderCourseDetails = () => {
@@ -38,68 +39,74 @@ const Course = ({ data, activeLink, onSearchPage, showRelationshipQuestion, upda
         return courseRender;
     };
     return (
-        <Row data-testid='related-course-object' className='noMargin'>
-            <Col sm={10} lg={10} className='pad-left-24'>
-                <Title
-                    activeLink={activeLink}
-                    name={data.title}
-                    id={data.id}
-                    type={data.type}
-                    onClickHandler={() => {
-                        onClick();
-                    }}
-                />
-                <br />
-                <Title
-                    activeLink={false}
-                    name={data.provider}
-                    id={data.provider}
-                    type={data.type}
-                    className={activeLink ? 'gray800-14 underlined' : 'gray800-14'}
-                    onClickHandler={() => updateOnFilterBadge('courseProviderSelected', data.provider)}
-                />
+        <>
+            <Row data-testid='related-course-object' className='pad-left-24 pad-right-24'>
+                <Col sm={10} lg={10}>
+                    <Title
+                        activeLink={activeLink}
+                        name={data.title}
+                        id={data.id}
+                        type={data.type}
+                        onClickHandler={() => {
+                            onClick();
+                        }}
+                    />
+                    <br />
+                    <Title
+                        activeLink={false}
+                        name={data.provider}
+                        id={data.provider}
+                        type={data.type}
+                        className={activeLink ? 'gray800-14 underlined' : 'gray800-14'}
+                        onClickHandler={() => updateOnFilterBadge('courseProviderSelected', data.provider)}
+                    />
 
-                <Row className='margin-top-8'>
-                    <Col sm={12} lg={12}>
-                        <CalendarSvg className='calendarSVG' />
-                        <span className='gray800-14 margin-left-10'>{renderCourseDetails()}</span>
-                    </Col>
-                </Row>
-            </Col>
-            <Col sm={2} lg={2} className='pad-right-24'>
-                {showRelationshipQuestion && <RemoveButton removeButtonHandler={removeButton} />}
-            </Col>
-            <Col sm={12} lg={12} className='pad-left-24 pad-right-24 pad-top-16'>
-                <Tag tagName={course.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
-                    <SVGIcon name='educationicon' fill='#ffffff' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
-                </Tag>
+                    <Row className='margin-top-8'>
+                        <Col sm={12} lg={12}>
+                            <CalendarSvg className='calendarSVG' />
+                            <span className='gray800-14 margin-left-10'>{renderCourseDetails()}</span>
+                        </Col>
+                    </Row>
+                </Col>
+                <Col sm={2} lg={2}>
+                    {showRelationshipQuestion && <RemoveButton removeButtonHandler={removeButton} />}
+                </Col>
+            </Row>
+            <Row className='pad-left-24 pad-right-24'>
+                <Col sm={12} lg={12} className='pad-top-16'>
+                    <ShowMore initialHeight={30}>
+                        <Tag tagName={course.TAB} tagType={data.type} updateOnFilterBadgeHandler={updateOnFilterBadge}>
+                            <SVGIcon name='educationicon' fill='#ffffff' className='badgeSvg mr-2' viewBox='-2 -2 22 22' />
+                        </Tag>
 
-                {data.award &&
-                    data.award.map((award, index) => (
-                        <Tag
-                            key={`${award}-${index}`}
-                            tagName={award}
-                            activeLink={activeLink}
-                            onSearchPage={onSearchPage}
-                            updateOnFilterBadgeHandler={updateOnFilterBadge}
-                            {...course.AWARDS}
-                        />
-                    ))}
+                        {data.award &&
+                            data.award.map((award, index) => (
+                                <Tag
+                                    key={`${award}-${index}`}
+                                    tagName={award}
+                                    activeLink={activeLink}
+                                    onSearchPage={onSearchPage}
+                                    updateOnFilterBadgeHandler={updateOnFilterBadge}
+                                    {...course.AWARDS}
+                                />
+                            ))}
 
-                {data.domains &&
-                    data.domains.map((domain, index) => (
-                        <Tag
-                            key={`${domain}-${index}`}
-                            tagName={domain}
-                            activeLink={activeLink}
-                            onSearchPage={onSearchPage}
-                            updateOnFilterBadgeHandler={updateOnFilterBadge}
-                            {...course.DOMAINS}
-                        />
-                    ))}
-            </Col>
-            {!showRelationshipQuestion && <Description type={data.type} description={stripMarkdown(data.description, 255)} />}
-        </Row>
+                        {data.domains &&
+                            data.domains.map((domain, index) => (
+                                <Tag
+                                    key={`${domain}-${index}`}
+                                    tagName={domain}
+                                    activeLink={activeLink}
+                                    onSearchPage={onSearchPage}
+                                    updateOnFilterBadgeHandler={updateOnFilterBadge}
+                                    {...course.DOMAINS}
+                                />
+                            ))}
+                    </ShowMore>
+                </Col>
+                {!showRelationshipQuestion && <Description type={data.type} description={stripMarkdown(data.description, 255)} />}
+            </Row>
+        </>
     );
 };
 

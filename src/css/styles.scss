@@ -394,6 +394,18 @@ a.nav-item.nav-link.active {
     }
 }
 
+.badge {
+    &-tag:hover {
+        background-color: $gray-400;
+    }
+}
+
+.badge {
+    &-version:hover {
+        background-color: $gray-400;
+    }
+}
+
 .iconHolder {
     text-align: right;
     padding-top: 5px;
@@ -1609,6 +1621,10 @@ button a {
     overflow-wrap: break-word !important;
 }
 
+.sentence-break {
+    word-break: break-word;
+}
+
 .paper-links {
     display: block;
 }
@@ -1739,4 +1755,25 @@ button a {
 .textarea-addEditForm {
     min-height: 186px;
     padding: 8px 12px;
+}
+
+.backToTop {
+    z-index: 1000;
+    right: 20px;
+    top: auto;
+    bottom: 40px;
+    @media screen and (min-width: 576px) {
+        top: 100px;
+        bottom: auto;
+        left: calc(((100vw - 540px) / 2) + 540px);
+    }
+    @media screen and (min-width: 768px) {
+        left: calc(((100vw - 720px) / 2) + 720px);
+    }
+    @media screen and (min-width: 992px) {
+        left: calc(((100vw - 960px) / 2) + 960px);
+    }
+    @media screen and (min-width: 1200px) {
+        left: calc(((100vw - 1140px) / 2) + 1140px);
+    }
 }

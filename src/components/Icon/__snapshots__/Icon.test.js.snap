@@ -3,7 +3,7 @@
 exports[`Given the Icon component When it is from a file Then matches the previous snapshot 1`] = `
 <div>
   <span
-    class="ui-Icon css-1sivg29 css-1nyc6qc-Icon"
+    class="ui-Icon additional-classname css-1tuhzuv css-18xv0v4-Icon"
   >
     Application_approved
   </span>

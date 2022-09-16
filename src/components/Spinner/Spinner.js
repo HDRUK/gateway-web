@@ -4,15 +4,15 @@ import { jsx } from '@emotion/react';
 import { ReactComponent as AutosaveIcon } from '../../images/icons/autosave-loader.svg';
 import Icon from '../Icon';
 import { PROP_TYPES_ICON } from '../Icon/Icon.propTypes';
-import LayoutBox from '../LayoutBox';
+import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Spinner.styles';
 
 const Spinner = ({ mt, mb, ml, mr, className, ...outerProps }) => {
     return (
-        <LayoutBox {...{ mt, mb, ml, mr }} display='inline-flex' className={cx('ui-Spinner', className)}>
+        <Box {...{ mt, mb, ml, mr }} display='inline-flex' className={cx('ui-Spinner', className)}>
             <Icon {...outerProps} css={styles.root()} />
-        </LayoutBox>
+        </Box>
     );
 };
 

@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import DataUsesSearchSort from './DataUsesSearchSort';
-import { render } from '@testing-library/react';
 
 const mockSortDropdown = jest.fn();
 const mockOnSort = jest.fn();

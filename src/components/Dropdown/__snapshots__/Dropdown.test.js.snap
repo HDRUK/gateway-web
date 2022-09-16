@@ -3,10 +3,10 @@
 exports[`Given the Dropdown component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-Box css-672p6m"
   >
     <div
-      class="ui-Dropdown css-7re9xt-Dropdown show dropdown"
+      class="ui-Dropdown additional-classname css-1lwd4b4-Dropdown show dropdown"
     >
       <button
         aria-expanded="true"

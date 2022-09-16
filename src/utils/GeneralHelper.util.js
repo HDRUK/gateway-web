@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import removeMd from 'remove-markdown';
 import { format } from 'date-fns';
-import { DISPLAY_DATE_STANDARD } from '../configs/constants';
+import { DISPLAY_DATE_STANDARD, DISPLAY_TIME_STANDARD } from '../configs/constants';
 
 export const isEditMode = (url = '') => {
     if (!_.isEmpty(url)) {
@@ -41,12 +41,15 @@ export const stripMarkdown = (value = '', truncate = 0) => {
     return value;
 };
 
-export const dateFormats = timestamp => {
+export const dateFormats = (timestamp, formats = {}) => {
+    if (!timestamp) return {};
+    const { dateFormat = DISPLAY_DATE_STANDARD, timeFormat = DISPLAY_TIME_STANDARD } = formats;
+
     const date = new Date(timestamp);
 
     return {
-        dateOnly: format(date, DISPLAY_DATE_STANDARD),
-        timeOnly: format(date, 'HH:mm'),
+        dateOnly: format(date, dateFormat),
+        timeOnly: format(date, timeFormat),
     };
 };
 
@@ -168,6 +171,23 @@ export const filterBranches = (filters, iteratee, children = 'children') => {
     filter(filters);
 
     return filteredNodes;
+};
+
+export const diffObjects = (a, b) => {
+    const compare = {
+        ...a,
+        ...b,
+    };
+
+    const diff = {};
+
+    Object.keys(compare).forEach(key => {
+        if (compare[key] !== a[key]) {
+            diff[key] = b[key];
+        }
+    });
+
+    return diff;
 };
 
 export const stripHtml = text => text.replace(/<\/?.+?>/gi, '');

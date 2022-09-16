@@ -1,10 +1,10 @@
 import axios from 'axios';
+import { Box } from 'hdruk-react-core';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
 import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
-import SVGIcon from '../../images/SVGIcon';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import AddEditTeamsPage from './Team/AddEditTeamsPage';
@@ -27,6 +27,7 @@ const AccountTeams = () => {
     const [editViewOrgName, setEditViewOrgName] = useState('');
     const [editViewTeamManagers, setEditViewTeamManagers] = useState([]);
     const [questionBankEnabled, setQuestionBankEnabled] = useState(false);
+    const [dataUseWidgetEnabled, setDataUseWidgetEnabled] = useState(false);
     const [alert, setAlert] = useState();
     const [activeTabKey] = useState(tabTypes.Teams);
 
@@ -73,6 +74,7 @@ const AccountTeams = () => {
 
     const editTeam = (publisher, teamManagers) => {
         setQuestionBankEnabled(publisher.publisherDetails.questionBank?.enabled);
+        setDataUseWidgetEnabled(publisher.publisherDetails.dataUse?.widget?.enabled);
         setEditViewID(publisher._id);
         setEditViewMemberOf(publisher.publisherDetails.memberOf);
         setEditViewOrgName(publisher.publisherDetails.name);
@@ -125,13 +127,13 @@ const AccountTeams = () => {
         <>
             {viewTeams ? (
                 <LayoutContent>
-                    {!_.isEmpty(alert) && (
-                        <Row className='teams-alert'>
-                            <Alert variant='success' className='main-alert teams-alert'>
-                                <SVGIcon name='check' width={24} height={24} fill='#2C8267' /> {alert.message}
-                            </Alert>
-                        </Row>
-                    )}
+                    <Row className='w-100'>
+                        {!_.isEmpty(alert) && (
+                            <Box flexGrow='1'>
+                                <Alert variant='success'>{alert.message}</Alert>
+                            </Box>
+                        )}
+                    </Row>
                     <Row className='accountHeader'>
                         <Col sm={12} md={8}>
                             <Row>
@@ -159,7 +161,8 @@ const AccountTeams = () => {
                         <Col sm={2} className='text-center'>
                             Members
                         </Col>
-                        <Col sm={2}>Question Bank Enabled?</Col>
+                        <Col sm={1}>Question Bank Enabled?</Col>
+                        <Col sm={1}>Data use widget Enabled?</Col>
                     </Row>
                     <Row>
                         <Col sm={12} lg={12}>
@@ -191,6 +194,7 @@ const AccountTeams = () => {
                     editViewOrgName={editViewOrgName}
                     editViewTeamManagers={editViewTeamManagers}
                     questionBankEnabled={questionBankEnabled}
+                    dataUseWidgetEnabled={dataUseWidgetEnabled}
                     setAlertFunction={setAlertFunction}
                 />
             )}
