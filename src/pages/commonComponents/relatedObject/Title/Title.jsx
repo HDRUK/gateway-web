@@ -11,18 +11,17 @@ const Title = props => {
         <>
             <a
                 onClick={onClickHandler}
-                className={className ? className : 'purple-bold-16'}
+                className={className || 'purple-bold-16'}
                 css={styles.pointer}
                 href={`/${type}/${id}`}
-                data-testid={`title-${type}-${id}`}
-            >
+                data-testid={`title-${type}-${id}`}>
                 {name}
             </a>
             {props.children}
         </>
     ) : (
         <>
-            <span className={className ? className : 'black-bold-16'} data-testid={`title-${type}-${id}`}>
+            <span className={className || 'black-bold-16'} data-testid={`title-${type}-${id}`}>
                 {' '}
                 {name}
             </span>
