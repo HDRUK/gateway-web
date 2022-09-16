@@ -2,10 +2,10 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import AccountDatasetsTabs from './AccountDatasetsTabs';
-import { STATUS_ARCHIVE } from '../../../../configs/constants';
+import { STATUS_ARCHIVE, STATUS_INREVIEW } from '../../../../configs/constants';
 
 const props = {
-    counts: { inReview: 1, active: 2, rejected: 3, archive: 4, ['active,draft']: 5 },
+    counts: { inReview: 1, active: 2, rejected: 3, archive: 4, 'active,draft': 5 },
     team: 'admin',
     onSelectTab: jest.fn(),
     activeKey: STATUS_INREVIEW,

@@ -2,58 +2,59 @@
 
 exports[`Given the TypeaheadAsyncCustom component When it is rendered without default value Then should match the snapshot 1`] = `
 <div>
-  <div
-    class="ui-LayoutBox css-1sivg29"
-  >
+  <div>
     <div
-      class="css-1bab3f0-Input form-group"
+      class="ui-Box css-672p6m"
     >
       <div
-        class="ui-Input ui-Typeahead css-1ees2q7-TypeaheadAsyncCustom input-group"
+        class="css-f3m9lf-Input form-group"
       >
         <div
-          class="css-1h9gu1e-Input input-group-prepend"
-        >
-          <button
-            color="purple"
-            fill="purple"
-            svg="[object Object]"
-          >
-            Icon
-          </button>
-        </div>
-        <div
-          class="rbt"
-          style="outline: none; position: relative;"
-          tabindex="-1"
+          class="ui-Input ui-Typeahead css-1oponl2-TypeaheadAsyncCustom input-group"
         >
           <div
-            class="rbt-input-multi form-control rbt-input"
+            class="css-1h9gu1e-Input input-group-prepend"
+          >
+            <button
+              fill="green700"
+              svg="[object Object]"
+            >
+              Icon
+            </button>
+          </div>
+          <div
+            class="rbt"
+            style="outline: none; position: relative;"
             tabindex="-1"
           >
             <div
-              class="rbt-input-wrapper"
+              class="rbt-input-multi form-control rbt-input"
+              tabindex="-1"
             >
               <div
-                style="display: flex; flex: 1; height: 100%; position: relative;"
+                class="rbt-input-wrapper"
               >
-                <input
-                  aria-autocomplete="list"
-                  aria-haspopup="listbox"
-                  autocomplete="off"
-                  class="rbt-input-main"
-                  style="background-color: transparent; border: 0px; box-shadow: none; cursor: inherit; outline: none; padding: 0px; width: 100%; z-index: 1;"
-                  type="text"
-                  value=""
-                />
-                <input
-                  aria-hidden="true"
-                  class="rbt-input-hint"
-                  readonly=""
-                  style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
-                  tabindex="-1"
-                  value=""
-                />
+                <div
+                  style="display: flex; flex: 1; height: 100%; position: relative;"
+                >
+                  <input
+                    aria-autocomplete="list"
+                    aria-haspopup="listbox"
+                    autocomplete="off"
+                    class="rbt-input-main"
+                    style="background-color: transparent; border: 0px; box-shadow: none; cursor: inherit; outline: none; padding: 0px; width: 100%; z-index: 1;"
+                    type="text"
+                    value=""
+                  />
+                  <input
+                    aria-hidden="true"
+                    class="rbt-input-hint"
+                    readonly=""
+                    style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
+                    tabindex="-1"
+                    value=""
+                  />
+                </div>
               </div>
             </div>
           </div>

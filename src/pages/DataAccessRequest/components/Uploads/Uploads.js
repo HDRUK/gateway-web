@@ -4,6 +4,9 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import FormData from 'form-data';
+import { t } from 'i18next';
+import { filesize } from 'humanize';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as UploadSVG } from '../../../../images/upload.svg';
 import { fileStatus } from './files.util';
 import { baseURL } from '../../../../configs/url.config';
@@ -11,17 +14,36 @@ import './Uploads.scss';
 import UploadFiles from './UploadFiles';
 import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
+import Icon from '../../../../components/Icon';
+import useRetryAsync from '../../../../hooks/useRetryAsync/useRetryAsync';
 
-const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
-    // 10mb - 10485760
-    // 2mb - 2097152
+const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disabled }) => {
     const maxSize = 10485760;
-    const maxRetries = 30;
-    let retryCount = 0;
-    // name, size, location, id
+
     const [uploadFiles, setUploadFiles] = useState([]);
     const [submitted, setSubmitted] = useState(false);
     const [isLoading, setLoading] = useState(false);
+
+    const retry = useRetryAsync({
+        onIterationComplete: (files, values) => {
+            values.forEach(
+                (
+                    {
+                        value: {
+                            data: { status },
+                        },
+                    },
+                    i
+                ) => {
+                    if (status === fileStatus.SCANNED || status === fileStatus.QUARANTINED || status === fileStatus.ERROR) {
+                        files[i].status = status;
+
+                        onFilesUpdate(files, false);
+                    }
+                }
+            );
+        },
+    });
 
     const onRemoveFile = file => {
         const newFiles = [...uploadFiles].filter(f => {
@@ -68,9 +90,11 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
     const formatRejectedFiles = rejectedFiles => {
         if (!_.isEmpty(rejectedFiles)) {
             return [...rejectedFiles].map(f => {
-                let { file } = f;
+                const { file, errors } = f;
+                const type = errors.find(({ code }) => code === 'file-invalid-type') ? 'file-invalid-type' : errors[0].code;
+
                 return {
-                    error: 'File exceeds limit',
+                    error: t(`DAR.upload.${type}`, { size: filesize(maxSize).replace('.00', '') }),
                     fileId: uuidv4(),
                     description: '',
                     size: file.size,
@@ -85,8 +109,8 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
 
     const onDescriptionChange = event => {
         event.preventDefault();
-        let { name, value } = event.currentTarget;
-        let [, uniqueId = ''] = name.split('_');
+        const { name, value } = event.currentTarget;
+        const [, uniqueId = ''] = name.split('_');
         if (!_.isEmpty(uniqueId)) {
             const allFiles = [...uploadFiles].map(file => {
                 if (file.fileId === uniqueId) return Object.assign(file, { ...file, description: value });
@@ -98,16 +122,15 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
     };
 
     const onUploadFiles = async () => {
-        retryCount = 0;
         setSubmitted(true);
         // 1. filter out files that have description and newFile to upload
         const acceptedFiles = [...uploadFiles].filter(f => !_.isEmpty(f.description) && f.status === fileStatus.NEWFILE);
         if (!_.isEmpty(acceptedFiles)) {
             // 2. setup new formData array for axios
-            let formData = new FormData();
+            const formData = new FormData();
             // 3. append our files to formData
             const fileObjects = [...acceptedFiles].map(f => {
-                let { file } = f;
+                const { file } = f;
                 formData.append('assets', file);
                 formData.append('descriptions', f.description);
                 formData.append('ids', f.fileId);
@@ -122,17 +145,17 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
                 .then(response => {
                     // set submission false
                     setSubmitted(false);
-                    let {
+                    const {
                         data: { mediaFiles = [] },
                     } = response;
                     // update file state
                     if (!_.isEmpty(mediaFiles)) {
-                        // returned files and initialFilesLoad = false
                         onFilesUpdate(mediaFiles, false);
-                        // wipe upload false
+
                         setUploadFiles([]);
-                        // set loading false
                         setLoading(false);
+
+                        retry.init(getStatusRequests(mediaFiles), mediaFiles);
                     }
                 })
                 .catch(err => {
@@ -144,7 +167,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
 
     const downloadFile = async file => {
         if (!_.isEmpty(file)) {
-            let { fileId, name } = file;
+            const { fileId, name } = file;
             await axios
                 .get(`${baseURL}/api/v1/data-access-request/${id}/file/${fileId}`, { responseType: 'blob' })
                 .then(response => {
@@ -165,7 +188,7 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
 
     const deleteFile = async file => {
         if (!_.isEmpty(file)) {
-            let { fileId } = file;
+            const { fileId } = file;
             const body = {
                 fileId,
             };
@@ -180,40 +203,17 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
         }
     };
 
+    const getStatusRequests = files => {
+        return files.map(
+            ({ fileId }) =>
+                () =>
+                    axios.get(`${baseURL}/api/v1/data-access-request/${id}/file/${fileId}/status`)
+        );
+    };
+
     useEffect(() => {
-        let timer = setInterval(() => {
-            if (retryCount < maxRetries) {
-                retryCount++;
-                files.forEach(file => {
-                    if (file.status === fileStatus.NEWFILE || file.status === fileStatus.UPLOADED) {
-                        axios
-                            .get(`${baseURL}/api/v1/data-access-request/${id}/file/${file.fileId}/status`)
-                            .then(response => {
-                                file.status = response.data.status;
-                                if (
-                                    file.status === fileStatus.SCANNED ||
-                                    file.status === fileStatus.QUARANTINED ||
-                                    file.status === fileStatus.ERROR
-                                ) {
-                                    onFilesUpdate(files, false);
-                                    retryCount = 0;
-                                    clearInterval(timer);
-                                }
-                            })
-                            .catch(err => {
-                                console.error(err.message);
-                                clearInterval(timer);
-                            });
-                    }
-                });
-            } else {
-                clearInterval(timer);
-            }
-        }, 10000);
-        return () => {
-            clearInterval(timer);
-        };
-    });
+        retry.initOnce(getStatusRequests(files), files);
+    }, []);
 
     // dropzone setup
     const { getRootProps, getInputProps } = useDropzone({
@@ -222,16 +222,35 @@ const Uploads = ({ id, files, onFilesUpdate, readOnly }) => {
         onDropRejected,
         minSize: 0,
         maxSize,
+        accept: [
+            '.pdf',
+            '.doc',
+            '.docx',
+            '.ppt',
+            '.pptx',
+            '.xls',
+            '.xlsx',
+            '.key',
+            '.pages',
+            '.numbers',
+            '.png',
+            '.jpg',
+            '.jpeg',
+            '.csv',
+            '.txt',
+        ],
     });
     return (
-        <div className='files'>
+        <div className='files dar-form'>
             <div className='files-header'>
+                {description && <h3>{description}</h3>}
+                {header && <h4>{header}</h4>}
                 <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <div className='upload'>
-                        <button className='button-tertiary'>
-                            <UploadSVG /> Select files
-                        </button>
+                        <Button variant='tertiary' iconLeft={<Icon svg={<UploadSVG />} size='lg' />} disabled={disabled} mr={3}>
+                            Select files
+                        </Button>
                         <span className='gray700-alt-13'>
                             PDF, CSV, TXT, Powerpoint, Word, Excel, Keynote, Pages, Numbers, JPG or PNG.
                             <br />

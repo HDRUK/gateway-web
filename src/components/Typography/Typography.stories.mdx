@@ -1,48 +1,34 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs';
 
-import Typography from './Typography';
+import Typography, { H1, H2, H3, H4, H5, H6, P } from './';
 
-<Meta title='Core/Typography' component={Typography} />
+<Meta title='Core/Atoms/Typography' component={Typography} />
 
 <Canvas>
     <Story name='Variants'>
         {props => (
             <div>
-                <div>
-                    <Typography {...props} variant='h1' mb={2}>
-                        Heading 1
-                    </Typography>
-                </div>
-                <div>
-                    <Typography {...props} variant='h2' mb={2}>
-                        Heading 2
-                    </Typography>
-                </div>
-                <div>
-                    <Typography {...props} variant='h3' mb={2}>
-                        Heading 3
-                    </Typography>
-                </div>
-                <div>
-                    <Typography {...props} variant='h4' mb={2}>
-                        Heading 4
-                    </Typography>
-                </div>
-                <div>
-                    <Typography {...props} variant='h5' mb={2}>
-                        Heading 5
-                    </Typography>
-                </div>
-                <div>
-                    <Typography {...props} variant='h6' mb={2}>
-                        Heading 6
-                    </Typography>
-                </div>
-                <div>
-                    <Typography {...props} variant='body' mb={2}>
-                        Body
-                    </Typography>
-                </div>
+                <H1 {...props} mb={2}>
+                    Heading 1
+                </H1>
+                <H2 {...props} mb={2}>
+                    Heading 2
+                </H2>
+                <H3 {...props} mb={2}>
+                    Heading 3
+                </H3>
+                <H4 {...props} mb={2}>
+                    Heading 4
+                </H4>
+                <H5 {...props} mb={2}>
+                    Heading 5
+                </H5>
+                <H6 {...props} mb={2}>
+                    Heading 6
+                </H6>
+                <P {...props} mb={2}>
+                    Body
+                </P>
                 <div>
                     <Typography {...props} variant='caption' mb={2}>
                         Caption

@@ -56,7 +56,7 @@ describe('Given the useGetPublisher component', () => {
                 isError: false,
                 isFetched: false,
                 isLoading: false,
-                params: { maxResults: 10, page: 1 },
+                params: { limit: 10, page: 1 },
             });
         });
 
@@ -65,7 +65,7 @@ describe('Given the useGetPublisher component', () => {
                 act(() => {
                     wrapper.result.current.getResults(
                         {
-                            maxResults: 10,
+                            limit: 10,
                             status: 'inReview',
                             search: 'dataset',
                         },
@@ -98,7 +98,7 @@ describe('Given the useGetPublisher component', () => {
 
             it('Then calls onSuccess', () => {
                 expect(mockOnSuccess).toHaveBeenCalledWith(mockGetPublisher, {
-                    maxResults: 10,
+                    limit: 10,
                     page: 1,
                     status: 'inReview',
                     search: 'dataset',
@@ -156,7 +156,7 @@ describe('Given the useGetPublisher component', () => {
                         act(() => {
                             wrapper.result.current.getResults(
                                 {
-                                    maxResults: 10,
+                                    limit: 10,
                                     status: 'inReview',
                                     search: 'dataset',
                                 },
@@ -185,7 +185,7 @@ describe('Given the useGetPublisher component', () => {
                     });
 
                     it('Then calls with cached results', async () => {
-                        expect(wrapper.result.current.params).toEqual({ maxResults: 10, page: 1, status: 'inReview' });
+                        expect(wrapper.result.current.params).toEqual({ limit: 10, page: 1, status: 'inReview' });
                     });
                 });
             });

@@ -10,20 +10,6 @@
     margin-bottom: 4px;
 }
 
-.active-group {
-    background: #f6f7f8;
-}
-
-.active-group:after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    content: '';
-    height: 100%;
-    width: 4px;
-    background: $teal;
-}
-
 .warning {
     color: #f0bb24;
 }
@@ -74,60 +60,6 @@
 
 #darContainer {
     margin-bottom: 100px;
-}
-
-.toolTip {
-    position: relative;
-    display: inline-block;
-    padding: 0 5px;
-}
-
-.toolTipHidden {
-    position: relative;
-    display: inline-block;
-    padding: 0 5px;
-    visibility: hidden;
-    opacity: 0;
-}
-
-.toolTip .toolTipText {
-    visibility: hidden;
-    position: absolute;
-    width: 120px;
-    background-color: #222;
-    font-size: 12px;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.4s;
-}
-
-.toolTipHidden .toolTipText {
-    visibility: hidden;
-    position: absolute;
-    width: 120px;
-    background-color: #222;
-    font-size: 12px;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.4s;
-}
-
-.toolTip i:hover + .toolTipText {
-    visibility: visible;
-    opacity: 1;
-}
-
-.toolTipHidden i:hover + .toolTipText {
-    visibility: visible;
-    opacity: 1;
 }
 
 span.toolTipText:after {
@@ -257,6 +189,7 @@ span.toolTipText:after {
     min-height: 70px;
     margin-left: 0px !important;
     align-content: center;
+    align-items: center;
 }
 
 .banner .banner-left {
@@ -268,7 +201,8 @@ span.toolTipText:after {
     text-align: right;
     vertical-align: middle;
     padding-right: 32px !important;
-    svg {
+
+    > svg {
         margin-left: 20px;
         cursor: pointer;
     }
@@ -423,7 +357,7 @@ span.toolTipText:after {
 @media (min-width: 884px) {
     .banner .banner-right span,
     .banner-right a,
-    .banner-right button {
+    .banner-right button:not(.ui-Button) {
         line-height: 30px;
     }
 }
@@ -694,10 +628,6 @@ input[type='radio']:disabled {
         margin-bottom: 8px;
     }
 
-    .form-group-nested {
-        border-left: 4px solid $gray-400;
-    }
-
     .form-group {
         position: relative;
         margin-bottom: 2px;
@@ -767,7 +697,7 @@ input[type='radio']:disabled {
     height: 32px;
     border: solid 2px $gray-400;
     border-radius: 100%;
-    display: flex;
+    display: inline-flex;
     flex-flow: column nowrap !important;
     justify-content: center;
     align-items: center;
@@ -803,46 +733,9 @@ input[type='radio']:disabled {
     width: 85px;
 }
 
-.action-control {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 0px;
-    position: absolute;
-    top: -8px;
-    right: 25px;
-    cursor: pointer;
-    min-width: 32px;
-    height: 32px;
-    transition: visibility 0.55s linear, opacity 0.35s ease-in-out;
-
-    & > i {
-        padding: 0 5px;
-    }
-}
-
 .form-group .addFormInputTypeAhead {
     height: min-content !important;
     min-height: 40px;
-}
-
-.question-wrap {
-    position: relative;
-    margin-bottom: 0;
-    padding: 3px 25px 3px 25px;
-
-    &:hover {
-        background: #f6f7f8;
-        > .action-control {
-            background: $white;
-            box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.09), -3px -3px 4px 0 rgba(0, 0, 0, 0.03);
-            > .toolTipHidden {
-                visibility: visible;
-                opacity: 1;
-            }
-        }
-    }
 }
 
 .addFormInputTypeAhead .dropdown-item.active,

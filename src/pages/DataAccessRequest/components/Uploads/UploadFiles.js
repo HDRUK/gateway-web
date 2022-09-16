@@ -1,10 +1,11 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import _ from 'lodash';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as PaperSVG } from '../../../../images/paper.svg';
 import { ReactComponent as CloseSVG } from '../../../../images/close-alt.svg';
-import { ReactComponent as SmallAttentionSVG } from '../../../../images/attention.svg';
 import { concatFileName, fileStatus, readableFileSize } from './files.util';
 import FileLoading from './FileLoading';
+import AlertMessage from '../../../../components/AlertMessage';
 
 export const UploadFiles = ({ uploadFiles, submitted, isLoading, onUploadFiles, onRemoveFile, onDescriptionChange }) => {
     const descriptionRequired = file => {
@@ -14,13 +15,13 @@ export const UploadFiles = ({ uploadFiles, submitted, isLoading, onUploadFiles, 
     const renderUploadButton = () => {
         if (uploadFiles.length > 0) {
             return (
-                <Fragment>
+                <>
                     <div className='upload-files-footer'>
-                        <button className='button-primary' onClick={e => onUploadFiles(e)}>
+                        <Button onClick={e => onUploadFiles(e)} disabled={!uploadFiles.find(({ status }) => status !== fileStatus.ERROR)}>
                             Upload all files
-                        </button>
+                        </Button>
                     </div>
-                </Fragment>
+                </>
             );
         }
         return '';
@@ -31,30 +32,26 @@ export const UploadFiles = ({ uploadFiles, submitted, isLoading, onUploadFiles, 
     return (
         <div className='upload-files'>
             {isLoading ? <FileLoading /> : ''}
-            <Fragment>
+            <>
                 <div className='upload-files wrap header'>
                     <div className='column gray800-14-bold'>File</div>
                     <div className='column gray800-14-bold'>File description</div>
                 </div>
                 {uploadFiles.length > 0 &&
-                    uploadFiles.map((file, index) => (
-                        <div className='upload-files wrap'>
-                            <div className='column upload-files-file'>
-                                <PaperSVG />
-                                <div className='upload-files-file--meta'>
-                                    <span>{concatFileName(file)}</span>
-                                    <span className='gray700-alt-13'>{readableFileSize(file)}</span>
+                    uploadFiles.map((file, index) => {
+                        return (
+                            <div className='upload-files wrap'>
+                                <div className='column upload-files-file'>
+                                    <PaperSVG />
+                                    <div className='upload-files-file--meta'>
+                                        <span>{concatFileName(file)}</span>
+                                        <span className='gray700-alt-13'>{readableFileSize(file)}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='column upload-files-desc'>
-                                {file.status === fileStatus.ERROR ? (
-                                    <Fragment>
-                                        <div className='error-alert'>
-                                            <SmallAttentionSVG /> File exceeds 10MB limit
-                                        </div>
-                                    </Fragment>
-                                ) : (
-                                    <Fragment>
+                                <div className='column upload-files-desc'>
+                                    {file.status === fileStatus.ERROR ? (
+                                        <AlertMessage variant='danger'>{file.error}</AlertMessage>
+                                    ) : (
                                         <div className='upload-files-desc--control'>
                                             <div className='upload-files-desc--wrap'>
                                                 <input
@@ -68,18 +65,18 @@ export const UploadFiles = ({ uploadFiles, submitted, isLoading, onUploadFiles, 
                                                 {descriptionRequired(file)}
                                             </div>
                                             <div className='cancel'>
-                                                <button className='button-tertiary' onClick={e => onRemoveFile(file)}>
-                                                    <CloseSVG /> Remove
-                                                </button>
+                                                <Button variant='tertiary' iconLeft={<CloseSVG />} onClick={() => onRemoveFile(file)}>
+                                                    Remove
+                                                </Button>
                                             </div>
                                         </div>
-                                    </Fragment>
-                                )}
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 {renderUploadButton()}
-            </Fragment>
+            </>
         </div>
     );
 };

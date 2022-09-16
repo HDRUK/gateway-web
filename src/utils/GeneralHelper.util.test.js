@@ -1,4 +1,5 @@
-import { filterBranches, findAllByKey, isEditMode, iterateDeep, dateFormats, getParams } from './GeneralHelper.util';
+import { DISPLAY_DATE_SLASH } from '../configs/constants';
+import { filterBranches, findAllByKey, isEditMode, iterateDeep, dateFormats, getParams, stripHtml } from './GeneralHelper.util';
 
 describe('Test GeneralHelper getUpdatesSubmittedLog', () => {
     it('should test isEditMode fn valid url', () => {
@@ -21,6 +22,19 @@ describe('dateFormats function', () => {
         const dateFormat = dateFormats('2021-11-08T14:49:41.225Z');
         expect(dateFormat).toHaveProperty('timeOnly', '14:49');
         expect(dateFormat).toHaveProperty('dateOnly', '8 November 2021');
+    });
+    it('should return date and time in default format', () => {
+        const dateFormat = dateFormats('2021-11-08T14:49:41.225Z');
+        expect(dateFormat).toHaveProperty('timeOnly', '14:49');
+        expect(dateFormat).toHaveProperty('dateOnly', '8 November 2021');
+    });
+    it('should return date in specified format', () => {
+        const dateFormat = dateFormats('2021-11-08T14:49:41.225Z', { dateFormat: DISPLAY_DATE_SLASH });
+        expect(dateFormat).toHaveProperty('dateOnly', '08/11/2021');
+    });
+    it('should return time in specified format', () => {
+        const dateFormat = dateFormats('2021-11-08T14:49:41.225Z', { timeFormat: 'HH:mm:ss' });
+        expect(dateFormat).toHaveProperty('timeOnly', '14:49:41');
     });
 });
 
@@ -151,5 +165,12 @@ describe('getParams function', () => {
             tab: '',
             test: 'one',
         });
+    });
+});
+
+describe('stripHtml function', () => {
+    it('should return correct string without html tags ', () => {
+        const text = stripHtml('<p>This is a <b>test</b> string</p>');
+        expect(text).toEqual(`This is a test string`);
     });
 });

@@ -1,65 +1,62 @@
-import React, { Component, Fragment } from 'react';
-import { Container, Row, Col, Modal, Alert, Tooltip, Button } from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
-import Winterfell from 'winterfell';
-import queryString from 'query-string';
-import _ from 'lodash';
 import axios from 'axios';
+import _ from 'lodash';
+import moment from 'moment';
+import queryString from 'query-string';
+import React, { Component, Fragment } from 'react';
+import { Button, Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import ReactMarkdown from 'react-markdown';
-import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
-import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
-import TypeaheadMultiUser from './components/TypeaheadUser/TypeaheadMultiUser';
-import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
-import SearchBar from '../commonComponents/searchBar/SearchBar';
+import 'react-tabs/style/react-tabs.css';
+import Winterfell from 'winterfell';
+import Alert from '../../components/Alert';
+import { baseURL } from '../../configs/url.config';
+import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import googleAnalytics from '../../tracking';
+import DarHelper from '../../utils/DarHelper.util';
+import DarValidation from '../../utils/DarValidation.util';
+import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
+import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
+import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
+import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
-import QuestionActionTabs from './components/QuestionActionTabs';
-import NavItem from './components/NavItem/NavItem';
-import NavDropdown from './components/NavDropdown/NavDropdown';
-import WorkflowReviewStepsModal from '../commonComponents/workflowReviewStepsModal/WorkflowReviewStepsModal';
+import SearchBar from '../commonComponents/searchBar/SearchBar';
+import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
+import SLA from '../commonComponents/sla/SLA';
+import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
+import UserMessages from '../commonComponents/userMessages/UserMessages';
+import VersionSelector from '../commonComponents/versionSelector/VersionSelector';
 import ActivePhaseModal from '../commonComponents/workflowActivePhase/ActivePhaseModal';
 import WorkflowReviewDecisionModal from '../commonComponents/workflowReviewDecision/WorkflowReviewDecisionModal';
-import DarValidation from '../../utils/DarValidation.util';
-import DarHelper from '../../utils/DarHelper.util';
-import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
+import WorkflowReviewStepsModal from '../commonComponents/workflowReviewStepsModal/WorkflowReviewStepsModal';
 import { classSchema } from './classSchema';
-import { baseURL } from '../../configs/url.config';
-import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
-import UserMessages from '../commonComponents/userMessages/UserMessages';
-import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import 'react-tabs/style/react-tabs.css';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import './DataAccessRequest.scss';
-import SVGIcon from '../../images/SVGIcon';
-import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
-import moment from 'moment';
+import AboutApplication from './components/AboutApplication/AboutApplication';
+import ActionModal from './components/ActionModal/ActionModal';
+import ActionNotAllowedModal from './components/ActionNotAllowedModal/ActionNotAllowedModal';
+import AmendApplicationModal from './components/AmendApplicationModal/AmendApplicationModal';
 import AmendmentCount from './components/AmendmentCount/AmendmentCount';
 import ApplicantActionButtons from './components/ApplicantActionButtons/ApplicantActionButtons';
-import CustodianActionButtons from './components/CustodianActionButtons/CustodianActionButtons';
-import ActionModal from './components/ActionModal/ActionModal';
-import ContributorModal from './components/ContributorModal/ContributorModal';
 import AssignWorkflowModal from './components/AssignWorkflowModal/AssignWorkflowModal';
-import SLA from '../commonComponents/sla/SLA';
-import AboutApplication from './components/AboutApplication/AboutApplication';
-import Uploads from './components/Uploads/Uploads';
-import UpdateRequestModal from './components/UpdateRequestModal/UpdateRequestModal';
-import MissingFieldsModal from './components/MissingFieldsModal/MissingFieldsModal';
 import ConfirmSubmissionModal from './components/ConfirmSubmissionModal/ConfirmSubmissionModal';
-import SubmitAmendmentModal from './components/SubmitAmendmentModal/SubmitAmendmentModal';
+import ContributorModal from './components/ContributorModal/ContributorModal';
+import CustodianActionButtons from './components/CustodianActionButtons/CustodianActionButtons';
+import DatePickerCustom from './components/DatePickerCustom/DatepickerCustom';
 import DeleteDraftModal from './components/DeleteDraftModal/DeleteDraftModal';
-import AmendApplicationModal from './components/AmendApplicationModal/AmendApplicationModal';
+import DoubleDropdownCustom from './components/DoubleDropdownCustom/DoubleDropdownCustom';
+import DropdownCustom from './components/DropdownCustom/DropdownCustom';
 import DuplicateApplicationModal from './components/DuplicateApplicationModal/DuplicateApplicationModal';
 import MinorVersionBlockedModal from './components/MinorVersionBlockedModal/MinorVersionBlockedModal';
-import ActionNotAllowedModal from './components/ActionNotAllowedModal/ActionNotAllowedModal';
+import MissingFieldsModal from './components/MissingFieldsModal/MissingFieldsModal';
+import NavItem from './components/NavItem/NavItem';
+import QuestionActionTabs from './components/QuestionActionTabs';
 import SelectDatasetModal from './components/SelectDatasetModal/SelectDatasetModal';
-import VersionSelector from '../commonComponents/versionSelector/VersionSelector';
-import googleAnalytics from '../../tracking';
-import ErrorModal from '../commonComponents/errorModal';
-import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
-import DropdownCustom from './components/DropdownCustom/DropdownCustom';
-import DoubleDropdownCustom from './components/DoubleDropdownCustom/DoubleDropdownCustom';
-
-import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
+import SubmitAmendmentModal from './components/SubmitAmendmentModal/SubmitAmendmentModal';
+import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
+import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
+import UpdateRequestModal from './components/UpdateRequestModal/UpdateRequestModal';
+import Uploads from './components/Uploads/Uploads';
+import './DataAccessRequest.scss';
 
 class DataAccessRequest extends Component {
     constructor(props) {
@@ -278,6 +275,7 @@ class DataAccessRequest extends Component {
                         versions,
                         isLatestMinorVersion,
                         formType,
+                        questionSetStatus,
                     },
                 },
             } = response;
@@ -302,6 +300,7 @@ class DataAccessRequest extends Component {
                 versions,
                 isLatestMinorVersion,
                 formType,
+                questionSetStatus,
             });
         } catch (err) {
             this.setState({ isLoading: false });
@@ -333,6 +332,7 @@ class DataAccessRequest extends Component {
                         applicationType,
                         isLatestMinorVersion,
                         formType,
+                        questionSetStatus = {},
                     },
                 },
             } = response;
@@ -356,6 +356,7 @@ class DataAccessRequest extends Component {
                 applicationType,
                 isLatestMinorVersion,
                 formType,
+                questionSetStatus,
             });
         } catch (err) {
             this.setState({ isLoading: false });
@@ -411,6 +412,7 @@ class DataAccessRequest extends Component {
             formType,
             areDatasetsAmended = false,
             dateSubmitted = '',
+            questionSetStatus = {},
         } = context;
         let {
             datasetfields: { publisher },
@@ -536,6 +538,7 @@ class DataAccessRequest extends Component {
             areDatasetsAmended,
             datasetsAmendedBy: `${firstname} ${lastname}`,
             datasetsAmendedDate: dateSubmitted,
+            questionSetStatus,
         });
     };
 
@@ -550,16 +553,24 @@ class DataAccessRequest extends Component {
         let formPanel = {};
         let currentPageIdx = 0;
         // check if About page has been injected
-        let navElementsExist = [...pages].find(page => page.pageId === DarHelper.darStaticPageIds.ABOUT) || false;
-        // 2. About page does not exist
-        if (!navElementsExist) {
-            // Append 'about' & 'files' panel and nav item
+
+        let aboutNavElementsExist = [...pages].find(page => page.pageId === DarHelper.darStaticPageIds.ABOUT);
+        let additionalfilesNavElementsExist = [...pages].find(page => page.pageId === DarHelper.darStaticPageIds.ADDITIONALFILES);
+
+        if (!aboutNavElementsExist && !additionalfilesNavElementsExist) {
             jsonSchema.pages.unshift(DarHelper.staticContent.aboutPageNav);
-            jsonSchema.pages.push(DarHelper.staticContent.filesNav);
-            // Add form panel for 'about' & 'files'
+            jsonSchema.pages.push(DarHelper.staticContent.filesPageNav);
+
             jsonSchema.formPanels.unshift(DarHelper.staticContent.aboutPanel);
             jsonSchema.formPanels.push(DarHelper.staticContent.filesPanel);
         }
+
+        if (additionalfilesNavElementsExist) {
+            jsonSchema.formPanels.push(DarHelper.staticContent.additionalFilesPanel);
+
+            jsonSchema.questionPanels.push(DarHelper.staticContent.additionalFilesQuestionPanel);
+        }
+
         // if amendment has been made to datasets mark about application navigation with warning
         if (userType === DarHelper.userTypes.CUSTODIAN && areDatasetsAmended) {
             jsonSchema.pages[0].flag = 'WARNING';
@@ -579,7 +590,8 @@ class DataAccessRequest extends Component {
             let inReview =
                 [...reviewSections].includes(page.pageId.toLowerCase()) ||
                 page.pageId === DarHelper.darStaticPageIds.ABOUT ||
-                page.pageId === DarHelper.darStaticPageIds.FILES;
+                page.pageId === DarHelper.darStaticPageIds.FILES ||
+                page.pageId === DarHelper.darStaticPageIds.ADDITIONALFILES;
 
             return { ...page, inReview: inReviewMode && inReview };
         });
@@ -635,7 +647,7 @@ class DataAccessRequest extends Component {
             let countedQuestionAnswers = {};
             let totalQuestions = '';
             // 3. total questions answered
-            if (activePanelId === 'about' || activePanelId === 'files') {
+            if (activePanelId === 'about' || activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
                 countedQuestionAnswers = DarHelper.totalQuestionsAnswered(this);
                 totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered`;
             } else {
@@ -824,15 +836,8 @@ class DataAccessRequest extends Component {
     };
 
     onNextPanel = () => {
-        // 1. Copy formpanels
-        let formPanels = [...this.state.jsonSchema.formPanels];
-        // 2. Get activeIdx
-        let activeIdx = formPanels.findIndex(p => p.panelId === this.state.activePanelId);
-        // 3. Increment idx
-        let nextIdx = ++activeIdx;
-        // 4. Get activePanel - make sure newIdx doesnt exceed panels length
-        let { panelId, pageId } = formPanels[nextIdx > formPanels.length - 1 ? 0 : nextIdx];
-        // 5. Update the navigationState
+        const { panelId, pageId } = DarHelper.findNextPanel(this.state.activePanelId, this.state.questionSetStatus, this.state.jsonSchema);
+
         this.updateNavigation({ panelId, pageId });
     };
 
@@ -855,19 +860,25 @@ class DataAccessRequest extends Component {
             const newFormState = [...this.state.jsonSchema.pages].map(item => {
                 return { ...item, active: false };
             });
+
             // update actual object model with property of active true
             newFormState[newPageindex] = { ...pages[newPageindex], active: true };
 
             // get set the active panelId
             ({ panelId } = newForm);
+
             if (_.isEmpty(panelId) || typeof panelId == 'undefined') {
-                ({ panelId } = [...this.state.jsonSchema.formPanels].find(p => p.pageId === newFormState[newPageindex].pageId) || '');
+                const filteredPanels = [...this.state.jsonSchema.formPanels].filter((p, i) => {
+                    return p.pageId === newFormState[newPageindex].pageId;
+                });
+
+                ({ panelId } = filteredPanels[0]);
             }
 
             let countedQuestionAnswers = {};
             let totalQuestions = '';
             // if in the about panel, retrieve question answers count for entire application
-            if (panelId === 'about' || panelId === 'files') {
+            if (panelId === 'about' || panelId === 'additionalinformationfiles-files' || panelId === 'files') {
                 countedQuestionAnswers = DarHelper.totalQuestionsAnswered(this);
                 totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions || 0}/${
                     countedQuestionAnswers.totalQuestions || 0
@@ -884,12 +895,24 @@ class DataAccessRequest extends Component {
             this.setState({
                 jsonSchema: { ...jsonSchema, pages: newFormState },
                 activePanelId: panelId,
+                activePanelHeader: newForm.panelHeader,
+                activeQuestionPanelHeaderText: newForm.questionPanelHeaderText,
+                activePageId: 0,
                 isWideForm: panelId === 'about' || panelId === 'files',
                 totalQuestions: totalQuestions,
                 validationErrors,
                 reviewWarning,
                 activeGuidance: '',
-                actionTabSettings: { key: '', questionSetId: '', questionId: '' },
+                activePanelGuidance: newForm.panelGuidance,
+                actionTabSettings: {
+                    key: '',
+                    questionSetId: '',
+                    questionId: '',
+                    panel: {
+                        panelId,
+                        panelHeader: newForm.questionPanelHeaderText,
+                    },
+                },
             });
         }
     };
@@ -1134,27 +1157,33 @@ class DataAccessRequest extends Component {
     };
 
     updateCount = (questionId, questionSetId, messageType) => {
-        //Get the question that the count needs to be updated on
         let { jsonSchema } = this.state;
         let questionSet = DarHelper.findQuestionSet(questionSetId, jsonSchema);
-        let question = DarHelper.findQuestion(questionId, questionSet.questions);
 
-        //If question has no previous counts add in the defaults
-        if (!question.counts) {
-            question.counts = { messagesCount: 0, notesCount: 0 };
+        if (questionId) {
+            //Get the question that the count needs to be updated on
+
+            let question = DarHelper.findQuestion(questionId, questionSet.questions);
+
+            //If question has no previous counts add in the defaults
+            if (!question.counts) {
+                question.counts = { messagesCount: 0, notesCount: 0 };
+            }
+
+            //Update the count based on the messageType
+            if (messageType === 'message') {
+                question.counts.messagesCount = question.counts.messagesCount + 1;
+            } else if (messageType === 'note') {
+                question.counts.notesCount = question.counts.notesCount + 1;
+            }
+
+            //Update state
+            this.setState({
+                jsonSchema,
+                messagesCount: question.counts.messagesCount,
+                notesCount: question.counts.notesCount,
+            });
         }
-        //Update the count based on the messageType
-        if (messageType === 'message') {
-            question.counts.messagesCount = question.counts.messagesCount + 1;
-        } else if (messageType === 'note') {
-            question.counts.notesCount = question.counts.notesCount + 1;
-        }
-        //Update state
-        this.setState({
-            jsonSchema,
-            messagesCount: question.counts.messagesCount,
-            notesCount: question.counts.notesCount,
-        });
     };
 
     onHandleDataSetChange = (value = []) => {
@@ -1832,6 +1861,7 @@ class DataAccessRequest extends Component {
 
     renderApp = () => {
         let { activePanelId } = this.state;
+
         if (activePanelId === 'about') {
             return (
                 <AboutApplication
@@ -1871,9 +1901,16 @@ class DataAccessRequest extends Component {
                     datasetsAmendedDate={this.state.datasetsAmendedDate}
                 />
             );
-        } else if (activePanelId === 'files') {
+        } else if (activePanelId === 'additionalinformationfiles-files' || activePanelId === 'files') {
             return (
-                <Uploads onFilesUpdate={this.onFilesUpdate} id={this.state._id} files={this.state.files} readOnly={this.state.readOnly} />
+                <Uploads
+                    onFilesUpdate={this.onFilesUpdate}
+                    id={this.state._id}
+                    files={this.state.files}
+                    readOnly={this.state.readOnly}
+                    description={this.state.activePanelHeader}
+                    header={this.state.activeQuestionPanelHeaderText}
+                />
             );
         } else {
             return (
@@ -1906,6 +1943,7 @@ class DataAccessRequest extends Component {
             totalQuestions,
             isLoading,
             activeGuidance,
+            activePanelGuidance,
             datasets,
             showDrawer,
             showModal,
@@ -2033,6 +2071,7 @@ class DataAccessRequest extends Component {
                                                     activePanelId={this.state.activePanelId}
                                                     enabled={allowedNavigation}
                                                     notForReview={!item.inReview && this.state.inReviewMode}
+                                                    questionSetStatus={this.state.questionSetStatus}
                                                 />
                                             </ul>
                                         )}
@@ -2042,17 +2081,10 @@ class DataAccessRequest extends Component {
                         </div>
                         <div id='darCenterCol' className={isWideForm ? 'extended' : ''}>
                             {this.state.reviewWarning && (
-                                <Alert variant='warning' className=''>
-                                    <SVGIcon name='attention' width={24} height={24} fill={'#f0bb24'} viewBox='2 -9 22 22'></SVGIcon>
-                                    You are not assigned to this section but can still view the form
-                                </Alert>
+                                <Alert variant='warning'>You are not assigned to this section but can still view the form</Alert>
                             )}
-                            {!_.isEmpty(alert) && (
-                                <Alert variant={'success'} className='main-alert'>
-                                    <SVGIcon name='check' width={24} height={24} fill={'#2C8267'} /> {alert.message}
-                                </Alert>
-                            )}
-                            <div id='darDropdownNav'>
+                            {!_.isEmpty(alert) && <Alert variant='success'>{alert.message}</Alert>}
+                            {/* <div id='darDropdownNav'>
                                 <NavDropdown
                                     options={{
                                         ...this.state.jsonSchema,
@@ -2061,7 +2093,7 @@ class DataAccessRequest extends Component {
                                     onFormSwitchPanel={this.updateNavigation}
                                     enabled={allowedNavigation}
                                 />
-                            </div>
+                            </div> */}
                             <div style={{ backgroundColor: '#ffffff' }} className='dar__header'>
                                 {this.state.jsonSchema.pages
                                     ? [...this.state.jsonSchema.pages].map((item, idx) =>
@@ -2082,28 +2114,28 @@ class DataAccessRequest extends Component {
                                 {this.renderApp()}
                             </div>
                         </div>
-                        {isWideForm ? null : (
-                            <div id='darRightCol' className='scrollable-sticky-column'>
-                                <div className='darTab'>
-                                    <QuestionActionTabs
-                                        applicationId={this.state._id}
-                                        userState={userState}
-                                        settings={this.state.actionTabSettings}
-                                        activeGuidance={activeGuidance}
-                                        onHandleActionTabChange={this.onHandleActionTabChange}
-                                        toggleDrawer={this.toggleDrawer}
-                                        setMessageDescription={this.setMessageDescription}
-                                        userType={userType}
-                                        messagesCount={this.state.messagesCount}
-                                        notesCount={this.state.notesCount}
-                                        isShared={this.state.isShared}
-                                        updateCount={this.updateCount}
-                                        publisher={datasets[0].datasetv2.summary.publisher.name}
-                                        applicationStatus={applicationStatus}
-                                    />
-                                </div>
+
+                        <div id='darRightCol' className='scrollable-sticky-column'>
+                            <div className='darTab'>
+                                <QuestionActionTabs
+                                    applicationId={this.state._id}
+                                    userState={userState}
+                                    settings={this.state.actionTabSettings}
+                                    activeGuidance={activeGuidance}
+                                    activePanelGuidance={activePanelGuidance}
+                                    onHandleActionTabChange={this.onHandleActionTabChange}
+                                    toggleDrawer={this.toggleDrawer}
+                                    setMessageDescription={this.setMessageDescription}
+                                    userType={userType}
+                                    messagesCount={this.state.messagesCount}
+                                    notesCount={this.state.notesCount}
+                                    isShared={this.state.isShared}
+                                    updateCount={this.updateCount}
+                                    publisher={datasets[0].datasetv2.summary.publisher.name}
+                                    applicationStatus={applicationStatus}
+                                />
                             </div>
-                        )}
+                        </div>
                     </div>
 
                     <ActionBar userState={userState}>
@@ -2140,6 +2172,13 @@ class DataAccessRequest extends Component {
                                         applicationStatus={applicationStatus}
                                         onDuplicateClick={this.toggleDuplicateApplicationModal}
                                         onShowAmendApplicationModal={this.toggleAmendApplicationModal}
+                                        hasNext={
+                                            !!DarHelper.findNextPanel(
+                                                this.state.activePanelId,
+                                                this.state.questionSetStatus,
+                                                this.state.jsonSchema
+                                            )
+                                        }
                                     />
                                 ) : (
                                     <CustodianActionButtons
@@ -2157,6 +2196,13 @@ class DataAccessRequest extends Component {
                                         hasRecommended={this.state.hasRecommended}
                                         applicationStatus={applicationStatus}
                                         roles={roles}
+                                        hasNext={
+                                            !!DarHelper.findNextPanel(
+                                                this.state.activePanelId,
+                                                this.state.questionSetStatus,
+                                                this.state.jsonSchema
+                                            )
+                                        }
                                     />
                                 )}
                             </div>

@@ -12,7 +12,7 @@ export const root =
 
         return css`
             display: inline-flex;
-            stroke: ${stroke};
+            stroke: ${colors[stroke]};
             color: ${colors[color]};
             fill: ${colors[fill]};
             height: ${size === 'contained' ? '1em' : sizes[size]};

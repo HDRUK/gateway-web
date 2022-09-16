@@ -1,16 +1,23 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
+import { Box, Button, H6, Icon, Input, P } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import React from 'react';
-import { Alert, Button, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
+import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
-import SVGIcon from '../../images/SVGIcon';
+import { withTranslation } from 'react-i18next';
+import { ReactComponent as ClearSvg } from '../../images/clear.svg';
+import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
+import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
+import { ReactComponent as SearchSvg } from '../../images/search.svg';
+import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
-import { findAllByKey, iterateDeep } from '../../utils/GeneralHelper.util';
-import AdvancedSearchModal from '../commonComponents/AdvancedSearchModal/AdvancedSearchModal';
+import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
+import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
+import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
@@ -32,11 +39,10 @@ import Filter from './components/Filter';
 import FilterSelection from './components/FilterSelection';
 import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort';
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
-import SearchFilters from './components/SearchFilters';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
-import searchService from '../../services/search/search';
-import { getParams } from '../../utils/GeneralHelper.util';
+
+import { BackToTop } from '../../components';
 import './Search.scss';
 
 let baseURL = require('../commonComponents/BaseURL').getURL();
@@ -105,7 +111,6 @@ class SearchPage extends React.Component {
         isResultsLoading: true,
         showDrawer: false,
         showModal: false,
-        showAdvancedSearchModal: false,
         showSavedPreferencesModal: false,
         showSavedModal: false,
         context: {},
@@ -138,6 +143,7 @@ class SearchPage extends React.Component {
         showDataUtilityWizardModal: false,
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
+        searchFieldValue: '',
     };
 
     constructor(props) {
@@ -148,6 +154,9 @@ class SearchPage extends React.Component {
         }
         this.state.userState = props.userState;
         this.state.search = !_.isEmpty(search) ? search : props.location.search;
+
+        this.state.searchFieldValue = search;
+
         this.searchBar = React.createRef();
         this.updateFilterStates = this.updateFilterStates.bind(this);
         this.doSearchCall = this.doSearchCall.bind(this);
@@ -176,15 +185,6 @@ class SearchPage extends React.Component {
 
     showSavedName = data => {
         this.setState({ showSavedName: data });
-    };
-
-    toggleAdvancedSearchModal = () => {
-        if (!this.state.showAdvancedSearchModal) {
-            googleAnalytics.recordVirtualPageView('Advanced search modal');
-        }
-        this.setState(prevState => {
-            return { showAdvancedSearchModal: !prevState.showAdvancedSearchModal };
-        });
     };
 
     openDataUtilityWizard(activeStep) {
@@ -1727,6 +1727,24 @@ class SearchPage extends React.Component {
         };
     }
 
+    handleSearch = e => {
+        e.preventDefault();
+
+        window.location.href = `/search?search=${encodeURIComponent(this.state.searchFieldValue)}&tab=${this.state.key}`;
+    };
+
+    handleSearchChange = ({ target: { value } }) => {
+        this.setState({
+            searchFieldValue: value,
+        });
+    };
+
+    handleSearchReset = () => {
+        this.setState({
+            searchFieldValue: '',
+        });
+    };
+
     render() {
         let {
             summary: {
@@ -1763,10 +1781,8 @@ class SearchPage extends React.Component {
             paperSort,
             personSort,
             collectionSort,
-
             showDrawer,
             showModal,
-            showAdvancedSearchModal,
             context,
             activeDataUtilityWizardStep,
 
@@ -1805,6 +1821,7 @@ class SearchPage extends React.Component {
         return (
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <div>
+                    <BackToTop scrollOffset={300} className='backToTop' />
                     <SearchBar
                         ref={this.searchBar}
                         search={search}
@@ -1840,89 +1857,104 @@ class SearchPage extends React.Component {
                         )}
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
-                            <Row className='filters filter-save'>
-                                <Col className='title' lg={4}>
-                                    {(() => {
-                                        let { search } = queryString.parse(window.location.search);
-                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
-                                    })()}
+                            <Row className='filters filter-search'>
+                                <Col lg={12}>
+                                    <form onSubmit={this.handleSearch}>
+                                        <Box display='flex' justifyContent='center' width='100%' p={6}>
+                                            <Box width='150px' display='inline-flex'>
+                                                <ColourLogoSvg />
+                                            </Box>
+                                            <Box mt={1} flexGrow='1' mr={1}>
+                                                <Input
+                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                    iconRight={
+                                                        !!this.state.searchFieldValue && (
+                                                            <Icon
+                                                                svg={<ClearSvg />}
+                                                                fill='grey400'
+                                                                onClick={this.handleSearchReset}
+                                                                role='button'
+                                                            />
+                                                        )
+                                                    }
+                                                    value={this.state.searchFieldValue}
+                                                    onChange={this.handleSearchChange}
+                                                />
+                                            </Box>
+                                            <Box width='175px' mt={1}>
+                                                <Button type='submit'>Search</Button>
+                                            </Box>
+                                        </Box>
+                                    </form>
                                 </Col>
+                            </Row>
+
+                            <Row className='filters filter-save'>
+                                <Col className='title' lg={4} />
                                 <Col lg={8} className='saved-buttons'>
-                                    {this.state.key === 'Datauses' && (
-                                        <>
-                                            <Button
-                                                variant='light'
-                                                className='saved-preference button-tertiary'
-                                                onClick={() => this.onClickDownloadResults()}>
-                                                {' '}
-                                                Download Results
+                                    <Box display='inline-flex' gap={2} py={4}>
+                                        {this.state.key === 'Datauses' && (
+                                            <>
+                                                <Button variant='tertiary' onClick={this.onClickDownloadResults}>
+                                                    Download Results
+                                                </Button>
+                                                <CSVLink
+                                                    data={dataUseRegisterFullData}
+                                                    filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
+                                                    className='hidden'
+                                                    ref={this.csvLink}
+                                                    target='_blank'
+                                                />
+                                            </>
+                                        )}
+
+                                        {this.state.saveSuccess ? (
+                                            <Button variant='primaryAlt' disabled iconLeft={<Icon svg={<TickSvg />} fill='green300' />}>
+                                                Saved
                                             </Button>
-                                            <CSVLink
-                                                data={dataUseRegisterFullData}
-                                                filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
-                                                className='hidden'
-                                                ref={this.csvLink}
-                                                target='_blank'
+                                        ) : this.state.userState[0].loggedIn === false ? (
+                                            <Button variant='secondary' onClick={this.showLoginModal}>
+                                                Save
+                                            </Button>
+                                        ) : (
+                                            <Button variant='secondary' onClick={() => this.setState({ showSavedModal: true })}>
+                                                Save
+                                            </Button>
+                                        )}
+
+                                        {this.state.showSavedModal && (
+                                            <SaveModal
+                                                show={this.state.showSavedModal}
+                                                onHide={this.hideSavedModal}
+                                                onSaveHide={this.hideNoSaveSearchModal}
+                                                saveSuccess={this.showSuccessMessage}
+                                                saveName={this.showSavedName}
+                                                search={this.state.search}
+                                                filters={preferenceFilters}
+                                                sort={perferenceSort}
+                                                tab={this.state.key}
                                             />
-                                        </>
-                                    )}
+                                        )}
 
-                                    {this.state.saveSuccess ? (
-                                        <Button variant='success' className='saved-disabled button-teal button-teal' disabled>
-                                            <SVGIcon width='15px' height='15px' name='tick' fill={'#fff'} /> Saved
-                                        </Button>
-                                    ) : this.state.userState[0].loggedIn === false ? (
                                         <Button
-                                            variant='outline-success'
-                                            className='saved button-teal'
-                                            onClick={() => this.showLoginModal()}>
-                                            Save
+                                            variant='tertiary'
+                                            onClick={
+                                                this.state.userState[0].loggedIn === false
+                                                    ? () => this.showLoginModal()
+                                                    : () => this.setState({ showSavedPreferencesModal: true })
+                                            }>
+                                            Saved preferences
                                         </Button>
-                                    ) : (
-                                        <Button
-                                            variant='outline-success'
-                                            className='saved button-teal'
-                                            onClick={() => this.setState({ showSavedModal: true })}>
-                                            Save
-                                        </Button>
-                                    )}
-
-                                    {this.state.showSavedModal && (
-                                        <SaveModal
-                                            show={this.state.showSavedModal}
-                                            onHide={this.hideSavedModal}
-                                            onSaveHide={this.hideNoSaveSearchModal}
-                                            saveSuccess={this.showSuccessMessage}
-                                            saveName={this.showSavedName}
-                                            search={this.state.search}
-                                            filters={preferenceFilters}
-                                            sort={perferenceSort}
-                                            tab={this.state.key}
-                                        />
-                                    )}
-
-                                    <Button
-                                        variant='light'
-                                        className='saved-preference button-tertiary'
-                                        onClick={
-                                            this.state.userState[0].loggedIn === false
-                                                ? () => this.showLoginModal()
-                                                : () => this.setState({ showSavedPreferencesModal: true })
-                                        }>
-                                        {' '}
-                                        Saved preferences
-                                    </Button>
-                                    {this.state.showSavedPreferencesModal && (
-                                        <SavedPreferencesModal
-                                            show={this.state.showSavedPreferencesModal}
-                                            onHide={this.hideSavedPreferencesModal}
-                                            viewMatchesLink={this.viewMatches}
-                                            viewSaved={this.saveFiltersUpdate}
-                                            activeTab={key}
-                                        />
-                                    )}
-
-                                    {sortMenu}
+                                        {this.state.showSavedPreferencesModal && (
+                                            <SavedPreferencesModal
+                                                show={this.state.showSavedPreferencesModal}
+                                                onHide={this.hideSavedPreferencesModal}
+                                                viewMatchesLink={this.viewMatches}
+                                                viewSaved={this.saveFiltersUpdate}
+                                                activeTab={key}
+                                            />
+                                        )}
+                                    </Box>
                                 </Col>
                             </Row>
                             <Row>
@@ -1938,13 +1970,45 @@ class SearchPage extends React.Component {
                         </Container>
                     </div>
                     <Container>
+                        <Row className='flex-row-reverse'>
+                            <Col sm={12} md={12} lg={4}>
+                                <Box display='flex' justifyContent='end' alignItems='center' mt={3} mb={1}>
+                                    {key !== 'Courses' && (
+                                        <P color='grey800' mr='2'>
+                                            {this.props.t('searchResultsInfo.sortedBy')}
+                                        </P>
+                                    )}
+                                    {sortMenu}
+                                </Box>
+                            </Col>
+                            <Col sm={12} md={12} lg={5}>
+                                <Box mt={1} display='flex' alignItems='center' height='100%'>
+                                    {(() => {
+                                        let { search } = queryString.parse(window.location.search);
+                                        return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
+                                    })()}
+                                </Box>
+                            </Col>
+                            <Col sm={12} md={12} lg={3}>
+                                <Box mt={6} mb={4}>
+                                    <H6 color='grey700'>{this.props.t('searchResultsInfo.searchFilters')}</H6>
+                                </Box>
+                            </Col>
+                        </Row>
+                    </Container>
+                    <Container>
                         <Row>
                             <Col sm={12} md={12} lg={3} className='mt-1 mb-5'>
                                 {key !== 'People' && (
-                                    <SearchFilters onAdvancedSearchClick={this.toggleAdvancedSearchModal}>
+                                    <div className='saved-filterHolder'>
                                         <Filter {...filterProps} />
-                                    </SearchFilters>
+                                    </div>
                                 )}
+                                <Box my={5}>
+                                    <AdvancedSearchCohortDiscovery userProps={userState[0]} showLoginModal={this.showLoginModal} />
+                                </Box>
+
+                                <AdvancedSearchDataUtilityWizard onClick={this.openDataUtilityWizard} />
                             </Col>
                             <Col sm={12} md={12} lg={9} className='mt-2 mb-5'>
                                 {key === 'Datasets' && (
@@ -2033,13 +2097,6 @@ class SearchPage extends React.Component {
                         />
                     </SideDrawer>
 
-                    <AdvancedSearchModal
-                        open={showAdvancedSearchModal}
-                        closed={this.toggleAdvancedSearchModal}
-                        userProps={userState[0]}
-                        startDataUtilityWizardJourney={this.openDataUtilityWizard}
-                    />
-
                     <DataUtilityWizardModal
                         open={this.state.showDataUtilityWizardModal}
                         closed={() => {
@@ -2064,4 +2121,4 @@ class SearchPage extends React.Component {
     }
 }
 
-export default SearchPage;
+export default withTranslation()(SearchPage);

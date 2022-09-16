@@ -3,13 +3,13 @@
 exports[`Given the DropdownCustom component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-Box css-672p6m"
   >
     <div
-      class="css-1bab3f0-Input form-group"
+      class="css-f3m9lf-Input form-group"
     >
       <div
-        class="ui-Input ui-Typeahead css-v63lc4-Input input-group"
+        class="ui-Input ui-Typeahead css-uxo7bh-Input input-group"
       >
         <div
           class="rbt"
@@ -34,7 +34,7 @@ exports[`Given the DropdownCustom component When it is rendered Then matches the
               aria-hidden="true"
               class="rbt-input-hint"
               readonly=""
-              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: solid solid solid solid; border-width: 2px 2px 2px 2px; font-size: 13px; height: 40px; line-height: normal; padding: 1px 1px 1px 1px;"
+              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: solid solid solid solid; border-width: 2px 2px 2px 2px; font-size: 14px; height: 40px; line-height: normal; padding: 1px 1px 1px 1px;"
               tabindex="-1"
               value=""
             />

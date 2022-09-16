@@ -15,6 +15,7 @@ const props = {
     maxCharCount: 255,
     charCountDescription: 'sample description',
     onChange: jest.fn(),
+    className: 'additional-classname',
 };
 
 let wrapper;
@@ -29,6 +30,10 @@ describe('Given the Textarea component', () => {
 
         it('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
+        });
+
+        it('Then has the correct className', () => {
+            expect(wrapper.container.querySelector('.additional-classname')).toBeTruthy();
         });
 
         it('Then should use a standard textarea', () => {

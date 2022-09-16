@@ -2,9 +2,9 @@
 import { cx } from '@emotion/css';
 import { jsx } from '@emotion/react';
 import PropTypes from 'prop-types';
+import { Box } from 'hdruk-react-core';
 import { addCommonPropTypes } from '../../configs/propTypes';
 import { dateFormats } from '../../utils/GeneralHelper.util';
-import LayoutBox from '../LayoutBox';
 
 const ActionBarStatus = ({ status, dataset, totalQuestions, className, mt, mb, ml, mr, width, minWidth, maxWidth, ...outerProps }) => {
     const {
@@ -39,11 +39,11 @@ const ActionBarStatus = ({ status, dataset, totalQuestions, className, mt, mb, m
     }
 
     return (
-        <LayoutBox {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
+        <Box {...{ mt, mb, ml, mr, width, minWidth, maxWidth }}>
             <div {...outerProps} className={cx('action-bar-status', 'ui-ActionBarStatus', className)}>
                 {content}
             </div>
-        </LayoutBox>
+        </Box>
     );
 };
 
