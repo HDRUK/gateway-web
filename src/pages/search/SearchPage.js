@@ -254,10 +254,6 @@ class SearchPage extends React.Component {
             // 6. if openUserMessages is true open the user messages
             else if (this.state.userState[0].loggedIn && queryParams.openUserMessages === 'true') {
                 this.toggleDrawer();
-            }
-            // 7. if openAdvancedSearch is true open the user messages
-            else if (queryParams.openAdvancedSearch === 'true') {
-                this.toggleAdvancedSearchModal();
             } else if (queryParams.openDataUtilityWizard === 'true') {
                 this.toggleDataUtilityWizardModal();
             }
