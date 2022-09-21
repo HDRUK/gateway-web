@@ -1,17 +1,18 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
+import { Button } from 'hdruk-react-core';
 import googleAnalytics from '../../../../tracking';
 
 const MessageHeader = ({ userState, topic, modalRequired, onRequestAccess, onShowModal, is5Safes }) => {
-    let [showDashboard, setShowDashboard] = useState(false);
+    const [showDashboard, setShowDashboard] = useState(false);
     let [publisher, setPubliser] = useState('');
-    let history = useHistory();
+    const history = useHistory();
 
     const showDashboardOption = () => {
         ({ title: publisher } = topic);
         setPubliser(publisher);
-        let { teams = [] } = userState;
+        const { teams = [] } = userState;
         if (!_.isEmpty(teams)) {
             const hasPublisher = [...teams].map(t => t.name).includes(publisher);
             setShowDashboard(hasPublisher);
@@ -30,7 +31,7 @@ const MessageHeader = ({ userState, topic, modalRequired, onRequestAccess, onSho
     }, [topic]);
 
     return (
-        <Fragment>
+        <>
             <div className='messageArea-header-desc'>
                 <h1 className='black-20 ' data-test-id='headerTitle'>
                     {topic.title}
@@ -43,14 +44,13 @@ const MessageHeader = ({ userState, topic, modalRequired, onRequestAccess, onSho
             </div>
             <div className='messageArea-header-action'>
                 {modalRequired && showDashboard ? (
-                    <Fragment>
+                    <>
                         <div
                             className='purple-14 mr-2 pointer'
                             onClick={e => {
                                 googleAnalytics.recordEvent('Data access request', 'Show applications', 'Message drawer link clicked');
                                 onRouteChange(e);
-                            }}
-                        >
+                            }}>
                             Show applications
                         </div>
                         <button
@@ -58,37 +58,35 @@ const MessageHeader = ({ userState, topic, modalRequired, onRequestAccess, onSho
                             onClick={e => {
                                 googleAnalytics.recordEvent('Data access request', 'How to request access', 'Message drawer link clicked');
                                 onShowModal(e);
-                            }}
-                        >
+                            }}>
                             How to request access
                         </button>
-                    </Fragment>
+                    </>
                 ) : (
-                    <Fragment>
+                    <>
                         <button
                             className='button-tertiary'
                             onClick={e => {
                                 googleAnalytics.recordEvent('Data access request', 'How to request access', 'Message drawer link clicked');
                                 onShowModal(e);
-                            }}
-                        >
+                            }}>
                             How to request access
                         </button>
                         {topic.is5Safes || (topic.createdDate === 'New message' && is5Safes) ? (
-                            <button
-                                className='button-secondary ml-2'
+                            <Button
+                                variant='secondary'
+                                className='ml-2'
                                 onClick={e => {
                                     googleAnalytics.recordEvent('Data access request', 'Start application', 'Message drawer link clicked');
                                     onRequestAccess(e);
-                                }}
-                            >
+                                }}>
                                 Start application
-                            </button>
+                            </Button>
                         ) : null}
-                    </Fragment>
+                    </>
                 )}
             </div>
-        </Fragment>
+        </>
     );
 };
 

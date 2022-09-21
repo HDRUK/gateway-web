@@ -5,6 +5,7 @@ import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.s
 import './SubmitAmendmentModal.scss';
 import googleAnalytics from '../../../../tracking';
 import TextareaAutosize from 'react-textarea-autosize';
+import { Button } from 'hdruk-react-core';
 
 const SubmitAmendmentModal = ({ open, close, onHandleSubmit }) => {
     const [count, setCount] = useState(0);
@@ -26,7 +27,7 @@ const SubmitAmendmentModal = ({ open, close, onHandleSubmit }) => {
     };
 
     const handleChange = event => {
-        let { name, value } = event.currentTarget;
+        const { name, value } = event.currentTarget;
         setCount(value.length);
         setFormState({
             ...formState,
@@ -38,7 +39,7 @@ const SubmitAmendmentModal = ({ open, close, onHandleSubmit }) => {
     };
 
     const isFormInvalid = () => {
-        let { amendDesc } = formState;
+        const { amendDesc } = formState;
         setFormState({
             ...formState,
             submitted: true,
@@ -54,7 +55,7 @@ const SubmitAmendmentModal = ({ open, close, onHandleSubmit }) => {
     };
 
     return (
-        <Fragment>
+        <>
             <Modal show={open} onHide={close} size='lg' aria-labelledby='contained-modal-title-vcenter' centered className='amendmentModal'>
                 <div className='amendmentModal-header'>
                     <div className='amendmentModal-header--wrap'>
@@ -82,29 +83,27 @@ const SubmitAmendmentModal = ({ open, close, onHandleSubmit }) => {
                             onChange={handleChange}
                             value={formState.amendDesc}
                             rows='8'
-                        ></TextareaAutosize>
+                        />
                         <div className='invalid-feedback'>{formState.invalidMessage}</div>
                     </div>
                 </div>
 
                 <div className='amendmentModal-footer'>
                     <div className='amendmentModal-footer--wrap'>
-                        <button className='button-secondary' onClick={() => close()}>
+                        <Button variant='secondary' onClick={() => close()}>
                             No, nevermind
-                        </button>
-                        <button
-                            className='button-primary'
+                        </Button>
+                        <Button
                             onClick={e => {
                                 googleAnalytics.recordEvent('Data access request', 'Clicked submit amendment', 'Submitted amendment');
                                 onSubmit(e);
-                            }}
-                        >
+                            }}>
                             Submit amendment
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

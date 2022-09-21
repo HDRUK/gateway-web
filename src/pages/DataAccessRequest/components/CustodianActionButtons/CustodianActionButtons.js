@@ -128,7 +128,7 @@ const CustodianActionButtons = ({
 
     return (
         <>
-            <ActionBarMenu label='Manage application' options={availableManageOptions} buttonClass='button-tertiary' />
+            <ActionBarMenu label='Manage application' options={availableManageOptions} variant='tertiary' />
             <ActionBarMenu label='Make a decision' options={availableDecisionOptions} />
 
             {showAssignWorkflow && (

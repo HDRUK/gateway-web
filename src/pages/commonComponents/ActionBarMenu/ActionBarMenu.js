@@ -1,9 +1,10 @@
+import { Button } from 'hdruk-react-core';
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import './ActionBarMenu.scss';
 
-const ActionBarMenu = ({ label, options = [], disabled, buttonClass = 'button-secondary', alignStart }) => {
+const ActionBarMenu = ({ label, options = [], disabled, variant = 'secondary', alignStart }) => {
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         <a
             href='javascript:void(0)'
@@ -23,9 +24,9 @@ const ActionBarMenu = ({ label, options = [], disabled, buttonClass = 'button-se
             {options.length > 0 && options.some(option => option.actions.length > 0) && (
                 <Dropdown drop='up'>
                     <Dropdown.Toggle as={CustomToggle}>
-                        <button className={`${buttonClass} ${disabled ? 'disabled' : ''}`} disabled={disabled}>
+                        <Button variant={variant} className={`${disabled ? 'disabled' : ''}`} disabled={disabled}>
                             {label}
-                        </button>
+                        </Button>
                     </Dropdown.Toggle>
                     <Dropdown.Menu
                         className={`actionMenuDropdown${alignStart ? ' actionMenuDropdown__start' : ''}`}

@@ -72,12 +72,7 @@ const ApplicantActionButtons = ({
 
     return (
         <>
-            <ActionBarMenu
-                label='Manage application'
-                options={availableOptions}
-                disabled={!allowedNavigation}
-                buttonClass='button-tertiary'
-            />
+            <ActionBarMenu label='Manage application' options={availableOptions} disabled={!allowedNavigation} variant='tertiary' />
 
             {showSubmit && (
                 <Button

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { Formik, Field, Form, FieldArray } from 'formik';
 import axios from 'axios';
 import { SlideDown } from 'react-slidedown';
+import { Button } from 'hdruk-react-core';
 import WorkflowModal from './WorkflowModal';
 import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
@@ -47,16 +48,16 @@ const AddEditWorkflow = props => {
     };
 
     const toggleModal = async (type = '', action = {}) => {
-        let {
+        const {
             current: { values, setValues },
         } = formRef;
         if (!_.isEmpty(type)) {
-            let config = getModalConfig(type);
+            const config = getModalConfig(type);
             setModalConfig(config);
             setModelVisible(!modalVisible);
         }
         if (!_.isEmpty(action)) {
-            let { actionName = 'CANCEL', redirect = false } = action;
+            const { actionName = 'CANCEL', redirect = false } = action;
             switch (actionName.toUpperCase()) {
                 case modalactions.CANCEL:
                     setModelVisible(!modalVisible);
@@ -88,9 +89,9 @@ const AddEditWorkflow = props => {
     };
 
     const deletePhase = values => {
-        let { steps } = { ...values };
+        const { steps } = { ...values };
         if (!_.isEmpty(steps)) {
-            let newSteps = [...steps].filter((key, idx) => {
+            const newSteps = [...steps].filter((key, idx) => {
                 return idx !== phaseIndex;
             });
             setPhaseIndex(-1);
@@ -103,12 +104,12 @@ const AddEditWorkflow = props => {
     };
 
     const handleFormSubmission = async () => {
-        let {
+        const {
             current: { values, setSubmitting },
         } = formRef;
-        let { workflowName, steps, _id = '' } = values;
-        let existingWorkflow = !_.isEmpty(_id) ? true : false;
-        let params = {
+        const { workflowName, steps, _id = '' } = values;
+        const existingWorkflow = !_.isEmpty(_id);
+        const params = {
             workflowName,
             steps,
             publisher: team,
@@ -165,7 +166,7 @@ const AddEditWorkflow = props => {
     };
 
     return (
-        <Fragment>
+        <>
             <Formik
                 enableReinitialize
                 initialValues={workflow}
@@ -186,8 +187,7 @@ const AddEditWorkflow = props => {
                 })}
                 onSubmit={async () => {
                     await handleFormSubmission();
-                }}
-            >
+                }}>
                 {({ isSubmitting, values, errors, touched, setFieldValue }) => (
                     <Form autoComplete='off'>
                         <div className='row justify-content-md-center'>
@@ -197,7 +197,7 @@ const AddEditWorkflow = props => {
                                         <div className='main-header-desc'>
                                             <div>
                                                 {editWorkflowName ? (
-                                                    <Fragment>
+                                                    <>
                                                         <Field
                                                             name='workflowName'
                                                             type='text'
@@ -208,7 +208,7 @@ const AddEditWorkflow = props => {
                                                         {errors.workflowName && touched.workflowName ? (
                                                             <div className='errorMessages'>{errors.workflowName}</div>
                                                         ) : null}
-                                                    </Fragment>
+                                                    </>
                                                 ) : (
                                                     <h1 className='black-20-semibold'>{values.workflowName}</h1>
                                                 )}
@@ -220,16 +220,12 @@ const AddEditWorkflow = props => {
                                         </div>
                                         {/* CLOSE HEADER-DESCRIPTION */}
                                         <div className='main-header-action'>
-                                            <button className='button-tertiary mr-2' type='button' onClick={e => onClickWorkFlowName(e)}>
+                                            <Button className='tertiary' mr={2} onClick={e => onClickWorkFlowName(e)}>
                                                 {editWorkflowName ? 'Save name' : 'Edit name'}
-                                            </button>
-                                            <button
-                                                className='button-tertiary'
-                                                type='button'
-                                                onClick={e => toggleModal(modalactions.DELETEWORKFLOW)}
-                                            >
+                                            </Button>
+                                            <Button variant='tertiary' onClick={e => toggleModal(modalactions.DELETEWORKFLOW)}>
                                                 Delete
-                                            </button>
+                                            </Button>
                                         </div>
                                         {/* CLOSE MAIN-HEADER-ACTION */}
                                     </div>
@@ -248,11 +244,10 @@ const AddEditWorkflow = props => {
                                                                         onClick={e => {
                                                                             e.preventDefault();
                                                                             setFieldValue(`steps[${index}].expand`, !node.expand);
-                                                                        }}
-                                                                    >
+                                                                        }}>
                                                                         <SVGIcon
                                                                             name='chevronbottom'
-                                                                            fill={'#fff'}
+                                                                            fill='#fff'
                                                                             className={node.expand ? '' : 'flip180'}
                                                                         />
                                                                         <h1>
@@ -264,8 +259,7 @@ const AddEditWorkflow = props => {
                                                                             <div className='form-group'>
                                                                                 <label
                                                                                     htmlFor={`steps[${index}].stepName`}
-                                                                                    className='form-label'
-                                                                                >
+                                                                                    className='form-label'>
                                                                                     Phase Name
                                                                                 </label>
                                                                                 <Field
@@ -287,8 +281,7 @@ const AddEditWorkflow = props => {
                                                                             <div className='form-group'>
                                                                                 <label
                                                                                     htmlFor={`steps[${index}].reviewers`}
-                                                                                    className='form-label'
-                                                                                >
+                                                                                    className='form-label'>
                                                                                     Reviewers
                                                                                 </label>
                                                                                 <small className='form-text mb-2'>
@@ -323,8 +316,7 @@ const AddEditWorkflow = props => {
                                                                             <div className='form-group'>
                                                                                 <label
                                                                                     htmlFor={`node.${index}.sections`}
-                                                                                    className='form-label'
-                                                                                >
+                                                                                    className='form-label'>
                                                                                     What sections of the application can be reviewed?
                                                                                 </label>
                                                                                 <small className='form-text mb-2'>
@@ -406,8 +398,7 @@ const AddEditWorkflow = props => {
                                                                             <div className='form-group'>
                                                                                 <label
                                                                                     htmlFor={`node[${index}].start`}
-                                                                                    className='form-label'
-                                                                                >
+                                                                                    className='form-label'>
                                                                                     When will this phase start and end?
                                                                                 </label>
                                                                                 <small className='form-text'>
@@ -422,8 +413,7 @@ const AddEditWorkflow = props => {
                                                                             <div className='form-group'>
                                                                                 <label
                                                                                     htmlFor={`node[${index}].deadline`}
-                                                                                    className='form-label'
-                                                                                >
+                                                                                    className='form-label'>
                                                                                     Deadline
                                                                                 </label>
                                                                                 <small className='form-text mb-2'>
@@ -453,20 +443,19 @@ const AddEditWorkflow = props => {
                                                                                 ) : null}
                                                                             </div>
                                                                             <div className='form-group phase-action'>
-                                                                                <button
-                                                                                    className='button-tertiary'
+                                                                                <Button
+                                                                                    variant='tertiary'
                                                                                     onClick={async e => {
                                                                                         e.preventDefault();
                                                                                         removePhase(index);
-                                                                                    }}
-                                                                                >
+                                                                                    }}>
                                                                                     <CloseButtonSvg
                                                                                         width='10px'
                                                                                         height='10px'
                                                                                         fill='#475DA7'
                                                                                     />{' '}
                                                                                     Remove phase
-                                                                                </button>
+                                                                                </Button>
                                                                             </div>
                                                                         </div>
                                                                     </SlideDown>
@@ -474,9 +463,9 @@ const AddEditWorkflow = props => {
                                                             );
                                                         })}
                                                     <div className='main-footer'>
-                                                        <button type='button' className='button-secondary' onClick={e => push(step)}>
+                                                        <Button variant='secondary' onClick={e => push(step)}>
                                                             + Add another phase
-                                                        </button>
+                                                        </Button>
                                                     </div>
                                                     {/* CLOSE FOOTER */}
                                                 </div>
@@ -488,14 +477,10 @@ const AddEditWorkflow = props => {
                                 </div>
                                 {/* CLOSE MAIN-CARD */}
                                 <div className='workflow-action-bar'>
-                                    <button className='button-tertiary' onClick={e => returnToWorkflows(e)}>
+                                    <Button variant='tertiary' onClick={e => returnToWorkflows(e)}>
                                         Return to all workflows
-                                    </button>
-                                    <button
-                                        className={savedSuccess ? 'button-teal' : 'button-primary'}
-                                        type='submit'
-                                        disabled={isSubmitting}
-                                    >
+                                    </Button>
+                                    <Button variant={savedSuccess ? 'primaryAlt' : 'primary'} type='submit' disabled={isSubmitting}>
                                         {' '}
                                         {savedSuccess ? (
                                             <div>
@@ -504,7 +489,7 @@ const AddEditWorkflow = props => {
                                         ) : (
                                             'Save'
                                         )}
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -513,7 +498,7 @@ const AddEditWorkflow = props => {
             </Formik>
 
             <WorkflowModal open={modalVisible} context={modalConfig} close={toggleModal} />
-        </Fragment>
+        </>
     );
 };
 

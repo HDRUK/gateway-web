@@ -911,7 +911,7 @@ export const DataAccessRequestCustomiseForm = props => {
                         <div className='action-bar--questions'>
                             <ActionBarMenu
                                 label='Clear updates'
-                                buttonClass='button-tertiary'
+                                variant='tertiary'
                                 options={[
                                     {
                                         actions: [
@@ -974,9 +974,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                         <Button onClick={onSubmitClick}>{t('buttons.publish')}</Button>
                                     </>
                                 ) : (
-                                    <Button className='button-primary' onClick={() => setShowConfirmPublishModal(false)}>
-                                        {t('buttons.close')}
-                                    </Button>
+                                    <Button onClick={() => setShowConfirmPublishModal(false)}>{t('buttons.close')}</Button>
                                 ))}
 
                             {(showClearSectionModal || showClearModal) && (

@@ -820,6 +820,11 @@ textarea:focus {
     font-size: 14px !important;
 }
 
+// TODO: Extend react-core Button component and remove this
+a.nested-button {
+    text-decoration: none !important;
+}
+
 .accountDropDownGap {
     margin-left: 20px;
 }

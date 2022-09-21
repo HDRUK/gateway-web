@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import AddToCollection from '../addToCollection/AddToCollection';
 
 const ResourcePageButtons = props => {
@@ -24,9 +24,8 @@ const ResourcePageButtons = props => {
                 <Button
                     data-test-id='action-bar-edit'
                     variant='white'
-                    href={'/' + type + '/edit/' + props.data.id}
-                    className='techDetailButton mr-2'
-                >
+                    href={`/${type}/edit/${props.data.id}`}
+                    className='techDetailButton mr-2'>
                     Edit
                 </Button>
             ) : (
@@ -35,17 +34,17 @@ const ResourcePageButtons = props => {
 
             {props.data.type === 'dataset' ? (
                 <>
-                    <Button variant='white' onClick={props.exportCitation} className='techDetailButton mr-2'>
+                    <Button mr={2} variant='secondary' onClick={props.exportCitation}>
                         Export citation
                     </Button>
-                    <Button
-                        variant='white'
-                        href={'https://metadata-catalogue.org/hdruk/#/catalogue/dataModel/' + props.data.datasetid}
-                        target='_blank'
-                        className='techDetailButton mr-2'
-                    >
-                        Technical details
-                    </Button>
+                    <a
+                        className='nested-button'
+                        href={`https://metadata-catalogue.org/hdruk/#/catalogue/dataModel/${props.data.datasetid}`}
+                        target='_blank'>
+                        <Button mr={2} variant='secondary'>
+                            Technical details
+                        </Button>
+                    </a>
                 </>
             ) : (
                 ''

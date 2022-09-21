@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import '../../DatasetOnboarding.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Row } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 
 const CustodianActionButtons = ({ allowedNavigation = false, onNextClick, onActionClick, roles }) => {
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -11,21 +12,20 @@ const CustodianActionButtons = ({ allowedNavigation = false, onNextClick, onActi
             onClick={e => {
                 e.preventDefault();
                 onClick(e);
-            }}
-        >
+            }}>
             {children}
         </a>
     ));
 
     return (
-        <Fragment>
+        <>
             <Dropdown>
                 <Dropdown.Toggle as={CustomToggle}>
-                    <button className='button-secondary'>Make a decision</button>
+                    <Button variant='secondary'>Make a decision</Button>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className='makeADecisionDropdown'>
                     {roles.includes('admin') && (
-                        <Fragment>
+                        <>
                             <Row className='makeADecisionHeader'>
                                 <span className='gray800-14-bold'>Make a decision</span>
                             </Row>
@@ -35,15 +35,15 @@ const CustodianActionButtons = ({ allowedNavigation = false, onNextClick, onActi
                             <div className='gray800-14 pointer option' onClick={e => onActionClick('Reject')}>
                                 Reject
                             </div>
-                        </Fragment>
+                        </>
                     )}
                 </Dropdown.Menu>
             </Dropdown>
 
-            <button className={`button-primary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onNextClick()}>
+            <Button className={`${allowedNavigation ? '' : 'disabled'}`} onClick={e => onNextClick()}>
                 Next
-            </button>
-        </Fragment>
+            </Button>
+        </>
     );
 };
 
