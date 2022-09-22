@@ -127,18 +127,18 @@ const Dataset = ({
                     <br />
 
                     <Box
-                        as={Typography}
                         mb={1}
                         display='flex'
                         alignItems='center'
                         className={cx('gray800-14', { underlined: !!activeLink })}
                         css={styles.pointer}
-                        onClick={() =>
+                        onClick={() => {
                             updateOnFilterBadge('publisher', {
+                                value: publisherDetails.label,
                                 label: publisherDetails.label,
                                 parentKey: 'publisher',
-                            })
-                        }
+                            });
+                        }}
                         data-testid={`publisher-${publisherDetails.name}`}>
                         {publisherDetails.showShield && (
                             <ToolTip text={`Member of ${publisherDetails.memberOf}`} placement='bottom-start'>
