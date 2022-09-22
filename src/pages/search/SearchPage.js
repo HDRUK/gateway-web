@@ -1366,10 +1366,12 @@ class SearchPage extends React.Component {
      * @param {string} parentKey
      * @param {boolean} checkValue
      */
-    handleInputChange = (nodes, parentKey, checkValue) => {
+    handleInputChange = (nodes, parentKey, checkValue, performSearch = true) => {
         if (isTree(parentKey)) {
             this.setState(this.filterTreeByCheckbox(nodes, parentKey, checkValue), () => {
-                this.doSearchCall();
+                if (performSearch) {
+                    this.doSearchCall();
+                }
             });
 
             googleAnalytics.recordEvent(
@@ -1379,7 +1381,9 @@ class SearchPage extends React.Component {
             );
         } else {
             this.setState(this.filterShallowByCheckbox(nodes, parentKey, checkValue), () => {
-                this.doSearchCall();
+                if (performSearch) {
+                    this.doSearchCall();
+                }
             });
 
             googleAnalytics.recordEvent(
@@ -1512,18 +1516,9 @@ class SearchPage extends React.Component {
 
                 this.setState({ search: viewSaved.search, key: viewSaved.tab }, async () => {
                     await this.getFilters(viewSaved.tab);
-
                     for (let filter of viewSaved.filters) {
-                        this.handleInputChange(
-                            {
-                                parentKey: filter.parentKey,
-                                label: filter.label,
-                            },
-                            filter.parentKey,
-                            true
-                        );
+                        this.handleInputChange(filter, filter.parentKey, true, false);
                     }
-
                     this.doSearchCall();
                 });
             }
