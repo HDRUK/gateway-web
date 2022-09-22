@@ -1,5 +1,5 @@
 import { Button } from 'hdruk-react-core';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 

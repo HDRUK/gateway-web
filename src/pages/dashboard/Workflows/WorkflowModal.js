@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
