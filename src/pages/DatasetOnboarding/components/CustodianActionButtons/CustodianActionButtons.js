@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import '../../DatasetOnboarding.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Row } from 'react-bootstrap';
