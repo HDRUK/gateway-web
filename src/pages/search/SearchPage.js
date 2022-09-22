@@ -516,7 +516,12 @@ class SearchPage extends React.Component {
 
     updateOnFilterBadge = (filterGroup, filter) => {
         if (typeof filter === 'object' && !_.isEmpty(filter)) {
-            this.handleInputChange(filter, filter.parentKey, true);
+            const selectedFilters = this.getSelectedFiltersStateByKey(this.state.key);
+            const filteredFilters = selectedFilters.filter(item => filter.parentKey === item.parentKey);
+
+            if (!filteredFilters.find(item => filter.value === item.value)) {
+                this.handleInputChange(filter, filter.parentKey, true);
+            }
         } else {
             return;
         }

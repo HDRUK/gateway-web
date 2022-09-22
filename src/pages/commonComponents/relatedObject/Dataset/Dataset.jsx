@@ -143,7 +143,7 @@ const Dataset = ({
                                 updateOnFilterBadge('publisher', {
                                     value: publisherDetails.label,
                                     label: publisherDetails.label,
-                                    parentKey: 'publisher',
+                                    parentKey: 'datasetpublisher',
                                 })
                             }>
                             {publisherDetails.name}
