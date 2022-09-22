@@ -515,16 +515,8 @@ class SearchPage extends React.Component {
     }
 
     updateOnFilterBadge = (filterGroup, filter) => {
-        // 1. test type of filter if v2 it will be an object
         if (typeof filter === 'object' && !_.isEmpty(filter)) {
-            // 2. title case to match the backend cache implmentation of label value
-            let { parentKey, label } = filter;
-            let node = {
-                parentKey,
-                label: label,
-            };
-            // 3. the filter will contain {label, parentKey (parentKey is defined the filters.mapper API)}
-            this.handleInputChange(node, parentKey, true);
+            this.handleInputChange(filter, filter.parentKey, true);
         } else {
             return;
         }
@@ -599,6 +591,9 @@ class SearchPage extends React.Component {
             ...this.buildSearchObj(this.state.selectedV2Courses),
             ...this.buildSearchObj(this.state.selectedV2Collections),
         };
+
+        console.log('searchObj', searchObj);
+
         // 2. dynamically build the searchUrl v2 only
         searchURL = this.buildSearchUrl(searchObj);
 
@@ -947,6 +942,7 @@ class SearchPage extends React.Component {
         if (searchObj) {
             for (let key of Object.keys(searchObj)) {
                 const value = searchObj[key];
+                console.log('VALUE', key);
                 const values = value.toString().split(',');
                 const uniqueValues = [...new Set(values)].join('::');
 
@@ -1380,6 +1376,7 @@ class SearchPage extends React.Component {
                 `Filter values: "${nodes.map(filter => filter.value).join('" & ') || 'All'}"`
             );
         } else {
+            console.log(this.filterShallowByCheckbox(nodes, parentKey, checkValue));
             this.setState(this.filterShallowByCheckbox(nodes, parentKey, checkValue), () => {
                 if (performSearch) {
                     this.doSearchCall();
