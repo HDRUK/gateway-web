@@ -592,8 +592,6 @@ class SearchPage extends React.Component {
             ...this.buildSearchObj(this.state.selectedV2Collections),
         };
 
-        console.log('searchObj', searchObj);
-
         // 2. dynamically build the searchUrl v2 only
         searchURL = this.buildSearchUrl(searchObj);
 
@@ -942,7 +940,6 @@ class SearchPage extends React.Component {
         if (searchObj) {
             for (let key of Object.keys(searchObj)) {
                 const value = searchObj[key];
-                console.log('VALUE', key);
                 const values = value.toString().split(',');
                 const uniqueValues = [...new Set(values)].join('::');
 
@@ -1376,7 +1373,6 @@ class SearchPage extends React.Component {
                 `Filter values: "${nodes.map(filter => filter.value).join('" & ') || 'All'}"`
             );
         } else {
-            console.log(this.filterShallowByCheckbox(nodes, parentKey, checkValue));
             this.setState(this.filterShallowByCheckbox(nodes, parentKey, checkValue), () => {
                 if (performSearch) {
                     this.doSearchCall();
