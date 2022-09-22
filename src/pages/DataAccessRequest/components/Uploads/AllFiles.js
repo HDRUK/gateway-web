@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import Image from 'react-bootstrap/Image';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { Trans, useTranslation } from 'react-i18next';
+import { Button } from 'hdruk-react-core';
 import { concatFileName, fileStatus, readableFileSize } from './files.util';
 import { ReactComponent as PaperSVG } from '../../../../images/paper.svg';
 import { ReactComponent as ArrowDownSVG } from '../../../../images/arrow-down.svg';
@@ -131,12 +132,10 @@ export const AllFiles = ({ files, downloadFile, deleteFile, readOnly }) => {
                     <div className='workflowModal-body'>This file will be deleted from the Gateway and Discourse.</div>
                     <div className='workflowModal-footer'>
                         <div className='workflowModal-footer--wrap'>
-                            <Button variant='white' className='techDetailButton mr-2' onClick={() => renderDeleteModal(false)}>
+                            <Button variant='secondary' className='techDetailButton mr-2' onClick={() => renderDeleteModal(false)}>
                                 No, nevermind
                             </Button>
                             <Button
-                                variant='primary'
-                                className='white-14-semibold'
                                 onClick={() => {
                                     postDelete(fileToDelete);
                                 }}>

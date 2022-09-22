@@ -23,7 +23,7 @@ const ResourcePageButtons = props => {
                 props.userState[0].role === 'Admin') ? (
                 <Button
                     data-test-id='action-bar-edit'
-                    variant='white'
+                    variant='secondary'
                     href={`/${type}/edit/${props.data.id}`}
                     className='techDetailButton mr-2'>
                     Edit

@@ -7,6 +7,7 @@ import './ActionBarMenu.scss';
 const ActionBarMenu = ({ label, options = [], disabled, variant = 'secondary', alignStart }) => {
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         <a
+            className='nested-button'
             href='javascript:void(0)'
             ref={ref}
             onClick={e => {
