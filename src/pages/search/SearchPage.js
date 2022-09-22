@@ -451,7 +451,7 @@ class SearchPage extends React.Component {
             ? this.setState({ collectionIndex: queryParams.collectionIndex })
             : this.setState({ collectionIndex: 0 });
         // Sort for each tab
-        queryParams.datasetSort ? this.setState({ datasetSort: queryParams.datasetSort }) : this.setState({ datasetSort: 'popularity' });
+        queryParams.datasetSort ? this.setState({ datasetSort: queryParams.datasetSort }) : this.setState({ datasetSort: 'latest' });
         queryParams.toolSort ? this.setState({ toolSort: queryParams.toolSort }) : this.setState({ toolSort: '' });
         queryParams.dataUseRegisterSort
             ? this.setState({ dataUseRegisterSort: queryParams.dataUseRegisterSort })
