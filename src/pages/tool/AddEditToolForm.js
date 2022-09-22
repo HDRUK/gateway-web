@@ -714,7 +714,7 @@ const AddEditToolForm = props => {
             </div>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} href='/account?tab=tools'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=tools'>
                         <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>

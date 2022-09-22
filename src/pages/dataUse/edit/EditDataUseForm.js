@@ -1551,7 +1551,7 @@ const EditFormDataUse = props => {
             </div>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} href='/account?tab=datause'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=datause'>
                         <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>

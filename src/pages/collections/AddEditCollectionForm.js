@@ -450,7 +450,7 @@ const AddEditCollectionForm = props => {
 
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} href='/account?tab=collections'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=collections'>
                         <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>
