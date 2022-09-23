@@ -126,7 +126,6 @@ const Dataset = ({
                     />
                     <br />
                     <Box
-                        as={Typography}
                         mb={1}
                         display='flex'
                         alignItems='center'
@@ -142,8 +141,9 @@ const Dataset = ({
                             role='button'
                             onClick={() =>
                                 updateOnFilterBadge('publisher', {
+                                    value: publisherDetails.label,
                                     label: publisherDetails.label,
-                                    parentKey: 'publisher',
+                                    parentKey: 'datasetpublisher',
                                 })
                             }>
                             {publisherDetails.name}
