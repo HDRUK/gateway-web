@@ -447,7 +447,7 @@ class SearchPage extends React.Component {
             ? this.setState({ collectionIndex: queryParams.collectionIndex })
             : this.setState({ collectionIndex: 0 });
         // Sort for each tab
-        queryParams.datasetSort ? this.setState({ datasetSort: queryParams.datasetSort }) : this.setState({ datasetSort: 'popularity' });
+        queryParams.datasetSort ? this.setState({ datasetSort: queryParams.datasetSort }) : this.setState({ datasetSort: 'latest' });
         queryParams.toolSort ? this.setState({ toolSort: queryParams.toolSort }) : this.setState({ toolSort: '' });
         queryParams.dataUseRegisterSort
             ? this.setState({ dataUseRegisterSort: queryParams.dataUseRegisterSort })
@@ -511,16 +511,13 @@ class SearchPage extends React.Component {
     }
 
     updateOnFilterBadge = (filterGroup, filter) => {
-        // 1. test type of filter if v2 it will be an object
         if (typeof filter === 'object' && !_.isEmpty(filter)) {
-            // 2. title case to match the backend cache implmentation of label value
-            let { parentKey, label } = filter;
-            let node = {
-                parentKey,
-                label: label,
-            };
-            // 3. the filter will contain {label, parentKey (parentKey is defined the filters.mapper API)}
-            this.handleInputChange(node, parentKey, true);
+            const selectedFilters = this.getSelectedFiltersStateByKey(this.state.key);
+            const filteredFilters = selectedFilters.filter(item => filter.parentKey === item.parentKey);
+
+            if (!filteredFilters.find(item => filter.value === item.value)) {
+                this.handleInputChange(filter, filter.parentKey, true);
+            }
         } else {
             return;
         }
@@ -595,6 +592,7 @@ class SearchPage extends React.Component {
             ...this.buildSearchObj(this.state.selectedV2Courses),
             ...this.buildSearchObj(this.state.selectedV2Collections),
         };
+
         // 2. dynamically build the searchUrl v2 only
         searchURL = this.buildSearchUrl(searchObj);
 
@@ -1362,10 +1360,12 @@ class SearchPage extends React.Component {
      * @param {string} parentKey
      * @param {boolean} checkValue
      */
-    handleInputChange = (nodes, parentKey, checkValue) => {
+    handleInputChange = (nodes, parentKey, checkValue, performSearch = true) => {
         if (isTree(parentKey)) {
             this.setState(this.filterTreeByCheckbox(nodes, parentKey, checkValue), () => {
-                this.doSearchCall();
+                if (performSearch) {
+                    this.doSearchCall();
+                }
             });
 
             googleAnalytics.recordEvent(
@@ -1375,7 +1375,9 @@ class SearchPage extends React.Component {
             );
         } else {
             this.setState(this.filterShallowByCheckbox(nodes, parentKey, checkValue), () => {
-                this.doSearchCall();
+                if (performSearch) {
+                    this.doSearchCall();
+                }
             });
 
             googleAnalytics.recordEvent(
@@ -1508,18 +1510,9 @@ class SearchPage extends React.Component {
 
                 this.setState({ search: viewSaved.search, key: viewSaved.tab }, async () => {
                     await this.getFilters(viewSaved.tab);
-
                     for (let filter of viewSaved.filters) {
-                        this.handleInputChange(
-                            {
-                                parentKey: filter.parentKey,
-                                label: filter.label,
-                            },
-                            filter.parentKey,
-                            true
-                        );
+                        this.handleInputChange(filter, filter.parentKey, true, false);
                     }
-
                     this.doSearchCall();
                 });
             }

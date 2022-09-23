@@ -16,11 +16,54 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
     const [activeCard, setActiveCard] = useState('');
     const [showButtons, setShowButtons] = useState(false);
 
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            filterCriteria: {
+                searchTerm: search || '',
+                filters: filters || [],
+                tab: tab || '',
+                sort: sort || '',
+            },
+        },
+
+        validationSchema: Yup.object({
+            name: Yup.string().required('Please provide a title for your search'),
+        }),
+
+        onSubmit: values => {
+            axios
+                .post(`${baseURL}/api/v1/search-preferences`, values)
+                .then(res => {
+                    onHide();
+                    saveName(res.data.response.name);
+                    saveSuccess();
+                })
+                .catch(err => {
+                    return err;
+                });
+        },
+
+        handleClick() {},
+    });
+
     useEffect(() => {
         axios.get(`${baseURL}/api/v1/search-preferences`).then(res => {
             setData(res.data.data);
         });
     }, []);
+
+    useEffect(() => {
+        formik.setFieldValue('filterCriteria.searchTerm', search);
+    }, [search]);
+
+    useEffect(() => {
+        formik.setFieldValue('filterCriteria.filters', filters);
+    }, [filters]);
+
+    useEffect(() => {
+        formik.setFieldValue('filterCriteria.tab', tab);
+    }, [tab]);
 
     const resetTabs = () => {
         setActiveCard('');
@@ -70,37 +113,6 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
         }`;
         return <Caption>{title}</Caption>;
     };
-
-    const formik = useFormik({
-        initialValues: {
-            name: '',
-            filterCriteria: {
-                searchTerm: search || '',
-                filters: filters || [],
-                tab: tab || '',
-                sort: sort || '',
-            },
-        },
-
-        validationSchema: Yup.object({
-            name: Yup.string().required('Please provide a title for your search'),
-        }),
-
-        onSubmit: values => {
-            axios
-                .post(`${baseURL}/api/v1/search-preferences`, values)
-                .then(res => {
-                    onHide();
-                    saveName(res.data.response.name);
-                    saveSuccess();
-                })
-                .catch(err => {
-                    return err;
-                });
-        },
-
-        handleClick() {},
-    });
 
     return (
         <>
