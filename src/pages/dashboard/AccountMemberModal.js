@@ -1,5 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import { FieldArray, Formik, useFormik } from 'formik';
+import { Button } from 'hdruk-react-core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
@@ -249,18 +250,15 @@ const AccountMemberModal = ({ open, close, teamId, onMemberAdded }) => {
                                 </div>
                                 <div className='accountMembersModal-footer'>
                                     <div className='accountMembersModal-footer--wrap'>
-                                        <button
-                                            type='button'
-                                            className='button-secondary'
+                                        <Button
+                                            variant='secondary'
                                             onClick={e => {
                                                 e.preventDefault();
                                                 close();
                                             }}>
                                             Cancel
-                                        </button>
-                                        <button variant='primary' className='button-primary' type='submit'>
-                                            Add members
-                                        </button>
+                                        </Button>
+                                        <Button type='submit'>Add members</Button>
                                     </div>
                                 </div>
                             </Form>

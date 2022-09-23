@@ -589,12 +589,10 @@ svg:not(:root) {
 
 .cancelButton {
     width: 82px;
-    height: 40px;
 }
 
 .publishButton {
     width: 79px;
-    height: 40px;
 }
 
 .linkButton {
@@ -810,14 +808,12 @@ textarea:focus {
 }
 
 .techDetailButton {
-    height: 40px;
     width: 140px;
-    border: 2px solid $teal !important;
-    border-radius: 4px !important;
-    background-color: $white;
-    color: $indigo;
-    font-family: museo-sans-rounded;
-    font-size: 14px !important;
+}
+
+// TODO: Extend react-core Button component and remove this
+a.nested-button {
+    text-decoration: none !important;
 }
 
 .accountDropDownGap {
@@ -1508,7 +1504,6 @@ button a {
 
 .addToCollectionButton {
     width: 147px;
-    height: 40px;
 }
 
 .addToCollectionButton:focus {

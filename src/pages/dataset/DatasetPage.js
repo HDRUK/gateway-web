@@ -5,8 +5,8 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import { has, isEmpty, isNil, isUndefined } from 'lodash';
 import React, { Component, Fragment } from 'react';
-import { Box, Typography } from 'hdruk-react-core';
-import { Button, Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap/';
+import { Button, Box, Typography } from 'hdruk-react-core';
+import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap/';
 import Linkify from 'react-linkify';
 import 'react-tabs/style/react-tabs.css';
 import Alert from '../../components/Alert';
@@ -1219,7 +1219,7 @@ class DatasetDetail extends Component {
                                                                                   <Col sm={3} m={3} lg={3}>
                                                                                       {relation.type === 'text' ? (
                                                                                           <Button
-                                                                                              variant='white'
+                                                                                              variant='secondary'
                                                                                               href={'/search?search=' + relation.title}
                                                                                               target='_blank'
                                                                                               className='gatewaySearchButton floatRightLinkedDataset'>
@@ -1302,7 +1302,7 @@ class DatasetDetail extends Component {
                                                                                   <Col sm={3} m={3} lg={3}>
                                                                                       {relation.type === 'text' ? (
                                                                                           <Button
-                                                                                              variant='white'
+                                                                                              variant='secondary'
                                                                                               href={'/search?search=' + relation.title}
                                                                                               target='_blank'
                                                                                               className='gatewaySearchButton floatRightLinkedDataset'>
@@ -1352,8 +1352,8 @@ class DatasetDetail extends Component {
                                                         <Col sm={12} lg={12} className='centerText'>
                                                             <Button
                                                                 onClick={() => this.showHideAllEmpty()}
-                                                                variant='medium'
-                                                                className='datasetEmptyButton dark-14 mr-2'>
+                                                                variant='tertiary'
+                                                                className='datasetEmptyButton mr-2'>
                                                                 {showEmpty === false
                                                                     ? `Show all empty fields (${emptyFieldsCount})`
                                                                     : `Hide all empty fields (${emptyFieldsCount})`}

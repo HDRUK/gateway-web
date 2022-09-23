@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, ThemeProvider } from '@emotion/react';
-import { DEFAULT_THEME } from 'hdruk-react-core/dist/cjs';
+import { DEFAULT_THEME } from 'hdruk-react-core';
 import { merge } from 'lodash';
 import { Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';

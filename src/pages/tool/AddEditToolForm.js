@@ -1,25 +1,27 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Formik, useFormik, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { isNil, isEmpty } from 'lodash';
+import TextareaAutosize from 'react-textarea-autosize';
+import { Button } from 'hdruk-react-core';
 import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
 import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorModal';
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import googleAnalytics from '../../tracking';
-import TextareaAutosize from 'react-textarea-autosize';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
 import UploaderUtil from '../../utils/Uploader.util';
 import SVGIcon from '../../images/SVGIcon';
 import './Tool.scss';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
-let windowUrl = window.location.origin;
+
+const windowUrl = window.location.origin;
 
 const initialValues = {
     programmingLanguage: [{ programmingLanguage: '', version: '' }],
@@ -102,12 +104,12 @@ const AddEditToolForm = props => {
             values.toolCreator = props.userState[0];
             values.authors = uploadersList.map(uploader => uploader.id);
             if (props.isEdit) {
-                axios.put(baseURL + '/api/v1/tools/' + props.data.id, values).then(res => {
-                    window.location.href = windowUrl + '/tool/' + props.data.id + '/?toolEdited=true';
+                axios.put(`${baseURL}/api/v1/tools/${props.data.id}`, values).then(res => {
+                    window.location.href = `${windowUrl}/tool/${props.data.id}/?toolEdited=true`;
                 });
             } else {
-                axios.post(baseURL + '/api/v1/tools', values).then(res => {
-                    window.location.href = windowUrl + '/tool/' + res.data.response.id + '/?toolAdded=true';
+                axios.post(`${baseURL}/api/v1/tools`, values).then(res => {
+                    window.location.href = `${windowUrl}/tool/${res.data.response.id}/?toolAdded=true`;
                 });
             }
         },
@@ -176,8 +178,8 @@ const AddEditToolForm = props => {
         if (!inRelatedObject) {
             props.relatedObjects.push({
                 objectId: id,
-                pid: pid,
-                reason: reason,
+                pid,
+                reason,
                 objectType: type,
                 user: props.userState[0].name,
                 updated: moment().format('DD MMM YYYY'),
@@ -197,23 +199,23 @@ const AddEditToolForm = props => {
 
     return (
         <div>
-            <div className={'container'}>
+            <div className='container'>
                 <RemoveUploaderModal
                     open={showRemoveUploaderModal}
                     cancelUploaderRemoval={cancelUploaderRemoval}
                     confirmUploaderRemoval={confirmUploaderRemoval}
-                    entityType={'tool'}
+                    entityType='tool'
                     userState={props.userState}
                     uploaderToBeRemoved={uploaderToBeRemoved}
-                ></RemoveUploaderModal>
+                />
 
                 <RemoveUploaderErrorModal
                     open={showRemoveUploaderErrorModal}
                     cancelUploaderRemoval={cancelUploaderRemoval}
-                    entityType={'tool'}
+                    entityType='tool'
                     uploaderToBeRemoved={uploaderToBeRemoved}
                     removingOriginalUploader={removingOriginalUploader}
-                ></RemoveUploaderErrorModal>
+                />
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validateSchema}
@@ -232,7 +234,7 @@ const AddEditToolForm = props => {
                                                 </Col>
                                                 <Col sm={2} lg={2} className='text-right'>
                                                     <span className='badge-tool'>
-                                                        <SVGIcon name='newtoolicon' fill={'#ffffff'} className='badgeSvg mr-2' />
+                                                        <SVGIcon name='newtoolicon' fill='#ffffff' className='badgeSvg mr-2' />
                                                         Tool
                                                     </span>
                                                 </Col>
@@ -307,7 +309,7 @@ const AddEditToolForm = props => {
                                                                 : 'addFormInputTypeAhead'
                                                         }
                                                         onChange={selected => {
-                                                            var tempSelected = [];
+                                                            const tempSelected = [];
                                                             selected.forEach(selectedItem => {
                                                                 selectedItem.customOption === true
                                                                     ? tempSelected.push(selectedItem.category)
@@ -428,15 +430,14 @@ const AddEditToolForm = props => {
                                                     <FieldArray
                                                         name='programmingLanguage'
                                                         render={({ insert, remove, push }) => (
-                                                            <Fragment>
+                                                            <>
                                                                 {formik.values.programmingLanguage.length > 0 &&
                                                                     formik.values.programmingLanguage.map((p, index) => (
-                                                                        <Fragment>
+                                                                        <>
                                                                             <Col sm={12} md={8}>
                                                                                 <Form.Group
                                                                                     data-test-id={`programmingLanguage.${index}.programmingLanguage`}
-                                                                                    labelKey={`programmingLanguage.${index}.programmingLanguage`}
-                                                                                >
+                                                                                    labelKey={`programmingLanguage.${index}.programmingLanguage`}>
                                                                                     <Typeahead
                                                                                         id={`programmingLanguage-${index}`}
                                                                                         name={`programmingLanguage.${index}.programmingLanguage`}
@@ -463,7 +464,7 @@ const AddEditToolForm = props => {
                                                                                                 : 'addFormInputTypeAhead'
                                                                                         }
                                                                                         onChange={selected => {
-                                                                                            var tempSelected = [];
+                                                                                            const tempSelected = [];
                                                                                             selected.forEach(selectedItem => {
                                                                                                 selectedItem.customOption === true
                                                                                                     ? tempSelected.push(selectedItem.label)
@@ -515,8 +516,7 @@ const AddEditToolForm = props => {
 
                                                                             <Col
                                                                                 style={{ paddingRight: '0px' }}
-                                                                                className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'
-                                                                            >
+                                                                                className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'>
                                                                                 <button
                                                                                     type='button'
                                                                                     className='plusMinusButton'
@@ -524,8 +524,7 @@ const AddEditToolForm = props => {
                                                                                     onClick={() => {
                                                                                         remove(index);
                                                                                         formik.values.programmingLanguage.splice(index, 1);
-                                                                                    }}
-                                                                                >
+                                                                                    }}>
                                                                                     -
                                                                                 </button>
                                                                                 <button
@@ -542,14 +541,13 @@ const AddEditToolForm = props => {
                                                                                             programmingLanguage: '',
                                                                                             version: '',
                                                                                         });
-                                                                                    }}
-                                                                                >
+                                                                                    }}>
                                                                                     +
                                                                                 </button>
                                                                             </Col>
-                                                                        </Fragment>
+                                                                        </>
                                                                     ))}
-                                                            </Fragment>
+                                                            </>
                                                         )}
                                                     />
                                                 </Row>
@@ -565,7 +563,7 @@ const AddEditToolForm = props => {
                                                         options={props.combinedLicenses}
                                                         className='addFormInputTypeAhead'
                                                         onChange={selected => {
-                                                            var tempSelected = [];
+                                                            const tempSelected = [];
                                                             selected.forEach(selectedItem => {
                                                                 selectedItem.customOption === true
                                                                     ? tempSelected.push(selectedItem.license)
@@ -593,7 +591,7 @@ const AddEditToolForm = props => {
                                                         options={props.combinedFeatures}
                                                         className='addFormInputTypeAhead'
                                                         onChange={selected => {
-                                                            var tempSelected = [];
+                                                            const tempSelected = [];
                                                             selected.forEach(selectedItem => {
                                                                 selectedItem.customOption === true
                                                                     ? tempSelected.push(selectedItem.features)
@@ -616,7 +614,7 @@ const AddEditToolForm = props => {
                                                         options={props.combinedTopic}
                                                         className='addFormInputTypeAhead'
                                                         onChange={selected => {
-                                                            var tempSelected = [];
+                                                            const tempSelected = [];
                                                             selected.forEach(selectedItem => {
                                                                 selectedItem.customOption === true
                                                                     ? tempSelected.push(selectedItem.topics)
@@ -634,7 +632,7 @@ const AddEditToolForm = props => {
                                                     </p>
                                                     <AsyncTypeAheadUsers
                                                         selectedUsers={uploadersList}
-                                                        showAuthor={true}
+                                                        showAuthor
                                                         currentUserId={props.userState[0].id}
                                                         changeHandler={uploaderHandler}
                                                     />
@@ -658,7 +656,7 @@ const AddEditToolForm = props => {
                                                     {props.relatedObjects.map(object =>
                                                         !isNil(object.objectId) ? (
                                                             <RelatedObject
-                                                                showRelationshipQuestion={true}
+                                                                showRelationshipQuestion
                                                                 objectId={object.objectId}
                                                                 pid={object.pid}
                                                                 objectType={object.objectType}
@@ -707,7 +705,7 @@ const AddEditToolForm = props => {
                                     <Col sm={1} lg={10} />
                                 </Row>
                                 <Row>
-                                    <span className='formBottomGap'></span>
+                                    <span className='formBottomGap' />
                                 </Row>
                             </div>
                         );
@@ -716,8 +714,8 @@ const AddEditToolForm = props => {
             </div>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} href={'/account?tab=tools'}>
-                        <Button variant='medium' className='cancelButton dark-14 mr-2'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=tools'>
+                        <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>
                     </a>
@@ -726,18 +724,15 @@ const AddEditToolForm = props => {
                             relatedResourcesRef.current.showModal();
                             googleAnalytics.recordVirtualPageView('Related resources modal');
                         }}
-                        variant='white'
-                        className='techDetailButton mr-2'
-                    >
+                        variant='secondary'
+                        className='techDetailButton mr-2'>
                         + Add resource
                     </Button>
                     <Button
                         data-test-id='add-tool-publish'
-                        variant='primary'
                         className='publishButton white-14-semibold mr-2'
                         type='submit'
-                        onClick={formik.handleSubmit}
-                    >
+                        onClick={formik.handleSubmit}>
                         {props.isEdit ? 'Update' : 'Publish'}
                     </Button>
                 </div>

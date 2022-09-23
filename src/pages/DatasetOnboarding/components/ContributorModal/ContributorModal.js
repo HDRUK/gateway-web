@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
-import _ from 'lodash';
+import React from 'react';
 import { Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import SLA from '../../../commonComponents/sla/SLA';
 
@@ -13,15 +13,14 @@ const ContributorModal = ({ open, close, mainApplicant, children, handleOnSaveCh
     };
 
     return (
-        <Fragment>
+        <>
             <Modal
                 show={open}
                 onHide={close}
                 size='lg'
                 aria-labelledby='contained-modal-title-vcenter'
                 centered
-                className='contributorModal'
-            >
+                className='contributorModal'>
                 <div className='contributorModal-header'>
                     <div className='contributorModal-header--wrap'>
                         <div className='contributorModal-head'>
@@ -49,16 +48,16 @@ const ContributorModal = ({ open, close, mainApplicant, children, handleOnSaveCh
 
                 <div className='contributorModal-footer'>
                     <div className='contributorModal-footer--wrap'>
-                        <button className='button-secondary' onClick={() => close()}>
+                        <Button variant='secondary' onClick={() => close()}>
                             Cancel
-                        </button>
-                        <button className='button-primary' onClick={() => onSaveChanges()}>
+                        </Button>
+                        <Button className='primary' onClick={() => onSaveChanges()}>
                             Save changes
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 
