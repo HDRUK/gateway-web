@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import { Button } from 'hdruk-react-core';
+import React from 'react';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 import '../../DatasetOnboarding.scss';
 
@@ -49,46 +50,44 @@ const ApplicantActionButtons = ({
     });
 
     return (
-        <Fragment>
+        <>
             {showDeleteDraft ? (
                 <a href='javascript:void(0)' onClick={e => onShowDeleteDraftModal()}>
                     {' '}
-                    <span class='rejected-red-semibold-14 deleteDraftDataset cursorPointer'>Delete draft</span>{' '}
+                    <span className='rejected-red-semibold-14 deleteDraftDataset cursorPointer'>Delete draft</span>{' '}
                 </a>
             ) : (
                 ''
             )}
 
             {!isFederated ? (
-                <ActionBarMenu
-                    label='Manage dataset'
-                    options={availableOptions}
-                    disabled={!allowedNavigation}
-                    buttonClass='button-tertiary'
-                />
+                <ActionBarMenu label='Manage dataset' options={availableOptions} disabled={!allowedNavigation} variant='tertiary' />
             ) : (
                 ''
             )}
 
             {/*  {showUnArchive ? <button className={`button-tertiary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onShowUnArchiveModal()}>Un-archive</button> : ''} */}
             {showCreateNewVersion && !isFederated ? (
-                <button className={`button-tertiary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onShowCreateNewVersionModal()}>
+                <Button
+                    variant='tertiary'
+                    className={`${allowedNavigation ? '' : 'disabled'}`}
+                    onClick={e => onShowCreateNewVersionModal()}>
                     Create a new version
-                </button>
+                </Button>
             ) : (
                 ''
             )}
             {showSubmit ? (
-                <button className={`button-secondary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onFormSubmit()}>
+                <Button variant='secondary' className={`${allowedNavigation ? '' : 'disabled'}`} onClick={e => onFormSubmit()}>
                     {submitButtonText}
-                </button>
+                </Button>
             ) : (
                 ''
             )}
-            <button className={`button-primary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onNextClick()}>
+            <Button className={`${allowedNavigation ? '' : 'disabled'}`} onClick={e => onNextClick()}>
                 Next
-            </button>
-        </Fragment>
+            </Button>
+        </>
     );
 };
 

@@ -1,11 +1,11 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
 import { Formik, useFormik, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import _ from 'lodash';
 import moment from 'moment';
-import { Form, Button, Row, Col, InputGroup, DropdownButton, Dropdown, Container } from 'react-bootstrap';
+import { Form, Row, Col, InputGroup, DropdownButton, Dropdown, Container } from 'react-bootstrap';
 import { SlideDown } from 'react-slidedown';
 import DatePicker from 'react-datepicker';
 
@@ -18,9 +18,11 @@ import SVGIcon from '../../images/SVGIcon';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import './Course.scss';
 import TextareaAutosize from 'react-textarea-autosize';
+import { Button } from 'hdruk-react-core';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
-let windowUrl = window.location.origin;
+
+const windowUrl = window.location.origin;
 
 class Fees {
     constructor() {
@@ -137,12 +139,12 @@ const AddEditCourseForm = props => {
             if (values.courseDelivery === 'online') values.location = '';
             values.relatedObjects = props.relatedObjects;
             if (props.isEdit) {
-                axios.put(baseURL + '/api/v1/course/' + props.data.id, values).then(res => {
-                    window.location.href = windowUrl + '/course/' + props.data.id + '/?courseEdited=true';
+                axios.put(`${baseURL}/api/v1/course/${props.data.id}`, values).then(res => {
+                    window.location.href = `${windowUrl}/course/${props.data.id}/?courseEdited=true`;
                 });
             } else {
-                axios.post(baseURL + '/api/v1/course', values).then(res => {
-                    window.location.href = windowUrl + '/course/' + res.data.response.id + '/?courseAdded=true';
+                axios.post(`${baseURL}/api/v1/course`, values).then(res => {
+                    window.location.href = `${windowUrl}/course/${res.data.response.id}/?courseAdded=true`;
                 });
             }
         },
@@ -166,8 +168,8 @@ const AddEditCourseForm = props => {
         if (!inRelatedObject) {
             props.relatedObjects.push({
                 objectId: id,
-                pid: pid,
-                reason: reason,
+                pid,
+                reason,
                 objectType: type,
                 user: props.userState[0].name,
                 updated: moment().format('DD MMM YYYY'),
@@ -183,7 +185,7 @@ const AddEditCourseForm = props => {
 
     const removePhase = index => {
         if (!_.isEmpty(formik.values.courseOptions)) {
-            let newCourseOptions = formik.values.courseOptions.filter((key, idx) => {
+            const newCourseOptions = formik.values.courseOptions.filter((key, idx) => {
                 return idx !== index;
             });
             formik.setFieldValue('courseOptions', newCourseOptions);
@@ -222,7 +224,7 @@ const AddEditCourseForm = props => {
                                                 </Col>
                                                 <Col sm={2} lg={2} className='text-right'>
                                                     <span className='badge-course'>
-                                                        <SVGIcon name='newtoolicon' fill={'#ffffff'} className='badgeSvg mr-2' />
+                                                        <SVGIcon name='newtoolicon' fill='#ffffff' className='badgeSvg mr-2' />
                                                         Course
                                                     </span>
                                                 </Col>
@@ -405,7 +407,7 @@ const AddEditCourseForm = props => {
                                                         options={props.combinedKeywords}
                                                         className='addFormInputTypeAhead'
                                                         onChange={selected => {
-                                                            var tempSelected = [];
+                                                            const tempSelected = [];
                                                             selected.forEach(selectedItem => {
                                                                 selectedItem.customOption === true
                                                                     ? tempSelected.push(selectedItem.keywords)
@@ -430,7 +432,7 @@ const AddEditCourseForm = props => {
                                                         options={props.combinedDomains}
                                                         className='addFormInputTypeAhead'
                                                         onChange={selected => {
-                                                            var tempSelected = [];
+                                                            const tempSelected = [];
                                                             selected.forEach(selectedItem => {
                                                                 selectedItem.customOption === true
                                                                     ? tempSelected.push(selectedItem.domains)
@@ -464,11 +466,10 @@ const AddEditCourseForm = props => {
                                                                                             `courseOptions[${index}].expand`,
                                                                                             !node.expand
                                                                                         );
-                                                                                    }}
-                                                                                >
+                                                                                    }}>
                                                                                     <SVGIcon
                                                                                         name='chevronbottom'
-                                                                                        fill={'#fff'}
+                                                                                        fill='#fff'
                                                                                         className={node.expand ? '' : 'flip180'}
                                                                                     />
                                                                                     <h1>{index + 1}. Course option</h1>
@@ -478,8 +479,7 @@ const AddEditCourseForm = props => {
                                                                                         <div className='form-group'>
                                                                                             <label
                                                                                                 htmlFor={`node.${index}.sections`}
-                                                                                                className='form-label'
-                                                                                            >
+                                                                                                className='form-label'>
                                                                                                 Course start date
                                                                                             </label>
                                                                                             <small className='form-text mb-2'>
@@ -593,7 +593,7 @@ const AddEditCourseForm = props => {
                                                                                                                 disabled
                                                                                                                 selected
                                                                                                                 value
-                                                                                                            ></option>
+                                                                                                            />
                                                                                                         )
                                                                                                     }
                                                                                                     className='gray700-13 custom-dropdown padding-right-0'
@@ -607,15 +607,13 @@ const AddEditCourseForm = props => {
                                                                                                         (formik.values.courseOptions[
                                                                                                             index
                                                                                                         ].studyMode = selected)
-                                                                                                    }
-                                                                                                >
+                                                                                                    }>
                                                                                                     {studyMode.map((study, i) => (
                                                                                                         <Dropdown.Item
                                                                                                             data-test-id={`study-mode-${study}`}
                                                                                                             className='gray800-14 width-100'
                                                                                                             key={study}
-                                                                                                            eventKey={study}
-                                                                                                        >
+                                                                                                            eventKey={study}>
                                                                                                             {study}
                                                                                                         </Dropdown.Item>
                                                                                                     ))}
@@ -678,7 +676,7 @@ const AddEditCourseForm = props => {
                                                                                                                 disabled
                                                                                                                 selected
                                                                                                                 value
-                                                                                                            ></option>
+                                                                                                            />
                                                                                                         )
                                                                                                     }
                                                                                                     className='gray700-13 custom-dropdown padding-right-0'
@@ -692,16 +690,14 @@ const AddEditCourseForm = props => {
                                                                                                         (formik.values.courseOptions[
                                                                                                             index
                                                                                                         ].studyDurationMeasure = selected)
-                                                                                                    }
-                                                                                                >
+                                                                                                    }>
                                                                                                     {studyDurationMeasure.map(
                                                                                                         (study, i) => (
                                                                                                             <Dropdown.Item
                                                                                                                 data-test-id={`duration-measure-${study}`}
                                                                                                                 className='gray800-14 width-100'
                                                                                                                 key={study}
-                                                                                                                eventKey={study}
-                                                                                                            >
+                                                                                                                eventKey={study}>
                                                                                                                 {study}
                                                                                                             </Dropdown.Item>
                                                                                                         )
@@ -743,17 +739,16 @@ const AddEditCourseForm = props => {
                                                                                             <FieldArray
                                                                                                 name='fees'
                                                                                                 render={({ insert, remove, push }) => (
-                                                                                                    <Fragment>
+                                                                                                    <>
                                                                                                         {formik.values.courseOptions[index]
                                                                                                             .fees.length > 0 &&
                                                                                                             formik.values.courseOptions[
                                                                                                                 index
                                                                                                             ].fees.map((p, indexB) => (
-                                                                                                                <Fragment>
+                                                                                                                <>
                                                                                                                     <Col
                                                                                                                         sm={6}
-                                                                                                                        className='pad-right-0 pad-bottom-4'
-                                                                                                                    >
+                                                                                                                        className='pad-right-0 pad-bottom-4'>
                                                                                                                         <div className=''>
                                                                                                                             <Form.Control
                                                                                                                                 data-test-id='fee-description'
@@ -782,8 +777,7 @@ const AddEditCourseForm = props => {
                                                                                                                     </Col>
                                                                                                                     <Col
                                                                                                                         sm={2}
-                                                                                                                        className='pad-right-0 pad-bottom-4'
-                                                                                                                    >
+                                                                                                                        className='pad-right-0 pad-bottom-4'>
                                                                                                                         <div className=''>
                                                                                                                             <Form.Control
                                                                                                                                 data-test-id='fee-amount'
@@ -929,8 +923,7 @@ const AddEditCourseForm = props => {
                                                                                                                     </Col>
                                                                                                                     <Col
                                                                                                                         sm={2}
-                                                                                                                        className='pad-right-0 pad-bottom-4'
-                                                                                                                    >
+                                                                                                                        className='pad-right-0 pad-bottom-4'>
                                                                                                                         <div className=''>
                                                                                                                             <DropdownButton
                                                                                                                                 data-test-id='fee-per'
@@ -948,7 +941,7 @@ const AddEditCourseForm = props => {
                                                                                                                                             disabled
                                                                                                                                             selected
                                                                                                                                             value
-                                                                                                                                        ></option>
+                                                                                                                                        />
                                                                                                                                     )
                                                                                                                                 }
                                                                                                                                 className='gray700-13 custom-dropdown padding-right-0'
@@ -974,8 +967,7 @@ const AddEditCourseForm = props => {
                                                                                                                                         indexB
                                                                                                                                     ].feePer =
                                                                                                                                         selected)
-                                                                                                                                }
-                                                                                                                            >
+                                                                                                                                }>
                                                                                                                                 {feePer.map(
                                                                                                                                     (
                                                                                                                                         study,
@@ -989,8 +981,7 @@ const AddEditCourseForm = props => {
                                                                                                                                             }
                                                                                                                                             eventKey={
                                                                                                                                                 study
-                                                                                                                                            }
-                                                                                                                                        >
+                                                                                                                                            }>
                                                                                                                                             {
                                                                                                                                                 study
                                                                                                                                             }
@@ -1006,8 +997,7 @@ const AddEditCourseForm = props => {
                                                                                                                             paddingRight:
                                                                                                                                 '0px',
                                                                                                                         }}
-                                                                                                                        className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'
-                                                                                                                    >
+                                                                                                                        className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'>
                                                                                                                         <button
                                                                                                                             type='button'
                                                                                                                             className='plusMinusButton'
@@ -1030,8 +1020,7 @@ const AddEditCourseForm = props => {
                                                                                                                                     indexB,
                                                                                                                                     1
                                                                                                                                 );
-                                                                                                                            }}
-                                                                                                                        >
+                                                                                                                            }}>
                                                                                                                             -
                                                                                                                         </button>
                                                                                                                         <button
@@ -1068,22 +1057,20 @@ const AddEditCourseForm = props => {
                                                                                                                                             '',
                                                                                                                                     }
                                                                                                                                 );
-                                                                                                                            }}
-                                                                                                                        >
+                                                                                                                            }}>
                                                                                                                             +
                                                                                                                         </button>
                                                                                                                     </Col>
-                                                                                                                </Fragment>
+                                                                                                                </>
                                                                                                             ))}
-                                                                                                    </Fragment>
+                                                                                                    </>
                                                                                                 )}
                                                                                             />
                                                                                         </Row>
 
                                                                                         <div
                                                                                             className='form-group phase-action'
-                                                                                            style={{ paddingTop: '10px' }}
-                                                                                        >
+                                                                                            style={{ paddingTop: '10px' }}>
                                                                                             <button
                                                                                                 className='button-tertiary'
                                                                                                 disabled={
@@ -1092,8 +1079,7 @@ const AddEditCourseForm = props => {
                                                                                                 onClick={async e => {
                                                                                                     e.preventDefault();
                                                                                                     removePhase(index);
-                                                                                                }}
-                                                                                            >
+                                                                                                }}>
                                                                                                 <CloseButtonSvg
                                                                                                     width='10px'
                                                                                                     height='10px'
@@ -1109,16 +1095,14 @@ const AddEditCourseForm = props => {
                                                                     })}
 
                                                                 <div className='main-footer'>
-                                                                    <button
-                                                                        type='button'
-                                                                        className='button-secondary'
+                                                                    <Button
+                                                                        variant='secondary'
                                                                         onClick={() => {
                                                                             formik.values.courseOptions.push(courseOptions);
                                                                             formik.setFieldValue(); /* push(courseOptions); */
-                                                                        }}
-                                                                    >
+                                                                        }}>
                                                                         + Add course option
-                                                                    </button>
+                                                                    </Button>
                                                                 </div>
                                                             </div>
                                                         )}
@@ -1155,17 +1139,17 @@ const AddEditCourseForm = props => {
                                                     <FieldArray
                                                         name='entry'
                                                         render={({ remove, push }) => (
-                                                            <Fragment>
+                                                            <>
                                                                 {formik.values.entries.length > 0 &&
                                                                     formik.values.entries.map((p, indexC) => (
-                                                                        <Fragment>
+                                                                        <>
                                                                             <Col sm={5} className='pad-right-0 pad-bottom-4'>
                                                                                 <DropdownButton
                                                                                     data-test-id='entry-level'
                                                                                     variant='white'
                                                                                     title={
                                                                                         formik.values.entries[indexC].level || (
-                                                                                            <option disabled selected value></option>
+                                                                                            <option disabled selected value />
                                                                                         )
                                                                                     }
                                                                                     className='gray700-13 custom-dropdown padding-right-0'
@@ -1174,15 +1158,13 @@ const AddEditCourseForm = props => {
                                                                                     onBlur={formik.handleBlur}
                                                                                     onSelect={selected =>
                                                                                         (formik.values.entries[indexC].level = selected)
-                                                                                    }
-                                                                                >
+                                                                                    }>
                                                                                     {level.map((l, i) => (
                                                                                         <Dropdown.Item
                                                                                             data-test-id={`entry-level-${l}`}
                                                                                             className='gray800-14 width-100'
                                                                                             key={l}
-                                                                                            eventKey={l}
-                                                                                        >
+                                                                                            eventKey={l}>
                                                                                             {l}
                                                                                         </Dropdown.Item>
                                                                                     ))}
@@ -1206,8 +1188,7 @@ const AddEditCourseForm = props => {
                                                                             <Col
                                                                                 style={{ paddingRight: '0px' }}
                                                                                 sm={2}
-                                                                                className='d-flex justify-content-center align-items-center setHeight'
-                                                                            >
+                                                                                className='d-flex justify-content-center align-items-center setHeight'>
                                                                                 <button
                                                                                     type='button'
                                                                                     className='plusMinusButton'
@@ -1215,8 +1196,7 @@ const AddEditCourseForm = props => {
                                                                                     onClick={() => {
                                                                                         remove(indexC);
                                                                                         formik.values.entries.splice(indexC, 1);
-                                                                                    }}
-                                                                                >
+                                                                                    }}>
                                                                                     -
                                                                                 </button>
                                                                                 <button
@@ -1232,14 +1212,13 @@ const AddEditCourseForm = props => {
                                                                                             level: '',
                                                                                             subject: '',
                                                                                         });
-                                                                                    }}
-                                                                                >
+                                                                                    }}>
                                                                                     +
                                                                                 </button>
                                                                             </Col>
-                                                                        </Fragment>
+                                                                        </>
                                                                     ))}
-                                                            </Fragment>
+                                                            </>
                                                         )}
                                                     />
                                                 </Row>
@@ -1275,7 +1254,7 @@ const AddEditCourseForm = props => {
                                                         options={props.combinedAwards}
                                                         className='addFormInputTypeAhead'
                                                         onChange={selected => {
-                                                            var tempSelected = [];
+                                                            const tempSelected = [];
                                                             selected.forEach(selectedItem => {
                                                                 selectedItem.customOption === true
                                                                     ? tempSelected.push(selectedItem.award)
@@ -1311,14 +1290,13 @@ const AddEditCourseForm = props => {
                                                     </p>
                                                     <DropdownButton
                                                         variant='white'
-                                                        title={formik.values.nationalPriority || <option disabled selected value></option>}
+                                                        title={formik.values.nationalPriority || <option disabled selected value />}
                                                         className='gray700-13 custom-dropdown padding-right-0'
                                                         style={{ width: '100%' }}
                                                         onChange={formik.handleChange}
                                                         value={formik.values.nationalPriority}
                                                         onBlur={formik.handleBlur}
-                                                        onSelect={selected => (formik.values.nationalPriority = selected)}
-                                                    >
+                                                        onSelect={selected => (formik.values.nationalPriority = selected)}>
                                                         {priority.map((l, i) => (
                                                             <Dropdown.Item className='gray800-14 width-100' key={l} eventKey={l}>
                                                                 {l}
@@ -1346,7 +1324,7 @@ const AddEditCourseForm = props => {
                                                         if (!_.isNil(object.objectId)) {
                                                             return (
                                                                 <RelatedObject
-                                                                    showRelationshipQuestion={true}
+                                                                    showRelationshipQuestion
                                                                     objectId={object.objectId}
                                                                     pid={object.pid}
                                                                     objectType={object.objectType}
@@ -1395,7 +1373,7 @@ const AddEditCourseForm = props => {
                                     <Col sm={1} lg={10} />
                                 </Row>
                                 <Row>
-                                    <span className='formBottomGap'></span>
+                                    <span className='formBottomGap' />
                                 </Row>
                             </div>
                         );
@@ -1404,8 +1382,8 @@ const AddEditCourseForm = props => {
             </Container>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} href={'/account?tab=courses'}>
-                        <Button variant='medium' className='cancelButton dark-14 mr-2'>
+                    <a style={{ cursor: 'pointer' }} href='/account?tab=courses'>
+                        <Button variant='tertiary' mr={2}>
                             Cancel
                         </Button>
                     </a>
@@ -1414,18 +1392,11 @@ const AddEditCourseForm = props => {
                             relatedResourcesRef.current.showModal();
                             googleAnalytics.recordVirtualPageView('Related resources modal');
                         }}
-                        variant='white'
-                        className='techDetailButton mr-2'
-                    >
+                        variant='secondary'
+                        mr={2}>
                         + Add resource
                     </Button>
-                    <Button
-                        data-test-id='add-course-publish'
-                        variant='primary'
-                        className='publishButton white-14-semibold mr-2'
-                        type='submit'
-                        onClick={formik.handleSubmit}
-                    >
+                    <Button data-test-id='add-course-publish' mr={2} type='submit' onClick={formik.handleSubmit}>
                         {props.isEdit ? 'Update' : 'Publish'}
                     </Button>
                 </div>

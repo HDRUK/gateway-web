@@ -1,13 +1,14 @@
 import React from 'react';
-import { Modal, Button, Form, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Modal, Form, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
+import { Button } from 'hdruk-react-core';
+import escape from 'escape-html';
+import DatePicker from 'react-datepicker';
 import { ReactComponent as Calendar } from '../../../../images/calendaricon.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import './AddNewEventModal.scss';
-import DatePicker from 'react-datepicker';
-import escape from 'escape-html';
+import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 
 const AddNewEventModal = ({ dataaccessrequest, isOpened, close, onClickAddEvent }) => {
     const versionTree = Object.values(dataaccessrequest.versionTree);
@@ -118,22 +119,20 @@ const AddNewEventModal = ({ dataaccessrequest, isOpened, close, onClickAddEvent 
                             <Form.Label className='mb-0 gray800-14'>Application version</Form.Label>
                             <DropdownButton
                                 variant='white'
-                                className={'custom-dropdown'}
+                                className='custom-dropdown'
                                 value={formik.values.selectedVersionTitle}
                                 title={formik.values.selectedVersionTitle}
                                 onSelect={selected => {
                                     formik.setFieldValue('selectedVersionTitle', selected);
                                 }}
-                                id='selectedVersionTitle'
-                            >
+                                id='selectedVersionTitle'>
                                 {versionTree
                                     .map((version, i) => (
                                         <Dropdown.Item
                                             className='gray800-14 width-100'
                                             key={version.detailedTitle}
                                             eventKey={version.detailedTitle}
-                                            data-test-id={`selectedVersionTitle-option-${i}`}
-                                        >
+                                            data-test-id={`selectedVersionTitle-option-${i}`}>
                                             {version.detailedTitle}
                                         </Dropdown.Item>
                                     ))
@@ -144,10 +143,10 @@ const AddNewEventModal = ({ dataaccessrequest, isOpened, close, onClickAddEvent 
                     <Row className='pl-0 pr-0 mt-2'>
                         <div className='addNewEventModal-footer'>
                             <div className='addNewEventModal-footer--wrap'>
-                                <Button variant='white' className='techDetailButton mr-2' onClick={onCloseModal}>
+                                <Button variant='secondary' className='techDetailButton mr-2' onClick={onCloseModal}>
                                     No, nevermind
                                 </Button>
-                                <Button variant='primary' type='submit' className='white-14-semibold' data-test-id='add-event'>
+                                <Button type='submit' data-test-id='add-event'>
                                     Add event
                                 </Button>
                             </div>
