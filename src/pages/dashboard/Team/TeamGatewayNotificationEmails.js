@@ -6,16 +6,17 @@ import { userTypes } from './teamUtil';
 const TeamGatewayNotificationEmails = ({ teamId, userHasRole, teamNotification, toggleTeamNotifications }) => {
     const { t } = useTranslation();
     const [isManager, setManager] = useState(false);
-    let { optIn, notificationType } = teamNotification;
+    const { optIn, notificationType } = teamNotification;
 
     useEffect(() => {
+        // TODO: GAT-1510:017
         setManager(userHasRole(teamId, userTypes.MANAGER));
     }, [teamId, teamNotification]);
 
     return (
         <div className='tm-notification'>
             {teamId && isManager && (
-                <Fragment>
+                <>
                     <div className='tm-switch'>
                         <Switch
                             onChange={toggleTeamNotifications}
@@ -33,7 +34,7 @@ const TeamGatewayNotificationEmails = ({ teamId, userHasRole, teamNotification, 
                     <div className='tm-title'>
                         <div className='black-16-semibold'>{t('notifications.teamEmailText')}</div>
                     </div>
-                </Fragment>
+                </>
             )}
         </div>
     );

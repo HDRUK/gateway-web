@@ -15,6 +15,7 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
     const {
         location: { state: historyState },
     } = history;
+    // TODO: GAT-1510:015
     const isManager = userHasRole(userState, team, userTypes.MANAGER);
 
     const [dataUseUpload, setDataUseUpload] = React.useState(false);

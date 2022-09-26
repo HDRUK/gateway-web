@@ -13,6 +13,7 @@ const ResourcePageButtons = props => {
         }
     }, [props.data.type, props.isCollection]);
 
+    // TODO: GAT-1510:022
     return (
         <div className='floatRight row'>
             {props.userState[0].loggedIn &&

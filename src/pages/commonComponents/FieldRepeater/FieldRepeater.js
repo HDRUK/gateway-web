@@ -8,11 +8,12 @@ const FieldRepeater = ({ id, teamId, data, userHasRole, handleFieldChange, handl
     const [manager, setIsManager] = useState(false);
 
     const isManager = () => {
+        // TODO: GAT-1510:003
         const isManager = userHasRole(teamId, userTypes.MANAGER);
         setIsManager(isManager);
     };
 
-    let { subscribedEmails = [], notificationType = '' } = data;
+    const { subscribedEmails = [], notificationType = '' } = data;
 
     useEffect(() => {
         isManager();
