@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
@@ -242,56 +243,51 @@ export const AccountProjects = props => {
                                             </Row>
                                         ) : (
                                             projectsList.map(project => {
-                                            if (project.activeflag !== 'active') {
-                                                return <></>;
-                                            }
+                                                if (project.activeflag !== 'active') {
+                                                    return <></>;
+                                                }
                                                 return (
                                                     <Row className='entryBox' data-testid='projectEntryActive'>
                                                         <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                        {moment(project.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                    </Col>
+                                                            {moment(project.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
                                                         <Col sm={12} lg={5} className='pt-2'>
-                                                            <a href={`/project/${  project.id}`} className='black-14'>
-                                                            {project.name}
+                                                            <a href={`/project/${project.id}`} className='black-14'>
+                                                                {project.name}
                                                             </a>
                                                         </Col>
-                                                    <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
                                                             {project.persons <= 0
                                                                 ? 'Author not listed'
                                                                 : project.persons.map(person => {
-                                                                return (
-                                                                    <span>
+                                                                      return (
+                                                                          <span>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
-                                                                );
+                                                                      );
                                                                   })}
                                                         </Col>
 
                                                         <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                        <DropdownButton
+                                                            <DropdownButton
                                                                 variant='outline-secondary'
                                                                 alignRight
                                                                 title='Actions'
-                                                            className='floatRight'
-                                                        >
-                                                            <Dropdown.Item
-                                                                href={`/project/edit/${  project.id}`}
-                                                                className='black-14'
-                                                            >
+                                                                className='floatRight'>
+                                                                <Dropdown.Item href={`/project/edit/${project.id}`} className='black-14'>
                                                                     Edit
                                                                 </Dropdown.Item>
-                                                            <EntityActionButton
+                                                                <EntityActionButton
                                                                     id={project.id}
                                                                     action={archiveProject}
                                                                     entity='project'
-                                                                actionType='archive'
-                                                            />
+                                                                    actionType='archive'
+                                                                />
                                                             </DropdownButton>
                                                         </Col>
-                                                </Row>
-                                            );
-                                                
-                                        })
+                                                    </Row>
+                                                );
+                                            })
                                         )}
                                     </div>
                                 );
@@ -315,82 +311,77 @@ export const AccountProjects = props => {
                                             </Row>
                                         ) : (
                                             projectsList.map(project => {
-                                            if (project.activeflag !== 'review') {
-                                                return <></>;
-                                            }
+                                                if (project.activeflag !== 'review') {
+                                                    return <></>;
+                                                }
                                                 return (
                                                     <Row className='entryBox' data-testid='projectEntryPending'>
                                                         <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                        {moment(project.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                    </Col>
+                                                            {moment(project.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
                                                         <Col sm={12} lg={5} className='pt-2'>
-                                                            <a href={`/project/${  project.id}`} className='black-14'>
-                                                            {project.name}
+                                                            <a href={`/project/${project.id}`} className='black-14'>
+                                                                {project.name}
                                                             </a>
                                                         </Col>
                                                         <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                        {project.persons <= 0
+                                                            {project.persons <= 0
                                                                 ? 'Author not listed'
                                                                 : project.persons.map(person => {
                                                                       return (
-                                                                    <span>
+                                                                          <span>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
-                                                                );
+                                                                      );
                                                                   })}
                                                         </Col>
 
                                                         <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                        {/* TODO: GAT-1510:033 */}
-                                                        {userState[0].role === 'Admin' ? (
-                                                            <DropdownButton
+                                                            {/* TODO: GAT-1510:033 */}
+                                                            {userState[0].role === 'Admin' ? (
+                                                                <DropdownButton
                                                                     variant='outline-secondary'
                                                                     alignRight
-                                                                title='Actions'
-                                                                className='floatRight'
-                                                            >
+                                                                    title='Actions'
+                                                                    className='floatRight'>
                                                                     <Dropdown.Item
-                                                                        href={`/project/edit/${  project.id}`}
-                                                                    className='black-14'
-                                                                >
+                                                                        href={`/project/edit/${project.id}`}
+                                                                        className='black-14'>
                                                                         Edit
                                                                     </Dropdown.Item>
                                                                     <Dropdown.Item
-                                                                    href='#'
+                                                                        href='#'
                                                                         onClick={() =>
                                                                             approveProject(project.id, key, pendingIndex, reviewCount)
-                                                                    }
-                                                                    className='black-14'
-                                                                >
+                                                                        }
+                                                                        className='black-14'>
                                                                         Approve
-                                                                </Dropdown.Item>
+                                                                    </Dropdown.Item>
                                                                     <Dropdown.Item
                                                                         href='#'
-                                                                    onClick={() => toggleActionModal()}
-                                                                    className='black-14'
-                                                                >
+                                                                        onClick={() => toggleActionModal()}
+                                                                        className='black-14'>
                                                                         Reject
-                                                                </Dropdown.Item>
+                                                                    </Dropdown.Item>
                                                                     <ActionModal
                                                                         id={project.id}
-                                                                    entityKey="pending"
+                                                                        entityKey='pending'
                                                                         entityIndex={pendingIndex}
                                                                         entityCount={reviewCount}
-                                                                    open={showActionModal}
+                                                                        open={showActionModal}
                                                                         context={actionModalConfig}
                                                                         updateApplicationStatus={rejectProject}
                                                                         close={toggleActionModal}
-                                                                />
+                                                                    />
                                                                 </DropdownButton>
                                                             ) : (
                                                                 ''
-                                                        )}
+                                                            )}
                                                         </Col>
                                                     </Row>
                                                 );
                                             })
-                                        })
-                                    )}
+                                        )}
                                     </div>
                                 );
                             case 'rejected':
@@ -413,42 +404,36 @@ export const AccountProjects = props => {
                                             </Row>
                                         ) : (
                                             projectsList.map(project => {
-                                            if (project.activeflag !== 'rejected') {
-                                                return <></>;
-                                            }
+                                                if (project.activeflag !== 'rejected') {
+                                                    return <></>;
+                                                }
                                                 return (
                                                     <Row className='entryBox' data-testid='projectEntryRejected'>
-                                                    <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
                                                             {moment(project.updatedAt).format('D MMMM YYYY HH:mm')}
                                                         </Col>
-                                                    <Col sm={12} lg={5} className='pt-2'>
-                                                            <a href={`/project/${  project.id}`} className='black-14'>
-                                                            {project.name}
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/project/${project.id}`} className='black-14'>
+                                                                {project.name}
                                                             </a>
-                                                    </Col>
+                                                        </Col>
                                                         <Col sm={12} lg={2} className='pt-2 gray800-14'>
                                                             {project.persons <= 0
                                                                 ? 'Author not listed'
-                                                            : project.persons.map(person => {
+                                                                : project.persons.map(person => {
                                                                       return (
-                                                                    <span>
+                                                                          <span>
                                                                               {person.firstname} {person.lastname} <br />
-                                                                    </span>
-                                                                );
+                                                                          </span>
+                                                                      );
                                                                   })}
                                                         </Col>
 
-                                                    <Col
-                                                        sm={12}
-                                                        lg={3}
-                                                        style={{ textAlign: 'right' }}
-                                                        className='toolsButtons'
-                                                    ></Col>
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons' />
                                                     </Row>
-                                            );
+                                                );
                                             })
-                                        })
-                                    )}
+                                        )}
                                     </div>
                                 );
                             case 'archive':
@@ -471,93 +456,86 @@ export const AccountProjects = props => {
                                             </Row>
                                         ) : (
                                             projectsList.map(project => {
-                                            if (project.activeflag !== 'archive') {
-                                                return <></>;
-                                            }
+                                                if (project.activeflag !== 'archive') {
+                                                    return <></>;
+                                                }
                                                 return (
                                                     <Row className='entryBox' data-testid='projectEntryArchive'>
                                                         <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                        {moment(project.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                            {moment(project.updatedAt).format('D MMMM YYYY HH:mm')}
                                                         </Col>
                                                         <Col sm={12} lg={5} className='pt-2'>
-                                                            <a href={`/project/${  project.id}`} className='black-14'>
+                                                            <a href={`/project/${project.id}`} className='black-14'>
                                                                 {project.name}
-                                                        </a>
+                                                            </a>
                                                         </Col>
                                                         <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                        {project.persons <= 0
+                                                            {project.persons <= 0
                                                                 ? 'Author not listed'
                                                                 : project.persons.map(person => {
                                                                       return (
-                                                                    <span>
+                                                                          <span>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
                                                                       );
-                                                            })}
+                                                                  })}
                                                         </Col>
 
                                                         <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                        {/* TODO: GAT-1510:034 */}
-                                                        {userState[0].role === 'Admin' ? (
+                                                            {/* TODO: GAT-1510:034 */}
+                                                            {userState[0].role === 'Admin' ? (
                                                                 <DropdownButton
                                                                     variant='outline-secondary'
                                                                     alignRight
-                                                                title='Actions'
-                                                                className='floatRight'
-                                                            >
+                                                                    title='Actions'
+                                                                    className='floatRight'>
                                                                     <Dropdown.Item
-                                                                        href={`/project/edit/${  project.id}`}
-                                                                    className='black-14'
-                                                                >
+                                                                        href={`/project/edit/${project.id}`}
+                                                                        className='black-14'>
                                                                         Edit
                                                                     </Dropdown.Item>
                                                                     <Dropdown.Item
-                                                                    href='#'
+                                                                        href='#'
                                                                         onClick={() =>
                                                                             approveProject(project.id, key, archiveIndex, archiveCount)
                                                                         }
-                                                                    className='black-14'
-                                                                >
+                                                                        className='black-14'>
                                                                         Approve
-                                                                </Dropdown.Item>
-                                                                <Dropdown.Item
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
                                                                         href='#'
                                                                         onClick={() => toggleActionModal()}
-                                                                    className='black-14'
-                                                                >
+                                                                        className='black-14'>
                                                                         Reject
                                                                     </Dropdown.Item>
-                                                                <ActionModal
+                                                                    <ActionModal
                                                                         id={project.id}
-                                                                    entityKey="archive"
+                                                                        entityKey='archive'
                                                                         entityIndex={archiveIndex}
                                                                         entityCount={archiveCount}
                                                                         open={showActionModal}
-                                                                    context={actionModalConfig}
+                                                                        context={actionModalConfig}
                                                                         updateApplicationStatus={rejectProject}
                                                                         close={toggleActionModal}
-                                                                />
+                                                                    />
                                                                 </DropdownButton>
-                                                        ) : (
+                                                            ) : (
                                                                 <DropdownButton
-                                                                variant='outline-secondary'
-                                                                alignRight
+                                                                    variant='outline-secondary'
+                                                                    alignRight
                                                                     title='Actions'
-                                                                className='floatRight'
-                                                            >
+                                                                    className='floatRight'>
                                                                     <Dropdown.Item
-                                                                        href={`/project/edit/${  project.id}`}
-                                                                    className='black-14'
-                                                                >
+                                                                        href={`/project/edit/${project.id}`}
+                                                                        className='black-14'>
                                                                         Edit
-                                                                </Dropdown.Item>
+                                                                    </Dropdown.Item>
                                                                 </DropdownButton>
                                                             )}
                                                         </Col>
-                                                </Row>
-                                            );
-                                                
-                                        })
+                                                    </Row>
+                                                );
+                                            })
                                         )}
                                     </div>
                                 );
