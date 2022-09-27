@@ -741,6 +741,7 @@ class Account extends Component {
                                     </Dropdown.Menu>
                                 </Dropdown>
 
+                                {/* TODO: GAT-1510:056 */}
                                 {isUser(team) && (
                                     <>
                                         {TEAM_USERS_MENU.map(({ id, ...outerProps }) => (
@@ -754,6 +755,7 @@ class Account extends Component {
                                     </>
                                 )}
 
+                                {/* TODO: GAT-1510:054 */}
                                 {isAdmin(team) && (
                                     <>
                                         <DashboardNavItem
@@ -787,6 +789,7 @@ class Account extends Component {
                                     </>
                                 )}
 
+                                {/* TODO: GAT-1510:052 */}
                                 {isCustodian(team) && (
                                     <>
                                         <DashboardNavItem
@@ -865,6 +868,7 @@ class Account extends Component {
                         </div>
 
                         <div className='col-sm-12 col-md-10 margin-top-32'>
+                            {/* TODO: GAT-1510:057 */}
                             {isUser(team) && (
                                 <>
                                     {tabId === 'dashboard' && <AccountAnalyticsDashboard userState={userState} />}
@@ -906,6 +910,7 @@ class Account extends Component {
 
                             <Route path='/account/datasets/:id' component={AccountDataset} />
 
+                            {/* TODO: GAT-1510:058 */}
                             {!isUser(team) && (
                                 <>
                                     {/* TODO: GAT-1510:010 */}
