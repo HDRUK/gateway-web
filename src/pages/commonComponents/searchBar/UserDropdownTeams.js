@@ -46,6 +46,7 @@ const UserDropdownTeams = props => {
                 <Dropdown.Divider className='mb-1 mt-1' />
                 <Dropdown>
                     <Dropdown.Toggle as={CustomToggleInner}>
+                        {/* TODO: GAT-1510:047 */}
                         <span className='black-14'>{team.type === 'admin' ? 'HDR Admin' : team.name}</span>
                         <span className='addNewDropDownGap' />
                         {props.isMobile ? (
@@ -55,6 +56,7 @@ const UserDropdownTeams = props => {
                         )}
                     </Dropdown.Toggle>
                     <Dropdown.Menu as={CustomSubMenu}>
+                        {/* TODO: GAT-1510:048 */}
                         {team.type === 'admin' ? (
                             <>
                                 <Dropdown.Item href='/account?tab=datasets&team=admin' className='black-14 user-dropdown-item'>
@@ -77,6 +79,7 @@ const UserDropdownTeams = props => {
                                     className='black-14 user-dropdown-item'>
                                     Team Management
                                 </Dropdown.Item>
+                                {/* TODO: GAT-1510:001 */}
                                 {userHasRole(team._id, ['manager', 'reviewer']) && (
                                     <>
                                         <Dropdown.Item
@@ -95,6 +98,7 @@ const UserDropdownTeams = props => {
                                 <Dropdown.Item href={`/account?tab=datause&team=${team._id}`} className='black-14 user-dropdown-item'>
                                     Data Uses
                                 </Dropdown.Item>
+                                {/* TODO: GAT-1510:002 */}
                                 {userHasRole(team._id, ['manager', 'metadata_editor']) ? (
                                     <Dropdown.Item href={`/account?tab=datasets&team=${team._id}`} className='black-14 user-dropdown-item'>
                                         Datasets
