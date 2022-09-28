@@ -60,7 +60,40 @@ export const getWidgetAPI = () => {
     return widgetAPIURL;
 };
 
+export const addCmsGatewayApiHostname = path => {
+    const { hostname } = window.location;
+    let webHostname = 'https://api.web.www.healthdatagateway.org';
+
+    if (hostname.includes('.uat.')) {
+        webHostname = 'https://api.web.uat.healthdatagateway.org';
+    } else if (hostname.includes('.preprod.')) {
+        webHostname = 'https://api.web.preprod.hdruk.dev';
+    } else if (hostname.includes('.cloudshell.dev') || hostname.includes('localhost')) {
+        webHostname = 'http://localhost:3001';
+    }
+
+    return `${webHostname}/${path}`;
+};
+
+export const addCmsGatewayHostname = path => {
+    const { hostname } = window.location;
+    let webHostname = 'https://web.www.healthdatagateway.org';
+
+    if (hostname.includes('.uat.')) {
+        webHostname = 'https://web.uat.healthdatagateway.org';
+    } else if (hostname.includes('.preprod.')) {
+        webHostname = 'https://web.preprod.hdruk.dev';
+    } else if (hostname.includes('.cloudshell.dev')) {
+        webHostname = 'http://localhost';
+    } else if (hostname.includes('localhost')) {
+        webHostname = 'http://localhost:3000';
+    }
+
+    return `${webHostname}/${path}`;
+};
+
 export const baseURL = _buildUrl('http');
 export const cmsURL = _buildUrl('cms');
-export const apiURL = `${baseURL}/api/${process.env.REACT_APP_API_VERSION || 'v1'}`;
+export const apiPath = `api/${process.env.REACT_APP_API_VERSION || 'v1'}`;
+export const apiURL = `${baseURL}/${apiPath}`;
 export const apiV2URL = `${baseURL}/api/v2`;

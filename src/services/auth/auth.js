@@ -1,8 +1,8 @@
-import { apiURL } from '../../configs/url.config';
+import { addCmsGatewayApiHostname, apiPath, apiURL } from '../../configs/url.config';
 import { getRequest, postRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getStatus = options => {
-    return getRequest(`${apiURL}/auth/status`, options);
+    return getRequest(addCmsGatewayApiHostname(`${apiPath}/auth/status`), options);
 };
 
 const getLogout = options => {

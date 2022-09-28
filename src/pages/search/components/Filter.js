@@ -157,7 +157,7 @@ const TreeComponent = ({
                         <Filter
                             selected={selected}
                             data={node.filters}
-                            parentKey={node.key}
+                            parentKey={node.alias}
                             highlighted={node.highlighted}
                             hasChildren
                             searchValue={searchValue}
@@ -202,30 +202,32 @@ const Filter = ({
 
                         return false;
                     })
-                    .map(node => (
-                        <div key={node.label} className={generateClassName(node)}>
-                            {generateClassName(node) !== 'node-subItem' ? (
-                                <TreeComponent
-                                    selected={selected}
-                                    key={node.id}
-                                    node={node}
-                                    parentKey={parentKey}
-                                    highlighted={node.highlighted}
-                                    hasChildren={hasChildren}
-                                    onHandleInputChange={onHandleInputChange}
-                                    onHandleToggle={onHandleToggle}
-                                    onHandleClearSection={onHandleClearSection}
-                                />
-                            ) : (
-                                <CheckboxWrapper
-                                    node={node}
-                                    highlighted={highlighted}
-                                    parentKey={parentKey}
-                                    onHandleInputChange={onHandleInputChange}
-                                />
-                            )}
-                        </div>
-                    ))}
+                    .map(node => {
+                        return (
+                            <div key={node.label} className={generateClassName(node)}>
+                                {generateClassName(node) !== 'node-subItem' ? (
+                                    <TreeComponent
+                                        selected={selected}
+                                        key={node.id}
+                                        node={node}
+                                        parentKey={parentKey}
+                                        highlighted={node.highlighted}
+                                        hasChildren={hasChildren}
+                                        onHandleInputChange={onHandleInputChange}
+                                        onHandleToggle={onHandleToggle}
+                                        onHandleClearSection={onHandleClearSection}
+                                    />
+                                ) : (
+                                    <CheckboxWrapper
+                                        node={node}
+                                        highlighted={highlighted}
+                                        parentKey={parentKey}
+                                        onHandleInputChange={onHandleInputChange}
+                                    />
+                                )}
+                            </div>
+                        );
+                    })}
         </>
     );
 };

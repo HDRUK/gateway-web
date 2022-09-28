@@ -4,8 +4,9 @@ import { Box, Button, FeatureContent, Tag, Typography } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import googleAnalytics from '../../../tracking';
 import mediaUrl from '../../../images/feature-data-utility-wizard.png';
+import { addCmsGatewayHostname } from 'configs/url.config';
 
-const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
+const AdvancedSearchDataUtilityWizard = ({ onClick, variant }) => {
     const { t } = useTranslation();
 
     const handleClicked = useCallback(() => {
@@ -17,7 +18,7 @@ const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
 
     return (
         <FeatureContent
-            variant='vertical'
+            variant={variant}
             header={
                 <Box display='flex' width='100%' alignItems='center'>
                     <Box flexGrow='1'>{t('search.advanced.dataUtilityWizard.title')}</Box>
@@ -27,7 +28,7 @@ const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
                 </Box>
             }
             body={<Typography>{t('search.advanced.dataUtilityWizard.description')}</Typography>}
-            media={<img src={mediaUrl} alt={t('search.advanced.dataUtilityWizard.mediaAlt')} />}
+            media={<img src={addCmsGatewayHostname(mediaUrl)} alt={t('search.advanced.dataUtilityWizard.mediaAlt')} />}
             actions={
                 <>
                     <Button variant='secondary' mb={3} onClick={handleClicked}>
@@ -41,6 +42,10 @@ const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
             width='100%'
         />
     );
+};
+
+AdvancedSearchDataUtilityWizard.defaultProps = {
+    variant: 'vertical',
 };
 
 AdvancedSearchDataUtilityWizard.propTypes = {
