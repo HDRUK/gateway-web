@@ -10,11 +10,12 @@ import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS } from '../../../configs/constants'
 import usersService from '../../../services/users';
 import AdvancedSearchRequestAccessModal from '../../dashboard/AdvancedSearchRequestAccessModal';
 import AdvancedSearchTermsandConditionsModal from '../../dashboard/AdvancedSearchTAndCsModal';
+import { addCmsGatewayHostname } from 'configs/url.config';
 
 const baseURL = require('../BaseURL').getURL();
 const urlEnv = require('../BaseURL').getURLEnv();
 
-const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
+const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal }) => {
     const { t } = useTranslation();
     const [userState, setUserState] = useState(userProps);
     const [showModalTCs, setShowModalTCs] = useState();
@@ -100,7 +101,7 @@ const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
     return (
         <>
             <FeatureContent
-                variant='vertical'
+                variant={variant}
                 header={
                     <Box display='flex' width='100%' alignItems='center'>
                         <Box flexGrow='1'>{t('search.advanced.cohortDiscovery.title')}</Box>
@@ -110,7 +111,7 @@ const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
                     </Box>
                 }
                 body={<Typography>{t('search.advanced.cohortDiscovery.description')}</Typography>}
-                media={<img src={mediaUrl} alt={t('search.advanced.cohortDiscovery.mediaAlt')} />}
+                media={<img src={addCmsGatewayHostname(mediaUrl)} alt={t('search.advanced.cohortDiscovery.mediaAlt')} />}
                 actions={
                     <>
                         {!loggedIn && (
@@ -142,6 +143,10 @@ const AdvancedSearchCohortDiscovery = ({ userProps, showLoginModal }) => {
             <AdvancedSearchRequestAccessModal open={showModalAccess} close={() => setShowModalAccess(false)} userId={userState.id} />
         </>
     );
+};
+
+AdvancedSearchCohortDiscovery.defaultProps = {
+    variant: 'vertical',
 };
 
 AdvancedSearchCohortDiscovery.propTypes = {

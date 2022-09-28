@@ -40,6 +40,7 @@ import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
 import SavedPreferences from '../commonComponents/savedPreferences/SavedPreferences';
+import { withCms } from '../../context/CmsContext';
 
 import { BackToTop } from '../../components';
 import './Search.scss';
@@ -2134,4 +2135,4 @@ class SearchPage extends React.Component {
     }
 }
 
-export default withTranslation()(SearchPage);
+export default withTranslation()(withCms(SearchPage));
