@@ -15,8 +15,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         onClick={e => {
             e.preventDefault();
             onClick(e);
-        }}
-    >
+        }}>
         {children}
     </a>
 ));
@@ -134,8 +133,7 @@ class AddToCollection extends Component {
                                             return (
                                                 <div
                                                     className='gray800-14 addToCollectionItem pointer'
-                                                    onClick={() => this.updateCollection(dat)}
-                                                >
+                                                    onClick={() => this.updateCollection(dat)}>
                                                     <Row>
                                                         <Col sm={10} lg={10}>
                                                             {dat.name}

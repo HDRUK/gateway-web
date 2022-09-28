@@ -153,8 +153,7 @@ class AccountUsers extends React.Component {
                                                                     variant='outline-secondary'
                                                                     alignRight
                                                                     title='Actions'
-                                                                    className='floatRight'
-                                                                >
+                                                                    className='floatRight'>
                                                                     <Dropdown.Item href={'/editproject/' + dat.id} className='black-14'>
                                                                         Edit
                                                                     </Dropdown.Item>
