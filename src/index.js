@@ -10,13 +10,11 @@ import './i18n';
 import TagManager from 'react-gtm-module';
 import { hotjar } from 'react-hotjar';
 
-import GatewayAdvancedSearchDataUtilityWizard from './cms/GatewayAdvancedSearchDataUtilityWizard';
 import GlobalProviders from './GlobalProviders';
-import GatewayAdvancedSearchCohortDiscovery from './cms/GatewayAdvancedSearchCohortDiscovery';
 import Auth from './Auth';
 import httpDefaults from './configs/httpDefaults';
 import HDRRouter from './HDRRouter';
-import { CmsProvider } from 'context/CmsContext';
+import GatewayAdvancedSearchBanner from './cms/GatewayAdvancedSearchBanner';
 
 if (process.env.REACT_APP_HOTJAR_CODE && process.env.REACT_APP_HOTJAR_CODE_VERSION) {
     hotjar.initialize(process.env.REACT_APP_HOTJAR_CODE, process.env.REACT_APP_HOTJAR_CODE_VERSION);
@@ -31,40 +29,26 @@ if (window.gtmId && window.gaConsent === true) {
 
 httpDefaults();
 
-const cmsData = localStorage.getItem('cmsData');
-
 const rootNode = document.getElementById('root');
-const cmsGatewayAdvancedSearchDataUtilityWizard = document.getElementById('cms_GatewayAdvancedSearchDataUtilityWizard');
-const cmsGatewayAdvancedCohortDiscovery = document.getElementById('cms_GatewayAdvancedSearchCohortDiscovery');
+const gatewayAdvancedSearchBanner = document.getElementById('gateway_AdvancedSearchBanner');
 
-if (cmsGatewayAdvancedSearchDataUtilityWizard) {
-    ReactDOM.render(
-        <GlobalProviders>
-            <GatewayAdvancedSearchDataUtilityWizard />
-        </GlobalProviders>,
-        cmsGatewayAdvancedSearchDataUtilityWizard
-    );
-}
-
-if (cmsGatewayAdvancedCohortDiscovery) {
+if (gatewayAdvancedSearchBanner) {
     ReactDOM.render(
         <GlobalProviders>
             <Auth>
-                <GatewayAdvancedSearchCohortDiscovery />
+                <GatewayAdvancedSearchBanner />
             </Auth>
         </GlobalProviders>,
-        cmsGatewayAdvancedCohortDiscovery
+        gatewayAdvancedSearchBanner
     );
 }
 
 if (rootNode) {
     ReactDOM.render(
         <GlobalProviders>
-            <CmsProvider>
-                <Auth showLoader>
-                    <HDRRouter />
-                </Auth>
-            </CmsProvider>
+            <Auth showLoader>
+                <HDRRouter />
+            </Auth>
         </GlobalProviders>,
         rootNode
     );

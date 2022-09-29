@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { Box, Button, H6, Icon, Input, P, InputGroup } from 'hdruk-react-core';
+import { Box, Button, H6, Icon, Input, InputGroup, P } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
@@ -11,8 +11,8 @@ import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
-import { ReactComponent as SearchSvg } from '../../images/search.svg';
 import { ReactComponent as ArrowUpSvg } from '../../images/icons/arrow-up.svg';
+import { ReactComponent as SearchSvg } from '../../images/search.svg';
 import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
@@ -22,6 +22,7 @@ import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
+import SavedPreferences from '../commonComponents/savedPreferences/SavedPreferences';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SearchResults from '../commonComponents/SearchResults';
 import SearchResultsInfo from '../commonComponents/SearchResultsInfo';
@@ -39,8 +40,6 @@ import PapersSearchSort from './components/PapersSearchResults/PapersSearchSort'
 import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
-import SavedPreferences from '../commonComponents/savedPreferences/SavedPreferences';
-import { withCms } from '../../context/CmsContext';
 
 import { BackToTop } from '../../components';
 import './Search.scss';
@@ -813,6 +812,7 @@ class SearchPage extends React.Component {
      */
     getGlobals = async () => {
         try {
+            console.log('baseURL', baseURL);
             const response = await axios.get(`${baseURL}/api/v1/global?localeId=en-gb&entry.name=dataUtility`);
             const {
                 data: {
@@ -1799,6 +1799,10 @@ class SearchPage extends React.Component {
             key: baseKey,
         } = this.state;
 
+        const { cmsData } = this.props;
+
+        console.log('cmsData', cmsData);
+
         if (isLoading) {
             return (
                 <Container>
@@ -2135,4 +2139,4 @@ class SearchPage extends React.Component {
     }
 }
 
-export default withTranslation()(withCms(SearchPage));
+export default withTranslation()(SearchPage);
