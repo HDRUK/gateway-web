@@ -9,6 +9,7 @@ import { createBrowserHistory } from 'history';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Integrations } from '@sentry/tracing';
 import { theme } from './configs/theme';
+import { CmsProvider } from './context/CmsContext';
 
 const history = createBrowserHistory();
 const urlEnv = require('./pages/commonComponents/BaseURL').getURLEnv();
@@ -37,7 +38,9 @@ const GlobalProviders = ({ children }) => {
         <Suspense fallback={''}>
             <QueryClientProvider client={queryClient}>
                 <ThemeProvider theme={merge(theme, DEFAULT_THEME)}>
-                    <Router history={history}>{children}</Router>
+                    <CmsProvider>
+                        <Router history={history}>{children}</Router>
+                    </CmsProvider>
                 </ThemeProvider>
             </QueryClientProvider>
         </Suspense>

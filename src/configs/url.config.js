@@ -14,7 +14,7 @@ const _buildUrl = urlType => {
     if (href && href.includes('appspot.com')) {
         return origin;
     }
-    if (href && !href.includes('localhost')) {
+    if (href && !href.includes('localhost') && !href.includes('.cloudshell.dev')) {
         const regArray = _getRegexURL(urlType, href);
         if (regArray) {
             const url = regArray[2];
@@ -84,10 +84,12 @@ export const addCmsGatewayHostname = path => {
     } else if (hostname.includes('.preprod.')) {
         webHostname = 'https://web.preprod.hdruk.dev';
     } else if (hostname.includes('.cloudshell.dev')) {
-        webHostname = 'http://localhost';
+        webHostname = `https://web.${hostname.replace('web.', '')}`;
     } else if (hostname.includes('localhost')) {
         webHostname = 'http://localhost:3000';
     }
+
+    console.log('Addcms', `${webHostname}/${path}`);
 
     return `${webHostname}/${path}`;
 };
