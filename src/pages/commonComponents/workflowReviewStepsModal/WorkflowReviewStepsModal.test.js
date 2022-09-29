@@ -1,8 +1,9 @@
 import React from 'react';
-import WorkflowReviewModal from '../WorkflowReviewStepsModal';
 import { shallow } from 'enzyme';
+import WorkflowReviewModal from './WorkflowReviewStepsModal';
 
-let wrapper, props;
+let wrapper;
+let props;
 
 const fakeWorkflow = {
     workflowName: 'Workflow Test 2',

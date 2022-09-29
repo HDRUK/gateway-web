@@ -8,7 +8,7 @@ import {
     putRequest,
     useMutationWithTranslations,
     useQueryWithTranslations,
-} from '../requests';
+} from './requests';
 
 jest.mock('axios');
 

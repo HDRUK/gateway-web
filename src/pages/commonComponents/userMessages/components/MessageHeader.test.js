@@ -1,5 +1,5 @@
 import React from 'react';
-import MessageHeader from '../components/MessageHeader';
+import MessageHeader from './MessageHeader';
 import { activeTopic, userStateData, activeTopicMultipleDatasets } from '../../../../../test/mocks/dataMock';
 
 const mockHistoryPush = jest.fn();
@@ -14,7 +14,7 @@ let wrapper;
 
 describe('<MessageHeader />', () => {
     it('renders with correct custodian and one dataset tag', () => {
-        wrapper = shallow(<MessageHeader userState={userStateData} topic={activeTopic} modalRequired={true} />);
+        wrapper = shallow(<MessageHeader userState={userStateData} topic={activeTopic} modalRequired />);
         expect(wrapper.find('[data-test-id="headerTitle"]').text().trim()).toEqual('ALLIANCE > SAIL');
         expect(wrapper.find('[data-test-id="headerTag-0"]').exists()).toEqual(true);
         expect(wrapper.find('[data-test-id="headerTag-0"]').text().trim()).toEqual('Care Home Dataset');
@@ -23,7 +23,7 @@ describe('<MessageHeader />', () => {
 
 describe('<MessageHeader />', () => {
     it('renders with correct custodian and three dataset tags', () => {
-        wrapper = shallow(<MessageHeader userState={userStateData} topic={activeTopicMultipleDatasets} modalRequired={true} />);
+        wrapper = shallow(<MessageHeader userState={userStateData} topic={activeTopicMultipleDatasets} modalRequired />);
         expect(wrapper.find('[data-test-id="headerTitle"]').text().trim()).toEqual('ALLIANCE > HQIP');
         expect(wrapper.find('[data-test-id="headerTag-0"]').exists()).toEqual(true);
         expect(wrapper.find('[data-test-id="headerTag-0"]').text().trim()).toEqual('Epilepsy 12 - clinical audit');
