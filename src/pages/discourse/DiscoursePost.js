@@ -1,20 +1,21 @@
 import React from 'react';
 import { Image } from 'react-bootstrap';
 import Moment from 'react-moment';
-import styles from './Discourse.module.scss';
-import { Fragment } from 'react';
+
 import { Formik } from 'formik';
-import editIcon from '../../images/edit.svg';
-import deleteIcon from '../../images/delete.svg';
 import TextareaAutosize from 'react-textarea-autosize';
+import { Button } from 'hdruk-react-core';
+import deleteIcon from '../../images/delete.svg';
+import styles from './Discourse.module.scss';
+import editIcon from '../../images/edit.svg';
 
 class DiscoursePost extends React.Component {
     readPost() {
-        let { post, userState, onPostEdit, onPostDelete } = this.props;
+        const { post, userState, onPostEdit, onPostDelete } = this.props;
         return (
             <div className={styles.postContents}>
                 <div className={styles.postLeftCol}>
-                    <Image src={post.avatar_template} roundedCircle={true} />
+                    <Image src={post.avatar_template} roundedCircle />
                 </div>
                 <div className={styles.postRightCol}>
                     <div className={styles.postDetails}>
@@ -40,7 +41,7 @@ class DiscoursePost extends React.Component {
     }
 
     formContent(mode) {
-        let { post, onPostSubmit, onPostCancel } = this.props;
+        const { post, onPostSubmit, onPostCancel } = this.props;
         // 1. Default form mode to create
         let postId = 0;
         let comment = '';
@@ -70,8 +71,7 @@ class DiscoursePost extends React.Component {
                     onSubmit={(values, { setSubmitting }) => {
                         onPostSubmit(values);
                         setSubmitting(true);
-                    }}
-                >
+                    }}>
                     {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                         <form onSubmit={handleSubmit}>
                             <span className='form-input-label'>{title}</span>
@@ -91,12 +91,12 @@ class DiscoursePost extends React.Component {
                                 <span className='errorMessages'>{errors.comment && touched.comment && errors.comment}</span>
                             </div>
                             <div className={styles.buttonFooter}>
-                                <button className='button-tertiary' type='button' onClick={() => onPostCancel(postId)}>
+                                <Button variant='tertiary' onClick={() => onPostCancel(postId)}>
                                     Cancel
-                                </button>
-                                <button className='button-primary' type='submit' disabled={isSubmitting}>
+                                </Button>
+                                <Button type='submit' disabled={isSubmitting}>
                                     {submitText}
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     )}
@@ -110,14 +110,13 @@ class DiscoursePost extends React.Component {
         // e.g. read, edit or create
         if (mode === 'read') {
             return this.readPost();
-        } else {
-            return this.formContent(mode);
         }
+        return this.formContent(mode);
     }
 
     render() {
         const { mode } = this.props;
-        return <Fragment>{this.renderSwitch(mode)}</Fragment>;
+        return <>{this.renderSwitch(mode)}</>;
     }
 }
 

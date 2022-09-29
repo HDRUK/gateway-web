@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 
 import './ActionModal.scss';
@@ -23,12 +24,14 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
             cancel: {
                 label: 'Cancel',
                 action: 'cancel',
-                class: 'button-secondary mr-2',
+                class: 'mr-2',
+                variant: 'secondary',
             },
             confirmReject: {
                 label: 'Reject and send message',
                 action: 'confirmRejection',
-                class: 'btn btn-primary addButton',
+                class: 'addButton',
+                variant: 'primary',
             },
         },
     } = context;
@@ -133,11 +136,15 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
 
                 <div className='actionModal-footer'>
                     <div className='actionModal-footer--wrap'>
-                        {Object.keys(buttons).map((key, index) => {
+                        {buttons.map(button => {
                             return (
-                                <button key={index} className={buttons[key].class} onClick={e => onClickAction(e, buttons[key].action)}>
-                                    {buttons[key].label}
-                                </button>
+                                <Button
+                                    variant={button.variant}
+                                    key={button.action}
+                                    className={button.class}
+                                    onClick={e => onClickAction(e, button.action)}>
+                                    {button.label}
+                                </Button>
                             );
                         })}
                     </div>

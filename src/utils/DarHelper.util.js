@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import moment from 'moment';
-import { Button } from 'hdruk-react-core';
 
 const autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
 
@@ -257,12 +256,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: 'No, nevermind',
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmApproval: {
                             label: 'Confirm approval',
                             action: 'confirmApproval',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -277,12 +278,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: 'No, nevermind',
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmReject: {
                             label: 'Confirm rejection',
                             action: 'confirmRejection',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -297,12 +300,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: 'No, nevermind',
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmApprovalConditions: {
                             label: 'Confirm approval with conditions',
                             action: 'confirmApprovalConditions',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -528,7 +533,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, pub
         formPanels.push(staticContent.additionalFilesPanel);
         questionPanels.push(staticContent.additionalFilesQuestionPanel);
     }
-
+    // TODO: GAT-1510:041
     if (userState[0].role === 'Admin' && !exportExists) {
         injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels);
     }

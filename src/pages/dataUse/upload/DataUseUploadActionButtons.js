@@ -1,3 +1,4 @@
+import { Button } from 'hdruk-react-core';
 import React from 'react';
 import googleAnalytics from '../../../tracking';
 
@@ -13,9 +14,9 @@ const DataUseUploadActionButtons = ({ onSubmit }) => {
     }, []);
 
     return (
-        <button className='button-secondary' onClick={handleSubmitDataUses}>
+        <Button variant='secondary' onClick={handleSubmitDataUses}>
             Submit data uses
-        </button>
+        </Button>
     );
 };
 

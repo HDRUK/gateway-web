@@ -4,7 +4,8 @@ import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import React, { Component, Fragment } from 'react';
-import { Button, Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
+import { Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
@@ -2328,12 +2329,10 @@ class DataAccessRequest extends Component {
                         </div>
                         <div className='workflowModal-footer'>
                             <div className='workflowModal-footer--wrap'>
-                                <Button variant='white' className='techDetailButton mr-2' onClick={e => this.toggleEmailModal(false)}>
+                                <Button variant='secondary' className='techDetailButton mr-2' onClick={e => this.toggleEmailModal(false)}>
                                     No, nevermind
                                 </Button>
-                                <Button variant='primary' className='white-14-semibold' onClick={this.onClickMailDAR}>
-                                    Email application
-                                </Button>
+                                <Button onClick={this.onClickMailDAR}>Email application</Button>
                             </div>
                         </div>
                     </Modal>

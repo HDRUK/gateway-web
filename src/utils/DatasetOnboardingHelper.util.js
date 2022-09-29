@@ -199,7 +199,8 @@ const configActionModal = (type = '') => {
                         confirmSubmission: {
                             label: i18n.t('dataset.validationErrosModal.buttons.confirm'),
                             action: 'cancel',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -213,12 +214,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.validationErrosAdminModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmSubmission: {
                             label: i18n.t('dataset.validationErrosAdminModal.buttons.confirm'),
                             action: 'confirmSubmission',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -232,12 +235,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.submitForReviewModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmSubmission: {
                             label: i18n.t('dataset.submitForReviewModal.buttons.confirm'),
                             action: 'confirmSubmission',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -251,12 +256,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.createNewVersionModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmSubmission: {
                             label: i18n.t('dataset.createNewVersionModal.buttons.confirm'),
                             action: 'confirmNewVersion',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -270,12 +277,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.archiveModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmSubmission: {
                             label: i18n.t('dataset.archiveModal.buttons.confirm'),
                             action: 'archive',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -289,12 +298,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.unArchiveModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmSubmission: {
                             label: i18n.t('dataset.unArchiveModal.buttons.confirm'),
                             action: 'unarchive',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -308,12 +319,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.approvalModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmApproval: {
                             label: i18n.t('dataset.approvalModal.buttons.confirm'),
                             action: 'confirmApproval',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -327,12 +340,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.rejectModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmReject: {
                             label: i18n.t('dataset.rejectModal.buttons.confirm'),
                             action: 'confirmRejection',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -346,12 +361,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.approveWithConditionsModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmApprovalConditions: {
                             label: i18n.t('dataset.approveWithConditionsModal.buttons.confirm'),
                             action: 'confirmApprovalConditions',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -365,12 +382,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.deleteDraftModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmDelete: {
                             label: i18n.t('dataset.deleteDraftModal.buttons.confirm'),
                             action: 'deleteDraft',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
@@ -384,12 +403,14 @@ const configActionModal = (type = '') => {
                         cancel: {
                             label: i18n.t('dataset.duplicateModal.buttons.cancel'),
                             action: 'cancel',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                         },
                         confirmSubmission: {
                             label: i18n.t('dataset.duplicateModal.buttons.confirm'),
                             action: 'duplicate',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                         },
                     },
                 };
