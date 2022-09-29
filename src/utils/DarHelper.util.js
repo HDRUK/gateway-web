@@ -533,7 +533,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, pub
         formPanels.push(staticContent.additionalFilesPanel);
         questionPanels.push(staticContent.additionalFilesQuestionPanel);
     }
-
+    // TODO: GAT-1510:041
     if (userState[0].role === 'Admin' && !exportExists) {
         injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels);
     }

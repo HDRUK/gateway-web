@@ -513,10 +513,16 @@ class SearchPage extends React.Component {
     updateOnFilterBadge = (filterGroup, filter) => {
         if (typeof filter === 'object' && !_.isEmpty(filter)) {
             const selectedFilters = this.getSelectedFiltersStateByKey(this.state.key);
+            const filtersV2 = this.getFilterStateByKey(this.state.key);
             const filteredFilters = selectedFilters.filter(item => filter.parentKey === item.parentKey);
+            const parentNode = this.findParentNode(filtersV2, filter.parentKey);
+
+            const selectedNode = parentNode.filters.find(item => {
+                return item.value === filter.value;
+            });
 
             if (!filteredFilters.find(item => filter.value === item.value)) {
-                this.handleInputChange(filter, filter.parentKey, true);
+                this.handleInputChange(selectedNode, filter.parentKey, true);
             }
         } else {
             return;
@@ -1122,6 +1128,7 @@ class SearchPage extends React.Component {
      */
     handleSelected = (selected = {}, checked = false, tab = this.state.key) => {
         let selectedV2 = this.getSelectedFiltersStateByKey(tab);
+
         let results = [];
         if (!_.isEmpty(selected)) {
             if (checked) {

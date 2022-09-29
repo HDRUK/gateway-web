@@ -15,6 +15,7 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
     const {
         location: { state: historyState },
     } = history;
+    // TODO: GAT-1510:015
     const isManager = userHasRole(userState, team, userTypes.MANAGER);
 
     const [dataUseUpload, setDataUseUpload] = React.useState(false);
@@ -56,6 +57,7 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
                 <DataUsePage userState={userState} team={team} onClickDataUseUpload={handleClickUpload} />
             )}
 
+            {/* TODO: GAT-1510:053 */}
             {tabId === 'datause_widget' && isCustodian(team) && isManager && publisherDetails?.dataUse?.widget?.enabled && (
                 <DataUseWidget userState={userState} team={team} publisherDetails={publisherDetails} />
             )}

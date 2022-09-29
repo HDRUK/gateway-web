@@ -839,6 +839,8 @@ export const DataAccessRequestCustomiseForm = props => {
                                         </P>
                                     </Box>
                                 </Card>
+
+                                {/* TODO: GAT-1510:055 */}
                                 {isPublisherAdmin(userState, team) && (
                                     <Card>
                                         <Box p={5}>

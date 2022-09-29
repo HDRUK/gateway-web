@@ -156,7 +156,7 @@ const EditDataUse = props => {
                 });
 
                 setDatasetsArray(!isEmpty(datasets) ? datasets : [{ pid: '', name: '' }]);
-
+                // TODO: GAT-1510:045
                 setDisableInput(getUserRoles(res.data.publisher));
                 setIsLoading(false);
             });
