@@ -5,7 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import authService from './services/auth';
 import personService from './services/person';
 import Loading from './pages/commonComponents/Loading';
-import { DEFAULT_USER_STATE } from 'configs/constants';
+import { DEFAULT_USER_STATE } from './configs/constants';
 
 const App = ({ children, showLoader }) => {
     const [userState, setUserState] = useState();
@@ -25,8 +25,6 @@ const App = ({ children, showLoader }) => {
                                 person: { profileComplete, terms },
                             },
                         } = await personResult.mutateAsync(id);
-
-                        console.log(statusResult, profileComplete, terms);
 
                         setUserState([
                             {

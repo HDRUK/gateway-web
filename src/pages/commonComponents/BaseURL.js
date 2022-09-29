@@ -5,7 +5,7 @@ module.exports = {
         if (thisBaseURL.includes('appspot.com')) {
             return window.location.origin;
         }
-        if (!thisBaseURL.includes('localhost')) {
+        if (!thisBaseURL.includes('localhost') && !thisBaseURL.includes('.cloudshell.dev')) {
             const rx = /^([http|https]+:\/\/[a-z]+)([^/]*)/;
             const arr = rx.exec(thisBaseURL);
             if (arr && arr.length > 0) {
@@ -21,7 +21,7 @@ module.exports = {
         if (thisBaseURL.includes('appspot.com')) {
             return window.location.origin;
         }
-        if (!thisBaseURL.includes('localhost')) {
+        if (!thisBaseURL.includes('localhost') && !thisBaseURL.includes('cloudshell.dev')) {
             const rx = /^([http|https]+:\/\/[a-z]+)\.([^/]*)/;
             const arr = rx.exec(thisBaseURL);
             if (arr && arr.length > 0) {
@@ -35,7 +35,7 @@ module.exports = {
     },
 
     getURLEnv() {
-        if (thisBaseURL.includes('localhost')) {
+        if (thisBaseURL.includes('localhost') || thisBaseURL.includes('cloudshell.dev')) {
             return 'local';
         }
 
