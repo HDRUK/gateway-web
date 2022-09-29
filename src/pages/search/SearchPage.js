@@ -812,6 +812,7 @@ class SearchPage extends React.Component {
      */
     getGlobals = async () => {
         try {
+            console.log('baseURL', baseURL);
             const response = await axios.get(`${baseURL}/api/v1/global?localeId=en-gb&entry.name=dataUtility`);
             const {
                 data: {
@@ -1797,6 +1798,10 @@ class SearchPage extends React.Component {
 
             key: baseKey,
         } = this.state;
+
+        const { cmsData } = this.props;
+
+        console.log('cmsData', cmsData);
 
         if (isLoading) {
             return (

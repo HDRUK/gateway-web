@@ -30,16 +30,25 @@ export const CmsProvider = ({ children }) => {
         setData(cmsData ? JSON.parse(cmsData) : null);
     }, []);
 
-    const reset = useCallback(() => {
-        Cookies.remove('cmsData');
+    const handleResetData = useCallback(() => {
+        Cookies.remove('cmsData', { domain: window.location.hostname.replace('web.', '') });
 
         setData(null);
+    }, []);
+
+    const handleSetData = useCallback(value => {
+        const cmsData = JSON.stringify(value);
+
+        Cookies.set('cmsData', cmsData, { domain: window.location.hostname });
+
+        setData(cmsData);
     }, []);
 
     return (
         <CmsContext.Provider
             value={{
-                reset,
+                resetData: handleResetData,
+                setData: handleSetData,
                 data,
             }}>
             {children}
