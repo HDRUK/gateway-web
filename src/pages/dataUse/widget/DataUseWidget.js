@@ -17,7 +17,7 @@ const baseURL = require('../../commonComponents/BaseURL').getURL();
 
 const DataUseWidget = ({ userState, team, publisherDetails }) => {
     const { t } = useTranslation();
-    const widgetAPIURL = `${baseURL}/api/v1/data?search=&datausedatacustodian=${publisherDetails.name}&tab=Datauses`;
+    const widgetAPIURL = `${baseURL}/api/v1/search?search=&datausedatacustodian=${publisherDetails.name}&tab=Datauses`;
     useScript(WIDGET_MODULE);
     const [checked, setChecked] = useState(false);
     const [disabled, setDisabled] = useState(true);
