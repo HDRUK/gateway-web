@@ -33,6 +33,7 @@ function Login() {
 
     const clickHandler = (id, authURL) => {
         localStorage.setItem('lastChoice', id);
+        console.log(`${baseURL}${authURL}`);
         return id === 'openAthens' ? showWayFinder() : (window.location.href = `${baseURL}${authURL}`);
     };
 
