@@ -2,24 +2,24 @@ import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, FeatureContent, Tag, Typography } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 import googleAnalytics from '../../../tracking';
 import mediaUrl from '../../../images/feature-cohort-discovery.png';
-import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS } from '../../../configs/constants';
+import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS, CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL } from '../../../configs/constants';
 import usersService from '../../../services/users';
 import AdvancedSearchRequestAccessModal from '../../dashboard/AdvancedSearchRequestAccessModal';
 import AdvancedSearchTermsandConditionsModal from '../../dashboard/AdvancedSearchTAndCsModal';
-import { addCmsGatewayHostname } from 'configs/url.config';
+import { addCmsGatewayHostname } from '../../../configs/url.config';
+import { useCms } from '../../../context/CmsContext';
 
-const baseURL = require('../BaseURL').getURL();
 const urlEnv = require('../BaseURL').getURLEnv();
 
-const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal }) => {
+const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal, onClick }) => {
     const { t } = useTranslation();
     const [userState, setUserState] = useState(userProps);
     const [showModalTCs, setShowModalTCs] = useState();
     const [showModalAccess, setShowModalAccess] = useState();
+    const { data, resetData } = useCms();
 
     const { loggedIn, advancedSearchRoles, acceptedAdvancedSearchTerms } = userState;
 
@@ -98,6 +98,18 @@ const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal }) =
         setUserState(userProps);
     }, [userProps]);
 
+    useEffect(() => {
+        if (data?.action === CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL) {
+            resetData();
+
+            if (!loggedIn) {
+                showLoginModal();
+            } else {
+                handleRequestAccess();
+            }
+        }
+    }, [data]);
+
     return (
         <>
             <FeatureContent
@@ -115,7 +127,7 @@ const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal }) =
                 actions={
                     <>
                         {!loggedIn && (
-                            <Button variant='secondary' mb={3} onClick={showLoginModal}>
+                            <Button variant='secondary' mb={3} onClick={onClick || showLoginModal}>
                                 {t('search.advanced.cohortDiscovery.actionLoggedOut')}
                             </Button>
                         )}
@@ -123,7 +135,7 @@ const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal }) =
                             <Button
                                 variant='secondary'
                                 mb={3}
-                                onClick={handleRequestAccess}
+                                onClick={onClick || handleRequestAccess}
                                 data-testid={acceptedAdvancedSearchTerms ? 'accepted-action' : 'action'}>
                                 {t('search.advanced.cohortDiscovery.action')}
                             </Button>
@@ -152,6 +164,8 @@ AdvancedSearchCohortDiscovery.defaultProps = {
 AdvancedSearchCohortDiscovery.propTypes = {
     userProps: PropTypes.object.isRequired,
     showLoginModal: PropTypes.func.isRequired,
+    variant: PropTypes.oneOf(['horizontal', 'vertical']),
+    onClick: PropTypes.func.isRequired,
 };
 
 export default AdvancedSearchCohortDiscovery;
