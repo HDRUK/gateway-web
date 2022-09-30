@@ -56,6 +56,8 @@ const App = ({ children, showLoader }) => {
 
     const isLoading = personResult.isLoading || statusResult.isLoading;
 
+    console.log('statusResult', statusResult);
+
     return (
         <AuthProvider
             value={{

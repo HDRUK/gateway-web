@@ -1,12 +1,23 @@
-import React from 'react';
-
+import { CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL } from 'configs/constants';
+import React, { useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useCms } from '../../context/CmsContext';
+import { addCmsGatewayHostname } from '../../configs/url.config';
 import AdvancedSearchCohortDiscovery from '../../pages/commonComponents/AdvancedSearchCohortDiscovery';
 
 const GatewayAdvancedSearchCohortDiscovery = () => {
     const { userState } = useAuth();
+    const { setData } = useCms();
 
-    return <AdvancedSearchCohortDiscovery variant='horizontal' userProps={userState[0]} />;
+    const handleClick = useCallback(() => {
+        setData({
+            action: CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL,
+        });
+
+        window.location.href = addCmsGatewayHostname('/search=&tab=datasets');
+    }, []);
+
+    return <AdvancedSearchCohortDiscovery variant='horizontal' userProps={userState[0]} onClick={handleClick} />;
 };
 
 export default GatewayAdvancedSearchCohortDiscovery;

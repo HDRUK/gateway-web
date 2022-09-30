@@ -24,3 +24,4 @@ export const DEFAULT_USER_STATE = [
 ];
 
 export const CMS_ACTION_OPEN_DATA_UTILITY_MODAL = 'openDataUtilityModal';
+export const CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL = 'openCohortDiscoveryModal';
