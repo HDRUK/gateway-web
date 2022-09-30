@@ -3,7 +3,7 @@
 exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Card ui-FeatureContentVertical emotion-0"
+    class="ui-FeatureContentVertical ui-Card emotion-0"
     role="article"
   >
     <div
@@ -19,10 +19,10 @@ exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered
             class="ui-Box emotion-4"
           >
             <div
-              class="ui-Box emotion-4"
+              class="ui-Box emotion-5"
             >
               <div
-                class="ui-Box emotion-4"
+                class="ui-Box emotion-6"
               >
                 Data Utility Wizard
               </div>
@@ -43,7 +43,7 @@ exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered
           />
         </div>
         <div
-          class="ui-Box emotion-4"
+          class="ui-Box emotion-9"
         >
           <p
             class="ui-Typography emotion-10"
@@ -52,7 +52,7 @@ exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered
           </p>
         </div>
         <div
-          class="ui-Box emotion-4"
+          class="ui-Box emotion-11"
         >
           <button
             class="ui-Button emotion-12"
@@ -68,7 +68,7 @@ exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered
             target="_blank"
           >
             <p
-              class="ui-Typography emotion-10"
+              class="ui-Typography emotion-13"
             >
               Learn more
             </p>

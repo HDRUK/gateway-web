@@ -23,6 +23,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
 
     useEffect(() => {
         if (lastChoice) {
+            console.log('Last choice', lastChoice);
             dispatch(lastChoice);
         }
     }, [lastChoice]);
