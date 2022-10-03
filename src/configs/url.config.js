@@ -89,8 +89,6 @@ export const addCmsGatewayHostname = path => {
         webHostname = 'http://localhost:3000';
     }
 
-    console.log('Addcms', `${webHostname}/${path}`);
-
     return `${webHostname}/${path}`;
 };
 
