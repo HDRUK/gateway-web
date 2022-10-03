@@ -22,12 +22,6 @@ class AddEditCollectionPage extends React.Component {
         this.searchBar = React.createRef();
     }
 
-    componentDidUpdate = prevProps => {
-        if (prevProps.userState[0].loggedIn !== this.props.userState[0].loggedIn) {
-            this.setState({ userState: this.props.userState });
-        }
-    };
-
     // initialize our state
     state = {
         data: [],
