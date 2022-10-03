@@ -1,8 +1,8 @@
 import React from 'react';
-import { H4 } from 'hdruk-react-core';
+import { Box, H4 } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
-import GatewayAdvancedSearchDataUtilityWizard from './GatewayAdvancedSearchDataUtilityWizard';
-import GatewayAdvancedSearchCohortDiscovery from './GatewayAdvancedSearchCohortDiscovery';
+import GatewayAdvancedSearchDataUtilityWizard from '../GatewayAdvancedSearchDataUtilityWizard';
+import GatewayAdvancedSearchCohortDiscovery from '../GatewayAdvancedSearchCohortDiscovery';
 
 const GatewayAdvancedSearchBanner = () => {
     const { t } = useTranslation();
@@ -10,14 +10,32 @@ const GatewayAdvancedSearchBanner = () => {
     return (
         <>
             <H4 mb={6}>{t('cms.advancedSearch.banner.title')}</H4>
-            <div className='row gx-5'>
-                <div className='col-sm-6'>
+            <Box
+                display='flex'
+                flexDirection={{
+                    xs: 'column',
+                    md: 'row',
+                }}
+                width={{
+                    xs: '100%',
+                }}
+                maxWidth={{
+                    md: '1280px',
+                }}
+                gap={7}>
+                <Box
+                    width={{
+                        md: 'calc(50% - 14px)',
+                    }}>
                     <GatewayAdvancedSearchDataUtilityWizard />
-                </div>
-                <div className='col-sm-6'>
+                </Box>
+                <Box
+                    width={{
+                        md: 'calc(50% - 14px)',
+                    }}>
                     <GatewayAdvancedSearchCohortDiscovery />
-                </div>
-            </div>
+                </Box>
+            </Box>
         </>
     );
 };

@@ -18,7 +18,6 @@ const CohortDiscoveryBanner = ({ userProps }) => {
     const accessRQuest = async () => {
         const approvedUser = await authorisedForAdvancedSearch();
         if (approvedUser && userState.acceptedAdvancedSearchTerms) {
-            console.log('Redirecting to RQuest');
             if (urlEnv === 'prod') {
                 window.location.assign('https://rquest.prod.healthdatagateway.org/bcrquest/');
             } else {
@@ -124,8 +123,7 @@ const CohortDiscoveryBanner = ({ userProps }) => {
                                         className='textUnderline gray800-14 cursorPointer'
                                         href='https://www.healthdatagateway.org/about/cohort-discovery'
                                         target='_blank'
-                                        rel='noopener noreferrer'
-                                    >
+                                        rel='noopener noreferrer'>
                                         Learn more
                                     </a>
                                 </div>
@@ -134,8 +132,7 @@ const CohortDiscoveryBanner = ({ userProps }) => {
                                 <span
                                     onClick={() => {
                                         userState.loggedIn ? accessRQuest() : showLoginModal();
-                                    }}
-                                >
+                                    }}>
                                     <ChevronRightSvg fill={'#475da7'} className='dataClassArrow pointer' />
                                 </span>
                             </Col>
@@ -146,13 +143,13 @@ const CohortDiscoveryBanner = ({ userProps }) => {
             <AdvancedSearchTermsandConditionsModal
                 open={showTermsandConditionsModal}
                 close={() => toggleShowTermsandConditionsModal()}
-                updateUserAcceptedAdvancedSearchTerms={() => updateUserAcceptedAdvancedSearchTerms()}
-            ></AdvancedSearchTermsandConditionsModal>
+                updateUserAcceptedAdvancedSearchTerms={() =>
+                    updateUserAcceptedAdvancedSearchTerms()
+                }></AdvancedSearchTermsandConditionsModal>
             <AdvancedSearchRequestAccessModal
                 open={showRequestAccessModal}
                 close={() => toggleShowRequestAccessModal()}
-                userId={userState.id}
-            ></AdvancedSearchRequestAccessModal>
+                userId={userState.id}></AdvancedSearchRequestAccessModal>
         </>
     );
 };

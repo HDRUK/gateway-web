@@ -15,6 +15,7 @@ import { theme } from './configs/theme';
 import 'jest-date-mock';
 import { DEFAULT_THEME } from 'hdruk-react-core';
 import { merge } from 'lodash';
+import { CmsProvider } from './context/CmsContext';
 
 Enzyme.configure({
     adapter: new Adapter(),
@@ -90,6 +91,9 @@ global.redefineWindow = () => {
                 configurable: true,
                 value: jest.fn(),
             },
+            hostname: {
+                value: 'web.www.healthdatagateway.org',
+            },
         }
     );
 };
@@ -108,7 +112,9 @@ global.Providers = ({ children }) => {
             <Suspense fallback='Loading'>
                 <ThemeProvider theme={merge(theme, DEFAULT_THEME)}>
                     <AuthProvider value={{ userState: mockUser.data }}>
-                        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+                        <QueryClientProvider client={queryClient}>
+                            <CmsProvider>{children}</CmsProvider>
+                        </QueryClientProvider>
                     </AuthProvider>
                 </ThemeProvider>
             </Suspense>
