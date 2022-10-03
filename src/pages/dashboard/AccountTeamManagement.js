@@ -279,7 +279,7 @@ const AccountTeamManagement = ({
     const saveNotifications = async () => {
         const missingOptIns = findMandatoryOptIns() || false;
         const isValid = validEmailList().length > 0;
-        // check role
+        // TODO: GAT-1510:014
         const isManager = userHasRole(teamId, userTypes.MANAGER);
         // has optIns for team notificaiton emails
         const teamOptIns = hasTeamNotificationOptIns();
@@ -380,6 +380,7 @@ const AccountTeamManagement = ({
             localStorage.setItem('HDR_TEAM', team);
         }
 
+        // TODO: GAT-1510:019
         if (!userRoleIsAdmin(team)) {
             if (!isEmpty(innertab) && innertab === tabTypes.Notifications) {
                 onTabChange(innertab);
@@ -427,6 +428,7 @@ const AccountTeamManagement = ({
                 <div className='tabsBackground'>
                     <Col sm={12} lg={12}>
                         <Tabs className='dataAccessTabs gray700-14' activeKey={activeTabKey} onSelect={onTabChange}>
+                            {/* TODO: GAT-1510:020 */}
                             {!userRoleIsAdmin(teamId)
                                 ? Object.keys(tabTypes).map((keyName, i) => (
                                       <Tab

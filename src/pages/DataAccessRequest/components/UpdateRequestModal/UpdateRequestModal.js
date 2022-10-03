@@ -1,15 +1,16 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import { baseURL } from '../../../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import './UpdateRequestModal.scss';
 import googleAnalytics from '../../../../tracking';
 
 const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicationId, projectName = '' }) => {
-    let history = useHistory();
+    const history = useHistory();
 
     const onHandleClose = e => {
         e.preventDefault();
@@ -19,7 +20,7 @@ const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicatio
     const onRequestUpdate = e => {
         if (!_.isEmpty(applicationId) && !_.isEmpty(publisher)) {
             axios.post(`${baseURL}/api/v1/data-access-request/${applicationId}/requestAmendments`).then(res => {
-                let alert = {
+                const alert = {
                     publisher,
                     nav: `dataaccessrequests&team=${publisher}`,
                     tab: 'inReview',
@@ -32,7 +33,7 @@ const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicatio
     };
 
     return (
-        <Fragment>
+        <>
             <Modal show={open} onHide={close} size='lg' aria-labelledby='contained-modal-title-vcenter' centered className='updateRequest'>
                 <div className='updateRequest-header'>
                     <div className='updateRequest-header--wrap'>
@@ -54,7 +55,7 @@ const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicatio
                             </h6>
                             {fullAmendments[section].map((item, i) => (
                                 <div key={`item-${i}`} className='request-section' data-spec='request-section'>
-                                    <Fragment>
+                                    <>
                                         <div className='area'>Question:</div>
                                         <div className='area' data-spec='request-question'>
                                             {item.question}
@@ -63,7 +64,7 @@ const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicatio
                                         <div className='area' data-spec='request-answer'>
                                             {item.answer}
                                         </div>
-                                    </Fragment>
+                                    </>
                                 </div>
                             ))}
                         </div>
@@ -71,23 +72,21 @@ const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicatio
                 </div>
                 <div className='updateRequest-footer'>
                     <div className='updateRequest-footer--wrap'>
-                        <button onClick={e => onHandleClose(e)} className='button-secondary' data-spec='btn-cancel'>
+                        <Button onClick={e => onHandleClose(e)} variant='secondary' data-spec='btn-cancel'>
                             No, nevermind
-                        </button>
-                        <button
-                            className='button-primary'
+                        </Button>
+                        <Button
                             onClick={e => {
                                 onRequestUpdate(e);
                                 googleAnalytics.recordEvent('Data access request', 'Clicked request update', 'Custodian requested updates');
                             }}
-                            data-spec='btn-submit'
-                        >
+                            data-spec='btn-submit'>
                             Request update
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

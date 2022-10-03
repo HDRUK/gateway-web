@@ -138,6 +138,7 @@ class SearchBar extends React.Component {
 
     doMessagesCall() {
         var apiToCall = '/api/v1/messages/' + this.state.userState[0].id;
+        // TODO: GAT-1510:023
         if (this.state.userState[0].role === 'Admin') {
             apiToCall = '/api/v1/messages/admin/' + this.state.userState[0].id;
         }
@@ -154,6 +155,7 @@ class SearchBar extends React.Component {
 
     getNumberOfUnreadNotifications() {
         let apiToCall = '/api/v1/messages/numberofunread/' + this.state.userState[0].id;
+        // TODO: GAT-1510:024
         if (this.state.userState[0].role === 'Admin') {
             apiToCall = '/api/v1/messages/numberofunread/admin/' + this.state.userState[0].id;
         }
@@ -1190,6 +1192,7 @@ class SearchBar extends React.Component {
                                                                             <ChevronBottom />
                                                                         </Dropdown.Toggle>
                                                                         <Dropdown.Menu as={CustomSubMenu}>
+                                                                            {/* TODO: GAT-1510:025 */}
                                                                             <UserDropdownItems
                                                                                 isAdmin={userState[0].role === 'Admin'}></UserDropdownItems>
                                                                         </Dropdown.Menu>
@@ -1201,6 +1204,7 @@ class SearchBar extends React.Component {
                                                                                 {userState[0].name}
                                                                             </span>
                                                                         </Dropdown.Item>
+                                                                        {/* TODO: GAT-1510:026 */}
                                                                         <UserDropdownItems
                                                                             isAdmin={userState[0].role === 'Admin'}></UserDropdownItems>
                                                                     </Fragment>
@@ -1297,6 +1301,7 @@ class SearchBar extends React.Component {
                                                                         />
                                                                     </Dropdown.Toggle>
                                                                     <Dropdown.Menu as={CustomSubMenu}>
+                                                                        {/* TODO: GAT-1510:027 */}
                                                                         <UserDropdownItems
                                                                             isAdmin={userState[0].role === 'Admin'}></UserDropdownItems>
                                                                     </Dropdown.Menu>

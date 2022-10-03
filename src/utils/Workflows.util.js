@@ -48,15 +48,15 @@ export const formatWorkflows = data => {
         return [...data].reduce((acc, item, index) => {
             if (!_.isEmpty(item)) {
                 // alter each step in the workflow and add expand flag
-                let workflowSteps = [...item.steps].map((step, idx) => {
+                const workflowSteps = [...item.steps].map((step, idx) => {
                     return {
                         ...step,
                         workflowId: item._id,
-                        closed: index === 0 && idx === 0 ? false : true,
+                        closed: !(index === 0 && idx === 0),
                     };
                 });
                 // update workflow with new steps with expand
-                let workflow = {
+                const workflow = {
                     ...item,
                     applicationsClosed: true,
                     steps: [...workflowSteps],
@@ -76,7 +76,7 @@ export const toggleWorkflowStep = (workflows = [], step = {}) => {
         return [...workflows].reduce((arr, workflow) => {
             if (workflow._id === step.workflowId) {
                 if (workflow.steps.length > 0) {
-                    let steps = updateStepToggle([...workflow.steps], step);
+                    const steps = updateStepToggle([...workflow.steps], step);
                     workflow = {
                         ...workflow,
                         steps,
@@ -108,9 +108,8 @@ export const toggleWorkflowApplications = (workflows, _id = '') => {
                     ...el,
                     applicationsClosed: !el.applicationsClosed,
                 };
-            } else {
-                return el;
             }
+            return el;
         });
         return workflowArr;
     }
@@ -143,13 +142,15 @@ export const modalConfigWorkflow = (type = '') => {
                         cancel: {
                             label: 'No, nevermind',
                             actionName: 'CANCEL',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                             redirect: false,
                         },
                         confirm: {
                             label: 'Delete',
                             actionName: 'DELETEWORKFLOW',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                             redirect: true,
                         },
                     },
@@ -163,13 +164,15 @@ export const modalConfigWorkflow = (type = '') => {
                         cancel: {
                             label: 'Leave, without saving',
                             actionName: 'CANCEL',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                             redirect: true,
                         },
                         confirm: {
                             label: 'Save',
                             actionName: 'SAVEWORKFLOW',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                             redirect: true,
                         },
                     },
@@ -184,13 +187,15 @@ export const modalConfigWorkflow = (type = '') => {
                         cancel: {
                             label: 'No, nevermind',
                             actionName: 'CANCEL',
-                            class: 'button-secondary mr-2',
+                            class: 'mr-2',
+                            variant: 'secondary',
                             redirect: false,
                         },
                         confirm: {
                             label: 'Delete',
                             actionName: 'DELETEPHASE',
-                            class: 'btn btn-primary addButton',
+                            class: 'addButton',
+                            variant: 'primary',
                             redirect: false,
                         },
                     },

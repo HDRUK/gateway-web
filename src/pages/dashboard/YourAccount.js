@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import * as Yup from 'yup';
-import { Row, Col, Button, Alert, Form, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Row, Col, Alert, Form, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import queryString from 'query-string';
@@ -11,6 +11,7 @@ import SVGIcon from '../../images/SVGIcon';
 import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
 import TextareaAutosize from 'react-textarea-autosize';
 import Checkbox from '../../components/Checkbox';
+import { Button } from 'hdruk-react-core';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -958,15 +959,15 @@ const YourAccountForm = props => {
                 <Row className='mt-3 mb-5'>
                     <Col className='text-right'>
                         <Button
-                            variant='medium'
-                            className='dark-14 mr-2'
+                            variant='tertiary'
+                            className='mr-2'
                             onClick={e => {
                                 window.location.href = `/person/${props.userdata.id}`;
                             }}
                             data-test-id='user-account-view-profile'>
                             View my profile
                         </Button>
-                        <Button variant='primary' type='submit' className='addButton' data-test-id='user-account-save-changes'>
+                        <Button type='submit' className='addButton' data-test-id='user-account-save-changes'>
                             Save changes
                         </Button>
                     </Col>
