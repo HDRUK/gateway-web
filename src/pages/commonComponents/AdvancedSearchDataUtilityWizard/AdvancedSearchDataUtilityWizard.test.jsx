@@ -11,6 +11,8 @@ let wrapper;
 describe('Given the AdvancedSearchDataUtilityWizard component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
+            redefineWindow();
+
             wrapper = render(<AdvancedSearchDataUtilityWizard {...props} />, {
                 wrapper: Providers,
             });

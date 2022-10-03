@@ -39,9 +39,9 @@ export const CmsProvider = ({ children }) => {
     const handleSetData = useCallback(value => {
         const cmsData = JSON.stringify(value);
 
-        Cookies.set('cmsData', cmsData, { domain: window.location.hostname });
+        Cookies.set('cmsData', cmsData, { domain: window.location.hostname.replace('web.', '') });
 
-        setData(cmsData);
+        setData(value);
     }, []);
 
     return (

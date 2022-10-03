@@ -64,9 +64,9 @@ export const addCmsGatewayApiHostname = path => {
     const { hostname } = window.location;
     let webHostname = 'https://api.web.www.healthdatagateway.org';
 
-    if (hostname.includes('.uat.')) {
+    if (hostname.includes('uat.')) {
         webHostname = 'https://api.web.uat.healthdatagateway.org';
-    } else if (hostname.includes('.preprod.')) {
+    } else if (hostname.includes('preprod.')) {
         webHostname = 'https://api.web.preprod.hdruk.dev';
     } else if (hostname.includes('.cloudshell.dev') || hostname.includes('localhost')) {
         webHostname = 'http://localhost:3001';
@@ -79,17 +79,15 @@ export const addCmsGatewayHostname = path => {
     const { hostname } = window.location;
     let webHostname = 'https://web.www.healthdatagateway.org';
 
-    if (hostname.includes('.uat.')) {
+    if (hostname.includes('uat.')) {
         webHostname = 'https://web.uat.healthdatagateway.org';
-    } else if (hostname.includes('.preprod.')) {
+    } else if (hostname.includes('preprod.')) {
         webHostname = 'https://web.preprod.hdruk.dev';
     } else if (hostname.includes('.cloudshell.dev')) {
         webHostname = `https://web.${hostname.replace('web.', '')}`;
     } else if (hostname.includes('localhost')) {
         webHostname = 'http://localhost:3000';
     }
-
-    console.log('Addcms', `${webHostname}/${path}`);
 
     return `${webHostname}/${path}`;
 };

@@ -99,7 +99,7 @@ const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal, onC
     }, [userProps]);
 
     useEffect(() => {
-        if (data?.action === CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL) {
+        if (data?.action === CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL && showLoginModal) {
             resetData();
 
             if (!loggedIn) {
@@ -108,7 +108,7 @@ const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal, onC
                 handleRequestAccess();
             }
         }
-    }, [data]);
+    }, [data, showLoginModal]);
 
     return (
         <>
@@ -127,7 +127,11 @@ const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal, onC
                 actions={
                     <>
                         {!loggedIn && (
-                            <Button variant='secondary' mb={3} onClick={onClick || showLoginModal}>
+                            <Button
+                                variant='secondary'
+                                mb={3}
+                                onClick={onClick || showLoginModal}
+                                width={variant === 'horizontal' ? '100%' : 'auto'}>
                                 {t('search.advanced.cohortDiscovery.actionLoggedOut')}
                             </Button>
                         )}
@@ -136,13 +140,16 @@ const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal, onC
                                 variant='secondary'
                                 mb={3}
                                 onClick={onClick || handleRequestAccess}
-                                data-testid={acceptedAdvancedSearchTerms ? 'accepted-action' : 'action'}>
+                                data-testid={acceptedAdvancedSearchTerms ? 'accepted-action' : 'action'}
+                                width={variant === 'horizontal' ? '100%' : 'auto'}>
                                 {t('search.advanced.cohortDiscovery.action')}
                             </Button>
                         )}
-                        <a href='https://www.healthdatagateway.org/about/cohort-discovery' target='_blank' rel='noreferrer'>
-                            <Typography color='purple500'>{t('learn.more')}</Typography>
-                        </a>
+                        {variant === 'vertical' && (
+                            <a href='https://www.healthdatagateway.org/about/cohort-discovery' target='_blank' rel='noreferrer'>
+                                <Typography color='purple500'>{t('learn.more')}</Typography>
+                            </a>
+                        )}
                     </>
                 }
                 mb={5}
@@ -159,13 +166,15 @@ const AdvancedSearchCohortDiscovery = ({ userProps, variant, showLoginModal, onC
 
 AdvancedSearchCohortDiscovery.defaultProps = {
     variant: 'vertical',
+    showLoginModal: null,
+    onClick: null,
 };
 
 AdvancedSearchCohortDiscovery.propTypes = {
     userProps: PropTypes.object.isRequired,
-    showLoginModal: PropTypes.func.isRequired,
+    showLoginModal: PropTypes.func,
     variant: PropTypes.oneOf(['horizontal', 'vertical']),
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
 };
 
 export default AdvancedSearchCohortDiscovery;
