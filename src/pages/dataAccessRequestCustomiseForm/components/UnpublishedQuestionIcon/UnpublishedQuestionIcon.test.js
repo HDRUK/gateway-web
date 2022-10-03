@@ -1,6 +1,7 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import UnpublishedQuestionIcon from './UnpublishedQuestionIcon';
+import '@testing-library/jest-dom/extend-expect';
 
 let wrapper;
 
@@ -22,13 +23,13 @@ describe('Given the UnpublishedQuestionIcon component', () => {
         });
 
         describe('And the question does not exist and is locked', () => {
-            it('Then does not show any content', async () => {
-                expect(wrapper.container.firstChild).toBeFalsy();
+            it('Then does show the unedited icon', async () => {
+                expect(screen.getByTestId("unedited")).toBeInTheDocument();
             });
         });
 
-        describe.skip('And the question exists', () => {
-            it('Then shows the editted icon', async () => {
+        describe('And the question exists', () => {
+            it('Then shows the edited icon', async () => {
                 wrapper.rerender(
                     <UnpublishedQuestionIcon
                         question={{
@@ -43,7 +44,7 @@ describe('Given the UnpublishedQuestionIcon component', () => {
             });
         });
 
-        describe.skip('And the question does not exist and is not locked', () => {
+        describe('And the question does not exist and is not locked', () => {
             it('Then shows nothing', async () => {
                 wrapper.rerender(
                     <UnpublishedQuestionIcon

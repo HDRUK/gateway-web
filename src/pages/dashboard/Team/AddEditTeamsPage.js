@@ -86,7 +86,7 @@ const AddEditTeamsPage = ({
                 await axios.put(`${baseURL}/api/v1/teams/${editViewID}`, values);
 
                 alertText = {
-                    message: "You have editted the data custodian team '" + `${editViewMemberOf} > ${editViewOrgName}` + "'",
+                    message: "You have edited the data custodian team '" + `${editViewMemberOf} > ${editViewOrgName}` + "'",
                 };
             } else {
                 const newTeam = await axios.post(`${baseURL}/api/v1/teams/add`, values);
