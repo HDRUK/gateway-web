@@ -10,6 +10,7 @@ jest.mock('../../dashboard/AdvancedSearchTAndCsModal', () => ({ updateUserAccept
 });
 
 const mockShowLogin = jest.fn();
+const mockOnClick = jest.fn();
 
 const props = {
     userProps: {
@@ -53,7 +54,7 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
 
         describe('And the action is clicked', () => {
             beforeEach(() => {
-                const button = wrapper.getByText('You must be signed in to use cohort discovery');
+                const button = wrapper.getByText('Sign in to use Cohort Discovery');
 
                 fireEvent.click(button);
             });
@@ -148,6 +149,24 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
                             });
                         });
                     });
+                });
+            });
+        });
+
+        describe('And onClick is supplied', () => {
+            beforeAll(() => {
+                wrapper.rerender(<AdvancedSearchCohortDiscovery {...props} onClick={mockOnClick} />);
+            });
+
+            describe('And the action is clicked', () => {
+                beforeEach(() => {
+                    const button = wrapper.getByText('Sign in to use Cohort Discovery');
+
+                    fireEvent.click(button);
+                });
+
+                it('Then calls onClick', async () => {
+                    await waitFor(() => expect(mockOnClick).toHaveBeenCalled());
                 });
             });
         });

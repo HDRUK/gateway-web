@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the GatewayAdvancedSearchDataUtilityWizard component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-FeatureContentHorizontal ui-Card emotion-0"
+    role="article"
+  >
+    <div
+      class="ui-CardBody emotion-1"
+    >
+      <div
+        class="ui-Box emotion-2"
+      >
+        <div
+          class="ui-Box emotion-3"
+        >
+          <div
+            class="ui-Box emotion-4"
+          >
+            <h5
+              class="ui-Typography emotion-5"
+            >
+              <div
+                class="ui-Box emotion-6"
+              >
+                <div
+                  class="ui-Box emotion-7"
+                >
+                  <div
+                    class="ui-Box emotion-4"
+                  >
+                    Cohort Discovery
+                  </div>
+                  <span
+                    class="ui-Tag emotion-9"
+                  >
+                    BETA
+                  </span>
+                </div>
+              </div>
+            </h5>
+            <div
+              class="ui-Box emotion-10"
+            >
+              <p
+                class="ui-Typography emotion-11"
+              >
+                Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.
+              </p>
+            </div>
+          </div>
+          <div
+            class="ui-Box emotion-12"
+          >
+            <button
+              class="ui-Button emotion-13"
+              type="button"
+            >
+               
+              Sign in to use Cohort Discovery
+               
+            </button>
+            <a
+              href="https://www.healthdatagateway.org/about/cohort-discovery"
+              rel="noreferrer"
+              target="_blank"
+            >
+              <p
+                class="ui-Typography emotion-14"
+              >
+                Learn more
+              </p>
+            </a>
+          </div>
+        </div>
+        <div
+          class="ui-Box emotion-15"
+        >
+          <div
+            class="emotion-16"
+          >
+            <img
+              alt="Cohort Discovery feature image"
+              src="https://web.www.healthdatagateway.org/"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

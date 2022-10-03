@@ -42,12 +42,14 @@ const AdvancedSearchDataUtilityWizard = ({ onClick, variant }) => {
             media={<img src={addCmsGatewayHostname(mediaUrl)} alt={t('search.advanced.dataUtilityWizard.mediaAlt')} />}
             actions={
                 <>
-                    <Button variant='secondary' mb={3} onClick={handleClicked}>
+                    <Button variant='secondary' mb={3} onClick={handleClicked} width={variant === 'horizontal' ? '100%' : 'auto'}>
                         {t('search.advanced.dataUtilityWizard.action')}
                     </Button>
-                    <a href='https://www.healthdatagateway.org/about/data-utility-wizard' target='_blank' rel='noreferrer'>
-                        <Typography color='purple500'>{t('learn.more')}</Typography>
-                    </a>
+                    {variant === 'vertical' && (
+                        <a href='https://www.healthdatagateway.org/about/data-utility-wizard' target='_blank' rel='noreferrer'>
+                            <Typography color='purple500'>{t('learn.more')}</Typography>
+                        </a>
+                    )}
                 </>
             }
             width='100%'
