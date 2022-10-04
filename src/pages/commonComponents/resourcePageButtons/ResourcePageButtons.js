@@ -25,8 +25,7 @@ const ResourcePageButtons = props => {
                     data-test-id='action-bar-edit'
                     variant='white'
                     href={'/' + type + '/edit/' + props.data.id}
-                    className='techDetailButton mr-2'
-                >
+                    className='techDetailButton mr-2'>
                     Edit
                 </Button>
             ) : (
@@ -40,10 +39,9 @@ const ResourcePageButtons = props => {
                     </Button>
                     <Button
                         variant='white'
-                        href={'https://metadata-catalogue.org/hdruk/#/catalogue/dataModel/' + props.data.datasetid}
+                        href={`${process.env.REACT_APP_METADATA_CATALOG}/#/catalogue/dataModel/${props.data.datasetid}`}
                         target='_blank'
-                        className='techDetailButton mr-2'
-                    >
+                        className='techDetailButton mr-2'>
                         Technical details
                     </Button>
                 </>
