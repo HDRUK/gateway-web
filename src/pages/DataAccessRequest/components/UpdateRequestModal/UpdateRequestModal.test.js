@@ -1,12 +1,12 @@
 import React from 'React';
 import { mount } from 'enzyme';
 import moxios from 'moxios';
-import UpdateRequestModal from '../UpdateRequestModal';
-import { getSpecWrapper } from '../../../../../../test/utils/unitTest';
-import { updateRequestProps } from '../../../../../utils/__mocks__/DarHelper.mock';
+import UpdateRequestModal from './UpdateRequestModal';
+import { getSpecWrapper } from '../../../../../test/utils/unitTest';
+import { updateRequestProps } from '../../../../utils/__mocks__/DarHelper.mock';
 
 let wrapped;
-let props = updateRequestProps;
+const props = updateRequestProps;
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -67,7 +67,7 @@ describe('UpdateRequestModal actions <UpdateRequestModal />', () => {
         // else where in the code axios.post() will occur
         // moxis test our response
         moxios.wait(() => {
-            let request = moxios.requests.mostRecent();
+            const request = moxios.requests.mostRecent();
             request
                 .respondWith({
                     status: 200,

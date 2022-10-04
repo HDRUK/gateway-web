@@ -1,6 +1,5 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import AdvancedSearchCohortDiscovery from '.';
 import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS } from '../../../configs/constants';
 import { server } from '../../../services/mockServer';
@@ -53,7 +52,7 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
 
         describe('And the action is clicked', () => {
             beforeEach(() => {
-                const button = wrapper.getByText('You must be signed in to use cohort discovery');
+                const button = wrapper.getByText('Sign in to use Cohort Discovery');
 
                 fireEvent.click(button);
             });
