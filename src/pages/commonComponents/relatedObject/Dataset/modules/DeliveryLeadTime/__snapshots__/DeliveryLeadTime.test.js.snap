@@ -12,7 +12,7 @@ exports[`Given the DeliveryLeadTime component When it is rendered should match t
       Typical time to access: 
     </span>
     <span
-      class="ui-Typography emotion-2"
+      class="ui-Typography emotion-1"
     >
       Variable
     </span>

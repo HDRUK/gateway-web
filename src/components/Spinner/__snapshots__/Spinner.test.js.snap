@@ -3,7 +3,7 @@
 exports[`Given the Spinner component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Spinner additional-classname ui-Box emotion-0"
+    class="ui-Box ui-Spinner additional-classname emotion-0"
   >
     <span
       class="ui-Icon emotion-1 emotion-2"
