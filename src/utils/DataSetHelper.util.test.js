@@ -1,5 +1,4 @@
-import { mockInReviewDataset, mockRejectedDataset } from '../../services/datasets/mockMsw';
-import utils from '../DataSetHelper.util';
+import utils from './DataSetHelper.util';
 
 describe('Given the dataset inReview util', () => {
     describe('When it is not inReview', () => {

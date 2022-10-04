@@ -3,7 +3,7 @@
 exports[`Given the ActionBarStatus component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-Box emotion-0"
   >
     <div
       class="action-bar-status ui-ActionBarStatus additional-className"
