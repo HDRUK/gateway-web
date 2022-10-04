@@ -38,15 +38,13 @@ const ResourcePageButtons = props => {
                     <Button mr={2} variant='secondary' onClick={props.exportCitation}>
                         Export citation
                     </Button>
-                    <a
-                        className='nested-button'
-                        rel='noopener noreferrer'
+                    <Button
+                        variant='white'
                         href={`${process.env.REACT_APP_METADATA_CATALOG}/#/catalogue/dataModel/${props.data.datasetid}`}
-                        target='_blank'>
-                        <Button mr={2} variant='secondary'>
-                            Technical details
-                        </Button>
-                    </a>
+                        target='_blank'
+                        className='techDetailButton mr-2'>
+                        Technical details
+                    </Button>
                 </>
             ) : (
                 ''
