@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from 'testUtils';
 import React from 'react';
 import Modal from './Modal';
 import ModalHeader from './ModalHeader';
@@ -20,10 +20,7 @@ describe('Given the Modal component', () => {
                     <ModalHeader>Header</ModalHeader>
                     <ModalBody>Body</ModalBody>
                     <ModalFooter>Footer</ModalFooter>
-                </Modal>,
-                {
-                    wrapper: Providers,
-                }
+                </Modal>
             );
         });
 
@@ -39,7 +36,7 @@ describe('Given the Modal component', () => {
 
         describe('When it is closed', () => {
             beforeAll(() => {
-                const button = wrapper.container.querySelector('button');
+                const button = screen.getByRole('button');
 
                 fireEvent.click(button);
             });
@@ -56,10 +53,7 @@ describe('Given the Modal component', () => {
                         <ModalHeader>Header</ModalHeader>
                         <ModalBody>Body</ModalBody>
                         <ModalFooter>Footer</ModalFooter>
-                    </Modal>,
-                    {
-                        wrapper: Providers,
-                    }
+                    </Modal>
                 );
             });
 

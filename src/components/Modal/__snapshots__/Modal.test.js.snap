@@ -12,33 +12,29 @@ exports[`Given the Modal component When it is rendered Then matches the previous
       <div
         class="ui-LayoutBox emotion-2 emotion-3"
       >
-        <a
-          class="ui-Box ui-Cta emotion-4"
+        <button
+          class="ui-Cta emotion-4"
         >
            
            
-          <span
-            class="ui-Icon emotion-5 emotion-6"
-          >
-            <icon-mock />
-          </span>
-        </a>
+          <icon-mock />
+        </button>
       </div>
       <div
-        class="ui-ModalHeader ui-CardHeader emotion-7"
+        class="ui-ModalHeader ui-CardHeader emotion-5"
       >
         Header
       </div>
       <div
-        class="ui-ModalBody ui-CardBody emotion-8"
+        class="ui-ModalBody ui-CardBody emotion-6"
       >
         Body
       </div>
       <div
-        class="ui-ModalFooter ui-CardFooter emotion-9"
+        class="ui-ModalFooter ui-CardFooter emotion-7"
       >
         <div
-          class="ui-LayoutBox emotion-10"
+          class="ui-LayoutBox emotion-8"
         >
           Footer
         </div>
