@@ -422,7 +422,7 @@ export const CollectionPage = props => {
                     <Tab eventKey='paper' title={`Papers (${paperCount})`} />
                     <Tab eventKey='dataUseRegister' title={`Data Uses (${dataUseRegisterCount})`} />
                     <Tab eventKey='person' title={`People (${personCount})`} />
-                    <Tab eventKey='course' title={`Course (${courseCount})`} />
+                    <Tab eventKey='course' title={`Courses (${courseCount})`} />
                     <Tab eventKey='discussion' title={`Discussion (${discoursePostCount})`}>
                         <Container className='resource-card'>
                             <Row>
