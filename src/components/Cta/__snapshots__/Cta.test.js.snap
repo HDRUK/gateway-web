@@ -3,7 +3,7 @@
 exports[`Given the Alert component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <a
-    class="ui-Cta additional-classname ui-Box emotion-0"
+    class="ui-Box ui-Cta additional-classname emotion-0"
   >
     <span
       class="ui-Icon emotion-1 emotion-2"
