@@ -5,7 +5,6 @@ COPY package.json /app/package.json
 COPY .env /app/.env
 RUN npm install --silent --legacy-peer-deps
 COPY . /app
-RUN npm install react-use
 RUN npm run build
 
 # production environment
