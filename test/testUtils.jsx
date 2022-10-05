@@ -16,6 +16,17 @@ AllTheProviders.propTypes = {
 
 const customRender = (ui, options) => render(ui, { wrapper: AllTheProviders, ...options });
 
+const createPortalContainer = () => {
+    const div = document.createElement('div');
+    document.body.appendChild(div);
+
+    return div;
+};
+
+const removePortalContainer = div => {
+    div.parentNode.removeChild(div);
+};
+
 export * from '@testing-library/react';
 
-export { customRender as render };
+export { customRender as render, createPortalContainer, removePortalContainer };
