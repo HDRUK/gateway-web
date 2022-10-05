@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { addCmsGatewayApiHostname, apiPath, apiURL } from '../../configs/url.config';
 import { getRequest, postRequest } from '../../utils/requests';
 import service from './auth';
 
@@ -30,7 +30,7 @@ describe('Given the auth service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/auth/logout`, {
+            expect(getRequest).toHaveBeenCalledWith(addCmsGatewayApiHostname(`/${apiPath}/auth/status`), {
                 option1: true,
             });
         });

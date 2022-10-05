@@ -1,4 +1,11 @@
 {
+    "cms": {
+        "advancedSearch": {
+            "banner": {
+                "title": "Try these Advanced Search Methods"
+            }
+        }
+    },
     "services": {
         "status": {
             "404": {
