@@ -3,7 +3,7 @@
 exports[`Given the GatewayAdvancedSearchDataUtilityWizard component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-FeatureContentHorizontal ui-Card emotion-0"
+    class="ui-Card ui-FeatureContentHorizontal emotion-0"
     role="article"
   >
     <div
@@ -16,19 +16,19 @@ exports[`Given the GatewayAdvancedSearchDataUtilityWizard component When it is r
           class="ui-Box emotion-3"
         >
           <div
-            class="ui-Box emotion-4"
+            class="ui-Box emotion-2"
           >
             <h5
               class="ui-Typography emotion-5"
             >
               <div
-                class="ui-Box emotion-6"
+                class="ui-Box emotion-2"
               >
                 <div
-                  class="ui-Box emotion-7"
+                  class="ui-Box emotion-2"
                 >
                   <div
-                    class="ui-Box emotion-4"
+                    class="ui-Box emotion-2"
                   >
                     Cohort Discovery
                   </div>
@@ -41,7 +41,7 @@ exports[`Given the GatewayAdvancedSearchDataUtilityWizard component When it is r
               </div>
             </h5>
             <div
-              class="ui-Box emotion-10"
+              class="ui-Box emotion-2"
             >
               <p
                 class="ui-Typography emotion-11"
@@ -51,7 +51,7 @@ exports[`Given the GatewayAdvancedSearchDataUtilityWizard component When it is r
             </div>
           </div>
           <div
-            class="ui-Box emotion-12"
+            class="ui-Box emotion-2"
           >
             <button
               class="ui-Button emotion-13"
@@ -64,7 +64,7 @@ exports[`Given the GatewayAdvancedSearchDataUtilityWizard component When it is r
           </div>
         </div>
         <div
-          class="ui-Box emotion-14"
+          class="ui-Box emotion-2"
         >
           <div
             class="emotion-15"

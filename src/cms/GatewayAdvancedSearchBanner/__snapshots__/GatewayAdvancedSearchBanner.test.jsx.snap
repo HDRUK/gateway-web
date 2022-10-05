@@ -11,35 +11,35 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
     class="ui-Box emotion-1"
   >
     <div
-      class="ui-Box emotion-2"
+      class="ui-Box emotion-1"
     >
       <div
-        class="ui-FeatureContentHorizontal ui-Card emotion-3"
+        class="ui-Card ui-FeatureContentHorizontal emotion-3"
         role="article"
       >
         <div
           class="ui-CardBody emotion-4"
         >
           <div
-            class="ui-Box emotion-5"
+            class="ui-Box emotion-1"
           >
             <div
               class="ui-Box emotion-6"
             >
               <div
-                class="ui-Box emotion-7"
+                class="ui-Box emotion-1"
               >
                 <h5
                   class="ui-Typography emotion-8"
                 >
                   <div
-                    class="ui-Box emotion-9"
+                    class="ui-Box emotion-1"
                   >
                     <div
-                      class="ui-Box emotion-10"
+                      class="ui-Box emotion-1"
                     >
                       <div
-                        class="ui-Box emotion-7"
+                        class="ui-Box emotion-1"
                       >
                         Data Utility Wizard
                       </div>
@@ -52,7 +52,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
                   </div>
                 </h5>
                 <div
-                  class="ui-Box emotion-13"
+                  class="ui-Box emotion-1"
                 >
                   <p
                     class="ui-Typography emotion-14"
@@ -62,7 +62,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
                 </div>
               </div>
               <div
-                class="ui-Box emotion-15"
+                class="ui-Box emotion-1"
               >
                 <button
                   class="ui-Button emotion-16"
@@ -75,7 +75,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
               </div>
             </div>
             <div
-              class="ui-Box emotion-17"
+              class="ui-Box emotion-1"
             >
               <div
                 class="emotion-18"
@@ -91,35 +91,35 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
       </div>
     </div>
     <div
-      class="ui-Box emotion-2"
+      class="ui-Box emotion-1"
     >
       <div
-        class="ui-FeatureContentHorizontal ui-Card emotion-20"
+        class="ui-Card ui-FeatureContentHorizontal emotion-3"
         role="article"
       >
         <div
           class="ui-CardBody emotion-4"
         >
           <div
-            class="ui-Box emotion-5"
+            class="ui-Box emotion-1"
           >
             <div
               class="ui-Box emotion-6"
             >
               <div
-                class="ui-Box emotion-7"
+                class="ui-Box emotion-1"
               >
                 <h5
                   class="ui-Typography emotion-8"
                 >
                   <div
-                    class="ui-Box emotion-9"
+                    class="ui-Box emotion-1"
                   >
                     <div
-                      class="ui-Box emotion-10"
+                      class="ui-Box emotion-1"
                     >
                       <div
-                        class="ui-Box emotion-7"
+                        class="ui-Box emotion-1"
                       >
                         Cohort Discovery
                       </div>
@@ -132,7 +132,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
                   </div>
                 </h5>
                 <div
-                  class="ui-Box emotion-13"
+                  class="ui-Box emotion-1"
                 >
                   <p
                     class="ui-Typography emotion-14"
@@ -142,7 +142,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
                 </div>
               </div>
               <div
-                class="ui-Box emotion-15"
+                class="ui-Box emotion-1"
               >
                 <button
                   class="ui-Button emotion-16"
@@ -155,7 +155,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
               </div>
             </div>
             <div
-              class="ui-Box emotion-17"
+              class="ui-Box emotion-1"
             >
               <div
                 class="emotion-18"

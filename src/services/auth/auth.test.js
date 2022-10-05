@@ -25,12 +25,12 @@ describe('Given the auth service', () => {
     });
 
     describe('When getStatus is called', () => {
-        it('Then calls getRequest with the correct arguments', async () => {
-            await service.getLogout({
+        it('Then calls getStatus with the correct arguments', async () => {
+            await service.getStatus({
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(addCmsGatewayApiHostname(`/${apiPath}/auth/status`), {
+            expect(getRequest).toHaveBeenCalledWith(addCmsGatewayApiHostname(`${apiPath}/auth/status`), {
                 option1: true,
             });
         });

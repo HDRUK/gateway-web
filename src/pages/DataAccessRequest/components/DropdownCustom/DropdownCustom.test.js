@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor, act } from '@testing-library/react';
+import { render, waitFor, fireEvent } from 'testUtils';
 import DropdownCustom from './DropdownCustom';
 import { server } from '../../../../services/mockServer';
 import '@testing-library/jest-dom/extend-expect';
@@ -60,9 +60,7 @@ describe('Given the DropdownCustom component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
             server.listen();
-            wrapper = render(<DropdownCustom {...dropdownCustomProps} />, {
-                wrapper: Providers,
-            });
+            wrapper = render(<DropdownCustom {...dropdownCustomProps} />);
             input = document.querySelector('.rbt-input-main');
             fireEvent.click(input);
         });
