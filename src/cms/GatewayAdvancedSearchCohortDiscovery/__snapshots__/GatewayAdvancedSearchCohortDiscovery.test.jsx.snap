@@ -61,24 +61,13 @@ exports[`Given the GatewayAdvancedSearchDataUtilityWizard component When it is r
               Sign in to use Cohort Discovery
                
             </button>
-            <a
-              href="https://www.healthdatagateway.org/about/cohort-discovery"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <p
-                class="ui-Typography emotion-14"
-              >
-                Learn more
-              </p>
-            </a>
           </div>
         </div>
         <div
-          class="ui-Box emotion-15"
+          class="ui-Box emotion-14"
         >
           <div
-            class="emotion-16"
+            class="emotion-15"
           >
             <img
               alt="Cohort Discovery feature image"

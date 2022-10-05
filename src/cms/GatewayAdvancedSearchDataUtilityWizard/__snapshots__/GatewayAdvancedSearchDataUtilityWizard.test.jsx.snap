@@ -61,24 +61,13 @@ exports[`Given the GatewayAdvancedSearchDataUtilityWizard component When it is r
               Search using Data Utility Wizard
                
             </button>
-            <a
-              href="https://www.healthdatagateway.org/about/data-utility-wizard"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <p
-                class="ui-Typography emotion-14"
-              >
-                Learn more
-              </p>
-            </a>
           </div>
         </div>
         <div
-          class="ui-Box emotion-15"
+          class="ui-Box emotion-14"
         >
           <div
-            class="emotion-16"
+            class="emotion-15"
           >
             <img
               alt="search.advanced.dataUtilityWizard.mediaAlt"

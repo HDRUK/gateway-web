@@ -2,17 +2,16 @@
 
 exports[`Given the GatewayAdvancedSearchBanner component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
-  <div
-    class="ui-Box emotion-0"
+  <h4
+    class="ui-Typography emotion-0"
   >
-    <h4
-      class="ui-Typography emotion-1"
-    >
-      Try these Advanced Search Methods
-    </h4>
+    Try these Advanced Search Methods
+  </h4>
+  <div
+    class="ui-Box emotion-1"
+  >
     <div
       class="ui-Box emotion-2"
-      flex="0 0 50%;"
     >
       <div
         class="ui-FeatureContentHorizontal ui-Card emotion-3"
@@ -63,7 +62,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
                 </div>
               </div>
               <div
-                class="ui-Box emotion-2"
+                class="ui-Box emotion-15"
               >
                 <button
                   class="ui-Button emotion-16"
@@ -73,24 +72,13 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
                   Search using Data Utility Wizard
                    
                 </button>
-                <a
-                  href="https://www.healthdatagateway.org/about/data-utility-wizard"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <p
-                    class="ui-Typography emotion-17"
-                  >
-                    Learn more
-                  </p>
-                </a>
               </div>
             </div>
             <div
-              class="ui-Box emotion-18"
+              class="ui-Box emotion-17"
             >
               <div
-                class="emotion-19"
+                class="emotion-18"
               >
                 <img
                   alt="search.advanced.dataUtilityWizard.mediaAlt"
@@ -104,10 +92,9 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
     </div>
     <div
       class="ui-Box emotion-2"
-      flex="0 0 50%;"
     >
       <div
-        class="ui-FeatureContentHorizontal ui-Card emotion-21"
+        class="ui-FeatureContentHorizontal ui-Card emotion-20"
         role="article"
       >
         <div
@@ -155,7 +142,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
                 </div>
               </div>
               <div
-                class="ui-Box emotion-2"
+                class="ui-Box emotion-15"
               >
                 <button
                   class="ui-Button emotion-16"
@@ -165,24 +152,13 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
                   Sign in to use Cohort Discovery
                    
                 </button>
-                <a
-                  href="https://www.healthdatagateway.org/about/cohort-discovery"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <p
-                    class="ui-Typography emotion-17"
-                  >
-                    Learn more
-                  </p>
-                </a>
               </div>
             </div>
             <div
-              class="ui-Box emotion-18"
+              class="ui-Box emotion-17"
             >
               <div
-                class="emotion-19"
+                class="emotion-18"
               >
                 <img
                   alt="Cohort Discovery feature image"
