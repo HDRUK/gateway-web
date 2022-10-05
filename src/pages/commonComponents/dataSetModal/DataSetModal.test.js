@@ -1,13 +1,8 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import { getNon5SafesModalContentRequest } from '../../../services/content';
+import { render, cleanup, screen } from 'testUtils';
+import contentService from '../../../services/content';
 import DataSetModal from './DataSetModal';
-
-jest.mock('../../../services/content', () => ({
-    __esModule: true,
-    default: () => jest.fn().mockImplementation(() => {}),
-    getNon5SafesModalContentRequest: jest.fn().mockImplementation(() => {}),
-}));
+import '@testing-library/jest-dom/extend-expect';
 
 const userState = {
     loggedIn: true,
@@ -42,33 +37,30 @@ const defaultProps = {
     open: true,
 };
 
-let component;
-
 describe('Given the DataSetModal component', () => {
     describe('When is5Safes is false', () => {
         beforeAll(() => {
-            getNon5SafesModalContentRequest.mockResolvedValue({ data: '<div>non 5safes content</div>' });
-            component = render(<DataSetModal {...defaultProps} />);
+            contentService.getNon5SafesModalContentRequest = jest.fn().mockReturnValue({ data: '<div>non 5safes content</div>' });
+
+            render(<DataSetModal {...defaultProps} />);
         });
 
         afterAll(() => {
             cleanup();
         });
 
-        it.skip('Should just render the non5Safes modal content', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('non 5safes content')).toBeTruthy();
+        it('Should just render the non5Safes modal content', async () => {
+            expect(screen.getByText('non 5safes content')).toBeInTheDocument();
         });
 
         it('Should not render the Start application button', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('Start application')).toBeFalsy();
+            expect(screen.queryByText('Start application')).not.toBeInTheDocument();
         });
     });
 
     describe('When is5Safes is true', () => {
         beforeAll(() => {
-            getNon5SafesModalContentRequest.mockResolvedValue({ data: '<div>non 5safes content</div>' });
+            contentService.getNon5SafesModalContentRequest = jest.fn().mockResolvedValue({ data: '<div>non 5safes content</div>' });
 
             const datasetProps = {
                 open: true,
@@ -78,27 +70,24 @@ describe('Given the DataSetModal component', () => {
                 is5Safes: true,
             };
 
-            component = render(<DataSetModal {...datasetProps} />);
+            render(<DataSetModal {...datasetProps} />);
         });
 
         afterAll(() => {
             cleanup();
         });
 
-        it.skip('Should not render the non5Safes modal content', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('non 5safes content')).toBeFalsy();
+        it('Should not render the non5Safes modal content', async () => {
+            expect(screen.queryByText('non 5safes content')).not.toBeInTheDocument();
         });
 
         it('should render the content from the dataset', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('Data header')).toBeTruthy();
-            expect(await queryByText('Data body')).toBeTruthy();
+            expect(screen.queryByText('Data header')).toBeInTheDocument();
+            expect(screen.queryByText('Data body')).toBeInTheDocument();
         });
 
         it('should render the Start Application button', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('Start application')).toBeTruthy();
+            expect(screen.queryByText('Start application')).toBeInTheDocument();
         });
     });
 
@@ -112,7 +101,7 @@ describe('Given the DataSetModal component', () => {
                 is5Safes: true,
             };
 
-            component = render(<DataSetModal {...datasetProps} />);
+            render(<DataSetModal {...datasetProps} />);
         });
 
         afterEach(() => {
@@ -120,8 +109,7 @@ describe('Given the DataSetModal component', () => {
         });
 
         it('Should not render the action buttons container', async () => {
-            const { queryByTestId } = component;
-            expect(await queryByTestId('actionButtons')).toBeFalsy();
+            expect(screen.queryByTestId('actionButtons')).not.toBeInTheDocument();
         });
     });
 });
