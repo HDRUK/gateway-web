@@ -67,17 +67,6 @@ global.assertServiceRefetchCalled = async (rendered, mock, ...args) => {
     });
 };
 
-global.createPortalContainer = () => {
-    const div = document.createElement('div');
-    document.body.appendChild(div);
-
-    return div;
-};
-
-global.removePortalContainer = div => {
-    div.parentNode.removeChild(div);
-};
-
 global.redefineWindow = () => {
     const oldWindowLocation = window.location;
 

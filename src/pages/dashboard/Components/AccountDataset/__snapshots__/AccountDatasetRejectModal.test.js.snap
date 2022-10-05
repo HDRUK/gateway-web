@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given the AccountDatasetRejectModal component When it is rendered Should match the snapshot 1`] = `
-<div
-  aria-hidden="true"
-/>
-`;
+exports[`Given the AccountDatasetRejectModal component When it is rendered Should match the snapshot 1`] = `<div />`;

@@ -1,9 +1,9 @@
 import React from 'React';
-import { mount } from 'enzyme';
+import { render, screen } from 'testUtils';
 import moxios from 'moxios';
 import UpdateRequestModal from './UpdateRequestModal';
-import { getSpecWrapper } from '../../../../../test/utils/unitTest';
 import { updateRequestProps } from '../../../../utils/__mocks__/DarHelper.mock';
+import '@testing-library/jest-dom/extend-expect';
 
 let wrapped;
 const props = updateRequestProps;
@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
 
 beforeEach(() => {
     moxios.install();
-    wrapped = mount(<UpdateRequestModal {...props} />);
+    wrapped = render(<UpdateRequestModal {...props} />);
 });
 
 afterEach(() => {
@@ -34,36 +34,35 @@ afterEach(() => {
 
 describe('UpdateRequestModal component <UpdateRequestModal />', () => {
     it('will display a list of requested changes', () => {
-        expect(getSpecWrapper(wrapped, 'request-question').length).toEqual(1);
+        expect(screen.getAllByText('Test question').length).toEqual(1);
     });
 
     it('will display a h6 heading', () => {
-        expect(getSpecWrapper(wrapped, 'request-section-title').length).toEqual(1);
-    });
-
-    it('will display a h6 heading with `Safe People | Applicant`', () => {
-        const wrapperText = getSpecWrapper(wrapped, 'request-section-title').text();
-        expect(wrapperText).toContain('Safe People | Applicant');
+        expect(screen.getAllByText('Safe People | Applicant').length).toEqual(1);
     });
 
     it('will display `No, Nevermind` button', () => {
-        expect(getSpecWrapper(wrapped, 'btn-cancel').length).toEqual(1);
+        expect(screen.getByText('No, nevermind')).toBeInTheDocument();
     });
 
     it('will display `Request updates button`', () => {
-        expect(getSpecWrapper(wrapped, 'btn-submit').length).toEqual(1);
+        expect(screen.getByText('Request update')).toBeInTheDocument();
     });
 });
 
 describe('UpdateRequestModal actions <UpdateRequestModal />', () => {
     it('Calls the parent function to close the modal', () => {
-        // simulate change event
-        getSpecWrapper(wrapped, 'btn-cancel').simulate('click');
+        const button = screen.getByText('No, nevermind');
+        expect(screen.getByText('Update answer request')).toBeInTheDocument();
+
+        button.click();
+        expect(props.close).toHaveBeenCalled();
     });
 
-    it('Calls Request Update API and redirects', async () => {
+    it('Calls Request Update API and redirects', async done => {
         // simulate change event
-        getSpecWrapper(wrapped, 'btn-submit').simulate('click');
+        const button = screen.getByText('Request update');
+        button.click();
         // else where in the code axios.post() will occur
         // moxis test our response
         moxios.wait(() => {
