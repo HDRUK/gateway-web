@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor, screen } from 'testUtils';
 import React from 'react';
 import AdvancedSearchCohortDiscovery from '.';
 import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS } from '../../../configs/constants';
@@ -19,6 +19,7 @@ const props = {
         acceptedAdvancedSearchTerms: false,
     },
     showLoginModal: mockShowLogin,
+    variant: 'vertical',
 };
 
 let wrapper;
@@ -42,20 +43,18 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
 
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<AdvancedSearchCohortDiscovery {...props} />, {
-                wrapper: Providers,
-            });
+            wrapper = render(<AdvancedSearchCohortDiscovery {...props} />);
         });
 
         it('Then shows a learn more link', async () => {
-            await waitFor(() => expect(wrapper.getByText('Learn more')).toBeTruthy());
+            await waitFor(() => expect(screen.getByText('Learn more')).toBeTruthy());
         });
 
         describe('And the action is clicked', () => {
             beforeEach(() => {
-                const button = wrapper.getByText('Sign in to use Cohort Discovery');
+                const button = screen.getByText('Sign in to use Cohort Discovery');
 
-                fireEvent.click(button);
+                button.click();
             });
 
             it('Then matches the previous snapshot', async () => {
@@ -76,18 +75,15 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
                             ...props.userProps,
                             loggedIn: true,
                         }}
-                    />,
-                    {
-                        wrapper: Providers,
-                    }
+                    />
                 );
             });
 
             describe('And the action is clicked', () => {
                 beforeAll(() => {
-                    const button = wrapper.getByText('Search using Cohort Discovery');
+                    const button = screen.getByText('Search using Cohort Discovery');
 
-                    fireEvent.click(button);
+                    button.click();
                 });
 
                 it('Then shows the terms and conditions modal', async () => {
@@ -105,18 +101,15 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
                                 loggedIn: true,
                                 advancedSearchRoles: [ADVANCED_SEARCH_ROLE_GENERAL_ACCESS],
                             }}
-                        />,
-                        {
-                            wrapper: Providers,
-                        }
+                        />
                     );
                 });
 
                 describe('And the action is clicked', () => {
                     beforeAll(() => {
-                        const button = wrapper.getByText('Search using Cohort Discovery');
+                        const button = screen.getByText('Search using Cohort Discovery');
 
-                        fireEvent.click(button);
+                        button.click();
                     });
 
                     it('Then shows the terms and conditions modal', async () => {
@@ -134,9 +127,9 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
 
                         describe('And the action is clicked', () => {
                             beforeEach(() => {
-                                const button = wrapper.getByTestId('accepted-action');
+                                const button = screen.getByTestId('accepted-action');
 
-                                fireEvent.click(button);
+                                button.click();
                             });
 
                             it('Then redirects to the correct place', async () => {
@@ -159,9 +152,9 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
 
             describe('And the action is clicked', () => {
                 beforeEach(() => {
-                    const button = wrapper.getByText('Sign in to use Cohort Discovery');
+                    const button = screen.getByText('Sign in to use Cohort Discovery');
 
-                    fireEvent.click(button);
+                    button.click();
                 });
 
                 it('Then calls onClick', async () => {
