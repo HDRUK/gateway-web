@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from 'hdruk-react-core';
 import AddToCollection from '../addToCollection/AddToCollection';
 
@@ -13,6 +13,14 @@ const ResourcePageButtons = props => {
         }
     }, [props.data.type, props.isCollection]);
 
+    const handleGoToCatalog = useCallback(() => {
+        window.open(`${process.env.REACT_APP_METADATA_CATALOG}/#/catalogue/dataModel/${props.data.datasetid}`, '_blank');
+    }, [props.data.datasetid]);
+
+    const handleGoToEdit = useCallback(() => {
+        window.location.assign(`/${type}/edit/${props.data.id}`);
+    }, [type, props.data.id]);
+
     // TODO: GAT-1510:022
     return (
         <div className='floatRight row'>
@@ -22,11 +30,7 @@ const ResourcePageButtons = props => {
             ((props.data.authors && props.data.authors.includes(props.userState[0].id)) ||
                 (props.data.creator && props.data.creator[0].id === props.userState[0].id) ||
                 props.userState[0].role === 'Admin') ? (
-                <Button
-                    data-test-id='action-bar-edit'
-                    variant='secondary'
-                    href={`/${type}/edit/${props.data.id}`}
-                    className='techDetailButton mr-2'>
+                <Button data-test-id='action-bar-edit' onClick={handleGoToEdit} variant='secondary' className='techDetailButton mr-2'>
                     Edit
                 </Button>
             ) : (
@@ -38,11 +42,7 @@ const ResourcePageButtons = props => {
                     <Button mr={2} variant='secondary' onClick={props.exportCitation}>
                         Export citation
                     </Button>
-                    <Button
-                        variant='white'
-                        href={`${process.env.REACT_APP_METADATA_CATALOG}/#/catalogue/dataModel/${props.data.datasetid}`}
-                        target='_blank'
-                        className='techDetailButton mr-2'>
+                    <Button variant='secondary' onClick={handleGoToCatalog} target='_blank' className='techDetailButton mr-2'>
                         Technical details
                     </Button>
                 </>
