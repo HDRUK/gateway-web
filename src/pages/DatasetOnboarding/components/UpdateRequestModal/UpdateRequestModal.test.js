@@ -41,11 +41,6 @@ describe('UpdateRequestModal component <UpdateRequestModal />', () => {
         expect(screen.getAllByText('Safe People | Applicant').length).toEqual(1);
     });
 
-    // it('will display a h6 heading with `Safe People | Applicant`', () => {
-    //     const wrapperText = getSpecWrapper(wrapped, 'request-section-title').text();
-    //     expect(wrapperText).toContain('Safe People | Applicant');
-    // });
-
     it('will display `No, Nevermind` button', () => {
         expect(screen.getByText('No, nevermind')).toBeInTheDocument();
     });
