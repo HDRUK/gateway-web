@@ -42,7 +42,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(addCmsGatewayApiHostname(`/${apiPath}/person/1234`), {
+            expect(getRequest).toHaveBeenCalledWith(addCmsGatewayApiHostname(`${apiPath}/person/1234`), {
                 option1: true,
             });
         });

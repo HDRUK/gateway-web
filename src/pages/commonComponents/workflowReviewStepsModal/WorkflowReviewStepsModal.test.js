@@ -120,6 +120,5 @@ beforeEach(() => {
 describe('<WorkflowReviewModal /> rendering', () => {
     it('renders Workflow Review Modal', () => {
         // const ModalHeader = wrapper.find('ModalHeader');
-        console.log(wrapper.debug());
     });
 });
