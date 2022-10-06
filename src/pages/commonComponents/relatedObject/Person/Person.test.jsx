@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import Person from './Person';
 import mockData from './mockData';
+
 const props = {
     data: { ...mockData },
     activeLink: false,
@@ -37,14 +38,14 @@ describe('Given the Person component', () => {
     describe('And activeLink is true', () => {
         it('Then the Tilte should be clickable with a link', () => {
             const { rerender } = wrapper;
-            rerender(<Person {...props} activeLink={true} />);
+            rerender(<Person {...props} activeLink />);
             expect(screen.getByTestId(`title-${props.data.type}-${props.data.id}`)).toHaveAttribute('href', `/person/${props.data.id}`);
         });
     });
     describe('And showRelationshipQuestion is true', () => {
         it('Then the remove button should be rendered ', () => {
             const { rerender } = wrapper;
-            rerender(<Person {...props} showRelationshipQuestion={true} />);
+            rerender(<Person {...props} showRelationshipQuestion />);
             expect(screen.getByTestId('closeicon')).toBeTruthy();
         });
         it('Then onclick removeButton function should be called', () => {

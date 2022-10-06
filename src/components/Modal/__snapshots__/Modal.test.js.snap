@@ -6,44 +6,37 @@ exports[`Given the Modal component When it is rendered Then matches the previous
     class="ui-Dimmer emotion-0"
   >
     <div
-      class="ui-LayoutBox emotion-1"
+      class="ui-Card ui-Modal emotion-1"
+      role="article"
     >
       <div
-        class="ui-Modal ui-Card emotion-2"
+        class="ui-LayoutBox emotion-2 emotion-3"
+      >
+        <button
+          class="ui-Cta emotion-4"
+        >
+           
+           
+          <icon-mock />
+        </button>
+      </div>
+      <div
+        class="ui-ModalHeader ui-CardHeader emotion-5"
+      >
+        Header
+      </div>
+      <div
+        class="ui-ModalBody ui-CardBody emotion-6"
+      >
+        Body
+      </div>
+      <div
+        class="ui-ModalFooter ui-CardFooter emotion-7"
       >
         <div
-          class="ui-LayoutBox emotion-3 emotion-4"
+          class="ui-LayoutBox emotion-8"
         >
-          <a
-            class="ui-Cta ui-Box emotion-5"
-          >
-             
-             
-            <span
-              class="ui-Icon emotion-6 emotion-7"
-            >
-              <icon-mock />
-            </span>
-          </a>
-        </div>
-        <div
-          class="ui-ModalHeader ui-CardHeader emotion-8"
-        >
-          Header
-        </div>
-        <div
-          class="ui-ModalBody ui-CardBody emotion-9"
-        >
-          Body
-        </div>
-        <div
-          class="ui-ModalFooter ui-CardFooter emotion-10"
-        >
-          <div
-            class="ui-LayoutBox emotion-11"
-          >
-            Footer
-          </div>
+          Footer
         </div>
       </div>
     </div>

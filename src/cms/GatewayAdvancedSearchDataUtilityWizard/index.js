@@ -1,0 +1,3 @@
+import GatewayAdvancedSearchDataUtilityWizard from './GatewayAdvancedSearchDataUtilityWizard';
+
+export default GatewayAdvancedSearchDataUtilityWizard;

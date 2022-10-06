@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { addCmsGatewayApiHostname, apiPath, apiURL } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
 import service from './person';
 
@@ -42,7 +42,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/person/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(addCmsGatewayApiHostname(`${apiPath}/person/1234`), {
                 option1: true,
             });
         });

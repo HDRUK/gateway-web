@@ -41,8 +41,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
                                         data-testid={value.id}
                                         className='btn btn-outline-secondary btn-block'
                                         css={styles.btn}
-                                        onClick={() => clickHandler(value.id, value.authURL)}
-                                    >
+                                        onClick={() => clickHandler(value.id, value.authURL)}>
                                         <img src={value.img} css={styles.btnImg} alt={value.id} />
                                         &nbsp; {value.text}
                                         {value.active ? (
@@ -71,8 +70,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
                                 target='_blank'
                                 href={`${communityLink}/t/how-to-submit-a-feature-request-or-feedback/1`}
                                 data-testid='communityLink'
-                                rel='noopener noreferrer'
-                            >
+                                rel='noopener noreferrer'>
                                 Suggest another Indentity Provider
                             </a>
                         </span>

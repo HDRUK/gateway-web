@@ -3,7 +3,7 @@
 exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered And the action is clicked Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-FeatureContentVertical ui-Card emotion-0"
+    class="ui-Card ui-FeatureContentVertical emotion-0"
     role="article"
   >
     <div
@@ -19,10 +19,10 @@ exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered A
             class="ui-Box emotion-4"
           >
             <div
-              class="ui-Box emotion-5"
+              class="ui-Box emotion-4"
             >
               <div
-                class="ui-Box emotion-6"
+                class="ui-Box emotion-4"
               >
                 Cohort Discovery
               </div>
@@ -39,11 +39,11 @@ exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered A
         >
           <img
             alt="Cohort Discovery feature image"
-            src=""
+            src="https://web.www.healthdatagateway.org/"
           />
         </div>
         <div
-          class="ui-Box emotion-9"
+          class="ui-Box emotion-4"
         >
           <p
             class="ui-Typography emotion-10"
@@ -52,7 +52,7 @@ exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered A
           </p>
         </div>
         <div
-          class="ui-Box emotion-11"
+          class="ui-Box emotion-4"
         >
           <button
             class="ui-Button emotion-12"
@@ -68,7 +68,7 @@ exports[`Given the AdvancedSearchCohortDiscovery component When it is rendered A
             target="_blank"
           >
             <p
-              class="ui-Typography emotion-13"
+              class="ui-Typography emotion-10"
             >
               Learn more
             </p>

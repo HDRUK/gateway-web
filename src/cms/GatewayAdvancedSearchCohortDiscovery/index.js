@@ -1,0 +1,3 @@
+import GatewayAdvancedSearchCohortDiscovery from './GatewayAdvancedSearchCohortDiscovery';
+
+export default GatewayAdvancedSearchCohortDiscovery;

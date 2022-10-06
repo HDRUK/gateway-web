@@ -33,7 +33,7 @@ describe('Given the DatasetSearchSort component', () => {
         it('Then has the correct properties', () => {
             expect(mockSortDropdown.mock.calls[0][0]).toMatchObject({
                 value: 'sort by',
-                defaultValue: 'relevance',
+                defaultValue: 'latest',
                 options,
             });
         });
@@ -47,7 +47,7 @@ describe('Given the DatasetSearchSort component', () => {
         it('Then has the correct properties', () => {
             expect(mockSortDropdown.mock.calls[0][0]).toMatchObject({
                 value: '',
-                defaultValue: 'metadata',
+                defaultValue: 'latest',
                 options,
             });
         });
@@ -61,7 +61,7 @@ describe('Given the DatasetSearchSort component', () => {
         it('Then has the correct properties', () => {
             expect(mockSortDropdown.mock.calls[0][0]).toMatchObject({
                 value: '',
-                defaultValue: 'relevance',
+                defaultValue: 'latest',
                 options,
             });
         });

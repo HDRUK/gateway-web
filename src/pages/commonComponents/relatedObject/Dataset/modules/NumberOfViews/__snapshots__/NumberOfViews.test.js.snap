@@ -13,7 +13,7 @@ exports[`Given the NumberOfViews component When it is rendered should match the 
        
     </span>
     <span
-      class="ui-Typography emotion-2"
+      class="ui-Typography emotion-1"
     >
       23
     </span>

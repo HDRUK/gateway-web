@@ -1,8 +1,9 @@
 import React from 'react';
-import WorkflowReviewModal from '../WorkflowReviewStepsModal';
 import { shallow } from 'enzyme';
+import WorkflowReviewModal from './WorkflowReviewStepsModal';
 
-let wrapper, props;
+let wrapper;
+let props;
 
 const fakeWorkflow = {
     workflowName: 'Workflow Test 2',
@@ -119,6 +120,5 @@ beforeEach(() => {
 describe('<WorkflowReviewModal /> rendering', () => {
     it('renders Workflow Review Modal', () => {
         // const ModalHeader = wrapper.find('ModalHeader');
-        console.log(wrapper.debug());
     });
 });

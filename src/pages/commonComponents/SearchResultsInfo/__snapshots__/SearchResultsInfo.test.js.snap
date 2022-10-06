@@ -3,7 +3,8 @@
 exports[`Given the SearchResultsInfo When it is rendered Should match the snapshot 1`] = `
 <div>
   <p
-    class="sentence-break ui-Typography emotion-0"
+    class="ui-Typography sentence-break emotion-0"
+    data-testid="searchResultsInfo"
   >
     Showing 60 results
      for 

@@ -4,7 +4,7 @@ exports[`Given the DataUseWidgetCode component When it is rendered Then matches 
 <div>
   <div>
     <h6
-      class="ui-Typography ui-Box emotion-0"
+      class="ui-Box ui-Typography emotion-0"
     >
       Copy the source code and share with your development team to display the widget above on your website
     </h6>

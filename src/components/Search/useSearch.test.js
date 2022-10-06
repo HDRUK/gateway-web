@@ -22,7 +22,7 @@ const searchOptions = {
     onError: mockOnError,
 };
 
-describe('Given the useGetPublisher component', () => {
+describe('Given the useSearch hook', () => {
     describe('When it is run', () => {
         beforeAll(() => {
             server.listen();
