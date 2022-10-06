@@ -25,7 +25,7 @@ describe('Given the auth service', () => {
     });
 
     describe('When getStatus is called', () => {
-        it('Then calls getStatus with the correct arguments', async () => {
+        it('Then calls getRequest with the correct arguments', async () => {
             await service.getStatus({
                 option1: true,
             });
