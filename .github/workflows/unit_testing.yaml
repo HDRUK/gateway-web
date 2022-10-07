@@ -8,8 +8,6 @@ on:
         branches: ['GAT-1577_testing-ci']
     pull_request:
         branches: ['GAT-1577_testing-ci']
-env:
-  WINTERFELL_REPO: secret.WINTERFELL_REPO
 
 jobs:
     build:
@@ -29,7 +27,7 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: 'npm'
-            - run: npm install '${{ env.WINTERFELL_REPO }}'
+            - run: npm install '${{ secret.WINTERFELL_REPO }}'
             - run: npm ci
             - run: CI=false npm run build --if-present
             - run: npm run test:ci
