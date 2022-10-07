@@ -27,7 +27,7 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: 'npm'
-            - run: npm install '${{ secret.WINTERFELL_REPO }}'
+            - run: npm install '${{ secrets.WINTERFELL_REPO }}'
             - run: npm ci
             - run: CI=false npm run build --if-present
             - run: npm run test:ci
