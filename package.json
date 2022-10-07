@@ -95,6 +95,7 @@
         "build": "react-scripts build",
         "test:watchAll": "cross-env NODE_ENV=test jest --watchAll --env=jsdom --config=jest.config.json",
         "test:watch": "cross-env NODE_ENV=test jest --watch --env=jsdom --config=jest.config.json",
+        "test:ci": "cross-env NODE_ENV=test jest --ci --runInBand --env=jsdom --config=jest.config.json",
         "test": "cross-env NODE_ENV=test jest --env=jsdom --coverage --config=jest.config.json",
         "test-rtl": "cross-env NODE_ENV=test jest --env=jsdom --testPathIgnorePatterns=/test/",
         "eject": "react-scripts eject",
