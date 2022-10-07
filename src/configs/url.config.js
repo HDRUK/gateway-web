@@ -65,7 +65,7 @@ export const addCmsGatewayApiHostname = path => {
     let webHostname = 'https://api.www.healthdatagateway.org';
 
     if (hostname.includes('uat.')) {
-        webHostname = 'https://api.healthdatagateway.org';
+        webHostname = 'https://api.uat.healthdatagateway.org';
     } else if (hostname.includes('preprod.')) {
         webHostname = 'https://api.preprod.hdruk.dev';
     } else if (hostname.includes('.cloudshell.dev') || hostname.includes('localhost')) {
