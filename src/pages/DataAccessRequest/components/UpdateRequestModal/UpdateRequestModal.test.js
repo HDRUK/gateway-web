@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { render, screen } from 'testUtils';
 import moxios from 'moxios';
 import UpdateRequestModal from './UpdateRequestModal';
