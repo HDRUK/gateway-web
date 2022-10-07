@@ -30,5 +30,4 @@ jobs:
             - run: npm install git+https://git@github.com/HDRUK/Winterfell.git
             - run: npm ci
             - run: CI=false npm run build --if-present
-            # - run: npm test
             - run: npm run test:ci
