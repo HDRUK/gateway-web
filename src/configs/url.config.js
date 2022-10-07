@@ -62,12 +62,12 @@ export const getWidgetAPI = () => {
 
 export const addCmsGatewayApiHostname = path => {
     const { hostname } = window.location;
-    let webHostname = 'https://api.web.www.healthdatagateway.org';
+    let webHostname = 'https://api.www.healthdatagateway.org';
 
     if (hostname.includes('uat.')) {
-        webHostname = 'https://api.web.uat.healthdatagateway.org';
+        webHostname = 'https://api.uat.healthdatagateway.org';
     } else if (hostname.includes('preprod.')) {
-        webHostname = 'https://api.web.preprod.hdruk.dev';
+        webHostname = 'https://api.preprod.hdruk.dev';
     } else if (hostname.includes('.cloudshell.dev') || hostname.includes('localhost')) {
         webHostname = 'http://localhost:3001';
     }
