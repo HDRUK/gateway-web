@@ -29,7 +29,7 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: 'npm'
-            - run: npm install ${{ env.WINTERFELL_REPO }}
+            - run: npm install '${{ env.WINTERFELL_REPO }}'
             - run: npm ci
             - run: CI=false npm run build --if-present
             - run: npm run test:ci
