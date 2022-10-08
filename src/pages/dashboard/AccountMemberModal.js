@@ -22,7 +22,7 @@ const AccountMemberModal = ({ open, close, teamId, onMemberAdded }) => {
     const addTeamMembers = serviceTeam.useAddMembers();
 
     useEffect(() => {
-        getUserInfo();
+        getUserInfo().catch(console.error);
     }, []);
 
     const initialValues = {
