@@ -19,7 +19,7 @@ jobs:
                 # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
         steps:
-            - name: checkout
+            - name: Checkout
               uses: actions/checkout@v3
               with:
                   persist-credentials: 'false'
@@ -28,9 +28,9 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: 'npm'
-            - name: install winterfell
+            - name: Install winterfell
               run: npm install '${{ secrets.WINTERFELL_REPO }}'
-            - name: npm ci and Unit testing 
+            - name: Clean install, npm ci and Unit testing 
               run: |
                 npm ci
                 CI=false npm run build --if-present
