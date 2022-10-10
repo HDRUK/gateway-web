@@ -10,7 +10,7 @@ on:
         branches: ['GAT-1577_testing-ci']
 
 jobs:
-    security:
+    security_scanning:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@master
@@ -20,8 +20,8 @@ jobs:
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
 
-    build:
-      needs: security
+    npm_build_tests:
+      needs: security_scanning
       runs-on: ubuntu-latest
       strategy:
         matrix:
