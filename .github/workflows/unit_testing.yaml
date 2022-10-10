@@ -10,32 +10,6 @@ on:
         branches: ['GAT-1577_testing-ci']
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-
-        strategy:
-            matrix:
-                node-version: [14.x]
-                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-              with:
-                  persist-credentials: 'false'
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-                  cache: 'npm'
-            - name: Install winterfell
-              run: npm install '${{ secrets.WINTERFELL_REPO }}'
-            - name: Clean install, npm ci and Unit testing 
-              run: |
-                npm ci
-                CI=false npm run build --if-present
-                echo "Runnning Unit Tests"
-                npm run test:ci
     security:
       runs-on: ubuntu-latest
       steps:
@@ -44,4 +18,30 @@ jobs:
           uses: snyk/actions/node@master
           continue-on-error: true
           env:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}      
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
+
+    build:
+      needs: security
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+            node-version: [14.x]
+                # See supported Node.js release schedule at https://nodejs.org/en/about/releases
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+          with:
+            persist-credentials: 'false'
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+              node-version: ${{ matrix.node-version }}
+              cache: 'npm'
+        - name: Install winterfell
+          run: npm install '${{ secrets.WINTERFELL_REPO }}'
+        - name: Clean install, npm ci and Unit testing 
+          run: |
+              npm ci
+              CI=false npm run build --if-present
+              echo "Runnning Unit Tests"
+              npm run test:ci
