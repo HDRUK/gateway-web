@@ -19,7 +19,7 @@ steps:
           [
               'run',
               'deploy',
-              '${_ENVIRONMENT}-medicines-dashboard',
+              '${_ENVIRONMENT}-web',
               '--image',
               'gcr.io/$PROJECT_ID/${_APP_NAME}:${_ENVIRONMENT}',
               '--platform',
