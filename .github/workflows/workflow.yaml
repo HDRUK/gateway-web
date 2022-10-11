@@ -5,43 +5,44 @@ name: Unit tests
 
 on:
     push:
-        branches: ['GAT-1577_testing-ci']
+        branches: ['dev']
     pull_request:
-        branches: ['GAT-1577_testing-ci']
+        branches: ['dev']
 
 jobs:
     security_scanning:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@master
-        - name: Run Snyk to check for vulnerabilities
-          uses: snyk/actions/node@master
-          continue-on-error: true
-          env:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Run Snyk to check for vulnerabilities
+              uses: snyk/actions/node@master
+              continue-on-error: true
+              env:
+                  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     npm_build_tests:
-      needs: security_scanning
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-            node-version: [14.x]
-                # See supported Node.js release schedule at https://nodejs.org/en/about/releases
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v3
-          with:
-            persist-credentials: 'false'
-        - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v3
-          with:
-              node-version: ${{ matrix.node-version }}
-              cache: 'npm'
-        - name: Install winterfell
-          run: npm install '${{ secrets.WINTERFELL_REPO }}'
-        - name: Clean install, npm ci and Unit testing 
-          run: |
-              npm ci
-              CI=false npm run build --if-present
-              echo "Runnning Unit Tests"
-              npm run test:ci
+        needs: security_scanning
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version:
+                    [14.x]
+                    # See supported Node.js release schedule at https://nodejs.org/en/about/releases
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  persist-credentials: 'false'
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'npm'
+            - name: Install winterfell
+              run: npm install '${{ secrets.WINTERFELL_REPO }}'
+            - name: Clean install, npm ci and Unit testing
+              run: |
+                  npm ci
+                  CI=false npm run build --if-present
+                  echo "Runnning Unit Tests"
+                  npm run test:ci
