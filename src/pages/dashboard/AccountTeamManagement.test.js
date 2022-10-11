@@ -1,16 +1,16 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen, cleanup } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
+import { waitFor } from '@testing-library/dom';
 import AccountTeamManagement from './AccountTeamManagement';
 import { userState } from './mockData';
-import { tabTypes } from './Team/teamUtil';
 
 const forwardRefMock = jest.fn();
 const onTeamManagementSaveMock = jest.fn();
 const onTeamManagementTabChangeMock = jest.fn();
 const onClearInnerTabMock = jest.fn();
 
-test('should not render Member,Notifications and Teams Tab', async () => {
+describe('should not render tabs', () => {
     render(
         <AccountTeamManagement
             userState={userState}
@@ -22,26 +22,41 @@ test('should not render Member,Notifications and Teams Tab', async () => {
             onClearInnerTab={onClearInnerTabMock}
         />
     );
-    Object.keys(tabTypes).map(key => {
-        expect(screen.queryByTestId(tabTypes[key])).toBeNull();
+    it('should not render tabs', () => {
+        expect(screen.queryByTestId('members')).toBeNull();
+        expect(screen.queryByTestId('notifications')).toBeNull();
     });
 });
 
-test('should render Member,Notifications and Teams Tab', async () => {
-    render(
-        <AccountTeamManagement
-            userState={userState}
-            team='6107fd7d7cceaa24a67eefe8'
-            innertab=''
-            forwardRef={forwardRefMock}
-            onTeamManagementSave={onTeamManagementSaveMock}
-            onTeamManagementTabChange={onTeamManagementTabChangeMock}
-            onClearInnerTab={onClearInnerTabMock}
-        />
-    );
-    Object.keys(tabTypes).map(key => {
-        expect(screen.getByTestId(tabTypes[key])).toBeInTheDocument();
-        fireEvent.click(screen.getByTestId(tabTypes[key]));
-        expect(onTeamManagementTabChangeMock).toHaveBeenCalledTimes(1);
+describe('should render tabs', () => {
+    beforeEach(() => {
+        render(
+            <AccountTeamManagement
+                userState={userState}
+                team='6107fd7d7cceaa24a67eefe8'
+                innertab=''
+                forwardRef={forwardRefMock}
+                onTeamManagementSave={onTeamManagementSaveMock}
+                onTeamManagementTabChange={onTeamManagementTabChangeMock}
+                onClearInnerTab={onClearInnerTabMock}
+            />
+        );
+    });
+
+    afterEach(() => {
+        cleanup();
+    });
+
+    it('should render members tab', () => {
+        screen.getByTestId('members').click();
+        waitFor(() => {
+            expect(onTeamManagementTabChangeMock).toHaveBeenCalledWith('members');
+        });
+    });
+    it('should render notifications tab', () => {
+        screen.getByTestId('notifications').click();
+        waitFor(() => {
+            expect(onTeamManagementTabChangeMock).toHaveBeenCalledWith('notifications');
+        });
     });
 });

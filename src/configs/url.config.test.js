@@ -41,14 +41,14 @@ describe('Given the addCmsGatewayApiHostname helper', () => {
     describe('When it is called with hostname uat.', () => {
         it('Then returns the correct url', () => {
             window.location.hostname = 'uat.healthdatagateway.org';
-            expect(addCmsGatewayApiHostname('path/to/something')).toEqual('https://api.web.uat.healthdatagateway.org/path/to/something');
+            expect(addCmsGatewayApiHostname('path/to/something')).toEqual('https://api.uat.healthdatagateway.org/path/to/something');
         });
     });
 
     describe('When it is called with hostname preprod.', () => {
         it('Then returns the correct url', () => {
             window.location.hostname = 'preprod.';
-            expect(addCmsGatewayApiHostname('path/to/something')).toEqual('https://api.web.preprod.hdruk.dev/path/to/something');
+            expect(addCmsGatewayApiHostname('path/to/something')).toEqual('https://api.preprod.hdruk.dev/path/to/something');
         });
     });
 
@@ -69,7 +69,7 @@ describe('Given the addCmsGatewayApiHostname helper', () => {
     describe('When it is called with any other hostname', () => {
         it('Then returns the correct url', () => {
             window.location.hostname = 'test';
-            expect(addCmsGatewayApiHostname('path/to/something')).toEqual('https://api.web.www.healthdatagateway.org/path/to/something');
+            expect(addCmsGatewayApiHostname('path/to/something')).toEqual('https://api.www.healthdatagateway.org/path/to/something');
         });
     });
 });

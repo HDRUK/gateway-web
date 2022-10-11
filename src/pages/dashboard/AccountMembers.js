@@ -23,7 +23,7 @@ export const AccountMembers = props => {
     }, [props]);
 
     useEffect(() => {
-        doMembersCall();
+        doMembersCall().catch(console.error);
     }, [accountMembersId]);
 
     const doMembersCall = async () => {
