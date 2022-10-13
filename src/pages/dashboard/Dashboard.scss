@@ -8,6 +8,26 @@
     padding: 25px;
 }
 
+.dashboard-results.table thead th,
+.dashboard-results.table tbody td {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 24px !important;
+    border-bottom: 1px solid #eeeeee !important;
+}
+
+.dashboard-results.table thead th {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.dashboard-results.table tbody td {
+    font-size: 14px;
+    font-weight: 700;
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+}
+
 .container-wrap {
     display: flex;
     flex-wrap: wrap;
