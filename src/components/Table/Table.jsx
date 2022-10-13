@@ -56,6 +56,7 @@ Table.propTypes = {
 Table.defaultProps = {
     columns: [],
     data: [],
+    width: '100%',
 };
 
 export default Table;
