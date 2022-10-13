@@ -390,6 +390,11 @@ export const theme = {
         },
         Input: THEME_INPUT,
         Dropdown: THEME_INPUT,
+        Table: {
+            globals: {
+                borderColor: 'grey200',
+            },
+        },
         Textarea: THEME_INPUT,
         Typeahead: THEME_INPUT,
         Typography: {
