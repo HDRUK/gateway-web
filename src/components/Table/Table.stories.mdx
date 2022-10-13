@@ -1,0 +1,40 @@
+import { useState } from 'react';
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import Table from './Table';
+
+<Meta title='Core/Table' component={Table} />
+
+<Canvas>
+    <Story name='Basic'>
+        {props => (
+            <Table
+                width='600px'
+                columns={[
+                    {
+                        Header: 'Name',
+                        accessor: 'name',
+                    },
+                    {
+                        Header: 'Role',
+                        accessor: 'role',
+                    },
+                ]}
+                data={[
+                    {
+                        name: 'Kymme Hayley',
+                        role: 'Admin',
+                    },
+                    {
+                        name: 'Peter Hammans',
+                        role: 'Admin',
+                    },
+                    {
+                        name: 'Geeta Kotecha',
+                        role: 'Admin',
+                    },
+                ]}
+            />
+        )}
+    </Story>
+</Canvas>
