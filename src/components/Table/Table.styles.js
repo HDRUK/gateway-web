@@ -1,21 +1,27 @@
 import { css } from '@emotion/react';
 import { getSize } from 'hdruk-react-core';
-import { getComponentGlobals } from '../../configs/theme';
+import { getColorStyle, getComponentGlobals } from '../../configs/theme';
 
 const styles = theme => {
     const { borderColor } = getComponentGlobals('Table', theme);
 
     return css`
+        font-size: ${theme.font.size.md};
+
+        th,
+        td {
+            border-bottom: 1px solid;
+            ${getColorStyle('border-color', borderColor, theme)}
+        }
+
         td {
             font-size: 14px;
-            font-weight: 700;
-            padding: 0 ${getSize(6, theme)};
-            border-bottom: 1px solid ${borderColor};
+            padding: ${getSize(7, theme)} ${getSize(6, theme)};
         }
 
         th {
-            padding-top: ${getSize(3, theme)};
-            padding-bottom: ${getSize(3, theme)};
+            padding: ${getSize(3, theme)} ${getSize(6, theme)};
+            font-weight: 700;
         }
     `;
 };
