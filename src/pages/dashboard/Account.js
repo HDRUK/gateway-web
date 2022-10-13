@@ -38,7 +38,7 @@ import AccountAnalyticsDashboard from './AccountAnalyticsDashboard';
 import AccountCollections from './AccountCollections';
 import AccountCourses from './AccountCourses';
 import AccountPapers from './AccountPapers';
-import AccountTeamManagement from './AccountTeamManagement';
+import { AccountTeamManagement } from 'pages';
 import AccountTeams from './AccountTeams';
 import AccountTools from './AccountTools';
 import AccountUsers from './AccountUsers';
