@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Row, Col, Tabs, Tab } from 'react-bootstrap';
-import { isEmpty, upperFirst } from 'lodash';
+import { Row, Col } from 'react-bootstrap';
+import { isEmpty } from 'lodash';
 import axios from 'axios';
 import {
     AccountTeamFieldRepeater,
@@ -12,22 +12,31 @@ import {
     AccountTeamGatewayEmail,
 } from 'modules';
 import { authUtils } from 'utils';
-import { accountConsts, permissionsConsts } from 'consts';
+import { accountConsts, permissionsConsts, uiConsts } from 'consts';
 import PropTypes from 'prop-types';
 import { baseURL } from '../../configs/url.config';
 // import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
-import { userRoleIsAdmin, hasTeamNotificationOptIns } from './AccountTeamManagementPage.utils';
-import { GeneratedAlerts, LoaderRow } from './AccountTeamManagementPage.components';
+import {
+    userRoleIsAdmin,
+    hasTeamNotificationOptIns,
+    validEmailList,
+    getTeamNotificationType,
+    findMandatoryOptIns,
+    getMemberNotification,
+    formatSubscribedEmails,
+} from './AccountTeamManagementPage.utils';
+import {
+    EmailNotificationsHeader,
+    GeneratedAlerts,
+    LoaderRow,
+    TabsNav,
+    TeamManagementHeader,
+} from './AccountTeamManagementPage.components';
 
+const { alertTypes } = uiConsts;
 const { tabTypes } = accountConsts;
 const { userTypes } = permissionsConsts;
-
-const alertTypes = {
-    success: 'success',
-    warning: 'warning',
-};
-const messageKey = 'message';
 
 const AccountTeamManagementPage = ({
     userState = [],
@@ -51,6 +60,39 @@ const AccountTeamManagementPage = ({
 
     const history = useHistory();
 
+    // modal for notifications ensures one notification is selected
+    const toggleAlertModal = (title = '', body = '') => {
+        if (!isEmpty(title) && !isEmpty(body)) {
+            setAlertModalOptions({ title, body });
+        }
+
+        setAlertModal(!alertModal);
+    };
+
+    // Save Notifications API
+    const saveNotifications = async () => {
+        const missingOptIns = findMandatoryOptIns(memberNotifications, teamGatewayNotifications) || false;
+        const isValid = validEmailList(teamGatewayNotifications).length > 0;
+        // TODO: GAT-1510:014
+        const isManager = authUtils.userHasRole(userState, teamId, userTypes.MANAGER);
+        // has optIns for team notificaiton emails
+        const teamOptIns = hasTeamNotificationOptIns(teamGatewayNotifications);
+        if (missingOptIns) {
+            // fire modal you must have one selected
+            toggleAlertModal(
+                'You must have one email address selected',
+                'At least one email address is needed to receive notifications from the gateway.'
+            );
+        } else if (!isValid) {
+            toggleAlertModal('Invalid Email address', 'Please fix the following email errors.');
+        } else if (isManager && teamGatewayNotifications.length > 0 && teamOptIns) {
+            // show modal with team email notifications if on only
+            setTeamEmailModal(true);
+        } else {
+            updateNotifications();
+        }
+    };
+
     forwardRef(() => saveNotifications());
 
     const onTabChange = key => {
@@ -66,7 +108,41 @@ const AccountTeamManagementPage = ({
         });
     };
 
+    const updateNotifications = async () => {
+        if (!isEmpty(teamGatewayNotifications) && teamId) {
+            // format the subscribeEmails for the backend
+            const notifications = formatSubscribedEmails(teamGatewayNotifications);
+            // setup data model for backend
+            const data = {
+                memberNotifications,
+                teamNotifications: notifications,
+            };
+            // param 1: isSubmitting, params 2: savedTeamNotificationSuccess
+            onTeamManagementSave(true, false);
+            await axios
+                .put(`${baseURL}/api/v1/teams/${teamId}/notifications`, data)
+                .then(() => {
+                    // call parent set save button state
+                    onTeamManagementSave(false, true);
+                    // set alert message success save
+                    setAlerts([{ message: 'You have successfully updated your email notifications', type: 'success' }]);
+                    // scroll to the top so we can see the notification
+                    window.scrollTo(0, 0);
+                    // remove after 5's alert
+                    setTimeout(() => {
+                        onTeamManagementSave(false, false);
+                        setAlerts([]);
+                    }, 5000);
+                })
+                .catch(err => {
+                    console.error(err.message);
+                });
+        }
+    };
+
     const getTeamNotifications = () => {
+        const messageKey = 'message';
+
         if (!isEmpty(teamId)) {
             setLoading(true);
             axios
@@ -129,14 +205,6 @@ const AccountTeamManagementPage = ({
         if (activeTabKey === tabTypes.Notifications) getTeamNotifications();
     }, [activeTabKey, teamId]);
 
-    const getTeamNotificationType = notificationType => {
-        return teamGatewayNotifications.findIndex(notification => notification.notificationType === notificationType);
-    };
-
-    const getMemberNotification = notificationType => {
-        return memberNotifications.findIndex(notification => notification.notificationType === notificationType);
-    };
-
     const getTotalGatewayTeamEmails = (data = []) => {
         // 1. if the user has passed in data ie set team emails to that data
         if (!isEmpty(data)) {
@@ -150,8 +218,8 @@ const AccountTeamManagementPage = ({
     // send email notifications to my gateway email address
     const togglePersonalNotifications = (checked, e = {}, id = '') => {
         if (!isEmpty(id)) {
-            const foundTeamIndex = getTeamNotificationType(id);
-            const foundMemberIndex = getMemberNotification(id);
+            const foundTeamIndex = getTeamNotificationType(id, teamGatewayNotifications);
+            const foundMemberIndex = getMemberNotification(id, memberNotifications);
             if (foundTeamIndex > -1) {
                 const totalGatewayEmails = getTotalGatewayTeamEmails(teamGatewayNotifications[foundTeamIndex].subscribedEmails);
                 if (!checked && totalGatewayEmails === 0) {
@@ -167,7 +235,7 @@ const AccountTeamManagementPage = ({
     const toggleTeamNotifications = (checked, e = {}, id = '') => {
         if (!isEmpty(id)) {
             // 1. find notificationType
-            const foundIndex = getTeamNotificationType(id);
+            const foundIndex = getTeamNotificationType(id, teamGatewayNotifications);
             if (foundIndex > -1) {
                 // 2. update the notification by type
                 teamGatewayNotifications[foundIndex] = {
@@ -184,7 +252,7 @@ const AccountTeamManagementPage = ({
         let error = '';
         const { value } = e.target;
         // 1. find the object in team gateway notifications
-        const foundIndex = getTeamNotificationType(notificationType);
+        const foundIndex = getTeamNotificationType(notificationType, teamGatewayNotifications);
         if (foundIndex > -1) {
             const pattern = new RegExp(
                 /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
@@ -202,7 +270,7 @@ const AccountTeamManagementPage = ({
             // 5. if team notification emails are 0 default my gateway emails to true ie turn on
             if (totalEmailNotificationCount === 0) {
                 // turn on the member notification automatically if exists
-                const foundMemberIndex = getMemberNotification(notificationType);
+                const foundMemberIndex = getMemberNotification(notificationType, memberNotifications);
                 if (foundMemberIndex > -1) {
                     memberNotifications[foundMemberIndex].optIn = true;
                     setMemberNotifications([...memberNotifications]);
@@ -220,7 +288,7 @@ const AccountTeamManagementPage = ({
     // remove row handle click
     const handleRemoveClick = (index, notificationType = '') => {
         if (teamGatewayNotifications.length && !isEmpty(notificationType)) {
-            const foundIndex = getTeamNotificationType(notificationType);
+            const foundIndex = getTeamNotificationType(notificationType, teamGatewayNotifications);
             if (foundIndex > -1) {
                 teamGatewayNotifications[foundIndex].subscribedEmails.splice(index, 1);
                 setTeamGatewayNotifications([...teamGatewayNotifications]);
@@ -231,7 +299,7 @@ const AccountTeamManagementPage = ({
     // add row handle click
     const handleAddClick = (notificationType = '') => {
         if (teamGatewayNotifications.length && !isEmpty(notificationType)) {
-            const foundIndex = getTeamNotificationType(notificationType);
+            const foundIndex = getTeamNotificationType(notificationType, teamGatewayNotifications);
             if (foundIndex > -1) {
                 teamGatewayNotifications[foundIndex].subscribedEmails = [
                     ...teamGatewayNotifications[foundIndex].subscribedEmails,
@@ -242,126 +310,79 @@ const AccountTeamManagementPage = ({
         }
     };
 
-    // modal for notifications ensures one notification is selected
-    const toggleAlertModal = (title = '', body = '') => {
-        if (!isEmpty(title) && !isEmpty(body)) setAlertModalOptions({ title, body });
-
-        setAlertModal(!alertModal);
-    };
-
-    // format subscribed emails for BE
-    const formatSubscribedEmails = () => {
-        if (!isEmpty(teamGatewayNotifications)) {
-            return [...teamGatewayNotifications].reduce((arr, teamNotification) => {
-                let emails = [];
-                const { notificationType, optIn, subscribedEmails } = teamNotification;
-
-                if (!isEmpty(subscribedEmails)) {
-                    emails = [...subscribedEmails]
-                        .filter(item => {
-                            return item.value !== '';
-                        })
-                        .map(value => value.value);
-                }
-
-                arr = [...arr, { notificationType, optIn, subscribedEmails: emails }];
-
-                return arr;
-            }, []);
-        }
-        return [];
-    };
-
-    const updateNotifications = async () => {
-        if (!isEmpty(teamGatewayNotifications) && teamId) {
-            // format the subscribeEmails for the backend
-            const notifications = formatSubscribedEmails();
-            // setup data model for backend
-            const data = {
-                memberNotifications,
-                teamNotifications: notifications,
-            };
-            // param 1: isSubmitting, params 2: savedTeamNotificationSuccess
-            onTeamManagementSave(true, false);
-            await axios
-                .put(`${baseURL}/api/v1/teams/${teamId}/notifications`, data)
-                .then(() => {
-                    // call parent set save button state
-                    onTeamManagementSave(false, true);
-                    // set alert message success save
-                    setAlerts([{ message: 'You have successfully updated your email notifications', type: 'success' }]);
-                    // scroll to the top so we can see the notification
-                    window.scrollTo(0, 0);
-                    // remove after 5's alert
-                    setTimeout(() => {
-                        onTeamManagementSave(false, false);
-                        setAlerts([]);
-                    }, 5000);
-                })
-                .catch(err => {
-                    console.error(err.message);
-                });
-        }
-    };
-
-    const findMandatoryOptIns = () => {
-        if (!isEmpty(memberNotifications)) {
-            let hasMissingOptIns = false;
-            for (const memberNotification of memberNotifications) {
-                const { optIn: memberOptIn, notificationType } = memberNotification;
-                const foundIndex = getTeamNotificationType(notificationType);
-                if (foundIndex > -1) {
-                    const { optIn: teamOptIn } = teamGatewayNotifications[foundIndex];
-                    if (!memberOptIn && !teamOptIn) hasMissingOptIns = true;
-                }
-            }
-            return hasMissingOptIns;
-        }
-    };
-
-    const validEmailList = () => {
-        if (!isEmpty(teamGatewayNotifications)) {
-            return [...teamGatewayNotifications].reduce((arr, teamNotification) => {
-                let emails = [];
-                const { subscribedEmails } = teamNotification;
-                if (!isEmpty(subscribedEmails)) emails = [...subscribedEmails].filter(item => !isEmpty(item.error) || !isEmpty(item.value));
-
-                if (emails.length > 0) arr = [...arr, ...emails];
-
-                return arr;
-            }, []);
-        }
-        return [];
-    };
-
-    // Save Notifications API
-    const saveNotifications = async () => {
-        const missingOptIns = findMandatoryOptIns() || false;
-        const isValid = validEmailList().length > 0;
-        // TODO: GAT-1510:014
-        const isManager = authUtils.userHasRole(userState, teamId, userTypes.MANAGER);
-        // has optIns for team notificaiton emails
-        const teamOptIns = hasTeamNotificationOptIns(teamGatewayNotifications);
-        if (missingOptIns) {
-            // fire modal you must have one selected
-            toggleAlertModal(
-                'You must have one email address selected',
-                'At least one email address is needed to receive notifications from the gateway.'
-            );
-        } else if (!isValid) {
-            toggleAlertModal('Invalid Email address', 'Please fix the following email errors.');
-        } else if (isManager && teamGatewayNotifications.length > 0 && teamOptIns) {
-            // show modal with team email notifications if on only
-            setTeamEmailModal(true);
-        } else {
-            updateNotifications();
-        }
-    };
-
     // Email Alert for managers confirming Team Email addresses
     const toggleTeamEmailsModal = persistUpdate => {
         setTeamEmailModal(!teamEmailModal);
         if (persistUpdate) updateNotifications();
+    };
+
+    const MemberNotifications = () => {
+        return (
+            <div className='accountHeader accountHeader-alt'>
+                {memberNotifications &&
+                    [...memberNotifications].map((memberNotification, index) => {
+                        return (
+                            <div key={`memberNotification-${index}`}>
+                                <AccountTeamGatewayEmail
+                                    id={index}
+                                    teamId={teamId}
+                                    userState={userState}
+                                    memberNotification={memberNotification}
+                                    togglePersonalNotifications={togglePersonalNotifications}
+                                />
+                            </div>
+                        );
+                    })}
+            </div>
+        );
+    };
+
+    const TeamNotifications = () => {
+        return (
+            <div className='accountHeader accountHeader-alt'>
+                {teamGatewayNotifications &&
+                    [...teamGatewayNotifications].map((teamNotification, index) => {
+                        return (
+                            <div key={`teamNotificationOverview-${index}`}>
+                                <AccountTeamGatewayNotificationEmails
+                                    teamId={teamId}
+                                    teamNotification={teamNotification}
+                                    toggleTeamNotifications={toggleTeamNotifications}
+                                />
+                                {teamNotification.optIn ? (
+                                    <>
+                                        <div className='tm-wrapper'>
+                                            <div className='gray700-14'>Team email</div>
+                                            <AccountTeamFieldRepeater
+                                                id={index}
+                                                teamId={teamId}
+                                                data={teamNotification}
+                                                handleFieldChange={handleFieldChange}
+                                                handleRemoveClick={handleRemoveClick}
+                                                handleAddClick={handleAddClick}
+                                            />
+                                        </div>
+                                    </>
+                                ) : (
+                                    ''
+                                )}
+                            </div>
+                        );
+                    })}
+            </div>
+        );
+    };
+
+    const NotificationTab = () => {
+        return (
+            <LayoutContent>
+                <div className='col-sm-10'>
+                    <EmailNotificationsHeader />
+                    <MemberNotifications />
+                    <TeamNotifications />
+                </div>
+            </LayoutContent>
+        );
     };
 
     if (isLoading) {
@@ -372,98 +393,11 @@ const AccountTeamManagementPage = ({
         <>
             <LayoutContent>
                 <GeneratedAlerts alerts={alerts} />
-                <div className='accountHeader dataAccessHeader'>
-                    <Col xs={8}>
-                        <Row>
-                            <div className='black-20'>Team management</div>
-                            <div className='gray700-14'>Organise and manage team members and the teams email notifications.</div>
-                        </Row>
-                    </Col>
-                    <Col xs={4} style={{ textAlign: 'right' }} />
-                </div>
-                <div className='tabsBackground'>
-                    <Col sm={12} lg={12}>
-                        <Tabs className='dataAccessTabs gray700-14' activeKey={activeTabKey} onSelect={onTabChange}>
-                            {/* TODO: GAT-1510:020 */}
-                            {!userRoleIsAdmin(teamId, userState)
-                                ? Object.keys(tabTypes).map((keyName, i) => (
-                                      <Tab
-                                          key={i}
-                                          eventKey={`${tabTypes[keyName]}`}
-                                          title={`${upperFirst(tabTypes[keyName])}`}
-                                          data-testid={tabTypes[keyName]}
-                                      />
-                                  ))
-                                : ''}
-                        </Tabs>
-                    </Col>
-                </div>
+                <TeamManagementHeader />
+                <TabsNav userState={userState} activeTabKey={activeTabKey} onTabChange={onTabChange} />
             </LayoutContent>
             {activeTabKey === tabTypes.Members && <AccountTeamMembers userState={userState} teamId={teamId} />}
-            {activeTabKey === tabTypes.Notifications && (
-                <LayoutContent>
-                    <div className='col-sm-10'>
-                        <div className='accountHeader dataAccessHeader'>
-                            <Col xs={12}>
-                                <Row>
-                                    <div className='black-20-semibold'>Email notifications</div>
-                                    <div className='gray700-14'>
-                                        Team related email notifications will automatically be sent to each team members Gateway log in
-                                        email. Data custodian managers can choose to send notifications to additional email accounts.
-                                    </div>
-                                </Row>
-                            </Col>
-                        </div>
-                        <div className='accountHeader accountHeader-alt'>
-                            {memberNotifications &&
-                                [...memberNotifications].map((memberNotification, index) => {
-                                    return (
-                                        <div key={`memberNotification-${index}`}>
-                                            <AccountTeamGatewayEmail
-                                                id={index}
-                                                teamId={teamId}
-                                                userState={userState}
-                                                memberNotification={memberNotification}
-                                                togglePersonalNotifications={togglePersonalNotifications}
-                                            />
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                        <div className='accountHeader accountHeader-alt'>
-                            {teamGatewayNotifications &&
-                                [...teamGatewayNotifications].map((teamNotification, index) => {
-                                    return (
-                                        <div key={`teamNotificationOverview-${index}`}>
-                                            <AccountTeamGatewayNotificationEmails
-                                                teamId={teamId}
-                                                teamNotification={teamNotification}
-                                                toggleTeamNotifications={toggleTeamNotifications}
-                                            />
-                                            {teamNotification.optIn ? (
-                                                <>
-                                                    <div className='tm-wrapper'>
-                                                        <div className='gray700-14'>Team email</div>
-                                                        <AccountTeamFieldRepeater
-                                                            id={index}
-                                                            teamId={teamId}
-                                                            data={teamNotification}
-                                                            handleFieldChange={handleFieldChange}
-                                                            handleRemoveClick={handleRemoveClick}
-                                                            handleAddClick={handleAddClick}
-                                                        />
-                                                    </div>
-                                                </>
-                                            ) : (
-                                                ''
-                                            )}
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    </div>
-                </LayoutContent>
-            )}
+            {activeTabKey === tabTypes.Notifications && <NotificationTab />}
             <AccountTeamEmailAlertModal open={alertModal} close={toggleAlertModal} options={alertModalOptions} />
             <AccountTeamNotificationsConfirmationModal
                 open={teamEmailModal}
@@ -476,7 +410,7 @@ const AccountTeamManagementPage = ({
 };
 
 AccountTeamManagementPage.propTypes = {
-    userState: PropTypes.arrayOf({ teamId: PropTypes.number }).isRequired,
+    userState: PropTypes.arrayOf(PropTypes.shape({ teamId: PropTypes.number })).isRequired,
     teamId: PropTypes.string.isRequired,
     innerTab: PropTypes.oneOfType([tabTypes.Notifications, tabTypes.MANAGER]).isRequired,
     forwardRef: PropTypes.func.isRequired,

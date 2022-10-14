@@ -1,9 +1,28 @@
 import React from 'react';
-import { isEmpty } from 'lodash';
 import { Alert } from 'components';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { isEmpty, upperFirst } from 'lodash';
+import { accountConsts } from 'consts';
 import Loading from '../commonComponents/Loading';
+import { userRoleIsAdmin } from './AccountTeamManagementPage.utils';
 
+const { tabTypes } = accountConsts;
+
+const EmailNotificationsHeader = () => {
+    return (
+        <div className='accountHeader dataAccessHeader'>
+            <Col xs={12}>
+                <Row>
+                    <div className='black-20-semibold'>Email notifications</div>
+                    <div className='gray700-14'>
+                        Team related email notifications will automatically be sent to each team members Gateway log in email. Data
+                        custodian managers can choose to send notifications to additional email accounts.
+                    </div>
+                </Row>
+            </Col>
+        </div>
+    );
+};
 const LoaderRow = () => (
     <Row>
         <Col xs={1} />
@@ -13,6 +32,42 @@ const LoaderRow = () => (
         <Col xs={1} />
     </Row>
 );
+
+const TeamManagementHeader = () => {
+    return (
+        <div className='accountHeader dataAccessHeader'>
+            <Col xs={8}>
+                <Row>
+                    <div className='black-20'>Team management</div>
+                    <div className='gray700-14'>Organise and manage team members and the teams email notifications.</div>
+                </Row>
+            </Col>
+            <Col xs={4} style={{ textAlign: 'right' }} />
+        </div>
+    );
+};
+
+const TabsNav = ({ activeTabKey, onTabChange, teamId, userState }) => {
+    return (
+        <div className='tabsBackground'>
+            <Col sm={12} lg={12}>
+                <Tabs className='dataAccessTabs gray700-14' activeKey={activeTabKey} onSelect={onTabChange}>
+                    {/* TODO: GAT-1510:020 */}
+                    {!userRoleIsAdmin(teamId, userState)
+                        ? Object.keys(tabTypes).map((keyName, i) => (
+                              <Tab
+                                  key={i}
+                                  eventKey={`${tabTypes[keyName]}`}
+                                  title={`${upperFirst(tabTypes[keyName])}`}
+                                  data-testid={tabTypes[keyName]}
+                              />
+                          ))
+                        : ''}
+                </Tabs>
+            </Col>
+        </div>
+    );
+};
 
 const GeneratedAlerts = ({ alerts }) => {
     if (!isEmpty(alerts)) {
@@ -32,4 +87,4 @@ const GeneratedAlerts = ({ alerts }) => {
     return null;
 };
 
-export { GeneratedAlerts, LoaderRow };
+export { EmailNotificationsHeader, TabsNav, TeamManagementHeader, GeneratedAlerts, LoaderRow };
