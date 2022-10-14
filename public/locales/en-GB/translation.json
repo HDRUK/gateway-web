@@ -476,6 +476,14 @@
     "components": {
         "QualityScore": {
             "tooltip": "<p>Metadata richness score: {{score}}</p><p>The score relates to the amount of information available about the dataset, and not to the quality of the actual datasets.</p><p>Click to read more about how the score is calculated.</p><p>{{completeness_percent}} Weighted completeness %<br />{{error_percent}} Weighted error %</p>"
+        },
+        "AccountMembers": {
+            "members": {
+                "description1": "To remove team members or change their roles, please raise a support ticket at the following link",
+                "description2": "Managers can manage members, create and assign workflows, review applications that are assigned to them and make the final decision on data access request applications.",
+                "description3": "Reviewers can review applications that are assigned to them.",
+                "add": "+ Add a new member"
+            }
         }
     }
 }
