@@ -442,7 +442,7 @@ const AccountTeamManagementPage = ({
                     </Col>
                 </div>
             </LayoutContent>
-            {activeTabKey === tabTypes.Members && <AccountTeamMembers userState={userState} team={team} teamId={teamId} />}
+            {activeTabKey === tabTypes.Members && <AccountTeamMembers userState={userState} teamId={teamId} />}
             {activeTabKey === tabTypes.Notifications && (
                 <LayoutContent>
                     <div className='col-sm-10'>
