@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Switch from 'react-switch';
 import { permissionsConsts } from 'consts';
 import { authUtils } from 'utils';
+import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
 
 const { userTypes } = permissionsConsts;
 
@@ -10,7 +11,7 @@ const AccountTeamGatewayEmail = ({ id, teamId, userState = [], memberNotificatio
     const { optIn, notificationType } = memberNotification;
     const isManager = () => {
         // TODO: GAT-1510:016
-        return authUtils.userHasRole(userState, teamId, userTypes.MANAGER);
+        return authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager);
     };
 
     useEffect(() => {

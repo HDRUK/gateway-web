@@ -3,13 +3,14 @@ import Field from './Field';
 import FieldRepeaterAction from './FieldRepeaterAction';
 import { userTypes } from '../../dashboard/Team/teamUtil';
 import './FieldRepeater.scss';
+import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
 
 const FieldRepeater = ({ id, teamId, data, userHasRole, handleFieldChange, handleRemoveClick, handleAddClick }) => {
     const [manager, setIsManager] = useState(false);
 
     const isManager = () => {
         // TODO: GAT-1510:003
-        const isManager = userHasRole(teamId, userTypes.MANAGER);
+        const isManager = userHasRole(teamId, PERMISSIONS_USER_TYPES.manager);
         setIsManager(isManager);
     };
 
