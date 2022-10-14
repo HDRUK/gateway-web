@@ -1,3 +1,3 @@
 import AccountTeamManagementPage from './AccountTeamManagementPage';
 
-export { AccountTeamManagementPage };
+export default AccountTeamManagementPage;

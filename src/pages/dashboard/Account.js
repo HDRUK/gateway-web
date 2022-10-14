@@ -38,7 +38,7 @@ import AccountAnalyticsDashboard from './AccountAnalyticsDashboard';
 import AccountCollections from './AccountCollections';
 import AccountCourses from './AccountCourses';
 import AccountPapers from './AccountPapers';
-import { AccountTeamManagement } from 'pages';
+import { AccountTeamManagementPage } from 'pages';
 import AccountTeams from './AccountTeams';
 import AccountTools from './AccountTools';
 import AccountUsers from './AccountUsers';
@@ -979,10 +979,10 @@ class Account extends Component {
                                         )}
 
                                     {tabId === 'teamManagement' && (
-                                        <AccountTeamManagement
+                                        <AccountTeamManagementPage
                                             userState={userState}
-                                            team={team}
-                                            innertab={innertab}
+                                            teamId={team}
+                                            innerTab={innertab}
                                             forwardRef={c => {
                                                 this.saveNotifiations = c;
                                             }}

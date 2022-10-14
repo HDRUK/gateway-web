@@ -10,31 +10,25 @@ import AccountMembersModal from '../AccountTeamMembersModal';
 import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
 
-const AccountTeamMembers = props => {
-    const [userState] = useState(props.userState);
+const AccountTeamMembers = ({ userState, teamId }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [members, setMembers] = useState([]);
     const [userIsManager, setUserIsManager] = useState(false);
     const [showAccountAddMemberModal, setShowAccountAddMemberModal] = useState(false);
-    const [accountMembersId, setAccountMembersId] = useState(props.team);
 
     useEffect(() => {
-        setAccountMembersId(props.team);
-    }, [props]);
-
-    useEffect(() => {
+        if (!teamId) return;
         doMembersCall().catch(console.error);
-    }, [accountMembersId]);
+    }, [teamId]);
 
     const doMembersCall = async () => {
-        if (accountMembersId) {
-            setIsLoading(true);
-            await axios.get(`${baseURL}/api/v1/teams/${accountMembersId}/members`).then(async res => {
-                setMembers(res.data.members);
-                // TODO: GAT-1510:042
-                setUserIsManager(res.data.members.filter(m => m.id === userState[0].id).map(m => m.roles[0] === 'manager')[0]);
-            });
-        }
+        setIsLoading(true);
+        await axios.get(`${baseURL}/api/v1/teams/${teamId}/members`).then(async res => {
+            setMembers(res.data.members);
+            // TODO: GAT-1510:042
+            setUserIsManager(res.data.members.filter(m => m.id === userState[0].id).map(m => m.roles[0] === 'manager')[0]);
+        });
+
         setIsLoading(false);
     };
 
@@ -153,7 +147,7 @@ const AccountTeamMembers = props => {
                             <AccountMembersModal
                                 open={showAccountAddMemberModal}
                                 close={onShowAccountMembersModal}
-                                teamId={accountMembersId}
+                                teamId={teamId}
                                 onMemberAdded={onMemberAdded}
                             />
                         </div>
