@@ -23,6 +23,7 @@ import SearchInput from './SearchInput';
 import SortDropdown from './SortDropdown';
 import Spinner from './Spinner';
 import Switch from './Switch';
+import Table from './Table';
 import Textarea from './Textarea';
 import Timeline from './Timeline';
 import ToolTip from './ToolTip';
@@ -54,6 +55,7 @@ export {
     SortDropdown,
     Spinner,
     Switch,
+    Table,
     Textarea,
     Timeline,
     ToolTip,
