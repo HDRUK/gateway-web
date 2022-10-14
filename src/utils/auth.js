@@ -1,5 +1,7 @@
 import queryString from 'query-string';
-import _ from 'lodash';
+import _, { isEmpty } from 'lodash';
+
+import { ROLE_LIST } from 'configs/constants';
 
 export const getTeam = props => {
     const values = queryString.parse(window.location.search);
@@ -53,4 +55,10 @@ export const isPublisherAdmin = (userState, publisherId) => {
     return userState[0].teams.find(team => {
         return publisherId === team._id && team.isAdmin;
     });
+};
+
+export const getRolesList = roles => {
+    const sortedRoles = (roles || []).sort();
+    // TODO: GAT-1510:043
+    return sortedRoles.map(role => ROLE_LIST[role]).join(', ');
 };
