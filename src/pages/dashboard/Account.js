@@ -981,7 +981,7 @@ class Account extends Component {
                                     {tabId === 'teamManagement' && (
                                         <AccountTeamManagementPage
                                             userState={userState}
-                                            team={team}
+                                            teamId={team}
                                             innerTab={innertab}
                                             forwardRef={c => {
                                                 this.saveNotifiations = c;
