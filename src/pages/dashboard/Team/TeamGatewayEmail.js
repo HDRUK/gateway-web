@@ -7,7 +7,7 @@ const TeamGatewayEmail = ({ id, teamId, userState = [], userHasRole, memberNotif
     const { optIn, notificationType } = memberNotification;
     const isManager = () => {
         // TODO: GAT-1510:016
-        return userHasRole(teamId, userTypes.MANAGER);
+        return userHasRole(teamId, PERMISSIONS_USER_TYPES.manager);
     };
 
     useEffect(() => {

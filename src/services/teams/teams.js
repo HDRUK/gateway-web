@@ -2,7 +2,7 @@ import { apiURL } from '../../configs/url.config';
 import { getRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getMembers = (_id, options) => {
-    return getRequest(`${apiURL}/teams/${_id}/members`, options);
+    return getRequest(`${apiURL}/teams/${_id}/mdembers`, options);
 };
 
 const getNotifications = (_id, options) => {
@@ -31,7 +31,7 @@ const putNotifications = (_id, data, options) => {
 
 const useGetMembers = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(id => getMembers(id, requestOptions), {
-        queryKey: 'teams.getMembers',
+        mutationKey: 'teams.getMembers',
         ...mutateOptions,
     });
 };

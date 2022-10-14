@@ -121,6 +121,13 @@
                         "message": "There has been a problem updating the terms and conditions"
                     }
                 }
+            },
+            "teams": {
+                "getMembers": {
+                    "404": {
+                        "message": "There has been a problem getting the members of this team"
+                    }
+                }
             }
         }
     },
@@ -158,6 +165,7 @@
     },
     "next": "Next",
     "previous": "Previous",
+    "members": "Members",
     "guidance.inEdit": "Guidance in edit",
     "guidance.unedited": "Guidance unedited",
     "guidance.edited": "Guidance edited",
