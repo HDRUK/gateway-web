@@ -18,7 +18,7 @@ const styles = theme => {
         tr {
             @media screen and (max-width: ${theme.breakpoints.sm}) {
                 ${getComponentSerializable('Card', theme)};
-                margin-bottom: 12px;
+                margin-bottom: ${getSize(3, theme)};
                 display: block;
             }
         }
