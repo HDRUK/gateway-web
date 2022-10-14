@@ -14,12 +14,11 @@ import {
 import { authUtils } from 'utils';
 import { accountConsts, permissionsConsts } from 'consts';
 import PropTypes from 'prop-types';
-import Loading from '../commonComponents/Loading';
 import { baseURL } from '../../configs/url.config';
 // import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
 import { userRoleIsAdmin, hasTeamNotificationOptIns } from './AccountTeamManagementPage.utils';
-import { GeneratedAlerts } from './AccountTeamManagementPage.components';
+import { GeneratedAlerts, LoaderRow } from './AccountTeamManagementPage.components';
 
 const { tabTypes } = accountConsts;
 const { userTypes } = permissionsConsts;
@@ -29,16 +28,6 @@ const alertTypes = {
     warning: 'warning',
 };
 const messageKey = 'message';
-
-const LoaderRow = (
-    <Row>
-        <Col xs={1} />
-        <Col xs={10}>
-            <Loading data-testid='isLoading' />
-        </Col>
-        <Col xs={1} />
-    </Row>
-);
 
 const AccountTeamManagementPage = ({
     userState = [],
