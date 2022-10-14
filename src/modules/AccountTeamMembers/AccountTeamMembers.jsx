@@ -3,6 +3,7 @@ import { Card, CardBody, Typography, Button, CardHeader, P, Box } from 'hdruk-re
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { NotificationManager } from 'react-notifications';
 import Table from '../../components/Table';
 import { SUPPORT_URL } from '../../configs/constants';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
@@ -13,12 +14,17 @@ import { useAuth } from '../../context/AuthContext';
 import teamsService from '../../services/teams';
 import { getRolesList } from '../../utils/auth';
 
-export const AccountTeamMembers = ({ team }) => {
+export const AccountTeamMembers = ({ teamId }) => {
     const { isTeamManager, managerInTeam } = useAuth();
     const [members, setMembers] = useState([]);
     const [showModal, setShowModal] = useState();
     const { t } = useTranslation();
-    const getMembersRequest = teamsService.useGetMembers();
+
+    const getMembersRequest = teamsService.useGetMembers(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
     const columns = useMemo(
         () => [
@@ -36,18 +42,18 @@ export const AccountTeamMembers = ({ team }) => {
 
     useEffect(() => {
         const init = () => {
-            if (team) {
-                getMembersRequest.mutateAsync(team).then(({ data: { members: teamMembers } }) => {
+            if (teamId) {
+                getMembersRequest.mutateAsync(teamId).then(({ data: { members: teamMembers } }) => {
                     setMembers(teamMembers);
 
                     // TODO: GAT-1510:042
-                    managerInTeam(team);
+                    managerInTeam(teamId);
                 });
             }
         };
 
         init();
-    }, [team]);
+    }, [teamId]);
 
     const handleCloseModal = useCallback(() => {
         setShowModal(false);
@@ -73,7 +79,7 @@ export const AccountTeamMembers = ({ team }) => {
         <>
             <LayoutContent>
                 <Card mb={4}>
-                    <CardHeader>Members</CardHeader>
+                    <CardHeader>{t('members')}</CardHeader>
                     <CardBody>
                         <Box
                             display={{
@@ -130,14 +136,14 @@ export const AccountTeamMembers = ({ team }) => {
                     </Card>
                 )}
 
-                <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={team} onMemberAdded={handleMemberAdded} />
+                <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
             </LayoutContent>
         </>
     );
 };
 
 AccountTeamMembers.propTypes = {
-    team: PropTypes.string.isRequired,
+    teamId: PropTypes.string.isRequired,
 };
 
 export default AccountTeamMembers;

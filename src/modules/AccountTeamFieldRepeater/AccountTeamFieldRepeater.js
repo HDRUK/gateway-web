@@ -3,6 +3,7 @@ import { permissionsConsts } from 'consts';
 import './AccountTeamFieldRepeater.scss';
 import { authUtils } from 'utils';
 import { isEmpty } from 'lodash';
+import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
 
 const { userTypes } = permissionsConsts;
 
@@ -54,7 +55,7 @@ const AccountTeamFieldRepeater = ({ id, teamId, data, userState, handleFieldChan
 
     useEffect(() => {
         // TODO: GAT-1510:003
-        setIsManager(authUtils.userHasRole(userState, teamId, userTypes.MANAGER));
+        setIsManager(authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
     }, [teamId]);
 
     return (

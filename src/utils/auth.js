@@ -1,7 +1,7 @@
 import queryString from 'query-string';
-import _, { isEmpty } from 'lodash';
+import _ from 'lodash';
 
-import { ROLE_LIST } from 'configs/constants';
+import { PERMISSIONS_ROLE_NAMES } from 'consts/permissions';
 
 export const getTeam = props => {
     const values = queryString.parse(window.location.search);
@@ -60,5 +60,5 @@ export const isPublisherAdmin = (userState, publisherId) => {
 export const getRolesList = roles => {
     const sortedRoles = (roles || []).sort();
     // TODO: GAT-1510:043
-    return sortedRoles.map(role => ROLE_LIST[role]).join(', ');
+    return sortedRoles.map(role => PERMISSIONS_ROLE_NAMES[role]).join(', ');
 };
