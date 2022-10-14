@@ -11,7 +11,6 @@ export const STATUS_REJECTED = 'rejected';
 export const STATUS_ARCHIVE = 'archive';
 
 export const SUPPORT_CREATE_URL = 'https://hdruk.atlassian.net/servicedesk/customer/portal/1/group/1/create/1';
-export const SUPPORT_URL = 'https://hdruk.atlassian.net/servicedesk/customer/portal/1';
 
 export const ADVANCED_SEARCH_ROLE_GENERAL_ACCESS = 'GENERAL_ACCESS';
 
@@ -26,10 +25,3 @@ export const DEFAULT_USER_STATE = [
 
 export const CMS_ACTION_OPEN_DATA_UTILITY_MODAL = 'openDataUtilityModal';
 export const CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL = 'openCohortDiscoveryModal';
-
-export const ROLE_LIST = {
-    manager: 'Manager',
-    reviewer: 'Reviewer',
-    metadata_editor: 'Metadata Editor',
-    admin: 'Admin',
-};
