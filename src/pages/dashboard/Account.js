@@ -982,7 +982,7 @@ class Account extends Component {
                                         <AccountTeamManagementPage
                                             userState={userState}
                                             team={team}
-                                            innertab={innertab}
+                                            innerTab={innertab}
                                             forwardRef={c => {
                                                 this.saveNotifiations = c;
                                             }}

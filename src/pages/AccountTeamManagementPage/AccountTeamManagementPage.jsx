@@ -11,13 +11,15 @@ import {
     AccountTeamNotificationsConfirmationModal,
     AccountTeamGatewayEmail,
 } from 'modules';
+import { authUtils } from 'utils';
 import { accountConsts, permissionsConsts } from 'consts';
 import PropTypes from 'prop-types';
 import Loading from '../commonComponents/Loading';
 import { baseURL } from '../../configs/url.config';
 // import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
+import { userRoleIsAdmin, hasTeamNotificationOptIns } from './AccountTeamManagementPage.utils';
+import { GeneratedAlerts } from './AccountTeamManagementPage.components';
 
 const { tabTypes } = accountConsts;
 const { userTypes } = permissionsConsts;
@@ -38,40 +40,81 @@ const LoaderRow = (
     </Row>
 );
 
-const userRoleIsAdmin = (teamId, userState) => {
-    const team = userState[0].teams.filter(t => {
-        // eslint-disable-next-line no-underscore-dangle
-        return t._id === teamId;
-    })[0];
-    return team && team.isAdmin && !team.roles.includes(userTypes.MANAGER);
-};
-
 const AccountTeamManagementPage = ({
     userState = [],
     teamId,
-    innertab,
+    innerTab,
     forwardRef,
     onTeamManagementSave,
     onTeamManagementTabChange,
     onClearInnerTab,
 }) => {
-    const [isLoading, setLoading] = useState(false);
+    const [activeTabKey, setActiveTabKey] = useState(tabTypes.Members);
     const [alerts, setAlerts] = useState([]);
+    const [alertModal, setAlertModal] = useState(false);
+    const [alertModalOptions, setAlertModalOptions] = useState({ title: '', body: '' });
+    const [isLoading, setLoading] = useState(false);
     const [memberNotifications, setMemberNotifications] = useState([{ optIn: true, notificationType: 'dataAccessRequest' }]);
+    const [teamEmailModal, setTeamEmailModal] = useState(false);
     const [teamGatewayNotifications, setTeamGatewayNotifications] = useState([
         { notificationType: 'dataAccessRequest', optIn: false, subscribedEmails: [{ value: '', error: '' }], message: 'Test message' },
     ]);
-    const [alertModal, setAlertModal] = useState(false);
-    const [teamEmailModal, setTeamEmailModal] = useState(false);
-    const [alertModalOptions, setAlertModalOptions] = useState({ title: '', body: '' });
-    const [activeTabKey, setActiveTabKey] = useState(tabTypes.Members);
+
     const history = useHistory();
+
     forwardRef(() => saveNotifications());
 
     const onTabChange = key => {
         onTeamManagementTabChange(key);
         setActiveTabKey(key);
         setAlerts([]);
+    };
+
+    // Removes message from UI - ie mark as read clears member notification messages for all notification types
+    const updateMessageAlerts = () => {
+        axios.put(`${baseURL}/api/v1/teams/${teamId}/notification-messages`).catch(err => {
+            console.error(err.message);
+        });
+    };
+
+    const getTeamNotifications = () => {
+        if (!isEmpty(teamId)) {
+            setLoading(true);
+            axios
+                .get(`${baseURL}/api/v1/teams/${teamId}/notifications`)
+                .then(res => {
+                    let messages;
+                    // will need updated once more notification types are defined
+                    const { memberNotifications: resMemberNotifications = [], teamNotifications = [] } = res.data;
+                    // memberNotifications set
+                    if (!isEmpty(resMemberNotifications)) {
+                        // set member notifications
+                        setMemberNotifications([...resMemberNotifications]);
+                        // pull out messages from the member notifications and format in valid alerts for UI
+                        messages = [...resMemberNotifications]
+                            .filter(obj => Object.keys(obj).includes(messageKey) && !isEmpty(obj[messageKey]))
+                            .map(value => ({ message: value.message, type: alertTypes.warning }));
+                        // if messages exist from personal notifications
+                        if (!isEmpty(messages)) {
+                            // set the alerts to show on the UI - once only
+                            setAlerts(messages);
+                            // post to back-end to remove all alerts so they do not show on repeat once we re-vist the page
+                            // axios put remove teamNotificationMessage
+                            updateMessageAlerts();
+                        } else {
+                            setAlerts([]);
+                        }
+                    }
+                    // teamNotifications
+                    if (!isEmpty(teamNotifications) && teamNotifications.length > 0) setTeamGatewayNotifications(teamNotifications);
+
+                    setLoading(false);
+                })
+                .catch(err => {
+                    setLoading(false);
+                    console.error(err.message);
+                });
+        }
     };
 
     useEffect(() => {
@@ -84,8 +127,8 @@ const AccountTeamManagementPage = ({
 
         // TODO: GAT-1510:019
         if (!userRoleIsAdmin(teamId, userState)) {
-            if (!isEmpty(innertab) && innertab === tabTypes.Notifications) {
-                onTabChange(innertab);
+            if (!isEmpty(innerTab) && innerTab === tabTypes.Notifications) {
+                onTabChange(innerTab);
                 onClearInnerTab();
             }
         } else {
@@ -94,29 +137,8 @@ const AccountTeamManagementPage = ({
         }
 
         // only call get teamNotifications on tab change
-        if (activeTabKey === tabTypes.Notifications) getTeamNotifications(teamId);
+        if (activeTabKey === tabTypes.Notifications) getTeamNotifications();
     }, [activeTabKey, teamId]);
-
-    // manage and insert alerts into the UI
-    const generateAlerts = () => {
-        if (!isEmpty(alerts)) {
-            return alerts.map((alert, i) => {
-                const { type = '', message = '' } = alert;
-                return (
-                    <Alert variant={type} key={`alert-${message}`} mt={2}>
-                        {message}
-                    </Alert>
-                );
-            });
-        }
-        return '';
-    };
-
-    const hasTeamNotificationOptIns = () => {
-        if (!isEmpty(teamGatewayNotifications)) {
-            return teamGatewayNotifications.some(notification => notification.optIn === true);
-        }
-    };
 
     const getTeamNotificationType = notificationType => {
         return teamGatewayNotifications.findIndex(notification => notification.notificationType === notificationType);
@@ -124,13 +146,6 @@ const AccountTeamManagementPage = ({
 
     const getMemberNotification = notificationType => {
         return memberNotifications.findIndex(notification => notification.notificationType === notificationType);
-    };
-
-    const userHasRole = (teamId, role) => {
-        const team = userState[0].teams.filter(t => {
-            return t._id === teamId;
-        })[0];
-        return team && team.roles.includes(role);
     };
 
     const getTotalGatewayTeamEmails = (data = []) => {
@@ -335,9 +350,9 @@ const AccountTeamManagementPage = ({
         const missingOptIns = findMandatoryOptIns() || false;
         const isValid = validEmailList().length > 0;
         // TODO: GAT-1510:014
-        const isManager = userHasRole(teamId, userTypes.MANAGER);
+        const isManager = authUtils.userHasRole(userState, teamId, userTypes.MANAGER);
         // has optIns for team notificaiton emails
-        const teamOptIns = hasTeamNotificationOptIns();
+        const teamOptIns = hasTeamNotificationOptIns(teamGatewayNotifications);
         if (missingOptIns) {
             // fire modal you must have one selected
             toggleAlertModal(
@@ -360,53 +375,6 @@ const AccountTeamManagementPage = ({
         if (persistUpdate) updateNotifications();
     };
 
-    // Removes message from UI - ie mark as read clears member notification messages for all notification types
-    const updateMessageAlerts = () => {
-        axios.put(`${baseURL}/api/v1/teams/${teamId}/notification-messages`).catch(err => {
-            console.error(err.message);
-        });
-    };
-
-    const getTeamNotifications = teamId => {
-        if (!isEmpty(teamId)) {
-            setLoading(true);
-            axios
-                .get(`${baseURL}/api/v1/teams/${teamId}/notifications`)
-                .then(res => {
-                    let messages;
-                    // will need updated once more notification types are defined
-                    const { memberNotifications = [], teamNotifications = [] } = res.data;
-                    // memberNotifications set
-                    if (!isEmpty(memberNotifications)) {
-                        // set member notifications
-                        setMemberNotifications([...memberNotifications]);
-                        // pull out messages from the member notifications and format in valid alerts for UI
-                        messages = [...memberNotifications]
-                            .filter(obj => Object.keys(obj).includes(messageKey) && !isEmpty(obj[messageKey]))
-                            .map(value => ({ message: value.message, type: alertTypes.warning }));
-                        // if messages exist from personal notifications
-                        if (!isEmpty(messages)) {
-                            // set the alerts to show on the UI - once only
-                            setAlerts(messages);
-                            // post to back-end to remove all alerts so they do not show on repeat once we re-vist the page
-                            // axios put remove teamNotificationMessage
-                            updateMessageAlerts();
-                        } else {
-                            setAlerts([]);
-                        }
-                    }
-                    // teamNotifications
-                    if (!isEmpty(teamNotifications) && teamNotifications.length > 0) setTeamGatewayNotifications(teamNotifications);
-
-                    setLoading(false);
-                })
-                .catch(err => {
-                    setLoading(false);
-                    console.error(err.message);
-                });
-        }
-    };
-
     if (isLoading) {
         return <LoaderRow />;
     }
@@ -414,7 +382,7 @@ const AccountTeamManagementPage = ({
     return (
         <>
             <LayoutContent>
-                {generateAlerts()}
+                <GeneratedAlerts alerts={alerts} />
                 <div className='accountHeader dataAccessHeader'>
                     <Col xs={8}>
                         <Row>
@@ -466,7 +434,6 @@ const AccountTeamManagementPage = ({
                                                 id={index}
                                                 teamId={teamId}
                                                 userState={userState}
-                                                userHasRole={userHasRole}
                                                 memberNotification={memberNotification}
                                                 togglePersonalNotifications={togglePersonalNotifications}
                                             />
@@ -522,7 +489,7 @@ const AccountTeamManagementPage = ({
 AccountTeamManagementPage.propTypes = {
     userState: PropTypes.arrayOf({ teamId: PropTypes.number }).isRequired,
     teamId: PropTypes.string.isRequired,
-    innertab: PropTypes.oneOfType([tabTypes.Notifications, tabTypes.MANAGER]).isRequired,
+    innerTab: PropTypes.oneOfType([tabTypes.Notifications, tabTypes.MANAGER]).isRequired,
     forwardRef: PropTypes.func.isRequired,
     onTeamManagementSave: PropTypes.func.isRequired,
     onTeamManagementTabChange: PropTypes.func.isRequired,
