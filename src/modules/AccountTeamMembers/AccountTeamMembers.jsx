@@ -6,11 +6,11 @@ import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
 // import '../../css/styles.scss';
 // import './Dashboard.scss';
-import AccountMembersModal from '../AccountMembersModal';
+import AccountMembersModal from '../AccountTeamMembersModal';
 import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
 
-export const AccountMembers = props => {
+const AccountTeamMembers = props => {
     const [userState] = useState(props.userState);
     const [isLoading, setIsLoading] = useState(true);
     const [members, setMembers] = useState([]);
@@ -164,4 +164,4 @@ export const AccountMembers = props => {
     );
 };
 
-export default AccountMembers;
+export default AccountTeamMembers;

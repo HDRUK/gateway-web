@@ -10,9 +10,9 @@ import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import serviceAuth from '../../services/auth/auth';
 import serviceTeam from '../../services/teams';
 import AsyncTypeAheadUsers from '../../pages/commonComponents/AsyncTypeAheadUsers';
-import './AccountMembersModal.scss';
+import './AccountTeamMembersModal.scss';
 
-const AccountMemberModal = ({ open, close, teamId, onMemberAdded }) => {
+const AccountTeamMembersModal = ({ open, close, teamId, onMemberAdded }) => {
     const [userInfo, setUserInfo] = useState([]);
 
     const getUserInfo = async () => {
@@ -270,11 +270,11 @@ const AccountMemberModal = ({ open, close, teamId, onMemberAdded }) => {
     );
 };
 
-AccountMemberModal.propTypes = {
+AccountTeamMembersModal.propTypes = {
     open: PropTypes.bool.isRequired,
     close: PropTypes.func.isRequired,
     teamId: PropTypes.string.isRequired,
     onMemberAdded: PropTypes.func.isRequired,
 };
 
-export default AccountMemberModal;
+export default AccountTeamMembersModal;

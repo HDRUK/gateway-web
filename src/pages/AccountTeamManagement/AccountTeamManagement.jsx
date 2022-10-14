@@ -3,18 +3,23 @@ import { useHistory } from 'react-router-dom';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
 import axios from 'axios';
-import { AccountMembers } from 'modules';
+import {
+    AccountTeamMembers,
+    AccountTeamEmailAlertModal,
+    AccountTeamGatewayNotificationEmails,
+    AccountTeamNotificationsConfirmationModal,
+    AccountTeamGatewayEmail,
+} from 'modules';
+import { accountConsts, permissionsConsts } from 'consts';
 import Loading from '../commonComponents/Loading';
 import { baseURL } from '../../configs/url.config';
-import TeamGatewayEmail from '../dashboard/Team/TeamGatewayEmail';
-import TeamGatewayNotificationEmails from '../dashboard/Team/TeamGatewayNotificationEmails';
 import FieldRepeater from '../commonComponents/FieldRepeater/FieldRepeater';
-import TeamEmailAlertModal from '../dashboard/Team/TeamEmailAlertModal';
-import TeamNotificationsConfirmationModal from '../dashboard/Team/TeamNotificationsConfirmationModal';
-import { userTypes, tabTypes } from '../dashboard/Team/teamUtil';
 // import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
 import Alert from '../../components/Alert';
+
+const { tabTypes } = accountConsts;
+const { userTypes } = permissionsConsts;
 
 const AccountTeamManagement = ({
     userState = [],
@@ -443,7 +448,7 @@ const AccountTeamManagement = ({
                     </Col>
                 </div>
             </LayoutContent>
-            {activeTabKey === tabTypes.Members && <AccountMembers userState={userState} team={team} teamId={teamId} />}
+            {activeTabKey === tabTypes.Members && <AccountTeamMembers userState={userState} team={team} teamId={teamId} />}
             {activeTabKey === tabTypes.Notifications && (
                 <LayoutContent>
                     <div className='col-sm-10'>
@@ -463,7 +468,7 @@ const AccountTeamManagement = ({
                                 [...memberNotifications].map((memberNotification, index) => {
                                     return (
                                         <div key={`memberNotification-${index}`}>
-                                            <TeamGatewayEmail
+                                            <AccountTeamGatewayEmail
                                                 id={index}
                                                 teamId={teamId}
                                                 userState={userState}
@@ -480,7 +485,7 @@ const AccountTeamManagement = ({
                                 [...teamGatewayNotifications].map((teamNotification, index) => {
                                     return (
                                         <div key={`teamNotificationOverview-${index}`}>
-                                            <TeamGatewayNotificationEmails
+                                            <AccountTeamGatewayNotificationEmails
                                                 teamId={teamId}
                                                 userHasRole={userHasRole}
                                                 teamNotification={teamNotification}
@@ -511,8 +516,8 @@ const AccountTeamManagement = ({
                     </div>
                 </LayoutContent>
             )}
-            <TeamEmailAlertModal open={alertModal} close={toggleAlertModal} options={alertModalOptions} />
-            <TeamNotificationsConfirmationModal
+            <AccountTeamEmailAlertModal open={alertModal} close={toggleAlertModal} options={alertModalOptions} />
+            <AccountTeamNotificationsConfirmationModal
                 open={teamEmailModal}
                 close={toggleTeamEmailsModal}
                 confirm={toggleTeamEmailsModal}
