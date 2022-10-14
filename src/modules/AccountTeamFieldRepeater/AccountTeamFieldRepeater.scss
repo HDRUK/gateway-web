@@ -1,0 +1,37 @@
+@import '../../../css/variables';
+
+.field-repeater {
+	display: flex;
+	flex-flow: column nowrap;
+	@media (min-width: $bp-medium) {
+		flex-flow: row nowrap;
+	}
+}
+
+.field-repeater > .form-group {
+	margin: 0.5em 0;
+	flex: 1 0 87%;
+
+	& > .form-control {
+		border: 2px solid #d0d3d4;
+	}
+}
+
+.field-repeater > .field-action {
+	display: flex;
+	flex: 1 0 13%;
+	height: 35px;
+	@media (min-width: $bp-medium) {
+		justify-content: flex-end;
+		margin-top: 0.6rem;
+	}
+}
+
+.plusMinusButton {
+	align-items: center;
+	justify-content: center;
+	&:focus {
+		border: none;
+		outline: none;
+	}
+}
