@@ -31,8 +31,12 @@ const Table = ({ columns, data, mt, mb, ml, mr, width, minWidth, maxWidth }) => 
 
                     return (
                         <tr {...row.getRowProps()}>
-                            {row.cells.map(cell => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                            {row.cells.map((cell, i) => {
+                                return (
+                                    <td {...cell.getCellProps()} data-label={headerGroups[0].headers[i].id}>
+                                        {cell.render('Cell')}
+                                    </td>
+                                );
                             })}
                         </tr>
                     );
