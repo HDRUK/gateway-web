@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { AuthProvider } from './context/AuthContext';
 import authService from './services/auth';
 import personService from './services/person';
 import Loading from './pages/commonComponents/Loading';
-import { DEFAULT_USER_STATE } from './configs/constants';
+import { DEFAULT_USER_STATE, ROLE_MANAGER } from './configs/constants';
 
 const App = ({ children, showLoader }) => {
     const [userState, setUserState] = useState();
-
+    const [isTeamManager, setIsTeamManager] = useState();
     const statusResult = authService.useGetStatus();
     const personResult = personService.useGetPerson();
 
@@ -42,7 +42,6 @@ const App = ({ children, showLoader }) => {
                             },
                         ]);
                     } catch (e) {
-                        console.log('E', e);
                         setUserState(DEFAULT_USER_STATE);
                     }
                 } else {
@@ -54,6 +53,21 @@ const App = ({ children, showLoader }) => {
         init();
     }, [statusResult.data]);
 
+    const roleInTeam = useCallback(
+        (teamId, role) => {
+            const { teams } = userState[0];
+
+            return !!teams.find(({ id, roles }) => {
+                return teamId === id && roles.includes(role);
+            });
+        },
+        [userState]
+    );
+
+    const managerInTeam = teamId => {
+        setIsTeamManager(teamId, ROLE_MANAGER);
+    };
+
     const isLoading = personResult.isLoading || statusResult.isLoading;
 
     return (
@@ -61,6 +75,9 @@ const App = ({ children, showLoader }) => {
             value={{
                 userState,
                 showError: personResult.isError || statusResult.isError,
+                roleInTeam,
+                managerInTeam,
+                isTeamManager,
             }}>
             {showLoader && isLoading && (
                 <Container>
