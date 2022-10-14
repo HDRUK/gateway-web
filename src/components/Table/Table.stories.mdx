@@ -8,33 +8,34 @@ import Table from './Table';
 <Canvas>
     <Story name='Basic'>
         {props => (
-            <Table
-                width='600px'
-                columns={[
-                    {
-                        Header: 'Name',
-                        accessor: 'name',
-                    },
-                    {
-                        Header: 'Role',
-                        accessor: 'role',
-                    },
-                ]}
-                data={[
-                    {
-                        name: 'Kymme Hayley',
-                        role: 'Admin',
-                    },
-                    {
-                        name: 'Peter Hammans',
-                        role: 'Admin',
-                    },
-                    {
-                        name: 'Geeta Kotecha',
-                        role: 'Admin',
-                    },
-                ]}
-            />
+            <Box maxWidth='100%'>
+                <Table
+                    columns={[
+                        {
+                            Header: 'Name',
+                            accessor: 'name',
+                        },
+                        {
+                            Header: 'Role',
+                            accessor: 'role',
+                        },
+                    ]}
+                    data={[
+                        {
+                            name: 'Kymme Hayley',
+                            role: 'Admin',
+                        },
+                        {
+                            name: 'Peter Hammans',
+                            role: 'Admin',
+                        },
+                        {
+                            name: 'Geeta Kotecha',
+                            role: 'Admin',
+                        },
+                    ]}
+                />
+            </Box>
         )}
     </Story>
 </Canvas>
