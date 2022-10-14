@@ -1,67 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Row, Col, Button } from 'react-bootstrap';
-import { isEmpty } from 'lodash';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { Card, CardBody, Typography, Button, CardHeader, P, Box } from 'hdruk-react-core';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+import Table from '../../components/Table';
+import { SUPPORT_URL } from '../../configs/constants';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
-// import '../../css/styles.scss';
-// import './Dashboard.scss';
-import AccountMembersModal from '../AccountTeamMembersModal';
+import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { LayoutContent } from '../../components/Layout';
-import { baseURL } from '../../configs/url.config';
+import { useAuth } from '../../context/AuthContext';
+import teamsService from '../../services/teams';
+import { getRolesList } from '../../utils/auth';
 
-const AccountTeamMembers = props => {
-    const [userState] = useState(props.userState);
-    const [isLoading, setIsLoading] = useState(true);
+export const AccountTeamMembers = ({ team }) => {
+    const { isTeamManager, managerInTeam } = useAuth();
     const [members, setMembers] = useState([]);
-    const [userIsManager, setUserIsManager] = useState(false);
-    const [showAccountAddMemberModal, setShowAccountAddMemberModal] = useState(false);
-    const [accountMembersId, setAccountMembersId] = useState(props.team);
+    const [showModal, setShowModal] = useState();
+    const { t } = useTranslation();
+    const getMembersRequest = teamsService.useGetMembers();
+
+    const columns = useMemo(
+        () => [
+            {
+                Header: 'Name',
+                accessor: 'name',
+            },
+            {
+                Header: 'Role',
+                accessor: 'role',
+            },
+        ],
+        []
+    );
 
     useEffect(() => {
-        setAccountMembersId(props.team);
-    }, [props]);
+        const init = () => {
+            if (team) {
+                getMembersRequest.mutateAsync(team).then(({ data: { members: teamMembers } }) => {
+                    setMembers(teamMembers);
 
-    useEffect(() => {
-        doMembersCall().catch(console.error);
-    }, [accountMembersId]);
+                    // TODO: GAT-1510:042
+                    managerInTeam(team);
+                });
+            }
+        };
 
-    const doMembersCall = async () => {
-        if (accountMembersId) {
-            setIsLoading(true);
-            await axios.get(`${baseURL}/api/v1/teams/${accountMembersId}/members`).then(async res => {
-                setMembers(res.data.members);
-                // TODO: GAT-1510:042
-                setUserIsManager(res.data.members.filter(m => m.id === userState[0].id).map(m => m.roles[0] === 'manager')[0]);
-            });
-        }
-        setIsLoading(false);
+        init();
+    }, [team]);
+
+    const handleCloseModal = useCallback(() => {
+        setShowModal(false);
+    }, []);
+
+    const handleOpenModal = useCallback(() => {
+        setShowModal(true);
+    }, []);
+
+    const handleMemberAdded = addedMembers => {
+        setMembers(addedMembers);
     };
 
-    const onShowAccountMembersModal = () => {
-        setShowAccountAddMemberModal(!showAccountAddMemberModal);
-    };
-
-    const onMemberAdded = members => {
-        setMembers(members);
-    };
-
-    const renderRoles = roles => {
-        if (!isEmpty(roles)) {
-            const sortedRoles = roles.sort();
-            // TODO: GAT-1510:043
-            return sortedRoles.map(role => `${roleList[role]}${roles.length > 1 && roles.indexOf(role) !== roles.length - 1 ? ', ' : ' '}`);
-        }
-        return '';
-    };
-
-    let roleList = {
-        manager: 'Manager',
-        reviewer: 'Reviewer',
-        metadata_editor: 'Metadata Editor',
-    };
-
-    if (isLoading) {
+    if (getMembersRequest.isLoading) {
         return (
             <LayoutContent>
                 <Loading />
@@ -72,96 +72,72 @@ const AccountTeamMembers = props => {
     return (
         <>
             <LayoutContent>
-                <div className='accountHeader d-flex'>
-                    <Col sm={12} md={9}>
-                        <Row>
-                            <span className='black-20'>Members</span>
-                        </Row>
-                        <Row>
-                            <span className='gray700-13'>
-                                To remove team members or change their roles, please raise a support ticket at the following link:
-                            </span>
-                        </Row>
-                        <Row>
-                            <span className='purple-13 pad-bottom-24'>
-                                {' '}
-                                <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>
-                                    https://hdruk.atlassian.net/servicedesk/customer/portal/1
-                                </a>
-                            </span>
-                        </Row>
-                        <Row>
-                            <span className='gray700-13 pad-bottom-24'>
-                                Managers can; manage members, create and assign workflows, review applications that are assigned to them and
-                                make the final decision on data access request applications.
-                            </span>
-                        </Row>
-                        <Row>
-                            <span className='gray700-13'>Reviewers can review applications that are assigned to them.</span>
-                        </Row>
-                    </Col>
+                <Card mb={4}>
+                    <CardHeader>Members</CardHeader>
+                    <CardBody>
+                        <Box
+                            display={{
+                                md: 'flex',
+                            }}
+                            gap={8}>
+                            <Box
+                                mb={{
+                                    xxs: 6,
+                                    md: 0,
+                                }}
+                                flexGrow='1'>
+                                <P mb={6}>
+                                    {t('components.AccountMembers.members.description1')}: <a href={SUPPORT_URL}>{SUPPORT_URL}</a>
+                                </P>
+                                <P mb={6}>{t('components.AccountMembers.members.description2')}</P>
+                                <P>{t('components.AccountMembers.members.description3')}</P>
+                            </Box>
+                            <Box
+                                display={{
+                                    md: 'flex',
+                                }}
+                                justifyContent='flex-end'
+                                flexBasis={{
+                                    md: '40%',
+                                }}>
+                                {isTeamManager && (
+                                    <Button variant='primary' onClick={handleOpenModal}>
+                                        {t('components.AccountMembers.members.add')}
+                                    </Button>
+                                )}
+                            </Box>
+                        </Box>
+                    </CardBody>
+                </Card>
 
-                    <Col sm={12} md={3} style={{ textAlign: 'right' }}>
-                        {userIsManager ? (
-                            <Button variant='primary' className='addButton' onClick={e => onShowAccountMembersModal()}>
-                                + Add a new member
-                            </Button>
-                        ) : (
-                            ''
-                        )}
-                    </Col>
-                </div>
+                {members.length <= 0 && <MessageNotFound word='members' />}
+                {members.length > 0 && (
+                    <Card>
+                        <Table
+                            columns={columns}
+                            data={members.map(({ lastname, firstname, id, bio, organisation, roles }) => ({
+                                name: (
+                                    <>
+                                        <Typography as={Link} to={`/person/${id}`} color='purple500'>
+                                            {firstname} {lastname}
+                                        </Typography>
+                                        <Typography color='grey600'>{organisation || bio}</Typography>
+                                    </>
+                                ),
+                                role: getRolesList(roles),
+                            }))}
+                        />
+                    </Card>
+                )}
 
-                {(() => {
-                    return (
-                        <div>
-                            {members.length <= 0 ? (
-                                ''
-                            ) : (
-                                <div className='subHeaderFlex mt-3 gray800-14-bold'>
-                                    <Col xs={5}>Name</Col>
-                                    <Col xs={4}>Role</Col>
-                                    <Col xs={3} />
-                                </div>
-                            )}
-                            {members.length <= 0 ? (
-                                <Row className='margin-right-15'>
-                                    <MessageNotFound word='members' />
-                                </Row>
-                            ) : (
-                                members.map(m => {
-                                    return (
-                                        <div className='entryBoxFlex padding-left-20'>
-                                            <Col sm={12} lg={5}>
-                                                <a href={`/person/${m.id}`} className='purple-14'>
-                                                    {m.firstname} {m.lastname}
-                                                </a>
-                                                <Row sm={5} lg={5}>
-                                                    <Col sm={10} lg={10} className='gray-600-14 ellipsis'>
-                                                        {m.organisation ? m.organisation : m.bio}
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                            <Col sm={4} lg={4} className='black-14'>
-                                                {renderRoles(m.roles)}
-                                            </Col>
-                                        </div>
-                                    );
-                                })
-                            )}
-
-                            <AccountMembersModal
-                                open={showAccountAddMemberModal}
-                                close={onShowAccountMembersModal}
-                                teamId={accountMembersId}
-                                onMemberAdded={onMemberAdded}
-                            />
-                        </div>
-                    );
-                })()}
+                <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={team} onMemberAdded={handleMemberAdded} />
             </LayoutContent>
         </>
     );
+};
+
+AccountTeamMembers.propTypes = {
+    team: PropTypes.string.isRequired,
 };
 
 export default AccountTeamMembers;
