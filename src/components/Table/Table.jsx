@@ -2,11 +2,12 @@
 import { jsx } from '@emotion/react';
 import PropTypes from 'prop-types';
 import { useTable } from 'react-table';
+import { cx } from '@emotion/css';
 import useCommonStyles from '../../hooks/useCommonStyles';
 import { COMMON_PROP_TYPES } from '../../configs/propTypes';
 import styles from './Table.styles';
 
-const Table = ({ columns, data, mt, mb, ml, mr, width, minWidth, maxWidth }) => {
+const Table = ({ className, columns, data, mt, mb, ml, mr, width, minWidth, maxWidth }) => {
     const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
@@ -15,7 +16,7 @@ const Table = ({ columns, data, mt, mb, ml, mr, width, minWidth, maxWidth }) => 
     });
 
     return (
-        <table {...getTableProps()} css={styles} className={commonStyles}>
+        <table {...getTableProps()} css={styles} className={cx([commonStyles, className])}>
             <thead>
                 {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
