@@ -16,6 +16,8 @@ import 'jest-date-mock';
 import { DEFAULT_THEME } from 'hdruk-react-core';
 import { merge } from 'lodash';
 import { CmsProvider } from './context/CmsContext';
+import { MemoryRouter, Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 Enzyme.configure({
     adapter: new Adapter(),
@@ -95,6 +97,8 @@ const queryClient = new QueryClient({
     },
 });
 
+const history = createMemoryHistory();
+
 global.Providers = ({ children }) => {
     return (
         <I18nextProvider i18n={i18n}>
@@ -102,7 +106,9 @@ global.Providers = ({ children }) => {
                 <ThemeProvider theme={merge(theme, DEFAULT_THEME)}>
                     <AuthProvider value={{ userState: mockUser.data }}>
                         <QueryClientProvider client={queryClient}>
-                            <CmsProvider>{children}</CmsProvider>
+                            <CmsProvider>
+                                <MemoryRouter history={history}>{children}</MemoryRouter>
+                            </CmsProvider>
                         </QueryClientProvider>
                     </AuthProvider>
                 </ThemeProvider>

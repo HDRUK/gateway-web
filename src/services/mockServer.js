@@ -7,6 +7,7 @@ import mswGetContributors from './contributors/mockMsw';
 import mswDatasetOnboarding from './dataset-onboarding/mockMsw';
 import mswDatasets from './datasets/mockMsw';
 import mswGetLocations from './locations/mockMsw';
+import mswGetMembers from './teams/mockMsw';
 import mswGetUsers from './users/mockMsw';
 
 const mswGetEnTranslations = rest.get(`http://localhost/locales/en/translation.json`, (req, res, ctx) => {
@@ -33,6 +34,7 @@ const handlers = [
     mswGetEnTranslations,
     mswGetEnGbTranslations,
     mswGetIcon,
+    ...mswGetMembers,
 ];
 
-export const server = setupServer(...handlers);
+export const server = setupServer.apply(null, handlers);
