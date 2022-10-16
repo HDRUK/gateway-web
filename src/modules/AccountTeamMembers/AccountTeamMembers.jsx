@@ -14,9 +14,9 @@ import { useAuth } from '../../context/AuthContext';
 import teamsService from '../../services/teams';
 import { getRolesList } from '../../utils/auth';
 
-export const AccountTeamMembers = ({ teamId }) => {
+const AccountTeamMembers = ({ teamId }) => {
     const { isTeamManager, managerInTeam } = useAuth();
-    const [members, setMembers] = useState([]);
+    const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
     const { t } = useTranslation();
 
@@ -43,8 +43,8 @@ export const AccountTeamMembers = ({ teamId }) => {
     useEffect(() => {
         const init = () => {
             if (teamId) {
-                getMembersRequest.mutateAsync(teamId).then(({ data: { members: teamMembers } }) => {
-                    setMembers(teamMembers);
+                getMembersRequest.mutateAsync(teamId).then(({ data: { members } }) => {
+                    setTeamMembers(members);
 
                     // TODO: GAT-1510:042
                     managerInTeam(teamId);
@@ -64,7 +64,7 @@ export const AccountTeamMembers = ({ teamId }) => {
     }, []);
 
     const handleMemberAdded = addedMembers => {
-        setMembers(addedMembers);
+        setTeamMembers(addedMembers);
     };
 
     if (getMembersRequest.isLoading) {
@@ -74,6 +74,8 @@ export const AccountTeamMembers = ({ teamId }) => {
             </LayoutContent>
         );
     }
+
+    console.log('teamMembers', teamMembers);
 
     return (
         <>
@@ -116,12 +118,12 @@ export const AccountTeamMembers = ({ teamId }) => {
                     </CardBody>
                 </Card>
 
-                {members.length <= 0 && <MessageNotFound word='members' />}
-                {members.length > 0 && (
+                {teamMembers.length <= 0 && <MessageNotFound word='members' />}
+                {teamMembers.length > 0 && (
                     <Card>
                         <Table
                             columns={columns}
-                            data={members.map(({ lastname, firstname, id, bio, organisation, roles }) => ({
+                            data={teamMembers.map(({ lastname, firstname, id, bio, organisation, roles }) => ({
                                 name: (
                                     <>
                                         <Typography as={Link} to={`/person/${id}`} color='purple500'>
