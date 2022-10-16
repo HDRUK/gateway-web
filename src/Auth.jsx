@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { PERMISSIONS_USER_TYPES } from 'consts';
+import { permissionsUserTypes } from 'consts';
 import { userHasRole } from 'utils/auth';
 import { AuthProvider } from './context/AuthContext';
 import authService from './services/auth';
 import personService from './services/person';
 import Loading from './pages/commonComponents/Loading';
-import { DEFAULT_USER_STATE, ROLE_MANAGER } from './configs/constants';
+import { DEFAULT_USER_STATE } from './configs/constants';
 
 const App = ({ children, showLoader }) => {
     const [userState, setUserState] = useState();
@@ -56,7 +56,7 @@ const App = ({ children, showLoader }) => {
     }, [statusResult.data]);
 
     const managerInTeam = teamId => {
-        setIsTeamManager(userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
+        setIsTeamManager(userHasRole(userState, teamId, permissionsUserTypes.MANAGER));
     };
 
     const isLoading = personResult.isLoading || statusResult.isLoading;
