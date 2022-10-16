@@ -122,7 +122,7 @@ describe('Given the AccountTeamMembers component', () => {
                     fireEvent.click(addMembersButton);
                 });
 
-                describe('Add member is clicked', () => {
+                describe('And add member is clicked', () => {
                     beforeAll(() => {
                         const addMemberButton = screen.getByText(/Add member/);
 
