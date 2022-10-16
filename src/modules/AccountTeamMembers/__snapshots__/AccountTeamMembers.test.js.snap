@@ -203,6 +203,9 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
           </tbody>
         </table>
       </div>
+      <div>
+        Modal closed
+      </div>
     </div>
     <div
       class="ui-LayoutContent--right col-1"

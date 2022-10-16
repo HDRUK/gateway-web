@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { server } from '../../services/mockServer';
@@ -11,11 +11,39 @@ const props = {
 jest.mock('../../context/AuthContext', () => ({
     ...jest.requireActual('../../context/AuthContext'),
     useAuth: jest.fn().mockReturnValue({
+        isTeamManager: false,
         managerInTeam: jest.fn(),
     }),
 }));
 
-// const managerInTeamMock = jest.fn();
+// This is temporary until AccountTeamMembersModal has been refactored
+jest.mock('../AccountTeamMembersModal', () => ({ onMemberAdded, close, open }) => {
+    return open ? (
+        <>
+            <button
+                onClick={() =>
+                    onMemberAdded([
+                        {
+                            firstname: 'Patient',
+                            lastname: '0',
+                            id: '9101112',
+                            roles: ['manager'],
+                            organisation: 'HDR',
+                            bio: 'Manager',
+                        },
+                    ])
+                }
+                type='button'>
+                Add member
+            </button>
+            <button onClick={close} type='button'>
+                Close
+            </button>
+        </>
+    ) : (
+        <div>Modal closed</div>
+    );
+});
 
 let wrapper;
 let headers;
@@ -81,6 +109,47 @@ describe('Given the AccountTeamMembers component', () => {
                 expect(within(cells[0]).getByRole('link').textContent).toEqual('Jane Doe');
                 expect(within(cells[0]).getByText('Google')).toBeTruthy();
                 expect(within(cells[1]).getByText(/Manager/)).toBeTruthy();
+            });
+
+            describe('And new member is clicked', () => {
+                beforeAll(() => {
+                    useAuth.mockReturnValue({ isTeamManager: true, managerInTeam: jest.fn() });
+
+                    wrapper.rerender(<AccountTeamMembers {...props} />);
+
+                    const addMembersButton = screen.getByText(/Add a new member/);
+
+                    fireEvent.click(addMembersButton);
+                });
+
+                describe('Add member is clicked', () => {
+                    beforeAll(() => {
+                        const addMemberButton = screen.getByText(/Add member/);
+
+                        fireEvent.click(addMemberButton);
+                    });
+
+                    it('Then has a new row', () => {
+                        const rows = within(headers[1]).getAllByRole('row');
+                        const cells = within(rows[0]).getAllByRole('cell');
+
+                        expect(within(cells[0]).getByRole('link').textContent).toEqual('Patient 0');
+                        expect(within(cells[0]).getByText('HDR')).toBeTruthy();
+                        expect(within(cells[1]).getByText(/Manager/)).toBeTruthy();
+                    });
+                });
+
+                describe('And close is clicked', () => {
+                    beforeAll(() => {
+                        const closeButton = screen.getByText(/Close/);
+
+                        fireEvent.click(closeButton);
+                    });
+
+                    it('Then closes the modal', () => {
+                        expect(screen.getByText('Modal closed')).toBeTruthy();
+                    });
+                });
             });
         });
     });
