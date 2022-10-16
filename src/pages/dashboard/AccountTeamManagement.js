@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
 import axios from 'axios';
-import { PERMISSIONS_USER_TYPES } from 'consts';
+import { permissionsUserTypes } from 'consts';
 import Loading from '../commonComponents/Loading';
 import { baseURL } from '../../configs/url.config';
 import AccountMembers from './AccountMembers';
@@ -95,7 +95,7 @@ const AccountTeamManagement = ({
         const team = userState[0].teams.filter(t => {
             return t._id === teamId;
         })[0];
-        return team && team.isAdmin && !team.roles.includes(PERMISSIONS_USER_TYPES.manager);
+        return team && team.isAdmin && !team.roles.includes(permissionsUserTypes.MANAGER);
     };
 
     const getTotalGatewayTeamEmails = (data = []) => {
@@ -281,7 +281,7 @@ const AccountTeamManagement = ({
         const missingOptIns = findMandatoryOptIns() || false;
         const isValid = validEmailList().length > 0;
         // TODO: GAT-1510:014
-        const isManager = userHasRole(teamId, PERMISSIONS_USER_TYPES.manager);
+        const isManager = userHasRole(teamId, permissionsUserTypes.MANAGER);
         // has optIns for team notificaiton emails
         const teamOptIns = hasTeamNotificationOptIns();
         if (missingOptIns) {
