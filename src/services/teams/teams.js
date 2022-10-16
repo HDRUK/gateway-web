@@ -2,7 +2,7 @@ import { apiURL } from '../../configs/url.config';
 import { getRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getMembers = (_id, options) => {
-    return getRequest(`${apiURL}/teams/${_id}/mdembers`, options);
+    return getRequest(`${apiURL}/teams/${_id}/members`, options);
 };
 
 const getNotifications = (_id, options) => {
