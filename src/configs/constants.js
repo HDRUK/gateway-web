@@ -26,12 +26,3 @@ export const DEFAULT_USER_STATE = [
 
 export const CMS_ACTION_OPEN_DATA_UTILITY_MODAL = 'openDataUtilityModal';
 export const CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL = 'openCohortDiscoveryModal';
-
-export const ROLE_LIST = {
-    manager: 'Manager',
-    reviewer: 'Reviewer',
-    metadata_editor: 'Metadata Editor',
-    admin: 'Admin',
-};
-
-export const ROLE_MANAGER = 'manager';

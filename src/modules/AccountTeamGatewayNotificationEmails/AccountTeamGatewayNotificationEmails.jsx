@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Switch from 'react-switch';
 import { useTranslation } from 'react-i18next';
-import { permissionsConsts } from 'consts';
 import { authUtils } from 'utils';
-import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
-
-const { userTypes } = permissionsConsts;
+import { PERMISSIONS_USER_TYPES } from 'consts';
 
 const AccountTeamGatewayNotificationEmails = ({ teamId, userState, teamNotification, toggleTeamNotifications }) => {
     const { t } = useTranslation();

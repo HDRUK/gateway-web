@@ -12,9 +12,8 @@ import {
     AccountTeamGatewayEmail,
 } from 'modules';
 import { authUtils } from 'utils';
-import { accountConsts, permissionsConsts, uiConsts } from 'consts';
+import { accountConsts, PERMISSIONS_USER_TYPES, uiConsts } from 'consts';
 import PropTypes from 'prop-types';
-import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
 import { baseURL } from '../../configs/url.config';
 // import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
@@ -37,7 +36,6 @@ import {
 
 const { alertTypes } = uiConsts;
 const { tabTypes } = accountConsts;
-const { userTypes } = permissionsConsts;
 
 const AccountTeamManagementPage = ({
     userState = [],

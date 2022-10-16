@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
+import { PERMISSIONS_USER_TYPES } from 'consts';
 import { userHasRole } from 'utils/auth';
 import { AuthProvider } from './context/AuthContext';
 import authService from './services/auth';

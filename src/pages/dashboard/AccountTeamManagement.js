@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
 import axios from 'axios';
-import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
+import { PERMISSIONS_USER_TYPES } from 'consts';
 import Loading from '../commonComponents/Loading';
 import { baseURL } from '../../configs/url.config';
 import AccountMembers from './AccountMembers';
@@ -12,7 +12,7 @@ import TeamGatewayNotificationEmails from './Team/TeamGatewayNotificationEmails'
 import FieldRepeater from '../commonComponents/FieldRepeater/FieldRepeater';
 import TeamEmailAlertModal from './Team/TeamEmailAlertModal';
 import TeamNotificationsConfirmationModal from './Team/TeamNotificationsConfirmationModal';
-import { userTypes, tabTypes } from './Team/teamUtil';
+import { tabTypes } from './Team/teamUtil';
 import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
 import Alert from '../../components/Alert';

@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { permissionsConsts } from 'consts';
 import './AccountTeamFieldRepeater.scss';
 import { authUtils } from 'utils';
 import { isEmpty } from 'lodash';
-import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
-
-const { userTypes } = permissionsConsts;
+import { PERMISSIONS_USER_TYPES } from 'consts';
 
 const AccountTeamFieldRepeaterAction = ({ data, isManager, notificationType, index, handleRemoveClick, handleAddClick }) => {
     return (

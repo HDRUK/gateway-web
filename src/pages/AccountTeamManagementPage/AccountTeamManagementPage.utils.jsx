@@ -1,8 +1,5 @@
 import { isEmpty } from 'lodash';
-import { permissionsConsts } from 'consts';
-import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
-
-const { userTypes } = permissionsConsts;
+import { PERMISSIONS_USER_TYPES } from 'consts';
 
 const userRoleIsAdmin = (teamId, userState) => {
     const team = userState[0].teams.filter(t => {
