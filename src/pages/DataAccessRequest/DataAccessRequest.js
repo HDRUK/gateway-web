@@ -58,7 +58,7 @@ import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UpdateRequestModal from './components/UpdateRequestModal/UpdateRequestModal';
 import Uploads from './components/Uploads/Uploads';
 import './DataAccessRequest.scss';
-import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
+import { PERMISSIONS_USER_TYPES } from 'consts';
 
 class DataAccessRequest extends Component {
     constructor(props) {

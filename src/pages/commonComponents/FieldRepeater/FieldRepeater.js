@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Field from './Field';
 import FieldRepeaterAction from './FieldRepeaterAction';
-import { userTypes } from '../../dashboard/Team/teamUtil';
 import './FieldRepeater.scss';
-import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
+import { PERMISSIONS_USER_TYPES } from 'consts';
 
 const FieldRepeater = ({ id, teamId, data, userHasRole, handleFieldChange, handleRemoveClick, handleAddClick }) => {
     const [manager, setIsManager] = useState(false);
