@@ -1,4 +1,4 @@
-import { PERMISSIONS_USER_TYPES } from 'consts/permissions';
+import { PERMISSIONS_USER_TYPES } from 'consts';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Alert from '../../../../components/Alert';
@@ -8,7 +8,6 @@ import { isCustodian, userHasRole } from '../../../../utils/auth';
 import DataUsePage from '../../../dataUse/DataUsePage';
 import DataUseUpload from '../../../dataUse/upload/DataUseUpload';
 import DataUseWidget from '../../../dataUse/widget/DataUseWidget';
-import { userTypes } from '../../Team/teamUtil';
 
 const AccountDataUse = ({ tabId, team, publisherDetails }) => {
     const { userState } = useAuth();

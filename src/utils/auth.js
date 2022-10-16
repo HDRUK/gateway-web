@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import _ from 'lodash';
 
-import { PERMISSIONS_ROLE_NAMES } from '../consts/permissions';
+import { PERMISSIONS_ROLE_NAMES } from 'consts';
 
 export const getTeam = props => {
     const values = queryString.parse(window.location.search);
