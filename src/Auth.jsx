@@ -56,7 +56,7 @@ const App = ({ children, showLoader }) => {
     }, [statusResult.data]);
 
     const managerInTeam = teamId => {
-        setIsTeamManager(userHasRole(teamId, PERMISSIONS_USER_TYPES.manager));
+        setIsTeamManager(userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
     };
 
     const isLoading = personResult.isLoading || statusResult.isLoading;
