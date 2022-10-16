@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './AccountTeamFieldRepeater.scss';
 import { authUtils } from 'utils';
 import { isEmpty } from 'lodash';
-import { PERMISSIONS_USER_TYPES } from 'consts';
+import { permissionsUserTypes } from 'consts';
 
 const AccountTeamFieldRepeaterAction = ({ data, isManager, notificationType, index, handleRemoveClick, handleAddClick }) => {
     return (
@@ -52,7 +52,7 @@ const AccountTeamFieldRepeater = ({ id, teamId, data, userState, handleFieldChan
 
     useEffect(() => {
         // TODO: GAT-1510:003
-        setIsManager(authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
+        setIsManager(authUtils.userHasRole(userState, teamId, permissionsUserTypes.MANAGER));
     }, [teamId]);
 
     return (
