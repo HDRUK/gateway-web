@@ -75,8 +75,6 @@ const AccountTeamMembers = ({ teamId }) => {
         );
     }
 
-    console.log('teamMembers', teamMembers);
-
     return (
         <>
             <LayoutContent>
