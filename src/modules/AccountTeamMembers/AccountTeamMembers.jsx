@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { Card, CardBody, Typography, Button, CardHeader, P, Box } from 'hdruk-react-core';
+import { Card, CardBody, Typography, Button, P, Box, H5 } from 'hdruk-react-core';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -79,8 +79,8 @@ const AccountTeamMembers = ({ teamId }) => {
         <>
             <LayoutContent>
                 <Card mb={4}>
-                    <CardHeader>{t('members')}</CardHeader>
                     <CardBody>
+                        <H5 mb={1}>{t('members')}</H5>
                         <Box
                             display={{
                                 md: 'flex',
