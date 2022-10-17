@@ -12,7 +12,7 @@ import {
     AccountTeamGatewayEmail,
 } from 'modules';
 import { authUtils } from 'utils';
-import { accountConsts, permissionsUserTypes, uiConsts } from 'consts';
+import { accountConsts, PERMISSIONS_USER_TYPES, uiConsts } from 'consts';
 import PropTypes from 'prop-types';
 import { baseURL } from '../../configs/url.config';
 // import './Dashboard.scss';
@@ -73,7 +73,7 @@ const AccountTeamManagementPage = ({
         const missingOptIns = findMandatoryOptIns(memberNotifications, teamGatewayNotifications) || false;
         const isValid = validEmailList(teamGatewayNotifications).length > 0;
         // TODO: GAT-1510:014
-        const isManager = authUtils.userHasRole(userState, teamId, permissionsUserTypes.MANAGER);
+        const isManager = authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager);
         // has optIns for team notificaiton emails
         const teamOptIns = hasTeamNotificationOptIns(teamGatewayNotifications);
         if (missingOptIns) {

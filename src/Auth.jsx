@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { permissionsUserTypes } from 'consts';
+import { PERMISSIONS_USER_TYPES } from 'consts';
 import { userHasRole } from 'utils/auth';
 import { AuthProvider } from './context/AuthContext';
 import authService from './services/auth';
@@ -56,7 +56,7 @@ const App = ({ children, showLoader }) => {
     }, [statusResult.data]);
 
     const managerInTeam = teamId => {
-        setIsTeamManager(userHasRole(userState, teamId, permissionsUserTypes.MANAGER));
+        setIsTeamManager(userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
     };
 
     const isLoading = personResult.isLoading || statusResult.isLoading;
