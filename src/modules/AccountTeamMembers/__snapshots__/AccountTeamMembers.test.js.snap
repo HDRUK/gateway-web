@@ -74,13 +74,13 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
         role="article"
       >
         <div
-          class="ui-CardHeader emotion-1"
+          class="ui-CardBody emotion-1"
         >
-          Members
-        </div>
-        <div
-          class="ui-CardBody emotion-2"
-        >
+          <h5
+            class="ui-Typography emotion-2"
+          >
+            Members
+          </h5>
           <div
             class="ui-Box emotion-3"
           >
