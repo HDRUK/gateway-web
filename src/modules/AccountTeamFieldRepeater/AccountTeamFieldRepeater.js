@@ -4,7 +4,7 @@ import { authUtils } from 'utils';
 import { isEmpty } from 'lodash';
 import { PERMISSIONS_USER_TYPES } from 'consts';
 
-const AccountTeamFieldRepeaterAction = ({ data, isManager, notificationType, index, handleRemoveClick, handleAddClick }) => {
+const AccountTeamFieldRepeaterAction = ({ subscribedEmails, notificationType, isManager, index, handleRemoveClick, handleAddClick }) => {
     return (
         <>
             {isManager && (
@@ -12,13 +12,13 @@ const AccountTeamFieldRepeaterAction = ({ data, isManager, notificationType, ind
                     <button
                         onClick={e => handleRemoveClick(index, notificationType)}
                         className='plusMinusButton'
-                        disabled={data.length === 1}>
+                        disabled={subscribedEmails.length === 1}>
                         -
                     </button>
                     <button
                         onClick={() => handleAddClick(notificationType)}
                         className='plusMinusButton'
-                        disabled={data.length - 1 !== index}>
+                        disabled={subscribedEmails.length - 1 !== index}>
                         +
                     </button>
                 </div>
@@ -27,8 +27,8 @@ const AccountTeamFieldRepeaterAction = ({ data, isManager, notificationType, ind
     );
 };
 
-const AccountTeamField = ({ id = '', isManager = false, data = {}, index = 0, notificationType = '', handleFieldChange }) => {
-    const { value, error } = data;
+const AccountTeamField = ({ id = '', isManager = false, subscribedEmail = {}, notificationType, index = 0, handleFieldChange }) => {
+    const { value, error } = subscribedEmail;
     return (
         <div className='form-group'>
             <input
@@ -45,10 +45,10 @@ const AccountTeamField = ({ id = '', isManager = false, data = {}, index = 0, no
     );
 };
 
-const AccountTeamFieldRepeater = ({ id, teamId, data, userState, handleFieldChange, handleRemoveClick, handleAddClick }) => {
+const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, userState, handleFieldChange, handleRemoveClick, handleAddClick }) => {
     const [isManager, setIsManager] = useState(false);
 
-    const { subscribedEmails = [], notificationType = '' } = data;
+    const { subscribedEmails = [], notificationType = '' } = teamNotification;
 
     useEffect(() => {
         // TODO: GAT-1510:003
@@ -62,13 +62,13 @@ const AccountTeamFieldRepeater = ({ id, teamId, data, userState, handleFieldChan
                     <AccountTeamField
                         id={index + 1}
                         isManager={isManager}
-                        data={value}
+                        subscribedEmail={value}
                         index={index}
                         notificationType={notificationType}
                         handleFieldChange={handleFieldChange}
                     />
                     <AccountTeamFieldRepeaterAction
-                        data={subscribedEmails}
+                        subscribedEmails={subscribedEmails}
                         isManager={isManager}
                         notificationType={notificationType}
                         index={index}

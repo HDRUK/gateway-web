@@ -5,7 +5,7 @@ import { isEmpty, upperFirst } from 'lodash';
 import { ACCOUNT_TAB_TYPES } from 'consts';
 import { AccountTeamFieldRepeater, AccountTeamGatewayNotificationEmails, AccountTeamGatewayEmail } from 'modules';
 import PropTypes from 'prop-types';
-import { userStateType } from 'types';
+import { userStateType, teamGatewayNotificationsType } from 'types';
 import { Card, H2, P, Typography, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import Loading from '../commonComponents/Loading';
@@ -165,7 +165,7 @@ const TeamNotifications = ({
 };
 
 TeamNotifications.propTypes = {
-    teamGatewayNotifications: PropTypes.arrayOf(PropTypes.shape({ optIn: PropTypes.bool, notificationType: PropTypes.string })).isRequired,
+    teamGatewayNotifications: teamGatewayNotificationsType.isRequired,
     teamId: PropTypes.string.isRequired,
     toggleTeamNotifications: PropTypes.func.isRequired,
     handleRemoveClick: PropTypes.func.isRequired,
@@ -212,7 +212,7 @@ NotificationTab.propTypes = {
     teamId: PropTypes.string.isRequired,
     userState: userStateType.isRequired,
     togglePersonalNotifications: PropTypes.func.isRequired,
-    teamGatewayNotifications: PropTypes.arrayOf(PropTypes.shape({ optIn: PropTypes.bool, notificationType: PropTypes.string })).isRequired,
+    teamGatewayNotifications: teamGatewayNotificationsType.isRequired,
     toggleTeamNotifications: PropTypes.func.isRequired,
     handleFieldChange: PropTypes.func.isRequired,
     handleRemoveClick: PropTypes.func.isRequired,
