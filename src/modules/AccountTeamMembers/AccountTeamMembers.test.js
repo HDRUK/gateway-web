@@ -1,5 +1,5 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import React from 'react';
+import { render, fireEvent, screen, waitFor, within } from 'testUtils';
 import { useAuth } from '../../context/AuthContext';
 import { server } from '../../services/mockServer';
 import AccountTeamMembers from './AccountTeamMembers';
@@ -53,9 +53,7 @@ describe('Given the AccountTeamMembers component', () => {
         beforeAll(() => {
             server.listen();
 
-            wrapper = render(<AccountTeamMembers {...props} />, {
-                wrapper: Providers,
-            });
+            wrapper = render(<AccountTeamMembers {...props} />);
         });
 
         afterEach(() => {

@@ -10,4 +10,5 @@ export const PERMISSIONS_ROLE_NAMES = {
     reviewer: 'Reviewer',
     metadata_editor: 'Metadata Editor',
     admin: 'Admin',
+    custodian: 'Custodian',
 };
