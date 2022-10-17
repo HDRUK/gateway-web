@@ -1,4 +1,5 @@
 import ActionBarStatus from './ActionBarStatus';
+import ActionCard from './ActionCard';
 import Alert from './Alert';
 import AlertMessage from './AlertMessage';
 import AlertModal from './AlertModal';
@@ -32,6 +33,7 @@ import Typography from './Typography';
 
 export {
     ActionBarStatus,
+    ActionCard,
     Alert,
     AlertMessage,
     AlertModal,
