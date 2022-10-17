@@ -16,7 +16,7 @@ import 'jest-date-mock';
 import { DEFAULT_THEME } from 'hdruk-react-core';
 import { merge } from 'lodash';
 import { CmsProvider } from './context/CmsContext';
-import { MemoryRouter, Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 Enzyme.configure({

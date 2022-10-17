@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { PERMISSIONS_USER_TYPES } from 'consts';
