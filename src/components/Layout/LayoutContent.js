@@ -1,14 +1,30 @@
+import { Box } from 'hdruk-react-core/dist/cjs';
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 const LayoutContent = ({ children, ...outerProps }) => (
-    <Row {...outerProps} className='ui-LayoutContent'>
-        <Col xs={1} className='ui-LayoutContent--left' />
-        <Col xs={10} className='ui-LayoutContent--content'>
-            {children}
-        </Col>
-        <Col xs={1} className='ui-LayoutContent--right' />
-    </Row>
+    <Box
+        mb={4}
+        display={{
+            xxs: 'block',
+            md: 'grid',
+        }}
+        gridTemplateRows='1fr'
+        width='100%'
+        gridTemplateColumns='8.3% 1fr 8.3%'
+        {...outerProps}>
+        <div />
+        <div>{children}</div>
+        <div />
+    </Box>
 );
+
+LayoutContent.defaultProps = {
+    children: null,
+};
+
+LayoutContent.propTypes = {
+    children: PropTypes.node,
+};
 
 export default LayoutContent;
