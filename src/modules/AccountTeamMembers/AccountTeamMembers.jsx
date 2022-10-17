@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
-import { SUPPORT_URL } from 'consts';
+import { SUPPORT_URL } from '../../consts';
 import Table from '../../components/Table';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
