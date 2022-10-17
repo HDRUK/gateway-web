@@ -16,6 +16,16 @@ const hasTeamNotificationOptIns = teamGatewayNotifications => {
     return false;
 };
 
+const getTotalGatewayTeamEmails = (data = []) => {
+    // 1. if the user has passed in data ie set team emails to that data
+    if (!isEmpty(data)) {
+        const teamEmails = [...data];
+        // 3. if the emails are not empty and are clear of errors return the count else 0;
+        return [...teamEmails].filter(item => item.value !== '' && isEmpty(item.error)).length;
+    }
+    return 0;
+};
+
 const validEmailList = teamGatewayNotifications => {
     if (!isEmpty(teamGatewayNotifications)) {
         return [...teamGatewayNotifications].reduce((arr, teamNotification) => {
@@ -63,7 +73,7 @@ const formatSubscribedEmails = teamGatewayNotifications => {
     return [];
 };
 
-const findMandatoryOptIns = (memberNotifications, teamGatewayNotifications) => {
+const getHasMandatoryOptIns = (memberNotifications, teamGatewayNotifications) => {
     if (!isEmpty(memberNotifications)) {
         let hasMissingOptIns = false;
         for (const memberNotification of memberNotifications) {
@@ -76,11 +86,13 @@ const findMandatoryOptIns = (memberNotifications, teamGatewayNotifications) => {
         }
         return hasMissingOptIns;
     }
+    return false;
 };
 
 export {
+    getTotalGatewayTeamEmails,
     formatSubscribedEmails,
-    findMandatoryOptIns,
+    getHasMandatoryOptIns,
     getMemberNotification,
     getTeamNotificationType,
     validEmailList,

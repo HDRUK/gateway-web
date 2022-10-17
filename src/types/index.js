@@ -1,0 +1,27 @@
+import { arrayOf, shape, number, string, bool } from 'prop-types';
+
+const userStateType = arrayOf(
+    shape({
+        acceptedAdvancedSearchTerms: bool,
+        advancedSearchRoles: arrayOf(string),
+        email: string,
+        id: number,
+        loggedIn: bool,
+        name: string,
+        profileComplete: bool,
+        provider: string,
+        role: string,
+        teams: arrayOf(
+            shape({
+                _id: string,
+                isAdmin: bool,
+                name: string,
+                roles: arrayOf(string),
+                type: string,
+            })
+        ),
+        terms: bool,
+    })
+);
+
+export { userStateType };

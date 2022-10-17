@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Switch from 'react-switch';
-import { authUtils } from 'utils';
 import { PERMISSIONS_USER_TYPES } from 'consts';
+import { authUtils } from 'utils';
 
-const AccountTeamGatewayEmail = ({ id, teamId, userState = [], memberNotification, togglePersonalNotifications }) => {
+const AccountTeamGatewayEmail = ({ teamId, userState = [], memberNotification, togglePersonalNotifications }) => {
     const [user = {}] = userState;
     const { optIn, notificationType } = memberNotification;
     const isManager = () => {
@@ -17,7 +17,7 @@ const AccountTeamGatewayEmail = ({ id, teamId, userState = [], memberNotificatio
 
     return (
         <>
-            <div className='tm-notification' key={`member-notification-${id}`}>
+            <div className='tm-notification' key={`member-notification-${memberNotification.notificationType}`}>
                 <div className='tm-switch'>
                     <Switch
                         onChange={togglePersonalNotifications}

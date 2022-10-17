@@ -1,6 +1,6 @@
-const alertTypes = {
+const UI_ALERT_TYPES = {
     success: 'success',
     warning: 'warning',
 };
 
-export { alertTypes };
+export { UI_ALERT_TYPES };
