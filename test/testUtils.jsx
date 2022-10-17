@@ -6,6 +6,7 @@ import { merge } from 'lodash';
 import PropTypes from 'prop-types';
 import { I18nextProvider } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { MemoryRouter } from 'react-router-dom';
 import { AuthProvider } from '../src/context/AuthContext';
 import { theme } from '../src/configs/theme';
 import { CmsProvider } from '../src/context/CmsContext';
@@ -27,7 +28,9 @@ const AllTheProviders = ({ children }) => {
                 <ThemeProvider theme={merge(theme, DEFAULT_THEME)}>
                     <AuthProvider value={{ userState: mockUser.data }}>
                         <QueryClientProvider client={queryClient}>
-                            <CmsProvider>{children}</CmsProvider>
+                            <CmsProvider>
+                                <MemoryRouter>{children}</MemoryRouter>
+                            </CmsProvider>
                         </QueryClientProvider>
                     </AuthProvider>
                 </ThemeProvider>
