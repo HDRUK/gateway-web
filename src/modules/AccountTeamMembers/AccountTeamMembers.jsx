@@ -93,10 +93,10 @@ const AccountTeamMembers = ({ teamId }) => {
                                 }}
                                 flexGrow='1'>
                                 <P mb={6}>
-                                    {t('components.AccountMembers.members.description1')}: <a href={SUPPORT_URL}>{SUPPORT_URL}</a>
+                                    {t('components.AccountTeamMembers.members.description1')}: <a href={SUPPORT_URL}>{SUPPORT_URL}</a>
                                 </P>
-                                <P mb={6}>{t('components.AccountMembers.members.description2')}</P>
-                                <P>{t('components.AccountMembers.members.description3')}</P>
+                                <P mb={6}>{t('components.AccountTeamMembers.members.description2')}</P>
+                                <P>{t('components.AccountTeamMembers.members.description3')}</P>
                             </Box>
                             <Box
                                 display={{
@@ -108,7 +108,7 @@ const AccountTeamMembers = ({ teamId }) => {
                                 }}>
                                 {isTeamManager && (
                                     <Button variant='primary' onClick={handleOpenModal}>
-                                        {t('components.AccountMembers.members.add')}
+                                        {t('components.AccountTeamMembers.members.add')}
                                     </Button>
                                 )}
                             </Box>
