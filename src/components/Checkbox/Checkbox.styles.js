@@ -14,6 +14,7 @@ export const root =
             ${mixins.root({ width, disabled })}
 
             font-size: ${fontSize};
+            display: block;
 
             &::before {
                 ${mixins.before({ colors, variants, variant, width, height })}
