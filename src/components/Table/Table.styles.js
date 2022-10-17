@@ -40,6 +40,7 @@ const styles = theme => {
 
         td {
             padding: ${getSize(7, theme)} ${getSize(6, theme)};
+            position: relative;
 
             @media screen and (max-width: ${theme.breakpoints.sm}) {
                 display: block;
