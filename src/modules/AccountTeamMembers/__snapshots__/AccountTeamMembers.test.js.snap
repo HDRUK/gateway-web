@@ -3,14 +3,10 @@
 exports[`Given the AccountTeamMembers component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutContent row"
+    class="ui-Box emotion-0"
   >
-    <div
-      class="ui-LayoutContent--left col-1"
-    />
-    <div
-      class="ui-LayoutContent--content col-10"
-    >
+    <div />
+    <div>
       <div
         class="mt-2 row"
         subtext="...sorry, this is taking longer than usual"
@@ -45,9 +41,7 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
         </div>
       </div>
     </div>
-    <div
-      class="ui-LayoutContent--right col-1"
-    />
+    <div />
   </div>
 </div>
 `;
@@ -61,34 +55,30 @@ exports[`Given the AccountTeamMembers component When it is rendered Then shows a
 exports[`Given the AccountTeamMembers component When it is rendered When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutContent row"
+    class="ui-Box emotion-0"
   >
-    <div
-      class="ui-LayoutContent--left col-1"
-    />
-    <div
-      class="ui-LayoutContent--content col-10"
-    >
+    <div />
+    <div>
       <div
-        class="ui-Card emotion-0"
+        class="ui-Card emotion-1"
         role="article"
       >
         <div
-          class="ui-CardBody emotion-1"
+          class="ui-CardBody emotion-2"
         >
           <h5
-            class="ui-Typography emotion-2"
+            class="ui-Typography emotion-3"
           >
             Members
           </h5>
           <div
-            class="ui-Box emotion-3"
+            class="ui-Box emotion-0"
           >
             <div
-              class="ui-Box emotion-3"
+              class="ui-Box emotion-0"
             >
               <p
-                class="ui-Typography emotion-5"
+                class="ui-Typography emotion-6"
               >
                 To remove team members or change their roles, please raise a support ticket at the following link
                 : 
@@ -99,28 +89,28 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 </a>
               </p>
               <p
-                class="ui-Typography emotion-5"
+                class="ui-Typography emotion-6"
               >
                 Managers can manage members, create and assign workflows, review applications that are assigned to them and make the final decision on data access request applications.
               </p>
               <p
-                class="ui-Typography emotion-5"
+                class="ui-Typography emotion-6"
               >
                 Reviewers can review applications that are assigned to them.
               </p>
             </div>
             <div
-              class="ui-Box emotion-3"
+              class="ui-Box emotion-0"
             />
           </div>
         </div>
       </div>
       <div
-        class="ui-Card emotion-0"
+        class="ui-Card emotion-1"
         role="article"
       >
         <table
-          class="emotion-10 emotion-11"
+          class="emotion-11 emotion-12"
           role="table"
         >
           <thead>
@@ -152,7 +142,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 role="cell"
               >
                 <a
-                  class="ui-Typography emotion-5"
+                  class="ui-Typography emotion-6"
                   href="/person/5678"
                 >
                   John
@@ -160,7 +150,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                   Smith
                 </a>
                 <p
-                  class="ui-Typography emotion-5"
+                  class="ui-Typography emotion-6"
                 >
                   HDR UK
                 </p>
@@ -180,7 +170,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 role="cell"
               >
                 <a
-                  class="ui-Typography emotion-5"
+                  class="ui-Typography emotion-6"
                   href="/person/5678"
                 >
                   Jane
@@ -188,7 +178,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                   Doe
                 </a>
                 <p
-                  class="ui-Typography emotion-5"
+                  class="ui-Typography emotion-6"
                 >
                   Google
                 </p>
@@ -207,9 +197,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
         Modal closed
       </div>
     </div>
-    <div
-      class="ui-LayoutContent--right col-1"
-    />
+    <div />
   </div>
 </div>
 `;
