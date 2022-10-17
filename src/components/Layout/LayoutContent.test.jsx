@@ -14,7 +14,7 @@ describe('Given the LayoutContent component', () => {
             expect(wrapper.container).toMatchSnapshot();
         });
 
-        it('Then has the correct icons', async () => {
+        it('Then has the correct content', async () => {
             expect(screen.getByText(/Content/)).toBeTruthy();
         });
     });
