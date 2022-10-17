@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the LayoutContent component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Box emotion-0"
+  >
+    <div />
+    <div>
+      Content
+    </div>
+    <div />
+  </div>
+</div>
+`;
