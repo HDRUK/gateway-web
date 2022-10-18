@@ -62,6 +62,8 @@ const AccountTeamMembers = ({ teamId }) => {
             if (teamId) {
                 getMembersRequest.mutateAsync(teamId).then(({ data: { members } }) => {
                     /**
+                     * GAT-1678: currently static
+                     *
                      * const initialCheckboxes = {};
                      *
                      * members.forEach((member) => {
@@ -97,6 +99,8 @@ const AccountTeamMembers = ({ teamId }) => {
 
     const handleCheckboxChange = useCallback(({ target: { id, checked } }) => {
         /**
+         * GAT-1678: currently static
+         *
          * setCheckboxes({
          *    [id]: checked,
          *    ...checkboxes
