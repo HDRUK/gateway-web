@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AccountTeamMembers component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Box emotion-0"
+  >
+    <div />
+    <div>
+      <div
+        class="mt-2 row"
+        subtext="...sorry, this is taking longer than usual"
+        text="Loading..."
+        timeout="5000"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="rectangle"
+          >
+            <div
+              class="gray800-14"
+              style="text-align: center;"
+            >
+              <img
+                class=""
+                src=""
+              />
+            </div>
+            <div
+              class="gray800-14"
+              style="text-align: center;"
+            >
+              <p>
+                Loading...
+              </p>
+              <p />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div />
+  </div>
+</div>
+`;
+
+exports[`Given the AccountTeamMembers component When it is rendered Then shows a loader 1`] = `
+<p>
+  Loading...
+</p>
+`;
+
+exports[`Given the AccountTeamMembers component When it is rendered When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Box emotion-0"
+  >
+    <div />
+    <div>
+      <div
+        class="ui-Card emotion-1"
+        role="article"
+      >
+        <div
+          class="ui-CardBody emotion-2"
+        >
+          <h5
+            class="ui-Typography emotion-3"
+          >
+            Members
+          </h5>
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="ui-Box emotion-0"
+            >
+              <p
+                class="ui-Typography emotion-6"
+              >
+                To remove team members or change their roles, please raise a support ticket at the following link
+                : 
+                <a
+                  href="https://hdruk.atlassian.net/servicedesk/customer/portal/1"
+                >
+                  https://hdruk.atlassian.net/servicedesk/customer/portal/1
+                </a>
+              </p>
+              <p
+                class="ui-Typography emotion-6"
+              >
+                Managers can manage members, create and assign workflows, review applications that are assigned to them and make the final decision on data access request applications.
+              </p>
+              <p
+                class="ui-Typography emotion-6"
+              >
+                Reviewers can review applications that are assigned to them.
+              </p>
+            </div>
+            <div
+              class="ui-Box emotion-0"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-Card emotion-1"
+        role="article"
+      >
+        <table
+          class="emotion-11 emotion-12"
+          role="table"
+        >
+          <thead>
+            <tr
+              role="row"
+            >
+              <th
+                colspan="1"
+                role="columnheader"
+              >
+                Name
+              </th>
+              <th
+                colspan="1"
+                role="columnheader"
+              >
+                Role
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            role="rowgroup"
+          >
+            <tr
+              role="row"
+            >
+              <td
+                data-label="name"
+                role="cell"
+              >
+                <a
+                  class="ui-Typography emotion-6"
+                  href="/person/5678"
+                >
+                  John
+                   
+                  Smith
+                </a>
+                <p
+                  class="ui-Typography emotion-6"
+                >
+                  HDR UK
+                </p>
+              </td>
+              <td
+                data-label="role"
+                role="cell"
+              >
+                Manager
+              </td>
+            </tr>
+            <tr
+              role="row"
+            >
+              <td
+                data-label="name"
+                role="cell"
+              >
+                <a
+                  class="ui-Typography emotion-6"
+                  href="/person/5678"
+                >
+                  Jane
+                   
+                  Doe
+                </a>
+                <p
+                  class="ui-Typography emotion-6"
+                >
+                  Google
+                </p>
+              </td>
+              <td
+                data-label="role"
+                role="cell"
+              >
+                Manager
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        Modal closed
+      </div>
+    </div>
+    <div />
+  </div>
+</div>
+`;

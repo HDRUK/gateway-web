@@ -1,13 +1,13 @@
+import { PERMISSIONS_USER_TYPES } from 'consts';
 import React, { useEffect } from 'react';
 import Switch from 'react-switch';
-import { userTypes } from './teamUtil';
 
 const TeamGatewayEmail = ({ id, teamId, userState = [], userHasRole, memberNotification, togglePersonalNotifications }) => {
     const [user = {}] = userState;
     const { optIn, notificationType } = memberNotification;
     const isManager = () => {
         // TODO: GAT-1510:016
-        return userHasRole(teamId, userTypes.MANAGER);
+        return userHasRole(teamId, PERMISSIONS_USER_TYPES.manager);
     };
 
     useEffect(() => {

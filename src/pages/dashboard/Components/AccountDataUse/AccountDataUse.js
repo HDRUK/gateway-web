@@ -1,3 +1,4 @@
+import { PERMISSIONS_USER_TYPES } from 'consts';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Alert from '../../../../components/Alert';
@@ -7,7 +8,6 @@ import { isCustodian, userHasRole } from '../../../../utils/auth';
 import DataUsePage from '../../../dataUse/DataUsePage';
 import DataUseUpload from '../../../dataUse/upload/DataUseUpload';
 import DataUseWidget from '../../../dataUse/widget/DataUseWidget';
-import { userTypes } from '../../Team/teamUtil';
 
 const AccountDataUse = ({ tabId, team, publisherDetails }) => {
     const { userState } = useAuth();
@@ -16,7 +16,7 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
         location: { state: historyState },
     } = history;
     // TODO: GAT-1510:015
-    const isManager = userHasRole(userState, team, userTypes.MANAGER);
+    const isManager = userHasRole(userState, team, PERMISSIONS_USER_TYPES.manager);
 
     const [dataUseUpload, setDataUseUpload] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState(false);

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
 import axios from 'axios';
+import { PERMISSIONS_USER_TYPES } from 'consts';
 import Loading from '../commonComponents/Loading';
 import { baseURL } from '../../configs/url.config';
 import AccountMembers from './AccountMembers';
@@ -11,7 +12,7 @@ import TeamGatewayNotificationEmails from './Team/TeamGatewayNotificationEmails'
 import FieldRepeater from '../commonComponents/FieldRepeater/FieldRepeater';
 import TeamEmailAlertModal from './Team/TeamEmailAlertModal';
 import TeamNotificationsConfirmationModal from './Team/TeamNotificationsConfirmationModal';
-import { userTypes, tabTypes } from './Team/teamUtil';
+import { tabTypes } from './Team/teamUtil';
 import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
 import Alert from '../../components/Alert';
@@ -94,7 +95,7 @@ const AccountTeamManagement = ({
         const team = userState[0].teams.filter(t => {
             return t._id === teamId;
         })[0];
-        return team && team.isAdmin && !team.roles.includes(userTypes.MANAGER);
+        return team && team.isAdmin && !team.roles.includes(PERMISSIONS_USER_TYPES.manager);
     };
 
     const getTotalGatewayTeamEmails = (data = []) => {
@@ -280,7 +281,7 @@ const AccountTeamManagement = ({
         const missingOptIns = findMandatoryOptIns() || false;
         const isValid = validEmailList().length > 0;
         // TODO: GAT-1510:014
-        const isManager = userHasRole(teamId, userTypes.MANAGER);
+        const isManager = userHasRole(teamId, PERMISSIONS_USER_TYPES.manager);
         // has optIns for team notificaiton emails
         const teamOptIns = hasTeamNotificationOptIns();
         if (missingOptIns) {

@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
 import Switch from 'react-switch';
-import { permissionsConsts } from 'consts';
 import { authUtils } from 'utils';
-
-const { userTypes } = permissionsConsts;
+import { PERMISSIONS_USER_TYPES } from 'consts';
 
 const AccountTeamGatewayEmail = ({ id, teamId, userState = [], memberNotification, togglePersonalNotifications }) => {
     const [user = {}] = userState;
     const { optIn, notificationType } = memberNotification;
     const isManager = () => {
         // TODO: GAT-1510:016
-        return authUtils.userHasRole(userState, teamId, userTypes.MANAGER);
+        return authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager);
     };
 
     useEffect(() => {

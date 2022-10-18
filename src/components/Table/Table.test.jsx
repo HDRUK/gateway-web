@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within } from 'testUtils';
 import React from 'react';
 import Table from './Table';
 
@@ -36,9 +36,7 @@ let headers;
 describe('Given the Table component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<Table {...props} />, {
-                wrapper: Providers,
-            });
+            wrapper = render(<Table {...props} />);
 
             headers = screen.getAllByRole('rowgroup');
         });

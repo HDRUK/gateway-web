@@ -29,11 +29,10 @@ const putNotifications = (_id, data, options) => {
     return putRequest(`${apiURL}/teams/${_id}/notifications`, data, options);
 };
 
-const useGetMembers = (requestOptions, queryOptions) => {
-    return useQueryWithTranslations({
-        queryKey: 'teams.getMembers',
-        ...queryOptions,
-        queryFn: _id => getMembers(_id, requestOptions),
+const useGetMembers = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(id => getMembers(id, requestOptions), {
+        mutationKey: 'teams.getMembers',
+        ...mutateOptions,
     });
 };
 

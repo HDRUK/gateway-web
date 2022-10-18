@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Switch from 'react-switch';
 import { useTranslation } from 'react-i18next';
-import { permissionsConsts } from 'consts';
 import { authUtils } from 'utils';
-
-const { userTypes } = permissionsConsts;
+import { PERMISSIONS_USER_TYPES } from 'consts';
 
 const AccountTeamGatewayNotificationEmails = ({ teamId, userState, teamNotification, toggleTeamNotifications }) => {
     const { t } = useTranslation();
@@ -13,7 +11,7 @@ const AccountTeamGatewayNotificationEmails = ({ teamId, userState, teamNotificat
 
     useEffect(() => {
         // TODO: GAT-1510:017
-        setManager(authUtils.userHasRole(userState, teamId, userTypes.MANAGER));
+        setManager(authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
     }, [teamId, teamNotification]);
 
     return (

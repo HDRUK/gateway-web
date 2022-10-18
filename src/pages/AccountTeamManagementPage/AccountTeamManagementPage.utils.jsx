@@ -1,14 +1,12 @@
 import { isEmpty } from 'lodash';
-import { permissionsConsts } from 'consts';
-
-const { userTypes } = permissionsConsts;
+import { PERMISSIONS_USER_TYPES } from 'consts';
 
 const userRoleIsAdmin = (teamId, userState) => {
     const team = userState[0].teams.filter(t => {
         // eslint-disable-next-line no-underscore-dangle
         return t._id === teamId;
     })[0];
-    return team && team.isAdmin && !team.roles.includes(userTypes.MANAGER);
+    return team && team.isAdmin && !team.roles.includes(PERMISSIONS_USER_TYPES.manager);
 };
 
 const hasTeamNotificationOptIns = teamGatewayNotifications => {

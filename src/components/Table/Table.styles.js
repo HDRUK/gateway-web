@@ -46,10 +46,6 @@ const styles = theme => {
                 text-align: right;
                 padding: 0 ${padding};
 
-                :first-child {
-                    padding-top: ${padding};
-                }
-
                 :last-child {
                     padding-bottom: ${padding};
                 }
@@ -64,6 +60,12 @@ const styles = theme => {
                     text-transform: uppercase;
                     font-weight: 700;
                 }
+            }
+        }
+
+        td:first-of-type {
+            @media screen and (max-width: ${theme.breakpoints.sm}) {
+                padding-top: ${padding};
             }
         }
     `;
