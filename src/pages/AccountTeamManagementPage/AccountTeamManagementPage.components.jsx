@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, LayoutContent } from 'components';
-import { Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
 import { ACCOUNT_TAB_TYPES } from 'consts';
 import { AccountTeamFieldRepeater, AccountTeamGatewayNotificationEmails, AccountTeamGatewayEmail } from 'modules';
@@ -8,86 +8,80 @@ import PropTypes from 'prop-types';
 import { userStateType, teamGatewayNotificationsType } from 'types';
 import { Card, H2, P, Typography, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
+import { isAdminNotManager } from 'utils/auth';
 import Loading from '../commonComponents/Loading';
-import { userRoleIsAdmin } from './AccountTeamManagementPage.utils';
 
 const EmailNotificationsHeader = () => {
     const { t } = useTranslation();
     return (
-        <Card style={{ padding: '30px 20px' }}>
-            <H2>{t('pages.AccountTeamManagement.emailNotificationsTitle')}</H2>
+        <Card data-testid='EmailNotificationsHeader' style={{ padding: '30px 20px' }}>
+            <H2 mb={2}>{t('pages.AccountTeamManagement.emailNotificationsTitle')}</H2>
             <P color='grey700'>{t('pages.AccountTeamManagement.emailNotificationsDescription')}</P>
         </Card>
     );
 };
 const LoaderRow = () => (
-    <Row>
-        <Col xs={1} />
-        <Col xs={10}>
-            <Loading data-testid='isLoading' />
-        </Col>
-        <Col xs={1} />
-    </Row>
+    <LayoutContent data-testid='LoaderRow'>
+        <Loading />
+    </LayoutContent>
 );
 
 const TeamManagementHeader = () => {
     const { t } = useTranslation();
     return (
-        <Card style={{ padding: '30px 20px' }}>
+        <Card data-testid='TeamManagementHeader' style={{ padding: '30px 20px' }}>
             <Typography variant='h2' as='h1' mb={2}>
                 {t('pages.AccountTeamManagement.title')}
             </Typography>
             <P color='grey700'>
-                {t('pages.AccountTeamManagement.description')} <a href='/support'>{t('supportLinkText')}.</a>
+                {t('pages.AccountTeamManagement.description')}{' '}
+                <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>{t('pages.AccountTeamManagement.supportLinkText')}</a>.
             </P>
         </Card>
     );
 };
 
 const TabsNav = ({ activeTabKey, onTabChange, teamId, userState }) => {
+    //  TODO: GAT-1510:020
+    if (isAdminNotManager(teamId, userState)) return null;
+
     return (
-        <div className='tabsBackground'>
-            <Col>
-                <Tabs className='dataAccessTabs' activeKey={activeTabKey} onSelect={onTabChange}>
-                    {/* TODO: GAT-1510:020 */}
-                    {!userRoleIsAdmin(teamId, userState)
-                        ? Object.keys(ACCOUNT_TAB_TYPES).map(keyName => (
-                              <Tab
-                                  key={keyName}
-                                  eventKey={`${ACCOUNT_TAB_TYPES[keyName]}`}
-                                  title={<P>{upperFirst(ACCOUNT_TAB_TYPES[keyName])}</P>}
-                                  data-testid={ACCOUNT_TAB_TYPES[keyName]}
-                              />
-                          ))
-                        : ''}
-                </Tabs>
-            </Col>
-        </div>
+        <Card data-testid='TabsNav'>
+            <Tabs activeKey={activeTabKey} onSelect={onTabChange}>
+                {Object.keys(ACCOUNT_TAB_TYPES).map(keyName => (
+                    <Tab
+                        key={keyName}
+                        eventKey={`${ACCOUNT_TAB_TYPES[keyName]}`}
+                        title={<P>{upperFirst(ACCOUNT_TAB_TYPES[keyName])}</P>}
+                        data-testid={ACCOUNT_TAB_TYPES[keyName]}
+                    />
+                ))}
+            </Tabs>
+        </Card>
     );
 };
 
 TabsNav.propTypes = {
     activeTabKey: PropTypes.string.isRequired,
     onTabChange: PropTypes.func.isRequired,
-    teamId: PropTypes.number.isRequired,
+    teamId: PropTypes.string.isRequired,
     userState: userStateType.isRequired,
 };
 
 const GeneratedAlerts = ({ alerts }) => {
-    if (!isEmpty(alerts)) {
-        return (
-            <>
-                {alerts.map(({ type = '', message = '' }) => {
-                    return (
-                        <Alert variant={type} key={`alert-${message}`} mt={2}>
-                            {message}
-                        </Alert>
-                    );
-                })}
-            </>
-        );
-    }
-    return null;
+    if (isEmpty(alerts)) return null;
+
+    return (
+        <div data-testid='GeneratedAlerts'>
+            {alerts.map(({ type = '', message = '' }) => {
+                return (
+                    <Alert variant={type} key={`alert-${message}`} mt={2}>
+                        {message}
+                    </Alert>
+                );
+            })}
+        </div>
+    );
 };
 
 GeneratedAlerts.propTypes = {
@@ -100,8 +94,9 @@ GeneratedAlerts.propTypes = {
 };
 
 const MemberNotifications = ({ memberNotifications = [], teamId, userState, togglePersonalNotifications }) => {
+    if (!memberNotifications.length) return null;
     return (
-        <div className='accountHeader accountHeader-alt'>
+        <div data-testid='MemberNotifications' className='accountHeader accountHeader-alt'>
             {[...memberNotifications].map(memberNotification => {
                 return (
                     <div key={`memberNotification-${memberNotification.notificationType}`}>
@@ -132,13 +127,16 @@ const TeamNotifications = ({
     handleFieldChange,
     handleRemoveClick,
     handleAddClick,
+    userState,
 }) => {
+    if (!teamGatewayNotifications.length) return null;
     return (
-        <div className='accountHeader accountHeader-alt'>
-            {[...teamGatewayNotifications].map(teamNotification => {
+        <div data-testid='TeamNotifications' className='accountHeader accountHeader-alt'>
+            {[...teamGatewayNotifications].map((teamNotification, index) => {
                 return (
                     <div key={`teamNotificationOverview-${teamNotification.notificationType}`}>
                         <AccountTeamGatewayNotificationEmails
+                            userState={userState}
                             teamId={teamId}
                             teamNotification={teamNotification}
                             toggleTeamNotifications={toggleTeamNotifications}
@@ -147,7 +145,9 @@ const TeamNotifications = ({
                             <Box ml={2} mr={2}>
                                 <P>Team email</P>
                                 <AccountTeamFieldRepeater
+                                    id={index}
                                     teamId={teamId}
+                                    userState={userState}
                                     teamNotification={teamNotification}
                                     handleFieldChange={handleFieldChange}
                                     handleRemoveClick={handleRemoveClick}
@@ -171,6 +171,7 @@ TeamNotifications.propTypes = {
     handleRemoveClick: PropTypes.func.isRequired,
     handleFieldChange: PropTypes.func.isRequired,
     handleAddClick: PropTypes.func.isRequired,
+    userState: userStateType.isRequired,
 };
 
 const NotificationTab = ({
@@ -185,24 +186,23 @@ const NotificationTab = ({
     handleAddClick,
 }) => {
     return (
-        <LayoutContent>
-            <div className='col-sm-10'>
-                <EmailNotificationsHeader />
-                <MemberNotifications
-                    memberNotifications={memberNotifications}
-                    teamId={teamId}
-                    userState={userState}
-                    togglePersonalNotifications={togglePersonalNotifications}
-                />
-                <TeamNotifications
-                    teamGatewayNotifications={teamGatewayNotifications}
-                    teamId={teamId}
-                    toggleTeamNotifications={toggleTeamNotifications}
-                    handleFieldChange={handleFieldChange}
-                    handleRemoveClick={handleRemoveClick}
-                    handleAddClick={handleAddClick}
-                />
-            </div>
+        <LayoutContent data-testid='NotificationTab'>
+            <EmailNotificationsHeader />
+            <MemberNotifications
+                memberNotifications={memberNotifications}
+                teamId={teamId}
+                userState={userState}
+                togglePersonalNotifications={togglePersonalNotifications}
+            />
+            <TeamNotifications
+                userState={userState}
+                teamGatewayNotifications={teamGatewayNotifications}
+                teamId={teamId}
+                toggleTeamNotifications={toggleTeamNotifications}
+                handleFieldChange={handleFieldChange}
+                handleRemoveClick={handleRemoveClick}
+                handleAddClick={handleAddClick}
+            />
         </LayoutContent>
     );
 };

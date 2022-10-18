@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Switch from 'react-switch';
 import { PERMISSIONS_USER_TYPES } from 'consts';
 import { authUtils } from 'utils';
+import { userStateType } from 'types';
+import PropTypes from 'prop-types';
 
 const AccountTeamGatewayEmail = ({ teamId, userState = [], memberNotification, togglePersonalNotifications }) => {
-    const [user = {}] = userState;
-    const { optIn, notificationType } = memberNotification;
-    const isManager = () => {
-        // TODO: GAT-1510:016
-        return authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager);
-    };
+    const [isManager, setIsManager] = useState(false);
 
     useEffect(() => {
-        isManager();
-    }, [teamId]);
+        // TODO: GAT-1510:016
+        setIsManager(authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
+    }, [teamId, userState]);
 
     return (
         <>
@@ -21,8 +19,8 @@ const AccountTeamGatewayEmail = ({ teamId, userState = [], memberNotification, t
                 <div className='tm-switch'>
                     <Switch
                         onChange={togglePersonalNotifications}
-                        checked={optIn}
-                        id={notificationType}
+                        checked={memberNotification.optIn}
+                        id={memberNotification.notificationType}
                         offColor='#c2303d'
                         uncheckedIcon={false}
                         checkedIcon={false}
@@ -33,7 +31,7 @@ const AccountTeamGatewayEmail = ({ teamId, userState = [], memberNotification, t
                 </div>
                 <div className='tm-title'>
                     <div className='black-16-semibold'>Send email notifications to my Gateway email address</div>
-                    {teamId && isManager() && (
+                    {teamId && isManager && (
                         <div className='gray700-14'>
                             You will need to add a team email to be able to save switching off notifications to your own Gateway email.
                         </div>
@@ -41,13 +39,13 @@ const AccountTeamGatewayEmail = ({ teamId, userState = [], memberNotification, t
                 </div>
             </div>
             <div className='form-group mt-3'>
-                <label className='gray700-14' htmlFor='EmailAddress'>
+                <label className='gray700-14' htmlFor='myGatewayEmail'>
                     My Gateway email
                 </label>
                 <input
                     type='email'
                     name='myGatewayEmail'
-                    value={`${user.email}`}
+                    value={`${userState[0]?.email}`}
                     className='form-control gray800-14'
                     aria-describedby='My Gateway email'
                     readOnly
@@ -55,6 +53,13 @@ const AccountTeamGatewayEmail = ({ teamId, userState = [], memberNotification, t
             </div>
         </>
     );
+};
+
+AccountTeamGatewayEmail.propTypes = {
+    userState: userStateType.isRequired,
+    teamId: PropTypes.string.isRequired,
+    togglePersonalNotifications: PropTypes.func.isRequired,
+    memberNotification: PropTypes.shape({ optIn: PropTypes.bool, notificationType: PropTypes.string }).isRequired,
 };
 
 export default AccountTeamGatewayEmail;

@@ -8,10 +8,8 @@ import { ACCOUNT_TAB_TYPES, UI_ALERT_TYPES, PERMISSIONS_USER_TYPES } from 'const
 import PropTypes from 'prop-types';
 import { userStateType } from 'types';
 import { baseURL } from '../../configs/url.config';
-// import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
 import {
-    userRoleIsAdmin,
     hasTeamNotificationOptIns,
     validEmailList,
     getTeamNotificationType,
@@ -21,18 +19,17 @@ import {
     getTotalGatewayTeamEmails,
 } from './AccountTeamManagementPage.utils';
 import { GeneratedAlerts, LoaderRow, NotificationTab, TabsNav, TeamManagementHeader } from './AccountTeamManagementPage.components';
+import { isAdminNotManager } from 'utils/auth';
 
 const AccountTeamManagementPage = ({
-    userState = [],
+    userState,
     teamId,
-    innerTab = ACCOUNT_TAB_TYPES.Members,
+    innerTab,
     forwardRef,
     onTeamManagementSave,
     onTeamManagementTabChange,
     onClearInnerTab,
 }) => {
-    console.log('userState: ', userState);
-    console.log('innerTab: ', innerTab);
     const [activeTabKey, setActiveTabKey] = useState(ACCOUNT_TAB_TYPES.Members);
     const [alerts, setAlerts] = useState([]);
     const [alertModal, setAlertModal] = useState(false);
@@ -177,8 +174,8 @@ const AccountTeamManagementPage = ({
         }
 
         // TODO: GAT-1510:019
-        if (!userRoleIsAdmin(teamId, userState)) {
-            if (!isEmpty(innerTab) && innerTab === ACCOUNT_TAB_TYPES.Notifications) {
+        if (!isAdminNotManager(teamId, userState)) {
+            if (innerTab === ACCOUNT_TAB_TYPES.Notifications) {
                 onTabChange(innerTab);
                 onClearInnerTab();
             }
@@ -297,11 +294,11 @@ const AccountTeamManagementPage = ({
     }
 
     return (
-        <>
+        <div data-testid='AccountTeamManagementPage'>
             <LayoutContent>
                 <GeneratedAlerts alerts={alerts} />
                 <TeamManagementHeader />
-                <TabsNav userState={userState} activeTabKey={activeTabKey} onTabChange={onTabChange} />
+                <TabsNav teamId={teamId} userState={userState} activeTabKey={activeTabKey} onTabChange={onTabChange} />
             </LayoutContent>
             {activeTabKey === ACCOUNT_TAB_TYPES.Members && <AccountTeamMembers userState={userState} teamId={teamId} />}
             {activeTabKey === ACCOUNT_TAB_TYPES.Notifications && (
@@ -324,18 +321,22 @@ const AccountTeamManagementPage = ({
                 confirm={toggleTeamEmailsModal}
                 teamNotifications={teamGatewayNotifications}
             />
-        </>
+        </div>
     );
 };
 
 AccountTeamManagementPage.propTypes = {
     userState: userStateType.isRequired,
     teamId: PropTypes.string.isRequired,
-    innerTab: PropTypes.oneOf([ACCOUNT_TAB_TYPES.Notifications, ACCOUNT_TAB_TYPES.Members]).isRequired,
+    innerTab: PropTypes.oneOf([ACCOUNT_TAB_TYPES.Notifications, ACCOUNT_TAB_TYPES.Members]),
     forwardRef: PropTypes.func.isRequired,
     onTeamManagementSave: PropTypes.func.isRequired,
     onTeamManagementTabChange: PropTypes.func.isRequired,
     onClearInnerTab: PropTypes.func.isRequired,
+};
+
+AccountTeamManagementPage.defaultProps = {
+    innerTab: ACCOUNT_TAB_TYPES.Members,
 };
 
 export default AccountTeamManagementPage;
