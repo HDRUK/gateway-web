@@ -68,7 +68,7 @@ const isAdminNotManager = (teamId, userState) => {
         // eslint-disable-next-line no-underscore-dangle
         return t._id === teamId;
     })[0];
-    return team && team.isAdmin && !team.roles.includes(PERMISSIONS_USER_TYPES.MANAGER);
+    return team && team.isAdmin && !team.roles.includes(PERMISSIONS_USER_TYPES.manager);
 };
 
 export { getRolesList, getTeam, isCustodian, isAdmin, isUser, isPublisherAdmin, userHasRole, isAdminNotManager };

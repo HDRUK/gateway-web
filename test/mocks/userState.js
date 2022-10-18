@@ -27,7 +27,7 @@ const userStateAdmin = [
     },
 ];
 
-const userStateManager = [{ email: 'dan@ackroyd.com', teams: [{ _id: '1234', roles: [PERMISSION_USER_TYPES.MANAGER] }] }];
+const userStateManager = [{ email: 'dan@ackroyd.com', teams: [{ _id: '1234', roles: [PERMISSION_USER_TYPES.manager] }] }];
 
 const userStateNonManager = [{ email: 'john@candy.com', teams: [{ _id: '1234', roles: [] }] }];
 

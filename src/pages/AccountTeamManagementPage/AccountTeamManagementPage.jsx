@@ -89,7 +89,7 @@ const AccountTeamManagementPage = ({
         const missingOptIns = getHasMandatoryOptIns(memberNotifications, teamGatewayNotifications) || false;
         const isValid = validEmailList(teamGatewayNotifications).length > 0;
         // TODO: GAT-1510:014
-        const isManager = authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.MANAGER);
+        const isManager = authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager);
         // has optIns for team notificaiton emails
         const teamOptIns = hasTeamNotificationOptIns(teamGatewayNotifications);
         if (missingOptIns) {
