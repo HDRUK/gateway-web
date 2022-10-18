@@ -8,7 +8,7 @@
         "public/(.*)": "<rootDir>/public/$1",
         "lodash-es": "lodash"
     },
-    "modulePaths": ["<rootDir>/public", "<rootDir>/test", "<rootDir>/src"],
+    "modulePaths": ["<rootDir>/public"],
     "coveragePathIgnorePatterns": [
         "mockData.js",
         "Mock.js",
@@ -29,6 +29,6 @@
         "P.js"
     ],
     "collectCoverageFrom": ["src/**/*.{js,jsx}"],
-    "roots": ["<rootDir>", "<rootDir>/src", "<rootDir>/test"],
+    "roots": ["<rootDir>", "<rootDir>src"],
     "moduleDirectories": ["test", "node_modules"]
 }

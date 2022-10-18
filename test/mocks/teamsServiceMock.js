@@ -1,4 +1,4 @@
-const __teamMembers = [
+const teamMembers = [
     {
         firstname: 'John',
         lastname: 'Smith',
@@ -16,7 +16,11 @@ const __teamMembers = [
         bio: 'Manager',
     },
 ];
+const teamNotifications = [];
+const memberNotifications = [];
 
 module.exports = {
-    teamMembersMock: __teamMembers,
+    teamMembersMock: teamMembers,
+    teamNotificationsMock: teamNotifications,
+    memberNotificationsMock: memberNotifications,
 };

@@ -56,6 +56,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
 <div>
   <div
     class="ui-Box emotion-0"
+    data-testid="AccountTeamMembers"
   >
     <div />
     <div>

@@ -76,69 +76,67 @@ const AccountTeamMembers = ({ teamId }) => {
     }
 
     return (
-        <>
-            <LayoutContent>
-                <Card mb={4}>
-                    <CardBody>
-                        <H5 mb={1}>{t('members')}</H5>
+        <LayoutContent data-testid='AccountTeamMembers'>
+            <Card mb={4}>
+                <CardBody>
+                    <H5 mb={1}>{t('members')}</H5>
+                    <Box
+                        display={{
+                            md: 'flex',
+                        }}
+                        gap={8}>
+                        <Box
+                            mb={{
+                                xxs: 6,
+                                md: 0,
+                            }}
+                            flexGrow='1'>
+                            <P mb={6}>
+                                {t('components.AccountTeamMembers.members.description1')}: <a href={SUPPORT_URL}>{SUPPORT_URL}</a>
+                            </P>
+                            <P mb={6}>{t('components.AccountTeamMembers.members.description2')}</P>
+                            <P>{t('components.AccountTeamMembers.members.description3')}</P>
+                        </Box>
                         <Box
                             display={{
                                 md: 'flex',
                             }}
-                            gap={8}>
-                            <Box
-                                mb={{
-                                    xxs: 6,
-                                    md: 0,
-                                }}
-                                flexGrow='1'>
-                                <P mb={6}>
-                                    {t('components.AccountTeamMembers.members.description1')}: <a href={SUPPORT_URL}>{SUPPORT_URL}</a>
-                                </P>
-                                <P mb={6}>{t('components.AccountTeamMembers.members.description2')}</P>
-                                <P>{t('components.AccountTeamMembers.members.description3')}</P>
-                            </Box>
-                            <Box
-                                display={{
-                                    md: 'flex',
-                                }}
-                                justifyContent='flex-end'
-                                flexBasis={{
-                                    md: '40%',
-                                }}>
-                                {isTeamManager && (
-                                    <Button variant='primary' onClick={handleOpenModal}>
-                                        {t('components.AccountTeamMembers.members.add')}
-                                    </Button>
-                                )}
-                            </Box>
+                            justifyContent='flex-end'
+                            flexBasis={{
+                                md: '40%',
+                            }}>
+                            {isTeamManager && (
+                                <Button variant='primary' onClick={handleOpenModal}>
+                                    {t('components.AccountTeamMembers.members.add')}
+                                </Button>
+                            )}
                         </Box>
-                    </CardBody>
+                    </Box>
+                </CardBody>
+            </Card>
+
+            {teamMembers.length <= 0 && <MessageNotFound word='members' />}
+            {teamMembers.length > 0 && (
+                <Card>
+                    <Table
+                        columns={columns}
+                        data={teamMembers.map(({ lastname, firstname, id, bio, organisation, roles }) => ({
+                            name: (
+                                <>
+                                    <Typography as={Link} to={`/person/${id}`} color='purple500'>
+                                        {firstname} {lastname}
+                                    </Typography>
+                                    <Typography color='grey600'>{organisation || bio}</Typography>
+                                </>
+                            ),
+                            role: getRolesList(roles),
+                        }))}
+                    />
                 </Card>
+            )}
 
-                {teamMembers.length <= 0 && <MessageNotFound word='members' />}
-                {teamMembers.length > 0 && (
-                    <Card>
-                        <Table
-                            columns={columns}
-                            data={teamMembers.map(({ lastname, firstname, id, bio, organisation, roles }) => ({
-                                name: (
-                                    <>
-                                        <Typography as={Link} to={`/person/${id}`} color='purple500'>
-                                            {firstname} {lastname}
-                                        </Typography>
-                                        <Typography color='grey600'>{organisation || bio}</Typography>
-                                    </>
-                                ),
-                                role: getRolesList(roles),
-                            }))}
-                        />
-                    </Card>
-                )}
-
-                <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
-            </LayoutContent>
-        </>
+            <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
+        </LayoutContent>
     );
 };
 
