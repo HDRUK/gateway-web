@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { arrayOf, shape, number, string, bool } from 'prop-types';
 
 const userStateType = arrayOf(
@@ -42,6 +41,3 @@ const memberPropTypes = shape({
 });
 
 export { userStateType, teamGatewayNotificationsType, memberPropTypes };
-=======
-export * from './members';
->>>>>>> 6af462ecdc63bf54079de23a2db4c2151d45aa29
