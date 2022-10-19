@@ -3,13 +3,30 @@ import { Typography } from 'hdruk-react-core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { Checkbox, Popover, PopoverMenu } from 'components';
 import { memberPropTypes } from '../../types';
-import { Checkbox } from '../../components';
+import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
 
 const cellProps = {
     member: memberPropTypes.isRequired,
     onChange: PropTypes.func.isRequired,
     checkboxes: PropTypes.objectOf(PropTypes.bool).isRequired,
+};
+
+export const ActionCell = ({ member: { id }, onDeleteMember }) => {
+    const items = [
+        {
+            label: 'Remove',
+            icon: WastebinIcon,
+            action: () => onDeleteMember(id),
+        },
+    ];
+    return <Popover content={<PopoverMenu items={items} />} />;
+};
+
+ActionCell.propTypes = {
+    member: memberPropTypes.isRequired,
+    onDeleteMember: PropTypes.func.isRequired,
 };
 
 export const NameCell = ({ member: { lastname, firstname, id, bio, organisation } }) => (

@@ -21,7 +21,12 @@ const Table = ({ className, columns, data, mt, mb, ml, mr, width, minWidth, maxW
                 {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                            <th
+                                {...column.getHeaderProps({
+                                    style: { ...column.styles },
+                                })}>
+                                {column.render('Header')}
+                            </th>
                         ))}
                     </tr>
                 ))}
