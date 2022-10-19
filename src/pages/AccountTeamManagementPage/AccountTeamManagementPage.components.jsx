@@ -6,7 +6,7 @@ import { ACCOUNT_TAB_TYPES } from 'consts';
 import { AccountTeamFieldRepeater, AccountTeamGatewayNotificationEmails, AccountTeamGatewayEmail } from 'modules';
 import PropTypes from 'prop-types';
 import { userStateType, teamGatewayNotificationsType } from 'types';
-import { Card, H2, P, Typography, Box } from 'hdruk-react-core';
+import { Card, H5, P, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import { isAdminNotManager } from 'utils/auth';
 import Loading from '../commonComponents/Loading';
@@ -15,7 +15,7 @@ const EmailNotificationsHeader = () => {
     const { t } = useTranslation();
     return (
         <Card data-testid='EmailNotificationsHeader' style={{ padding: '30px 20px' }}>
-            <H2 mb={2}>{t('pages.AccountTeamManagement.emailNotificationsTitle')}</H2>
+            <H5 mb={2}>{t('pages.AccountTeamManagement.emailNotificationsTitle')}</H5>
             <P color='grey700'>{t('pages.AccountTeamManagement.emailNotificationsDescription')}</P>
         </Card>
     );
@@ -30,9 +30,7 @@ const TeamManagementHeader = () => {
     const { t } = useTranslation();
     return (
         <Card data-testid='TeamManagementHeader' style={{ padding: '30px 20px' }}>
-            <Typography variant='h2' as='h1' mb={2}>
-                {t('pages.AccountTeamManagement.title')}
-            </Typography>
+            <H5 mb={2}>{t('pages.AccountTeamManagement.title')}</H5>
             <P color='grey700'>
                 {t('pages.AccountTeamManagement.description')}{' '}
                 <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>{t('pages.AccountTeamManagement.supportLinkText')}</a>.
