@@ -3,11 +3,11 @@ import { Typography } from 'hdruk-react-core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { memberPropTypes } from '../../types';
+import { propTypesMember } from '../../types';
 import { Checkbox } from '../../components';
 
 const cellProps = {
-    member: memberPropTypes.isRequired,
+    member: propTypesMember.isRequired,
     onChange: PropTypes.func.isRequired,
     checkboxes: PropTypes.objectOf(PropTypes.bool).isRequired,
 };
