@@ -66,17 +66,17 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
         <div
           class="ui-CardBody emotion-2"
         >
-          <h5
-            class="ui-Typography emotion-3"
-          >
-            Members
-          </h5>
           <div
             class="ui-Box emotion-0"
           >
             <div
               class="ui-Box emotion-0"
             >
+              <h5
+                class="ui-Typography emotion-5"
+              >
+                Members
+              </h5>
               <p
                 class="ui-Typography emotion-6"
               >
@@ -99,9 +99,6 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 Reviewers can review applications that are assigned to them.
               </p>
             </div>
-            <div
-              class="ui-Box emotion-0"
-            />
           </div>
         </div>
       </div>
@@ -110,7 +107,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
         role="article"
       >
         <table
-          class="emotion-11 emotion-12"
+          class="emotion-10 emotion-11"
           role="table"
         >
           <thead>
@@ -127,7 +124,19 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 colspan="1"
                 role="columnheader"
               >
-                Role
+                Team Admin
+              </th>
+              <th
+                colspan="1"
+                role="columnheader"
+              >
+                Data Access Request
+              </th>
+              <th
+                colspan="1"
+                role="columnheader"
+              >
+                Metadata
               </th>
             </tr>
           </thead>
@@ -156,10 +165,102 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 </p>
               </td>
               <td
-                data-label="role"
+                data-label="teamAdmin"
                 role="cell"
+                valign="top"
               >
-                Manager
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_admin"
+                >
+                  <input
+                    id="5678_admin"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Admin
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="dataAccessRequest"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_dataAccessRequest_manager"
+                >
+                  <input
+                    id="5678_dataAccessRequest_manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_dataAccessRequest_reviewer"
+                >
+                  <input
+                    id="5678_dataAccessRequest_reviewer"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Reviewer
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="metadata"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_metadata_manager"
+                >
+                  <input
+                    id="5678_metadata_manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_metadata_editor"
+                >
+                  <input
+                    id="5678_metadata_editor"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Editor
+                    </span>
+                  </span>
+                </label>
               </td>
             </tr>
             <tr
@@ -184,10 +285,102 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 </p>
               </td>
               <td
-                data-label="role"
+                data-label="teamAdmin"
                 role="cell"
+                valign="top"
               >
-                Manager
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_admin"
+                >
+                  <input
+                    id="5678_admin"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Admin
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="dataAccessRequest"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_dataAccessRequest_manager"
+                >
+                  <input
+                    id="5678_dataAccessRequest_manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_dataAccessRequest_reviewer"
+                >
+                  <input
+                    id="5678_dataAccessRequest_reviewer"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Reviewer
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="metadata"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_metadata_manager"
+                >
+                  <input
+                    id="5678_metadata_manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-14 emotion-15"
+                  for="5678_metadata_editor"
+                >
+                  <input
+                    id="5678_metadata_editor"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Editor
+                    </span>
+                  </span>
+                </label>
               </td>
             </tr>
           </tbody>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
-import { Checkbox, ActionCard, Table } from 'components';
+import { Checkbox, ActionCard, Table } from '../../components';
 import { SUPPORT_URL } from '../../consts';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
@@ -97,14 +97,10 @@ const AccountTeamMembers = ({ teamId }) => {
     };
 
     const handleCheckboxChange = useCallback(({ target: { id, checked } }) => {
-        /**
-         * GAT-1678: currently static
-         *
-         * setCheckboxes({
-         *    [id]: checked,
-         *    ...checkboxes
-         * })
-         * */
+        setCheckboxes({
+            [id]: checked,
+            ...checkboxes,
+        });
     }, []);
 
     if (getMembersRequest.isLoading) {
@@ -164,7 +160,12 @@ const AccountTeamMembers = ({ teamId }) => {
                                         </>
                                     ),
                                     teamAdmin: (
-                                        <Checkbox label={t('admin')} onChange={handleCheckboxChange} checked={idAdmin} id={idAdmin} />
+                                        <Checkbox
+                                            label={t('admin')}
+                                            onChange={handleCheckboxChange}
+                                            checked={checkboxes[idAdmin]}
+                                            id={idAdmin}
+                                        />
                                     ),
                                     dataAccessRequest: (
                                         <>
