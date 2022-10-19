@@ -26,7 +26,7 @@ jest.mock('../AccountTeamMembersModal', () => ({ onMemberAdded, close, open }) =
                         {
                             firstname: 'Patient',
                             lastname: '0',
-                            id: '9101112',
+                            id: 9101112,
                             roles: ['manager'],
                             organisation: 'HDR',
                             bio: 'Manager',

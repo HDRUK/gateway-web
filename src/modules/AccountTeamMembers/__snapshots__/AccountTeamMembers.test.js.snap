@@ -272,7 +272,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
               >
                 <a
                   class="ui-Typography emotion-6"
-                  href="/person/5678"
+                  href="/person/1234"
                 >
                   Jane
                    
@@ -291,10 +291,10 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
               >
                 <label
                   class="ui-Checkbox emotion-14 emotion-15"
-                  for="5678_admin"
+                  for="1234_admin"
                 >
                   <input
-                    id="5678_admin"
+                    id="1234_admin"
                     type="checkbox"
                   />
                   <span
@@ -313,10 +313,10 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
               >
                 <label
                   class="ui-Checkbox emotion-14 emotion-15"
-                  for="5678_dataAccessRequest_manager"
+                  for="1234_dataAccessRequest_manager"
                 >
                   <input
-                    id="5678_dataAccessRequest_manager"
+                    id="1234_dataAccessRequest_manager"
                     type="checkbox"
                   />
                   <span
@@ -329,10 +329,10 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 </label>
                 <label
                   class="ui-Checkbox emotion-14 emotion-15"
-                  for="5678_dataAccessRequest_reviewer"
+                  for="1234_dataAccessRequest_reviewer"
                 >
                   <input
-                    id="5678_dataAccessRequest_reviewer"
+                    id="1234_dataAccessRequest_reviewer"
                     type="checkbox"
                   />
                   <span
@@ -351,10 +351,10 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
               >
                 <label
                   class="ui-Checkbox emotion-14 emotion-15"
-                  for="5678_metadata_manager"
+                  for="1234_metadata_manager"
                 >
                   <input
-                    id="5678_metadata_manager"
+                    id="1234_metadata_manager"
                     type="checkbox"
                   />
                   <span
@@ -367,10 +367,10 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 </label>
                 <label
                   class="ui-Checkbox emotion-14 emotion-15"
-                  for="5678_metadata_editor"
+                  for="1234_metadata_editor"
                 >
                   <input
-                    id="5678_metadata_editor"
+                    id="1234_metadata_editor"
                     type="checkbox"
                   />
                   <span
