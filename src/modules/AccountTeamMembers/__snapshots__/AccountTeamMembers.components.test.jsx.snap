@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AccountTeamMembers components When DataAccessRequestCell is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <label
+    class="ui-Checkbox emotion-0 emotion-1"
+    for="5678_dataAccessRequest_manager"
+  >
+    <input
+      checked=""
+      id="5678_dataAccessRequest_manager"
+      type="checkbox"
+    />
+    <span
+      class="ui-Checkbox__label"
+    >
+      <span>
+        Manager
+      </span>
+    </span>
+  </label>
+  <label
+    class="ui-Checkbox emotion-0 emotion-1"
+    for="5678_dataAccessRequest_reviewer"
+  >
+    <input
+      id="5678_dataAccessRequest_reviewer"
+      type="checkbox"
+    />
+    <span
+      class="ui-Checkbox__label"
+    >
+      <span>
+        Reviewer
+      </span>
+    </span>
+  </label>
+</div>
+`;
+
+exports[`Given the AccountTeamMembers components When MetadataCell is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <label
+    class="ui-Checkbox emotion-0 emotion-1"
+    for="5678_metadata_manager"
+  >
+    <input
+      checked=""
+      id="5678_metadata_manager"
+      type="checkbox"
+    />
+    <span
+      class="ui-Checkbox__label"
+    >
+      <span>
+        Manager
+      </span>
+    </span>
+  </label>
+  <label
+    class="ui-Checkbox emotion-0 emotion-1"
+    for="5678_metadata_editor"
+  >
+    <input
+      id="5678_metadata_editor"
+      type="checkbox"
+    />
+    <span
+      class="ui-Checkbox__label"
+    >
+      <span>
+        Editor
+      </span>
+    </span>
+  </label>
+</div>
+`;
+
+exports[`Given the AccountTeamMembers components When NameCell is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <a
+    class="ui-Typography emotion-0"
+    href="/person/5678"
+  >
+    John
+     
+    Smith
+  </a>
+  <p
+    class="ui-Typography emotion-0"
+  >
+    HDR UK
+  </p>
+</div>
+`;
+
+exports[`Given the AccountTeamMembers components When TeamAdminCell is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <label
+    class="ui-Checkbox emotion-0 emotion-1"
+    for="5678_admin"
+  >
+    <input
+      checked=""
+      id="5678_admin"
+      type="checkbox"
+    />
+    <span
+      class="ui-Checkbox__label"
+    >
+      <span>
+        Admin
+      </span>
+    </span>
+  </label>
+</div>
+`;

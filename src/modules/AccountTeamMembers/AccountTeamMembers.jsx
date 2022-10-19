@@ -1,23 +1,23 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { Card, CardBody, Typography, Button, P, Box, H5 } from 'hdruk-react-core';
-import { Link } from 'react-router-dom';
+import { Card, Button, P } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
+import { ActionCard, Table } from '../../components';
 import { SUPPORT_URL } from '../../consts';
-import Table from '../../components/Table';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
 import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { LayoutContent } from '../../components/Layout';
 import { useAuth } from '../../context/AuthContext';
 import teamsService from '../../services/teams';
-import { getRolesList } from '../../utils/auth';
+import { DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell } from './AccountTeamMembers.components';
 
 const AccountTeamMembers = ({ teamId }) => {
     const { isTeamManager, managerInTeam } = useAuth();
     const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
+    const [checkboxes, setCheckboxes] = useState({});
     const { t } = useTranslation();
 
     const getMembersRequest = teamsService.useGetMembers(null, {
@@ -26,24 +26,22 @@ const AccountTeamMembers = ({ teamId }) => {
         },
     });
 
-    const columns = useMemo(
-        () => [
-            {
-                Header: 'Name',
-                accessor: 'name',
-            },
-            {
-                Header: 'Role',
-                accessor: 'role',
-            },
-        ],
-        []
-    );
-
     useEffect(() => {
         const init = () => {
             if (teamId) {
                 getMembersRequest.mutateAsync(teamId).then(({ data: { members } }) => {
+                    /**
+                     * GAT-1678: currently static
+                     *
+                     * const initialCheckboxes = {};
+                     *
+                     * members.forEach((member) => {
+                     *   initialCheckboxes[someId] = someBoolean;
+                     * });
+                     *
+                     * setCheckboxes(initialCheckboxes);
+                     */
+
                     setTeamMembers(members);
 
                     // TODO: GAT-1510:042
@@ -67,6 +65,52 @@ const AccountTeamMembers = ({ teamId }) => {
         setTeamMembers(addedMembers);
     };
 
+    const handleCheckboxChange = useCallback(({ target: { id, checked } }) => {
+        setCheckboxes({
+            [id]: checked,
+            ...checkboxes,
+        });
+    }, []);
+
+    const columns = useMemo(
+        () => [
+            {
+                Header: t('name'),
+                accessor: 'name',
+                Cell: ({ row: { original } }) => <NameCell member={original} />,
+            },
+            {
+                Header: t('teamAdmin'),
+                accessor: 'teamAdmin',
+                cellProps: {
+                    valign: 'top',
+                },
+                Cell: ({ row: { original } }) => (
+                    <TeamAdminCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />
+                ),
+            },
+            {
+                Header: t('dataAccessRequest'),
+                accessor: 'dataAccessRequest',
+                cellProps: {
+                    valign: 'top',
+                },
+                Cell: ({ row: { original } }) => (
+                    <DataAccessRequestCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />
+                ),
+            },
+            {
+                Header: t('metadata'),
+                accessor: 'metadata',
+                cellProps: {
+                    valign: 'top',
+                },
+                Cell: ({ row: { original } }) => <MetadataCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />,
+            },
+        ],
+        []
+    );
+
     if (getMembersRequest.isLoading) {
         return (
             <LayoutContent>
@@ -76,67 +120,39 @@ const AccountTeamMembers = ({ teamId }) => {
     }
 
     return (
-        <LayoutContent data-testid='AccountTeamMembers'>
-            <Card mb={4}>
-                <CardBody>
-                    <H5 mb={1}>{t('members')}</H5>
-                    <Box
-                        display={{
-                            md: 'flex',
-                        }}
-                        gap={8}>
-                        <Box
-                            mb={{
-                                xxs: 6,
-                                md: 0,
-                            }}
-                            flexGrow='1'>
+        <>
+            <LayoutContent>
+                <ActionCard
+                    title={t('members')}
+                    content={
+                        <>
                             <P mb={6}>
                                 {t('components.AccountTeamMembers.members.description1')}: <a href={SUPPORT_URL}>{SUPPORT_URL}</a>
                             </P>
                             <P mb={6}>{t('components.AccountTeamMembers.members.description2')}</P>
                             <P>{t('components.AccountTeamMembers.members.description3')}</P>
-                        </Box>
-                        <Box
-                            display={{
-                                md: 'flex',
-                            }}
-                            justifyContent='flex-end'
-                            flexBasis={{
-                                md: '40%',
-                            }}>
-                            {isTeamManager && (
-                                <Button variant='primary' onClick={handleOpenModal}>
-                                    {t('components.AccountTeamMembers.members.add')}
-                                </Button>
-                            )}
-                        </Box>
-                    </Box>
-                </CardBody>
-            </Card>
+                        </>
+                    }
+                    action={
+                        isTeamManager && (
+                            <Button variant='primary' onClick={handleOpenModal}>
+                                {t('components.AccountTeamMembers.members.add')}
+                            </Button>
+                        )
+                    }
+                    mb={4}
+                />
 
-            {teamMembers.length <= 0 && <MessageNotFound word='members' />}
-            {teamMembers.length > 0 && (
-                <Card>
-                    <Table
-                        columns={columns}
-                        data={teamMembers.map(({ lastname, firstname, id, bio, organisation, roles }) => ({
-                            name: (
-                                <>
-                                    <Typography as={Link} to={`/person/${id}`} color='purple500'>
-                                        {firstname} {lastname}
-                                    </Typography>
-                                    <Typography color='grey600'>{organisation || bio}</Typography>
-                                </>
-                            ),
-                            role: getRolesList(roles),
-                        }))}
-                    />
-                </Card>
-            )}
+                {teamMembers.length <= 0 && <MessageNotFound word='members' />}
+                {teamMembers.length > 0 && (
+                    <Card>
+                        <Table columns={columns} data={teamMembers} />
+                    </Card>
+                )}
 
-            <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
-        </LayoutContent>
+                <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
+            </LayoutContent>
+        </>
     );
 };
 

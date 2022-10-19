@@ -34,7 +34,7 @@ const Table = ({ className, columns, data, mt, mb, ml, mr, width, minWidth, maxW
                         <tr {...row.getRowProps()}>
                             {row.cells.map((cell, i) => {
                                 return (
-                                    <td {...cell.getCellProps()} data-label={headerGroups[0].headers[i].id}>
+                                    <td {...cell.getCellProps(cell.column.cellProps)} data-label={headerGroups[0].headers[i].id}>
                                         {cell.render('Cell')}
                                     </td>
                                 );

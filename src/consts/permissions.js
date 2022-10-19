@@ -3,6 +3,7 @@ export const PERMISSIONS_USER_TYPES = {
     reviewer: 'reviewer',
     custodian: 'custodian',
     applicant: 'applicant',
+    admin: 'admin',
 };
 
 export const PERMISSIONS_ROLE_NAMES = {

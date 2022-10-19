@@ -1,0 +1,26 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import ActionCard from './ActionCard';
+
+import { P, Button } from 'hdruk-react-core';
+
+<Meta title='Core/ActionCard' component={ActionCard} />
+
+<Canvas>
+    <Story name='Variants'>
+        {props => (
+            <ActionCard
+                title='Members'
+                content={
+                    <P>
+                        Managers can manage members, create and assign workflows, review applications that are assigned to them and make the
+                        final decision on data access request applications.
+                    </P>
+                }
+                action={<Button variant='primary'>Add member</Button>}
+                width='800px'
+                {...props}
+            />
+        )}
+    </Story>
+</Canvas>

@@ -2,7 +2,7 @@ const teamMembers = [
     {
         firstname: 'John',
         lastname: 'Smith',
-        id: '5678',
+        id: 5678,
         roles: ['manager'],
         organisation: 'HDR UK',
         bio: 'Developer',
@@ -10,7 +10,7 @@ const teamMembers = [
     {
         firstname: 'Jane',
         lastname: 'Doe',
-        id: '5678',
+        id: 1234,
         roles: ['manager'],
         organisation: 'Google',
         bio: 'Manager',
