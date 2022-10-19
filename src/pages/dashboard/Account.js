@@ -129,7 +129,7 @@ class Account extends Component {
         ],
         dashboardState: {},
         tabId: '',
-        innertab: '',
+        innertab: null,
         activeKey: '',
         team: 'user',
         alert: {},
@@ -194,7 +194,7 @@ class Account extends Component {
                 tab = this.checkRedirect(values);
                 this.setState({
                     tabId: tab,
-                    innertab: values.innertab ? values.innertab : '',
+                    innertab: values.innertab,
                     isDeleted: values.toolDeleted,
                     isApproved: values.toolApproved,
                     isRejected: values.toolRejected,
@@ -541,7 +541,7 @@ class Account extends Component {
     };
 
     onClearInnerTab = () => {
-        this.setState({ innertab: '' });
+        this.setState({ innertab: null });
     };
 
     setDataAccessRequest = (dar = {}) => {

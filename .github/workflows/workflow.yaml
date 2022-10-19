@@ -5,9 +5,9 @@ name: Unit tests
 
 on:
     push:
-        branches: ['dev']
+        branches: ['dev', 'uat', 'uat2', 'release', 'master']
     pull_request:
-        branches: ['dev']
+        branches: ['dev', 'uat', 'uat2', 'release', 'master']
 
 jobs:
     security_scanning:

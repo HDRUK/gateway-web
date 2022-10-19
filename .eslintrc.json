@@ -23,5 +23,15 @@
             }
         ],
         "arrow-body-style": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx"]
+            },
+            "babel-module": {
+                "root": ["<rootDir>/node_modules", "<rootDir>/src"]
+            }
+        }
     }
 }
