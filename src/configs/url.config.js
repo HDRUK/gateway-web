@@ -64,7 +64,9 @@ export const addCmsGatewayApiHostname = path => {
     const { hostname } = window.location;
     let webHostname = 'https://api.www.healthdatagateway.org';
 
-    if (hostname.includes('uat.')) {
+    if (hostname.includes('uat2.')) {
+        webHostname = 'https://api.uat2.healthdatagateway.org';
+    } else if (hostname.includes('uat.')) {
         webHostname = 'https://api.uat.healthdatagateway.org';
     } else if (hostname.includes('preprod.')) {
         webHostname = 'https://api.preprod.hdruk.dev';
@@ -79,7 +81,9 @@ export const addCmsGatewayHostname = path => {
     const { hostname } = window.location;
     let webHostname = 'https://web.www.healthdatagateway.org';
 
-    if (hostname.includes('uat.')) {
+    if (hostname.includes('uat2.')) {
+        webHostname = 'https://web.uat2.healthdatagateway.org';
+    } else if (hostname.includes('uat.')) {
         webHostname = 'https://web.uat.healthdatagateway.org';
     } else if (hostname.includes('preprod.')) {
         webHostname = 'https://web.preprod.hdruk.dev';
