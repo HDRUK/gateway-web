@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { Card, CardBody, Typography, Button, P, Box, H5 } from 'hdruk-react-core';
+import { Card, Typography, Button, P } from 'hdruk-react-core';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -71,7 +71,6 @@ const AccountTeamMembers = ({ teamId }) => {
                      * });
                      *
                      * setCheckboxes(initialCheckboxes);
-                     *
                      */
 
                     setTeamMembers(members);
@@ -146,6 +145,9 @@ const AccountTeamMembers = ({ teamId }) => {
                         <Table
                             columns={columns}
                             data={teamMembers.map(({ lastname, firstname, id, bio, organisation }) => {
+                                /**
+                                 * GAT-1678: currently static
+                                 * */
                                 const idAdmin = `${id}_admin`;
                                 const idDARManager = `${id}_dataAccessRequest_manager`;
                                 const idDARReviewer = `${id}_dataAccessRequest_reviewer`;
