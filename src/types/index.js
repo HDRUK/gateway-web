@@ -32,4 +32,12 @@ const teamGatewayNotificationsType = arrayOf(
     })
 );
 
-export { userStateType, teamGatewayNotificationsType };
+const memberPropTypes = shape({
+    lastname: string,
+    firstname: string,
+    id: number,
+    bio: string,
+    organisation: string,
+});
+
+export { userStateType, teamGatewayNotificationsType, memberPropTypes };

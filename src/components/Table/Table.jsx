@@ -9,9 +9,6 @@ import styles from './Table.styles';
 
 const Table = ({ className, columns, data, mt, mb, ml, mr, width, minWidth, maxWidth }) => {
     const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
-    //     const cellProps = columns.map(({ cellProps }) => {
-    // return cellProps
-    //     });
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
         columns,

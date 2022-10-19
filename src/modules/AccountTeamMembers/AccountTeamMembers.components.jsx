@@ -1,0 +1,68 @@
+import React from 'react';
+import { Typography } from 'hdruk-react-core';
+import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { memberPropTypes } from '../../types';
+import { Checkbox } from '../../components';
+
+const cellProps = {
+    member: memberPropTypes.isRequired,
+    onChange: PropTypes.func.isRequired,
+    checkboxes: PropTypes.objectOf(PropTypes.bool).isRequired,
+};
+
+export const NameCell = ({ member: { lastname, firstname, id, bio, organisation } }) => (
+    <>
+        <Typography as={Link} to={`/person/${id}`} color='purple500'>
+            {firstname} {lastname}
+        </Typography>
+        <Typography color='grey600'>{organisation || bio}</Typography>
+    </>
+);
+
+NameCell.propTypes = {
+    member: propTypesMember.isRequired,
+};
+
+export const TeamAdminCell = ({ member: { id }, onChange, checkboxes }) => {
+    const { t } = useTranslation();
+
+    const idAdmin = `${id}_admin`;
+
+    return <Checkbox label={t('admin')} onChange={onChange} checked={checkboxes[idAdmin]} id={idAdmin} />;
+};
+
+TeamAdminCell.propTypes = cellProps;
+
+export const DataAccessRequestCell = ({ member: { id }, onChange, checkboxes }) => {
+    const { t } = useTranslation();
+
+    const idDARManager = `${id}_dataAccessRequest_manager`;
+    const idDARReviewer = `${id}_dataAccessRequest_reviewer`;
+
+    return (
+        <>
+            <Checkbox label={t('manager')} onChange={onChange} checked={checkboxes[idDARManager]} id={idDARManager} />
+            <Checkbox label={t('reviewer')} onChange={onChange} checked={checkboxes[idDARReviewer]} id={idDARReviewer} />
+        </>
+    );
+};
+
+DataAccessRequestCell.propTypes = cellProps;
+
+export const MetadataCell = ({ member: { id }, onChange, checkboxes }) => {
+    const { t } = useTranslation();
+
+    const idMetadataManager = `${id}_metadata_manager`;
+    const idMetadataEditor = `${id}_metadata_editor`;
+
+    return (
+        <>
+            <Checkbox label={t('manager')} onChange={onChange} checked={checkboxes[idMetadataManager]} id={idMetadataManager} />
+            <Checkbox label={t('editor')} onChange={onChange} checked={checkboxes[idMetadataEditor]} id={idMetadataEditor} />
+        </>
+    );
+};
+
+MetadataCell.propTypes = cellProps;

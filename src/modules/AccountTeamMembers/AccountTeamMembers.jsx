@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { Card, Typography, Button, P } from 'hdruk-react-core';
-import { Link } from 'react-router-dom';
+import { Card, Button, P } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
-import { Checkbox, ActionCard, Table } from '../../components';
+import { ActionCard, Table } from '../../components';
 import { SUPPORT_URL } from '../../consts';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
@@ -12,6 +11,7 @@ import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { LayoutContent } from '../../components/Layout';
 import { useAuth } from '../../context/AuthContext';
 import teamsService from '../../services/teams';
+import { DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell } from './AccountTeamMembers.components';
 
 const AccountTeamMembers = ({ teamId }) => {
     const { isTeamManager, managerInTeam } = useAuth();
@@ -25,37 +25,6 @@ const AccountTeamMembers = ({ teamId }) => {
             NotificationManager.error(message, title, 10000);
         },
     });
-
-    const columns = useMemo(
-        () => [
-            {
-                Header: t('name'),
-                accessor: 'name',
-            },
-            {
-                Header: t('teamAdmin'),
-                accessor: 'teamAdmin',
-                cellProps: {
-                    valign: 'top',
-                },
-            },
-            {
-                Header: t('dataAccessRequest'),
-                accessor: 'dataAccessRequest',
-                cellProps: {
-                    valign: 'top',
-                },
-            },
-            {
-                Header: t('metadata'),
-                accessor: 'metadata',
-                cellProps: {
-                    valign: 'top',
-                },
-            },
-        ],
-        []
-    );
 
     useEffect(() => {
         const init = () => {
@@ -103,6 +72,45 @@ const AccountTeamMembers = ({ teamId }) => {
         });
     }, []);
 
+    const columns = useMemo(
+        () => [
+            {
+                Header: t('name'),
+                accessor: 'name',
+                Cell: ({ row: { original } }) => <NameCell member={original} />,
+            },
+            {
+                Header: t('teamAdmin'),
+                accessor: 'teamAdmin',
+                cellProps: {
+                    valign: 'top',
+                },
+                Cell: ({ row: { original } }) => (
+                    <TeamAdminCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />
+                ),
+            },
+            {
+                Header: t('dataAccessRequest'),
+                accessor: 'dataAccessRequest',
+                cellProps: {
+                    valign: 'top',
+                },
+                Cell: ({ row: { original } }) => (
+                    <DataAccessRequestCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />
+                ),
+            },
+            {
+                Header: t('metadata'),
+                accessor: 'metadata',
+                cellProps: {
+                    valign: 'top',
+                },
+                Cell: ({ row: { original } }) => <MetadataCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />,
+            },
+        ],
+        []
+    );
+
     if (getMembersRequest.isLoading) {
         return (
             <LayoutContent>
@@ -138,70 +146,7 @@ const AccountTeamMembers = ({ teamId }) => {
                 {teamMembers.length <= 0 && <MessageNotFound word='members' />}
                 {teamMembers.length > 0 && (
                     <Card>
-                        <Table
-                            columns={columns}
-                            data={teamMembers.map(({ lastname, firstname, id, bio, organisation }) => {
-                                /**
-                                 * GAT-1678: currently static
-                                 * */
-                                const idAdmin = `${id}_admin`;
-                                const idDARManager = `${id}_dataAccessRequest_manager`;
-                                const idDARReviewer = `${id}_dataAccessRequest_reviewer`;
-                                const idMetadataManager = `${id}_metadata_manager`;
-                                const idMetadataEditor = `${id}_metadata_editor`;
-
-                                return {
-                                    name: (
-                                        <>
-                                            <Typography as={Link} to={`/person/${id}`} color='purple500'>
-                                                {firstname} {lastname}
-                                            </Typography>
-                                            <Typography color='grey600'>{organisation || bio}</Typography>
-                                        </>
-                                    ),
-                                    teamAdmin: (
-                                        <Checkbox
-                                            label={t('admin')}
-                                            onChange={handleCheckboxChange}
-                                            checked={checkboxes[idAdmin]}
-                                            id={idAdmin}
-                                        />
-                                    ),
-                                    dataAccessRequest: (
-                                        <>
-                                            <Checkbox
-                                                label={t('manager')}
-                                                onChange={handleCheckboxChange}
-                                                checked={checkboxes[idDARManager]}
-                                                id={idDARManager}
-                                            />
-                                            <Checkbox
-                                                label={t('reviewer')}
-                                                onChange={handleCheckboxChange}
-                                                checked={checkboxes[idDARReviewer]}
-                                                id={idDARReviewer}
-                                            />
-                                        </>
-                                    ),
-                                    metadata: (
-                                        <>
-                                            <Checkbox
-                                                label={t('manager')}
-                                                onChange={handleCheckboxChange}
-                                                checked={checkboxes[idMetadataManager]}
-                                                id={idMetadataManager}
-                                            />
-                                            <Checkbox
-                                                label={t('editor')}
-                                                onChange={handleCheckboxChange}
-                                                checked={checkboxes[idMetadataEditor]}
-                                                id={idMetadataEditor}
-                                            />
-                                        </>
-                                    ),
-                                };
-                            })}
-                        />
+                        <Table columns={columns} data={teamMembers} />
                     </Card>
                 )}
 
