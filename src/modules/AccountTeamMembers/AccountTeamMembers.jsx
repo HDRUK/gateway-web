@@ -29,25 +29,25 @@ const AccountTeamMembers = ({ teamId }) => {
     const columns = useMemo(
         () => [
             {
-                Header: 'Name',
+                Header: t('name'),
                 accessor: 'name',
             },
             {
-                Header: 'Team Admin',
+                Header: t('teamAdmin'),
                 accessor: 'teamAdmin',
                 cellProps: {
                     valign: 'top',
                 },
             },
             {
-                Header: 'Data Access Request',
+                Header: t('dataAccessRequest'),
                 accessor: 'dataAccessRequest',
                 cellProps: {
                     valign: 'top',
                 },
             },
             {
-                Header: 'Metadata',
+                Header: t('metadata'),
                 accessor: 'metadata',
                 cellProps: {
                     valign: 'top',
