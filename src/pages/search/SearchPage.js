@@ -12,7 +12,7 @@ import { withTranslation } from 'react-i18next';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { ReactComponent as ArrowUpSvg } from '../../images/icons/arrow-up.svg';
-import { ReactComponent as SearchSvg } from '../../images/search.svg';
+import { SvgSearch } from 'hdruk-react-core/dist/esm/icons';
 import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
@@ -1867,7 +1867,7 @@ class SearchPage extends React.Component {
                                             <Box mt={1}>
                                                 <InputGroup>
                                                     <Input
-                                                        iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                        iconLeft={<SvgSearch fill='purple500' size="sm"/>}
                                                         iconRight={
                                                             !!this.state.searchFieldValue && (
                                                                 <Icon
