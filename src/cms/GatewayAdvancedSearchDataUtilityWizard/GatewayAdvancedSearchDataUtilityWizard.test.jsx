@@ -39,7 +39,7 @@ describe('Given the GatewayAdvancedSearchDataUtilityWizard component', () => {
             });
 
             it('Then goes to the web subdomain', async () => {
-                expect(window.location.assign).toHaveBeenCalledWith('https://web.www.healthdatagateway.org/search=&tab=datasets');
+                expect(window.location.assign).toHaveBeenCalledWith('https://web.www.healthdatagateway.org/search?search=&tab=Datasets');
             });
         });
     });
