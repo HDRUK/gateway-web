@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, fireEvent, screen } from 'testUtils';
+import { render, fireEvent, screen, cleanup } from 'testUtils';
 import { teamMembersMock } from '../../../test/mocks/teamsServiceMock';
-import { NameCell, TeamAdminCell, DataAccessRequestCell, MetadataCell } from './AccountTeamMembers.components';
+import { HeaderTooltip, NameCell, TeamAdminCell, DataAccessRequestCell, MetadataCell } from './AccountTeamMembers.components';
+import '@testing-library/jest-dom/extend-expect';
 
 const changeMock = jest.fn();
 
@@ -152,6 +153,23 @@ describe('Given the AccountTeamMembers components', () => {
 
                 expect(changeMock).toHaveBeenCalled();
             });
+        });
+    });
+    describe('When HeaderTooltip is rendered', () => {
+        afterEach(() => {
+            cleanup();
+        });
+        it('Then renders just the heading', () => {
+            render(<HeaderTooltip header='My header' content='My content' />);
+            expect(screen.getByText('My header')).toBeInTheDocument();
+            expect(screen.queryByText('My content')).not.toBeInTheDocument();
+        });
+        it('When you mouseover the content is displayed', () => {
+            const { container } = render(<HeaderTooltip header='My header' content='My content' />);
+            const iconTrigger = container.querySelector('icon-mock');
+
+            fireEvent.mouseOver(iconTrigger);
+            expect(screen.queryByText('My content')).toBeInTheDocument();
         });
     });
 });

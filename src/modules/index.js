@@ -5,6 +5,7 @@ import AccountTeamGatewayNotificationEmails from './AccountTeamGatewayNotificati
 import AccountTeamMembers from './AccountTeamMembers';
 import AccountTeamMembersModal from './AccountTeamMembersModal';
 import AccountTeamNotificationsConfirmationModal from './AccountTeamNotificationsConfirmationModal';
+import PermissionDescriptions from './PermissionDescriptions';
 
 export {
     AccountTeamFieldRepeater,
@@ -14,4 +15,5 @@ export {
     AccountTeamMembers,
     AccountTeamMembersModal,
     AccountTeamNotificationsConfirmationModal,
+    PermissionDescriptions,
 };

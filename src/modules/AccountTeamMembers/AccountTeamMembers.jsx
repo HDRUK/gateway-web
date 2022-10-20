@@ -3,14 +3,16 @@ import { Card, Button, P } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
-import { ActionCard, Table, LayoutContent } from '../../components';
+import { ActionCard, Table, LayoutContent } from 'components';
+import { PermissionDescriptions } from 'modules';
 import { SUPPORT_URL } from '../../consts';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
 import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { useAuth } from '../../context/AuthContext';
 import teamsService from '../../services/teams';
-import { ActionCell, DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell } from './AccountTeamMembers.components';
+import { ActionCell, DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell, HeaderTooltip } from './AccountTeamMembers.components';
+import { ROLES_ADMIN, ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR } from 'configs';
 
 const AccountTeamMembers = ({ teamId }) => {
     const { isTeamManager, managerInTeam } = useAuth();
@@ -83,7 +85,7 @@ const AccountTeamMembers = ({ teamId }) => {
                 Cell: ({ row: { original } }) => <NameCell member={original} />,
             },
             {
-                Header: t('teamAdmin'),
+                Header: <HeaderTooltip header={t('teamAdmin')} content={<PermissionDescriptions roles={[ROLES_ADMIN.value]} />} />,
                 accessor: 'teamAdmin',
                 cellProps: {
                     valign: 'top',
@@ -93,7 +95,12 @@ const AccountTeamMembers = ({ teamId }) => {
                 ),
             },
             {
-                Header: t('dataAccessRequest'),
+                Header: (
+                    <HeaderTooltip
+                        header={t('dataAccessRequest')}
+                        content={<PermissionDescriptions roles={[ROLES_MANAGER.value, ROLES_REVIEWER.value]} />}
+                    />
+                ),
                 accessor: 'dataAccessRequest',
                 cellProps: {
                     valign: 'top',
@@ -103,7 +110,12 @@ const AccountTeamMembers = ({ teamId }) => {
                 ),
             },
             {
-                Header: t('metadata'),
+                Header: (
+                    <HeaderTooltip
+                        header={t('metadata')}
+                        content={<PermissionDescriptions roles={[ROLES_MANAGER.value, ROLES_METADATA_EDITOR.value]} />}
+                    />
+                ),
                 accessor: 'metadata',
                 cellProps: {
                     valign: 'top',

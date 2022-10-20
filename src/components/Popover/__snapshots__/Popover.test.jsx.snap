@@ -4,6 +4,7 @@ exports[`Given the Popover component When it is rendered Then matches the previo
 <div>
   <div
     role="button"
+    style="display: inline-block; line-height: 0;"
     tabindex="0"
   >
     <span
