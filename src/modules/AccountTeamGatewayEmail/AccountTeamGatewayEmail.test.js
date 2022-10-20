@@ -42,6 +42,12 @@ describe('Given the AccountTeamGatewayEmail component', () => {
             expect(emailInput).toHaveProperty('disabled');
         });
 
+        it('Then should set the toggle correctly', () => {
+            const checkbox = screen.getByRole('checkbox', { hidden: true });
+
+            expect(checkbox.checked).toBe(false);
+        });
+
         describe('And the user is a manager', () => {
             beforeAll(() => {
                 authSpy.mockReturnValue({
