@@ -14,6 +14,7 @@ const PopoverMenu = ({ items }) => {
                     <li key={index} css={styles.listItem}>
                         <Button
                             onClick={() => action()}
+                            m={buttonVariant !== 'secondaryAlt' ? 1 : 0}
                             variant={buttonVariant}
                             iconLeft={icon && <Icon fill={iconFill} size={iconSize} svg={<ItemIcon />} />}>
                             {label}
