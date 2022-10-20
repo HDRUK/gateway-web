@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AccountTeamGatewayEmail component When it renders And the user is a manager Then should match the snapshot 1`] = `
+<div>
+  <label
+    class="emotion-0 ui-Switch emotion-1"
+    for="notifictionType1"
+  >
+    <input
+      id="notifictionType1"
+      type="checkbox"
+      variant="primary"
+    />
+    <div
+      class="ui-SwitchControl"
+    >
+      <div>
+        <div>
+          Send email notifications to my Gateway email address
+        </div>
+        <div
+          class="ui-Message emotion-2"
+        >
+          You will need to add a team email to be able to save switching off notifications to your own Gateway email.
+        </div>
+      </div>
+    </div>
+  </label>
+  <div
+    class="ui-Box emotion-3"
+  >
+    <div
+      class="ui-Input emotion-4"
+    >
+      <label
+        class="ui-Label emotion-5"
+      >
+        My Gateway email
+      </label>
+      <div
+        class="ui-Box emotion-3"
+      >
+        <input
+          aria-describedby="My Gateway email"
+          class="emotion-7"
+          name="myGatewayEmail"
+          readonly=""
+          type="email"
+          value="dan@ackroyd.com"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Given the AccountTeamGatewayEmail component When it renders Then should match the snapshot 1`] = `
+<div>
+  <label
+    class="emotion-0 ui-Switch emotion-1"
+    for="notifictionType1"
+  >
+    <input
+      id="notifictionType1"
+      type="checkbox"
+      variant="primary"
+    />
+    <div
+      class="ui-SwitchControl"
+    >
+      <div>
+        <div>
+          Send email notifications to my Gateway email address
+        </div>
+      </div>
+    </div>
+  </label>
+  <div
+    class="ui-Box emotion-2"
+  >
+    <div
+      class="ui-Input emotion-3"
+    >
+      <label
+        class="ui-Label emotion-4"
+      >
+        My Gateway email
+      </label>
+      <div
+        class="ui-Box emotion-2"
+      >
+        <input
+          aria-describedby="My Gateway email"
+          class="emotion-6"
+          name="myGatewayEmail"
+          readonly=""
+          type="email"
+          value="dan@ackroyd.com"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

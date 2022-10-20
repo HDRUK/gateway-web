@@ -189,7 +189,7 @@ const AccountTeamManagementPage = ({
     }, [activeTabKey, teamId]);
 
     // send email notifications to my gateway email address
-    const togglePersonalNotifications = (checked, e = {}, id = '') => {
+    const togglePersonalNotifications = ({ target: { checked, id } }) => {
         if (!isEmpty(id)) {
             const foundTeamIndex = getTeamNotificationType(id, teamGatewayNotifications);
             const foundMemberIndex = getMemberNotification(id, memberNotifications);

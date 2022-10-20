@@ -500,6 +500,13 @@
                 "description3": "Reviewers can review applications that are assigned to them.",
                 "add": "+ Add a new member"
             }
+        },
+        "AccountTeamGatewayEmail": {
+            "optIn": {
+                "switch": "Send email notifications to my Gateway email address",
+                "description": "You will need to add a team email to be able to save switching off notifications to your own Gateway email."
+            },
+            "emailLabel": "My Gateway email"
         }
     },
     "pages": {
