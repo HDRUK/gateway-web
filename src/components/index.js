@@ -19,6 +19,8 @@ import LayoutBox from './LayoutBox';
 import ListInfo from './ListInfo';
 import Loading from './Loading';
 import QualityScore from './QualityScore';
+import Popover from './Popover';
+import PopoverMenu from './PopoverMenu';
 import SearchControls from './SearchControls';
 import SearchInput from './SearchInput';
 import SortDropdown from './SortDropdown';
@@ -52,6 +54,8 @@ export {
     LayoutBox,
     ListInfo,
     Loading,
+    Popover,
+    PopoverMenu,
     SearchControls,
     SearchInput,
     SortDropdown,

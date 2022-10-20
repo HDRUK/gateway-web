@@ -3,15 +3,14 @@ import { Card, Button, P } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
-import { ActionCard, Table } from '../../components';
+import { ActionCard, Table, LayoutContent } from '../../components';
 import { SUPPORT_URL } from '../../consts';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
 import AccountTeamMembersModal from '../AccountTeamMembersModal';
-import { LayoutContent } from '../../components/Layout';
 import { useAuth } from '../../context/AuthContext';
 import teamsService from '../../services/teams';
-import { DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell } from './AccountTeamMembers.components';
+import { ActionCell, DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell } from './AccountTeamMembers.components';
 
 const AccountTeamMembers = ({ teamId }) => {
     const { isTeamManager, managerInTeam } = useAuth();
@@ -52,6 +51,10 @@ const AccountTeamMembers = ({ teamId }) => {
 
         init();
     }, [teamId]);
+
+    const handleDeleteMember = id => {
+        console.log(`delete member: ${id}`);
+    };
 
     const handleCloseModal = useCallback(() => {
         setShowModal(false);
@@ -106,6 +109,18 @@ const AccountTeamMembers = ({ teamId }) => {
                     valign: 'top',
                 },
                 Cell: ({ row: { original } }) => <MetadataCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />,
+            },
+            {
+                Header: 'Further Actions',
+                id: 'actions',
+                Cell: ({ row: { original } }) => (
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <ActionCell member={original} onDeleteMember={handleDeleteMember} />
+                    </div>
+                ),
+                styles: {
+                    width: '147px',
+                },
             },
         ],
         []

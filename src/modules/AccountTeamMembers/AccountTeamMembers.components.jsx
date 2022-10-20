@@ -1,10 +1,11 @@
 import React from 'react';
 import { Typography } from 'hdruk-react-core';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { Checkbox, Popover, PopoverMenu } from 'components';
+import { useTranslation } from 'react-i18next';
 import { memberPropTypes } from '../../types';
-import { Checkbox } from '../../components';
+import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
 
 const cellProps = {
     member: memberPropTypes.isRequired,
@@ -12,7 +13,24 @@ const cellProps = {
     checkboxes: PropTypes.objectOf(PropTypes.bool).isRequired,
 };
 
-export const NameCell = ({ member: { lastname, firstname, id, bio, organisation } }) => (
+const ActionCell = ({ member: { id }, onDeleteMember }) => {
+    const { t } = useTranslation();
+    const items = [
+        {
+            label: t('remove'),
+            icon: WastebinIcon,
+            action: () => onDeleteMember(id),
+        },
+    ];
+    return <Popover content={<PopoverMenu items={items} />} />;
+};
+
+ActionCell.propTypes = {
+    member: memberPropTypes.isRequired,
+    onDeleteMember: PropTypes.func.isRequired,
+};
+
+const NameCell = ({ member: { lastname, firstname, id, bio, organisation } }) => (
     <>
         <Typography as={Link} to={`/person/${id}`} color='purple500'>
             {firstname} {lastname}
@@ -25,7 +43,7 @@ NameCell.propTypes = {
     member: memberPropTypes.isRequired,
 };
 
-export const TeamAdminCell = ({ member: { id }, onChange, checkboxes }) => {
+const TeamAdminCell = ({ member: { id }, onChange, checkboxes }) => {
     const { t } = useTranslation();
 
     const idAdmin = `${id}_admin`;
@@ -35,7 +53,7 @@ export const TeamAdminCell = ({ member: { id }, onChange, checkboxes }) => {
 
 TeamAdminCell.propTypes = cellProps;
 
-export const DataAccessRequestCell = ({ member: { id }, onChange, checkboxes }) => {
+const DataAccessRequestCell = ({ member: { id }, onChange, checkboxes }) => {
     const { t } = useTranslation();
 
     const idDARManager = `${id}_dataAccessRequest_manager`;
@@ -51,7 +69,7 @@ export const DataAccessRequestCell = ({ member: { id }, onChange, checkboxes }) 
 
 DataAccessRequestCell.propTypes = cellProps;
 
-export const MetadataCell = ({ member: { id }, onChange, checkboxes }) => {
+const MetadataCell = ({ member: { id }, onChange, checkboxes }) => {
     const { t } = useTranslation();
 
     const idMetadataManager = `${id}_metadata_manager`;
@@ -66,3 +84,5 @@ export const MetadataCell = ({ member: { id }, onChange, checkboxes }) => {
 };
 
 MetadataCell.propTypes = cellProps;
+
+export { ActionCell, NameCell, DataAccessRequestCell, TeamAdminCell, MetadataCell };
