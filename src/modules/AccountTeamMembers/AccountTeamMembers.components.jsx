@@ -1,11 +1,12 @@
 import React from 'react';
-import { Typography } from 'hdruk-react-core';
+import { Typography, Icon, Box } from 'hdruk-react-core';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Checkbox, Popover, PopoverMenu } from 'components';
 import { useTranslation } from 'react-i18next';
 import { memberPropTypes } from '../../types';
 import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
+import { ReactComponent as InfoOutlineIcon } from '../../images/icons/info-outline.svg';
 
 const cellProps = {
     member: memberPropTypes.isRequired,
@@ -85,4 +86,21 @@ const MetadataCell = ({ member: { id }, onChange, checkboxes }) => {
 
 MetadataCell.propTypes = cellProps;
 
-export { ActionCell, NameCell, DataAccessRequestCell, TeamAdminCell, MetadataCell };
+const HeaderTooltip = ({ header, content }) => (
+    <Box display='flex' alignItems='center'>
+        {header}
+        <Popover
+            actionType='hover'
+            position='top'
+            content={content}
+            trigger={<Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />}
+        />
+    </Box>
+);
+
+HeaderTooltip.propTypes = {
+    header: PropTypes.string.isRequired,
+    content: PropTypes.node.isRequired,
+};
+
+export { ActionCell, NameCell, DataAccessRequestCell, TeamAdminCell, MetadataCell, HeaderTooltip };

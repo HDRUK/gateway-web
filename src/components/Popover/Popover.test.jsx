@@ -2,6 +2,7 @@ import { render, screen, waitFor, cleanup } from 'testUtils';
 import React from 'react';
 import Popover from './Popover';
 import '@testing-library/jest-dom/extend-expect';
+import { fireEvent } from '@testing-library/dom';
 
 describe('Given the Popover component', () => {
     describe('When it is rendered', () => {
@@ -23,6 +24,13 @@ describe('Given the Popover component', () => {
             render(<Popover content={<div>content</div>} trigger='this is my trigger' />);
             expect(screen.queryByText('content')).not.toBeInTheDocument();
             screen.getByRole('button').click();
+            expect(screen.getByText('content')).toBeInTheDocument();
+        });
+
+        it('When the trigger is moused-over shows the content', async () => {
+            render(<Popover actionType='hover' content={<div>content</div>} trigger='this is my trigger' />);
+            expect(screen.queryByText('content')).not.toBeInTheDocument();
+            fireEvent.mouseOver(screen.getByRole('button'));
             expect(screen.getByText('content')).toBeInTheDocument();
         });
 

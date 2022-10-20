@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
 import * as Yup from 'yup';
+import { ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR } from 'configs';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import serviceAuth from '../../services/auth/auth';
 import serviceTeam from '../../services/teams';
@@ -41,23 +42,7 @@ const AccountTeamMembersModal = ({ open, close, teamId, onMemberAdded }) => {
         }
     }
 
-    const roleSelect = [
-        {
-            role: 'Manager',
-            value: 'manager',
-            roleDescription: 'Can add, edit or remove members and resources. Can assign workflows and review applications.',
-        },
-        {
-            role: 'Reviewer',
-            value: 'reviewer',
-            roleDescription: 'Can review applications assigned to them.',
-        },
-        {
-            role: 'Metadata editor',
-            value: 'metadata_editor',
-            roleDescription: 'Can add and create new versions of datasets',
-        },
-    ];
+    const roleSelect = [ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR];
 
     const formik = useFormik({
         initialValues: {
