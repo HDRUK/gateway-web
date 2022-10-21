@@ -62,9 +62,7 @@ describe('Given the AccountTeamGatewayNotificationEmails component', () => {
 
             it('Then should call the correct method', () => {
                 screen.getByRole('checkbox', { hidden: true }).click();
-                expect(toggleTeamNotificationsMock).toHaveBeenCalled();
-                const checkbox = screen.getByRole('checkbox', { hidden: true });
-                expect(checkbox.checked).toBe(true);
+                expect(toggleTeamNotificationsMock).toHaveBeenCalledWith({ checked: true, id: 'notifictionType1' });
             });
         });
     });

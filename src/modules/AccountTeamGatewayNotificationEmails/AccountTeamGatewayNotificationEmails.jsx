@@ -16,13 +16,11 @@ const AccountTeamGatewayNotificationEmails = ({ teamId, teamNotification, toggle
     }, [teamId]);
 
     if (!isTeamManager || !teamId) return null;
-
     return (
         <div data-testid='AccountTeamGatewayNotificationEmails'>
             <Switch
-                onChange={toggleTeamNotifications}
                 checked={teamNotification.optIn}
-                id={teamNotification.notificationType}
+                onChange={({ target: { checked } }) => toggleTeamNotifications({ checked, id: teamNotification.notificationType })}
                 label={t('notifications.teamEmailText')}
             />
         </div>

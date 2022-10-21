@@ -17,14 +17,13 @@ const AccountTeamGatewayEmail = ({ teamId, memberNotification, togglePersonalNot
     return (
         <>
             <Switch
-                id={memberNotification.notificationType}
                 label={
                     <>
                         <div>{t('components.AccountTeamGatewayEmail.optIn.switch')}</div>
                         {isTeamManager && <Message mt={2}>{t('components.AccountTeamGatewayEmail.optIn.description')}</Message>}
                     </>
                 }
-                onChange={togglePersonalNotifications}
+                onChange={({ target: { checked } }) => togglePersonalNotifications({ checked, id: memberNotification.notificationType })}
                 checked={memberNotification.optIn}
             />
 

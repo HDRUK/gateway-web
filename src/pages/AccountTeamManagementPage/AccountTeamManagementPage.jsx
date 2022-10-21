@@ -189,7 +189,7 @@ const AccountTeamManagementPage = ({
     }, [activeTabKey, teamId]);
 
     // send email notifications to my gateway email address
-    const togglePersonalNotifications = ({ target: { checked, id } }) => {
+    const togglePersonalNotifications = ({ checked, id }) => {
         if (!isEmpty(id)) {
             const foundTeamIndex = getTeamNotificationType(id, teamGatewayNotifications);
             const foundMemberIndex = getMemberNotification(id, memberNotifications);
@@ -205,8 +205,7 @@ const AccountTeamManagementPage = ({
     };
 
     // send email notifications to team email address
-    const toggleTeamNotifications = ({ target: { checked, id } }) => {
-        console.log('not toggled');
+    const toggleTeamNotifications = ({ checked, id }) => {
         if (!isEmpty(id)) {
             // 1. find notificationType
             const foundIndex = getTeamNotificationType(id, teamGatewayNotifications);
