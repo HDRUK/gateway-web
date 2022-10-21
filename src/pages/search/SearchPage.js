@@ -1867,7 +1867,7 @@ class SearchPage extends React.Component {
                                             <Box mt={1}>
                                                 <InputGroup>
                                                     <Input
-                                                        iconLeft={<SvgSearch fill='purple500' size="sm"/>}
+                                                        iconLeft={<Icon svg={<SvgSearch />} fill='purple500' />}
                                                         iconRight={
                                                             !!this.state.searchFieldValue && (
                                                                 <Icon
