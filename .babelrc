@@ -1,6 +1,7 @@
 {
     "presets": ["@babel/env", "react-app", "@babel/react"],
     "plugins": [
+        ["inline-react-svg"],
         ["@babel/plugin-proposal-class-properties"],
         [
             "module-resolver",

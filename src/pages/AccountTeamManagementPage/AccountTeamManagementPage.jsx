@@ -20,6 +20,9 @@ import {
 } from './AccountTeamManagementPage.utils';
 import { GeneratedAlerts, LoaderRow, NotificationTab, TabsNav, TeamManagementHeader } from './AccountTeamManagementPage.components';
 import { isAdminNotManager } from 'utils/auth';
+import { Button, H1, H5, ModalBody, ModalFooter, ModalHeader, P } from 'hdruk-react-core';
+import { Modal } from 'hdruk-react-core';
+import { t } from 'i18next';
 
 const AccountTeamManagementPage = ({
     userState,
