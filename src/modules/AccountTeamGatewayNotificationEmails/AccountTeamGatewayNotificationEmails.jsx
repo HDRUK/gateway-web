@@ -1,44 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import Switch from 'react-switch';
+import React, { useEffect } from 'react';
+import { Switch } from 'components';
+import { useAuth } from 'context/AuthContext';
 import { useTranslation } from 'react-i18next';
-import { authUtils } from 'utils';
-import { PERMISSIONS_USER_TYPES } from 'consts';
+import PropTypes from 'prop-types';
+import { teamGatewayNotificationPropTypes } from 'types';
 
-const AccountTeamGatewayNotificationEmails = ({ teamId, userState, teamNotification, toggleTeamNotifications }) => {
+const AccountTeamGatewayNotificationEmails = ({ teamId, teamNotification, toggleTeamNotifications }) => {
     const { t } = useTranslation();
-    const [isManager, setManager] = useState(false);
-    const { optIn, notificationType } = teamNotification;
+    const { isTeamManager, managerInTeam } = useAuth();
 
     useEffect(() => {
+        if (!teamId) return;
         // TODO: GAT-1510:017
-        setManager(authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
-    }, [teamId, teamNotification]);
+        managerInTeam(teamId);
+    }, [teamId]);
 
+    if (!isTeamManager || !teamId) return null;
     return (
-        <div className='tm-notification'>
-            {teamId && isManager && (
-                <>
-                    <div className='tm-switch'>
-                        <Switch
-                            onChange={toggleTeamNotifications}
-                            checked={optIn}
-                            id={notificationType}
-                            offColor='#c2303d'
-                            uncheckedIcon={false}
-                            checkedIcon={false}
-                            width={48}
-                            height={24}
-                            className='react-switch'
-                            data-testid='notify-team-email'
-                        />
-                    </div>
-                    <div className='tm-title'>
-                        <div className='black-16-semibold'>{t('notifications.teamEmailText')}</div>
-                    </div>
-                </>
-            )}
+        <div data-testid='AccountTeamGatewayNotificationEmails'>
+            <Switch
+                checked={teamNotification.optIn}
+                onChange={({ target: { checked } }) => toggleTeamNotifications({ checked, id: teamNotification.notificationType })}
+                label={t('notifications.teamEmailText')}
+            />
         </div>
     );
+};
+
+AccountTeamGatewayNotificationEmails.propTypes = {
+    teamId: PropTypes.string.isRequired,
+    toggleTeamNotifications: PropTypes.func.isRequired,
+    teamNotification: teamGatewayNotificationPropTypes.isRequired,
 };
 
 export default AccountTeamGatewayNotificationEmails;

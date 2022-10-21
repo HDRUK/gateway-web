@@ -22,6 +22,7 @@ import { ReactComponent as SettingsIcon } from '../../images/icons/settings.svg'
 import { ReactComponent as ToolsIcon } from '../../images/icons/tools.svg';
 import { ReactComponent as UserIcon } from '../../images/icons/user.svg';
 import { ReactComponent as UsersIcon } from '../../images/icons/users.svg';
+import AccountTeamManagement from './AccountTeamManagement';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 import { getTeam, isAdmin, isCustodian, isPublisherAdmin, isUser } from '../../utils/auth';
@@ -978,19 +979,32 @@ class Account extends Component {
                                             />
                                         )}
 
-                                    {tabId === 'teamManagement' && (
-                                        <AccountTeamManagementPage
-                                            userState={userState}
-                                            teamId={team}
-                                            innerTab={innertab}
-                                            forwardRef={c => {
-                                                this.saveNotifiations = c;
-                                            }}
-                                            onTeamManagementSave={this.onTeamManagementSave}
-                                            onTeamManagementTabChange={this.onTeamManagementTabChange}
-                                            onClearInnerTab={this.onClearInnerTab}
-                                        />
-                                    )}
+                                    {tabId === 'teamManagement' &&
+                                        (1 === 1 ? (
+                                            <AccountTeamManagementPage
+                                                userState={userState}
+                                                teamId={team}
+                                                innerTab={innertab}
+                                                forwardRef={c => {
+                                                    this.saveNotifiations = c;
+                                                }}
+                                                onTeamManagementSave={this.onTeamManagementSave}
+                                                onTeamManagementTabChange={this.onTeamManagementTabChange}
+                                                onClearInnerTab={this.onClearInnerTab}
+                                            />
+                                        ) : (
+                                            <AccountTeamManagement
+                                                userState={userState}
+                                                team={team}
+                                                innertab={innertab}
+                                                forwardRef={c => {
+                                                    this.saveNotifiations = c;
+                                                }}
+                                                onTeamManagementSave={this.onTeamManagementSave}
+                                                onTeamManagementTabChange={this.onTeamManagementTabChange}
+                                                onClearInnerTab={this.onClearInnerTab}
+                                            />
+                                        ))}
 
                                     {tabId === 'help' ? <TeamHelp /> : ''}
                                 </>

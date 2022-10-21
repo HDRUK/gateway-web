@@ -5,7 +5,7 @@ import { isEmpty, upperFirst } from 'lodash';
 import { ACCOUNT_TAB_TYPES } from 'consts';
 import { AccountTeamFieldRepeater, AccountTeamGatewayNotificationEmails, AccountTeamGatewayEmail } from 'modules';
 import PropTypes from 'prop-types';
-import { userStateType, teamGatewayNotificationsType } from 'types';
+import { userStatePropTypes, teamGatewayNotificationsPropTypes } from 'types';
 import { Card, H5, P, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import { isAdminNotManager } from 'utils/auth';
@@ -45,7 +45,7 @@ const TabsNav = ({ activeTabKey, onTabChange, teamId, userState }) => {
 
     return (
         <Card data-testid='TabsNav'>
-            <Tabs activeKey={activeTabKey} onSelect={onTabChange}>
+            <Tabs fill activeKey={activeTabKey} onSelect={onTabChange}>
                 {Object.keys(ACCOUNT_TAB_TYPES).map(keyName => (
                     <Tab
                         key={keyName}
@@ -63,7 +63,7 @@ TabsNav.propTypes = {
     activeTabKey: PropTypes.string.isRequired,
     onTabChange: PropTypes.func.isRequired,
     teamId: PropTypes.string.isRequired,
-    userState: userStateType.isRequired,
+    userState: userStatePropTypes.isRequired,
 };
 
 const GeneratedAlerts = ({ alerts }) => {
@@ -114,7 +114,7 @@ const MemberNotifications = ({ memberNotifications = [], teamId, userState, togg
 MemberNotifications.propTypes = {
     memberNotifications: PropTypes.arrayOf(PropTypes.shape({ optIn: PropTypes.bool, notificationType: PropTypes.string })).isRequired,
     teamId: PropTypes.string.isRequired,
-    userState: userStateType.isRequired,
+    userState: userStatePropTypes.isRequired,
     togglePersonalNotifications: PropTypes.func.isRequired,
 };
 
@@ -163,13 +163,13 @@ const TeamNotifications = ({
 };
 
 TeamNotifications.propTypes = {
-    teamGatewayNotifications: teamGatewayNotificationsType.isRequired,
+    teamGatewayNotifications: teamGatewayNotificationsPropTypes.isRequired,
     teamId: PropTypes.string.isRequired,
     toggleTeamNotifications: PropTypes.func.isRequired,
     handleRemoveClick: PropTypes.func.isRequired,
     handleFieldChange: PropTypes.func.isRequired,
     handleAddClick: PropTypes.func.isRequired,
-    userState: userStateType.isRequired,
+    userState: userStatePropTypes.isRequired,
 };
 
 const NotificationTab = ({
@@ -208,9 +208,9 @@ const NotificationTab = ({
 NotificationTab.propTypes = {
     memberNotifications: PropTypes.arrayOf(PropTypes.shape({ optIn: PropTypes.bool, notificationType: PropTypes.string })).isRequired,
     teamId: PropTypes.string.isRequired,
-    userState: userStateType.isRequired,
+    userState: userStatePropTypes.isRequired,
     togglePersonalNotifications: PropTypes.func.isRequired,
-    teamGatewayNotifications: teamGatewayNotificationsType.isRequired,
+    teamGatewayNotifications: teamGatewayNotificationsPropTypes.isRequired,
     toggleTeamNotifications: PropTypes.func.isRequired,
     handleFieldChange: PropTypes.func.isRequired,
     handleRemoveClick: PropTypes.func.isRequired,

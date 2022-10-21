@@ -1,6 +1,6 @@
 import { arrayOf, shape, number, string, bool } from 'prop-types';
 
-const userStateType = arrayOf(
+const userStatePropTypes = arrayOf(
     shape({
         acceptedAdvancedSearchTerms: bool,
         advancedSearchRoles: arrayOf(string),
@@ -24,13 +24,13 @@ const userStateType = arrayOf(
     })
 );
 
-const teamGatewayNotificationsPropTypes = arrayOf(
-    shape({
-        subscribedEmails: arrayOf(shape({ value: string, error: string })),
-        optIn: bool,
-        notificationType: string,
-    })
-);
+const teamGatewayNotificationPropTypes = shape({
+    subscribedEmails: arrayOf(shape({ value: string, error: string })),
+    optIn: bool,
+    notificationType: string,
+});
+
+const teamGatewayNotificationsPropTypes = arrayOf(teamGatewayNotificationPropTypes);
 
 const memberPropTypes = shape({
     lastname: string,
@@ -40,4 +40,4 @@ const memberPropTypes = shape({
     organisation: string,
 });
 
-export { userStateType, teamGatewayNotificationsPropTypes, memberPropTypes };
+export { userStatePropTypes, teamGatewayNotificationPropTypes, teamGatewayNotificationsPropTypes, memberPropTypes };

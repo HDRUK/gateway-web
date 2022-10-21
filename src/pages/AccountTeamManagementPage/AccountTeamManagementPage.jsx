@@ -6,7 +6,7 @@ import { AccountTeamMembers, AccountTeamEmailAlertModal, AccountTeamNotification
 import { authUtils } from 'utils';
 import { ACCOUNT_TAB_TYPES, UI_ALERT_TYPES, PERMISSIONS_USER_TYPES } from 'consts';
 import PropTypes from 'prop-types';
-import { userStateType } from 'types';
+import { userStatePropTypes } from 'types';
 import { baseURL } from '../../configs/url.config';
 import { LayoutContent } from '../../components/Layout';
 import {
@@ -189,7 +189,7 @@ const AccountTeamManagementPage = ({
     }, [activeTabKey, teamId]);
 
     // send email notifications to my gateway email address
-    const togglePersonalNotifications = ({ target: { checked, id } }) => {
+    const togglePersonalNotifications = ({ checked, id }) => {
         if (!isEmpty(id)) {
             const foundTeamIndex = getTeamNotificationType(id, teamGatewayNotifications);
             const foundMemberIndex = getMemberNotification(id, memberNotifications);
@@ -205,7 +205,7 @@ const AccountTeamManagementPage = ({
     };
 
     // send email notifications to team email address
-    const toggleTeamNotifications = (checked, e = {}, id = '') => {
+    const toggleTeamNotifications = ({ checked, id }) => {
         if (!isEmpty(id)) {
             // 1. find notificationType
             const foundIndex = getTeamNotificationType(id, teamGatewayNotifications);
@@ -326,7 +326,7 @@ const AccountTeamManagementPage = ({
 };
 
 AccountTeamManagementPage.propTypes = {
-    userState: userStateType.isRequired,
+    userState: userStatePropTypes.isRequired,
     teamId: PropTypes.string.isRequired,
     innerTab: PropTypes.oneOf([ACCOUNT_TAB_TYPES.Notifications, ACCOUNT_TAB_TYPES.Members]),
     forwardRef: PropTypes.func.isRequired,
