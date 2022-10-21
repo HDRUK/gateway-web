@@ -5,9 +5,9 @@ import { COMMON_COMPONENT_PROPS } from '../../configs/propTypes';
 
 const SwitchControl = ({ className, children }) => {
     return (
-        <span className={cx(className, 'ui-SwitchControl')}>
-            <span>{children}</span>
-        </span>
+        <div className={cx(className, 'ui-SwitchControl')}>
+            <div>{children}</div>
+        </div>
     );
 };
 
