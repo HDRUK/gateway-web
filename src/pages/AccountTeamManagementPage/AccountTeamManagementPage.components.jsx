@@ -45,7 +45,7 @@ const TabsNav = ({ activeTabKey, onTabChange, teamId, userState }) => {
 
     return (
         <Card data-testid='TabsNav'>
-            <Tabs activeKey={activeTabKey} onSelect={onTabChange}>
+            <Tabs fill activeKey={activeTabKey} onSelect={onTabChange}>
                 {Object.keys(ACCOUNT_TAB_TYPES).map(keyName => (
                     <Tab
                         key={keyName}
