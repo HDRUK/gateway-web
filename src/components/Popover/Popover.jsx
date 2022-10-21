@@ -4,27 +4,29 @@ import PropTypes from 'prop-types';
 import { Icon } from 'hdruk-react-core';
 import { ReactComponent as EllipsisIcon } from '../../images/icons/ellipsis.svg';
 
-const PopoverButton = React.forwardRef((props, ref) => (
+const PopoverButton = React.forwardRef(({ actionType, handleAction, isPopoverOpen, children }, ref) => (
     <div
         ref={ref}
         style={{ display: 'inline-block', lineHeight: 0 }}
         tabIndex={0}
         role='button'
-        {...(props.actionType === 'click' && {
-            onKeyPress: props.onAction,
-            onClick: props.onAction,
+        {...(actionType === 'click' && {
+            onKeyPress: () => handleAction(!isPopoverOpen),
+            onClick: () => handleAction(!isPopoverOpen),
         })}
-        {...(props.actionType === 'hover' && {
-            onMouseOver: props.onAction,
-            onFocus: props.onAction,
+        {...(actionType === 'hover' && {
+            onMouseOver: () => handleAction(true),
+            onMouseOut: () => handleAction(false),
+            onFocus: () => handleAction(true),
         })}>
-        {props.children}
+        {children}
     </div>
 ));
 
 PopoverButton.propTypes = {
+    isPopoverOpen: PropTypes.bool.isRequired,
     children: PropTypes.node.isRequired,
-    onAction: PropTypes.func.isRequired,
+    handleAction: PropTypes.func.isRequired,
     actionType: PropTypes.oneOf(['click', 'hover']).isRequired,
 };
 
@@ -38,11 +40,11 @@ const Popover = ({ trigger, position, padding, content, actionType }) => {
             positions={[position]}
             padding={padding}
             content={() => (
-                <PopoverButton actionType={actionType} onAction={() => setIsPopoverOpen(!isPopoverOpen)}>
+                <PopoverButton actionType={actionType} handleAction={setIsPopoverOpen} isPopoverOpen={isPopoverOpen}>
                     {content}
                 </PopoverButton>
             )}>
-            <PopoverButton actionType={actionType} onAction={() => setIsPopoverOpen(!isPopoverOpen)}>
+            <PopoverButton actionType={actionType} handleAction={setIsPopoverOpen} isPopoverOpen={isPopoverOpen}>
                 {trigger}
             </PopoverButton>
         </TinyPopover>

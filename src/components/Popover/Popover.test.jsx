@@ -1,4 +1,4 @@
-import { render, screen, waitFor, cleanup } from 'testUtils';
+import { render, screen, cleanup } from 'testUtils';
 import React from 'react';
 import Popover from './Popover';
 import '@testing-library/jest-dom/extend-expect';
