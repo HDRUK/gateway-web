@@ -24,7 +24,7 @@ const userStateType = arrayOf(
     })
 );
 
-const teamGatewayNotificationsType = arrayOf(
+const teamGatewayNotificationsPropTypes = arrayOf(
     shape({
         subscribedEmails: arrayOf(shape({ value: string, error: string })),
         optIn: bool,
@@ -40,4 +40,4 @@ const memberPropTypes = shape({
     organisation: string,
 });
 
-export { userStateType, teamGatewayNotificationsType, memberPropTypes };
+export { userStateType, teamGatewayNotificationsPropTypes, memberPropTypes };
