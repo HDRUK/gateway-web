@@ -3771,4 +3771,5 @@ const mswGetSearch = rest.get(`${apiURL}/search`, (req, res, ctx) => {
     );
 });
 
+export { mockDatasetFilters };
 export default [mswGetSearch];

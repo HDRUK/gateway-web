@@ -1,11 +1,10 @@
 import React from 'react';
-import { render, screen } from 'testUtils';
+import { render, screen, cleanup } from '@testing-library/react';
 import moxios from 'moxios';
 import UpdateRequestModal from './UpdateRequestModal';
 import { updateRequestProps } from '../../../../utils/__mocks__/DarHelper.mock';
 import '@testing-library/jest-dom/extend-expect';
 
-let wrapped;
 const props = updateRequestProps;
 const mockHistoryPush = jest.fn();
 
@@ -17,12 +16,14 @@ jest.mock('react-router-dom', () => ({
 
 beforeEach(() => {
     moxios.install();
-    wrapped = render(<UpdateRequestModal {...props} />);
+    render(<UpdateRequestModal {...props} />, {
+        wrapper: Providers,
+    });
 });
 
 afterEach(() => {
     moxios.uninstall();
-    wrapped.unmount();
+    cleanup();
 });
 
 /**

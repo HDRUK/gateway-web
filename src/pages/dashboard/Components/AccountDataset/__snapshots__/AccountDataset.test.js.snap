@@ -5,14 +5,10 @@ exports[`Given the AccountDataset component When it is rendered And the Make a d
 exports[`Given the AccountDataset component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutContent row"
+    class="ui-Box emotion-0"
   >
-    <div
-      class="ui-LayoutContent--left col-1"
-    />
-    <div
-      class="ui-LayoutContent--content col-10"
-    >
+    <div />
+    <div>
       <div
         class="mt-2 row"
         subtext="...sorry, this is taking longer than usual"
@@ -47,9 +43,7 @@ exports[`Given the AccountDataset component When it is rendered Then matches the
         </div>
       </div>
     </div>
-    <div
-      class="ui-LayoutContent--right col-1"
-    />
+    <div />
   </div>
 </div>
 `;

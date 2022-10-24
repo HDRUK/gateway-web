@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { Card, Button, P } from 'hdruk-react-core';
+import { Card, Button, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
-import { ActionCard, Table, LayoutContent } from 'components';
+import { Table, LayoutContent } from 'components';
 import { PermissionDescriptions } from 'modules';
-import { SUPPORT_URL } from '../../consts';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
 import AccountTeamMembersModal from '../AccountTeamMembersModal';
@@ -147,39 +146,24 @@ const AccountTeamMembers = ({ teamId }) => {
     }
 
     return (
-        <>
-            <LayoutContent>
-                <ActionCard
-                    title={t('members')}
-                    content={
-                        <>
-                            <P mb={6}>
-                                {t('components.AccountTeamMembers.members.description1')}: <a href={SUPPORT_URL}>{SUPPORT_URL}</a>
-                            </P>
-                            <P mb={6}>{t('components.AccountTeamMembers.members.description2')}</P>
-                            <P>{t('components.AccountTeamMembers.members.description3')}</P>
-                        </>
-                    }
-                    action={
-                        isTeamManager && (
-                            <Button variant='primary' onClick={handleOpenModal}>
-                                {t('components.AccountTeamMembers.members.add')}
-                            </Button>
-                        )
-                    }
-                    mb={4}
-                />
-
-                {teamMembers.length <= 0 && <MessageNotFound word='members' />}
-                {teamMembers.length > 0 && (
-                    <Card>
-                        <Table columns={columns} data={teamMembers} />
-                    </Card>
-                )}
-
-                <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
-            </LayoutContent>
-        </>
+        <LayoutContent data-testid='AccountTeamMembers'>
+            {teamMembers.length <= 0 && <MessageNotFound word='members' />}
+            {teamMembers.length > 0 && (
+                <Card>
+                    <Table columns={columns} data={teamMembers} />
+                </Card>
+            )}
+            {isTeamManager && (
+                <Card>
+                    <Box p={6} display='flex' justifyContent='center'>
+                        <Button variant='primary' onClick={handleOpenModal}>
+                            {t('components.AccountTeamMembers.members.add')}
+                        </Button>
+                    </Box>
+                </Card>
+            )}
+            <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
+        </LayoutContent>
     );
 };
 

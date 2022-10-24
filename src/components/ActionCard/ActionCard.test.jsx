@@ -5,7 +5,7 @@ import ActionCard from './ActionCard';
 const props = {
     title: 'Title',
     content: 'Content',
-    actions: 'Action',
+    action: 'Action',
 };
 
 let wrapper;

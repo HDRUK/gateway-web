@@ -11,9 +11,19 @@ import {
     GeneratedAlerts,
     LoaderRow,
 } from './AccountTeamManagementPage.components';
-import { userStateManager, userStateAdmin } from 'mocks';
+import { mockUserStateManager, mockUserStateAdmin } from 'mocks';
+import * as Auth from '../../context/AuthContext';
+
+const authSpy = jest.spyOn(Auth, 'useAuth');
 
 describe('AccountTeamManagement components', () => {
+    beforeAll(() => {
+        authSpy.mockReturnValue({
+            isTeamManager: true,
+            managerInTeam: jest.fn(),
+            userState: mockUserStateManager,
+        });
+    });
     afterEach(() => {
         cleanup();
     });
@@ -28,7 +38,7 @@ describe('AccountTeamManagement components', () => {
                     togglePersonalNotifications={togglePersonalNotifications}
                     memberNotifications={[]}
                     teamId={teamId}
-                    userState={userStateManager}
+                    userState={mockUserStateManager}
                 />
             );
 
@@ -40,7 +50,7 @@ describe('AccountTeamManagement components', () => {
                     togglePersonalNotifications={togglePersonalNotifications}
                     memberNotifications={memberNotifications}
                     teamId={teamId}
-                    userState={userStateManager}
+                    userState={mockUserStateManager}
                 />
             );
 
@@ -70,7 +80,7 @@ describe('AccountTeamManagement components', () => {
                     handleFieldChange={handleFieldChange}
                     handleRemoveClick={handleRemoveClick}
                     handleAddClick={handleAddClick}
-                    userState={userStateManager}
+                    userState={mockUserStateManager}
                 />
             );
             expect(screen.queryByTestId('TeamNotifications')).not.toBeInTheDocument();
@@ -84,7 +94,7 @@ describe('AccountTeamManagement components', () => {
                     handleFieldChange={handleFieldChange}
                     handleRemoveClick={handleRemoveClick}
                     handleAddClick={handleAddClick}
-                    userState={userStateManager}
+                    userState={mockUserStateManager}
                 />
             );
             expect(screen.getByTestId('TeamNotifications')).toBeInTheDocument();
@@ -106,7 +116,7 @@ describe('AccountTeamManagement components', () => {
                 <NotificationTab
                     memberNotifications={memberNotifications}
                     teamId={teamId}
-                    userState={userStateManager}
+                    userState={mockUserStateManager}
                     togglePersonalNotifications={jest.fn()}
                     teamGatewayNotifications={teamGatewayNotifications}
                     toggleTeamNotifications={jest.fn()}
@@ -139,7 +149,7 @@ describe('AccountTeamManagement components', () => {
         const onTabChange = jest.fn();
         const teamId = '1234';
         it('should render the tabs if not admin', () => {
-            render(<TabsNav teamId={teamId} onTabChange={onTabChange} activeTabKey={activeTabKey} userState={userStateManager} />);
+            render(<TabsNav teamId={teamId} onTabChange={onTabChange} activeTabKey={activeTabKey} userState={mockUserStateManager} />);
             expect(screen.getByText('Members')).toBeInTheDocument();
             expect(screen.getByText('Notifications')).toBeInTheDocument();
         });
@@ -149,7 +159,7 @@ describe('AccountTeamManagement components', () => {
                     teamId='5f7b1a2bce9f65e2ed83e7da'
                     onTabChange={onTabChange}
                     activeTabKey={activeTabKey}
-                    userState={userStateAdmin}
+                    userState={mockUserStateAdmin}
                 />
             );
             expect(screen.queryByText('Members')).not.toBeInTheDocument();

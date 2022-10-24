@@ -4,10 +4,8 @@ exports[`Given the AccountTeamGatewayEmail component When it renders And the use
 <div>
   <label
     class="emotion-0 ui-Switch emotion-1"
-    for="notifictionType1"
   >
     <input
-      id="notifictionType1"
       type="checkbox"
       variant="primary"
     />
@@ -58,10 +56,8 @@ exports[`Given the AccountTeamGatewayEmail component When it renders Then should
 <div>
   <label
     class="emotion-0 ui-Switch emotion-1"
-    for="notifictionType1"
   >
     <input
-      id="notifictionType1"
       type="checkbox"
       variant="primary"
     />

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './AccountTeamFieldRepeater.scss';
-import { authUtils } from 'utils';
+import { useAuth } from 'context/AuthContext';
 import { isEmpty } from 'lodash';
-import { PERMISSIONS_USER_TYPES } from 'consts';
 
 const AccountTeamFieldRepeaterAction = ({ subscribedEmails, notificationType, isManager, index, handleRemoveClick, handleAddClick }) => {
     return (
@@ -45,14 +44,13 @@ const AccountTeamField = ({ id = '', isManager = false, subscribedEmail = {}, no
     );
 };
 
-const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, userState, handleFieldChange, handleRemoveClick, handleAddClick }) => {
-    const [isManager, setIsManager] = useState(false);
-
+const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, handleFieldChange, handleRemoveClick, handleAddClick }) => {
+    const { isTeamManager, managerInTeam } = useAuth();
     const { subscribedEmails = [], notificationType = '' } = teamNotification;
 
     useEffect(() => {
         // TODO: GAT-1510:003
-        setIsManager(authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
+        managerInTeam(teamId);
     }, [teamId]);
 
     return (
@@ -61,7 +59,7 @@ const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, userState, han
                 <div className='field-repeater' key={`repeater-section-${index}`}>
                     <AccountTeamField
                         id={index + 1}
-                        isManager={isManager}
+                        isManager={isTeamManager}
                         subscribedEmail={value}
                         index={index}
                         notificationType={notificationType}
@@ -69,7 +67,7 @@ const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, userState, han
                     />
                     <AccountTeamFieldRepeaterAction
                         subscribedEmails={subscribedEmails}
-                        isManager={isManager}
+                        isManager={isTeamManager}
                         notificationType={notificationType}
                         index={index}
                         handleRemoveClick={handleRemoveClick}

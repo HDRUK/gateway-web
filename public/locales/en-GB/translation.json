@@ -173,7 +173,7 @@
     "editor": "Editor",
     "manager": "Manager",
     "reviewer": "Reviewer",
-    "remove": "Remove",
+    "removeUser": "Remove user",
     "admin": "Admin",
     "guidance.inEdit": "Guidance in edit",
     "guidance.unedited": "Guidance unedited",

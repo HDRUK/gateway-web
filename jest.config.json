@@ -6,7 +6,15 @@
         "\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/mocks/fileMock.js",
         "\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js",
         "public/(.*)": "<rootDir>/public/$1",
-        "lodash-es": "lodash"
+        "lodash-es": "lodash",
+        "^consts(.*)$": "<rootDir>/src/consts$1",
+        "^configs(.*)$": "<rootDir>/src/configs$1",
+        "^components(.*)$": "<rootDir>/src/components$1",
+        "^modules(.*)$": "<rootDir>/src/modules$1",
+        "^context(.*)$": "<rootDir>/src/context$1",
+        "^utils(.*)$": "<rootDir>/src/utils$1",
+        "^types(.*)$": "<rootDir>/src/types$1",
+        "^mocks(.*)$": "<rootDir>/test/mocks$1"
     },
     "modulePaths": ["<rootDir>/public"],
     "coveragePathIgnorePatterns": [
@@ -26,7 +34,9 @@
         "H4.js",
         "H5.js",
         "H6.js",
-        "P.js"
+        "P.js",
+        "<rootDir>/src/pages/dashboard/Team/",
+        "<rootDir>/src/pages/dashboard/AccountTeams.js"
     ],
     "collectCoverageFrom": ["src/**/*.{js,jsx}"],
     "roots": ["<rootDir>", "<rootDir>src"],

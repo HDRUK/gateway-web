@@ -6,7 +6,6 @@ import { AccountTeamMembers, AccountTeamEmailAlertModal, AccountTeamNotification
 import { authUtils } from 'utils';
 import { ACCOUNT_TAB_TYPES, UI_ALERT_TYPES, PERMISSIONS_USER_TYPES } from 'consts';
 import PropTypes from 'prop-types';
-import { userStatePropTypes } from 'types';
 import { baseURL } from '../../configs/url.config';
 import { LayoutContent } from '../../components/Layout';
 import {
@@ -20,19 +19,10 @@ import {
 } from './AccountTeamManagementPage.utils';
 import { GeneratedAlerts, LoaderRow, NotificationTab, TabsNav, TeamManagementHeader } from './AccountTeamManagementPage.components';
 import { isAdminNotManager } from 'utils/auth';
-import { Button, H1, H5, ModalBody, ModalFooter, ModalHeader, P } from 'hdruk-react-core';
-import { Modal } from 'hdruk-react-core';
-import { t } from 'i18next';
+import { useAuth } from 'context/AuthContext';
 
-const AccountTeamManagementPage = ({
-    userState,
-    teamId,
-    innerTab,
-    forwardRef,
-    onTeamManagementSave,
-    onTeamManagementTabChange,
-    onClearInnerTab,
-}) => {
+const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagementSave, onTeamManagementTabChange, onClearInnerTab }) => {
+    const { userState } = useAuth();
     const [activeTabKey, setActiveTabKey] = useState(ACCOUNT_TAB_TYPES.Members);
     const [alerts, setAlerts] = useState([]);
     const [alertModal, setAlertModal] = useState(false);
@@ -303,7 +293,7 @@ const AccountTeamManagementPage = ({
                 <TeamManagementHeader />
                 <TabsNav teamId={teamId} userState={userState} activeTabKey={activeTabKey} onTabChange={onTabChange} />
             </LayoutContent>
-            {activeTabKey === ACCOUNT_TAB_TYPES.Members && <AccountTeamMembers userState={userState} teamId={teamId} />}
+            {activeTabKey === ACCOUNT_TAB_TYPES.Members && <AccountTeamMembers teamId={teamId} />}
             {activeTabKey === ACCOUNT_TAB_TYPES.Notifications && (
                 <NotificationTab
                     memberNotifications={memberNotifications}
@@ -329,7 +319,6 @@ const AccountTeamManagementPage = ({
 };
 
 AccountTeamManagementPage.propTypes = {
-    userState: userStatePropTypes.isRequired,
     teamId: PropTypes.string.isRequired,
     innerTab: PropTypes.oneOf([ACCOUNT_TAB_TYPES.Notifications, ACCOUNT_TAB_TYPES.Members]),
     forwardRef: PropTypes.func.isRequired,

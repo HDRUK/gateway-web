@@ -18,7 +18,7 @@ const ActionCell = ({ member: { id }, onDeleteMember }) => {
     const { t } = useTranslation();
     const items = [
         {
-            label: t('remove'),
+            label: t('removeUser'),
             icon: WastebinIcon,
             action: () => onDeleteMember(id),
         },
