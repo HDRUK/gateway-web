@@ -1,9 +1,9 @@
 import React from 'react';
-import { screen, render, cleanup } from 'testUtils';
+import { screen, render } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamGatewayEmail from './AccountTeamGatewayEmail';
 import * as Auth from '../../context/AuthContext';
-import { userStateNonManager, userStateManager } from 'mocks';
+import { mockUserStateManager } from 'mocks';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
 
@@ -23,7 +23,7 @@ describe('Given the AccountTeamGatewayEmail component', () => {
             authSpy.mockReturnValue({
                 isTeamManager: false,
                 managerInTeam: managerInTeamMock,
-                userState: userStateManager,
+                userState: mockUserStateManager,
             });
 
             wrapper = render(<AccountTeamGatewayEmail {...props} />);
@@ -53,7 +53,7 @@ describe('Given the AccountTeamGatewayEmail component', () => {
                 authSpy.mockReturnValue({
                     isTeamManager: true,
                     managerInTeam: managerInTeamMock,
-                    userState: userStateManager,
+                    userState: mockUserStateManager,
                 });
 
                 wrapper.rerender(<AccountTeamGatewayEmail {...props} />);
@@ -77,7 +77,7 @@ describe('Given the AccountTeamGatewayEmail component', () => {
                 authSpy.mockReturnValue({
                     isTeamManager: false,
                     managerInTeam: jest.fn(),
-                    userState: userStateManager,
+                    userState: mockUserStateManager,
                 });
 
                 wrapper.rerender(<AccountTeamGatewayEmail {...props} />);

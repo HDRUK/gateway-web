@@ -1,6 +1,6 @@
 import { PERMISSIONS_USER_TYPES } from 'consts';
 
-const userStateAdmin = [
+const mockUserStateAdmin = [
     {
         loggedIn: true,
         role: 'Admin',
@@ -27,8 +27,8 @@ const userStateAdmin = [
     },
 ];
 
-const userStateManager = [{ email: 'dan@ackroyd.com', teams: [{ _id: '1234', roles: [PERMISSIONS_USER_TYPES.manager] }] }];
+const mockUserStateManager = [{ email: 'dan@ackroyd.com', teams: [{ _id: '1234', roles: [PERMISSIONS_USER_TYPES.manager] }] }];
 
-const userStateNonManager = [{ email: 'john@candy.com', teams: [{ _id: '1234', roles: [] }] }];
+const mockUserStateNonManager = [{ email: 'john@candy.com', teams: [{ _id: '1234', roles: [] }] }];
 
-export { userStateAdmin, userStateManager, userStateNonManager };
+export { mockUserStateAdmin, mockUserStateManager, mockUserStateNonManager };

@@ -5,7 +5,7 @@ import { server } from '../../services/mockServer';
 import AccountTeamMembers from './AccountTeamMembers';
 
 const props = {
-    teamId: '5f7b1a2bce9f65e6ed83e7da',
+    teamId: '1234',
 };
 
 jest.mock('../../context/AuthContext', () => ({

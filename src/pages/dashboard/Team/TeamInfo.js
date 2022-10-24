@@ -1,16 +1,15 @@
 import React from 'react';
 import { Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
-import InlineSVG from 'react-inlinesvg/esm';
 import Icon from '../../../components/Icon';
-import iconTick from '../../../images/tick.svg';
-import iconRejected from '../../../images/Application_rejected.svg';
+import { ReactComponent as IconTick } from '../../../images/tick.svg';
+import { ReactComponent as IconRejected } from '../../../images/Application_rejected.svg';
 
 const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }) => {
     const questionBankEnabled = publisher?.publisherDetails?.questionBank?.enabled;
     const dataUseWidgetEnabled = publisher?.publisherDetails?.dataUse?.widget?.enabled;
-    const questionBankStatusIcon = questionBankEnabled ? iconTick : iconRejected;
-    const dataUseWidgetStatusIcon = dataUseWidgetEnabled ? iconTick : iconRejected;
+    const QuestionBankStatusIcon = questionBankEnabled ? IconTick : IconRejected;
+    const DataUseWidgetStatusIcon = dataUseWidgetEnabled ? IconTick : IconRejected;
 
     let teamManagerNames = '';
 
@@ -39,12 +38,12 @@ const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }
             </Col>
             <Col sm={12} lg={1}>
                 <p className='text-center'>
-                    <Icon mr={2} size='2xl' svg={<InlineSVG src={questionBankStatusIcon} />} />
+                    <Icon mr={2} size='2xl' svg={<QuestionBankStatusIcon />} />
                 </p>
             </Col>
             <Col sm={12} lg={1}>
                 <p className='text-center'>
-                    <Icon mr={2} size='2xl' svg={<InlineSVG src={dataUseWidgetStatusIcon} />} />
+                    <Icon mr={2} size='2xl' svg={<DataUseWidgetStatusIcon />} />
                 </p>
             </Col>
             <Col sm={12} lg={2}>

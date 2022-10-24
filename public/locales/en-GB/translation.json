@@ -173,11 +173,12 @@
     "editor": "Editor",
     "manager": "Manager",
     "reviewer": "Reviewer",
-    "remove": "Remove",
+    "removeUser": "Remove user",
     "admin": "Admin",
     "guidance.inEdit": "Guidance in edit",
     "guidance.unedited": "Guidance unedited",
     "guidance.edited": "Guidance edited",
+    "team.email": "Team email",
     "dataset": {
         "dateUpdated": "Metadata last updated:",
         "dateUpdatedTooltip": "The last date when the information about this dataset was updated",
@@ -337,7 +338,8 @@
         "cancel": "Cancel",
         "confirm": "Confirm",
         "publish": "Publish",
-        "clearUpdates": "Clear updates"
+        "clearUpdates": "Clear updates",
+        "saveUpdate": "Save update"
     },
     "sortby": {
         "selected": {
@@ -508,6 +510,10 @@
                 "description": "You will need to add a team email to be able to save switching off notifications to your own Gateway email."
             },
             "emailLabel": "My Gateway email"
+        },
+        "AccountTeamNotificationsConfirmationModal": {
+            "title": "Email notifications",
+            "description": "Are you sure you want to save your update to email notifications? Please make sure any team email addresses you have entered are correct."
         }
     },
     "pages": {

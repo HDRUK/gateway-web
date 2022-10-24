@@ -12,13 +12,13 @@ exports[`Given the Switch component When it is rendered Then matches the previou
       value="sampelValue"
       variant="primary"
     />
-    <span
+    <div
       class="ui-SwitchControl"
     >
-      <span>
+      <div>
         Sample label
-      </span>
-    </span>
+      </div>
+    </div>
   </label>
 </div>
 `;

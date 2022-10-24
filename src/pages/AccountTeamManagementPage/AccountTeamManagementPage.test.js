@@ -2,42 +2,41 @@ import React from 'react';
 import { screen, render, cleanup, within, act } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamManagementPage from './AccountTeamManagementPage';
-import { userStateManager } from 'mocks';
 import { server } from '../../services/mockServer';
 import { waitFor } from '@testing-library/dom';
+import * as Auth from '../../context/AuthContext';
+import { mockUserStateManager } from 'mocks';
 
-jest.mock('../../context/AuthContext', () => ({
-    ...jest.requireActual('../../context/AuthContext'),
-    useAuth: jest.fn().mockReturnValue({
-        isTeamManager: false,
-        managerInTeam: jest.fn(),
-    }),
-}));
+const authSpy = jest.spyOn(Auth, 'useAuth');
 
 jest.mock('../../modules/AccountTeamMembersModal', () => () => null);
 
 describe('AccountTeamManagement Page', () => {
-    beforeAll(() => {
+    beforeEach(() => {
+        authSpy.mockReturnValue({
+            isTeamManager: true,
+            managerInTeam: () => jest.fn(),
+            userState: mockUserStateManager,
+        });
+
         server.listen();
     });
 
     afterEach(() => {
         server.resetHandlers();
+        cleanup();
     });
 
     afterAll(() => {
         server.close();
     });
-    afterEach(() => {
-        cleanup();
-    });
+
     it('should render child components for members', () => {
-        const teamId = '5f7b1a2bce9f65e6ed83e7da';
+        const teamId = '1234';
         const innertab = 'members';
         act(() => {
             render(
                 <AccountTeamManagementPage
-                    userState={userStateManager}
                     teamId={teamId}
                     innerTab={innertab}
                     forwardRef={jest.fn()}
@@ -48,16 +47,14 @@ describe('AccountTeamManagement Page', () => {
             );
         });
 
-        const memberTabContent = screen.getByTestId('AccountTeamMembers');
-        expect(within(memberTabContent).getByText('Members')).toBeInTheDocument();
+        expect(screen.getByTestId('AccountTeamMembers')).toBeInTheDocument();
     });
     it('should render child components for notifications', async () => {
-        const teamId = '5f7b1a2bce9f65e6ed83e7da';
+        const teamId = '1234';
         const innertab = 'notifications';
         act(() => {
             render(
                 <AccountTeamManagementPage
-                    userState={userStateManager}
                     teamId={teamId}
                     innerTab={innertab}
                     forwardRef={jest.fn()}

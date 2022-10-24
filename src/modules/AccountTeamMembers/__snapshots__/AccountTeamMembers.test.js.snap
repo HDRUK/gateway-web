@@ -64,51 +64,8 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
         class="ui-Card emotion-1"
         role="article"
       >
-        <div
-          class="ui-CardBody emotion-2"
-        >
-          <div
-            class="ui-Box emotion-0"
-          >
-            <div
-              class="ui-Box emotion-0"
-            >
-              <h5
-                class="ui-Typography emotion-5"
-              >
-                Members
-              </h5>
-              <p
-                class="ui-Typography emotion-6"
-              >
-                To remove team members or change their roles, please raise a support ticket at the following link
-                : 
-                <a
-                  href="https://hdruk.atlassian.net/servicedesk/customer/portal/1"
-                >
-                  https://hdruk.atlassian.net/servicedesk/customer/portal/1
-                </a>
-              </p>
-              <p
-                class="ui-Typography emotion-6"
-              >
-                Managers can manage members, create and assign workflows, review applications that are assigned to them and make the final decision on data access request applications.
-              </p>
-              <p
-                class="ui-Typography emotion-6"
-              >
-                Reviewers can review applications that are assigned to them.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="ui-Card emotion-1"
-        role="article"
-      >
         <table
-          class="emotion-10 emotion-11"
+          class="emotion-2 emotion-3"
           role="table"
         >
           <thead>
@@ -125,19 +82,83 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 colspan="1"
                 role="columnheader"
               >
-                Team Admin
+                <div
+                  class="ui-Box emotion-0"
+                >
+                  Team Admin
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <button
+                      class="emotion-5"
+                    >
+                      <span
+                        class="ui-Icon emotion-6"
+                      >
+                        <icon-mock />
+                      </span>
+                    </button>
+                  </div>
+                </div>
               </th>
               <th
                 colspan="1"
                 role="columnheader"
               >
-                Data Access Request
+                <div
+                  class="ui-Box emotion-0"
+                >
+                  Data Access Request
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <button
+                      class="emotion-5"
+                    >
+                      <span
+                        class="ui-Icon emotion-6"
+                      >
+                        <icon-mock />
+                      </span>
+                    </button>
+                  </div>
+                </div>
               </th>
               <th
                 colspan="1"
                 role="columnheader"
               >
-                Metadata
+                <div
+                  class="ui-Box emotion-0"
+                >
+                  Metadata
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <button
+                      class="emotion-5"
+                    >
+                      <span
+                        class="ui-Icon emotion-6"
+                      >
+                        <icon-mock />
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </th>
+              <th
+                colspan="1"
+                role="columnheader"
+                style="width: 147px;"
+              >
+                Further Actions
               </th>
             </tr>
           </thead>
@@ -152,7 +173,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 role="cell"
               >
                 <a
-                  class="ui-Typography emotion-6"
+                  class="ui-Typography emotion-13"
                   href="/person/5678"
                 >
                   John
@@ -160,7 +181,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                   Smith
                 </a>
                 <p
-                  class="ui-Typography emotion-6"
+                  class="ui-Typography emotion-13"
                 >
                   HDR UK
                 </p>
@@ -171,7 +192,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 valign="top"
               >
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="5678_admin"
                 >
                   <input
@@ -193,7 +214,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 valign="top"
               >
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="5678_dataAccessRequest_manager"
                 >
                   <input
@@ -209,7 +230,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                   </span>
                 </label>
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="5678_dataAccessRequest_reviewer"
                 >
                   <input
@@ -231,7 +252,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 valign="top"
               >
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="5678_metadata_manager"
                 >
                   <input
@@ -247,7 +268,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                   </span>
                 </label>
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="5678_metadata_editor"
                 >
                   <input
@@ -263,6 +284,28 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                   </span>
                 </label>
               </td>
+              <td
+                data-label="actions"
+                role="cell"
+              >
+                <div
+                  style="display: flex; justify-content: center;"
+                >
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="ui-Icon emotion-25"
+                    >
+                      <icon-mock
+                        fill="inherit"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </td>
             </tr>
             <tr
               role="row"
@@ -272,7 +315,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 role="cell"
               >
                 <a
-                  class="ui-Typography emotion-6"
+                  class="ui-Typography emotion-13"
                   href="/person/1234"
                 >
                   Jane
@@ -280,7 +323,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                   Doe
                 </a>
                 <p
-                  class="ui-Typography emotion-6"
+                  class="ui-Typography emotion-13"
                 >
                   Google
                 </p>
@@ -291,7 +334,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 valign="top"
               >
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="1234_admin"
                 >
                   <input
@@ -313,7 +356,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 valign="top"
               >
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="1234_dataAccessRequest_manager"
                 >
                   <input
@@ -329,7 +372,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                   </span>
                 </label>
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="1234_dataAccessRequest_reviewer"
                 >
                   <input
@@ -351,7 +394,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                 valign="top"
               >
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="1234_metadata_manager"
                 >
                   <input
@@ -367,7 +410,7 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                   </span>
                 </label>
                 <label
-                  class="ui-Checkbox emotion-14 emotion-15"
+                  class="ui-Checkbox emotion-15 emotion-16"
                   for="1234_metadata_editor"
                 >
                   <input
@@ -382,6 +425,28 @@ exports[`Given the AccountTeamMembers component When it is rendered When it is r
                     </span>
                   </span>
                 </label>
+              </td>
+              <td
+                data-label="actions"
+                role="cell"
+              >
+                <div
+                  style="display: flex; justify-content: center;"
+                >
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="ui-Icon emotion-25"
+                    >
+                      <icon-mock
+                        fill="inherit"
+                      />
+                    </span>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>

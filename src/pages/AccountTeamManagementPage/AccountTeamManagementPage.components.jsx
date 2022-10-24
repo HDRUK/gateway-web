@@ -1,8 +1,8 @@
 import React from 'react';
-import { Alert, LayoutContent } from 'components';
+import { Alert, LayoutContent, Link } from 'components';
 import { Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
-import { ACCOUNT_TAB_TYPES } from 'consts';
+import { ACCOUNT_TAB_TYPES, SUPPORT_URL } from 'consts';
 import { AccountTeamFieldRepeater, AccountTeamGatewayNotificationEmails, AccountTeamGatewayEmail } from 'modules';
 import PropTypes from 'prop-types';
 import { userStatePropTypes, teamGatewayNotificationsPropTypes } from 'types';
@@ -33,7 +33,10 @@ const TeamManagementHeader = () => {
             <H5 mb={2}>{t('pages.AccountTeamManagement.title')}</H5>
             <P color='grey700'>
                 {t('pages.AccountTeamManagement.description')}{' '}
-                <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>{t('pages.AccountTeamManagement.supportLinkText')}</a>.
+                <Link isExternal href={SUPPORT_URL}>
+                    {t('pages.AccountTeamManagement.supportLinkText')}
+                </Link>
+                .
             </P>
         </Card>
     );
@@ -91,7 +94,7 @@ GeneratedAlerts.propTypes = {
     ).isRequired,
 };
 
-const MemberNotifications = ({ memberNotifications = [], teamId, userState, togglePersonalNotifications }) => {
+const MemberNotifications = ({ memberNotifications = [], teamId, togglePersonalNotifications }) => {
     if (!memberNotifications.length) return null;
     return (
         <div data-testid='MemberNotifications' className='accountHeader accountHeader-alt'>
@@ -100,7 +103,6 @@ const MemberNotifications = ({ memberNotifications = [], teamId, userState, togg
                     <div key={`memberNotification-${memberNotification.notificationType}`}>
                         <AccountTeamGatewayEmail
                             teamId={teamId}
-                            userState={userState}
                             memberNotification={memberNotification}
                             togglePersonalNotifications={togglePersonalNotifications}
                         />
@@ -114,7 +116,6 @@ const MemberNotifications = ({ memberNotifications = [], teamId, userState, togg
 MemberNotifications.propTypes = {
     memberNotifications: PropTypes.arrayOf(PropTypes.shape({ optIn: PropTypes.bool, notificationType: PropTypes.string })).isRequired,
     teamId: PropTypes.string.isRequired,
-    userState: userStatePropTypes.isRequired,
     togglePersonalNotifications: PropTypes.func.isRequired,
 };
 
@@ -125,7 +126,6 @@ const TeamNotifications = ({
     handleFieldChange,
     handleRemoveClick,
     handleAddClick,
-    userState,
 }) => {
     if (!teamGatewayNotifications.length) return null;
     return (
@@ -134,7 +134,6 @@ const TeamNotifications = ({
                 return (
                     <div key={`teamNotificationOverview-${teamNotification.notificationType}`}>
                         <AccountTeamGatewayNotificationEmails
-                            userState={userState}
                             teamId={teamId}
                             teamNotification={teamNotification}
                             toggleTeamNotifications={toggleTeamNotifications}
@@ -145,7 +144,6 @@ const TeamNotifications = ({
                                 <AccountTeamFieldRepeater
                                     id={index}
                                     teamId={teamId}
-                                    userState={userState}
                                     teamNotification={teamNotification}
                                     handleFieldChange={handleFieldChange}
                                     handleRemoveClick={handleRemoveClick}
@@ -169,7 +167,6 @@ TeamNotifications.propTypes = {
     handleRemoveClick: PropTypes.func.isRequired,
     handleFieldChange: PropTypes.func.isRequired,
     handleAddClick: PropTypes.func.isRequired,
-    userState: userStatePropTypes.isRequired,
 };
 
 const NotificationTab = ({
@@ -189,7 +186,6 @@ const NotificationTab = ({
             <MemberNotifications
                 memberNotifications={memberNotifications}
                 teamId={teamId}
-                userState={userState}
                 togglePersonalNotifications={togglePersonalNotifications}
             />
             <TeamNotifications
