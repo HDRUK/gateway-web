@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import { isEmpty } from 'lodash';
+import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { Button, H5, ModalBody, ModalFooter, P } from 'hdruk-react-core';
