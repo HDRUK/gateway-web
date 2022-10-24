@@ -33,7 +33,7 @@ afterEach(() => {
  * 3. When 'Request Updates' clicked fire event call API
  */
 
-describe.only('UpdateRequestModal component', () => {
+describe('UpdateRequestModal component', () => {
     it('will display a list of requested changes', () => {
         expect(screen.getAllByText('Test question').length).toEqual(1);
     });
