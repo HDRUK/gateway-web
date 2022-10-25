@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from 'testUtils';
 import axios from 'axios';
 import {
     deleteRequest,
@@ -101,25 +101,21 @@ describe('Given the request helpers', () => {
         it('Then rewrites the error function to have translations', async () =>
             expect(
                 new Promise(resolves => {
-                    const { result } = renderHook(
-                        () =>
-                            useMutationWithTranslations(
-                                () =>
-                                    Promise.reject({
-                                        response: {
-                                            status: 404,
-                                        },
-                                    }),
-                                {
-                                    mutationKey: 'dur.getDataUseRegistersByTeam',
-                                    onError: addedTranslations => {
-                                        resolves(addedTranslations);
+                    const { result } = renderHook(() =>
+                        useMutationWithTranslations(
+                            () =>
+                                Promise.reject({
+                                    response: {
+                                        status: 404,
                                     },
-                                }
-                            ),
-                        {
-                            wrapper: Providers,
-                        }
+                                }),
+                            {
+                                mutationKey: 'dur.getDataUseRegistersByTeam',
+                                onError: addedTranslations => {
+                                    resolves(addedTranslations);
+                                },
+                            }
+                        )
                     );
 
                     result.current.mutate();
@@ -131,30 +127,23 @@ describe('Given the request helpers', () => {
     });
 
     describe('When useQueryWithTranslations is called', () => {
-        it.skip('Then rewrites the error function to have translations', async () =>
+        it('Then rewrites the error function to have translations', async () =>
             expect(
                 new Promise(resolves => {
-                    const { result } = renderHook(
-                        () =>
-                            useQueryWithTranslations(
-                                () =>
-                                    Promise.reject({
-                                        response: {
-                                            status: 404,
-                                        },
-                                    }),
-                                {
-                                    mutationKey: 'dur.getDataUseRegistersByTeam',
-                                    onError: addedTranslations => {
-                                        resolves(addedTranslations);
+                    const { result } = renderHook(() =>
+                        useQueryWithTranslations({
+                            queryFn: () =>
+                                Promise.reject({
+                                    response: {
+                                        status: 404,
                                     },
-                                }
-                            ),
-                        {
-                            wrapper: Providers,
-                        }
+                                }),
+                            queryKey: 'dur.getDataUseRegistersByTeam',
+                            onError: addedTranslations => {
+                                resolves(addedTranslations);
+                            },
+                        })
                     );
-
                     result.current.refetch();
                 })
             ).resolves.toEqual({
