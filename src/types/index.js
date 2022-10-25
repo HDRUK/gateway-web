@@ -24,13 +24,19 @@ const userStatePropTypes = arrayOf(
     })
 );
 
-const teamGatewayNotificationPropTypes = shape({
-    subscribedEmails: arrayOf(shape({ value: string, error: string })),
+const subscribedEmailPropTypes = shape({ value: string, error: string });
+
+const memberNotificationPropTypes = shape({ optIn: bool, notificationType: string });
+
+const memberNotificationsPropTypes = arrayOf(memberNotificationPropTypes);
+
+const teamNotificationPropTypes = shape({
+    subscribedEmails: arrayOf(subscribedEmailPropTypes),
     optIn: bool,
     notificationType: string,
 });
 
-const teamGatewayNotificationsPropTypes = arrayOf(teamGatewayNotificationPropTypes);
+const teamNotificationsPropTypes = arrayOf(teamNotificationPropTypes);
 
 const memberPropTypes = shape({
     lastname: string,
@@ -40,4 +46,12 @@ const memberPropTypes = shape({
     organisation: string,
 });
 
-export { userStatePropTypes, teamGatewayNotificationPropTypes, teamGatewayNotificationsPropTypes, memberPropTypes };
+export {
+    memberNotificationPropTypes,
+    memberNotificationsPropTypes,
+    subscribedEmailPropTypes,
+    userStatePropTypes,
+    teamNotificationPropTypes,
+    teamNotificationsPropTypes,
+    memberPropTypes,
+};

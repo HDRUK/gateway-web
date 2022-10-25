@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountTeamNotificationsConfirmationModal components EmailList Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Box emotion-0"
+  >
+    <div
+      class="ui-Box emotion-0"
+    >
+      <div
+        class="ui-Message emotion-2"
+      >
+        Team email
+      </div>
+    </div>
+    <div
+      class="ui-Box emotion-0"
+    >
+      a value
+    </div>
+  </div>
+  <div
+    class="ui-Box emotion-0"
+  >
+    <div
+      class="ui-Box emotion-0"
+    >
+      <div
+        class="ui-Message emotion-2"
+      >
+        Team email
+      </div>
+    </div>
+    <div
+      class="ui-Box emotion-0"
+    >
+      a value, another value
+    </div>
+  </div>
+  <div
+    class="ui-Box emotion-0"
+  >
+    <div
+      class="ui-Box emotion-0"
+    >
+      <div
+        class="ui-Message emotion-2"
+      >
+        Team email
+      </div>
+    </div>
+    <div
+      class="ui-Box emotion-0"
+    >
+      a value
+    </div>
+  </div>
+</div>
+`;

@@ -5,7 +5,7 @@ import { isEmpty, upperFirst } from 'lodash';
 import { ACCOUNT_TAB_TYPES, SUPPORT_URL } from 'consts';
 import { AccountTeamFieldRepeater, AccountTeamGatewayNotificationEmails, AccountTeamGatewayEmail } from 'modules';
 import PropTypes from 'prop-types';
-import { userStatePropTypes, teamGatewayNotificationsPropTypes } from 'types';
+import { userStatePropTypes, teamNotificationsPropTypes } from 'types';
 import { Card, H5, P, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import { isAdminNotManager } from 'utils/auth';
@@ -161,7 +161,7 @@ const TeamNotifications = ({
 };
 
 TeamNotifications.propTypes = {
-    teamGatewayNotifications: teamGatewayNotificationsPropTypes.isRequired,
+    teamGatewayNotifications: teamNotificationsPropTypes.isRequired,
     teamId: PropTypes.string.isRequired,
     toggleTeamNotifications: PropTypes.func.isRequired,
     handleRemoveClick: PropTypes.func.isRequired,
@@ -206,7 +206,7 @@ NotificationTab.propTypes = {
     teamId: PropTypes.string.isRequired,
     userState: userStatePropTypes.isRequired,
     togglePersonalNotifications: PropTypes.func.isRequired,
-    teamGatewayNotifications: teamGatewayNotificationsPropTypes.isRequired,
+    teamGatewayNotifications: teamNotificationsPropTypes.isRequired,
     toggleTeamNotifications: PropTypes.func.isRequired,
     handleFieldChange: PropTypes.func.isRequired,
     handleRemoveClick: PropTypes.func.isRequired,

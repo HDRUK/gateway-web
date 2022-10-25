@@ -307,11 +307,11 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
                     handleAddClick={handleAddClick}
                 />
             )}
-            <AccountTeamEmailAlertModal open={alertModal} close={toggleAlertModal} options={alertModalOptions} />
+            <AccountTeamEmailAlertModal isOpen={alertModal} onClose={toggleAlertModal} options={alertModalOptions} />
             <AccountTeamNotificationsConfirmationModal
-                open={teamEmailModal}
-                close={toggleTeamEmailsModal}
-                confirm={toggleTeamEmailsModal}
+                isOpen={teamEmailModal}
+                onClose={toggleTeamEmailsModal}
+                onConfirm={toggleTeamEmailsModal}
                 teamNotifications={teamGatewayNotifications}
             />
         </div>
