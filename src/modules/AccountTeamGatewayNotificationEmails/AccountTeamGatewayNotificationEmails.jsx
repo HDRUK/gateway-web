@@ -3,7 +3,7 @@ import { Switch } from 'components';
 import { useAuth } from 'context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { teamGatewayNotificationPropTypes } from 'types';
+import { teamNotificationPropTypes } from 'types';
 
 const AccountTeamGatewayNotificationEmails = ({ teamId, teamNotification, toggleTeamNotifications }) => {
     const { t } = useTranslation();
@@ -30,7 +30,7 @@ const AccountTeamGatewayNotificationEmails = ({ teamId, teamNotification, toggle
 AccountTeamGatewayNotificationEmails.propTypes = {
     teamId: PropTypes.string.isRequired,
     toggleTeamNotifications: PropTypes.func.isRequired,
-    teamNotification: teamGatewayNotificationPropTypes.isRequired,
+    teamNotification: teamNotificationPropTypes.isRequired,
 };
 
 export default AccountTeamGatewayNotificationEmails;

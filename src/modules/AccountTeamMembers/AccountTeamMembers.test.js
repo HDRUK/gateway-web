@@ -17,8 +17,8 @@ jest.mock('../../context/AuthContext', () => ({
 }));
 
 // This is temporary until AccountTeamMembersModal has been refactored
-jest.mock('../AccountTeamMembersModal', () => ({ onMemberAdded, close, open }) => {
-    return open ? (
+jest.mock('../AccountTeamMembersModal', () => ({ onMemberAdded, onClose, isOpen }) => {
+    return isOpen ? (
         <>
             <button
                 onClick={() =>
@@ -36,7 +36,7 @@ jest.mock('../AccountTeamMembersModal', () => ({ onMemberAdded, close, open }) =
                 type='button'>
                 Add member
             </button>
-            <button onClick={close} type='button'>
+            <button onClick={onClose} type='button'>
                 Close
             </button>
         </>

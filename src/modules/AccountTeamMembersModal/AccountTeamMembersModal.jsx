@@ -13,7 +13,7 @@ import serviceTeam from '../../services/teams';
 import AsyncTypeAheadUsers from '../../pages/commonComponents/AsyncTypeAheadUsers';
 import './AccountTeamMembersModal.scss';
 
-const AccountTeamMembersModal = ({ open, close, teamId, onMemberAdded }) => {
+const AccountTeamMembersModal = ({ isOpen, onClose, teamId, onMemberAdded }) => {
     const [userInfo, setUserInfo] = useState([]);
 
     const getUserInfo = async () => {
@@ -75,7 +75,7 @@ const AccountTeamMembersModal = ({ open, close, teamId, onMemberAdded }) => {
                     data: { members },
                 } = await addTeamMembers.mutateAsync({ id: teamId, data: payload });
                 onMemberAdded(members);
-                close();
+                onClose();
             } catch (err) {
                 console.error(err.message);
             }
@@ -88,8 +88,8 @@ const AccountTeamMembersModal = ({ open, close, teamId, onMemberAdded }) => {
                 render={() => (
                     <>
                         <Modal
-                            show={open}
-                            onHide={close}
+                            show={isOpen}
+                            onHide={onClose}
                             size='lg'
                             aria-labelledby='contained-modal-title-vcenter'
                             centered
@@ -99,7 +99,7 @@ const AccountTeamMembersModal = ({ open, close, teamId, onMemberAdded }) => {
                                     <div className='accountMembersModal-header--wrap'>
                                         <div className='accountMembersModal-head'>
                                             <h1 className='black-20-semibold'>Add members to your team</h1>
-                                            <CloseButtonSvg className='accountMembersModal-head--close' onClick={() => close()} />
+                                            <CloseButtonSvg className='accountMembersModal-head--close' onClick={() => onClose()} />
                                         </div>
                                         <p>Users that you want to add to your team must already have an account on the Gateway.</p>
                                     </div>
@@ -239,7 +239,7 @@ const AccountTeamMembersModal = ({ open, close, teamId, onMemberAdded }) => {
                                             variant='secondary'
                                             onClick={e => {
                                                 e.preventDefault();
-                                                close();
+                                                onClose();
                                             }}>
                                             Cancel
                                         </Button>
@@ -256,8 +256,8 @@ const AccountTeamMembersModal = ({ open, close, teamId, onMemberAdded }) => {
 };
 
 AccountTeamMembersModal.propTypes = {
-    open: PropTypes.bool.isRequired,
-    close: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
     teamId: PropTypes.string.isRequired,
     onMemberAdded: PropTypes.func.isRequired,
 };

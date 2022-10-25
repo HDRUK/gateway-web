@@ -162,7 +162,7 @@ const AccountTeamMembers = ({ teamId }) => {
                     </Box>
                 </Card>
             )}
-            <AccountTeamMembersModal open={showModal} close={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
+            <AccountTeamMembersModal isOpen={showModal} onClose={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
         </LayoutContent>
     );
 };

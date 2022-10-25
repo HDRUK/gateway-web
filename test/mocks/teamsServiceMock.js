@@ -16,7 +16,27 @@ const teamMembers = [
         bio: 'Manager',
     },
 ];
-const teamNotifications = [];
+const teamNotifications = [
+    {
+        subscribedEmails: [{ value: 'a value', error: '' }],
+        optIn: true,
+        notificationType: 'notification1',
+    },
+    {
+        subscribedEmails: [
+            { value: 'a value', error: 'an error' },
+            { value: 'another value', error: '' },
+        ],
+        optIn: true,
+        notificationType: 'notification2',
+    },
+    {
+        subscribedEmails: [{ value: 'a value', error: 'an error' }],
+        optIn: false,
+        notificationType: 'notification3',
+    },
+];
+
 const memberNotifications = [];
 
 module.exports = {

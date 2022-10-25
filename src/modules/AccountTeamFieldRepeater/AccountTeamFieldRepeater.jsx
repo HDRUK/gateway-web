@@ -2,31 +2,42 @@ import React, { useEffect } from 'react';
 import './AccountTeamFieldRepeater.scss';
 import { useAuth } from 'context/AuthContext';
 import { isEmpty } from 'lodash';
+import PropTypes from 'prop-types';
+import { subscribedEmailPropTypes, teamNotificationPropTypes } from 'types';
 
 const AccountTeamFieldRepeaterAction = ({ subscribedEmails, notificationType, isManager, index, handleRemoveClick, handleAddClick }) => {
+    if (!isManager) return null;
+
     return (
-        <>
-            {isManager && (
-                <div className='field-action' key={`field-action-${index}`}>
-                    <button
-                        onClick={e => handleRemoveClick(index, notificationType)}
-                        className='plusMinusButton'
-                        disabled={subscribedEmails.length === 1}>
-                        -
-                    </button>
-                    <button
-                        onClick={() => handleAddClick(notificationType)}
-                        className='plusMinusButton'
-                        disabled={subscribedEmails.length - 1 !== index}>
-                        +
-                    </button>
-                </div>
-            )}
-        </>
+        <div className='field-action' key={`field-action-${index}`}>
+            <button
+                type='button'
+                onClick={() => handleRemoveClick(index, notificationType)}
+                className='plusMinusButton'
+                disabled={subscribedEmails.length === 1}>
+                -
+            </button>
+            <button
+                type='button'
+                onClick={() => handleAddClick(notificationType)}
+                className='plusMinusButton'
+                disabled={subscribedEmails.length - 1 !== index}>
+                +
+            </button>
+        </div>
     );
 };
 
-const AccountTeamField = ({ id = '', isManager = false, subscribedEmail = {}, notificationType, index = 0, handleFieldChange }) => {
+AccountTeamFieldRepeaterAction.propTypes = {
+    index: PropTypes.number.isRequired,
+    isManager: PropTypes.bool.isRequired,
+    subscribedEmails: PropTypes.arrayOf(subscribedEmailPropTypes).isRequired,
+    notificationType: PropTypes.string.isRequired,
+    handleAddClick: PropTypes.func.isRequired,
+    handleRemoveClick: PropTypes.func.isRequired,
+};
+
+const AccountTeamField = ({ id, isManager = false, subscribedEmail = {}, notificationType, index = 0, handleFieldChange }) => {
     const { value, error } = subscribedEmail;
     return (
         <div className='form-group'>
@@ -42,6 +53,21 @@ const AccountTeamField = ({ id = '', isManager = false, subscribedEmail = {}, no
             {error && <div className='invalid-feedback'>{error}</div>}
         </div>
     );
+};
+
+AccountTeamField.propTypes = {
+    id: PropTypes.number.isRequired,
+    isManager: PropTypes.bool,
+    subscribedEmail: subscribedEmailPropTypes,
+    notificationType: PropTypes.string.isRequired,
+    index: PropTypes.number,
+    handleFieldChange: PropTypes.func.isRequired,
+};
+
+AccountTeamField.defaultProps = {
+    isManager: false,
+    subscribedEmail: {},
+    index: 0,
 };
 
 const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, handleFieldChange, handleRemoveClick, handleAddClick }) => {
@@ -77,6 +103,15 @@ const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, handleFieldCha
             ))}
         </div>
     );
+};
+
+AccountTeamFieldRepeater.propTypes = {
+    id: PropTypes.number.isRequired,
+    teamId: PropTypes.string.isRequired,
+    teamNotification: teamNotificationPropTypes.isRequired,
+    handleFieldChange: PropTypes.func.isRequired,
+    handleRemoveClick: PropTypes.func.isRequired,
+    handleAddClick: PropTypes.func.isRequired,
 };
 
 export default AccountTeamFieldRepeater;

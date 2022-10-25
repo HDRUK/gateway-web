@@ -4,7 +4,7 @@ import { useAuth } from 'context/AuthContext';
 import { Switch } from 'components';
 import { Input, Box, Message } from 'hdruk-react-core';
 import { t } from 'i18next';
-import { teamGatewayNotificationPropTypes } from 'types';
+import { teamNotificationPropTypes } from 'types';
 
 const AccountTeamGatewayEmail = ({ teamId, memberNotification, togglePersonalNotifications }) => {
     const { isTeamManager, managerInTeam, userState } = useAuth();
@@ -44,7 +44,7 @@ const AccountTeamGatewayEmail = ({ teamId, memberNotification, togglePersonalNot
 AccountTeamGatewayEmail.propTypes = {
     teamId: PropTypes.string.isRequired,
     togglePersonalNotifications: PropTypes.func.isRequired,
-    memberNotification: teamGatewayNotificationPropTypes.isRequired,
+    memberNotification: teamNotificationPropTypes.isRequired,
 };
 
 export default AccountTeamGatewayEmail;
