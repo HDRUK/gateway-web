@@ -37,7 +37,7 @@ AccountTeamFieldRepeaterAction.propTypes = {
     handleRemoveClick: PropTypes.func.isRequired,
 };
 
-const AccountTeamField = ({ id = '', isManager = false, subscribedEmail = {}, notificationType, index = 0, handleFieldChange }) => {
+const AccountTeamField = ({ id, isManager = false, subscribedEmail = {}, notificationType, index = 0, handleFieldChange }) => {
     const { value, error } = subscribedEmail;
     return (
         <div className='form-group'>
@@ -56,7 +56,7 @@ const AccountTeamField = ({ id = '', isManager = false, subscribedEmail = {}, no
 };
 
 AccountTeamField.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     isManager: PropTypes.bool,
     subscribedEmail: subscribedEmailPropTypes,
     notificationType: PropTypes.string.isRequired,
@@ -106,7 +106,7 @@ const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, handleFieldCha
 };
 
 AccountTeamFieldRepeater.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     teamId: PropTypes.string.isRequired,
     teamNotification: teamNotificationPropTypes.isRequired,
     handleFieldChange: PropTypes.func.isRequired,
