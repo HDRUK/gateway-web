@@ -21,7 +21,7 @@ import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
 import questionbankService from '../../services/questionbank';
-import { getTeam, getIsTeamAdmin } from '../../utils/auth';
+import { getTeam } from '../../utils/auth';
 import helpers from '../../utils/DarHelper.util';
 import { diffObjects } from '../../utils/GeneralHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';

@@ -9,7 +9,6 @@ import { useAuth } from '../../../../context/AuthContext';
 import { useDashboard } from '../../../../context/DashboardContext';
 import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
 import googleAnalytics from '../../../../tracking';
-import utils from '../../../../utils/DataSetHelper.util';
 import '../../Dashboard.scss';
 import AccountDatasetsCreate from '../AccountDatasetsCreate';
 import AccountDatasetsContent from './AccountDatasetsContent';
