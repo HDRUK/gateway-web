@@ -430,8 +430,8 @@ const findQuestionSetsByPageId = (pageId = '', schema = {}) => {
 const findPageByQuestionSet = (questionSetId = '', schema = {}) => {
     if (!_.isEmpty(questionSetId) && !_.isEmpty(schema)) {
         const { formPanels, pages } = schema;
-
         const pageId = formPanels.find(q => q.panelId === questionSetId)?.pageId;
+
         return pages.find(q => q.pageId === pageId);
     }
     return {};
@@ -532,6 +532,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, pub
     }
 
     if (additionalfilesNavElementsExist) {
+        formPanels.push(staticContent.additionalFilesPanel);
         questionPanels.push(staticContent.additionalFilesQuestionPanel);
     }
 
