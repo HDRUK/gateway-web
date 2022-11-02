@@ -3,8 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import axios from 'axios';
 import { AccountTeamMembers, AccountTeamEmailAlertModal, AccountTeamNotificationsConfirmationModal } from 'modules';
-import { authUtils } from 'utils';
-import { ACCOUNT_TAB_TYPES, UI_ALERT_TYPES, PERMISSIONS_USER_TYPES } from 'consts';
+import { ACCOUNT_TAB_TYPES, UI_ALERT_TYPES } from 'consts';
 import PropTypes from 'prop-types';
 import { baseURL } from '../../configs/url.config';
 import { LayoutContent } from '../../components/Layout';
@@ -18,11 +17,10 @@ import {
     getTotalGatewayTeamEmails,
 } from './AccountTeamManagementPage.utils';
 import { GeneratedAlerts, LoaderRow, NotificationTab, TabsNav, TeamManagementHeader } from './AccountTeamManagementPage.components';
-import { isAdminNotManager } from 'utils/auth';
 import { useAuth } from 'context/AuthContext';
 
 const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagementSave, onTeamManagementTabChange, onClearInnerTab }) => {
-    const { userState } = useAuth();
+    const { checkIsTeamAdminNotManager, isTeamManager, checkIsTeamManager } = useAuth();
     const [activeTabKey, setActiveTabKey] = useState(ACCOUNT_TAB_TYPES.Members);
     const [alerts, setAlerts] = useState([]);
     const [alertModal, setAlertModal] = useState(false);
@@ -33,6 +31,11 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
     const [teamGatewayNotifications, setTeamGatewayNotifications] = useState([
         { notificationType: 'dataAccessRequest', optIn: false, subscribedEmails: [{ value: '', error: '' }], message: 'Test message' },
     ]);
+
+    useEffect(() => {
+        // TODO: GAT-1510:014
+        checkIsTeamManager(teamId);
+    }, [teamId]);
 
     const history = useHistory();
 
@@ -81,8 +84,6 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
     const saveNotifications = async () => {
         const missingOptIns = getHasMandatoryOptIns(memberNotifications, teamGatewayNotifications) || false;
         const isValid = validEmailList(teamGatewayNotifications).length > 0;
-        // TODO: GAT-1510:014
-        const isManager = authUtils.userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager);
         // has optIns for team notificaiton emails
         const teamOptIns = hasTeamNotificationOptIns(teamGatewayNotifications);
         if (missingOptIns) {
@@ -93,7 +94,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
             );
         } else if (!isValid) {
             toggleAlertModal('Invalid Email address', 'Please fix the following email errors.');
-        } else if (isManager && teamGatewayNotifications.length > 0 && teamOptIns) {
+        } else if (isTeamManager && teamGatewayNotifications.length > 0 && teamOptIns) {
             // show modal with team email notifications if on only
             setTeamEmailModal(true);
         } else {
@@ -167,7 +168,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
         }
 
         // TODO: GAT-1510:019
-        if (!isAdminNotManager(teamId, userState)) {
+        if (!checkIsTeamAdminNotManager(teamId)) {
             if (innerTab === ACCOUNT_TAB_TYPES.Notifications) {
                 onTabChange(innerTab);
                 onClearInnerTab();
@@ -291,7 +292,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
             <LayoutContent>
                 <GeneratedAlerts alerts={alerts} />
                 <TeamManagementHeader />
-                <TabsNav teamId={teamId} userState={userState} activeTabKey={activeTabKey} onTabChange={onTabChange} />
+                <TabsNav teamId={teamId} activeTabKey={activeTabKey} onTabChange={onTabChange} />
             </LayoutContent>
             {activeTabKey === ACCOUNT_TAB_TYPES.Members && <AccountTeamMembers teamId={teamId} />}
             {activeTabKey === ACCOUNT_TAB_TYPES.Notifications && (
@@ -299,7 +300,6 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
                     memberNotifications={memberNotifications}
                     teamGatewayNotifications={teamGatewayNotifications}
                     teamId={teamId}
-                    userState={userState}
                     togglePersonalNotifications={togglePersonalNotifications}
                     toggleTeamNotifications={toggleTeamNotifications}
                     handleFieldChange={handleFieldChange}

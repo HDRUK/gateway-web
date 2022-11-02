@@ -7,11 +7,11 @@ import { t } from 'i18next';
 import { teamNotificationPropTypes } from 'types';
 
 const AccountTeamGatewayEmail = ({ teamId, memberNotification, togglePersonalNotifications }) => {
-    const { isTeamManager, managerInTeam, userState } = useAuth();
+    const { isTeamManager, checkIsTeamManager, userState } = useAuth();
 
     useEffect(() => {
         // TODO: GAT-1510:016
-        managerInTeam(teamId);
+        checkIsTeamManager(teamId);
     }, [teamId]);
 
     return (

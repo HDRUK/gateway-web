@@ -8,6 +8,7 @@ import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import { LayoutContent } from '../../components/Layout';
+import { authUtils } from 'utils';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -66,9 +67,9 @@ class AccountUsers extends React.Component {
 
         // TODO: GAT-1510:037
         data.forEach(user => {
-            if (user.role === 'Creator') userCount++;
-            else if (user.role === 'DataCustodian') dataCustodianCount++;
-            else if (user.role === 'Admin') adminCount++;
+            if (authUtils.getIsUserRoleCreator(user.role)) userCount++;
+            else if (authUtils.getIsUserRoleDataCustodian(user.role)) dataCustodianCount++;
+            else if (authUtils.getIsUserRoleAdmin(user.role)) adminCount++;
         });
 
         return (

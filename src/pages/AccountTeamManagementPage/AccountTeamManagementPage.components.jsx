@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Alert, LayoutContent, Link } from 'components';
 import { Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
 import { ACCOUNT_TAB_TYPES, SUPPORT_URL } from 'consts';
 import { AccountTeamFieldRepeater, AccountTeamGatewayNotificationEmails, AccountTeamGatewayEmail } from 'modules';
 import PropTypes from 'prop-types';
-import { userStatePropTypes, teamNotificationsPropTypes } from 'types';
+import { teamNotificationsPropTypes } from 'types';
 import { Card, H5, P, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
-import { isAdminNotManager } from 'utils/auth';
+import { useAuth } from 'context/AuthContext';
 import Loading from '../commonComponents/Loading';
 
 const EmailNotificationsHeader = () => {
@@ -42,9 +42,15 @@ const TeamManagementHeader = () => {
     );
 };
 
-const TabsNav = ({ activeTabKey, onTabChange, teamId, userState }) => {
-    //  TODO: GAT-1510:020
-    if (isAdminNotManager(teamId, userState)) return null;
+const TabsNav = ({ activeTabKey, onTabChange, teamId }) => {
+    const { checkIsTeamAdminNotManager, isTeamAdminNotManager } = useAuth();
+
+    useEffect(() => {
+        //  TODO: GAT-1510:020
+        checkIsTeamAdminNotManager(teamId);
+    }, [teamId]);
+
+    if (isTeamAdminNotManager) return null;
 
     return (
         <Card data-testid='TabsNav'>
@@ -66,7 +72,6 @@ TabsNav.propTypes = {
     activeTabKey: PropTypes.string.isRequired,
     onTabChange: PropTypes.func.isRequired,
     teamId: PropTypes.string.isRequired,
-    userState: userStatePropTypes.isRequired,
 };
 
 const GeneratedAlerts = ({ alerts }) => {
@@ -172,7 +177,6 @@ TeamNotifications.propTypes = {
 const NotificationTab = ({
     memberNotifications = [],
     teamId,
-    userState,
     togglePersonalNotifications,
     teamGatewayNotifications,
     toggleTeamNotifications,
@@ -189,7 +193,6 @@ const NotificationTab = ({
                 togglePersonalNotifications={togglePersonalNotifications}
             />
             <TeamNotifications
-                userState={userState}
                 teamGatewayNotifications={teamGatewayNotifications}
                 teamId={teamId}
                 toggleTeamNotifications={toggleTeamNotifications}
@@ -204,7 +207,6 @@ const NotificationTab = ({
 NotificationTab.propTypes = {
     memberNotifications: PropTypes.arrayOf(PropTypes.shape({ optIn: PropTypes.bool, notificationType: PropTypes.string })).isRequired,
     teamId: PropTypes.string.isRequired,
-    userState: userStatePropTypes.isRequired,
     togglePersonalNotifications: PropTypes.func.isRequired,
     teamGatewayNotifications: teamNotificationsPropTypes.isRequired,
     toggleTeamNotifications: PropTypes.func.isRequired,

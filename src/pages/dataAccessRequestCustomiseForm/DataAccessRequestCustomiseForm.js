@@ -21,7 +21,7 @@ import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
 import questionbankService from '../../services/questionbank';
-import { getTeam, isPublisherAdmin } from '../../utils/auth';
+import { getTeam, getIsTeamAdmin } from '../../utils/auth';
 import helpers from '../../utils/DarHelper.util';
 import { diffObjects } from '../../utils/GeneralHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
@@ -48,6 +48,7 @@ import handleAnalytics from './handleAnalytics';
 import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
 import DropdownCustom from '../DataAccessRequest/components/DropdownCustom/DropdownCustom';
 import DoubleDropdownCustom from '../DataAccessRequest/components/DoubleDropdownCustom/DoubleDropdownCustom';
+import { useAuth } from 'context/AuthContext';
 
 const questionActions = {
     questionActions: [{ key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 }],
@@ -56,7 +57,7 @@ const questionActions = {
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
     const [searchBar] = useState(React.createRef());
-
+    const { isTeamAdmin, checkIsTeamAdmin } = useAuth();
     const [schemaId, setSchemaId] = useState('');
     const [publisherDetails, setPublisherDetails] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -99,6 +100,10 @@ export const DataAccessRequestCustomiseForm = props => {
 
     const location = useLocation();
     const team = getTeam({ location });
+
+    useEffect(() => {
+        checkIsTeamAdmin(team);
+    }, [team]);
 
     const patchSchemaRequest = darService.usePatchSchema(null, {
         onError: ({ title, message }) => {
@@ -841,7 +846,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                 </Card>
 
                                 {/* TODO: GAT-1510:055 */}
-                                {isPublisherAdmin(userState, team) && (
+                                {isTeamAdmin && (
                                     <Card>
                                         <Box p={5}>
                                             <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />

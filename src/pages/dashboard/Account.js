@@ -25,7 +25,6 @@ import { ReactComponent as UsersIcon } from '../../images/icons/users.svg';
 import AccountTeamManagement from './AccountTeamManagement';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
-import { getTeam, isAdmin, isCustodian, isPublisherAdmin, isUser } from '../../utils/auth';
 import { isRouteMatch } from '../../utils/router';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -56,6 +55,8 @@ import { tabTypes } from './Team/teamUtil';
 import TeamHelp from './TeamHelp/TeamHelp';
 import WorkflowDashboard from './Workflows/WorkflowDashboard';
 import YourAccount from './YourAccount';
+import { authUtils } from 'utils';
+import { PERMISSIONS_TEAM_ROLES } from 'consts';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -167,7 +168,8 @@ class Account extends Component {
             this.alertTimeOut = setTimeout(() => this.setState({ alert: {} }), 10000);
         }
 
-        this.state.team = getTeam(props);
+        // TODO: GAT-1738 the 'team' prop is assigned both team.type and teamId intermittently. We need to split the prop out into 'teamType' and 'teamId'
+        this.state.team = authUtils.getTeam(props);
 
         if (_.has(props, 'profileComplete')) {
             this.state.profileComplete = props.profileComplete;
@@ -253,7 +255,7 @@ class Account extends Component {
                     activeAccordion,
                 });
 
-                if (team !== 'user' && team !== 'admin') {
+                if (!authUtils.getIsTypeUser(team) && !authUtils.getIsTypeAdmin(team)) {
                     await axios.get(baseURL + `/api/v1/publishers/${team}`).then(res => {
                         let publisherDetails = res.data.publisher;
                         if (!publisherDetails.allowAccessRequestManagement && values.tab === 'dataaccessrequests')
@@ -266,7 +268,7 @@ class Account extends Component {
                     });
                 }
 
-                if (team !== 'user' && team !== 'admin') {
+                if (!authUtils.getIsTypeUser(team) && !authUtils.getIsTypeAdmin(team)) {
                     this.setState({
                         dashboardState: {
                             isLoading: true,
@@ -367,7 +369,8 @@ class Account extends Component {
         let { userState } = this.state;
         let [user] = userState;
         if (!_.isEmpty(user.teams)) {
-            return [...user.teams].filter(p => p.type === 'publisher').length > 0 ? true : false;
+            // TODO: GAT-1510:049
+            return [...user.teams].filter(p => authUtils.getIsTypePublisher(p.type)).length > 0 ? true : false;
         }
         return false;
     };
@@ -382,7 +385,7 @@ class Account extends Component {
         let [user] = userState;
         if (!_.isEmpty(user.teams)) {
             // TODO: GAT-1510:049
-            const filterPublishers = [...user.teams].filter(p => p.type === 'publisher');
+            const filterPublishers = [...user.teams].filter(p => authUtils.getIsTypePublisher(p.type));
             if (!_.isEmpty(filterPublishers)) {
                 return filterPublishers.map((pub, index) => {
                     return (
@@ -416,9 +419,9 @@ class Account extends Component {
         let { userState } = this.state;
         let [user] = userState;
         // TODO: GAT-1510:050
-        const isAdmin = [...user.teams].filter(p => p.type === 'admin');
+        const _isAdmin = [...user.teams].filter(p => authUtils.getIsTypeAdmin(p.type));
 
-        if (!_.isEmpty(isAdmin)) {
+        if (!_.isEmpty(_isAdmin)) {
             return (
                 <Dropdown.Item
                     className='gray700-13'
@@ -488,12 +491,13 @@ class Account extends Component {
 
             if (!_.isEmpty(tab.team)) {
                 localStorage.setItem('HDR_TEAM', tab.team);
-                if (tab.team !== 'user' && tab.team !== 'admin') {
+                if (!authUtils.getIsTypeUser(tab.team) && !authUtils.getIsTypeAdmin(tab.team)) {
                     if (_.isEmpty(tab.tabId) || !['dataaccessrequests', 'datasets', 'teamManagement'].includes(tab.tabId)) {
                         // TODO: GAT-1510:004
-                        if (this.userHasRole(tab.team, ['manager', 'reviewer'])) tab.tabId = 'dataaccessrequests';
+                        if (this.userHasTeamRole(tab.team, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]))
+                            tab.tabId = 'dataaccessrequests';
                         // TODO: GAT-1510:005
-                        else if (this.userHasRole(tab.team, 'metadata_editor')) tab.tabId = 'datasets';
+                        else if (this.userHasTeamRole(tab.team, PERMISSIONS_TEAM_ROLES.metadata_editor)) tab.tabId = 'datasets';
                         else tab.tabId = 'teamManagement';
                     }
                 }
@@ -516,11 +520,8 @@ class Account extends Component {
         this.setState({ activeAccordion });
     };
 
-    userHasRole(teamId, role) {
-        const team = this?.state?.userState[0]?.teams.filter(t => {
-            return t._id === teamId;
-        })[0];
-        return team && team.roles.some(r => role.includes(r));
+    userHasTeamRole(teamId, role) {
+        return authUtils.userHasTeamRole(this?.state?.userState, teamId, role);
     }
 
     onSaveNotificationsClick = () => {
@@ -653,7 +654,7 @@ class Account extends Component {
             { id: 'dataaccessrequests', children: 'Data access requests', icon: <UsersIcon /> },
             { id: 'collections', children: 'Collections', icon: <BookmarkIcon /> },
             // TODO: GAT-1510:028
-            ...(userState[0].role === 'Admin' ? [{ id: 'usersroles', children: 'Users and roles', icon: <UsersIcon /> }] : []),
+            ...(authUtils.getIsRootRoleAdmin(userState) ? [{ id: 'usersroles', children: 'Users and roles', icon: <UsersIcon /> }] : []),
         ];
 
         const ACCORDIAN_DAR_MENU = {
@@ -665,7 +666,7 @@ class Account extends Component {
                     id: 'dataaccessrequests',
                 },
                 // TODO: GAT-1510:006
-                ...(allowWorkflow && this.userHasRole(team, 'manager')
+                ...(allowWorkflow && this.userHasTeamRole(team, PERMISSIONS_TEAM_ROLES.manager)
                     ? [
                           {
                               id: 'workflows',
@@ -703,7 +704,7 @@ class Account extends Component {
         };
 
         // TODO: GAT-1510:007
-        this.userHasRole(team, ['manager']) &&
+        this.userHasTeamRole(team, [PERMISSIONS_TEAM_ROLES.manager]) &&
             publisherDetails.dataUse?.widget?.enabled &&
             ACCORDIAN_DUR_MENU.children.push({
                 text: 'Data use widget',
@@ -743,7 +744,7 @@ class Account extends Component {
                                 </Dropdown>
 
                                 {/* TODO: GAT-1510:056 */}
-                                {isUser(team) && (
+                                {authUtils.getIsTypeUser(team) && (
                                     <>
                                         {TEAM_USERS_MENU.map(({ id, ...outerProps }) => (
                                             <DashboardNavItem
@@ -757,7 +758,7 @@ class Account extends Component {
                                 )}
 
                                 {/* TODO: GAT-1510:054 */}
-                                {isAdmin(team) && (
+                                {authUtils.getIsTypeAdmin(team) && (
                                     <>
                                         <DashboardNavItem
                                             icon={<UsersIcon />}
@@ -791,7 +792,7 @@ class Account extends Component {
                                 )}
 
                                 {/* TODO: GAT-1510:052 */}
-                                {isCustodian(team) && (
+                                {authUtils.getIsTypeCustodian(team) && (
                                     <>
                                         <DashboardNavItem
                                             icon={<SettingsIcon />}
@@ -800,43 +801,50 @@ class Account extends Component {
                                             Team Management
                                         </DashboardNavItem>
                                         {/* TODO: GAT-1510:008 */}
-                                        {allowAccessRequestManagement && this.userHasRole(team, ['manager', 'reviewer']) && (
-                                            <>
-                                                <div
-                                                    className={this.getNavActiveClass([
-                                                        'dataaccessrequests',
-                                                        'workflows',
-                                                        'addeditworkflow',
-                                                    ])}>
-                                                    <DashboardNavAccordian
-                                                        onSelect={this.accordionClick}
-                                                        onClick={this.toggleNav}
-                                                        tabId={tabId}
-                                                        activeKey={activeAccordion}
-                                                        eventKey='0'
-                                                        data={ACCORDIAN_DAR_MENU}
-                                                    />
-                                                </div>
-                                                {publisherDetails?.questionBank?.enabled && (
+                                        {allowAccessRequestManagement &&
+                                            this.userHasTeamRole(team, [
+                                                PERMISSIONS_TEAM_ROLES.manager,
+                                                PERMISSIONS_TEAM_ROLES.reviewer,
+                                            ]) && (
+                                                <>
                                                     <div
                                                         className={this.getNavActiveClass([
-                                                            'customisedataaccessrequests_guidance',
-                                                            'customisedataaccessrequests_applicationform',
+                                                            'dataaccessrequests',
+                                                            'workflows',
+                                                            'addeditworkflow',
                                                         ])}>
                                                         <DashboardNavAccordian
                                                             onSelect={this.accordionClick}
                                                             onClick={this.toggleNav}
                                                             tabId={tabId}
                                                             activeKey={activeAccordion}
-                                                            eventKey='1'
-                                                            data={ACCORDIAN_CUSTOM_DAR_MENU}
+                                                            eventKey='0'
+                                                            data={ACCORDIAN_DAR_MENU}
                                                         />
                                                     </div>
-                                                )}
-                                            </>
-                                        )}
+                                                    {publisherDetails?.questionBank?.enabled && (
+                                                        <div
+                                                            className={this.getNavActiveClass([
+                                                                'customisedataaccessrequests_guidance',
+                                                                'customisedataaccessrequests_applicationform',
+                                                            ])}>
+                                                            <DashboardNavAccordian
+                                                                onSelect={this.accordionClick}
+                                                                onClick={this.toggleNav}
+                                                                tabId={tabId}
+                                                                activeKey={activeAccordion}
+                                                                eventKey='1'
+                                                                data={ACCORDIAN_CUSTOM_DAR_MENU}
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
                                         {/* TODO: GAT-1510:009 */}
-                                        {this.userHasRole(team, ['manager', 'metadata_editor']) && (
+                                        {this.userHasTeamRole(team, [
+                                            PERMISSIONS_TEAM_ROLES.manager,
+                                            PERMISSIONS_TEAM_ROLES.metadata_editor,
+                                        ]) && (
                                             <DashboardNavItem
                                                 icon={<ServerIcon />}
                                                 activeClassName={this.getNavActiveClass('datasets')}
@@ -870,19 +878,19 @@ class Account extends Component {
 
                         <div className='col-sm-12 col-md-10 margin-top-32'>
                             {/* TODO: GAT-1510:057 */}
-                            {isUser(team) && (
+                            {authUtils.getIsTypeUser(team) && (
                                 <>
                                     {tabId === 'dashboard' && <AccountAnalyticsDashboard userState={userState} />}
 
                                     {tabId === 'youraccount' && <YourAccount userState={userState} accountUpdated={accountUpdated} />}
 
-                                    {tabId === 'tools' && <AccountTools userState={userState} />}
+                                    {tabId === 'tools' && <AccountTools />}
 
                                     {tabId === 'reviews' && <ReviewTools userState={userState} />}
 
-                                    {tabId === 'papers' && <AccountPapers userState={userState} />}
+                                    {tabId === 'papers' && <AccountPapers />}
 
-                                    {tabId === 'courses' && <AccountCourses userState={userState} />}
+                                    {tabId === 'courses' && <AccountCourses />}
 
                                     {tabId === 'dataaccessrequests' &&
                                         (_.isEmpty(dataaccessrequest) ? (
@@ -912,37 +920,42 @@ class Account extends Component {
                             <Route path='/account/datasets/:id' component={AccountDataset} />
 
                             {/* TODO: GAT-1510:058 */}
-                            {!isUser(team) && (
+                            {!authUtils.getIsTypeUser(team) && (
                                 <>
                                     {/* TODO: GAT-1510:010 */}
-                                    {allowAccessRequestManagement && this.userHasRole(team, ['manager', 'reviewer']) && (
-                                        <>
-                                            {' '}
-                                            {tabId === 'dataaccessrequests' &&
-                                                (_.isEmpty(dataaccessrequest) ? (
-                                                    <DataAccessRequests
-                                                        setDataAccessRequest={this.setDataAccessRequest}
-                                                        userState={userState}
-                                                        team={team}
-                                                        alert={alert}
-                                                    />
-                                                ) : (
-                                                    <ActivityLog
-                                                        onClickStartReview={this.navigateToLocation}
-                                                        dataaccessrequest={dataaccessrequest}
-                                                        userState={userState}
-                                                        team={team}
-                                                        ref={this.activityLog}
-                                                        onUpdateLogs={this.loadActivityLogNotifications}
-                                                    />
-                                                ))}
-                                        </>
-                                    )}
+                                    {allowAccessRequestManagement &&
+                                        this.userHasTeamRole(team, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]) && (
+                                            <>
+                                                {' '}
+                                                {tabId === 'dataaccessrequests' &&
+                                                    (_.isEmpty(dataaccessrequest) ? (
+                                                        <DataAccessRequests
+                                                            setDataAccessRequest={this.setDataAccessRequest}
+                                                            userState={userState}
+                                                            team={team}
+                                                            alert={alert}
+                                                        />
+                                                    ) : (
+                                                        <ActivityLog
+                                                            onClickStartReview={this.navigateToLocation}
+                                                            dataaccessrequest={dataaccessrequest}
+                                                            userState={userState}
+                                                            team={team}
+                                                            ref={this.activityLog}
+                                                            onUpdateLogs={this.loadActivityLogNotifications}
+                                                        />
+                                                    ))}
+                                            </>
+                                        )}
                                     {/* TODO: GAT-1510:011 */}
-                                    {(this.userHasRole(team, ['manager', 'metadata_editor']) || team === 'admin') &&
+                                    {(this.userHasTeamRole(team, [
+                                        PERMISSIONS_TEAM_ROLES.manager,
+                                        PERMISSIONS_TEAM_ROLES.metadata_editor,
+                                    ]) ||
+                                        authUtils.getIsTypeAdmin(team)) &&
                                         tabId === 'datasets' && <AccountDatasets userState={userState} team={team} alert={alert} />}
 
-                                    {team === 'admin' && tabId === 'teams' && (
+                                    {authUtils.getIsTypeAdmin(team) && tabId === 'teams' && (
                                         <AccountTeams
                                             userState={userState}
                                             onTeamsTabChange={this.onTeamsTabChange}
@@ -956,12 +969,13 @@ class Account extends Component {
                                     )}
 
                                     {/* TODO: GAT-1510:012 */}
-                                    {allowWorkflow && this.userHasRole(team, 'manager') && tabId === 'workflows' && (
-                                        <WorkflowDashboard userState={userState} team={team} />
-                                    )}
+                                    {allowWorkflow &&
+                                        this.userHasTeamRole(team, PERMISSIONS_TEAM_ROLES.manager) &&
+                                        tabId === 'workflows' && <WorkflowDashboard userState={userState} team={team} />}
 
                                     {/* TODO: GAT-1510:013 */}
-                                    {(this.userHasRole(team, ['manager']) || isPublisherAdmin(userState, team)) &&
+                                    {(this.userHasTeamRole(team, [PERMISSIONS_TEAM_ROLES.manager]) ||
+                                        authUtils.getIsTeamAdmin(userState, team)) &&
                                         (tabId === 'customisedataaccessrequests_applicationform' ||
                                             tabId === 'customisedataaccessrequests_guidance') && (
                                             <CustomiseDAR

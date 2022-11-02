@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import moment from 'moment';
+import { authUtils } from 'utils';
 
 const autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
 
@@ -247,73 +248,73 @@ const configActionModal = (type = '') => {
     let config = {};
     if (!_.isEmpty(type)) {
         switch (type.toUpperCase()) {
-            case 'APPROVE':
-                config = {
-                    title: 'Application approval',
-                    subTitle: 'Are you sure you want to approve this application?',
-                    description: false,
-                    buttons: {
-                        cancel: {
-                            label: 'No, nevermind',
-                            action: 'cancel',
-                            class: 'mr-2',
-                            variant: 'secondary',
-                        },
-                        confirmApproval: {
-                            label: 'Confirm approval',
-                            action: 'confirmApproval',
-                            class: 'addButton',
-                            variant: 'primary',
-                        },
+        case 'APPROVE':
+            config = {
+                title: 'Application approval',
+                subTitle: 'Are you sure you want to approve this application?',
+                description: false,
+                buttons: {
+                    cancel: {
+                        label: 'No, nevermind',
+                        action: 'cancel',
+                        class: 'mr-2',
+                        variant: 'secondary',
                     },
-                };
-                break;
-            case 'REJECT':
-                config = {
-                    title: 'Application rejection',
-                    subTitle:
+                    confirmApproval: {
+                        label: 'Confirm approval',
+                        action: 'confirmApproval',
+                        class: 'addButton',
+                        variant: 'primary',
+                    },
+                },
+            };
+            break;
+        case 'REJECT':
+            config = {
+                title: 'Application rejection',
+                subTitle:
                         'Are you sure you want to reject this application? If, so please provide the applicant with a reason for the failed request.',
-                    description: true,
-                    buttons: {
-                        cancel: {
-                            label: 'No, nevermind',
-                            action: 'cancel',
-                            class: 'mr-2',
-                            variant: 'secondary',
-                        },
-                        confirmReject: {
-                            label: 'Confirm rejection',
-                            action: 'confirmRejection',
-                            class: 'addButton',
-                            variant: 'primary',
-                        },
+                description: true,
+                buttons: {
+                    cancel: {
+                        label: 'No, nevermind',
+                        action: 'cancel',
+                        class: 'mr-2',
+                        variant: 'secondary',
                     },
-                };
-                break;
-            case 'APPROVEWITHCONDITIONS':
-                config = {
-                    title: 'Application approval with conditions',
-                    subTitle:
+                    confirmReject: {
+                        label: 'Confirm rejection',
+                        action: 'confirmRejection',
+                        class: 'addButton',
+                        variant: 'primary',
+                    },
+                },
+            };
+            break;
+        case 'APPROVEWITHCONDITIONS':
+            config = {
+                title: 'Application approval with conditions',
+                subTitle:
                         'Are you sure you want to apprive this application? If so, please provide the conditions of this approval to the applicant',
-                    description: true,
-                    buttons: {
-                        cancel: {
-                            label: 'No, nevermind',
-                            action: 'cancel',
-                            class: 'mr-2',
-                            variant: 'secondary',
-                        },
-                        confirmApprovalConditions: {
-                            label: 'Confirm approval with conditions',
-                            action: 'confirmApprovalConditions',
-                            class: 'addButton',
-                            variant: 'primary',
-                        },
+                description: true,
+                buttons: {
+                    cancel: {
+                        label: 'No, nevermind',
+                        action: 'cancel',
+                        class: 'mr-2',
+                        variant: 'secondary',
                     },
-                };
-                break;
-            default:
-                return type;
+                    confirmApprovalConditions: {
+                        label: 'Confirm approval with conditions',
+                        action: 'confirmApprovalConditions',
+                        class: 'addButton',
+                        variant: 'primary',
+                    },
+                },
+            };
+            break;
+        default:
+            return type;
         }
     }
 
@@ -534,7 +535,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, pub
         questionPanels.push(staticContent.additionalFilesQuestionPanel);
     }
     // TODO: GAT-1510:041
-    if (userState[0].role === 'Admin' && !exportExists) {
+    if (authUtils.getIsRootRoleAdmin(userState) && !exportExists) {
         injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels);
     }
 

@@ -1,4 +1,4 @@
-import { PERMISSIONS_USER_TYPES } from 'consts';
+import { PERMISSIONS_TEAM_ROLES } from 'consts';
 
 const mockUserStateAdmin = [
     {
@@ -27,7 +27,7 @@ const mockUserStateAdmin = [
     },
 ];
 
-const mockUserStateManager = [{ email: 'dan@ackroyd.com', teams: [{ _id: '1234', roles: [PERMISSIONS_USER_TYPES.manager] }] }];
+const mockUserStateManager = [{ email: 'dan@ackroyd.com', teams: [{ _id: '1234', roles: [PERMISSIONS_TEAM_ROLES.manager] }] }];
 
 const mockUserStateNonManager = [{ email: 'john@candy.com', teams: [{ _id: '1234', roles: [] }] }];
 

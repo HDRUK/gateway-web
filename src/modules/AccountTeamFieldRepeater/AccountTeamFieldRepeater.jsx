@@ -71,12 +71,12 @@ AccountTeamField.defaultProps = {
 };
 
 const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, handleFieldChange, handleRemoveClick, handleAddClick }) => {
-    const { isTeamManager, managerInTeam } = useAuth();
+    const { isTeamManager, checkIsTeamManager } = useAuth();
     const { subscribedEmails = [], notificationType = '' } = teamNotification;
 
     useEffect(() => {
         // TODO: GAT-1510:003
-        managerInTeam(teamId);
+        checkIsTeamManager(teamId);
     }, [teamId]);
 
     return (

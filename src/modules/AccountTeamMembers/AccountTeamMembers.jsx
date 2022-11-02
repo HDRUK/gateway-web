@@ -14,7 +14,7 @@ import { ActionCell, DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCel
 import { ROLES_ADMIN, ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR } from 'configs';
 
 const AccountTeamMembers = ({ teamId }) => {
-    const { isTeamManager, managerInTeam } = useAuth();
+    const { isTeamManager, checkIsTeamManager } = useAuth();
     const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
     const [checkboxes, setCheckboxes] = useState({});
@@ -45,7 +45,7 @@ const AccountTeamMembers = ({ teamId }) => {
                     setTeamMembers(members);
 
                     // TODO: GAT-1510:042
-                    managerInTeam(teamId);
+                    checkIsTeamManager(teamId);
                 });
             }
         };

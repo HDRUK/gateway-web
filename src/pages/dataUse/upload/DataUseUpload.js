@@ -655,7 +655,6 @@ const DataUseUpload = ({ onSubmit, team, dataUsePage, userState }) => {
                         confirm={submitDataUse}
                         isValid={isEmpty(uploadedData.uploadErrors)}
                         hasDuplicates={hasDuplicates()}
-                        isAdmin={userState[0].teams.some(team => team.type === 'admin')}
                         recommendedFieldsMissing={recommendedFieldsMissing}
                     />
 

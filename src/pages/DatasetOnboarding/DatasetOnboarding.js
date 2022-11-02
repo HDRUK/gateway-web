@@ -45,6 +45,8 @@ import DatasetOnboardingHelperUtil from '../../utils/DatasetOnboardingHelper.uti
 import ActionBarStatus from '../../components/ActionBarStatus';
 import ErrorModal from '../commonComponents/errorModal';
 import datasetOnboardingServices from '../../services/dataset-onboarding';
+import { authUtils } from 'utils';
+import { PERMISSIONS_USER_TYPES } from 'consts';
 
 /* export const DatasetOnboarding = props => {
     const [id] = useState('');
@@ -245,9 +247,10 @@ class DatasetOnboarding extends Component {
 
         let publisher = dataset.datasetv2.summary.publisher.identifier;
 
-        this.setState({ roles: this.getUserRoles() });
+        this.setState({ roles: authUtils.getIsTypeAdminOrApplicant(this.props.userState) });
         // TODO: GAT-1510:046
-        if (this.state.roles.includes('admin') && applicationStatus === DatasetOnboardingHelper.datasetStatus.inReview) userType = 'ADMIN';
+        if (this.state.roles.includes(PERMISSIONS_USER_TYPES.admin) && applicationStatus === DatasetOnboardingHelper.datasetStatus.inReview)
+            userType = 'ADMIN';
 
         jsonSchema = this.injectStaticContent(jsonSchema, inReviewMode, reviewSections);
         jsonSchema = this.injectObservations(jsonSchema, questionAnswers);
@@ -497,7 +500,7 @@ class DatasetOnboarding extends Component {
         if (isValid) {
             this.toggleActionModal('SUBMITFORREVIEW');
             // TODO: GAT-1510:018
-        } else if (this.userRoleIsAdmin(this.state.publisher)) {
+        } else if (authUtils.userRoleIsAdmin(this.props.userState, this.state.publisher)) {
             this.toggleActionModal('VALIDATIONERRORSADMIN');
         } else {
             let activePage = _.get(_.keys({ ...errors }), 0);
@@ -1040,80 +1043,11 @@ class DatasetOnboarding extends Component {
             case 'CONFIRMAPPROVALCONDITIONS':
             case 'CONFIRMREJECTION':
             case 'CONFIRMAPPROVAL':
-                //let { _id } = this.state;
-                /*const body = {
-					applicationStatus: this.applicationState[type],
-					applicationStatusDesc: statusDesc,
-				};*/
-
-                /* // 1. Update action status
-				const response = await axios.put(`${baseURL}/api/v1/data-access-request/${_id}`, body);
-				// 2. set alert object for screen
-				let alert = {
-					publisher: this.state.publisher || '',
-					nav: `dataaccessrequests&team=${this.state.publisher}`,
-					tab: this.tabState[type],
-					message: `You have ${this.tabState[type]} the data access request for ${this.state.publisher}`,
-				};
-				// 3. hide screen modal for approve, reject, approve with comments
-				this.toggleActionModal();
-				// 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
-				this.props.history.push({
-					pathname: `/account`,
-					search: '?tab=dataaccessrequests',
-					state: { alert },
-				}); */
                 break;
             default:
                 this.toggleActionModal();
         }
     };
-
-    getUserRoles() {
-        let { teams } = this.props.userState[0];
-
-        let foundAdmin = teams.filter(x => x.type === 'admin');
-        if (!_.isEmpty(foundAdmin)) {
-            return ['admin'];
-        }
-
-        let foundTeam = teams.filter(team => team.name === this.state.publisher);
-        if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
-            return ['applicant'];
-        }
-
-        /* let { teams } = props.userState[0];
-		let foundAdmin = teams.filter(x => x.type === team);
-		if (!_.isEmpty(foundAdmin)) {
-			return 'admin';
-		}
-		let foundTeam = teams.filter(x => x.name === team);
-		if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
-			return ['applicant']; //pass back to user
-		}
-
-		return foundTeam[0]._id; */
-    }
-
-    userHasRole = (teamId, role) => {
-        const team = this.props.userState[0].teams.filter(t => {
-            return t._id === teamId;
-        })[0];
-        return team && team.roles.includes(role);
-    };
-
-    userRoleIsAdmin = teamId => {
-        const team = this.props.userState[0].teams.filter(t => {
-            return t._id === teamId;
-        })[0];
-        return team && team.isAdmin;
-    };
-
-    /* renderTooltip = props => (
-		<Tooltip className='tool-tip' style={{ width: '240px' }}>
-			{props}
-		</Tooltip>
-	); */
 
     /**
      * OnUpdateRequest

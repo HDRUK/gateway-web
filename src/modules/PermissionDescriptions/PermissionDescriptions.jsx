@@ -1,14 +1,14 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import { useMemo } from 'react';
-import { ROLES_ALL } from 'configs';
+import { ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR, ROLES_ADMIN } from 'configs';
 import PropTypes from 'prop-types';
 import { P } from 'hdruk-react-core';
 import * as styles from './PermissionDescriptions.styles';
 
 const PermissionDescriptions = ({ roles }) => {
     const descriptions = useMemo(() => {
-        return ROLES_ALL.filter(role => roles.includes(role.value));
+        return [ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR, ROLES_ADMIN].filter(role => roles.includes(role.value));
     }, [roles]);
 
     if (!descriptions.length) return null;

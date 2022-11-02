@@ -7,12 +7,12 @@ import { teamNotificationPropTypes } from 'types';
 
 const AccountTeamGatewayNotificationEmails = ({ teamId, teamNotification, toggleTeamNotifications }) => {
     const { t } = useTranslation();
-    const { isTeamManager, managerInTeam } = useAuth();
+    const { isTeamManager, checkIsTeamManager } = useAuth();
 
     useEffect(() => {
         if (!teamId) return;
         // TODO: GAT-1510:017
-        managerInTeam(teamId);
+        checkIsTeamManager(teamId);
     }, [teamId]);
 
     if (!isTeamManager || !teamId) return null;

@@ -58,7 +58,7 @@ import TypeaheadUser from './components/TypeaheadUser/TypeaheadUser';
 import UpdateRequestModal from './components/UpdateRequestModal/UpdateRequestModal';
 import Uploads from './components/Uploads/Uploads';
 import './DataAccessRequest.scss';
-import { PERMISSIONS_USER_TYPES } from 'consts';
+import { PERMISSIONS_TEAM_ROLES } from 'consts';
 
 class DataAccessRequest extends Component {
     constructor(props) {
@@ -429,7 +429,7 @@ class DataAccessRequest extends Component {
             ({ _id: publisherId, workflowEnabled } = datasets[0].publisher);
         }
         // 2. If user is custodian and the form is not in review, redirect the user to the DAR team dashboard
-        if (userType === PERMISSIONS_USER_TYPES.custodian && applicationStatus === DarHelper.darStatus.submitted) {
+        if (userType === 'custodian' && applicationStatus === DarHelper.darStatus.submitted) {
             const alert = {
                 publisher,
                 nav: `dataaccessrequests&team=${publisher}`,
@@ -574,7 +574,7 @@ class DataAccessRequest extends Component {
         }
 
         // if amendment has been made to datasets mark about application navigation with warning
-        if (userType === PERMISSIONS_USER_TYPES.custodian && areDatasetsAmended) {
+        if (userType === 'custodian' && areDatasetsAmended) {
             jsonSchema.pages[0].flag = 'WARNING';
         }
 
@@ -1122,7 +1122,7 @@ class DataAccessRequest extends Component {
                 amendmentIterations,
                 showSubmit:
                     this.state.applicationStatus === DarHelper.darStatus.inProgress ||
-                    (unansweredAmendments === 0 && answeredAmendments > 0 && this.state.userType === PERMISSIONS_USER_TYPES.applicant),
+                    (unansweredAmendments === 0 && answeredAmendments > 0 && this.state.userType === PERMISSIONS_TEAM_ROLES.applicant),
             },
             _.isNil
         );
