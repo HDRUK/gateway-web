@@ -1,108 +1,108 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
+import { Box, Icon, Message } from 'hdruk-react-core';
+import { t } from 'react-i18next';
+import LayoutContent from 'components/Layout/LayoutContent';
 import LoginSSOButtons from './LoginSSOButtons/index';
-import './CommonComponents.scss';
-import tickSVG from '../../images/tick.svg';
+import { ReactComponent as TickSvg } from '../../images/tick.svg';
 import { ssoBtnsConfig } from '../../configs/ssoBtnsConfig';
-var baseURL = require('./BaseURL').getURL();
-var communityLink = require('./BaseURL').getDiscourseURL();
+
+import './CommonComponents.scss';
+
+const baseURL = require('./BaseURL').getURL();
+const communityLink = require('./BaseURL').getDiscourseURL();
 
 function Login() {
+    const [showButtons, setShowButtons] = useState(true);
+    const [showWayFinder, setShowWayFinder] = useState();
+
     const lastChoice = localStorage.getItem('lastChoice');
 
     const descText = [
         {
-            text: 'Submit data access enquiries and application',
+            text: t('components.Login.list.description1'),
         },
         {
-            text: 'Add your own collections, papers and other resources',
+            text: t('components.Login.list.description2'),
         },
         {
-            text: 'Use the Cohort Discovery advanced search tool',
+            text: t('components.Login.list.description3'),
         },
     ];
-    const showWayFinder = e => {
-        document.getElementById('loginWayFinder').style.display = 'block';
-        document.getElementById('loginButtons').style.display = 'none';
+
+    const handleShowWayFinder = () => {
+        setShowButtons(false);
+        setShowWayFinder(true);
     };
 
-    const hideWayFinder = e => {
-        document.getElementById('loginButtons').style.display = 'block';
-        document.getElementById('loginWayFinder').style.display = 'none';
+    const handleHideWayFinder = () => {
+        setShowButtons(true);
+        setShowWayFinder(false);
     };
 
     const clickHandler = (id, authURL) => {
         localStorage.setItem('lastChoice', id);
-        return id === 'openAthens' ? showWayFinder() : (window.location.href = `${baseURL}${authURL}`);
+
+        if (id === 'openAthens') {
+            handleShowWayFinder();
+        } else {
+            window.location.href = `${baseURL}${authURL}`;
+        }
     };
 
     return (
-        <div className='mb-1'>
-            <div id='loginButtons'>
-                <Row className='mt-2'>
-                    <Col sm={1} lg={1} />
-                    <Col sm={10} lg={10}>
-                        <span className='gray800-14'>
-                            Anyone can search and view datasets, collections and other resources with or without an account. Creating an
-                            account allows you to:
-                        </span>
-                    </Col>
-                    <Col sm={1} lg={1} />
-                </Row>
-                <Row className='mt-2'>
-                    {descText.map((value, i) => (
-                        <Fragment key={i}>
-                            <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10} className='mt-2'>
-                                <span className='gray800-14'>
-                                    <img src={tickSVG} width='20' style={{ float: 'left', marginTop: '3px' }} />
-                                    &nbsp;{value.text}
-                                </span>
-                            </Col>
-                            <Col sm={1} lg={1} />
-                        </Fragment>
+        <Box mb={1}>
+            <div>
+                <LayoutContent>
+                    <Message mt={2}>{t('components.Login.description')}:</Message>
+                    {descText.map(value => (
+                        <Message mt={2} key={value.text}>
+                            <Icon svg={<TickSvg />} /> {value.text}
+                        </Message>
                     ))}
-                </Row>
+                </LayoutContent>
 
-                <LoginSSOButtons
-                    clickHandler={clickHandler}
-                    communityLink={communityLink}
-                    lastChoice={lastChoice}
-                    ssoBtnsConfig={ssoBtnsConfig}
-                />
+                {showButtons && (
+                    <LoginSSOButtons
+                        clickHandler={clickHandler}
+                        communityLink={communityLink}
+                        lastChoice={lastChoice}
+                        ssoBtnsConfig={ssoBtnsConfig}
+                    />
+                )}
             </div>
 
-            <div id='loginWayFinder' style={{ display: 'none' }}>
-                <Row className='mt-3 text-center'>
-                    <Col sm={1} lg={1} />
-                    <Col sm={10} lg={10}>
-                        <a href='javascript:void(0)' onClick={hideWayFinder} className='purple-14'>
-                            Show all login options
-                        </a>
-                    </Col>
-                    <Col sm={1} lg={1} />
-                </Row>
-                <Row className='mt-4'>
-                    <Col sm={1} lg={1} />
-                    <Col sm={10} lg={10}>
-                        <div id='wayfinder'>
-                            <div className='gray800-14' style={{ textAlign: 'center' }}>
-                                <Image src={require('../../images/Loader.gif')} />
+            {showWayFinder && (
+                <div>
+                    <Box mt={3} textAlign='center'>
+                        <LayoutContent>
+                            <a href='javascript:void(0)' onClick={handleHideWayFinder} className='purple-14'>
+                                Show all login options
+                            </a>
+                        </LayoutContent>
+                    </Box>
+                    <Row className='mt-4'>
+                        <Col sm={1} lg={1} />
+                        <Col sm={10} lg={10}>
+                            <div id='wayfinder'>
+                                <div className='gray800-14' style={{ textAlign: 'center' }}>
+                                    <Image src={require('../../images/Loader.gif')} />
+                                </div>
+                                <div className='gray800-14' style={{ textAlign: 'center' }}>
+                                    Loading...
+                                    <br />
+                                    <br />
+                                    <a href={`${baseURL}/auth/oidc`} className='purple-14'>
+                                        Click here if login screen does not load
+                                    </a>
+                                </div>
                             </div>
-                            <div className='gray800-14' style={{ textAlign: 'center' }}>
-                                Loading...
-                                <br />
-                                <br />
-                                <a href={baseURL + '/auth/oidc'} className='purple-14'>
-                                    Click here if login screen does not load
-                                </a>
-                            </div>
-                        </div>
-                    </Col>
-                    <Col sm={1} lg={1} />
-                </Row>
-            </div>
-        </div>
+                        </Col>
+                        <Col sm={1} lg={1} />
+                    </Row>
+                </div>
+            )}
+        </Box>
     );
 }
 
