@@ -11,6 +11,7 @@ const CustodianActionButtons = ({
     onNextClick,
     onActionClick,
     applicationStatus,
+    // TODO: GAT-1510:059 Investigate - this value receives a combination of PERMISSIONS_USER_TYPES and PERMISSIONS_TEAM_ROLES
     roles,
     workflowEnabled = false,
     workflowAssigned,

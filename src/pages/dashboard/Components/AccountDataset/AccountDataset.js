@@ -17,6 +17,7 @@ import Loading from '../../../commonComponents/Loading';
 import ActivityLogCard from '../ActivityLogCard';
 import AccountDatasetApproveModal from './AccountDatasetApproveModal';
 import AccountDatasetRejectModal from './AccountDatasetRejectModal';
+import { authUtils } from 'utils';
 
 const AccountDataset = props => {
     const { t } = useTranslation();
@@ -35,7 +36,7 @@ const AccountDataset = props => {
     });
 
     const dataActivityLog = serviceActivityLog.usePostActivityLog();
-    const publisherId = React.useMemo(() => utils.getPublisherID(userState[0], team), [userState[0], team]);
+    const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], team), [userState[0], team]);
     const dataPublisher = serviceDatasetOnboarding.useGetPublisher(publisherId);
 
     useEffect(() => {

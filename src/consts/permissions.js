@@ -28,3 +28,6 @@ export const PERMISSIONS_TEAM_MEMBER_ROLES = {
     reviewer: 'reviewer',
     metadata_editor: 'metadata_editor',
 };
+
+// TODO: GAT-1510:061 This is not recognised as a member role in the api
+export const PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN = 'admin';

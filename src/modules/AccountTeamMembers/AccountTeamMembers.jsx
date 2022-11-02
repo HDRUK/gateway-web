@@ -11,7 +11,7 @@ import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { useAuth } from '../../context/AuthContext';
 import teamsService from '../../services/teams';
 import { ActionCell, DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell, HeaderTooltip } from './AccountTeamMembers.components';
-import { ROLES_ADMIN, ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR } from 'configs';
+import { PERMISSIONS_TEAM_MEMBER_ROLES, PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN } from 'consts';
 
 const AccountTeamMembers = ({ teamId }) => {
     const { isTeamManager, checkIsTeamManager } = useAuth();
@@ -84,7 +84,12 @@ const AccountTeamMembers = ({ teamId }) => {
                 Cell: ({ row: { original } }) => <NameCell member={original} />,
             },
             {
-                Header: <HeaderTooltip header={t('teamAdmin')} content={<PermissionDescriptions roles={[ROLES_ADMIN.value]} />} />,
+                Header: (
+                    <HeaderTooltip
+                        header={t('teamAdmin')}
+                        content={<PermissionDescriptions roles={[PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN]} />}
+                    />
+                ),
                 accessor: 'teamAdmin',
                 cellProps: {
                     valign: 'top',
@@ -97,7 +102,11 @@ const AccountTeamMembers = ({ teamId }) => {
                 Header: (
                     <HeaderTooltip
                         header={t('dataAccessRequest')}
-                        content={<PermissionDescriptions roles={[ROLES_MANAGER.value, ROLES_REVIEWER.value]} />}
+                        content={
+                            <PermissionDescriptions
+                                roles={[PERMISSIONS_TEAM_MEMBER_ROLES.manager, PERMISSIONS_TEAM_MEMBER_ROLES.reviewer]}
+                            />
+                        }
                     />
                 ),
                 accessor: 'dataAccessRequest',
@@ -112,7 +121,11 @@ const AccountTeamMembers = ({ teamId }) => {
                 Header: (
                     <HeaderTooltip
                         header={t('metadata')}
-                        content={<PermissionDescriptions roles={[ROLES_MANAGER.value, ROLES_METADATA_EDITOR.value]} />}
+                        content={
+                            <PermissionDescriptions
+                                roles={[PERMISSIONS_TEAM_MEMBER_ROLES.manager, PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor]}
+                            />
+                        }
                     />
                 ),
                 accessor: 'metadata',

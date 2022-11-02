@@ -247,7 +247,7 @@ class DatasetOnboarding extends Component {
 
         let publisher = dataset.datasetv2.summary.publisher.identifier;
 
-        this.setState({ roles: authUtils.getIsTypeAdminOrApplicant(this.props.userState) });
+        this.setState({ roles: authUtils.getIsTypeAdminOrApplicant(this.props.userState, this.state.publisher) });
         // TODO: GAT-1510:046
         if (this.state.roles.includes(PERMISSIONS_USER_TYPES.admin) && applicationStatus === DatasetOnboardingHelper.datasetStatus.inReview)
             userType = 'ADMIN';

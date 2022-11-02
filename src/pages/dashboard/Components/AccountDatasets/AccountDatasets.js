@@ -1,6 +1,7 @@
 import reduce from 'lodash/reduce';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { NotificationManager } from 'react-notifications';
+import { authUtils } from 'utils';
 import { LayoutContent } from '../../../../components/Layout';
 import useSearch from '../../../../components/Search/useSearch';
 import { DATASETS_STATUS_ACTIVE, STATUS_INREVIEW } from '../../../../configs/constants';
@@ -72,7 +73,7 @@ const AccountDatasets = props => {
     }, []);
 
     useEffect(() => {
-        setPublisherId(utils.getPublisherID(userState[0], team));
+        setPublisherId(authUtils.getPublisherId(userState[0], team));
         setKey(team === 'admin' ? STATUS_INREVIEW : props.alert.tab || DATASETS_STATUS_ACTIVE);
     }, [team]);
 
