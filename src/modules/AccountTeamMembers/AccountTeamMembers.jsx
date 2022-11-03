@@ -12,13 +12,15 @@ import { useAuth } from '../../context/AuthContext';
 import teamsService from '../../services/teams';
 import { ActionCell, DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell, HeaderTooltip } from './AccountTeamMembers.components';
 import { PERMISSIONS_TEAM_MEMBER_ROLES, PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN } from 'consts';
+import { authUtils } from 'utils';
 
 const AccountTeamMembers = ({ teamId }) => {
-    const { isTeamManager, checkIsTeamManager } = useAuth();
+    const { userState } = useAuth();
     const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
     const [checkboxes, setCheckboxes] = useState({});
     const { t } = useTranslation();
+    const [isTeamManager, setIsTeamManager] = useState(false);
 
     const getMembersRequest = teamsService.useGetMembers(null, {
         onError: ({ title, message }) => {
@@ -45,13 +47,13 @@ const AccountTeamMembers = ({ teamId }) => {
                     setTeamMembers(members);
 
                     // TODO: GAT-1510:042
-                    checkIsTeamManager(teamId);
+                    setIsTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
                 });
             }
         };
 
         init();
-    }, [teamId]);
+    }, [teamId, userState]);
 
     const handleDeleteMember = id => {
         console.log(`delete member: ${id}`);

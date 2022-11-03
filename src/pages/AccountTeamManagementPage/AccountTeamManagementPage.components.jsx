@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, LayoutContent, Link } from 'components';
 import { Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
@@ -9,6 +9,7 @@ import { teamNotificationsPropTypes } from 'types';
 import { Card, H5, P, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from 'context/AuthContext';
+import { authUtils } from 'utils';
 import Loading from '../commonComponents/Loading';
 
 const EmailNotificationsHeader = () => {
@@ -43,12 +44,14 @@ const TeamManagementHeader = () => {
 };
 
 const TabsNav = ({ activeTabKey, onTabChange, teamId }) => {
-    const { checkIsTeamAdminNotManager, isTeamAdminNotManager } = useAuth();
+    const { userState } = useAuth();
+    const [isTeamAdminNotManager, setIsTeamAdminNotManager] = useState(false);
 
     useEffect(() => {
+        if (!teamId || !userState) return;
         //  TODO: GAT-1510:020
-        checkIsTeamAdminNotManager(teamId);
-    }, [teamId]);
+        setIsTeamAdminNotManager(authUtils.isTeamAdminNotManager(teamId, userState));
+    }, [teamId, userState]);
 
     if (isTeamAdminNotManager) return null;
 

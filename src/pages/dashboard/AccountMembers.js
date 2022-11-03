@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col, Button } from 'react-bootstrap';
-import { authUtils } from 'utils';
+import { isEmpty } from 'lodash';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import '../../css/styles.scss';
@@ -32,7 +32,7 @@ export const AccountMembers = props => {
             await axios.get(`${baseURL}/api/v1/teams/${accountMembersId}/members`).then(async res => {
                 setMembers(res.data.members);
                 // TODO: GAT-1510:042
-                setUserIsManager(authUtils.isTeamMemberManager(userState, res.data.members));
+                setUserIsManager(res.data.members.filter(m => m.id === userState[0].id).map(m => m.roles[0] === 'manager')[0]);
             });
         }
         setIsLoading(false);
@@ -44,6 +44,21 @@ export const AccountMembers = props => {
 
     const onMemberAdded = members => {
         setMembers(members);
+    };
+
+    const renderRoles = roles => {
+        if (!isEmpty(roles)) {
+            const sortedRoles = roles.sort();
+            // TODO: GAT-1510:043
+            return sortedRoles.map(role => `${roleList[role]}${roles.length > 1 && roles.indexOf(role) !== roles.length - 1 ? ', ' : ' '}`);
+        }
+        return '';
+    };
+
+    let roleList = {
+        manager: 'Manager',
+        reviewer: 'Reviewer',
+        metadata_editor: 'Metadata Editor',
     };
 
     if (isLoading) {
@@ -128,7 +143,7 @@ export const AccountMembers = props => {
                                                 </Row>
                                             </Col>
                                             <Col sm={4} lg={4} className='black-14'>
-                                                {authUtils.getTeamRoleNames(m.roles)}
+                                                {renderRoles(m.roles)}
                                             </Col>
                                         </div>
                                     );

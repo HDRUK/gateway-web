@@ -49,6 +49,7 @@ import TextareaInputCustom from '../commonComponents/TextareaInputCustom/Textare
 import DropdownCustom from '../DataAccessRequest/components/DropdownCustom/DropdownCustom';
 import DoubleDropdownCustom from '../DataAccessRequest/components/DoubleDropdownCustom/DoubleDropdownCustom';
 import { useAuth } from 'context/AuthContext';
+import { authUtils } from 'utils';
 
 const questionActions = {
     questionActions: [{ key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 }],
@@ -57,21 +58,12 @@ const questionActions = {
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
     const [searchBar] = useState(React.createRef());
-    const { isTeamAdmin, checkIsTeamAdmin } = useAuth();
+    const { userState } = useAuth();
+    const [isTeamAdmin, setIsTeamAdmin] = useState(false);
     const [schemaId, setSchemaId] = useState('');
     const [publisherDetails, setPublisherDetails] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [searchString, setSearchString] = useState('');
-    const [userState] = useState(
-        props.userState || [
-            {
-                loggedIn: false,
-                role: 'Reader',
-                id: null,
-                name: null,
-            },
-        ]
-    );
     const [showDrawer, setShowDrawer] = useState(false);
     const [lastSaved, setLastSaved] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -102,8 +94,9 @@ export const DataAccessRequestCustomiseForm = props => {
     const team = getTeam({ location });
 
     useEffect(() => {
-        checkIsTeamAdmin(team);
-    }, [team]);
+        if (!team || !userState) return;
+        setIsTeamAdmin(authUtils.getIsTeamAdmin(userState, team));
+    }, [team, userState]);
 
     const patchSchemaRequest = darService.usePatchSchema(null, {
         onError: ({ title, message }) => {

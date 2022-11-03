@@ -18,9 +18,10 @@ import {
 } from './AccountTeamManagementPage.utils';
 import { GeneratedAlerts, LoaderRow, NotificationTab, TabsNav, TeamManagementHeader } from './AccountTeamManagementPage.components';
 import { useAuth } from 'context/AuthContext';
+import { authUtils } from 'utils';
 
 const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagementSave, onTeamManagementTabChange, onClearInnerTab }) => {
-    const { checkIsTeamAdminNotManager, isTeamManager, checkIsTeamManager } = useAuth();
+    const { userState } = useAuth();
     const [activeTabKey, setActiveTabKey] = useState(ACCOUNT_TAB_TYPES.Members);
     const [alerts, setAlerts] = useState([]);
     const [alertModal, setAlertModal] = useState(false);
@@ -31,13 +32,14 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
     const [teamGatewayNotifications, setTeamGatewayNotifications] = useState([
         { notificationType: 'dataAccessRequest', optIn: false, subscribedEmails: [{ value: '', error: '' }], message: 'Test message' },
     ]);
+    const [isTeamManager, setIsTeamManager] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
+        if (!teamId || !userState) return;
         // TODO: GAT-1510:014
-        checkIsTeamManager(teamId);
-    }, [teamId]);
-
-    const history = useHistory();
+        setIsTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
+    }, [teamId, userState]);
 
     // modal for notifications ensures one notification is selected
     const toggleAlertModal = (title = '', body = '') => {
@@ -168,7 +170,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
         }
 
         // TODO: GAT-1510:019
-        if (!checkIsTeamAdminNotManager(teamId)) {
+        if (!authUtils.isTeamAdminNotManager(teamId, userState)) {
             if (innerTab === ACCOUNT_TAB_TYPES.Notifications) {
                 onTabChange(innerTab);
                 onClearInnerTab();
@@ -180,7 +182,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
 
         // only call get teamNotifications on tab change
         if (activeTabKey === ACCOUNT_TAB_TYPES.Notifications) getTeamNotifications();
-    }, [activeTabKey, teamId]);
+    }, [activeTabKey, teamId, userState]);
 
     // send email notifications to my gateway email address
     const togglePersonalNotifications = ({ checked, id }) => {

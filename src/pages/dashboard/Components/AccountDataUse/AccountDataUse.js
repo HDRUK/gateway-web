@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { authUtils } from 'utils';
 import Alert from '../../../../components/Alert';
@@ -9,7 +9,8 @@ import DataUseUpload from '../../../dataUse/upload/DataUseUpload';
 import DataUseWidget from '../../../dataUse/widget/DataUseWidget';
 
 const AccountDataUse = ({ tabId, team, publisherDetails }) => {
-    const { userState, checkIsTeamManager, isTeamManager } = useAuth();
+    const { userState } = useAuth();
+    const [isTeamManager, setisTeamManager] = useState(false);
     const history = useHistory();
     const {
         location: { state: historyState },
@@ -17,8 +18,8 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
 
     useEffect(() => {
         // TODO: GAT-1510:015
-        checkIsTeamManager(team);
-    }, [team]);
+        setisTeamManager(authUtils.getHasTeamManagerRole(userState, team));
+    }, [team, userState]);
 
     const [dataUseUpload, setDataUseUpload] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState(false);

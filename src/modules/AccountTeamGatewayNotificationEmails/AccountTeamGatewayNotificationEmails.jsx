@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Switch } from 'components';
 import { useAuth } from 'context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { teamNotificationPropTypes } from 'types';
+import { authUtils } from 'utils';
 
 const AccountTeamGatewayNotificationEmails = ({ teamId, teamNotification, toggleTeamNotifications }) => {
     const { t } = useTranslation();
-    const { isTeamManager, checkIsTeamManager } = useAuth();
+    const { userState } = useAuth();
+    const [isTeamManager, setIsTeamManager] = useState(false);
 
     useEffect(() => {
-        if (!teamId) return;
+        if (!teamId || !userState) return;
         // TODO: GAT-1510:017
-        checkIsTeamManager(teamId);
-    }, [teamId]);
+        setIsTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
+    }, [teamId, userState]);
 
     if (!isTeamManager || !teamId) return null;
     return (

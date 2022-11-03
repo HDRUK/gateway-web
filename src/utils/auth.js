@@ -63,7 +63,6 @@ const getIsUserRoleCreator = role => {
     return role === PERMISSIONS_ROOT_ROLES.creator;
 };
 
-// TODO: GAT-1510 No need to refactor - page being removed
 const userHasTeamRole = (userState, teamId, role) => {
     const team = userState[0]?.teams.filter(t => {
         // eslint-disable-next-line no-underscore-dangle
@@ -72,10 +71,17 @@ const userHasTeamRole = (userState, teamId, role) => {
     return team && team.roles.some(r => role.includes(r));
 };
 
-// TODO: GAT-1510 No need to refactor - page being removed
-const getIsTeamAdmin = (userState, publisherId) => {
+const getHasTeamManagerRole = (userState, teamId) => {
+    const team = userState[0]?.teams.filter(t => {
+        // eslint-disable-next-line no-underscore-dangle
+        return t._id === teamId;
+    })[0];
+    return team && team.roles.some(r => PERMISSIONS_TEAM_ROLES.manager.includes(r));
+};
+
+const getIsTeamAdmin = (userState, teamId) => {
     // eslint-disable-next-line no-underscore-dangle
-    const found = userState[0]?.teams.find(team => publisherId === team._id && team.isAdmin);
+    const found = userState[0]?.teams.find(team => teamId === team._id && team.isAdmin);
     return !!found;
 };
 
@@ -153,6 +159,7 @@ const getPublisherId = (userState, team) => {
 };
 
 export {
+    getHasTeamManagerRole,
     getPublisherId,
     returnApplicantIfTeamNotFound,
     isTeamMemberManager,

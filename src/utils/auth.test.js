@@ -1,4 +1,4 @@
-import { getRolesList, userHasTeamRole, getIsTeamAdmin, isTeamAdminNotManager } from './auth';
+import { getTeamRoleNames, userHasTeamRole, getIsTeamAdmin, isTeamAdminNotManager } from './auth';
 
 describe('Given the auth helpers', () => {
     const userStateMock = [
@@ -33,16 +33,16 @@ describe('Given the auth helpers', () => {
     describe('When getIsTeamAdmin is called', () => {
         it('Then returns false if not admin', () => {
             const teamIdMock = '2222';
-            expect(getIsTeamAdmin(userStateMock, teamIdMock)).toBeFalsy();
-        });
-        it('Then returns true if admin', () => {
-            const teamIdMock = '1111';
             expect(getIsTeamAdmin(userStateMock, teamIdMock)).toBeTruthy();
         });
+        it('Then returns true if admin', () => {
+            const teamIdMock = '4444';
+            expect(getIsTeamAdmin(userStateMock, teamIdMock)).toBeFalsy();
+        });
     });
-    describe('When getRolesList is called', () => {
+    describe('When getTeamRoleNames is called', () => {
         it('Then returns the correct value', () => {
-            expect(getRolesList(['manager', 'metadata_editor'])).toEqual('Admin, Metadata Editor');
+            expect(getTeamRoleNames(['manager', 'metadata_editor'])).toEqual('Manager, Metadata Editor');
         });
     });
     describe('When userHasTeamRole is called', () => {
