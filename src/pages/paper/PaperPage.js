@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
+import parse from 'html-react-parser';
+import { formatPaperDescription } from 'utils/Paper.util';
 import Alert from '../../components/Alert';
 import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
@@ -560,7 +562,7 @@ export const PaperDetail = props => {
                                                     <Row className='mt-3'>
                                                         <Col>
                                                             <span data-test-id='paper-abstract' className='gray800-14 hdruk-section-body'>
-                                                                <ReactMarkdown source={paperData.description} />
+                                                                {parse(formatPaperDescription(paperData.description))}
                                                             </span>
                                                         </Col>
                                                     </Row>
