@@ -3,7 +3,7 @@ import { jsx } from '@emotion/react';
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { formatPaperIntro } from 'utils/Paper.util';
+import { formatPaperIntro } from '../../../../utils/Paper.util';
 import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
 import SVGIcon from '../../../../images/SVGIcon';
 import RemoveButton from '../RemoveButton/RemoveButton';
