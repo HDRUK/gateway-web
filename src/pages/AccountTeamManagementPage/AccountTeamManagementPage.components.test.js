@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, cleanup } from 'testUtils';
+import { screen, render, cleanup, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import {
     MemberNotifications,
@@ -19,8 +19,6 @@ const authSpy = jest.spyOn(Auth, 'useAuth');
 describe('AccountTeamManagement components', () => {
     beforeAll(() => {
         authSpy.mockReturnValue({
-            isTeamManager: true,
-            managerInTeam: jest.fn(),
             userState: mockUserStateManager,
         });
     });
@@ -148,12 +146,17 @@ describe('AccountTeamManagement components', () => {
         const activeTabKey = 'notifications';
         const onTabChange = jest.fn();
         const teamId = '1234';
-        it('should render the tabs if not admin', () => {
-            render(<TabsNav teamId={teamId} onTabChange={onTabChange} activeTabKey={activeTabKey} userState={mockUserStateManager} />);
-            expect(screen.getByText('Members')).toBeInTheDocument();
-            expect(screen.getByText('Notifications')).toBeInTheDocument();
+        it('should render the tabs if not admin', async () => {
+            render(<TabsNav teamId={teamId} onTabChange={onTabChange} activeTabKey={activeTabKey} />);
+            await waitFor(() => {
+                expect(screen.getByText('Members')).toBeInTheDocument();
+                expect(screen.getByText('Notifications')).toBeInTheDocument();
+            });
         });
-        it('should not render the tabs if admin', () => {
+        it('should not render the tabs if admin', async () => {
+            authSpy.mockReturnValue({
+                userState: mockUserStateAdmin,
+            });
             render(
                 <TabsNav
                     teamId='5f7b1a2bce9f65e2ed83e7da'
@@ -162,8 +165,10 @@ describe('AccountTeamManagement components', () => {
                     userState={mockUserStateAdmin}
                 />
             );
-            expect(screen.queryByText('Members')).not.toBeInTheDocument();
-            expect(screen.queryByText('Notifications')).not.toBeInTheDocument();
+            await waitFor(() => {
+                expect(screen.queryByText('Members')).not.toBeInTheDocument();
+                expect(screen.queryByText('Notifications')).not.toBeInTheDocument();
+            });
         });
     });
 

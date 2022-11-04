@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+import { useAuth } from 'context/AuthContext';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
@@ -13,8 +14,8 @@ import { LayoutContent } from '../../components/Layout';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
-export const AccountPapers = props => {
-    const [userState] = useState(props.userState);
+export const AccountPapers = () => {
+    const { isRootAdmin } = useAuth();
     const [key, setKey] = useState('active');
     const [papersList, setPapersList] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -332,7 +333,7 @@ export const AccountPapers = props => {
                                                         </Col>
                                                         <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
                                                             {/* TODO: GAT-1510:031 */}
-                                                            {userState[0].role === 'Admin' ? (
+                                                            {isRootAdmin ? (
                                                                 <DropdownButton
                                                                     variant='outline-secondary'
                                                                     alignRight
@@ -471,7 +472,7 @@ export const AccountPapers = props => {
                                                         </Col>
                                                         <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
                                                             {/* TODO: GAT-1510:032 */}
-                                                            {userState[0].role === 'Admin' ? (
+                                                            {isRootAdmin ? (
                                                                 <DropdownButton
                                                                     variant='outline-secondary'
                                                                     alignRight

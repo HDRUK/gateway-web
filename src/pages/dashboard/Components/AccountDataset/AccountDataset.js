@@ -9,7 +9,7 @@ import { useAuth } from '../../../../context/AuthContext';
 import serviceActivityLog from '../../../../services/activitylog/activitylog';
 import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
 import { getTeam } from '../../../../utils/auth';
-import { default as DataSetHelper, default as utils } from '../../../../utils/DataSetHelper.util';
+import { default as DataSetHelper } from '../../../../utils/DataSetHelper.util';
 import ActionBar from '../../../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 import DatasetCard from '../../../commonComponents/DatasetCard';
@@ -17,6 +17,7 @@ import Loading from '../../../commonComponents/Loading';
 import ActivityLogCard from '../ActivityLogCard';
 import AccountDatasetApproveModal from './AccountDatasetApproveModal';
 import AccountDatasetRejectModal from './AccountDatasetRejectModal';
+import { authUtils } from 'utils';
 
 const AccountDataset = props => {
     const { t } = useTranslation();
@@ -35,7 +36,7 @@ const AccountDataset = props => {
     });
 
     const dataActivityLog = serviceActivityLog.usePostActivityLog();
-    const publisherId = React.useMemo(() => utils.getPublisherID(userState[0], team), [userState[0], team]);
+    const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], team), [userState[0], team]);
     const dataPublisher = serviceDatasetOnboarding.useGetPublisher(publisherId);
 
     useEffect(() => {

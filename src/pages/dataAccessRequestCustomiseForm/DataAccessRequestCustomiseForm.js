@@ -21,7 +21,7 @@ import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
 import darService from '../../services/data-access-request';
 import publishersService from '../../services/publishers';
 import questionbankService from '../../services/questionbank';
-import { getTeam, isPublisherAdmin } from '../../utils/auth';
+import { getTeam } from '../../utils/auth';
 import helpers from '../../utils/DarHelper.util';
 import { diffObjects } from '../../utils/GeneralHelper.util';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
@@ -48,6 +48,8 @@ import handleAnalytics from './handleAnalytics';
 import TextareaInputCustom from '../commonComponents/TextareaInputCustom/TextareaInputCustom';
 import DropdownCustom from '../DataAccessRequest/components/DropdownCustom/DropdownCustom';
 import DoubleDropdownCustom from '../DataAccessRequest/components/DoubleDropdownCustom/DoubleDropdownCustom';
+import { useAuth } from 'context/AuthContext';
+import { authUtils } from 'utils';
 
 const questionActions = {
     questionActions: [{ key: 'guidanceEdit', icon: 'fas fa-pencil-alt', color: '#475da7', toolTip: 'Guidance', order: 1 }],
@@ -56,21 +58,12 @@ const questionActions = {
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
     const [searchBar] = useState(React.createRef());
-
+    const { userState } = useAuth();
+    const [isTeamAdmin, setIsTeamAdmin] = useState(false);
     const [schemaId, setSchemaId] = useState('');
     const [publisherDetails, setPublisherDetails] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [searchString, setSearchString] = useState('');
-    const [userState] = useState(
-        props.userState || [
-            {
-                loggedIn: false,
-                role: 'Reader',
-                id: null,
-                name: null,
-            },
-        ]
-    );
     const [showDrawer, setShowDrawer] = useState(false);
     const [lastSaved, setLastSaved] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -99,6 +92,11 @@ export const DataAccessRequestCustomiseForm = props => {
 
     const location = useLocation();
     const team = getTeam({ location });
+
+    useEffect(() => {
+        if (!team || !userState) return;
+        setIsTeamAdmin(authUtils.getIsTeamAdmin(userState, team));
+    }, [team, userState]);
 
     const patchSchemaRequest = darService.usePatchSchema(null, {
         onError: ({ title, message }) => {
@@ -841,7 +839,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                 </Card>
 
                                 {/* TODO: GAT-1510:055 */}
-                                {isPublisherAdmin(userState, team) && (
+                                {isTeamAdmin && (
                                     <Card>
                                         <Box p={5}>
                                             <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />

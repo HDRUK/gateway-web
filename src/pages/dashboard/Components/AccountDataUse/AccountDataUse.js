@@ -1,22 +1,25 @@
-import { PERMISSIONS_USER_TYPES } from 'consts';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { authUtils } from 'utils';
 import Alert from '../../../../components/Alert';
 import { LayoutContent } from '../../../../components/Layout';
 import { useAuth } from '../../../../context/AuthContext';
-import { isCustodian, userHasRole } from '../../../../utils/auth';
 import DataUsePage from '../../../dataUse/DataUsePage';
 import DataUseUpload from '../../../dataUse/upload/DataUseUpload';
 import DataUseWidget from '../../../dataUse/widget/DataUseWidget';
 
 const AccountDataUse = ({ tabId, team, publisherDetails }) => {
     const { userState } = useAuth();
+    const [isTeamManager, setisTeamManager] = useState(false);
     const history = useHistory();
     const {
         location: { state: historyState },
     } = history;
-    // TODO: GAT-1510:015
-    const isManager = userHasRole(userState, team, PERMISSIONS_USER_TYPES.manager);
+
+    useEffect(() => {
+        // TODO: GAT-1510:015
+        setisTeamManager(authUtils.getHasTeamManagerRole(userState, team));
+    }, [team, userState]);
 
     const [dataUseUpload, setDataUseUpload] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState(false);
@@ -58,9 +61,12 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
             )}
 
             {/* TODO: GAT-1510:053 */}
-            {tabId === 'datause_widget' && isCustodian(team) && isManager && publisherDetails?.dataUse?.widget?.enabled && (
-                <DataUseWidget userState={userState} team={team} publisherDetails={publisherDetails} />
-            )}
+            {tabId === 'datause_widget' &&
+                authUtils.getIsTypeCustodian(team) &&
+                isTeamManager &&
+                publisherDetails?.dataUse?.widget?.enabled && (
+                    <DataUseWidget userState={userState} team={team} publisherDetails={publisherDetails} />
+                )}
         </>
     );
 };

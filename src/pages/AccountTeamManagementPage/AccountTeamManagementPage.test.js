@@ -1,9 +1,8 @@
 import React from 'react';
-import { screen, render, cleanup, within, act } from 'testUtils';
+import { screen, render, cleanup, within, act, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamManagementPage from './AccountTeamManagementPage';
 import { server } from '../../services/mockServer';
-import { waitFor } from '@testing-library/dom';
 import * as Auth from '../../context/AuthContext';
 import { mockUserStateManager } from 'mocks';
 
@@ -14,8 +13,6 @@ jest.mock('../../modules/AccountTeamMembersModal', () => () => null);
 describe('AccountTeamManagement Page', () => {
     beforeEach(() => {
         authSpy.mockReturnValue({
-            isTeamManager: true,
-            managerInTeam: () => jest.fn(),
             userState: mockUserStateManager,
         });
 
@@ -31,7 +28,7 @@ describe('AccountTeamManagement Page', () => {
         server.close();
     });
 
-    it('should render child components for members', () => {
+    it('should render child components for members', async () => {
         const teamId = '1234';
         const innertab = 'members';
         act(() => {
@@ -47,7 +44,9 @@ describe('AccountTeamManagement Page', () => {
             );
         });
 
-        expect(screen.getByTestId('AccountTeamMembers')).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByTestId('AccountTeamMembers')).toBeInTheDocument();
+        });
     });
     it('should render child components for notifications', async () => {
         const teamId = '1234';

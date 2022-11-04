@@ -3,6 +3,7 @@ import { Box } from 'hdruk-react-core';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
+import { authUtils } from 'utils';
 import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
 import Loading from '../commonComponents/Loading';
@@ -51,7 +52,7 @@ const AccountTeams = () => {
                 teams.map((team, index) => {
                     if (team.members.length > 0) {
                         // TODO: GAT-1510:044
-                        const teamManagers = team.members.filter(member => member.roles.includes('manager'));
+                        const teamManagers = authUtils.getTeamMemberManagers(team.members);
                         teamManagers.map(memberId => {
                             teamManagersIds.push(memberId.memberid);
                         });

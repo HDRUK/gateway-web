@@ -91,7 +91,7 @@ exports[`Given the AccountTeamGatewayEmail component When it renders Then should
           name="myGatewayEmail"
           readonly=""
           type="email"
-          value="dan@ackroyd.com"
+          value="john@candy.com"
         />
       </div>
     </div>

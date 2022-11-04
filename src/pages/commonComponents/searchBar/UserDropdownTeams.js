@@ -1,5 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
+import { useAuth } from 'context/AuthContext';
+import { PERMISSIONS_TEAM_ROLES } from 'consts';
+import { authUtils } from 'utils';
 import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
 import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
@@ -30,26 +33,23 @@ const CustomSubMenu = React.forwardRef(({ children, style, className, show, 'ari
     }
 });
 
-const UserDropdownTeams = props => {
-    const [teams] = useState(props.teams);
+const UserDropdownTeams = ({ isMobile = false }) => {
+    const { userState } = useAuth();
 
-    const userHasRole = (teamId, role) => {
-        const team = teams.filter(t => {
-            return t._id === teamId;
-        })[0];
-        return team && team.roles.some(r => role.includes(r));
+    const userHasTeamRole = (teamId, role) => {
+        return authUtils.userHasTeamRole(userState, teamId, role);
     };
 
-    return teams.map(team => {
+    return userState[0].teams.map(team => {
         return (
             <>
                 <Dropdown.Divider className='mb-1 mt-1' />
                 <Dropdown>
                     <Dropdown.Toggle as={CustomToggleInner}>
                         {/* TODO: GAT-1510:047 */}
-                        <span className='black-14'>{team.type === 'admin' ? 'HDR Admin' : team.name}</span>
+                        <span className='black-14'>{authUtils.getIsTypeAdmin(team.type) ? 'HDR Admin' : team.name}</span>
                         <span className='addNewDropDownGap' />
-                        {props.isMobile ? (
+                        {isMobile ? (
                             <SVGIcon name='chevronbottom' fill='#475DA7' className='svg-16 floatRightChevron' />
                         ) : (
                             <ChevronBottom />
@@ -57,7 +57,7 @@ const UserDropdownTeams = props => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu as={CustomSubMenu}>
                         {/* TODO: GAT-1510:048 */}
-                        {team.type === 'admin' ? (
+                        {authUtils.getIsTypeAdmin(team.type) ? (
                             <>
                                 <Dropdown.Item href='/account?tab=datasets&team=admin' className='black-14 user-dropdown-item'>
                                     Datasets
@@ -80,7 +80,7 @@ const UserDropdownTeams = props => {
                                     Team Management
                                 </Dropdown.Item>
                                 {/* TODO: GAT-1510:001 */}
-                                {userHasRole(team._id, ['manager', 'reviewer']) && (
+                                {userHasTeamRole(team._id, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]) && (
                                     <>
                                         <Dropdown.Item
                                             href={`/account?tab=dataaccessrequests&team=${team._id}`}
@@ -99,7 +99,7 @@ const UserDropdownTeams = props => {
                                     Data Uses
                                 </Dropdown.Item>
                                 {/* TODO: GAT-1510:002 */}
-                                {userHasRole(team._id, ['manager', 'metadata_editor']) ? (
+                                {userHasTeamRole(team._id, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.metadata_editor]) ? (
                                     <Dropdown.Item href={`/account?tab=datasets&team=${team._id}`} className='black-14 user-dropdown-item'>
                                         Datasets
                                     </Dropdown.Item>

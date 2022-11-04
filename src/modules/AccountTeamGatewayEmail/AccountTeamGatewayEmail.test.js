@@ -1,13 +1,11 @@
 import React from 'react';
-import { screen, render } from 'testUtils';
+import { screen, render, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamGatewayEmail from './AccountTeamGatewayEmail';
 import * as Auth from '../../context/AuthContext';
-import { mockUserStateManager } from 'mocks';
+import { mockUserStateManager, mockUserStateNonManager } from 'mocks';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
-
-const managerInTeamMock = jest.fn();
 
 const props = {
     memberNotification: { optIn: false, notificationType: 'notifictionType1' },
@@ -21,24 +19,20 @@ describe('Given the AccountTeamGatewayEmail component', () => {
     describe('When it renders', () => {
         beforeAll(() => {
             authSpy.mockReturnValue({
-                isTeamManager: false,
-                managerInTeam: managerInTeamMock,
-                userState: mockUserStateManager,
+                userState: mockUserStateNonManager,
             });
 
             wrapper = render(<AccountTeamGatewayEmail {...props} />);
         });
 
-        it('Then should match the snapshot', () => {
-            expect(wrapper.container).toMatchSnapshot();
-        });
-
-        it('Then should check the user is a manager', () => {
-            expect(managerInTeamMock).toHaveBeenCalled();
+        it('Then should match the snapshot', async () => {
+            await waitFor(() => {
+                expect(wrapper.container).toMatchSnapshot();
+            });
         });
 
         it('Then should set the correct email', () => {
-            const emailInput = screen.getByDisplayValue('dan@ackroyd.com');
+            const emailInput = screen.getByDisplayValue('john@candy.com');
             expect(emailInput).toHaveProperty('disabled');
         });
 
@@ -51,8 +45,6 @@ describe('Given the AccountTeamGatewayEmail component', () => {
         describe('And the user is a manager', () => {
             beforeAll(() => {
                 authSpy.mockReturnValue({
-                    isTeamManager: true,
-                    managerInTeam: managerInTeamMock,
                     userState: mockUserStateManager,
                 });
 
@@ -75,20 +67,20 @@ describe('Given the AccountTeamGatewayEmail component', () => {
         describe('And the user is not a manager', () => {
             beforeAll(() => {
                 authSpy.mockReturnValue({
-                    isTeamManager: false,
-                    managerInTeam: jest.fn(),
                     userState: mockUserStateManager,
                 });
 
                 wrapper.rerender(<AccountTeamGatewayEmail {...props} />);
             });
 
-            it('Then should not render the managers message', () => {
-                expect(
-                    screen.queryByText(
-                        /You will need to add a team email to be able to save switching off notifications to your own Gateway email/
-                    )
-                ).not.toBeInTheDocument();
+            it('Then should not render the managers message', async () => {
+                waitFor(() => {
+                    expect(
+                        screen.queryByText(
+                            /You will need to add a team email to be able to save switching off notifications to your own Gateway email/
+                        )
+                    ).not.toBeInTheDocument();
+                });
             });
         });
 

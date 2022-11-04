@@ -1,6 +1,7 @@
 import reduce from 'lodash/reduce';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { NotificationManager } from 'react-notifications';
+import { authUtils } from 'utils';
 import { LayoutContent } from '../../../../components/Layout';
 import useSearch from '../../../../components/Search/useSearch';
 import { DATASETS_STATUS_ACTIVE, STATUS_INREVIEW } from '../../../../configs/constants';
@@ -8,7 +9,6 @@ import { useAuth } from '../../../../context/AuthContext';
 import { useDashboard } from '../../../../context/DashboardContext';
 import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
 import googleAnalytics from '../../../../tracking';
-import utils from '../../../../utils/DataSetHelper.util';
 import '../../Dashboard.scss';
 import AccountDatasetsCreate from '../AccountDatasetsCreate';
 import AccountDatasetsContent from './AccountDatasetsContent';
@@ -72,7 +72,7 @@ const AccountDatasets = props => {
     }, []);
 
     useEffect(() => {
-        setPublisherId(utils.getPublisherID(userState[0], team));
+        setPublisherId(authUtils.getPublisherId(userState[0], team));
         setKey(team === 'admin' ? STATUS_INREVIEW : props.alert.tab || DATASETS_STATUS_ACTIVE);
     }, [team]);
 

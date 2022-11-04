@@ -1,9 +1,11 @@
 import * as Sentry from '@sentry/react';
+import { PERMISSIONS_TEAM_ROLES } from 'consts';
 import { isArray, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { createRef, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
+import { authUtils } from 'utils';
 import dataUseRegistersService from '../../../services/data-use-registers';
 import datasetsService from '../../../services/datasets';
 import papersService from '../../../services/papers';
@@ -157,23 +159,18 @@ const EditDataUse = props => {
 
                 setDatasetsArray(!isEmpty(datasets) ? datasets : [{ pid: '', name: '' }]);
                 // TODO: GAT-1510:045
-                setDisableInput(getUserRoles(res.data.publisher));
+                setDisableInput(
+                    !authUtils.userHasTeamRole(userState, res.data.publisher, [
+                        PERMISSIONS_TEAM_ROLES.manager,
+                        PERMISSIONS_TEAM_ROLES.reviewer,
+                    ])
+                );
                 setIsLoading(false);
             });
         };
 
         init();
     }, []);
-
-    const getUserRoles = publisher => {
-        const { teams } = userState[0];
-        const foundTeam = teams.filter(team => team._id === publisher);
-        if (isEmpty(teams) || isEmpty(foundTeam)) {
-            return true;
-        }
-
-        return !foundTeam[0].roles.some(role => ['manager', 'reviewer'].includes(role));
-    };
 
     const doGetUsersCall = () =>
         usersRequest.refetch().then(res => {

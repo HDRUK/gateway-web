@@ -8,7 +8,6 @@ import { Col, Dropdown, Row } from 'react-bootstrap';
 import NotificationBadge from 'react-notification-badge';
 import { NotificationManager } from 'react-notifications';
 import { cmsURL } from '../../../configs/url.config';
-import { ReactComponent as WhiteArrowDownSvg } from '../../../images/arrowDownWhite.svg';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
 import { ReactComponent as ColourLogoSvg } from '../../../images/colour.svg';
 import { ReactComponent as ColourLogoSvgMobile } from '../../../images/colourMobile.svg';
@@ -21,6 +20,7 @@ import CmsDropdown from './CmsDropdown';
 import './SearchBar.scss';
 import UserDropdownItems from './UserDropdownItems';
 import UserDropdownTeams from './UserDropdownTeams';
+import { authUtils } from 'utils';
 
 var baseURL = require('../BaseURL').getURL();
 const urlEnv = require('../BaseURL').getURLEnv();
@@ -139,7 +139,7 @@ class SearchBar extends React.Component {
     doMessagesCall() {
         var apiToCall = '/api/v1/messages/' + this.state.userState[0].id;
         // TODO: GAT-1510:023
-        if (this.state.userState[0].role === 'Admin') {
+        if (authUtils.getIsRootRoleAdmin(this.state.userState)) {
             apiToCall = '/api/v1/messages/admin/' + this.state.userState[0].id;
         }
 
@@ -156,7 +156,7 @@ class SearchBar extends React.Component {
     getNumberOfUnreadNotifications() {
         let apiToCall = '/api/v1/messages/numberofunread/' + this.state.userState[0].id;
         // TODO: GAT-1510:024
-        if (this.state.userState[0].role === 'Admin') {
+        if (authUtils.getIsRootRoleAdmin(this.state.userState)) {
             apiToCall = '/api/v1/messages/numberofunread/admin/' + this.state.userState[0].id;
         }
         axios.get(baseURL + apiToCall).then(res => {
@@ -1194,7 +1194,9 @@ class SearchBar extends React.Component {
                                                                         <Dropdown.Menu as={CustomSubMenu}>
                                                                             {/* TODO: GAT-1510:025 */}
                                                                             <UserDropdownItems
-                                                                                isAdmin={userState[0].role === 'Admin'}></UserDropdownItems>
+                                                                                isAdmin={authUtils.getIsRootRoleAdmin(
+                                                                                    userState
+                                                                                )}></UserDropdownItems>
                                                                         </Dropdown.Menu>
                                                                     </Fragment>
                                                                 ) : (
@@ -1206,11 +1208,13 @@ class SearchBar extends React.Component {
                                                                         </Dropdown.Item>
                                                                         {/* TODO: GAT-1510:026 */}
                                                                         <UserDropdownItems
-                                                                            isAdmin={userState[0].role === 'Admin'}></UserDropdownItems>
+                                                                            isAdmin={authUtils.getIsRootRoleAdmin(
+                                                                                userState
+                                                                            )}></UserDropdownItems>
                                                                     </Fragment>
                                                                 )}
                                                             </Dropdown>
-                                                            <UserDropdownTeams teams={[...userState[0].teams]} />
+                                                            <UserDropdownTeams />
                                                             <Dropdown.Divider className='mb-1 mt-1' />
                                                             <Dropdown.Item
                                                                 onClick={this.logout}
@@ -1303,11 +1307,13 @@ class SearchBar extends React.Component {
                                                                     <Dropdown.Menu as={CustomSubMenu}>
                                                                         {/* TODO: GAT-1510:027 */}
                                                                         <UserDropdownItems
-                                                                            isAdmin={userState[0].role === 'Admin'}></UserDropdownItems>
+                                                                            isAdmin={authUtils.getIsRootRoleAdmin(
+                                                                                userState
+                                                                            )}></UserDropdownItems>
                                                                     </Dropdown.Menu>
                                                                 </Fragment>
                                                             </Dropdown>
-                                                            <UserDropdownTeams teams={[...userState[0].teams]} isMobile={true} />
+                                                            <UserDropdownTeams isMobile={true} />
                                                             <Dropdown.Divider className='mb-1 mt-1' />
                                                             <Dropdown.Item
                                                                 onClick={this.logout}

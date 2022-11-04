@@ -1,67 +1,44 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor, within } from 'testUtils';
-import { useAuth } from '../../context/AuthContext';
+import { render, fireEvent, screen, waitFor, within, cleanup } from 'testUtils';
+import { mockUserStateManager, mockUserStateNonManager } from '../../../test/mocks';
 import { server } from '../../services/mockServer';
 import AccountTeamMembers from './AccountTeamMembers';
+import * as Auth from '../../context/AuthContext';
+import '@testing-library/jest-dom/extend-expect';
+
+const authSpy = jest.spyOn(Auth, 'useAuth');
 
 const props = {
     teamId: '1234',
 };
 
-jest.mock('../../context/AuthContext', () => ({
-    ...jest.requireActual('../../context/AuthContext'),
-    useAuth: jest.fn().mockReturnValue({
-        isTeamManager: false,
-        managerInTeam: jest.fn(),
-    }),
-}));
-
-// This is temporary until AccountTeamMembersModal has been refactored
-jest.mock('../AccountTeamMembersModal', () => ({ onMemberAdded, onClose, isOpen }) => {
-    return isOpen ? (
-        <>
-            <button
-                onClick={() =>
-                    onMemberAdded([
-                        {
-                            firstname: 'Patient',
-                            lastname: '0',
-                            id: 9101112,
-                            roles: ['manager'],
-                            organisation: 'HDR',
-                            bio: 'Manager',
-                        },
-                    ])
-                }
-                type='button'>
-                Add member
-            </button>
-            <button onClick={onClose} type='button'>
-                Close
-            </button>
-        </>
-    ) : (
-        <div>Modal closed</div>
-    );
-});
-
 let wrapper;
 let headers;
 
 describe('Given the AccountTeamMembers component', () => {
+    beforeAll(() => {
+        server.listen();
+    });
+
+    afterEach(() => {
+        server.resetHandlers();
+    });
+
+    afterAll(() => {
+        server.close();
+    });
+
     describe('When it is rendered', () => {
-        beforeAll(() => {
-            server.listen();
+        beforeEach(async () => {
+            authSpy.mockReturnValue({
+                userState: mockUserStateNonManager,
+            });
 
             wrapper = render(<AccountTeamMembers {...props} />);
         });
 
         afterEach(() => {
-            server.resetHandlers();
-        });
-
-        afterAll(() => {
-            server.close();
+            cleanup();
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -72,180 +49,181 @@ describe('Given the AccountTeamMembers component', () => {
             expect(screen.getByText('Loading...')).toMatchSnapshot();
         });
 
-        describe('When it is rendered', () => {
-            beforeAll(async () => {
-                await waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+        it('Then matches the previous snapshot', async () => {
+            await waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
-                headers = screen.getAllByRole('rowgroup');
+            expect(wrapper.container).toMatchSnapshot();
+        });
+
+        it('Then has the correct headings', async () => {
+            await waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+
+            headers = screen.getAllByRole('rowgroup');
+            const row = within(headers[0]).getByRole('row');
+            const cells = within(row).getAllByRole('columnheader');
+
+            expect(cells[0].textContent).toEqual('Name');
+            expect(cells[1].textContent).toEqual('Team Admin');
+            expect(cells[2].textContent).toEqual('Data Access Request');
+            expect(cells[3].textContent).toEqual('Metadata');
+        });
+
+        it('Then has the correct first row', async () => {
+            await waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+
+            headers = screen.getAllByRole('rowgroup');
+            const rows = within(headers[1]).getAllByRole('row');
+            const cells = within(rows[0]).getAllByRole('cell');
+
+            expect(within(cells[0]).getByRole('link').textContent).toEqual('John Smith');
+            expect(within(cells[0]).getByText('HDR UK')).toBeTruthy();
+        });
+
+        it('Then has the correct second row', async () => {
+            await waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+
+            headers = screen.getAllByRole('rowgroup');
+            const rows = within(headers[1]).getAllByRole('row');
+            const cells = within(rows[1]).getAllByRole('cell');
+
+            expect(within(cells[0]).getByRole('link').textContent).toEqual('Jane Doe');
+            expect(within(cells[0]).getByText('Google')).toBeTruthy();
+        });
+    });
+
+    describe('And new member is clicked', () => {
+        beforeEach(async () => {
+            authSpy.mockReturnValue({
+                userState: mockUserStateManager,
             });
 
-            it('Then matches the previous snapshot', async () => {
-                expect(wrapper.container).toMatchSnapshot();
+            render(<AccountTeamMembers {...props} />);
+
+            await waitFor(() => {
+                screen.getByText(/Add a new member/);
             });
 
-            it('Then has the correct headings', async () => {
-                const row = within(headers[0]).getByRole('row');
-                const cells = within(row).getAllByRole('columnheader');
+            const addMembersButton = screen.getByText(/Add a new member/);
 
-                expect(cells[0].textContent).toEqual('Name');
-                expect(cells[1].textContent).toEqual('Team Admin');
-                expect(cells[2].textContent).toEqual('Data Access Request');
-                expect(cells[3].textContent).toEqual('Metadata');
+            fireEvent.click(addMembersButton);
+        });
+
+        afterEach(() => {
+            cleanup();
+        });
+
+        it('Then modal is displayed', () => {
+            expect(screen.getByText('Add members to your team')).toBeInTheDocument();
+        });
+    });
+
+    describe('And new member is clicked', () => {
+        beforeEach(async () => {
+            authSpy.mockReturnValue({
+                userState: mockUserStateManager,
             });
 
-            it('Then has the correct first row', () => {
+            render(<AccountTeamMembers {...props} />);
+
+            await waitFor(() => {
+                screen.getByText(/Add a new member/);
+            });
+
+            const addMembersButton = screen.getByText(/Add a new member/);
+
+            fireEvent.click(addMembersButton);
+        });
+
+        afterEach(() => {
+            cleanup();
+        });
+
+        describe('And add member is clicked', () => {
+            it('Then has a new row', async () => {
+                await waitFor(() => {
+                    screen.getByText('Add members');
+                });
+
+                const addMemberButton = screen.getByText('Add members');
+
+                fireEvent.click(addMemberButton);
+
                 const rows = within(headers[1]).getAllByRole('row');
                 const cells = within(rows[0]).getAllByRole('cell');
 
                 expect(within(cells[0]).getByRole('link').textContent).toEqual('John Smith');
                 expect(within(cells[0]).getByText('HDR UK')).toBeTruthy();
             });
+        });
 
-            it('Then has the correct second row', () => {
+        describe('And Team Admin is enabled', () => {
+            let teamAdminCheckbox;
+
+            beforeAll(() => {
                 const rows = within(headers[1]).getAllByRole('row');
-                const cells = within(rows[1]).getAllByRole('cell');
+                const cells = within(rows[0]).getAllByRole('cell');
 
-                expect(within(cells[0]).getByRole('link').textContent).toEqual('Jane Doe');
-                expect(within(cells[0]).getByText('Google')).toBeTruthy();
+                teamAdminCheckbox = within(cells[1]).getByLabelText('Admin');
+
+                fireEvent.click(teamAdminCheckbox);
             });
 
-            describe('And new member is clicked', () => {
-                beforeAll(() => {
-                    useAuth.mockReturnValue({ isTeamManager: true, managerInTeam: jest.fn() });
+            it('Then checks the checkbox', () => {
+                expect(teamAdminCheckbox.checked).toBeTruthy();
+            });
+        });
 
-                    wrapper.rerender(<AccountTeamMembers {...props} />);
+        describe('And Data access request roles are enabled', () => {
+            let cell;
 
-                    const addMembersButton = screen.getByText(/Add a new member/);
+            beforeAll(() => {
+                const rows = within(headers[1]).getAllByRole('row');
+                const cells = within(rows[0]).getAllByRole('cell');
 
-                    fireEvent.click(addMembersButton);
-                });
-
-                describe('And add member is clicked', () => {
-                    beforeAll(() => {
-                        const addMemberButton = screen.getByText(/Add member/);
-
-                        fireEvent.click(addMemberButton);
-                    });
-
-                    it('Then has a new row', () => {
-                        const rows = within(headers[1]).getAllByRole('row');
-                        const cells = within(rows[0]).getAllByRole('cell');
-
-                        expect(within(cells[0]).getByRole('link').textContent).toEqual('Patient 0');
-                        expect(within(cells[0]).getByText('HDR')).toBeTruthy();
-                    });
-                });
-
-                describe('And close is clicked', () => {
-                    beforeAll(() => {
-                        const closeButton = screen.getByText(/Close/);
-
-                        fireEvent.click(closeButton);
-                    });
-
-                    it('Then closes the modal', () => {
-                        expect(screen.getByText('Modal closed')).toBeTruthy();
-                    });
-                });
+                cell = within(cells[2]);
             });
 
-            describe('And new member is clicked', () => {
-                beforeAll(() => {
-                    useAuth.mockReturnValue({ isTeamManager: true, managerInTeam: jest.fn() });
+            it('Then checks the manager checkbox', () => {
+                const checkbox = cell.getByLabelText('Manager');
 
-                    wrapper.rerender(<AccountTeamMembers {...props} />);
+                fireEvent.click(checkbox);
 
-                    const addMembersButton = screen.getByText(/Add a new member/);
+                expect(checkbox.checked).toBeTruthy();
+            });
 
-                    fireEvent.click(addMembersButton);
-                });
+            it('Then checks the reviewer checkbox', () => {
+                const checkbox = cell.getByLabelText('Reviewer');
 
-                describe('And add member is clicked', () => {
-                    beforeAll(() => {
-                        const addMemberButton = screen.getByText(/Add member/);
+                fireEvent.click(checkbox);
 
-                        fireEvent.click(addMemberButton);
-                    });
+                expect(checkbox.checked).toBeTruthy();
+            });
+        });
 
-                    it('Then has a new row', () => {
-                        const rows = within(headers[1]).getAllByRole('row');
-                        const cells = within(rows[0]).getAllByRole('cell');
+        describe('And Metadata roles are enabled', () => {
+            let cell;
 
-                        expect(within(cells[0]).getByRole('link').textContent).toEqual('Patient 0');
-                        expect(within(cells[0]).getByText('HDR')).toBeTruthy();
-                    });
-                });
+            beforeAll(() => {
+                const rows = within(headers[1]).getAllByRole('row');
+                const cells = within(rows[0]).getAllByRole('cell');
 
-                describe('And Team Admin is enabled', () => {
-                    let teamAdminCheckbox;
+                cell = within(cells[3]);
+            });
 
-                    beforeAll(() => {
-                        const rows = within(headers[1]).getAllByRole('row');
-                        const cells = within(rows[0]).getAllByRole('cell');
+            it('Then checks the manager checkbox', () => {
+                const checkbox = cell.getByLabelText('Manager');
 
-                        teamAdminCheckbox = within(cells[1]).getByLabelText('Admin');
+                fireEvent.click(checkbox);
 
-                        fireEvent.click(teamAdminCheckbox);
-                    });
+                expect(checkbox).toBeTruthy();
+            });
 
-                    it('Then checks the checkbox', () => {
-                        expect(teamAdminCheckbox.checked).toBeTruthy();
-                    });
-                });
+            it('Then checks the editor checkbox', () => {
+                const checkbox = cell.getByLabelText('Editor');
 
-                describe('And Data access request roles are enabled', () => {
-                    let cell;
+                fireEvent.click(checkbox);
 
-                    beforeAll(() => {
-                        const rows = within(headers[1]).getAllByRole('row');
-                        const cells = within(rows[0]).getAllByRole('cell');
-
-                        cell = within(cells[2]);
-                    });
-
-                    it('Then checks the manager checkbox', () => {
-                        const checkbox = cell.getByLabelText('Manager');
-
-                        fireEvent.click(checkbox);
-
-                        expect(checkbox.checked).toBeTruthy();
-                    });
-
-                    it('Then checks the reviewer checkbox', () => {
-                        const checkbox = cell.getByLabelText('Reviewer');
-
-                        fireEvent.click(checkbox);
-
-                        expect(checkbox.checked).toBeTruthy();
-                    });
-                });
-
-                describe('And Metadata roles are enabled', () => {
-                    let cell;
-
-                    beforeAll(() => {
-                        const rows = within(headers[1]).getAllByRole('row');
-                        const cells = within(rows[0]).getAllByRole('cell');
-
-                        cell = within(cells[3]);
-                    });
-
-                    it('Then checks the manager checkbox', () => {
-                        const checkbox = cell.getByLabelText('Manager');
-
-                        fireEvent.click(checkbox);
-
-                        expect(checkbox).toBeTruthy();
-                    });
-
-                    it('Then checks the editor checkbox', () => {
-                        const checkbox = cell.getByLabelText('Editor');
-
-                        fireEvent.click(checkbox);
-
-                        expect(checkbox.checked).toBeTruthy();
-                    });
-                });
+                expect(checkbox.checked).toBeTruthy();
             });
         });
     });

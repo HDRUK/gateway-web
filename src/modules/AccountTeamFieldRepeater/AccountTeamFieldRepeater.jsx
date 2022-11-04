@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AccountTeamFieldRepeater.scss';
 import { useAuth } from 'context/AuthContext';
 import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import { subscribedEmailPropTypes, teamNotificationPropTypes } from 'types';
+import { authUtils } from 'utils';
 
 const AccountTeamFieldRepeaterAction = ({ subscribedEmails, notificationType, isManager, index, handleRemoveClick, handleAddClick }) => {
     if (!isManager) return null;
@@ -71,13 +72,15 @@ AccountTeamField.defaultProps = {
 };
 
 const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, handleFieldChange, handleRemoveClick, handleAddClick }) => {
-    const { isTeamManager, managerInTeam } = useAuth();
+    const { userState } = useAuth();
+    const [isTeamManager, setIsTeamManager] = useState(false);
     const { subscribedEmails = [], notificationType = '' } = teamNotification;
 
     useEffect(() => {
+        if (!teamId || !userState) return;
         // TODO: GAT-1510:003
-        managerInTeam(teamId);
-    }, [teamId]);
+        setIsTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
+    }, [teamId, userState]);
 
     return (
         <div key={`repeater-${id}`}>

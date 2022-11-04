@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { PERMISSIONS_USER_TYPES } from 'consts';
-import { userHasRole } from 'utils/auth';
+import { authUtils } from 'utils';
 import { AuthProvider } from './context/AuthContext';
 import authService from './services/auth';
 import personService from './services/person';
@@ -11,7 +10,7 @@ import { DEFAULT_USER_STATE } from './configs/constants';
 
 const App = ({ children, showLoader }) => {
     const [userState, setUserState] = useState();
-    const [isTeamManager, setIsTeamManager] = useState();
+    const [isRootAdmin, setIsRootAdmin] = useState(false);
     const statusResult = authService.useGetStatus();
     const personResult = personService.useGetPerson();
 
@@ -55,9 +54,10 @@ const App = ({ children, showLoader }) => {
         init();
     }, [statusResult.data]);
 
-    const managerInTeam = teamId => {
-        setIsTeamManager(userHasRole(userState, teamId, PERMISSIONS_USER_TYPES.manager));
-    };
+    useEffect(() => {
+        if (!userState) return;
+        setIsRootAdmin(authUtils.getIsRootRoleAdmin(userState));
+    }, [userState]);
 
     const isLoading = personResult.isLoading || statusResult.isLoading;
 
@@ -66,8 +66,7 @@ const App = ({ children, showLoader }) => {
             value={{
                 userState,
                 showError: personResult.isError || statusResult.isError,
-                managerInTeam,
-                isTeamManager,
+                isRootAdmin,
             }}>
             {showLoader && isLoading && (
                 <Container>

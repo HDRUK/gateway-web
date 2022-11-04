@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'hdruk-react-core';
+import { useAuth } from 'context/AuthContext';
 import AddToCollection from '../addToCollection/AddToCollection';
 
 const ResourcePageButtons = props => {
     const [type, setType] = useState('');
+    const { isRootAdmin } = useAuth();
 
     useEffect(() => {
         if (props.isCollection === true) {
@@ -21,17 +23,17 @@ const ResourcePageButtons = props => {
             props.data.type !== 'dataUseRegister' &&
             ((props.data.authors && props.data.authors.includes(props.userState[0].id)) ||
                 (props.data.creator && props.data.creator[0].id === props.userState[0].id) ||
-                props.userState[0].role === 'Admin') ? (
-                <Button
-                    data-test-id='action-bar-edit'
-                    variant='secondary'
-                    href={`/${type}/edit/${props.data.id}`}
-                    className='techDetailButton mr-2'>
+                isRootAdmin) ? (
+                    <Button
+                        data-test-id='action-bar-edit'
+                        variant='secondary'
+                        href={`/${type}/edit/${props.data.id}`}
+                        className='techDetailButton mr-2'>
                     Edit
-                </Button>
-            ) : (
-                ''
-            )}
+                    </Button>
+                ) : (
+                    ''
+                )}
 
             {props.data.type === 'dataset' ? (
                 <>

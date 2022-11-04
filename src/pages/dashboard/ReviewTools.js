@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import { authUtils } from 'utils';
 
 import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 
@@ -39,7 +40,7 @@ class ReviewTools extends React.Component {
     doReviewCall() {
         this.setState({ isLoading: true });
         // TODO: GAT-1510:039
-        if (this.state.userState[0].role === 'Admin') {
+        if (authUtils.getIsRootRoleAdmin(this.state.userState)) {
             axios.get(baseURL + '/api/v1/reviews/admin/pending').then(res => {
                 this.setState({ data: res.data.data, isLoading: false });
 
@@ -295,7 +296,7 @@ class ReviewTools extends React.Component {
 
                                                                 <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
                                                                     {/* TODO: GAT-1510:040 */}
-                                                                    {userState[0].role === 'Admin' ? (
+                                                                    {authUtils.getIsRootRoleAdmin(userState) ? (
                                                                         <DropdownButton
                                                                             variant='outline-secondary'
                                                                             alignRight

@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import _ from 'lodash';
-import { PERMISSIONS_USER_TYPES, PERMISSIONS_ROLE_NAMES } from 'consts';
+import { PERMISSIONS_TEAM_ROLES, PERMISSIONS_ROOT_ROLES, PERMISSIONS_TEAM_MEMBER_ROLES, PERMISSIONS_USER_TYPES } from 'consts';
 
 const getTeam = props => {
     const values = queryString.parse(window.location.search);
@@ -31,44 +31,151 @@ const getTeam = props => {
     return team;
 };
 
-const isCustodian = team => {
-    return team !== 'user' && team !== 'admin';
+const getIsTypeCustodian = type => {
+    return type !== 'user' && type !== 'admin';
 };
 
-const isAdmin = team => {
-    return team === 'admin';
+const getIsTypeAdmin = type => {
+    return type === 'admin';
 };
 
-const isUser = team => {
-    return team === 'user';
+const getIsTypeUser = type => {
+    return type === 'user';
 };
 
-const userHasRole = (userState, teamId, role) => {
+const getIsTypePublisher = type => {
+    return type === 'publisher';
+};
+
+const getIsRootRoleAdmin = userState => {
+    return userState[0].role === PERMISSIONS_ROOT_ROLES.admin;
+};
+
+const getIsUserRoleAdmin = role => {
+    return role === PERMISSIONS_ROOT_ROLES.admin;
+};
+
+const getIsUserRoleDataCustodian = role => {
+    return role === PERMISSIONS_ROOT_ROLES.data_custodian;
+};
+
+const getIsUserRoleCreator = role => {
+    return role === PERMISSIONS_ROOT_ROLES.creator;
+};
+
+const userHasTeamRole = (userState, teamId, role) => {
     const team = userState[0]?.teams.filter(t => {
+        // eslint-disable-next-line no-underscore-dangle
         return t._id === teamId;
     })[0];
     return team && team.roles.some(r => role.includes(r));
 };
 
-const isPublisherAdmin = (userState, publisherId) => {
-    return userState[0].teams.find(team => {
-        return publisherId === team._id && team.isAdmin;
-    });
+const getHasTeamManagerRole = (userState, teamId) => {
+    const team = userState[0]?.teams.filter(t => {
+        // eslint-disable-next-line no-underscore-dangle
+        return t._id === teamId;
+    })[0];
+    return team && team.roles.some(r => PERMISSIONS_TEAM_ROLES.manager.includes(r));
 };
 
-const getRolesList = roles => {
+const getIsTeamAdmin = (userState, teamId) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const found = userState[0]?.teams.find(team => teamId === team._id && team.isAdmin);
+    return !!found;
+};
+
+const getTeamMemberManagers = (members = []) => {
+    return members.filter(member => member?.roles?.includes(PERMISSIONS_TEAM_MEMBER_ROLES.manager));
+};
+
+const isTeamMemberManager = (userState, members = []) => {
+    return members.filter(m => m.id === userState[0].id).map(m => m.roles[0] === 'manager')[0];
+};
+
+const getTeamRoleNames = roles => {
     const sortedRoles = (roles || []).sort();
 
+    const roleNames = {
+        manager: 'Manager',
+        reviewer: 'Reviewer',
+        metadata_editor: 'Metadata Editor',
+    };
+
     // TODO: GAT-1510:043
-    return sortedRoles.map(role => PERMISSIONS_ROLE_NAMES[role]).join(', ');
+    return sortedRoles.map(role => roleNames[role]).join(', ');
 };
 
-const isAdminNotManager = (teamId, userState) => {
+const isTeamAdminNotManager = (teamId, userState) => {
     const team = userState[0].teams.filter(t => {
         // eslint-disable-next-line no-underscore-dangle
         return t._id === teamId;
     })[0];
-    return team && team.isAdmin && !team.roles.includes(PERMISSIONS_USER_TYPES.manager);
+    return team && team.isAdmin && !team.roles.includes(PERMISSIONS_TEAM_ROLES.manager);
 };
 
-export { getRolesList, getTeam, isCustodian, isAdmin, isUser, isPublisherAdmin, userHasRole, isAdminNotManager };
+// TODO: GAT-1510 Investigate - this does not always return a value
+const getIsTypeAdminOrApplicant = (userState, teamId) => {
+    const { teams } = userState[0];
+
+    const foundAdmin = teams.filter(x => x.type === PERMISSIONS_USER_TYPES.admin);
+    if (!_.isEmpty(foundAdmin)) {
+        return [PERMISSIONS_USER_TYPES.admin];
+    }
+
+    const foundTeam = teams.filter(team => team.name === teamId);
+    if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
+        return [PERMISSIONS_USER_TYPES.applicant];
+    }
+};
+
+// TODO: GAT-1510 Investigate - this returns both PERMISSIONS_USER_TYPES and PERMISSIONS_TEAM_ROLES
+const returnApplicantIfTeamNotFound = (userState, teamId) => {
+    const { teams } = userState[0];
+    const foundTeam = teams.filter(team => team.name === teamId);
+    if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
+        return [PERMISSIONS_USER_TYPES.applicant];
+    }
+    return foundTeam[0].roles;
+};
+
+// TODO: GAT-1510 Investigate - similar to getIsTypeAdminOrApplicant above
+const getPublisherId = (userState, team) => {
+    const { teams } = userState;
+    const foundAdmin = teams.filter(x => x.type === team);
+
+    if (!_.isEmpty(foundAdmin)) {
+        return 'admin';
+    }
+
+    // eslint-disable-next-line no-underscore-dangle
+    const foundTeam = teams.filter(x => x._id === team);
+    if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
+        return ['applicant'];
+    }
+
+    // eslint-disable-next-line no-underscore-dangle
+    return foundTeam[0]._id;
+};
+
+export {
+    getHasTeamManagerRole,
+    getPublisherId,
+    returnApplicantIfTeamNotFound,
+    isTeamMemberManager,
+    getIsTypeAdminOrApplicant,
+    getTeamMemberManagers,
+    getIsRootRoleAdmin,
+    getTeamRoleNames,
+    getTeam,
+    getIsTypePublisher,
+    getIsTypeCustodian,
+    getIsTypeAdmin,
+    getIsTypeUser,
+    getIsTeamAdmin,
+    userHasTeamRole,
+    isTeamAdminNotManager,
+    getIsUserRoleAdmin,
+    getIsUserRoleDataCustodian,
+    getIsUserRoleCreator,
+};

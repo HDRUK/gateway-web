@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import SVGIcon from '../../images/SVGIcon';
+import { authUtils } from 'utils';
 import './Dashboard.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
@@ -29,7 +30,7 @@ class YourAccount extends React.Component {
     doMessagesCall() {
         var apiToCall = '/api/v1/messages/' + this.state.userState[0].id;
         // TODO: GAT-1510:038
-        if (this.state.userState[0].role === 'Admin') {
+        if (authUtils.getIsRootRoleAdmin(this.state.userState)) {
             apiToCall = '/api/v1/messages/admin/' + this.state.userState[0].id;
         }
 
