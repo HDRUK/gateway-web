@@ -6,6 +6,7 @@ import { merge } from 'lodash';
 import PropTypes from 'prop-types';
 import { I18nextProvider } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { renderHook } from '@testing-library/react-hooks';
 import { MemoryRouter } from 'react-router-dom';
 import { AuthProvider } from '../src/context/AuthContext';
 import { theme } from '../src/configs/theme';
@@ -44,6 +45,7 @@ AllTheProviders.propTypes = {
 };
 
 const customRender = (ui, options) => render(ui, { wrapper: AllTheProviders, ...options });
+const customRenderHook = (ui, options) => renderHook(ui, { wrapper: AllTheProviders, ...options });
 
 const createPortalContainer = () => {
     const div = document.createElement('div');
@@ -58,4 +60,4 @@ const removePortalContainer = div => {
 
 export * from '@testing-library/react';
 
-export { customRender as render, createPortalContainer, removePortalContainer };
+export { customRender as render, customRenderHook as renderHook, createPortalContainer, removePortalContainer };

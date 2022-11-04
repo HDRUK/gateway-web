@@ -68,6 +68,7 @@ class AccountUsers extends React.Component {
         // TODO: GAT-1510:037
         data.forEach(user => {
             if (authUtils.getIsUserRoleCreator(user.role)) userCount++;
+            // TODO: GAT-1510:067
             else if (authUtils.getIsUserRoleDataCustodian(user.role)) dataCustodianCount++;
             else if (authUtils.getIsUserRoleAdmin(user.role)) adminCount++;
         });
