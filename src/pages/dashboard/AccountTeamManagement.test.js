@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, screen, cleanup } from 'testUtils';
+import { render, screen, cleanup, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
-import { waitFor } from '@testing-library/dom';
 import AccountTeamManagement from './AccountTeamManagement';
 import { userState } from './mockData';
 

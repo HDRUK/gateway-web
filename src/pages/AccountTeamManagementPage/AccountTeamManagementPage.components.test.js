@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, cleanup } from 'testUtils';
+import { screen, render, cleanup, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import {
     MemberNotifications,
@@ -13,7 +13,6 @@ import {
 } from './AccountTeamManagementPage.components';
 import { mockUserStateManager, mockUserStateAdmin } from 'mocks';
 import * as Auth from '../../context/AuthContext';
-import { waitFor } from '@testing-library/dom';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
 
