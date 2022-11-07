@@ -648,6 +648,7 @@ const DataUseUpload = ({ onSubmit, team, dataUsePage, userState }) => {
                         ''
                     )}
 
+                    {/* TODO: GAT-1510:051 */}
                     <DataUseSubmitModal
                         open={isSubmitModalVisible}
                         close={toggleSubmitModal}

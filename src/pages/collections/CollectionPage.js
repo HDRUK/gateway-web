@@ -422,7 +422,7 @@ export const CollectionPage = props => {
                     <Tab eventKey='paper' title={`Papers (${paperCount})`} />
                     <Tab eventKey='dataUseRegister' title={`Data Uses (${dataUseRegisterCount})`} />
                     <Tab eventKey='person' title={`People (${personCount})`} />
-                    <Tab eventKey='course' title={`Course (${courseCount})`} />
+                    <Tab eventKey='course' title={`Courses (${courseCount})`} />
                     <Tab eventKey='discussion' title={`Discussion (${discoursePostCount})`}>
                         <Container className='resource-card'>
                             <Row>
@@ -537,6 +537,7 @@ export const CollectionPage = props => {
                 </Row>
             </Container>
 
+            {/* TODO: GAT-1510:021 */}
             {userState[0].loggedIn &&
                 (userState[0].role === 'Admin' || (collectionData.authors && collectionData.authors.includes(userState[0].id))) && (
                     <ActionBar userState={userState}>

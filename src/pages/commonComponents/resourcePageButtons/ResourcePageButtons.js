@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import AddToCollection from '../addToCollection/AddToCollection';
 
 const ResourcePageButtons = props => {
@@ -13,6 +13,7 @@ const ResourcePageButtons = props => {
         }
     }, [props.data.type, props.isCollection]);
 
+    // TODO: GAT-1510:022
     return (
         <div className='floatRight row'>
             {props.userState[0].loggedIn &&
@@ -23,8 +24,8 @@ const ResourcePageButtons = props => {
                 props.userState[0].role === 'Admin') ? (
                 <Button
                     data-test-id='action-bar-edit'
-                    variant='white'
-                    href={'/' + type + '/edit/' + props.data.id}
+                    variant='secondary'
+                    href={`/${type}/edit/${props.data.id}`}
                     className='techDetailButton mr-2'>
                     Edit
                 </Button>
@@ -34,16 +35,18 @@ const ResourcePageButtons = props => {
 
             {props.data.type === 'dataset' ? (
                 <>
-                    <Button variant='white' onClick={props.exportCitation} className='techDetailButton mr-2'>
+                    <Button mr={2} variant='secondary' onClick={props.exportCitation}>
                         Export citation
                     </Button>
-                    <Button
-                        variant='white'
+                    <a
+                        className='nested-button'
+                        rel='noopener noreferrer'
                         href={`${process.env.REACT_APP_METADATA_CATALOG}/#/catalogue/dataModel/${props.data.datasetid}`}
-                        target='_blank'
-                        className='techDetailButton mr-2'>
-                        Technical details
-                    </Button>
+                        target='_blank'>
+                        <Button mr={2} variant='secondary'>
+                            Technical details
+                        </Button>
+                    </a>
                 </>
             ) : (
                 ''

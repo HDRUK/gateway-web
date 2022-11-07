@@ -15,6 +15,7 @@ import { theme } from './configs/theme';
 import 'jest-date-mock';
 import { DEFAULT_THEME } from 'hdruk-react-core';
 import { merge } from 'lodash';
+import { CmsProvider } from './context/CmsContext';
 
 Enzyme.configure({
     adapter: new Adapter(),
@@ -66,17 +67,6 @@ global.assertServiceRefetchCalled = async (rendered, mock, ...args) => {
     });
 };
 
-global.createPortalContainer = () => {
-    const div = document.createElement('div');
-    document.body.appendChild(div);
-
-    return div;
-};
-
-global.removePortalContainer = div => {
-    div.parentNode.removeChild(div);
-};
-
 global.redefineWindow = () => {
     const oldWindowLocation = window.location;
 
@@ -89,6 +79,9 @@ global.redefineWindow = () => {
             assign: {
                 configurable: true,
                 value: jest.fn(),
+            },
+            hostname: {
+                value: 'web.www.healthdatagateway.org',
             },
         }
     );
@@ -108,7 +101,9 @@ global.Providers = ({ children }) => {
             <Suspense fallback='Loading'>
                 <ThemeProvider theme={merge(theme, DEFAULT_THEME)}>
                     <AuthProvider value={{ userState: mockUser.data }}>
-                        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+                        <QueryClientProvider client={queryClient}>
+                            <CmsProvider>{children}</CmsProvider>
+                        </QueryClientProvider>
                     </AuthProvider>
                 </ThemeProvider>
             </Suspense>
@@ -137,5 +132,9 @@ global.document.createRange = () => ({
 
 Object.defineProperty(window, 'location', {
     writable: true,
-    value: { href: 'https://www.healthdatagateway.org', assign: jest.fn() },
+    value: {
+        href: 'https://www.healthdatagateway.org',
+        assign: jest.fn(),
+        hostname: 'web.www.healthdatagateway.org',
+    },
 });

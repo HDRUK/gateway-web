@@ -6,7 +6,7 @@ import { P } from 'hdruk-react-core';
 const SearchResultsInfo = ({ searchTerm, count }) => {
     const { t } = useTranslation();
     return (
-        <P color='grey700' className='sentence-break'>
+        <P data-testid='searchResultsInfo' color='grey700' className='sentence-break'>
             {t('searchResultsInfo.withOutTerm', { count })}
             {searchTerm && (
                 <>

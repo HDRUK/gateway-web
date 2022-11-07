@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, createPortalContainer, removePortalContainer, fireEvent } from 'testUtils';
 import React from 'react';
 import ErrorModal from '.';
 
@@ -62,7 +62,7 @@ describe('Given the ErrorModal component', () => {
             });
 
             it('Then hides the modal', () => {
-                expect(location.pathname).toEqual('/');
+                expect(window.location.pathname).toEqual('/');
             });
         });
     });

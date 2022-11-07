@@ -10,9 +10,3 @@ export const publisherLogoCSS = publisherLogo => css`
 export const pointer = css`
     cursor: pointer;
 `;
-
-export const publishingFrequencyContainer = css`
-    @media (min-width: 769px) {
-        justify-content: end;
-    }
-`;

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { Accordion, Card, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
+import { Button } from 'hdruk-react-core';
 import DarHelper from '../../../../utils/DarHelper.util';
 import SVGIcon from '../../../../images/SVGIcon';
 import { ReactComponent as InfoSVG } from '../../../../images/info.svg';
@@ -101,15 +102,15 @@ const AboutApplication = props => {
                                 ) : null}
                                 <div className='panConfirm d-flex justify-content-end'>
                                     {userType.toUpperCase() === 'APPLICANT' && !readOnly && (
-                                        <button
+                                        <Button
                                             type='input'
-                                            className={`button-primary ${allowedNavigation ? '' : 'disabled'}`}
+                                            className={`confirm-button ${allowedNavigation ? '' : 'disabled'}`}
                                             disabled={!allowedNavigation}
                                             onClick={e => {
                                                 onNextStep(allowedNavigation);
                                             }}>
                                             Confirm
-                                        </button>
+                                        </Button>
                                     )}
                                 </div>
                             </div>
@@ -213,13 +214,14 @@ const AboutApplication = props => {
                                 ) : null}
                                 <div className='panConfirm d-flex justify-content-end'>
                                     {userType.toUpperCase() === 'APPLICANT' && !readOnly && (
-                                        <button
+                                        <Button
                                             type='input'
-                                            className={`button-primary ${allowedNavigation ? '' : 'disabled'}`}
+                                            variant='primary'
+                                            className={`${allowedNavigation ? '' : 'disabled'}`}
                                             disabled={!allowedNavigation}
                                             onClick={e => onNextStep(allowedNavigation)}>
                                             Confirm
-                                        </button>
+                                        </Button>
                                     )}
                                 </div>
                             </div>
@@ -252,9 +254,9 @@ const AboutApplication = props => {
                                 </div>
                                 <div className='dar-form-check-group'>
                                     {userType.toUpperCase() !== 'CUSTODIAN' && !readOnly && (
-                                        <button className='button-secondary' type='button' onClick={e => toggleContributorModal()}>
+                                        <Button variant='secondary' onClick={e => toggleContributorModal()}>
                                             Add contributors
-                                        </button>
+                                        </Button>
                                     )}
                                     <input
                                         type='checkbox'
@@ -346,9 +348,9 @@ const AboutApplication = props => {
                                 </div>
                                 <div className='dar-form-check-group'>
                                     {userType.toUpperCase() !== 'CUSTODIAN' && (
-                                        <button className='button-secondary' type='button' onClick={e => toggleDrawer()}>
+                                        <Button variant='secondary' type='button' onClick={e => toggleDrawer()}>
                                             Send message
-                                        </button>
+                                        </Button>
                                     )}
                                     <input
                                         type='checkbox'
@@ -436,9 +438,9 @@ const AboutApplication = props => {
                                     </p>
                                 </div>
                                 <div className='dar-form-check-group'>
-                                    <button className='button-secondary' type='button' onClick={e => toggleMrcModal()}>
+                                    <Button variant='secondary' type='button' onClick={e => toggleMrcModal()}>
                                         MRC Health Data Access toolkit
-                                    </button>
+                                    </Button>
                                     <input
                                         type='checkbox'
                                         id='chkApprovalAdvice'

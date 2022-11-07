@@ -3,7 +3,7 @@
 exports[`Given the Checkbox component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <label
-    class="ui-Checkbox additional-classname css-1tuhzuv css-1efynz2-Checkbox"
+    class="ui-Checkbox additional-classname emotion-0 emotion-1"
     for="sampleLabel"
   >
     <input

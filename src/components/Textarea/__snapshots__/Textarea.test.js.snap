@@ -3,27 +3,27 @@
 exports[`Given the Textarea component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-672p6m"
+    class="ui-Box emotion-0"
   >
     <div
-      class="ui-Textarea additional-classname css-1r4a1n6-Textarea form-group"
+      class="ui-Textarea additional-classname emotion-1 form-group"
     >
       <label
-        class="css-8ro76h-Textarea form-label"
+        class="emotion-2 form-label"
       >
         Sample label
       </label>
       <div
-        class="css-15rnp08-Textarea input-group"
+        class="emotion-3 input-group"
       >
         <div
-          class="ui-TextArea__charCount css-25vzsz-Textarea"
+          class="ui-TextArea__charCount emotion-4"
         >
           11
            
           sample description
           <span
-            class="css-ghohkr-Textarea"
+            class="emotion-5"
           >
              
             (

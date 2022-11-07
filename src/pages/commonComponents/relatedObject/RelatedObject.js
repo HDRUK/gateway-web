@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Alert, Button } from 'react-bootstrap';
+import { Row, Col, Alert } from 'react-bootstrap';
 import { has } from 'lodash';
 import Loading from '../Loading';
 import SVGIcon from '../../../images/SVGIcon';
@@ -11,6 +11,7 @@ import Person from './Person/Person';
 import relatedObjectService from '../../../services/related-objects';
 import './RelatedObject.scss';
 import ShowMore from '../ShowMore';
+import { Button } from 'hdruk-react-core';
 
 var cmsURL = require('../BaseURL').getCMSURL();
 const env = require('../BaseURL').getURLEnv();
@@ -196,7 +197,7 @@ class RelatedObject extends React.Component {
                                         </Col>
                                         <Col sm={2} lg={2} className='pad-right-24'>
                                             {this.props.showRelationshipQuestion ? (
-                                                <Button variant='medium' className='soft-black-14' onClick={this.removeButton}>
+                                                <Button variant='tertiary' onClick={this.removeButton}>
                                                     <SVGIcon name='closeicon' fill={'#979797'} className='buttonSvg mr-2' />
                                                     Remove
                                                 </Button>

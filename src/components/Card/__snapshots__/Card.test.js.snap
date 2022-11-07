@@ -1,29 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given the Card component When it is rendered with a body Then matches the previous snapshot 1`] = `
+exports[`Given the Card component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-7gpj3f"
+    class="ui-LayoutBox emotion-0"
   >
     <div
-      class="ui-Card css-qqktxm-Card"
-      variant="success"
+      class="ui-Card emotion-1"
     >
       <div
-        class="ui-CardHeader css-15f034b-CardHeader"
+        class="ui-CardHeader emotion-2"
       >
         Header
       </div>
       <div
-        class="ui-CardBody css-1q6nqwm-CardBody"
+        class="ui-CardBody emotion-3"
       >
         Body
       </div>
       <div
-        class="ui-CardFooter css-ulm7py-CardFooter"
+        class="ui-CardFooter emotion-4"
       >
         <div
-          class="ui-LayoutBox css-6gjyu9"
+          class="ui-LayoutBox emotion-5"
         >
           Footer
         </div>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, InputGroup, FormText } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
+import _ from 'lodash';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import SVGIcon from '../../../images/SVGIcon';
 import './DataUtilityWizard.scss';
-import _ from 'lodash';
-import { Typeahead } from 'react-bootstrap-typeahead';
 import googleAnalytics from '../../../tracking';
 
 const DataUtilityWizardModal = ({
@@ -22,7 +23,7 @@ const DataUtilityWizardModal = ({
     onStepChange,
 }) => {
     const [stepCounter, setStepCounter] = useState(1);
-    let [typeaheadOption, setTypeaheadOption] = useState([]);
+    const [typeaheadOption, setTypeaheadOption] = useState([]);
 
     useEffect(() => {
         setStepCounter(activeStep);
@@ -43,11 +44,11 @@ const DataUtilityWizardModal = ({
     const changeFilter = async (stepKey, impliedValues, entryLabel, wizardStepTitle) => {
         // Formats the implied values to be accepted by the updateFilterStates function
         // e.g: [x, y, z] ---> X::Y::Z
-        for (var i = 0; i < impliedValues.length; i++) {
+        for (let i = 0; i < impliedValues.length; i++) {
             impliedValues[i] = impliedValues[i].charAt(0).toUpperCase() + impliedValues[i].substr(1);
         }
-        let formattedImpliedValues = impliedValues.join('::');
-        let searchObject = {};
+        const formattedImpliedValues = impliedValues.join('::');
+        const searchObject = {};
         searchObject[stepKey] = formattedImpliedValues;
 
         // Passes filters into the updateFilterStates function
@@ -77,9 +78,9 @@ const DataUtilityWizardModal = ({
                                     <h5 className='black-20 mb-0 mr-1'> {step.wizardStepTitle}</h5>
 
                                     {_.times(dataUtilityWizardSteps.length, index => {
-                                        if (stepCounter - 1 === index) return <div className='current-question'></div>;
-                                        if (stepCounter - 1 > index) return <div className='previous-question'></div>;
-                                        if (stepCounter - 1 < index) return <div className='next-question'></div>;
+                                        if (stepCounter - 1 === index) return <div className='current-question' />;
+                                        if (stepCounter - 1 > index) return <div className='previous-question' />;
+                                        if (stepCounter - 1 < index) return <div className='next-question' />;
                                     })}
                                 </div>
                                 <p className='gray800-14 mt-4'>{step.wizardStepDescription}</p>
@@ -91,7 +92,7 @@ const DataUtilityWizardModal = ({
                                                     <InputGroup.Prepend>
                                                         <InputGroup.Radio
                                                             aria-label='Radio button for following text input'
-                                                            name={'radioButtonSet' + stepCounter}
+                                                            name={`radioButtonSet${stepCounter}`}
                                                             value={entry.impliedValues}
                                                             onChange={() =>
                                                                 changeFilter(
@@ -119,11 +120,11 @@ const DataUtilityWizardModal = ({
                                 {step.wizardStepType === 'search' && (
                                     <div className='data-utility-wizard-modal-search'>
                                         <div className='data-utility-wizard-modal-search-icon'>
-                                            <SVGIcon name='searchicon' width={16} height={16} fill={'#2c8267'} />
+                                            <SVGIcon name='searchicon' width={16} height={16} fill='#2c8267' />
                                         </div>
                                         <div className='data-utility-wizard-modal-search-input'>
                                             <Typeahead
-                                                id={'typeaheadDataUtilityWizard'}
+                                                id='typeaheadDataUtilityWizard'
                                                 onChange={input => {
                                                     doSearchCall(false, input);
                                                 }}
@@ -151,8 +152,7 @@ const DataUtilityWizardModal = ({
             className='data-utility-wizard-modal'
             size='lg'
             aria-labelledby='contained-modal-title-vcenter'
-            centered
-        >
+            centered>
             <div className='data-utility-wizard-header'>
                 <CloseButtonSvg className='data-utility-wizard-modal-close' onClick={closed} />
                 <div className='data-utility-wizard-header--wrap'>
@@ -171,38 +171,35 @@ const DataUtilityWizardModal = ({
             <div className='data-utility-wizard-footer'>
                 <div className='data-utility-wizard-footer--wrap'>
                     {stepCounter > 1 && (
-                        <button
-                            className='button-tertiary'
+                        <Button
+                            variant='tertiary'
                             style={{ marginRight: 'auto' }}
                             onClick={() => {
                                 setStepCounter(stepCounter => stepCounter - 1);
                                 onStepChange(stepCounter - 1);
-                            }}
-                        >
+                            }}>
                             Back
-                        </button>
+                        </Button>
                     )}
-                    <button
-                        className='button-secondary'
+                    <Button
+                        variant='secondary'
                         style={{ marginLeft: 'auto' }}
                         onClick={() => {
                             closed();
                             onWizardComplete(true);
                             recordWizardCloseEvent();
-                        }}
-                    >
+                        }}>
                         View {datasetCount} dataset matches
-                    </button>
+                    </Button>
                     {stepCounter < dataUtilityWizardSteps.length && (
-                        <button
-                            className='button-primary ml-3'
+                        <Button
+                            className='ml-3'
                             onClick={() => {
                                 setStepCounter(stepCounter => stepCounter + 1);
                                 onStepChange(stepCounter + 1);
-                            }}
-                        >
+                            }}>
                             Next
-                        </button>
+                        </Button>
                     )}
                 </div>
             </div>

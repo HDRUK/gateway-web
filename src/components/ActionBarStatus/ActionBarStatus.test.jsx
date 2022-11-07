@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from 'testUtils';
 import ActionBarStatus from '.';
+import '@testing-library/jest-dom/extend-expect';
 
 let wrapper;
 
@@ -18,7 +19,7 @@ const props = {
     className: 'additional-className',
 };
 
-describe.skip('Given the ActionBarStatus component', () => {
+describe('Given the ActionBarStatus component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
             wrapper = render(<ActionBarStatus {...props} />);
@@ -29,7 +30,7 @@ describe.skip('Given the ActionBarStatus component', () => {
         });
 
         it('Then has the correct className', () => {
-            expect(wrapper.container.firstChild.classList.contains('additional-className')).toBeTruthy();
+            expect(screen.getByText('This version was published on 28 September 2021')).toHaveClass('additional-className');
         });
 
         describe('And the status is active', () => {

@@ -1,4 +1,4 @@
-import { apiURL } from '../../configs/url.config';
+import { addCmsGatewayApiHostname, apiPath, apiURL } from '../../configs/url.config';
 import {
     deleteRequest,
     getRequest,
@@ -14,7 +14,7 @@ const getPersons = options => {
 };
 
 const getPerson = (_id, options) => {
-    return getRequest(`${apiURL}/person/${_id}`, options);
+    return getRequest(addCmsGatewayApiHostname(`${apiPath}/person/${_id}`), options);
 };
 
 const postPerson = (_id, data, options) => {
@@ -51,8 +51,8 @@ const useGetPersons = (requestOptions, queryOptions) => {
 
 const useGetPerson = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(
-        _id => {
-            return getPerson(_id, requestOptions);
+        id => {
+            return getPerson(id, requestOptions);
         },
         {
             mutationKey: 'person.getPerson',

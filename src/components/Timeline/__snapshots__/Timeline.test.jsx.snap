@@ -3,26 +3,26 @@
 exports[`Given the Timeline component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-672p6m"
+    class="ui-Box emotion-0"
   >
     <ul
-      class="ui-Timeline additional-classname css-1q9wqza-Timeline"
+      class="ui-Timeline additional-classname emotion-1"
     >
       <li
-        class="css-6kixhu-Timeline"
+        class="emotion-2"
       >
         <div
-          class="css-g885vc-Timeline"
+          class="emotion-3"
         >
           <div
-            class="timeline-icon css-fzwd7m-Timeline"
+            class="timeline-icon emotion-4"
           >
             <div>
               Icon 1
             </div>
           </div>
           <div
-            class="css-1l50hzm-Timeline"
+            class="emotion-5"
           >
             <time
               data-testid="event-time-0"
@@ -33,26 +33,26 @@ exports[`Given the Timeline component When it is rendered Then matches the previ
           </div>
         </div>
         <div
-          class="css-u46oo6-Timeline"
+          class="emotion-6"
         >
           Content 1
         </div>
       </li>
       <li
-        class="css-6kixhu-Timeline"
+        class="emotion-2"
       >
         <div
-          class="css-g885vc-Timeline"
+          class="emotion-3"
         >
           <div
-            class="timeline-icon css-fzwd7m-Timeline"
+            class="timeline-icon emotion-4"
           >
             <div>
               Icon 2
             </div>
           </div>
           <div
-            class="css-1l50hzm-Timeline"
+            class="emotion-5"
           >
             <time
               data-testid="event-time-1"
@@ -63,7 +63,7 @@ exports[`Given the Timeline component When it is rendered Then matches the previ
           </div>
         </div>
         <div
-          class="css-u46oo6-Timeline"
+          class="emotion-6"
         >
           Content 2
         </div>

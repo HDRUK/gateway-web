@@ -1,7 +1,9 @@
-import React, { Fragment } from 'react';
+import { Button } from 'hdruk-react-core';
+import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import './AdvancedSearchRequestAccessModal.scss';
+
 const urlEnv = require('../commonComponents/BaseURL').getURLEnv();
 
 const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
@@ -12,15 +14,14 @@ const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
     };
 
     return (
-        <Fragment>
+        <>
             <Modal
                 show={open}
                 onHide={close}
                 size='lg'
                 aria-labelledby='contained-modal-title-vcenter'
                 centered
-                className='advancedSearchRequestAccessModal'
-            >
+                className='advancedSearchRequestAccessModal'>
                 <div className='advancedSearchRequestAccessModal-header'>
                     <div className='advancedSearchRequestAccessModal-header--wrap'>
                         <div className='advancedSearchRequestAccessModal-head'>
@@ -38,16 +39,16 @@ const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
 
                 <div className='advancedSearchRequestAccessModal-footer'>
                     <div className='advancedSearchRequestAccessModal-footer--wrap'>
-                        <button className='button-secondary' onClick={() => close()}>
+                        <Button variant='secondary' onClick={() => close()}>
                             No, nevermind
-                        </button>
-                        <button data-test-id='request-access' className='button-primary' onClick={() => redirectToJira()}>
+                        </Button>
+                        <Button data-test-id='request-access' onClick={() => redirectToJira()}>
                             Request access
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 
