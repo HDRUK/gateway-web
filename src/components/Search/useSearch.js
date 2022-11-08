@@ -10,6 +10,8 @@ const useSearch = (mutateHook, options) => {
         }
     );
 
+    console.log('params', params);
+
     const [cache, updateCache] = usePersistState();
 
     const [state, setState] = React.useState({
@@ -42,12 +44,13 @@ const useSearch = (mutateHook, options) => {
 
     const getResults = React.useCallback(
         async (searchParams, cacheKey) => {
-            const filteredParams = pickBy(searchParams, value => value !== '');
-            const queryParams = {
-                limit: params.limit,
-                page,
-                ...filteredParams,
-            };
+            const queryParams = pickBy(
+                {
+                    ...params,
+                    ...searchParams,
+                },
+                value => value !== ''
+            );
 
             setParams(queryParams);
             query(queryParams, cacheKey);
@@ -57,15 +60,14 @@ const useSearch = (mutateHook, options) => {
 
     const getCachedResults = React.useCallback(
         (searchParams, key) => {
-            const existingParams = getCache(key);
+            const entry = getCache(key);
 
             getResults(
-                existingParams
-                    ? existingParams.params
-                    : {
-                          ...options.initialParams,
-                          ...searchParams,
-                      },
+                {
+                    ...options.initialParams,
+                    ...entry?.params,
+                    ...searchParams,
+                },
                 key
             );
         },
@@ -74,6 +76,8 @@ const useSearch = (mutateHook, options) => {
 
     const query = React.useCallback(async (searchParams, cacheKey) => {
         try {
+            console.log('searchParams', searchParams);
+
             const { data } = await mutateHook.mutateAsync(searchParams);
             const { total, onSuccess } = options;
 

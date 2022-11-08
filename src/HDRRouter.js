@@ -37,6 +37,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './css/styles.scss';
 import 'react-notifications/lib/notifications.css';
 import { withAuth } from 'context/AuthContext';
+import SearchV2 from 'pages/SearchV2/SearchV2';
 
 let actionBar, footer;
 
@@ -109,6 +110,7 @@ class HDRRouter extends Component {
                                 ''
                             )}
                             <Route path='/search' render={props => <SearchPage {...props} userState={userState} />} />
+                            <Route path='/searchV2' render={props => <SearchV2 {...props} />} />
                             <Route path='/loginerror' render={props => <LoginErrorPage {...props} userState={userState} />} />
                             <Route path='/person/:personID' render={props => <PersonPage {...props} userState={userState} />} />
                             <Route path='/dataset/:datasetID' render={props => <DatasetPage {...props} userState={userState} />} />

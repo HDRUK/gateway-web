@@ -10,6 +10,7 @@ const getTopic = (topic, options) => {
 };
 
 const getFilters = (filter, options) => {
+    console.log(`${apiV2URL}/filters/${filter}`);
     return getRequest(`${apiV2URL}/filters/${filter}`, options);
 };
 
@@ -22,7 +23,7 @@ const useGetSearch = (requestOptions, mutateOptions) => {
         params =>
             getSearch({
                 ...requestOptions,
-                ...params,
+                params,
             }),
         {
             mutationKey: 'search.getSearch',
@@ -39,11 +40,10 @@ const useGetTopic = (requestOptions, queryOptions) => {
     });
 };
 
-const useGetFilters = (requestOptions, queryOptions) => {
-    return useQueryWithTranslations({
-        queryKey: 'search.getFilters',
-        ...queryOptions,
-        queryFn: () => getFilters(requestOptions),
+const useGetFilters = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(({ entityType }) => getFilters(entityType, requestOptions), {
+        mutationKey: 'search.getFilters',
+        ...mutateOptions,
     });
 };
 

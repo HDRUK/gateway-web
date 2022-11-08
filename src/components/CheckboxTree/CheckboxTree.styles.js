@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { mixins } from '../Checkbox/Checkbox.styles';
 
 export const root =
-    ({ hasLeafIcon, hasParentIcon, checkboxVariant: variant }) =>
+    ({ hasLeafIcon, hasParentIcon, checkboxVariant: variant, expandable }) =>
     theme => {
         const {
             colors,
@@ -47,6 +47,7 @@ export const root =
                 justify-content: center;
                 align-items: center;
                 flex: 0 0 ${width};
+                ${!expandable ? 'display: none;' : ''}
             }
 
             .rct-collapse:focus {
@@ -69,7 +70,7 @@ export const root =
             }
 
             .rct-text {
-                padding: 0 0 ${2 * increment}px 0;
+                padding: 0 0 ${expandable ? 2 * increment : 0}px 0;
             }
 
             input + .rct-checkbox {

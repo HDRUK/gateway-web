@@ -25,6 +25,7 @@ const CheckboxTree = ({
     icons,
     nodes,
     checkboxProps: { variant: checkboxVariant },
+    expandable,
     ...outerProps
 }) => {
     const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
@@ -58,9 +59,9 @@ const CheckboxTree = ({
                 hasLeafIcon: !!icons.leaf,
                 hasParentIcon: !!icons.parentClose || !!icons.parentOpen,
                 checkboxVariant,
+                expandable,
             })}
-            className={cx(className, commonStyles, 'ui-CheckboxTree')}
-        >
+            className={cx(className, commonStyles, 'ui-CheckboxTree')}>
             <ReactCheckboxTree nodes={formattedNodes} icons={icons} {...outerProps} checkModel='all' />
         </div>
     );
@@ -79,6 +80,7 @@ CheckboxTree.propTypes = addCommonPropTypes({
         variant: PropTypes.oneOf(['primary', 'secondary']).isRequired,
     }),
     onCheck: PropTypes.func,
+    noChildren: PropTypes.bool,
 });
 
 CheckboxTree.defaultProps = {
@@ -92,6 +94,7 @@ CheckboxTree.defaultProps = {
     checkboxProps: {
         variant: 'primary',
     },
+    expandable: PropTypes.bool,
 };
 
 export default CheckboxTree;
