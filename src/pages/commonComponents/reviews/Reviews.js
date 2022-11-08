@@ -152,13 +152,13 @@ const ReviewButton = props => {
                     {props.data.authors.includes(props.userState[0].id) ? (
                         ''
                     ) : (
-                        <Button variant='light' id='addReviewButton' className='button-tertiary mb-3 addButton' onClick={handleShow}>
+                        <Button variant='tertiary' id='addReviewButton' onClick={handleShow}>
                             + Add a review
                         </Button>
                     )}
                 </>
             ) : (
-                <Button variant='light' id='addReviewButton' className='button-tertiary mb-3 addButton' onClick={showLoginModal}>
+                <Button variant='tertiary' id='addReviewButton' onClick={showLoginModal}>
                     + Add a review
                 </Button>
             )}
@@ -350,7 +350,7 @@ const ReplyButton = props => {
     return (
         <>
             {props.userState[0].loggedIn === true && props.data.authors.includes(props.userState[0].id) && !props.review.reply ? (
-                <Button variant='light' onClick={handleShow}>
+                <Button variant='tertiary' onClick={handleShow}>
                     Reply to review
                 </Button>
             ) : (
