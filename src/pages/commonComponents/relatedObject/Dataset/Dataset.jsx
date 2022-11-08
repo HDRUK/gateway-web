@@ -53,7 +53,7 @@ const Dataset = ({
             publisher.label = name;
             publisher.showShield = !isNil(data.datasetv2.summary.publisher.memberOf);
             publisher.memberOf = data.datasetv2.summary.publisher.memberOf;
-        } else {
+        } else if (data.datasetfields.publisher) {
             const name = data.datasetfields.publisher;
             const publisherName = name.includes('>') ? name.split(' > ')[1].toUpperCase() : name.toUpperCase();
             publisher.name = publisherName;
@@ -182,7 +182,7 @@ const Dataset = ({
                         justifyContent={{ sm: 'end' }}
                         mt={1}
                         mb={1}>
-                        {data.datasetv2.provenance?.temporal?.accrualPeriodicity && (
+                        {data.datasetv2?.provenance?.temporal?.accrualPeriodicity && (
                             <>
                                 {t('dataset.publishingFrequency')}
                                 {data.datasetv2.provenance.temporal.accrualPeriodicity}
