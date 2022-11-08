@@ -17,8 +17,6 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
         showActionModal: false,
     });
 
-    console.log('Context', context);
-
     const {
         title = '',
         subTitle = 'Let the person who added this know know why their submission is being rejected, especially if there’s anything in particular they should correct before re-submitting.',
@@ -37,8 +35,6 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
             },
         },
     } = context;
-
-    console.log('buttons', buttons);
 
     const onClickAction = (e, action) => {
         e.preventDefault();
