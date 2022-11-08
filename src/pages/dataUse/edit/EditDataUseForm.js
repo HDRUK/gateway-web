@@ -2,9 +2,7 @@ import { FieldArray, Formik, useFormik } from 'formik';
 import { isEmpty, isNil, isNumber } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Button } from 'hdruk-react-core';
-
-import { Accordion, Card, Col, Form, Row } from 'react-bootstrap';
+import { Accordion, Card, Col, Form, Row, Button } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import DatePicker from 'react-datepicker';
 import * as Yup from 'yup';
