@@ -17,6 +17,8 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
         showActionModal: false,
     });
 
+    console.log('Context', context);
+
     const {
         title = '',
         subTitle = 'Let the person who added this know know why their submission is being rejected, especially if there’s anything in particular they should correct before re-submitting.',
@@ -35,6 +37,8 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
             },
         },
     } = context;
+
+    console.log('buttons', buttons);
 
     const onClickAction = (e, action) => {
         e.preventDefault();
@@ -136,14 +140,14 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
 
                 <div className='actionModal-footer'>
                     <div className='actionModal-footer--wrap'>
-                        {buttons.map(button => {
+                        {Object.keys(buttons).map(key => {
                             return (
                                 <Button
-                                    variant={button.variant}
-                                    key={button.action}
-                                    className={button.class}
-                                    onClick={e => onClickAction(e, button.action)}>
-                                    {button.label}
+                                    variant={buttons[key].variant}
+                                    key={buttons[key].action}
+                                    className={buttons[key].class}
+                                    onClick={e => onClickAction(e, buttons[key].action)}>
+                                    {buttons[key].label}
                                 </Button>
                             );
                         })}
