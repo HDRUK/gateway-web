@@ -12,7 +12,7 @@ const GatewayAdvancedSearchDataUtilityWizard = () => {
             action: CMS_ACTION_OPEN_DATA_UTILITY_MODAL,
         });
 
-        window.location.assign(addCmsGatewayHostname('search=&tab=datasets'));
+        window.location.assign(addCmsGatewayHostname('search?search=&tab=Datasets'));
     }, []);
 
     return <AdvancedSearchDataUtilityWizard variant='horizontal' onClick={handleClick} />;

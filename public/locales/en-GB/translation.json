@@ -514,6 +514,17 @@
         "AccountTeamNotificationsConfirmationModal": {
             "title": "Email notifications",
             "description": "Are you sure you want to save your update to email notifications? Please make sure any team email addresses you have entered are correct."
+        },
+        "Login": {
+            "description": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
+            "list": {
+                "description1": "Submit data access enquiries and applications",
+                "description2": "Add your own collections, papers and other resources",
+                "description3": "Use the Cohort Discovery advanced search tool"
+            },
+            "notLoading": "Click here if login screen does not load",
+            "linkLoginOptions": "Show all login options",
+            "descriptionButtons": "You can sign in or create a Gateway account with any of the organisations below, simply click your preferred organisation and follow the on-screen instructions:"
         }
     },
     "pages": {
