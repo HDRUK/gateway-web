@@ -438,7 +438,7 @@ const AboutApplication = props => {
                                     </p>
                                 </div>
                                 <div className='dar-form-check-group'>
-                                    <Button varian='secondary' type='button' onClick={e => toggleMrcModal()}>
+                                    <Button variant='secondary' type='button' onClick={e => toggleMrcModal()}>
                                         MRC Health Data Access toolkit
                                     </Button>
                                     <input
