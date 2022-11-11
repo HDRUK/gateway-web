@@ -253,7 +253,7 @@ const About = ({ data }) => {
                         showMoreButton={!!(data.laySummary && data.laySummary.length >= 250)}
                         showLess={closedLaySummary}
                         onClickHandler={() => (!closedLaySummary ? setClosedLaySummary(true) : setClosedLaySummary(false))}
-                        toolTipText='A concise and clear description of the project, (e.g. as required by URKI in funding applications). It should outline the problem, objectives and expected outcomes in language that is understandable to the general public and contain a maximum of 300 words.'
+                        toolTipText='A concise and clear description of the project, (e.g. as required by URKI in funding applications). It should outline the problem, objectives and expected outcomes in language that is understandable to the general public and contain a maximum of 3000 words.'
                     >
                         <span data-testid='laySummary-details'>
                             {data.laySummary && data.laySummary.length > 0 ? (
