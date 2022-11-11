@@ -600,7 +600,7 @@ const EditFormDataUse = props => {
                                                                             <span id='currentLaySummaryCount'>
                                                                                 {laySummaryCounter || 0}
                                                                             </span>
-                                                                            /3000)
+                                                                            /300)
                                                                         </span>
                                                                     </div>
                                                                     <Form.Control
