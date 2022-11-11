@@ -136,14 +136,14 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
 
                 <div className='actionModal-footer'>
                     <div className='actionModal-footer--wrap'>
-                        {Object.keys(buttons).map(key => {
+                        {buttons.map(button => {
                             return (
                                 <Button
-                                    variant={buttons[key].variant}
-                                    key={buttons[key].action}
-                                    className={buttons[key].class}
-                                    onClick={e => onClickAction(e, buttons[key].action)}>
-                                    {buttons[key].label}
+                                    variant={button.variant}
+                                    key={button.action}
+                                    className={button.class}
+                                    onClick={e => onClickAction(e, button.action)}>
+                                    {button.label}
                                 </Button>
                             );
                         })}
