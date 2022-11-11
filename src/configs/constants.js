@@ -1,5 +1,3 @@
-import { baseURL } from './url.config';
-
 export const DISPLAY_DATE_STANDARD = 'd MMMM yyyy';
 export const DISPLAY_DATE_SLASH = 'dd/MM/yyyy';
 
@@ -27,5 +25,3 @@ export const DEFAULT_USER_STATE = [
 
 export const CMS_ACTION_OPEN_DATA_UTILITY_MODAL = 'openDataUtilityModal';
 export const CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL = 'openCohortDiscoveryModal';
-
-export const URL_OIDC = `${baseURL}/auth/oidc`;

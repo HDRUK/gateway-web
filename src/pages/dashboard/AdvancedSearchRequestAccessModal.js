@@ -6,14 +6,10 @@ import './AdvancedSearchRequestAccessModal.scss';
 
 const urlEnv = require('../commonComponents/BaseURL').getURLEnv();
 
-const description = encodeURIComponent(
-    'Your Safe People status will be assessed based on your Gateway registered user profile. Please ensure this is complete and up to date before you submit this request and includes your institutional email address and role description.\n\nPlease provide details on why your use of Cohort Discovery has the potential to deliver public benefit.'
-);
-
 const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
     const redirectToJira = () => {
         window.location.assign(
-            `https://hdruk.atlassian.net/servicedesk/customer/portal/1/group/1/create/1?summary=Cohort%20Discovery%20Access%20Request%20|%20UserId:%20${userId}%20|%20Environment:%20${urlEnv}&description=${description}`
+            `https://hdruk.atlassian.net/servicedesk/customer/portal/1/group/1/create/1?summary=Cohort%20Discovery%20Access%20Request%20|%20UserId:%20${userId}%20|%20Environment:%20${urlEnv}&description=Please%20provide%20details%20about%20you%20(profile,%20url,%20etc)`
         );
     };
 

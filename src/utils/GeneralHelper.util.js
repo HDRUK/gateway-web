@@ -3,23 +3,6 @@ import removeMd from 'remove-markdown';
 import { format } from 'date-fns';
 import { DISPLAY_DATE_STANDARD, DISPLAY_TIME_STANDARD } from '../configs/constants';
 
-export const removeHTMLTags = (text, tags) => {
-    if (!text || typeof text !== 'string' || !tags) return '';
-
-    const doc = new DOMParser().parseFromString(text, 'text/html');
-
-    doc.querySelectorAll('*').forEach(elm => {
-        if (elm.matches(tags)) {
-            elm.remove();
-        }
-        [...elm.attributes].forEach(attrib => {
-            elm.removeAttribute(attrib.name);
-        });
-    });
-
-    return doc.body.innerHTML.trim();
-};
-
 export const isEditMode = (url = '') => {
     if (!_.isEmpty(url)) {
         const src = url.toLowerCase();

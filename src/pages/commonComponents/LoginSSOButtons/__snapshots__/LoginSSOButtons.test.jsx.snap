@@ -3,8 +3,9 @@
 exports[`Given the LoginSSOButtons component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div>
+    <br />
     <div
-      class="mt-3 row"
+      class="mt-2 row"
     >
       <div
         class="col-lg-1"
@@ -53,8 +54,9 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
         class="col-lg-1"
       />
     </div>
+    <br />
     <div
-      class="mt-3 row"
+      class="mt-2 row"
     >
       <div
         class="col-lg-1"
