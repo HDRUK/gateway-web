@@ -472,11 +472,15 @@ class DataAccessRequest extends Component {
         let modalContext = DarHelper.createModalContext(aboutApplication.selectedDatasets);
         let allowsMultipleDatasets = formType === '5 safe';
 
-        // 6. If multiple datasets are allowed, append 'before you begin' section
-        if (allowsMultipleDatasets) {
-            // we need to inject About and File sections if first time running
-            jsonSchema = this.injectStaticContent(jsonSchema, inReviewMode, reviewSections, userType, areDatasetsAmended);
-        }
+        jsonSchema = this.injectStaticContent(
+            jsonSchema,
+            inReviewMode,
+            reviewSections,
+            userType,
+            areDatasetsAmended,
+            allowsMultipleDatasets
+        );
+
         // 7. Hide show submit application
         if (applicationStatus === DarHelper.darStatus.inProgress) {
             if (applicationType === DarHelper.darApplicationTypes.amendment) {
@@ -548,7 +552,7 @@ class DataAccessRequest extends Component {
      * @desc Function to inject static 'about' and 'files' pages and panels into schema
      * @returns {jsonSchmea} object
      */
-    injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = [], userType, areDatasetsAmended) {
+    injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = [], userType, areDatasetsAmended, allowsMultipleDatasets) {
         let { pages, formPanels } = { ...jsonSchema };
         // formPanel {pageId: 'safePeople', panelId:'applicant'}
         let formPanel = {};
@@ -558,17 +562,16 @@ class DataAccessRequest extends Component {
         let aboutNavElementsExist = [...pages].find(page => page.pageId === DarHelper.darStaticPageIds.ABOUT);
         let additionalfilesNavElementsExist = [...pages].find(page => page.pageId === DarHelper.darStaticPageIds.ADDITIONALFILES);
 
-        if (!aboutNavElementsExist && !additionalfilesNavElementsExist) {
+        if (!aboutNavElementsExist && allowsMultipleDatasets) {
             jsonSchema.pages.unshift(DarHelper.staticContent.aboutPageNav);
-            jsonSchema.pages.push(DarHelper.staticContent.filesPageNav);
-
             jsonSchema.formPanels.unshift(DarHelper.staticContent.aboutPanel);
-            jsonSchema.formPanels.push(DarHelper.staticContent.filesPanel);
         }
 
-        if (additionalfilesNavElementsExist) {
+        if (!additionalfilesNavElementsExist) {
+            jsonSchema.pages.push(DarHelper.staticContent.filesPageNav);
+            jsonSchema.formPanels.push(DarHelper.staticContent.filesPanel);
+        } else {
             jsonSchema.formPanels.push(DarHelper.staticContent.additionalFilesPanel);
-
             jsonSchema.questionPanels.push(DarHelper.staticContent.additionalFilesQuestionPanel);
         }
 
@@ -692,7 +695,8 @@ class DataAccessRequest extends Component {
                         false,
                         this.state.reviewSections,
                         this.state.userType,
-                        this.state.areDatasetsAmended
+                        this.state.areDatasetsAmended,
+                        true
                     );
                 let schemaUpdates = _.omitBy(
                     {
@@ -987,7 +991,8 @@ class DataAccessRequest extends Component {
             this.state.inReviewMode,
             this.state.reviewSections,
             this.state.userType,
-            this.state.areDatasetsAmended
+            this.state.areDatasetsAmended,
+            true
         );
         // return the updated schema to allow it to be spread into state later
         return { jsonSchema, questionAnswers };
@@ -1109,7 +1114,8 @@ class DataAccessRequest extends Component {
             this.state.inReviewMode,
             this.state.reviewSections,
             this.state.userType,
-            this.state.areDatasetsAmended
+            this.state.areDatasetsAmended,
+            true
         );
 
         let stateObj = _.omitBy(

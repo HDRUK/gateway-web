@@ -41,7 +41,7 @@ const ResourcePageButtons = props => {
                     <a
                         className='nested-button'
                         rel='noopener noreferrer'
-                        href={`https://metadata-catalogue.org/hdruk/#/catalogue/dataModel/${props.data.datasetid}`}
+                        href={`${process.env.REACT_APP_METADATA_CATALOG}/#/catalogue/dataModel/${props.data.datasetid}`}
                         target='_blank'>
                         <Button mr={2} variant='secondary'>
                             Technical details
