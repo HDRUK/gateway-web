@@ -50,6 +50,7 @@ const AccountTeams = () => {
                 const teamManagersIds = [];
                 teams.map((team, index) => {
                     if (team.members.length > 0) {
+                        // TODO: GAT-1510:044
                         const teamManagers = team.members.filter(member => member.roles.includes('manager'));
                         teamManagers.map(memberId => {
                             teamManagersIds.push(memberId.memberid);

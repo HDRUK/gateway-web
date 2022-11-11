@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import SearchResultsInfo from './SearchResultsInfo';
@@ -27,7 +27,7 @@ describe('Given the SearchResultsInfo', () => {
         });
 
         it('Then the results info should be displayed with search term', async () => {
-            await waitFor(() => expect(wrapper.getByText("Showing 60 results for 'covid'")).toBeTruthy());
+            expect(screen.getByTestId('searchResultsInfo')).toHaveTextContent(`Showing 60 results for 'covid'`);
         });
     });
     describe('And when search term is empty', () => {

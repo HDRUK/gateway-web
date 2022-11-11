@@ -1,11 +1,13 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Formik, useFormik, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import { Form, Button, Row, Col, Container } from 'react-bootstrap';
+import { Form, Row, Col, Container } from 'react-bootstrap';
 import moment from 'moment';
 import { isNil, isEmpty } from 'lodash';
+import { Button } from 'hdruk-react-core';
+import TextareaAutosize from 'react-textarea-autosize';
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
@@ -13,7 +15,6 @@ import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
 import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorModal';
 import { isPDFLink, removeArrayItem } from '../../utils/GeneralHelper.util';
 import googleAnalytics from '../../tracking';
-import TextareaAutosize from 'react-textarea-autosize';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
 import UploaderUtil from '../../utils/Uploader.util';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
@@ -22,7 +23,8 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './Paper.scss';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
-let windowUrl = window.location.origin;
+
+const windowUrl = window.location.origin;
 
 const initialValues = {
     document_links: {
@@ -107,7 +109,7 @@ const AddEditPaperForm = props => {
         onSubmit: values => {
             values.relatedObjects = props.relatedObjects;
             values.toolCreator = props.userState[0];
-            for (var i = 0; i < values.document_links.doi.length; i++) {
+            for (let i = 0; i < values.document_links.doi.length; i++) {
                 if (isPDFLink(values.document_links.doi[i])) {
                     values.document_links.pdf.push(values.document_links.doi[i]);
                     removeArrayItem(values.document_links.doi, values.document_links.doi[i]);
@@ -115,12 +117,12 @@ const AddEditPaperForm = props => {
             }
             values.authors = uploadersList.map(uploader => uploader.id);
             if (props.isEdit) {
-                axios.put(baseURL + '/api/v1/papers/' + props.data.id, values).then(res => {
-                    window.location.href = windowUrl + '/paper/' + props.data.id + '/?paperEdited=true';
+                axios.put(`${baseURL}/api/v1/papers/${props.data.id}`, values).then(res => {
+                    window.location.href = `${windowUrl}/paper/${props.data.id}/?paperEdited=true`;
                 });
             } else {
-                axios.post(baseURL + '/api/v1/papers/', values).then(res => {
-                    window.location.href = windowUrl + '/paper/' + res.data.response.id + '/?paperAdded=true';
+                axios.post(`${baseURL}/api/v1/papers/`, values).then(res => {
+                    window.location.href = `${windowUrl}/paper/${res.data.response.id}/?paperAdded=true`;
                 });
             }
         },
@@ -189,8 +191,8 @@ const AddEditPaperForm = props => {
         if (!inRelatedObject) {
             props.relatedObjects.push({
                 objectId: id,
-                pid: pid,
-                reason: reason,
+                pid,
+                reason,
                 objectType: type,
                 user: props.userState[0].name,
                 updated: moment().format('DD MMM YYYY'),
@@ -214,18 +216,18 @@ const AddEditPaperForm = props => {
                     open={showRemoveUploaderModal}
                     cancelUploaderRemoval={cancelUploaderRemoval}
                     confirmUploaderRemoval={confirmUploaderRemoval}
-                    entityType={'paper'}
+                    entityType='paper'
                     userState={props.userState}
                     uploaderToBeRemoved={uploaderToBeRemoved}
-                ></RemoveUploaderModal>
+                />
 
                 <RemoveUploaderErrorModal
                     open={showRemoveUploaderErrorModal}
                     cancelUploaderRemoval={cancelUploaderRemoval}
-                    entityType={'paper'}
+                    entityType='paper'
                     uploaderToBeRemoved={uploaderToBeRemoved}
                     removingOriginalUploader={removingOriginalUploader}
-                ></RemoveUploaderErrorModal>
+                />
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validateSchema}
@@ -244,7 +246,7 @@ const AddEditPaperForm = props => {
                                                 </Col>
                                                 <Col sm={2} lg={2} className='text-right'>
                                                     <span className='badge-paper'>
-                                                        <SVGIcon name='projecticon' fill={'#3c3c3b'} className='badgeSvg mr-2' />
+                                                        <SVGIcon name='projecticon' fill='#3c3c3b' className='badgeSvg mr-2' />
                                                         Paper
                                                     </span>
                                                 </Col>
@@ -296,12 +298,12 @@ const AddEditPaperForm = props => {
                                                     <FieldArray
                                                         name='document_links'
                                                         render={({ insert, remove, push }) => (
-                                                            <Fragment>
+                                                            <>
                                                                 {formik.values.document_links.doi.length > 0 &&
                                                                     formik.values.document_links.doi.map((d, index) => (
-                                                                        <Fragment>
+                                                                        <>
                                                                             <Col sm={12} lg={10}>
-                                                                                <Form.Group labelKey={`document_links.doi`}>
+                                                                                <Form.Group labelKey='document_links.doi'>
                                                                                     <Form.Control
                                                                                         id={`document_links.doi.${index}`}
                                                                                         name={`document_links.doi.${index}`}
@@ -338,8 +340,7 @@ const AddEditPaperForm = props => {
 
                                                                             <Col
                                                                                 style={{ paddingRight: '0px' }}
-                                                                                className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'
-                                                                            >
+                                                                                className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'>
                                                                                 <button
                                                                                     type='button'
                                                                                     className='plusMinusButton'
@@ -347,8 +348,7 @@ const AddEditPaperForm = props => {
                                                                                     onClick={() => {
                                                                                         remove(index);
                                                                                         formik.values.document_links.doi.splice(index, 1);
-                                                                                    }}
-                                                                                >
+                                                                                    }}>
                                                                                     -
                                                                                 </button>
                                                                                 <button
@@ -358,14 +358,13 @@ const AddEditPaperForm = props => {
                                                                                     onClick={() => {
                                                                                         push('');
                                                                                         formik.values.document_links.doi.push('');
-                                                                                    }}
-                                                                                >
+                                                                                    }}>
                                                                                     +
                                                                                 </button>
                                                                             </Col>
-                                                                        </Fragment>
+                                                                        </>
                                                                     ))}
-                                                            </Fragment>
+                                                            </>
                                                         )}
                                                     />
                                                 </Row>
@@ -409,8 +408,7 @@ const AddEditPaperForm = props => {
                                                                     <span
                                                                         className='purple-13'
                                                                         onMouseEnter={() => setPreprintToolTipIsShown(true)}
-                                                                        onMouseLeave={() => setPreprintToolTipIsShown(false)}
-                                                                    >
+                                                                        onMouseLeave={() => setPreprintToolTipIsShown(false)}>
                                                                         <InfoSVG className='paperFormSVG' />
                                                                     </span>
                                                                     {isPreprintToolTipShown && (
@@ -567,7 +565,7 @@ const AddEditPaperForm = props => {
                                                         className='addFormInputTypeAhead'
                                                         options={props.combinedFeatures}
                                                         onChange={selected => {
-                                                            var tempSelected = [];
+                                                            const tempSelected = [];
                                                             selected.forEach(selectedItem => {
                                                                 selectedItem.customOption === true
                                                                     ? tempSelected.push(selectedItem.features)
@@ -590,7 +588,7 @@ const AddEditPaperForm = props => {
                                                         className='addFormInputTypeAhead'
                                                         options={props.combinedTopic}
                                                         onChange={selected => {
-                                                            var tempSelected = [];
+                                                            const tempSelected = [];
                                                             selected.forEach(selectedItem => {
                                                                 selectedItem.customOption === true
                                                                     ? tempSelected.push(selectedItem.topics)
@@ -608,7 +606,7 @@ const AddEditPaperForm = props => {
                                                     </p>
                                                     <AsyncTypeAheadUsers
                                                         selectedUsers={uploadersList}
-                                                        showAuthor={true}
+                                                        showAuthor
                                                         currentUserId={props.userState[0].id}
                                                         changeHandler={uploaderHandler}
                                                     />
@@ -632,7 +630,7 @@ const AddEditPaperForm = props => {
                                                     {props.relatedObjects.map(object =>
                                                         !isNil(object.objectId) ? (
                                                             <RelatedObject
-                                                                showRelationshipQuestion={true}
+                                                                showRelationshipQuestion
                                                                 objectId={object.objectId}
                                                                 pid={object.pid}
                                                                 objectType={object.objectType}
@@ -681,7 +679,7 @@ const AddEditPaperForm = props => {
                                     <Col sm={1} lg={10} />
                                 </Row>
                                 <Row>
-                                    <span className='formBottomGap'></span>
+                                    <span className='formBottomGap' />
                                 </Row>
                             </div>
                         );
@@ -691,8 +689,8 @@ const AddEditPaperForm = props => {
 
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} href={'/account?tab=papers'}>
-                        <Button variant='medium' className='cancelButton dark-14 mr-2'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=papers'>
+                        <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>
                     </a>
@@ -702,19 +700,12 @@ const AddEditPaperForm = props => {
                             relatedResourcesRef.current.showModal();
                             googleAnalytics.recordVirtualPageView('Related resources modal');
                         }}
-                        variant='white'
-                        className='techDetailButton mr-2'
-                    >
+                        variant='secondary'
+                        className='techDetailButton mr-2'>
                         + Add resource
                     </Button>
 
-                    <Button
-                        data-test-id='add-paper-publish'
-                        variant='primary'
-                        className='publishButton white-14-semibold mr-2'
-                        type='submit'
-                        onClick={formik.handleSubmit}
-                    >
+                    <Button data-test-id='add-paper-publish' className='publishButton mr-2' type='submit' onClick={formik.handleSubmit}>
                         {props.isEdit ? 'Update' : 'Publish'}
                     </Button>
                 </div>

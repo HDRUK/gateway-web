@@ -8,13 +8,13 @@ import { useFormik } from 'formik';
 import { ReactComponent as EmptyStarIconSvg } from '../../../images/starempty.svg';
 import { ReactComponent as FullStarIconSvg } from '../../../images/star.svg';
 
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import MessageNotFound from '../MessageNotFound';
 import Collapse from 'react-bootstrap/Collapse';
 import './Reviews.scss';
+import { Button } from 'hdruk-react-core';
 
 // import {ReviewButton, ReplyButton} from './ReviewComponents';
 
@@ -152,13 +152,13 @@ const ReviewButton = props => {
                     {props.data.authors.includes(props.userState[0].id) ? (
                         ''
                     ) : (
-                        <Button variant='light' id='addReviewButton' className='button-tertiary mb-3 addButton' onClick={handleShow}>
+                        <Button variant='tertiary' id='addReviewButton' mb={3} onClick={handleShow}>
                             + Add a review
                         </Button>
                     )}
                 </>
             ) : (
-                <Button variant='light' id='addReviewButton' className='button-tertiary mb-3 addButton' onClick={showLoginModal}>
+                <Button variant='tertiary' id='addReviewButton' mb={3} onClick={showLoginModal}>
                     + Add a review
                 </Button>
             )}
@@ -323,12 +323,12 @@ const AddReviewForm = props => {
                         <Row className='mt-3'>
                             <Col xs={7} lg={7} />
                             <Col xs={1} lg={1} className='text-left pr-5'>
-                                <Button variant='medium' className='greyCancelButton' onClick={props.handleClose}>
+                                <Button variant='tertiary' onClick={props.handleClose}>
                                     Cancel
                                 </Button>
                             </Col>
                             <Col xs={3} lg={3} className='text-right pl-5'>
-                                <Button variant='primary' type='submit' className='smallAddButton'>
+                                <Button type='submit' className='smallAddButton'>
                                     Add this review
                                 </Button>
                             </Col>
@@ -350,7 +350,7 @@ const ReplyButton = props => {
     return (
         <>
             {props.userState[0].loggedIn === true && props.data.authors.includes(props.userState[0].id) && !props.review.reply ? (
-                <Button variant='light' onClick={handleShow}>
+                <Button variant='tertiary' onClick={handleShow}>
                     Reply to review
                 </Button>
             ) : (
@@ -435,12 +435,12 @@ const ReplyReviewForm = props => {
                         <Row className='mt-3'>
                             <Col xs={7} lg={7} />
                             <Col xs={1} lg={1} className='text-left pr-5'>
-                                <Button variant='medium' className='greyCancelButton' onClick={props.handleClose}>
+                                <Button variant='tertiary' onClick={props.handleClose}>
                                     Cancel
                                 </Button>
                             </Col>
                             <Col xs={3} lg={3} className='text-right pl-5'>
-                                <Button variant='primary' type='submit' className='smallAddButton'>
+                                <Button type='submit' className='smallAddButton'>
                                     Add this review
                                 </Button>
                             </Col>

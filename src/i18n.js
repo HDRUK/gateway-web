@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
+import { addCmsGatewayHostname } from './configs/url.config';
 
 const config = {
     debug: false,
@@ -24,7 +25,17 @@ if (process.env.NODE_ENV === 'test') {
         });
     });
 } else {
-    i18n.use(Backend).use(LanguageDetector).use(initReactI18next).init(config);
+    i18n.use(Backend)
+        .use(LanguageDetector)
+        .use(initReactI18next)
+        .init({
+            ...config,
+            backend: {
+                loadPath: () => {
+                    return addCmsGatewayHostname('locales/{{lng}}/{{ns}}.json');
+                },
+            },
+        });
 }
 
 export default i18n;

@@ -246,6 +246,7 @@ class DatasetOnboarding extends Component {
         let publisher = dataset.datasetv2.summary.publisher.identifier;
 
         this.setState({ roles: this.getUserRoles() });
+        // TODO: GAT-1510:046
         if (this.state.roles.includes('admin') && applicationStatus === DatasetOnboardingHelper.datasetStatus.inReview) userType = 'ADMIN';
 
         jsonSchema = this.injectStaticContent(jsonSchema, inReviewMode, reviewSections);
@@ -495,6 +496,7 @@ class DatasetOnboarding extends Component {
 
         if (isValid) {
             this.toggleActionModal('SUBMITFORREVIEW');
+            // TODO: GAT-1510:018
         } else if (this.userRoleIsAdmin(this.state.publisher)) {
             this.toggleActionModal('VALIDATIONERRORSADMIN');
         } else {

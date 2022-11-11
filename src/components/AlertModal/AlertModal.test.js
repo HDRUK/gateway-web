@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, createPortalContainer, removePortalContainer } from 'testUtils';
 import React from 'react';
 import AlertModal from '.';
 

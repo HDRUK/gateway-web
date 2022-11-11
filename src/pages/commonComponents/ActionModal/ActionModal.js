@@ -1,8 +1,9 @@
 import React, { useState, Fragment } from 'react';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
-import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import TextareaAutosize from 'react-textarea-autosize';
+import { Button } from 'hdruk-react-core';
+import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 
 import './ActionModal.scss';
 
@@ -16,19 +17,21 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
         showActionModal: false,
     });
 
-    let {
+    const {
         title = '',
         subTitle = 'Let the person who added this know know why their submission is being rejected, especially if there’s anything in particular they should correct before re-submitting.',
         buttons = {
             cancel: {
                 label: 'Cancel',
                 action: 'cancel',
-                class: 'button-secondary mr-2',
+                class: 'mr-2',
+                variant: 'secondary',
             },
             confirmReject: {
                 label: 'Reject and send message',
                 action: 'confirmRejection',
-                class: 'btn btn-primary addButton',
+                class: 'addButton',
+                variant: 'primary',
             },
         },
     } = context;
@@ -40,13 +43,13 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
         // 2. status = { cancel, confirmApprovalConditions, confirmApproval, confirmRejection }
         if (!_.isEmpty(action)) {
             // 3. convert to uppercase better consistency
-            let type = action.toUpperCase();
+            const type = action.toUpperCase();
             // 4. deconstruct properties
-            let { statusDesc } = formState;
+            const { statusDesc } = formState;
             switch (type) {
                 case 'CONFIRMREJECTION':
                     // 5. check state is valid / invalid
-                    let isInvalid = isFormInvalid();
+                    const isInvalid = isFormInvalid();
                     // 6. is valid pass back to DAR
                     if (!isInvalid) {
                         if (typeof entityKey === 'undefined') {
@@ -67,7 +70,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
     };
 
     const handleChange = event => {
-        let { name, value } = event.currentTarget;
+        const { name, value } = event.currentTarget;
         setCount(value.length);
         setFormState({
             ...formState,
@@ -83,7 +86,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
     };
 
     const isFormInvalid = () => {
-        let { statusDesc } = formState;
+        const { statusDesc } = formState;
         setFormState({
             ...formState,
             submitted: true,
@@ -99,7 +102,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
     };
 
     return (
-        <Fragment>
+        <>
             <Modal show={open} onHide={close} size='lg' aria-labelledby='contained-modal-title-vcenter' centered className='actionModal'>
                 <div className='actionModal-header'>
                     <div className='actionModal-header--wrap'>
@@ -125,7 +128,7 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
                                 onChange={handleChange}
                                 value={formState.statusDesc}
                                 rows='8'
-                            ></TextareaAutosize>
+                            />
                             <div className='invalid-feedback'>{formState.invalidMessage}</div>
                         </div>
                     </form>
@@ -133,17 +136,21 @@ const ActionModal = ({ id, open, close, context, updateApplicationStatus, entity
 
                 <div className='actionModal-footer'>
                     <div className='actionModal-footer--wrap'>
-                        {Object.keys(buttons).map((key, index) => {
+                        {Object.keys(buttons).map(key => {
                             return (
-                                <button key={index} className={buttons[key].class} onClick={e => onClickAction(e, buttons[key].action)}>
+                                <Button
+                                    variant={buttons[key].variant}
+                                    key={buttons[key].action}
+                                    className={buttons[key].class}
+                                    onClick={e => onClickAction(e, buttons[key].action)}>
                                     {buttons[key].label}
-                                </button>
+                                </Button>
                             );
                         })}
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

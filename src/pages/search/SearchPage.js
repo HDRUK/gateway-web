@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { Box, Button, H6, Icon, Input, P } from 'hdruk-react-core';
+import { Box, Button, H6, Icon, Input, InputGroup, P } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
@@ -11,7 +11,7 @@ import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
-import { ReactComponent as TickSvg } from '../../images/icons/tick.svg';
+import { ReactComponent as ArrowUpSvg } from '../../images/icons/arrow-up.svg';
 import { ReactComponent as SearchSvg } from '../../images/search.svg';
 import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
@@ -22,8 +22,7 @@ import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import DataUtilityWizardModal from '../commonComponents/DataUtilityWizard/DataUtilityWizardModal';
 import ErrorModal from '../commonComponents/errorModal';
 import Loading from '../commonComponents/Loading';
-import SavedPreferencesModal from '../commonComponents/savedPreferencesModal/SavedPreferencesModal';
-import SaveModal from '../commonComponents/saveModal/SaveModal';
+import SavedPreferences from '../commonComponents/savedPreferences/SavedPreferences';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SearchResults from '../commonComponents/SearchResults';
 import SearchResultsInfo from '../commonComponents/SearchResultsInfo';
@@ -111,8 +110,6 @@ class SearchPage extends React.Component {
         isResultsLoading: true,
         showDrawer: false,
         showModal: false,
-        showSavedPreferencesModal: false,
-        showSavedModal: false,
         context: {},
         userState: [
             {
@@ -143,7 +140,7 @@ class SearchPage extends React.Component {
         showDataUtilityWizardModal: false,
         showDataUtilityBanner: false,
         activeDataUtilityWizardStep: 1,
-        searchFieldValue: '',
+        shouldShowSavedPreferences: false,
     };
 
     constructor(props) {
@@ -166,8 +163,8 @@ class SearchPage extends React.Component {
         this.csvLink = React.createRef();
     }
 
-    hideSavedPreferencesModal = () => {
-        this.setState({ showSavedPreferencesModal: false });
+    toggleSavedPreferences = () => {
+        this.setState({ shouldShowSavedPreferences: Boolean(!this.state.shouldShowSavedPreferences) });
     };
 
     hideSavedModal = () => {
@@ -257,10 +254,6 @@ class SearchPage extends React.Component {
             // 6. if openUserMessages is true open the user messages
             else if (this.state.userState[0].loggedIn && queryParams.openUserMessages === 'true') {
                 this.toggleDrawer();
-            }
-            // 7. if openAdvancedSearch is true open the user messages
-            else if (queryParams.openAdvancedSearch === 'true') {
-                this.toggleAdvancedSearchModal();
             } else if (queryParams.openDataUtilityWizard === 'true') {
                 this.toggleDataUtilityWizardModal();
             }
@@ -282,14 +275,10 @@ class SearchPage extends React.Component {
         }
     }
 
-    doSearch = e => {
-        // fires on enter on searchbar
-        if (e.key === 'Enter') {
-            // reload window and test for search if entered
-            this.setState({ isResultsLoading: true }, () => {
-                this.clearFilterStates();
-            });
-        }
+    doSearch = () => {
+        this.setState({ isResultsLoading: true }, () => {
+            this.clearFilterStates();
+        });
     };
 
     doClear = e => {
@@ -458,7 +447,7 @@ class SearchPage extends React.Component {
             ? this.setState({ collectionIndex: queryParams.collectionIndex })
             : this.setState({ collectionIndex: 0 });
         // Sort for each tab
-        queryParams.datasetSort ? this.setState({ datasetSort: queryParams.datasetSort }) : this.setState({ datasetSort: '' });
+        queryParams.datasetSort ? this.setState({ datasetSort: queryParams.datasetSort }) : this.setState({ datasetSort: 'latest' });
         queryParams.toolSort ? this.setState({ toolSort: queryParams.toolSort }) : this.setState({ toolSort: '' });
         queryParams.dataUseRegisterSort
             ? this.setState({ dataUseRegisterSort: queryParams.dataUseRegisterSort })
@@ -522,16 +511,19 @@ class SearchPage extends React.Component {
     }
 
     updateOnFilterBadge = (filterGroup, filter) => {
-        // 1. test type of filter if v2 it will be an object
         if (typeof filter === 'object' && !_.isEmpty(filter)) {
-            // 2. title case to match the backend cache implmentation of label value
-            let { parentKey, label } = filter;
-            let node = {
-                parentKey,
-                label: label,
-            };
-            // 3. the filter will contain {label, parentKey (parentKey is defined the filters.mapper API)}
-            this.handleInputChange(node, parentKey, true);
+            const selectedFilters = this.getSelectedFiltersStateByKey(this.state.key);
+            const filtersV2 = this.getFilterStateByKey(this.state.key);
+            const filteredFilters = selectedFilters.filter(item => filter.parentKey === item.parentKey);
+            const parentNode = this.findParentNode(filtersV2, filter.parentKey);
+
+            const selectedNode = parentNode.filters.find(item => {
+                return item.value === filter.value;
+            });
+
+            if (!filteredFilters.find(item => filter.value === item.value)) {
+                this.handleInputChange(selectedNode, filter.parentKey, true);
+            }
         } else {
             return;
         }
@@ -569,7 +561,7 @@ class SearchPage extends React.Component {
         });
     };
 
-    doSearchCall(skipHistory, textSearch = '') {
+    doSearchCall(skipHistory, textSearch) {
         let searchURL = '';
         let filtersDatasetsV2 = [];
         let filtersV2Tools = [];
@@ -606,6 +598,7 @@ class SearchPage extends React.Component {
             ...this.buildSearchObj(this.state.selectedV2Courses),
             ...this.buildSearchObj(this.state.selectedV2Collections),
         };
+
         // 2. dynamically build the searchUrl v2 only
         searchURL = this.buildSearchUrl(searchObj);
 
@@ -636,7 +629,8 @@ class SearchPage extends React.Component {
             if (this.state.key) searchURL += '&tab=' + this.state.key;
 
             this.props.history.push(
-                `${window.location.pathname}?search=${encodeURIComponent(textSearch ? textSearch : this.state.search)}` + searchURL
+                `${window.location.pathname}?search=${encodeURIComponent(textSearch !== undefined ? textSearch : this.state.search)}` +
+                    searchURL
             );
         }
         if (this.state.key !== 'People') {
@@ -645,7 +639,9 @@ class SearchPage extends React.Component {
 
             searchService
                 .getSearchFilters({
-                    params: getParams(`search=${encodeURIComponent(textSearch ? textSearch : this.state.search)}${searchURL}`),
+                    params: getParams(
+                        `search=${encodeURIComponent(textSearch !== undefined ? textSearch : this.state.search)}${searchURL}`
+                    ),
                 })
                 .then(res => {
                     let filters = this.getFilterState(res);
@@ -686,7 +682,7 @@ class SearchPage extends React.Component {
         // search call brings back search results and now filters highlighting for v2
         searchService
             .getSearch({
-                params: getParams(`search=${encodeURIComponent(textSearch ? textSearch : this.state.search)}${searchURL}`),
+                params: getParams(`search=${encodeURIComponent(textSearch !== undefined ? textSearch : this.state.search)}${searchURL}`),
             })
             .then(res => {
                 // get the correct entity type from our mapper via the selected tab ie..'Dataset, Tools'
@@ -1132,6 +1128,7 @@ class SearchPage extends React.Component {
      */
     handleSelected = (selected = {}, checked = false, tab = this.state.key) => {
         let selectedV2 = this.getSelectedFiltersStateByKey(tab);
+
         let results = [];
         if (!_.isEmpty(selected)) {
             if (checked) {
@@ -1370,10 +1367,12 @@ class SearchPage extends React.Component {
      * @param {string} parentKey
      * @param {boolean} checkValue
      */
-    handleInputChange = (nodes, parentKey, checkValue) => {
+    handleInputChange = (nodes, parentKey, checkValue, performSearch = true) => {
         if (isTree(parentKey)) {
             this.setState(this.filterTreeByCheckbox(nodes, parentKey, checkValue), () => {
-                this.doSearchCall();
+                if (performSearch) {
+                    this.doSearchCall();
+                }
             });
 
             googleAnalytics.recordEvent(
@@ -1383,7 +1382,9 @@ class SearchPage extends React.Component {
             );
         } else {
             this.setState(this.filterShallowByCheckbox(nodes, parentKey, checkValue), () => {
-                this.doSearchCall();
+                if (performSearch) {
+                    this.doSearchCall();
+                }
             });
 
             googleAnalytics.recordEvent(
@@ -1453,7 +1454,7 @@ class SearchPage extends React.Component {
 
     saveFiltersUpdate = async viewSaved => {
         await this.getFilters(viewSaved.tab);
-        this.setState({ showSavedPreferencesModal: false });
+        this.setState({ shouldShowSavedPreferences: false });
         // 1. v2 take copy of data
         let filtersV2DatasetsData = !_.isNil(this.state.filtersV2Datasets) ? [...this.state.filtersV2Datasets] : [];
         let filtersV2ToolsData = !_.isNil(this.state.filtersV2Tools) ? [...this.state.filtersV2Tools] : [];
@@ -1516,18 +1517,9 @@ class SearchPage extends React.Component {
 
                 this.setState({ search: viewSaved.search, key: viewSaved.tab }, async () => {
                     await this.getFilters(viewSaved.tab);
-
                     for (let filter of viewSaved.filters) {
-                        this.handleInputChange(
-                            {
-                                parentKey: filter.parentKey,
-                                label: filter.label,
-                            },
-                            filter.parentKey,
-                            true
-                        );
+                        this.handleInputChange(filter, filter.parentKey, true, false);
                     }
-
                     this.doSearchCall();
                 });
             }
@@ -1730,7 +1722,14 @@ class SearchPage extends React.Component {
     handleSearch = e => {
         e.preventDefault();
 
-        window.location.href = `/search?search=${encodeURIComponent(this.state.searchFieldValue)}&tab=${this.state.key}`;
+        this.setState(
+            {
+                search: this.state.searchFieldValue,
+            },
+            () => {
+                this.doSearch();
+            }
+        );
     };
 
     handleSearchChange = ({ target: { value } }) => {
@@ -1740,9 +1739,15 @@ class SearchPage extends React.Component {
     };
 
     handleSearchReset = () => {
-        this.setState({
-            searchFieldValue: '',
-        });
+        this.setState(
+            {
+                search: '',
+                searchFieldValue: '',
+            },
+            () => {
+                this.doSearch();
+            }
+        );
     };
 
     render() {
@@ -1822,35 +1827,14 @@ class SearchPage extends React.Component {
             <Sentry.ErrorBoundary fallback={<ErrorModal />}>
                 <div>
                     <BackToTop scrollOffset={300} className='backToTop' />
-                    <SearchBar
-                        ref={this.searchBar}
-                        search={search}
-                        doSearchMethod={this.doSearch}
-                        onClearMethod={this.doClear}
-                        doUpdateSearchString={this.updateSearchString}
-                        doToggleDrawer={this.toggleDrawer}
-                        userState={userState}
-                    />
+                    <SearchBar ref={this.searchBar} doToggleDrawer={this.toggleDrawer} userState={userState} />
 
-                    <div className='searchTabsHolder'>
-                        <div>
-                            <Tabs className='tabsBackground gray700-13' activeKey={key} onSelect={this.handleSelect}>
-                                <Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'} />
-                                <Tab eventKey='Tools' title={'Tools (' + toolCount + ')'} />
-                                <Tab eventKey='Datauses' title={'Data uses (' + dataUseRegisterCount + ')'} />
-                                <Tab eventKey='Collections' title={'Collections (' + collectionCount + ')'} />
-                                <Tab eventKey='Courses' title={'Courses (' + courseCount + ')'} />
-                                <Tab eventKey='Papers' title={'Papers (' + paperCount + ')'} />
-                                <Tab eventKey='People' title={'People (' + personCount + ')'} />
-                            </Tabs>
-                        </div>
-                    </div>
                     <div className='container'>
                         {this.state.showDataUtilityBanner && (
                             <SearchUtilityBanner onClick={this.openDataUtilityWizard} step={activeDataUtilityWizardStep} />
                         )}
 
-                        {this.state.saveSuccess && !this.state.showSavedModal && (
+                        {this.state.saveSuccess && !this.state.shouldShowSavedPreferences && (
                             <Alert variant='primary' className='blue-banner saved-preference-banner'>
                                 Saved preference: "{this.state.showSavedName}"
                             </Alert>
@@ -1858,115 +1842,140 @@ class SearchPage extends React.Component {
 
                         <Container className={this.state.saveSuccess && !this.state.showSavedModal && 'container-saved-preference-banner'}>
                             <Row className='filters filter-search'>
-                                <Col lg={12}>
+                                <Col>
                                     <form onSubmit={this.handleSearch}>
-                                        <Box display='flex' justifyContent='center' width='100%' p={6}>
-                                            <Box width='150px' display='inline-flex'>
+                                        <Box
+                                            display={{
+                                                xxs: 'block',
+                                                md: 'grid',
+                                            }}
+                                            gridTemplateColumns='150px 1fr 158px'
+                                            gridTemplateRows='1fr'
+                                            width='100%'
+                                            p={6}>
+                                            <Box
+                                                display={{
+                                                    xxs: 'none',
+                                                    md: 'inline-flex',
+                                                }}>
                                                 <ColourLogoSvg />
                                             </Box>
-                                            <Box mt={1} flexGrow='1' mr={1}>
-                                                <Input
-                                                    iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
-                                                    iconRight={
-                                                        !!this.state.searchFieldValue && (
-                                                            <Icon
-                                                                svg={<ClearSvg />}
-                                                                fill='grey400'
-                                                                onClick={this.handleSearchReset}
-                                                                role='button'
-                                                            />
-                                                        )
-                                                    }
-                                                    value={this.state.searchFieldValue}
-                                                    onChange={this.handleSearchChange}
-                                                />
-                                            </Box>
-                                            <Box width='175px' mt={1}>
-                                                <Button type='submit'>Search</Button>
+                                            <Box mt={1}>
+                                                <InputGroup>
+                                                    <Input
+                                                        iconLeft={<Icon svg={<SearchSvg />} fill='purple500' />}
+                                                        iconRight={
+                                                            !!this.state.searchFieldValue && (
+                                                                <Icon
+                                                                    svg={<ClearSvg />}
+                                                                    fill='grey400'
+                                                                    onClick={this.handleSearchReset}
+                                                                    role='button'
+                                                                />
+                                                            )
+                                                        }
+                                                        value={this.state.searchFieldValue}
+                                                        onChange={this.handleSearchChange}
+                                                    />
+                                                    <Button type='submit'>Search</Button>
+                                                </InputGroup>
                                             </Box>
                                         </Box>
                                     </form>
                                 </Col>
                             </Row>
 
-                            <Row className='filters filter-save'>
-                                <Col className='title' lg={4} />
-                                <Col lg={8} className='saved-buttons'>
-                                    <Box display='inline-flex' gap={2} py={4}>
-                                        {this.state.key === 'Datauses' && (
-                                            <>
-                                                <Button variant='tertiary' onClick={this.onClickDownloadResults}>
-                                                    Download Results
+                            <Row className='filters filter-categories'>
+                                <Col>
+                                    <Tabs
+                                        className='tabsBackground tabsBackground__searchPage gray700-14'
+                                        activeKey={key}
+                                        onSelect={this.handleSelect}>
+                                        <Tab eventKey='Datasets' title={'Datasets (' + datasetCount + ')'} />
+                                        <Tab eventKey='Tools' title={'Tools (' + toolCount + ')'} />
+                                        <Tab eventKey='Datauses' title={'Data uses (' + dataUseRegisterCount + ')'} />
+                                        <Tab eventKey='Collections' title={'Collections (' + collectionCount + ')'} />
+                                        <Tab eventKey='Courses' title={'Courses (' + courseCount + ')'} />
+                                        <Tab eventKey='Papers' title={'Papers (' + paperCount + ')'} />
+                                        <Tab eventKey='People' title={'People (' + personCount + ')'} />
+                                    </Tabs>
+                                </Col>
+                            </Row>
+                            <Row className='filters'>
+                                <Col>
+                                    <Box
+                                        display={{
+                                            xxs: 'block',
+                                            md: 'grid',
+                                        }}
+                                        gridTemplateColumns='1fr 158px'
+                                        pt={3}
+                                        pb={3}
+                                        pr={6}
+                                        pl={6}
+                                        width='100%'>
+                                        <Box display='flex'>
+                                            <Box flexGrow='1' display='flex' alignItems='center'>
+                                                {key !== 'People' && (
+                                                    <FilterSelection
+                                                        {...filtersSelectionProps}
+                                                        onHandleClearSelection={this.handleClearSelection}
+                                                        onHandleClearAll={this.handleClearAll}
+                                                        savedSearches={true}
+                                                    />
+                                                )}
+                                            </Box>
+                                            <Box display='inline-flex'>
+                                                {this.state.key === 'Datauses' && (
+                                                    <>
+                                                        <Button mr={2} variant='tertiary' onClick={this.onClickDownloadResults}>
+                                                            Download Results
+                                                        </Button>
+                                                        <CSVLink
+                                                            data={dataUseRegisterFullData}
+                                                            filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
+                                                            className='hidden'
+                                                            ref={this.csvLink}
+                                                            target='_blank'
+                                                        />
+                                                    </>
+                                                )}
+                                                <Button
+                                                    variant='tertiary'
+                                                    aria-haspopup='true'
+                                                    iconRight={
+                                                        <Icon
+                                                            svg={<ArrowUpSvg />}
+                                                            fill='grey800'
+                                                            className={this.state.shouldShowSavedPreferences ? '' : 'flip180'}
+                                                        />
+                                                    }
+                                                    onClick={
+                                                        this.state.userState[0].loggedIn === false
+                                                            ? () => this.showLoginModal()
+                                                            : () => this.toggleSavedPreferences()
+                                                    }>
+                                                    Save
                                                 </Button>
-                                                <CSVLink
-                                                    data={dataUseRegisterFullData}
-                                                    filename={`data-use-registers-${moment().format('DDMMYYYYHHmmss')}.csv`}
-                                                    className='hidden'
-                                                    ref={this.csvLink}
-                                                    target='_blank'
-                                                />
-                                            </>
-                                        )}
-
-                                        {this.state.saveSuccess ? (
-                                            <Button variant='primaryAlt' disabled iconLeft={<Icon svg={<TickSvg />} fill='green300' />}>
-                                                Saved
-                                            </Button>
-                                        ) : this.state.userState[0].loggedIn === false ? (
-                                            <Button variant='secondary' onClick={this.showLoginModal}>
-                                                Save
-                                            </Button>
-                                        ) : (
-                                            <Button variant='secondary' onClick={() => this.setState({ showSavedModal: true })}>
-                                                Save
-                                            </Button>
-                                        )}
-
-                                        {this.state.showSavedModal && (
-                                            <SaveModal
-                                                show={this.state.showSavedModal}
-                                                onHide={this.hideSavedModal}
-                                                onSaveHide={this.hideNoSaveSearchModal}
-                                                saveSuccess={this.showSuccessMessage}
-                                                saveName={this.showSavedName}
-                                                search={this.state.search}
-                                                filters={preferenceFilters}
-                                                sort={perferenceSort}
-                                                tab={this.state.key}
-                                            />
-                                        )}
-
-                                        <Button
-                                            variant='tertiary'
-                                            onClick={
-                                                this.state.userState[0].loggedIn === false
-                                                    ? () => this.showLoginModal()
-                                                    : () => this.setState({ showSavedPreferencesModal: true })
-                                            }>
-                                            Saved preferences
-                                        </Button>
-                                        {this.state.showSavedPreferencesModal && (
-                                            <SavedPreferencesModal
-                                                show={this.state.showSavedPreferencesModal}
-                                                onHide={this.hideSavedPreferencesModal}
-                                                viewMatchesLink={this.viewMatches}
-                                                viewSaved={this.saveFiltersUpdate}
-                                                activeTab={key}
-                                            />
-                                        )}
+                                            </Box>
+                                        </Box>
                                     </Box>
                                 </Col>
                             </Row>
-                            <Row>
-                                {key !== 'People' && (
-                                    <FilterSelection
-                                        {...filtersSelectionProps}
-                                        onHandleClearSelection={this.handleClearSelection}
-                                        onHandleClearAll={this.handleClearAll}
-                                        savedSearches={true}
-                                    />
-                                )}
-                            </Row>
+                            {this.state.shouldShowSavedPreferences && (
+                                <SavedPreferences
+                                    onHide={this.toggleSavedPreferences}
+                                    viewMatchesLink={this.viewMatches}
+                                    viewSaved={this.saveFiltersUpdate}
+                                    activeTab={key}
+                                    saveSuccess={this.showSuccessMessage}
+                                    saveName={this.showSavedName}
+                                    search={this.state.search}
+                                    filters={preferenceFilters}
+                                    sort={perferenceSort}
+                                    tab={this.state.key}
+                                />
+                            )}
                         </Container>
                     </div>
                     <Container>

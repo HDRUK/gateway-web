@@ -3,47 +3,40 @@
 exports[`Given the Modal component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Dimmer css-t1lyrf-Dimmer"
+    class="ui-Dimmer emotion-0"
   >
     <div
-      class="ui-LayoutBox css-1m30tkv"
+      class="ui-Card ui-Modal emotion-1"
+      role="article"
     >
       <div
-        class="ui-Modal ui-Card css-qqktxm-Card"
+        class="ui-LayoutBox emotion-2 emotion-3"
+      >
+        <button
+          class="ui-Cta emotion-4"
+        >
+           
+           
+          <icon-mock />
+        </button>
+      </div>
+      <div
+        class="ui-ModalHeader ui-CardHeader emotion-5"
+      >
+        Header
+      </div>
+      <div
+        class="ui-ModalBody ui-CardBody emotion-6"
+      >
+        Body
+      </div>
+      <div
+        class="ui-ModalFooter ui-CardFooter emotion-7"
       >
         <div
-          class="ui-LayoutBox css-1pjjxvx"
+          class="ui-LayoutBox emotion-8"
         >
-          <button
-            class="ui-LayoutBox ui-Cta css-1ahlma1-Cta css-l4ytru"
-          >
-             
-             
-            <span
-              class="ui-Icon css-7gpj3f css-jh808c-Icon"
-            >
-              <iconmock />
-            </span>
-          </button>
-        </div>
-        <div
-          class="ui-ModalHeader ui-CardHeader css-15f034b-CardHeader"
-        >
-          Header
-        </div>
-        <div
-          class="ui-ModalBody ui-CardBody css-1q6nqwm-CardBody"
-        >
-          Body
-        </div>
-        <div
-          class="ui-ModalFooter ui-CardFooter css-ulm7py-CardFooter"
-        >
-          <div
-            class="ui-LayoutBox css-6gjyu9"
-          >
-            Footer
-          </div>
+          Footer
         </div>
       </div>
     </div>

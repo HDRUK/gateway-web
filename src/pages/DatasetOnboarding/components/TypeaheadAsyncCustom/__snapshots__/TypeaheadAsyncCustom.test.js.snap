@@ -4,16 +4,16 @@ exports[`Given the TypeaheadAsyncCustom component When it is rendered without de
 <div>
   <div>
     <div
-      class="ui-Box css-672p6m"
+      class="ui-Box emotion-0"
     >
       <div
-        class="css-f3m9lf-Input form-group"
+        class="emotion-1 form-group"
       >
         <div
-          class="ui-Input ui-Typeahead css-1oponl2-TypeaheadAsyncCustom input-group"
+          class="ui-Input ui-Typeahead emotion-2 input-group"
         >
           <div
-            class="css-1h9gu1e-Input input-group-prepend"
+            class="emotion-3 input-group-prepend"
           >
             <button
               fill="green700"

@@ -3,16 +3,16 @@
 exports[`Given the SearchInput component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-Box css-672p6m"
+    class="ui-Box emotion-0"
   >
     <div
-      class="css-f3m9lf-Input form-group"
+      class="emotion-1 form-group"
     >
       <div
-        class="ui-Input ui-SearchInput css-uxo7bh-Input input-group"
+        class="ui-Input ui-SearchInput emotion-2 input-group"
       >
         <div
-          class="css-1h9gu1e-Input input-group-prepend"
+          class="emotion-3 input-group-prepend"
         >
           <button
             fill="green700"

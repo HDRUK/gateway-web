@@ -1,4 +1,11 @@
 {
+    "cms": {
+        "advancedSearch": {
+            "banner": {
+                "title": "Try these Advanced Search Methods"
+            }
+        }
+    },
     "services": {
         "status": {
             "404": {
@@ -158,6 +165,11 @@
         "dateUpdated": "Metadata last updated:",
         "dateUpdatedTooltip": "The last date when the information about this dataset was updated",
         "publishingFrequency": "Publishing frequency: ",
+        "typicalTimeToAccess": "Typical time to access: ",
+        "numberOfViews": {
+            "viewed": "Viewed",
+            "times": "times"
+        },
         "publishingFrequencyTooltip": "The frequency of publishing new data for this dataset",
         "inReview": "pending approval",
         "active": "Active",

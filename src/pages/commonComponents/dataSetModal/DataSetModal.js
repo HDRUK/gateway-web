@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
+import { Button } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
@@ -87,22 +88,23 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
                     {screenData.showActionButtons ? (
                         <div className='appModal-footer--wrap' data-testid='actionButtons'>
                             {is5Safes ? (
-                                <button
-                                    className='button-secondary mr-2'
+                                <Button
+                                    variant='secondary'
+                                    mr={2}
                                     onClick={() => {
                                         isLoggedIn ? onCloseModal('SUBMIT_APPLICATION') : showLoginModal();
                                     }}>
                                     Start application
-                                </button>
+                                </Button>
                             ) : null}
-                            <button
+                            <Button
                                 data-test-id='dar-modal-make-enquiry-btn'
-                                className='btn btn-primary addButton'
+                                className='addButton'
                                 onClick={() => {
                                     isLoggedIn ? onCloseModal('ENQUIRY') : showLoginModal();
                                 }}>
                                 Make an enquiry
-                            </button>
+                            </Button>
                         </div>
                     ) : null}
                 </div>

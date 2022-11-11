@@ -1,4 +1,4 @@
-import { render, within, waitFor } from '@testing-library/react';
+import { render, within, waitFor, createPortalContainer, removePortalContainer, fireEvent } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import AccountDatasetApproveModal from './AccountDatasetApproveModal';
@@ -28,9 +28,7 @@ describe('Given the AccountDatasetApproveModal component', () => {
         beforeAll(() => {
             server.listen();
             containerDiv = createPortalContainer();
-            wrapper = render(<AccountDatasetApproveModal {...props} container={containerDiv} />, {
-                wrapper: Providers,
-            });
+            wrapper = render(<AccountDatasetApproveModal {...props} container={containerDiv} />);
         });
 
         afterEach(() => {
@@ -62,9 +60,7 @@ describe('Given the AccountDatasetApproveModal component', () => {
                     showGoToNext: false,
                 };
 
-                rerender(<AccountDatasetApproveModal {...newProps} container={containerDiv} />, {
-                    wrapper: Providers,
-                });
+                rerender(<AccountDatasetApproveModal {...newProps} container={containerDiv} />);
             });
             it('Then the Approve and go to next button should be disabled', async () => {
                 await waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
@@ -76,19 +72,15 @@ describe('Given the AccountDatasetApproveModal component', () => {
         });
 
         describe('And the Approve button is clicked', () => {
-            let button;
-
             beforeAll(async () => {
                 const { rerender } = wrapper;
 
-                rerender(<AccountDatasetApproveModal {...props} container={containerDiv} />, {
-                    wrapper: Providers,
-                });
+                rerender(<AccountDatasetApproveModal {...props} container={containerDiv} />);
 
                 await waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
 
                 const { getByTestId } = wrapper;
-                button = within(getByTestId('button-container')).getAllByText('Approve')[0];
+                const button = within(getByTestId('button-container')).getAllByText('Approve')[0];
                 fireEvent.click(button);
             });
 
@@ -113,9 +105,7 @@ describe('Given the AccountDatasetApproveModal component', () => {
             beforeAll(async () => {
                 const { rerender } = wrapper;
 
-                rerender(<AccountDatasetApproveModal {...props} container={containerDiv} />, {
-                    wrapper: Providers,
-                });
+                rerender(<AccountDatasetApproveModal {...props} container={containerDiv} />);
 
                 await waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
 
