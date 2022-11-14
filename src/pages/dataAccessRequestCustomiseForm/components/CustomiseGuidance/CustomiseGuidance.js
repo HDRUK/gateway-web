@@ -39,16 +39,14 @@ const CustomiseGuidance = ({ activeGuidance, onGuidanceChange, activeQuestion, a
 
     return (
         <>
-            {activeGuidance
-                ? editorState && (
-                      <WysiwygEditor
-                          data-testid='wysiwyg-editor'
-                          editorState={editorState}
-                          onEditorStateChange={handleEditorStateChange}
-                          onMarkdownChange={handleGuidanceChange}
-                      />
-                  )
-                : 'There is currently no guidance for this question'}
+            {editorState && (
+                <WysiwygEditor
+                    data-testid='wysiwyg-editor'
+                    editorState={editorState}
+                    onEditorStateChange={handleEditorStateChange}
+                    onMarkdownChange={handleGuidanceChange}
+                />
+            )}
         </>
     );
 };
