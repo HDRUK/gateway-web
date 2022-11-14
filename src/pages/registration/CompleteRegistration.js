@@ -911,7 +911,7 @@ const YourAccountForm = props => {
                                 <a
                                     target='_blank'
                                     rel='noopener noreferrer'
-                                    href={process.env.REACT_APP_NEWSLETTER_EXAMPLE}>
+                                    href={process.env.REACT_APP_NEWSLETTER_EXAMPLE_URL}>
                                     Show me an example
                                 </a>{' '}
                             </Col>
