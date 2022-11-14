@@ -154,7 +154,7 @@ const EditFormDataUse = props => {
             organisationName: Yup.string().required('This cannot be empty'),
             projectTitle: Yup.string().required('This cannot be empty'),
             datasets: Yup.string().required('This cannot be empty'),
-            laySummary: Yup.string().max(3000, 'Maximum of 3,000 characters').required('This cannot be empty'),
+            laySummary: Yup.string().max(3000, 'Maximum of 3,000 characters')
 
         }),
 
