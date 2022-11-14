@@ -911,7 +911,7 @@ const YourAccountForm = props => {
                                 <a
                                     target='_blank'
                                     rel='noopener noreferrer'
-                                    href='https://mailchi.mp/hdruk.ac.uk/explore-and-access-the-uks-health-research-datasets'>
+                                    href='https://hdruk-ac-uk-1.hubspotpagebuilder.com/hdr-innovation-gateway-november-update'>
                                     Show me an example
                                 </a>
                             </Col>
