@@ -925,7 +925,7 @@ const YourAccountForm = props => {
                             <a
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                href='https://www.hdruk.ac.uk/infrastructure/gateway/privacy-policy/'>
+                                href={process.env.NEWSLETTER_EXAMPLE}>
                                 privacy policy
                             </a>{' '}
                             aims to give you information on how Health Data Research UK collects and processes your personal data through
