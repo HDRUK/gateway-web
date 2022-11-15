@@ -137,7 +137,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
                   <p
                     class="ui-Typography emotion-14"
                   >
-                    Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.
+                    Search to find cohorts in pseudonymised datasets based on characteristics such as disease, age, location. Available for a limited number of datasets, with more being added regularly.
                   </p>
                 </div>
               </div>

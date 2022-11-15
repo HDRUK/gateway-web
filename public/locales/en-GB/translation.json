@@ -292,7 +292,7 @@
         "advanced": {
             "cohortDiscovery": {
                 "title": "Cohort Discovery",
-                "description": "Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.",
+                "description": "Search to find cohorts in pseudonymised datasets based on characteristics such as disease, age, location. Available for a limited number of datasets, with more being added regularly.",
                 "action": "Search using Cohort Discovery",
                 "actionLoggedOut": "Sign in to use Cohort Discovery",
                 "mediaAlt": "Cohort Discovery feature image"
