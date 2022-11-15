@@ -844,7 +844,7 @@ const YourAccountForm = props => {
                                     <span className='gray800-14 ml-4 margin-top-2'>
                                         I agree to the HDRUK{' '}
                                         <a
-                                            href='https://www.hdruk.ac.uk/infrastructure/gateway/terms-and-conditions/'
+                                            href={process.env.REACT_APP_TERMS_AND_CONDITIONS_URL}
                                             target='_blank'
                                             rel='noopener noreferrer'>
                                             Terms and Conditions
@@ -925,7 +925,7 @@ const YourAccountForm = props => {
                             <a
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                href='https://www.hdruk.ac.uk/infrastructure/gateway/privacy-policy'>
+                                href={process.env.REACT_APP_GATEWAY_PRIVACY_POLICY_URL}>
                                 privacy policy
                             </a>{' '}
                             aims to give you information on how Health Data Research UK collects and processes your personal data through
