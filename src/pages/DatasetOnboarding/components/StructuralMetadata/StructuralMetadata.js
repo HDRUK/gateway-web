@@ -162,14 +162,14 @@ const StructuralMetadata = ({
             if (errors.error === 'required') {
                 return (
                     <>
-                        Error in row {errors.row}: "{errors.column}" is empty and should be "True" or "False"
+                        Error in row {errors.row}: "{errors.column}" is empty and should be TRUE or FALSE
                         <br />
                     </>
                 );
             }
             return (
                 <>
-                    Error in row {errors.row}: "{errors.column}" is "{errors.value}" and should be "True" or "False"
+                    Error in row {errors.row}: "{errors.column}" is "{errors.value}" and should be TRUE or FALSE
                     <br />
                 </>
             );
