@@ -1,4 +1,4 @@
-import { Button } from 'hdruk-react-core';
+import { Button, H1, P } from 'hdruk-react-core';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { Link } from '../../components';
@@ -30,10 +30,10 @@ const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
                 <div className='advancedSearchRequestAccessModal-header'>
                     <div className='advancedSearchRequestAccessModal-header--wrap'>
                         <div className='advancedSearchRequestAccessModal-head'>
-                            <h1 className='black-20-semibold'>Access to Cohort Discovery</h1>
+                            <H1 className='black-20-semibold'>Access to Cohort Discovery</H1>
                             <CloseButtonSvg className='advancedSearchRequestAccessModal-head--close' onClick={() => close()} />
                         </div>
-                        <p>
+                        <P mb={2}>
                             In line with the{' '}
                             <Link href={process.env.REACT_APP_FIVE_SAFES_URL} isExternal>
                                 Five Safes Framework
@@ -41,16 +41,16 @@ const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
                             , users requesting access to Cohort Discovery must demonstrate their Safe People status either as a researcher,
                             NHS analyst or equivalent. This will be assessed based on your Gateway registered user profile, including
                             institutional email address, role description and ORCID entries.
-                        </p>
-                        <p>
+                        </P>
+                        <P mb={2}>
                             If your Safe People status is indeterminate, we will contact you for further information and reserve the right
                             not to provide access.
-                        </p>
-                        <p>
+                        </P>
+                        <P>
                             To satisfy a proportionate assessment of 'Safe Project', you will also need to provide information on why you
                             are requesting access, which will be reviewed to ensure there is potential for public benefit. Access, if
                             granted, will be for a period of 6-months after which you will need to renew.
-                        </p>
+                        </P>
                     </div>
                 </div>
 
