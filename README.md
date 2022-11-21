@@ -66,4 +66,5 @@ REACT_APP_METADATA_CATALOG=https://modelcatalogue.cs.ox.ac.uk/hdruk_live
 REACT_APP_NEWSLETTER_EXAMPLE_URL=https://hdruk-ac-uk-1.hubspotpagebuilder.com/hdr-innovation-gateway-november-update
 REACT_APP_TERMS_AND_CONDITIONS_URL=https://www.hdruk.ac.uk/infrastructure/gateway/terms-and-conditions/
 REACT_APP_GATEWAY_PRIVACY_POLICY_URL=https://www.hdruk.ac.uk/infrastructure/gateway/privacy-policy
+REACT_APP_FIVE_SAFES_URL=https://ukdataservice.ac.uk/help/secure-lab/what-is-the-five-safes-framework/
 ```
