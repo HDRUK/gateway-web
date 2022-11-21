@@ -100,4 +100,6 @@ export const baseURL = _buildUrl('http');
 export const cmsURL = _buildUrl('cms');
 export const apiPath = `api/${process.env.REACT_APP_API_VERSION || 'v1'}`;
 export const apiURL = `${baseURL}/${apiPath}`;
+
+export const apiV1Url = `${baseURL}/api/v1`;
 export const apiV2URL = `${baseURL}/api/v2`;
