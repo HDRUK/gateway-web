@@ -15,6 +15,7 @@ import IconButton from './IconButton';
 import Input from './Input';
 import { LayoutContent } from './Layout';
 import LayoutBox from './LayoutBox';
+import Link from './Link';
 import ListInfo from './ListInfo';
 import Loading from './Loading';
 import QualityScore from './QualityScore';
@@ -47,6 +48,7 @@ export {
     Input,
     LayoutContent,
     LayoutBox,
+    Link,
     ListInfo,
     Loading,
     SearchControls,

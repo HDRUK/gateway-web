@@ -87,7 +87,7 @@ describe('Given the AdvancedSearchCohortDiscovery component', () => {
                 });
 
                 it('Then shows the terms and conditions modal', async () => {
-                    await waitFor(() => expect(wrapper.getByText('How to access the advanced search tool')).toBeTruthy());
+                    await waitFor(() => expect(wrapper.getByText('Access to Cohort Discovery')).toBeTruthy());
                 });
             });
 
