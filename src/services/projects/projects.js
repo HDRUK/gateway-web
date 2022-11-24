@@ -1,4 +1,4 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import {
     deleteRequest,
     getRequest,
@@ -10,27 +10,27 @@ import {
 } from '../../utils/requests';
 
 const getProjects = options => {
-    return getRequest(`${apiURL}/projects/getList`, options);
+    return getRequest(`${apiUrlV1}/projects/getList`, options);
 };
 
 const getProject = (_id, options) => {
-    return getRequest(`${apiURL}/projects/${_id}`, options);
+    return getRequest(`${apiUrlV1}/projects/${_id}`, options);
 };
 
 const postProject = (_id, data, options) => {
-    return postRequest(`${apiURL}/projects/${_id}`, data, options);
+    return postRequest(`${apiUrlV1}/projects/${_id}`, data, options);
 };
 
 const putProject = (_id, data, options) => {
-    return putRequest(`${apiURL}/projects/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/projects/${_id}`, data, options);
 };
 
 const patchProject = (_id, data, options) => {
-    return patchRequest(`${apiURL}/projects/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/projects/${_id}`, data, options);
 };
 
 const deleteProject = (_id, options) => {
-    return deleteRequest(`${apiURL}/projects/${_id}`, options);
+    return deleteRequest(`${apiUrlV1}/projects/${_id}`, options);
 };
 
 const useGetProjects = (requestOptions, queryOptions) => {

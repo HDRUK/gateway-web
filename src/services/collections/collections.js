@@ -1,20 +1,20 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, postRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getCollections = (_id, options) => {
-    return getRequest(`${apiURL}/collections/entityid/${_id}`, options);
+    return getRequest(`${apiUrlV1}/collections/entityid/${_id}`, options);
 };
 
 const getCollectionRequest = (_id, options) => {
-    return getRequest(`${apiURL}/collections/${_id}`, options);
+    return getRequest(`${apiUrlV1}/collections/${_id}`, options);
 };
 
 const getCollectionRelatedObjectsRequest = (_id, options) => {
-    return getRequest(`${apiURL}/collections/relatedobjects/${_id}`, options);
+    return getRequest(`${apiUrlV1}/collections/relatedobjects/${_id}`, options);
 };
 
 const postCollectionCounterUpdateRequest = (data, options) => {
-    return postRequest(`${apiURL}/collectioncounter/update`, data, options);
+    return postRequest(`${apiUrlV1}/collectioncounter/update`, data, options);
 };
 
 const useGetCollections = (requestOptions, mutateOptions) => {

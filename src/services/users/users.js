@@ -1,24 +1,24 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, patchRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getUsers = options => {
-    return getRequest(`${apiURL}/users`, options);
+    return getRequest(`${apiUrlV1}/users`, options);
 };
 
 const getUserById = (id, options) => {
-    return getRequest(`${apiURL}/person/${id}`, options);
+    return getRequest(`${apiUrlV1}/person/${id}`, options);
 };
 
 const searchUsers = (term, options) => {
-    return getRequest(`${apiURL}/users/search/${term}`, options);
+    return getRequest(`${apiUrlV1}/users/search/${term}`, options);
 };
 
 const patchRoles = (_id, data, options) => {
-    return patchRequest(`${apiURL}/users/advancedsearch/roles/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/users/advancedsearch/roles/${_id}`, data, options);
 };
 
 const patchTerms = (_id, data, options) => {
-    return patchRequest(`${apiURL}/users/advancedsearch/terms/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/users/advancedsearch/terms/${_id}`, data, options);
 };
 
 const useGetUsers = (requestOptions, queryOptions) => {

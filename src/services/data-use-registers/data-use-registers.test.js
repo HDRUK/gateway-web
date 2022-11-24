@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiV2URL } from '../../configs/url.config';
+import { apiUrlV2 } from '../../configs/url.config';
 import { getRequest, patchRequest, postRequest } from '../../utils/requests';
 import service from './data-use-registers';
 
@@ -30,7 +30,7 @@ describe('Given the papers service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/data-use-registers`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV2}/data-use-registers`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the papers service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/data-use-registers?team=admin`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV2}/data-use-registers?team=admin`, {
                 option1: true,
             });
         });
@@ -54,7 +54,7 @@ describe('Given the papers service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/data-use-registers/1234?isEdit=true`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV2}/data-use-registers/1234?isEdit=true`, {
                 option1: true,
             });
         });
@@ -71,7 +71,7 @@ describe('Given the papers service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiV2URL}/data-use-registers/1234`,
+                `${apiUrlV2}/data-use-registers/1234`,
                 { status: 'active' },
                 {
                     option1: true,
@@ -90,7 +90,7 @@ describe('Given the papers service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiV2URL}/data-use-registers/counter`,
+                `${apiUrlV2}/data-use-registers/counter`,
                 { status: 'active' },
                 {
                     option1: true,
@@ -109,7 +109,7 @@ describe('Given the papers service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiV2URL}/data-use-registers/check`,
+                `${apiUrlV2}/data-use-registers/check`,
                 { status: 'active' },
                 {
                     option1: true,
@@ -128,7 +128,7 @@ describe('Given the papers service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiV2URL}/data-use-registers/upload`,
+                `${apiUrlV2}/data-use-registers/upload`,
                 { status: 'active' },
                 {
                     option1: true,

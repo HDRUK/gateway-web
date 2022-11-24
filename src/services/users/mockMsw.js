@@ -1,8 +1,8 @@
 import { rest } from 'msw';
 import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS } from '../../configs/constants';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 
-export const mswGetUsers = rest.get(`${apiURL}/users`, (req, res, ctx) => {
+export const mswGetUsers = rest.get(`${apiUrlV1}/users`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -15,7 +15,7 @@ export const mswGetUsers = rest.get(`${apiURL}/users`, (req, res, ctx) => {
     );
 });
 
-export const mswGetUserByID = rest.get(`${apiURL}/person/123`, (req, res, ctx) => {
+export const mswGetUserByID = rest.get(`${apiUrlV1}/person/123`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -24,7 +24,7 @@ export const mswGetUserByID = rest.get(`${apiURL}/person/123`, (req, res, ctx) =
     );
 });
 
-export const mswSearchUsers = rest.get(`${apiURL}/users/search/jack`, (req, res, ctx) => {
+export const mswSearchUsers = rest.get(`${apiUrlV1}/users/search/jack`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -36,7 +36,7 @@ export const mswSearchUsers = rest.get(`${apiURL}/users/search/jack`, (req, res,
     );
 });
 
-export const mswPatchRoles = rest.patch(`${apiURL}/users/advancedsearch/roles/1234`, (req, res, ctx) => {
+export const mswPatchRoles = rest.patch(`${apiUrlV1}/users/advancedsearch/roles/1234`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -47,7 +47,7 @@ export const mswPatchRoles = rest.patch(`${apiURL}/users/advancedsearch/roles/12
     );
 });
 
-export const mswPatchTerms = rest.patch(`${apiURL}/users/advancedsearch/terms/1234`, (req, res, ctx) => {
+export const mswPatchTerms = rest.patch(`${apiUrlV1}/users/advancedsearch/terms/1234`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({

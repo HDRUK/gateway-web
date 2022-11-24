@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, postRequest } from '../../utils/requests';
 import service from './collections';
 
@@ -30,7 +30,7 @@ describe('Given the collections service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/collections/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/collections/1234`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the collections service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/collections/relatedobjects/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/collections/relatedobjects/1234`, {
                 option1: true,
             });
         });
@@ -52,7 +52,7 @@ describe('Given the collections service', () => {
         it('Then calls postRequest with the correct arguments', async () => {
             await service.postCollectionCounterUpdateRequest(100, { id: 1234, option1: true });
 
-            expect(postRequest).toHaveBeenCalledWith(`${apiURL}/collectioncounter/update`, 100, { id: 1234, option1: true });
+            expect(postRequest).toHaveBeenCalledWith(`${apiUrlV1}/collectioncounter/update`, 100, { id: 1234, option1: true });
         });
     });
 

@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
 import service from './messages';
 
@@ -31,7 +31,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/messages`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/messages`, {
                 option1: true,
             });
         });
@@ -43,7 +43,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/messages/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/messages/1234`, {
                 option1: true,
             });
         });
@@ -55,7 +55,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/messages/unread/count`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/messages/unread/count`, {
                 option1: true,
             });
         });
@@ -72,7 +72,7 @@ describe('Given the person service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/messages/1234`,
+                `${apiUrlV1}/messages/1234`,
                 {
                     status: 'archive',
                 },
@@ -91,7 +91,7 @@ describe('Given the person service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/messages/markasread`,
+                `${apiUrlV1}/messages/markasread`,
                 {
                     status: 'archive',
                 },
@@ -111,7 +111,7 @@ describe('Given the person service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/messages/1234`,
+                `${apiUrlV1}/messages/1234`,
                 {
                     status: 'archive',
                 },
@@ -131,7 +131,7 @@ describe('Given the person service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/messages/1234`,
+                `${apiUrlV1}/messages/1234`,
                 {
                     status: 'archive',
                 },
@@ -146,7 +146,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/messages/1234`, {
+            expect(deleteRequest).toHaveBeenCalledWith(`${apiUrlV1}/messages/1234`, {
                 option1: true,
             });
         });

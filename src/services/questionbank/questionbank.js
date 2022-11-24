@@ -1,20 +1,20 @@
-import { apiV2URL } from '../../configs/url.config';
+import { apiUrlV2 } from '../../configs/url.config';
 import { getRequest, patchRequest, postRequest, useMutationWithTranslations } from '../../utils/requests';
 
 const getQuestionbankItem = (_id, options) => {
-    return getRequest(`${apiV2URL}/questionbank/${_id}`, options);
+    return getRequest(`${apiUrlV2}/questionbank/${_id}`, options);
 };
 
 const postQuestionbankItem = (_id, data, options) => {
-    return postRequest(`${apiV2URL}/questionbank/${_id}`, data, options);
+    return postRequest(`${apiUrlV2}/questionbank/${_id}`, data, options);
 };
 
 const patchClearAll = (_id, options) => {
-    return patchRequest(`${apiV2URL}/questionbank/${_id}`, options);
+    return patchRequest(`${apiUrlV2}/questionbank/${_id}`, options);
 };
 
 const patchClearSection = (_id, pageId, options) => {
-    return patchRequest(`${apiV2URL}/questionbank/${_id}?page=${pageId}`, options);
+    return patchRequest(`${apiUrlV2}/questionbank/${_id}?page=${pageId}`, options);
 };
 
 const useGetQuestionbankItem = (requestOptions, mutateOptions) => {

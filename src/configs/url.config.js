@@ -98,8 +98,9 @@ export const addCmsGatewayHostname = path => {
 
 export const baseURL = _buildUrl('http');
 export const cmsURL = _buildUrl('cms');
-export const apiPath = `api/${process.env.REACT_APP_API_VERSION || 'v1'}`;
-export const apiURL = `${baseURL}/${apiPath}`;
 
-export const apiV1Url = `${baseURL}/api/v1`;
-export const apiV2URL = `${baseURL}/api/v2`;
+export const apiPathV1 = 'api/v1';
+export const apiUrlV1 = `${baseURL}/${apiPathV1}`;
+
+export const apiPathV2 = 'api/v2';
+export const apiUrlV2 = `${baseURL}/${apiPathV2}`;

@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, postRequest, putRequest } from '../../utils/requests';
 import service from './teams';
 
@@ -30,7 +30,7 @@ describe('Given the teams service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/teams/1234/members`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/teams/1234/members`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the teams service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/teams/1234/notifications`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/teams/1234/notifications`, {
                 option1: true,
             });
         });
@@ -58,7 +58,7 @@ describe('Given the teams service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/teams/add`,
+                `${apiUrlV1}/teams/add`,
                 {
                     status: 'archive',
                 },
@@ -78,7 +78,7 @@ describe('Given the teams service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/teams/1234`,
+                `${apiUrlV1}/teams/1234`,
                 {
                     status: 'archive',
                 },
@@ -98,7 +98,7 @@ describe('Given the teams service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/teams/1234/notification-messages`,
+                `${apiUrlV1}/teams/1234/notification-messages`,
                 {
                     status: 'archive',
                 },
@@ -118,7 +118,7 @@ describe('Given the teams service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/teams/1234/notifications`,
+                `${apiUrlV1}/teams/1234/notifications`,
                 {
                     status: 'archive',
                 },

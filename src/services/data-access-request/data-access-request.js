@@ -1,4 +1,4 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import {
     deleteRequest,
     getRequest,
@@ -10,51 +10,51 @@ import {
 } from '../../utils/requests';
 
 const getDataAccessRequests = options => {
-    return getRequest(`${apiURL}/data-access-request`, options);
+    return getRequest(`${apiUrlV1}/data-access-request`, options);
 };
 
 const getDataAccessRequest = (_id, options) => {
-    return getRequest(`${apiURL}/data-access-request/${_id}`, options);
+    return getRequest(`${apiUrlV1}/data-access-request/${_id}`, options);
 };
 
 const getDatasets = (_id, options) => {
-    return getRequest(`${apiURL}/data-access-request/datasets`, options);
+    return getRequest(`${apiUrlV1}/data-access-request/datasets`, options);
 };
 
 const postDataAccessRequest = (_id, data, options) => {
-    return postRequest(`${apiURL}/data-access-request/${_id}`, data, options);
+    return postRequest(`${apiUrlV1}/data-access-request/${_id}`, data, options);
 };
 
 const postRequestAmendments = (_id, data, options) => {
-    return postRequest(`${apiURL}/data-access-request/${_id}/requestAmendments`, data, options);
+    return postRequest(`${apiUrlV1}/data-access-request/${_id}/requestAmendments`, data, options);
 };
 
 const postMessages = (_id, data, options) => {
-    return postRequest(`${apiURL}/data-access-request/${_id}/messages`, data, options);
+    return postRequest(`${apiUrlV1}/data-access-request/${_id}/messages`, data, options);
 };
 
 const postAmendments = (_id, data, options) => {
-    return postRequest(`${apiURL}/data-access-request/${_id}/amendments`, data, options);
+    return postRequest(`${apiUrlV1}/data-access-request/${_id}/amendments`, data, options);
 };
 
 const postActions = (_id, data, options) => {
-    return postRequest(`${apiURL}/data-access-request/${_id}/actions`, data, options);
+    return postRequest(`${apiUrlV1}/data-access-request/${_id}/actions`, data, options);
 };
 
 const putDataAccessRequest = (_id, data, options) => {
-    return putRequest(`${apiURL}/data-access-request/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/data-access-request/${_id}`, data, options);
 };
 
 const patchDataAccessRequest = (_id, data, options) => {
-    return patchRequest(`${apiURL}/data-access-request/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/data-access-request/${_id}`, data, options);
 };
 
 const patchSchema = (_id, data, options) => {
-    return patchRequest(`${apiURL}/data-access-request/schema/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/data-access-request/schema/${_id}`, data, options);
 };
 
 const deleteDataAccessRequest = (_id, options) => {
-    return deleteRequest(`${apiURL}/data-access-request/${_id}`, options);
+    return deleteRequest(`${apiUrlV1}/data-access-request/${_id}`, options);
 };
 
 const useGetDataAccessRequests = (requestOptions, queryOptions) => {

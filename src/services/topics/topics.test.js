@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
 import service from './topics';
 
@@ -30,7 +30,7 @@ describe('Given the topics service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/topics`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/topics`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the topics service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/topics/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/topics/1234`, {
                 option1: true,
             });
         });
@@ -59,7 +59,7 @@ describe('Given the topics service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/topics/1234`,
+                `${apiUrlV1}/topics/1234`,
                 {
                     status: 'archive',
                 },
@@ -79,7 +79,7 @@ describe('Given the topics service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/topics/1234`,
+                `${apiUrlV1}/topics/1234`,
                 {
                     status: 'archive',
                 },
@@ -99,7 +99,7 @@ describe('Given the topics service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/topics/1234`,
+                `${apiUrlV1}/topics/1234`,
                 {
                     status: 'archive',
                 },
@@ -114,7 +114,7 @@ describe('Given the topics service', () => {
                 option1: true,
             });
 
-            expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/topics/1234`, {
+            expect(deleteRequest).toHaveBeenCalledWith(`${apiUrlV1}/topics/1234`, {
                 option1: true,
             });
         });

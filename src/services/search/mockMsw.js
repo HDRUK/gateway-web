@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 
 export const mockDatasetFilters = [
     {
@@ -3762,7 +3762,7 @@ export const mockDatasetFilters = [
     },
 ];
 
-export const mswGetSearch = rest.get(`${apiURL}/search`, (req, res, ctx) => {
+export const mswGetSearch = rest.get(`${apiUrlV1}/search`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
