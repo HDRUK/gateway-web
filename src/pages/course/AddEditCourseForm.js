@@ -116,32 +116,12 @@ const AddEditCourseForm = props => {
 
     const relatedResourcesRef = React.useRef();
 
-    const removePhase = index => {
-        if (!_.isEmpty(formik.values.courseOptions)) {
-            const newCourseOptions = formik.values.courseOptions.filter((key, idx) => {
-                return idx !== index;
-            });
-            formik.setFieldValue('courseOptions', newCourseOptions);
-        }
-    };
-
-    const studyMode = ['Full-time', 'Part-time', 'Self-taught'];
-
     return (
         <div>
             <Container>
                 <Formik enableReinitialize initialValues={initialValues} innerRef={formRef}>
-                    {() => (
-                        <CourseForm
-                            studyMode={studyMode}
-                            removePhase={removePhase}
-                            relatedResourcesRef={relatedResourcesRef}
-                            props={props}
-                            formik={formik}
-                        />
-                    )}
+                    {() => <CourseForm relatedResourcesRef={relatedResourcesRef} props={props} formik={formik} />}
                 </Formik>
-                />
             </Container>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>

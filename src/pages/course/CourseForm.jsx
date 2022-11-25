@@ -12,7 +12,7 @@ import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import EntryFieldArray from './EntryFieldArray';
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 
-const CourseForm = ({ props, formik, studyMode, removePhase, relatedResourcesRef }) => {
+const CourseForm = ({ props, formik, relatedResourcesRef }) => {
     function descriptionCount(e) {
         document.getElementById('currentCount').innerHTML = e.target.value.length;
     }
@@ -275,9 +275,7 @@ const CourseForm = ({ props, formik, studyMode, removePhase, relatedResourcesRef
 
                         <div className='rectangle pixelGapTop'>
                             <div className='main-body'>
-                                <FieldArray name='courseOptions'>
-                                    {() => <CourseOptionsFieldArray formik={formik} studyMode={studyMode} removePhase={removePhase} />}
-                                </FieldArray>
+                                <FieldArray name='courseOptions'>{() => <CourseOptionsFieldArray formik={formik} />}</FieldArray>
                             </div>
                         </div>
 

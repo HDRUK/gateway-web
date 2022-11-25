@@ -10,25 +10,37 @@ import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import './Course.scss';
 import Fees from './Fees';
 
-const CourseOptionsFieldArray = ({ formik, studyMode, removePhase }) => {
-    const studyDurationMeasure = ['Hour(s)', 'Day(s)', 'Week(s)', 'Month(s)', 'Year(s)'];
+const studyDurationMeasure = ['Hour(s)', 'Day(s)', 'Week(s)', 'Month(s)', 'Year(s)'];
 
-    const feePer = ['Week', 'Month', 'Year', 'Total course'];
+const studyMode = ['Full-time', 'Part-time', 'Self-taught'];
 
-    const courseOptions = {
-        flexibleDates: false,
-        startDate: '',
-        studyMode: '',
-        studyDurationNumber: '',
-        studyDurationMeasure: '',
-        fees: [
-            {
-                feeDescription: '',
-                feeAmount: '',
-                feePer: '',
-            },
-        ],
+const feePer = ['Week', 'Month', 'Year', 'Total course'];
+
+const courseOptions = {
+    flexibleDates: false,
+    startDate: '',
+    studyMode: '',
+    studyDurationNumber: '',
+    studyDurationMeasure: '',
+    fees: [
+        {
+            feeDescription: '',
+            feeAmount: '',
+            feePer: '',
+        },
+    ],
+};
+
+const CourseOptionsFieldArray = ({ formik }) => {
+    const removePhase = index => {
+        if (!_.isEmpty(formik.values.courseOptions)) {
+            const newCourseOptions = formik.values.courseOptions.filter((key, idx) => {
+                return idx !== index;
+            });
+            formik.setFieldValue('courseOptions', newCourseOptions);
+        }
     };
+
     return (
         <div>
             {formik.values.courseOptions.length > 0 &&
