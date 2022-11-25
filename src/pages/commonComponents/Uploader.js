@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { ReactComponent as PersonPlaceholderSvg } from '../../images/person-placeholder.svg';
 import './CommonComponents.scss';
