@@ -355,7 +355,7 @@ export const PaperDetail = props => {
                             <div className='rectangle'>
                                 <Row>
                                     <Col>
-                                        <span data-testid='paper-name' className='black-16' data-testid='title'>
+                                        <span data-testid='paper-name' className='black-16'>
                                             {paperData.name}
                                         </span>
                                     </Col>

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
 import Login from './Login';
