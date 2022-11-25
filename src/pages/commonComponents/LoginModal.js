@@ -5,7 +5,7 @@ import Login from './Login';
 
 const LoginModal = props => {
     useEffect(() => {
-        var values = queryString.parse(window.location.search);
+        const values = queryString.parse(window.location.search);
         if (!!values.showLogin && values.showLogin === 'true') {
             document.getElementById('myModal').style.display = 'block';
             document.getElementById('loginWayFinder').style.display = 'none';
@@ -29,8 +29,8 @@ const LoginModal = props => {
     };
 
     return (
-        <Fragment>
-            <div id='myModal' className='modal login-modal' data-test-id='mdlLogin'>
+        <>
+            <div id='myModal' className='modal login-modal' data-testid='mdlLogin'>
                 <div className='modal-dialog modal-dialog-centered modal-lg' role='document'>
                     <div className='modal-content'>
                         <div className='modal-body mb-4'>
@@ -67,7 +67,7 @@ const LoginModal = props => {
                     </div>
                 </div>
             </div>
-        </Fragment>
+        </>
     );
 };
 

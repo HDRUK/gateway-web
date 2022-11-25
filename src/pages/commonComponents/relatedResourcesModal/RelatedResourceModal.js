@@ -98,8 +98,7 @@ class RelatedResourcesModal extends React.Component {
                     active={i === datasetIndex / maxResults + 1}
                     onClick={e => {
                         this.handlePagination('dataset', (i - 1) * maxResults, 'click');
-                    }}
-                >
+                    }}>
                     {i}
                 </Pagination.Item>
             );
@@ -111,8 +110,7 @@ class RelatedResourcesModal extends React.Component {
                     active={i === toolIndex / maxResults + 1}
                     onClick={e => {
                         this.handlePagination('tool', (i - 1) * maxResults, 'click');
-                    }}
-                >
+                    }}>
                     {i}
                 </Pagination.Item>
             );
@@ -124,8 +122,7 @@ class RelatedResourcesModal extends React.Component {
                     active={i === dataUseRegisterIndex / maxResults + 1}
                     onClick={e => {
                         this.handlePagination('datause', (i - 1) * maxResults, 'click');
-                    }}
-                >
+                    }}>
                     {i}
                 </Pagination.Item>
             );
@@ -137,8 +134,7 @@ class RelatedResourcesModal extends React.Component {
                     active={i === paperIndex / maxResults + 1}
                     onClick={e => {
                         this.handlePagination('paper', (i - 1) * maxResults, 'click');
-                    }}
-                >
+                    }}>
                     {i}
                 </Pagination.Item>
             );
@@ -150,8 +146,7 @@ class RelatedResourcesModal extends React.Component {
                     active={i === personIndex / maxResults + 1}
                     onClick={e => {
                         this.handlePagination('person', (i - 1) * maxResults, 'click');
-                    }}
-                >
+                    }}>
                     {i}
                 </Pagination.Item>
             );
@@ -163,8 +158,7 @@ class RelatedResourcesModal extends React.Component {
                     active={i === courseIndex / maxResults + 1}
                     onClick={e => {
                         this.handlePagination('course', (i - 1) * maxResults, 'click');
-                    }}
-                >
+                    }}>
                     {i}
                 </Pagination.Item>
             );
@@ -249,11 +243,10 @@ class RelatedResourcesModal extends React.Component {
                             <div className='searchTabsHolder'>
                                 <div style={{ width: '90%' }}>
                                     <Tabs
-                                        data-test-id='related-resource-tabs'
+                                        data-testid='related-resource-tabs'
                                         className='tabsBackground-shadow-bottom gray700-13'
                                         activeKey={key}
-                                        onSelect={this.handleSelect}
-                                    >
+                                        onSelect={this.handleSelect}>
                                         <Tab
                                             eventKey='Datasets'
                                             title={
@@ -295,7 +288,7 @@ class RelatedResourcesModal extends React.Component {
                                             }
                                         />
                                         <Tab
-                                            data-test-id='related-papers'
+                                            data-testid='related-papers'
                                             eventKey='Papers'
                                             title={
                                                 'Papers (' +

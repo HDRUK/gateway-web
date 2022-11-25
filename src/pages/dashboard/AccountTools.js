@@ -179,7 +179,7 @@ export const AccountTools = props => {
                     </Col>
                     <Col sm={12} md={4} style={{ textAlign: 'right' }}>
                         <Button
-                            data-test-id='add-tool-btn'
+                            data-testid='add-tool-btn'
                             variant='primary'
                             href='/tool/add'
                             className='addButton'

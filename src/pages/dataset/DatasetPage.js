@@ -806,7 +806,7 @@ class DatasetDetail extends Component {
                                         {this.state.isLatestVersion && !this.state.isDatasetArchived && (
                                             <Col sm={6} className='text-right'>
                                                 <button
-                                                    data-test-id='dataset-request-access-btn'
+                                                    data-testid='dataset-request-access-btn'
                                                     className='btn btn-primary addButton pointer float-right'
                                                     onClick={() => {
                                                         this.toggleModal();

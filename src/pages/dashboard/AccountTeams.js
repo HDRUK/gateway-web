@@ -145,12 +145,7 @@ const AccountTeams = () => {
                             </Row>
                         </Col>
                         <Col sm={12} md={4} style={{ textAlign: 'right' }}>
-                            <Button
-                                data-test-id='add-team-btn'
-                                variant='primary'
-                                href=''
-                                className='addButton'
-                                onClick={() => createTeam()}>
+                            <Button data-testid='add-team-btn' variant='primary' href='' className='addButton' onClick={() => createTeam()}>
                                 + Add a new team
                             </Button>
                         </Col>

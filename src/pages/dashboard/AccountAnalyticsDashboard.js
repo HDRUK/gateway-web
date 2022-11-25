@@ -256,7 +256,7 @@ class AccountAnalyticsDashboard extends React.Component {
                                         <span className='black-20-semibold'>Dashboard</span>
                                     </Col>
                                     <Col sm={4} lg={4}>
-                                        <span className='gray700-13 floatRight' data-test-id='dashboard-metrics-last-updated'>
+                                        <span className='gray700-13 floatRight' data-testid='dashboard-metrics-last-updated'>
                                             Last updated: {moment().format('DD MMM YYYY, hh:mm')}
                                         </span>
                                     </Col>
@@ -318,8 +318,7 @@ class AccountAnalyticsDashboard extends React.Component {
                                                 className='floatRight gray800-14'
                                                 title={moment(this.state.selectedOption).format('MMMM YYYY')}
                                                 id='dateDropdown'
-                                                onSelect={this.handleDateSelect.bind(this)}
-                                            >
+                                                onSelect={this.handleDateSelect.bind(this)}>
                                                 {dates.map((date, i) => (
                                                     <Dropdown.Item className='gray800-14' key={i} eventKey={i}>
                                                         {moment(date).format('MMMM YYYY')}

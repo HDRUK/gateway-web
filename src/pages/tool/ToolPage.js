@@ -355,7 +355,7 @@ export const ToolDetail = props => {
                             <div className='rectangle'>
                                 <Row>
                                     <Col className='line-height-normal'>
-                                        <span data-test-id='tool-name' className='black-16'>
+                                        <span data-testid='tool-name' className='black-16'>
                                             {toolData.name}
                                         </span>
                                     </Col>
@@ -431,7 +431,7 @@ export const ToolDetail = props => {
                                                         <Col
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
-                                                            data-test-id='tool-description'>
+                                                            data-testid='tool-description'>
                                                             <ReactMarkdown source={toolData.description} />
                                                         </Col>
                                                     </Row>
@@ -472,7 +472,7 @@ export const ToolDetail = props => {
                                                             <a
                                                                 href={toolData.link}
                                                                 rel='noopener noreferrer'
-                                                                data-test-id='tool-page-url'
+                                                                data-testid='tool-page-url'
                                                                 target='_blank'
                                                                 className='purple-14 text-break'>
                                                                 {toolData.link}
@@ -506,7 +506,7 @@ export const ToolDetail = props => {
                                                             <Col sm={2}>
                                                                 <span className='gray800-14'>Authors</span>
                                                             </Col>
-                                                            <Col sm={10} className='gray800-14 overflowWrap' data-test-id='tool-authors'>
+                                                            <Col sm={10} className='gray800-14 overflowWrap' data-testid='tool-authors'>
                                                                 {toolData.authorsNew}
                                                             </Col>
                                                         </Row>
@@ -532,7 +532,7 @@ export const ToolDetail = props => {
                                                         <Col sm={10} className='gray800-14'>
                                                             <a
                                                                 href={`/search?search=&tab=Tools&toolcategories=${toolData.categories.category}`}>
-                                                                <div data-test-id='tool-type' className='badge-tag'>
+                                                                <div data-testid='tool-type' className='badge-tag'>
                                                                     {toolData.categories.category}
                                                                 </div>
                                                             </a>
@@ -552,7 +552,7 @@ export const ToolDetail = props => {
                                                                               <div
                                                                                   className='badge-version'
                                                                                   key={i}
-                                                                                  data-test-id='tool-implementation'>
+                                                                                  data-testid='tool-implementation'>
                                                                                   <span>{obj.programmingLanguage}</span>
                                                                                   <span>{obj.version}</span>
                                                                               </div>

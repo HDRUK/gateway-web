@@ -348,7 +348,7 @@ export const CollectionPage = props => {
                         </Row>
                         <Row>
                             <Col sm={12} lg={12} className='centerText'>
-                                <span className='black-28' data-test-id='collectionName'>
+                                <span className='black-28' data-testid='collectionName'>
                                     {collectionData.name}{' '}
                                 </span>
                             </Col>
@@ -398,7 +398,7 @@ export const CollectionPage = props => {
 
                         <Row className='pad-top-24'>
                             <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10} data-test-id='collection-description' className='gray800-14 hdruk-section-body'>
+                            <Col sm={10} lg={10} data-testid='collection-description' className='gray800-14 hdruk-section-body'>
                                 <ReactMarkdown source={collectionData.description} data-testid='collectionDescription' />
                             </Col>
                             <Col sm={1} lg={1} />

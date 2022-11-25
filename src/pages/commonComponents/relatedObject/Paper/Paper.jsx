@@ -18,7 +18,7 @@ import ShowMore from '../../ShowMore';
 
 const Paper = ({ data, activeLink, onSearchPage, showRelationshipQuestion, updateOnFilterBadge, removeButton, isLocked, onClick }) => (
     <>
-        <Row data-test-id='related-paper-object' className='pad-left-24 pad-right-24'>
+        <Row data-testid='related-paper-object' className='pad-left-24 pad-right-24'>
             <Col sm={10} lg={10}>
                 <Title
                     activeLink={activeLink}

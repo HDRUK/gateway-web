@@ -315,14 +315,14 @@ export const CourseDetail = props => {
                             <div className='rectangle'>
                                 <Row>
                                     <Col>
-                                        <span data-test-id='course-title' className='black-16'>
+                                        <span data-testid='course-title' className='black-16'>
                                             {courseData.title}
                                         </span>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <span data-test-id='course-provider' className='black-14'>
+                                        <span data-testid='course-provider' className='black-14'>
                                             {courseData.provider}
                                         </span>
                                     </Col>
@@ -389,7 +389,7 @@ export const CourseDetail = props => {
                                                     <Row className='mt-3'>
                                                         <Col
                                                             sm={12}
-                                                            data-test-id='course-description'
+                                                            data-testid='course-description'
                                                             className='gray800-14 hdruk-section-body'>
                                                             <ReactMarkdown source={courseData.description} />
                                                         </Col>
@@ -429,7 +429,7 @@ export const CourseDetail = props => {
                                                         </Col>
                                                         <Col sm={10} className='gray800-14'>
                                                             <a
-                                                                data-test-id='course-url'
+                                                                data-testid='course-url'
                                                                 href={courseData.link}
                                                                 rel='noopener noreferrer'
                                                                 target='_blank'
@@ -480,7 +480,7 @@ export const CourseDetail = props => {
                                                         <Col sm={2} className='gray800-14'>
                                                             Course location
                                                         </Col>
-                                                        <Col sm={10} className='gray-deep-14 overflowWrap' data-test-id='course-location'>
+                                                        <Col sm={10} className='gray-deep-14 overflowWrap' data-testid='course-location'>
                                                             {courseData.location ? (
                                                                 courseData.location
                                                             ) : (
@@ -538,7 +538,7 @@ export const CourseDetail = props => {
                                                         return (
                                                             <div className='margin-top-24'>
                                                                 <Row className='gray800-14-opacity'>
-                                                                    <Col sm={12} data-test-id='course-date'>
+                                                                    <Col sm={12} data-testid='course-date'>
                                                                         {courseOption.flexibleDates
                                                                             ? 'Flexible'
                                                                             : moment(courseOption.startDate).format('dddd Do MMMM YYYY')}
@@ -552,7 +552,7 @@ export const CourseDetail = props => {
                                                                         <Col
                                                                             sm={10}
                                                                             className='gray-deep-14 overflowWrap'
-                                                                            data-test-id='course-duration'>
+                                                                            data-testid='course-duration'>
                                                                             {courseOption.studyMode} | {courseOption.studyDurationNumber}{' '}
                                                                             {courseOption.studyDurationMeasure}
                                                                         </Col>
@@ -576,7 +576,7 @@ export const CourseDetail = props => {
                                                                                     <Col
                                                                                         sm={10}
                                                                                         className='gray-deep-14 overflowWrap'
-                                                                                        data-test-id='course-fees'>
+                                                                                        data-testid='course-fees'>
                                                                                         {fee.feeDescription} | £{fee.feeAmount}{' '}
                                                                                         {fee.feePer ? (
                                                                                             <>per {fee.feePer.toLowerCase()}</>
@@ -619,8 +619,8 @@ export const CourseDetail = props => {
                                                                         <a
                                                                             href={`/search?search=&tab=Courses&courseentrylevel=${entry.level}`}>
                                                                             <div className='badge-version'>
-                                                                                <span data-test-id='entry-level'>{entry.level}</span>
-                                                                                <span data-test-id='entry-subject'>{entry.subject}</span>
+                                                                                <span data-testid='entry-level'>{entry.level}</span>
+                                                                                <span data-testid='entry-subject'>{entry.subject}</span>
                                                                             </div>
                                                                         </a>
                                                                     ) : entry.level && !entry.subject ? (

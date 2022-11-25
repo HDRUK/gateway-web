@@ -352,7 +352,7 @@ const AddEditPaperForm = props => {
                                                                                     -
                                                                                 </button>
                                                                                 <button
-                                                                                    data-test-id={`add-link-${index}`}
+                                                                                    data-testid={`add-link-${index}`}
                                                                                     type='button'
                                                                                     className='plusMinusButton'
                                                                                     onClick={() => {
@@ -377,7 +377,7 @@ const AddEditPaperForm = props => {
                                                     </p>
                                                     <Form.Control
                                                         id='authorsNew'
-                                                        data-test-id='authors'
+                                                        data-testid='authors'
                                                         name='authorsNew'
                                                         type='text'
                                                         className='addFormInput gray700-13'
@@ -493,7 +493,7 @@ const AddEditPaperForm = props => {
                                                         </span>
                                                     </div>
                                                     <TextareaAutosize
-                                                        data-test-id='abstract'
+                                                        data-testid='abstract'
                                                         as='textarea'
                                                         id='description'
                                                         name='description'
@@ -550,7 +550,7 @@ const AddEditPaperForm = props => {
                                                     ) : null}
                                                 </Form.Group>
 
-                                                <Form.Group data-test-id='keywords'>
+                                                <Form.Group data-testid='keywords'>
                                                     <p className='gray800-14 margin-bottom-0 pad-bottom-4'>Keywords (optional)</p>
                                                     <p className='gray700-13 margin-bottom-0'>
                                                         Technological paradigms or other keywords. Eg. Rule-based, clustering, supervised
@@ -576,7 +576,7 @@ const AddEditPaperForm = props => {
                                                     />
                                                 </Form.Group>
 
-                                                <Form.Group data-test-id='domain'>
+                                                <Form.Group data-testid='domain'>
                                                     <p className='gray800-14 margin-bottom-0 pad-bottom-4'>Domain (optional)</p>
                                                     <p className='gray700-13 margin-bottom-0'>E.g. Biogenomics, Nutrition, Blockchain</p>
                                                     <Typeahead
@@ -599,7 +599,7 @@ const AddEditPaperForm = props => {
                                                     />
                                                 </Form.Group>
 
-                                                <Form.Group data-test-id='uploaders'>
+                                                <Form.Group data-testid='uploaders'>
                                                     <p className='gray800-14 margin-bottom-0 pad-bottom-4'>Uploaders</p>
                                                     <p className='gray700-13 margin-bottom-0'>
                                                         Uploaders are Gateway members with editing rights on this paper.
@@ -705,7 +705,7 @@ const AddEditPaperForm = props => {
                         + Add resource
                     </Button>
 
-                    <Button data-test-id='add-paper-publish' className='publishButton mr-2' type='submit' onClick={formik.handleSubmit}>
+                    <Button data-testid='add-paper-publish' className='publishButton mr-2' type='submit' onClick={formik.handleSubmit}>
                         {props.isEdit ? 'Update' : 'Publish'}
                     </Button>
                 </div>

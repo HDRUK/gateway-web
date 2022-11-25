@@ -182,7 +182,7 @@ export const AccountPapers = props => {
                     </Col>
                     <Col sm={12} md={4} style={{ textAlign: 'right' }}>
                         <Button
-                            data-test-id='add-paper-btn'
+                            data-testid='add-paper-btn'
                             variant='primary'
                             href='/paper/add'
                             className='addButton'

@@ -52,7 +52,7 @@ const AdvancedSearchTAndCsModal = ({ open, close, updateUserAcceptedAdvancedSear
                                 Cancel
                             </Button>
                             <Button
-                                data-test-id='agree-to-terms'
+                                data-testid='agree-to-terms'
                                 type='submit'
                                 onClick={() => {
                                     const elmnt = document.getElementById('accept-terms');
