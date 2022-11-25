@@ -159,14 +159,13 @@ const AccountCollections = props => {
                     </Col>
                     <Col sm={12} md={4} style={{ textAlign: 'right' }}>
                         <Button
-                            data-test-id='add-collection-btn'
+                            data-testid='add-collection-btn'
                             variant='primary'
                             href='/collection/add'
                             className='addButton'
                             onClick={() =>
                                 googleAnalytics.recordEvent('Collections', 'Add a new collection', 'Collections dashboard button clicked')
-                            }
-                        >
+                            }>
                             + Create a collection
                         </Button>
                     </Col>
@@ -246,12 +245,10 @@ const AccountCollections = props => {
                                                                     variant='outline-secondary'
                                                                     alignRight
                                                                     title='Actions'
-                                                                    className='floatRight'
-                                                                >
+                                                                    className='floatRight'>
                                                                     <Dropdown.Item
                                                                         href={'/collection/edit/' + collection.id}
-                                                                        className='black-14'
-                                                                    >
+                                                                        className='black-14'>
                                                                         Edit
                                                                     </Dropdown.Item>
                                                                     <EntityActionButton
@@ -325,12 +322,10 @@ const AccountCollections = props => {
                                                                     variant='outline-secondary'
                                                                     alignRight
                                                                     title='Actions'
-                                                                    className='floatRight'
-                                                                >
+                                                                    className='floatRight'>
                                                                     <Dropdown.Item
                                                                         href={'/collection/edit/' + collection.id}
-                                                                        className='black-14'
-                                                                    >
+                                                                        className='black-14'>
                                                                         Edit
                                                                     </Dropdown.Item>
                                                                     <EntityActionButton
@@ -368,8 +363,7 @@ const AccountCollections = props => {
                                 statusKey={key}
                                 paginationIndex={activeIndex}
                                 setPaginationIndex={setActiveIndex}
-                                maxResults={maxResults}
-                            ></PaginationHelper>
+                                maxResults={maxResults}></PaginationHelper>
                         ) : (
                             ''
                         )}
@@ -380,8 +374,7 @@ const AccountCollections = props => {
                                 statusKey={key}
                                 paginationIndex={archiveIndex}
                                 setPaginationIndex={setArchiveIndex}
-                                maxResults={maxResults}
-                            ></PaginationHelper>
+                                maxResults={maxResults}></PaginationHelper>
                         ) : (
                             ''
                         )}

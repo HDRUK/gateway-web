@@ -16,7 +16,7 @@ class DashboardKPI extends Component {
                 <Row className='kpiCard'>
                     <Col sm={12} lg={12}>
                         <Row className='text-left ml-2'>
-                            <span className='black-28 text-left' data-test-id={testId}>
+                            <span className='black-28 text-left' data-testid={testId}>
                                 {_.isEmpty(kpiText) ? (
                                     ''
                                 ) : overallStats.includes(kpiText) ? (
@@ -32,7 +32,7 @@ class DashboardKPI extends Component {
                         </Row>
 
                         <Row className='text-left ml-2'>
-                            <span className='gray700-12' data-test-id='kpiText'>
+                            <span className='gray700-12' data-testid='kpiText'>
                                 {' '}
                                 {kpiText}{' '}
                             </span>

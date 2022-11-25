@@ -98,7 +98,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
                                 </Button>
                             ) : null}
                             <Button
-                                data-test-id='dar-modal-make-enquiry-btn'
+                                data-testid='dar-modal-make-enquiry-btn'
                                 className='addButton'
                                 onClick={() => {
                                     isLoggedIn ? onCloseModal('ENQUIRY') : showLoginModal();

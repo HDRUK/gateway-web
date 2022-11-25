@@ -244,7 +244,7 @@ const AddEditCourseForm = props => {
                                                 <Form.Group>
                                                     <span className='gray800-14'>Course title</span>
                                                     <Form.Control
-                                                        data-test-id='title'
+                                                        data-testid='title'
                                                         id='title'
                                                         name='title'
                                                         type='text'
@@ -268,7 +268,7 @@ const AddEditCourseForm = props => {
                                                         Where can users sign up and find more information about this course?
                                                     </p>
                                                     <Form.Control
-                                                        data-test-id='url'
+                                                        data-testid='url'
                                                         id='link'
                                                         name='link'
                                                         type='text'
@@ -290,7 +290,7 @@ const AddEditCourseForm = props => {
                                                     <p className='gray800-14 margin-bottom-0 pad-bottom-4'>Course provider</p>
                                                     <p className='gray700-13 margin-bottom-0'>Who is providing this course?</p>
                                                     <Form.Control
-                                                        data-test-id='provider'
+                                                        data-testid='provider'
                                                         id='provider'
                                                         name='provider'
                                                         type='text'
@@ -348,7 +348,7 @@ const AddEditCourseForm = props => {
                                                                 Where is this course being held? e.g. London, Manchester, Wales, Scotland
                                                             </p>
                                                             <Form.Control
-                                                                data-test-id='location'
+                                                                data-testid='location'
                                                                 id='location'
                                                                 name='location'
                                                                 type='text'
@@ -373,7 +373,7 @@ const AddEditCourseForm = props => {
                                                         </span>
                                                     </div>
                                                     <TextareaAutosize
-                                                        data-test-id='description'
+                                                        data-testid='description'
                                                         as='textarea'
                                                         id='description'
                                                         name='description'
@@ -489,7 +489,7 @@ const AddEditCourseForm = props => {
                                                                                             </small>
                                                                                             <div className='row mb-2'>
                                                                                                 <Form.Control
-                                                                                                    data-test-id='flexible-dates'
+                                                                                                    data-testid='flexible-dates'
                                                                                                     type='checkbox'
                                                                                                     className='checker'
                                                                                                     id={`courseOptions[${index}].flexibleDates`}
@@ -584,7 +584,7 @@ const AddEditCourseForm = props => {
                                                                                         <Row className='mt-2'>
                                                                                             <Col sm={4} className='pad-right-0'>
                                                                                                 <DropdownButton
-                                                                                                    data-test-id='study-mode'
+                                                                                                    data-testid='study-mode'
                                                                                                     variant='white'
                                                                                                     title={
                                                                                                         formik.values.courseOptions[index]
@@ -610,7 +610,7 @@ const AddEditCourseForm = props => {
                                                                                                     }>
                                                                                                     {studyMode.map((study, i) => (
                                                                                                         <Dropdown.Item
-                                                                                                            data-test-id={`study-mode-${study}`}
+                                                                                                            data-testid={`study-mode-${study}`}
                                                                                                             className='gray800-14 width-100'
                                                                                                             key={study}
                                                                                                             eventKey={study}>
@@ -621,7 +621,7 @@ const AddEditCourseForm = props => {
                                                                                             </Col>
                                                                                             <Col sm={4} className='pad-right-0'>
                                                                                                 <Form.Control
-                                                                                                    data-test-id='study-duration-number'
+                                                                                                    data-testid='study-duration-number'
                                                                                                     id={`courseOptions[${index}].studyDurationNumber`}
                                                                                                     name={`courseOptions[${index}].studyDurationNumber`}
                                                                                                     type='text'
@@ -667,7 +667,7 @@ const AddEditCourseForm = props => {
                                                                                             </Col>
                                                                                             <Col sm={4}>
                                                                                                 <DropdownButton
-                                                                                                    data-test-id='study-duration-measure'
+                                                                                                    data-testid='study-duration-measure'
                                                                                                     variant='white'
                                                                                                     title={
                                                                                                         formik.values.courseOptions[index]
@@ -694,7 +694,7 @@ const AddEditCourseForm = props => {
                                                                                                     {studyDurationMeasure.map(
                                                                                                         (study, i) => (
                                                                                                             <Dropdown.Item
-                                                                                                                data-test-id={`duration-measure-${study}`}
+                                                                                                                data-testid={`duration-measure-${study}`}
                                                                                                                 className='gray800-14 width-100'
                                                                                                                 key={study}
                                                                                                                 eventKey={study}>
@@ -751,7 +751,7 @@ const AddEditCourseForm = props => {
                                                                                                                         className='pad-right-0 pad-bottom-4'>
                                                                                                                         <div className=''>
                                                                                                                             <Form.Control
-                                                                                                                                data-test-id='fee-description'
+                                                                                                                                data-testid='fee-description'
                                                                                                                                 id={`courseOptions[${index}].fees[${indexB}].feeDescription`}
                                                                                                                                 name={`courseOptions[${index}].fees[${indexB}].feeDescription`}
                                                                                                                                 type='text'
@@ -780,7 +780,7 @@ const AddEditCourseForm = props => {
                                                                                                                         className='pad-right-0 pad-bottom-4'>
                                                                                                                         <div className=''>
                                                                                                                             <Form.Control
-                                                                                                                                data-test-id='fee-amount'
+                                                                                                                                data-testid='fee-amount'
                                                                                                                                 id={`courseOptions[${index}].fees[${indexB}].feeAmount`}
                                                                                                                                 name={`courseOptions[${index}].fees[${indexB}].feeAmount`}
                                                                                                                                 type='text'
@@ -926,7 +926,7 @@ const AddEditCourseForm = props => {
                                                                                                                         className='pad-right-0 pad-bottom-4'>
                                                                                                                         <div className=''>
                                                                                                                             <DropdownButton
-                                                                                                                                data-test-id='fee-per'
+                                                                                                                                data-testid='fee-per'
                                                                                                                                 variant='white'
                                                                                                                                 title={
                                                                                                                                     formik
@@ -974,7 +974,7 @@ const AddEditCourseForm = props => {
                                                                                                                                         i
                                                                                                                                     ) => (
                                                                                                                                         <Dropdown.Item
-                                                                                                                                            data-test-id={`fee-per-${study}`}
+                                                                                                                                            data-testid={`fee-per-${study}`}
                                                                                                                                             className='gray800-14 width-100'
                                                                                                                                             key={
                                                                                                                                                 study
@@ -1145,7 +1145,7 @@ const AddEditCourseForm = props => {
                                                                         <>
                                                                             <Col sm={5} className='pad-right-0 pad-bottom-4'>
                                                                                 <DropdownButton
-                                                                                    data-test-id='entry-level'
+                                                                                    data-testid='entry-level'
                                                                                     variant='white'
                                                                                     title={
                                                                                         formik.values.entries[indexC].level || (
@@ -1161,7 +1161,7 @@ const AddEditCourseForm = props => {
                                                                                     }>
                                                                                     {level.map((l, i) => (
                                                                                         <Dropdown.Item
-                                                                                            data-test-id={`entry-level-${l}`}
+                                                                                            data-testid={`entry-level-${l}`}
                                                                                             className='gray800-14 width-100'
                                                                                             key={l}
                                                                                             eventKey={l}>
@@ -1173,7 +1173,7 @@ const AddEditCourseForm = props => {
                                                                             <Col sm={5} className='pad-right-0 pad-bottom-4'>
                                                                                 <div className=''>
                                                                                     <Form.Control
-                                                                                        data-test-id='entry-subject'
+                                                                                        data-testid='entry-subject'
                                                                                         id={`entries[${indexC}].subject`}
                                                                                         name={`entries[${indexC}].subject`}
                                                                                         type='text'
@@ -1396,7 +1396,7 @@ const AddEditCourseForm = props => {
                         mr={2}>
                         + Add resource
                     </Button>
-                    <Button data-test-id='add-course-publish' mr={2} type='submit' onClick={formik.handleSubmit}>
+                    <Button data-testid='add-course-publish' mr={2} type='submit' onClick={formik.handleSubmit}>
                         {props.isEdit ? 'Update' : 'Publish'}
                     </Button>
                 </div>

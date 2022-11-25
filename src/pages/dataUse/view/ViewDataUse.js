@@ -423,7 +423,7 @@ export const DataUseView = props => {
                                 <div className='rectangle'>
                                     <Row>
                                         <Col>
-                                            <span data-test-id='datause-name' className='black-16' data-testid='title'>
+                                            <span className='black-16' data-testid='title'>
                                                 {dataUseData.projectTitle}
                                             </span>
                                             <br />

@@ -23,7 +23,7 @@ const ResourcePageButtons = props => {
                 (props.data.creator && props.data.creator[0].id === props.userState[0].id) ||
                 props.userState[0].role === 'Admin') ? (
                 <Button
-                    data-test-id='action-bar-edit'
+                    data-testid='action-bar-edit'
                     variant='secondary'
                     href={`/${type}/edit/${props.data.id}`}
                     className='techDetailButton mr-2'>

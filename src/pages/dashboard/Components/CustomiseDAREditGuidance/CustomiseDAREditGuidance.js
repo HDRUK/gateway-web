@@ -103,7 +103,7 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
             ),
             confirm: (
                 <Button
-                    data-test-id='add-collection-publish'
+                    data-testid='add-collection-publish'
                     variant='primary'
                     className='publishButton white-14-semibold'
                     type='submit'
@@ -123,7 +123,7 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
             ),
             confirm: (
                 <Button
-                    data-test-id='add-collection-publish'
+                    data-testid='add-collection-publish'
                     variant='primary'
                     className='publishButton white-14-semibold'
                     type='submit'

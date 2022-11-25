@@ -292,7 +292,7 @@ const AddEditToolForm = props => {
                                                     ) : null}
                                                 </Form.Group>
 
-                                                <Form.Group data-test-id='txtType'>
+                                                <Form.Group data-testid='txtType'>
                                                     <p className='gray800-14 margin-bottom-0 pad-bottom-4'>Type</p>
                                                     <p className='gray700-13 margin-bottom-0'>Select from existing or enter a new one.</p>
                                                     <Typeahead
@@ -327,7 +327,7 @@ const AddEditToolForm = props => {
                                                     ) : null}
                                                 </Form.Group>
 
-                                                <Form.Group data-test-id='description'>
+                                                <Form.Group data-testid='description'>
                                                     <div style={{ display: 'inline-block' }}>
                                                         <p className='gray800-14 margin-bottom-0 pad-bottom-4'>Description</p>
                                                         <p className='gray700-13 margin-bottom-0'>
@@ -405,7 +405,7 @@ const AddEditToolForm = props => {
                                                 </p>
                                                 <Form.Control
                                                     id='authorsNew'
-                                                    data-test-id='authors'
+                                                    data-testid='authors'
                                                     name='authorsNew'
                                                     type='text'
                                                     className='addFormInput gray700-13'
@@ -436,7 +436,7 @@ const AddEditToolForm = props => {
                                                                         <>
                                                                             <Col sm={12} md={8}>
                                                                                 <Form.Group
-                                                                                    data-test-id={`programmingLanguage.${index}.programmingLanguage`}
+                                                                                    data-testid={`programmingLanguage.${index}.programmingLanguage`}
                                                                                     labelKey={`programmingLanguage.${index}.programmingLanguage`}>
                                                                                     <Typeahead
                                                                                         id={`programmingLanguage-${index}`}
@@ -625,7 +625,7 @@ const AddEditToolForm = props => {
                                                     />
                                                 </Form.Group>
 
-                                                <Form.Group data-test-id='uploaders'>
+                                                <Form.Group data-testid='uploaders'>
                                                     <p className='gray800-14 margin-bottom-0 pad-bottom-4'>Uploaders</p>
                                                     <p className='gray700-13 margin-bottom-0'>
                                                         Uploaders are Gateway members with editing rights on this tool.
@@ -729,7 +729,7 @@ const AddEditToolForm = props => {
                         + Add resource
                     </Button>
                     <Button
-                        data-test-id='add-tool-publish'
+                        data-testid='add-tool-publish'
                         className='publishButton white-14-semibold mr-2'
                         type='submit'
                         onClick={formik.handleSubmit}>

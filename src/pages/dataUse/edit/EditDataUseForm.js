@@ -154,8 +154,7 @@ const EditFormDataUse = props => {
             organisationName: Yup.string().required('This cannot be empty'),
             projectTitle: Yup.string().required('This cannot be empty'),
             datasets: Yup.string().required('This cannot be empty'),
-            laySummary: Yup.string().max(3000, 'Maximum of 3,000 characters')
-
+            laySummary: Yup.string().max(3000, 'Maximum of 3,000 characters'),
         }),
 
         onSubmit: values => {
@@ -607,7 +606,7 @@ const EditFormDataUse = props => {
                                                                     </div>
                                                                     <Form.Control
                                                                         readOnly={disableInput}
-                                                                        data-test-id='laySummary'
+                                                                        data-testid='laySummary'
                                                                         as='textarea'
                                                                         id='laySummary'
                                                                         name='laySummary'
@@ -639,7 +638,7 @@ const EditFormDataUse = props => {
                                                                     </div>
                                                                     <Form.Control
                                                                         readOnly={disableInput}
-                                                                        data-test-id='publicBenefitStatement'
+                                                                        data-testid='publicBenefitStatement'
                                                                         as='textarea'
                                                                         id='publicBenefitStatement'
                                                                         name='publicBenefitStatement'
@@ -703,7 +702,7 @@ const EditFormDataUse = props => {
                                                                     </div>
                                                                     <Form.Control
                                                                         readOnly={disableInput}
-                                                                        data-test-id='technicalSummary'
+                                                                        data-testid='technicalSummary'
                                                                         as='textarea'
                                                                         id='technicalSummary'
                                                                         name='technicalSummary'
@@ -1116,7 +1115,7 @@ const EditFormDataUse = props => {
                                                                     </p>
                                                                     <Form.Control
                                                                         readOnly={disableInput}
-                                                                        data-test-id='datasetLinkageDescription'
+                                                                        data-testid='datasetLinkageDescription'
                                                                         as='textarea'
                                                                         id='datasetLinkageDescription'
                                                                         name='datasetLinkageDescription'
@@ -1138,7 +1137,7 @@ const EditFormDataUse = props => {
                                                                     </p>
                                                                     <Form.Control
                                                                         readOnly={disableInput}
-                                                                        data-test-id='confidentialDataDescription'
+                                                                        data-testid='confidentialDataDescription'
                                                                         as='textarea'
                                                                         id='confidentialDataDescription'
                                                                         name='confidentialDataDescription'
@@ -1243,7 +1242,7 @@ const EditFormDataUse = props => {
                                                                     {formik.touched.accessType && formik.errors.accessType ? (
                                                                         <div
                                                                             className='errorMessages margin-top-8'
-                                                                            data-test-id='user-account-sector-validation'>
+                                                                            data-testid='user-account-sector-validation'>
                                                                             {formik.errors.accessType}
                                                                         </div>
                                                                     ) : null}
@@ -1372,7 +1371,7 @@ const EditFormDataUse = props => {
                                                                                                     -
                                                                                                 </button>
                                                                                                 <button
-                                                                                                    data-test-id={`add-link-${index}`}
+                                                                                                    data-testid={`add-link-${index}`}
                                                                                                     type='button'
                                                                                                     disabled={
                                                                                                         safeOuputsArray.length - 1 !== index
@@ -1557,7 +1556,7 @@ const EditFormDataUse = props => {
                         </Button>
                     </a>
                     <Button
-                        data-test-id='add-datause-publish'
+                        data-testid='add-datause-publish'
                         variant='primary'
                         className='publishButton white-14-semibold mr-2'
                         type='submit'

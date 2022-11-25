@@ -181,7 +181,7 @@ export const AccountCourses = props => {
                     </Col>
                     <Col sm={12} md={4} style={{ textAlign: 'right' }}>
                         <Button
-                            data-test-id='add-course-btn'
+                            data-testid='add-course-btn'
                             variant='primary'
                             href='/course/add'
                             className='addButton'

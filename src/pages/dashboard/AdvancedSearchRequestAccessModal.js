@@ -59,7 +59,7 @@ const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
                         <Button variant='secondary' onClick={() => close()}>
                             No, nevermind
                         </Button>
-                        <Button data-test-id='request-access' onClick={() => redirectToJira()}>
+                        <Button data-testid='request-access' onClick={() => redirectToJira()}>
                             Request access
                         </Button>
                     </div>
