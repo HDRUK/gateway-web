@@ -1,20 +1,20 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getCourse = (_id, options) => {
-    return getRequest(`${apiURL}/course/${_id}`, options);
+    return getRequest(`${apiUrlV1}/course/${_id}`, options);
 };
 
 const getEdit = (_id, options) => {
-    return getRequest(`${apiURL}/course/edit/${_id}`, options);
+    return getRequest(`${apiUrlV1}/course/edit/${_id}`, options);
 };
 
 const postCourse = (data, options) => {
-    return postRequest(`${apiURL}/course`, data, options);
+    return postRequest(`${apiUrlV1}/course`, data, options);
 };
 
 const putCourse = (_id, data, options) => {
-    return putRequest(`${apiURL}/course/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/course/${_id}`, data, options);
 };
 
 const useGetCourse = (requestOptions, queryOptions) => {

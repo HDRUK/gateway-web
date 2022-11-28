@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, postRequest, putRequest } from '../../utils/requests';
 import service from './workflows';
 
@@ -34,7 +34,7 @@ describe('Given the auth service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/workflows`,
+                `${apiUrlV1}/workflows`,
                 {
                     status: 'archive',
                 },
@@ -54,7 +54,7 @@ describe('Given the auth service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/workflows/1234`,
+                `${apiUrlV1}/workflows/1234`,
                 {
                     status: 'archive',
                 },
@@ -69,7 +69,7 @@ describe('Given the auth service', () => {
                 option1: true,
             });
 
-            expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/workflows/1234`, {
+            expect(deleteRequest).toHaveBeenCalledWith(`${apiUrlV1}/workflows/1234`, {
                 option1: true,
             });
         });

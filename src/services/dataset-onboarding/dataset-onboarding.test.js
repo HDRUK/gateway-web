@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
 import service from './dataset-onboarding';
 
@@ -30,7 +30,7 @@ describe('Given the dataset-onboarding service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/dataset-onboarding`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/dataset-onboarding`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the dataset-onboarding service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/dataset-onboarding/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/dataset-onboarding/1234`, {
                 option1: true,
             });
         });
@@ -54,7 +54,7 @@ describe('Given the dataset-onboarding service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/dataset-onboarding/publisher/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/dataset-onboarding/publisher/1234`, {
                 option1: true,
             });
         });
@@ -71,7 +71,7 @@ describe('Given the dataset-onboarding service', () => {
 
             await service.postDatasetOnboarding(...commonArgs);
 
-            expect(postRequest).toHaveBeenCalledWith(`${apiURL}/dataset-onboarding`, ...commonArgs);
+            expect(postRequest).toHaveBeenCalledWith(`${apiUrlV1}/dataset-onboarding`, ...commonArgs);
         });
     });
 
@@ -86,7 +86,7 @@ describe('Given the dataset-onboarding service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/dataset-onboarding/duplicate/1234`,
+                `${apiUrlV1}/dataset-onboarding/duplicate/1234`,
                 {
                     status: 'archive',
                 },
@@ -106,7 +106,7 @@ describe('Given the dataset-onboarding service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/dataset-onboarding/1234`,
+                `${apiUrlV1}/dataset-onboarding/1234`,
                 {
                     status: 'archive',
                 },
@@ -126,7 +126,7 @@ describe('Given the dataset-onboarding service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/dataset-onboarding/1234`,
+                `${apiUrlV1}/dataset-onboarding/1234`,
                 {
                     status: 'archive',
                 },
@@ -141,7 +141,7 @@ describe('Given the dataset-onboarding service', () => {
                 option1: true,
             });
 
-            expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/dataset-onboarding/delete/1234`, {
+            expect(deleteRequest).toHaveBeenCalledWith(`${apiUrlV1}/dataset-onboarding/delete/1234`, {
                 option1: true,
             });
         });

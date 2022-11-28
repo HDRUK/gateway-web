@@ -1,20 +1,20 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, useMutationWithTranslations } from '../../utils/requests';
 
 const getRelatedObject = (_id, options) => {
-    return getRequest(`${apiURL}/relatedobject/${_id}`, options);
+    return getRequest(`${apiUrlV1}/relatedobject/${_id}`, options);
 };
 
 const getRelatedObjectByType = (_id, type, options) => {
-    return getRequest(`${apiURL}/relatedobject/${type}/${_id}`, options);
+    return getRequest(`${apiUrlV1}/relatedobject/${type}/${_id}`, options);
 };
 
 const getRelatedObjectForCourse = (_id, options) => {
-    return getRequest(`${apiURL}/relatedobject/course/${_id}`, options);
+    return getRequest(`${apiUrlV1}/relatedobject/course/${_id}`, options);
 };
 
 const getLinkedDatasets = (relation, options) => {
-    return getRequest(`${apiURL}/relatedobject/linkeddatasets/${relation}`, options);
+    return getRequest(`${apiUrlV1}/relatedobject/linkeddatasets/${relation}`, options);
 };
 
 const useGetRelatedObject = (requestOptions, mutateOptions) => {

@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest } from '../../utils/requests';
 import service from './contributors';
 
@@ -29,7 +29,7 @@ describe('Given the contributors service', () => {
             await service.getContributorsInfo('123', {
                 option1: true,
             });
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/data-access-request/prepopulate-contributors/123`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/data-access-request/prepopulate-contributors/123`, {
                 option1: true,
             });
         });

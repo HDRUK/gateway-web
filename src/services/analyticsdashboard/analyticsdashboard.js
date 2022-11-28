@@ -1,12 +1,12 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, useQueryWithTranslations } from '../../utils/requests';
 
 const getTotalUsers = options => {
-    return getRequest(`${apiURL}/analyticsdashboard/totalusers`, options);
+    return getRequest(`${apiUrlV1}/analyticsdashboard/totalusers`, options);
 };
 
 const getUsersPerMonth = options => {
-    return getRequest(`${apiURL}/analyticsdashboard/userspermonth`, options);
+    return getRequest(`${apiUrlV1}/analyticsdashboard/userspermonth`, options);
 };
 
 const useGetTotalUsers = (requestOptions, queryOptions) => {

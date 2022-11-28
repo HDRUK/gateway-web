@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest } from '../../utils/requests';
 import service from './reviews';
 
@@ -30,7 +30,7 @@ describe('Given the reviews service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/reviews`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/reviews`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the reviews service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/reviews/pending`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/reviews/pending`, {
                 option1: true,
             });
         });
@@ -54,7 +54,7 @@ describe('Given the reviews service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/reviews/admin/pending`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/reviews/admin/pending`, {
                 option1: true,
             });
         });

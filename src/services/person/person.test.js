@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { addCmsGatewayApiHostname, apiPath, apiURL } from '../../configs/url.config';
+import { addCmsGatewayApiHostname, apiPathV1, apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
 import service from './person';
 
@@ -30,7 +30,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/person`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/person`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(addCmsGatewayApiHostname(`${apiPath}/person/1234`), {
+            expect(getRequest).toHaveBeenCalledWith(addCmsGatewayApiHostname(`${apiPathV1}/person/1234`), {
                 option1: true,
             });
         });
@@ -59,7 +59,7 @@ describe('Given the person service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/person/1234`,
+                `${apiUrlV1}/person/1234`,
                 {
                     status: 'archive',
                 },
@@ -79,7 +79,7 @@ describe('Given the person service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/person/1234`,
+                `${apiUrlV1}/person/1234`,
                 {
                     status: 'archive',
                 },
@@ -99,7 +99,7 @@ describe('Given the person service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/person/unsubscribe/1234`,
+                `${apiUrlV1}/person/unsubscribe/1234`,
                 {
                     status: 'archive',
                 },
@@ -119,7 +119,7 @@ describe('Given the person service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/person/1234`,
+                `${apiUrlV1}/person/1234`,
                 {
                     status: 'archive',
                 },
@@ -139,7 +139,7 @@ describe('Given the person service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/person/profileComplete/1234`,
+                `${apiUrlV1}/person/profileComplete/1234`,
                 {
                     status: 'archive',
                 },
@@ -154,7 +154,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/person/1234`, {
+            expect(deleteRequest).toHaveBeenCalledWith(`${apiUrlV1}/person/1234`, {
                 option1: true,
             });
         });

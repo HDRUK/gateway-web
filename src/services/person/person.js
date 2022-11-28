@@ -1,4 +1,4 @@
-import { addCmsGatewayApiHostname, apiPath, apiURL } from '../../configs/url.config';
+import { addCmsGatewayApiHostname, apiPathV1, apiUrlV1 } from '../../configs/url.config';
 import {
     deleteRequest,
     getRequest,
@@ -10,35 +10,35 @@ import {
 } from '../../utils/requests';
 
 const getPersons = options => {
-    return getRequest(`${apiURL}/person`, options);
+    return getRequest(`${apiUrlV1}/person`, options);
 };
 
 const getPerson = (_id, options) => {
-    return getRequest(addCmsGatewayApiHostname(`${apiPath}/person/${_id}`), options);
+    return getRequest(addCmsGatewayApiHostname(`${apiPathV1}/person/${_id}`), options);
 };
 
 const postPerson = (_id, data, options) => {
-    return postRequest(`${apiURL}/person/${_id}`, data, options);
+    return postRequest(`${apiUrlV1}/person/${_id}`, data, options);
 };
 
 const putPerson = (_id, data, options) => {
-    return putRequest(`${apiURL}/person/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/person/${_id}`, data, options);
 };
 
 const putUnsubscribe = (_id, data, options) => {
-    return putRequest(`${apiURL}/person/unsubscribe/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/person/unsubscribe/${_id}`, data, options);
 };
 
 const patchPerson = (_id, data, options) => {
-    return patchRequest(`${apiURL}/person/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/person/${_id}`, data, options);
 };
 
 const patchProfileComplete = (_id, data, options) => {
-    return patchRequest(`${apiURL}/person/profileComplete/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/person/profileComplete/${_id}`, data, options);
 };
 
 const deletePerson = (_id, options) => {
-    return deleteRequest(`${apiURL}/person/${_id}`, options);
+    return deleteRequest(`${apiUrlV1}/person/${_id}`, options);
 };
 
 const useGetPersons = (requestOptions, queryOptions) => {
