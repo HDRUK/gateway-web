@@ -77,6 +77,7 @@ describe('Given the useSearch hook', () => {
 
             it('Then sets the loading flag', async () => {
                 const { waitFor } = wrapper;
+                jest.setTimeout(10000);
 
                 await waitFor(() => expect(wrapper.result.current.isLoading).toEqual(true));
             });
