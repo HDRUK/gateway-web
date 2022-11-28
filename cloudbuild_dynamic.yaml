@@ -16,7 +16,6 @@ steps:
               '--build-arg=REACT_APP_NEWSLETTER_EXAMPLE_URL=$_REACT_APP_NEWSLETTER_EXAMPLE_URL',
               '--build-arg=REACT_APP_TERMS_AND_CONDITIONS_URL=$_REACT_APP_TERMS_AND_CONDITIONS_URL',
               '--build-arg=REACT_APP_GATEWAY_PRIVACY_POLICY_URL=$_REACT_APP_GATEWAY_PRIVACY_POLICY_URL',
-              'gcr.io/$PROJECT_ID/${_APP_NAME}:${_ENVIRONMENT}',
               '--cache-from',
               '.',
           ]
