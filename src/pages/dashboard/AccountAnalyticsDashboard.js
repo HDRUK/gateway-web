@@ -6,7 +6,7 @@ import { Col, Dropdown, DropdownButton, Row } from 'react-bootstrap';
 import { LayoutContent } from 'components';
 
 import Loading from '../commonComponents/Loading';
-import UnmetDemandSection from './Components/UnmetDemandSection';
+import UnmetDemandSection from './Components/UnmetDemand/UnmetDemandSection';
 import DashboardKPI from './DARComponents/DashboardKPI';
 import './Dashboard.scss';
 import TopDatasets from './TopDatasets';
