@@ -69,6 +69,7 @@
         "react-rating": "^2.0.4",
         "react-router-dom": "^5.1.2",
         "react-schemaorg": "^1.1.0",
+        "react-scripts": "3.4.4",
         "react-select": "^5.1.0",
         "react-slidedown": "^2.4.5",
         "react-switch": "^6.0.0",
@@ -171,8 +172,7 @@
         "moxios": "^0.4.0",
         "nodemon": "^2.0.20",
         "path": "^0.12.7",
-        "prettier": "^2.5.1",
-        "react-scripts": "3.4.4"
+        "prettier": "^2.5.1"
     },
     "snyk": true
 }
