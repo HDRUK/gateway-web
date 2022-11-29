@@ -12,7 +12,4 @@ const usePostActivityLog = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
-    postActivityLog,
-    usePostActivityLog,
-};
+export { postActivityLog, usePostActivityLog };

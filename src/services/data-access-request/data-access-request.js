@@ -152,7 +152,7 @@ const useDeleteDataAccessRequest = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getDataAccessRequests,
     getDataAccessRequest,
     getDatasets,

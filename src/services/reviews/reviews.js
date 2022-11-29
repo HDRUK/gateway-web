@@ -37,11 +37,4 @@ const useGetAdminPending = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
-    getReviews,
-    getAdminPending,
-    getPending,
-    useGetReviews,
-    useGetPending,
-    useGetAdminPending,
-};
+export { getReviews, getAdminPending, getPending, useGetReviews, useGetPending, useGetAdminPending };

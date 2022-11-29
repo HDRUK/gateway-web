@@ -1,1 +1,1 @@
-export { default } from './datasets';
+export * from './datasets';

@@ -13,7 +13,4 @@ const useGetLocations = (term, requestOptions, queryOptions = { queryKey: 'locat
     });
 };
 
-export default {
-    getLocations,
-    useGetLocations,
-};
+export { getLocations, useGetLocations };

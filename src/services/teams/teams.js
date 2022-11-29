@@ -80,7 +80,7 @@ const usePutNotifications = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
+export {
     getMembers,
     getNotifications,
     addMembers,

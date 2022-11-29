@@ -6,23 +6,24 @@ import _ from 'lodash';
 import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
+
+import { LayoutContent, Alert } from 'components';
+import SVGIcon from '../../images/SVGIcon';
+import googleAnalytics from '../../tracking';
+
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
-import SVGIcon from '../../images/SVGIcon';
-import DiscourseTopic from '../discourse/DiscourseTopic';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
 import ErrorModal from '../commonComponents/errorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
-import './Course.scss';
+import DiscourseTopic from '../discourse/DiscourseTopic';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import googleAnalytics from '../../tracking';
-import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
+import './Course.scss';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 

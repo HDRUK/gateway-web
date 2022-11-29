@@ -36,11 +36,4 @@ const usePostRegister = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
-    getStatus,
-    getLogout,
-    postRegister,
-    useGetStatus,
-    useGetLogout,
-    usePostRegister,
-};
+export { getStatus, getLogout, postRegister, useGetStatus, useGetLogout, usePostRegister };

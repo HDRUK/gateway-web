@@ -5,17 +5,19 @@ import { useFormik } from 'formik';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import * as Yup from 'yup';
 import { Row, Col, Container, Button, Form, DropdownButton, Dropdown } from 'react-bootstrap';
+import 'react-tabs/style/react-tabs.css';
+import TextareaAutosize from 'react-textarea-autosize';
+
+import { Alert } from 'components';
+import googleAnalytics from '../../tracking';
+import SVGIcon from '../../images/SVGIcon';
+
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
-import googleAnalytics from '../../tracking';
-import 'react-tabs/style/react-tabs.css';
-import SVGIcon from '../../images/SVGIcon';
-import TextareaAutosize from 'react-textarea-autosize';
-import Alert from '../../components/Alert';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;

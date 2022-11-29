@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+
+import { LayoutContent } from 'components';
+import googleAnalytics from '../../tracking';
+
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import ActionModal from '../commonComponents/ActionModal/ActionModal';
-import { EntityActionButton } from './EntityActionButton.jsx';
-import googleAnalytics from '../../tracking';
+import { EntityActionButton } from './EntityActionButton';
 import { PaginationHelper } from '../commonComponents/PaginationHelper';
-import { LayoutContent } from '../../components/Layout';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 

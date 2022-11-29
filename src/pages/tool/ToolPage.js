@@ -1,20 +1,21 @@
+import React, { useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 import Rating from 'react-rating';
 import 'react-tabs/style/react-tabs.css';
-import Alert from '../../components/Alert';
-import { LayoutContent } from '../../components/Layout';
+
+import { LayoutContent, Alert } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
 import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';

@@ -7,13 +7,14 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import DatePicker from 'react-datepicker';
 import * as Yup from 'yup';
 import { NotificationManager } from 'react-notifications';
+
+import { dataUseRegistersService } from 'services';
 import { ReactComponent as Calendar } from '../../../images/calendaricon.svg';
 import SVGIcon from '../../../images/SVGIcon';
+
 import ActionBar from '../../commonComponents/actionbar/ActionBar';
 import RelatedObject from '../../commonComponents/relatedObject/RelatedObject';
 import RelatedResources from '../../commonComponents/relatedResources/RelatedResources';
-
-import dataUseRegistersService from '../../../services/data-use-registers';
 
 const windowUrl = window.location.origin;
 

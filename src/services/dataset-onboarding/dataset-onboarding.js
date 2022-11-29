@@ -106,7 +106,7 @@ const useDeleteDatasetOnboarding = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getDatasetOnboardings,
     getDatasetOnboarding,
     getPublisher,

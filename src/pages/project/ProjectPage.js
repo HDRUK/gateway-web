@@ -6,12 +6,16 @@ import _ from 'lodash';
 import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import moment from 'moment';
+
+import { LayoutContent, Alert } from 'components';
+import SVGIcon from '../../images/SVGIcon';
+import googleAnalytics from '../../tracking';
+
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
 import Uploader from '../commonComponents/Uploader';
-import SVGIcon from '../../images/SVGIcon';
 import DiscourseTopic from '../discourse/DiscourseTopic';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
@@ -20,9 +24,6 @@ import ResourcePageButtons from '../commonComponents/resourcePageButtons/Resourc
 import ErrorModal from '../commonComponents/errorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import googleAnalytics from '../../tracking';
-import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 

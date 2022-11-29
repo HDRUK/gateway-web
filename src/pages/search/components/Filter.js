@@ -1,8 +1,10 @@
 import _ from 'lodash';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SlideDown } from 'react-slidedown';
-import Checkbox from '../../../components/Checkbox';
+
+import { Checkbox } from 'components';
 import SVGIcon from '../../../images/SVGIcon';
+
 import { FilterCount } from './FilterCount';
 import { FilterSearch } from './FilterSearch';
 import { FilterClearSection } from './FilterClearSection';

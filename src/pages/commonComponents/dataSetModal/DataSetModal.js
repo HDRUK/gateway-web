@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
+
+import { contentService } from 'services';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
-import contentService from '../../../services/content';
 import DataSetHelper from '../../../utils/DataSetHelper.util';
+
 import './DataSetModal.scss';
 
 const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginModal }) => {

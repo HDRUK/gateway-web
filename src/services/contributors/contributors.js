@@ -11,7 +11,4 @@ const useGetContributorsInfo = (requestOptions, queryOptions) =>
         queryFn: () => getContributorsInfo(requestOptions),
     });
 
-export default {
-    getContributorsInfo,
-    useGetContributorsInfo,
-};
+export { getContributorsInfo, useGetContributorsInfo };

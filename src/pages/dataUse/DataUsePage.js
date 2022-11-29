@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import Alert from '../../components/Alert';
-import { LayoutContent } from '../../components/Layout';
-import dataUseRegistersService from '../../services/data-use-registers';
+
+import { dataUseRegistersService } from 'services';
+import { Alert, LayoutContent } from 'components';
 import googleAnalytics from '../../tracking';
 import DarHelperUtil from '../../utils/DarHelper.util';
+
 import Loading from '../commonComponents/Loading';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import ArchiveModal from './ArchiveModal';

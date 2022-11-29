@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest } from '../../utils/requests';
-import service from './analyticsdashboard';
+import * as service from './analyticsdashboard';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');

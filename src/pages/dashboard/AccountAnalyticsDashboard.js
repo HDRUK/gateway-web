@@ -2,9 +2,11 @@ import axios from 'axios';
 import moment from 'moment';
 import React, { Fragment } from 'react';
 import { Col, Dropdown, DropdownButton, Row } from 'react-bootstrap';
+
+import { LayoutContent } from 'components';
+
 import Loading from '../commonComponents/Loading';
-import { LayoutContent } from '../../components/Layout';
-import UnmetDemandSection from './Components/UnmetDemand/UnmetDemandSection';
+import UnmetDemandSection from './Components/UnmetDemandSection';
 import DashboardKPI from './DARComponents/DashboardKPI';
 import './Dashboard.scss';
 import TopDatasets from './TopDatasets';

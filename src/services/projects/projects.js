@@ -78,7 +78,7 @@ const useDeleteProject = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getProjects,
     getProject,
     postProject,

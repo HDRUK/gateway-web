@@ -1,5 +1,5 @@
-import { renderHook } from 'testUtils';
 import axios from 'axios';
+import { testUtils } from '../../test';
 import {
     deleteRequest,
     getRequest,
@@ -101,7 +101,7 @@ describe('Given the request helpers', () => {
         it('Then rewrites the error function to have translations', async () =>
             expect(
                 new Promise(resolves => {
-                    const { result } = renderHook(() =>
+                    const { result } = testUtils.renderHook(() =>
                         useMutationWithTranslations(
                             () =>
                                 Promise.reject({
@@ -130,7 +130,7 @@ describe('Given the request helpers', () => {
         it('Then rewrites the error function to have translations', async () =>
             expect(
                 new Promise(resolves => {
-                    const { result } = renderHook(() =>
+                    const { result } = testUtils.renderHook(() =>
                         useQueryWithTranslations({
                             queryFn: () =>
                                 Promise.reject({

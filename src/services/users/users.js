@@ -71,7 +71,7 @@ const usePatchTerms = (requestOptions, mutateOptions) => {
     );
 };
 
-export default {
+export {
     getUsers,
     getUserById,
     searchUsers,

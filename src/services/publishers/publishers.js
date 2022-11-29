@@ -73,7 +73,7 @@ const usePatchPublisherDataUseWidget = (requestOptions, mutateOptions) => {
     );
 };
 
-export default {
+export {
     getPublisher,
     patchModalContent,
     useGetPublisher,

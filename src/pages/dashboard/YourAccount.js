@@ -5,13 +5,15 @@ import { Row, Col, Alert, Form, DropdownButton, Dropdown } from 'react-bootstrap
 import { useFormik } from 'formik';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import queryString from 'query-string';
-import Loading from '../commonComponents/Loading';
-import './Dashboard.scss';
-import SVGIcon from '../../images/SVGIcon';
-import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
-import TextareaAutosize from 'react-textarea-autosize';
-import Checkbox from '../../components/Checkbox';
 import { Button } from 'hdruk-react-core';
+import TextareaAutosize from 'react-textarea-autosize';
+
+import SVGIcon from '../../images/SVGIcon';
+import { Checkbox } from 'components';
+
+import './Dashboard.scss';
+import Loading from '../commonComponents/Loading';
+import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 

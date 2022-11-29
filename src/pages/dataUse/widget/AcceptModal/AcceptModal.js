@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import { Button } from 'hdruk-react-core';
-import leaglText from './TermsAndConditions';
+
+import { LayoutBox, Typography, ModalBody, ModalFooter, ModalHeader, Modal } from 'components';
+
+import legalText from './TermsAndConditions';
 import * as styles from './AcceptModal.styles';
-import { ModalBody, ModalFooter, ModalHeader, Modal } from '../../../../components/Modal';
-import LayoutBox from '../../../../components/LayoutBox';
-import Typography from '../../../../components/Typography';
 
 const AcceptModal = ({ open, onClose, onAccept }) => {
     const { t } = useTranslation();
@@ -44,7 +44,7 @@ const AcceptModal = ({ open, onClose, onAccept }) => {
             </ModalHeader>
             <ModalBody>
                 <div onScroll={onScroll} ref={listInnerRef} css={styles.markdown}>
-                    <ReactMarkdown source={leaglText} className='react-markdown' />
+                    <ReactMarkdown source={legalText} className='react-markdown' />
                 </div>
             </ModalBody>
             <ModalFooter>

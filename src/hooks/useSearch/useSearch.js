@@ -1,6 +1,6 @@
 import pickBy from 'lodash/pickBy';
 import React from 'react';
-import usePersistState from '../../hooks/usePersistState';
+import usePersistState from '../usePersistState';
 
 const useSearch = (mutateHook, options) => {
     const [params, setParams] = React.useState(

@@ -47,13 +47,4 @@ const usePutCourse = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
-    getCourse,
-    getEdit,
-    postCourse,
-    putCourse,
-    useGetCourse,
-    useGetEdit,
-    usePostCourse,
-    usePutCourse,
-};
+export { getCourse, getEdit, postCourse, putCourse, useGetCourse, useGetEdit, usePostCourse, usePutCourse };

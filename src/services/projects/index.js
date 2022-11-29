@@ -1,1 +1,1 @@
-export { default } from './publishers';
+export * from './projects';

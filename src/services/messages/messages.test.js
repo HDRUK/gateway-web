@@ -3,7 +3,7 @@ import axios from 'axios';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
-import service from './messages';
+import * as service from './messages';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');

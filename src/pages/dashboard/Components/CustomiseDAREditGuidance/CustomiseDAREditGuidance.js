@@ -7,12 +7,12 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import { Button } from 'hdruk-react-core';
-import publishersService from '../../../../services/publishers';
+
+import { publishersService } from 'services';
 import { WysiwygEditor } from '../../../commonComponents/WysiwygEditor/WysiwygEditor';
 import handleAnalytics from '../../../dataAccessRequestCustomiseForm/handleAnalytics';
-import './CustomiseDAREditGuidance.scss';
 
-const baseURL = require('../../../commonComponents/BaseURL').getURL();
+import './CustomiseDAREditGuidance.scss';
 
 export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => {
     const { t } = useTranslation();

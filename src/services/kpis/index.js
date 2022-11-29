@@ -1,1 +1,1 @@
-export { default } from './kpis';
+export * from './kpis';

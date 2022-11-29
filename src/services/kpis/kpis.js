@@ -13,7 +13,4 @@ const useGetKpis = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
-    getKpis,
-    useGetKpis,
-};
+export { getKpis, useGetKpis };

@@ -51,7 +51,7 @@ const usePostCollectionCounterUpdateRequest = (requestOptions, mutateOptions) =>
     });
 };
 
-export default {
+export {
     getCollections,
     getCollectionRequest,
     getCollectionRelatedObjectsRequest,

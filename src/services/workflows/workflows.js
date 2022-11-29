@@ -27,7 +27,7 @@ const usePutWorkflow = (requestOptions, mutateOptions) => {
     });
 };
 
-export const useDeleteWorkflow = (requestOptions, queryOptions) => {
+const useDeleteWorkflow = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
         queryKey: 'workflows.deleteWorkflow',
         ...queryOptions,
@@ -35,11 +35,4 @@ export const useDeleteWorkflow = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
-    postWorkflow,
-    putWorkflow,
-    deleteWorkflow,
-    usePostWorkflow,
-    usePutWorkflow,
-    useDeleteWorkflow,
-};
+export { postWorkflow, putWorkflow, deleteWorkflow, usePostWorkflow, usePutWorkflow, useDeleteWorkflow };

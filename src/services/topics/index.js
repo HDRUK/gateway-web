@@ -1,1 +1,1 @@
-export { default } from './topics';
+export * from './topics';

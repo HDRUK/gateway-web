@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, cleanup } from 'testUtils';
+import { testUtils } from '../../../../../../../test';
 import NumberOfViews from './NumberOfViews';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -16,19 +16,19 @@ describe('Given the NumberOfViews component', () => {
 
     describe('When it is rendered', () => {
         afterEach(() => {
-            cleanup();
+            testUtils.cleanup();
         });
         it('should match the previous snapshot', async () => {
-            const wrapper = render(<NumberOfViews {...props} />);
+            const wrapper = testUtils.render(<NumberOfViews {...props} />);
             expect(wrapper.container).toMatchSnapshot();
         });
 
         it('should display the correct counter and label', () => {
-            render(<NumberOfViews {...props} />);
-            expect(screen.getByTestId('numberOfViews')).toHaveTextContent('Viewed 23 times');
+            testUtils.render(<NumberOfViews {...props} />);
+            expect(testUtils.screen.getByTestId('numberOfViews')).toHaveTextContent('Viewed 23 times');
         });
         it('should log error if count is undefined', () => {
-            render(<NumberOfViews count={undefined} />);
+            testUtils.render(<NumberOfViews count={undefined} />);
             expect(console.error).toHaveBeenCalledTimes(1);
         });
     });

@@ -3,8 +3,10 @@ import { Box } from 'hdruk-react-core';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
-import { LayoutContent } from '../../components/Layout';
+
+import { LayoutContent } from 'components';
 import { baseURL } from '../../configs/url.config';
+
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import AddEditTeamsPage from './Team/AddEditTeamsPage';

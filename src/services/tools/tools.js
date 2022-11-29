@@ -141,7 +141,7 @@ const useDeleteTool = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getTools,
     getTool,
     getToolEdit,

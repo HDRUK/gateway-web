@@ -25,9 +25,4 @@ const useGetUsersPerMonth = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
-    getTotalUsers,
-    getUsersPerMonth,
-    useGetTotalUsers,
-    useGetUsersPerMonth,
-};
+export { getTotalUsers, getUsersPerMonth, useGetTotalUsers, useGetUsersPerMonth };
