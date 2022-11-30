@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest } from '../../utils/requests';
-import service from './analyticsdashboard';
+import * as service from './analyticsdashboard';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the analyticsdashboard service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/analyticsdashboard/totalusers`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/analyticsdashboard/totalusers`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the analyticsdashboard service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/analyticsdashboard/userspermonth`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/analyticsdashboard/userspermonth`, {
                 option1: true,
             });
         });

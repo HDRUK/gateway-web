@@ -23,5 +23,6 @@
             }
         ],
         "arrow-body-style": "off"
-    }
+    },
+    "settings": { "import/resolver": { "node": { "moduleDirectory": ["node_modules", "src/", "test/"] } } }
 }

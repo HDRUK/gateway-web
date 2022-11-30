@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import React from 'react';
-import CheckboxTree from '../../../../components/CheckboxTree';
+
+import { CheckboxTree } from 'components';
 import { filterBranches } from '../../../../utils/GeneralHelper.util';
 
 const FilterTree = ({ node, filters, highlighted, checked, expanded, onCheck, searchValue }) => {

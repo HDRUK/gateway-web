@@ -9,13 +9,16 @@ import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
+
+import { BackToTop } from 'components';
+import { searchService } from 'services';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { ReactComponent as ArrowUpSvg } from '../../images/icons/arrow-up.svg';
 import { ReactComponent as SearchSvg } from '../../images/search.svg';
-import searchService from '../../services/search/search';
 import googleAnalytics from '../../tracking';
 import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
+
 import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
 import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -41,7 +44,6 @@ import PeopleSearchSort from './components/PeopleSearchResult/PeopleSearchSort';
 import SearchUtilityBanner from './components/SearchUtilityBanner';
 import ToolsSearchSort from './components/ToolsSearchResults/ToolsSearchSort';
 
-import { BackToTop } from '../../components';
 import './Search.scss';
 
 let baseURL = require('../commonComponents/BaseURL').getURL();

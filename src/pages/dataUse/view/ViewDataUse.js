@@ -2,19 +2,17 @@ import * as Sentry from '@sentry/react';
 import _, { isEmpty } from 'lodash';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row, Tab, Tabs, Tooltip } from 'react-bootstrap';
+import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import 'react-tabs/style/react-tabs.css';
 import { Box } from 'hdruk-react-core';
-import Alert from '../../../components/Alert';
-import { LayoutContent } from '../../../components/Layout';
-import SearchControls from '../../../components/SearchControls';
+
+import { Alert, LayoutContent, SearchControls } from 'components';
+import { collectionsService, dataUseRegistersService, relatedObjectsService } from 'services';
 import SVGIcon from '../../../images/SVGIcon';
-import collectionsService from '../../../services/collections';
-import dataUseRegistersService from '../../../services/data-use-registers';
-import relatedObjectsService from '../../../services/related-objects';
 import googleAnalytics from '../../../tracking';
+
 import ActionBar from '../../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
@@ -423,7 +421,7 @@ export const DataUseView = props => {
                                 <div className='rectangle'>
                                     <Row>
                                         <Col>
-                                            <span data-test-id='datause-name' className='black-16' data-testid='title'>
+                                            <span className='black-16' data-testid='title'>
                                                 {dataUseData.projectTitle}
                                             </span>
                                             <br />

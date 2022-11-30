@@ -8,11 +8,12 @@ import { Link, useHistory } from 'react-router-dom';
 import { SlideDown } from 'react-slidedown';
 import readXlsxFile from 'read-excel-file';
 import convertToJson from 'read-excel-file/schema';
-import Alert from '../../../components/Alert';
-import Loading from '../../../components/Loading';
+
+import { Alert, Loading } from 'components';
 import SVGIcon from '../../../images/SVGIcon';
-import dataUseRegistersService from '../../../services/data-use-registers';
+import { dataUseRegistersService } from 'services';
 import googleAnalytics from '../../../tracking';
+
 import ActionBar from '../../commonComponents/actionbar/ActionBar';
 import dataUseSchema from './DataUseSchema';
 import DataUseSubmitModal from './DataUseSubmitModal';

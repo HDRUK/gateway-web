@@ -1,3 +1,3 @@
 import LayoutContent from './LayoutContent';
 
-export { LayoutContent };
+export default LayoutContent;

@@ -50,7 +50,7 @@ const SaveModal = ({ ...props }) => {
                 </p>
                 <label className='black-14'>Title</label>
                 <Form.Control
-                    data-test-id='saved-preference-name'
+                    data-testid='saved-preference-name'
                     id='name'
                     name='name'
                     type='text'

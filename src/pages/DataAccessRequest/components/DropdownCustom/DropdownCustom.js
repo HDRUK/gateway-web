@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
-import serviceContributors from '../../../../services/contributors/contributors';
-import serviceAuth from '../../../../services/auth/auth';
-import Typeahead from '../../../../components/Typeahead/Typeahead';
+
+import { Typeahead } from 'components';
+import { contributorsService, authService } from 'services';
+
 import './DropdownCustom.scss';
 
 const DropdownCustom = props => {
@@ -16,12 +17,12 @@ const DropdownCustom = props => {
     }, [props.applicationId]);
 
     const getUserInfo = async () => {
-        const res = await serviceAuth.getStatus();
+        const res = await authService.getStatus();
         setUserInfo(res.data.data[0]);
     };
 
     const getContributorsInfo = async () => {
-        const res = await serviceContributors.getContributorsInfo(props.applicationId);
+        const res = await contributorsService.getContributorsInfo(props.applicationId);
         setcontributorsInfo(res.data.data);
     };
 

@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL, apiV2URL } from '../../configs/url.config';
+import { apiUrlV1, apiUrlV2 } from '../../configs/url.config';
 import { getRequest } from '../../utils/requests';
-import service from './search';
+import * as service from './search';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -32,7 +32,7 @@ describe('Given the search service', () => {
                 },
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/search`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/search`, {
                 params: {
                     search: 'search term',
                 },
@@ -46,7 +46,7 @@ describe('Given the search service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/search/filter/topic/paper`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/search/filter/topic/paper`, {
                 option1: true,
             });
         });
@@ -58,7 +58,7 @@ describe('Given the search service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/filters/paper`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV2}/filters/paper`, {
                 option1: true,
             });
         });
@@ -74,7 +74,7 @@ describe('Given the search service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/search/filter`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/search/filter`, {
                 option1: true,
                 params: {
                     search: 'test',

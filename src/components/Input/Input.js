@@ -4,10 +4,12 @@ import { css, jsx } from '@emotion/react';
 import debounce from 'lodash/debounce';
 import React, { useCallback, useRef } from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
-import useDOMChanged from '../../hooks/useDOMChanged';
 import { Box } from 'hdruk-react-core';
-import { PROP_TYPES_INPUT } from './Input.propTypes';
+
+import { useDOMChanged } from 'hooks';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
+
+import { PROP_TYPES_INPUT } from './Input.propTypes';
 import * as styles from './Input.styles';
 
 const Input = ({

@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
-import service from './projects';
+import * as service from './projects';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the projects service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/projects/getList`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/projects/getList`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the projects service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/projects/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/projects/1234`, {
                 option1: true,
             });
         });
@@ -59,7 +59,7 @@ describe('Given the projects service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/projects/1234`,
+                `${apiUrlV1}/projects/1234`,
                 {
                     status: 'archive',
                 },
@@ -79,7 +79,7 @@ describe('Given the projects service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/projects/1234`,
+                `${apiUrlV1}/projects/1234`,
                 {
                     status: 'archive',
                 },
@@ -99,7 +99,7 @@ describe('Given the projects service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/projects/1234`,
+                `${apiUrlV1}/projects/1234`,
                 {
                     status: 'archive',
                 },
@@ -114,7 +114,7 @@ describe('Given the projects service', () => {
                 option1: true,
             });
 
-            expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/projects/1234`, {
+            expect(deleteRequest).toHaveBeenCalledWith(`${apiUrlV1}/projects/1234`, {
                 option1: true,
             });
         });

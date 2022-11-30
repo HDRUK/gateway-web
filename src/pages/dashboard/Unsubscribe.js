@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
-import SearchBar from '../commonComponents/searchBar/SearchBar';
 import axios from 'axios';
+
+import { Alert } from 'components';
+
+import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
 import './Dashboard.scss';
-import Alert from '../../components/Alert';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 

@@ -68,7 +68,7 @@ const UserDropdownTeams = props => {
                                 <Dropdown.Item
                                     href='/account?tab=teams&team=admin'
                                     className='black-14 user-dropdown-item'
-                                    data-test-id='optTeams'>
+                                    data-testid='optTeams'>
                                     Teams
                                 </Dropdown.Item>
                             </>

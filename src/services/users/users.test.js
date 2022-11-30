@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, patchRequest } from '../../utils/requests';
-import service from './users';
+import * as service from './users';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the users service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/users`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/users`, {
                 option1: true,
             });
         });
@@ -47,7 +47,7 @@ describe('Given the users service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/users/advancedsearch/roles/1234`,
+                `${apiUrlV1}/users/advancedsearch/roles/1234`,
                 {
                     status: 'archive',
                 },
@@ -67,7 +67,7 @@ describe('Given the users service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/users/advancedsearch/terms/1234`,
+                `${apiUrlV1}/users/advancedsearch/terms/1234`,
                 {
                     status: 'archive',
                 },

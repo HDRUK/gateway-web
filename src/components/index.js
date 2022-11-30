@@ -13,11 +13,12 @@ import FileSelector from './FileSelector';
 import Icon from './Icon';
 import IconButton from './IconButton';
 import Input from './Input';
-import { LayoutContent } from './Layout';
+import LayoutContent from './Layout';
 import LayoutBox from './LayoutBox';
 import Link from './Link';
 import ListInfo from './ListInfo';
 import Loading from './Loading';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from './Modal';
 import QualityScore from './QualityScore';
 import SearchControls from './SearchControls';
 import SearchInput from './SearchInput';
@@ -51,6 +52,10 @@ export {
     Link,
     ListInfo,
     Loading,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
     SearchControls,
     SearchInput,
     SortDropdown,

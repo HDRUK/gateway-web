@@ -6,12 +6,16 @@ import _ from 'lodash';
 import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import moment from 'moment';
+
+import { LayoutContent, Alert } from 'components';
+import SVGIcon from '../../images/SVGIcon';
+import googleAnalytics from '../../tracking';
+
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
 import Uploader from '../commonComponents/Uploader';
-import SVGIcon from '../../images/SVGIcon';
 import DiscourseTopic from '../discourse/DiscourseTopic';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
@@ -20,9 +24,6 @@ import ResourcePageButtons from '../commonComponents/resourcePageButtons/Resourc
 import ErrorModal from '../commonComponents/errorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import googleAnalytics from '../../tracking';
-import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -246,7 +247,7 @@ export const ProjectDetail = props => {
                         <Col sm={10} lg={10}>
                             <div className='rectangle'>
                                 <Row>
-                                    <Col data-test-id='project-name' className='line-height-normal'>
+                                    <Col data-testid='project-name' className='line-height-normal'>
                                         <span className='black-16'>{projectData.name}</span>
                                     </Col>
                                 </Row>
@@ -304,7 +305,7 @@ export const ProjectDetail = props => {
                                                         <Col
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
-                                                            data-test-id='project-description'>
+                                                            data-testid='project-description'>
                                                             <ReactMarkdown source={projectData.description} />
                                                         </Col>
                                                     </Row>
@@ -323,7 +324,7 @@ export const ProjectDetail = props => {
                                                             <Col
                                                                 sm={12}
                                                                 className='gray800-14 hdruk-section-body'
-                                                                data-test-id='project-results'>
+                                                                data-testid='project-results'>
                                                                 <ReactMarkdown source={projectData.resultsInsights} />
                                                             </Col>
                                                         </Row>
@@ -344,7 +345,7 @@ export const ProjectDetail = props => {
                                                         <Col sm={2} className='gray800-14'>
                                                             URL
                                                         </Col>
-                                                        <Col sm={10} data-test-id='link' className='gray800-14'>
+                                                        <Col sm={10} data-testid='link' className='gray800-14'>
                                                             <a
                                                                 href={projectData.link}
                                                                 rel='noopener noreferrer'
@@ -379,7 +380,7 @@ export const ProjectDetail = props => {
                                                             <Col sm={2}>
                                                                 <span className='gray800-14'>Collaborators</span>
                                                             </Col>
-                                                            <Col sm={10} className='gray800-14 overflowWrap' data-test-id='project-authors'>
+                                                            <Col sm={10} className='gray800-14 overflowWrap' data-testid='project-authors'>
                                                                 {projectData.authorsNew}
                                                             </Col>
                                                         </Row>
@@ -394,7 +395,7 @@ export const ProjectDetail = props => {
                                                             <Col
                                                                 sm={10}
                                                                 className='gray800-14 overflowWrap'
-                                                                data-test-id='project-leadResearcher'>
+                                                                data-testid='project-leadResearcher'>
                                                                 {projectData.leadResearcher}
                                                             </Col>
                                                         </Row>
@@ -405,7 +406,7 @@ export const ProjectDetail = props => {
                                                         <Col sm={2} className='gray800-14'>
                                                             Type
                                                         </Col>
-                                                        <Col sm={10} className='gray800-14' data-test-id='project-type'>
+                                                        <Col sm={10} className='gray800-14' data-testid='project-type'>
                                                             <a
                                                                 href={`/search?search=&tab=Projects&projectcategories=${projectData.categories.category}`}>
                                                                 <div className='badge-tag'>{projectData.categories.category}</div>
@@ -424,7 +425,7 @@ export const ProjectDetail = props => {
                                                                     return (
                                                                         <a
                                                                             href={`/search?search=&tab=Projects&projectfeatures=${keyword}`}
-                                                                            data-test-id={`keywords-${i}`}>
+                                                                            data-testid={`keywords-${i}`}>
                                                                             <div className='badge-tag'>{keyword}</div>
                                                                         </a>
                                                                     );
@@ -444,7 +445,7 @@ export const ProjectDetail = props => {
                                                                     return (
                                                                         <a
                                                                             href={`/search?search=&tab=Projects&projecttopics=${domain}`}
-                                                                            data-test-id={`domain-${i}`}>
+                                                                            data-testid={`domain-${i}`}>
                                                                             <div className='badge-tag'>{domain}</div>
                                                                         </a>
                                                                     );

@@ -137,7 +137,7 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
                                 <Box flexGrow='1' mr={2}>
                                     <Input
                                         label='Title'
-                                        data-test-id='saved-preference-name'
+                                        data-testid='saved-preference-name'
                                         id='name'
                                         name='name'
                                         type='text'

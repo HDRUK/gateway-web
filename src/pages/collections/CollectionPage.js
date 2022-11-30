@@ -1,18 +1,19 @@
+import React, { useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
 import { Col, Container, Pagination, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
 import { Box } from 'hdruk-react-core';
-import { LayoutContent } from '../../components/Layout';
-import SearchControls from '../../components/SearchControls';
+
+import { LayoutContent, SearchControls, Alert } from 'components';
+import { collectionsService } from 'services';
 import SVGIcon from '../../images/SVGIcon';
-import collectionsService from '../../services/collections';
 import googleAnalytics from '../../tracking';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
@@ -33,7 +34,6 @@ import PersonCollectionResults from './Components/PersonCollectionResults';
 import ToolCollectionResults from './Components/ToolCollectionResults';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import { MAXRESULTS } from './constants';
-import Alert from '../../components/Alert';
 
 export const CollectionPage = props => {
     const { t } = useTranslation();
@@ -348,7 +348,7 @@ export const CollectionPage = props => {
                         </Row>
                         <Row>
                             <Col sm={12} lg={12} className='centerText'>
-                                <span className='black-28' data-test-id='collectionName'>
+                                <span className='black-28' data-testid='collectionName'>
                                     {collectionData.name}{' '}
                                 </span>
                             </Col>
@@ -398,7 +398,7 @@ export const CollectionPage = props => {
 
                         <Row className='pad-top-24'>
                             <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10} data-test-id='collection-description' className='gray800-14 hdruk-section-body'>
+                            <Col sm={10} lg={10} data-testid='collection-description' className='gray800-14 hdruk-section-body'>
                                 <ReactMarkdown source={collectionData.description} data-testid='collectionDescription' />
                             </Col>
                             <Col sm={1} lg={1} />

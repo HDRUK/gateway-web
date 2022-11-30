@@ -28,24 +28,23 @@ const CustomToggle = React.forwardRef(({ children, onClick, loggedIn, showLoginM
                 showLoginModal();
             }
         }}
-        className='addNewEntityDropdown'
-    >
+        className='addNewEntityDropdown'>
         {children}
     </button>
 ));
 
 const AddNewEntity = props => {
     const showLoginModal = () => {
-        let modalID = 'myModal';
+        const modalID = 'myModal';
         document.getElementById(modalID).style.display = 'block';
         document.getElementById('modalRequestSection').style.display = 'none';
     };
 
     return (
-        <Dropdown data-test-id='addNewEntityDropdown' className='addNewEntityDropdown'>
+        <Dropdown data-testid='addNewEntityDropdown' className='addNewEntityDropdown'>
             <Dropdown.Toggle as={CustomToggle} showLoginModal={showLoginModal} loggedIn={props.loggedIn}>
                 + Add new
-                <span className='addNewDropDownGap'></span>
+                <span className='addNewDropDownGap' />
                 <ChevronBottom />
             </Dropdown.Toggle>
 
@@ -53,41 +52,36 @@ const AddNewEntity = props => {
                 <Dropdown.Item
                     href='/collection/add'
                     className='black-14'
-                    data-test-id='addNewCollection'
-                    onClick={() => googleAnalytics.recordEvent('Collections', 'Add a new collection', 'Search bar add new link clicked')}
-                >
+                    data-testid='addNewCollection'
+                    onClick={() => googleAnalytics.recordEvent('Collections', 'Add a new collection', 'Search bar add new link clicked')}>
                     Collection
                 </Dropdown.Item>
                 <Dropdown.Item
                     href='/course/add'
                     className='black-14'
-                    data-test-id='addNewCourse'
-                    onClick={() => googleAnalytics.recordEvent('Courses', 'Add a new course', 'Search bar add new link clicked')}
-                >
+                    data-testid='addNewCourse'
+                    onClick={() => googleAnalytics.recordEvent('Courses', 'Add a new course', 'Search bar add new link clicked')}>
                     Course
                 </Dropdown.Item>
                 <Dropdown.Item
                     href='/paper/add'
                     className='black-14'
-                    data-test-id='addNewPaper'
-                    onClick={() => googleAnalytics.recordEvent('Papers', 'Add a new paper', 'Search bar add new link clicked')}
-                >
+                    data-testid='addNewPaper'
+                    onClick={() => googleAnalytics.recordEvent('Papers', 'Add a new paper', 'Search bar add new link clicked')}>
                     Paper
                 </Dropdown.Item>
                 <Dropdown.Item
                     href='/project/add'
                     className='black-14'
-                    data-test-id='addNewProject'
-                    onClick={() => googleAnalytics.recordEvent('Projects', 'Add a new project', 'Search bar add new link clicked')}
-                >
+                    data-testid='addNewProject'
+                    onClick={() => googleAnalytics.recordEvent('Projects', 'Add a new project', 'Search bar add new link clicked')}>
                     Project
                 </Dropdown.Item>
                 <Dropdown.Item
                     href='/tool/add'
                     className='black-14 '
-                    data-test-id='addNewTool'
-                    onClick={() => googleAnalytics.recordEvent('Tools', 'Add a new tool', 'Search bar add new link clicked')}
-                >
+                    data-testid='addNewTool'
+                    onClick={() => googleAnalytics.recordEvent('Tools', 'Add a new tool', 'Search bar add new link clicked')}>
                     Tool
                 </Dropdown.Item>
             </Dropdown.Menu>

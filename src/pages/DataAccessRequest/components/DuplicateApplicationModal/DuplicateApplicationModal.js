@@ -3,14 +3,16 @@ import { Modal } from 'react-bootstrap';
 import moment from 'moment';
 import _ from 'lodash';
 import axios from 'axios';
+
+import { Alert } from 'components';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
-import './DuplicateApplicationModal.scss';
 import SVGIcon from '../../../../images/SVGIcon';
-import SLA from '../../../commonComponents/sla/SLA';
-import DarHelperUtil from '../../../../utils/DarHelper.util';
-import TimeDuration from '../../../commonComponents/timeDuration/TimeDuration';
 import { baseURL } from '../../../../configs/url.config';
-import Alert from '../../../../components/Alert';
+import DarHelperUtil from '../../../../utils/DarHelper.util';
+
+import SLA from '../../../commonComponents/sla/SLA';
+import TimeDuration from '../../../commonComponents/timeDuration/TimeDuration';
+import './DuplicateApplicationModal.scss';
 
 const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, showDatasetModal, appToCloneId }) => {
     const [applicationsToCloneInto, setApplicationsToCloneInto] = useState([]);

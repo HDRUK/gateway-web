@@ -5,17 +5,19 @@ import { useFormik } from 'formik';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import * as Yup from 'yup';
 import { Row, Col, Container, Button, Form, DropdownButton, Dropdown } from 'react-bootstrap';
+import 'react-tabs/style/react-tabs.css';
+import TextareaAutosize from 'react-textarea-autosize';
+
+import { Alert } from 'components';
+import googleAnalytics from '../../tracking';
+import SVGIcon from '../../images/SVGIcon';
+
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
-import googleAnalytics from '../../tracking';
-import 'react-tabs/style/react-tabs.css';
-import SVGIcon from '../../images/SVGIcon';
-import TextareaAutosize from 'react-textarea-autosize';
-import Alert from '../../components/Alert';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 let windowUrl = window.location.origin;
@@ -843,10 +845,7 @@ const YourAccountForm = props => {
                                     />
                                     <span className='gray800-14 ml-4 margin-top-2'>
                                         I agree to the HDRUK{' '}
-                                        <a
-                                            href={process.env.REACT_APP_TERMS_AND_CONDITIONS_URL}
-                                            target='_blank'
-                                            rel='noopener noreferrer'>
+                                        <a href={process.env.REACT_APP_TERMS_AND_CONDITIONS_URL} target='_blank' rel='noopener noreferrer'>
                                             Terms and Conditions
                                         </a>
                                     </span>
@@ -881,7 +880,7 @@ const YourAccountForm = props => {
                                     id='feedback'
                                     checked={formik.values.feedback}
                                     onChange={formik.handleChange}
-                                    data-test-id='user-account-feedback'
+                                    data-testid='user-account-feedback'
                                 />
                             </Col>
                             <Col md={10} sm={8} xs={6} className='gray800-14 pl-0'>
@@ -903,15 +902,12 @@ const YourAccountForm = props => {
                                     id='news'
                                     checked={formik.values.news}
                                     onChange={formik.handleChange}
-                                    data-test-id='user-account-news'
+                                    data-testid='user-account-news'
                                 />
                             </Col>
                             <Col md={10} sm={8} xs={6} className='gray800-14 pl-0'>
                                 I want to receive news, updates and curated marketing from the Gateway&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                    href={process.env.REACT_APP_NEWSLETTER_EXAMPLE_URL}>
+                                <a target='_blank' rel='noopener noreferrer' href={process.env.REACT_APP_NEWSLETTER_EXAMPLE_URL}>
                                     Show me an example
                                 </a>{' '}
                             </Col>
@@ -922,10 +918,7 @@ const YourAccountForm = props => {
                         <span className='divider-lines' />
                         <Col sm={12}>
                             As a user of the Gateway we take the privacy and security of your personal data seriously. Our{' '}
-                            <a
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                href={process.env.REACT_APP_GATEWAY_PRIVACY_POLICY_URL}>
+                            <a target='_blank' rel='noopener noreferrer' href={process.env.REACT_APP_GATEWAY_PRIVACY_POLICY_URL}>
                                 privacy policy
                             </a>{' '}
                             aims to give you information on how Health Data Research UK collects and processes your personal data through

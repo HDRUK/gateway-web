@@ -6,11 +6,12 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import NotificationManager from 'react-notifications';
 import { Box } from 'hdruk-react-core';
-import Loading from '../../commonComponents/Loading';
+
+import { LayoutContent, Switch } from 'components';
+import { publishersService } from 'services';
+
 import '../Dashboard.scss';
-import { LayoutContent } from '../../../components/Layout';
-import Switch from '../../../components/Switch';
-import publishersService from '../../../services/publishers';
+import Loading from '../../commonComponents/Loading';
 
 const baseURL = require('../../commonComponents/BaseURL').getURL();
 

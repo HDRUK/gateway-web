@@ -2,7 +2,9 @@ import React from 'react';
 import { Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
 import InlineSVG from 'react-inlinesvg/esm';
-import Icon from '../../../components/Icon';
+
+import { Icon } from 'components';
+
 import iconTick from '../../../images/tick.svg';
 import iconRejected from '../../../images/Application_rejected.svg';
 

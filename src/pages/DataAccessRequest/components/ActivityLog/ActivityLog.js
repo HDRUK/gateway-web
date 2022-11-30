@@ -3,10 +3,11 @@ import { isEmpty, isUndefined } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import Alert from '../../../../components/Alert';
+
+import { Alert } from 'components';
 import { baseURL } from '../../../../configs/url.config';
 import DarHelperUtil from '../../../../utils/DarHelper.util';
-// import VersionSelector from '../../../commonComponents/versionSelector/VersionSelector';
+
 import SLA from '../../../commonComponents/sla/SLA';
 import WorkflowReviewStepsModal from '../../../commonComponents/workflowReviewStepsModal/WorkflowReviewStepsModal';
 import AccessActivity from '../../../dashboard/DataAccessRequests/AccessActivity/AccessActivity';

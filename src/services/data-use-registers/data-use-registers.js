@@ -1,32 +1,32 @@
-import { apiV2URL } from '../../configs/url.config';
+import { apiUrlV2 } from '../../configs/url.config';
 import { getRequest, patchRequest, postRequest, useMutationWithTranslations } from '../../utils/requests';
 
 const getDataUseRegisters = options => {
-    return getRequest(`${apiV2URL}/data-use-registers`, options);
+    return getRequest(`${apiUrlV2}/data-use-registers`, options);
 };
 
 const getDataUseRegistersByTeam = (team, options) => {
-    return getRequest(`${apiV2URL}/data-use-registers?team=${team}`, options);
+    return getRequest(`${apiUrlV2}/data-use-registers?team=${team}`, options);
 };
 
 const getDataUseRegister = (_id, options) => {
-    return getRequest(`${apiV2URL}/data-use-registers/${_id}?isEdit=true`, options);
+    return getRequest(`${apiUrlV2}/data-use-registers/${_id}?isEdit=true`, options);
 };
 
 const patchDataUseRegister = (_id, data, options) => {
-    return patchRequest(`${apiV2URL}/data-use-registers/${_id}`, data, options);
+    return patchRequest(`${apiUrlV2}/data-use-registers/${_id}`, data, options);
 };
 
 const patchDataUseRegisterCounter = (data, options) => {
-    return patchRequest(`${apiV2URL}/data-use-registers/counter`, data, options);
+    return patchRequest(`${apiUrlV2}/data-use-registers/counter`, data, options);
 };
 
 const postDataUseRegisterCheck = (data, options) => {
-    return postRequest(`${apiV2URL}/data-use-registers/check`, data, options);
+    return postRequest(`${apiUrlV2}/data-use-registers/check`, data, options);
 };
 
 const postDataUseRegisterUpload = (data, options) => {
-    return postRequest(`${apiV2URL}/data-use-registers/upload`, data, options);
+    return postRequest(`${apiUrlV2}/data-use-registers/upload`, data, options);
 };
 
 const useGetDataUseRegisters = (requestOptions, mutateOptions) => {
@@ -92,7 +92,7 @@ const usePostDataUseRegisterUpload = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
+export {
     getDataUseRegisters,
     getDataUseRegistersByTeam,
     getDataUseRegister,

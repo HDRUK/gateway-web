@@ -8,14 +8,17 @@ import { Button, Box, Typography } from 'hdruk-react-core';
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap/';
 import Linkify from 'react-linkify';
 import 'react-tabs/style/react-tabs.css';
-import Alert from '../../components/Alert';
-import { QualityScore } from '../../components';
+
+import { QualityScore, Alert, ToolTip, Icon } from 'components';
+import { RelatedResourcesTab } from 'modules';
 import { ReactComponent as GoldStar } from '../../images/cd-star.svg';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
 import { ReactComponent as InfoFillSVG } from '../../images/infofill.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 import DataSetHelper from '../../utils/DataSetHelper.util';
+import { ReactComponent as Shield } from '../../images/shield.svg';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import CommunicateDataCustodianModal from '../commonComponents/communicateDataCustodianModal/CommunicateDataCustodianModal';
@@ -34,12 +37,8 @@ import DatasetAboutCard from './components/DatasetAboutCard';
 import DataUtitlityFramework from './components/DataUtilityFramework';
 import TechnicalDetailsPage from './components/TechnicalDetailsPage';
 import TechnicalMetadata from './components/TechnicalMetadata';
-import ToolTip from '../../components/ToolTip';
-import Icon from '../../components/Icon';
-import { ReactComponent as Shield } from '../../images/shield.svg';
 import './Dataset.scss';
 import DatasetSchema from './DatasetSchema';
-import RelatedResourcesTab from 'modules/RelatedResourcesTab';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
@@ -806,7 +805,7 @@ class DatasetDetail extends Component {
                                         {this.state.isLatestVersion && !this.state.isDatasetArchived && (
                                             <Col sm={6} className='text-right'>
                                                 <button
-                                                    data-test-id='dataset-request-access-btn'
+                                                    data-testid='dataset-request-access-btn'
                                                     className='btn btn-primary addButton pointer float-right'
                                                     onClick={() => {
                                                         this.toggleModal();

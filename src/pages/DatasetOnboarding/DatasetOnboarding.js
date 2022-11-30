@@ -5,6 +5,21 @@ import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
+import 'react-tabs/style/react-tabs.css';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import Dropdown from 'react-bootstrap/Dropdown';
+import moment from 'moment';
+
+import { ActionBarStatus } from 'components';
+import { datasetOnboardingService } from 'services';
+import DatasetOnboardingValidation from '../../utils/DatasetOnboardingValidation.util';
+import DatasetOnboardingHelper from '../../utils/DatasetOnboardingHelper.util';
+import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
+import { baseURL } from '../../configs/url.config';
+import SVGIcon from '../../images/SVGIcon';
+import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+import DatasetOnboardingHelperUtil from '../../utils/DatasetOnboardingHelper.util';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
 import TypeaheadAsyncCustom from './components/TypeaheadAsyncCustom';
@@ -17,19 +32,10 @@ import MultiField from './components/MultiField/MultiField';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
 import NavItem from './components/NavItem/NavItem';
-import DatasetOnboardingValidation from '../../utils/DatasetOnboardingValidation.util';
-import DatasetOnboardingHelper from '../../utils/DatasetOnboardingHelper.util';
-import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
 import { classSchema } from './classSchema';
-import { baseURL } from '../../configs/url.config';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
-import 'react-tabs/style/react-tabs.css';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './DatasetOnboarding.scss';
-import SVGIcon from '../../images/SVGIcon';
-import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
-import moment from 'moment';
 import AmendmentCount from './components/AmendmentCount/AmendmentCount';
 import ApplicantActionButtons from './components/ApplicantActionButtons/ApplicantActionButtons';
 import CustodianActionButtons from './components/CustodianActionButtons/CustodianActionButtons';
@@ -39,12 +45,8 @@ import Guidance from './components/Guidance/Guidance';
 import StructuralMetadata from './components/StructuralMetadata/StructuralMetadata';
 import StatusDisplay from '../commonComponents/StatusDisplay';
 import ActionModal from './components/ActionModal/ActionModal';
-import Dropdown from 'react-bootstrap/Dropdown';
 import { formSchema } from './formSchema';
-import DatasetOnboardingHelperUtil from '../../utils/DatasetOnboardingHelper.util';
-import ActionBarStatus from '../../components/ActionBarStatus';
 import ErrorModal from '../commonComponents/errorModal';
-import datasetOnboardingServices from '../../services/dataset-onboarding';
 
 /* export const DatasetOnboarding = props => {
     const [id] = useState('');
@@ -176,7 +178,7 @@ class DatasetOnboarding extends Component {
 
                 let {
                     data: { publisher: publisherDetails },
-                } = await datasetOnboardingServices.getPublisherDetails(data.dataset.datasetv2.summary.publisher.identifier);
+                } = await datasetOnboardingService.getPublisherDetails(data.dataset.datasetv2.summary.publisher.identifier);
 
                 if (!_.isEmpty(publisherDetails.federation) && publisherDetails.federation.active) this.setState({ isFederated: true });
 

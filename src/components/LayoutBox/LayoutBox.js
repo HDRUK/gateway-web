@@ -2,7 +2,8 @@
 import { cx } from '@emotion/css';
 import { jsx } from '@emotion/react';
 import PropTypes from 'prop-types';
-import useCommonStyles from '../../hooks/useCommonStyles';
+
+import { useCommonStyles } from 'hooks';
 import { PROP_TYPES_LAYOUTBOX } from './LayoutBox.propTypes';
 
 const LayoutBox = ({

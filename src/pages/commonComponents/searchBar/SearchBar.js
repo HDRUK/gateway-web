@@ -327,7 +327,7 @@ class SearchBar extends React.Component {
                                     <a
                                         href={communityLink}
                                         className='black-14 cmsDropdownTitle'
-                                        data-test-id='lnkCommunity'
+                                        data-testid='lnkCommunity'
                                         onClick={() => {
                                             googleAnalytics.recordEvent(
                                                 'Search bar',
@@ -346,7 +346,7 @@ class SearchBar extends React.Component {
                                         if (userState[0].loggedIn === true) {
                                             return (
                                                 <Box display='flex' alignItems='center' gap={8}>
-                                                    <div onClick={this.props.doToggleDrawer} data-test-id='imgMessageBadge'>
+                                                    <div onClick={this.props.doToggleDrawer} data-testid='imgMessageBadge'>
                                                         <NotificationBadge
                                                             count={this.state.messageCount}
                                                             style={{ backgroundColor: '#29235c' }}
@@ -361,7 +361,7 @@ class SearchBar extends React.Component {
                                                             className={'pointer'}
                                                         />
                                                     </div>
-                                                    <div data-test-id='imgNotificationBadge'>
+                                                    <div data-testid='imgNotificationBadge'>
                                                         <Dropdown>
                                                             <Dropdown.Toggle as={CustomToggle} ref={node => (this.node = node)}>
                                                                 <NotificationBadge
@@ -1166,9 +1166,9 @@ class SearchBar extends React.Component {
                                         {(() => {
                                             if (userState[0].loggedIn === true) {
                                                 return (
-                                                    <Dropdown data-test-id='ddUserNavigation'>
+                                                    <Dropdown data-testid='ddUserNavigation'>
                                                         <Dropdown.Toggle as={CustomToggle}>
-                                                            <span className='black-14' data-test-id='lblUserName'>
+                                                            <span className='black-14' data-testid='lblUserName'>
                                                                 {userState[0].name}
                                                             </span>
                                                             <span className='accountDropDownGap'></span>
@@ -1176,16 +1176,16 @@ class SearchBar extends React.Component {
                                                         </Dropdown.Toggle>
 
                                                         <Dropdown.Menu as={CustomMenu} className='desktopLoginMenu'>
-                                                            <Dropdown data-test-id='ddUserNavigation'>
+                                                            <Dropdown data-testid='ddUserNavigation'>
                                                                 {!isEmpty(userState[0].teams) ? (
                                                                     <Fragment>
                                                                         <Dropdown.Toggle
-                                                                            data-test-id='ddUserNavigationToggle'
+                                                                            data-testid='ddUserNavigationToggle'
                                                                             subToggle={true}
                                                                             as={CustomToggle}>
                                                                             <span
                                                                                 className='black-14'
-                                                                                data-test-id='ddUserNavigationSubMenu'>
+                                                                                data-testid='ddUserNavigationSubMenu'>
                                                                                 {userState[0].name}
                                                                             </span>
                                                                             <span className='addNewDropDownGap'></span>
@@ -1200,7 +1200,7 @@ class SearchBar extends React.Component {
                                                                 ) : (
                                                                     <Fragment>
                                                                         <Dropdown.Item className='black-14 user-dropdown-item'>
-                                                                            <span className='gray700-14' data-test-id='lblUserName'>
+                                                                            <span className='gray700-14' data-testid='lblUserName'>
                                                                                 {userState[0].name}
                                                                             </span>
                                                                         </Dropdown.Item>
@@ -1215,7 +1215,7 @@ class SearchBar extends React.Component {
                                                             <Dropdown.Item
                                                                 onClick={this.logout}
                                                                 className='black-14 user-dropdown-item'
-                                                                data-test-id='optLogout'>
+                                                                data-testid='optLogout'>
                                                                 Sign out
                                                             </Dropdown.Item>
                                                         </Dropdown.Menu>
@@ -1227,7 +1227,7 @@ class SearchBar extends React.Component {
                                                         <Button
                                                             variant='secondary'
                                                             id='myBtn'
-                                                            data-test-id='btnLogin'
+                                                            data-testid='btnLogin'
                                                             style={{ cursor: 'pointer' }}
                                                             onClick={e => {
                                                                 this.showLoginModal();
@@ -1284,13 +1284,13 @@ class SearchBar extends React.Component {
                                                 if (userState[0].loggedIn === true) {
                                                     return (
                                                         <>
-                                                            <Dropdown data-test-id='ddUserNavigation'>
+                                                            <Dropdown data-testid='ddUserNavigation'>
                                                                 <Fragment>
                                                                     <Dropdown.Toggle
-                                                                        data-test-id='ddUserNavigationToggle'
+                                                                        data-testid='ddUserNavigationToggle'
                                                                         subToggle={true}
                                                                         as={CustomToggle}>
-                                                                        <span className='black-14' data-test-id='ddUserNavigationSubMenu'>
+                                                                        <span className='black-14' data-testid='ddUserNavigationSubMenu'>
                                                                             {userState[0].name}
                                                                         </span>
                                                                         <span className='addNewDropDownGap'></span>
@@ -1312,7 +1312,7 @@ class SearchBar extends React.Component {
                                                             <Dropdown.Item
                                                                 onClick={this.logout}
                                                                 className='black-14 user-dropdown-item'
-                                                                data-test-id='optLogout'>
+                                                                data-testid='optLogout'>
                                                                 Sign out
                                                             </Dropdown.Item>
                                                         </>
@@ -1362,7 +1362,7 @@ class SearchBar extends React.Component {
                                                         sm: 0,
                                                     }}>
                                                     <Box xs={4} className='navBarMessageSpacing'>
-                                                        <div onClick={this.props.doToggleDrawer} data-test-id='imgMessageBadge'>
+                                                        <div onClick={this.props.doToggleDrawer} data-testid='imgMessageBadge'>
                                                             <NotificationBadge
                                                                 count={this.state.messageCount}
                                                                 style={{ backgroundColor: '#29235c' }}

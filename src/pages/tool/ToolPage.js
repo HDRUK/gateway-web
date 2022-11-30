@@ -1,20 +1,21 @@
+import React, { useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 import Rating from 'react-rating';
 import 'react-tabs/style/react-tabs.css';
-import Alert from '../../components/Alert';
-import { LayoutContent } from '../../components/Layout';
+
+import { LayoutContent, Alert } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
 import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -355,7 +356,7 @@ export const ToolDetail = props => {
                             <div className='rectangle'>
                                 <Row>
                                     <Col className='line-height-normal'>
-                                        <span data-test-id='tool-name' className='black-16'>
+                                        <span data-testid='tool-name' className='black-16'>
                                             {toolData.name}
                                         </span>
                                     </Col>
@@ -431,7 +432,7 @@ export const ToolDetail = props => {
                                                         <Col
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
-                                                            data-test-id='tool-description'>
+                                                            data-testid='tool-description'>
                                                             <ReactMarkdown source={toolData.description} />
                                                         </Col>
                                                     </Row>
@@ -472,7 +473,7 @@ export const ToolDetail = props => {
                                                             <a
                                                                 href={toolData.link}
                                                                 rel='noopener noreferrer'
-                                                                data-test-id='tool-page-url'
+                                                                data-testid='tool-page-url'
                                                                 target='_blank'
                                                                 className='purple-14 text-break'>
                                                                 {toolData.link}
@@ -506,7 +507,7 @@ export const ToolDetail = props => {
                                                             <Col sm={2}>
                                                                 <span className='gray800-14'>Authors</span>
                                                             </Col>
-                                                            <Col sm={10} className='gray800-14 overflowWrap' data-test-id='tool-authors'>
+                                                            <Col sm={10} className='gray800-14 overflowWrap' data-testid='tool-authors'>
                                                                 {toolData.authorsNew}
                                                             </Col>
                                                         </Row>
@@ -532,7 +533,7 @@ export const ToolDetail = props => {
                                                         <Col sm={10} className='gray800-14'>
                                                             <a
                                                                 href={`/search?search=&tab=Tools&toolcategories=${toolData.categories.category}`}>
-                                                                <div data-test-id='tool-type' className='badge-tag'>
+                                                                <div data-testid='tool-type' className='badge-tag'>
                                                                     {toolData.categories.category}
                                                                 </div>
                                                             </a>
@@ -552,7 +553,7 @@ export const ToolDetail = props => {
                                                                               <div
                                                                                   className='badge-version'
                                                                                   key={i}
-                                                                                  data-test-id='tool-implementation'>
+                                                                                  data-testid='tool-implementation'>
                                                                                   <span>{obj.programmingLanguage}</span>
                                                                                   <span>{obj.version}</span>
                                                                               </div>

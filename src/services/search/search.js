@@ -1,20 +1,20 @@
-import { apiURL, apiV2URL } from '../../configs/url.config';
+import { apiUrlV1, apiUrlV2 } from '../../configs/url.config';
 import { getRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getSearch = options => {
-    return getRequest(`${apiURL}/search`, options);
+    return getRequest(`${apiUrlV1}/search`, options);
 };
 
 const getTopic = (topic, options) => {
-    return getRequest(`${apiURL}/search/filter/topic/${topic}`, options);
+    return getRequest(`${apiUrlV1}/search/filter/topic/${topic}`, options);
 };
 
 const getFilters = (filter, options) => {
-    return getRequest(`${apiV2URL}/filters/${filter}`, options);
+    return getRequest(`${apiUrlV2}/filters/${filter}`, options);
 };
 
 const getSearchFilters = options => {
-    return getRequest(`${apiURL}/search/filter`, options);
+    return getRequest(`${apiUrlV1}/search/filter`, options);
 };
 
 const useGetSearch = (requestOptions, mutateOptions) => {
@@ -55,13 +55,4 @@ const useGetSearchFilters = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
-    getSearch,
-    getTopic,
-    getFilters,
-    getSearchFilters,
-    useGetSearch,
-    useGetTopic,
-    useGetFilters,
-    useGetSearchFilters,
-};
+export { getSearch, getTopic, getFilters, getSearchFilters, useGetSearch, useGetTopic, useGetFilters, useGetSearchFilters };

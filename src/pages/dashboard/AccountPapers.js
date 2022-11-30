@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+
+import { LayoutContent } from 'components';
+import googleAnalytics from '../../tracking';
+
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import ActionModal from '../commonComponents/ActionModal/ActionModal';
-import { EntityActionButton } from './EntityActionButton.jsx';
-import googleAnalytics from '../../tracking';
+import { EntityActionButton } from './EntityActionButton';
 import { PaginationHelper } from '../commonComponents/PaginationHelper';
-import { LayoutContent } from '../../components/Layout';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -182,7 +184,7 @@ export const AccountPapers = props => {
                     </Col>
                     <Col sm={12} md={4} style={{ textAlign: 'right' }}>
                         <Button
-                            data-test-id='add-paper-btn'
+                            data-testid='add-paper-btn'
                             variant='primary'
                             href='/paper/add'
                             className='addButton'

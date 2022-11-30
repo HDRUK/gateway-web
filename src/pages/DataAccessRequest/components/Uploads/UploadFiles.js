@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { Button } from 'hdruk-react-core';
+
+import { AlertMessage } from 'components';
 import { ReactComponent as PaperSVG } from '../../../../images/paper.svg';
 import { ReactComponent as CloseSVG } from '../../../../images/close-alt.svg';
+
 import { concatFileName, fileStatus, readableFileSize } from './files.util';
 import FileLoading from './FileLoading';
-import AlertMessage from '../../../../components/AlertMessage';
 
 export const UploadFiles = ({ uploadFiles, submitted, isLoading, onUploadFiles, onRemoveFile, onDescriptionChange }) => {
     const descriptionRequired = file => {

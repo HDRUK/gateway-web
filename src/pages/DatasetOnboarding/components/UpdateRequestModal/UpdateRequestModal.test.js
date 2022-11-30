@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, screen } from 'testUtils';
 import moxios from 'moxios';
+import { testUtils } from '../../../../../test';
 import UpdateRequestModal from './UpdateRequestModal';
 import { updateRequestProps } from '../../../../utils/__mocks__/DarHelper.mock';
 import '@testing-library/jest-dom/extend-expect';
@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
 
 beforeEach(() => {
     moxios.install();
-    wrapped = render(<UpdateRequestModal {...props} />);
+    wrapped = testUtils.render(<UpdateRequestModal {...props} />);
 });
 
 afterEach(() => {
@@ -34,27 +34,27 @@ afterEach(() => {
 
 describe('UpdateRequestModal component <UpdateRequestModal />', () => {
     it('will display a list of requested changes', () => {
-        expect(screen.getAllByText('Test question').length).toEqual(1);
+        expect(testUtils.screen.getAllByText('Test question').length).toEqual(1);
     });
 
     it('will display a h6 heading', () => {
-        expect(screen.getAllByText('Safe People | Applicant').length).toEqual(1);
+        expect(testUtils.screen.getAllByText('Safe People | Applicant').length).toEqual(1);
     });
 
     it('will display `No, Nevermind` button', () => {
-        expect(screen.getByText('No, nevermind')).toBeInTheDocument();
+        expect(testUtils.screen.getByText('No, nevermind')).toBeInTheDocument();
     });
 
     it('will display `Request updates button`', () => {
-        expect(screen.getByText('Request update')).toBeInTheDocument();
+        expect(testUtils.screen.getByText('Request update')).toBeInTheDocument();
     });
 });
 
 describe('UpdateRequestModal actions <UpdateRequestModal />', () => {
     it('Calls the parent function to close the modal', () => {
         // simulate change event
-        const button = screen.getByText('No, nevermind');
-        expect(screen.getByText('Update answer request')).toBeInTheDocument();
+        const button = testUtils.screen.getByText('No, nevermind');
+        expect(testUtils.screen.getByText('Update answer request')).toBeInTheDocument();
 
         button.click();
         expect(props.close).toHaveBeenCalled();
@@ -62,7 +62,7 @@ describe('UpdateRequestModal actions <UpdateRequestModal />', () => {
 
     it('Calls Request Update API and redirects', async done => {
         // simulate change event
-        const button = screen.getByText('Request update');
+        const button = testUtils.screen.getByText('Request update');
         button.click();
         // else where in the code axios.post() will occur
         // moxis test our response

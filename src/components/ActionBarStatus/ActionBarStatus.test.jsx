@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from 'testUtils';
+import { testUtils } from '../../../test';
 import ActionBarStatus from '.';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -22,7 +22,7 @@ const props = {
 describe('Given the ActionBarStatus component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<ActionBarStatus {...props} />);
+            wrapper = testUtils.render(<ActionBarStatus {...props} />);
         });
 
         it('Then matches the previous snapshot', () => {
@@ -30,52 +30,52 @@ describe('Given the ActionBarStatus component', () => {
         });
 
         it('Then has the correct className', () => {
-            expect(screen.getByText('This version was published on 28 September 2021')).toHaveClass('additional-className');
+            expect(testUtils.screen.getByText('This version was published on 28 September 2021')).toHaveClass('additional-className');
         });
 
         describe('And the status is active', () => {
             it('Then has the correct output', () => {
-                expect(screen.getByText('This version was published on 28 September 2021')).toBeInTheDocument();
+                expect(testUtils.screen.getByText('This version was published on 28 September 2021')).toBeInTheDocument();
             });
         });
 
         describe('And the status is draft', () => {
             it('Then has the correct output', () => {
-                render(<ActionBarStatus {...props} status='draft' />);
+                testUtils.render(<ActionBarStatus {...props} status='draft' />);
 
-                expect(screen.getByText('1 / 45 questions answered')).toBeInTheDocument();
+                expect(testUtils.screen.getByText('1 / 45 questions answered')).toBeInTheDocument();
             });
         });
 
         describe('And the status is published', () => {
             it('Then has the correct output', () => {
-                render(<ActionBarStatus {...props} status='inReview' />);
+                testUtils.render(<ActionBarStatus {...props} status='inReview' />);
 
-                expect(screen.getByText('Submitted for review on 22 September 2021')).toBeInTheDocument();
+                expect(testUtils.screen.getByText('Submitted for review on 22 September 2021')).toBeInTheDocument();
             });
         });
 
         describe('And the status is rejected', () => {
             it('Then has the correct output', () => {
-                render(<ActionBarStatus {...props} status='rejected' />);
+                testUtils.render(<ActionBarStatus {...props} status='rejected' />);
 
-                expect(screen.getByText('This version was rejected on 23 September 2021')).toBeInTheDocument();
+                expect(testUtils.screen.getByText('This version was rejected on 23 September 2021')).toBeInTheDocument();
             });
         });
 
         describe('And the status is archived', () => {
             it('Then has the correct output', () => {
-                render(<ActionBarStatus {...props} status='archived' />);
+                testUtils.render(<ActionBarStatus {...props} status='archived' />);
 
                 expect(
-                    screen.getByText('This version was published on 28 September 2021 and archived on 29 September 2021')
+                    testUtils.screen.getByText('This version was published on 28 September 2021 and archived on 29 September 2021')
                 ).toBeInTheDocument();
             });
         });
 
         describe('And there is no status', () => {
             it('Then has no output', () => {
-                const { container } = render(<ActionBarStatus {...props} status={null} />);
+                const { container } = testUtils.render(<ActionBarStatus {...props} status={null} />);
 
                 expect(container.textContent).toBe('');
             });

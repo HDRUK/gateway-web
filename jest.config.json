@@ -30,5 +30,5 @@
     ],
     "collectCoverageFrom": ["src/**/*.{js,jsx}"],
     "roots": ["<rootDir>", "<rootDir>src"],
-    "moduleDirectories": ["test", "node_modules"]
+    "moduleDirectories": ["src", "node_modules"]
 }

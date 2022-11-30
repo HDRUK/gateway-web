@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiV2URL } from '../../configs/url.config';
+import { apiUrlV2 } from '../../configs/url.config';
 import { postRequest } from '../../utils/requests';
-import service from './activitylog';
+import * as service from './activitylog';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -35,7 +35,7 @@ describe('Given the datasets service', () => {
                 option1: true,
             });
 
-            expect(postRequest).toHaveBeenCalledWith(`${apiV2URL}/activitylog`, mockBody, {
+            expect(postRequest).toHaveBeenCalledWith(`${apiUrlV2}/activitylog`, mockBody, {
                 option1: true,
             });
         });

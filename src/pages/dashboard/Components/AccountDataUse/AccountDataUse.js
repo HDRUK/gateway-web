@@ -1,9 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Alert from '../../../../components/Alert';
-import { LayoutContent } from '../../../../components/Layout';
+
+import { Alert, LayoutContent } from 'components';
 import { useAuth } from '../../../../context/AuthContext';
 import { isCustodian, userHasRole } from '../../../../utils/auth';
+
 import DataUsePage from '../../../dataUse/DataUsePage';
 import DataUseUpload from '../../../dataUse/upload/DataUseUpload';
 import DataUseWidget from '../../../dataUse/widget/DataUseWidget';

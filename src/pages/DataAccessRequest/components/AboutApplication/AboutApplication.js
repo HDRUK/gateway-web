@@ -1,14 +1,16 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { Accordion, Card, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
 import { Button } from 'hdruk-react-core';
+
+import { Alert } from 'components';
+
 import DarHelper from '../../../../utils/DarHelper.util';
 import SVGIcon from '../../../../images/SVGIcon';
 import { ReactComponent as InfoSVG } from '../../../../images/info.svg';
 import TypeaheadDataset from '../TypeaheadDataset/TypeaheadDataset';
-import Alert from '../../../../components/Alert';
 
 const AboutApplication = props => {
     const {

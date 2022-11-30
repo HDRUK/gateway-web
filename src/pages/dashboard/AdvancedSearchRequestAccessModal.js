@@ -1,8 +1,10 @@
 import { Button, H1, P } from 'hdruk-react-core';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { Link } from '../../components';
+
+import { Link } from 'components';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+
 import './AdvancedSearchRequestAccessModal.scss';
 
 const urlEnv = require('../commonComponents/BaseURL').getURLEnv();
@@ -59,7 +61,7 @@ const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
                         <Button variant='secondary' onClick={() => close()}>
                             No, nevermind
                         </Button>
-                        <Button data-test-id='request-access' onClick={() => redirectToJira()}>
+                        <Button data-testid='request-access' onClick={() => redirectToJira()}>
                             Request access
                         </Button>
                     </div>

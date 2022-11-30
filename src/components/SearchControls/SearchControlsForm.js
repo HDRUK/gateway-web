@@ -2,9 +2,10 @@ import React from 'react';
 import { useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useCommonStyles } from 'hooks';
+
 import SearchInput from '../SearchInput';
 import SortDropdown from '../SortDropdown';
-import useCommonStyles from '../../hooks/useCommonStyles';
 
 const SearchControlsForm = ({ sortProps, inputProps, type, mt, mb, mr, ml, width, minWidth, maxWidth }) => {
     const { t } = useTranslation();

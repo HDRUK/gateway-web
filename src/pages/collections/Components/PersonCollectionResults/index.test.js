@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import PersonCollectionResults from './index';
-import service from '../../../../services/related-objects';
+import * as service from '../../../../services/related-objects';
 
 jest.mock('../../../../services/related-objects', () => ({ __esModule: true, getRelatedObject: jest.fn() }));
 
