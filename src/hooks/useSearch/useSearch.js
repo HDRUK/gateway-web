@@ -1,37 +1,29 @@
 import pickBy from 'lodash/pickBy';
-import React from 'react';
+import { useState, useCallback } from 'react';
 import usePersistState from '../usePersistState';
 
 const useSearch = (mutateHook, options) => {
-    const [params, setParams] = React.useState(
+    const [params, setParams] = useState(
         options.initialParams || {
             limit: 10,
             page: 1,
         }
     );
 
+    const [totalItems, setTotalItems] = useState(0);
+    const [isFetched, setIsFetched] = useState(false);
+
     const [cache, updateCache] = usePersistState();
 
-    const [state, setState] = React.useState({
-        total: 0,
-        isFetched: false,
-    });
+    const hasNext = useCallback(() => {
+        return params.page < Math.ceil(totalItems / params.limit);
+    }, [params, totalItems]);
 
-    const { isLoading, isError, data, isFetching } = mutateHook;
-    const { page } = params;
-    const { total } = state;
-
-    const hasNext = React.useCallback(() => {
-        const { limit, page } = params;
-        return page < Math.ceil(total / limit);
-    }, [params, total]);
-
-    const hasPrevious = React.useCallback(() => {
-        const { page } = params;
-        return page > 1;
+    const hasPrevious = useCallback(() => {
+        return params.page > 1;
     }, [params]);
 
-    const getCache = React.useCallback(
+    const getCache = useCallback(
         key => {
             if (!key) return cache;
 
@@ -40,47 +32,13 @@ const useSearch = (mutateHook, options) => {
         [cache]
     );
 
-    const getResults = React.useCallback(
-        async (searchParams, cacheKey) => {
-            const filteredParams = pickBy(searchParams, value => value !== '');
-            const queryParams = {
-                limit: params.limit,
-                page,
-                ...filteredParams,
-            };
-
-            setParams(queryParams);
-            query(queryParams, cacheKey);
-        },
-        [params, page]
-    );
-
-    const getCachedResults = React.useCallback(
-        (searchParams, key) => {
-            const existingParams = getCache(key);
-
-            getResults(
-                existingParams
-                    ? existingParams.params
-                    : {
-                          ...options.initialParams,
-                          ...searchParams,
-                      },
-                key
-            );
-        },
-        [cache]
-    );
-
-    const query = React.useCallback(async (searchParams, cacheKey) => {
+    const query = useCallback(async (searchParams, cacheKey) => {
         try {
             const { data } = await mutateHook.mutateAsync(searchParams);
             const { total, onSuccess } = options;
 
-            setState({
-                total: (total ? total(data) : data.data.results.total) || 0,
-                isFetched: true,
-            });
+            setTotalItems((total ? total(data) : data.data.results.total) || 0);
+            setIsFetched(true);
 
             updateCache(cacheKey, {
                 params: searchParams,
@@ -95,30 +53,54 @@ const useSearch = (mutateHook, options) => {
         }
     }, []);
 
+    const getResults = useCallback(
+        async (searchParams, cacheKey) => {
+            const filteredParams = pickBy(searchParams, value => value !== '');
+            const queryParams = {
+                limit: params.limit,
+                page: params.page,
+                ...filteredParams,
+            };
+
+            setParams(queryParams);
+            query(queryParams, cacheKey);
+        },
+        [params]
+    );
+
+    const getCachedResults = useCallback(
+        (searchParams, key) => {
+            const existingParams = getCache(key);
+
+            getResults(existingParams ? existingParams.params : { ...options.initialParams, ...searchParams }, key);
+        },
+        [cache]
+    );
+
     const goToPage = i => {
         const searchParams = {
             ...params,
             page: i,
-            index: (i - 1) * 10,
+            index: (i - 1) * params.limit,
         };
 
         setParams(searchParams);
         query(searchParams);
     };
 
-    const goToNext = React.useCallback(() => {
+    const goToNext = useCallback(() => {
         if (hasNext()) {
             const { page } = params;
             goToPage(page + 1);
         }
-    }, [params, total]);
+    }, [params, totalItems]);
 
-    const goToPrevious = React.useCallback(() => {
+    const goToPrevious = useCallback(() => {
         if (hasPrevious()) {
             const { page } = params;
             goToPage(page - 1);
         }
-    }, [params, total]);
+    }, [params, totalItems]);
 
     return {
         goToPage,
@@ -129,13 +111,13 @@ const useSearch = (mutateHook, options) => {
         getCachedResults,
         hasNext,
         hasPrevious,
-        total,
-        data,
+        total: totalItems,
+        isFetched,
+        data: mutateHook.data,
         params,
-        isLoading,
-        isError,
-        isFetching,
-        ...state,
+        isLoading: mutateHook.isLoading,
+        isError: mutateHook.isError,
+        isFetching: mutateHook.isFetching,
     };
 };
 

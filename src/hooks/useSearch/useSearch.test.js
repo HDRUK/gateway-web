@@ -40,12 +40,6 @@ describe('Given the useSearch hook', () => {
             server.close();
         });
 
-        it('Then gets the correct styles', () => {
-            const getSpy = jest.spyOn(datasetOnboardingService, 'getPublisher');
-
-            expect(getSpy).not.toHaveBeenCalled();
-        });
-
         it('Then contains the correct return values', () => {
             expect(wrapper.result.current).toMatchObject({
                 total: 0,
