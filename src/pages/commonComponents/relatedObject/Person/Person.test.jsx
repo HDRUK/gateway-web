@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from 'testUtils';
+import { testUtils } from '../../../../../test';
 import '@testing-library/jest-dom/extend-expect';
 import Person from './Person';
 import mockData from './mockData';
@@ -16,7 +16,7 @@ let wrapper;
 describe('Given the Person component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<Person {...props} />);
+            wrapper = testUtils.render(<Person {...props} />);
         });
 
         it('Then matches the previous snapshot', () => {
@@ -24,14 +24,14 @@ describe('Given the Person component', () => {
         });
 
         it('Then Person Title should be rendered with Bio', () => {
-            expect(screen.getByTestId(`title-${props.data.type}-${props.data.id}`)).toHaveTextContent(
+            expect(testUtils.screen.getByTestId(`title-${props.data.type}-${props.data.id}`)).toHaveTextContent(
                 `${props.data.firstname} ${props.data.lastname}`
             );
-            expect(screen.getByTestId('person-bio')).toHaveTextContent(props.data.bio);
+            expect(testUtils.screen.getByTestId('person-bio')).toHaveTextContent(props.data.bio);
         });
 
         it('Then Person SVG Icon should be rendered', () => {
-            expect(screen.getByTestId('avatar-circle')).toBeTruthy();
+            expect(testUtils.screen.getByTestId('avatar-circle')).toBeTruthy();
         });
     });
 
@@ -39,17 +39,20 @@ describe('Given the Person component', () => {
         it('Then the Tilte should be clickable with a link', () => {
             const { rerender } = wrapper;
             rerender(<Person {...props} activeLink />);
-            expect(screen.getByTestId(`title-${props.data.type}-${props.data.id}`)).toHaveAttribute('href', `/person/${props.data.id}`);
+            expect(testUtils.screen.getByTestId(`title-${props.data.type}-${props.data.id}`)).toHaveAttribute(
+                'href',
+                `/person/${props.data.id}`
+            );
         });
     });
     describe('And showRelationshipQuestion is true', () => {
         it('Then the remove button should be rendered ', () => {
             const { rerender } = wrapper;
             rerender(<Person {...props} showRelationshipQuestion />);
-            expect(screen.getByTestId('closeicon')).toBeTruthy();
+            expect(testUtils.screen.getByTestId('closeicon')).toBeTruthy();
         });
         it('Then onclick removeButton function should be called', () => {
-            fireEvent.click(screen.getByTestId('closeicon'));
+            testUtils.fireEvent.click(testUtils.screen.getByTestId('closeicon'));
             expect(props.removeButton.mock.calls.length).toBe(1);
         });
     });

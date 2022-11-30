@@ -96,7 +96,7 @@ const useDeletePaper = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getPapers,
     getPaper,
     getEdit,

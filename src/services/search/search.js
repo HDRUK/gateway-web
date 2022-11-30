@@ -55,13 +55,4 @@ const useGetSearchFilters = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
-    getSearch,
-    getTopic,
-    getFilters,
-    getSearchFilters,
-    useGetSearch,
-    useGetTopic,
-    useGetFilters,
-    useGetSearchFilters,
-};
+export { getSearch, getTopic, getFilters, getSearchFilters, useGetSearch, useGetTopic, useGetFilters, useGetSearchFilters };

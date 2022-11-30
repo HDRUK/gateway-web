@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { Button, Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
+
+import { Alert } from 'components';
+import { datasetOnboardingService } from 'services';
 import googleAnalytics from '../../../../tracking';
-import Alert from '../../../../components/Alert';
 
 const AccountDatasetsCreate = props => {
     const {
@@ -17,7 +18,7 @@ const AccountDatasetsCreate = props => {
 
     const { t } = useTranslation();
 
-    const dataPostDatasetOnboarding = serviceDatasetOnboarding.usePostDatasetOnboarding(null, {
+    const dataPostDatasetOnboarding = datasetOnboardingService.usePostDatasetOnboarding(null, {
         enabled: false,
     });
 

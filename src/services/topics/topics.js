@@ -78,7 +78,7 @@ const useDeleteTopic = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getTopics,
     getTopic,
     postTopic,

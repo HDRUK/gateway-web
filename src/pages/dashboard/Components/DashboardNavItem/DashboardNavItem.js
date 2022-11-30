@@ -1,6 +1,7 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
-import Icon from '../../../../components/Icon';
+
+import { Icon } from 'components';
 
 const DashboardNavItem = ({ icon, activeClassName, onClick, children, to }) => {
     return (

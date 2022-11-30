@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Button } from 'hdruk-react-core';
-import Typography from '../../../../components/Typography';
+
+import { Typography, LayoutBox } from 'components';
+
 import styles from './DataUseWidgetCode.styles';
-import LayoutBox from '../../../../components/LayoutBox';
 
 const DataUseWidgetCode = ({ codeString, copyToClipBoard }) => {
     const { t } = useTranslation();

@@ -45,7 +45,7 @@ const usePatchClearSection = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
+export {
     getQuestionbankItem,
     postQuestionbankItem,
     patchClearAll,

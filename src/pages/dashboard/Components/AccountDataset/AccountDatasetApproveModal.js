@@ -4,9 +4,11 @@ import React, { Suspense } from 'react';
 import { Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+
+import { datasetOnboardingService } from 'services';
 import { STATUS_INREVIEW, TEXTAREA_ROWS } from '../../../../configs/constants';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
-import datasetOnboardingService from '../../../../services/dataset-onboarding/dataset-onboarding';
+
 import './AccountDatasetDecisionModal.scss';
 
 const AccountDatasetApproveModal = ({ id, open, closed, goToNext, showGoToNext, handleApprove }) => {

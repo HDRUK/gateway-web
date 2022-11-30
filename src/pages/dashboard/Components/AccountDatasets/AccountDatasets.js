@@ -1,14 +1,16 @@
 import reduce from 'lodash/reduce';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { NotificationManager } from 'react-notifications';
-import { LayoutContent } from '../../../../components/Layout';
-import useSearch from '../../../../components/Search/useSearch';
+
+import { LayoutContent } from 'components';
+import { useSearch } from 'hooks';
+import { datasetOnboardingService } from 'services';
 import { DATASETS_STATUS_ACTIVE, STATUS_INREVIEW } from '../../../../configs/constants';
 import { useAuth } from '../../../../context/AuthContext';
 import { useDashboard } from '../../../../context/DashboardContext';
-import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
 import googleAnalytics from '../../../../tracking';
 import utils from '../../../../utils/DataSetHelper.util';
+
 import '../../Dashboard.scss';
 import AccountDatasetsCreate from '../AccountDatasetsCreate';
 import AccountDatasetsContent from './AccountDatasetsContent';
@@ -37,7 +39,7 @@ const AccountDatasets = props => {
     );
 
     const { isLoading, isFetched, isError, data, params, getResults, getCachedResults, getCache } = useSearch(
-        serviceDatasetOnboarding.useGetPublisher(publisherID),
+        datasetOnboardingService.useGetPublisher(publisherID),
         searchOptions
     );
 

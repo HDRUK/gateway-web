@@ -1,11 +1,12 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import Icon from '../../../../components/Icon';
-import Typeahead from '../../../../components/Typeahead/Typeahead';
-import serviceLocations from '../../../../services/locations/locations';
+
+import { Icon, Typeahead } from 'components';
+import { locationService } from 'services';
 import DatasetOnboardingHelperUtil from '../../../../utils/DatasetOnboardingHelper.util';
 import { ReactComponent as SearchIcon } from '../../../../images/search.svg';
+
 import * as styles from './TypeaheadAsyncCustom.styles';
 
 function TypeaheadAsyncCustom(props) {
@@ -29,7 +30,7 @@ function TypeaheadAsyncCustom(props) {
     const handleSearch = async query => {
         if (isNaN(query)) {
             setIsLoading(true);
-            const locations = await serviceLocations.getLocations(query, { withCredentials: false });
+            const locations = await locationService.getLocations(query, { withCredentials: false });
             const { data } = locations.data;
             if (data) {
                 const options = data.map(i => ({

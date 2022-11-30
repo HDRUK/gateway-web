@@ -2,28 +2,26 @@ import * as Sentry from '@sentry/react';
 import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Trans } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import { NotificationManager } from 'react-notifications';
 import { useHistory, useLocation } from 'react-router-dom';
-import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
 import { Button, Box, P, H5, Typography, Cta } from 'hdruk-react-core';
-import Alert from '../../components/Alert';
-import Icon from '../../components/Icon';
-import Spinner from '../../components/Spinner/Spinner';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import 'react-tabs/style/react-tabs.css';
+
+import { Alert, Icon, Spinner } from 'components';
+import { dataAccessRequestService, publishersService, questionbankService } from 'services';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
-import darService from '../../services/data-access-request';
-import publishersService from '../../services/publishers';
-import questionbankService from '../../services/questionbank';
 import { getTeam, isPublisherAdmin } from '../../utils/auth';
 import helpers from '../../utils/DarHelper.util';
 import { diffObjects } from '../../utils/GeneralHelper.util';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../commonComponents/ActionBarMenu/ActionBarMenu';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -100,7 +98,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const location = useLocation();
     const team = getTeam({ location });
 
-    const patchSchemaRequest = darService.usePatchSchema(null, {
+    const patchSchemaRequest = dataAccessRequestService.usePatchSchema(null, {
         onError: ({ title, message }) => {
             setIsUploading(false);
 

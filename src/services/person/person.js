@@ -104,7 +104,7 @@ const useDeletePerson = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getPersons,
     getPerson,
     postPerson,

@@ -8,13 +8,14 @@ import React, { Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'regenerator-runtime/runtime';
+import { DEFAULT_THEME } from 'hdruk-react-core';
+import { merge } from 'lodash';
+
 import { AuthProvider } from './context/AuthContext';
 import i18n from './i18n';
 import { mockUser } from './services/auth/mockData';
 import { theme } from './configs/theme';
 import 'jest-date-mock';
-import { DEFAULT_THEME } from 'hdruk-react-core';
-import { merge } from 'lodash';
 import { CmsProvider } from './context/CmsContext';
 
 Enzyme.configure({

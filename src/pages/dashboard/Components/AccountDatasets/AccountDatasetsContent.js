@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Box } from 'hdruk-react-core';
-import Icon from '../../../../components/Icon';
-import SearchControls from '../../../../components/SearchControls';
+
+import { Icon, SearchControls } from 'components';
 import { DATASETS_STATUS_ACTIVE, STATUS_ARCHIVE, STATUS_INREVIEW, STATUS_REJECTED } from '../../../../configs/constants';
 import DatasetCard from '../../../commonComponents/DatasetCard';
 import MessageNotFound from '../../../commonComponents/MessageNotFound';
 import SearchResults from '../../../commonComponents/SearchResults';
 import { ReactComponent as EyeIcon } from '../../../../images/eye.svg';
+
 import '../../Dashboard.scss';
 
 const options = ['latest', 'alphabetic', 'metadata'];

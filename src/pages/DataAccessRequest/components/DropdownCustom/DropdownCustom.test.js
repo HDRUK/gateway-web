@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor, fireEvent } from 'testUtils';
+import { testUtils } from '../../../../../test';
 import DropdownCustom from './DropdownCustom';
 import { server } from '../../../../services/mockServer';
 import '@testing-library/jest-dom/extend-expect';
@@ -60,9 +60,9 @@ describe('Given the DropdownCustom component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
             server.listen();
-            wrapper = render(<DropdownCustom {...dropdownCustomProps} />);
+            wrapper = testUtils.render(<DropdownCustom {...dropdownCustomProps} />);
             input = document.querySelector('.rbt-input-main');
-            fireEvent.click(input);
+            testUtils.fireEvent.click(input);
         });
 
         it('Then matches the previous snapshot', () => {
@@ -70,7 +70,7 @@ describe('Given the DropdownCustom component', () => {
         });
 
         it('Then name should be rendered for 3 contributors', async () => {
-            await waitFor(() => {
+            await testUtils.waitFor(() => {
                 expect(wrapper.getByTestId('darContributorDropdownName-0')).toHaveTextContent('Ciara Ward');
                 expect(wrapper.getByTestId('darContributorDropdownName-1')).toHaveTextContent('Paul McCafferty (contributor)');
                 expect(wrapper.getByTestId('darContributorDropdownName-2')).toHaveTextContent('Ciara Test (contributor)');
@@ -78,7 +78,7 @@ describe('Given the DropdownCustom component', () => {
         });
 
         it('Then email should be rendered for only the logged in users email displayed', async () => {
-            await waitFor(() => {
+            await testUtils.waitFor(() => {
                 expect(wrapper.getByTestId('darContributorDropdownEmail-0')).toHaveTextContent('ciara.ward@paconsulting.com');
                 expect(wrapper.getByTestId('darContributorDropdownEmail-1')).toHaveTextContent('Email address cannot be shown');
                 expect(wrapper.getByTestId('darContributorDropdownEmail-2')).toHaveTextContent('Email address cannot be shown');
@@ -86,7 +86,7 @@ describe('Given the DropdownCustom component', () => {
         });
 
         it('Then renders with the correct organisations shown and hidden', async () => {
-            await waitFor(() => {
+            await testUtils.waitFor(() => {
                 expect(wrapper.getByTestId('darContributorDropdownOrganisation-0')).toHaveTextContent('test');
                 expect(wrapper.getByTestId('darContributorDropdownOrganisation-1')).toHaveTextContent('PA Consulting');
                 expect(wrapper.getByTestId('darContributorDropdownOrganisation-2')).toHaveTextContent('Organisation cannot be shown');

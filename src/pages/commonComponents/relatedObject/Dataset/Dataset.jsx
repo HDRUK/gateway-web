@@ -8,25 +8,25 @@ import { isEmpty, isNil } from 'lodash';
 import { cx } from '@emotion/css';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from 'hdruk-react-core';
+
+import { ToolTip, Icon, QualityScore } from 'components';
 import googleAnalytics from '../../../../tracking';
 import { dateFormats, stripMarkdown } from '../../../../utils/GeneralHelper.util';
+import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
+import { ReactComponent as Shield } from '../../../../images/shield.svg';
+import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
+import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
+import SVGIcon from '../../../../images/SVGIcon';
+
 import RemoveButton from '../RemoveButton/RemoveButton';
 import Title from '../Title/Title';
 import Description from '../Description/Description';
 import Tag from '../Tag/Tag';
-import ToolTip from '../../../../components/ToolTip/ToolTip';
-import Icon from '../../../../components/Icon';
-import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
-import { ReactComponent as Shield } from '../../../../images/shield.svg';
 import { dataset } from './constants';
 import * as styles from './Dataset.styles';
 import '../../CommonComponents.scss';
 import '../RelatedObject.scss';
 import ShowMore from '../../ShowMore';
-import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
-import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
-import { QualityScore } from '../../../../components';
-import SVGIcon from '../../../../images/SVGIcon';
 import DeliveryLeadTime from './modules/DeliveryLeadTime';
 import NumberOfViews from './modules/NumberOfViews';
 

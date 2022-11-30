@@ -10,13 +10,15 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
-import Alert from '../../components/Alert';
+
+import { Alert } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import googleAnalytics from '../../tracking';
 import DarHelper from '../../utils/DarHelper.util';
 import DarValidation from '../../utils/DarValidation.util';
 import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';

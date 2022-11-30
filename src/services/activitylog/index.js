@@ -1,1 +1,1 @@
-export { default } from './activitylog';
+export * from './activitylog';

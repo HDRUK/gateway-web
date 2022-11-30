@@ -1,10 +1,12 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import Icon from '../../../../components/Icon';
+
+import { Icon } from 'components';
 import { ReactComponent as ChevronBottomIcon } from '../../../../images/chevron-bottom.svg';
 import { ReactComponent as ChevronRightIcon } from '../../../../images/chevron-right.svg';
 import { ReactComponent as InfoIcon } from '../../../../images/info.svg';
+
 import * as styles from './TreeSubHeader.styles.js';
 
 const TreeSubHeader = ({ node }) => {

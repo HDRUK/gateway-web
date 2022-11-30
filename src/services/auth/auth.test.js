@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { addCmsGatewayApiHostname, apiPathV1, apiUrlV1 } from '../../configs/url.config';
 import { getRequest, postRequest } from '../../utils/requests';
-import service from './auth';
+import * as service from './auth';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');

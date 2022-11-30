@@ -1,4 +1,4 @@
-import relatedObjectService from '../../services/related-objects';
+import { relatedObjectsService } from 'services';
 
 const FILTER_SHOW_ALL = 'showAll';
 
@@ -22,7 +22,7 @@ const getResourcesFromApi = async (relatedObjects, authorId) => {
     await Promise.all(
         relatedObjects.map(async object => {
             if (['course', 'dataUseRegister'].includes(object.objectType)) {
-                return relatedObjectService.getRelatedObjectByType(object.objectId, object.objectType).then(res => {
+                return relatedObjectsService.getRelatedObjectByType(object.objectId, object.objectType).then(res => {
                     populatedRelatedObjects.push({
                         ...res.data.data[0],
                         id: object.objectId,
@@ -30,7 +30,7 @@ const getResourcesFromApi = async (relatedObjects, authorId) => {
                     });
                 });
             }
-            return relatedObjectService.getRelatedObject(object.objectId).then(res => {
+            return relatedObjectsService.getRelatedObject(object.objectId).then(res => {
                 populatedRelatedObjects.push({
                     ...res.data.data[0],
                     id: object.objectId,

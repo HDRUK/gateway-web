@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { Button } from 'hdruk-react-core';
-import { LayoutContent } from '../../../../components/Layout';
+
+import { LayoutContent } from 'components';
+import { activityLogService, datasetOnboardingService } from 'services';
 import { useAuth } from '../../../../context/AuthContext';
-import serviceActivityLog from '../../../../services/activitylog/activitylog';
-import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
 import { getTeam } from '../../../../utils/auth';
-import { default as DataSetHelper, default as utils } from '../../../../utils/DataSetHelper.util';
+import DataSetHelper from '../../../../utils/DataSetHelper.util';
+
 import ActionBar from '../../../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 import DatasetCard from '../../../commonComponents/DatasetCard';
@@ -34,9 +35,9 @@ const AccountDataset = props => {
         showRejectDatasetModal: false,
     });
 
-    const dataActivityLog = serviceActivityLog.usePostActivityLog();
-    const publisherId = React.useMemo(() => utils.getPublisherID(userState[0], team), [userState[0], team]);
-    const dataPublisher = serviceDatasetOnboarding.useGetPublisher(publisherId);
+    const dataActivityLog = activityLogService.usePostActivityLog();
+    const publisherId = React.useMemo(() => DataSetHelper.getPublisherID(userState[0], team), [userState[0], team]);
+    const dataPublisher = datasetOnboardingService.useGetPublisher(publisherId);
 
     useEffect(() => {
         setTeam(getTeam(props));

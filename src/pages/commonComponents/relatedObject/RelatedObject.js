@@ -1,17 +1,19 @@
 import React from 'react';
 import { Row, Col, Alert } from 'react-bootstrap';
 import { has } from 'lodash';
-import Loading from '../Loading';
+import { Button } from 'hdruk-react-core';
+
+import { relatedObjectsService } from 'services';
 import SVGIcon from '../../../images/SVGIcon';
+
+import Loading from '../Loading';
 import Dataset from './Dataset/Dataset';
 import Tool from './Tool/Tool';
 import Paper from './Paper/Paper';
 import Course from './Course/Course';
 import Person from './Person/Person';
-import relatedObjectService from '../../../services/related-objects';
 import './RelatedObject.scss';
 import ShowMore from '../ShowMore';
-import { Button } from 'hdruk-react-core';
 
 var cmsURL = require('../BaseURL').getCMSURL();
 const env = require('../BaseURL').getURLEnv();
@@ -83,7 +85,7 @@ class RelatedObject extends React.Component {
     getRelatedObjectFromApi = (id, type) => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-        relatedObjectService.getRelatedObjectByType(id, type).then(res => {
+        relatedObjectsService.getRelatedObjectByType(id, type).then(res => {
             this.setState({
                 data: res.data.data[0],
                 isCohortDiscovery: res.data.data[0].isCohortDiscovery || false,

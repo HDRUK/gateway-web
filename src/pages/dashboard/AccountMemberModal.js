@@ -6,9 +6,10 @@ import React, { useEffect, useState } from 'react';
 import { Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
 import * as Yup from 'yup';
+
+import { authService, teamService } from 'services';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
-import serviceAuth from '../../services/auth/auth';
-import serviceTeam from '../../services/teams';
+
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
 import './AccountMemberModal.scss';
 
@@ -16,10 +17,10 @@ const AccountMemberModal = ({ open, close, teamId, onMemberAdded }) => {
     const [userInfo, setUserInfo] = useState([]);
 
     const getUserInfo = async () => {
-        const res = await serviceAuth.getStatus();
+        const res = await authService.getStatus();
         setUserInfo(res.data.data[0]);
     };
-    const addTeamMembers = serviceTeam.useAddMembers();
+    const addTeamMembers = teamService.useAddMembers();
 
     useEffect(() => {
         getUserInfo().catch(console.error);

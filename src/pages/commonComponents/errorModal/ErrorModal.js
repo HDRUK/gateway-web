@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import AlertModal from '../../../components/AlertModal';
 
-const cmsURL = require('../../commonComponents/BaseURL').getCMSURL();
+import { AlertModal } from 'components';
+
+const cmsURL = require('../BaseURL').getCMSURL();
 
 const ErrorModal = ({ onClose, ...outerProps }) => {
     const [show, setShow] = React.useState(true);
@@ -12,7 +13,7 @@ const ErrorModal = ({ onClose, ...outerProps }) => {
         if (onClose) onClose();
         setShow(false);
 
-        //For analytics dashboard (at least), history push doesn't work
+        // For analytics dashboard (at least), history push doesn't work
 
         // history.push({ pathname: '/' });
         window.location.pathname = '/';

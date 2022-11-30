@@ -30,9 +30,4 @@ const useGetDataset = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
-    getDatasets,
-    getDataset,
-    useGetDatasets,
-    useGetDataset,
-};
+export { getDatasets, getDataset, useGetDatasets, useGetDataset };

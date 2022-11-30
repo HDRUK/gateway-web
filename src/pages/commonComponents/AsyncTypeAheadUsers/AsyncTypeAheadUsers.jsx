@@ -1,16 +1,18 @@
 /** @jsx jsx */
+import { useEffect, useState } from 'react';
 import { jsx } from '@emotion/react';
 import { find, isEmpty, isUndefined, remove } from 'lodash';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 import { Menu, MenuItem } from 'react-bootstrap-typeahead';
-import Icon from '../../../components/Icon';
-import Typeahead from '../../../components/Typeahead/Typeahead';
-import useDebounce from '../../../hooks/useDebounce';
+
+import { Icon, Typeahead } from 'components';
+import { useDebounce } from 'hooks';
+import { usersService } from 'services';
+
 import { ReactComponent as SearchIcon } from '../../../images/search.svg';
 import { ReactComponent as GreenTick } from '../../../images/tick.svg';
-import serviceUsers from '../../../services/users/users';
 import UploaderUtil from '../../../utils/Uploader.util';
+
 import * as styles from './AsyncTypeAheadUsers.styles';
 
 function AsyncTypeAheadUsers(props) {
@@ -24,7 +26,7 @@ function AsyncTypeAheadUsers(props) {
     const handleSearch = async () => {
         if (value.length > 2) {
             setIsLoading(true);
-            const users = await serviceUsers.searchUsers(value);
+            const users = await usersService.searchUsers(value);
             setOptions(users.data.data);
             setShowRecentlyAdded(false);
             setIsLoading(false);
@@ -33,7 +35,7 @@ function AsyncTypeAheadUsers(props) {
 
     const handleOnFocus = async e => {
         if (!isUndefined(e) && e.type === 'focus' && isEmpty(recentlyAdded)) {
-            const response = await serviceUsers.getUsers();
+            const response = await usersService.getUsers();
             const { data } = response.data;
             const currentUserInfo = remove(data, { id: props.currentUserId });
             if (!isEmpty(currentUserInfo)) {

@@ -7,13 +7,14 @@ import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
 import parse from 'html-react-parser';
+
+import { Alert, LayoutContent } from 'components';
 import { formatPaperDescription } from 'utils/Paper.util';
-import Alert from '../../components/Alert';
-import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';

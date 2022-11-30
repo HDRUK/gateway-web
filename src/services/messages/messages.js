@@ -101,7 +101,7 @@ const useDeleteMessage = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getMessages,
     getMessage,
     getUnreadCount,

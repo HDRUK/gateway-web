@@ -1,1 +1,1 @@
-export { default } from './questionbank';
+export * from './questionbank';

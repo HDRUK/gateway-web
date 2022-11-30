@@ -92,7 +92,7 @@ const usePostDataUseRegisterUpload = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
+export {
     getDataUseRegisters,
     getDataUseRegistersByTeam,
     getDataUseRegister,

@@ -52,7 +52,7 @@ const useGetLinkedDatasets = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
+export {
     getRelatedObject,
     getRelatedObjectByType,
     getRelatedObjectForCourse,

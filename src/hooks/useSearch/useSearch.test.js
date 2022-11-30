@@ -1,8 +1,8 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import serviceDatasetOnboarding from '../../services/dataset-onboarding/dataset-onboarding';
+import { datasetOnboardingService } from 'services';
+import { testUtils } from '../../../test';
 import { mockGetPublisher } from '../../services/dataset-onboarding/mockMsw';
 import { server } from '../../services/mockServer';
-import useSearch from './useSearch';
+import useSearch from '.';
 
 const mockOnSuccess = jest.fn();
 const mockOnError = jest.fn();
@@ -27,11 +27,8 @@ describe('Given the useSearch hook', () => {
         beforeAll(() => {
             server.listen();
 
-            wrapper = renderHook(
-                () => useSearch(serviceDatasetOnboarding.useGetPublisher('applicant', { enabled: false }), searchOptions),
-                {
-                    wrapper: Providers,
-                }
+            wrapper = testUtils.renderHook(() =>
+                useSearch(datasetOnboardingService.useGetPublisher('applicant', { enabled: false }), searchOptions)
             );
         });
 
@@ -44,7 +41,7 @@ describe('Given the useSearch hook', () => {
         });
 
         it('Then gets the correct styles', () => {
-            const getSpy = jest.spyOn(serviceDatasetOnboarding, 'getPublisher');
+            const getSpy = jest.spyOn(datasetOnboardingService, 'getPublisher');
 
             expect(getSpy).not.toHaveBeenCalled();
         });
@@ -62,7 +59,7 @@ describe('Given the useSearch hook', () => {
 
         describe('And getResults is called', () => {
             beforeAll(async () => {
-                act(() => {
+                testUtils.act(() => {
                     wrapper.result.current.getResults(
                         {
                             limit: 10,
@@ -107,7 +104,7 @@ describe('Given the useSearch hook', () => {
 
             describe('And next is clicked', () => {
                 beforeAll(async () => {
-                    act(() => {
+                    testUtils.act(() => {
                         wrapper.result.current.goToNext();
                     });
 
@@ -130,7 +127,7 @@ describe('Given the useSearch hook', () => {
 
                 describe('And previous is clicked', () => {
                     beforeAll(async () => {
-                        act(() => {
+                        testUtils.act(() => {
                             wrapper.result.current.goToPrevious();
                         });
 
@@ -146,14 +143,11 @@ describe('Given the useSearch hook', () => {
 
                 describe('And there is an error', () => {
                     it('Then calls onError', async () => {
-                        wrapper = renderHook(
-                            () => useSearch(serviceDatasetOnboarding.useGetPublisher('unknown', { enabled: false }), searchOptions),
-                            {
-                                wrapper: Providers,
-                            }
+                        wrapper = testUtils.renderHook(() =>
+                            useSearch(datasetOnboardingService.useGetPublisher('unknown', { enabled: false }), searchOptions)
                         );
 
-                        act(() => {
+                        testUtils.act(() => {
                             wrapper.result.current.getResults(
                                 {
                                     limit: 10,
@@ -170,7 +164,7 @@ describe('Given the useSearch hook', () => {
 
                 describe('And getCachedResults is called', () => {
                     beforeAll(async () => {
-                        act(() => {
+                        testUtils.act(() => {
                             wrapper.result.current.getCachedResults(
                                 {
                                     status: 'inReview',

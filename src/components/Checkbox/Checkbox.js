@@ -2,8 +2,10 @@
 import { cx } from '@emotion/css';
 import { jsx } from '@emotion/react';
 import PropTypes from 'prop-types';
+
+import { useCommonStyles } from 'hooks';
 import { addCommonPropTypes } from '../../configs/propTypes';
-import useCommonStyles from '../../hooks/useCommonStyles';
+
 import * as styles from './Checkbox.styles';
 
 const Checkbox = ({

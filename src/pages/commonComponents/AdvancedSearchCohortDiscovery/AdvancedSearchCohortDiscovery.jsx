@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { Box, Button, FeatureContent, Tag, Typography } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
+
+import { usersService } from 'services';
 import googleAnalytics from '../../../tracking';
 import mediaUrl from '../../../images/feature-cohort-discovery.png';
 import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS, CMS_ACTION_OPEN_COHORT_DISCOVERY_MODAL } from '../../../configs/constants';
-import usersService from '../../../services/users';
+import { addCmsGatewayHostname } from '../../../configs/url.config';
+
 import AdvancedSearchRequestAccessModal from '../../dashboard/AdvancedSearchRequestAccessModal';
 import AdvancedSearchTermsandConditionsModal from '../../dashboard/AdvancedSearchTAndCsModal';
-import { addCmsGatewayHostname } from '../../../configs/url.config';
 import { useCms } from '../../../context/CmsContext';
 
 const urlEnv = require('../BaseURL').getURLEnv();

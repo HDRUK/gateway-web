@@ -1,11 +1,12 @@
-import { render, within, waitFor, createPortalContainer, removePortalContainer, fireEvent } from 'testUtils';
-import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
+import '@testing-library/jest-dom/extend-expect';
+
+import { datasetOnboardingService } from 'services';
+import { testUtils } from '../../../../../test';
 import AccountDatasetApproveModal from './AccountDatasetApproveModal';
-import datasetOnboardingService from '../../../../services/dataset-onboarding/dataset-onboarding';
 import { server } from '../../../../services/mockServer';
 
-jest.mock('../../../../services/dataset-onboarding/dataset-onboarding');
+jest.mock('services');
 
 let containerDiv;
 const goToNext = jest.fn();
@@ -27,8 +28,8 @@ describe('Given the AccountDatasetApproveModal component', () => {
 
         beforeAll(() => {
             server.listen();
-            containerDiv = createPortalContainer();
-            wrapper = render(<AccountDatasetApproveModal {...props} container={containerDiv} />);
+            containerDiv = testUtils.createPortalContainer();
+            wrapper = testUtils.render(<AccountDatasetApproveModal {...props} container={containerDiv} />);
         });
 
         afterEach(() => {
@@ -37,7 +38,7 @@ describe('Given the AccountDatasetApproveModal component', () => {
 
         afterAll(() => {
             server.close();
-            removePortalContainer(containerDiv);
+            testUtils.removePortalContainer(containerDiv);
         });
 
         it('Should match the snapshot', async () => {
@@ -45,7 +46,7 @@ describe('Given the AccountDatasetApproveModal component', () => {
         });
 
         it('Then the Approve and go to next button should not be disabled', async () => {
-            await waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
+            await testUtils.waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
 
             const { getByText } = wrapper;
             const approveAndGoToNextButton = getByText('Approve and go to next');
@@ -63,7 +64,7 @@ describe('Given the AccountDatasetApproveModal component', () => {
                 rerender(<AccountDatasetApproveModal {...newProps} container={containerDiv} />);
             });
             it('Then the Approve and go to next button should be disabled', async () => {
-                await waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
+                await testUtils.waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
 
                 const { getByText } = wrapper;
                 const approveAndGoToNextButton = getByText('Approve and go to next');
@@ -77,15 +78,15 @@ describe('Given the AccountDatasetApproveModal component', () => {
 
                 rerender(<AccountDatasetApproveModal {...props} container={containerDiv} />);
 
-                await waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
+                await testUtils.waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
 
                 const { getByTestId } = wrapper;
-                const button = within(getByTestId('button-container')).getAllByText('Approve')[0];
-                fireEvent.click(button);
+                const button = testUtils.within(getByTestId('button-container')).getAllByText('Approve')[0];
+                testUtils.fireEvent.click(button);
             });
 
             it('Then submits the dataset approval request', async () => {
-                await waitFor(() =>
+                await testUtils.waitFor(() =>
                     expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
                         id: 'id',
                         applicationStatus: 'approved',
@@ -95,7 +96,7 @@ describe('Given the AccountDatasetApproveModal component', () => {
             });
 
             it('Then calls the handleApprove prop to close the modal', async () => {
-                await waitFor(() => expect(handleApprove).toHaveBeenCalled());
+                await testUtils.waitFor(() => expect(handleApprove).toHaveBeenCalled());
             });
         });
 
@@ -107,15 +108,15 @@ describe('Given the AccountDatasetApproveModal component', () => {
 
                 rerender(<AccountDatasetApproveModal {...props} container={containerDiv} />);
 
-                await waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
+                await testUtils.waitFor(() => expect(wrapper.getByText('Approve and go to next')).toBeTruthy());
 
                 const { getByText } = wrapper;
                 button = getByText('Approve and go to next');
-                fireEvent.click(button);
+                testUtils.fireEvent.click(button);
             });
 
             it('Then submits the dataset approval request', async () => {
-                await waitFor(() =>
+                await testUtils.waitFor(() =>
                     expect(datasetOnboardingService.putDatasetOnboarding).toHaveBeenCalledWith('id', {
                         id: 'id',
                         applicationStatus: 'approved',
@@ -125,7 +126,7 @@ describe('Given the AccountDatasetApproveModal component', () => {
             });
 
             it('Then goes to next dataset', async () => {
-                await waitFor(() => expect(goToNext).toHaveBeenCalled());
+                await testUtils.waitFor(() => expect(goToNext).toHaveBeenCalled());
             });
         });
     });
