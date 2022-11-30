@@ -4,11 +4,11 @@ import _ from 'lodash';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
+
 import 'react-tabs/style/react-tabs.css';
 import parse from 'html-react-parser';
 
-import { Alert, LayoutContent } from 'components';
+import { Alert, LayoutContent, RenderMarkdown } from 'components';
 import { formatPaperDescription } from 'utils/Paper.util';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
@@ -583,7 +583,7 @@ export const PaperDetail = props => {
                                                         <Row className='mt-3'>
                                                             <Col>
                                                                 <span data-testid='paper-results' className='gray800-14 hdruk-section-body'>
-                                                                    <ReactMarkdown source={paperData.resultsInsights} />
+                                                                    <RenderMarkdown source={paperData.resultsInsights} />
                                                                 </span>
                                                             </Col>
                                                         </Row>

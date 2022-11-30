@@ -4,13 +4,13 @@ import Winterfell from 'winterfell';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import axios from 'axios';
-import ReactMarkdown from 'react-markdown';
+
 import 'react-tabs/style/react-tabs.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import moment from 'moment';
 
-import { ActionBarStatus } from 'components';
+import { ActionBarStatus, RenderMarkdown } from 'components';
 import { datasetOnboardingService } from 'services';
 import DatasetOnboardingValidation from '../../utils/DatasetOnboardingValidation.util';
 import DatasetOnboardingHelper from '../../utils/DatasetOnboardingHelper.util';
@@ -1492,7 +1492,7 @@ class DatasetOnboarding extends Component {
                                           item.active ? (
                                               <Fragment key={`pageContent-${idx}`}>
                                                   <p className='black-20-semibold mb-0'>{item.active ? item.title : ''}</p>
-                                                  <ReactMarkdown className='gray800-14' source={item.description} />
+                                                  <RenderMarkdown className='gray800-14' source={item.description} />
                                               </Fragment>
                                           ) : (
                                               ''

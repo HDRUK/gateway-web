@@ -5,11 +5,11 @@ import moment from 'moment';
 import queryString from 'query-string';
 import { Col, Container, Pagination, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import ReactMarkdown from 'react-markdown';
+
 import 'react-tabs/style/react-tabs.css';
 import { Box } from 'hdruk-react-core';
 
-import { LayoutContent, SearchControls, Alert } from 'components';
+import { LayoutContent, SearchControls, Alert, RenderMarkdown } from 'components';
 import { collectionsService } from 'services';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
@@ -399,7 +399,7 @@ export const CollectionPage = props => {
                         <Row className='pad-top-24'>
                             <Col sm={1} lg={1} />
                             <Col sm={10} lg={10} data-testid='collection-description' className='gray800-14 hdruk-section-body'>
-                                <ReactMarkdown source={collectionData.description} data-testid='collectionDescription' />
+                                <RenderMarkdown source={collectionData.description} data-testid='collectionDescription' />
                             </Col>
                             <Col sm={1} lg={1} />
                         </Row>

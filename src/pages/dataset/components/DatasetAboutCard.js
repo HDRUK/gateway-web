@@ -1,9 +1,11 @@
 import React from 'react';
 import { Col, Row, Table } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
 import { isEmpty } from 'lodash';
-import AboutCardElement from './AboutCardElement';
+
+import { RenderMarkdown } from 'components';
 import googleAnalytics from '../../../tracking';
+
+import AboutCardElement from './AboutCardElement';
 import '../Dataset.scss';
 
 const DatasetAboutCard = ({ v2data, section, showEmpty, toggleModal }) => {
@@ -33,7 +35,7 @@ const DatasetAboutCard = ({ v2data, section, showEmpty, toggleModal }) => {
                                 <Row className='mt-3'>
                                     <Col sm={12} className='gray800-14 overflowWrap'>
                                         <span className='gray800-14' data-testid='documentation-description'>
-                                            <ReactMarkdown source={formatLinks(v2data.documentation.description)} />
+                                            <RenderMarkdown source={formatLinks(v2data.documentation.description)} />
                                         </span>
                                     </Col>
                                 </Row>
@@ -405,8 +407,7 @@ const DatasetAboutCard = ({ v2data, section, showEmpty, toggleModal }) => {
                                                     'How to request access',
                                                     'Dataset page secondary button clicked'
                                                 );
-                                            }}
-                                        >
+                                            }}>
                                             How to request access
                                         </span>
                                     </Col>

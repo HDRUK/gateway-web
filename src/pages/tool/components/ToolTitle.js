@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-import ReactMarkdown from 'react-markdown';
 import Rating from 'react-rating';
 import { Row, Col } from 'react-bootstrap/';
+import moment from 'moment';
+
+import { RenderMarkdown } from 'components';
 import { ReactComponent as EmptyStarIconSvg } from '../../../images/starempty.svg';
 import { ReactComponent as FullStarIconSvg } from '../../../images/star.svg';
 import { baseURL } from '../../../configs/url.config';
-import moment from 'moment';
 
 class ToolTitle extends React.Component {
     constructor(props) {
@@ -152,7 +153,7 @@ class ToolTitle extends React.Component {
                             <Row>
                                 <Col xs={12} md={12} className='mb-3'>
                                     <span className='gray800-14 descriptionWhiteSpace'>
-                                        <ReactMarkdown source={data.description} />
+                                        <RenderMarkdown source={data.description} />
                                     </span>
                                 </Col>
                             </Row>

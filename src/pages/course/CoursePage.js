@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+
 import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
 
-import { LayoutContent, Alert } from 'components';
+import { LayoutContent, Alert, RenderMarkdown } from 'components';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 
@@ -392,7 +392,7 @@ export const CourseDetail = props => {
                                                             sm={12}
                                                             data-testid='course-description'
                                                             className='gray800-14 hdruk-section-body'>
-                                                            <ReactMarkdown source={courseData.description} />
+                                                            <RenderMarkdown source={courseData.description} />
                                                         </Col>
                                                     </Row>
                                                 </div>
@@ -408,7 +408,7 @@ export const CourseDetail = props => {
                                                         </Row>
                                                         <Row className='mt-3'>
                                                             <Col sm={12} className='gray800-14 hdruk-section-body'>
-                                                                <ReactMarkdown source={courseData.resultsInsights} />
+                                                                <RenderMarkdown source={courseData.resultsInsights} />
                                                             </Col>
                                                         </Row>
                                                     </div>

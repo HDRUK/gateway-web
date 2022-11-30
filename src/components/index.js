@@ -20,6 +20,7 @@ import ListInfo from './ListInfo';
 import Loading from './Loading';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from './Modal';
 import QualityScore from './QualityScore';
+import RenderMarkdown from './RenderMarkdown';
 import SearchControls from './SearchControls';
 import SearchInput from './SearchInput';
 import SortDropdown from './SortDropdown';
@@ -56,6 +57,7 @@ export {
     ModalBody,
     ModalFooter,
     ModalHeader,
+    RenderMarkdown,
     SearchControls,
     SearchInput,
     SortDropdown,

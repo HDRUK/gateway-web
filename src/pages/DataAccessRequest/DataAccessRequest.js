@@ -7,11 +7,11 @@ import React, { Component, Fragment } from 'react';
 import { Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import ReactMarkdown from 'react-markdown';
+
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
 
-import { Alert } from 'components';
+import { Alert, RenderMarkdown } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import googleAnalytics from '../../tracking';
@@ -2109,7 +2109,7 @@ class DataAccessRequest extends Component {
                                           item.active ? (
                                               <Fragment key={`pageContent-${idx}`}>
                                                   <p className='black-20-semibold mb-0'>{item.active ? item.title : ''}</p>
-                                                  <ReactMarkdown className='gray800-14' source={item.description} />
+                                                  <RenderMarkdown className='gray800-14' source={item.description} />
                                               </Fragment>
                                           ) : (
                                               ''

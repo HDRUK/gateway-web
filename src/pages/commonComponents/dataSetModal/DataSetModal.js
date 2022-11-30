@@ -2,9 +2,9 @@ import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Button } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
 
 import { contentService } from 'services';
+import { RenderMarkdown } from 'components';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import DataSetHelper from '../../../utils/DataSetHelper.util';
 
@@ -71,7 +71,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
                         </div>
                         {!_.isEmpty(screenData.dataRequestModalContent) &&
                         typeof screenData.dataRequestModalContent.header !== 'undefined' ? (
-                            <ReactMarkdown source={screenData.dataRequestModalContent.header} />
+                            <RenderMarkdown source={screenData.dataRequestModalContent.header} />
                         ) : (
                             ''
                         )}
@@ -80,7 +80,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
 
                 <div className={is5Safes ? 'appModal-body' : 'appModal-non-5safes-body'}>
                     {!_.isEmpty(screenData.dataRequestModalContent) && typeof screenData.dataRequestModalContent.body !== 'undefined' ? (
-                        <ReactMarkdown source={screenData.dataRequestModalContent.body} />
+                        <RenderMarkdown source={screenData.dataRequestModalContent.body} />
                     ) : (
                         showNon5SafesData()
                     )}

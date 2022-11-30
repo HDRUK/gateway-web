@@ -5,11 +5,10 @@ import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
 import Rating from 'react-rating';
 import 'react-tabs/style/react-tabs.css';
 
-import { LayoutContent, Alert } from 'components';
+import { LayoutContent, Alert, RenderMarkdown } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
 import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg';
@@ -433,7 +432,7 @@ export const ToolDetail = props => {
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
                                                             data-testid='tool-description'>
-                                                            <ReactMarkdown source={toolData.description} />
+                                                            <RenderMarkdown source={toolData.description} />
                                                         </Col>
                                                     </Row>
                                                 </div>
@@ -449,7 +448,7 @@ export const ToolDetail = props => {
                                                         </Row>
                                                         <Row className='mt-3'>
                                                             <Col sm={12} className='gray800-14 hdruk-section-body'>
-                                                                <ReactMarkdown source={toolData.resultsInsights} />
+                                                                <RenderMarkdown source={toolData.resultsInsights} />
                                                             </Col>
                                                         </Row>
                                                     </div>

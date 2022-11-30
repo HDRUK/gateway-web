@@ -2,7 +2,9 @@ import { convertFromRaw, EditorState } from 'draft-js';
 import { debounce } from 'lodash';
 import { markdownToDraft } from 'markdown-draft-js';
 import React, { useCallback, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
+
+import { RenderMarkdown } from 'components';
+
 import { WysiwygEditor } from '../../../commonComponents/WysiwygEditor/WysiwygEditor';
 
 const CustomiseGuidance = ({ activeGuidance, onGuidanceChange, activeQuestion, activePanel }) => {
@@ -34,7 +36,7 @@ const CustomiseGuidance = ({ activeGuidance, onGuidanceChange, activeQuestion, a
     }, [activeQuestion]);
 
     if (activePanel?.panelGuidance && !activeQuestion) {
-        return <ReactMarkdown source={activePanel.panelGuidance} linkTarget='_blank' />;
+        return <RenderMarkdown source={activePanel.panelGuidance} linkTarget='_blank' />;
     }
 
     return (

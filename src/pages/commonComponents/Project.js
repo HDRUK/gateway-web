@@ -3,7 +3,7 @@ import { Row, Col, Alert } from 'react-bootstrap';
 import SVGIcon from '../../images/SVGIcon';
 import axios from 'axios';
 import Loading from './Loading';
-import ReactMarkdown from 'react-markdown';
+
 import './CommonComponents.scss';
 
 var baseURL = require('./BaseURL').getURL();
@@ -77,8 +77,7 @@ class Project extends React.Component {
                                 ? 'rectangle selectedBorder'
                                 : 'rectangle'
                         }
-                        onClick={() => !activeLink && this.props.doAddToTempRelatedObjects(data.id, data.type)}
-                    >
+                        onClick={() => !activeLink && this.props.doAddToTempRelatedObjects(data.id, data.type)}>
                         {data.activeflag === 'review' ? (
                             <Row>
                                 <Col sm={12} lg={12}>
@@ -181,7 +180,7 @@ class Project extends React.Component {
                                         </span>
                                     )}
 
-                                    <ReactMarkdown
+                                    <RenderMarkdown
                                         source={data.description.substr(0, 160) + (data.description.length > 160 ? '...' : '')}
                                     />
                                 </p>
