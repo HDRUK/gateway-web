@@ -1,0 +1,33 @@
+{
+    "main_nav_explore_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(2) > div > a",
+    "main_nav_explore_datasets_link": "#explore-container > div.explore-left-container > a:nth-child(1)",
+    "main_nav_explore_tools_link": "#explore-container > div.explore-left-container > a:nth-child(2)",
+    "main_nav_explore_data_uses_link": "#explore-container > div.explore-left-container > a:nth-child(3)",
+    "main_nav_explore_papers_link": "#explore-container > div.explore-left-container > a:nth-child(4)",
+    "main_nav_explore_courses_link": "#explore-container > div.explore-left-container > a:nth-child(5)",
+    "main_nav_explore_people_link": "#explore-container > div.explore-left-container > a:nth-child(6)",
+    "main_nav_explore_cohorts_link": "#explore-container > div.explore-left-container > a:nth-child(7)",
+    "main_nav_explore_collections_malaria_link": "#explore-container > div.explore-right-container > a:nth-child(2)",
+    "main_nav_explore_collections_breast_cancer_link": "#explore-container > div.explore-right-container > a:nth-child(3)",
+    "main_nav_explore_collections_epilepsy_link": "#explore-container > div.explore-right-container > a:nth-child(4)",
+    "main_nav_explore_collections_osteoporosis_link": "#explore-container > div.explore-right-container > a:nth-child(5)",
+    "main_nav_explore_collections_sars_link": "#explore-container > div.explore-right-container > a:nth-child(6)",
+    "main_nav_explore_collections_bacteria_link": "#explore-container > div.explore-right-container > a:nth-child(7)",
+    "main_nav_explore_collections_cdc_link": "#explore-container > div.explore-right-container > a:nth-child(8)",
+
+    "people_1st_link": "#root > div.mainWrap > div > div:nth-child(5) > div > div.mt-1.mb-5.col-lg-9.col-md-12.col-sm-12 > div:nth-child(1) > div > div > div > div.pad-left-8.col-lg-9.col-sm-8 > a",
+
+    "explore_dataset_compare": "#root > div.mainWrap > div > div:nth-child(5) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div > div:nth-child(1) > div > div > div:nth-child(2) > div:nth-child(1) > span",
+    "explore_tools_compare": "#root > div.mainWrap > div > div:nth-child(5) > div > div.mt-1.mb-5.col-lg-9.col-md-12.col-sm-12 > div:nth-child(2) > div > div > div > div.pad-left-24.pad-right-24.pad-top-16.col > span.badge-tool",
+    "explore_datause_compare": "#root > div.mainWrap > div > div:nth-child(5) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div > div:nth-child(1) > div > div > div > div.pad-left-24.pad-right-24.pad-top-16.col > div.ui-Box.ui-Collapsable.css-1952z4z > div.ui-Box.css-19khi60 > div > span",
+    "explore_papers_compare": "#root > div.mainWrap > div > div:nth-child(5) > div > div.mt-1.mb-5.col-lg-9.col-md-12.col-sm-12 > div:nth-child(1) > div > div > div > div.pad-left-24.pad-right-24.pad-top-16.col-lg-12.col-sm-12 > span.badge-paper",
+    "explore_courses_compare": "#root > div.mainWrap > div > div:nth-child(5) > div > div.mt-1.mb-5.col-lg-9.col-md-12.col-sm-12 > div:nth-child(2) > div > div > div > div.pad-left-24.pad-right-24.pad-top-16.col-lg-12.col-sm-12 > span.badge-course",
+    "explore_cohorts_compare": "#main > div > div.matrixHeaderNoImage > div",
+    "explore_collections_malaria_compare": "#root > div.mainWrap > div > div.collectionHeader.pixelGapTop.pixelGapBottom > div > div:nth-child(3) > div > span",
+    "explore_collections_breast_cancer_compare": "#root > div.mainWrap > div > div.collectionHeader.pixelGapTop.pixelGapBottom > div > div:nth-child(3) > div > span",
+    "explore_collections_epilepsy_compare": "#root > div.mainWrap > div > div.collectionHeader.pixelGapTop.pixelGapBottom > div > div.pad-top-24.row > div.gray800-14.hdruk-section-body.col-lg-10.col-sm-10",
+    "explore_collections_osteoporosis_compare": "#root > div.mainWrap > div > div.collectionHeader.pixelGapTop.pixelGapBottom > div > div:nth-child(3) > div > span",
+    "explore_collections_sars_compare": "#root > div.mainWrap > div > div.collectionHeader.pixelGapTop.pixelGapBottom > div > div:nth-child(3) > div > span",
+    "explore_collections_bacteria_compare": "#root > div.mainWrap > div > div.collectionHeader.pixelGapTop.pixelGapBottom > div > div:nth-child(3) > div > span",
+    "explore_collections_cdc_compare": "#root > div.mainWrap > div > div.collectionHeader.pixelGapTop.pixelGapBottom > div > div:nth-child(3) > div > span"
+}

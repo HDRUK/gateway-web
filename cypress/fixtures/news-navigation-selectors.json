@@ -1,0 +1,5 @@
+{
+    "main_nav_news_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(6) > a",
+
+    "news_compare": "#main > div > div.row.mt-4 > div.col-lg-9.mt-4 > span"
+}
