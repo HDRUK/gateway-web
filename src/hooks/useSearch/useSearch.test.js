@@ -71,9 +71,9 @@ describe('Given the useSearch hook', () => {
 
             it('Then sets the loading flag', async () => {
                 const { waitFor } = wrapper;
-                jest.setTimeout(10000);
+                jest.setTimeout(15000);
 
-                await waitFor(() => expect(wrapper.result.current.isLoading).toEqual(true));
+                await waitFor(() => expect(wrapper.result.current.isLoading).toEqual(true), 15000);
             });
 
             it('Then has no previous pages', async () => {
