@@ -40,12 +40,6 @@ describe('Given the useSearch hook', () => {
             server.close();
         });
 
-        it('Then gets the correct styles', () => {
-            const getSpy = jest.spyOn(datasetOnboardingService, 'getPublisher');
-
-            expect(getSpy).not.toHaveBeenCalled();
-        });
-
         it('Then contains the correct return values', () => {
             expect(wrapper.result.current).toMatchObject({
                 total: 0,
@@ -77,8 +71,9 @@ describe('Given the useSearch hook', () => {
 
             it('Then sets the loading flag', async () => {
                 const { waitFor } = wrapper;
+                jest.setTimeout(15000);
 
-                await waitFor(() => expect(wrapper.result.current.isLoading).toEqual(true));
+                await waitFor(() => expect(wrapper.result.current.isLoading).toEqual(true), 15000);
             });
 
             it('Then has no previous pages', async () => {
