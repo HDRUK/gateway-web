@@ -84,7 +84,7 @@
         "remark-rehype": "^10.0.1",
         "remove-markdown": "^0.3.0",
         "sass": "^1.39.0",
-        "snyk": "^1.685.0",
+        "snyk": "^1.1064.0",
         "uniqid": "^5.2.0",
         "uuid": "^8.3.1",
         "winterfell": "github:HDRUK/Winterfell",
