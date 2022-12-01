@@ -1090,7 +1090,7 @@ class DatasetDetail extends Component {
                                                                                       {relation.type === 'text' ? (
                                                                                           <Button
                                                                                               variant='secondary'
-                                                                                              href={'/search?search=' + relation.title}
+                                                                                              onClick={() => this.props.history.push(`/search?search=${encodeURIComponent(relation.title)}`)}
                                                                                               target='_blank'
                                                                                               className='gatewaySearchButton floatRightLinkedDataset'>
                                                                                               Search on gateway
@@ -1173,7 +1173,7 @@ class DatasetDetail extends Component {
                                                                                       {relation.type === 'text' ? (
                                                                                           <Button
                                                                                               variant='secondary'
-                                                                                              href={'/search?search=' + relation.title}
+                                                                                              onClick={() => this.props.history.push(`/search?search=${encodeURIComponent(relation.title)}`)}
                                                                                               target='_blank'
                                                                                               className='gatewaySearchButton floatRightLinkedDataset'>
                                                                                               Search on gateway
