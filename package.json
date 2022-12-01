@@ -108,7 +108,8 @@
         "prettier:write": "prettier --write \"./src/**/*.{js,jsx}\"",
         "storybook": "start-storybook -p 6006 -s public",
         "build-storybook": "build-storybook -s public",
-        "serve": "npm run build && nodemon ./server.js"
+        "serve": "npm run build && nodemon ./server.js",
+        "cypress:open": "npx cypress open"
     },
     "eslintConfig": {
         "extends": "react-app",
@@ -153,6 +154,7 @@
         "@testing-library/react-hooks": "^7.0.2",
         "@testing-library/user-event": "^14.4.3",
         "babel-preset-react-app": "^9.1.2",
+        "cypress": "^11.2.0",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.2",
         "eslint": "^7.32.0",
