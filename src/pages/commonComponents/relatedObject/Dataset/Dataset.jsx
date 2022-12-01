@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import React, { useState, useEffect, useCallback } from 'react';
-import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
@@ -10,6 +9,7 @@ import { cx } from '@emotion/css';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from 'hdruk-react-core';
 
+import { generalUtils } from 'utils';
 import { ToolTip, Icon, QualityScore } from 'components';
 import googleAnalytics from '../../../../tracking';
 import { dateFormats, stripMarkdown } from '../../../../utils/GeneralHelper.util';
@@ -104,10 +104,12 @@ const Dataset = ({
         },
     } = data;
 
-    const phenotypesSelected = queryString.parse(window.location.search).phenotypes
-        ? queryString.parse(window.location.search).phenotypes.split('::')
+    const phenotypesSelected = generalUtils.parseQueryString(window.location.search).phenotypes
+        ? generalUtils.parseQueryString(window.location.search).phenotypes.split('::')
         : [];
-    const searchTerm = queryString.parse(window.location.search).search ? queryString.parse(window.location.search).search : '';
+    const searchTerm = generalUtils.parseQueryString(window.location.search).search
+        ? generalUtils.parseQueryString(window.location.search).search
+        : '';
     const phenotypesSearched = data.datasetfields.phenotypes.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
 
     return (

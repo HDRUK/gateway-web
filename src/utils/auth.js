@@ -1,8 +1,9 @@
-import queryString from 'query-string';
 import _ from 'lodash';
 
+import { generalUtils } from 'utils';
+
 export const getTeam = props => {
-    const values = queryString.parse(window.location.search);
+    const values = generalUtils.parseQueryString(window.location.search);
     let team;
 
     if (values.team === 'user') {

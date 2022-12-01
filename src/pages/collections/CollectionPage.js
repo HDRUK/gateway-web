@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
 import { Col, Container, Pagination, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-
 import 'react-tabs/style/react-tabs.css';
 import { Box } from 'hdruk-react-core';
 
+import { generalUtils } from 'utils';
 import { LayoutContent, SearchControls, Alert, RenderMarkdown } from 'components';
 import { collectionsService } from 'services';
 import SVGIcon from '../../images/SVGIcon';
@@ -78,7 +77,7 @@ export const CollectionPage = props => {
 
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setCollectionAdded(values.collectionAdded);
             setCollectionEdited(values.collectionEdited);
         }

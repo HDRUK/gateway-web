@@ -3,13 +3,13 @@ import axios from 'axios';
 import { Box, Button, H6, Icon, Input, InputGroup, P } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
 import React from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
 
+import { generalUtils } from 'utils';
 import { BackToTop } from 'components';
 import { searchService } from 'services';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
@@ -147,7 +147,7 @@ class SearchPage extends React.Component {
 
     constructor(props) {
         super(props);
-        let { search = '', tab = 'Datasets' } = queryString.parse(window.location.search);
+        let { search = '', tab = 'Datasets' } = generalUtils.parseQueryString(window.location.search);
         if (!Object.keys(typeMapper).some(key => key === tab)) {
             window.location.href = '/search?search=&tab=Datasets';
         }
@@ -242,7 +242,7 @@ class SearchPage extends React.Component {
             await this.getGlobals();
 
             // 3. splits location search into object { search: search, tab: Datasets}
-            let queryParams = queryString.parse(window.location.search);
+            let queryParams = generalUtils.parseQueryString(window.location.search);
             // 4. if values has loginReferrer set location href to it.
             if (this.state.userState[0].loggedIn && queryParams.loginReferrer) {
                 window.location.href = queryParams.loginReferrer;
@@ -270,7 +270,7 @@ class SearchPage extends React.Component {
     }
 
     async componentWillReceiveProps() {
-        let queryParams = queryString.parse(window.location.search);
+        let queryParams = generalUtils.parseQueryString(window.location.search);
         // 1. if tabs are different update
         if (this.state.key !== queryParams.tab) {
             this.setState({ key: queryParams.tab.replace(/ /g, '') || 'Datasets' });
@@ -621,7 +621,7 @@ class SearchPage extends React.Component {
         if (collectionSort !== '') searchURL += '&collectionSort=' + encodeURIComponent(collectionSort);
         // login status handler
         if (userState[0].loggedIn === false) {
-            let values = queryString.parse(window.location.search);
+            let values = generalUtils.parseQueryString(window.location.search);
             if (values.showLogin === 'true' && values.loginReferrer && values.loginReferrer !== '')
                 searchURL += '&loginReferrer=' + encodeURIComponent(values.loginReferrer);
             else if (values.showLogin === 'true' && document.referrer !== '')
@@ -775,7 +775,7 @@ class SearchPage extends React.Component {
     handleSelect = key => {
         const entityType = typeMapper[`${this.state.key}`];
         googleAnalytics.recordVirtualPageView(`${key} results page ${this.state[`${entityType}Index`] + 1}`);
-        let values = queryString.parse(window.location.search);
+        let values = generalUtils.parseQueryString(window.location.search);
         values.tab = key;
         this.props.history.push(window.location.pathname + '?' + queryString.stringify(values));
 
@@ -1995,7 +1995,7 @@ class SearchPage extends React.Component {
                             <Col sm={12} md={12} lg={5}>
                                 <Box mt={1} display='flex' alignItems='center' height='100%'>
                                     {(() => {
-                                        let { search } = queryString.parse(window.location.search);
+                                        let { search } = generalUtils.parseQueryString(window.location.search);
                                         return <SearchResultsInfo count={this.getCountByKey(key)} searchTerm={search} />;
                                     })()}
                                 </Box>

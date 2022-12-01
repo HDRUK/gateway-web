@@ -3,11 +3,11 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 import Rating from 'react-rating';
 import 'react-tabs/style/react-tabs.css';
 
+import { generalUtils } from 'utils';
 import { LayoutContent, Alert, RenderMarkdown } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
@@ -65,7 +65,7 @@ export const ToolDetail = props => {
     // componentDidMount - on loading of tool detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setToolAdded(values.toolAdded);
             setToolEdited(values.toolEdited);
             setReviewAdded(values.reviewAdded);

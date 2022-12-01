@@ -1,13 +1,13 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
-import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 
 import 'react-tabs/style/react-tabs.css';
 import parse from 'html-react-parser';
 
+import { generalUtils } from 'utils';
 import { Alert, LayoutContent, RenderMarkdown } from 'components';
 import { formatPaperDescription } from 'utils/Paper.util';
 import { baseURL } from '../../configs/url.config';
@@ -63,7 +63,7 @@ export const PaperDetail = props => {
     // componentDidMount - on loading of page detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setPaperAdded(values.toolAdded);
             setPaperEdited(values.toolEdited);
         }

@@ -202,4 +202,11 @@ describe('GeneralHelper Util', () => {
             expect(text).toEqual(`This is a test string`);
         });
     });
+
+    describe('parseQueryString function', () => {
+        it('should return parsed string  ', () => {
+            const response = parseQueryString('?foo=bar');
+            expect(response).toEqual({ foo: 'bar' });
+        });
+    });
 });

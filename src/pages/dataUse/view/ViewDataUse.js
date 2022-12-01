@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/react';
 import _, { isEmpty } from 'lodash';
-import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +7,7 @@ import { NotificationManager } from 'react-notifications';
 import 'react-tabs/style/react-tabs.css';
 import { Box } from 'hdruk-react-core';
 
+import { generalUtils } from 'utils';
 import { Alert, LayoutContent, SearchControls } from 'components';
 import { collectionsService, dataUseRegistersService, relatedObjectsService } from 'services';
 import SVGIcon from '../../../images/SVGIcon';
@@ -94,7 +94,7 @@ export const DataUseView = props => {
     // componentDidMount - on loading of page detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setDataUseAdded(values.dataUseAdded);
             setDataUseEdited(values.dataUseEdited);
         }

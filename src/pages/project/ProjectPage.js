@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
-import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import moment from 'moment';
 
+import { generalUtils } from 'utils';
 import { LayoutContent, Alert, RenderMarkdown } from 'components';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
@@ -55,7 +55,7 @@ export const ProjectDetail = props => {
     // componentDidMount - on loading of project detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setProjectAdded(values.projectAdded);
             setProjectEdited(values.projectEdited);
         }

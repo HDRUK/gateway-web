@@ -1,11 +1,11 @@
 import { has, isEmpty } from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 
+import { generalUtils } from 'utils';
 import { Alert, LayoutContent } from 'components';
 import { personService, publishersService } from 'services';
 import SVGIcon from '../../../images/SVGIcon';
@@ -27,7 +27,7 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
     const [closeGuidanceMessage, setCloseGuidanceMessage] = useState('');
     const [alertMessage, setAlertMessage] = useState(alert?.message);
 
-    const { publishedDARContent } = queryString.parse(window.location.search);
+    const { publishedDARContent } = generalUtils.parseQueryString(window.location.search);
 
     const publishersRequest = publishersService.useGetPublisher(null, {
         onError: ({ title, message }) => {

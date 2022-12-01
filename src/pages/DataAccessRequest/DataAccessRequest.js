@@ -2,7 +2,6 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
 import React, { Component, Fragment } from 'react';
 import { Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
@@ -11,6 +10,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
 
+import { generalUtils } from 'utils';
 import { Alert, RenderMarkdown } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
@@ -203,7 +203,7 @@ class DataAccessRequest extends Component {
             //	b) Message Panel - route will contain only the 'publisherId' with historic state passed from the message panel component which includes datasetId(s)
             // 	c/d) Data Access Request User Area / Direct Link - route will contain a data access request 'accessId' which specifically links all associated data to one application
             const { datasetId, accessId, publisherId } = this.props.match.params;
-            const { version } = queryString.parse(window.location.search);
+            const { version } = generalUtils.parseQueryString(window.location.search);
             let countedQuestionAnswers = {},
                 totalQuestions = '';
 

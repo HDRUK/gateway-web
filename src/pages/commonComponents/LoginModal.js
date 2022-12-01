@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import queryString from 'query-string';
 import { Row, Col } from 'react-bootstrap';
+
+import { generalUtils } from 'utils';
 import Login from './Login';
 
 const LoginModal = props => {
     useEffect(() => {
-        const values = queryString.parse(window.location.search);
+        const values = generalUtils.parseQueryString(window.location.search);
         if (!!values.showLogin && values.showLogin === 'true') {
             document.getElementById('myModal').style.display = 'block';
             document.getElementById('loginWayFinder').style.display = 'none';
