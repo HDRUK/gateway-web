@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { cx } from '@emotion/css';
 import { css, jsx } from '@emotion/react';

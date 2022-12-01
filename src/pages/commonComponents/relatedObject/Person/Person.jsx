@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import React from 'react';
@@ -29,8 +30,7 @@ const Person = ({ data, activeLink, showRelationshipQuestion, removeButton, onCl
                     activeLink={activeLink}
                     onClickHandler={() => {
                         onClick();
-                    }}
-                >
+                    }}>
                     <br />
                     <span className='gray800-14' data-testid='person-bio'>
                         {' '}

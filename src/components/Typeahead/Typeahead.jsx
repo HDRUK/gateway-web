@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import React from 'react';
 import { cx } from '@emotion/css';
@@ -52,8 +53,7 @@ const Typeahead = ({
             ml={ml}
             width={width}
             maxWidth={maxWidth}
-            minWidth={minWidth}
-        >
+            minWidth={minWidth}>
             {!async && <BootstrapTypeahead {...outerProps} selected={selected} />}
             {async && <BootstrapTypeaheadAsync {...outerProps} selected={selected} />}
         </Input>
