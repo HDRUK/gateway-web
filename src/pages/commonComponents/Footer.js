@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import Loading from './Loading';
 import './CommonComponents.scss';
@@ -8,7 +8,7 @@ const cmsURL = baseURL.getCMSURL();
 const env = baseURL.getURLEnv();
 const local = 'local';
 
-class Footer extends React.Component {
+class Footer extends Component {
     state = {
         footer: '',
         isLoading: true,

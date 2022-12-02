@@ -2,7 +2,8 @@ import * as Sentry from '@sentry/react';
 import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import * as React from 'react';
 import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
 

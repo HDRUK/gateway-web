@@ -1,10 +1,10 @@
-import React from 'react';
+import { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import '../Dataset.scss';
 import DataQualityInfo from './DataQualityInfo';
 import _ from 'lodash';
 
-class DataQuality extends React.Component {
+class DataQuality extends Component {
     state = {
         datasetUtility: null,
         allOpen: false,

@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import _, { isEmpty } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { createRef, useCallback, useEffect, useState } from 'react';
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
@@ -47,7 +47,7 @@ export const DataUseView = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [userState] = useState(
         props.userState || [
             {
@@ -298,7 +298,7 @@ export const DataUseView = props => {
         submitForm();
     };
 
-    const doRelatedObjectsSearch = React.useCallback(() => {
+    const doRelatedObjectsSearch = useCallback(() => {
         doRelatedObjectsQuery({
             search: relatedObjectsSearchValue,
             sortBy: 'showAll',
@@ -322,7 +322,7 @@ export const DataUseView = props => {
             return '';
         });
 
-    const handleSort = React.useCallback(
+    const handleSort = useCallback(
         async (sort, submitForm) => {
             handleAnalytics(`Sorted related resources`, sort);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import axios from 'axios';

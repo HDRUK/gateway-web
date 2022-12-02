@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import { Component, Fragment, useState } from 'react';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { Row, Col, Alert, Form, DropdownButton, Dropdown } from 'react-bootstrap';
@@ -17,7 +17,7 @@ import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class YourAccount extends React.Component {
+class YourAccount extends Component {
     // initialize our state
     state = {
         data: [],

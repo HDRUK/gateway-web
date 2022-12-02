@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SlideDown } from 'react-slidedown';
 
 import { Checkbox } from 'components';
@@ -14,7 +14,7 @@ import { isTree } from '../SearchPage';
 
 const CheckboxWrapper = ({ node = {}, highlighted = [], parentKey = '', onHandleInputChange }) => {
     let highlight = false;
-    const onHandleChange = React.useCallback(
+    const onHandleChange = useCallback(
         e => {
             onHandleInputChange(node, parentKey, e.target.checked);
         },

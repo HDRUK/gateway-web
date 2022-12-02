@@ -1,5 +1,5 @@
 import pluralize from 'pluralize';
-import React, { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Box } from 'hdruk-react-core';
@@ -29,7 +29,7 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
 
     const { t } = useTranslation();
 
-    const handleChange = React.useCallback(value => {
+    const handleChange = useCallback(value => {
         setSearchValue(value);
     }, []);
 
@@ -39,11 +39,11 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
         history.push(getDatasetPath(id));
     };
 
-    const handleKeyDownEnter = React.useCallback(submitForm => {
+    const handleKeyDownEnter = useCallback(submitForm => {
         submitForm();
     }, []);
 
-    const handleSort = React.useCallback(
+    const handleSort = useCallback(
         (data, submitForm) => {
             setSortValue(data);
 
@@ -52,11 +52,11 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
         [searchValue]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         setSearchValue(search);
     }, [search]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (sortBy && sortDirection) {
             setSortValue({
                 value: sortBy,
@@ -65,7 +65,7 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
         }
     }, [sortBy, sortDirection]);
 
-    const hasActivityHistory = React.useCallback(dataset => dataset.listOfVersions.length > 0 && team === 'admin', [team]);
+    const hasActivityHistory = useCallback(dataset => dataset.listOfVersions.length > 0 && team === 'admin', [team]);
 
     const getDatasetCardProps = dataset => {
         const datasetCardProps = {};

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { isEmpty, some, find } from 'lodash';
 import axios from 'axios';
 import readXlsxFile from 'read-excel-file';
@@ -153,7 +153,7 @@ const StructuralMetadata = ({
         onStructuralMetaDataUpdate(newStructuralMetaData, newStructuralMetaDataErrors);
     }, [newStructuralMetaData, newStructuralMetaDataErrors]);
 
-    const hiddenFileInput = React.useRef(null);
+    const hiddenFileInput = useRef(null);
 
     const handleClick = () => {
         hiddenFileInput.current.click();

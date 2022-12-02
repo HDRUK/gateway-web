@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
-import { act, render, waitFor } from '@testing-library/react';
-import React from 'react';
 import { advanceTo, clear } from 'jest-date-mock';
+import { testUtils } from '../../../../../test';
 import * as SearchControls from '../../../../components/SearchControls';
 import { STATUS_INREVIEW } from '../../../../configs/constants';
 import { mockGetPublisher } from '../../../../services/dataset-onboarding/mockMsw';
@@ -16,13 +15,13 @@ const searchResultsSpy = jest.spyOn(SearchResults, 'default');
 const searchControlsSpy = jest.spyOn(SearchControls, 'default');
 const datasetCardSpy = jest.spyOn(DatasetCard, 'default');
 
-jest.mock('../../../../components/Icon', () => ({ onClick }) => (
-    <span onClick={onClick} className='icon-mock'>
-        Icon
-    </span>
-));
+// jest.mock('../../../../components/Icon', () => ({ onClick }) => (
+//     <span onClick={onClick} className='icon-mock'>
+//         Icon
+//     </span>
+// ));
 
-jest.mock('../../../commonComponents/relatedObject/RelatedObject', () => <div />);
+// jest.mock('../../../commonComponents/relatedObject/RelatedObject', () => <div />);
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -49,9 +48,7 @@ describe('Given the AccountDatasetsContent component', () => {
         beforeAll(() => {
             advanceTo(new Date(2022, 8, 14, 0, 0, 0));
 
-            wrapper = render(<AccountDatasetsContent {...props} />, {
-                wrapper: Providers,
-            });
+            wrapper = testUtils.render(<AccountDatasetsContent {...props} />);
         });
 
         afterAll(() => {
@@ -75,11 +72,8 @@ describe('Given the AccountDatasetsContent component', () => {
             beforeAll(() => {
                 jest.clearAllMocks();
 
-                wrapper = render(
-                    <AccountDatasetsContent {...props} data={mockGetPublisher.data.results.listOfDatasets} isFetched isLoading={false} />,
-                    {
-                        wrapper: Providers,
-                    }
+                wrapper = testUtils.render(
+                    <AccountDatasetsContent {...props} data={mockGetPublisher.data.results.listOfDatasets} isFetched isLoading={false} />
                 );
             });
 
@@ -90,13 +84,13 @@ describe('Given the AccountDatasetsContent component', () => {
             it('Then handles input change', async () => {
                 const input = wrapper.container.querySelector('input[name="search"]');
 
-                await fireEvent.change(input, {
+                await testUtils.fireEvent.change(input, {
                     target: {
                         value: 'dataset',
                     },
                 });
 
-                await waitFor(() => expect(input.value).toEqual('dataset'));
+                await testUtils.waitFor(() => expect(input.value).toEqual('dataset'));
             });
 
             it('The should call SearchResults with the correct arguments', () => {
@@ -145,26 +139,23 @@ describe('Given the AccountDatasetsContent component', () => {
                 beforeAll(() => {
                     jest.clearAllMocks();
 
-                    wrapper = render(
+                    wrapper = testUtils.render(
                         <AccountDatasetsContent
                             {...props}
                             data={mockGetPublisher.data.results.listOfDatasets}
                             isFetched
                             isLoading={false}
                             status={STATUS_INREVIEW}
-                        />,
-                        {
-                            wrapper: Providers,
-                        }
+                        />
                     );
                 });
 
                 it('Then should change history onClick', async () => {
                     const sla = wrapper.container.querySelectorAll('.sla-icons .icon-mock')[0];
 
-                    await fireEvent.click(sla, '1234');
+                    await testUtils.fireEvent.click(sla, '1234');
 
-                    await waitFor(() => expect(mockHistoryPush).toHaveBeenCalled());
+                    await testUtils.waitFor(() => expect(mockHistoryPush).toHaveBeenCalled());
                 });
 
                 it('Then should call Datasetcard with the correct arguments', () => {
@@ -203,17 +194,14 @@ describe('Given the AccountDatasetsContent component', () => {
                 beforeAll(() => {
                     jest.clearAllMocks();
 
-                    wrapper = render(
+                    wrapper = testUtils.render(
                         <AccountDatasetsContent
                             {...props}
                             data={mockGetPublisher.data.results.listOfDatasets}
                             isFetched
                             isLoading={false}
                             status='rejected'
-                        />,
-                        {
-                            wrapper: Providers,
-                        }
+                        />
                     );
                 });
 
@@ -253,15 +241,15 @@ describe('Given the AccountDatasetsContent component', () => {
                 beforeAll(() => {
                     const input = wrapper.container.querySelector('button');
 
-                    fireEvent.click(input);
+                    testUtils.fireEvent.click(input);
                 });
 
                 it.skip('Then submits with the correct values', async () => {
                     const link = wrapper.container.querySelectorAll('a')[1];
 
-                    fireEvent.click(link);
+                    testUtils.fireEvent.click(link);
 
-                    await waitFor(() =>
+                    await testUtils.waitFor(() =>
                         expect(mockOnSubmit.mock.calls[0][0]).toEqual({ search: 'covid', sortBy: 'alphabetic', sortDirection: 'desc' })
                     );
                 });
@@ -269,9 +257,9 @@ describe('Given the AccountDatasetsContent component', () => {
                 it.skip('Then submits with the correct sort direction', async () => {
                     const link = wrapper.container.querySelector('.btn-link');
 
-                    fireEvent.click(link);
+                    testUtils.fireEvent.click(link);
 
-                    await waitFor(() =>
+                    await testUtils.waitFor(() =>
                         expect(mockOnSubmit.mock.calls[1][0]).toEqual({ search: 'covid', sortBy: 'alphabetic', sortDirection: 'asc' })
                     );
                 });

@@ -1,9 +1,7 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Card, Dimmer, Cta } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import LayoutBox from '../LayoutBox';
@@ -12,15 +10,15 @@ import { ReactComponent as CloseIcon } from '../../images/close-alt.svg';
 import * as styles from './Modal.styles';
 
 const Modal = ({ children, className, width, dismissable, onClose, open, height, position, ...outerProps }) => {
-    const [show, setShow] = React.useState(true);
+    const [show, setShow] = useState(true);
 
-    const handleClose = React.useCallback(() => {
+    const handleClose = useCallback(() => {
         setShow(false);
 
         onClose();
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setShow(open);
     }, [open]);
 

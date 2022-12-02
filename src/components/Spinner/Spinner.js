@@ -1,11 +1,10 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
+import { Box } from 'hdruk-react-core';
 import { ReactComponent as AutosaveIcon } from '../../images/icons/autosave-loader.svg';
 import Icon from '../Icon';
 import { PROP_TYPES_ICON } from '../Icon/Icon.propTypes';
-import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Spinner.styles';
 

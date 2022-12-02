@@ -3,10 +3,12 @@ import axios from 'axios';
 import { Button, Box } from 'hdruk-react-core';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useState } from 'react';
+import { forwardRef, Children, Component, Fragment, useState } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
-import NotificationBadge from 'react-notification-badge';
 import { NotificationManager } from 'react-notifications';
+
+import { NotificationBadge } from 'components';
+
 import { cmsURL } from '../../../configs/url.config';
 import { ReactComponent as WhiteArrowDownSvg } from '../../../images/arrowDownWhite.svg';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
@@ -26,7 +28,7 @@ var baseURL = require('../BaseURL').getURL();
 const urlEnv = require('../BaseURL').getURLEnv();
 const communityLink = require('../BaseURL').getDiscourseURL();
 
-const CustomToggle = React.forwardRef(({ children, onClick, subToggle }, ref) => (
+const CustomToggle = forwardRef(({ children, onClick, subToggle }, ref) => (
     <a
         href='javascript:void(0)'
         ref={ref}
@@ -40,32 +42,32 @@ const CustomToggle = React.forwardRef(({ children, onClick, subToggle }, ref) =>
     </a>
 ));
 
-const CustomMenu = React.forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+const CustomMenu = forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
     const [value] = useState('');
 
     return (
         <div ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
             <ul className='list-unstyled  mb-0 mt-0'>
-                {React.Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
+                {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
             </ul>
         </div>
     );
 });
 
-const CustomSubMenu = React.forwardRef(({ children, style, className, show, 'aria-labelledby': labeledBy }, ref) => {
+const CustomSubMenu = forwardRef(({ children, style, className, show, 'aria-labelledby': labeledBy }, ref) => {
     const [value] = useState('');
     if (show) {
         return (
             <Fragment ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
                 <ul className='list-unstyled'>
-                    {React.Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
+                    {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
                 </ul>
             </Fragment>
         );
     }
 });
 
-class SearchBar extends React.Component {
+class SearchBar extends Component {
     _isMounted = false;
 
     state = {

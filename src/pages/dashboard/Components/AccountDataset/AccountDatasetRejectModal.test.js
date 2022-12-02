@@ -1,4 +1,3 @@
-import React from 'react';
 import { datasetOnboardingService } from 'services';
 import { testUtils } from '../../../../../test';
 import '@testing-library/jest-dom/extend-expect';

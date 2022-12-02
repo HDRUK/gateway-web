@@ -1,4 +1,3 @@
-import React from 'react';
 import { Col, Row, Table } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 

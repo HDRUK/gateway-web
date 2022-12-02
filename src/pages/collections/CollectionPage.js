@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { createRef, useCallback, useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import moment from 'moment';
@@ -58,7 +58,7 @@ export const CollectionPage = props => {
     const [sort, setSort] = useState('recentlyadded');
     const [discoursePostCount, setDiscoursePostCount] = useState(0);
     const [key, setKey] = useState('dataset');
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [showDrawer, setShowDrawer] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
@@ -185,7 +185,7 @@ export const CollectionPage = props => {
         }
     };
 
-    const handleSort = React.useCallback(({ value }, submitForm) => {
+    const handleSort = useCallback(({ value }, submitForm) => {
         submitForm();
 
         setSort(value);
@@ -193,7 +193,7 @@ export const CollectionPage = props => {
         googleAnalytics.recordEvent('Collections', `Sorted collection entities by ${value}`, 'Sort dropdown option changed');
     }, []);
 
-    const handleReset = React.useCallback(() => {
+    const handleReset = useCallback(() => {
         setSort('recentlyadded');
         setSearchString('');
 
@@ -203,7 +203,7 @@ export const CollectionPage = props => {
         });
     }, [key, objectData]);
 
-    const handleKeyDownEnter = React.useCallback(submitForm => {
+    const handleKeyDownEnter = useCallback(submitForm => {
         submitForm();
     }, []);
 
@@ -219,7 +219,7 @@ export const CollectionPage = props => {
         return [];
     };
 
-    const doCollectionsSearch = React.useCallback(
+    const doCollectionsSearch = useCallback(
         ({ search, sortBy }) => {
             const filteredCollectionItems = filterCollectionItems(objectData, search);
 

@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { Button } from 'hdruk-react-core';
-import React from 'react';
+import { useCallback } from 'react';
 import { Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -24,7 +24,7 @@ const AccountDatasetRejectModal = ({ id, open, closed, goToNext, handleReject, s
         await datasetOnboardingService.putDatasetOnboarding(id, payload);
     };
 
-    const handleSubmit = React.useCallback(
+    const handleSubmit = useCallback(
         async values => {
             const payload = {
                 ...values,

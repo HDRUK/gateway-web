@@ -1,4 +1,3 @@
-import React from 'react';
 import { EnquiryMessage } from './EnquiryMessage';
 import { activeTopic } from '../../../../../test/mocks/dataMock';
 

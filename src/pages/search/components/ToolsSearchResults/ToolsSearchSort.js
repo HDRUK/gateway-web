@@ -1,4 +1,3 @@
-import React from 'react';
 import { SortDropdown } from 'components';
 
 const ToolsSearchSort = ({ sort, onSort, search, ...outerProps }) => {

@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import './Dashboard.scss';
 
-class TopSearches extends React.Component {
+class TopSearches extends Component {
     state = {
         data: '',
     };

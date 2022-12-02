@@ -1,22 +1,19 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 import { CheckboxTree } from 'components';
 import { filterBranches } from '../../../../utils/GeneralHelper.util';
 
 const FilterTree = ({ node, filters, highlighted, checked, expanded, onCheck, searchValue }) => {
-    const treeRef = React.useRef();
-    const [nodesChecked, setNodesChecked] = React.useState(checked);
-    const [nodesExpanded, setNodesExpanded] = React.useState(expanded);
-    const [nodeFilters, setNodeFilters] = React.useState([]);
+    const treeRef = useRef();
+    const [nodesChecked, setNodesChecked] = useState(checked);
+    const [nodesExpanded, setNodesExpanded] = useState(expanded);
+    const [nodeFilters, setNodeFilters] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setNodesChecked(checked);
     }, [checked]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setNodeFilters(filters);
     }, [filters]);
 
@@ -30,7 +27,7 @@ const FilterTree = ({ node, filters, highlighted, checked, expanded, onCheck, se
         return nodes;
     };
 
-    const handleChecked = React.useCallback(
+    const handleChecked = useCallback(
         checked => {
             setNodesChecked(checked);
 
@@ -43,7 +40,7 @@ const FilterTree = ({ node, filters, highlighted, checked, expanded, onCheck, se
         [node]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         const formatLabels = filters => {
             const data = [...filters];
 

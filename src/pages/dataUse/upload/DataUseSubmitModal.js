@@ -1,11 +1,11 @@
-import React from 'react';
+import { useMemo } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import './DataUseSubmitModal.scss';
 
 const DataUseSubmitModal = ({ open, close, confirm, isValid, hasDuplicates, recommendedFieldsMissing }) => {
-    const message = React.useMemo(() => {
+    const message = useMemo(() => {
         if (hasDuplicates) {
             return {
                 title: 'Submit data uses with duplicates',

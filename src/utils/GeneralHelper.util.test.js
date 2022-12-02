@@ -8,6 +8,7 @@ import {
     getParams,
     stripHtml,
     removeHTMLTags,
+    parseQueryString,
 } from './GeneralHelper.util';
 
 describe('GeneralHelper Util', () => {

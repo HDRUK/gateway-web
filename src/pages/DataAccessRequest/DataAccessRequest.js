@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
-import React, { Component, Fragment } from 'react';
+import { createRef, Component, Fragment } from 'react';
 import { Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -68,7 +68,7 @@ class DataAccessRequest extends Component {
         this.onFormUpdate = this.onFormUpdate.bind(this);
         this.onHandleDataSetChange = this.onHandleDataSetChange.bind(this);
         this.onHandleActionTabChange = this.onHandleActionTabChange.bind(this);
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
 
         this.state = {
             _id: '',

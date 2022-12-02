@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { CSVLink } from 'react-csv';
 import { Button } from 'hdruk-react-core';

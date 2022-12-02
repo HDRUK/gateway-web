@@ -1,8 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import React from 'react';
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
 import PropTypes from 'prop-types';
 import { AsyncTypeahead as BootstrapTypeaheadAsync, Typeahead as BootstrapTypeahead } from 'react-bootstrap-typeahead';
 import { pick } from '../../configs/propTypes';
@@ -34,7 +31,7 @@ const Typeahead = ({
     const iconsAppend =
         isLoading || iconAppend ? (
             <>
-                {isLoading && <div class='rbt-loader'></div>}
+                {isLoading && <div className='rbt-loader' />}
                 {iconAppend}
             </>
         ) : null;

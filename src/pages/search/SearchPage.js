@@ -1,16 +1,16 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { Box, Button, H6, Icon, Input, InputGroup, P } from 'hdruk-react-core';
+import { Box, Button, H6, Icon, Input, InputGroup, P, BackToTop } from 'hdruk-react-core';
 import _ from 'lodash';
 import moment from 'moment';
-import React from 'react';
+import { createRef, Component } from 'react';
 import { Alert, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
 
 import { generalUtils } from 'utils';
-import { BackToTop } from 'components';
+// import { BackToTop } from 'components';
 import { searchService } from 'services';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
@@ -61,7 +61,7 @@ export const isTree = key => {
     return ['spatial'].includes(key);
 };
 
-class SearchPage extends React.Component {
+class SearchPage extends Component {
     state = {
         search: '',
         datasetSort: '',
@@ -156,13 +156,13 @@ class SearchPage extends React.Component {
 
         this.state.searchFieldValue = search;
 
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
         this.updateFilterStates = this.updateFilterStates.bind(this);
         this.doSearchCall = this.doSearchCall.bind(this);
         this.openDataUtilityWizard = this.openDataUtilityWizard.bind(this);
         this.toggleDataUtilityBanner = this.toggleDataUtilityBanner.bind(this);
         this.onWizardStepChange = this.onWizardStepChange.bind(this);
-        this.csvLink = React.createRef();
+        this.csvLink = createRef();
     }
 
     toggleSavedPreferences = () => {

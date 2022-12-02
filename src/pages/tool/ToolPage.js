@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
@@ -60,7 +60,7 @@ export const ToolDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
 
     // componentDidMount - on loading of tool detail page
     useEffect(() => {

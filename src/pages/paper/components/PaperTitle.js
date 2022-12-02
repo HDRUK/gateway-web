@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import { Row, Col } from 'react-bootstrap/';
 import moment from 'moment';
@@ -8,7 +8,7 @@ import { baseURL } from '../../../configs/url.config';
 
 import '../Paper.scss';
 
-class ToolTitle extends React.Component {
+class ToolTitle extends Component {
     constructor(props) {
         super(props);
     }

@@ -1,7 +1,8 @@
 import { convertFromRaw, EditorState } from 'draft-js';
 import { debounce } from 'lodash';
 import { markdownToDraft } from 'markdown-draft-js';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+import * as React from 'react';
 
 import { RenderMarkdown } from 'components';
 

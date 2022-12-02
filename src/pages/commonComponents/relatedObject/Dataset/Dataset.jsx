@@ -1,7 +1,6 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React, { useState, useEffect, useCallback } from 'react';
+/** @jsxImportSource @emotion/react */
+import { useState, useEffect, useCallback } from 'react';
+
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect } from 'react';
 import { useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -21,19 +21,19 @@ const SearchControlsForm = ({ sortProps, inputProps, type, mt, mb, mr, ml, width
         setFieldValue,
     } = useFormikContext();
 
-    const handleKeyDown = React.useCallback(e => {
+    const handleKeyDown = useCallback(e => {
         if (e.key === 'Enter') {
             if (inputProps.onKeyDownEnter) inputProps.onKeyDownEnter(submitForm);
         }
     }, []);
 
-    const handleReset = React.useCallback(() => {
+    const handleReset = useCallback(() => {
         resetForm();
 
         if (inputProps.onReset) inputProps.onReset(submitForm);
     }, [values]);
 
-    const handleChange = React.useCallback(({ target: { name, value } }) => {
+    const handleChange = useCallback(({ target: { name, value } }) => {
         setFieldValue(name, value);
 
         const { onChange } = inputProps;
@@ -41,7 +41,7 @@ const SearchControlsForm = ({ sortProps, inputProps, type, mt, mb, mr, ml, width
         if (onChange) onChange(value);
     }, []);
 
-    const handleOnSort = React.useCallback(
+    const handleOnSort = useCallback(
         criteria => {
             const { value, direction } = criteria;
             const { onSort } = sortProps;
@@ -54,7 +54,7 @@ const SearchControlsForm = ({ sortProps, inputProps, type, mt, mb, mr, ml, width
         [values]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         setFieldValue('sortBy', value);
         setFieldValue('sortDirection', direction);
     }, [value, direction]);

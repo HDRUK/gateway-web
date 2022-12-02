@@ -1,4 +1,3 @@
-import React from 'react';
 import { testUtils } from '../../../test';
 import Modal from './Modal';
 import ModalHeader from './ModalHeader';

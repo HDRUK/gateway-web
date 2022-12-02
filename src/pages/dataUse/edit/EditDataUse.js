@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react';
 import { isArray, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, { createRef, useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 

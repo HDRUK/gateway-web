@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { createRef, Component } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
@@ -34,7 +34,7 @@ class Unsubscribe extends Component {
     constructor(props) {
         super(props);
         this.state.userState = props.userState;
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
     }
 
     componentDidMount() {

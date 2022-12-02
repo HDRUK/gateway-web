@@ -1,6 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
 import LayoutBox from '../LayoutBox';
 import * as styles from './Card.styles.js';

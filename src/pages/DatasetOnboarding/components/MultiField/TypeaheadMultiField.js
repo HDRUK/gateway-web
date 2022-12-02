@@ -1,10 +1,10 @@
-import React from 'react';
+import { Component } from 'react';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { Row, Col } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import _ from 'lodash';
 
-class TypeaheadMultiField extends React.Component {
+class TypeaheadMultiField extends Component {
     constructor(props) {
         super(props);
 

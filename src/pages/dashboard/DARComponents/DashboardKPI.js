@@ -1,5 +1,5 @@
 // /ShowObjects/Title.js
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import '../Dashboard.scss';
 import CountUp from 'react-countup';

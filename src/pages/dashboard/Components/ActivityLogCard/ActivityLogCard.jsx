@@ -1,6 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import groupBy from 'lodash/groupBy';
 import PropTypes from 'prop-types';
 import { Suspense } from 'react';

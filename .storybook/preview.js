@@ -1,5 +1,3 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
 import { jsx, ThemeProvider } from '@emotion/react';
 import { DEFAULT_THEME } from 'hdruk-react-core';
 import { merge } from 'lodash';

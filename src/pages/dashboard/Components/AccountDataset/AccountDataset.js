@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import React, { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
+import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import { Redirect, useHistory, useParams } from 'react-router-dom';

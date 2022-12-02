@@ -1,11 +1,11 @@
 import { Button } from 'hdruk-react-core';
-import React from 'react';
+import { forwardRef } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import './ActionBarMenu.scss';
 
 const ActionBarMenu = ({ label, options = [], disabled, variant = 'secondary', alignStart }) => {
-    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    const CustomToggle = forwardRef(({ children, onClick }, ref) => (
         <a
             className='nested-button'
             href='javascript:void(0)'

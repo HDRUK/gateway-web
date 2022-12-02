@@ -1,4 +1,3 @@
-import React from 'react';
 import MessageHeader from './MessageHeader';
 import { activeTopic, userStateData, activeTopicMultipleDatasets } from '../../../../../test/mocks/dataMock';
 

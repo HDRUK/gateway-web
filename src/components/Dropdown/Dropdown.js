@@ -1,12 +1,11 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
 import PropTypes from 'prop-types';
 import { Dropdown as BootstrapDropdown } from 'react-bootstrap';
+import { Box } from 'hdruk-react-core';
 import { ReactComponent as CheckIcon } from '../../images/check.svg';
 import Icon from '../Icon';
-import { Box } from 'hdruk-react-core';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Dropdown.styles';
 

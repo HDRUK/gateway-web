@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col, Button } from 'react-bootstrap';
 import { isEmpty } from 'lodash';

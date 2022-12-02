@@ -1,9 +1,9 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import debounce from 'lodash/debounce';
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
+import * as React from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 import { Box } from 'hdruk-react-core';
 

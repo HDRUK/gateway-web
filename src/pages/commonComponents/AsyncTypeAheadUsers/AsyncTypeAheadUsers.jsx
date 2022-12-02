@@ -1,7 +1,6 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
-import { jsx } from '@emotion/react';
+
 import { find, isEmpty, isUndefined, remove } from 'lodash';
 import PropTypes from 'prop-types';
 import { Menu, MenuItem } from 'react-bootstrap-typeahead';

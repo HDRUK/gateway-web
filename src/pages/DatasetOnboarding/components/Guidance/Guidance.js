@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { RenderMarkdown } from 'components';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 

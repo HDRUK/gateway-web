@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import Rating from 'react-rating';
 import { Row, Col } from 'react-bootstrap/';
@@ -9,7 +9,7 @@ import { ReactComponent as EmptyStarIconSvg } from '../../../images/starempty.sv
 import { ReactComponent as FullStarIconSvg } from '../../../images/star.svg';
 import { baseURL } from '../../../configs/url.config';
 
-class ToolTitle extends React.Component {
+class ToolTitle extends Component {
     constructor(props) {
         super(props);
     }

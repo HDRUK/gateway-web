@@ -1,10 +1,10 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
-import React, { Component, Fragment, useState } from 'react';
+import { Component, Fragment, useState } from 'react';
+import * as React from 'react';
 import { Dropdown, Nav } from 'react-bootstrap';
 import { Route, withRouter } from 'react-router-dom';
-import 'react-web-tabs/dist/react-web-tabs.css';
 
 import { generalUtils } from 'utils';
 import { DashboardProvider } from '../../context/DashboardContext';

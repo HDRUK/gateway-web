@@ -1,7 +1,3 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Caption } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';

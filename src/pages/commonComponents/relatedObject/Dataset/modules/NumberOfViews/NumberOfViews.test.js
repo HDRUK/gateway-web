@@ -1,4 +1,3 @@
-import React from 'react';
 import { testUtils } from '../../../../../../../test';
 import NumberOfViews from './NumberOfViews';
 import '@testing-library/jest-dom/extend-expect';

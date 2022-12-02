@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { createRef, useState, useEffect } from 'react';
 
 import axios from 'axios';
 import * as Sentry from '@sentry/react';
@@ -40,7 +40,7 @@ export const ProjectDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [userState] = useState(
         props.userState || [
             {

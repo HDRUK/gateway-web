@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { Row, Col, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ import './CommonComponents.scss';
 
 var baseURL = require('./BaseURL').getURL();
 
-class Tool extends React.Component {
+class Tool extends Component {
     // initialize our state
     state = {
         data: [],

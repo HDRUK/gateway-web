@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { OverlayTrigger, Tooltip, Row, Button, Accordion } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
@@ -40,7 +40,7 @@ const DatasetCard = props => {
     } = props;
     const [flagClosed, setFlagClosed] = useState(true);
 
-    const handleClick = React.useCallback(() => {
+    const handleClick = useCallback(() => {
         window.location.href = path || `/dataset-onboarding/${id}`;
     }, [id]);
 

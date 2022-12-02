@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
 
 import 'react-tabs/style/react-tabs.css';
@@ -47,7 +47,7 @@ export const PaperDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [isHovering, setIsHovering] = useState(false);
     const [userState] = useState(
         props.userState || [

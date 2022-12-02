@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 
 const AmendmentCount = ({ answeredAmendments = 0, unansweredAmendments = 0 }) => {
     const runHeavyCalc = (answeredAmendments, unansweredAmendments) => {

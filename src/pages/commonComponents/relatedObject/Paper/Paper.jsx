@@ -1,7 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
+/** @jsxImportSource @emotion/react */
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { formatPaperIntro } from '../../../../utils/Paper.util';

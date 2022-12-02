@@ -1,4 +1,3 @@
-import React from 'react';
 import { Nav } from 'react-bootstrap';
 
 const DashboardSubNavItem = ({ onClick, children, active }) => {

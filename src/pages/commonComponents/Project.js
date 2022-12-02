@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { Row, Col, Alert } from 'react-bootstrap';
 import SVGIcon from '../../images/SVGIcon';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import './CommonComponents.scss';
 
 var baseURL = require('./BaseURL').getURL();
 
-class Project extends React.Component {
+class Project extends Component {
     // initialize our state
     state = {
         data: [],

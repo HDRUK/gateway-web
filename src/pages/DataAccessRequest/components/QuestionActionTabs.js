@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import { useCallback, useState, useEffect, Fragment } from 'react';
 import { Tabs, Tab } from 'react-bootstrap/';
 import { capitalize, isEmpty } from 'lodash';
 import Guidance from './Guidance/Guidance';
@@ -42,7 +42,7 @@ const QuestionActionTabs = ({
         setNotesCount(messages.length);
     };
 
-    const handleUpdateMessagesCount = React.useCallback(
+    const handleUpdateMessagesCount = useCallback(
         (questionId, questionSetId, type) => {
             setMessagesCount(messagesCount + 1);
 
@@ -51,7 +51,7 @@ const QuestionActionTabs = ({
         [messagesCount]
     );
 
-    const handleUpdateNotesCount = React.useCallback(
+    const handleUpdateNotesCount = useCallback(
         (questionId, questionSetId, type) => {
             setNotesCount(notesCount + 1);
 

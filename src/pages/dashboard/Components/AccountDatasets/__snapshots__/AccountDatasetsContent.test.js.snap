@@ -24,9 +24,9 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
                 class="emotion-5 input-group-prepend"
               >
                 <span
-                  class="icon-mock"
+                  class="ui-Icon emotion-1 emotion-7"
                 >
-                  Icon
+                  <icon-mock />
                 </span>
               </div>
               <input
@@ -46,13 +46,13 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
         class="d-flex justify-content-end col-lg-4"
       >
         <div
-          class="ui-SortDropdown emotion-6"
+          class="ui-SortDropdown emotion-8"
         >
           <div
             class="ui-Box emotion-0"
           >
             <div
-              class="ui-Dropdown emotion-8 dropdown"
+              class="ui-Dropdown emotion-10 dropdown"
             >
               <button
                 aria-expanded="false"
@@ -65,7 +65,7 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
             </div>
           </div>
           <button
-            class="emotion-9 btn btn-link"
+            class="emotion-11 btn btn-link"
             ml="2"
             type="button"
           >
@@ -73,9 +73,9 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
               class="ui-SortDropdown__desc"
             >
               <span
-                class="icon-mock"
+                class="ui-Icon emotion-1 emotion-13"
               >
-                Icon
+                <icon-mock />
               </span>
             </span>
           </button>
@@ -358,9 +358,10 @@ exports[`Given the AccountDatasetsContent component When it is rendered And has 
                   class="sla-icons"
                 >
                   <span
-                    class="icon-mock"
+                    class="ui-Icon emotion-14 emotion-15"
+                    role="button"
                   >
-                    Icon
+                    <icon-mock />
                   </span>
                 </span>
                 In review

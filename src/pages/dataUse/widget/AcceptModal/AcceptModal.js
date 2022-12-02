@@ -1,7 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React, { useState, useRef } from 'react';
+/** @jsxImportSource @emotion/react */
+import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -29,7 +27,7 @@ const AcceptModal = ({ open, onClose, onAccept }) => {
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (open) {
             setAcceptStatus(true);
         }

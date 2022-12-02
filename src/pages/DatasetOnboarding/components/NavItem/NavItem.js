@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { isEmpty } from 'lodash';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import DarHelper from '../../../../utils/DarHelper.util';
