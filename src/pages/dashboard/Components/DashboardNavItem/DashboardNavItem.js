@@ -1,6 +1,6 @@
 import { Nav } from 'react-bootstrap';
 
-import { Icon } from 'components';
+import { Icon } from 'hdruk-react-core';
 
 const DashboardNavItem = ({ icon, activeClassName, onClick, children, to }) => {
     return (

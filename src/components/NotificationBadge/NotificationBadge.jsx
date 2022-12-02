@@ -1,7 +1,13 @@
+/** @jsxImportSource @emotion/react */
 import PropTypes from 'prop-types';
+import rootStyles from './NotificationBadge.styles';
 
 const NotificationBadge = ({ count, ...props }) => {
-    return <div {...props}>{count}</div>;
+    return (
+        <div css={rootStyles} {...props}>
+            {count}
+        </div>
+    );
 };
 
 NotificationBadge.propTypes = {
