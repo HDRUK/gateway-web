@@ -3,7 +3,20 @@ steps:
       entrypoint: 'bash'
       args: ['-c', 'docker pull gcr.io/$PROJECT_ID/${_APP_NAME}:latest || exit 0']
     - name: 'gcr.io/cloud-builders/docker'
-      args: ['build', '-t', 'gcr.io/$PROJECT_ID/${_APP_NAME}:latest', '--cache-from', 'gcr.io/$PROJECT_ID/${_APP_NAME}:latest', '.']
+      args: [
+              'build',
+              '-t', 
+              'gcr.io/$PROJECT_ID/${_APP_NAME}:latest',
+              '--cache-from', 'gcr.io/$PROJECT_ID/${_APP_NAME}:latest',
+              '--build-arg', 'SKIP_PREFLIGHT_CHECK=${_SKIP_PREFLIGHT_CHECK}',
+              '--build-arg', 'NODE_ENV=${_NODE_ENV}',
+              '--build-arg', 'REACT_APP_HOTJAR_CODE=${_REACT_APP_HOTJAR_CODE}',
+              '--build-arg', 'REACT_APP_HOTJAR_CODE_VERSION=${_REACT_APP_HOTJAR_CODE_VERSION}',
+              '--build-arg', 'REACT_APP_METADATA_CATALOG_URL=${_REACT_APP_METADATA_CATALOG_URL}',
+              '--build-arg', 'REACT_APP_NEWSLETTER_EXAMPLE_URL=${_REACT_APP_NEWSLETTER_EXAMPLE_URL}',
+              '--build-arg', 'REACT_APP_TERMS_AND_CONDITIONS_URL=${_REACT_APP_TERMS_AND_CONDITIONS_URL}',
+              '--build-arg', 'REACT_APP_GATEWAY_PRIVACY_POLICY_URL=${_REACT_APP_GATEWAY_PRIVACY_POLICY_URL}',
+              '.']
     - name: 'gcr.io/cloud-builders/docker'
       args: ['push', 'gcr.io/$PROJECT_ID/${_APP_NAME}:latest']
     - name: 'gcr.io/cloud-builders/gcloud'
@@ -14,14 +27,6 @@ steps:
               'latest-web',
               '--image',
               'gcr.io/$PROJECT_ID/${_APP_NAME}:latest',
-              '--build-arg', 'SKIP_PREFLIGHT_CHECK=${_SKIP_PREFLIGHT_CHECK}',
-              '--build-arg', 'NODE_ENV=${_NODE_ENV}',
-              '--build-arg', 'REACT_APP_HOTJAR_CODE=${_REACT_APP_HOTJAR_CODE}',
-              '--build-arg', 'REACT_APP_HOTJAR_CODE_VERSION=${_REACT_APP_HOTJAR_CODE_VERSION}',
-              '--build-arg', 'REACT_APP_METADATA_CATALOG_URL=${_REACT_APP_METADATA_CATALOG_URL}',
-              '--build-arg', 'REACT_APP_NEWSLETTER_EXAMPLE_URL=${_REACT_APP_NEWSLETTER_EXAMPLE_URL}',
-              '--build-arg', 'REACT_APP_TERMS_AND_CONDITIONS_URL=${_REACT_APP_TERMS_AND_CONDITIONS_URL}',
-              '--build-arg', 'REACT_APP_GATEWAY_PRIVACY_POLICY_URL=${_REACT_APP_GATEWAY_PRIVACY_POLICY_URL}',
               '--platform',
               'managed',
               '--region',
