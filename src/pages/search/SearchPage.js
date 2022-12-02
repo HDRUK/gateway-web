@@ -777,7 +777,7 @@ class SearchPage extends Component {
         googleAnalytics.recordVirtualPageView(`${key} results page ${this.state[`${entityType}Index`] + 1}`);
         let values = generalUtils.parseQueryString(window.location.search);
         values.tab = key;
-        this.props.history.push(window.location.pathname + '?' + queryString.stringify(values));
+        this.props.history.push(window.location.pathname + '?' + generalUtils.stringifyQueryString(values));
 
         this.setState({ key, isResultsLoading: true }, () => {
             this.getFilters(key);

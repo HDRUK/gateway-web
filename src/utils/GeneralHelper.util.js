@@ -5,6 +5,10 @@ import queryString from 'query-string';
 
 import { DISPLAY_DATE_STANDARD, DISPLAY_TIME_STANDARD } from '../configs/constants';
 
+const stringifyQueryString = string => {
+    return queryString.stringify(string);
+};
+
 const parseQueryString = string => {
     return queryString.parse(string);
 };
@@ -232,4 +236,5 @@ export {
     diffObjects,
     stripHtml,
     parseQueryString,
+    stringifyQueryString,
 };

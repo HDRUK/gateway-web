@@ -9,6 +9,7 @@ import {
     stripHtml,
     removeHTMLTags,
     parseQueryString,
+    stringifyQueryString,
 } from './GeneralHelper.util';
 
 describe('GeneralHelper Util', () => {
@@ -205,9 +206,15 @@ describe('GeneralHelper Util', () => {
     });
 
     describe('parseQueryString function', () => {
-        it('should return parsed string  ', () => {
+        it('should return parsed string', () => {
             const response = parseQueryString('?foo=bar');
             expect(response).toEqual({ foo: 'bar' });
+        });
+    });
+    describe('stringifyQueryString function', () => {
+        it('should return stringifyed object', () => {
+            const response = stringifyQueryString({ foo: 'bar' });
+            expect(response).toEqual('foo=bar');
         });
     });
 });
