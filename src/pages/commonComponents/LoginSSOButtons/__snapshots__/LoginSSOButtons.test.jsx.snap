@@ -103,7 +103,7 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
               rel="noopener noreferrer"
               target="_blank"
             >
-              Suggest another Indentity Provider
+              Suggest another Identity Provider
             </a>
           </span>
         </div>
