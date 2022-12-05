@@ -15,13 +15,11 @@ const searchResultsSpy = jest.spyOn(SearchResults, 'default');
 const searchControlsSpy = jest.spyOn(SearchControls, 'default');
 const datasetCardSpy = jest.spyOn(DatasetCard, 'default');
 
-// jest.mock('../../../../components/Icon', () => ({ onClick }) => (
-//     <span onClick={onClick} className='icon-mock'>
-//         Icon
-//     </span>
-// ));
-
-// jest.mock('../../../commonComponents/relatedObject/RelatedObject', () => <div />);
+jest.mock('../../../../components/Icon', () => ({ onClick }) => (
+    <span onClick={onClick} className='icon-mock'>
+        Icon
+    </span>
+));
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
