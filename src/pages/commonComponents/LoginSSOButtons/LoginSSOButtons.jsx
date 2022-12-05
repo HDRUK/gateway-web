@@ -70,7 +70,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
                                 href={`${communityLink}/t/how-to-submit-a-feature-request-or-feedback/1`}
                                 data-testid='communityLink'
                                 rel='noopener noreferrer'>
-                                Suggest another Indentity Provider
+                                Suggest another Identity Provider
                             </a>
                         </span>
                     </Col>
