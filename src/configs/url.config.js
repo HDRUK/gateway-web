@@ -54,6 +54,9 @@ export const getWidgetAPI = () => {
     if (href.includes('.uat.')) {
         widgetAPIURL = 'https://uat-datause-widget.healthdatagateway.org';
     }
+    if (href.includes('.bau.')) {
+        widgetAPIURL = 'https://preprod-datause-widget.preprod.hdruk.dev/';
+    }
     if (href.includes('.preprod.')) {
         widgetAPIURL = 'https://preprod-datause-widget.preprod.hdruk.dev/';
     }
@@ -66,6 +69,8 @@ export const addCmsGatewayApiHostname = path => {
 
     if (hostname.includes('uat.')) {
         webHostname = 'https://api.uat.healthdatagateway.org';
+    } else if (hostname.includes('bau.')) {
+        webHostname = 'https://api.bau.hdruk.dev';
     } else if (hostname.includes('preprod.')) {
         webHostname = 'https://api.preprod.hdruk.dev';
     } else if (hostname.includes('.cloudshell.dev') || hostname.includes('localhost')) {
@@ -81,6 +86,8 @@ export const addCmsGatewayHostname = path => {
 
     if (hostname.includes('uat.')) {
         webHostname = 'https://web.uat.healthdatagateway.org';
+    } else if (hostname.includes('bau.')) {
+        webHostname = 'https://web.bau.hdruk.dev';
     } else if (hostname.includes('preprod.')) {
         webHostname = 'https://web.preprod.hdruk.dev';
     } else if (hostname.includes('.cloudshell.dev')) {
