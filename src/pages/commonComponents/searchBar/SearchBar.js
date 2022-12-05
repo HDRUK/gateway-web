@@ -347,8 +347,8 @@ class SearchBar extends Component {
                                     {(() => {
                                         if (userState[0].loggedIn === true) {
                                             return (
-                                                <Box display='flex' alignItems='center' gap={8}>
-                                                    <div onClick={this.props.doToggleDrawer} data-testid='imgMessageBadge'>
+                                                <Box display='flex' alignItems='center'>
+                                                    <Box mr={3} onClick={this.props.doToggleDrawer} data-testid='imgMessageBadge'>
                                                         <NotificationBadge
                                                             count={this.state.messageCount}
                                                             style={{ backgroundColor: '#29235c' }}
@@ -362,8 +362,8 @@ class SearchBar extends Component {
                                                             id='notificationsBell'
                                                             className={'pointer'}
                                                         />
-                                                    </div>
-                                                    <div data-testid='imgNotificationBadge'>
+                                                    </Box>
+                                                    <Box mr={8} data-testid='imgNotificationBadge'>
                                                         <Dropdown>
                                                             <Dropdown.Toggle as={CustomToggle} ref={node => (this.node = node)}>
                                                                 <NotificationBadge
@@ -379,7 +379,6 @@ class SearchBar extends Component {
                                                                     className='notificationsBell'
                                                                     style={{ cursor: 'pointer' }}
                                                                 />
-                                                                {/* <NotificationsBellSvg width={50} height={50} id="notificationsBell" className={this.state.dropdownOpen ? "notificationsBell" : null} style={{ cursor: 'pointer' }} /> */}
                                                             </Dropdown.Toggle>
 
                                                             <Dropdown.Menu as={CustomMenu} className='desktopNotificationMenu'>
@@ -1153,7 +1152,7 @@ class SearchBar extends Component {
                                                             </Dropdown.Menu>
                                                         </Dropdown>
                                                         {this.checkRedirectToast()}
-                                                    </div>
+                                                    </Box>
                                                     <div className='navBarAvatarSpacing'>
                                                         <div className='avatar-circle'>
                                                             <span className='initials'>{this.getUserInitials(userState[0].name)}</span>
