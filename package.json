@@ -89,7 +89,7 @@
         "yup": "^0.28.1"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "GENERATE_SOURCEMAP=false react-scripts start",
         "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
         "test:watchAll": "cross-env NODE_ENV=test TZ=UTC jest --watchAll --env=jsdom --config=jest.config.json",
         "test:watch": "cross-env NODE_ENV=test TZ=UTC jest --watch --env=jsdom --config=jest.config.json",
