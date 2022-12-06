@@ -1,4 +1,4 @@
-import { forwardRef, Children, Fragment, useState } from 'react';
+import { forwardRef, Children, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
