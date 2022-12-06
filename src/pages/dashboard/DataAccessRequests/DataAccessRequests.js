@@ -67,7 +67,7 @@ class DataAccessRequestsNew extends Component {
         this.fetchDataAccessRequests(this.state);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.team !== this.props.team) {
             const teamIs = this.props.userState[0].teams.filter(t => {
                 return t._id === nextProps.team;

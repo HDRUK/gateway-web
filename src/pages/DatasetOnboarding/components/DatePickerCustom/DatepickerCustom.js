@@ -21,7 +21,7 @@ class DatePickerCustom extends Component {
 		this.handleFocus = this.handleFocus.bind(this);
 		this.handleBlur = this.handleBlur.bind(this);
 	}
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		let { value } = nextProps;
 
 		if (!_.isNil(value) && moment(value, 'DD/MM/YYYY').isValid()) value = moment(value, 'DD/MM/YYYY').toDate();

@@ -10,7 +10,6 @@ import { hotjar } from 'react-hotjar';
 import { withTranslation } from 'react-i18next';
 
 import { generalUtils } from 'utils';
-// import { BackToTop } from 'components';
 import { searchService } from 'services';
 import { ReactComponent as ClearSvg } from '../../images/clear.svg';
 import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
@@ -269,7 +268,7 @@ class SearchPage extends Component {
         }
     }
 
-    async componentWillReceiveProps() {
+    async UNSAFE_componentWillReceiveProps() {
         let queryParams = generalUtils.parseQueryString(window.location.search);
         // 1. if tabs are different update
         if (this.state.key !== queryParams.tab) {

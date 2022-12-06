@@ -15,7 +15,7 @@ class TypeaheadMultiField extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (this.props.value !== nextProps.value) this.setState({ value: nextProps.value });
     }
 

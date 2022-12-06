@@ -215,7 +215,7 @@ class Account extends Component {
         }
     }
 
-    async componentWillReceiveProps(nextProps) {
+    async UNSAFE_componentWillReceiveProps(nextProps) {
         if (window.location.search) {
             let values = generalUtils.parseQueryString(window.location.search);
             let team = 'user';

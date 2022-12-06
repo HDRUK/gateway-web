@@ -290,7 +290,7 @@ class DataQualityInfo extends Component {
         this.state.coverageWeight = props.coverageWeight;
     }
 
-    async componentWillMount() {
+    async UNSAFE_componentWillMount() {
         if (!_.isEmpty(this.props.datasetUtility)) {
             await this.updateSections(this.props.datasetUtility);
         }

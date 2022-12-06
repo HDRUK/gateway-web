@@ -11,7 +11,7 @@ class MultiField extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (this.props.value !== nextProps.value) this.setState({ value: this.updateValue(nextProps.value) });
     }
 

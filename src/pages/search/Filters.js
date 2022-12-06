@@ -43,7 +43,7 @@ class Filters extends Component {
         };
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         this.setState({
             data: props.data || [],
             selected: props.selected || [],

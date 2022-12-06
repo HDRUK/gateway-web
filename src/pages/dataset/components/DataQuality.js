@@ -21,7 +21,7 @@ class DataQuality extends Component {
         this.state.datasetUtility = props.datasetUtility || {};
     }
 
-    async componentWillMount() {
+    async UNSAFE_componentWillMount() {
         if (!_.isEmpty(this.props.datasetUtility)) await this.displaySections(this.props.datasetUtility);
     }
 
