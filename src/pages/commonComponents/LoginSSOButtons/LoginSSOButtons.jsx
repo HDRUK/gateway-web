@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { useEffect, useReducer, Fragment } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';

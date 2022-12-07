@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
+/** @jsxImportSource @emotion/react */
+import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box } from 'hdruk-react-core';
 import Icon from '../Icon';
@@ -29,15 +28,15 @@ const Alert = ({
     autocloseDuration,
     ...outerProps
 }) => {
-    const [show, setShow] = React.useState(true);
+    const [show, setShow] = useState(true);
 
-    const handleClose = React.useCallback(() => {
+    const handleClose = useCallback(() => {
         setShow(false);
 
         onClose();
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (show && autoclose) {
             const showTimeout = setTimeout(() => {
                 handleClose();

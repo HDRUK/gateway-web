@@ -1,4 +1,3 @@
-import React from 'react';
 import './DoubleDropdowncustom.scss';
 import './SelectedOption.scss';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap/';
 import PropTypes from 'prop-types';
 import SVGIcon from '../../images/SVGIcon';

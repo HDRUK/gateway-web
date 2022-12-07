@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { Col, Row, Button, Accordion } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 import '../Dashboard.scss';
 
-class UnmetDemand extends React.Component {
+class UnmetDemand extends Component {
     state = {
         data: '',
         flagClosed: true,

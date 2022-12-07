@@ -1,4 +1,3 @@
-import React from 'react';
 import { FieldArray } from 'formik';
 import _ from 'lodash';
 import { Form, Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';

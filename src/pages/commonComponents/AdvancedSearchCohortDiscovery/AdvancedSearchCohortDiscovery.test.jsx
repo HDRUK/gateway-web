@@ -1,4 +1,3 @@
-import React from 'react';
 import { testUtils } from '../../../../test';
 import AdvancedSearchCohortDiscovery from '.';
 import { ADVANCED_SEARCH_ROLE_GENERAL_ACCESS } from '../../../configs/constants';

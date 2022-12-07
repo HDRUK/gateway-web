@@ -1,16 +1,16 @@
-import React, { Component, Fragment, useState } from 'react';
+import { forwardRef, Children, createRef, Component, Fragment, useState } from 'react';
 import { OverlayTrigger, Tooltip, Container, Row, Col } from 'react-bootstrap';
 import Winterfell from 'winterfell';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import axios from 'axios';
-import ReactMarkdown from 'react-markdown';
+
 import 'react-tabs/style/react-tabs.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import moment from 'moment';
 
-import { ActionBarStatus } from 'components';
+import { ActionBarStatus, RenderMarkdown } from 'components';
 import { datasetOnboardingService } from 'services';
 import DatasetOnboardingValidation from '../../utils/DatasetOnboardingValidation.util';
 import DatasetOnboardingHelper from '../../utils/DatasetOnboardingHelper.util';
@@ -55,7 +55,7 @@ import ErrorModal from '../commonComponents/errorModal';
 
 } */
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+const CustomToggle = forwardRef(({ children, onClick }, ref) => (
     <a
         href='javascript:void(0)'
         ref={ref}
@@ -67,13 +67,13 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     </a>
 ));
 
-const CustomMenu = React.forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+const CustomMenu = forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
     const [value] = useState('');
 
     return (
         <div ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
             <ul className='list-unstyled margin-bottom-0'>
-                {React.Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
+                {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
             </ul>
         </div>
     );
@@ -85,7 +85,7 @@ class DatasetOnboarding extends Component {
         this.onFormSubmit = this.onFormSubmit.bind(this);
         this.onFormUpdate = this.onFormUpdate.bind(this);
         //this.onHandleDataSetChange = this.onHandleDataSetChange.bind(this);
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
 
         this.state = {
             _id: '',
@@ -1492,7 +1492,7 @@ class DatasetOnboarding extends Component {
                                           item.active ? (
                                               <Fragment key={`pageContent-${idx}`}>
                                                   <p className='black-20-semibold mb-0'>{item.active ? item.title : ''}</p>
-                                                  <ReactMarkdown className='gray800-14' source={item.description} />
+                                                  <RenderMarkdown className='gray800-14' source={item.description} />
                                               </Fragment>
                                           ) : (
                                               ''

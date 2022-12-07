@@ -1,6 +1,5 @@
-/** @jsx jsx */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
 import { COMMON_COMPONENT_PROPS } from '../../configs/propTypes';
 
 const SwitchControl = ({ className, children }) => {

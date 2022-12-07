@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import { has, isEmpty } from 'lodash';
 import { draftToMarkdown, markdownToDraft } from 'markdown-draft-js';
@@ -33,7 +33,7 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
         },
     });
 
-    const handleConfirmOk = React.useCallback(() => {
+    const handleConfirmOk = useCallback(() => {
         const content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
 
         const { _id } = publisherDetails;
@@ -51,23 +51,23 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
         handleAnalytics('Clicked Publish button', 'Presubmission guidance');
     }, [publisherDetails._id, editorState.getCurrentContent()]);
 
-    const handlePublish = React.useCallback(() => {
+    const handlePublish = useCallback(() => {
         setShowConfirm(true);
     }, []);
 
-    const handleConfirmCancel = React.useCallback(() => {
+    const handleConfirmCancel = useCallback(() => {
         setShowConfirm(false);
     }, []);
 
-    const handleCancel = React.useCallback(() => {
+    const handleCancel = useCallback(() => {
         setShowCancel(true);
     }, []);
 
-    const handleCancelCancel = React.useCallback(() => {
+    const handleCancelCancel = useCallback(() => {
         setShowCancel(false);
     }, []);
 
-    const handleCancelOk = React.useCallback(() => {
+    const handleCancelOk = useCallback(() => {
         onHide();
     }, []);
 

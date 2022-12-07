@@ -1,4 +1,3 @@
-import React from 'react';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 
 const ActivePhaseHeader = ({ onClickAction }) => {

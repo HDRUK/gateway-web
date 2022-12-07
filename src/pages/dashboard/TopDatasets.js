@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import './Dashboard.scss';
 
-class TopDatasets extends React.Component {
+class TopDatasets extends Component {
     render() {
         const {
             data: { name, requests, publisher, pid },

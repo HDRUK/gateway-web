@@ -1,5 +1,3 @@
-import React from 'react';
-
 const getViewBox = name => {
     switch (name) {
         case 'projecticon':

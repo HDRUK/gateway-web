@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { Col, Row, Collapse } from 'react-bootstrap';
 import _ from 'lodash';
 import SVGIcon from '../../../images/SVGIcon';
@@ -14,7 +14,7 @@ import { ReactComponent as SilverSVG } from '../../../images/silverUtility.svg';
 import { ReactComponent as GoldSVG } from '../../../images/goldUtility.svg';
 import { ReactComponent as PlatinumSVG } from '../../../images/platinumUtility.svg';
 
-class DataQualityInfo extends React.Component {
+class DataQualityInfo extends Component {
     state = {
         open: false,
         flagClosed: true,
@@ -290,7 +290,7 @@ class DataQualityInfo extends React.Component {
         this.state.coverageWeight = props.coverageWeight;
     }
 
-    async componentWillMount() {
+    async UNSAFE_componentWillMount() {
         if (!_.isEmpty(this.props.datasetUtility)) {
             await this.updateSections(this.props.datasetUtility);
         }

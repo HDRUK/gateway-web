@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import Loading from '../commonComponents/Loading';
 import Row from 'react-bootstrap/Row';
@@ -9,7 +9,7 @@ import './Dashboard.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class YourAccount extends React.Component {
+class YourAccount extends Component {
     constructor(props) {
         super(props);
         this.state.userState = props.userState;

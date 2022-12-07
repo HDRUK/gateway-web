@@ -1,4 +1,3 @@
-import React from 'react';
 import { isEmpty } from 'lodash';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';

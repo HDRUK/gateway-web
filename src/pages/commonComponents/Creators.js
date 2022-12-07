@@ -1,5 +1,5 @@
 // /ShowObjects/Title.js
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { ReactComponent as PersonPlaceholderSvg } from '../../images/person-placeholder.svg';
 import './CommonComponents.scss';

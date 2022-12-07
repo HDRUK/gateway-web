@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React, { useCallback, useRef, useState } from 'react';
+/** @jsxImportSource @emotion/react */
+import { useCallback, useRef, useState } from 'react';
 import { filesize } from 'humanize';
 import { Box, Button, Caption, H5 } from 'hdruk-react-core';
 import * as styles from './FileSelector.styles';

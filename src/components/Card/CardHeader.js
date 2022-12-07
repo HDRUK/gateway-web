@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
 import * as styles from './Card.styles.js';
 

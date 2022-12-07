@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import _ from 'lodash';
 import { Button } from 'hdruk-react-core';
 

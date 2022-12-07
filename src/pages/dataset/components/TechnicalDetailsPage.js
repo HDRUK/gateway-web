@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { ReactComponent as GoldStar } from '../../../images/cd-star.svg';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
@@ -7,7 +7,7 @@ import TechnicalMetadataVariables from './TechnicalMetadataVariables';
 import CohortProfilingVariables from './CohortProfilingVariables';
 import '../Dataset.scss';
 
-class TechnicalDetailsPage extends React.Component {
+class TechnicalDetailsPage extends Component {
     state = {
         technicalMetadata: null,
         allOpen: false,

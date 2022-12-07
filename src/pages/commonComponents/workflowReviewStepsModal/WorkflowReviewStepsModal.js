@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import _ from 'lodash';
 import uniqid from 'uniqid';
 import { Modal } from 'react-bootstrap';

@@ -1,4 +1,3 @@
-import React from 'react';
 import './AdvancedSearchRequestAccessModal.scss';
 import { Form } from 'react-bootstrap';
 

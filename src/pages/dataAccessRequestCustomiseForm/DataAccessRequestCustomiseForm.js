@@ -2,10 +2,11 @@ import * as Sentry from '@sentry/react';
 import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import * as React from 'react';
 import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
-import ReactMarkdown from 'react-markdown';
+
 import { NotificationManager } from 'react-notifications';
 import { useHistory, useLocation } from 'react-router-dom';
 import Winterfell from 'winterfell';
@@ -13,7 +14,7 @@ import { Button, Box, P, H5, Typography, Cta } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-tabs/style/react-tabs.css';
 
-import { Alert, Icon, Spinner } from 'components';
+import { Alert, Icon, Spinner, RenderMarkdown } from 'components';
 import { dataAccessRequestService, publishersService, questionbankService } from 'services';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
@@ -858,7 +859,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                               color={activePanelId === 'about' ? 'grey500' : 'inherit'}
                                               as='div'>
                                               <H5 color='inherit'>{item.active ? item.title : ''}</H5>
-                                              <ReactMarkdown source={item.description} />
+                                              <RenderMarkdown source={item.description} />
                                           </Typography>
                                       ) : (
                                           ''

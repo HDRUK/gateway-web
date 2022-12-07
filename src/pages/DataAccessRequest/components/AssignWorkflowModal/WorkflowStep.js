@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Row, Col, Button, Accordion } from 'react-bootstrap';
 import SVGIcon from '../../../../images/SVGIcon';
 import './AssignWorkflowModal.scss';

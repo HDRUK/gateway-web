@@ -1,4 +1,3 @@
-import React from 'react';
 import WorkflowStep from './WorkflowReviewStep';
 
 let wrapper;

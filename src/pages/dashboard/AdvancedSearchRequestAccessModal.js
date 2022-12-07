@@ -1,5 +1,4 @@
 import { Button, H1, P } from 'hdruk-react-core';
-import React from 'react';
 import { Modal } from 'react-bootstrap';
 
 import { Link } from 'components';

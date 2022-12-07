@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';

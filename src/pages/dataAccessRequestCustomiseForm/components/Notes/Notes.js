@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import isEmpty from 'lodash';
 import '../Messages/Messages.scss';
 import axios from 'axios';

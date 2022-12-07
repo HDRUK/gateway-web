@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { isEmpty, has, isString } from 'lodash';
 import * as Yup from 'yup';
 import { Formik, Field, Form } from 'formik';

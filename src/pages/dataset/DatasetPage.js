@@ -1,9 +1,7 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import { has, isEmpty, isNil } from 'lodash';
-import React, { Component, Fragment } from 'react';
+import { createRef, Component, Fragment } from 'react';
 import { Button, Box, Typography } from 'hdruk-react-core';
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap/';
 import Linkify from 'react-linkify';
@@ -108,7 +106,7 @@ class DatasetDetail extends Component {
         this.state.userState = props.userState;
         this.handleMouseHover = this.handleMouseHover.bind(this);
         this.handleMouseHoverShield = this.handleMouseHoverShield.bind(this);
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
     }
 
     // on loading of tool detail page

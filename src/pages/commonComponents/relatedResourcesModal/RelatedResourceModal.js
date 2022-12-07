@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import _ from 'lodash';
 import { Col, Container, Pagination, Row, Tab, Tabs } from 'react-bootstrap';
 
@@ -7,7 +7,7 @@ import { SearchInput } from 'components';
 import RelatedObject from '../relatedObject/RelatedObject';
 import './RelatedResourcesModal.scss';
 
-class RelatedResourcesModal extends React.Component {
+class RelatedResourcesModal extends Component {
     state = {
         key: '',
         datasetIndex: 0,

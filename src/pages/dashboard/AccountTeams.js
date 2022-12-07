@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Box } from 'hdruk-react-core';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
 
 import { LayoutContent } from 'components';

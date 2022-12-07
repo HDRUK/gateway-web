@@ -1,10 +1,10 @@
-import React from 'react';
+import { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap/';
 import SearchBar from './searchBar/SearchBar';
 
 var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
 
-class LoginErrorPage extends React.Component {
+class LoginErrorPage extends Component {
     state = {
         userState: [
             {

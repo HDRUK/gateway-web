@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, H4 } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import GatewayAdvancedSearchDataUtilityWizard from '../GatewayAdvancedSearchDataUtilityWizard';

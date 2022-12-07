@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
@@ -29,7 +29,7 @@ const DataUseWidget = ({ userState, team, publisherDetails }) => {
 
     const accepted = publisherDetails?.dataUse?.widget?.accepted;
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (accepted) {
             setChecked(accepted);
             setDisabled(accepted);

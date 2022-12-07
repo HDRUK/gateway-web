@@ -1,7 +1,6 @@
 import { render, rerender, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import TeamGatewayNotificationEmails from './TeamGatewayNotificationEmails';
 import { server } from '../../../services/mockServer';
 const props = {

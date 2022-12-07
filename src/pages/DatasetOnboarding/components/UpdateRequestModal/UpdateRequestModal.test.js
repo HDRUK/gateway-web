@@ -1,4 +1,3 @@
-import React from 'react';
 import moxios from 'moxios';
 import { testUtils } from '../../../../../test';
 import UpdateRequestModal from './UpdateRequestModal';

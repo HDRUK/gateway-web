@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import _ from 'lodash';
 import Image from 'react-bootstrap/Image';
 import { Modal } from 'react-bootstrap';

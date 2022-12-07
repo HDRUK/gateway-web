@@ -1,12 +1,11 @@
-import React, { Fragment } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { RenderMarkdown } from 'components';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 
 const Guidance = ({ activeGuidance, resetGuidance }) => {
     return (
-        <Fragment>
+        <>
             {activeGuidance ? (
-                <Fragment>
+                <>
                     <header>
                         <div>
                             <i className='far fa-question-circle mr-2' />
@@ -15,9 +14,9 @@ const Guidance = ({ activeGuidance, resetGuidance }) => {
                         <CloseButtonSvg width='16px' height='16px' fill='#475da' onClick={resetGuidance} />
                     </header>
                     <main className='gray800-14'>
-                        <ReactMarkdown source={activeGuidance} linkTarget='_blank' />
+                        <RenderMarkdown source={activeGuidance} linkTarget='_blank' />
                     </main>
-                </Fragment>
+                </>
             ) : (
                 <div className='darTab-guidance'>
                     Click on a question guidance to view details&nbsp;
@@ -26,7 +25,7 @@ const Guidance = ({ activeGuidance, resetGuidance }) => {
                     </span>
                 </div>
             )}
-        </Fragment>
+        </>
     );
 };
 

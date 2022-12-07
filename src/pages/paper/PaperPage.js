@@ -1,14 +1,14 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
-import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
+
 import 'react-tabs/style/react-tabs.css';
 import parse from 'html-react-parser';
 
-import { Alert, LayoutContent } from 'components';
+import { generalUtils } from 'utils';
+import { Alert, LayoutContent, RenderMarkdown } from 'components';
 import { formatPaperDescription } from 'utils/Paper.util';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
@@ -47,7 +47,7 @@ export const PaperDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [isHovering, setIsHovering] = useState(false);
     const [userState] = useState(
         props.userState || [
@@ -63,7 +63,7 @@ export const PaperDetail = props => {
     // componentDidMount - on loading of page detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setPaperAdded(values.toolAdded);
             setPaperEdited(values.toolEdited);
         }
@@ -583,7 +583,7 @@ export const PaperDetail = props => {
                                                         <Row className='mt-3'>
                                                             <Col>
                                                                 <span data-testid='paper-results' className='gray800-14 hdruk-section-body'>
-                                                                    <ReactMarkdown source={paperData.resultsInsights} />
+                                                                    <RenderMarkdown source={paperData.resultsInsights} />
                                                                 </span>
                                                             </Col>
                                                         </Row>

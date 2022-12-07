@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Form, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import './Course.scss';
 import Entries from './Entries';

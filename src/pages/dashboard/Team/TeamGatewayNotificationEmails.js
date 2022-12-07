@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Switch from 'react-switch';
 import { useTranslation } from 'react-i18next';
 import { userTypes } from './teamUtil';

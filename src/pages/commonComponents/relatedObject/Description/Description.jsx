@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
 import { Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import '../../CommonComponents.scss';

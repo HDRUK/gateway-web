@@ -1,11 +1,11 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
 import PropTypes from 'prop-types';
 import { Form, InputGroup } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
-import { addCommonPropTypes } from '../../configs/propTypes';
 import { Box } from 'hdruk-react-core';
+import { addCommonPropTypes } from '../../configs/propTypes';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 import * as styles from './Textarea.styles';
 

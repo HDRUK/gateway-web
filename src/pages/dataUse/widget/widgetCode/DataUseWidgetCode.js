@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
+/** @jsxImportSource @emotion/react */
 import { useTranslation } from 'react-i18next';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';

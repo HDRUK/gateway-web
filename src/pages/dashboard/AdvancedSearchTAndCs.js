@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import { createRef, useState, Fragment } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import AdvancedSearchTAndCsContent from './AdvancedSearchTAndCsContent';
 import './AdvancedSearchTAndCsModal.scss';
-import { Fragment } from 'react';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 
 const AdvancedSearchTAndCs = props => {
     const [searchString, setSearchString] = useState('');
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [showDrawer, setShowDrawer] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});

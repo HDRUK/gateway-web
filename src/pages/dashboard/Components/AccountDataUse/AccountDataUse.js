@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Alert, LayoutContent } from 'components';
@@ -19,24 +19,24 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
     // TODO: GAT-1510:015
     const isManager = userHasRole(userState, team, userTypes.MANAGER);
 
-    const [dataUseUpload, setDataUseUpload] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState(false);
+    const [dataUseUpload, setDataUseUpload] = useState(false);
+    const [alertMessage, setAlertMessage] = useState(false);
 
-    const handleClickUpload = React.useCallback(() => {
+    const handleClickUpload = useCallback(() => {
         setDataUseUpload(true);
     }, []);
 
-    const handleSubmitUpload = React.useCallback(() => {
+    const handleSubmitUpload = useCallback(() => {
         setDataUseUpload(false);
     }, []);
 
-    const handleAlertClose = React.useCallback(() => {
+    const handleAlertClose = useCallback(() => {
         setAlertMessage('');
 
         history.replace('/account?tab=datause', { state: null });
     }, [history]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (historyState && historyState.alert) {
             setAlertMessage(historyState.alert.message);
         }

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { createRef, useState, useEffect } from 'react';
+
 import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
-import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
 
-import { LayoutContent, Alert } from 'components';
+import { generalUtils } from 'utils';
+import { LayoutContent, Alert, RenderMarkdown } from 'components';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 
@@ -42,7 +42,7 @@ export const CourseDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [searchString, setSearchString] = useState('');
     const [userState] = useState(
         props.userState || [
@@ -58,7 +58,7 @@ export const CourseDetail = props => {
     // componentDidMount - on loading of course detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setCourseAdded(values.courseAdded);
             setCourseEdited(values.courseEdited);
         }
@@ -392,7 +392,7 @@ export const CourseDetail = props => {
                                                             sm={12}
                                                             data-testid='course-description'
                                                             className='gray800-14 hdruk-section-body'>
-                                                            <ReactMarkdown source={courseData.description} />
+                                                            <RenderMarkdown source={courseData.description} />
                                                         </Col>
                                                     </Row>
                                                 </div>
@@ -408,7 +408,7 @@ export const CourseDetail = props => {
                                                         </Row>
                                                         <Row className='mt-3'>
                                                             <Col sm={12} className='gray800-14 hdruk-section-body'>
-                                                                <ReactMarkdown source={courseData.resultsInsights} />
+                                                                <RenderMarkdown source={courseData.resultsInsights} />
                                                             </Col>
                                                         </Row>
                                                     </div>

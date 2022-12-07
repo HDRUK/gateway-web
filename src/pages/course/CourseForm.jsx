@@ -1,4 +1,3 @@
-import React from 'react';
 import { FieldArray } from 'formik';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import _ from 'lodash';

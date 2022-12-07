@@ -1,7 +1,7 @@
 import { FieldArray, Formik, useFormik } from 'formik';
 import { isEmpty, isNil, isNumber } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Accordion, Card, Col, Form, Row, Button } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import DatePicker from 'react-datepicker';
@@ -99,7 +99,7 @@ const EditFormDataUse = props => {
 
     const validateSchema = Yup.object().shape({});
 
-    const relatedResourcesRef = React.useRef();
+    const relatedResourcesRef = useRef();
 
     const formik = useFormik({
         initialValues: {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import CourseCollectionResults from './index';
 import * as service from '../../../../services/related-objects';

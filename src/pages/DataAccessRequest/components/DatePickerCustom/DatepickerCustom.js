@@ -1,10 +1,10 @@
-import React from 'react';
+import { Component } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-class DatePickerCustom extends React.Component {
+class DatePickerCustom extends Component {
     constructor(props) {
         super(props);
         let date = null;
@@ -19,7 +19,7 @@ class DatePickerCustom extends React.Component {
         this.handleBlur = this.handleBlur.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let { value } = nextProps;
 
         if (!_.isNil(value)) value = moment(value, 'DD/MM/YYYY').toDate();

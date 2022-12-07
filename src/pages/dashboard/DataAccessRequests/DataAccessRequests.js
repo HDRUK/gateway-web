@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
@@ -18,7 +18,7 @@ import AccessActivity from './AccessActivity/AccessActivity';
 import VersionSelector from '../../commonComponents/versionSelector/VersionSelector';
 import './DataAccessRequests.scss';
 
-class DataAccessRequestsNew extends React.Component {
+class DataAccessRequestsNew extends Component {
     durationLookups = ['inProgress', 'submitted', 'inReview'];
     finalDurationLookups = ['rejected', 'approved', 'approved with conditions'];
 
@@ -67,7 +67,7 @@ class DataAccessRequestsNew extends React.Component {
         this.fetchDataAccessRequests(this.state);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.team !== this.props.team) {
             const teamIs = this.props.userState[0].teams.filter(t => {
                 return t._id === nextProps.team;

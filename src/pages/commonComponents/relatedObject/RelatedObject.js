@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { Row, Col, Alert } from 'react-bootstrap';
 import { has } from 'lodash';
 import { Button } from 'hdruk-react-core';
@@ -18,7 +18,7 @@ import ShowMore from '../ShowMore';
 var cmsURL = require('../BaseURL').getCMSURL();
 const env = require('../BaseURL').getURLEnv();
 
-class RelatedObject extends React.Component {
+class RelatedObject extends Component {
     state = {
         relatedObject: [],
         reason: '',

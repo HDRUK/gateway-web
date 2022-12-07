@@ -1,9 +1,9 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useMemo } from 'react';
 import ReactCheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
@@ -47,7 +47,7 @@ const CheckboxTree = ({
         return node;
     };
 
-    const formattedNodes = React.useMemo(() => {
+    const formattedNodes = useMemo(() => {
         return nodes.map(node => {
             return formatNode(node);
         });

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 import { Box, Icon, Li, Message, P, Ul } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
