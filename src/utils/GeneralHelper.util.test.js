@@ -10,6 +10,7 @@ import {
     removeHTMLTags,
     parseQueryString,
     stringifyQueryString,
+    trimFirstCharacter,
 } from './GeneralHelper.util';
 
 describe('GeneralHelper Util', () => {
@@ -215,6 +216,15 @@ describe('GeneralHelper Util', () => {
         it('should return stringifyed object', () => {
             const response = stringifyQueryString({ foo: 'bar' });
             expect(response).toEqual('foo=bar');
+        });
+    });
+    describe('trimFirstCharacter function', () => {
+        it('should return trimmed string', () => {
+            expect(trimFirstCharacter('/route', '/')).toBe('route');
+            expect(trimFirstCharacter('route', '/')).toBe('route');
+            expect(trimFirstCharacter('route/route', '/')).toBe('route/route');
+            expect(trimFirstCharacter('/route/route/', '/')).toBe('route/route/');
+            expect(trimFirstCharacter('route/route/', 'a')).toBe('route/route/');
         });
     });
 });

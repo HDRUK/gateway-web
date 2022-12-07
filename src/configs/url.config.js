@@ -1,3 +1,4 @@
+import { generalUtils } from 'utils';
 import { regExpConfig } from './regex.config';
 
 /**
@@ -55,7 +56,7 @@ export const getWidgetAPI = () => {
         widgetAPIURL = 'https://uat-datause-widget.healthdatagateway.org';
     }
     if (href.includes('.preprod.')) {
-        widgetAPIURL = 'https://preprod-datause-widget.preprod.hdruk.dev/';
+        widgetAPIURL = 'https://preprod-datause-widget.preprod.hdruk.dev';
     }
     return widgetAPIURL;
 };
@@ -74,7 +75,7 @@ export const addCmsGatewayApiHostname = path => {
         webHostname = 'http://localhost:3001';
     }
 
-    return `${webHostname}/${path}`;
+    return `${webHostname}/${generalUtils.trimFirstCharacter(path, '/')}`;
 };
 
 export const addCmsGatewayHostname = path => {
@@ -93,7 +94,7 @@ export const addCmsGatewayHostname = path => {
         webHostname = 'http://localhost:3000';
     }
 
-    return `${webHostname}/${path}`;
+    return `${webHostname}/${generalUtils.trimFirstCharacter(path, '/')}`;
 };
 
 export const baseURL = _buildUrl('http');

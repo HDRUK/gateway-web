@@ -5,6 +5,11 @@ import queryString from 'query-string';
 
 import { DISPLAY_DATE_STANDARD, DISPLAY_TIME_STANDARD } from '../configs/constants';
 
+const trimFirstCharacter = (string, character) => {
+    if (string.substring(0, 1) !== character) return string;
+    return string.substring(1);
+};
+
 const stringifyQueryString = string => {
     return queryString.stringify(string);
 };
@@ -237,4 +242,5 @@ export {
     stripHtml,
     parseQueryString,
     stringifyQueryString,
+    trimFirstCharacter,
 };
