@@ -1,4 +1,3 @@
-import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import './AlertBannerBlue.scss';
 import { isEmpty } from 'lodash';

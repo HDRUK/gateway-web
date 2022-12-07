@@ -1,5 +1,6 @@
 import reduce from 'lodash/reduce';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import * as React from 'react';
 import { NotificationManager } from 'react-notifications';
 
 import { LayoutContent } from 'components';

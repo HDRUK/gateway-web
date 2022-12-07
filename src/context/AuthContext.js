@@ -1,6 +1,6 @@
-import React from 'react';
+import { createContext, useContext } from 'react';
 
-export const AuthContext = React.createContext({
+export const AuthContext = createContext({
     userState: [
         {
             loggedIn: false,
@@ -12,7 +12,7 @@ export const AuthContext = React.createContext({
 });
 
 export const useAuth = () => {
-    return React.useContext(AuthContext);
+    return useContext(AuthContext);
 };
 
 export const withAuth = Component => {

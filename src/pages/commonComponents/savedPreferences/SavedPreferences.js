@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col, Tab, Tabs } from 'react-bootstrap';
 import './SavedPreferences.scss';
 import { Caption, Button, H6, H5, Box, P, Input } from 'hdruk-react-core';

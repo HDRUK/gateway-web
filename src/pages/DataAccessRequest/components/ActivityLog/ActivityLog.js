@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { isEmpty, isUndefined } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import { forwardRef, useImperativeHandle, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { Alert } from 'components';
@@ -16,8 +16,8 @@ import ActivityLogVersionCard from './ActivityLogVersionCard';
 import AddNewEventModal from './AddNewEventModal';
 import DeleteManualEventModal from './DeleteManualEventModal';
 
-const ActivityLog = React.forwardRef(({ dataaccessrequest, team, onClickStartReview, onUpdateLogs }, ref) => {
-    React.useImperativeHandle(ref, () => ({
+const ActivityLog = forwardRef(({ dataaccessrequest, team, onClickStartReview, onUpdateLogs }, ref) => {
+    useImperativeHandle(ref, () => ({
         showAddNewEventModal() {
             toggleAddNewEventModal();
         },

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { Dropdown, Nav, Navbar } from 'react-bootstrap';
 import SelectedOption from './SelectedOption';
 import SVGIcon from '../../../../images/SVGIcon';
@@ -6,7 +6,7 @@ import tickSVG from '../../../../images/tick.svg';
 
 import './DoubleDropdowncustom.scss';
 
-class DoubleDropdownCustom extends React.Component {
+class DoubleDropdownCustom extends Component {
     constructor(props) {
         super(props);
         this.state = {

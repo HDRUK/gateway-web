@@ -1,4 +1,3 @@
-import React from 'react';
 import { testUtils } from '../../../test';
 import ActionBarStatus from '.';
 import '@testing-library/jest-dom/extend-expect';

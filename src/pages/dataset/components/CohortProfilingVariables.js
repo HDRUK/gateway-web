@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Col, Row, Collapse } from 'react-bootstrap';
 import { isNil, isEmpty } from 'lodash';
 import SVGIcon from '../../../images/SVGIcon';

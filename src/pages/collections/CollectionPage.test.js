@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, waitForElementToBeRemoved, cleanup, screen, within } from '@testing-library/react';
 import { CollectionPage } from './CollectionPage';
 import * as service from '../../services/collections/collections';

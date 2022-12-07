@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { addCmsGatewayHostname } from '../../configs/url.config';
 import { CMS_ACTION_OPEN_DATA_UTILITY_MODAL } from '../../configs/constants';
 import AdvancedSearchDataUtilityWizard from '../../pages/commonComponents/AdvancedSearchDataUtilityWizard';

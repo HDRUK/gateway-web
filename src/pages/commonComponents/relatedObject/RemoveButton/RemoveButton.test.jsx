@@ -1,4 +1,3 @@
-import React from 'react';
 import { testUtils } from '../../../../../test';
 import '@testing-library/jest-dom/extend-expect';
 import RemoveButton from './RemoveButton';

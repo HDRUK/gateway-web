@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState, useRef } from 'react';
+import { createRef, Component, Fragment, useState, useRef } from 'react';
 import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import { useFormik } from 'formik';
@@ -25,7 +25,7 @@ let windowUrl = window.location.origin;
 class CompleteRegistration extends Component {
     constructor(props) {
         super(props);
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
     }
 
     state = {

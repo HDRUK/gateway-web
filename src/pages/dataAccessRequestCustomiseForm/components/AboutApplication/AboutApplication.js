@@ -1,4 +1,3 @@
-import React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
 import { H6 } from 'hdruk-react-core';
 

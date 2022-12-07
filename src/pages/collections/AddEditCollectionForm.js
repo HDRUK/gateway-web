@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -190,7 +190,7 @@ const AddEditCollectionForm = props => {
 
     const [isShown, setIsShown] = useState(false);
 
-    const relatedResourcesRef = React.useRef();
+    const relatedResourcesRef = useRef();
 
     return (
         <div>

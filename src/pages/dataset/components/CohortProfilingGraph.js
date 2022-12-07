@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 import Loading from '../../commonComponents/Loading';

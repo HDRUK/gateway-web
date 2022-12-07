@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { Row, Col, Form, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import axios from 'axios';
@@ -118,11 +118,11 @@ const AddEditTeamsPage = ({
         },
     });
 
-    const handleEnableQuestionBank = React.useCallback(({ target: { checked } }) => {
+    const handleEnableQuestionBank = useCallback(({ target: { checked } }) => {
         setQuestionBank(checked);
     }, []);
 
-    const handleEnableDataUseWidget = React.useCallback(({ target: { checked } }) => {
+    const handleEnableDataUseWidget = useCallback(({ target: { checked } }) => {
         setDataUseWidget(checked);
     }, []);
 

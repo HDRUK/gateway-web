@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Field from './Field';
 import FieldRepeaterAction from './FieldRepeaterAction';
 import { userTypes } from '../../dashboard/Team/teamUtil';

@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from '@emotion/react';

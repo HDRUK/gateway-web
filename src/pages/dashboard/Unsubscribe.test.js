@@ -1,4 +1,3 @@
-import React from 'react';
 import Unsubscribe from './Unsubscribe';
 import { unsubscribeState } from '../../../test/mocks/dataMock';
 

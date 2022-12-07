@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Formik, useFormik, FieldArray } from 'formik';
 import * as Yup from 'yup';
@@ -208,7 +208,7 @@ const AddEditPaperForm = props => {
         document.getElementById('resultsInsightsCount').innerHTML = e.target.value.length;
     }
 
-    const relatedResourcesRef = React.useRef();
+    const relatedResourcesRef = useRef();
     return (
         <div>
             <Container>

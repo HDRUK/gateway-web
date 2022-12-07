@@ -1,8 +1,8 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Dropdown from '../Dropdown';
@@ -14,12 +14,12 @@ import * as styles from './SortDropdown.styles';
 
 const SortDropdown = ({ onSort, className, options, value, direction, allowDirection, ...outerProps }) => {
     const { t } = useTranslation();
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         value,
         direction,
     });
 
-    const handleSort = React.useCallback(
+    const handleSort = useCallback(
         value => {
             const newState = {
                 ...state,
@@ -32,7 +32,7 @@ const SortDropdown = ({ onSort, className, options, value, direction, allowDirec
         [state]
     );
 
-    const handleOrder = React.useCallback(() => {
+    const handleOrder = useCallback(() => {
         const direction = state.direction === 'asc' ? 'desc' : 'asc';
         const newState = {
             ...state,
@@ -43,7 +43,7 @@ const SortDropdown = ({ onSort, className, options, value, direction, allowDirec
         onSort(newState);
     }, [state]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setState({
             value,
             direction,

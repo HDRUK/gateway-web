@@ -1,5 +1,4 @@
 import { Button } from 'hdruk-react-core';
-import React from 'react';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 import '../../DatasetOnboarding.scss';
 

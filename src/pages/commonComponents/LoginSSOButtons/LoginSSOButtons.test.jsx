@@ -1,4 +1,3 @@
-import React from 'react';
 import LoginSSOButtons from './index';
 import _ from 'lodash';
 import { render, screen, fireEvent } from '@testing-library/react';

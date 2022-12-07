@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { createRef, useState, useEffect } from 'react';
+
 import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
-import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import moment from 'moment';
 
-import { LayoutContent, Alert } from 'components';
+import { generalUtils } from 'utils';
+import { LayoutContent, Alert, RenderMarkdown } from 'components';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 
@@ -40,7 +40,7 @@ export const ProjectDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [userState] = useState(
         props.userState || [
             {
@@ -55,7 +55,7 @@ export const ProjectDetail = props => {
     // componentDidMount - on loading of project detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setProjectAdded(values.projectAdded);
             setProjectEdited(values.projectEdited);
         }
@@ -306,7 +306,7 @@ export const ProjectDetail = props => {
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
                                                             data-testid='project-description'>
-                                                            <ReactMarkdown source={projectData.description} />
+                                                            <RenderMarkdown source={projectData.description} />
                                                         </Col>
                                                     </Row>
                                                 </div>
@@ -325,7 +325,7 @@ export const ProjectDetail = props => {
                                                                 sm={12}
                                                                 className='gray800-14 hdruk-section-body'
                                                                 data-testid='project-results'>
-                                                                <ReactMarkdown source={projectData.resultsInsights} />
+                                                                <RenderMarkdown source={projectData.resultsInsights} />
                                                             </Col>
                                                         </Row>
                                                     </div>

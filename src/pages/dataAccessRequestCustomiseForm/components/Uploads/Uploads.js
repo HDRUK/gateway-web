@@ -1,4 +1,3 @@
-import React from 'react';
 import { FileSelector } from 'components';
 
 const Uploads = ({ maxFileSize, fileTypes }) => {

@@ -1,6 +1,6 @@
 import { groupBy, isEmpty, startCase } from 'lodash';
 import moment from 'moment';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SlideDown } from 'react-slidedown';
 import { ReactComponent as ActionRequired } from '../../../../images/Action_required.svg';
 import { ReactComponent as ApplicationRejected } from '../../../../images/Application_rejected.svg';

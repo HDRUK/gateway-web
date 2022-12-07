@@ -1,5 +1,4 @@
 import { Typography } from 'hdruk-react-core';
-import React from 'react';
 
 import { Dropdown } from 'react-bootstrap';
 import googleAnalytics from '../../../tracking';

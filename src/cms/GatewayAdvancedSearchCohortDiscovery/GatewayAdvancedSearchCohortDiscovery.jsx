@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useCms } from '../../context/CmsContext';
 import { addCmsGatewayHostname } from '../../configs/url.config';

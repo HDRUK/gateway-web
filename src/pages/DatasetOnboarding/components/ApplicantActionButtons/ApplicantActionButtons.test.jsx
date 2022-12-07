@@ -1,4 +1,3 @@
-import React from 'react';
 import { testUtils } from '../../../../../test';
 import ApplicationActionButtons from './ApplicantActionButtons';
 import '@testing-library/jest-dom/extend-expect';

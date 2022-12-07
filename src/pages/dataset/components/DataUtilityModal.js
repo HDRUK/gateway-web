@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import DataUtilityModalInfo from './DataUtilityModalInfo';
 import '../Dataset.scss';
 
-class DataUtilityModal extends React.Component {
+class DataUtilityModal extends Component {
     state = {
         allOpen: false,
     };

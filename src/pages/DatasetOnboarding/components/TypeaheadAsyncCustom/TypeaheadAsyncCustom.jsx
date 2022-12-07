@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
 
 import { Icon, Typeahead } from 'components';

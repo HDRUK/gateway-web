@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import React, { Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import { Col, Dropdown, DropdownButton, Row } from 'react-bootstrap';
 
 import { LayoutContent } from 'components';
@@ -15,7 +15,7 @@ import TopSearches from './TopSearches';
 var baseURL = require('../commonComponents/BaseURL').getURL();
 let isMounted = false;
 
-class AccountAnalyticsDashboard extends React.Component {
+class AccountAnalyticsDashboard extends Component {
     // initialize our state
     state = {
         key: 'Datasets',

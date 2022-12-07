@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import GatewayAdvancedSearchDataUtilityWizard from '.';
 import { CMS_ACTION_OPEN_DATA_UTILITY_MODAL } from '../../configs/constants';

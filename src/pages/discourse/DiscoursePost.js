@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { Image } from 'react-bootstrap';
 import Moment from 'react-moment';
 
@@ -9,7 +9,7 @@ import deleteIcon from '../../images/delete.svg';
 import styles from './Discourse.module.scss';
 import editIcon from '../../images/edit.svg';
 
-class DiscoursePost extends React.Component {
+class DiscoursePost extends Component {
     readPost() {
         const { post, userState, onPostEdit, onPostDelete } = this.props;
         return (

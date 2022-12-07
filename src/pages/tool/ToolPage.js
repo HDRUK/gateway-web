@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
 import Rating from 'react-rating';
 import 'react-tabs/style/react-tabs.css';
 
-import { LayoutContent, Alert } from 'components';
+import { generalUtils } from 'utils';
+import { LayoutContent, Alert, RenderMarkdown } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
 import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg';
@@ -61,12 +60,12 @@ export const ToolDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
 
     // componentDidMount - on loading of tool detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setToolAdded(values.toolAdded);
             setToolEdited(values.toolEdited);
             setReviewAdded(values.reviewAdded);
@@ -433,7 +432,7 @@ export const ToolDetail = props => {
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
                                                             data-testid='tool-description'>
-                                                            <ReactMarkdown source={toolData.description} />
+                                                            <RenderMarkdown source={toolData.description} />
                                                         </Col>
                                                     </Row>
                                                 </div>
@@ -449,7 +448,7 @@ export const ToolDetail = props => {
                                                         </Row>
                                                         <Row className='mt-3'>
                                                             <Col sm={12} className='gray800-14 hdruk-section-body'>
-                                                                <ReactMarkdown source={toolData.resultsInsights} />
+                                                                <RenderMarkdown source={toolData.resultsInsights} />
                                                             </Col>
                                                         </Row>
                                                     </div>

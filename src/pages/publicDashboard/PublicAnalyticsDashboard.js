@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { createRef, Component, Fragment } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import * as Sentry from '@sentry/react';
@@ -18,7 +18,7 @@ import '../dashboard/Dashboard.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class PublicAnalyticsDashboard extends React.Component {
+class PublicAnalyticsDashboard extends Component {
     state = {
         userState: [],
         key: 'Datasets',
@@ -46,7 +46,7 @@ class PublicAnalyticsDashboard extends React.Component {
         super(props);
         this.state.userState = props.userState;
         this.state.selectedOption = this.state.dates[0];
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
     }
 
     handleSelect = key => {

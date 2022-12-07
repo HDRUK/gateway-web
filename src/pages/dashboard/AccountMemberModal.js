@@ -2,7 +2,7 @@
 import { FieldArray, Formik, useFormik } from 'formik';
 import { Button } from 'hdruk-react-core';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
 import * as Yup from 'yup';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
 import InlineSVG from 'react-inlinesvg/esm';

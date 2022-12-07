@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React from 'react';
+import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { omit } from '../../../../configs/propTypes';
 import RelatedObject from '../../../commonComponents/relatedObject/RelatedObject';
@@ -7,7 +7,7 @@ import SearchResults from '../../../commonComponents/SearchResults';
 import { PROP_TYPES_SEARCH_RESULTS } from '../../../commonComponents/SearchResults/SearchResults.propTypes';
 
 const CoursesSearchResults = ({ updateOnFilterBadge, ...outerProps }) => {
-    const mapResults = React.useCallback(
+    const mapResults = useCallback(
         data => {
             let courseRender = [];
             let currentHeader = '';

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useState, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 
 import { AlertModal } from 'components';
@@ -7,9 +7,9 @@ import { AlertModal } from 'components';
 const cmsURL = require('../BaseURL').getCMSURL();
 
 const ErrorModal = ({ onClose, ...outerProps }) => {
-    const [show, setShow] = React.useState(true);
+    const [show, setShow] = useState(true);
 
-    const handleClose = React.useCallback(() => {
+    const handleClose = useCallback(() => {
         if (onClose) onClose();
         setShow(false);
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import _ from 'lodash';
 import { SlideDown } from 'react-slidedown';
 import SVGIcon from '../../../images/SVGIcon';

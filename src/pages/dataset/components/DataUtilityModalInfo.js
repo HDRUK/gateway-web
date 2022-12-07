@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { Col, Row, Collapse } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 import '../Dataset.scss';
@@ -7,7 +7,7 @@ import { ReactComponent as SubSilverSVG } from '../../../images/sub_silver.svg';
 import { ReactComponent as SubGoldSVG } from '../../../images/sub_gold.svg';
 import { ReactComponent as SubPlatinumSVG } from '../../../images/sub_platinum.svg';
 
-class DataUtilityModalInfo extends React.Component {
+class DataUtilityModalInfo extends Component {
     state = {
         open: false,
         flagClosed: true,

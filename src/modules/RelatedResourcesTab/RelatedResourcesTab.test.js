@@ -1,4 +1,3 @@
-import React from 'react';
 import RelatedResourcesTab from './RelatedResourcesTab';
 import '@testing-library/jest-dom/extend-expect';
 import { server } from '../../services/mockServer';

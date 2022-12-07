@@ -1,4 +1,3 @@
-import React from 'react';
 import { testUtils } from '../../../../../test';
 import DropdownCustom from './DropdownCustom';
 import { server } from '../../../../services/mockServer';

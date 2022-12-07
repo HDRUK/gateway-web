@@ -1,13 +1,13 @@
 import { convertToRaw } from 'draft-js';
 import { draftToMarkdown } from 'markdown-draft-js';
-import React from 'react';
+import { useState, createRef, useEffect } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './Wysiwyg.scss';
 
 export const WysiwygEditor = ({ editorState, onEditorStateChange, onContentStateChange, onMarkdownChange }) => {
-    const [markdown, setMarkdown] = React.useState();
-    const ref = React.createRef(null);
+    const [markdown, setMarkdown] = useState();
+    const ref = createRef(null);
 
     const handleOnEditorStateChange = editorStateChanged => {
         const guidanceAsMarkdown = draftToMarkdown(convertToRaw(editorStateChanged.getCurrentContent()));
@@ -18,7 +18,7 @@ export const WysiwygEditor = ({ editorState, onEditorStateChange, onContentState
     };
 
 
-    React.useEffect(() => {
+    useEffect(() => {
         setMarkdown(draftToMarkdown(convertToRaw(editorState.getCurrentContent())));
     }, []);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import isEmpty from 'lodash';
 import axios from 'axios';
 import { Box, Button } from 'hdruk-react-core';

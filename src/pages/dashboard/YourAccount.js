@@ -1,15 +1,15 @@
-import React, { Fragment, useState } from 'react';
+import { Component, Fragment, useState } from 'react';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { Row, Col, Alert, Form, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import queryString from 'query-string';
 import { Button } from 'hdruk-react-core';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import SVGIcon from '../../images/SVGIcon';
+import { generalUtils } from 'utils';
 import { Checkbox } from 'components';
+import SVGIcon from '../../images/SVGIcon';
 
 import './Dashboard.scss';
 import Loading from '../commonComponents/Loading';
@@ -17,7 +17,7 @@ import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class YourAccount extends React.Component {
+class YourAccount extends Component {
     // initialize our state
     state = {
         data: [],
@@ -45,7 +45,7 @@ class YourAccount extends React.Component {
 
     componentDidMount() {
         if (!!window.location.search) {
-            var values = queryString.parse(window.location.search);
+            var values = generalUtils.parseQueryString(window.location.search);
             this.setState({ isUpdated: values.accountUpdated });
         }
         this.getAccountDetails();

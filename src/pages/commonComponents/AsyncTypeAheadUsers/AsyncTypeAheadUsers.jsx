@@ -1,6 +1,6 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
-import { jsx } from '@emotion/react';
+
 import { find, isEmpty, isUndefined, remove } from 'lodash';
 import PropTypes from 'prop-types';
 import { Menu, MenuItem } from 'react-bootstrap-typeahead';
@@ -26,7 +26,7 @@ function AsyncTypeAheadUsers(props) {
     const handleSearch = async () => {
         if (value.length > 2) {
             setIsLoading(true);
-            const users = await usersService.searchUsers(value);
+            const users = await usersService.searchUsers(encodeURI(value));
             setOptions(users.data.data);
             setShowRecentlyAdded(false);
             setIsLoading(false);
@@ -117,7 +117,7 @@ function AsyncTypeAheadUsers(props) {
                         </Menu.Header>
                     )}
                     {results.map((result, index) => (
-                        <MenuItem option={result} position={index}>
+                        <MenuItem key={index} option={result} position={index}>
                             <span className='name' data-testid={`name-${index}`}>
                                 {result.name}
                             </span>
