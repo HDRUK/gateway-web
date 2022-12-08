@@ -11,7 +11,7 @@ ARG REACT_APP_GATEWAY_PRIVACY_POLICY_URL
 
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
-RUN npm install --silent --legacy-peer-deps
+RUN npm install --silent
 COPY . /app
 RUN npm run build
 
