@@ -16,6 +16,20 @@ steps:
               '--build-arg', 'REACT_APP_NEWSLETTER_EXAMPLE_URL=${_REACT_APP_NEWSLETTER_EXAMPLE_URL}',
               '--build-arg', 'REACT_APP_TERMS_AND_CONDITIONS_URL=${_REACT_APP_TERMS_AND_CONDITIONS_URL}',
               '--build-arg', 'REACT_APP_GATEWAY_PRIVACY_POLICY_URL=${_REACT_APP_GATEWAY_PRIVACY_POLICY_URL}',
+              '--build-arg', 'SERVICE_DESK_URL=${_SERVICE_DESK_URL}',
+              '--build-arg', 'SERVICE_DESK_TECHNICAL_SUPPORT_URL=${_SERVICE_DESK_TECHNICAL_SUPPORT_URL}',
+              '--build-arg', 'SENTRY_URL=${_SENTRY_URL}',
+              '--build-arg', 'HDR_UK_DOCUMENTATION_SCORES_URL=${_HDR_UK_DOCUMENTATION_SCORES_URL}',
+              '--build-arg', 'HDR_UK_URL=${_HDR_UK_URL}',
+              '--build-arg', 'HEALTH_DATA_ACCESS_TOOLKIT_URL=${_HEALTH_DATA_ACCESS_TOOLKIT_URL}',
+              '--build-arg', 'DATAUSE_WIDGET_MODULE_URL=${_DATAUSE_WIDGET_MODULE_URL}',
+              '--build-arg', 'DSPT_URL=${_DSPT_URL}',
+              '--build-arg', 'ONS_REQUESTING_STATS_URL=${_ONS_REQUESTING_STATS_URL}',
+              '--build-arg', 'GATEWAY_API_URL=${_GATEWAY_API_URL}',
+              '--build-arg', 'GATEWAY_WEB_URL=${_GATEWAY_WEB_URL}',
+              '--build-arg', 'DATAUSE_WIDGET_URL=${_DATAUSE_WIDGET_URL}',
+              '--build-arg', 'DISCOURSE_URL=${_DISCOURSE_URL}',
+              '--build-arg', 'COHORT_REQUEST_ACCESS_URL=${_COHORT_REQUEST_ACCESS_URL}',
               '.']
     - name: 'gcr.io/cloud-builders/docker'
       args: ['push', 'gcr.io/$PROJECT_ID/${_APP_NAME}:latest']
