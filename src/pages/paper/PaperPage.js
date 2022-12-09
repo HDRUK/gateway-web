@@ -1,19 +1,20 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
-import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
+
 import 'react-tabs/style/react-tabs.css';
 import parse from 'html-react-parser';
+
+import { generalUtils } from 'utils';
+import { Alert, LayoutContent, RenderMarkdown } from 'components';
 import { formatPaperDescription } from 'utils/Paper.util';
-import Alert from '../../components/Alert';
-import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -46,7 +47,7 @@ export const PaperDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [isHovering, setIsHovering] = useState(false);
     const [userState] = useState(
         props.userState || [
@@ -62,7 +63,7 @@ export const PaperDetail = props => {
     // componentDidMount - on loading of page detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setPaperAdded(values.toolAdded);
             setPaperEdited(values.toolEdited);
         }
@@ -355,7 +356,7 @@ export const PaperDetail = props => {
                             <div className='rectangle'>
                                 <Row>
                                     <Col>
-                                        <span data-test-id='paper-name' className='black-16' data-testid='title'>
+                                        <span data-testid='paper-name' className='black-16'>
                                             {paperData.name}
                                         </span>
                                     </Col>
@@ -408,7 +409,7 @@ export const PaperDetail = props => {
                                                                 {paperData.document_links ? (
                                                                     paperData.document_links.doi.map((paperDoi, i) => (
                                                                         <a
-                                                                            data-test-id={`document-links-doi-${i}`}
+                                                                            data-testid={`document-links-doi-${i}`}
                                                                             href={paperDoi}
                                                                             rel='noopener noreferrer'
                                                                             target='_blank'
@@ -429,7 +430,7 @@ export const PaperDetail = props => {
                                                                     paperData.document_links.pdf &&
                                                                     paperData.document_links.pdf.map((paperPdf, i) => (
                                                                         <a
-                                                                            data-test-id={`document-links-pdf-${i}`}
+                                                                            data-testid={`document-links-pdf-${i}`}
                                                                             href={paperPdf}
                                                                             rel='noopener noreferrer'
                                                                             target='_blank'
@@ -441,7 +442,7 @@ export const PaperDetail = props => {
                                                                     paperData.document_links.html &&
                                                                     paperData.document_links.html.map((paperHtml, i) => (
                                                                         <a
-                                                                            data-test-id={`document-links-html-${i}`}
+                                                                            data-testid={`document-links-html-${i}`}
                                                                             href={paperHtml}
                                                                             rel='noopener noreferrer'
                                                                             target='_blank'
@@ -461,7 +462,7 @@ export const PaperDetail = props => {
                                                                     <span className='gray800-14'>Journal</span>
                                                                 </Col>
                                                                 <Col sm={10}>
-                                                                    <span data-test-id='paper-journal' className='gray800-14'>
+                                                                    <span data-testid='paper-journal' className='gray800-14'>
                                                                         {paperData.journal}
                                                                     </span>
                                                                 </Col>
@@ -471,7 +472,7 @@ export const PaperDetail = props => {
                                                                     <span className='gray800-14'>Year</span>
                                                                 </Col>
                                                                 <Col sm={10}>
-                                                                    <span data-test-id='paper-year' className='gray800-14'>
+                                                                    <span data-testid='paper-year' className='gray800-14'>
                                                                         {paperData.journalYear}
                                                                     </span>
                                                                 </Col>
@@ -483,7 +484,7 @@ export const PaperDetail = props => {
                                                             <Col sm={2}>
                                                                 <span className='gray800-14'>Authors</span>
                                                             </Col>
-                                                            <Col sm={10} className='gray800-14 overflowWrap' data-test-id='paper-authors'>
+                                                            <Col sm={10} className='gray800-14 overflowWrap' data-testid='paper-authors'>
                                                                 {paperData.authorsNew}
                                                             </Col>
                                                         </Row>
@@ -514,7 +515,7 @@ export const PaperDetail = props => {
                                                                           return (
                                                                               <div className='badge-tag' key={i}>
                                                                                   <a
-                                                                                      data-test-id={`keywords-${i}`}
+                                                                                      data-testid={`keywords-${i}`}
                                                                                       className='gray800-14'
                                                                                       href={`/search?search=&tab=Papers&paperfeatures=${feature}&type=all`}>
                                                                                       {feature}
@@ -537,7 +538,7 @@ export const PaperDetail = props => {
                                                                           return (
                                                                               <div className='badge-tag' key={i}>
                                                                                   <a
-                                                                                      data-test-id={`domain-${i}`}
+                                                                                      data-testid={`domain-${i}`}
                                                                                       className='gray800-14'
                                                                                       href={`/search?search=&tab=Papers&papertopics=${topic}&type=all`}>
                                                                                       {topic}
@@ -561,7 +562,7 @@ export const PaperDetail = props => {
                                                     </Row>
                                                     <Row className='mt-3'>
                                                         <Col>
-                                                            <span data-test-id='paper-abstract' className='gray800-14 hdruk-section-body'>
+                                                            <span data-testid='paper-abstract' className='gray800-14 hdruk-section-body'>
                                                                 {parse(formatPaperDescription(paperData.description))}
                                                             </span>
                                                         </Col>
@@ -581,10 +582,8 @@ export const PaperDetail = props => {
                                                         </Row>
                                                         <Row className='mt-3'>
                                                             <Col>
-                                                                <span
-                                                                    data-test-id='paper-results'
-                                                                    className='gray800-14 hdruk-section-body'>
-                                                                    <ReactMarkdown source={paperData.resultsInsights} />
+                                                                <span data-testid='paper-results' className='gray800-14 hdruk-section-body'>
+                                                                    <RenderMarkdown source={paperData.resultsInsights} />
                                                                 </span>
                                                             </Col>
                                                         </Row>

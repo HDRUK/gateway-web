@@ -1,4 +1,3 @@
-import React from 'react';
 import SVGIcon from '../../../images/SVGIcon';
 
 export const FilterSearch = ({ onSearchChange }) => {

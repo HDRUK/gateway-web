@@ -1,22 +1,20 @@
 import { has, isEmpty } from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import Alert from '../../../components/Alert';
-import { LayoutContent } from '../../../components/Layout';
+
+import { generalUtils } from 'utils';
+import { Alert, LayoutContent } from 'components';
+import { personService, publishersService } from 'services';
 import SVGIcon from '../../../images/SVGIcon';
-import personService from '../../../services/person';
-import publishersService from '../../../services/publishers';
-import { stripHtml } from '../../../utils/GeneralHelper.util';
+import { stripHtml } from '../../../utils/General.util';
+
 import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
 import StatusBadge from './Components/StatusBadge';
 import './CustomiseDAR.scss';
 import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
-
-const baseURL = require('../../commonComponents/BaseURL').getURL();
 
 const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShowConfirmPublishModal, activeTab, onSelectTab, alert }) => {
     const { t } = useTranslation();
@@ -29,7 +27,7 @@ const CustomiseDAR = ({ userState, publisherId, showConfirmPublishModal, setShow
     const [closeGuidanceMessage, setCloseGuidanceMessage] = useState('');
     const [alertMessage, setAlertMessage] = useState(alert?.message);
 
-    const { publishedDARContent } = queryString.parse(window.location.search);
+    const { publishedDARContent } = generalUtils.parseQueryString(window.location.search);
 
     const publishersRequest = publishersService.useGetPublisher(null, {
         onError: ({ title, message }) => {

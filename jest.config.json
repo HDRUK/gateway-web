@@ -14,7 +14,8 @@
         "^context(.*)$": "<rootDir>/src/context$1",
         "^utils(.*)$": "<rootDir>/src/utils$1",
         "^types(.*)$": "<rootDir>/src/types$1",
-        "^mocks(.*)$": "<rootDir>/test/mocks$1"
+        "^mocks(.*)$": "<rootDir>/test/mocks$1",
+        "react-markdown": "<rootDir>/node_modules/react-markdown/react-markdown.min.js"
     },
     "modulePaths": ["<rootDir>/public"],
     "coveragePathIgnorePatterns": [
@@ -40,5 +41,5 @@
     ],
     "collectCoverageFrom": ["src/**/*.{js,jsx}"],
     "roots": ["<rootDir>", "<rootDir>src"],
-    "moduleDirectories": ["test", "node_modules"]
+    "moduleDirectories": ["src", "node_modules"]
 }

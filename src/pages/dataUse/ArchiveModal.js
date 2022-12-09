@@ -1,6 +1,6 @@
-import React from 'react';
-import DarHelperUtil from '../../utils/DarHelper.util';
 import { Modal, Button } from 'react-bootstrap';
+
+import { darHelperUtils } from 'utils';
 
 const ArchiveModal = ({ isVisible, toggleModal, archive, onConfirm }) => (
     <Modal show={isVisible} onHide={toggleModal}>
@@ -31,10 +31,9 @@ const ArchiveModal = ({ isVisible, toggleModal, archive, onConfirm }) => (
                 className='data-use-arch'
                 onClick={
                     archive
-                        ? () => onConfirm(DarHelperUtil.dataUseRegisterStatus.ACTIVE, DarHelperUtil.dataUseRegisterStatus.ARCHIVED)
-                        : () => onConfirm(DarHelperUtil.dataUseRegisterStatus.ARCHIVED, DarHelperUtil.dataUseRegisterStatus.ACTIVE)
-                }
-            >
+                        ? () => onConfirm(darHelperUtils.dataUseRegisterStatus.ACTIVE, darHelperUtils.dataUseRegisterStatus.ARCHIVED)
+                        : () => onConfirm(darHelperUtils.dataUseRegisterStatus.ARCHIVED, darHelperUtils.dataUseRegisterStatus.ACTIVE)
+                }>
                 {archive ? 'Archive' : 'Un-archive'}
             </Button>
         </Modal.Footer>

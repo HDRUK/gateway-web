@@ -1,11 +1,11 @@
-import React from 'react';
+import { forwardRef } from 'react';
 import '../../DatasetOnboarding.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Row } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
 
 const CustodianActionButtons = ({ allowedNavigation = false, onNextClick, onActionClick, roles }) => {
-    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    const CustomToggle = forwardRef(({ children, onClick }, ref) => (
         <a
             href='javascript:void(0)'
             ref={ref}

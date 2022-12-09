@@ -1,5 +1,5 @@
 import { render, screen, cleanup, fireEvent } from 'testUtils';
-import React from 'react';
+
 import Popover from './Popover';
 import '@testing-library/jest-dom/extend-expect';
 

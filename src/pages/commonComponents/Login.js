@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 import { Box, Icon, Li, Message, P, Ul } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
@@ -88,7 +88,7 @@ function Login() {
                         <div id='wayfinder'>
                             <Loading
                                 subText={
-                                    <a href={URL_OIDC} className='purple-14'>
+                                    <a href={`${baseURL}${URL_OIDC}`} className='purple-14'>
                                         {t('components.Login.notLoading')}
                                     </a>
                                 }

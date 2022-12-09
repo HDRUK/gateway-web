@@ -1,12 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import { useEffect } from 'react';
+import { createContext, useContext, useCallback, useState, useEffect } from 'react';
 
 import Cookies from 'js-cookie';
 
-export const CmsContext = React.createContext();
+export const CmsContext = createContext();
 
 export const useCms = () => {
-    return React.useContext(CmsContext);
+    return useContext(CmsContext);
 };
 
 export const withCms = Component => {

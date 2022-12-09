@@ -2,14 +2,15 @@
 import { FieldArray, Formik, useFormik } from 'formik';
 import { Button } from 'hdruk-react-core';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
 import * as Yup from 'yup';
+
 import { ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR } from 'configs';
+import { authService, teamService } from 'services';
+
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
-import serviceAuth from '../../services/auth/auth';
-import serviceTeam from '../../services/teams';
 import AsyncTypeAheadUsers from '../../pages/commonComponents/AsyncTypeAheadUsers';
 import './AccountTeamMembersModal.scss';
 
@@ -17,10 +18,10 @@ const AccountTeamMembersModal = ({ isOpen, onClose, teamId, onMemberAdded }) => 
     const [userInfo, setUserInfo] = useState([]);
 
     const getUserInfo = async () => {
-        const res = await serviceAuth.getStatus();
+        const res = await authService.getStatus();
         setUserInfo(res.data.data[0]);
     };
-    const addTeamMembers = serviceTeam.useAddMembers();
+    const addTeamMembers = teamService.useAddMembers();
 
     useEffect(() => {
         getUserInfo().catch(console.error);

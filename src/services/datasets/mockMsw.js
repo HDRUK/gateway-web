@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 
 const mockNextInReviewDataset = {
     _id: '60929068c794e1288d4ec704',
@@ -288,7 +288,7 @@ const mockRejectedDataset = {
     activeflag: 'rejected',
 };
 
-const mswGetInReviewDataset = rest.get(`${apiURL}/datasets/0a048419-0796-46fb-ad7d-91e650a6c742`, (req, res, ctx) => {
+const mswGetInReviewDataset = rest.get(`${apiUrlV1}/datasets/0a048419-0796-46fb-ad7d-91e650a6c742`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -297,7 +297,7 @@ const mswGetInReviewDataset = rest.get(`${apiURL}/datasets/0a048419-0796-46fb-ad
     );
 });
 
-const mswGetNextInReviewDataset = rest.get(`${apiURL}/datasets/d5c99a71-c039-4a0b-9171-dba8a1c33154`, (req, res, ctx) => {
+const mswGetNextInReviewDataset = rest.get(`${apiUrlV1}/datasets/d5c99a71-c039-4a0b-9171-dba8a1c33154`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -306,7 +306,7 @@ const mswGetNextInReviewDataset = rest.get(`${apiURL}/datasets/d5c99a71-c039-4a0
     );
 });
 
-const mswGetRejectedDataset = rest.get(`${apiURL}/datasets/1f509fe7-e94f-48fe-af6a-81f2bf8a5270`, (req, res, ctx) => {
+const mswGetRejectedDataset = rest.get(`${apiUrlV1}/datasets/1f509fe7-e94f-48fe-af6a-81f2bf8a5270`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -315,7 +315,7 @@ const mswGetRejectedDataset = rest.get(`${apiURL}/datasets/1f509fe7-e94f-48fe-af
     );
 });
 
-const mswGetInvalidDataset = rest.get(`${apiURL}/datasets/invalid`, (req, res, ctx) => {
+const mswGetInvalidDataset = rest.get(`${apiUrlV1}/datasets/invalid`, (req, res, ctx) => {
     return res(ctx.status(404));
 });
 

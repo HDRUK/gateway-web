@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, postRequest, putRequest } from '../../utils/requests';
-import service from './course';
+import * as service from './course';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the auth service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/course/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/course/1234`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the auth service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/course/edit/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/course/edit/1234`, {
                 option1: true,
             });
         });
@@ -58,7 +58,7 @@ describe('Given the auth service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/course`,
+                `${apiUrlV1}/course`,
                 {
                     status: 'archive',
                 },
@@ -78,7 +78,7 @@ describe('Given the auth service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/course/1234`,
+                `${apiUrlV1}/course/1234`,
                 {
                     status: 'archive',
                 },

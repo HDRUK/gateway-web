@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
+/** @jsxImportSource @emotion/react */
+import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box } from 'hdruk-react-core';
 import Icon from '../Icon';
@@ -10,7 +9,7 @@ import { ReactComponent as DangerIcon } from '../../images/icons/danger.svg';
 import { ReactComponent as InfoIcon } from '../../images/icons/info.svg';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 
-import * as styles from './Alert.styles.js';
+import * as styles from './Alert.styles';
 
 const Alert = ({
     icon,
@@ -29,15 +28,15 @@ const Alert = ({
     autocloseDuration,
     ...outerProps
 }) => {
-    const [show, setShow] = React.useState(true);
+    const [show, setShow] = useState(true);
 
-    const handleClose = React.useCallback(() => {
+    const handleClose = useCallback(() => {
         setShow(false);
 
         onClose();
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (show && autoclose) {
             const showTimeout = setTimeout(() => {
                 handleClose();

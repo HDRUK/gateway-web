@@ -1,9 +1,10 @@
-import queryString from 'query-string';
 import _ from 'lodash';
+
 import { PERMISSIONS_TEAM_ROLES, PERMISSIONS_ROOT_ROLES, PERMISSIONS_TEAM_MEMBER_ROLES, PERMISSIONS_USER_TYPES } from 'consts';
+import { generalUtils } from 'utils';
 
 const getTeam = props => {
-    const values = queryString.parse(window.location.search);
+    const values = generalUtils.parseQueryString(window.location.search);
     let team;
 
     if (values.team === 'user') {

@@ -1,7 +1,10 @@
 import { groupBy, isEmpty, startCase } from 'lodash';
 import moment from 'moment';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SlideDown } from 'react-slidedown';
+
+import { darHelperUtils } from 'utils';
+
 import { ReactComponent as ActionRequired } from '../../../../images/Action_required.svg';
 import { ReactComponent as ApplicationRejected } from '../../../../images/Application_rejected.svg';
 import { ReactComponent as VersionAccepted } from '../../../../images/check.svg';
@@ -14,7 +17,6 @@ import SVGIcon from '../../../../images/SVGIcon';
 import { ReactComponent as UpdateRequested } from '../../../../images/Updates_requested.svg';
 import { ReactComponent as VersionCreated } from '../../../../images/Versions_created.svg';
 import { ReactComponent as Workflow } from '../../../../images/Workflows.svg';
-import DarHelperUtil from '../../../../utils/DarHelper.util';
 import SLA from '../../../commonComponents/sla/SLA';
 import './ActivityLog.scss';
 
@@ -45,7 +47,7 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
                     <div className='header-version-title'>
                         <div className='header-version-number'>
                             <h1>
-                                {applicationType && applicationType !== DarHelperUtil.darApplicationTypes.initial
+                                {applicationType && applicationType !== darHelperUtils.darApplicationTypes.initial
                                     ? `${versionNumber} | ${startCase(applicationType)}`
                                     : versionNumber}
                             </h1>
@@ -62,8 +64,8 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
                             {renderDuration(applicationStatus, dateSubmitted, applicationType, version, timeWithApplicants)}
 
                             <SLA
-                                classProperty={DarHelperUtil.darStatusColours[applicationStatus]}
-                                text={DarHelperUtil.darSLAText[applicationStatus]}
+                                classProperty={darHelperUtils.darStatusColours[applicationStatus]}
+                                text={darHelperUtils.darSLAText[applicationStatus]}
                                 applicationType={applicationType}
                             />
                         </div>
@@ -81,46 +83,47 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
                                         <div>
                                             <div className='activity-log' key={`step-${index}`} onClick={e => toggleLogDetails(log._id)}>
                                                 <div className='activity-log-icon'>
-                                                    {(log.eventType === DarHelperUtil.activityLogEvents.APPLICATION_APPROVED ||
+                                                    {(log.eventType === darHelperUtils.activityLogEvents.APPLICATION_APPROVED ||
                                                         log.eventType ===
-                                                            DarHelperUtil.activityLogEvents.APPLICATION_APPROVED_WITH_CONDITIONS ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.UPDATE_SUBMITTED) && (
+                                                            darHelperUtils.activityLogEvents.APPLICATION_APPROVED_WITH_CONDITIONS ||
+                                                        log.eventType === darHelperUtils.activityLogEvents.UPDATE_SUBMITTED) && (
                                                         <VersionAccepted className='versionAccepted' fill='#fff' />
                                                     )}
-                                                    {(log.eventType === DarHelperUtil.activityLogEvents.UPDATES_SUBMITTED ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.AMENDMENT_SUBMITTED ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.APPLICATION_SUBMITTED) && (
+                                                    {(log.eventType === darHelperUtils.activityLogEvents.UPDATES_SUBMITTED ||
+                                                        log.eventType === darHelperUtils.activityLogEvents.AMENDMENT_SUBMITTED ||
+                                                        log.eventType === darHelperUtils.activityLogEvents.APPLICATION_SUBMITTED) && (
                                                         <VersionCreated className='versionCreated' />
                                                     )}
-                                                    {log.eventType === DarHelperUtil.activityLogEvents.MANUAL_EVENT && (
+                                                    {log.eventType === darHelperUtils.activityLogEvents.MANUAL_EVENT && (
                                                         <ManualEvent className='versionCreated' />
                                                     )}
-                                                    {log.eventType === DarHelperUtil.activityLogEvents.APPLICATION_REJECTED && (
+                                                    {log.eventType === darHelperUtils.activityLogEvents.APPLICATION_REJECTED && (
                                                         <ApplicationRejected className='versionCreated' />
                                                     )}
-                                                    {(log.eventType === DarHelperUtil.activityLogEvents.PRESUBMISSION_MESSAGE ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.CONTEXTUAL_MESSAGE) && (
+                                                    {(log.eventType === darHelperUtils.activityLogEvents.PRESUBMISSION_MESSAGE ||
+                                                        log.eventType === darHelperUtils.activityLogEvents.CONTEXTUAL_MESSAGE) && (
                                                         <Message className='versionCreated' />
                                                     )}
-                                                    {log.eventType === DarHelperUtil.activityLogEvents.NOTE && (
+                                                    {log.eventType === darHelperUtils.activityLogEvents.NOTE && (
                                                         <Notes className='versionCreated' />
                                                     )}
-                                                    {(log.eventType === DarHelperUtil.activityLogEvents.FINAL_DECISION_REQUIRED ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.DEADLINE_PASSED) && (
+                                                    {(log.eventType === darHelperUtils.activityLogEvents.FINAL_DECISION_REQUIRED ||
+                                                        log.eventType === darHelperUtils.activityLogEvents.DEADLINE_PASSED) && (
                                                         <ActionRequired className='versionCreated' />
                                                     )}
-                                                    {(log.eventType === DarHelperUtil.activityLogEvents.REVIEW_PROCESS_STARTED ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.WORKFLOW_ASSIGNED ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.REVIEW_PHASE_STARTED ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.RECOMMENDATION_WITH_ISSUE ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.RECOMMENDATION_WITH_NO_ISSUE) && (
+                                                    {(log.eventType === darHelperUtils.activityLogEvents.REVIEW_PROCESS_STARTED ||
+                                                        log.eventType === darHelperUtils.activityLogEvents.WORKFLOW_ASSIGNED ||
+                                                        log.eventType === darHelperUtils.activityLogEvents.REVIEW_PHASE_STARTED ||
+                                                        log.eventType === darHelperUtils.activityLogEvents.RECOMMENDATION_WITH_ISSUE ||
+                                                        log.eventType ===
+                                                            darHelperUtils.activityLogEvents.RECOMMENDATION_WITH_NO_ISSUE) && (
                                                         <Workflow className='versionCreated' />
                                                     )}
-                                                    {(log.eventType === DarHelperUtil.activityLogEvents.COLLABORATOR_ADDEDD ||
-                                                        log.eventType === DarHelperUtil.activityLogEvents.COLLABORATOR_REMOVED) && (
+                                                    {(log.eventType === darHelperUtils.activityLogEvents.COLLABORATOR_ADDEDD ||
+                                                        log.eventType === darHelperUtils.activityLogEvents.COLLABORATOR_REMOVED) && (
                                                         <Collaborators className='versionCreated' />
                                                     )}
-                                                    {log.eventType === DarHelperUtil.activityLogEvents.UPDATE_REQUESTED && (
+                                                    {log.eventType === darHelperUtils.activityLogEvents.UPDATE_REQUESTED && (
                                                         <UpdateRequested className='versionCreated' />
                                                     )}
                                                 </div>
@@ -139,7 +142,7 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
                                                         />
                                                     </div>
                                                 )}
-                                                {log.eventType === DarHelperUtil.activityLogEvents.MANUAL_EVENT && team !== 'user' && (
+                                                {log.eventType === darHelperUtils.activityLogEvents.MANUAL_EVENT && team !== 'user' && (
                                                     <div className='activity-log-delete-event'>
                                                         <button
                                                             className={`btn-link btn-link-delete `}
@@ -192,7 +195,7 @@ const renderDuration = (applicationStatus, dateSubmitted, applicationType, versi
     let diff = 0;
     let sinceText = '';
 
-    if (applicationType.toLowerCase() === DarHelperUtil.darApplicationTypes.update.toLowerCase()) {
+    if (applicationType.toLowerCase() === darHelperUtils.darApplicationTypes.update.toLowerCase()) {
         const {
             meta: { dateSubmitted: dateUpdateSubmitted, dateReturned: dateUpdateReturned, dateCreated: dateUpdateCreated },
         } = version;
@@ -207,16 +210,16 @@ const renderDuration = (applicationStatus, dateSubmitted, applicationType, versi
             diff = calculateTimeDifference(dateUpdateCreated);
             sinceText = 'since start';
         }
-    } else if (applicationStatus === DarHelperUtil.darStatus.inProgress) {
+    } else if (applicationStatus === darHelperUtils.darStatus.inProgress) {
         sinceText = 'since start';
         diff = calculateTimeDifference(createdAt);
-    } else if (applicationStatus === DarHelperUtil.darStatus.submitted || applicationStatus === DarHelperUtil.darStatus.inReview) {
-        sinceText = applicationType === DarHelperUtil.darApplicationTypes.initial ? 'since submission' : 'since resubmission';
+    } else if (applicationStatus === darHelperUtils.darStatus.submitted || applicationStatus === darHelperUtils.darStatus.inReview) {
+        sinceText = applicationType === darHelperUtils.darApplicationTypes.initial ? 'since submission' : 'since resubmission';
         diff = calculateTimeDifference(dateSubmitted);
     } else if (
-        applicationStatus === DarHelperUtil.darStatus.approved ||
-        applicationStatus === DarHelperUtil.darStatus['approved with conditions'] ||
-        applicationStatus === DarHelperUtil.darStatus.rejected
+        applicationStatus === darHelperUtils.darStatus.approved ||
+        applicationStatus === darHelperUtils.darStatus['approved with conditions'] ||
+        applicationStatus === darHelperUtils.darStatus.rejected
     ) {
         if (!isEmpty(decisionDuration.toString())) {
             sinceText = 'total';

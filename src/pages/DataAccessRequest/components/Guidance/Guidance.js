@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import unified from 'unified';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';

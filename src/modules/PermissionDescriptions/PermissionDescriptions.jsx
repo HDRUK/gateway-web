@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { useMemo } from 'react';
 import { ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR, ROLES_ADMIN } from 'configs';
 import PropTypes from 'prop-types';

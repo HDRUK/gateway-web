@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
 import RelatedResourcesModal from '../relatedResourcesModal/RelatedResourceModal';
@@ -6,8 +6,8 @@ import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg'
 import googleAnalytics from '../../../tracking';
 import './RelatedResources.scss';
 
-const RelatedResources = React.forwardRef((props, ref) => {
-    React.useImperativeHandle(ref, () => ({
+const RelatedResources = forwardRef((props, ref) => {
+    useImperativeHandle(ref, () => ({
         showModal() {
             handleShow();
         },

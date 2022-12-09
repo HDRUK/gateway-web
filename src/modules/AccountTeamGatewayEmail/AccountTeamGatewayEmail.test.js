@@ -1,9 +1,8 @@
-import React from 'react';
 import { screen, render, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamGatewayEmail from './AccountTeamGatewayEmail';
 import * as Auth from '../../context/AuthContext';
-import { mockUserStateManager, mockUserStateNonManager } from 'mocks';
+import { mocks } from '../../../test';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
 
@@ -19,7 +18,7 @@ describe('Given the AccountTeamGatewayEmail component', () => {
     describe('When it renders', () => {
         beforeAll(() => {
             authSpy.mockReturnValue({
-                userState: mockUserStateNonManager,
+                userState: mocks.userState.mockUserStateNonManager,
             });
 
             wrapper = render(<AccountTeamGatewayEmail {...props} />);
@@ -45,7 +44,7 @@ describe('Given the AccountTeamGatewayEmail component', () => {
         describe('And the user is a manager', () => {
             beforeAll(() => {
                 authSpy.mockReturnValue({
-                    userState: mockUserStateManager,
+                    userState: mocks.userState.mockUserStateManager,
                 });
 
                 wrapper.rerender(<AccountTeamGatewayEmail {...props} />);
@@ -67,7 +66,7 @@ describe('Given the AccountTeamGatewayEmail component', () => {
         describe('And the user is not a manager', () => {
             beforeAll(() => {
                 authSpy.mockReturnValue({
-                    userState: mockUserStateManager,
+                    userState: mocks.userState.mockUserStateManager,
                 });
 
                 wrapper.rerender(<AccountTeamGatewayEmail {...props} />);

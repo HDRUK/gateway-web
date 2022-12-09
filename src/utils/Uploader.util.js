@@ -1,5 +1,10 @@
-import _ from 'lodash';
-import serviceUsers from '../services/users/users';
+import { usersService } from 'services';
+
+const getUserInfo = async id => {
+    const response = await usersService.getUserById(id, {});
+    const userInfo = response.data.person;
+    return userInfo;
+};
 
 /**
  * Returns array of user object.
@@ -31,13 +36,4 @@ const buildListOfUploaders = async (authorIds, currentUser) => {
     return listOfUploaders;
 };
 
-const getUserInfo = async id => {
-    const response = await serviceUsers.getUserById(id, {});
-    const userInfo = response.data.person;
-    return userInfo;
-};
-
-export default {
-    buildListOfUploaders: buildListOfUploaders,
-    getUserInfo: getUserInfo,
-};
+export { buildListOfUploaders, getUserInfo };

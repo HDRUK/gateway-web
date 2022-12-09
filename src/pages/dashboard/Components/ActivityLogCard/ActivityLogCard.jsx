@@ -1,24 +1,23 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import groupBy from 'lodash/groupBy';
 import PropTypes from 'prop-types';
 import { Suspense } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import BlockQuote from '../../../../components/BlockQuote';
-import ListInfo from '../../../../components/ListInfo';
-import Timeline from '../../../../components/Timeline';
+
+import { BlockQuote, ListInfo, Timeline } from 'components';
+import { datasetOnboardingHelperUtils } from 'utils';
+
 import approved from '../../../../images/Application_approved.svg';
 import rejected from '../../../../images/Application_rejected.svg';
 import updated from '../../../../images/Updates_requested.svg';
 import versionCreated from '../../../../images/Versions_created.svg';
-import ACTIVITY_LOG_PROP_TYPES from '../../../../services/activitylog/activitylog';
-import DatasetOnboardingHelper from '../../../../utils/DatasetOnboardingHelper.util';
-import { dateFormats } from '../../../../utils/GeneralHelper.util';
+import { dateFormats } from '../../../../utils/General.util';
+
 import SLA from '../../../commonComponents/sla/SLA';
 import * as styles from './ActivityLogCard.styles';
 
-let eventStatusIcons = {
+const eventStatusIcons = {
     newDatasetVersionSubmitted: versionCreated,
     datasetVersionApproved: approved,
     datasetVersionRejected: rejected,
@@ -56,8 +55,8 @@ const ActivityLogCard = props => {
                                 <Col sm={6} lg={6}>
                                     <span css={styles.applicationStatus} data-testid='status'>
                                         <SLA
-                                            classProperty={DatasetOnboardingHelper.datasetStatusColours[applicationStatus]}
-                                            text={DatasetOnboardingHelper.datasetSLAText[applicationStatus]}
+                                            classProperty={datasetOnboardingHelperUtils.datasetStatusColours[applicationStatus]}
+                                            text={datasetOnboardingHelperUtils.datasetSLAText[applicationStatus]}
                                         />
                                     </span>
                                 </Col>
@@ -103,7 +102,7 @@ const ActivityLogCard = props => {
                                                             )}
                                                             {event.datasetUpdates &&
                                                                 event.datasetUpdates.map((item, i) => {
-                                                                    const log = DatasetOnboardingHelper.getUpdatesSubmittedLog(item);
+                                                                    const log = datasetOnboardingHelperUtils.getUpdatesSubmittedLog(item);
 
                                                                     return (
                                                                         <div data-testid={`event-detailed-text-${index}-${i}`}>
@@ -150,7 +149,38 @@ ActivityLogCard.defaultProps = {
 };
 
 ActivityLogCard.propTypes = {
-    ...ACTIVITY_LOG_PROP_TYPES,
+    versionNumber: PropTypes.string.isRequired,
+    meta: PropTypes.shape({
+        dateSubmitted: PropTypes.string,
+        dateCreated: PropTypes.string,
+        applicationStatus: PropTypes.string,
+    }).isRequired,
+    events: PropTypes.arrayOf(
+        PropTypes.shape({
+            _id: PropTypes.string,
+            eventType: PropTypes.string.isRequired,
+            logType: PropTypes.string.isRequired,
+            timestamp: PropTypes.string.isRequired,
+            user: PropTypes.string.isRequired,
+            userDetails: PropTypes.shape({
+                firstName: PropTypes.string,
+                lastName: PropTypes.string,
+                role: PropTypes.string,
+            }).isRequired,
+            version: PropTypes.string.isRequired,
+            versionId: PropTypes.string.isRequired,
+            userTypes: PropTypes.arrayOf(PropTypes.string),
+            adminComment: PropTypes.string.isRequired,
+            datasetUpdates: PropTypes.arrayOf(
+                PropTypes.objectOf(
+                    PropTypes.shape({
+                        previousAnswer: PropTypes.string,
+                        updatedAnswer: PropTypes.string,
+                    })
+                )
+            ),
+        })
+    ).isRequired,
     mb: PropTypes.string,
 };
 

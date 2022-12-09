@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { CSVLink } from 'react-csv';
 import { Button } from 'hdruk-react-core';
-import DarHelperUtil from '../../../../utils/DarHelper.util';
+import { darHelperUtils } from 'utils';
 
 const ActivityLogActionButtons = ({ team, latestVersion, onClickAddNewEvent, activityLog, onClickStartReview }) => {
     const [activityLogs, setActivityLogs] = useState([]);
@@ -28,7 +28,7 @@ const ActivityLogActionButtons = ({ team, latestVersion, onClickAddNewEvent, act
             )}
 
             {(Object.values(latestVersion.versionTree) || [])
-                .filter(version => version.applicationStatus === DarHelperUtil.darStatus.submitted)
+                .filter(version => version.applicationStatus === darHelperUtils.darStatus.submitted)
                 .map(submittedVersion => {
                     return (
                         team !== 'user' && (
@@ -43,7 +43,7 @@ const ActivityLogActionButtons = ({ team, latestVersion, onClickAddNewEvent, act
                     );
                 })}
 
-            {(team === 'user' || latestVersion.applicationStatus !== DarHelperUtil.darStatus.submitted) && (
+            {(team === 'user' || latestVersion.applicationStatus !== darHelperUtils.darStatus.submitted) && (
                 <a href={latestVersion.versions[0].link}>
                     <Button>View application form</Button>
                 </a>

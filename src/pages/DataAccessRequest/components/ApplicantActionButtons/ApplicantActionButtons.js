@@ -1,7 +1,6 @@
-import React from 'react';
 import { Button } from 'hdruk-react-core';
+import { darHelperUtils } from 'utils';
 import googleAnalytics from '../../../../tracking';
-import DarHelper from '../../../../utils/DarHelper.util';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 
 const ApplicantActionButtons = ({
@@ -39,9 +38,9 @@ const ApplicantActionButtons = ({
                         onShowAmendApplicationModal();
                     },
                     isVisible:
-                        applicationStatus === DarHelper.darStatus.inReview ||
-                        applicationStatus === DarHelper.darStatus.approved ||
-                        applicationStatus === DarHelper.darStatus.rejected,
+                        applicationStatus === darHelperUtils.darStatus.inReview ||
+                        applicationStatus === darHelperUtils.darStatus.approved ||
+                        applicationStatus === darHelperUtils.darStatus.rejected,
                 },
                 {
                     title: 'Duplicate application',
@@ -59,7 +58,7 @@ const ApplicantActionButtons = ({
                         googleAnalytics.recordVirtualPageView('delete draft application modal');
                         onDeleteDraftClick();
                     },
-                    isVisible: applicationStatus === DarHelper.darStatus.inProgress,
+                    isVisible: applicationStatus === darHelperUtils.darStatus.inProgress,
                 },
             ],
         },

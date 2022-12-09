@@ -1,13 +1,14 @@
 import { isEmpty } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Col, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import Alert from '../../components/Alert';
-import { LayoutContent } from '../../components/Layout';
-import dataUseRegistersService from '../../services/data-use-registers';
+
+import { dataUseRegistersService } from 'services';
+import { Alert, LayoutContent } from 'components';
+import { darHelperUtils } from 'utils';
 import googleAnalytics from '../../tracking';
-import DarHelperUtil from '../../utils/DarHelper.util';
+
 import Loading from '../commonComponents/Loading';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import ArchiveModal from './ArchiveModal';
@@ -114,19 +115,19 @@ const DataUsePage = ({ onClickDataUseUpload, team }) => {
 
     const updataDataUseStatus = (oldStatus, newStatus, rejectionReason = '') => {
         dataUseRegistersUpdate.mutateAsync({ _id: dataUseId, activeflag: newStatus, rejectionReason }).then(() => {
-            if (oldStatus === DarHelperUtil.dataUseRegisterStatus.INREVIEW && newStatus === DarHelperUtil.dataUseRegisterStatus.ACTIVE) {
+            if (oldStatus === darHelperUtils.dataUseRegisterStatus.INREVIEW && newStatus === darHelperUtils.dataUseRegisterStatus.ACTIVE) {
                 showAlert('Your data use has been successfully approved.');
                 toggleApproveModal();
             } else if (
-                oldStatus === DarHelperUtil.dataUseRegisterStatus.ARCHIVED &&
-                newStatus === DarHelperUtil.dataUseRegisterStatus.ACTIVE
+                oldStatus === darHelperUtils.dataUseRegisterStatus.ARCHIVED &&
+                newStatus === darHelperUtils.dataUseRegisterStatus.ACTIVE
             ) {
                 showAlert('Your data use has been successfully unarchived.');
                 toggleUnarchiveModal();
-            } else if (newStatus === DarHelperUtil.dataUseRegisterStatus.REJECTED) {
+            } else if (newStatus === darHelperUtils.dataUseRegisterStatus.REJECTED) {
                 showAlert('Your data use has been successfully rejected.');
                 toggleRejectModal();
-            } else if (newStatus === DarHelperUtil.dataUseRegisterStatus.ARCHIVED) {
+            } else if (newStatus === darHelperUtils.dataUseRegisterStatus.ARCHIVED) {
                 showAlert('Your data use has been successfully archived.');
                 toggleArchiveModal();
             }

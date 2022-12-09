@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
 import * as styles from './AlertModal.styles';

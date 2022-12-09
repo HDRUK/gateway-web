@@ -1,6 +1,5 @@
-import React from 'react';
 import { render, fireEvent, screen, waitFor, within, cleanup } from 'testUtils';
-import { mockUserStateManager, mockUserStateNonManager } from '../../../test/mocks';
+import { mocks } from '../../../test';
 import { server } from '../../services/mockServer';
 import AccountTeamMembers from './AccountTeamMembers';
 import * as Auth from '../../context/AuthContext';
@@ -31,7 +30,7 @@ describe('Given the AccountTeamMembers component', () => {
     describe('When it is rendered', () => {
         beforeEach(async () => {
             authSpy.mockReturnValue({
-                userState: mockUserStateNonManager,
+                userState: mocks.userState.mockUserStateNonManager,
             });
 
             wrapper = render(<AccountTeamMembers {...props} />);
@@ -94,7 +93,7 @@ describe('Given the AccountTeamMembers component', () => {
     describe('And new member is clicked', () => {
         beforeEach(async () => {
             authSpy.mockReturnValue({
-                userState: mockUserStateManager,
+                userState: mocks.userState.mockUserStateManager,
             });
 
             render(<AccountTeamMembers {...props} />);
@@ -120,7 +119,7 @@ describe('Given the AccountTeamMembers component', () => {
     describe('And new member is clicked', () => {
         beforeEach(async () => {
             authSpy.mockReturnValue({
-                userState: mockUserStateManager,
+                userState: mocks.userState.mockUserStateManager,
             });
 
             render(<AccountTeamMembers {...props} />);

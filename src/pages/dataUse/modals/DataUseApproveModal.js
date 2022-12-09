@@ -1,8 +1,10 @@
-import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
+
+import { darHelperUtils } from 'utils';
+
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
-import DarHelperUtil from '../../../utils/DarHelper.util';
+
 import './DataUseModals.scss';
 
 const DataUseApproveModal = ({ isVisible, toggleModal, onConfirm }) => {
@@ -26,7 +28,7 @@ const DataUseApproveModal = ({ isVisible, toggleModal, onConfirm }) => {
                         </Button>
                         <Button
                             onClick={() =>
-                                onConfirm(DarHelperUtil.dataUseRegisterStatus.INREVIEW, DarHelperUtil.dataUseRegisterStatus.ACTIVE)
+                                onConfirm(darHelperUtils.dataUseRegisterStatus.INREVIEW, darHelperUtils.dataUseRegisterStatus.ACTIVE)
                             }>
                             Approve
                         </Button>

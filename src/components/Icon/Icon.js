@@ -1,9 +1,9 @@
-/** @jsx jsx */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
-import useCommonStyles from '../../hooks/useCommonStyles';
+
+import { useCommonStyles } from 'hooks';
+
 import { PROP_TYPES_ICON } from './Icon.propTypes';
-import * as styles from './Icon.styles.js';
+import * as styles from './Icon.styles';
 
 const Icon = ({ svg, size, color, fill, stroke, className, ml, mr, mb, mt, ...outerProps }) => {
     const commonStyles = useCommonStyles({ mt, mb, ml, mr });

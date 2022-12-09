@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
 import { cx } from '@emotion/css';
 import CardBody from '../Card/CardBody';
 

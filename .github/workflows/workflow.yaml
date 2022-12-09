@@ -41,6 +41,8 @@ jobs:
             - name: Install winterfell
               run: npm install '${{ secrets.WINTERFELL_REPO }}'
             - name: Clean install, npm ci and Unit testing
+              env:
+                  SKIP_PREFLIGHT_CHECK: true
               run: |
                   npm ci
                   CI=false npm run build --if-present

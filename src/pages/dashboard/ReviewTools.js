@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import { Component, useState, Fragment } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { authUtils } from 'utils';
@@ -11,7 +11,7 @@ import './Dashboard.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class ReviewTools extends React.Component {
+class ReviewTools extends Component {
     constructor(props) {
         super(props);
         this.state.userState = props.userState;

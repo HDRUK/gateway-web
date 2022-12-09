@@ -1,17 +1,18 @@
-import React, { Fragment, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { OverlayTrigger, Tooltip, Row, Button, Accordion } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
-import SLA from '../commonComponents/sla/SLA';
-import TimeDuration from './timeDuration/TimeDuration';
-import DatasetOnboardingHelper from './../../utils/DatasetOnboardingHelper.util';
-import CommentItem from '../dashboard/DataAccessRequests/CommentItem/CommentItem.js';
-import StatusDisplay from './StatusDisplay';
-import SVGIcon from '../../images/SVGIcon';
 import moment from 'moment';
 
-import '../commonComponents/DatasetCard.scss';
+import { datasetOnboardingHelperUtils } from 'utils';
+import SVGIcon from '../../images/SVGIcon';
 
-let completionList = {
+import SLA from './sla/SLA';
+import TimeDuration from './timeDuration/TimeDuration';
+import CommentItem from '../dashboard/DataAccessRequests/CommentItem/CommentItem';
+import StatusDisplay from './StatusDisplay';
+import './DatasetCard.scss';
+
+const completionList = {
     Summary: 'summary',
     Documentation: 'documentation',
     Coverage: 'coverage',
@@ -22,8 +23,8 @@ let completionList = {
     'Structural Meta Data': 'structural',
 };
 
-export const DatasetCard = props => {
-    let {
+const DatasetCard = props => {
+    const {
         id,
         publisher,
         title,
@@ -39,7 +40,7 @@ export const DatasetCard = props => {
     } = props;
     const [flagClosed, setFlagClosed] = useState(true);
 
-    const handleClick = React.useCallback(() => {
+    const handleClick = useCallback(() => {
         window.location.href = path || `/dataset-onboarding/${id}`;
     }, [id]);
 
@@ -54,22 +55,24 @@ export const DatasetCard = props => {
                         <div className='datasetHeader-status'>
                             {datasetStatus === 'draft' ? (
                                 <TimeDuration
-                                    text={`${DatasetOnboardingHelper.calculateTimeDifference(timeStamps.created)} days since start`}
+                                    text={`${datasetOnboardingHelperUtils.calculateTimeDifference(timeStamps.created)} days since start`}
                                 />
                             ) : (
                                 ''
                             )}
                             {datasetStatus === 'inReview' ? (
                                 <TimeDuration
-                                    text={`${DatasetOnboardingHelper.calculateTimeDifference(timeStamps.submitted)} days since submission`}
+                                    text={`${datasetOnboardingHelperUtils.calculateTimeDifference(
+                                        timeStamps.submitted
+                                    )} days since submission`}
                                 />
                             ) : (
                                 ''
                             )}
 
                             <SLA
-                                classProperty={DatasetOnboardingHelper.datasetStatusColours[datasetStatus]}
-                                text={DatasetOnboardingHelper.datasetSLAText[datasetStatus]}
+                                classProperty={datasetOnboardingHelperUtils.datasetStatusColours[datasetStatus]}
+                                text={datasetOnboardingHelperUtils.datasetSLAText[datasetStatus]}
                                 {...slaProps}
                             />
 
@@ -77,8 +80,8 @@ export const DatasetCard = props => {
                                 <>
                                     &nbsp;&nbsp;
                                     <SLA
-                                        classProperty={DatasetOnboardingHelper.datasetStatusColours['active']}
-                                        text={DatasetOnboardingHelper.datasetSLAText['active']}
+                                        classProperty={datasetOnboardingHelperUtils.datasetStatusColours.active}
+                                        text={datasetOnboardingHelperUtils.datasetSLAText.active}
                                         {...slaProps}
                                     />
                                 </>
@@ -94,11 +97,10 @@ export const DatasetCard = props => {
                                       key={key}
                                       placement='top'
                                       overlay={
-                                          <Tooltip id={`tooltip-top`}>
+                                          <Tooltip id='tooltip-top'>
                                               {key}: {completion[completionList[key]]}
                                           </Tooltip>
-                                      }
-                                  >
+                                      }>
                                       <div>
                                           <StatusDisplay section={key} status={completion[completionList[key]]} />
                                       </div>
@@ -108,7 +110,7 @@ export const DatasetCard = props => {
                     </div>
 
                     <div className='body'>
-                        <Fragment>
+                        <>
                             <div className='box'>Publisher</div>
                             <div className='box'>{publisher}</div>
                             <div className='box version-list'>Version</div>
@@ -126,22 +128,21 @@ export const DatasetCard = props => {
                                             }}
                                             data-testid='accordion-toggle'
                                             style={{ width: '100%', padding: '0px', border: '0px' }}
-                                            className='version-list'
-                                        >
+                                            className='version-list'>
                                             <div className='version-list'>
                                                 {version}
                                                 {datasetStatus === 'draft' ? ' (Draft)' : ''}
                                                 {datasetStatus === 'inReview' ? ' (Pending)' : ''}
                                                 <SVGIcon
                                                     name='chevronbottom'
-                                                    fill={'#475da7'}
+                                                    fill='#475da7'
                                                     style={{ width: '18px', height: '18px', paddingLeft: '4px' }}
                                                     className={flagClosed === true ? 'svg-24' : 'svg-24 flipSVG'}
                                                 />
                                             </div>
                                         </Accordion.Toggle>
                                         <Accordion.Collapse eventKey='0' style={{ paddingRight: '20px' }}>
-                                            <Fragment>
+                                            <>
                                                 {listOfVersions.map(datasetVersion => (
                                                     <>
                                                         {datasetVersion.datasetVersion !== version ? (
@@ -151,8 +152,7 @@ export const DatasetCard = props => {
                                                                 onClick={e => {
                                                                     e.stopPropagation();
                                                                     window.location.href = `/dataset-onboarding/${datasetVersion._id}`;
-                                                                }}
-                                                            >
+                                                                }}>
                                                                 {datasetVersion.datasetVersion}
                                                                 {datasetVersion.activeflag === 'draft' ? ' (Draft)' : ''}
                                                                 {datasetVersion.activeflag === 'active' ? ' (Live)' : ''}
@@ -164,7 +164,7 @@ export const DatasetCard = props => {
                                                         )}
                                                     </>
                                                 ))}
-                                            </Fragment>
+                                            </>
                                         </Accordion.Collapse>
                                     </Accordion>
                                 </div>
@@ -178,12 +178,12 @@ export const DatasetCard = props => {
                             <div className='box'>
                                 {!isEmpty(timeStamps.updated) ? moment(timeStamps.updated).format('D MMMM YYYY HH:mm') : '-'}
                             </div>
-                        </Fragment>
+                        </>
                     </div>
                     {datasetStatus === 'rejected' ? (
                         <CommentItem
                             text={rejectionText}
-                            title={'Reason for rejection'}
+                            title='Reason for rejection'
                             subtitle={rejectionAuthor || 'HDR Admin'}
                             decisionDate={moment(timeStamps.rejected).format('D MMMM YYYY HH:mm')}
                         />

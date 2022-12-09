@@ -2,16 +2,13 @@ import * as Sentry from '@sentry/react';
 import { PERMISSIONS_TEAM_ROLES } from 'consts';
 import { isArray, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, { createRef, useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
+
 import { authUtils } from 'utils';
-import dataUseRegistersService from '../../../services/data-use-registers';
-import datasetsService from '../../../services/datasets';
-import papersService from '../../../services/papers';
-import searchService from '../../../services/search';
-import toolsService from '../../../services/tools';
-import usersService from '../../../services/users';
+import { dataUseRegistersService, datasetsService, papersService, searchService, toolsService, usersService } from 'services';
+
 import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../../commonComponents/errorModal/ErrorModal';
 import Loading from '../../commonComponents/Loading';

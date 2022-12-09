@@ -1,10 +1,9 @@
-import React from 'react';
 import { screen, render, cleanup, within, act, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamManagementPage from './AccountTeamManagementPage';
 import { server } from '../../services/mockServer';
 import * as Auth from '../../context/AuthContext';
-import { mockUserStateManager } from 'mocks';
+import { mocks } from '../../../test';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
 
@@ -13,7 +12,7 @@ jest.mock('../../modules/AccountTeamMembersModal', () => () => null);
 describe('AccountTeamManagement Page', () => {
     beforeEach(() => {
         authSpy.mockReturnValue({
-            userState: mockUserStateManager,
+            userState: mocks.userState.mockUserStateManager,
         });
 
         server.listen();

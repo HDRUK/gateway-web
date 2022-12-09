@@ -1,5 +1,5 @@
 // /ShowObjects/Reviews.js
-import React, { Component, useState } from 'react';
+import { Component, useState } from 'react';
 import axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
 import Rating from 'react-rating';

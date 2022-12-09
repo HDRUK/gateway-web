@@ -1,15 +1,16 @@
 import _ from 'lodash';
-import React, { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
+import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { Button } from 'hdruk-react-core';
-import { LayoutContent } from '../../../../components/Layout';
+
+import { LayoutContent } from 'components';
+import { activityLogService, datasetOnboardingService } from 'services';
+import { authUtils, dataSetHelperUtils } from 'utils';
 import { useAuth } from '../../../../context/AuthContext';
-import serviceActivityLog from '../../../../services/activitylog/activitylog';
-import serviceDatasetOnboarding from '../../../../services/dataset-onboarding/dataset-onboarding';
-import { getTeam } from '../../../../utils/auth';
-import { default as DataSetHelper } from '../../../../utils/DataSetHelper.util';
+
 import ActionBar from '../../../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 import DatasetCard from '../../../commonComponents/DatasetCard';
@@ -17,7 +18,6 @@ import Loading from '../../../commonComponents/Loading';
 import ActivityLogCard from '../ActivityLogCard';
 import AccountDatasetApproveModal from './AccountDatasetApproveModal';
 import AccountDatasetRejectModal from './AccountDatasetRejectModal';
-import { authUtils } from 'utils';
 
 const AccountDataset = props => {
     const { t } = useTranslation();
@@ -35,19 +35,19 @@ const AccountDataset = props => {
         showRejectDatasetModal: false,
     });
 
-    const dataActivityLog = serviceActivityLog.usePostActivityLog();
+    const dataActivityLog = activityLogService.usePostActivityLog();
     const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], team), [userState[0], team]);
-    const dataPublisher = serviceDatasetOnboarding.useGetPublisher(publisherId);
+    const dataPublisher = datasetOnboardingService.useGetPublisher(publisherId);
 
     useEffect(() => {
-        setTeam(getTeam(props));
+        setTeam(authUtils.getTeam(props));
 
         if (publisherId && id) dataPublisher.mutate();
     }, [publisherId, id]);
 
     const getValidDatasets = listOfDatasets => {
         return listOfDatasets.filter(dataset => {
-            return DataSetHelper.isInReview(dataset) && parseFloat(dataset.datasetVersion) > 1;
+            return dataSetHelperUtils.isInReview(dataset) && parseFloat(dataset.datasetVersion) > 1;
         });
     };
 

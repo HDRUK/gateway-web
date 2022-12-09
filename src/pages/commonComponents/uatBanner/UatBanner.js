@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './UatBanner.scss';
 
 export const UatBanner = props => {

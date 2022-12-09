@@ -1,5 +1,5 @@
 import { render, screen } from 'testUtils';
-import React from 'react';
+
 import PopoverMenu from './PopoverMenu';
 import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
 import '@testing-library/jest-dom/extend-expect';

@@ -1,7 +1,6 @@
-import React from 'react';
 import { Button } from 'hdruk-react-core';
+import { darHelperUtils } from 'utils';
 import googleAnalytics from '../../../../tracking';
-import DarHelper from '../../../../utils/DarHelper.util';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 
 const CustodianActionButtons = ({
@@ -23,17 +22,17 @@ const CustodianActionButtons = ({
     hasNext,
 }) => {
     const showRecommendationDropdown =
-        applicationStatus === DarHelper.darStatus.inReview &&
+        applicationStatus === darHelperUtils.darStatus.inReview &&
         ((inReviewMode && !hasRecommended) || roles.includes('manager')) &&
         !parseInt(unansweredAmendments) > 0;
 
     const showReviewOptions = inReviewMode && !hasRecommended && workflowAssigned;
 
     const showAssignWorkflow =
-        applicationStatus === DarHelper.darStatus.inReview && roles.includes('manager') && workflowEnabled && !workflowAssigned;
+        applicationStatus === darHelperUtils.darStatus.inReview && roles.includes('manager') && workflowEnabled && !workflowAssigned;
 
     const showSendUpdateRequest =
-        applicationStatus === DarHelper.darStatus.inReview &&
+        applicationStatus === darHelperUtils.darStatus.inReview &&
         activeParty === 'custodian' &&
         roles.includes('manager') &&
         unansweredAmendments > 0;
@@ -49,7 +48,7 @@ const CustodianActionButtons = ({
                         onWorkflowReview();
                         googleAnalytics.recordVirtualPageView('workflow recommendations modal');
                     },
-                    isVisible: applicationStatus === DarHelper.darStatus.inReview,
+                    isVisible: applicationStatus === darHelperUtils.darStatus.inReview,
                 },
             ],
         },

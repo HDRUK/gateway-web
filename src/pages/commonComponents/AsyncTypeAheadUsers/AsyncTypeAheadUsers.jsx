@@ -1,16 +1,18 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import { useEffect, useState } from 'react';
+
 import { find, isEmpty, isUndefined, remove } from 'lodash';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 import { Menu, MenuItem } from 'react-bootstrap-typeahead';
-import Icon from '../../../components/Icon';
-import Typeahead from '../../../components/Typeahead/Typeahead';
-import useDebounce from '../../../hooks/useDebounce';
+
+import { Icon, Typeahead } from 'components';
+import { useDebounce } from 'hooks';
+import { usersService } from 'services';
+import { uploaderUtils } from 'utils';
+
 import { ReactComponent as SearchIcon } from '../../../images/search.svg';
 import { ReactComponent as GreenTick } from '../../../images/tick.svg';
-import serviceUsers from '../../../services/users/users';
-import UploaderUtil from '../../../utils/Uploader.util';
+
 import * as styles from './AsyncTypeAheadUsers.styles';
 
 function AsyncTypeAheadUsers(props) {
@@ -24,7 +26,7 @@ function AsyncTypeAheadUsers(props) {
     const handleSearch = async () => {
         if (value.length > 2) {
             setIsLoading(true);
-            const users = await serviceUsers.searchUsers(value);
+            const users = await usersService.searchUsers(encodeURI(value));
             setOptions(users.data.data);
             setShowRecentlyAdded(false);
             setIsLoading(false);
@@ -33,7 +35,7 @@ function AsyncTypeAheadUsers(props) {
 
     const handleOnFocus = async e => {
         if (!isUndefined(e) && e.type === 'focus' && isEmpty(recentlyAdded)) {
-            const response = await serviceUsers.getUsers();
+            const response = await usersService.getUsers();
             const { data } = response.data;
             const currentUserInfo = remove(data, { id: props.currentUserId });
             if (!isEmpty(currentUserInfo)) {
@@ -62,7 +64,7 @@ function AsyncTypeAheadUsers(props) {
             contributors
                 .filter(id => id !== props.currentUserId)
                 .map(async id => {
-                    const userInfo = await UploaderUtil.getUserInfo(id);
+                    const userInfo = await uploaderUtils.getUserInfo(id);
                     if (userInfo) {
                         return { id: userInfo.id, name: `${userInfo.firstname} ${userInfo.lastname}` };
                     }
@@ -115,7 +117,7 @@ function AsyncTypeAheadUsers(props) {
                         </Menu.Header>
                     )}
                     {results.map((result, index) => (
-                        <MenuItem option={result} position={index}>
+                        <MenuItem key={index} option={result} position={index}>
                             <span className='name' data-testid={`name-${index}`}>
                                 {result.name}
                             </span>

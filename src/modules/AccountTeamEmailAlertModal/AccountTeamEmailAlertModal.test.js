@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, cleanup } from 'testUtils';
 import AccountTeamEmailAlertModal from './AccountTeamEmailAlertModal';
 import '@testing-library/jest-dom/extend-expect';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { isArray } from 'lodash';
 import moment from 'moment';

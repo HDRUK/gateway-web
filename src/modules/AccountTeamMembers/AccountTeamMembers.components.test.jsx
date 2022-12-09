@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, fireEvent, screen, cleanup } from 'testUtils';
 import { teamMembersMock } from '../../../test/mocks/teamsServiceMock';
 import { HeaderTooltip, NameCell, TeamAdminCell, DataAccessRequestCell, MetadataCell } from './AccountTeamMembers.components';

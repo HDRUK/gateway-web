@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, cleanup } from 'testUtils';
 import PermissionDescriptions from './PermissionDescriptions';
 import '@testing-library/jest-dom/extend-expect';

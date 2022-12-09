@@ -1,4 +1,3 @@
-import React from 'react';
 import { EnquiryMessage } from './EnquiryMessage';
 import { activeTopic } from '../../../../../test/mocks/dataMock';
 
@@ -15,7 +14,7 @@ beforeEach(() => {
 
 describe('<EnquiryMessage />', () => {
     it('renders with the first message form', () => {
-        expect(wrapper.find('[data-test-id="formIntroText"]').exists()).toEqual(true);
-        expect(wrapper.find('[data-test-id="formik"]').exists()).toEqual(true);
+        expect(wrapper.find('[data-testid="formIntroText"]').exists()).toEqual(true);
+        expect(wrapper.find('[data-testid="formik"]').exists()).toEqual(true);
     });
 });

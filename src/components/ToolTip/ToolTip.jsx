@@ -1,11 +1,13 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
 import PropTypes from 'prop-types';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+
+import { useCommonStyles } from 'hooks';
+
 import * as styles from './ToolTip.styles';
-import useCommonStyles from '../../hooks/useCommonStyles';
 
 function ToolTip({ width, maxWidth, minWidth, text, placement, ...outerProps }) {
     const commonStyles = useCommonStyles({ width, minWidth, maxWidth });

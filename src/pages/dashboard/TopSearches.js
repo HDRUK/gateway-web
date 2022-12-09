@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import './Dashboard.scss';
 
-class TopSearches extends React.Component {
+class TopSearches extends Component {
     state = {
         data: '',
     };
@@ -17,7 +17,7 @@ class TopSearches extends React.Component {
         const { data } = this.state;
         return (
             <Fragment>
-                <Row className='entryBox' data-test-id='topSearches-search'>
+                <Row className='entryBox' data-testid='topSearches-search'>
                     <Col sm={5} lg={6} className='gray800-14' style={{ float: 'left', paddingLeft: '0px' }}>
                         <span className='truncate colOneTerm'>
                             {!data || !data._id ? (
@@ -26,8 +26,7 @@ class TopSearches extends React.Component {
                                 <a
                                     href={'/search?search=' + data._id}
                                     className='searchTermLink truncate'
-                                    data-test-id='topSearches-search-term'
-                                >
+                                    data-testid='topSearches-search-term'>
                                     {' '}
                                     {data._id}{' '}
                                 </a>
@@ -35,12 +34,12 @@ class TopSearches extends React.Component {
                         </span>
                     </Col>
                     <Col sm={2} lg={2} className='gray800-14'>
-                        <span style={{ float: 'left' }} data-test-id='topSearches-search-count'>
+                        <span style={{ float: 'left' }} data-testid='topSearches-search-count'>
                             {!data || !data.count ? 'number of searches' : data.count}
                         </span>
                     </Col>
                     <Col sm={5} lg={4} className='gray800-14'>
-                        <span style={{ paddingRight: '0px' }} data-test-id='topSearches-search-results'>
+                        <span style={{ paddingRight: '0px' }} data-testid='topSearches-search-results'>
                             {(data.datasets || 0) +
                                 ' datasets, ' +
                                 (data.tools || 0) +

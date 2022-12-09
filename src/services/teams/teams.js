@@ -1,32 +1,32 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getMembers = (_id, options) => {
-    return getRequest(`${apiURL}/teams/${_id}/members`, options);
+    return getRequest(`${apiUrlV1}/teams/${_id}/members`, options);
 };
 
 const getNotifications = (_id, options) => {
-    return getRequest(`${apiURL}/teams/${_id}/notifications`, options);
+    return getRequest(`${apiUrlV1}/teams/${_id}/notifications`, options);
 };
 
 const addMembers = (_id, data, options) => {
-    return postRequest(`${apiURL}/teams/${_id}/members`, data, options);
+    return postRequest(`${apiUrlV1}/teams/${_id}/members`, data, options);
 };
 
 const postAdd = (data, options) => {
-    return postRequest(`${apiURL}/teams/add`, data, options);
+    return postRequest(`${apiUrlV1}/teams/add`, data, options);
 };
 
 const putTeam = (_id, data, options) => {
-    return putRequest(`${apiURL}/teams/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/teams/${_id}`, data, options);
 };
 
 const putNotificationMessage = (_id, data, options) => {
-    return putRequest(`${apiURL}/teams/${_id}/notification-messages`, data, options);
+    return putRequest(`${apiUrlV1}/teams/${_id}/notification-messages`, data, options);
 };
 
 const putNotifications = (_id, data, options) => {
-    return putRequest(`${apiURL}/teams/${_id}/notifications`, data, options);
+    return putRequest(`${apiUrlV1}/teams/${_id}/notifications`, data, options);
 };
 
 const useGetMembers = (requestOptions, mutateOptions) => {
@@ -79,7 +79,7 @@ const usePutNotifications = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
+export {
     getMembers,
     getNotifications,
     addMembers,

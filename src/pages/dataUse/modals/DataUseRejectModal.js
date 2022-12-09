@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
 import TextareaAutosize from 'react-textarea-autosize';
+
+import { darHelperUtils } from 'utils';
+
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
-import DarHelperUtil from '../../../utils/DarHelper.util';
+
 import './DataUseModals.scss';
 
 const DataUseRejectModal = ({ isVisible, toggleModal, onConfirm }) => {
@@ -70,8 +73,8 @@ const DataUseRejectModal = ({ isVisible, toggleModal, onConfirm }) => {
                             className='white-14-semibold'
                             onClick={() =>
                                 onConfirm(
-                                    DarHelperUtil.dataUseRegisterStatus.INREVIEW,
-                                    DarHelperUtil.dataUseRegisterStatus.REJECTED,
+                                    darHelperUtils.dataUseRegisterStatus.INREVIEW,
+                                    darHelperUtils.dataUseRegisterStatus.REJECTED,
                                     rejectionReason
                                 )
                             }>

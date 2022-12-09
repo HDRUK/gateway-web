@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen, cleanup, waitFor } from 'testUtils';
+import { testUtils } from '../../../test';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamManagement from './AccountTeamManagement';
 import { userState } from './mockData';
@@ -10,7 +9,7 @@ const onTeamManagementTabChangeMock = jest.fn();
 const onClearInnerTabMock = jest.fn();
 
 describe('should not render tabs', () => {
-    render(
+    testUtils.render(
         <AccountTeamManagement
             userState={userState}
             team='5fc12be363eaab9e68dae76e'
@@ -22,14 +21,14 @@ describe('should not render tabs', () => {
         />
     );
     it('should not render tabs', () => {
-        expect(screen.queryByTestId('members')).toBeNull();
-        expect(screen.queryByTestId('notifications')).toBeNull();
+        expect(testUtils.screen.queryByTestId('members')).toBeNull();
+        expect(testUtils.screen.queryByTestId('notifications')).toBeNull();
     });
 });
 
 describe('should render tabs', () => {
     beforeEach(() => {
-        render(
+        testUtils.render(
             <AccountTeamManagement
                 userState={userState}
                 team='6107fd7d7cceaa24a67eefe8'
@@ -43,18 +42,18 @@ describe('should render tabs', () => {
     });
 
     afterEach(() => {
-        cleanup();
+        testUtils.cleanup();
     });
 
     it('should render members tab', () => {
-        screen.getByTestId('members').click();
-        waitFor(() => {
+        testUtils.screen.getByTestId('members').click();
+        testUtils.waitFor(() => {
             expect(onTeamManagementTabChangeMock).toHaveBeenCalledWith('members');
         });
     });
     it('should render notifications tab', () => {
-        screen.getByTestId('notifications').click();
-        waitFor(() => {
+        testUtils.screen.getByTestId('notifications').click();
+        testUtils.waitFor(() => {
             expect(onTeamManagementTabChangeMock).toHaveBeenCalledWith('notifications');
         });
     });

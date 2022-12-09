@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Card, CardBody, H5 } from 'hdruk-react-core';
 

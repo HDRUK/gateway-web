@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import axios from 'axios';
 import { Col, Container } from 'react-bootstrap/';
 import Loading from '../../commonComponents/Loading';
@@ -8,7 +8,7 @@ import moment from 'moment';
 
 var baseURL = require('../../commonComponents/BaseURL').getURL();
 
-class InnovatorApplication extends React.Component {
+class InnovatorApplication extends Component {
     state = {
         data: {},
         dataset: '',

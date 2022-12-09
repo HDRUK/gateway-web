@@ -1,11 +1,13 @@
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
+
+import { contentService } from 'services';
+import { RenderMarkdown } from 'components';
+import { dataSetHelperUtils } from 'utils';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
-import contentService from '../../../services/content';
-import DataSetHelper from '../../../utils/DataSetHelper.util';
+
 import './DataSetModal.scss';
 
 const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginModal }) => {
@@ -40,7 +42,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
             // 2. close modal and do not show enquiry - false;
             closed(false);
             // 3. Show the loginPanel
-            DataSetHelper.showLoginPanel(window, _.isEmpty(title) ? screenData.subTitle : title);
+            dataSetHelperUtils.showLoginPanel(window, _.isEmpty(title) ? screenData.subTitle : title);
         } else {
             // 4. do normal operation
             closed(action);
@@ -69,7 +71,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
                         </div>
                         {!_.isEmpty(screenData.dataRequestModalContent) &&
                         typeof screenData.dataRequestModalContent.header !== 'undefined' ? (
-                            <ReactMarkdown source={screenData.dataRequestModalContent.header} />
+                            <RenderMarkdown source={screenData.dataRequestModalContent.header} />
                         ) : (
                             ''
                         )}
@@ -78,7 +80,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
 
                 <div className={is5Safes ? 'appModal-body' : 'appModal-non-5safes-body'}>
                     {!_.isEmpty(screenData.dataRequestModalContent) && typeof screenData.dataRequestModalContent.body !== 'undefined' ? (
-                        <ReactMarkdown source={screenData.dataRequestModalContent.body} />
+                        <RenderMarkdown source={screenData.dataRequestModalContent.body} />
                     ) : (
                         showNon5SafesData()
                     )}
@@ -98,7 +100,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
                                 </Button>
                             ) : null}
                             <Button
-                                data-test-id='dar-modal-make-enquiry-btn'
+                                data-testid='dar-modal-make-enquiry-btn'
                                 className='addButton'
                                 onClick={() => {
                                     isLoggedIn ? onCloseModal('ENQUIRY') : showLoginModal();

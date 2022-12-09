@@ -6,6 +6,7 @@ import AccountTeamMembers from './AccountTeamMembers';
 import AccountTeamMembersModal from './AccountTeamMembersModal';
 import AccountTeamNotificationsConfirmationModal from './AccountTeamNotificationsConfirmationModal';
 import PermissionDescriptions from './PermissionDescriptions';
+import RelatedResourcesTab from './RelatedResourcesTab';
 
 export {
     AccountTeamFieldRepeater,
@@ -16,4 +17,6 @@ export {
     AccountTeamMembersModal,
     AccountTeamNotificationsConfirmationModal,
     PermissionDescriptions,
+    RelatedResourcesTab
 };
+

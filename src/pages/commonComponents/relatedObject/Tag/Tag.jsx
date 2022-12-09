@@ -1,8 +1,6 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
+/** @jsxImportSource @emotion/react */
 import PropTypes from 'prop-types';
-import { toTitleCase } from '../../../../utils/GeneralHelper.util';
+import { toTitleCase } from '../../../../utils/General.util';
 import * as styles from '../Dataset/Dataset.styles';
 import '../../CommonComponents.scss';
 
@@ -39,8 +37,7 @@ const Tag = props => {
                 <span
                     css={styles.pointer}
                     onClick={event => updateOnFilterBadgeHandler(filter, { label: tagName, parentKey })}
-                    data-testid={`badge-${tagName}-span`}
-                >
+                    data-testid={`badge-${tagName}-span`}>
                     <div className={`badge-${tagType} ${className}`} data-testid={`badge-${tagName}`}>
                         {props.children}
                         <span className={className}>{displayTagName}</span>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from 'hdruk-react-core';
 import { useAuth } from 'context/AuthContext';
 import AddToCollection from '../addToCollection/AddToCollection';
@@ -25,7 +25,7 @@ const ResourcePageButtons = props => {
                 (props.data.creator && props.data.creator[0].id === props.userState[0].id) ||
                 isRootAdmin) ? (
                     <Button
-                        data-test-id='action-bar-edit'
+                        data-testid='action-bar-edit'
                         variant='secondary'
                         href={`/${type}/edit/${props.data.id}`}
                         className='techDetailButton mr-2'>
@@ -43,7 +43,7 @@ const ResourcePageButtons = props => {
                     <a
                         className='nested-button'
                         rel='noopener noreferrer'
-                        href={`${process.env.REACT_APP_METADATA_CATALOG}/#/catalogue/dataModel/${props.data.datasetid}`}
+                        href={`${process.env.REACT_APP_METADATA_CATALOG_URL}/#/catalogue/dataModel/${props.data.datasetid}`}
                         target='_blank'>
                         <Button mr={2} variant='secondary'>
                             Technical details

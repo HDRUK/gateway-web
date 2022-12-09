@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import moment from 'moment';
 import _ from 'lodash';
 import axios from 'axios';
+
+import { Alert } from 'components';
+import { darHelperUtils } from 'utils';
+
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
-import './DuplicateApplicationModal.scss';
 import SVGIcon from '../../../../images/SVGIcon';
-import SLA from '../../../commonComponents/sla/SLA';
-import DarHelperUtil from '../../../../utils/DarHelper.util';
-import TimeDuration from '../../../commonComponents/timeDuration/TimeDuration';
 import { baseURL } from '../../../../configs/url.config';
-import Alert from '../../../../components/Alert';
+import SLA from '../../../commonComponents/sla/SLA';
+import TimeDuration from '../../../commonComponents/timeDuration/TimeDuration';
+import './DuplicateApplicationModal.scss';
 
 const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, showDatasetModal, appToCloneId }) => {
     const [applicationsToCloneInto, setApplicationsToCloneInto] = useState([]);
@@ -100,8 +102,8 @@ const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, s
                                     <div className='status'>
                                         {renderDuration(createdAt)}
                                         <SLA
-                                            classProperty={DarHelperUtil.darStatusColours[request.applicationStatus]}
-                                            text={DarHelperUtil.darSLAText[request.applicationStatus]}
+                                            classProperty={darHelperUtils.darStatusColours[request.applicationStatus]}
+                                            text={darHelperUtils.darSLAText[request.applicationStatus]}
                                         />
                                     </div>
                                 </div>

@@ -1,6 +1,7 @@
-import { PERMISSIONS_TEAM_ROLES } from 'consts';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Switch from 'react-switch';
+
+import { PERMISSIONS_TEAM_ROLES } from 'consts';
 
 const TeamGatewayEmail = ({ id, teamId, userState = [], userHasRole, memberNotification, togglePersonalNotifications }) => {
     const [user = {}] = userState;

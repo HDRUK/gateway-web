@@ -11,7 +11,4 @@ const updateSearchString = (searchString, component) => {
     component.setState({ searchString });
 };
 
-export default {
-    doSearch,
-    updateSearchString,
-};
+export { doSearch, updateSearchString };

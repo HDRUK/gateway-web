@@ -1,11 +1,14 @@
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
-import queryString from 'query-string';
-import React, { Component, Fragment, useState } from 'react';
+import { Component, Fragment, useState } from 'react';
+import * as React from 'react';
 import { Dropdown, Nav } from 'react-bootstrap';
 import { Route, withRouter } from 'react-router-dom';
-import 'react-web-tabs/dist/react-web-tabs.css';
+
+import { generalUtils, authUtils } from 'utils';
+import { PERMISSIONS_TEAM_ROLES } from 'consts';
+
 import { DashboardProvider } from '../../context/DashboardContext';
 import { ReactComponent as CheckSVG } from '../../images/check.svg';
 import { ReactComponent as ChevronRightSvg } from '../../images/chevron-bottom.svg';
@@ -26,6 +29,7 @@ import AccountTeamManagement from './AccountTeamManagement';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 import { isRouteMatch } from '../../utils/router';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
@@ -55,8 +59,6 @@ import { tabTypes } from './Team/teamUtil';
 import TeamHelp from './TeamHelp/TeamHelp';
 import WorkflowDashboard from './Workflows/WorkflowDashboard';
 import YourAccount from './YourAccount';
-import { authUtils } from 'utils';
-import { PERMISSIONS_TEAM_ROLES } from 'consts';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -192,7 +194,7 @@ class Account extends Component {
         window.currentComponent = this;
         if (window.location.search) {
             let tab = '';
-            let values = queryString.parse(window.location.search);
+            let values = generalUtils.parseQueryString(window.location.search);
             if (values.tab !== this.state.tabId || !_.isUndefined(values.tab) || !_.isNull(values.tab)) {
                 tab = this.checkRedirect(values);
                 this.setState({
@@ -216,9 +218,9 @@ class Account extends Component {
         }
     }
 
-    async componentWillReceiveProps(nextProps) {
+    async UNSAFE_componentWillReceiveProps(nextProps) {
         if (window.location.search) {
-            let values = queryString.parse(window.location.search);
+            let values = generalUtils.parseQueryString(window.location.search);
             let team = 'user';
             if (values.tab !== this.state.tabId || !_.isUndefined(values.tab) || !_.isNull(values.tab)) {
                 if (values.tab !== 'youraccount' && this.state.accountUpdated) {

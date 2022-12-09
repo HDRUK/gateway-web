@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import SVGIcon from '../../../images/SVGIcon';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { SlideDown } from 'react-slidedown';

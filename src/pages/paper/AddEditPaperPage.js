@@ -1,4 +1,4 @@
-import React from 'react';
+import { createRef, Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import * as Sentry from '@sentry/react';
@@ -10,16 +10,16 @@ import AddEditPaperForm from './AddEditPaperForm';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import { isEditMode } from '../../utils/GeneralHelper.util';
+import { isEditMode } from '../../utils/General.util';
 import './Paper.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class AddEditPaperPage extends React.Component {
+class AddEditPaperPage extends Component {
     constructor(props) {
         super(props);
         this.state.userState = props.userState;
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
     }
 
     // initialize our state

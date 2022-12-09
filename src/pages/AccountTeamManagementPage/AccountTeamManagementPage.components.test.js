@@ -1,4 +1,3 @@
-import React from 'react';
 import { screen, render, cleanup, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import {
@@ -11,7 +10,7 @@ import {
     GeneratedAlerts,
     LoaderRow,
 } from './AccountTeamManagementPage.components';
-import { mockUserStateManager, mockUserStateAdmin } from 'mocks';
+import { mocks } from '../../../test';
 import * as Auth from '../../context/AuthContext';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
@@ -19,7 +18,7 @@ const authSpy = jest.spyOn(Auth, 'useAuth');
 describe('AccountTeamManagement components', () => {
     beforeAll(() => {
         authSpy.mockReturnValue({
-            userState: mockUserStateManager,
+            userState: mocks.userState.mockUserStateManager,
         });
     });
     afterEach(() => {
@@ -36,7 +35,7 @@ describe('AccountTeamManagement components', () => {
                     togglePersonalNotifications={togglePersonalNotifications}
                     memberNotifications={[]}
                     teamId={teamId}
-                    userState={mockUserStateManager}
+                    userState={mocks.userState.mockUserStateManager}
                 />
             );
 
@@ -48,7 +47,7 @@ describe('AccountTeamManagement components', () => {
                     togglePersonalNotifications={togglePersonalNotifications}
                     memberNotifications={memberNotifications}
                     teamId={teamId}
-                    userState={mockUserStateManager}
+                    userState={mocks.userState.mockUserStateManager}
                 />
             );
 
@@ -78,7 +77,7 @@ describe('AccountTeamManagement components', () => {
                     handleFieldChange={handleFieldChange}
                     handleRemoveClick={handleRemoveClick}
                     handleAddClick={handleAddClick}
-                    userState={mockUserStateManager}
+                    userState={mocks.userState.mockUserStateManager}
                 />
             );
             expect(screen.queryByTestId('TeamNotifications')).not.toBeInTheDocument();
@@ -92,7 +91,7 @@ describe('AccountTeamManagement components', () => {
                     handleFieldChange={handleFieldChange}
                     handleRemoveClick={handleRemoveClick}
                     handleAddClick={handleAddClick}
-                    userState={mockUserStateManager}
+                    userState={mocks.userState.mockUserStateManager}
                 />
             );
             expect(screen.getByTestId('TeamNotifications')).toBeInTheDocument();
@@ -114,7 +113,7 @@ describe('AccountTeamManagement components', () => {
                 <NotificationTab
                     memberNotifications={memberNotifications}
                     teamId={teamId}
-                    userState={mockUserStateManager}
+                    userState={mocks.userState.mockUserStateManager}
                     togglePersonalNotifications={jest.fn()}
                     teamGatewayNotifications={teamGatewayNotifications}
                     toggleTeamNotifications={jest.fn()}
@@ -155,14 +154,14 @@ describe('AccountTeamManagement components', () => {
         });
         it('should not render the tabs if admin', async () => {
             authSpy.mockReturnValue({
-                userState: mockUserStateAdmin,
+                userState: mocks.userState.mockUserStateAdmin,
             });
             render(
                 <TabsNav
                     teamId='5f7b1a2bce9f65e2ed83e7da'
                     onTabChange={onTabChange}
                     activeTabKey={activeTabKey}
-                    userState={mockUserStateAdmin}
+                    userState={mocks.userState.mockUserStateAdmin}
                 />
             );
             await waitFor(() => {

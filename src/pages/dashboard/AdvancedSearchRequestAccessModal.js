@@ -1,7 +1,9 @@
-import { Button } from 'hdruk-react-core';
-import React from 'react';
+import { Button, H1, P } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
+
+import { Link } from 'components';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
+
 import './AdvancedSearchRequestAccessModal.scss';
 
 const urlEnv = require('../commonComponents/BaseURL').getURLEnv();
@@ -29,15 +31,27 @@ const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
                 <div className='advancedSearchRequestAccessModal-header'>
                     <div className='advancedSearchRequestAccessModal-header--wrap'>
                         <div className='advancedSearchRequestAccessModal-head'>
-                            <h1 className='black-20-semibold'>How to access the advanced search tool</h1>
+                            <H1 className='black-20-semibold'>Access to Cohort Discovery</H1>
                             <CloseButtonSvg className='advancedSearchRequestAccessModal-head--close' onClick={() => close()} />
                         </div>
-                        <p>
-                            In order to protect patient privacy, we need to verify your identity. To gain access to the advanced search
-                            tool, please raise a support ticket. Please make sure you have filled out enough information on your profile
-                            otherwise you may be asked to provide more details before being approved. You will receive an email to confirm
-                            the approval of your request.
-                        </p>
+                        <P mb={2}>
+                            In line with the{' '}
+                            <Link href={process.env.REACT_APP_FIVE_SAFES_URL} isExternal>
+                                Five Safes Framework
+                            </Link>
+                            , users requesting access to Cohort Discovery must demonstrate their Safe People status either as a researcher,
+                            NHS analyst or equivalent. This will be assessed based on your Gateway registered user profile, including
+                            institutional email address, role description and ORCID entries.
+                        </P>
+                        <P mb={2}>
+                            If your Safe People status is indeterminate, we will contact you for further information and reserve the right
+                            not to provide access.
+                        </P>
+                        <P>
+                            To satisfy a proportionate assessment of 'Safe Project', you will also need to provide information on why you
+                            are requesting access, which will be reviewed to ensure there is potential for public benefit. Access, if
+                            granted, will be for a period of 6-months after which you will need to renew.
+                        </P>
                     </div>
                 </div>
 
@@ -46,7 +60,7 @@ const AdvancedSearchRequestAccessModal = ({ open, close, userId }) => {
                         <Button variant='secondary' onClick={() => close()}>
                             No, nevermind
                         </Button>
-                        <Button data-test-id='request-access' onClick={() => redirectToJira()}>
+                        <Button data-testid='request-access' onClick={() => redirectToJira()}>
                             Request access
                         </Button>
                     </div>

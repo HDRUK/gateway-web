@@ -15,7 +15,11 @@
     "rules": {
         "indent": ["error", 4],
         "prettier/prettier": ["error", { "endOfLine": "auto" }],
+        "react/jsx-uses-react": "off",
+        "import/no-cycle": "off",
+        "react/react-in-jsx-scope": "off",
         "react/jsx-props-no-spreading": "off",
+        "react/no-unknown-property": ["error", { "ignore": ["css"] }],
         "react/jsx-filename-extension": [
             1,
             {
@@ -24,14 +28,5 @@
         ],
         "arrow-body-style": "off"
     },
-    "settings": {
-        "import/resolver": {
-            "node": {
-                "extensions": [".js", ".jsx"]
-            },
-            "babel-module": {
-                "root": ["<rootDir>/node_modules", "<rootDir>/src"]
-            }
-        }
-    }
+    "settings": { "import/resolver": { "node": { "moduleDirectory": ["node_modules", "src/", "test/"] } } }
 }

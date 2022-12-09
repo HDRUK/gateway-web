@@ -1,8 +1,8 @@
-import React from 'react';
+import { Component } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-class NoResults extends React.Component {
+class NoResults extends Component {
     state = {
         dataUtilityWizard: false,
     };

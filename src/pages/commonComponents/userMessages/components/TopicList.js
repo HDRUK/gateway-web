@@ -1,4 +1,3 @@
-import React from 'react';
 import TopicItem from './TopicItem';
 import '../UserMessages.scss';
 

@@ -1,10 +1,7 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import ShowMore from '../../ShowMore';
-import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
+import { stripMarkdown } from '../../../../utils/General.util';
 import SVGIcon from '../../../../images/SVGIcon';
 import RemoveButton from '../RemoveButton/RemoveButton';
 import Title from '../Title/Title';

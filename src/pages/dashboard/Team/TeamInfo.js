@@ -1,9 +1,11 @@
-import React from 'react';
 import { Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
-import Icon from '../../../components/Icon';
+
+import { Icon } from 'components';
+
 import { ReactComponent as IconTick } from '../../../images/tick.svg';
 import { ReactComponent as IconRejected } from '../../../images/Application_rejected.svg';
+
 
 const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }) => {
     const questionBankEnabled = publisher?.publisherDetails?.questionBank?.enabled;

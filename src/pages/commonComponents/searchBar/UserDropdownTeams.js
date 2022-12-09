@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import { forwardRef, Children, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useAuth } from 'context/AuthContext';
 import { PERMISSIONS_TEAM_ROLES } from 'consts';
@@ -7,7 +7,7 @@ import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
 import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
 
-const CustomToggleInner = React.forwardRef(({ children, onClick }, ref) => (
+const CustomToggleInner = forwardRef(({ children, onClick }, ref) => (
     <a
         href='javascript:void(0)'
         ref={ref}
@@ -20,17 +20,18 @@ const CustomToggleInner = React.forwardRef(({ children, onClick }, ref) => (
     </a>
 ));
 
-const CustomSubMenu = React.forwardRef(({ children, style, className, show, 'aria-labelledby': labeledBy }, ref) => {
+const CustomSubMenu = forwardRef(({ children, style, className, show, 'aria-labelledby': labeledBy }, ref) => {
     const [value] = useState('');
     if (show) {
         return (
-            <Fragment ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
+            <div ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
                 <ul className='list-unstyled'>
-                    {React.Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
+                    {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
                 </ul>
-            </Fragment>
+            </div>
         );
     }
+    return null;
 });
 
 const UserDropdownTeams = ({ isMobile = false }) => {
@@ -68,7 +69,7 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                                 <Dropdown.Item
                                     href='/account?tab=teams&team=admin'
                                     className='black-14 user-dropdown-item'
-                                    data-test-id='optTeams'>
+                                    data-testid='optTeams'>
                                     Teams
                                 </Dropdown.Item>
                             </>

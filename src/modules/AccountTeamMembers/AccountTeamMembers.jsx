@@ -1,18 +1,20 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { Card, Button, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
+
 import { Table, LayoutContent } from 'components';
 import { PermissionDescriptions } from 'modules';
+import { PERMISSIONS_TEAM_MEMBER_ROLES, PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN } from 'consts';
+import { authUtils } from 'utils';
+import { teamService } from 'services';
+
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
 import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { useAuth } from '../../context/AuthContext';
-import teamsService from '../../services/teams';
 import { ActionCell, DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell, HeaderTooltip } from './AccountTeamMembers.components';
-import { PERMISSIONS_TEAM_MEMBER_ROLES, PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN } from 'consts';
-import { authUtils } from 'utils';
 
 const AccountTeamMembers = ({ teamId }) => {
     const { userState } = useAuth();
@@ -22,7 +24,7 @@ const AccountTeamMembers = ({ teamId }) => {
     const { t } = useTranslation();
     const [isTeamManager, setIsTeamManager] = useState(false);
 
-    const getMembersRequest = teamsService.useGetMembers(null, {
+    const getMembersRequest = teamService.useGetMembers(null, {
         onError: ({ title, message }) => {
             NotificationManager.error(message, title, 10000);
         },

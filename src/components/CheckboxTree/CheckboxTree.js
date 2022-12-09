@@ -1,16 +1,18 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useMemo } from 'react';
 import ReactCheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
+
+import { useCommonStyles } from 'hooks';
 import { addCommonPropTypes } from '../../configs/propTypes';
-import useCommonStyles from '../../hooks/useCommonStyles';
 import Icon from '../Icon';
 import { ReactComponent as ChevronRight } from '../../images/chevron-right.svg';
 import { ReactComponent as ChevronBottom } from '../../images/chevron-bottom.svg';
+
 import * as styles from './CheckboxTree.styles';
 
 const CheckboxTree = ({
@@ -45,7 +47,7 @@ const CheckboxTree = ({
         return node;
     };
 
-    const formattedNodes = React.useMemo(() => {
+    const formattedNodes = useMemo(() => {
         return nodes.map(node => {
             return formatNode(node);
         });
@@ -59,8 +61,7 @@ const CheckboxTree = ({
                 hasParentIcon: !!icons.parentClose || !!icons.parentOpen,
                 checkboxVariant,
             })}
-            className={cx(className, commonStyles, 'ui-CheckboxTree')}
-        >
+            className={cx(className, commonStyles, 'ui-CheckboxTree')}>
             <ReactCheckboxTree nodes={formattedNodes} icons={icons} {...outerProps} checkModel='all' />
         </div>
     );

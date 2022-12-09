@@ -1,8 +1,9 @@
-import React, { Fragment } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
+
+import { darHelperUtils } from 'utils';
+
 import SLA from '../../../commonComponents/sla/SLA';
-import DarHelperUtil from '../../../../utils/DarHelper.util';
 import WorkflowDecision from '../../../commonComponents/workflowDecision/WorkflowDecision';
 
 const AccessActivity = ({
@@ -34,13 +35,13 @@ const AccessActivity = ({
         if (!_.isEmpty(amendmentStatus)) {
             reviewDecision = (
                 <WorkflowDecision
-                    text={DarHelperUtil.amendmentStatuses[amendmentStatus].text}
-                    icon={DarHelperUtil.amendmentStatuses[amendmentStatus].icon}
-                    iconColor={DarHelperUtil.amendmentStatuses[amendmentStatus].iconColor}
+                    text={darHelperUtils.amendmentStatuses[amendmentStatus].text}
+                    icon={darHelperUtils.amendmentStatuses[amendmentStatus].icon}
+                    iconColor={darHelperUtils.amendmentStatuses[amendmentStatus].iconColor}
                 />
             );
         } else {
-            if (workflowCompleted && applicationStatus === DarHelperUtil.darStatus.inReview) {
+            if (workflowCompleted && applicationStatus === darHelperUtils.darStatus.inReview) {
                 reviewDecision = <WorkflowDecision text={reviewStatus} icon='flag' />;
             } else if (deadlinePassed) {
                 reviewDecision = <div className='box-deadline'>{reviewStatus}</div>;
@@ -65,10 +66,10 @@ const AccessActivity = ({
     };
 
     const buildAccessRequest = () => {
-        const hasWorkflow = !_.isEmpty(workflowName) ? true : false;
-        const isTeam = team !== 'user' ? true : false;
+        const hasWorkflow = !_.isEmpty(workflowName);
+        const isTeam = team !== 'user';
         return (
-            <Fragment>
+            <>
                 <div className='box gray800-14'>Datasets</div>
                 <div className='box'>
                     {datasets.map((d, i) => {
@@ -80,29 +81,28 @@ const AccessActivity = ({
                 <div className='box'>Applicants</div>
                 <div className='box'>{!_.isEmpty(applicants) ? applicants : '-'}</div>
                 {hasWorkflow === true ? (
-                    <Fragment>
+                    <>
                         <div className='box'>Workflow</div>
                         <div
                             id={`workflow_${workflow._id}`}
                             className='box box-link'
                             onClick={e => {
                                 navigateToLocation(e);
-                            }}
-                        >
+                            }}>
                             {!_.isEmpty(workflowName) ? workflowName : '-'}
                             {!_.isEmpty(stepName) ? ` | ${stepName}` : ''}
                             {workflowCompleted ? ' complete' : ''}
                         </div>
-                    </Fragment>
+                    </>
                 ) : (
                     ''
                 )}
                 {isTeam === true &&
-                (applicationStatus === DarHelperUtil.darStatus.submitted || applicationStatus === DarHelperUtil.darStatus.inReview) ? (
-                    <Fragment>
+                (applicationStatus === darHelperUtils.darStatus.submitted || applicationStatus === darHelperUtils.darStatus.inReview) ? (
+                    <>
                         <div className='box'>Action required by</div>
-                        <div className='box'>{!_.isEmpty(remainingActioners) ? <Fragment>{remainingActioners}</Fragment> : '-'}</div>
-                    </Fragment>
+                        <div className='box'>{!_.isEmpty(remainingActioners) ? <>{remainingActioners}</> : '-'}</div>
+                    </>
                 ) : (
                     ''
                 )}
@@ -113,9 +113,9 @@ const AccessActivity = ({
                     {moment(updatedAt).format('D MMMM YYYY HH:mm')}
                     {isTeam === true ? (
                         <div className='box-meta'>
-                            {applicationStatus === DarHelperUtil.darStatus.submitted && isStartReviewEnabled
+                            {applicationStatus === darHelperUtils.darStatus.submitted && isStartReviewEnabled
                                 ? (Object.values(latestVersion.versionTree) || [])
-                                      .filter(version => version.applicationStatus === DarHelperUtil.darStatus.submitted)
+                                      .filter(version => version.applicationStatus === darHelperUtils.darStatus.submitted)
                                       .map(submittedVersion => {
                                           return (
                                               team !== 'user' && (
@@ -124,8 +124,7 @@ const AccessActivity = ({
                                                       className='button-primary'
                                                       onClick={e => {
                                                           navigateToLocation(e, submittedVersion.applicationId);
-                                                      }}
-                                                  >
+                                                      }}>
                                                       Start review: {submittedVersion.displayTitle}
                                                   </button>
                                               )
@@ -141,10 +140,10 @@ const AccessActivity = ({
                         ''
                     )}
                 </div>
-            </Fragment>
+            </>
         );
     };
-    return <Fragment>{buildAccessRequest()}</Fragment>;
+    return <>{buildAccessRequest()}</>;
 };
 
 export default AccessActivity;

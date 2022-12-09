@@ -1,5 +1,5 @@
 import { render, screen, within } from 'testUtils';
-import React from 'react';
+
 import Table from './Table';
 
 const props = {

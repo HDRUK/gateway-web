@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, cleanup } from 'testUtils';
 import { teamNotificationsMock } from '../../../test/mocks/teamsServiceMock';
 import AccountTeamNotificationsConfirmationModal from './AccountTeamNotificationsConfirmationModal';

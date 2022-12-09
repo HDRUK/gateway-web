@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { Row, Col, Form, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import axios from 'axios';
@@ -6,11 +6,12 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import NotificationManager from 'react-notifications';
 import { Box } from 'hdruk-react-core';
-import Loading from '../../commonComponents/Loading';
+
+import { LayoutContent, Switch } from 'components';
+import { publishersService } from 'services';
+
 import '../Dashboard.scss';
-import { LayoutContent } from '../../../components/Layout';
-import Switch from '../../../components/Switch';
-import publishersService from '../../../services/publishers';
+import Loading from '../../commonComponents/Loading';
 
 const baseURL = require('../../commonComponents/BaseURL').getURL();
 
@@ -117,11 +118,11 @@ const AddEditTeamsPage = ({
         },
     });
 
-    const handleEnableQuestionBank = React.useCallback(({ target: { checked } }) => {
+    const handleEnableQuestionBank = useCallback(({ target: { checked } }) => {
         setQuestionBank(checked);
     }, []);
 
-    const handleEnableDataUseWidget = React.useCallback(({ target: { checked } }) => {
+    const handleEnableDataUseWidget = useCallback(({ target: { checked } }) => {
         setDataUseWidget(checked);
     }, []);
 

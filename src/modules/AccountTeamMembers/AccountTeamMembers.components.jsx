@@ -1,4 +1,3 @@
-import React from 'react';
 import { Typography, IconButton, Box } from 'hdruk-react-core';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';

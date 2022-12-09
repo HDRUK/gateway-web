@@ -1,14 +1,15 @@
-import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { Accordion, Card, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
 import { Button } from 'hdruk-react-core';
-import DarHelper from '../../../../utils/DarHelper.util';
+
+import { Alert } from 'components';
+
+import { darHelperUtils } from 'utils';
 import SVGIcon from '../../../../images/SVGIcon';
 import { ReactComponent as InfoSVG } from '../../../../images/info.svg';
 import TypeaheadDataset from '../TypeaheadDataset/TypeaheadDataset';
-import Alert from '../../../../components/Alert';
 
 const AboutApplication = props => {
     const {
@@ -57,7 +58,7 @@ const AboutApplication = props => {
                 <Card className={activeAccordionCard === 0 ? 'activeCard' : ''}>
                     <Accordion.Toggle
                         as={Card.Header}
-                        className={DarHelper.calcAccordionClasses(activeAccordionCard === 0, allowedNavigation)}
+                        className={darHelperUtils.calcAccordionClasses(activeAccordionCard === 0, allowedNavigation)}
                         eventKey='0'
                         onClick={e => toggleCard(e, 0)}>
                         {completedDatasetSelection ? (
@@ -121,7 +122,7 @@ const AboutApplication = props => {
                 <Card className={activeAccordionCard === 1 ? 'activeCard' : ''}>
                     <Accordion.Toggle
                         as={Card.Header}
-                        className={DarHelper.calcAccordionClasses(activeAccordionCard === 1, allowedNavigation)}
+                        className={darHelperUtils.calcAccordionClasses(activeAccordionCard === 1, allowedNavigation)}
                         eventKey='1'
                         onClick={e => toggleCard(e, 1)}>
                         {projectNameValid && ncsValid && !_.isEmpty(projectName) ? (
@@ -231,7 +232,7 @@ const AboutApplication = props => {
                 <Card className={activeAccordionCard === 2 ? 'activeCard' : ''}>
                     <Accordion.Toggle
                         as={Card.Header}
-                        className={DarHelper.calcAccordionClasses(activeAccordionCard === 2, allowedNavigation)}
+                        className={darHelperUtils.calcAccordionClasses(activeAccordionCard === 2, allowedNavigation)}
                         eventKey='2'
                         onClick={e => toggleCard(e, 2)}>
                         {completedInviteCollaborators ? (
@@ -275,7 +276,7 @@ const AboutApplication = props => {
                 <Card className={activeAccordionCard === 3 ? 'activeCard' : ''}>
                     <Accordion.Toggle
                         as={Card.Header}
-                        className={DarHelper.calcAccordionClasses(activeAccordionCard === 3, allowedNavigation)}
+                        className={darHelperUtils.calcAccordionClasses(activeAccordionCard === 3, allowedNavigation)}
                         eventKey='3'
                         onClick={e => toggleCard(e, 3)}>
                         {completedReadAdvice ? (
@@ -326,7 +327,7 @@ const AboutApplication = props => {
                 <Card className={activeAccordionCard === 4 ? 'activeCard' : ''}>
                     <Accordion.Toggle
                         as={Card.Header}
-                        className={DarHelper.calcAccordionClasses(activeAccordionCard === 4, allowedNavigation)}
+                        className={darHelperUtils.calcAccordionClasses(activeAccordionCard === 4, allowedNavigation)}
                         eventKey='4'
                         onClick={e => toggleCard(e, 4)}>
                         {completedCommunicateAdvice ? (
@@ -369,7 +370,7 @@ const AboutApplication = props => {
                 <Card className={activeAccordionCard === 5 ? 'activeCard' : ''}>
                     <Accordion.Toggle
                         as={Card.Header}
-                        className={DarHelper.calcAccordionClasses(activeAccordionCard === 5, allowedNavigation)}
+                        className={darHelperUtils.calcAccordionClasses(activeAccordionCard === 5, allowedNavigation)}
                         eventKey='5'
                         onClick={e => toggleCard(e, 5)}>
                         {completedApprovalsAdvice ? (
@@ -458,7 +459,7 @@ const AboutApplication = props => {
                 <Card className={activeAccordionCard === 6 ? 'activeCard' : ''}>
                     <Accordion.Toggle
                         as={Card.Header}
-                        className={DarHelper.calcAccordionClasses(activeAccordionCard === 6, allowedNavigation)}
+                        className={darHelperUtils.calcAccordionClasses(activeAccordionCard === 6, allowedNavigation)}
                         eventKey='6'
                         onClick={e => toggleCard(e, 6)}>
                         {completedSubmitAdvice ? (

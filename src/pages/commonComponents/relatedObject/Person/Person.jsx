@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -29,8 +26,7 @@ const Person = ({ data, activeLink, showRelationshipQuestion, removeButton, onCl
                     activeLink={activeLink}
                     onClickHandler={() => {
                         onClick();
-                    }}
-                >
+                    }}>
                     <br />
                     <span className='gray800-14' data-testid='person-bio'>
                         {' '}

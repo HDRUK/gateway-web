@@ -1,4 +1,4 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import {
     deleteRequest,
     getRequest,
@@ -10,35 +10,35 @@ import {
 } from '../../utils/requests';
 
 const getMessages = options => {
-    return getRequest(`${apiURL}/messages`, options);
+    return getRequest(`${apiUrlV1}/messages`, options);
 };
 
 const getMessage = (_id, options) => {
-    return getRequest(`${apiURL}/messages/${_id}`, options);
+    return getRequest(`${apiUrlV1}/messages/${_id}`, options);
 };
 
 const getUnreadCount = options => {
-    return getRequest(`${apiURL}/messages/unread/count`, options);
+    return getRequest(`${apiUrlV1}/messages/unread/count`, options);
 };
 
 const postMessage = (_id, data, options) => {
-    return postRequest(`${apiURL}/messages/${_id}`, data, options);
+    return postRequest(`${apiUrlV1}/messages/${_id}`, data, options);
 };
 
 const postMarkAsRead = (data, options) => {
-    return postRequest(`${apiURL}/messages/markasread`, data, options);
+    return postRequest(`${apiUrlV1}/messages/markasread`, data, options);
 };
 
 const putMessage = (_id, data, options) => {
-    return putRequest(`${apiURL}/messages/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/messages/${_id}`, data, options);
 };
 
 const patchMessage = (_id, data, options) => {
-    return patchRequest(`${apiURL}/messages/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/messages/${_id}`, data, options);
 };
 
 const deleteMessage = (_id, options) => {
-    return deleteRequest(`${apiURL}/messages/${_id}`, options);
+    return deleteRequest(`${apiUrlV1}/messages/${_id}`, options);
 };
 
 const useGetMessages = (requestOptions, queryOptions) => {
@@ -101,7 +101,7 @@ const useDeleteMessage = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getMessages,
     getMessage,
     getUnreadCount,

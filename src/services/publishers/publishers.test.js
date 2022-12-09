@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
-import service from './publishers';
+import * as service from './publishers';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the person service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/publishers/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/publishers/1234`, {
                 option1: true,
             });
         });
@@ -47,7 +47,7 @@ describe('Given the person service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/publishers/dataRequestModalContent/1234`,
+                `${apiUrlV1}/publishers/dataRequestModalContent/1234`,
                 { status: 'archive ' },
                 {
                     option1: true,

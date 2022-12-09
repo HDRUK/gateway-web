@@ -1,4 +1,4 @@
-const showLoginPanel = (window, title, contactPoint) => {
+const showLoginPanel = (window, title) => {
     document.getElementById('myModal').style.display = 'block';
     document.getElementById('loginWayFinder').style.display = 'none';
     document.getElementById('loginButtons').style.display = 'block';
@@ -33,11 +33,4 @@ const isArchived = dataset => {
     return dataset.activeflag === 'archive';
 };
 
-export default {
-    showLoginPanel,
-    isNotActive,
-    isInReview,
-    isRejected,
-    isArchived,
-    isDraft,
-};
+export { showLoginPanel, isNotActive, isInReview, isRejected, isArchived, isDraft };

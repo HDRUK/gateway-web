@@ -1,7 +1,6 @@
-import React from 'react';
 import { render } from 'testUtils';
 import AccountTeamFieldRepeater from './AccountTeamFieldRepeater';
-import { mockUserStateManager } from 'mocks';
+import { mocks } from '../../../test';
 import * as Auth from '../../context/AuthContext';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
@@ -11,7 +10,7 @@ describe('AccountTeamFieldRepeater', () => {
         authSpy.mockReturnValue({
             isTeamManager: false,
             managerInTeam: jest.fn(),
-            userState: mockUserStateManager,
+            userState: mocks.userState.mockUserStateManager,
         });
     });
 

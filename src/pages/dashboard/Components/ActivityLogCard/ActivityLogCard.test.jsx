@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, waitFor } from '@testing-library/react';
-import React from 'react';
 import DatasetOnboardingHelper from '../../../../utils/DatasetOnboardingHelper.util';
-import { dateFormats } from '../../../../utils/GeneralHelper.util';
+import { dateFormats } from '../../../../utils/General.util';
 import ActivityLogCard from './ActivityLogCard';
 import mockData from './mockData';
 import { server } from '../../../../services/mockServer';

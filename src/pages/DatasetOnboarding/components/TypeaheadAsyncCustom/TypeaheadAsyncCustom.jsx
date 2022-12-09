@@ -1,11 +1,12 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
-import Icon from '../../../../components/Icon';
-import Typeahead from '../../../../components/Typeahead/Typeahead';
-import serviceLocations from '../../../../services/locations/locations';
-import DatasetOnboardingHelperUtil from '../../../../utils/DatasetOnboardingHelper.util';
+
+import { Icon, Typeahead } from 'components';
+import { locationService } from 'services';
+import { datasetOnboardingHelperUtils } from 'utils';
+
 import { ReactComponent as SearchIcon } from '../../../../images/search.svg';
+
 import * as styles from './TypeaheadAsyncCustom.styles';
 
 function TypeaheadAsyncCustom(props) {
@@ -24,12 +25,12 @@ function TypeaheadAsyncCustom(props) {
         }
     }, [props.value]);
 
-    const getFormattedValues = values => DatasetOnboardingHelperUtil.getLocationsObj(values);
+    const getFormattedValues = values => datasetOnboardingHelperUtils.getLocationsObj(values);
 
     const handleSearch = async query => {
         if (isNaN(query)) {
             setIsLoading(true);
-            const locations = await serviceLocations.getLocations(query, { withCredentials: false });
+            const locations = await locationService.getLocations(query, { withCredentials: false });
             const { data } = locations.data;
             if (data) {
                 const options = data.map(i => ({

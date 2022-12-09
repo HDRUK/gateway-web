@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -8,6 +8,9 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import moment from 'moment';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Button } from 'hdruk-react-core';
+
+import { uploaderUtils } from 'utils';
+
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
@@ -15,7 +18,6 @@ import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorMod
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import googleAnalytics from '../../tracking';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
-import UploaderUtil from '../../utils/Uploader.util';
 import SVGIcon from '../../images/SVGIcon';
 import ToolTip from '../../images/imageURL-ToolTip.gif';
 import './Collections.scss';
@@ -34,7 +36,7 @@ const AddEditCollectionForm = props => {
 
     useEffect(() => {
         async function getUploaderData() {
-            setUploadersList(await UploaderUtil.buildListOfUploaders(props.data.authors, props.userState[0]));
+            setUploadersList(await uploaderUtils.buildListOfUploaders(props.data.authors, props.userState[0]));
         }
         getUploaderData();
     }, []);
@@ -190,7 +192,7 @@ const AddEditCollectionForm = props => {
 
     const [isShown, setIsShown] = useState(false);
 
-    const relatedResourcesRef = React.useRef();
+    const relatedResourcesRef = useRef();
 
     return (
         <div>
@@ -238,7 +240,7 @@ const AddEditCollectionForm = props => {
                                 <Form.Group className='margin-bottom-24'>
                                     <span className='gray800-14'>Collection name</span>
                                     <Form.Control
-                                        data-test-id='collection-name'
+                                        data-testid='collection-name'
                                         id='name'
                                         name='name'
                                         type='text'
@@ -259,7 +261,7 @@ const AddEditCollectionForm = props => {
                                     <p className='gray700-13 margin-bottom-0'>Up to 5,000 characters</p>
                                     <TextareaAutosize
                                         as='textarea'
-                                        data-test-id='collection-description'
+                                        data-testid='collection-description'
                                         id='description'
                                         name='description'
                                         type='text'
@@ -305,7 +307,7 @@ const AddEditCollectionForm = props => {
 									/> */}
                                 </Form.Group>
 
-                                <Form.Group className='margin-bottom-24' data-test-id='keywords'>
+                                <Form.Group className='margin-bottom-24' data-testid='keywords'>
                                     <p className='gray800-14 margin-bottom-0 pad-bottom-4'>Keywords</p>
                                     <p className='gray700-13 margin-bottom-0'>E.g. NCS, Charity, Disease etc.</p>
                                     <Typeahead
@@ -457,7 +459,7 @@ const AddEditCollectionForm = props => {
                     </a>
 
                     <Button
-                        data-test-id='add-resource'
+                        data-testid='add-resource'
                         onClick={() => {
                             relatedResourcesRef.current.showModal();
                             googleAnalytics.recordVirtualPageView('Related resources modal');
@@ -467,11 +469,7 @@ const AddEditCollectionForm = props => {
                         + Add resource
                     </Button>
 
-                    <Button
-                        data-test-id='add-collection-publish'
-                        className='publishButton mr-2'
-                        type='submit'
-                        onClick={formik.handleSubmit}>
+                    <Button data-testid='add-collection-publish' className='publishButton mr-2' type='submit' onClick={formik.handleSubmit}>
                         Save
                     </Button>
                 </div>

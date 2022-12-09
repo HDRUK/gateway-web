@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import { Component, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-
 import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+
+import { LayoutContent } from 'components';
+import { authUtils } from 'utils';
 
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
-import { LayoutContent } from '../../components/Layout';
-import { authUtils } from 'utils';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class AccountUsers extends React.Component {
+class AccountUsers extends Component {
     constructor(props) {
         super(props);
         this.state.userState = props.userState;

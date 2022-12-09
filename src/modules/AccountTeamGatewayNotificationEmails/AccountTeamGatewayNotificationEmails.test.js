@@ -1,9 +1,8 @@
-import React from 'react';
 import { screen, render, cleanup } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamGatewayNotificationEmails from './AccountTeamGatewayNotificationEmails';
 import * as Auth from '../../context/AuthContext';
-import { mockUserStateAdmin, mockUserStateManager } from '../../../test/mocks';
+import { mocks } from '../../../test';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
 
@@ -23,7 +22,7 @@ describe('Given the AccountTeamGatewayNotificationEmails component', () => {
         describe('And the user is not a manager', () => {
             beforeAll(() => {
                 authSpy.mockReturnValue({
-                    userState: mockUserStateAdmin,
+                    userState: mocks.userState.mockUserStateAdmin,
                 });
 
                 wrapper = render(<AccountTeamGatewayNotificationEmails {...props} />);
@@ -41,7 +40,7 @@ describe('Given the AccountTeamGatewayNotificationEmails component', () => {
         describe('And the user is a manager', () => {
             beforeEach(() => {
                 authSpy.mockReturnValue({
-                    userState: mockUserStateManager,
+                    userState: mocks.userState.mockUserStateManager,
                 });
 
                 render(<AccountTeamGatewayNotificationEmails {...props} />);

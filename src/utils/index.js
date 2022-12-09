@@ -4,7 +4,7 @@ import * as darValidationUtils from './DarValidation.util';
 import * as dataSetHelperUtils from './DataSetHelper.util';
 import * as datasetOnboardingHelperUtils from './DatasetOnboardingHelper.util';
 import * as datasetOnboardingValidationUtils from './DatasetOnboardingValidation.util';
-import * as generalHelperUtils from './GeneralHelper.util';
+import * as generalUtils from './General.util';
 import * as modalHelperUtils from './ModalHelper.util';
 import * as requestsUtils from './requests';
 import * as routerUtils from './router';
@@ -19,7 +19,7 @@ export {
     dataSetHelperUtils,
     datasetOnboardingHelperUtils,
     datasetOnboardingValidationUtils,
-    generalHelperUtils,
+    generalUtils,
     modalHelperUtils,
     requestsUtils,
     routerUtils,

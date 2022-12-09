@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+
 import { AccountTeamMembers, AccountTeamEmailAlertModal, AccountTeamNotificationsConfirmationModal } from 'modules';
 import { ACCOUNT_TAB_TYPES, UI_ALERT_TYPES } from 'consts';
-import PropTypes from 'prop-types';
+import { LayoutContent } from 'components';
+import { useAuth } from 'context/AuthContext';
+import { authUtils } from 'utils';
+
 import { baseURL } from '../../configs/url.config';
-import { LayoutContent } from '../../components/Layout';
+
 import {
     hasTeamNotificationOptIns,
     validEmailList,
@@ -17,8 +22,6 @@ import {
     getTotalGatewayTeamEmails,
 } from './AccountTeamManagementPage.utils';
 import { GeneratedAlerts, LoaderRow, NotificationTab, TabsNav, TeamManagementHeader } from './AccountTeamManagementPage.components';
-import { useAuth } from 'context/AuthContext';
-import { authUtils } from 'utils';
 
 const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagementSave, onTeamManagementTabChange, onClearInnerTab }) => {
     const { userState } = useAuth();

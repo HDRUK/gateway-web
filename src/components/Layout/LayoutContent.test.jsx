@@ -1,5 +1,5 @@
 import { render, screen } from 'testUtils';
-import React from 'react';
+
 import LayoutContent from './LayoutContent';
 
 let wrapper;

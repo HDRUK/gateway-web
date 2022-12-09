@@ -1,14 +1,13 @@
-import React from 'react';
 import { SlideDown } from 'react-slidedown';
 import _ from 'lodash';
+import { darHelperUtils } from 'utils';
 import SLA from '../sla/SLA';
 import TimeDuration from '../timeDuration/TimeDuration';
 import SVGIcon from '../../../images/SVGIcon';
-import DarHelper from '../../../utils/DarHelper.util';
 import WorkflowReview from './WorkflowReview';
 
 const WorkflowReviewStep = ({ index, step, toggleStep, toggleReview }) => {
-    let { stepName, sections, reviews, closed, deadlinePassed, reviewStatus = '' } = step;
+    const { stepName, sections, reviews, closed, deadlinePassed, reviewStatus = '' } = step;
 
     const renderSections = () => {
         if (!_.isEmpty(sections)) {
@@ -18,11 +17,11 @@ const WorkflowReviewStep = ({ index, step, toggleStep, toggleReview }) => {
     };
 
     const renderSLA = step => {
-        let { active = false, completed = false } = step;
+        const { active = false, completed = false } = step;
 
-        if (active) return <SLA classProperty={DarHelper.darStatusColours.inReview} text={'Active'} />;
+        if (active) return <SLA classProperty={darHelperUtils.darStatusColours.inReview} text='Active' />;
 
-        if (completed) return <SLA classProperty={DarHelper.darStatusColours.approved} text={'Phase Completed'} />;
+        if (completed) return <SLA classProperty={darHelperUtils.darStatusColours.approved} text='Phase Completed' />;
 
         return '';
     };
@@ -47,7 +46,7 @@ const WorkflowReviewStep = ({ index, step, toggleStep, toggleReview }) => {
                     <div className={deadlinePassed ? 'app-red' : ''}>{renderReviewStatus()}</div>
                     {renderSLA(step)}
                 </div>
-                <SVGIcon width='20px' height='20px' name='chevronbottom' fill={'#475da7'} className={closed ? '' : 'flip180'} />
+                <SVGIcon width='20px' height='20px' name='chevronbottom' fill='#475da7' className={closed ? '' : 'flip180'} />
             </div>
             <SlideDown closed={step.closed}>
                 <div className='step-body'>

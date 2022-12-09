@@ -8,9 +8,12 @@ import {
     getParams,
     stripHtml,
     removeHTMLTags,
-} from './GeneralHelper.util';
+    parseQueryString,
+    stringifyQueryString,
+    trimFirstCharacter,
+} from './General.util';
 
-describe('GeneralHelper Util', () => {
+describe('General Util', () => {
     describe('removeHTMLTags', () => {
         it('should return content without html tags', () => {
             const examplePaper =
@@ -29,7 +32,7 @@ describe('GeneralHelper Util', () => {
         });
     });
 
-    describe('Test GeneralHelper getUpdatesSubmittedLog', () => {
+    describe('isEditMode', () => {
         it('should test isEditMode fn valid url', () => {
             const validSrc = '/projects/edit/456765';
             const isEdit = isEditMode(validSrc);
@@ -200,6 +203,28 @@ describe('GeneralHelper Util', () => {
         it('should return correct string without html tags ', () => {
             const text = stripHtml('<p>This is a <b>test</b> string</p>');
             expect(text).toEqual(`This is a test string`);
+        });
+    });
+
+    describe('parseQueryString function', () => {
+        it('should return parsed string', () => {
+            const response = parseQueryString('?foo=bar');
+            expect(response).toEqual({ foo: 'bar' });
+        });
+    });
+    describe('stringifyQueryString function', () => {
+        it('should return stringifyed object', () => {
+            const response = stringifyQueryString({ foo: 'bar' });
+            expect(response).toEqual('foo=bar');
+        });
+    });
+    describe('trimFirstCharacter function', () => {
+        it('should return trimmed string', () => {
+            expect(trimFirstCharacter('/route', '/')).toBe('route');
+            expect(trimFirstCharacter('route', '/')).toBe('route');
+            expect(trimFirstCharacter('route/route', '/')).toBe('route/route');
+            expect(trimFirstCharacter('/route/route/', '/')).toBe('route/route/');
+            expect(trimFirstCharacter('route/route/', 'a')).toBe('route/route/');
         });
     });
 });

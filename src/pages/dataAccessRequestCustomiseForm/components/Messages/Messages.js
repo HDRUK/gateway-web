@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { isEmpty, isBoolean } from 'lodash';
@@ -7,7 +7,7 @@ import ShareFormModal from './ShareFormModal';
 import Loading from '../../../commonComponents/Loading';
 import './Messages.scss';
 import { baseURL } from '../../../../configs/url.config';
-import DarHelper from '../../../../utils/DarHelper.util';
+import { darHelperUtils } from 'utils';
 
 const Messages = ({
     applicationId,
@@ -51,7 +51,7 @@ const Messages = ({
         if (!message) {
             return;
         }
-        if ((!isBoolean(applicationIsShared) || !applicationIsShared) && applicationStatus === DarHelper.darStatus.inProgress) {
+        if ((!isBoolean(applicationIsShared) || !applicationIsShared) && applicationStatus === darHelperUtils.darStatus.inProgress) {
             onShowShareFormModal();
         } else {
             sendMessage(message);

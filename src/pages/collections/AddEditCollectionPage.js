@@ -1,4 +1,4 @@
-import React from 'react';
+import { createRef, Component } from 'react';
 import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import { Container } from 'react-bootstrap';
@@ -8,18 +8,18 @@ import moment from 'moment';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import { isEditMode } from '../../utils/GeneralHelper.util';
+import { isEditMode } from '../../utils/General.util';
 import AddEditCollectionForm from './AddEditCollectionForm';
 import ErrorModal from '../commonComponents/errorModal';
 import './Collections.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class AddEditCollectionPage extends React.Component {
+class AddEditCollectionPage extends Component {
     constructor(props) {
         super(props);
         this.state.userState = props.userState;
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
     }
 
     // initialize our state

@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
 import axios from 'axios';
 import { PERMISSIONS_TEAM_ROLES } from 'consts';
-import Loading from '../commonComponents/Loading';
+
+import { LayoutContent, Alert } from 'components';
 import { baseURL } from '../../configs/url.config';
+
+import Loading from '../commonComponents/Loading';
 import AccountMembers from './AccountMembers';
 import TeamGatewayEmail from './Team/TeamGatewayEmail';
 import TeamGatewayNotificationEmails from './Team/TeamGatewayNotificationEmails';
@@ -14,8 +17,6 @@ import TeamEmailAlertModal from './Team/TeamEmailAlertModal';
 import TeamNotificationsConfirmationModal from './Team/TeamNotificationsConfirmationModal';
 import { tabTypes } from './Team/teamUtil';
 import './Dashboard.scss';
-import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
 
 const AccountTeamManagement = ({
     userState = [],

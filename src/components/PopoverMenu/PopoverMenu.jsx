@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'hdruk-react-core';
 import * as styles from './PopoverMenu.styles';

@@ -1,23 +1,25 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
+
+import { darHelperUtils } from 'utils';
+import { Alert, LayoutContent } from 'components';
+
 import { ReactComponent as Clock } from '../../../images/clock.svg';
+import { baseURL } from '../../../configs/url.config';
+
 import Loading from '../../commonComponents/Loading';
 import SLA from '../../commonComponents/sla/SLA';
 import TimeDuration from '../../commonComponents/timeDuration/TimeDuration';
 import WorkflowReviewStepsModal from '../../commonComponents/workflowReviewStepsModal/WorkflowReviewStepsModal';
 import CommentItem from './CommentItem/CommentItem';
 import AccessActivity from './AccessActivity/AccessActivity';
-import { baseURL } from '../../../configs/url.config';
-import DarHelperUtil from '../../../utils/DarHelper.util';
 import VersionSelector from '../../commonComponents/versionSelector/VersionSelector';
 import './DataAccessRequests.scss';
-import Alert from '../../../components/Alert';
-import { LayoutContent } from '../../../components/Layout';
 
-class DataAccessRequestsNew extends React.Component {
+class DataAccessRequestsNew extends Component {
     durationLookups = ['inProgress', 'submitted', 'inReview'];
     finalDurationLookups = ['rejected', 'approved', 'approved with conditions'];
 
@@ -66,7 +68,7 @@ class DataAccessRequestsNew extends React.Component {
         this.fetchDataAccessRequests(this.state);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.team !== this.props.team) {
             const teamIs = this.props.userState[0].teams.filter(t => {
                 return t._id === nextProps.team;
@@ -111,7 +113,7 @@ class DataAccessRequestsNew extends React.Component {
         // 3. modifies approve with conditions to approved
         let screenData = this.formatScreenData(data);
         // 4. count stats
-        let counts = DarHelperUtil.generateStatusCounts(screenData);
+        let counts = darHelperUtils.generateStatusCounts(screenData);
         // 5. set state
         this.setState({
             data: screenData,
@@ -134,12 +136,12 @@ class DataAccessRequestsNew extends React.Component {
     };
 
     onTabChange = key => {
-        let statusKey = DarHelperUtil.darStatus[key];
+        let statusKey = darHelperUtils.darStatus[key];
         let { data } = this.state;
 
         if (statusKey === 'all') {
             let screenData = [...data].reduce((arr, item) => {
-                if (item.applicationStatus !== DarHelperUtil.darStatus.inProgress || this.state.team === 'user') {
+                if (item.applicationStatus !== darHelperUtils.darStatus.inProgress || this.state.team === 'user') {
                     arr.push({
                         ...item,
                     });
@@ -194,7 +196,7 @@ class DataAccessRequestsNew extends React.Component {
                     ...arr,
                     {
                         ...item,
-                        applicationStatus: DarHelperUtil.darStatus[`${applicationStatus}`],
+                        applicationStatus: darHelperUtils.darStatus[`${applicationStatus}`],
                     },
                 ];
             }, []);
@@ -220,7 +222,7 @@ class DataAccessRequestsNew extends React.Component {
         const decisionApprovedType = decisionApproved ? 'No issues found:' : 'Issues found:';
         if (!_.isEmpty(applicationStatusDesc) && !_.isEmpty(applicationStatus)) {
             if (this.finalDurationLookups.includes(applicationStatus)) {
-                return <CommentItem text={applicationStatusDesc} title={DarHelperUtil.darCommentTitle[applicationStatus]} />;
+                return <CommentItem text={applicationStatusDesc} title={darHelperUtils.darCommentTitle[applicationStatus]} />;
             }
         } else if (decisionMade && !this.finalDurationLookups.includes(applicationStatus)) {
             return (
@@ -241,21 +243,21 @@ class DataAccessRequestsNew extends React.Component {
             createdAt,
             dateSubmitted,
             decisionDuration = '',
-            applicationType = DarHelperUtil.darApplicationTypes.initial,
+            applicationType = darHelperUtils.darApplicationTypes.initial,
         } = accessRequest;
         let diff = 0;
         let sinceText = '';
 
-        if (applicationStatus === DarHelperUtil.darStatus.inProgress) {
+        if (applicationStatus === darHelperUtils.darStatus.inProgress) {
             sinceText = 'since start';
             diff = this.calculateTimeDifference(createdAt);
-        } else if (applicationStatus === DarHelperUtil.darStatus.submitted || applicationStatus === DarHelperUtil.darStatus.inReview) {
-            sinceText = applicationType === DarHelperUtil.darApplicationTypes.initial ? 'since submission' : 'since resubmission';
+        } else if (applicationStatus === darHelperUtils.darStatus.submitted || applicationStatus === darHelperUtils.darStatus.inReview) {
+            sinceText = applicationType === darHelperUtils.darApplicationTypes.initial ? 'since submission' : 'since resubmission';
             diff = this.calculateTimeDifference(dateSubmitted);
         } else if (
-            applicationStatus === DarHelperUtil.darStatus.approved ||
-            applicationStatus === DarHelperUtil.darStatus['approved with conditions'] ||
-            applicationStatus === DarHelperUtil.darStatus.rejected
+            applicationStatus === darHelperUtils.darStatus.approved ||
+            applicationStatus === darHelperUtils.darStatus['approved with conditions'] ||
+            applicationStatus === darHelperUtils.darStatus.rejected
         ) {
             if (!_.isEmpty(decisionDuration.toString())) {
                 sinceText = 'total';
@@ -433,24 +435,24 @@ class DataAccessRequestsNew extends React.Component {
                                                 </div>
                                                 <div className='header-version-status'>
                                                     {this.renderDuration(request)}
-                                                    {applicationType === DarHelperUtil.darApplicationTypes.amendment &&
-                                                    applicationStatus !== DarHelperUtil.darStatus.approved &&
-                                                    applicationStatus !== DarHelperUtil.darStatus['approved with conditions'] &&
-                                                    applicationStatus !== DarHelperUtil.darStatus.rejected ? (
+                                                    {applicationType === darHelperUtils.darApplicationTypes.amendment &&
+                                                    applicationStatus !== darHelperUtils.darStatus.approved &&
+                                                    applicationStatus !== darHelperUtils.darStatus['approved with conditions'] &&
+                                                    applicationStatus !== darHelperUtils.darStatus.rejected ? (
                                                         <>
                                                             <SLA
-                                                                classProperty={DarHelperUtil.darStatusColours[applicationStatus]}
-                                                                text={DarHelperUtil.darAmendmentSLAText[applicationStatus]}
+                                                                classProperty={darHelperUtils.darStatusColours[applicationStatus]}
+                                                                text={darHelperUtils.darAmendmentSLAText[applicationStatus]}
                                                             />
                                                             <SLA
-                                                                classProperty={DarHelperUtil.darStatusColours['approved']}
-                                                                text={DarHelperUtil.darSLAText['approved']}
+                                                                classProperty={darHelperUtils.darStatusColours['approved']}
+                                                                text={darHelperUtils.darSLAText['approved']}
                                                             />
                                                         </>
                                                     ) : (
                                                         <SLA
-                                                            classProperty={DarHelperUtil.darStatusColours[applicationStatus]}
-                                                            text={DarHelperUtil.darSLAText[applicationStatus]}
+                                                            classProperty={darHelperUtils.darStatusColours[applicationStatus]}
+                                                            text={darHelperUtils.darSLAText[applicationStatus]}
                                                         />
                                                     )}
                                                 </div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from 'testUtils';
 import { teamNotificationsMock } from '../../../test/mocks/teamsServiceMock';
 import { EmailList } from './AccountTeamNotificationsConfirmationModal.components';

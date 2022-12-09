@@ -1,4 +1,3 @@
-import React from 'react';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { Box, Message } from 'hdruk-react-core';

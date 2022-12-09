@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import React from 'react';
 import Status from '.';
 
 const props = {
