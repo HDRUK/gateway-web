@@ -1,15 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { useCallback, useRef, useState } from 'react';
 import { filesize } from 'humanize';
-import { Box, Button, Caption, H5 } from 'hdruk-react-core';
+import { Icon, Box, Button, Caption, H5 } from 'hdruk-react-core';
 import * as styles from './FileSelector.styles';
-import Icon from '../Icon';
 
 import { ReactComponent as UploadIcon } from '../../images/icons/upload.svg';
 import { ReactComponent as RemoveIcon } from '../../images/icons/close.svg';
 import { ReactComponent as JsonIcon } from '../../images/icons/json.svg';
 
-const FileSelector = ({ children, fileTypes, maxFileSize, noFilesMessage, multiple, actions, disabled }) => {
+const FileSelector = ({ fileTypes, maxFileSize, noFilesMessage, multiple, actions, disabled }) => {
     const fileRef = useRef(null);
     const [fileList, setFileList] = useState([]);
 
