@@ -10,11 +10,11 @@ import { Trans } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import { useHistory, useLocation } from 'react-router-dom';
 import Winterfell from 'winterfell';
-import { Button, Box, P, H5, Typography, Cta } from 'hdruk-react-core';
+import { Button, Box, P, H5, Typography, Cta, Alert } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-tabs/style/react-tabs.css';
 
-import { Alert, Icon, Spinner, RenderMarkdown } from 'components';
+import { Icon, Spinner, RenderMarkdown } from 'components';
 import { dataAccessRequestService, publishersService, questionbankService } from 'services';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
@@ -642,16 +642,18 @@ export const DataAccessRequestCustomiseForm = props => {
 
                         return (
                             <Alert variant='info' mb={3} mt={1}>
-                                {on && (
-                                    <Trans i18nKey='DAR.customise.optionalQuestionsIncluded'>
-                                        ,<strong>{{ includedExcluded }}</strong>
-                                    </Trans>
-                                )}
-                                {!on && (
-                                    <Trans i18nKey='DAR.customise.optionalQuestionsExcluded'>
-                                        ,<strong>{{ includedExcluded }}</strong>
-                                    </Trans>
-                                )}
+                                <P>
+                                    {on && (
+                                        <Trans i18nKey='DAR.customise.optionalQuestionsIncluded'>
+                                            ,<strong>{{ includedExcluded }}</strong>
+                                        </Trans>
+                                    )}
+                                    {!on && (
+                                        <Trans i18nKey='DAR.customise.optionalQuestionsExcluded'>
+                                            ,<strong>{{ includedExcluded }}</strong>
+                                        </Trans>
+                                    )}
+                                </P>
                             </Alert>
                         );
                     }}
@@ -818,12 +820,12 @@ export const DataAccessRequestCustomiseForm = props => {
                         </div>
 
                         <Alert variant='info' icon={<Icon svg={<Clock />} size='lg' />} onClose={handleClose} dismissable mb={2} mr={2}>
-                            {t('DAR.customise.saveAlert')}
+                            <P>{t('DAR.customise.saveAlert')}</P>
                         </Alert>
 
                         {isUploaded && (
                             <Alert variant='success' dismissable onClose={handleSuccessClose} mb={2} mr={2}>
-                                {t('DAR.customise.uploadAlert')}
+                                <P>{t('DAR.customise.uploadAlert')}</P>
                             </Alert>
                         )}
 
