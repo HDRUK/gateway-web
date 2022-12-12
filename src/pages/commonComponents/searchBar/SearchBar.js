@@ -10,7 +10,6 @@ import { NotificationManager } from 'react-notifications';
 import { NotificationBadge } from 'components';
 
 import { cmsURL } from '../../../configs/url.config';
-import { ReactComponent as WhiteArrowDownSvg } from '../../../images/arrowDownWhite.svg';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
 import { ReactComponent as ColourLogoSvg } from '../../../images/colour.svg';
 import { ReactComponent as ColourLogoSvgMobile } from '../../../images/colourMobile.svg';
@@ -58,11 +57,11 @@ const CustomSubMenu = forwardRef(({ children, style, className, show, 'aria-labe
     const [value] = useState('');
     if (show) {
         return (
-            <div ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
+            <Fragment ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
                 <ul className='list-unstyled'>
                     {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
                 </ul>
-            </div>
+            </Fragment>
         );
     }
     return null;
