@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AlertMessage component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="emotion-0 ui-AlertMessage emotion-1"
+  >
+    <span
+      class="emotion-2"
+    >
+      <span
+        class="ui-Icon emotion-0 emotion-4"
+      >
+        <icon-mock
+          fill="inherit"
+        />
+      </span>
+    </span>
+    <div>
+      Content
+    </div>
+  </div>
+</div>
+`;

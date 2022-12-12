@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the DataUseWidget component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-LayoutContent row"
+  >
+    <div
+      class="ui-LayoutContent--left col-1"
+    />
+    <div
+      class="ui-LayoutContent--content col-10"
+    >
+      <div
+        class="accountHeader"
+      >
+        <h5
+          class="ui-LayoutBox ui-Typography css-kqk0q3-Typography css-1k6rz1e"
+        >
+          How to start using your widget
+        </h5>
+        <p
+          class="ui-LayoutBox ui-Typography css-ob39y4-Typography css-2lztm6"
+        >
+          Below is an interactive example of how your widget could look and be used. Please note that this design is compatible with mobile devices and can be resized to fit anywhere on your website. To start using this widget please accept the terms and conditions by clicking on the 'Get widget' button below.
+        </p>
+        <button
+          class="ui-LayoutBox css-kp49dp-Button css-2lztm6"
+          data-testid="getWidgetButton"
+          type="button"
+        >
+          Get widget
+        </button>
+        <p
+          class="ui-LayoutBox ui-Typography css-ob39y4-Typography css-1k6rz1e"
+        >
+          By embedding content in your website or app, you are agreeing to the Terms and Conditions
+        </p>
+        <label
+          class="ui-Checkbox css-170n6b4 css-27yzq3-Checkbox"
+          for="termCo  nditions"
+        >
+          <input
+            id="termCo  nditions"
+            type="checkbox"
+          />
+          <span
+            class="ui-Checkbox__label"
+          >
+            <span>
+              I agree to the HDR Widget Terms and Conditions of use
+            </span>
+          </span>
+        </label>
+        <h6
+          class="ui-LayoutBox ui-Typography css-18e1tcr-Typography css-1k6rz1e"
+        >
+          Data Use Widget
+        </h6>
+        <p
+          class="ui-LayoutBox ui-Typography css-1egrwj6-Typography css-1k6rz1e"
+        >
+          <i>
+            Click the button below to see your filtered data uses
+          </i>
+        </p>
+        <hdruk-data-uses
+          publisher="Test Custodian"
+        />
+        <br />
+      </div>
+    </div>
+    <div
+      class="ui-LayoutContent--right col-1"
+    />
+  </div>
+</div>
+`;

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the QualityScore component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <a
+    href="https://github.com/HDRUK/datasets/tree/master/reports#hdr-uk-data-documentation-scores"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    <div
+      class="ui-Box emotion-0"
+    >
+      <icon-mock />
+    </div>
+  </a>
+</div>
+`;

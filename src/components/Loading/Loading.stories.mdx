@@ -1,0 +1,16 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Loading from './Loading';
+
+<Meta
+    title='Core/Loading'
+    component={Loading}
+    args={{
+        text: 'loading...',
+        subText: 'still loading...',
+        timeout: 2000,
+    }}
+/>
+
+<Canvas>
+    <Story name='Basic'>{props => <Loading {...props} />}</Story>
+</Canvas>

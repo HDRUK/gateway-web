@@ -66,7 +66,7 @@ exports[`Given the Course component When it is rendered Then matches the previou
       class="pad-left-24 pad-right-24 pad-top-16 col-lg-12 col-sm-12"
     >
       <div
-        class="badge-course"
+        class="badge-course "
         data-testid="badge-Course"
       >
         <svg
@@ -83,28 +83,40 @@ exports[`Given the Course component When it is rendered Then matches the previou
             fill="#ffffff"
           />
         </svg>
-        <span>
-          Course
+        <span
+          class=""
+        >
+          <span>
+            Course
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-BSc"
       >
-        <span>
-          BSc
+        <span
+          class=""
+        >
+          <span>
+            BSc
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-test"
       >
-        <span>
-          test
+        <span
+          class=""
+        >
+          <span>
+            test
+          </span>
+          <span />
         </span>
-        <span />
       </div>
     </div>
     <div

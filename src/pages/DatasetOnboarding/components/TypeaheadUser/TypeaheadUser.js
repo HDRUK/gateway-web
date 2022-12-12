@@ -91,9 +91,9 @@ class TypaheadUser extends React.Component {
 TypaheadUser.defaultProps = {
     id: '',
     options: [],
-    onChange: () => { },
-    onFocus: () => { },
-    onBlur: () => { },
+    onChange: () => {},
+    onFocus: () => {},
+    onBlur: () => {},
 };
 
 export default TypaheadUser;

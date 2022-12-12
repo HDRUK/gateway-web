@@ -1,49 +1,50 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import '../../DatasetOnboarding.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Row } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 
 const CustodianActionButtons = ({ allowedNavigation = false, onNextClick, onActionClick, roles }) => {
-	const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-		<a
-			href='javascript:void(0)'
-			ref={ref}
-			onClick={e => {
-				e.preventDefault();
-				onClick(e);
-			}}>
-			{children}
-		</a>
-	));
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        <a
+            href='javascript:void(0)'
+            ref={ref}
+            onClick={e => {
+                e.preventDefault();
+                onClick(e);
+            }}>
+            {children}
+        </a>
+    ));
 
-	return (
-		<Fragment>
-			<Dropdown>
-				<Dropdown.Toggle as={CustomToggle}>
-					<button className='button-secondary'>Make a decision</button>
-				</Dropdown.Toggle>
-				<Dropdown.Menu className='makeADecisionDropdown'>
-					{roles.includes('admin') && (
-						<Fragment>
-							<Row className='makeADecisionHeader'>
-								<span className='gray800-14-bold'>Make a decision</span>
-							</Row>
-							<div className='gray800-14 pointer option' onClick={e => onActionClick('Approve')}>
-								Approve
-							</div>
-							<div className='gray800-14 pointer option' onClick={e => onActionClick('Reject')}>
-								Reject
-							</div>
-						</Fragment>
-					)}
-				</Dropdown.Menu>
-			</Dropdown>
+    return (
+        <>
+            <Dropdown>
+                <Dropdown.Toggle as={CustomToggle}>
+                    <Button variant='secondary'>Make a decision</Button>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className='makeADecisionDropdown'>
+                    {roles.includes('admin') && (
+                        <>
+                            <Row className='makeADecisionHeader'>
+                                <span className='gray800-14-bold'>Make a decision</span>
+                            </Row>
+                            <div className='gray800-14 pointer option' onClick={e => onActionClick('Approve')}>
+                                Approve
+                            </div>
+                            <div className='gray800-14 pointer option' onClick={e => onActionClick('Reject')}>
+                                Reject
+                            </div>
+                        </>
+                    )}
+                </Dropdown.Menu>
+            </Dropdown>
 
-			<button className={`button-primary ${allowedNavigation ? '' : 'disabled'}`} onClick={e => onNextClick()}>
-				Next
-			</button>
-		</Fragment>
-	);
+            <Button className={`${allowedNavigation ? '' : 'disabled'}`} onClick={e => onNextClick()}>
+                Next
+            </Button>
+        </>
+    );
 };
 
 export default CustodianActionButtons;

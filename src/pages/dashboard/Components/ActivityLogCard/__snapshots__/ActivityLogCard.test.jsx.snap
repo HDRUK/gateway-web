@@ -12,10 +12,10 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
         class="layoutCard"
       >
         <div
-          class="css-1rfjxm6-ActivityLogCard"
+          class="emotion-0"
         >
           <div
-            class="css-1s3f5pl-ActivityLogCard row"
+            class="emotion-1 row"
           >
             <div
               class="col-lg-6 col-sm-6"
@@ -34,7 +34,7 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
               class="col-lg-6 col-sm-6"
             >
               <span
-                class="css-zlbsue-ActivityLogCard"
+                class="emotion-2"
                 data-testid="status"
               >
                 <div
@@ -51,266 +51,290 @@ exports[`Given the ActivityLogCard component When it is rendered Then matches th
             >
               8 November 2021
             </h3>
-            <ul
-              class="ui-Timeline css-1sivg29 css-1rag44v-Timeline"
+            <div
+              class="ui-Box emotion-3"
             >
-              <li
-                class="css-f5erw7"
+              <ul
+                class="ui-Timeline emotion-4"
               >
-                <div
-                  class="css-z67izj"
+                <li
+                  class="emotion-5"
                 >
                   <div
-                    class="timeline-icon css-1vyp46c"
+                    class="emotion-6"
+                  >
+                    <div
+                      class="timeline-icon emotion-7"
+                    >
+                      <div>
+                        <img
+                          alt="Icon"
+                          data-testid="0-datasetVersionApproved"
+                          src="[object Object]"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="emotion-8"
+                    >
+                      <time
+                        data-testid="event-time-0"
+                        datetime="14:50"
+                      >
+                        14:50
+                      </time>
+                    </div>
+                  </div>
+                  <div
+                    class="emotion-9"
                   >
                     <div>
-                      <img
-                        alt="Icon"
-                        data-testid="0-datasetVersionApproved"
-                        src="[object Object]"
-                      />
+                      <div
+                        class="mb-3"
+                      >
+                        <b>
+                          Version 2
+                        </b>
+                         of this dataset been approved by admin 
+                        <b>
+                          Callum Reekie
+                        </b>
+                      </div>
+                      <div
+                        class="ui-Box emotion-3"
+                      >
+                        <blockquote
+                          class="ui-Blockquote emotion-11"
+                        >
+                          <h6
+                            class="mb-3 gray800"
+                          >
+                            comment
+                          </h6>
+                          <p
+                            class="mb-0"
+                          >
+                            Approved with minor changes!
+                          </p>
+                        </blockquote>
+                      </div>
                     </div>
                   </div>
+                </li>
+                <li
+                  class="emotion-5"
+                >
                   <div
-                    class="css-1pfaqp5"
+                    class="emotion-6"
                   >
-                    <time
-                      data-testid="event-time-0"
-                      datetime="14:50"
-                    >
-                      14:50
-                    </time>
-                  </div>
-                </div>
-                <div
-                  class="css-obendf"
-                >
-                  <div>
                     <div
-                      class="mb-3"
+                      class="timeline-icon emotion-7"
                     >
-                      <b>
-                        Version 2
-                      </b>
-                       of this dataset been approved by admin 
-                      <b>
-                        Callum Reekie
-                      </b>
+                      <div>
+                        <img
+                          alt="Icon"
+                          data-testid="1-datasetUpdatesSubmitted"
+                          src="[object Object]"
+                        />
+                      </div>
                     </div>
-                    <blockquote
-                      class="ui-Blockquote css-1sivg29 css-1ta6g32-BlockQuote"
+                    <div
+                      class="emotion-8"
                     >
-                      <h6
-                        class="mb-3 gray800"
+                      <time
+                        data-testid="event-time-1"
+                        datetime="14:50"
                       >
-                        comment
-                      </h6>
-                      <p
-                        class="mb-0"
-                      >
-                        Approved with minor changes!
-                      </p>
-                    </blockquote>
+                        14:50
+                      </time>
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li
-                class="css-f5erw7"
-              >
-                <div
-                  class="css-z67izj"
-                >
                   <div
-                    class="timeline-icon css-1vyp46c"
+                    class="emotion-9"
                   >
                     <div>
-                      <img
-                        alt="Icon"
-                        data-testid="1-datasetUpdatesSubmitted"
-                        src="[object Object]"
-                      />
+                      <div
+                        class="mb-3"
+                      >
+                        <b>
+                          Updates submitted
+                        </b>
+                         by data custodian 
+                        <b>
+                          Callum Reekie
+                        </b>
+                      </div>
+                      <div
+                        data-testid="event-detailed-text-1-0"
+                      >
+                        <div
+                          class="ui-Box emotion-3"
+                        >
+                          <blockquote
+                            class="ui-Blockquote emotion-11"
+                          >
+                            <h6
+                              class="mb-3 gray800"
+                            >
+                              Summary
+                            </h6>
+                            <div
+                              class="ui-Box emotion-3"
+                            >
+                              <ul
+                                class="ui-ListInfo emotion-20"
+                              >
+                                <li
+                                  class="emotion-21"
+                                >
+                                  <div
+                                    class="emotion-22"
+                                  >
+                                    Question
+                                  </div>
+                                  <div>
+                                    Abstract
+                                  </div>
+                                </li>
+                                <li
+                                  class="emotion-21"
+                                >
+                                  <div
+                                    class="emotion-22"
+                                  >
+                                    Previous answer
+                                  </div>
+                                  <div>
+                                    test
+                                  </div>
+                                </li>
+                                <li
+                                  class="emotion-21"
+                                >
+                                  <div
+                                    class="emotion-22"
+                                  >
+                                    Updated answer
+                                  </div>
+                                  <div>
+                                    I have changed the abstract!
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </blockquote>
+                        </div>
+                      </div>
+                      <div
+                        data-testid="event-detailed-text-1-1"
+                      >
+                        <div
+                          class="ui-Box emotion-3"
+                        >
+                          <blockquote
+                            class="ui-Blockquote emotion-11"
+                          >
+                            <h6
+                              class="mb-3 gray800"
+                            >
+                              Provenance | Temporal
+                            </h6>
+                            <div
+                              class="ui-Box emotion-3"
+                            >
+                              <ul
+                                class="ui-ListInfo emotion-20"
+                              >
+                                <li
+                                  class="emotion-21"
+                                >
+                                  <div
+                                    class="emotion-22"
+                                  >
+                                    Question
+                                  </div>
+                                  <div>
+                                    Distribution Release Date
+                                  </div>
+                                </li>
+                                <li
+                                  class="emotion-21"
+                                >
+                                  <div
+                                    class="emotion-22"
+                                  >
+                                    Previous answer
+                                  </div>
+                                  <div />
+                                </li>
+                                <li
+                                  class="emotion-21"
+                                >
+                                  <div
+                                    class="emotion-22"
+                                  >
+                                    Updated answer
+                                  </div>
+                                  <div>
+                                    02/11/2021
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </blockquote>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                </li>
+                <li
+                  class="emotion-5"
+                >
                   <div
-                    class="css-1pfaqp5"
+                    class="emotion-6"
                   >
-                    <time
-                      data-testid="event-time-1"
-                      datetime="14:50"
-                    >
-                      14:50
-                    </time>
-                  </div>
-                </div>
-                <div
-                  class="css-obendf"
-                >
-                  <div>
                     <div
-                      class="mb-3"
+                      class="timeline-icon emotion-7"
                     >
-                      <b>
-                        Updates submitted
-                      </b>
-                       by data custodian 
-                      <b>
-                        Callum Reekie
-                      </b>
+                      <div>
+                        <img
+                          alt="Icon"
+                          data-testid="2-newDatasetVersionSubmitted"
+                          src="[object Object]"
+                        />
+                      </div>
                     </div>
                     <div
-                      data-testid="event-detailed-text-1-0"
+                      class="emotion-8"
                     >
-                      <blockquote
-                        class="ui-Blockquote css-1sivg29 css-1ta6g32-BlockQuote"
+                      <time
+                        data-testid="event-time-2"
+                        datetime="14:49"
                       >
-                        <h6
-                          class="mb-3 gray800"
-                        >
-                          Summary
-                        </h6>
-                        <ul
-                          class="ui-ListInfo css-1sivg29 css-1jupbku-ListInfo"
-                        >
-                          <li
-                            class="css-ifzpa6"
-                          >
-                            <div
-                              class="css-112bk1i"
-                            >
-                              Question
-                            </div>
-                            <div>
-                              Abstract
-                            </div>
-                          </li>
-                          <li
-                            class="css-ifzpa6"
-                          >
-                            <div
-                              class="css-112bk1i"
-                            >
-                              Previous answer
-                            </div>
-                            <div>
-                              test
-                            </div>
-                          </li>
-                          <li
-                            class="css-ifzpa6"
-                          >
-                            <div
-                              class="css-112bk1i"
-                            >
-                              Updated answer
-                            </div>
-                            <div>
-                              I have changed the abstract!
-                            </div>
-                          </li>
-                        </ul>
-                      </blockquote>
-                    </div>
-                    <div
-                      data-testid="event-detailed-text-1-1"
-                    >
-                      <blockquote
-                        class="ui-Blockquote css-1sivg29 css-1ta6g32-BlockQuote"
-                      >
-                        <h6
-                          class="mb-3 gray800"
-                        >
-                          Provenance | Temporal
-                        </h6>
-                        <ul
-                          class="ui-ListInfo css-1sivg29 css-1jupbku-ListInfo"
-                        >
-                          <li
-                            class="css-ifzpa6"
-                          >
-                            <div
-                              class="css-112bk1i"
-                            >
-                              Question
-                            </div>
-                            <div>
-                              Distribution Release Date
-                            </div>
-                          </li>
-                          <li
-                            class="css-ifzpa6"
-                          >
-                            <div
-                              class="css-112bk1i"
-                            >
-                              Previous answer
-                            </div>
-                            <div />
-                          </li>
-                          <li
-                            class="css-ifzpa6"
-                          >
-                            <div
-                              class="css-112bk1i"
-                            >
-                              Updated answer
-                            </div>
-                            <div>
-                              02/11/2021
-                            </div>
-                          </li>
-                        </ul>
-                      </blockquote>
+                        14:49
+                      </time>
                     </div>
                   </div>
-                </div>
-              </li>
-              <li
-                class="css-f5erw7"
-              >
-                <div
-                  class="css-z67izj"
-                >
                   <div
-                    class="timeline-icon css-1vyp46c"
+                    class="emotion-9"
                   >
                     <div>
-                      <img
-                        alt="Icon"
-                        data-testid="2-newDatasetVersionSubmitted"
-                        src="[object Object]"
-                      />
+                      <div
+                        class="mb-3"
+                      >
+                        <b>
+                          Version 2
+                        </b>
+                         of this dataset been submitted by data custodian 
+                        <b>
+                          Callum Reekie
+                        </b>
+                      </div>
                     </div>
                   </div>
-                  <div
-                    class="css-1pfaqp5"
-                  >
-                    <time
-                      data-testid="event-time-2"
-                      datetime="14:49"
-                    >
-                      14:49
-                    </time>
-                  </div>
-                </div>
-                <div
-                  class="css-obendf"
-                >
-                  <div>
-                    <div
-                      class="mb-3"
-                    >
-                      <b>
-                        Version 2
-                      </b>
-                       of this dataset been submitted by data custodian 
-                      <b>
-                        Callum Reekie
-                      </b>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

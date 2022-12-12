@@ -3,8 +3,10 @@ import _ from 'lodash';
 import RelatedObject from '../../../commonComponents/relatedObject/RelatedObject';
 
 const PaperCollectionResults = ({ searchResults, relatedObjects, userId }) => {
-    const canViewResults = object => Boolean(object.activeflag === 'active' ||
-        (object.type === 'paper' && object.activeflag === 'review' && object.authors.includes(userId)));
+    const canViewResults = object =>
+        Boolean(
+            object.activeflag === 'active' || (object.type === 'paper' && object.activeflag === 'review' && object.authors.includes(userId))
+        );
 
     return searchResults.map(object => {
         if (canViewResults(object)) {
@@ -34,7 +36,7 @@ const PaperCollectionResults = ({ searchResults, relatedObjects, userId }) => {
                 );
             }
         }
-    })
-}
+    });
+};
 
 export default PaperCollectionResults;

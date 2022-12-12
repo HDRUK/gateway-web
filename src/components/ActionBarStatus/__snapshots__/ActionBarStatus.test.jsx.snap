@@ -3,9 +3,13 @@
 exports[`Given the ActionBarStatus component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="action-bar-status ui-ActionBarStatus additional-className css-1sivg29"
+    class="ui-Box emotion-0"
   >
-    This version was published on 28 September 2021
+    <div
+      class="action-bar-status ui-ActionBarStatus additional-className"
+    >
+      This version was published on 28 September 2021
+    </div>
   </div>
 </div>
 `;

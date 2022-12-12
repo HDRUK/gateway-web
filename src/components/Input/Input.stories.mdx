@@ -1,87 +1,57 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs';
-
+import SVG from 'react-inlinesvg';
+import searchIcon from '../../images/search.svg';
+import tickIcon from '../../images/delete.svg';
 import Input from './Input';
 import Icon from '../Icon';
 
 <Meta title='Core/Input' component={Input} />
 
 <Canvas>
-	<Story name='Variants'>
-		{props => (
-			<>
-				<div>
-					<Input
-						{...props}
-						label='Primary'
-						iconPrepend={<Icon name='star' />}
-						iconAppend={<Icon name='tick' inline />}
-						width='350px'
-						mb={4}
-					/>
-				</div>
-				<div>
-					<Input
-						{...props}
-						label='Primary with error'
-						iconPrepend={<Icon name='star' />}
-						iconAppend={<Icon name='tick' inline />}
-						width='350px'
-						mb={10}
-						error='Must have a value'
-					/>
-				</div>
-				<div>
-					<Input
-						{...props}
-						label='Secondary'
-						variant='secondary'
-						iconPrepend={<Icon name='star' />}
-						iconAppend={<Icon name='tick' inline />}
-						width='350px'
-					/>
-				</div>
-				<div>
-					<Input
-						{...props}
-						label='Secondary with error'
-						variant='secondary'
-						iconPrepend={<Icon name='star' />}
-						iconAppend={<Icon name='tick' inline />}
-						width='350px'
-						error='Must have an error'
-					/>
-				</div>
-			</>
-		)}
-	</Story>
-	<Story name='Sizes'>
-		{props => (
-			<>
-				<div>
-					<Input
-						{...props}
-						label='Small'
-						size='small'
-						iconPrepend={<Icon name='star' />}
-						iconAppend={<Icon name='tick' inline />}
-						width='350px'
-						mb={4}
-					/>
-				</div>
-				<div>
-					<Input {...props} label='Default' iconPrepend={<Icon name='star' />} iconAppend={<Icon name='tick' inline />} width='350px' />
-				</div>
-				<div>
-					<Input
-						{...props}
-						label='Large'
-						size='large'
-						iconPrepend={<Icon name='star' />}
-						iconAppend={<Icon name='tick' inline />}
-						width='350px'
-					/>
-				</div>
-			</>
-		)}
-	</Story>
+    <Story name='Variants'>
+        {props => {
+            const icons = {
+                iconPrepend: <Icon svg={<SVG src={searchIcon} />} />,
+                iconAppend: <Icon svg={<SVG src={tickIcon} />} />,
+            };
+            return (
+                <>
+                    <div>
+                        <Input {...props} {...icons} label='Primary' width='350px' mb={4} />
+                    </div>
+                    <div>
+                        <Input {...props} {...icons} label='Primary with error' width='350px' mb={10} error='Must have a value' />
+                    </div>
+                    <div>
+                        <Input {...props} {...icons} label='Secondary' variant='secondary' width='350px' />
+                    </div>
+                    <div>
+                        <Input
+                            {...props}
+                            {...icons}
+                            label='Secondary with error'
+                            variant='secondary'
+                            width='350px'
+                            error='Must have an error'
+                        />
+                    </div>
+                </>
+            );
+        }}
+    </Story>
+    <Story name='Sizes'>
+        {props => (
+            <>
+                <div>
+                    <Input {...props} label='Small' size='small' width='350px' mb={4} />
+                </div>
+                <div>
+                    <Input {...props} label='Default' width='350px' mb={4} />
+                </div>
+                <div>
+                    <Input {...props} label='Large' size='large' width='350px' />
+                </div>
+            </>
+        )}
+    </Story>
 </Canvas>

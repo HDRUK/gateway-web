@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the GatewayAdvancedSearchBanner component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <h4
+    class="ui-Typography emotion-0"
+  >
+    Try these Advanced Search Methods
+  </h4>
+  <div
+    class="ui-Box emotion-1"
+  >
+    <div
+      class="ui-Box emotion-1"
+    >
+      <div
+        class="ui-Card ui-FeatureContentHorizontal emotion-3"
+        role="article"
+      >
+        <div
+          class="ui-CardBody emotion-4"
+        >
+          <div
+            class="ui-Box emotion-1"
+          >
+            <div
+              class="ui-Box emotion-6"
+            >
+              <div
+                class="ui-Box emotion-1"
+              >
+                <h5
+                  class="ui-Typography emotion-8"
+                >
+                  <div
+                    class="ui-Box emotion-1"
+                  >
+                    <div
+                      class="ui-Box emotion-1"
+                    >
+                      <div
+                        class="ui-Box emotion-1"
+                      >
+                        Data Utility Wizard
+                      </div>
+                      <span
+                        class="ui-Tag emotion-12"
+                      >
+                        BETA
+                      </span>
+                    </div>
+                  </div>
+                </h5>
+                <div
+                  class="ui-Box emotion-1"
+                >
+                  <p
+                    class="ui-Typography emotion-14"
+                  >
+                    A tool to help refine your search to only datasets that meet your data utility requirements.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="ui-Box emotion-1"
+              >
+                <button
+                  class="ui-Button emotion-16"
+                  type="button"
+                >
+                   
+                  Search using Data Utility Wizard
+                   
+                </button>
+              </div>
+            </div>
+            <div
+              class="ui-Box emotion-1"
+            >
+              <div
+                class="emotion-18"
+              >
+                <img
+                  alt="search.advanced.dataUtilityWizard.mediaAlt"
+                  src="https://web.www.healthdatagateway.org/"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="ui-Box emotion-1"
+    >
+      <div
+        class="ui-Card ui-FeatureContentHorizontal emotion-3"
+        role="article"
+      >
+        <div
+          class="ui-CardBody emotion-4"
+        >
+          <div
+            class="ui-Box emotion-1"
+          >
+            <div
+              class="ui-Box emotion-6"
+            >
+              <div
+                class="ui-Box emotion-1"
+              >
+                <h5
+                  class="ui-Typography emotion-8"
+                >
+                  <div
+                    class="ui-Box emotion-1"
+                  >
+                    <div
+                      class="ui-Box emotion-1"
+                    >
+                      <div
+                        class="ui-Box emotion-1"
+                      >
+                        Cohort Discovery
+                      </div>
+                      <span
+                        class="ui-Tag emotion-12"
+                      >
+                        BETA
+                      </span>
+                    </div>
+                  </div>
+                </h5>
+                <div
+                  class="ui-Box emotion-1"
+                >
+                  <p
+                    class="ui-Typography emotion-14"
+                  >
+                    Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="ui-Box emotion-1"
+              >
+                <button
+                  class="ui-Button emotion-16"
+                  type="button"
+                >
+                   
+                  Sign in to use Cohort Discovery
+                   
+                </button>
+              </div>
+            </div>
+            <div
+              class="ui-Box emotion-1"
+            >
+              <div
+                class="emotion-18"
+              >
+                <img
+                  alt="Cohort Discovery feature image"
+                  src="https://web.www.healthdatagateway.org/"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -31,7 +31,7 @@ exports[`Given the Tool component When it is rendered Then matches the previous 
       class="pad-left-24 pad-right-24 pad-top-16 col"
     >
       <div
-        class="badge-tool"
+        class="badge-tool "
         data-testid="badge-Tool"
       >
         <svg
@@ -48,48 +48,68 @@ exports[`Given the Tool component When it is rendered Then matches the previous 
             fill="#ffffff"
           />
         </svg>
-        <span>
-          Tool
+        <span
+          class=""
+        >
+          <span>
+            Tool
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-test"
       >
-        <span>
-          test
+        <span
+          class=""
+        >
+          <span>
+            test
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-version"
+        class="badge-version "
         data-testid="badge-React JS"
       >
-        <span>
-          React JS
-        </span>
-        <span>
-          1
+        <span
+          class=""
+        >
+          <span>
+            React JS
+          </span>
+          <span>
+            1
+          </span>
         </span>
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-Arbitrage"
       >
-        <span>
-          Arbitrage
+        <span
+          class=""
+        >
+          <span>
+            Arbitrage
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-Blood"
       >
-        <span>
-          Blood
+        <span
+          class=""
+        >
+          <span>
+            Blood
+          </span>
+          <span />
         </span>
-        <span />
       </div>
     </div>
     <div

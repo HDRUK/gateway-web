@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the DataUseWidgetCode component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div>
+    <h6
+      class="ui-Box ui-Typography emotion-0"
+    >
+      Copy the source code and share with your development team to display the widget above on your website
+    </h6>
+     
+    <div
+      class="emotion-1"
+    >
+      <pre>
+        <code>
+          &lt;test/&gt;
+        </code>
+      </pre>
+    </div>
+    <div
+      class="ui-LayoutBox emotion-2"
+    >
+      <button
+        class="ui-Button emotion-3"
+        type="button"
+      >
+         
+        Copy Code
+         
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -1,45 +1,67 @@
-import { useQuery } from 'react-query';
-import { apiURL } from '../configs/url.config';
-import { getRequest } from '../utils/requests';
+import { apiURL, apiV2URL } from '../../configs/url.config';
+import { getRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getSearch = options => {
-	return getRequest(`${apiURL}/search`, options);
+    return getRequest(`${apiURL}/search`, options);
 };
 
 const getTopic = (topic, options) => {
-	return getRequest(`${apiURL}/search/filter/topic/${topic}`, options);
+    return getRequest(`${apiURL}/search/filter/topic/${topic}`, options);
 };
 
 const getFilters = (filter, options) => {
-	return getRequest(`${apiURL}/search/filters/${filter}`, options);
+    return getRequest(`${apiV2URL}/filters/${filter}`, options);
 };
 
-const useGetSearch = (requestOptions, queryOptions = { queryKey: 'getSearch' }) => {
-	return useQuery({
-		...queryOptions,
-		queryFn: () => getSearch(requestOptions),
-	});
+const getSearchFilters = options => {
+    return getRequest(`${apiURL}/search/filter`, options);
 };
 
-const useGetTopic = (requestOptions, queryOptions = { queryKey: 'getTopic' }) => {
-	return useQuery({
-		...queryOptions,
-		queryFn: () => getTopic(requestOptions),
-	});
+const useGetSearch = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(
+        params =>
+            getSearch({
+                ...requestOptions,
+                ...params,
+            }),
+        {
+            mutationKey: 'search.getSearch',
+            ...mutateOptions,
+        }
+    );
 };
 
-const useGetFilters = (requestOptions, queryOptions = { queryKey: 'getFilters' }) => {
-	return useQuery({
-		...queryOptions,
-		queryFn: () => getFilters(requestOptions),
-	});
+const useGetTopic = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'search.getTopic',
+        ...queryOptions,
+        queryFn: () => getTopic(requestOptions),
+    });
+};
+
+const useGetFilters = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'search.getFilters',
+        ...queryOptions,
+        queryFn: () => getFilters(requestOptions),
+    });
+};
+
+const useGetSearchFilters = (requestOptions, queryOptions) => {
+    return useQueryWithTranslations({
+        queryKey: 'search.getSearchFilters',
+        ...queryOptions,
+        queryFn: () => getSearchFilters(requestOptions),
+    });
 };
 
 export default {
-	getSearch,
-	getTopic,
-	getFilters,
-	useGetSearch,
-	useGetTopic,
-	useGetFilters,
+    getSearch,
+    getTopic,
+    getFilters,
+    getSearchFilters,
+    useGetSearch,
+    useGetTopic,
+    useGetFilters,
+    useGetSearchFilters,
 };

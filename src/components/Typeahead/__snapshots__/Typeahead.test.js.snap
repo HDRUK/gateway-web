@@ -7,11 +7,3 @@ exports[`Given the Typeahead component When it is rendered Then should match the
   </div>
 </div>
 `;
-
-exports[`Given the Typeahead component When it is rendered without default value Then should match the snapshot 1`] = `
-<div>
-  <div>
-    <div />
-  </div>
-</div>
-`;

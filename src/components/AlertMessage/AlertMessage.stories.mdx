@@ -1,0 +1,23 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+import AlertMessage from './AlertMessage';
+
+<Meta title='Core/AlertMessage' component={AlertMessage} />
+
+<Canvas>
+    <Story name='Variants'>
+        {props => {
+            return (
+                <>
+                    {['success', 'info', 'warning', 'danger'].map(variant => (
+                        <div>
+                            <AlertMessage variant={variant} mb={4}>
+                                Lorem ipsum dolor sit amet ad hicio hortus est
+                            </AlertMessage>
+                        </div>
+                    ))}
+                </>
+            );
+        }}
+    </Story>
+</Canvas>

@@ -1,66 +1,79 @@
+import { Button } from 'hdruk-react-core';
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const ActionBarMenu = ({ label, options = [], disabled, buttonClass = 'button-secondary' }) => {
-	const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-		<a
-			href='javascript:void(0)'
-			ref={ref}
-			onClick={e => {
-				e.preventDefault();
-				if (!disabled) {
-					onClick(e);
-				}
-			}}>
-			{children}
-		</a>
-	));
-			console.log(options);
-	return (
-		<>
-			{options.length > 0 && options.some(option => option.actions.length > 0) && (
-				<Dropdown>
-					<Dropdown.Toggle as={CustomToggle}>
-						<button className={`${buttonClass} ${disabled ? 'disabled' : ''}`} disabled={disabled}>
-							{label}
-						</button>
-					</Dropdown.Toggle>
-					<Dropdown.Menu className='actionMenuDropdown'>
-						{options.map(option => {
-							return (
-								option.actions.length > 0 && (
-									<>
-										<div className='actionMenuSection'>
-											<div className='actionMenuHeader'>
-												<span className='gray800-14-bold description'>{option.description}</span>
-												{option.detailedDescription && <span className='gray700-13 detailedDescription'>{option.detailedDescription}</span>}
-											</div>
+import './ActionBarMenu.scss';
 
-											{option.actions.map(action => {
-												return (
-													<div
-														className='pointer option'
-														onClick={e => {
-															e.preventDefault();
-															action.onClick(e);
-														}}>
-														<span className='gray800-14 title' style={{ marginTop: '0px' }}>
-															{action.title}
-														</span>
-														{action.description && <span className='gray700-13 description'>{action.description}</span>}
-													</div>
-												);
-											})}
-										</div>
-									</>
-								)
-							);
-						})}
-					</Dropdown.Menu>
-				</Dropdown>
-			)}
-		</>
-	);
+const ActionBarMenu = ({ label, options = [], disabled, variant = 'secondary', alignStart }) => {
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        <a
+            className='nested-button'
+            href='javascript:void(0)'
+            ref={ref}
+            onClick={e => {
+                e.preventDefault();
+                if (!disabled) {
+                    onClick(e);
+                }
+            }}>
+            {children}
+        </a>
+    ));
+
+    return (
+        <>
+            {options.length > 0 && options.some(option => option.actions.length > 0) && (
+                <Dropdown drop='up'>
+                    <Dropdown.Toggle as={CustomToggle}>
+                        <Button variant={variant} className={`${disabled ? 'disabled' : ''}`} disabled={disabled}>
+                            {label}
+                        </Button>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu
+                        className={`actionMenuDropdown${alignStart ? ' actionMenuDropdown__start' : ''}`}
+                        flip={false}
+                        align='end'>
+                        {options.map(option => {
+                            return (
+                                option.actions.length > 0 && (
+                                    <>
+                                        <div className='actionMenuSection'>
+                                            {(option.description || option.detailedDescription) && (
+                                                <div className='actionMenuHeader'>
+                                                    <span className='gray800-14-bold description'>{option.description}</span>
+                                                    {option.detailedDescription && (
+                                                        <span className='gray700-13 detailedDescription'>{option.detailedDescription}</span>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {option.actions.map(action => {
+                                                return (
+                                                    <div
+                                                        className='pointer option'
+                                                        onClick={e => {
+                                                            e.preventDefault();
+                                                            action.onClick(e);
+                                                        }}>
+                                                        <span className='gray800-14 title' style={{ marginTop: '0px' }}>
+                                                            {action.title}
+                                                        </span>
+                                                        {action.description && (
+                                                            <span className='gray700-13 description'>{action.description}</span>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </>
+                                )
+                            );
+                        })}
+                    </Dropdown.Menu>
+                </Dropdown>
+            )}
+        </>
+    );
 };
 
 export default ActionBarMenu;

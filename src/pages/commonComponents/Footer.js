@@ -9,37 +9,37 @@ const env = baseURL.getURLEnv();
 const local = 'local';
 
 class Footer extends React.Component {
-	state = {
-		footer: '',
-		isLoading: true,
-	};
+    state = {
+        footer: '',
+        isLoading: true,
+    };
 
-	async componentDidMount() {
-		let url = env === local ? 'https://uatbeta.healthdatagateway.org' : cmsURL;
-		axios
-			.get(url + '/footer', { withCredentials: false })
-			.then(res => {
-				this.setState({
-					footer: res.data,
-					isLoading: false,
-				});
-			})
-			.catch(error => {
-				this.setState({
-					isLoading: false,
-				});
-			});
-	}
+    async componentDidMount() {
+        let url = env === local ? 'https://uatbeta.healthdatagateway.org' : cmsURL;
+        axios
+            .get(url + '/footer', { withCredentials: false })
+            .then(res => {
+                this.setState({
+                    footer: res.data,
+                    isLoading: false,
+                });
+            })
+            .catch(error => {
+                this.setState({
+                    isLoading: false,
+                });
+            });
+    }
 
-	render() {
-		const { isLoading, footer } = this.state;
+    render() {
+        const { isLoading, footer } = this.state;
 
-		if (isLoading) {
-			return <Loading />;
-		}
+        if (isLoading) {
+            return <Loading />;
+        }
 
-		return <>{footer !== '' ? <div dangerouslySetInnerHTML={{ __html: footer }} /> : <div className='footerBottom' />}</>;
-	}
+        return <>{footer !== '' ? <div dangerouslySetInnerHTML={{ __html: footer }} /> : <div className='footerBottom' />}</>;
+    }
 }
 
 export default Footer;

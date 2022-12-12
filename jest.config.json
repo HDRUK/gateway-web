@@ -1,24 +1,34 @@
 {
-	"setupFiles": ["raf/polyfill", "<rootDir>/src/setupTests.js"],
-	"moduleNameMapper": {
-		"\\.(css|less|sass|scss)$": "<rootDir>/test/mocks/styleMock.js",
-		"\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/mocks/fileMock.js",
-		"\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js",
-		"public/(.*)": "<rootDir>/public/$1"
-	},
-	"modulePaths": ["<rootDir>/public"],
-	"coveragePathIgnorePatterns": [
-		"mockData.js",
-		"Mock.js",
-		".stories.js",
-		".styles.js",
-		"index.js",
-		"configs",
-		"mockMsw.js",
-		"mockServer.js",
-		".constants.js",
-		".propTypes.js"
-	],
-	"collectCoverageFrom": ["src/**/*.{js,jsx}"],
-	"roots": ["<rootDir>", "<rootDir>src"]
+    "setupFiles": ["raf/polyfill", "<rootDir>/src/setupTests.js"],
+    "setupFilesAfterEnv": ["<rootDir>/test/customSerializer.js"],
+    "moduleNameMapper": {
+        "\\.(css|less|sass|scss)$": "<rootDir>/test/mocks/styleMock.js",
+        "\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/mocks/fileMock.js",
+        "\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js",
+        "public/(.*)": "<rootDir>/public/$1",
+        "lodash-es": "lodash"
+    },
+    "modulePaths": ["<rootDir>/public"],
+    "coveragePathIgnorePatterns": [
+        "mockData.js",
+        "Mock.js",
+        ".stories.js",
+        ".styles.js",
+        "index.js",
+        "configs",
+        "mockMsw.js",
+        "mockServer.js",
+        ".constants.js",
+        ".propTypes.js",
+        "H1.js",
+        "H2.js",
+        "H3.js",
+        "H4.js",
+        "H5.js",
+        "H6.js",
+        "P.js"
+    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
+    "roots": ["<rootDir>", "<rootDir>src"],
+    "moduleDirectories": ["test", "node_modules"]
 }

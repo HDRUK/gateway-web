@@ -3,54 +3,57 @@ import { Meta, Story, Canvas } from '@storybook/addon-docs';
 import Dropdown from './Dropdown';
 
 <Meta
-	title='Core/Dropdown'
-	component={Dropdown}
-	args={{
-		options: [
-			{
-				label: 'Recently updated',
-				value: 'updated',
-			},
-			'Related resources',
-		],
-	}}
+    title='Core/Dropdown'
+    component={Dropdown}
+    args={{
+        options: [
+            {
+                label: 'Recently updated',
+                value: 'updated',
+            },
+            {
+                label: 'Related resources',
+                value: 'related',
+            },
+        ],
+    }}
 />
 
 <Canvas>
-	<Story name='Variants'>
-		{props => {
-			return (
-				<>
-					<div>
-						<div>Primary</div>
-						<Dropdown {...props} label='Primary' width='350px' mb={4} />
-					</div>
-					<div>
-						<div>Secondary</div>
-						<Dropdown {...props} label='Secondary' variant='secondary' width='350px' />
-					</div>
-				</>
-			);
-		}}
-	</Story>
-	<Story name='Sizes'>
-		{props => {
-			return (
-				<>
-					<div>
-						<div>Small</div>
-						<Dropdown {...props} size='small' label='Small' width='350px' mb={4} />
-					</div>
-					<div>
-						<div>Default</div>
-						<Dropdown {...props} size='default' width='350px' mb={4} />
-					</div>
-					<div>
-						<div>Large</div>
-						<Dropdown {...props} size='large' label='Large' width='350px' />
-					</div>
-				</>
-			);
-		}}
-	</Story>
+    <Story name='Variants'>
+        {props => {
+            return (
+                <>
+                    <div>
+                        <div>Primary</div>
+                        <Dropdown {...props} label='Primary' width='350px' mb={4} />
+                    </div>
+                    <div>
+                        <div>Secondary</div>
+                        <Dropdown {...props} label='Secondary' variant='secondary' width='350px' />
+                    </div>
+                </>
+            );
+        }}
+    </Story>
+    <Story name='Sizes'>
+        {props => {
+            return (
+                <>
+                    <div>
+                        <div>Small</div>
+                        <Dropdown {...props} size='small' label='Small' width='350px' mb={4} />
+                    </div>
+                    <div>
+                        <div>Default</div>
+                        <Dropdown {...props} size='default' width='350px' mb={4} />
+                    </div>
+                    <div>
+                        <div>Large</div>
+                        <Dropdown {...props} size='large' label='Large' width='350px' />
+                    </div>
+                </>
+            );
+        }}
+    </Story>
 </Canvas>

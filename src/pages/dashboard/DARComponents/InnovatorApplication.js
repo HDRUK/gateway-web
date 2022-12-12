@@ -9,76 +9,76 @@ import moment from 'moment';
 var baseURL = require('../../commonComponents/BaseURL').getURL();
 
 class InnovatorApplication extends React.Component {
-	state = {
-		data: {},
-		dataset: '',
-		isLoading: true,
-	};
+    state = {
+        data: {},
+        dataset: '',
+        isLoading: true,
+    };
 
-	constructor(props) {
-		super(props);
-		this.state.data = props.data;
-	}
+    constructor(props) {
+        super(props);
+        this.state.data = props.data;
+    }
 
-	componentDidMount() {
-		this.getDatasetSearch();
-	}
+    componentDidMount() {
+        this.getDatasetSearch();
+    }
 
-	getDatasetSearch = () => {
-		this.setState({ isLoading: true });
-		axios.get(baseURL + '/api/v1/datasets/' + this.state.data.dataSetId).then(res => {
-			this.setState({
-				dataset: res.data.data.label,
-				isLoading: false,
-			});
-		});
-	};
+    getDatasetSearch = () => {
+        this.setState({ isLoading: true });
+        axios.get(baseURL + '/api/v1/datasets/' + this.state.data.dataSetId).then(res => {
+            this.setState({
+                dataset: res.data.data.label,
+                isLoading: false,
+            });
+        });
+    };
 
-	getProgress = () => {
-		switch (this.props.data.applicationStatus) {
-			case 'presubmission':
-				return 'Pre-submission';
-			case 'submitted':
-				return 'In review';
-			case 'approved':
-				return 'Approved';
-			case 'rejected':
-				return 'Rejected';
+    getProgress = () => {
+        switch (this.props.data.applicationStatus) {
+            case 'presubmission':
+                return 'Pre-submission';
+            case 'submitted':
+                return 'In review';
+            case 'approved':
+                return 'Approved';
+            case 'rejected':
+                return 'Rejected';
 
-			default:
-				return '';
-		}
-	};
+            default:
+                return '';
+        }
+    };
 
-	render() {
-		const { isLoading, dataset } = this.state;
+    render() {
+        const { isLoading, dataset } = this.state;
 
-		if (isLoading) {
-			return (
-				<Container>
-					<Loading />
-				</Container>
-			);
-		}
-		return (
-			<Fragment>
-				<Col sm={3} lg={3} className='pt-2 gray800-14'>
-					{moment(this.props.data.updatedAt).format('D MMMM YYYY HH:mm')}
-				</Col>
-				<Col sm={3} lg={3} className='pt-2 gray800-14'>
-					{dataset}
-				</Col>
-				<Col sm={4} lg={4} className='pt-2 gray800-14'>
-					{this.getProgress()}
-				</Col>
-				<Col sm={2} lg={2} className='pt-2 gray800-14'>
-					<DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
-						<Dropdown.Item href=''>View</Dropdown.Item>
-					</DropdownButton>
-				</Col>
-			</Fragment>
-		);
-	}
+        if (isLoading) {
+            return (
+                <Container>
+                    <Loading />
+                </Container>
+            );
+        }
+        return (
+            <Fragment>
+                <Col sm={3} lg={3} className='pt-2 gray800-14'>
+                    {moment(this.props.data.updatedAt).format('D MMMM YYYY HH:mm')}
+                </Col>
+                <Col sm={3} lg={3} className='pt-2 gray800-14'>
+                    {dataset}
+                </Col>
+                <Col sm={4} lg={4} className='pt-2 gray800-14'>
+                    {this.getProgress()}
+                </Col>
+                <Col sm={2} lg={2} className='pt-2 gray800-14'>
+                    <DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
+                        <Dropdown.Item href=''>View</Dropdown.Item>
+                    </DropdownButton>
+                </Col>
+            </Fragment>
+        );
+    }
 }
 
 export default InnovatorApplication;

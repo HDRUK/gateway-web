@@ -55,7 +55,7 @@ exports[`Given the Dataset component When it is rendered Then matches the previo
       class="pad-left-24 pad-right-24 pad-top-16 col-lg-12 col-sm-12"
     >
       <div
-        class="badge-dataset"
+        class="badge-dataset "
         data-testid="badge-Dataset"
       >
         <svg
@@ -72,91 +72,131 @@ exports[`Given the Dataset component When it is rendered Then matches the previo
             fill="#113328"
           />
         </svg>
-        <span>
-          Dataset
+        <span
+          class=""
+        >
+          <span>
+            Dataset
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-COVID-19"
       >
-        <span>
-          COVID-19
+        <span
+          class=""
+        >
+          <span>
+            COVID-19
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-TRACKER"
       >
-        <span>
-          TRACKER
+        <span
+          class=""
+        >
+          <span>
+            TRACKER
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-SAIL"
       >
-        <span>
-          SAIL
+        <span
+          class=""
+        >
+          <span>
+            SAIL
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-COVID"
       >
-        <span>
-          COVID
+        <span
+          class=""
+        >
+          <span>
+            COVID
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-MOBILE APP"
       >
-        <span>
-          MOBILE APP
+        <span
+          class=""
+        >
+          <span>
+            MOBILE APP
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-CORONAVIRUS"
       >
-        <span>
-          CORONAVIRUS
+        <span
+          class=""
+        >
+          <span>
+            CORONAVIRUS
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-SYMPTOM"
       >
-        <span>
-          SYMPTOM
+        <span
+          class=""
+        >
+          <span>
+            SYMPTOM
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-NCS"
       >
-        <span>
-          NCS
+        <span
+          class=""
+        >
+          <span>
+            NCS
+          </span>
+          <span />
         </span>
-        <span />
       </div>
       <div
-        class="badge-tag"
+        class="badge-tag "
         data-testid="badge-National Core Study"
       >
-        <span>
-          National Core Study
+        <span
+          class=""
+        >
+          <span>
+            National Core Study
+          </span>
+          <span />
         </span>
-        <span />
       </div>
     </div>
     <div

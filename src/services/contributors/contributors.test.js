@@ -12,34 +12,34 @@ let wrapper;
 const queryClient = new QueryClient();
 
 describe('Given the contributors service', () => {
-	beforeAll(() => {
-		wrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
-	});
+    beforeAll(() => {
+        wrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+    });
 
-	afterAll(() => {
-		wrapper.unmount();
-	});
+    afterAll(() => {
+        wrapper.unmount();
+    });
 
-	afterEach(() => {
-		jest.resetAllMocks();
-	});
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
 
-	describe('When getContributorsInfo is called', () => {
-		it('Then calls getRequest with the correct arguments', async () => {
-			await service.getContributorsInfo('123', {
-				option1: true,
-			});
-			expect(getRequest).toHaveBeenCalledWith(`${apiURL}/data-access-request/prepopulate-contributors/123`, {
-				option1: true,
-			});
-		});
-	});
+    describe('When getContributorsInfo is called', () => {
+        it('Then calls getRequest with the correct arguments', async () => {
+            await service.getContributorsInfo('123', {
+                option1: true,
+            });
+            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/data-access-request/prepopulate-contributors/123`, {
+                option1: true,
+            });
+        });
+    });
 
-	describe('When useGetSearch is called', () => {
-		it('Then calls getSearch with the correct arguments', async () => {
-			const getSpy = jest.spyOn(service, 'getContributorsInfo');
-			const rendered = renderHook(() => service.useGetContributorsInfo({ option1: true }), { wrapper });
-			assertServiceRefetchCalled(rendered, getSpy);
-		});
-	});
+    describe('When useGetSearch is called', () => {
+        it('Then calls getSearch with the correct arguments', async () => {
+            const getSpy = jest.spyOn(service, 'getContributorsInfo');
+            const rendered = renderHook(() => service.useGetContributorsInfo({ option1: true }), { wrapper });
+            assertServiceRefetchCalled(rendered, getSpy);
+        });
+    });
 });

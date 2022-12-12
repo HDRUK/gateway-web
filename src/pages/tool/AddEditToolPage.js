@@ -16,499 +16,501 @@ import { isEditMode } from '../../utils/GeneralHelper.util';
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
 class AddEditToolPage extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state.userState = props.userState;
-		this.searchBar = React.createRef();
-	}
+    constructor(props) {
+        super(props);
+        this.state.userState = props.userState;
+        this.searchBar = React.createRef();
+    }
 
-	// initialize our state
-	state = {
-		data: [],
-		combinedTopic: [],
-		combinedFeatures: [],
-		combinedLanguages: [],
-		combinedCategories: [],
-		combinedLicenses: [],
-		combinedUsers: [],
-		isLoading: true,
-		userState: [],
-		searchString: '',
-		datasetData: [],
-		datauseData: [],
-		toolData: [],
-		paperData: [],
-		personData: [],
-		courseData: [],
-		summary: [],
-		tempRelatedObjectIds: [],
-		relatedObjects: [],
-		didDelete: false,
-		isEdit: isEditMode(window.location.pathname),
-		showDrawer: false,
-		showModal: false,
-		context: {},
-	};
+    // initialize our state
+    state = {
+        data: [],
+        combinedTopic: [],
+        combinedFeatures: [],
+        combinedLanguages: [],
+        combinedCategories: [],
+        combinedLicenses: [],
+        combinedUsers: [],
+        isLoading: true,
+        userState: [],
+        searchString: '',
+        datasetData: [],
+        datauseData: [],
+        toolData: [],
+        paperData: [],
+        personData: [],
+        courseData: [],
+        summary: [],
+        tempRelatedObjectIds: [],
+        relatedObjects: [],
+        didDelete: false,
+        isEdit: isEditMode(window.location.pathname),
+        showDrawer: false,
+        showModal: false,
+        context: {},
+    };
 
-	async componentDidMount() {
-		await Promise.all([
-			this.doGetTopicsCall(),
-			this.doGetFeaturesCall(),
-			this.doGetLanguagesCall(),
-			this.doGetCategoriesCall(),
-			this.doGetLicensesCall(),
-			this.doGetUsersCall(),
-		]);
-		if (this.state.isEdit) this.getToolFromDb();
-		else this.setState({ isLoading: false });
-	}
+    async componentDidMount() {
+        await Promise.all([
+            this.doGetTopicsCall(),
+            this.doGetFeaturesCall(),
+            this.doGetLanguagesCall(),
+            this.doGetCategoriesCall(),
+            this.doGetLicensesCall(),
+            this.doGetUsersCall(),
+        ]);
+        if (this.state.isEdit) this.getToolFromDb();
+        else this.setState({ isLoading: false });
+    }
 
-	getToolFromDb = () => {
-		//need to handle error if no id is found
-		this.setState({ isLoading: true });
-		axios.get(baseURL + '/api/v1/tools/edit/' + this.props.match.params.toolID).then(res => {
-			this.setState({
-				data: res.data.data[0],
-				relatedObjects: res.data.data[0].relatedObjects ? res.data.data[0].relatedObjects : [],
-			});
-			this.setState({ isLoading: false });
-		});
-	};
+    getToolFromDb = () => {
+        //need to handle error if no id is found
+        this.setState({ isLoading: true });
+        axios.get(baseURL + '/api/v1/tools/edit/' + this.props.match.params.toolID).then(res => {
+            this.setState({
+                data: res.data.data[0],
+                relatedObjects: res.data.data[0].relatedObjects ? res.data.data[0].relatedObjects : [],
+            });
+            this.setState({ isLoading: false });
+        });
+    };
 
-	doGetTopicsCall() {
-		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/topic/tool').then(res => {
-				var tempTopicArray = [
-					'Blood',
-					'Cancer and neoplasms',
-					'Cardiovascular',
-					'Congenital disorders',
-					'Ear',
-					'Eye',
-					'Infection',
-					'Inflammatory and immune system',
-					'Injuries and accidents',
-					'Mental health',
-					'Metabolic and Endocrine',
-					'Musculoskeletal',
-					'Neurological',
-					'Oral and Gastrointestinal',
-					'Renal and Urogenital',
-					'Reproductive health and childbirth',
-					'Respiratory',
-					'Skin',
-					'Stroke',
-				];
+    doGetTopicsCall() {
+        return new Promise((resolve, reject) => {
+            axios.get(baseURL + '/api/v1/search/filter/topic/tool').then(res => {
+                var tempTopicArray = [
+                    'Blood',
+                    'Cancer and neoplasms',
+                    'Cardiovascular',
+                    'Congenital disorders',
+                    'Ear',
+                    'Eye',
+                    'Infection',
+                    'Inflammatory and immune system',
+                    'Injuries and accidents',
+                    'Mental health',
+                    'Metabolic and Endocrine',
+                    'Musculoskeletal',
+                    'Neurological',
+                    'Oral and Gastrointestinal',
+                    'Renal and Urogenital',
+                    'Reproductive health and childbirth',
+                    'Respiratory',
+                    'Skin',
+                    'Stroke',
+                ];
 
-				res.data.data[0].forEach(to => {
-					if (!tempTopicArray.includes(to) && to !== '') {
-						tempTopicArray.push(to);
-					}
-				});
+                res.data.data[0].forEach(to => {
+                    if (!tempTopicArray.includes(to) && to !== '') {
+                        tempTopicArray.push(to);
+                    }
+                });
 
-				this.setState({
-					combinedTopic: tempTopicArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
-					}),
-				});
-				resolve();
-			});
-		});
-	}
+                this.setState({
+                    combinedTopic: tempTopicArray.sort(function (a, b) {
+                        return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+                    }),
+                });
+                resolve();
+            });
+        });
+    }
 
-	doGetFeaturesCall() {
-		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/feature/tool').then(res => {
-				var tempFeaturesArray = [
-					'Arbitrage',
-					'Association Rules',
-					'Attribution Modeling',
-					'Bayesian Statistics',
-					'Clustering',
-					'Collaborative Filtering',
-					'Confidence Interval',
-					'Cross-Validation',
-					'Decision Trees',
-					'Deep Learning',
-					'Density Estimation',
-					'Ensembles',
-					'Experimental Design',
-					'Feature Selection',
-					'Game Theory',
-					'Geospatial Modeling',
-					'Graphs',
-					'Imputation',
-					'Indexation / Cataloguing',
-					'Jackknife Regression',
-					'Lift Modeling',
-					'Linear Regression',
-					'Linkage Analysis',
-					'Logistic Regression',
-					'Model Fitting',
-					'Monte-Carlo Simulation',
-					'Naive Bayes',
-					'Nearest Neighbors - (k-NN)',
-					'Neural Networks',
-					'Pattern Recognition',
-					'Predictive Modeling',
-					'Principal Component Analysis - (PCA)',
-					'Random Numbers',
-					'Recommendation Engine',
-					'Relevancy Algorithm',
-					'Rule System',
-					'Scoring Engine',
-					'Search Engine',
-					'Segmentation',
-					'Supervised Learning',
-					'Support Vector Machine - (SVM)',
-					'Survival Analysis',
-					'Test of Hypotheses',
-					'Time Series',
-					'Yield Optimization',
-				];
+    doGetFeaturesCall() {
+        return new Promise((resolve, reject) => {
+            axios.get(baseURL + '/api/v1/search/filter/feature/tool').then(res => {
+                var tempFeaturesArray = [
+                    'Arbitrage',
+                    'Association Rules',
+                    'Attribution Modeling',
+                    'Bayesian Statistics',
+                    'Clustering',
+                    'Collaborative Filtering',
+                    'Confidence Interval',
+                    'Cross-Validation',
+                    'Decision Trees',
+                    'Deep Learning',
+                    'Density Estimation',
+                    'Ensembles',
+                    'Experimental Design',
+                    'Feature Selection',
+                    'Game Theory',
+                    'Geospatial Modeling',
+                    'Graphs',
+                    'Imputation',
+                    'Indexation / Cataloguing',
+                    'Jackknife Regression',
+                    'Lift Modeling',
+                    'Linear Regression',
+                    'Linkage Analysis',
+                    'Logistic Regression',
+                    'Model Fitting',
+                    'Monte-Carlo Simulation',
+                    'Naive Bayes',
+                    'Nearest Neighbors - (k-NN)',
+                    'Neural Networks',
+                    'Pattern Recognition',
+                    'Predictive Modeling',
+                    'Principal Component Analysis - (PCA)',
+                    'Random Numbers',
+                    'Recommendation Engine',
+                    'Relevancy Algorithm',
+                    'Rule System',
+                    'Scoring Engine',
+                    'Search Engine',
+                    'Segmentation',
+                    'Supervised Learning',
+                    'Support Vector Machine - (SVM)',
+                    'Survival Analysis',
+                    'Test of Hypotheses',
+                    'Time Series',
+                    'Yield Optimization',
+                ];
 
-				res.data.data[0].forEach(fe => {
-					if (!tempFeaturesArray.includes(fe) && fe !== '') {
-						tempFeaturesArray.push(fe);
-					}
-				});
+                res.data.data[0].forEach(fe => {
+                    if (!tempFeaturesArray.includes(fe) && fe !== '') {
+                        tempFeaturesArray.push(fe);
+                    }
+                });
 
-				this.setState({
-					combinedFeatures: tempFeaturesArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
-					}),
-				});
-				resolve();
-			});
-		});
-	}
+                this.setState({
+                    combinedFeatures: tempFeaturesArray.sort(function (a, b) {
+                        return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+                    }),
+                });
+                resolve();
+            });
+        });
+    }
 
-	doGetLanguagesCall() {
-		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/language/tool').then(res => {
-				var tempLanguagesArray = [
-					'No coding required',
-					'.net',
-					'AJAX',
-					'ASP.NET',
-					'C',
-					'C#',
-					'C++',
-					'CSS',
-					'Django',
-					'HTML',
-					'Java',
-					'Javascript',
-					'jQuery',
-					'JSON',
-					'Matlab',
-					'MySQL',
-					'Node.js',
-					'Objective C',
-					'PHP',
-					'Python',
-					'R',
-					'React JS',
-					'Regex',
-					'Ruby',
-					'Ruby on Rails',
-					'SQL',
-					'SQL server',
-					'Swift',
-					'XML',
-				];
+    doGetLanguagesCall() {
+        return new Promise((resolve, reject) => {
+            axios.get(baseURL + '/api/v1/search/filter/language/tool').then(res => {
+                var tempLanguagesArray = [
+                    'No coding required',
+                    '.net',
+                    'AJAX',
+                    'ASP.NET',
+                    'C',
+                    'C#',
+                    'C++',
+                    'CSS',
+                    'Django',
+                    'HTML',
+                    'Java',
+                    'Javascript',
+                    'jQuery',
+                    'JSON',
+                    'Matlab',
+                    'MySQL',
+                    'Node.js',
+                    'Objective C',
+                    'PHP',
+                    'Python',
+                    'R',
+                    'React JS',
+                    'Regex',
+                    'Ruby',
+                    'Ruby on Rails',
+                    'SQL',
+                    'SQL server',
+                    'Swift',
+                    'XML',
+                ];
 
-				res.data.data[0].forEach(la => {
-					if (!tempLanguagesArray.includes(la) && la !== '') {
-						tempLanguagesArray.push(la);
-					}
-				});
+                res.data.data[0].forEach(la => {
+                    if (!tempLanguagesArray.includes(la) && la !== '') {
+                        tempLanguagesArray.push(la);
+                    }
+                });
 
-				this.setState({
-					combinedLanguages: tempLanguagesArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
-					}),
-				});
-				resolve();
-			});
-		});
-	}
+                this.setState({
+                    combinedLanguages: tempLanguagesArray.sort(function (a, b) {
+                        return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+                    }),
+                });
+                resolve();
+            });
+        });
+    }
 
-	doGetCategoriesCall() {
-		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/category/tool').then(res => {
-				var tempCategoriesArray = [
-					'API',
-					'Code snippet',
-					'Container image',
-					'Dashboard',
-					'Developer stack',
-					'Directory',
-					'Docker app',
-					'Kubernetes app',
-					'Library',
-					'Notebook',
-					'Package',
-					'Platform',
-					'Repository',
-					'Service',
-					'Software',
-					'Virtual machine',
-					'Web application',
-				];
+    doGetCategoriesCall() {
+        return new Promise((resolve, reject) => {
+            axios.get(baseURL + '/api/v1/search/filter/category/tool').then(res => {
+                var tempCategoriesArray = [
+                    'API',
+                    'Code snippet',
+                    'Container image',
+                    'Dashboard',
+                    'Developer stack',
+                    'Directory',
+                    'Docker app',
+                    'Kubernetes app',
+                    'Library',
+                    'Notebook',
+                    'Package',
+                    'Platform',
+                    'Repository',
+                    'Service',
+                    'Software',
+                    'Virtual machine',
+                    'Web application',
+                ];
 
-				res.data.data[0].forEach(ca => {
-					if (!tempCategoriesArray.includes(ca) && ca !== '') {
-						tempCategoriesArray.push(ca);
-					}
-				});
+                res.data.data[0].forEach(ca => {
+                    if (!tempCategoriesArray.includes(ca) && ca !== '') {
+                        tempCategoriesArray.push(ca);
+                    }
+                });
 
-				this.setState({
-					combinedCategories: tempCategoriesArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
-					}),
-				});
-				resolve();
-			});
-		});
-	}
+                this.setState({
+                    combinedCategories: tempCategoriesArray.sort(function (a, b) {
+                        return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+                    }),
+                });
+                resolve();
+            });
+        });
+    }
 
-	doGetLicensesCall() {
-		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/search/filter/license/tool').then(res => {
-				var tempLicensesArray = [
-					'Apache License 2.0',
-					'BSD 3-Clause "New" or "Revised" license',
-					'BSD 2-Clause "Simplified" or "FreeBSD" license',
-					'GNU General Public License (GPL)',
-					'GNU Library or "Lesser" General Public License (LGPL)',
-					'MIT license',
-					'Mozilla Public License 2.0',
-					'Common Development and Distribution License',
-					'Eclipse Public License version 2.0',
-				];
+    doGetLicensesCall() {
+        return new Promise((resolve, reject) => {
+            axios.get(baseURL + '/api/v1/search/filter/license/tool').then(res => {
+                var tempLicensesArray = [
+                    'Apache License 2.0',
+                    'BSD 3-Clause "New" or "Revised" license',
+                    'BSD 2-Clause "Simplified" or "FreeBSD" license',
+                    'GNU General Public License (GPL)',
+                    'GNU Library or "Lesser" General Public License (LGPL)',
+                    'MIT license',
+                    'Mozilla Public License 2.0',
+                    'Common Development and Distribution License',
+                    'Eclipse Public License version 2.0',
+                ];
 
-				res.data.data[0].forEach(li => {
-					if (!tempLicensesArray.includes(li) && li !== '') {
-						tempLicensesArray.push(li);
-					}
-				});
+                res.data.data[0].forEach(li => {
+                    if (!tempLicensesArray.includes(li) && li !== '') {
+                        tempLicensesArray.push(li);
+                    }
+                });
 
-				this.setState({
-					combinedLicenses: tempLicensesArray.sort(function (a, b) {
-						return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
-					}),
-				});
-				resolve();
-			});
-		});
-	}
+                this.setState({
+                    combinedLicenses: tempLicensesArray.sort(function (a, b) {
+                        return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
+                    }),
+                });
+                resolve();
+            });
+        });
+    }
 
-	doGetUsersCall() {
-		return new Promise((resolve, reject) => {
-			axios.get(baseURL + '/api/v1/users').then(res => {
-				this.setState({ combinedUsers: res.data.data });
-				resolve();
-			});
-		});
-	}
+    doGetUsersCall() {
+        return new Promise((resolve, reject) => {
+            axios.get(baseURL + '/api/v1/users').then(res => {
+                this.setState({ combinedUsers: res.data.data });
+                resolve();
+            });
+        });
+    }
 
-	doSearch = e => {
-		//fires on enter on searchbar
-		if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(this.state.searchString)}`;
-	};
+    doSearch = e => {
+        //fires on enter on searchbar
+        if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(this.state.searchString)}`;
+    };
 
-	updateSearchString = searchString => {
-		this.setState({ searchString: searchString });
-	};
+    updateSearchString = searchString => {
+        this.setState({ searchString: searchString });
+    };
 
-	doModalSearch = (e, type = 'dataset', page = 0) => {
-		if (e.key === 'Enter' || e === 'click') {
-			var searchURL = '';
+    doModalSearch = (e, type = 'dataset', page = 0) => {
+        if (e.key === 'Enter' || e === 'click') {
+            var searchURL = '';
 
-			if (type === 'dataset' && page > 0) searchURL += '&datasetIndex=' + page;
-			if (type === 'tool' && page > 0) searchURL += '&toolIndex=' + page;
-			if (type === 'datause' && page > 0) searchURL += '&dataUseRegisterIndex=' + page;
-			if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
-			if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
-			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;
+            if (type === 'dataset' && page > 0) searchURL += '&datasetIndex=' + page;
+            if (type === 'tool' && page > 0) searchURL += '&toolIndex=' + page;
+            if (type === 'datause' && page > 0) searchURL += '&dataUseRegisterIndex=' + page;
+            if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
+            if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
+            if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;
 
-			axios
-				.get(baseURL + '/api/v1/search?search=' + encodeURIComponent(this.state.searchString) + searchURL, {
-					params: {
-						form: true,
-						userID: this.state.userState[0].id,
-					},
-				})
-				.then(res => {
-					this.setState({
-						datasetData: res.data.datasetResults || [],
-						toolData: res.data.toolResults || [],
-						datauseData: res.data.dataUseRegisterResults || [],
-						paperData: res.data.paperResults || [],
-						personData: res.data.personResults || [],
-						courseData: res.data.courseResults || [],
-						summary: res.data.summary || [],
-						isLoading: false,
-					});
-				});
-		}
-	};
+            axios
+                .get(baseURL + '/api/v1/search?search=' + encodeURIComponent(this.state.searchString) + searchURL, {
+                    params: {
+                        form: true,
+                        userID: this.state.userState[0].id,
+                    },
+                })
+                .then(res => {
+                    this.setState({
+                        datasetData: res.data.datasetResults || [],
+                        toolData: res.data.toolResults || [],
+                        datauseData: res.data.dataUseRegisterResults || [],
+                        paperData: res.data.paperResults || [],
+                        personData: res.data.personResults || [],
+                        courseData: res.data.courseResults || [],
+                        summary: res.data.summary || [],
+                        isLoading: false,
+                    });
+                });
+        }
+    };
 
-	addToTempRelatedObjects = (id, type, pid) => {
-		let updatedTempRelatedObjectIds = [...this.state.tempRelatedObjectIds];
-		if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some(object => object.objectId === id)) {
-			updatedTempRelatedObjectIds = updatedTempRelatedObjectIds.filter(object => object.objectId !== id);
-		} else {
-			updatedTempRelatedObjectIds.push({ objectId: id, objectType: type, pid: pid });
-		}
-		this.setState({ tempRelatedObjectIds: updatedTempRelatedObjectIds });
-	};
+    addToTempRelatedObjects = (id, type, pid) => {
+        let updatedTempRelatedObjectIds = [...this.state.tempRelatedObjectIds];
+        if (this.state.tempRelatedObjectIds && this.state.tempRelatedObjectIds.some(object => object.objectId === id)) {
+            updatedTempRelatedObjectIds = updatedTempRelatedObjectIds.filter(object => object.objectId !== id);
+        } else {
+            updatedTempRelatedObjectIds.push({ objectId: id, objectType: type, pid: pid });
+        }
+        this.setState({ tempRelatedObjectIds: updatedTempRelatedObjectIds });
+    };
 
-	addToRelatedObjects = () => {
-		let {
-			userState: [user = {}],
-		} = this.state;
-		let relatedObjectIds = [...this.state.tempRelatedObjectIds];
-		let relatedObjects = [...this.state.relatedObjects];
+    addToRelatedObjects = () => {
+        let {
+            userState: [user = {}],
+        } = this.state;
+        let relatedObjectIds = [...this.state.tempRelatedObjectIds];
+        let relatedObjects = [...this.state.relatedObjects];
 
-		let newRelatedObjects = relatedObjectIds.map(relatedObject => {
-			let newRelatedObject = {
-				...relatedObject,
-				objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId,
-				user: user.name,
-				updated: moment().format('DD MMM YYYY'),
-			};
-			return newRelatedObject;
-		});
-		this.setState({ relatedObjects: [...relatedObjects, ...newRelatedObjects] });
-		this.setState({ tempRelatedObjectIds: [] });
-	};
+        let newRelatedObjects = relatedObjectIds.map(relatedObject => {
+            let newRelatedObject = {
+                ...relatedObject,
+                objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId,
+                user: user.name,
+                updated: moment().format('DD MMM YYYY'),
+            };
+            return newRelatedObject;
+        });
+        this.setState({ relatedObjects: [...relatedObjects, ...newRelatedObjects] });
+        this.setState({ tempRelatedObjectIds: [] });
+    };
 
-	clearRelatedObjects = () => {
-		this.setState({ tempRelatedObjectIds: [] });
-	};
+    clearRelatedObjects = () => {
+        this.setState({ tempRelatedObjectIds: [] });
+    };
 
-	removeObject = (id, type, datasetid) => {
-		let countOfRelatedObjects = this.state.relatedObjects.length;
-		let newRelatedObjects = [...this.state.relatedObjects].filter(
-			obj => obj.objectId !== id && obj.objectId !== id.toString() && obj.pid !== id
-		);
+    removeObject = (id, type, datasetid) => {
+        let countOfRelatedObjects = this.state.relatedObjects.length;
+        let newRelatedObjects = [...this.state.relatedObjects].filter(
+            obj => obj.objectId !== id && obj.objectId !== id.toString() && obj.pid !== id
+        );
 
-		//if an item was not removed try removing by datasetid for retro linkages
-		if (countOfRelatedObjects <= newRelatedObjects.length && type === 'dataset') {
-			newRelatedObjects = [...this.state.relatedObjects].filter(obj => obj.objectId !== datasetid && obj.objectId !== datasetid.toString());
-		}
-		this.setState({ relatedObjects: newRelatedObjects, didDelete: true });
-	};
+        //if an item was not removed try removing by datasetid for retro linkages
+        if (countOfRelatedObjects <= newRelatedObjects.length && type === 'dataset') {
+            newRelatedObjects = [...this.state.relatedObjects].filter(
+                obj => obj.objectId !== datasetid && obj.objectId !== datasetid.toString()
+            );
+        }
+        this.setState({ relatedObjects: newRelatedObjects, didDelete: true });
+    };
 
-	updateDeleteFlag = () => {
-		this.setState({ didDelete: false });
-	};
+    updateDeleteFlag = () => {
+        this.setState({ didDelete: false });
+    };
 
-	toggleDrawer = () => {
-		this.setState(prevState => {
-			if (prevState.showDrawer === true) {
-				this.searchBar.current.getNumberOfUnreadMessages();
-			}
-			return { showDrawer: !prevState.showDrawer };
-		});
-	};
+    toggleDrawer = () => {
+        this.setState(prevState => {
+            if (prevState.showDrawer === true) {
+                this.searchBar.current.getNumberOfUnreadMessages();
+            }
+            return { showDrawer: !prevState.showDrawer };
+        });
+    };
 
-	toggleModal = (showEnquiry = false, context = {}) => {
-		this.setState(prevState => {
-			return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
-		});
-	};
+    toggleModal = (showEnquiry = false, context = {}) => {
+        this.setState(prevState => {
+            return { showModal: !prevState.showModal, context, showDrawer: showEnquiry };
+        });
+    };
 
-	render() {
-		const {
-			data,
-			isEdit,
-			combinedTopic,
-			combinedFeatures,
-			combinedLanguages,
-			combinedCategories,
-			combinedLicenses,
-			combinedUsers,
-			isLoading,
-			userState,
-			searchString,
-			datasetData,
-			toolData,
-			datauseData,
-			paperData,
-			personData,
-			courseData,
-			summary,
-			relatedObjects,
-			didDelete,
-			showDrawer,
-			showModal,
-			context,
-		} = this.state;
+    render() {
+        const {
+            data,
+            isEdit,
+            combinedTopic,
+            combinedFeatures,
+            combinedLanguages,
+            combinedCategories,
+            combinedLicenses,
+            combinedUsers,
+            isLoading,
+            userState,
+            searchString,
+            datasetData,
+            toolData,
+            datauseData,
+            paperData,
+            personData,
+            courseData,
+            summary,
+            relatedObjects,
+            didDelete,
+            showDrawer,
+            showModal,
+            context,
+        } = this.state;
 
-		if (isLoading) {
-			return (
-				<Container>
-					<Loading />
-				</Container>
-			);
-		}
+        if (isLoading) {
+            return (
+                <Container>
+                    <Loading />
+                </Container>
+            );
+        }
 
-		return (
-			<Sentry.ErrorBoundary fallback={<ErrorModal />}>
-				<div>
-					<SearchBar
-						ref={this.searchBar}
-						doSearchMethod={this.doSearch}
-						doUpdateSearchString={this.updateSearchString}
-						doToggleDrawer={this.toggleDrawer}
-						userState={userState}
-					/>
-					<AddEditToolForm
-						data={data}
-						isEdit={isEdit}
-						combinedTopic={combinedTopic}
-						combinedFeatures={combinedFeatures}
-						combinedLanguages={combinedLanguages}
-						combinedCategories={combinedCategories}
-						combinedLicenses={combinedLicenses}
-						combinedUsers={combinedUsers}
-						userState={userState}
-						searchString={searchString}
-						doSearchMethod={this.doModalSearch}
-						doUpdateSearchString={this.updateSearchString}
-						datasetData={datasetData}
-						toolData={toolData}
-						datauseData={datauseData}
-						paperData={paperData}
-						personData={personData}
-						courseData={courseData}
-						summary={summary}
-						doAddToTempRelatedObjects={this.addToTempRelatedObjects}
-						tempRelatedObjectIds={this.state.tempRelatedObjectIds}
-						doClearRelatedObjects={this.clearRelatedObjects}
-						doAddToRelatedObjects={this.addToRelatedObjects}
-						doRemoveObject={this.removeObject}
-						relatedObjects={relatedObjects}
-						didDelete={didDelete}
-						updateDeleteFlag={this.updateDeleteFlag}
-					/>
-					<SideDrawer open={showDrawer} closed={this.toggleDrawer}>
-						<UserMessages
-							userState={userState[0]}
-							closed={this.toggleDrawer}
-							toggleModal={this.toggleModal}
-							drawerIsOpen={this.state.showDrawer}
-						/>
-					</SideDrawer>
+        return (
+            <Sentry.ErrorBoundary fallback={<ErrorModal />}>
+                <div>
+                    <SearchBar
+                        ref={this.searchBar}
+                        doSearchMethod={this.doSearch}
+                        doUpdateSearchString={this.updateSearchString}
+                        doToggleDrawer={this.toggleDrawer}
+                        userState={userState}
+                    />
+                    <AddEditToolForm
+                        data={data}
+                        isEdit={isEdit}
+                        combinedTopic={combinedTopic}
+                        combinedFeatures={combinedFeatures}
+                        combinedLanguages={combinedLanguages}
+                        combinedCategories={combinedCategories}
+                        combinedLicenses={combinedLicenses}
+                        combinedUsers={combinedUsers}
+                        userState={userState}
+                        searchString={searchString}
+                        doSearchMethod={this.doModalSearch}
+                        doUpdateSearchString={this.updateSearchString}
+                        datasetData={datasetData}
+                        toolData={toolData}
+                        datauseData={datauseData}
+                        paperData={paperData}
+                        personData={personData}
+                        courseData={courseData}
+                        summary={summary}
+                        doAddToTempRelatedObjects={this.addToTempRelatedObjects}
+                        tempRelatedObjectIds={this.state.tempRelatedObjectIds}
+                        doClearRelatedObjects={this.clearRelatedObjects}
+                        doAddToRelatedObjects={this.addToRelatedObjects}
+                        doRemoveObject={this.removeObject}
+                        relatedObjects={relatedObjects}
+                        didDelete={didDelete}
+                        updateDeleteFlag={this.updateDeleteFlag}
+                    />
+                    <SideDrawer open={showDrawer} closed={this.toggleDrawer}>
+                        <UserMessages
+                            userState={userState[0]}
+                            closed={this.toggleDrawer}
+                            toggleModal={this.toggleModal}
+                            drawerIsOpen={this.state.showDrawer}
+                        />
+                    </SideDrawer>
 
-					<DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
-				</div>
-			</Sentry.ErrorBoundary>
-		);
-	}
+                    <DataSetModal open={showModal} context={context} closed={this.toggleModal} userState={userState[0]} />
+                </div>
+            </Sentry.ErrorBoundary>
+        );
+    }
 }
 
 export default AddEditToolPage;

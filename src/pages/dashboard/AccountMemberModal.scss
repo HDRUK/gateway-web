@@ -2,139 +2,139 @@
 @import '../../css/typography';
 
 .modal {
-	p,
-	li {
-		@include font-source(14px, $gray-dark);
-	}
+    p,
+    li {
+        @include font-source(14px, $gray-dark);
+    }
 }
 
 .accountMembersModal {
-	box-sizing: border-box;
+    box-sizing: border-box;
 
-	@media only screen and (max-width: 1323px) {
-		.modal-dialog {
-			min-width: 640px;
-			transform: translate(0%, 50%) !important;
-		}
-	}
+    @media only screen and (max-width: 1323px) {
+        .modal-dialog {
+            min-width: 640px;
+            transform: translate(0%, 50%) !important;
+        }
+    }
 
-	@media only screen and (min-width: 1324px) {
-		.modal-dialog {
-			min-width: 940px;
-			transform: translate(0%, 50%) !important;
-		}
-	}
+    @media only screen and (min-width: 1324px) {
+        .modal-dialog {
+            min-width: 940px;
+            transform: translate(0%, 50%) !important;
+        }
+    }
 
-	&-header {
-		display: flex;
-		flex-flow: column nowrap;
-		width: 100%;
-		padding: 32px 32px 0 32px;
+    &-header {
+        display: flex;
+        flex-flow: column nowrap;
+        width: 100%;
+        padding: 32px 32px 0 32px;
 
-		&--wrap {
-			padding-bottom: 12px;
+        &--wrap {
+            padding-bottom: 12px;
 
-			p {
-				margin-bottom: 0;
-				color: $gray-800;
-				font-size: 14px;
-			}
-		}
-	}
+            p {
+                margin-bottom: 0;
+                color: $gray-800;
+                font-size: 14px;
+            }
+        }
+    }
 
-	&-head {
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: space-between;
-		margin-bottom: 16px;
+    &-head {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        margin-bottom: 16px;
 
-		&--close {
-			width: 20px;
-			height: 20px;
-			fill: $indigo;
-			&:hover {
-				cursor: pointer;
-			}
-		}
-	}
+        &--close {
+            width: 20px;
+            height: 20px;
+            fill: $indigo;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
 
-	&-body {
-		width: 100%;
-		padding: 12px 32px 16px 32px;
+    &-body {
+        width: 100%;
+        padding: 12px 32px 16px 32px;
 
-		label {
-			display: flex;
-			width: 100%;
-			flex-flow: row nowrap;
-			justify-content: space-between;
-			margin: 0;
-		}
+        label {
+            display: flex;
+            width: 100%;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            margin: 0;
+        }
 
-		&--item {
-			padding: 16px;
+        &--item {
+            padding: 16px;
 
-			h2 {
-				margin-bottom: 10px;
-			}
-		}
-	}
+            h2 {
+                margin-bottom: 10px;
+            }
+        }
+    }
 
-	&-footer {
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: flex-end;
-		align-items: center;
-		width: 100%;
-		background: $white;
-		padding-top: 32px;
+    &-footer {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        background: $white;
+        padding-top: 32px;
 
-		&--wrap {
-			display: flex;
-			flex-flow: row nowrap;
-			padding: 0 32px 32px 32px;
+        &--wrap {
+            display: flex;
+            flex-flow: row nowrap;
+            padding: 0 32px 32px 32px;
 
-			button {
-				margin-left: 8px;
-			}
-		}
-	}
+            button {
+                margin-left: 8px;
+            }
+        }
+    }
 
-	.owner {
-		padding: 8px 10px 8px 10px;
-		margin: 8px 0 16px 0;
-		background-color: $gray-200;
-		border-radius: 4px;
+    .owner {
+        padding: 8px 10px 8px 10px;
+        margin: 8px 0 16px 0;
+        background-color: $gray-200;
+        border-radius: 4px;
 
-		.sla {
-			display: inline-block;
-			margin: 0;
-		}
-	}
+        .sla {
+            display: inline-block;
+            margin: 0;
+        }
+    }
 
-	.contributors {
-		margin: 8px 0 16px 0;
-	}
+    .contributors {
+        margin: 8px 0 16px 0;
+    }
 }
 
 .addMemberRow {
-	padding-left: 45px;
-	align-items: center;
+    padding-left: 45px;
+    align-items: center;
 }
 
 .roleDropDown {
-	height: 40px;
+    height: 40px;
 }
 
 .accountMemberDropdown {
-	width: 200% !important;
-	top: -4px !important;
-	left: -100% !important;
+    width: 200% !important;
+    top: -4px !important;
+    left: -100% !important;
 }
 
 .accountMemberDropdownItem {
-	overflow: hidden;
+    overflow: hidden;
 }
 
 .form-group .is-invalid {
-	border: 2px solid #dc3645 !important;
+    border: 2px solid #dc3645 !important;
 }

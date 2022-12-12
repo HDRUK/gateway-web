@@ -12,9 +12,13 @@ import { AuthProvider } from './context/AuthContext';
 import i18n from './i18n';
 import { mockUser } from './services/auth/mockData';
 import { theme } from './configs/theme';
+import 'jest-date-mock';
+import { DEFAULT_THEME } from 'hdruk-react-core';
+import { merge } from 'lodash';
+import { CmsProvider } from './context/CmsContext';
 
 Enzyme.configure({
-	adapter: new Adapter(),
+    adapter: new Adapter(),
 });
 
 global.React = React;
@@ -23,68 +27,99 @@ global.render = render;
 global.mount = mount;
 global.fireEvent = rtl.fireEvent;
 
+global.assertServiceMutateAsyncCalledWithDifferentArgs = async (rendered, mock, mutateArgs, spyArgs) => {
+    const { waitFor, result } = rendered;
+
+    await waitFor(() => result.current.mutateAsync);
+
+    result.current.mutateAsync(mutateArgs).then(() => {
+        expect(mock).toHaveBeenCalledWith(spyArgs);
+    });
+};
+
 global.assertServiceMutateAsyncCalled = async (rendered, mock, ...args) => {
-	const { waitFor, result } = rendered;
+    const { waitFor, result } = rendered;
 
-	await waitFor(() => result.current.mutateAsync);
+    await waitFor(() => result.current.mutateAsync);
 
-	result.current.mutateAsync(args).then(() => {
-		expect(mock).toHaveBeenCalledWith(args);
-	});
+    result.current.mutateAsync(args).then(() => {
+        expect(mock).toHaveBeenCalledWith(args);
+    });
+};
+
+global.assertServiceMutateAsyncCalledWithArgs = async (rendered, mock, asyncArgs, serviceArgs) => {
+    const { waitFor, result } = rendered;
+
+    await waitFor(() => result.current.mutateAsync);
+
+    result.current.mutateAsync(asyncArgs).then(() => {
+        expect(mock).toHaveBeenCalledWith(serviceArgs);
+    });
 };
 
 global.assertServiceRefetchCalled = async (rendered, mock, ...args) => {
-	const { waitFor, result } = rendered;
+    const { waitFor, result } = rendered;
 
-	await waitFor(() => result.current.refetch);
+    await waitFor(() => result.current.refetch);
 
-	result.current.refetch(args).then(() => {
-		expect(mock).toHaveBeenCalledWith(args);
-	});
+    result.current.refetch(args).then(() => {
+        expect(mock).toHaveBeenCalledWith(args);
+    });
 };
 
-global.createPortalContainer = () => {
-	const div = document.createElement('div');
-	document.body.appendChild(div);
+global.redefineWindow = () => {
+    const oldWindowLocation = window.location;
 
-	return div;
-};
+    delete window.location;
 
-global.removePortalContainer = div => {
-	div.parentNode.removeChild(div);
+    window.location = Object.defineProperties(
+        {},
+        {
+            ...Object.getOwnPropertyDescriptors(oldWindowLocation),
+            assign: {
+                configurable: true,
+                value: jest.fn(),
+            },
+            hostname: {
+                value: 'web.www.healthdatagateway.org',
+            },
+        }
+    );
 };
 
 const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			retry: false,
-		},
-	},
+    defaultOptions: {
+        queries: {
+            retry: false,
+        },
+    },
 });
 
 global.Providers = ({ children }) => {
-	return (
-		<I18nextProvider i18n={i18n}>
-			<Suspense fallback='Loading'>
-				<ThemeProvider theme={theme}>
-					<AuthProvider value={{ userState: mockUser.data }}>
-						<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-					</AuthProvider>
-				</ThemeProvider>
-			</Suspense>
-		</I18nextProvider>
-	);
+    return (
+        <I18nextProvider i18n={i18n}>
+            <Suspense fallback='Loading'>
+                <ThemeProvider theme={merge(theme, DEFAULT_THEME)}>
+                    <AuthProvider value={{ userState: mockUser.data }}>
+                        <QueryClientProvider client={queryClient}>
+                            <CmsProvider>{children}</CmsProvider>
+                        </QueryClientProvider>
+                    </AuthProvider>
+                </ThemeProvider>
+            </Suspense>
+        </I18nextProvider>
+    );
 };
 
 global.renderHook = renderHook;
 
 global.document.createRange = () => ({
-	setStart: () => {},
-	setEnd: () => {},
-	commonAncestorContainer: {
-		nodeName: 'BODY',
-		ownerDocument: document,
-	},
+    setStart: () => {},
+    setEnd: () => {},
+    commonAncestorContainer: {
+        nodeName: 'BODY',
+        ownerDocument: document,
+    },
 });
 
 // global.console = {
@@ -95,8 +130,11 @@ global.document.createRange = () => ({
 // 	debug: console.debug,
 // };
 
-
 Object.defineProperty(window, 'location', {
-	writable: true,
-	value: { assign: jest.fn() },
+    writable: true,
+    value: {
+        href: 'https://www.healthdatagateway.org',
+        assign: jest.fn(),
+        hostname: 'web.www.healthdatagateway.org',
+    },
 });
