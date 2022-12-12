@@ -1,68 +1,72 @@
 import { act, render, waitFor } from '@testing-library/react';
-import React from 'react';
 import SortDropdown from '.';
 
 const mockOnSort = jest.fn();
 
 const props = {
-	onSort: mockOnSort,
-	options: ['relevance', 'recentlyadded'],
+    onSort: mockOnSort,
+    options: ['relevance', 'recentlyadded'],
+    className: 'additional-classname',
 };
 
 let wrapper;
 
 describe('Given the SortDropdown component', () => {
-	describe('When it is rendered', () => {
-		beforeAll(() => {
-			act(() => {
-				wrapper = render(<SortDropdown {...props} />, {
-					wrapper: Providers,
-				});
+    describe('When it is rendered', () => {
+        beforeAll(() => {
+            act(() => {
+                wrapper = render(<SortDropdown {...props} />, {
+                    wrapper: Providers,
+                });
 
-				const input = wrapper.container.querySelector('button');
+                const input = wrapper.container.querySelector('button');
 
-				fireEvent.click(input);
-			});
-		});
+                fireEvent.click(input);
+            });
+        });
 
-		it('Then matches the previous snapshot', () => {
-			expect(wrapper.container).toMatchSnapshot();
-		});
+        it('Then matches the previous snapshot', () => {
+            expect(wrapper.container).toMatchSnapshot();
+        });
 
-		describe('When it is selected', () => {
-			beforeAll(() => {
-				const link = wrapper.container.querySelectorAll('a')[1];
+        it('Then has the correct className', () => {
+            expect(wrapper.container.querySelector('.additional-classname')).toBeTruthy();
+        });
 
-				fireEvent.click(link);
-			});
+        describe('When it is selected', () => {
+            beforeAll(() => {
+                const link = wrapper.container.querySelectorAll('a')[1];
 
-			it('Then calls onSort', async () => {
-				expect(mockOnSort).toHaveBeenCalledWith({ direction: 'asc', value: 'recentlyadded' });
-			});
-		});
+                fireEvent.click(link);
+            });
 
-		describe('When it allows sort direction', () => {
-			beforeAll(async () => {
-				wrapper = render(<SortDropdown {...props} allowDirection />, {
-					wrapper: Providers,
-				});
-			});
+            it('Then calls onSort', async () => {
+                expect(mockOnSort).toHaveBeenCalledWith({ direction: 'asc', value: 'recentlyadded' });
+            });
+        });
 
-			it('Then matches the previous snapshot', () => {
-				expect(wrapper.container).toMatchSnapshot();
-			});
+        describe('When it allows sort direction', () => {
+            beforeAll(async () => {
+                wrapper = render(<SortDropdown {...props} allowDirection />, {
+                    wrapper: Providers,
+                });
+            });
 
-			it('Then has the correct sort icon', () => {
-				expect(wrapper.container.querySelector('.ui-SortDropdown__asc')).toBeTruthy();
-			});
+            it('Then matches the previous snapshot', () => {
+                expect(wrapper.container).toMatchSnapshot();
+            });
 
-			it('Then has the correct sort icon on toggle', () => {
-				const icon = wrapper.container.querySelector('.ui-SortDropdown__asc');
+            it('Then has the correct sort icon', () => {
+                expect(wrapper.container.querySelector('.ui-SortDropdown__asc')).toBeTruthy();
+            });
 
-				fireEvent.click(icon);
+            it('Then has the correct sort icon on toggle', () => {
+                const icon = wrapper.container.querySelector('.ui-SortDropdown__asc');
 
-				expect(wrapper.container.querySelector('.ui-SortDropdown__desc')).toBeTruthy();
-			});
-		});
-	});
+                fireEvent.click(icon);
+
+                expect(wrapper.container.querySelector('.ui-SortDropdown__desc')).toBeTruthy();
+            });
+        });
+    });
 });

@@ -2,51 +2,61 @@
 
 exports[`Given the TypeaheadAsyncCustom component When it is rendered without default value Then should match the snapshot 1`] = `
 <div>
-  <div
-    class="ui-Input ui-Typeahead css-1pvfmkj css-1dax17f-TypeaheadAsyncCustom input-group"
-  >
+  <div>
     <div
-      class="css-j8o1xl-Input input-group-prepend"
-    >
-      <button
-        fill="purple"
-        name="search"
-      >
-        Icon
-      </button>
-    </div>
-    <div
-      class="rbt"
-      style="outline: none; position: relative;"
-      tabindex="-1"
+      class="ui-Box emotion-0"
     >
       <div
-        class="rbt-input-multi form-control rbt-input"
-        tabindex="-1"
+        class="emotion-1 form-group"
       >
         <div
-          class="rbt-input-wrapper"
+          class="ui-Input ui-Typeahead emotion-2 input-group"
         >
           <div
-            style="display: flex; flex: 1; height: 100%; position: relative;"
+            class="emotion-3 input-group-prepend"
           >
-            <input
-              aria-autocomplete="list"
-              aria-haspopup="listbox"
-              autocomplete="off"
-              class="rbt-input-main"
-              style="background-color: transparent; border: 0px; box-shadow: none; cursor: inherit; outline: none; padding: 0px; width: 100%; z-index: 1;"
-              type="text"
-              value=""
-            />
-            <input
-              aria-hidden="true"
-              class="rbt-input-hint"
-              readonly=""
-              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
+            <button
+              fill="green700"
+              svg="[object Object]"
+            >
+              Icon
+            </button>
+          </div>
+          <div
+            class="rbt"
+            style="outline: none; position: relative;"
+            tabindex="-1"
+          >
+            <div
+              class="rbt-input-multi form-control rbt-input"
               tabindex="-1"
-              value=""
-            />
+            >
+              <div
+                class="rbt-input-wrapper"
+              >
+                <div
+                  style="display: flex; flex: 1; height: 100%; position: relative;"
+                >
+                  <input
+                    aria-autocomplete="list"
+                    aria-haspopup="listbox"
+                    autocomplete="off"
+                    class="rbt-input-main"
+                    style="background-color: transparent; border: 0px; box-shadow: none; cursor: inherit; outline: none; padding: 0px; width: 100%; z-index: 1;"
+                    type="text"
+                    value=""
+                  />
+                  <input
+                    aria-hidden="true"
+                    class="rbt-input-hint"
+                    readonly=""
+                    style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
+                    tabindex="-1"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

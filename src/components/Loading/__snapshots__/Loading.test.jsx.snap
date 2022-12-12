@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Loading component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="mt-2 row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="rectangle"
+      >
+        <div
+          class="gray800-14"
+          style="text-align: center;"
+        >
+          <img
+            class=""
+            src=""
+          />
+        </div>
+        <div
+          class="gray800-14"
+          style="text-align: center;"
+        >
+          <p>
+            loading...
+          </p>
+          <p />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

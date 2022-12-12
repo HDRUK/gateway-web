@@ -1,16 +1,15 @@
-import React from 'react';
-import SortDropdown from '../../../../components/SortDropdown';
+import { SortDropdown } from 'components';
 
 const PapersSearchSort = ({ sort, onSort, search, ...outerProps }) => {
-	return (
-		<SortDropdown
-			onSort={onSort}
-			defaultValue={search === '' ? 'sortbyyear' : 'relevance'}
-			value={sort}
-			options={['relevance', 'popularity', 'sortbyyear', 'resources']}
-			{...outerProps}
-		/>
-	);
+    return (
+        <SortDropdown
+            onSort={onSort}
+            defaultValue={search === '' ? 'sortbyyear' : 'relevance'}
+            value={sort}
+            options={['relevance', 'popularity', 'sortbyyear', 'resources']}
+            {...outerProps}
+        />
+    );
 };
 
 export default PapersSearchSort;

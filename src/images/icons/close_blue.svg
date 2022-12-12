@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="-5 -5 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon / close</title>
+  <circle cx="8.75" cy="8.75" r="9" stroke="#4682B4" stroke-width="3" fill="#4682B4" />
+   
+  <line x1="6" y1="6" x2="12" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="12" y1="6" x2="6" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <!-- <defs>
+        <polygon id="close" points="19 3.58578644 20.4142136 5 13.415 12 20.4142136 19 19 20.4142136 12 13.415 5 20.4142136 3.58578644 19 10.585 12 3.58578644 5 5 3.58578644 12 10.585"></polygon>
+    </defs> -->
+    
+    <g id="icon-/-close" stroke="#fff" stroke-width="1" fill="#fff" fill-opacity="1" fill-rule="evenodd"> 
+        <mask id="mask-close" fill="white">
+            <use xlink:href="#close"></use>
+        </mask>
+        <use id="Combined-Shape" fill="#00288b" fill-opacity="0" fill-rule="nonzero" xlink:href="#close"></use>
+        <!-- <g id="colour/purple" mask="url(#mask-close)" fill="#475DA7"> -->
+        <g id="colour/white" mask="url(#mask-close)" fill="##ffffff">
+            <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+        </g>
+    </g>
+</svg> 

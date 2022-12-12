@@ -2,33 +2,37 @@
 
 exports[`Given the ListInfo component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
-  <ul
-    class="ui-ListInfo additional-classname css-1sivg29 css-1jupbku-ListInfo"
+  <div
+    class="ui-Box emotion-0"
   >
-    <li
-      class="css-ifzpa6"
+    <ul
+      class="ui-ListInfo additional-classname emotion-1"
     >
-      <div
-        class="css-112bk1i"
+      <li
+        class="emotion-2"
       >
-        Label 1
-      </div>
-      <div>
-        Value 1
-      </div>
-    </li>
-    <li
-      class="css-ifzpa6"
-    >
-      <div
-        class="css-112bk1i"
+        <div
+          class="emotion-3"
+        >
+          Label 1
+        </div>
+        <div>
+          Value 1
+        </div>
+      </li>
+      <li
+        class="emotion-2"
       >
-        Label 2
-      </div>
-      <div>
-        Value 2
-      </div>
-    </li>
-  </ul>
+        <div
+          class="emotion-3"
+        >
+          Label 2
+        </div>
+        <div>
+          Value 2
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
 `;

@@ -1,383 +1,410 @@
-import React, { useState, useEffect, createRef } from 'react';
 import * as Sentry from '@sentry/react';
-import axios from 'axios';
-import { baseURL } from '../../../configs/url.config';
-import { isEmpty, isArray } from 'lodash';
-
+import { isArray, isEmpty } from 'lodash';
+import moment from 'moment';
+import { createRef, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import EditFormDataUse from './EditDataUseForm';
-import SearchBar from '../../commonComponents/searchBar/SearchBar';
+import { NotificationManager } from 'react-notifications';
+
+import { dataUseRegistersService, datasetsService, papersService, searchService, toolsService, usersService } from 'services';
+
+import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../../commonComponents/errorModal/ErrorModal';
+import Loading from '../../commonComponents/Loading';
+import SearchBar from '../../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../../commonComponents/userMessages/UserMessages';
-import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
-import Loading from '../../commonComponents/Loading';
-import moment from 'moment';
-import SaveModal from '../SaveEditModal';
+import EditFormDataUse from './EditDataUseForm';
 
 const EditDataUse = props => {
-	const [data, setData] = useState([]);
-	const [showModal, setShowModal] = useState(false);
-	const [searchBar] = useState(createRef());
-	const [searchString, setSearchString] = useState('');
-	const [showDrawer, setShowDrawer] = useState(false);
-	const [context, setContext] = useState({});
-	const [isLoading, setIsLoading] = useState(true);
-	const [keywords, setKeywords] = useState([]);
-	const [datasetData, setDatasetData] = useState([]);
-	const [toolData, setToolData] = useState([]);
-	const [datauseData, setDatauseData] = useState([]);
-	const [paperData, setPaperData] = useState([]);
-	const [personData, setPersonData] = useState([]);
-	const [courseData, setCourseData] = useState([]);
-	const [summary, setSummary] = useState([]);
-	const [tempRelatedObjectIds, setTempRelatedObjectIds] = useState([]);
-	const [relatedObjects, setRelatedObjects] = useState([]);
-	const [didDelete, setDidDelete] = useState(false);
-	const [safeOuputsArray, setSafeOuputsArray] = useState(['']);
-	const [safeOuputsToolList, setSafeOuputsToolList] = useState([]);
-	const [safeOuputsPaperList, setSafeOuputsPaperList] = useState([]);
-	const [applicantsArray, setApplicantsArray] = useState(['']);
-	const [applicantsList, setApplicantsList] = useState([]);
-	const [datasetsArray, setDatasetsArray] = useState(['']);
-	const [datasetsList, setDatasetsList] = useState([]);
-	const [disableInput, setDisableInput] = useState(false);
-	const [userState] = useState(
-		props.userState || [
-			{
-				loggedIn: false,
-				role: 'Reader',
-				id: null,
-				name: null,
-			},
-		]
-	);
+    const [data, setData] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [searchBar] = useState(createRef());
+    const [searchString, setSearchString] = useState('');
+    const [showDrawer, setShowDrawer] = useState(false);
+    const [context, setContext] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [keywords, setKeywords] = useState([]);
+    const [datasetData, setDatasetData] = useState([]);
+    const [toolData, setToolData] = useState([]);
+    const [datauseData, setDatauseData] = useState([]);
+    const [paperData, setPaperData] = useState([]);
+    const [personData, setPersonData] = useState([]);
+    const [courseData, setCourseData] = useState([]);
+    const [summary, setSummary] = useState([]);
+    const [tempRelatedObjectIds, setTempRelatedObjectIds] = useState([]);
+    const [relatedObjects, setRelatedObjects] = useState([]);
+    const [didDelete, setDidDelete] = useState(false);
+    const [safeOuputsArray, setSafeOuputsArray] = useState(['']);
+    const [safeOuputsToolList, setSafeOuputsToolList] = useState([]);
+    const [safeOuputsPaperList, setSafeOuputsPaperList] = useState([]);
+    const [applicantsArray, setApplicantsArray] = useState(['']);
+    const [applicantsList, setApplicantsList] = useState([]);
+    const [datasetsArray, setDatasetsArray] = useState(['']);
+    const [datasetsList, setDatasetsList] = useState([]);
+    const [disableInput, setDisableInput] = useState(false);
+    const [userState] = useState(
+        props.userState || [
+            {
+                loggedIn: false,
+                role: 'Reader',
+                id: null,
+                name: null,
+            },
+        ]
+    );
 
-	useEffect(async () => {
-		setIsLoading(true);
-		await Promise.all([
-			doGetKeywordsCall(),
-			doGetUsersCall(),
-			doGetDatasetsCall(),
-			doGetSafeOutputsToolCall(),
-			doGetSafeOutputsPaperCall(),
-		]);
-		axios.get(`${baseURL}/api/v2/data-use-registers/${props.match.params.datauseID}?isEdit=true`).then(res => {
-			setData(res.data);
-			setRelatedObjects(res.data.relatedObjects ? res.data.relatedObjects : []);
-			let safeOutputs = [];
-			res.data.gatewayOutputsPapersInfo.forEach(output => {
-				safeOutputs.push({ id: output.id, name: output.name });
-			});
-			res.data.gatewayOutputsToolsInfo.forEach(output => {
-				safeOutputs.push({ id: output.id, name: output.name });
-			});
-			res.data.nonGatewayOutputs.forEach(output => {
-				safeOutputs.push({ id: 'nonGateway', name: output });
-			});
+    const dataUseRegistersRequest = dataUseRegistersService.useGetDataUseRegisters(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
-			setSafeOuputsArray(!isEmpty(safeOutputs) ? safeOutputs : [{ id: '', name: '' }]);
+    const dataUseRegisterRequest = dataUseRegistersService.useGetDataUseRegister(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
-			let applicants = [];
-			res.data.gatewayApplicants.forEach(gatewayApplicant => {
-				applicants.push({ id: gatewayApplicant.id, name: `${gatewayApplicant.firstname} ${gatewayApplicant.lastname}` });
-			});
-			res.data.nonGatewayApplicants.forEach(nonGatewayApplicant => {
-				applicants.push({ id: 'nonGateway', name: nonGatewayApplicant });
-			});
-			setApplicantsArray(!isEmpty(applicants) ? applicants : []);
+    const usersRequest = usersService.useGetUsers(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
-			let datasets = [];
-			res.data.gatewayDatasetsInfo.forEach(gatewayDataset => {
-				if (isArray(gatewayDataset)) {
-					datasets.push({ pid: gatewayDataset[0].pid, name: gatewayDataset[0].name });
-				} else {
-					datasets.push({ pid: gatewayDataset.pid, name: gatewayDataset.name });
-				}
-			});
-			res.data.nonGatewayDatasets.forEach(nonGatewayDataset => {
-				datasets.push({ pid: 'nonGateway', name: nonGatewayDataset });
-			});
-			setDatasetsArray(!isEmpty(datasets) ? datasets : [{ pid: '', name: '' }]);
+    const toolsRequest = toolsService.useGetTools(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
-			setDisableInput(getUserRoles(res.data.publisher));
-			setIsLoading(false);
-		});
-	}, []);
+    const papersRequest = papersService.useGetPapers(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
-	const getUserRoles = publisher => {
-		let { teams } = userState[0];
-		let foundTeam = teams.filter(team => team._id === publisher);
-		if (isEmpty(teams) || isEmpty(foundTeam)) {
-			return true;
-		}
+    const datasetsRequest = datasetsService.useGetDatasets(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
-		return !foundTeam[0].roles.some(role => ['manager', 'reviewer'].includes(role));
-	};
+    const searchRequest = searchService.useGetSearch(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
 
-	const doGetUsersCall = () => {
-		return new Promise(resolve => {
-			axios.get(baseURL + '/api/v1/users').then(res => {
-				setApplicantsList(res.data.data);
-				resolve();
-			});
-		});
-	};
+    useEffect(() => {
+        const init = async () => {
+            setIsLoading(true);
 
-	const doGetDatasetsCall = () => {
-		return new Promise(resolve => {
-			axios
-				.get(`${baseURL}/api/v2/datasets`, {
-					params: {
-						activeflag: 'active',
-						fields: 'pid,name,',
-					},
-				})
-				.then(res => {
-					setDatasetsList(res.data.datasets);
-					resolve();
-				});
-		});
-	};
+            await Promise.all([
+                doGetKeywordsCall(),
+                doGetUsersCall(),
+                doGetDatasetsCall(),
+                doGetSafeOutputsToolCall(),
+                doGetSafeOutputsPaperCall(),
+            ]);
 
-	const doGetSafeOutputsToolCall = () => {
-		return new Promise(resolve => {
-			axios
-				.get(`${baseURL}/api/v2/tools`, {
-					params: {
-						activeflag: 'active',
-						fields: 'id,name,',
-					},
-				})
-				.then(res => {
-					setSafeOuputsToolList(res.data.data);
-					resolve();
-				});
-		});
-	};
+            dataUseRegisterRequest.mutateAsync(props.match.params.datauseID).then(res => {
+                setData(res.data);
+                setRelatedObjects(res.data.relatedObjects ? res.data.relatedObjects : []);
 
-	const doGetSafeOutputsPaperCall = () => {
-		return new Promise(resolve => {
-			axios
-				.get(`${baseURL}/api/v2/papers`, {
-					params: {
-						activeflag: 'active',
-						fields: 'id,name,',
-					},
-				})
-				.then(res => {
-					setSafeOuputsPaperList(res.data.data);
-					resolve();
-				});
-		});
-	};
+                const safeOutputs = [];
+                res.data.gatewayOutputsPapersInfo.forEach(output => {
+                    safeOutputs.push({ id: output.id, name: output.name });
+                });
 
-	let showError = false;
+                res.data.gatewayOutputsToolsInfo.forEach(output => {
+                    safeOutputs.push({ id: output.id, name: output.name });
+                });
 
-	const showModalHandler = () => {
-		showError = true;
-	};
+                res.data.nonGatewayOutputs.forEach(output => {
+                    safeOutputs.push({ id: 'nonGateway', name: output });
+                });
 
-	const hideModalHandler = props => {
-		showError = false;
-	};
+                setSafeOuputsArray(!isEmpty(safeOutputs) ? safeOutputs : [{ id: '', name: '' }]);
 
-	const doSearch = e => {
-		//fires on enter on searchbar
-		if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(searchString)}`;
-	};
+                const applicants = [];
 
-	const updateSearchString = searchString => {
-		setSearchString(searchString);
-	};
+                res.data.gatewayApplicants.forEach(gatewayApplicant => {
+                    applicants.push({ id: gatewayApplicant.id, name: `${gatewayApplicant.firstname} ${gatewayApplicant.lastname}` });
+                });
 
-	const doModalSearch = (e, type = 'dataset', page = 0) => {
-		if (e.key === 'Enter' || e === 'click') {
-			var searchURL = '';
+                res.data.nonGatewayApplicants.forEach(nonGatewayApplicant => {
+                    applicants.push({ id: 'nonGateway', name: nonGatewayApplicant });
+                });
 
-			if (type === 'dataset' && page > 0) searchURL += '&datasetIndex=' + page;
-			if (type === 'tool' && page > 0) searchURL += '&toolIndex=' + page;
-			if (type === 'paper' && page > 0) searchURL += '&paperIndex=' + page;
-			if (type === 'person' && page > 0) searchURL += '&personIndex=' + page;
-			if (type === 'course' && page > 0) searchURL += '&courseIndex=' + page;
+                setApplicantsArray(!isEmpty(applicants) ? applicants : []);
 
-			axios
-				.get(baseURL + '/api/v1/search?search=' + encodeURIComponent(searchString) + searchURL, {
-					params: {
-						form: true,
-						userID: userState[0].id,
-					},
-				})
-				.then(res => {
-					setDatasetData(res.data.datasetResults || []);
-					setToolData(res.data.toolResults || []);
-					setDatauseData(res.data.dataUseRegisterResults || []);
-					setPaperData(res.data.paperResults || []);
-					setPersonData(res.data.personResults || []);
-					setCourseData(res.data.courseResults || []);
-					setSummary(res.data.summary || []);
-					setIsLoading(false);
-				});
-		}
-	};
+                const datasets = [];
 
-	const addToTempRelatedObjects = (id, type, pid) => {
-		let updatedTempRelatedObjectIds = [...tempRelatedObjectIds];
-		if (tempRelatedObjectIds && tempRelatedObjectIds.some(object => object.objectId === id)) {
-			updatedTempRelatedObjectIds = updatedTempRelatedObjectIds.filter(object => object.objectId !== id);
-		} else {
-			updatedTempRelatedObjectIds.push({ objectId: id, objectType: type, pid: pid });
-		}
-		setTempRelatedObjectIds(updatedTempRelatedObjectIds);
-	};
+                res.data.gatewayDatasetsInfo.forEach(gatewayDataset => {
+                    if (isArray(gatewayDataset)) {
+                        datasets.push({ pid: gatewayDataset[0].pid, name: gatewayDataset[0].name });
+                    } else {
+                        datasets.push({ pid: gatewayDataset.pid, name: gatewayDataset.name });
+                    }
+                });
 
-	const addToRelatedObjects = () => {
-		let relatedObjectIds = [...tempRelatedObjectIds];
+                res.data.nonGatewayDatasets.forEach(nonGatewayDataset => {
+                    datasets.push({ pid: 'nonGateway', name: nonGatewayDataset });
+                });
 
-		let newRelatedObjects = relatedObjectIds.map(relatedObject => {
-			let newRelatedObject = {
-				...relatedObject,
-				objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId,
-				user: userState.name,
-				updated: moment().format('DD MMM YYYY'),
-			};
-			return newRelatedObject;
-		});
-		setRelatedObjects([...relatedObjects, ...newRelatedObjects]);
-		setTempRelatedObjectIds([]);
-	};
+                setDatasetsArray(!isEmpty(datasets) ? datasets : [{ pid: '', name: '' }]);
+                // TODO: GAT-1510:045
+                setDisableInput(getUserRoles(res.data.publisher));
+                setIsLoading(false);
+            });
+        };
 
-	const clearRelatedObjects = () => {
-		setTempRelatedObjectIds([]);
-	};
+        init();
+    }, []);
 
-	const removeObject = (id, type, datasetid) => {
-		let countOfRelatedObjects = relatedObjects.length;
-		let newRelatedObjects = [...relatedObjects].filter(obj => obj.objectId !== id && obj.objectId !== id.toString() && obj.pid !== id);
+    const getUserRoles = publisher => {
+        const { teams } = userState[0];
+        const foundTeam = teams.filter(team => team._id === publisher);
+        if (isEmpty(teams) || isEmpty(foundTeam)) {
+            return true;
+        }
 
-		//if an item was not removed try removing by datasetid for retro linkages
-		if (countOfRelatedObjects <= newRelatedObjects.length && type === 'dataset') {
-			newRelatedObjects = [...relatedObjects].filter(obj => obj.objectId !== datasetid && obj.objectId !== datasetid.toString());
-		}
-		setRelatedObjects(newRelatedObjects);
-		setDidDelete(true);
-	};
+        return !foundTeam[0].roles.some(role => ['manager', 'reviewer'].includes(role));
+    };
 
-	const updateDeleteFlag = () => {
-		setDidDelete(false);
-	};
+    const doGetUsersCall = () =>
+        usersRequest.refetch().then(res => {
+            setApplicantsList(res.data.data.data);
+        });
 
-	const toggleDrawer = () => {
-		if (showDrawer === true) {
-			searchBar.current.getNumberOfUnreadMessages();
-		}
-		setShowDrawer(!showDrawer);
-	};
+    const doGetDatasetsCall = () =>
+        datasetsRequest
+            .mutateAsync({
+                params: {
+                    activeflag: 'active',
+                    fields: 'pid,name,',
+                },
+            })
+            .then(res => {
+                setDatasetsList(res.data.datasets);
+            });
 
-	const toggleModal = (showEnquiry = false, context = {}) => {
-		setShowModal(!showModal);
-		setContext(context);
-		setShowDrawer(showEnquiry);
-	};
+    const doGetSafeOutputsToolCall = () =>
+        toolsRequest
+            .mutateAsync({
+                params: {
+                    activeflag: 'active',
+                    fields: 'id,name,',
+                },
+            })
+            .then(res => {
+                setSafeOuputsToolList(res.data.data);
+            });
 
-	const showSaveModal = () => {
-		setShowModal(true);
-		console.log('saved');
-	};
+    const doGetSafeOutputsPaperCall = () =>
+        papersRequest
+            .mutateAsync({
+                params: {
+                    activeflag: 'active',
+                    fields: 'id,name,',
+                },
+            })
+            .then(res => {
+                setSafeOuputsPaperList(res.data.data);
+            });
 
-	const hideSaveModal = () => {
-		setShowModal(false);
-	};
+    let showError = false;
 
-	const doGetKeywordsCall = () => {
-		return new Promise((resolve, reject) => {
-			axios
-				.get(`${baseURL}/api/v2/data-use-registers`, {
-					params: {
-						activeflag: 'active',
-						fields: 'keywords,',
-					},
-				})
-				.then(res => {
-					var tempKeywordsArray = [];
+    const showModalHandler = () => {
+        showError = true;
+    };
 
-					res.data.data.forEach(keywordsArray => {
-						if (keywordsArray.keywords) {
-							keywordsArray.keywords.forEach(keywords => {
-								if (!tempKeywordsArray.includes(keywords) && keywords !== '') {
-									tempKeywordsArray.push(keywords);
-								}
-							});
-						}
-					});
+    const hideModalHandler = props => {
+        showError = false;
+    };
 
-					setKeywords(
-						tempKeywordsArray.sort(function (a, b) {
-							return a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0;
-						})
-					);
-					resolve();
-				});
-		});
-	};
+    const doSearch = e => {
+        // fires on enter on searchbar
+        if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(searchString)}`;
+    };
 
-	if (isLoading) {
-		return (
-			<Container>
-				<Loading data-testid='outerLoadingSpinner' />
-			</Container>
-		);
-	}
+    const updateSearchString = searchString => {
+        setSearchString(searchString);
+    };
 
-	return (
-		<Sentry.ErrorBoundary fallback={<ErrorModal show={showModalHandler} handleClose={hideModalHandler} />}>
-			<div>
-				<SearchBar
-					ref={searchBar}
-					searchString={searchString}
-					doSearchMethod={doSearch}
-					doUpdateSearchString={updateSearchString}
-					userState={userState}
-				/>
+    const doModalSearch = (e, type = 'dataset', page = 0) => {
+        if (e.key === 'Enter' || e === 'click') {
+            let searchURL = '';
 
-				<EditFormDataUse
-					data={data}
-					userState={userState}
-					keywordsData={keywords}
-					doToggleDrawer={toggleDrawer}
-					doSearchMethod={doModalSearch}
-					doUpdateSearchString={updateSearchString}
-					datasetData={datasetData}
-					toolData={toolData}
-					datauseData={datauseData}
-					paperData={paperData}
-					personData={personData}
-					courseData={courseData}
-					summary={summary}
-					doAddToTempRelatedObjects={addToTempRelatedObjects}
-					tempRelatedObjectIds={tempRelatedObjectIds}
-					doClearRelatedObjects={clearRelatedObjects}
-					doAddToRelatedObjects={addToRelatedObjects}
-					doRemoveObject={removeObject}
-					relatedObjects={relatedObjects}
-					didDelete={didDelete}
-					updateDeleteFlag={updateDeleteFlag}
-					safeOuputsArray={safeOuputsArray}
-					safeOuputsList={[...safeOuputsToolList, ...safeOuputsPaperList]}
-					applicantsArray={applicantsArray}
-					applicantsList={applicantsList}
-					datasetsArray={datasetsArray}
-					datasetsList={datasetsList}
-					disableInput={disableInput}
-				/>
-				<SideDrawer open={showDrawer} closed={toggleDrawer}>
-					<UserMessages userState={userState[0]} closed={toggleDrawer} toggleModal={toggleModal} drawerIsOpen={toggleDrawer} />
-				</SideDrawer>
+            if (type === 'dataset' && page > 0) searchURL += `&datasetIndex=${page}`;
+            if (type === 'tool' && page > 0) searchURL += `&toolIndex=${page}`;
+            if (type === 'paper' && page > 0) searchURL += `&paperIndex=${page}`;
+            if (type === 'person' && page > 0) searchURL += `&personIndex=${page}`;
+            if (type === 'course' && page > 0) searchURL += `&courseIndex=${page}`;
 
-				<DataSetModal open={showModal} context={context} closed={toggleModal} userState={userState[0]} />
-			</div>
-		</Sentry.ErrorBoundary>
-	);
+            searchRequest
+                .mutateAsync({
+                    params: {
+                        search: encodeURIComponent(searchString) + searchURL,
+                        form: true,
+                        userID: userState[0].id,
+                    },
+                })
+                .then(res => {
+                    setDatasetData(res.data.datasetResults || []);
+                    setToolData(res.data.toolResults || []);
+                    setDatauseData(res.data.dataUseRegisterResults || []);
+                    setPaperData(res.data.paperResults || []);
+                    setPersonData(res.data.personResults || []);
+                    setCourseData(res.data.courseResults || []);
+                    setSummary(res.data.summary || []);
+                    setIsLoading(false);
+                });
+        }
+    };
+
+    const addToTempRelatedObjects = (id, type, pid) => {
+        let updatedTempRelatedObjectIds = [...tempRelatedObjectIds];
+        if (tempRelatedObjectIds && tempRelatedObjectIds.some(object => object.objectId === id)) {
+            updatedTempRelatedObjectIds = updatedTempRelatedObjectIds.filter(object => object.objectId !== id);
+        } else {
+            updatedTempRelatedObjectIds.push({ objectId: id, objectType: type, pid });
+        }
+        setTempRelatedObjectIds(updatedTempRelatedObjectIds);
+    };
+
+    const addToRelatedObjects = () => {
+        const relatedObjectIds = [...tempRelatedObjectIds];
+
+        const newRelatedObjects = relatedObjectIds.map(relatedObject => {
+            const newRelatedObject = {
+                ...relatedObject,
+                objectId: relatedObject.type === 'dataset' ? relatedObject.pid : relatedObject.objectId,
+                user: userState.name,
+                updated: moment().format('DD MMM YYYY'),
+            };
+            return newRelatedObject;
+        });
+        setRelatedObjects([...relatedObjects, ...newRelatedObjects]);
+        setTempRelatedObjectIds([]);
+    };
+
+    const clearRelatedObjects = () => {
+        setTempRelatedObjectIds([]);
+    };
+
+    const removeObject = (id, type, datasetid) => {
+        const countOfRelatedObjects = relatedObjects.length;
+        let newRelatedObjects = [...relatedObjects].filter(obj => obj.objectId !== id && obj.objectId !== id.toString() && obj.pid !== id);
+
+        // if an item was not removed try removing by datasetid for retro linkages
+        if (countOfRelatedObjects <= newRelatedObjects.length && type === 'dataset') {
+            newRelatedObjects = [...relatedObjects].filter(obj => obj.objectId !== datasetid && obj.objectId !== datasetid.toString());
+        }
+        setRelatedObjects(newRelatedObjects);
+        setDidDelete(true);
+    };
+
+    const updateDeleteFlag = () => {
+        setDidDelete(false);
+    };
+
+    const toggleDrawer = () => {
+        if (showDrawer === true) {
+            searchBar.current.getNumberOfUnreadMessages();
+        }
+        setShowDrawer(!showDrawer);
+    };
+
+    const toggleModal = (showEnquiry = false, context = {}) => {
+        setShowModal(!showModal);
+        setContext(context);
+        setShowDrawer(showEnquiry);
+    };
+
+    const doGetKeywordsCall = () =>
+        dataUseRegistersRequest
+            .mutateAsync({
+                params: {
+                    activeflag: 'active',
+                    fields: 'keywords,',
+                },
+            })
+            .then(res => {
+                const tempKeywordsArray = [];
+
+                res.data.data.forEach(keywordsArray => {
+                    if (keywordsArray.keywords) {
+                        keywordsArray.keywords.forEach(keywords => {
+                            if (!tempKeywordsArray.includes(keywords) && keywords !== '') {
+                                tempKeywordsArray.push(keywords);
+                            }
+                        });
+                    }
+                });
+
+                setKeywords(
+                    tempKeywordsArray.sort((a, b) => (a.toUpperCase() < b.toUpperCase() ? -1 : a.toUpperCase() > b.toUpperCase() ? 1 : 0))
+                );
+            });
+
+    if (isLoading) {
+        return (
+            <Container>
+                <Loading data-testid='outerLoadingSpinner' />
+            </Container>
+        );
+    }
+
+    return (
+        <Sentry.ErrorBoundary fallback={<ErrorModal show={showModalHandler} handleClose={hideModalHandler} />}>
+            <div>
+                <SearchBar
+                    ref={searchBar}
+                    searchString={searchString}
+                    doSearchMethod={doSearch}
+                    doUpdateSearchString={updateSearchString}
+                    userState={userState}
+                />
+
+                <EditFormDataUse
+                    data={data}
+                    userState={userState}
+                    keywordsData={keywords}
+                    doToggleDrawer={toggleDrawer}
+                    doSearchMethod={doModalSearch}
+                    doUpdateSearchString={updateSearchString}
+                    datasetData={datasetData}
+                    toolData={toolData}
+                    datauseData={datauseData}
+                    paperData={paperData}
+                    personData={personData}
+                    courseData={courseData}
+                    summary={summary}
+                    doAddToTempRelatedObjects={addToTempRelatedObjects}
+                    tempRelatedObjectIds={tempRelatedObjectIds}
+                    doClearRelatedObjects={clearRelatedObjects}
+                    doAddToRelatedObjects={addToRelatedObjects}
+                    doRemoveObject={removeObject}
+                    relatedObjects={relatedObjects}
+                    didDelete={didDelete}
+                    updateDeleteFlag={updateDeleteFlag}
+                    safeOuputsArray={safeOuputsArray}
+                    safeOuputsList={[...safeOuputsToolList, ...safeOuputsPaperList]}
+                    applicantsArray={applicantsArray}
+                    applicantsList={applicantsList}
+                    datasetsArray={datasetsArray}
+                    datasetsList={datasetsList}
+                    disableInput={disableInput}
+                />
+                <SideDrawer open={showDrawer} closed={toggleDrawer}>
+                    <UserMessages userState={userState[0]} closed={toggleDrawer} toggleModal={toggleModal} drawerIsOpen={toggleDrawer} />
+                </SideDrawer>
+
+                <DataSetModal open={showModal} context={context} closed={toggleModal} userState={userState[0]} />
+            </div>
+        </Sentry.ErrorBoundary>
+    );
 };
 
 export default EditDataUse;

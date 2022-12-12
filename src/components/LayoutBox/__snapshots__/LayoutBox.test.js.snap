@@ -3,7 +3,7 @@
 exports[`Given the LayoutBox component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-LayoutBox additional-classname emotion-0"
   >
     Component goes here
   </div>

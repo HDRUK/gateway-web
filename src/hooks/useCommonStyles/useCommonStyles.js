@@ -3,11 +3,11 @@ import { css } from '@emotion/css';
 import { getCommonStyles } from '../../configs/theme';
 
 const useCommonStyles = props => {
-	const theme = useTheme();
+    const theme = useTheme();
 
-	return css`
-		${getCommonStyles(props, theme)}
-	`;
+    return css`
+        ${getCommonStyles(props, theme)}
+    `;
 };
 
 export default useCommonStyles;

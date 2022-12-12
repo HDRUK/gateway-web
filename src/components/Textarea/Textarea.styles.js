@@ -1,37 +1,40 @@
 import { css } from '@emotion/react';
 import { mixins } from '../Input/Input.styles';
 
-export const inputGroup = ({ variant, rows, error }) => theme => {
-	const {
-		colors,
-		components: {
-			Textarea: { variants },
-		},
-	} = theme;
+export const inputGroup =
+    ({ variant, rows, error, minHeight, maxHeight }) =>
+    theme => {
+        const {
+            colors,
+            components: {
+                Textarea: { variants },
+            },
+        } = theme;
 
-	return css`
-		width: 100%;
-		flex-direction: column;
-		flex: 0 0 100%;
+        return css`
+            width: 100%;
+            flex-direction: column;
+            flex: 0 0 100%;
 
-		textarea {
-			${mixins.input({ variant, error })({ colors, variants })}
-			width: 100% !important;
-			min-height: ${rows}em;
-		}
-	`;
-};
+            textarea {
+                ${mixins.input({ variant, error })({ colors, variants })}
+                width: 100% !important;
+                min-height: ${minHeight || `${rows}em`};
+                max-height: ${maxHeight};
+            }
+        `;
+    };
 
-export const formGroup = mixins.formGroup;
+export const { formGroup } = mixins;
 
-export const label = mixins.label;
+export const { label } = mixins;
 
 export const charCount = ({ colors: { grey700Alt } }) => css`
-	display: flex;
-	color: ${grey700Alt};
+    display: flex;
+    color: ${grey700Alt};
 `;
 
 export const charCountValue = () => css`
-	flex-grow: 1;
-	text-align: right;
+    flex-grow: 1;
+    text-align: right;
 `;

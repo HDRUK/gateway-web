@@ -3,16 +3,13 @@
 exports[`Given the DropdownCustom component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="ui-LayoutBox css-1sivg29"
+    class="ui-Box emotion-0"
   >
     <div
-      class="css-2jpb0u-Input form-group"
+      class="emotion-1 form-group"
     >
-      <label
-        class="form-label"
-      />
       <div
-        class="ui-Input ui-Typeahead css-gaftnd-Input input-group"
+        class="ui-Input ui-Typeahead emotion-2 input-group"
       >
         <div
           class="rbt"

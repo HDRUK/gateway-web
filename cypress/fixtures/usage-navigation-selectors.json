@@ -1,0 +1,11 @@
+{
+    "main_nav_usage_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(4) > div > a",
+
+    "main_nav_usage_general_activity_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(4) > div > div > ul > div > a:nth-child(1)",
+    "main_nav_usage_national_core_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(4) > div > div > ul > div > a:nth-child(2)",
+    "main_nav_usage_gateway_releases_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(4) > div > div > ul > div > a:nth-child(3)",
+
+    "usage_general_activity_compare": "#root > div.mainWrap > div > div.container > div > div.dashboardPadding.col-lg-10.col-sm-10 > div:nth-child(1) > div > div:nth-child(2) > div > span",
+    "usage_national_core_compare": "#main > div > div.matrixHeaderNoImage > div > div.matrixHeadingText",
+    "usage_gateway_releases_link": "#main > div > div:nth-child(3) > div > p:nth-child(1)"
+}

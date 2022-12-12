@@ -2,9 +2,7 @@
 
 exports[`Given the DatasetSearchResults component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
-  <div
-    style="margin-top: 8px;"
-  >
+  <div>
     <div
       class="row"
     >

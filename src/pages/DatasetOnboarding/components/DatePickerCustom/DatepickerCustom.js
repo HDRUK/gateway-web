@@ -1,14 +1,18 @@
-import React from 'react';
+import { Component } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-class DatePickerCustom extends React.Component {
+class DatePickerCustom extends Component {
+
 	constructor(props) {
 		super(props);
 		let date = null;
 		if (moment(this.props.value, 'DD/MM/YYYY').isValid()) {
 			date = moment(this.props.value, 'DD/MM/YYYY').toDate();
+		}
+		if (moment(this.props.value, moment.ISO_8601).isValid()) {
+			date = moment(this.props.value, moment.ISO_8601).toDate();
 		}
 		this.state = {
 			date,
@@ -17,58 +21,59 @@ class DatePickerCustom extends React.Component {
 		this.handleFocus = this.handleFocus.bind(this);
 		this.handleBlur = this.handleBlur.bind(this);
 	}
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		let { value } = nextProps;
 
-		if (!_.isNil(value)) value = moment(value, 'DD/MM/YYYY').toDate();
+		if (!_.isNil(value) && moment(value, 'DD/MM/YYYY').isValid()) value = moment(value, 'DD/MM/YYYY').toDate();
+		if (!_.isNil(value) && moment(value, moment.ISO_8601).isValid()) value = moment(value, moment.ISO_8601).toDate();
 
-		if (this.props.value !== value) this.setState({ date: value });
-	}
-	handleChange(e) {
-		this.setState(
-			{
-				date: e,
-			},
-			this.props.onChange.bind(null, !_.isNil(e) ? moment(e).format('DD/MM/YYYY') : e)
-		);
-	}
-	handleFocus(e) {
-		this.props.onFocus();
-	}
-	handleBlur(e) {
-		this.props.onBlur(this.props.value);
-	}
-	handleChangeRaw(e) {
-		e.preventDefault();
-	}
-	render() {
-		return (
-			<DatePicker
-				disabled={this.props.readOnly || false}
-				name={this.props.name || 'startdate'}
-				selected={this.state.date}
-				dateFormat='dd/MM/yyyy'
-				peekNextMonth
-				showMonthDropdown
-				showYearDropdown
-				dropdownMode='select'
-				onChange={this.handleChange}
-				onBlur={this.handleBlur}
-				onFocus={this.handleFocus}
-				onChangeRaw={this.handleChangeRaw}
-				isClearable={!this.props.readOnly}
-				autoComplete='off'
-			/>
-		);
-	}
+        if (this.props.value !== value) this.setState({ date: value });
+    }
+    handleChange(e) {
+        this.setState(
+            {
+                date: e,
+            },
+            this.props.onChange.bind(null, !_.isNil(e) ? moment(e).format('DD/MM/YYYY') : e)
+        );
+    }
+    handleFocus(e) {
+        this.props.onFocus();
+    }
+    handleBlur(e) {
+        this.props.onBlur(this.props.value);
+    }
+    handleChangeRaw(e) {
+        e.preventDefault();
+    }
+    render() {
+        return (
+            <DatePicker
+                disabled={this.props.readOnly || false}
+                name={this.props.name || 'startdate'}
+                selected={this.state.date}
+                dateFormat='dd/MM/yyyy'
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode='select'
+                onChange={this.handleChange}
+                onBlur={this.handleBlur}
+                onFocus={this.handleFocus}
+                onChangeRaw={this.handleChangeRaw}
+                isClearable={!this.props.readOnly}
+                autoComplete='off'
+            />
+        );
+    }
 }
 DatePickerCustom.defaultProps = {
-	name: '',
-	dateFormat: 'dd/MM/yyyy',
-	selectDate: {},
-	value: null,
-	onChange: () => {},
-	onFocus: () => {},
-	onBlur: () => {},
+    name: '',
+    dateFormat: 'dd/MM/yyyy',
+    selectDate: {},
+    value: null,
+    onChange: () => {},
+    onFocus: () => {},
+    onBlur: () => {},
 };
 export default DatePickerCustom;

@@ -1,0 +1,42 @@
+import { useState } from 'react';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import Alert from './Alert';
+
+<Meta title='Core/Alert' component={Alert} />
+
+<Canvas>
+    <Story name='Variants'>
+        {props => {
+            return (
+                <>
+                    {['success', 'info', 'warning', 'danger'].map(variant => (
+                        <div>
+                            <Alert variant={variant} mb={4}>
+                                Lorem ipsum dolor sit amet ad hicio hortus est
+                            </Alert>
+                        </div>
+                    ))}
+                </>
+            );
+        }}
+    </Story>
+    <Story name='Duration'>
+        {props => {
+            const [showClosed, setShowClosed] = React.useState(false);
+            const handleClose = React.useCallback(() => {
+                setShowClosed(true);
+            }, []);
+            return (
+                <div>
+                    <Alert variant='success' mb={4} dismissable={false} autoclose onClose={handleClose}>
+                        Lorem ipsum dolor sit amet ad hicio hortus est
+                    </Alert>
+                    {showClosed && 'Alert has been auto-closed!'}
+                </div>
+            );
+        }}
+    </Story>
+</Canvas>
+
+<ArgsTable of={Alert} />

@@ -1,135 +1,492 @@
 {
-	"collection": {
-		"private": {
-			"live": "This private collection is now live. Only those who you share the collection link with will be able to view this page.",
-			"updated": "Done! Your private collection has been updated. Only those who you share the collection link with will be able to view this page."
-		},
-		"public": {
-			"live": "This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.",
-			"updated": "Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users."
-		},
-		"created": "created"
-	},
-	"newDatasetVersionSubmitted": "<b>Version {{versionNumber}}</b> of this dataset been submitted by data custodian <b>{{firstName}} {{lastName}}</b>",
-	"datasetVersionApproved": "<b>Version {{versionNumber}}</b> of this dataset been approved by admin <b>{{firstName}} {{lastName}}</b>",
-	"datasetVersionRejected": "<b>Application rejected</b> by portal admin <b>{{firstName}} {{lastName}}</b>",
-	"datasetVersionArchived": "<b>Version {{versionNumber}}</b> of this dataset been archived by data custodian <b>{{firstName}} {{lastName}}",
-	"datasetVersionUnarchived": "<b>Version {{versionNumber}}</b> of this dataset been unarchived by data custodian <b>{{firstName}} {{lastName}}",
-	"datasetUpdatesSubmitted": "<b>Updates submitted</b> by data custodian <b>{{firstName}} {{lastName}}</b>",
-	"previousAnswer": "Previous answer",
-	"updatedAnswer": "Updated answer",
-	"question": "Question",
-	"datetime": {
-		"submitted": "Submitted {{datetime}}"
-	},
-	"loading": "Loading",
-	"activitylog": {
-		"notfound": "The activity log for this dataset cannot be accessed. It must be set to {{status}}.",
-		"rejection": "Reason for rejection"
-	},
-	"next": "Next",
-	"previous": "Previous",
-	"dataset": {
-		"inReview": "pending approval",
-		"active": "Active",
-		"active,draft": "Active",
-		"rejected": "Rejected",
-		"archive": "Archived",
-		"makeADecision": "Make a decision",
-		"approve": "Approve",
-		"reject": "Reject",
-		"approvalModal": {
-			"title": "Approve this version of this dataset metadata",
-			"description": "If you made any amendments to their application, such as fixing a type, please let the editor know using the description below.",
-			"applicationStatus": "Description (optional)",
-			"buttons": {
-				"cancel": "No, nevermind",
-				"approve": "Approve",
-				"approveAndGoToNext": "Approve and go to next"
-			}
-		},
-		"rejectModal": {
-			"title": "Reject this version of this dataset metadata",
-			"description": "Let the editor know why this submission is being rejected. They will be able to create a new version and make a new submission.",
-			"applicationStatus": "Description",
-			"applicationStatusRequired": "Description cannot be empty",
-			"buttons": {
-				"cancel": "No, nevermind",
-				"reject": "Reject",
-				"rejectAndGoToNext": "Reject and go to next"
-			}
-		},
-		"create": {
-			"description": {
-				"admin": "View, add, edit, archive and check the status of your datasets.",
-				"user": "Approve or reject pending datasets."
-			},
-			"action": "Add a new dataset"
-		}
-	},
-	"datasets": "Datasets",
-	"viewForm": "View form",
-	"search": {
-		"placeholder": "Search within {{type}}",
-		"results": {
-			"notFound": "Could not find any {{type}} matching {{search}}"
-		}
-	},
-	"tabs": {
-		"counts": {
-			"inReview": "Pending approval ({{count}})",
-			"active": "Active ({{count}})",
-			"rejected": "Rejected ({{count}})",
-			"draft": "Draft ({{count}})",
-			"archive": "Archived ({{count}})"
-		}
-	},
-	"sortby": {
-		"selected": {
-			"popularity": "Sort by number of views",
-			"metadata": "Sort by metadata quality",
-			"metadataQuality": "Sort by metadata quality",
-			"resources": "Sort by related resources",
-			"latest": "Sort by latest",
-			"recentActivity": "Sort by recent activity",
-			"recentlyadded": "Sort by recently added",
-			"recentlyPublished": "Sort by recently published",
-			"sortbyyear": "Sort by year",
-			"relevance": "Sort by match to search terms",
-			"alphabetic": "Sort alphabetically"
-		},
-		"options": {
-			"popularity": "Number of views (highest to lowest)",
-			"metadata": "Metadata quality (platinum to bronze)",
-			"metadataQuality": "Metadata quality (platinum to bronze)",
-			"resources": "Related resources (most first)",
-			"latest": "Latest (recently updated first)",
-			"recentActivity": "Recent activity (newest first)",
-			"recentlyadded": "Recently added to collection (newest first)",
-			"recentlyPublished": "Recently published (newest first)",
-			"sortbyyear": "Year (latest first)",
-			"relevance": "Match to search terms (closest first)"
-		},
-		"optionsSortable": {
-			"popularity": "Number of views",
-			"mostViewed": "Most viewed",
-			"metadata": "Metadata quality",
-			"metadataQuality": "Metadata quality",
-			"resources": "Related resources",
-			"latest": "Recent activity",
-			"recentActivity": "Recent activity",
-			"recentlyadded": "Recently published",
-			"recentlyPublished": "Recently published",
-			"sortbyyear": "Year",
-			"relevance": "Match to search terms",
-			"alphabetic": "Alphabetically"
-		}
-	},
-	"notifications": {
-		"teamEmailText": "Send email notifications to team email address"
-	},
-	"searchResultsInfo": {
-		"withTerm": "Showing {{count}} results for '{{searchTerm}}'",
-		"withOutTerm": "Showing {{count}} results"
-	}
+    "cms": {
+        "advancedSearch": {
+            "banner": {
+                "title": "Try these Advanced Search Methods"
+            }
+        }
+    },
+    "services": {
+        "status": {
+            "404": {
+                "title": "Page not found",
+                "message": "The requested resource could not be found"
+            },
+            "500": {
+                "title": "Server error",
+                "message": "An error was encountered on the server at the requested address"
+            },
+            "401": {
+                "title": "Unauthorised",
+                "message": "The request to this address was unauthorised"
+            }
+        },
+        "errors": {
+            "dar": {
+                "patchDataAccessSchemaRequest": {
+                    "500": {
+                        "title": "Auto save failed",
+                        "message": "There has been an error updating data access request schema"
+                    }
+                }
+            },
+            "dur": {
+                "getDataUseRegistersByTeam": {
+                    "404": {
+                        "message": "There has been an error getting data uses for this team"
+                    }
+                },
+                "getDataUseRegister": {
+                    "404": {
+                        "message": "There has been an error getting this data use"
+                    }
+                },
+                "patchDataUseRegister": {
+                    "404": {
+                        "message": "There has been an error updating the data use"
+                    }
+                },
+                "postDataUseRegisterCheck": {
+                    "404": {
+                        "message": "There has been an error checking if this is a duplicate record"
+                    }
+                },
+                "postDataUseRegisterUpload": {
+                    "404": {
+                        "message": "There has been an problem uploading the new data use"
+                    }
+                }
+            },
+            "tools": {
+                "getTools": {
+                    "404": {
+                        "message": "There has been a problem getting the list of tools"
+                    }
+                }
+            },
+            "datasets": {
+                "getDatasets": {
+                    "404": {
+                        "message": "There has been a problem getting the list of datasets"
+                    }
+                }
+            },
+            "collections": {
+                "getCollections": {
+                    "404": {
+                        "message": "There has been a problem getting the list of collections"
+                    }
+                }
+            },
+            "search": {
+                "getSearch": {
+                    "404": {
+                        "message": "There has been a problem getting the search results"
+                    }
+                }
+            },
+            "papers": {
+                "getPapers": {
+                    "404": {
+                        "message": "There has been a problem getting the list of papers"
+                    }
+                }
+            },
+            "relatedobjects": {
+                "getRelatedObject": {
+                    "404": {
+                        "message": "There has been a problem getting the related object"
+                    }
+                },
+                "getRelatedObjectByType": {
+                    "404": {
+                        "message": "There has been a problem getting the related object"
+                    }
+                }
+            },
+            "users": {
+                "patchRoles": {
+                    "404": {
+                        "message": "The resource for updating the roles could not be found"
+                    },
+                    "500": {
+                        "message": "There has been a problem updating the roles"
+                    }
+                },
+                "patchTerms": {
+                    "404": {
+                        "message": "The resource for updating the terms and conditions could not be found"
+                    },
+                    "500": {
+                        "message": "There has been a problem updating the terms and conditions"
+                    }
+                }
+            }
+        }
+    },
+    "collection": {
+        "private": {
+            "live": "This private collection is now live. Only those who you share the collection link with will be able to view this page.",
+            "updated": "Done! Your private collection has been updated. Only those who you share the collection link with will be able to view this page."
+        },
+        "public": {
+            "live": "This public collection is now live. This collection is searchable on the Gateway and can be viewed by all users.",
+            "updated": "Done! Your public collection has been updated. This collection is searchable on the Gateway and can be viewed by all users."
+        },
+        "created": "created"
+    },
+    "newDatasetVersionSubmitted": "<b>Version {{versionNumber}}</b> of this dataset been submitted by data custodian <b>{{firstName}} {{lastName}}</b>",
+    "datasetVersionApproved": "<b>Version {{versionNumber}}</b> of this dataset been approved by admin <b>{{firstName}} {{lastName}}</b>",
+    "datasetVersionRejected": "<b>Application rejected</b> by portal admin <b>{{firstName}} {{lastName}}</b>",
+    "datasetVersionArchived": "<b>Version {{versionNumber}}</b> of this dataset been archived by data custodian <b>{{firstName}} {{lastName}}",
+    "datasetVersionUnarchived": "<b>Version {{versionNumber}}</b> of this dataset been unarchived by data custodian <b>{{firstName}} {{lastName}}",
+    "datasetUpdatesSubmitted": "<b>Updates submitted</b> by data custodian <b>{{firstName}} {{lastName}}</b>",
+    "previousAnswer": "Previous answer",
+    "updatedAnswer": "Updated answer",
+    "question": "Question",
+    "datetime": {
+        "submitted": "Submitted {{datetime}}"
+    },
+    "beta": "Beta",
+    "learn.more": "Learn more",
+    "show": "Show",
+    "hide": "Hide",
+    "loading": "Loading",
+    "activitylog": {
+        "notfound": "The activity log for this dataset cannot be accessed. It must be set to {{status}}.",
+        "rejection": "Reason for rejection"
+    },
+    "next": "Next",
+    "previous": "Previous",
+    "guidance.inEdit": "Guidance in edit",
+    "guidance.unedited": "Guidance unedited",
+    "guidance.edited": "Guidance edited",
+    "dataset": {
+        "dateUpdated": "Metadata last updated:",
+        "dateUpdatedTooltip": "The last date when the information about this dataset was updated",
+        "publishingFrequency": "Publishing frequency: ",
+        "typicalTimeToAccess": "Typical time to access: ",
+        "numberOfViews": {
+            "viewed": "Viewed",
+            "times": "times"
+        },
+        "publishingFrequencyTooltip": "The frequency of publishing new data for this dataset",
+        "inReview": "pending approval",
+        "active": "Active",
+        "active,draft": "Active",
+        "rejected": "Rejected",
+        "archive": "Archived",
+        "makeADecision": "Make a decision",
+        "approve": "Approve",
+        "reject": "Reject",
+        "approvalModal": {
+            "title": "Approve this version of this dataset metadata",
+            "description": "If you made any amendments to their application, such as fixing a type, please let the editor know using the description below.",
+            "applicationStatus": "Description (optional)",
+            "buttons": {
+                "cancel": "No, nevermind",
+                "approve": "Approve",
+                "approveAndGoToNext": "Approve and go to next",
+                "confirm": "Approve this version"
+            }
+        },
+        "rejectModal": {
+            "title": "Reject this version of this dataset metadata",
+            "description": "Let the editor know why this submission is being rejected. They will be able to create a new version and make a new submission.",
+            "applicationStatus": "Description",
+            "applicationStatusRequired": "Description cannot be empty",
+            "buttons": {
+                "cancel": "No, nevermind",
+                "reject": "Reject",
+                "rejectAndGoToNext": "Reject and go to next",
+                "confirm": "Reject this version"
+            }
+        },
+        "validationErrosModal": {
+            "title": "Mandatory fields missing",
+            "description": "You cannot submit this dataset for review until you have completed all the mandatory questions. If you need to submit this dataset without the mandatory answers, please raise a support ticket at the following link:",
+            "buttons": {
+                "confirm": "Ok",
+                "cancel": "No, nevermind"
+            }
+        },
+        "validationErrosAdminModal": {
+            "title": "Mandatory fields missing",
+            "description": "Are you sure that you want to submit this version of this dataset for review? There are mandatory fields missing. You cannot edit this form whilst it is pending.",
+            "buttons": {
+                "confirm": "Ok",
+                "cancel": "No, nevermind"
+            }
+        },
+        "submitForReviewModal": {
+            "title": "Submit version for review?",
+            "description": "Are you sure that you want to submit this version of this dataset for review?\n\nYou cannot edit this form whilst it is pending.'",
+            "buttons": {
+                "confirm": "Confirm submission",
+                "cancel": "No, nevermind"
+            }
+        },
+        "createNewVersionModal": {
+            "title": "Create new version?",
+            "description": "Are you sure that you want to create a new draft version of this dataset?",
+            "buttons": {
+                "confirm": "Create new version",
+                "cancel": "No, nevermind"
+            }
+        },
+        "archiveModal": {
+            "title": "Archive this version?",
+            "description": "This will remove your dataset from search results, but anyone with a direct link will still be able to access the page with a message explaining that it has been archived.",
+            "buttons": {
+                "confirm": "Archive this version",
+                "cancel": "No, nevermind"
+            }
+        },
+        "unArchiveModal": {
+            "title": "Un-archive this dataset?",
+            "description": "This dataset will appear in search results again. You will be able to create a new version from this dataset once it has been un-archived.",
+            "buttons": {
+                "confirm": "Un-archive this version",
+                "cancel": "No, nevermind"
+            }
+        },
+        "approveWithConditionsModal": {
+            "title": "Application approval with conditions",
+            "description": "Are you sure you want to apprive this application? If so, please provide the conditions of this approval to the applicant",
+            "buttons": {
+                "confirm": "Confirm approval with conditions",
+                "cancel": "No, nevermind"
+            }
+        },
+        "deleteDraftModal": {
+            "title": "Delete draft",
+            "description": "Are you sure you want to delete this draft dataset? You will no longer be able to view this form and will lose any answers provided. All team members will be notified.",
+            "buttons": {
+                "confirm": "Delete draft",
+                "cancel": "No, nevermind"
+            }
+        },
+        "duplicateModal": {
+            "title": "Duplicate this dataset metadata?",
+            "description": "Are you sure you want to duplicate this dataset? All team members will be notified of this duplication.",
+            "buttons": {
+                "confirm": "Duplicate",
+                "cancel": "No, nevermind"
+            }
+        },
+        "create": {
+            "description": {
+                "admin": "View, add, edit, archive and check the status of your datasets.",
+                "user": "Approve or reject pending datasets."
+            },
+            "action": "Add a new dataset"
+        }
+    },
+    "datasets": "Datasets",
+    "viewForm": "View form",
+    "search": {
+        "placeholder": "Search within {{type}}",
+        "results": {
+            "notFound": "Could not find any {{type}} matching {{search}}"
+        },
+        "advanced": {
+            "cohortDiscovery": {
+                "title": "Cohort Discovery",
+                "description": "Search to find cohorts in pseudonymised datasets based on characteristics such as disease, age, location. Available for a limited number of datasets, with more being added regularly.",
+                "action": "Search using Cohort Discovery",
+                "actionLoggedOut": "Sign in to use Cohort Discovery",
+                "mediaAlt": "Cohort Discovery feature image"
+            },
+            "dataUtilityWizard": {
+                "title": "Data Utility Wizard",
+                "description": "A tool to help refine your search to only datasets that meet your data utility requirements.",
+                "action": "Search using Data Utility Wizard"
+            }
+        }
+    },
+    "tabs": {
+        "counts": {
+            "inReview": "Pending approval ({{count}})",
+            "active": "Active ({{count}})",
+            "rejected": "Rejected ({{count}})",
+            "draft": "Draft ({{count}})",
+            "archive": "Archived ({{count}})"
+        },
+        "presubmissionGuidance": "Presubmission guidance",
+        "applicationForm": "Application form"
+    },
+    "buttons": {
+        "neverMind": "No, nevermind",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "publish": "Publish",
+        "clearUpdates": "Clear updates"
+    },
+    "sortby": {
+        "selected": {
+            "popularity": "Sort by number of views",
+            "metadata": "Sort by metadata quality",
+            "metadataQuality": "Sort by metadata quality",
+            "resources": "Sort by related resources",
+            "latest": "Sort by latest",
+            "recentActivity": "Sort by recent activity",
+            "recentlyadded": "Sort by recently added",
+            "recentlyPublished": "Sort by recently published",
+            "sortbyyear": "Sort by year",
+            "relevance": "Sort by match to search terms",
+            "alphabetic": "Sort alphabetically"
+        },
+        "options": {
+            "popularity": "Number of views (highest to lowest)",
+            "metadata": "Metadata richness score",
+            "metadataQuality": "Metadata richness score",
+            "resources": "Related resources (most first)",
+            "latest": "Metadata last updated",
+            "recentActivity": "Recent activity (newest first)",
+            "recentlyadded": "Recently added to collection (newest first)",
+            "recentlyPublished": "Recently published (newest first)",
+            "sortbyyear": "Year (latest first)",
+            "relevance": "Match to search terms (closest first)"
+        },
+        "optionsFilters": {
+            "showAll": "Show all resources ({{n}})",
+            "dataset": "Show data ({{n}})",
+            "tool": "Show tools ({{n}})",
+            "paper": "Show papers ({{n}})",
+            "dataUseRegister": "Show data uses ({{n}})",
+            "course": "Show courses ({{n}})",
+            "people": "Show people ({{n}})"
+        },
+        "optionsSortable": {
+            "popularity": "Number of views",
+            "mostViewed": "Most viewed",
+            "metadata": "Metadata quality",
+            "metadataQuality": "Metadata quality",
+            "resources": "Related resources",
+            "latest": "Recent activity",
+            "recentActivity": "Recent activity",
+            "recentlyadded": "Recently published",
+            "recentlyPublished": "Recently published",
+            "sortbyyear": "Year",
+            "relevance": "Match to search terms",
+            "alphabetic": "Alphabetically"
+        }
+    },
+    "notifications": {
+        "teamEmailText": "Send email notifications to team email address"
+    },
+    "searchResultsInfo": {
+        "sortedBy": "Sorted by:",
+        "searchFilters": "Search filters",
+        "withOutTerm": "Showing {{count}} results",
+        "for": " for "
+    },
+    "datause": {
+        "upload": {
+            "successfulCheck": "Your file has been successfully uploaded.",
+            "SuccessfulUpload": "Your data uses have been successfully uploaded and are waiting for approval.",
+            "emptyError": "File Contains no entries",
+            "downloadTemplate": "Download template",
+            "downloadTemplateSubText": "Please use the template provided to add new approved data uses . You can also download your current data useregister from the Gateway, edit offline and uploading the edited file here:",
+            "downloadTemplateButtonTxt": "Download the data use template",
+            "selectFile": "Select file...",
+            "fileType": "Excel or xls. Max 10MB per file.",
+            "fileSizeLimit": "File exceeds 10MB limit",
+            "errorLoading": "There was an error loading the file",
+            "errors": "There are errors in the data you uploaded. Please correct these and try again. Errors are listed below.",
+            "warning": "Warning! Uploading a new file will delete any data uses that have not yet been submitted for admin checks by the Gateway team.",
+            "loadingtext": "Uploading...",
+            "requiredError": "Error in row {{row}} Mandatory field “{{column}}” is empty",
+            "duplicateError": "Error in row {{row}} : Suspected data use duplicate",
+            "duplicateRowError": "Error in row {{row}}: Suspected data use duplicate of row {{duplicateRow}}",
+            "pageInfoUser": "Manage your data use register by editing data uses.",
+            "pageInfoTeam": "Manage your data use register by uploading or editing data uses."
+        },
+        "widget": {
+            "heading": "Data use widget",
+            "description": "A data use widget is a great way of demonstrating transparency of how health data is being used, by connecting users of your website to the Gateway data use register. The widget will enable you to embed a link to the Gateway data use results page, pre-filtered on your organisation's data uses.",
+            "buttonHelp": "Click the button below to see your filtered data uses",
+            "modal": {
+                "accept": "Accept",
+                "cancel": "Cancel"
+            },
+            "howToHeader": "How to start using your widget",
+            "howToDesc": "Below is an interactive example of how your widget could look and be used. Please note that this design is compatible with mobile devices and can be resized to fit anywhere on your website. To start using this widget please accept the terms and conditions by clicking on the 'Get widget' button below.",
+            "getWidgetButton": "Get widget",
+            "tAndCHelp": "By embedding content in your website or app, you are agreeing to the Terms and Conditions",
+            "copyCodeHelp": "Copy the source code and share with your development team to display the widget above on your website",
+            "copyCodeButton": "Copy Code",
+            "copyCodeClipBoard": "Code copied to your clipboard"
+        }
+    },
+    "DAR": {
+        "upload": {
+            "virus": {
+                "error": "Virus scan failed! Your file, {{name}}, could not be scanned for viruses but you can still submit your application without it. To try and upload the file again, click “Select files” above. If the problem persists, please <2>Raise a Support Ticket</2>.",
+                "quarantined": " Virus detected! Your file {{name}} has been quarantined but you can still submit your application without it. You can try to upload the file again or please try a different version of the file"
+            },
+            "file-too-large": "File exceeds {{size}} limit",
+            "file-invalid-type": "File type not supported"
+        },
+        "customise": {
+            "title": "Customise data access requests",
+            "description": "Manage and edit your 'how to request access' information, your data access request form and workflows",
+            "statusWarning": "Please note that both <b>Presubmission Guidance</b> and <b>DAR Application Form</b> must be completed before they can be published.",
+            "lastUpdatedBy": "Last updated by",
+            "lastUpdatedOn": "Last updated on",
+            "applicationForm": {
+                "title": "Application Form",
+                "description": "Elements of the data access request form (Five safes form) can be customised as required by <b>{{publisherName}}</b>. You may choose which questions should be turned on/off and edit the accompanying for each question. However, we recommend modifying the guidance only if necessary for your data governance processes, and please note that some questions and guidance are mandatory, for example where the form has been aligned with the National Data Guardian.<br/><br/> Please consider carefully whether additional questions are required, as we are working to standardise the data access process as much as possible. If you would still like to propose addition of a new question, please raise a ticket at <a href='https://hdruk.atlassian.net/servicedesk/customer/portal/1'>https://hdruk.atlassian.net/servicedesk/customer/portal/1</a>"
+            },
+            "saveAlert": "Every change you make is automatically saved with the latest save time shown in the top right",
+            "uploadAlert": "You have successfully imported the DAR config file. Please check all sections to ensure everything is correct",
+            "optionalQuestionsIncluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To exclude this section, simply click the switch above and it will not be visible to the applicants",
+            "optionalQuestionsExcluded": "This section is optional and it is currently set to be <1>{{includedExcluded}}</1>. To include this section, simply click the switch above and customise each question as required",
+            "warningAlert": "Please note that both Presubmission Guidance and DAR Application Form must be completed before they can be published.",
+            "presubmissionGuidance": {
+                "title": "Presubmission guidance for data applicants",
+                "description": "The 'How to request access' information will be displayed to all users at the beginning of their access journey. To ensure that they are prepared for the process, include all necessary information such as; what to do before they submit an application",
+                "modal": {
+                    "title": "Edit your guidance to data applicants",
+                    "description": "The text below is shown to data applicants when they click on the 'How to access' button for <b>{{publisherName}}</b> datasets.Having read this text,the data applicant is then able to choose whether to submit an informal enquiry or a full data access request (Five Safes form). The default text below can be edited as required for your own needs. We recommend including key information such as; what to before submitting a full data access request, when data can be released, cost of accessing data, and any links to any resources that would be useful for the data applicant.",
+                    "publish": {
+                        "title": "Publish 'Applicant guidance for requesting access to data'",
+                        "description": "Selecting Publish will make your updates live on the Gateway for <b>{{publisherName}}</b> datasets.",
+                        "confirm": "Publish",
+                        "success": "You have successfully updated and published the {{publisherName}} application form and 'How to request access' information"
+                    },
+                    "cancel": {
+                        "title": "Cancel 'Applicant guidance for requesting access to data'",
+                        "description": "Are you sure you want to leave this page? Any changes you have made have not been published and will not be saved."
+                    }
+                },
+                "defaultGuidance": "# **Data access requests** \n **Before you submit an application** \n\nNot all enquires progress to the application stage. It may be that the data you need is available through our existing published data.Please read the following information to see if the data you require is available from another source before proceeding with your application.\n\nWe commission approximately 40 national clinical audits and clinical outcome review programmes which make up the National Clinical Audit and Patient Outcomes Programme(NCAPOP).We also commission some projects outside the NCAPOP and we host the National Joint Registry.\n\nThese projects collect data on the quality and outcomes of care in England and Wales. Some projects also collect data in Scotland,Northern Ireland, Isle of Man, Guernsey and Jersey, either under contract to HQIP or separately.\n\nData from these projects is routinely reported and these reports are available on each project website, as well as on our website.The reported data is also placed on the data.gov.uk website.\n\nWe also work to routinely to place outcomes data on the NHS Choices website.Many of these projects link with third party data sets such as Hospital Statistics(HES) and Office for National Statistics(ONS) data which are managed by NHS Digital."
+            }
+        }
+    },
+    "questionbank": {
+        "modal": {
+            "clearUnpublishedUpdates": "Clear unpublished updates",
+            "publishChanges": "Are you sure you want to publish your updates to this application form? Any applications which are already in process will not be updated.",
+            "noChanges": "No changes have been made to your application form so it cannot be published.",
+            "clearSection": "Are you sure you want to clear the unpublished updates in this section? You will permenantly lose any changes made by you and other team member in this area since the form was last published.",
+            "clear": "Are you sure you want to clear all the unpublished updates to this form? You will permenantly lose any changes made by you and other team member since this form was last published."
+        }
+    },
+    "components": {
+        "QualityScore": {
+            "tooltip": "<p>Metadata richness score: {{score}}</p><p>The score relates to the amount of information available about the dataset, and not to the quality of the actual datasets.</p><p>Click to read more about how the score is calculated.</p><p>{{completeness_percent}} Weighted completeness %<br />{{error_percent}} Weighted error %</p>"
+        },
+        "Login": {
+            "description": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
+            "list": {
+                "description1": "Submit data access enquiries and applications",
+                "description2": "Add your own collections, papers and other resources",
+                "description3": "Use the Cohort Discovery advanced search tool"
+            },
+            "notLoading": "Click here if login screen does not load",
+            "linkLoginOptions": "Show all login options",
+            "descriptionButtons": "You can sign in or create a Gateway account with any of the organisations below, simply click your preferred organisation and follow the on-screen instructions:"
+        }
+    }
 }

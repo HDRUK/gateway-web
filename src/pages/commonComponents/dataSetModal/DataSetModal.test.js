@@ -1,105 +1,98 @@
-import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import { getNon5SafesModalContentRequest } from '../../../services/content';
+import '@testing-library/jest-dom/extend-expect';
+
+import { testUtils } from '../../../../test';
+
 import DataSetModal from './DataSetModal';
 
-jest.mock('../../../services/content', () => ({ 
+jest.mock('../../../services/content', () => ({
     __esModule: true,
-    default: () => jest.fn().mockImplementation(() => {}),
-    getNon5SafesModalContentRequest: jest.fn().mockImplementation(() => {})
-}) );
+    getNon5SafesModalContentRequest: jest.fn().mockReturnValue({ data: '<div>non 5safes content</div>' }),
+}));
 
 const userState = {
     loggedIn: true,
-    role: "Creator",
+    role: 'Creator',
     id: 8355047451167574,
-    name: "Simon Kenyon",
-    teams: "[]",
-    email: "simon.kenyon@hdruk.ac.uk",
+    name: 'Simon Kenyon',
+    teams: '[]',
+    email: 'simon.kenyon@hdruk.ac.uk',
     profileComplete: true,
-    provider: "google",
+    provider: 'google',
     advancedSearchRoles: [],
-    terms: true
+    terms: true,
 };
 
 const context = {
     requiresModal: true,
     allowNewMessage: true,
     allowsMessaging: true,
-    dataRequestModalContent: {body: "Data body", header: "Data header"},
+    dataRequestModalContent: { body: 'Data body', header: 'Data header' },
     datasets: [{}],
-    contactPoint: "sail@email.com",
-    title: "ALLIANCE > SAIL",
-    showActionButtons: true
+    contactPoint: 'sail@email.com',
+    title: 'ALLIANCE > SAIL',
+    showActionButtons: true,
 };
 
 const defaultProps = {
     closed: () => {},
-	context: {
-        datasets: []
+    context: {
+        datasets: [],
     },
-	userState: {},
-	open: true,
+    userState: {},
+    open: true,
 };
-
-let component;
 
 describe('Given the DataSetModal component', () => {
     describe('When is5Safes is false', () => {
-
         beforeAll(() => {
-            getNon5SafesModalContentRequest.mockResolvedValue({ data: "<div>non 5safes content</div>" });
-            component = render(<DataSetModal {...defaultProps} />);
+            // getNon5SafesModalContentRequest = jest.fn().mockReturnValue({ data: '<div>non 5safes content</div>' });
+
+            testUtils.render(<DataSetModal {...defaultProps} />);
         });
 
         afterAll(() => {
-            cleanup();
-        })
+            testUtils.cleanup();
+        });
 
         it('Should just render the non5Safes modal content', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('non 5safes content')).toBeTruthy();
+            expect(testUtils.screen.getByText('non 5safes content')).toBeInTheDocument();
         });
 
         it('Should not render the Start application button', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('Start application')).toBeFalsy();
+            expect(testUtils.screen.queryByText('Start application')).not.toBeInTheDocument();
         });
     });
 
     describe('When is5Safes is true', () => {
         beforeAll(() => {
-            getNon5SafesModalContentRequest.mockResolvedValue({ data: "<div>non 5safes content</div>" });
+            // getNon5SafesModalContentRequest = jest.fn().mockResolvedValue({ data: '<div>non 5safes content</div>' });
 
             const datasetProps = {
                 open: true,
-                context: context,
+                context,
                 closed: () => {},
-                userState: userState,
-                is5Safes: true
-            }
-            
-            component = render(<DataSetModal {...datasetProps} />);
+                userState,
+                is5Safes: true,
+            };
+
+            testUtils.render(<DataSetModal {...datasetProps} />);
         });
 
         afterAll(() => {
-            cleanup();
+            testUtils.cleanup();
         });
 
         it('Should not render the non5Safes modal content', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('non 5safes content')).toBeFalsy();
+            expect(testUtils.screen.queryByText('non 5safes content')).not.toBeInTheDocument();
         });
 
         it('should render the content from the dataset', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('Data header')).toBeTruthy();
-            expect(await queryByText('Data body')).toBeTruthy();
+            expect(testUtils.screen.queryByText('Data header')).toBeInTheDocument();
+            expect(testUtils.screen.queryByText('Data body')).toBeInTheDocument();
         });
 
         it('should render the Start Application button', async () => {
-            const { queryByText } = component;
-            expect(await queryByText('Start application')).toBeTruthy();
+            expect(testUtils.screen.queryByText('Start application')).toBeInTheDocument();
         });
     });
 
@@ -107,22 +100,21 @@ describe('Given the DataSetModal component', () => {
         beforeEach(() => {
             const datasetProps = {
                 open: true,
-                context: {...context, showActionButtons: false},
+                context: { ...context, showActionButtons: false },
                 closed: () => {},
-                userState: userState,
-                is5Safes: true
-            }
-            
-            component = render(<DataSetModal {...datasetProps} />);
+                userState,
+                is5Safes: true,
+            };
+
+            testUtils.render(<DataSetModal {...datasetProps} />);
         });
 
         afterEach(() => {
-            cleanup();
+            testUtils.cleanup();
         });
 
         it('Should not render the action buttons container', async () => {
-            const { queryByTestId } = component;
-            expect(await queryByTestId('actionButtons')).toBeFalsy();
+            expect(testUtils.screen.queryByTestId('actionButtons')).not.toBeInTheDocument();
         });
     });
 });

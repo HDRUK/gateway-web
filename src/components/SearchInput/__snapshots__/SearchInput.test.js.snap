@@ -3,29 +3,30 @@
 exports[`Given the SearchInput component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="css-koyxv1-Input form-group"
+    class="ui-Box emotion-0"
   >
-    <label
-      class="form-label"
-    />
     <div
-      class="ui-Input ui-SearchInput css-1sivg29 css-1r1cho1-Input input-group"
+      class="emotion-1 form-group"
     >
       <div
-        class="css-haly75-Input input-group-prepend"
+        class="ui-Input ui-SearchInput emotion-2 input-group"
       >
-        <button
-          fill="green700"
-          name="search"
+        <div
+          class="emotion-3 input-group-prepend"
         >
-          Icon
-        </button>
+          <button
+            fill="green700"
+            svg="[object Object]"
+          >
+            Icon
+          </button>
+        </div>
+        <input
+          class="form-control"
+          name="search"
+          value=""
+        />
       </div>
-      <input
-        class="form-control"
-        name="search"
-        value=""
-      />
     </div>
   </div>
 </div>

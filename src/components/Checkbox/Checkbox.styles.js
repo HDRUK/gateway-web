@@ -1,48 +1,56 @@
 import { css } from '@emotion/react';
 
-export const root = ({ variant, partial }) => theme => {
-	const {
-		colors,
-		components: {
-			Checkbox: { height, width, variants },
-		},
-	} = theme;
+export const root =
+    ({ variant, disabled, partial }) =>
+    theme => {
+        const {
+            colors,
+            components: {
+                Checkbox: { height, width, variants, fontSize, disabledColor },
+            },
+        } = theme;
 
-	return css`
-		${mixins.root({ width })}
+        return css`
+            ${mixins.root({ width, disabled })}
 
-		&::before {
-			${mixins.before({ colors, variants, variant, width, height })}
-		}
+            font-size: ${fontSize};
 
-		input + .ui-Checkbox__label::after {
-			${mixins.after({ width, height })}
-		}
+            &::before {
+                ${mixins.before({ colors, variants, variant, width, height })}
+            }
 
-		input:disabled:not(:checked) + .ui-Checkbox__label::after {
-			${mixins.disabledNotChecked({ width, height })}
-		}
+            input:disabled + span {
+                color: ${colors[disabledColor]};
+            }
 
-		input:checked + .ui-Checkbox__label::after {
-			${mixins.checked({ colors, variants, variant })}
-		}
+            input + .ui-Checkbox__label::after {
+                ${mixins.after({ width, height })}
+            }
 
-		input:checked + .ui-Checkbox__label::after {
-			${mixins.checked({ colors, variants, variant })}
-		}
+            input:disabled:not(:checked) + .ui-Checkbox__label::after {
+                ${mixins.disabledNotChecked({ width, height })}
+            }
 
-		input + .ui-Checkbox__label > span::after {
-			${mixins.partial({ width, height })}
-		}
+            input:checked + .ui-Checkbox__label::after {
+                ${mixins.checked({ colors, variants, variant })}
+            }
 
-		input:disabled + .ui-Checkbox__label::after {
-			${mixins.disabled({ colors, variants, variant })}
-		}
-	`;
-};
+            input:checked + .ui-Checkbox__label::after {
+                ${mixins.checked({ colors, variants, variant })}
+            }
+
+            input + .ui-Checkbox__label > span::after {
+                ${partial && mixins.partial({ width, height })}
+            }
+
+            input:disabled + .ui-Checkbox__label::after {
+                ${mixins.disabled({ colors, variants, variant })}
+            }
+        `;
+    };
 
 export const mixins = {
-	root: ({ width }) => `
+    root: ({ width, disabled }) => `
 		position: relative;
 		padding-left: calc(${width} + 0.5rem);
 
@@ -50,11 +58,15 @@ export const mixins = {
 			display: none;
 		}
 
-		&:hover {
+		${
+            !disabled
+                ? `&:hover {
 			cursor: pointer;
-		}
+			}`
+                : ''
+        }
 	`,
-	before: ({ colors, variants, variant, width, height }) => `
+    before: ({ colors, variants, variant, width, height }) => `
 		content: '';
 		position: absolute;
 		top: 0;
@@ -65,7 +77,7 @@ export const mixins = {
 		width: ${width};
 		height: ${height};
 	`,
-	after: ({ width, height }) => `
+    after: ({ width, height }) => `
 		content: '';
 		position: absolute;
 		top: 5px;
@@ -73,7 +85,7 @@ export const mixins = {
 		width: calc(${width} - 10px);
 		height: calc(${height} - 10px);
 	`,
-	disabledNotChecked: ({ width, height }) => `
+    disabledNotChecked: ({ width, height }) => `
 		content: '';
 		position: absolute;
 		top: 2px;
@@ -81,14 +93,14 @@ export const mixins = {
 		width: calc(${width} - 4px);
 		height: calc(${height} - 4px);
 	`,
-	checked: ({ colors, variants, variant }) => `
+    checked: ({ colors, variants, variant }) => `
 		background: ${colors[variants[variant].checkedBackground]};
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	`,
-	partial: ({ width, height }) => `
-		content: '-';
+    partial: ({ width, height }) => `
+		content: '';
 		font-size: 22px;
 		color: white;
 		z-index: 1;
@@ -101,7 +113,7 @@ export const mixins = {
 		align-items: center;
 		justify-content: center;
 	`,
-	disabled: ({ colors, variants, variant }) => `
+    disabled: ({ colors, variants, variant }) => `
 		background: ${colors[variants[variant].backgroundDisabled]};
 	`,
 };

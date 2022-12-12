@@ -3,9 +3,8 @@
 exports[`Given the LoginSSOButtons component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div>
-    <br />
     <div
-      class="mt-2 row"
+      class="mt-3 row"
     >
       <div
         class="col-lg-1"
@@ -17,12 +16,12 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
           class="gray800-14"
         >
           <button
-            class="btn btn-outline-secondary btn-block css-117p4px"
+            class="btn btn-outline-secondary btn-block emotion-0"
             data-testid="google"
           >
             <img
               alt="google"
-              class="css-1o49y5s"
+              class="emotion-1"
               src="googleIcon"
             />
               
@@ -37,12 +36,12 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
           class="gray800-14"
         >
           <button
-            class="btn btn-outline-secondary btn-block css-117p4px"
+            class="btn btn-outline-secondary btn-block emotion-0"
             data-testid="openAthens"
           >
             <img
               alt="openAthens"
-              class="css-1o49y5s"
+              class="emotion-1"
               src="instIcon"
             />
               
@@ -54,9 +53,8 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
         class="col-lg-1"
       />
     </div>
-    <br />
     <div
-      class="mt-2 row"
+      class="mt-3 row"
     >
       <div
         class="col-lg-1"
@@ -68,12 +66,12 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
           class="gray800-14"
         >
           <button
-            class="btn btn-outline-secondary btn-block css-117p4px"
+            class="btn btn-outline-secondary btn-block emotion-0"
             data-testid="azure"
           >
             <img
               alt="azure"
-              class="css-1o49y5s"
+              class="emotion-1"
               src="microsoftIcon"
             />
               
@@ -86,7 +84,7 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
       />
     </div>
     <div
-      class="css-k2m949-LoginSSOButtons"
+      class="emotion-6"
     >
       <div
         class="mt-5  row"
@@ -105,7 +103,7 @@ exports[`Given the LoginSSOButtons component When it is rendered Then matches th
               rel="noopener noreferrer"
               target="_blank"
             >
-              Suggest another Indentity Provider
+              Suggest another Identity Provider
             </a>
           </span>
         </div>

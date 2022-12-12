@@ -34,13 +34,13 @@ exports[`Given the AlertModal component When it is rendered Then matches the pre
           </div>
         </div>
         <div
-          class="gray800-14 css-1axlqcz-AlertModal modal-body"
+          class="gray800-14 emotion-0 modal-body"
           data-testid="modal-body"
         >
           This is the body
         </div>
         <div
-          class="css-n34xqh-AlertModal modal-footer"
+          class="emotion-1 modal-footer"
           data-testid="modal-footer"
         >
           This is the footer

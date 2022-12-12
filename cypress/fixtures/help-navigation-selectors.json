@@ -1,0 +1,15 @@
+{
+    "main_nav_help_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(3) > div > a",
+
+    "main_nav_help_tutorial_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(3) > div > div > ul > div > a:nth-child(2)",
+    "main_nav_help_faq_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(3) > div > div > ul > div > a:nth-child(3)",
+    "main_nav_help_key_terms_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(3) > div > div > ul > div > a:nth-child(4)",
+    "main_nav_help_understanding_hd_access_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(3) > div > div > ul > div > a:nth-child(5)",
+    "main_nav_help_contact_us_link": "#desktopSearchBar > div > div.ui-Box.pr-0.pl-2.css-18xtwu6-Bn > div:nth-child(3) > div > div > ul > div > a:nth-child(6)",
+
+    "help_tutorials_compare": "#ember37-header > div > span > span > span.badge-category.clear-badge > span",
+    "help_faqs_compare": "#main > div > div:nth-child(5) > div",
+    "help_key_terms_compare": "#main > div > div.matrixContainer > div > table > tbody > tr:nth-child(1) > td",
+    "help_understanding_hd_access_compare": "#topic-title > div > div > h1 > a",
+    "help_contact_us_compare": "#main > div > div.matrixContainer > div > ul > li:nth-child(1) > p"
+}

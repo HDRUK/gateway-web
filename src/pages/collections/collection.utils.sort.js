@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 // NOTES:
-// All these functions mutate the array that is passed in. Ideally we wouldn't mutate this data. If we moved to a 
+// All these functions mutate the array that is passed in. Ideally we wouldn't mutate this data. If we moved to a
 // more functional programming style then we could avoid this, but for now i've just copied the original functions
 // from the CollectionPage component
 
@@ -22,16 +22,16 @@ export const sortByResources = filteredData => {
 
 export const sortByRelevance = (filteredData, searchCollectionsString) => {
     const getCountOfSearchTerm = field => {
-        if(!field) {
+        if (!field) {
             return 0;
         }
 
-		if (_.isArray(field)) {
-			return field.toString().toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
-		} else {
-			return field.toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
-		}
-	};
+        if (_.isArray(field)) {
+            return field.toString().toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
+        } else {
+            return field.toLowerCase().split(searchCollectionsString.toLowerCase()).length - 1;
+        }
+    };
 
     filteredData.forEach(function (data) {
         if (data.type === 'course') {
