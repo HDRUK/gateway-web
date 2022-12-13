@@ -1,9 +1,8 @@
-import { screen, render, cleanup, within, act, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamManagementPage from './AccountTeamManagementPage';
 import { server } from '../../services/mockServer';
 import * as Auth from '../../context/AuthContext';
-import { mocks } from '../../../test';
+import { mocks, testUtils } from '../../../test';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
 
@@ -20,7 +19,7 @@ describe('AccountTeamManagement Page', () => {
 
     afterEach(() => {
         server.resetHandlers();
-        cleanup();
+        testUtils.cleanup();
     });
 
     afterAll(() => {
@@ -30,8 +29,8 @@ describe('AccountTeamManagement Page', () => {
     it('should render child components for members', async () => {
         const teamId = '1234';
         const innertab = 'members';
-        act(() => {
-            render(
+        testUtils.act(() => {
+            testUtils.render(
                 <AccountTeamManagementPage
                     teamId={teamId}
                     innerTab={innertab}
@@ -43,15 +42,15 @@ describe('AccountTeamManagement Page', () => {
             );
         });
 
-        await waitFor(() => {
-            expect(screen.getByTestId('AccountTeamMembers')).toBeInTheDocument();
+        await testUtils.waitFor(() => {
+            expect(testUtils.screen.getByTestId('AccountTeamMembers')).toBeInTheDocument();
         });
     });
     it('should render child components for notifications', async () => {
         const teamId = '1234';
         const innertab = 'notifications';
-        act(() => {
-            render(
+        testUtils.act(() => {
+            testUtils.render(
                 <AccountTeamManagementPage
                     teamId={teamId}
                     innerTab={innertab}
@@ -63,10 +62,10 @@ describe('AccountTeamManagement Page', () => {
             );
         });
 
-        await waitFor(() => {
-            expect(screen.getByTestId('NotificationTab')).toBeInTheDocument();
+        await testUtils.waitFor(() => {
+            expect(testUtils.screen.getByTestId('NotificationTab')).toBeInTheDocument();
         });
 
-        expect(within(screen.getByTestId('NotificationTab')).getByText('Email notifications')).toBeInTheDocument();
+        expect(testUtils.within(testUtils.screen.getByTestId('NotificationTab')).getByText('Email notifications')).toBeInTheDocument();
     });
 });

@@ -15,12 +15,6 @@ const searchResultsSpy = jest.spyOn(SearchResults, 'default');
 const searchControlsSpy = jest.spyOn(SearchControls, 'default');
 const datasetCardSpy = jest.spyOn(DatasetCard, 'default');
 
-jest.mock('../../../../components/Icon', () => ({ onClick }) => (
-    <span onClick={onClick} className='icon-mock'>
-        Icon
-    </span>
-));
-
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useHistory: () => ({
@@ -34,7 +28,7 @@ const props = {
     isLoading: true,
     isFetched: false,
     status: STATUS_INREVIEW,
-    team: 'admin',
+    userType: 'admin',
     count: 19,
     params: { search: 'covid', sortBy: 'latest', sortDirection: 'desc', maxResults: 1000 },
 };

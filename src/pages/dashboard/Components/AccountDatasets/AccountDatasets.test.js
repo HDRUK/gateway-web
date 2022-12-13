@@ -1,4 +1,4 @@
-import { render, waitFor, act } from '@testing-library/react';
+import { testUtils } from '../../../../../test';
 import AccountDatasets from './AccountDatasets';
 import { server } from '../../../../services/mockServer';
 import { mockGetPublisher } from '../../../../services/dataset-onboarding/mockMsw';
@@ -42,7 +42,7 @@ jest.mock('../../../../components/Icon', () => 'Icon');
 
 const props = {
     alert: { message: 'Message goes here' },
-    team: 'applicant',
+    userType: 'applicant',
 };
 
 let wrapper;
@@ -62,11 +62,9 @@ describe('Given the AccountDatasets component', () => {
 
     describe('When it is rendered', () => {
         beforeAll(async () => {
-            wrapper = render(<AccountDatasets {...props} />, {
-                wrapper: Providers,
-            });
+            wrapper = testUtils.render(<AccountDatasets {...props} />);
 
-            await waitFor(() => expect(wrapper.getByText('Select tab')).toBeTruthy());
+            await testUtils.waitFor(() => expect(wrapper.getByText('Select tab')).toBeTruthy());
         });
 
         it('Then matches the previous snapshot', () => {
@@ -78,23 +76,23 @@ describe('Given the AccountDatasets component', () => {
         });
 
         it('Then calls the tabs with the correct props', async () => {
-            await waitFor(() => {
+            await testUtils.waitFor(() => {
                 expect(mockAccountDatasetsTabs).toHaveBeenCalledLastWithMatch({
                     activeKey: DATASETS_STATUS_ACTIVE,
                     counts: { inReview: 19 },
-                    team: 'applicant',
+                    userType: 'applicant',
                 });
             });
         });
 
         it('Then calls the results with the correct props', async () => {
-            await waitFor(() => {
+            await testUtils.waitFor(() => {
                 return expect(mockAccountDatasetsContent).toHaveBeenCalledLastWithMatch({
                     data: mockGetPublisher.data.results.listOfDatasets,
                     isFetched: true,
                     isLoading: false,
                     status: DATASETS_STATUS_ACTIVE,
-                    team: 'applicant',
+                    userType: 'applicant',
                 });
             });
         });
@@ -103,10 +101,10 @@ describe('Given the AccountDatasets component', () => {
             beforeAll(() => {
                 mockAccountDatasetsContent.mockClear();
 
-                act(async () => {
+                testUtils.act(async () => {
                     const submit = wrapper.getByText('Submit');
 
-                    await fireEvent.click(submit, {
+                    await testUtils.fireEvent.click(submit, {
                         search: 'dataset',
                         sortBy: 'metadataQuality',
                         sortDirection: 'desc',
@@ -115,12 +113,12 @@ describe('Given the AccountDatasets component', () => {
             });
 
             it('Then calls the results with the correct props', async () => {
-                await waitFor(() => {
+                await testUtils.waitFor(() => {
                     return expect(mockAccountDatasetsContent).toHaveBeenCalledLastWithMatch({
                         isFetched: true,
                         isLoading: false,
                         status: DATASETS_STATUS_ACTIVE,
-                        team: 'applicant',
+                        userType: 'applicant',
                     });
                 });
             });
@@ -129,21 +127,21 @@ describe('Given the AccountDatasets component', () => {
                 beforeAll(() => {
                     mockAccountDatasetsContent.mockClear();
 
-                    act(async () => {
+                    testUtils.act(async () => {
                         const tab = wrapper.getByText('Select tab', STATUS_INREVIEW);
 
-                        await fireEvent.click(tab);
+                        await testUtils.fireEvent.click(tab);
                     });
                 });
 
                 it('Then calls the results with the correct props', async () => {
-                    await waitFor(() => {
+                    await testUtils.waitFor(() => {
                         return expect(mockAccountDatasetsContent).toHaveBeenCalledLastWithMatch({
                             data: mockGetPublisher.data.results.listOfDatasets,
                             isFetched: true,
                             isLoading: false,
                             status: STATUS_INREVIEW,
-                            team: 'applicant',
+                            userType: 'applicant',
                         });
                     });
                 });

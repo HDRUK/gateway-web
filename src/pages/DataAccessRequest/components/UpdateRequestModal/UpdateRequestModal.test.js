@@ -1,7 +1,7 @@
 import moxios from 'moxios';
 import { testUtils } from '../../../../../test';
 import UpdateRequestModal from './UpdateRequestModal';
-import { updateRequestProps } from '../../../../utils/__mocks__/darHelperUtils.mock';
+import { updateRequestProps } from '../../../../utils/__mocks__/DarHelper.mock';
 import '@testing-library/jest-dom/extend-expect';
 
 const props = updateRequestProps;
@@ -20,7 +20,7 @@ beforeEach(() => {
 
 afterEach(() => {
     moxios.uninstall();
-    cleanup();
+    testUtils.cleanup();
 });
 
 /**

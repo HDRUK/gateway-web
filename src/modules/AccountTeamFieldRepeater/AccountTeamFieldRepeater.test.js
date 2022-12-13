@@ -1,6 +1,6 @@
-import { render } from 'testUtils';
+import { testUtils, mocks } from '../../../test';
 import AccountTeamFieldRepeater from './AccountTeamFieldRepeater';
-import { mocks } from '../../../test';
+
 import * as Auth from '../../context/AuthContext';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
@@ -18,7 +18,7 @@ describe('AccountTeamFieldRepeater', () => {
         const teamNotificationMock = {
             subscribedEmails: [],
         };
-        const wrapper = render(
+        const wrapper = testUtils.render(
             <AccountTeamFieldRepeater
                 id='1'
                 teamId='1234'
