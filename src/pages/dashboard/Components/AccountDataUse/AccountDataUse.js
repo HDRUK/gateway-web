@@ -9,7 +9,7 @@ import DataUsePage from '../../../dataUse/DataUsePage';
 import DataUseUpload from '../../../dataUse/upload/DataUseUpload';
 import DataUseWidget from '../../../dataUse/widget/DataUseWidget';
 
-const AccountDataUse = ({ tabId, team, publisherDetails }) => {
+const AccountDataUse = ({ tabId, userType, teamId, publisherDetails }) => {
     const { userState } = useAuth();
     const [isTeamManager, setisTeamManager] = useState(false);
     const history = useHistory();
@@ -19,8 +19,8 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
 
     useEffect(() => {
         // TODO: GAT-1510:015
-        setisTeamManager(authUtils.getHasTeamManagerRole(userState, team));
-    }, [team, userState]);
+        setisTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
+    }, [teamId, userState]);
 
     const [dataUseUpload, setDataUseUpload] = useState(false);
     const [alertMessage, setAlertMessage] = useState(false);
@@ -55,18 +55,18 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
                 </LayoutContent>
             )}
 
-            {tabId === 'datause' && dataUseUpload && <DataUseUpload userState={userState} team={team} onSubmit={handleSubmitUpload} />}
+            {tabId === 'datause' && dataUseUpload && <DataUseUpload userState={userState} teamId={teamId} onSubmit={handleSubmitUpload} />}
 
             {tabId === 'datause' && !dataUseUpload && (
-                <DataUsePage userState={userState} team={team} onClickDataUseUpload={handleClickUpload} />
+                <DataUsePage userState={userState} userType={userType} onClickDataUseUpload={handleClickUpload} />
             )}
 
             {/* TODO: GAT-1510:053 */}
             {tabId === 'datause_widget' &&
-                authUtils.getIsTypeCustodian(team) &&
+                authUtils.getIsTypeCustodian(userType) &&
                 isTeamManager &&
                 publisherDetails?.dataUse?.widget?.enabled && (
-                    <DataUseWidget userState={userState} team={team} publisherDetails={publisherDetails} />
+                    <DataUseWidget userState={userState} teamId={teamId} publisherDetails={publisherDetails} />
                 )}
         </>
     );

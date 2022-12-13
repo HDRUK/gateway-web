@@ -4,7 +4,7 @@ import { Table, Dropdown } from 'react-bootstrap';
 
 import googleAnalytics from '../../tracking';
 
-const DataUseTable = ({ team, data, active, pending, archived, onClickArchive, onClickUnarchive, onClickApprove, onClickReject }) => {
+const DataUseTable = ({ userType, data, active, pending, archived, onClickArchive, onClickUnarchive, onClickApprove, onClickReject }) => {
     const handleAnalytics = (label, value) => {
         googleAnalytics.recordEvent('Data uses', label, value);
     };
@@ -48,8 +48,7 @@ const DataUseTable = ({ team, data, active, pending, archived, onClickArchive, o
                     className='data-use-link'
                     to={`/dataset/${gatewayDataset.pid}`}
                     target='_blank'
-                    onClick={() => handleClickDataset(gatewayDataset.pid)}
-                >
+                    onClick={() => handleClickDataset(gatewayDataset.pid)}>
                     {gatewayDataset.name}
                 </Link>
             </div>
@@ -83,8 +82,7 @@ const DataUseTable = ({ team, data, active, pending, archived, onClickArchive, o
                                 className='data-use-link'
                                 to={`/datause/${dataUse.id}`}
                                 target='_blank'
-                                onClick={() => handleClickDatause(dataUse.id)}
-                            >
+                                onClick={() => handleClickDatause(dataUse.id)}>
                                 {dataUse.projectTitle}
                             </Link>
                             <p>{dataUse.organisationName}</p>
@@ -103,13 +101,13 @@ const DataUseTable = ({ team, data, active, pending, archived, onClickArchive, o
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
                                             <Dropdown.Item href={`/datauseRegister/edit/${dataUse.id}`}>Edit</Dropdown.Item>
-                                            {team !== 'user' && (
+                                            {userType !== 'user' && (
                                                 <Dropdown.Item onClick={() => handleClickArchive(dataUse.id)}>Archive</Dropdown.Item>
                                             )}
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 )}
-                                {pending && team === 'admin' && (
+                                {pending && userType === 'admin' && (
                                     <Dropdown>
                                         <Dropdown.Toggle variant='outline-secondary' className='data-use-action'>
                                             Actions

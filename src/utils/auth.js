@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { PERMISSIONS_TEAM_ROLES, PERMISSIONS_ROOT_ROLES, PERMISSIONS_TEAM_MEMBER_ROLES, PERMISSIONS_USER_TYPES } from 'consts';
 import { generalUtils } from 'utils';
 
+// TODO: GAT-1824 rewrite
 const getTeam = props => {
     const values = generalUtils.parseQueryString(window.location.search);
     let team;
@@ -141,16 +142,16 @@ const returnApplicantIfTeamNotFound = (userState, teamId) => {
 };
 
 // TODO: GAT-1510 Investigate - similar to getIsTypeAdminOrApplicant above
-const getPublisherId = (userState, team) => {
+const getPublisherId = (userState, teamId) => {
     const { teams } = userState;
-    const foundAdmin = teams.filter(x => x.type === team);
+    const foundAdmin = teams.filter(x => x.type === teamId);
 
     if (!_.isEmpty(foundAdmin)) {
         return 'admin';
     }
 
     // eslint-disable-next-line no-underscore-dangle
-    const foundTeam = teams.filter(x => x._id === team);
+    const foundTeam = teams.filter(x => x._id === teamId);
     if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
         return ['applicant'];
     }

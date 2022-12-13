@@ -11,8 +11,8 @@ import readXlsxFile from 'read-excel-file';
 import convertToJson from 'read-excel-file/schema';
 
 import { Alert, Loading } from 'components';
-import SVGIcon from '../../../images/SVGIcon';
 import { dataUseRegistersService } from 'services';
+import SVGIcon from '../../../images/SVGIcon';
 import googleAnalytics from '../../../tracking';
 
 import ActionBar from '../../commonComponents/actionbar/ActionBar';
@@ -21,7 +21,7 @@ import DataUseSubmitModal from './DataUseSubmitModal';
 import './DataUseUpload.scss';
 import DataUseUploadActionButtons from './DataUseUploadActionButtons';
 
-const DataUseUpload = ({ onSubmit, team, dataUsePage, userState }) => {
+const DataUseUpload = ({ onSubmit, teamId, userState }) => {
     const { t } = useTranslation();
     const history = useHistory();
     const hiddenFileInput = React.useRef(null);
@@ -149,7 +149,7 @@ const DataUseUpload = ({ onSubmit, team, dataUsePage, userState }) => {
         setIsLoading(true);
 
         const payload = {
-            teamId: team,
+            teamId,
             dataUses: uploadedData.rows,
         };
 
@@ -175,7 +175,7 @@ const DataUseUpload = ({ onSubmit, team, dataUsePage, userState }) => {
 
     const checkDataUses = async rows => {
         const response = await dataUseRegisterCheck.mutateAsync({
-            teamId: team,
+            teamId,
             dataUses: rows,
         });
         return response.data.result;

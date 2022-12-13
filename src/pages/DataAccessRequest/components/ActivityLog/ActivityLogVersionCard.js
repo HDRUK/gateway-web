@@ -20,7 +20,7 @@ import { ReactComponent as Workflow } from '../../../../images/Workflows.svg';
 import SLA from '../../../commonComponents/sla/SLA';
 import './ActivityLog.scss';
 
-const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
+const ActivityLogVersionCard = ({ version, userType, onDeleteEventClick }) => {
     const [activityLogIds, setActivityLogIds] = useState([]);
 
     const toggleLogDetails = id => {
@@ -142,7 +142,7 @@ const ActivityLogVersionCard = ({ version, team, onDeleteEventClick }) => {
                                                         />
                                                     </div>
                                                 )}
-                                                {log.eventType === darHelperUtils.activityLogEvents.MANUAL_EVENT && team !== 'user' && (
+                                                {log.eventType === darHelperUtils.activityLogEvents.MANUAL_EVENT && userType !== 'user' && (
                                                     <div className='activity-log-delete-event'>
                                                         <button
                                                             className={`btn-link btn-link-delete `}

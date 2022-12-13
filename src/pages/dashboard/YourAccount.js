@@ -44,6 +44,7 @@ class YourAccount extends Component {
     }
 
     componentDidMount() {
+        console.log('BOOOOOO');
         if (!!window.location.search) {
             var values = generalUtils.parseQueryString(window.location.search);
             this.setState({ isUpdated: values.accountUpdated });

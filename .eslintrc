@@ -17,6 +17,7 @@
         "prettier/prettier": ["error", { "endOfLine": "auto" }],
         "react/jsx-uses-react": "off",
         "import/no-cycle": "off",
+        "no-underscore-dangle": ["error", { "allow": ["_id"] }],
         "react/react-in-jsx-scope": "off",
         "react/jsx-props-no-spreading": "off",
         "react/no-unknown-property": ["error", { "ignore": ["css"] }],

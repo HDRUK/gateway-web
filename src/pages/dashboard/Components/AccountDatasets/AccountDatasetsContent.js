@@ -16,7 +16,7 @@ import '../../Dashboard.scss';
 const options = ['latest', 'alphabetic', 'metadata'];
 const optionsWithPublish = ['latest', 'alphabetic', 'metadata', 'recentlyadded'];
 
-const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFetched, status, params, team, count }) => {
+const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFetched, status, params, userType, count }) => {
     const { search, sortBy, sortDirection, maxResults } = params;
 
     const [searchValue, setSearchValue] = useState('');
@@ -65,7 +65,7 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
         }
     }, [sortBy, sortDirection]);
 
-    const hasActivityHistory = useCallback(dataset => dataset.listOfVersions.length > 0 && team === 'admin', [team]);
+    const hasActivityHistory = useCallback(dataset => dataset.listOfVersions.length > 0 && userType === 'admin', [userType]);
 
     const getDatasetCardProps = dataset => {
         const datasetCardProps = {};
@@ -86,7 +86,7 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
 
     let statusOptions = options;
 
-    if (team !== 'admin' && (status === STATUS_ARCHIVE || status === DATASETS_STATUS_ACTIVE)) {
+    if (userType !== 'admin' && (status === STATUS_ARCHIVE || status === DATASETS_STATUS_ACTIVE)) {
         statusOptions = optionsWithPublish;
     }
 
