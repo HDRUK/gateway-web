@@ -12,6 +12,7 @@ steps:
                 '--build-arg', 'REACT_APP_NEWSLETTER_EXAMPLE_URL=${_REACT_APP_NEWSLETTER_EXAMPLE_URL}',
                 '--build-arg', 'REACT_APP_TERMS_AND_CONDITIONS_URL=${_REACT_APP_TERMS_AND_CONDITIONS_URL}',
                 '--build-arg', 'REACT_APP_GATEWAY_PRIVACY_POLICY_URL=${_REACT_APP_GATEWAY_PRIVACY_POLICY_URL}',
+                '--build-arg', 'REACT_APP_FIVE_SAFES_URL=${_REACT_APP_FIVE_SAFES_URL}',
                 '.'
             ]
     - name: 'gcr.io/cloud-builders/docker'
