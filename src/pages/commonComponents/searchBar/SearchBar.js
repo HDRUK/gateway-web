@@ -58,11 +58,11 @@ const CustomSubMenu = forwardRef(({ children, style, className, show, 'aria-labe
     const [value] = useState('');
     if (show) {
         return (
-            <div ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
+            <Fragment ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
                 <ul className='list-unstyled'>
                     {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
                 </ul>
-            </div>
+            </Fragment>
         );
     }
     return null;

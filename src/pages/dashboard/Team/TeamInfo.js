@@ -1,17 +1,17 @@
 import { Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
 
-import { Icon } from 'components';
+import { Icon } from 'hdruk-react-core';
 
-import { ReactComponent as IconTick } from '../../../images/tick.svg';
-import { ReactComponent as IconRejected } from '../../../images/Application_rejected.svg';
-
+import { ReactComponent as TickIcon } from '../../../images/icons/tick-circle.svg';
+import { ReactComponent as ErrorIcon } from '../../../images/icons/error-circle.svg';
 
 const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }) => {
     const questionBankEnabled = publisher?.publisherDetails?.questionBank?.enabled;
     const dataUseWidgetEnabled = publisher?.publisherDetails?.dataUse?.widget?.enabled;
-    const QuestionBankStatusIcon = questionBankEnabled ? IconTick : IconRejected;
-    const DataUseWidgetStatusIcon = dataUseWidgetEnabled ? IconTick : IconRejected;
+
+    const EnabledIcon = <Icon mr={2} size='3xl' fill='green400' svg={<TickIcon />} />;
+    const DisabledIcon = <Icon mr={2} size='3xl' fill='red700' svg={<ErrorIcon />} />;
 
     let teamManagerNames = '';
 
@@ -39,14 +39,10 @@ const TeamInfo = ({ updatedAt, publisher, teamManagers, membersCount, editTeam }
                 <p className='text-center'>{membersCount}</p>
             </Col>
             <Col sm={12} lg={1}>
-                <p className='text-center'>
-                    <Icon mr={2} size='2xl' svg={<QuestionBankStatusIcon />} />
-                </p>
+                <p className='text-center'>{questionBankEnabled ? EnabledIcon : DisabledIcon}</p>
             </Col>
             <Col sm={12} lg={1}>
-                <p className='text-center'>
-                    <Icon mr={2} size='2xl' svg={<DataUseWidgetStatusIcon />} />
-                </p>
+                <p className='text-center'>{dataUseWidgetEnabled ? EnabledIcon : DisabledIcon}</p>
             </Col>
             <Col sm={12} lg={2}>
                 <DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>

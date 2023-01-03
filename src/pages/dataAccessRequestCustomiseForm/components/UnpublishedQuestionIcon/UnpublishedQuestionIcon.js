@@ -1,8 +1,8 @@
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { Icon } from 'hdruk-react-core';
 
-import { Icon } from 'components';
 import { darHelperUtils } from 'utils';
 
 import { ReactComponent as DotIcon } from '../../../../images/icons/dot.svg';
