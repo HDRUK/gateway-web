@@ -37,7 +37,7 @@ class DataAccessRequestsNew extends Component {
         preSubmissionCount: 0,
         submittedCount: 0,
         inReviewCount: 0,
-        userTypeLabel: '',
+        teamTypeLabel: '',
         avgDecisionTime: 0,
         alert: {},
         showWorkflowReviewModal: false,
@@ -53,11 +53,11 @@ class DataAccessRequestsNew extends Component {
             return t._id === props.teamId;
         })[0];
         if (!_.isEmpty(teamFound)) {
-            this.state.userTypeLabel = teamFound.name;
+            this.state.teamTypeLabel = teamFound.name;
         }
         if (!_.isEmpty(props.alert)) {
             this.state.alert = props.alert;
-            this.state.userTypeLabel = props.alert.publisher;
+            this.state.teamTypeLabel = props.alert.publisher;
         }
     }
 
@@ -72,7 +72,7 @@ class DataAccessRequestsNew extends Component {
                 return t._id === nextProps.teamId;
             })[0];
             let updatedProp = _.cloneDeep(nextProps);
-            updatedProp.userTypeLabel = teamFound.name;
+            updatedProp.teamTypeLabel = teamFound.name;
 
             this.setState({ isLoading: true });
             this.fetchDataAccessRequests(updatedProp);
@@ -92,12 +92,12 @@ class DataAccessRequestsNew extends Component {
         let dataProps = { ...nextProps, key: 'all' };
         // 1. if there is an alert set team and correct tab so it can display on the UI
         if (!_.isEmpty(this.state.alert)) {
-            dataProps.userTypeLabel = this.state.alert.publisher;
+            dataProps.teamTypeLabel = this.state.alert.publisher;
             dataProps.key = this.state.alert.tab;
         }
         // 2. check which API to call the user or custodian if a team and use team name
         const teamExists = !_.isEmpty(dataProps.teamId);
-        if (teamExists && dataProps.userType !== 'user') {
+        if (teamExists && dataProps.teamType !== 'user') {
             const response = await axios.get(`${baseURL}/api/v1/publishers/${dataProps.teamId}/dataaccessrequests`);
             ({
                 data: { data, avgDecisionTime, canViewSubmitted },
@@ -138,7 +138,7 @@ class DataAccessRequestsNew extends Component {
 
         if (statusKey === 'all') {
             let screenData = [...data].reduce((arr, item) => {
-                if (item.applicationStatus !== darHelperUtils.darStatus.inProgress || this.props.userType === 'user') {
+                if (item.applicationStatus !== darHelperUtils.darStatus.inProgress || this.props.teamType === 'user') {
                     arr.push({
                         ...item,
                     });
@@ -312,7 +312,7 @@ class DataAccessRequestsNew extends Component {
     };
 
     render() {
-        const { userType } = this.props;
+        const { teamType } = this.props;
 
         const {
             isLoading,
@@ -322,7 +322,7 @@ class DataAccessRequestsNew extends Component {
             submittedCount,
             inReviewCount,
             allCount,
-            userTypeLabel,
+            teamTypeLabel,
             alert,
             screenData,
             avgDecisionTime,
@@ -350,7 +350,7 @@ class DataAccessRequestsNew extends Component {
                         <div className='accountHeader dataAccessHeader'>
                             <Col xs={8}>
                                 <Row>
-                                    <div className='black-20'>Data access request applications {userTypeLabel}</div>
+                                    <div className='black-20'>Data access request applications {teamTypeLabel}</div>
                                     <div className='gray700-13'>Manage forms and applications</div>
                                     <div>
                                         <Clock /> {`${avgDecisionTime > 0 ? avgDecisionTime : '-'} days`}{' '}
@@ -365,7 +365,7 @@ class DataAccessRequestsNew extends Component {
                             <Col sm={12} lg={12}>
                                 <Tabs className='dataAccessTabs gray700-13' activeKey={this.state.key} onSelect={this.onTabChange}>
                                     <Tab eventKey='all' title={'All (' + allCount + ')'}></Tab>
-                                    {preSubmissionCount > 0 || userType === 'user' ? (
+                                    {preSubmissionCount > 0 || teamType === 'user' ? (
                                         <Tab eventKey='inProgress' title={'Pre-submission (' + preSubmissionCount + ')'}></Tab>
                                     ) : (
                                         ''
@@ -378,7 +378,7 @@ class DataAccessRequestsNew extends Component {
                             </Col>
                         </div>
 
-                        {userType !== 'user' && this.state.key === 'inProgress' ? this.generatePreSubmissionWarning() : ''}
+                        {teamType !== 'user' && this.state.key === 'inProgress' ? this.generatePreSubmissionWarning() : ''}
 
                         {screenData.map((request, i) => {
                             let {
@@ -462,7 +462,7 @@ class DataAccessRequestsNew extends Component {
                                                     updatedAt={updatedAt}
                                                     applicants={applicants}
                                                     dateSubmitted={dateSubmitted}
-                                                    userType={userType}
+                                                    teamType={teamType}
                                                     workflow={workflow}
                                                     workflowName={workflowName}
                                                     workflowCompleted={workflowCompleted}

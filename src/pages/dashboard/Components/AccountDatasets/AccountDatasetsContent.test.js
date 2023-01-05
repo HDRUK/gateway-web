@@ -28,7 +28,7 @@ const props = {
     isLoading: true,
     isFetched: false,
     status: STATUS_INREVIEW,
-    userType: 'admin',
+    teamType: 'admin',
     count: 19,
     params: { search: 'covid', sortBy: 'latest', sortDirection: 'desc', maxResults: 1000 },
 };
@@ -143,7 +143,7 @@ describe('Given the AccountDatasetsContent component', () => {
                 });
 
                 it('Then should change history onClick', async () => {
-                    const sla = wrapper.container.querySelectorAll('.sla-icons .icon-mock')[0];
+                    const sla = wrapper.container.querySelectorAll('.sla-icons .ui-Icon')[0];
 
                     await testUtils.fireEvent.click(sla, '1234');
 

@@ -2,9 +2,9 @@ import pluralize from 'pluralize';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Box } from 'hdruk-react-core';
+import { Box, Icon } from 'hdruk-react-core';
 
-import { Icon, SearchControls } from 'components';
+import { SearchControls } from 'components';
 import { DATASETS_STATUS_ACTIVE, STATUS_ARCHIVE, STATUS_INREVIEW, STATUS_REJECTED } from '../../../../configs/constants';
 import DatasetCard from '../../../commonComponents/DatasetCard';
 import MessageNotFound from '../../../commonComponents/MessageNotFound';
@@ -16,7 +16,7 @@ import '../../Dashboard.scss';
 const options = ['latest', 'alphabetic', 'metadata'];
 const optionsWithPublish = ['latest', 'alphabetic', 'metadata', 'recentlyadded'];
 
-const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFetched, status, params, userType, count }) => {
+const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFetched, status, params, teamType, count }) => {
     const { search, sortBy, sortDirection, maxResults } = params;
 
     const [searchValue, setSearchValue] = useState('');
@@ -38,10 +38,6 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
     const handleActivityLogClick = id => {
         history.push(getDatasetPath(id));
     };
-
-    const handleKeyDownEnter = useCallback(submitForm => {
-        submitForm();
-    }, []);
 
     const handleSort = useCallback(
         (data, submitForm) => {
@@ -65,7 +61,7 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
         }
     }, [sortBy, sortDirection]);
 
-    const hasActivityHistory = useCallback(dataset => dataset.listOfVersions.length > 0 && userType === 'admin', [userType]);
+    const hasActivityHistory = useCallback(dataset => dataset.listOfVersions.length > 0 && teamType === 'admin', [teamType]);
 
     const getDatasetCardProps = dataset => {
         const datasetCardProps = {};
@@ -86,7 +82,7 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
 
     let statusOptions = options;
 
-    if (userType !== 'admin' && (status === STATUS_ARCHIVE || status === DATASETS_STATUS_ACTIVE)) {
+    if (teamType !== 'admin' && (status === STATUS_ARCHIVE || status === DATASETS_STATUS_ACTIVE)) {
         statusOptions = optionsWithPublish;
     }
 
@@ -97,7 +93,6 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
                     type={t(`dataset.${status}`)}
                     onSubmit={onSubmit}
                     inputProps={{
-                        onKeyDownEnter: handleKeyDownEnter,
                         onChange: handleChange,
                         value: searchValue,
                         onReset,

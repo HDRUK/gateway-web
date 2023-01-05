@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
-import WorkflowsModal from './WorkflowsModal';
-import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import axios from 'axios';
+import { accountUtils } from 'utils';
+import WorkflowsModal from './WorkflowsModal';
+import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import { baseURL } from '../../../../configs/url.config';
 import googleAnalytics from '../../../../tracking';
 
@@ -14,11 +15,11 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
     // state for workflow has been selected
     const [isWorkflowSelected, setSelectedWorkflow] = useState(false);
 
-    let history = useHistory();
+    const history = useHistory();
 
     const modifyWorkflows = () => {
         if (!_.isEmpty(workflows)) {
-            let workflowsArr = workflows.map(item => {
+            const workflowsArr = workflows.map(item => {
                 return {
                     ...item,
                     selected: false,
@@ -30,17 +31,17 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
     };
 
     const toggleSelected = _id => {
-        let workflows = workflowsArr.map(item => {
+        const workflows = workflowsArr.map(item => {
             return {
                 ...item,
                 selected: item._id === _id ? !item.selected : false,
             };
         });
         // set workflow is Selected flag .find { selected: true, workflowId etc}
-        let isWorkflowSelected = [...workflows].some(el => el.selected === true);
+        const isWorkflowSelected = [...workflows].some(el => el.selected === true);
         // do we have a selected workflow
-        let selected = isWorkflowSelected ? true : false;
-        //set workflow selected state
+        const selected = !!isWorkflowSelected;
+        // set workflow selected state
         setSelectedWorkflow(selected);
         // set update to workflows array
         setWorkflow(workflows);
@@ -54,18 +55,19 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
             // next if workflow is not empty
             if (!_.isEmpty(workflow)) {
                 axios
-                    .put(baseURL + `/api/v1/data-access-request/${applicationId}/assignworkflow`, {
+                    .put(`${baseURL}/api/v1/data-access-request/${applicationId}/assignworkflow`, {
                         workflowId: workflow._id,
                     })
-                    .then(res => {
-                        let alert = {
-                            publisher: publisher,
-                            nav: `dataaccessrequests&team=${publisher}`,
+                    .then(() => {
+                        accountUtils.updateTeamType({ teamId: publisher, teamType: 'team' });
+                        const alert = {
+                            publisher,
+                            nav: 'dataaccessrequests',
                             tab: 'inReview',
                             message: `You have successfully assigned a workflow`,
                         };
-                        //redirect to dashboard with alert
-                        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests&team=`, state: { alert } });
+                        // redirect to dashboard with alert
+                        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests`, state: { alert } });
                     });
             }
         }
@@ -104,8 +106,7 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
                                             'Clicked assign workflow',
                                             'Assigned workflow to application'
                                         );
-                                    }}
-                                >
+                                    }}>
                                     Assign and notify
                                 </button>
                             </div>

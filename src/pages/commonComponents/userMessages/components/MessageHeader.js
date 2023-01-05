@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { Button } from 'hdruk-react-core';
+import { accountUtils } from 'utils';
 import googleAnalytics from '../../../../tracking';
 
 const MessageHeader = ({ userState, topic, modalRequired, onRequestAccess, onShowModal, is5Safes }) => {
@@ -23,7 +24,8 @@ const MessageHeader = ({ userState, topic, modalRequired, onRequestAccess, onSho
 
     const onRouteChange = e => {
         e.preventDefault();
-        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests&team=${publisher}`, state: { team: publisher } });
+        accountUtils.updateTeamType({ teamType: 'team', teamId: publisher });
+        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests` });
     };
 
     useEffect(() => {

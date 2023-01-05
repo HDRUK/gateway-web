@@ -42,7 +42,7 @@ jest.mock('../../../../components/Icon', () => 'Icon');
 
 const props = {
     alert: { message: 'Message goes here' },
-    userType: 'applicant',
+    teamType: 'applicant',
 };
 
 let wrapper;
@@ -80,7 +80,7 @@ describe('Given the AccountDatasets component', () => {
                 expect(mockAccountDatasetsTabs).toHaveBeenCalledLastWithMatch({
                     activeKey: DATASETS_STATUS_ACTIVE,
                     counts: { inReview: 19 },
-                    userType: 'applicant',
+                    teamType: 'applicant',
                 });
             });
         });
@@ -92,7 +92,7 @@ describe('Given the AccountDatasets component', () => {
                     isFetched: true,
                     isLoading: false,
                     status: DATASETS_STATUS_ACTIVE,
-                    userType: 'applicant',
+                    teamType: 'applicant',
                 });
             });
         });
@@ -118,7 +118,7 @@ describe('Given the AccountDatasets component', () => {
                         isFetched: true,
                         isLoading: false,
                         status: DATASETS_STATUS_ACTIVE,
-                        userType: 'applicant',
+                        teamType: 'applicant',
                     });
                 });
             });
@@ -141,7 +141,7 @@ describe('Given the AccountDatasets component', () => {
                             isFetched: true,
                             isLoading: false,
                             status: STATUS_INREVIEW,
-                            userType: 'applicant',
+                            teamType: 'applicant',
                         });
                     });
                 });

@@ -2,12 +2,12 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import { has, isEmpty, isNil } from 'lodash';
 import { createRef, Component, Fragment } from 'react';
-import { Button, Box, Typography } from 'hdruk-react-core';
-import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap/';
+import { Button, Box, Typography, Icon } from 'hdruk-react-core';
+import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import Linkify from 'react-linkify';
 import 'react-tabs/style/react-tabs.css';
 
-import { QualityScore, Alert, ToolTip, Icon } from 'components';
+import { QualityScore, Alert, ToolTip } from 'components';
 import { RelatedResourcesTab } from 'modules';
 import { dataSetHelperUtils } from 'utils';
 

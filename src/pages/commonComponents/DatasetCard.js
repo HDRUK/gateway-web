@@ -106,7 +106,7 @@ const DatasetCard = props => {
                                       </div>
                                   </OverlayTrigger>
                               ))
-                            : ''}
+                            : null}
                     </div>
 
                     <div className='body'>
@@ -143,27 +143,24 @@ const DatasetCard = props => {
                                         </Accordion.Toggle>
                                         <Accordion.Collapse eventKey='0' style={{ paddingRight: '20px' }}>
                                             <>
-                                                {listOfVersions.map(datasetVersion => (
-                                                    <>
-                                                        {datasetVersion.datasetVersion !== version ? (
-                                                            <a
-                                                                href='javascript:void(0)'
-                                                                className='version-list'
-                                                                onClick={e => {
-                                                                    e.stopPropagation();
-                                                                    window.location.href = `/dataset-onboarding/${datasetVersion._id}`;
-                                                                }}>
-                                                                {datasetVersion.datasetVersion}
-                                                                {datasetVersion.activeflag === 'draft' ? ' (Draft)' : ''}
-                                                                {datasetVersion.activeflag === 'active' ? ' (Live)' : ''}
-                                                                {datasetVersion.activeflag === 'rejected' ? ' (Rejected)' : ''}
-                                                                {datasetVersion.activeflag === 'inReview' ? ' (Pending)' : ''}
-                                                            </a>
-                                                        ) : (
-                                                            ''
-                                                        )}
-                                                    </>
-                                                ))}
+                                                {listOfVersions.map(datasetVersion =>
+                                                    datasetVersion.datasetVersion !== version ? (
+                                                        <a
+                                                            key={datasetVersion._id}
+                                                            href='#'
+                                                            className='version-list'
+                                                            onClick={e => {
+                                                                e.stopPropagation();
+                                                                window.location.href = `/dataset-onboarding/${datasetVersion._id}`;
+                                                            }}>
+                                                            {datasetVersion.datasetVersion}
+                                                            {datasetVersion.activeflag === 'draft' ? ' (Draft)' : ''}
+                                                            {datasetVersion.activeflag === 'active' ? ' (Live)' : ''}
+                                                            {datasetVersion.activeflag === 'rejected' ? ' (Rejected)' : ''}
+                                                            {datasetVersion.activeflag === 'inReview' ? ' (Pending)' : ''}
+                                                        </a>
+                                                    ) : null
+                                                )}
                                             </>
                                         </Accordion.Collapse>
                                     </Accordion>

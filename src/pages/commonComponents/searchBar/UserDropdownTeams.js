@@ -2,14 +2,14 @@ import { forwardRef, Children, useState, Fragment } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useAuth } from 'context/AuthContext';
 import { PERMISSIONS_TEAM_ROLES } from 'consts';
-import { authUtils } from 'utils';
+import { accountUtils, authUtils } from 'utils';
 import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
 import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
 
 const CustomToggleInner = forwardRef(({ children, onClick }, ref) => (
     <a
-        href='javascript:void(0)'
+        href='#'
         ref={ref}
         onClick={e => {
             e.preventDefault();
@@ -43,7 +43,7 @@ const UserDropdownTeams = ({ isMobile = false }) => {
 
     return userState[0].teams.map(team => {
         return (
-            <>
+            <div key={team._id}>
                 <Dropdown.Divider className='mb-1 mt-1' />
                 <Dropdown>
                     <Dropdown.Toggle as={CustomToggleInner}>
@@ -60,14 +60,21 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                         {/* TODO: GAT-1510:048 */}
                         {authUtils.getIsTypeAdmin(team.type) ? (
                             <>
-                                <Dropdown.Item href='/account?tab=datasets&team=admin' className='black-14 user-dropdown-item'>
+                                <Dropdown.Item
+                                    onClick={() => accountUtils.updateTeamType({ teamType: 'admin' })}
+                                    href='/account?tab=datasets'
+                                    className='black-14 user-dropdown-item'>
                                     Datasets
                                 </Dropdown.Item>
-                                <Dropdown.Item href='/account?tab=datause&team=admin' className='black-14 user-dropdown-item'>
+                                <Dropdown.Item
+                                    onClick={() => accountUtils.updateTeamType({ teamType: 'admin' })}
+                                    href='/account?tab=datause'
+                                    className='black-14 user-dropdown-item'>
                                     Data Uses
                                 </Dropdown.Item>
                                 <Dropdown.Item
-                                    href='/account?tab=teams&team=admin'
+                                    onClick={() => accountUtils.updateTeamType({ teamType: 'admin' })}
+                                    href='/account?tab=teams'
                                     className='black-14 user-dropdown-item'
                                     data-testid='optTeams'>
                                     Teams
@@ -76,7 +83,8 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                         ) : (
                             <>
                                 <Dropdown.Item
-                                    href={`/account?tab=teamManagement&team=${team._id}`}
+                                    onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                    href='/account?tab=teamManagement'
                                     className='black-14 user-dropdown-item'>
                                     Team Management
                                 </Dropdown.Item>
@@ -84,37 +92,48 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                                 {userHasTeamRole(team._id, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]) && (
                                     <>
                                         <Dropdown.Item
-                                            href={`/account?tab=dataaccessrequests&team=${team._id}`}
+                                            onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                            href='/account?tab=dataaccessrequests'
                                             className='black-14 user-dropdown-item'>
                                             Data access requests
                                         </Dropdown.Item>
                                         <Dropdown.Item
-                                            href={`/account?tab=customisedataaccessrequests_guidance&team=${team._id}`}
+                                            onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                            href='/account?tab=customisedataaccessrequests_guidance'
                                             className='black-14 user-dropdown-item'
                                             onClick={() => handleAnalytics('Clicked profile dropdown', 'Edit DAR form')}>
                                             Edit DAR Form
                                         </Dropdown.Item>
                                     </>
                                 )}
-                                <Dropdown.Item href={`/account?tab=datause&team=${team._id}`} className='black-14 user-dropdown-item'>
+                                <Dropdown.Item
+                                    onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                    href='/account?tab=datause'
+                                    className='black-14 user-dropdown-item'>
                                     Data Uses
                                 </Dropdown.Item>
                                 {/* TODO: GAT-1510:002 */}
                                 {userHasTeamRole(team._id, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.metadata_editor]) ? (
-                                    <Dropdown.Item href={`/account?tab=datasets&team=${team._id}`} className='black-14 user-dropdown-item'>
+                                    <Dropdown.Item
+                                        onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                        href='/account?tab=datasets'
+                                        className='black-14 user-dropdown-item'>
                                         Datasets
                                     </Dropdown.Item>
                                 ) : (
                                     ''
                                 )}
-                                <Dropdown.Item href={`/account?tab=help&team=${team._id}`} className='black-14 user-dropdown-item'>
+                                <Dropdown.Item
+                                    onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                    href='/account?tab=help'
+                                    className='black-14 user-dropdown-item'>
                                     Help
                                 </Dropdown.Item>
                             </>
                         )}
                     </Dropdown.Menu>
                 </Dropdown>
-            </>
+            </div>
         );
     });
 };

@@ -23,12 +23,11 @@ exports[`Given the SearchControlsForm component When it is rendered And it is no
               <div
                 class="emotion-5 input-group-prepend"
               >
-                <button
-                  fill="green700"
-                  svg="[object Object]"
+                <span
+                  class="ui-Icon emotion-6"
                 >
-                  Icon
-                </button>
+                  <icon-mock />
+                </span>
               </div>
               <input
                 class="form-control"
@@ -37,15 +36,14 @@ exports[`Given the SearchControlsForm component When it is rendered And it is no
                 value="dataset"
               />
               <div
-                class="emotion-6 input-group-append"
+                class="emotion-7 input-group-append"
               >
-                <button
-                  fill="purple500"
+                <span
+                  class="ui-Icon emotion-8"
                   role="button"
-                  svg="[object Object]"
                 >
-                  Icon
-                </button>
+                  <icon-mock />
+                </span>
               </div>
             </div>
           </div>
@@ -58,13 +56,13 @@ exports[`Given the SearchControlsForm component When it is rendered And it is no
         class="d-flex justify-content-end col-lg-4"
       >
         <div
-          class="ui-SortDropdown emotion-7"
+          class="ui-SortDropdown emotion-9"
         >
           <div
             class="ui-Box emotion-0"
           >
             <div
-              class="ui-Dropdown emotion-9 dropdown"
+              class="ui-Dropdown emotion-11 dropdown"
             >
               <button
                 aria-expanded="false"

@@ -16,7 +16,7 @@ import ActivityLogVersionCard from './ActivityLogVersionCard';
 import AddNewEventModal from './AddNewEventModal';
 import DeleteManualEventModal from './DeleteManualEventModal';
 
-const ActivityLog = forwardRef(({ dataaccessrequest, userType, onClickStartReview, onUpdateLogs }, ref) => {
+const ActivityLog = forwardRef(({ dataaccessrequest, teamType, onClickStartReview, onUpdateLogs }, ref) => {
     useImperativeHandle(ref, () => ({
         showAddNewEventModal() {
             toggleAddNewEventModal();
@@ -205,7 +205,7 @@ const ActivityLog = forwardRef(({ dataaccessrequest, userType, onClickStartRevie
                                     updatedAt={updatedAt}
                                     applicants={applicants}
                                     dateSubmitted={dateSubmitted}
-                                    userType={userType}
+                                    teamType={teamType}
                                     workflow={workflow}
                                     workflowName={workflowName}
                                     workflowCompleted={workflowCompleted}
@@ -231,7 +231,7 @@ const ActivityLog = forwardRef(({ dataaccessrequest, userType, onClickStartRevie
                 <Col xs={1} />
                 <Col>
                     {activityLogs.map(version => {
-                        return <ActivityLogVersionCard version={version} userType={userType} onDeleteEventClick={onDeleteEventClick} />;
+                        return <ActivityLogVersionCard version={version} teamType={teamType} onDeleteEventClick={onDeleteEventClick} />;
                     })}
                 </Col>
                 <Col xs={1} />

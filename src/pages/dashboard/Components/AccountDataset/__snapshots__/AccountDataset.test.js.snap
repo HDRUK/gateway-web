@@ -11,9 +11,6 @@ exports[`Given the AccountDataset component When it is rendered Then matches the
     <div>
       <div
         class="mt-2 row"
-        subtext="...sorry, this is taking longer than usual"
-        text="Loading..."
-        timeout="5000"
       >
         <div
           class="col"

@@ -11,7 +11,7 @@ var baseURL = require('../BaseURL').getURL();
 
 const CustomToggle = forwardRef(({ children, onClick }, ref) => (
     <a
-        href='javascript:void(0)'
+        href='#'
         ref={ref}
         onClick={e => {
             e.preventDefault();

@@ -243,10 +243,10 @@ export const AccountTools = () => {
                                         ) : (
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'active') {
-                                                    return <></>;
+                                                    return null;
                                                 }
                                                 return (
-                                                    <Row className='entryBox' data-testid='toolEntryActive'>
+                                                    <Row key={tool.id} className='entryBox' data-testid='toolEntryActive'>
                                                         <Col sm={12} lg={2} className='pt-2 gray800-14'>
                                                             {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
                                                         </Col>
@@ -260,7 +260,7 @@ export const AccountTools = () => {
                                                                 ? 'Author not listed'
                                                                 : tool.persons.map(person => {
                                                                       return (
-                                                                          <span>
+                                                                          <span key={`${person.firstname} ${person.lastname}`}>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
                                                                       );
@@ -311,7 +311,7 @@ export const AccountTools = () => {
                                         ) : (
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'review') {
-                                                    return <></>;
+                                                    return null;
                                                 }
                                                 return (
                                                     <Row className='entryBox' data-testid='toolEntryPending'>
@@ -328,7 +328,7 @@ export const AccountTools = () => {
                                                                 ? 'Author not listed'
                                                                 : tool.persons.map(person => {
                                                                       return (
-                                                                          <span>
+                                                                          <span key={`${person.firstname} ${person.lastname}`}>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
                                                                       );
@@ -400,7 +400,7 @@ export const AccountTools = () => {
                                         ) : (
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'rejected') {
-                                                    return <></>;
+                                                    return null;
                                                 }
                                                 return (
                                                     <Row className='entryBox' data-testid='toolEntryRejected'>
@@ -417,7 +417,7 @@ export const AccountTools = () => {
                                                                 ? 'Author not listed'
                                                                 : tool.persons.map(person => {
                                                                       return (
-                                                                          <span>
+                                                                          <span key={`${person.firstname} ${person.lastname}`}>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
                                                                       );
@@ -452,7 +452,7 @@ export const AccountTools = () => {
                                         ) : (
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'archive') {
-                                                    return <></>;
+                                                    return null;
                                                 }
                                                 return (
                                                     <Row className='entryBox' data-testid='toolEntryArchive'>
@@ -469,7 +469,7 @@ export const AccountTools = () => {
                                                                 ? 'Author not listed'
                                                                 : tool.persons.map(person => {
                                                                       return (
-                                                                          <span>
+                                                                          <span key={`${person.firstname} ${person.lastname}`}>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
                                                                       );

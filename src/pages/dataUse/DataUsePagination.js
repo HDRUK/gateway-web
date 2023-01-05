@@ -9,7 +9,7 @@ const DataUsePagination = ({ rowsPerPage, totalRows, paginate }) => {
         <nav>
             <ul className='pagination'>
                 {pageNumbers.map(number => (
-                    <Pagination>
+                    <Pagination key={number}>
                         <Pagination.Item onClick={() => paginate(number)}>{number}</Pagination.Item>
                     </Pagination>
                 ))}

@@ -4,7 +4,7 @@ import { CSVLink } from 'react-csv';
 import { Button } from 'hdruk-react-core';
 import { darHelperUtils } from 'utils';
 
-const ActivityLogActionButtons = ({ userType, latestVersion, onClickAddNewEvent, activityLog, onClickStartReview }) => {
+const ActivityLogActionButtons = ({ teamType, latestVersion, onClickAddNewEvent, activityLog, onClickStartReview }) => {
     const [activityLogs, setActivityLogs] = useState([]);
     const [exportFileName, setExportFileName] = useState('');
 
@@ -21,7 +21,7 @@ const ActivityLogActionButtons = ({ userType, latestVersion, onClickAddNewEvent,
                 </Button>
             </CSVLink>
 
-            {userType !== 'user' && (
+            {teamType !== 'user' && (
                 <Button variant='secondary' onClick={() => onClickAddNewEvent()}>
                     + Add new event
                 </Button>
@@ -31,7 +31,7 @@ const ActivityLogActionButtons = ({ userType, latestVersion, onClickAddNewEvent,
                 .filter(version => version.applicationStatus === darHelperUtils.darStatus.submitted)
                 .map(submittedVersion => {
                     return (
-                        userType !== 'user' && (
+                        teamType !== 'user' && (
                             <Button
                                 id='startReview'
                                 onClick={e => {
@@ -43,7 +43,7 @@ const ActivityLogActionButtons = ({ userType, latestVersion, onClickAddNewEvent,
                     );
                 })}
 
-            {(userType === 'user' || latestVersion.applicationStatus !== darHelperUtils.darStatus.submitted) && (
+            {(teamType === 'user' || latestVersion.applicationStatus !== darHelperUtils.darStatus.submitted) && (
                 <a href={latestVersion.versions[0].link}>
                     <Button>View application form</Button>
                 </a>

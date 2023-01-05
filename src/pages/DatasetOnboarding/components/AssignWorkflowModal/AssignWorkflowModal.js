@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import axios from 'axios';
 import { Button } from 'hdruk-react-core';
+import { accountUtils } from 'utils';
 import { baseURL } from '../../../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import WorkflowsModal from './WorkflowsModal';
@@ -57,15 +58,16 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
                     .put(`${baseURL}/api/v1/data-access-request/${applicationId}/assignworkflow`, {
                         workflowId: workflow._id,
                     })
-                    .then(res => {
+                    .then(() => {
+                        accountUtils.updateTeamType({ teamType: 'team', teamId: publisher });
                         const alert = {
                             publisher,
-                            nav: `dataaccessrequests&team=${publisher}`,
+                            nav: 'dataaccessrequests',
                             tab: 'inReview',
                             message: `You have successfully assigned a workflow`,
                         };
                         // redirect to dashboard with alert
-                        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests&team=`, state: { alert } });
+                        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests`, state: { alert } });
                     });
             }
         }

@@ -4,7 +4,7 @@ import { Table, Dropdown } from 'react-bootstrap';
 
 import googleAnalytics from '../../tracking';
 
-const DataUseTable = ({ userType, data, active, pending, archived, onClickArchive, onClickUnarchive, onClickApprove, onClickReject }) => {
+const DataUseTable = ({ teamType, data, active, pending, archived, onClickArchive, onClickUnarchive, onClickApprove, onClickReject }) => {
     const handleAnalytics = (label, value) => {
         googleAnalytics.recordEvent('Data uses', label, value);
     };
@@ -43,7 +43,7 @@ const DataUseTable = ({ userType, data, active, pending, archived, onClickArchiv
 
     const renderGatewayDatasets = dataUse => {
         const datasets = dataUse.gatewayDatasetsInfo.map(gatewayDataset => (
-            <div>
+            <div key={gatewayDataset.pid}>
                 <Link
                     className='data-use-link'
                     to={`/dataset/${gatewayDataset.pid}`}
@@ -59,7 +59,9 @@ const DataUseTable = ({ userType, data, active, pending, archived, onClickArchiv
 
     const renderNonGatewayDatasets = dataUse => {
         const datasets = dataUse.nonGatewayDatasets.map(nonGatewayDataset => (
-            <div className='data-use-namedDataset'>{nonGatewayDataset}</div>
+            <div key={nonGatewayDataset} className='data-use-namedDataset'>
+                {nonGatewayDataset}
+            </div>
         ));
 
         return datasets;
@@ -67,15 +69,17 @@ const DataUseTable = ({ userType, data, active, pending, archived, onClickArchiv
 
     return (
         <Table className='data-use-table black-14'>
-            <tr>
-                <th>Last activity</th>
-                <th>Project Title</th>
-                <th>Dataset(s)</th>
-                {(active || pending || archived) && <th />}
-            </tr>
+            <thead>
+                <tr>
+                    <th>Last activity</th>
+                    <th>Project Title</th>
+                    <th>Dataset(s)</th>
+                    {(active || pending || archived) && <th />}
+                </tr>
+            </thead>
             <tbody>
                 {data.map(dataUse => (
-                    <tr>
+                    <tr key={dataUse.id}>
                         <td>{moment(dataUse.lastActivity).format('DD/MM/YYYY')}</td>
                         <td>
                             <Link
@@ -88,9 +92,7 @@ const DataUseTable = ({ userType, data, active, pending, archived, onClickArchiv
                             <p>{dataUse.organisationName}</p>
                         </td>
                         <td>
-                            <p>
-                                {renderGatewayDatasets(dataUse)} {renderNonGatewayDatasets(dataUse)}
-                            </p>
+                            {renderGatewayDatasets(dataUse)} {renderNonGatewayDatasets(dataUse)}
                         </td>
                         {(active || pending || archived) && (
                             <td style={{ width: '130px' }}>
@@ -101,13 +103,13 @@ const DataUseTable = ({ userType, data, active, pending, archived, onClickArchiv
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
                                             <Dropdown.Item href={`/datauseRegister/edit/${dataUse.id}`}>Edit</Dropdown.Item>
-                                            {userType !== 'user' && (
+                                            {teamType !== 'user' && (
                                                 <Dropdown.Item onClick={() => handleClickArchive(dataUse.id)}>Archive</Dropdown.Item>
                                             )}
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 )}
-                                {pending && userType === 'admin' && (
+                                {pending && teamType === 'admin' && (
                                     <Dropdown>
                                         <Dropdown.Toggle variant='outline-secondary' className='data-use-action'>
                                             Actions

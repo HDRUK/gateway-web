@@ -5,16 +5,21 @@ import '@testing-library/jest-dom/extend-expect';
 
 const changeMock = jest.fn();
 
-let wrapper;
-
 describe('Given the AccountTeamMembers components', () => {
     afterEach(() => {
         changeMock.mockReset();
+        // testUtils.cleanup();
     });
 
     describe('When NameCell is rendered', () => {
+        let wrapper;
+
         beforeAll(() => {
             wrapper = testUtils.render(<NameCell member={teamMembersMock[0]} />);
+        });
+
+        afterAll(() => {
+            testUtils.cleanup();
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -28,8 +33,10 @@ describe('Given the AccountTeamMembers components', () => {
     });
 
     describe('When TeamAdminCell is rendered', () => {
+        let wrapper;
+
         beforeAll(() => {
-            wrapper.testUtils.render(
+            wrapper = testUtils.render(
                 <TeamAdminCell
                     member={teamMembersMock[0]}
                     onChange={changeMock}
@@ -38,6 +45,10 @@ describe('Given the AccountTeamMembers components', () => {
                     }}
                 />
             );
+        });
+
+        afterAll(() => {
+            testUtils.cleanup();
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -62,8 +73,10 @@ describe('Given the AccountTeamMembers components', () => {
     });
 
     describe('When DataAccessRequestCell is rendered', () => {
+        let wrapper;
+
         beforeAll(() => {
-            wrapper.testUtils.render(
+            wrapper = testUtils.render(
                 <DataAccessRequestCell
                     member={teamMembersMock[0]}
                     onChange={changeMock}
@@ -73,6 +86,10 @@ describe('Given the AccountTeamMembers components', () => {
                     }}
                 />
             );
+        });
+
+        afterAll(() => {
+            testUtils.cleanup();
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -109,8 +126,10 @@ describe('Given the AccountTeamMembers components', () => {
     });
 
     describe('When MetadataCell is rendered', () => {
+        let wrapper;
+
         beforeAll(() => {
-            wrapper.testUtils.render(
+            wrapper = testUtils.render(
                 <MetadataCell
                     member={teamMembersMock[0]}
                     onChange={changeMock}
@@ -120,6 +139,10 @@ describe('Given the AccountTeamMembers components', () => {
                     }}
                 />
             );
+        });
+
+        afterAll(() => {
+            testUtils.cleanup();
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -155,9 +178,6 @@ describe('Given the AccountTeamMembers components', () => {
         });
     });
     describe('When HeaderTooltip is rendered', () => {
-        afterEach(() => {
-            testUtils.cleanup();
-        });
         it('Then renders just the heading', () => {
             testUtils.render(<HeaderTooltip header='My header' content='My content' />);
             expect(testUtils.screen.getByText('My header')).toBeInTheDocument();

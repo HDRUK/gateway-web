@@ -64,7 +64,7 @@ var baseURL = require('../commonComponents/BaseURL').getURL();
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
-        href='javascript:void(0)'
+        href='#'
         ref={ref}
         onClick={e => {
             e.preventDefault();
@@ -85,6 +85,35 @@ const CustomMenu = React.forwardRef(({ children, style, className, 'aria-labelle
         </div>
     );
 });
+
+const TEAM_USERS_MENU = [
+    {
+        id: 'dashboard',
+        children: 'Dashboard',
+        icon: <BarChartIcon />,
+    },
+    {
+        id: 'youraccount',
+        children: 'Account',
+        icon: <UserIcon />,
+    },
+    {
+        id: 'tools',
+        children: 'Tools',
+        icon: <ToolsIcon />,
+    },
+    {
+        id: 'review',
+        children: 'Reviews',
+        icon: <CommentsIcon />,
+    },
+    { id: 'datause', children: 'Data Uses', icon: <FlowIcon /> },
+    { id: 'papers', children: 'Papers', icon: <PapersIcon /> },
+    { id: 'courses', children: 'Courses', icon: <CoursesIcon /> },
+    { id: 'dataaccessrequests', children: 'Data access requests', icon: <UsersIcon /> },
+    { id: 'collections', children: 'Collections', icon: <BookmarkIcon /> },
+];
+
 class Account extends Component {
     // callback declare
     alertTimeOut;
@@ -106,10 +135,7 @@ class Account extends Component {
         tabId: '',
         innertab: null,
         activeKey: '',
-
-        userType: 'user',
-        teamId: '',
-
+        team: 'user',
         alert: {},
         isDeleted: false,
         isApproved: false,
@@ -145,8 +171,7 @@ class Account extends Component {
         }
 
         // TODO: GAT-1738 the 'team' prop is assigned both team.type and teamId intermittently. We need to split the prop out into 'teamType' and 'teamId'
-        this.state.userType = authUtils.getTeam(props);
-        this.state.teamId = authUtils.getTeam(props);
+        this.state.team = authUtils.getTeam(props);
 
         if (_.has(props, 'profileComplete')) {
             this.state.profileComplete = props.profileComplete;
@@ -187,7 +212,7 @@ class Account extends Component {
         }
 
         if (!this.state.profileComplete) {
-            this.setState({ tabId: 'youraccount', userType: 'user' });
+            this.setState({ tabId: 'youraccount', team: 'user' });
             localStorage.setItem('HDR_TEAM', 'user');
             this.setProfileComplete();
         }
@@ -196,32 +221,16 @@ class Account extends Component {
     async UNSAFE_componentWillReceiveProps(nextProps) {
         if (window.location.search) {
             let values = generalUtils.parseQueryString(window.location.search);
-            let userType = 'user';
-            let teamId;
+            let team = 'user';
             if (values.tab !== this.state.tabId || !_.isUndefined(values.tab) || !_.isNull(values.tab)) {
                 if (values.tab !== 'youraccount' && this.state.accountUpdated) {
                     this.setState({ accountUpdated: false });
                 }
-                if (
-                    (_.has(nextProps, 'location.state.teamId') && nextProps.location.state.teamId !== '') ||
-                    (_.has(nextProps, 'location.state.userType') && nextProps.location.state.userType !== '')
-                ) {
-                    if (_.has(nextProps, 'location.state.userType') && nextProps.location.state.userType !== '') {
-                        userType = nextProps.location.state.userType;
-                        localStorage.setItem('HDR_TEAM', nextProps.location.state.userType);
-                    }
-                    if (_.has(nextProps, 'location.state.teamId') && nextProps.location.state.teamId !== '') {
-                        userType = 'team';
-                        localStorage.setItem('HDR_TEAM', nextProps.location.state.teamId);
-                    }
+                if (_.has(nextProps, 'location.state.team') && nextProps.location.state.team !== '') {
+                    team = nextProps.location.state.team;
+                    localStorage.setItem('HDR_TEAM', nextProps.location.state.team);
                 } else if (localStorage.getItem('HDR_TEAM') !== '') {
-                    const fromStorage = localStorage.getItem('HDR_TEAM');
-                    if (fromStorage === 'user' || fromStorage === 'admin') {
-                        userType = fromStorage;
-                    } else {
-                        userType = 'team';
-                        teamId = fromStorage;
-                    }
+                    team = localStorage.getItem('HDR_TEAM');
                 }
 
                 let activeAccordion = -1;
@@ -244,13 +253,12 @@ class Account extends Component {
                     isRejected: values.toolRejected,
                     isReviewApproved: values.reviewApproved,
                     isReviewRejected: values.reviewRejected,
-                    userType,
-                    teamId,
+                    team,
                     activeAccordion,
                 });
 
-                if (userType === 'team') {
-                    await axios.get(baseURL + `/api/v1/publishers/${teamId}`).then(res => {
+                if (!authUtils.getIsTypeUser(team) && !authUtils.getIsTypeAdmin(team)) {
+                    await axios.get(baseURL + `/api/v1/publishers/${team}`).then(res => {
                         let publisherDetails = res.data.publisher;
                         if (!publisherDetails.allowAccessRequestManagement && values.tab === 'dataaccessrequests')
                             this.setState({ tabId: 'teamManagement' });
@@ -260,14 +268,16 @@ class Account extends Component {
                             publisherDetails: publisherDetails.publisherDetails,
                         });
                     });
+                }
 
+                if (!authUtils.getIsTypeUser(team) && !authUtils.getIsTypeAdmin(team)) {
                     this.setState({
                         dashboardState: {
                             isLoading: true,
                         },
                     });
 
-                    await axios.get(baseURL + `/api/v1/publishers/${teamId}`).then(res => {
+                    await axios.get(baseURL + `/api/v1/publishers/${team}`).then(res => {
                         const { allowAccessRequestManagement, workflowEnabled, federation } = res.data.publisher;
 
                         if (!allowAccessRequestManagement && values.tab === 'dataaccessrequests') {
@@ -288,7 +298,7 @@ class Account extends Component {
         }
 
         if (!this.state.profileComplete) {
-            this.setState({ tabId: 'youraccount', userType: 'user' });
+            this.setState({ tabId: 'youraccount', team: 'user' });
             localStorage.setItem('HDR_TEAM', 'user');
             this.setProfileComplete();
         }
@@ -302,9 +312,11 @@ class Account extends Component {
     }
 
     checkRedirect = values => {
-        let { tab = '', teamId = '', userType = '' } = values;
+        let { tab = '', team = '' } = values;
         if (!_.isEmpty(tab) && tab === 'dataaccessrequests') {
-            return `${tab}&userType=${userType}&teamId=${teamId}`;
+            if (!_.isEmpty(team)) return `${tab}&team=${team}`;
+
+            return tab;
         }
 
         return tab;
@@ -331,7 +343,7 @@ class Account extends Component {
             (obj, item) => {
                 let arr = item.split('=');
                 let [key = '', value = ''] = arr;
-                obj = { ...obj, tabId: key !== 'team' ? key : obj.tabId, userType: value, teamId: obj.team };
+                obj = { ...obj, tabId: key !== 'team' ? key : obj.tabId, team: key === 'team' ? value : obj.team };
                 return obj;
             },
             { tabId: '', team: '' }
@@ -384,8 +396,8 @@ class Account extends Component {
                             <Dropdown.Item
                                 className='gray700-13'
                                 onClick={e => {
-                                    this.toggleNav(`${this.state.tabId}&userType=team&teamId=${pub._id}`);
-                                    this.setState({ userType: 'team', teamId: pub._id });
+                                    this.toggleNav(`${this.state.tabId}&team=${pub._id}`);
+                                    this.setState({ team: pub._id });
                                 }}>
                                 {pub.name}
                             </Dropdown.Item>
@@ -417,7 +429,7 @@ class Account extends Component {
                     className='gray700-13'
                     onClick={e => {
                         this.toggleNav(`datasets&team=admin`);
-                        this.setState({ userType: 'admin' });
+                        this.setState({ team: 'admin' });
                     }}>
                     HDR Admin
                 </Dropdown.Item>
@@ -428,27 +440,31 @@ class Account extends Component {
     }
 
     renderCurrentTeam() {
-        let { userType, userState, teamId } = this.state;
-
-        if (userType === 'user') {
-            return <Fragment>{userState[0].name}</Fragment>;
+        let { team: teamSelector, userState } = this.state;
+        let renderItem;
+        switch (teamSelector) {
+            case 'user':
+                renderItem = <Fragment>{userState[0].name}</Fragment>;
+                break;
+            case 'admin':
+                renderItem = <Fragment>HDR Admin</Fragment>;
+                break;
+            default:
+                const team = userState[0].teams.reduce((obj, team) => {
+                    if (team._id === teamSelector) {
+                        obj = { ...team };
+                    }
+                    return obj;
+                }, {});
+                if (_.isEmpty(team)) {
+                    this.setState({ team: 'user' });
+                    renderItem = <Fragment>{userState[0].name}</Fragment>;
+                } else {
+                    renderItem = <Fragment>{team.name}</Fragment>;
+                }
+                break;
         }
-        if (userType === 'admin') {
-            return <Fragment>HDR Admin</Fragment>;
-        }
-
-        const team = userState[0].teams.reduce((obj, team) => {
-            if (team._id === teamId) {
-                obj = { ...team };
-            }
-            return obj;
-        }, {});
-
-        if (_.isEmpty(team)) {
-            this.setState({ userType: 'user' });
-            return <Fragment>{userState[0].name}</Fragment>;
-        }
-        return <Fragment>{team.name}</Fragment>;
+        return renderItem;
     }
 
     toggleNav = (tabId = '', path) => {
@@ -475,15 +491,15 @@ class Account extends Component {
                 }
             }
 
-            if (!_.isEmpty(tab.userType)) {
-                localStorage.setItem('HDR_TEAM', tab.teamId || tab.userType);
-                if (!authUtils.getIsTypeUser(tab.userType) && !authUtils.getIsTypeAdmin(tab.userType)) {
+            if (!_.isEmpty(tab.team)) {
+                localStorage.setItem('HDR_TEAM', tab.team);
+                if (!authUtils.getIsTypeUser(tab.team) && !authUtils.getIsTypeAdmin(tab.team)) {
                     if (_.isEmpty(tab.tabId) || !['dataaccessrequests', 'datasets', 'teamManagement'].includes(tab.tabId)) {
                         // TODO: GAT-1510:004
-                        if (this.userHasTeamRole(tab.teamId, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]))
+                        if (this.userHasTeamRole(tab.team, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]))
                             tab.tabId = 'dataaccessrequests';
                         // TODO: GAT-1510:005
-                        else if (this.userHasTeamRole(tab.teamId, PERMISSIONS_TEAM_ROLES.metadata_editor)) tab.tabId = 'datasets';
+                        else if (this.userHasTeamRole(tab.team, PERMISSIONS_TEAM_ROLES.metadata_editor)) tab.tabId = 'datasets';
                         else tab.tabId = 'teamManagement';
                     }
                 }
@@ -491,19 +507,14 @@ class Account extends Component {
             // 5. set state
             this.setState({
                 tabId: tab.tabId,
-                userType: tab.userType,
-                teamId: tab.teamId,
+                team: tab.team,
                 activeKey: tab.tabId,
                 alert: !_.isEmpty(alert) ? alert : {},
                 activeAccordion,
                 dataaccessrequest: {},
             });
             // 6. push state
-            this.props.history.push({
-                pathname: path || window.location.pathname,
-                search: `?tab=${tab.tabId}`,
-                state: { userType: tab.userType, teamId: tab.teamId },
-            });
+            this.props.history.push({ pathname: path || window.location.pathname, search: `?tab=${tab.tabId}`, state: { team: tab.team } });
         }
     };
 
@@ -512,7 +523,7 @@ class Account extends Component {
     };
 
     userHasTeamRole(teamId, role) {
-        return authUtils.userHasTeamRole(this.state?.userState, teamId, role);
+        return authUtils.userHasTeamRole(this?.state?.userState, teamId, role);
     }
 
     onSaveNotificationsClick = () => {
@@ -603,14 +614,13 @@ class Account extends Component {
             showDrawer,
             showModal,
             context,
+            team,
             alert,
             activeAccordion,
             allowWorkflow,
             allowAccessRequestManagement,
             savedTeamNotificationSuccess,
             isSubmitting,
-            userType,
-            teamId,
             teamManagementTab,
             accountUpdated,
             dataaccessrequest,
@@ -658,7 +668,7 @@ class Account extends Component {
                     id: 'dataaccessrequests',
                 },
                 // TODO: GAT-1510:006
-                ...(allowWorkflow && this.userHasTeamRole(teamId, PERMISSIONS_TEAM_ROLES.manager)
+                ...(allowWorkflow && this.userHasTeamRole(team, PERMISSIONS_TEAM_ROLES.manager)
                     ? [
                           {
                               id: 'workflows',
@@ -696,7 +706,7 @@ class Account extends Component {
         };
 
         // TODO: GAT-1510:007
-        this.userHasTeamRole(teamId, [PERMISSIONS_TEAM_ROLES.manager]) &&
+        this.userHasTeamRole(team, [PERMISSIONS_TEAM_ROLES.manager]) &&
             publisherDetails.dataUse?.widget?.enabled &&
             ACCORDIAN_DUR_MENU.children.push({
                 text: 'Data use widget',
@@ -736,7 +746,7 @@ class Account extends Component {
                                 </Dropdown>
 
                                 {/* TODO: GAT-1510:056 */}
-                                {authUtils.getIsTypeUser(userType) && (
+                                {authUtils.getIsTypeUser(team) && (
                                     <>
                                         {TEAM_USERS_MENU.map(({ id, ...outerProps }) => (
                                             <DashboardNavItem
@@ -750,7 +760,7 @@ class Account extends Component {
                                 )}
 
                                 {/* TODO: GAT-1510:054 */}
-                                {authUtils.getIsTypeAdmin(userType) && (
+                                {authUtils.getIsTypeAdmin(team) && (
                                     <>
                                         <DashboardNavItem
                                             icon={<UsersIcon />}
@@ -784,7 +794,7 @@ class Account extends Component {
                                 )}
 
                                 {/* TODO: GAT-1510:052 */}
-                                {authUtils.getIsTypeCustodian(userType) && (
+                                {authUtils.getIsTypeCustodian(team) && (
                                     <>
                                         <DashboardNavItem
                                             icon={<SettingsIcon />}
@@ -794,7 +804,7 @@ class Account extends Component {
                                         </DashboardNavItem>
                                         {/* TODO: GAT-1510:008 */}
                                         {allowAccessRequestManagement &&
-                                            this.userHasTeamRole(teamId, [
+                                            this.userHasTeamRole(team, [
                                                 PERMISSIONS_TEAM_ROLES.manager,
                                                 PERMISSIONS_TEAM_ROLES.reviewer,
                                             ]) && (
@@ -833,7 +843,7 @@ class Account extends Component {
                                                 </>
                                             )}
                                         {/* TODO: GAT-1510:009 */}
-                                        {this.userHasTeamRole(teamId, [
+                                        {this.userHasTeamRole(team, [
                                             PERMISSIONS_TEAM_ROLES.manager,
                                             PERMISSIONS_TEAM_ROLES.metadata_editor,
                                         ]) && (
@@ -870,8 +880,7 @@ class Account extends Component {
 
                         <div className='col-sm-12 col-md-10 margin-top-32'>
                             {/* TODO: GAT-1510:057 */}
-                            <h1>userType: {userType}</h1>
-                            {authUtils.getIsTypeUser(userType) && (
+                            {authUtils.getIsTypeUser(team) && (
                                 <>
                                     {tabId === 'dashboard' && <AccountAnalyticsDashboard userState={userState} />}
 
@@ -890,7 +899,7 @@ class Account extends Component {
                                             <DataAccessRequests
                                                 setDataAccessRequest={this.setDataAccessRequest}
                                                 userState={userState}
-                                                userType={userType}
+                                                team={team}
                                                 alert={alert}
                                             />
                                         ) : (
@@ -898,7 +907,7 @@ class Account extends Component {
                                                 onClickStartReview={this.navigateToLocation}
                                                 dataaccessrequest={dataaccessrequest}
                                                 userState={userState}
-                                                userType={userType}
+                                                team={team}
                                                 ref={this.activityLog}
                                                 onUpdateLogs={this.loadActivityLogNotifications}
                                             />
@@ -913,11 +922,11 @@ class Account extends Component {
                             <Route path='/account/datasets/:id' component={AccountDataset} />
 
                             {/* TODO: GAT-1510:058 */}
-                            {!authUtils.getIsTypeUser(userType) && (
+                            {!authUtils.getIsTypeUser(team) && (
                                 <>
                                     {/* TODO: GAT-1510:010 */}
                                     {allowAccessRequestManagement &&
-                                        this.userHasTeamRole(teamId, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]) && (
+                                        this.userHasTeamRole(team, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]) && (
                                             <>
                                                 {' '}
                                                 {tabId === 'dataaccessrequests' &&
@@ -925,8 +934,7 @@ class Account extends Component {
                                                         <DataAccessRequests
                                                             setDataAccessRequest={this.setDataAccessRequest}
                                                             userState={userState}
-                                                            teamId={teamId}
-                                                            userType={userType}
+                                                            team={team}
                                                             alert={alert}
                                                         />
                                                     ) : (
@@ -934,7 +942,7 @@ class Account extends Component {
                                                             onClickStartReview={this.navigateToLocation}
                                                             dataaccessrequest={dataaccessrequest}
                                                             userState={userState}
-                                                            userType={userType}
+                                                            team={team}
                                                             ref={this.activityLog}
                                                             onUpdateLogs={this.loadActivityLogNotifications}
                                                         />
@@ -942,41 +950,39 @@ class Account extends Component {
                                             </>
                                         )}
                                     {/* TODO: GAT-1510:011 */}
-                                    {(this.userHasTeamRole(teamId, [
+                                    {(this.userHasTeamRole(team, [
                                         PERMISSIONS_TEAM_ROLES.manager,
                                         PERMISSIONS_TEAM_ROLES.metadata_editor,
                                     ]) ||
-                                        authUtils.getIsTypeAdmin(userType)) &&
-                                        tabId === 'datasets' && (
-                                            <AccountDatasets userState={userState} userType={userType} teamId={teamId} alert={alert} />
-                                        )}
+                                        authUtils.getIsTypeAdmin(team)) &&
+                                        tabId === 'datasets' && <AccountDatasets userState={userState} team={team} alert={alert} />}
 
-                                    {authUtils.getIsTypeAdmin(userType) && tabId === 'teams' && (
-                                        <AccountTeams userState={userState} onTeamsTabChange={this.onTeamsTabChange} alert={alert} />
+                                    {authUtils.getIsTypeAdmin(team) && tabId === 'teams' && (
+                                        <AccountTeams
+                                            userState={userState}
+                                            onTeamsTabChange={this.onTeamsTabChange}
+                                            team={team}
+                                            alert={alert}
+                                        />
                                     )}
 
                                     {(tabId === 'datause' || tabId === 'datause_widget') && (
-                                        <AccountDataUse
-                                            tabId={tabId}
-                                            userType={userType}
-                                            teamId={teamId}
-                                            publisherDetails={publisherDetails}
-                                        />
+                                        <AccountDataUse tabId={tabId} team={team} publisherDetails={publisherDetails} />
                                     )}
 
                                     {/* TODO: GAT-1510:012 */}
                                     {allowWorkflow &&
-                                        this.userHasTeamRole(teamId, PERMISSIONS_TEAM_ROLES.manager) &&
-                                        tabId === 'workflows' && <WorkflowDashboard userState={userState} teamId={teamId} />}
+                                        this.userHasTeamRole(team, PERMISSIONS_TEAM_ROLES.manager) &&
+                                        tabId === 'workflows' && <WorkflowDashboard userState={userState} team={team} />}
 
                                     {/* TODO: GAT-1510:013 */}
-                                    {(this.userHasTeamRole(teamId, [PERMISSIONS_TEAM_ROLES.manager]) ||
-                                        authUtils.getIsTeamAdmin(userState, teamId)) &&
+                                    {(this.userHasTeamRole(team, [PERMISSIONS_TEAM_ROLES.manager]) ||
+                                        authUtils.getIsTeamAdmin(userState, team)) &&
                                         (tabId === 'customisedataaccessrequests_applicationform' ||
                                             tabId === 'customisedataaccessrequests_guidance') && (
                                             <CustomiseDAR
                                                 userState={userState}
-                                                publisherId={teamId}
+                                                publisherId={team}
                                                 showConfirmPublishModal={showConfirmPublishModal}
                                                 setShowConfirmPublishModal={show => this.setState({ showConfirmPublishModal: show })}
                                                 showHowToRequestAccessEditor={showHowToRequestAccessEditor}
@@ -989,19 +995,32 @@ class Account extends Component {
                                             />
                                         )}
 
-                                    {tabId === 'teamManagement' && (
-                                        <AccountTeamManagementPage
-                                            userState={userState}
-                                            teamId={teamId}
-                                            innerTab={innertab}
-                                            forwardRef={c => {
-                                                this.saveNotifiations = c;
-                                            }}
-                                            onTeamManagementSave={this.onTeamManagementSave}
-                                            onTeamManagementTabChange={this.onTeamManagementTabChange}
-                                            onClearInnerTab={this.onClearInnerTab}
-                                        />
-                                    )}
+                                    {tabId === 'teamManagement' &&
+                                        (1 === 1 ? (
+                                            <AccountTeamManagementPage
+                                                userState={userState}
+                                                teamId={team}
+                                                innerTab={innertab}
+                                                forwardRef={c => {
+                                                    this.saveNotifiations = c;
+                                                }}
+                                                onTeamManagementSave={this.onTeamManagementSave}
+                                                onTeamManagementTabChange={this.onTeamManagementTabChange}
+                                                onClearInnerTab={this.onClearInnerTab}
+                                            />
+                                        ) : (
+                                            <AccountTeamManagement
+                                                userState={userState}
+                                                team={team}
+                                                innertab={innertab}
+                                                forwardRef={c => {
+                                                    this.saveNotifiations = c;
+                                                }}
+                                                onTeamManagementSave={this.onTeamManagementSave}
+                                                onTeamManagementTabChange={this.onTeamManagementTabChange}
+                                                onClearInnerTab={this.onClearInnerTab}
+                                            />
+                                        ))}
 
                                     {tabId === 'help' ? <TeamHelp /> : ''}
                                 </>
@@ -1014,7 +1033,7 @@ class Account extends Component {
                             <div className='action-bar'>
                                 <div className='action-bar-actions'>
                                     <ActivityLogActionButtons
-                                        userType={userType}
+                                        team={team}
                                         latestVersion={this.state.dataaccessrequest}
                                         onClickStartReview={this.navigateToLocation}
                                         activityLog={this.activityLog}

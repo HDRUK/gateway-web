@@ -59,7 +59,9 @@ function Login() {
                     </P>
                     <Ul mb={6}>
                         {descText.map(({ text }) => (
-                            <Li icon={<Icon svg={<TickSvg />} size='xl' />}>{text}</Li>
+                            <Li key={text} icon={<Icon svg={<TickSvg />} size='xl' />}>
+                                {text}
+                            </Li>
                         ))}
                     </Ul>
                     <P mb={2} color='grey800'>
@@ -78,7 +80,7 @@ function Login() {
             <div id='loginWayFinder' style={{ display: 'none' }}>
                 <Box mt={3} textAlign='center'>
                     <LayoutContent>
-                        <a href='javascript:void(0)' onClick={hideWayFinder} className='purple-14'>
+                        <a href='#' onClick={hideWayFinder} className='purple-14'>
                             {t('components.Login.linkLoginOptions')}
                         </a>
                     </LayoutContent>

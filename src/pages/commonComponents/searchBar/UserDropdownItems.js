@@ -1,6 +1,7 @@
 import { Typography } from 'hdruk-react-core';
 
 import { Dropdown } from 'react-bootstrap';
+import { accountUtils } from 'utils';
 import googleAnalytics from '../../../tracking';
 
 import './SearchBar.scss';
@@ -12,13 +13,22 @@ export const UserDropdownItems = isAdmin => {
 
     return (
         <>
-            <Dropdown.Item href='/account?tab=youraccount&team=user' className='black-14 user-dropdown-item'>
+            <Dropdown.Item
+                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                href='/account?tab=youraccount'
+                className='black-14 user-dropdown-item'>
                 My Account
             </Dropdown.Item>
-            <Dropdown.Item href='/account?tab=dataaccessrequests&team=user' className='black-14 user-dropdown-item'>
+            <Dropdown.Item
+                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                href='/account?tab=dataaccessrequests'
+                className='black-14 user-dropdown-item'>
                 Data access requests
             </Dropdown.Item>
-            <Dropdown.Item href='/account?tab=collections&team=user' className='black-14 user-dropdown-item'>
+            <Dropdown.Item
+                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                href='/account?tab=collections'
+                className='black-14 user-dropdown-item'>
                 Collections
             </Dropdown.Item>
             <Dropdown.Item href='/collection/add' className='user-dropdown-item__add'>
@@ -29,7 +39,10 @@ export const UserDropdownItems = isAdmin => {
                     + Add new
                 </Typography>
             </Dropdown.Item>
-            <Dropdown.Item href='/account?tab=courses&team=user' className='black-14 user-dropdown-item'>
+            <Dropdown.Item
+                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                href='/account?tab=courses'
+                className='black-14 user-dropdown-item'>
                 Courses
             </Dropdown.Item>
             <Dropdown.Item href='/course/add' className='user-dropdown-item__add'>
@@ -41,10 +54,16 @@ export const UserDropdownItems = isAdmin => {
                 </Typography>
             </Dropdown.Item>
 
-            <Dropdown.Item href='/account?tab=datause&team=user' className='black-14 user-dropdown-item'>
+            <Dropdown.Item
+                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                href='/account?tab=datause'
+                className='black-14 user-dropdown-item'>
                 Data Uses
             </Dropdown.Item>
-            <Dropdown.Item href='/account?tab=papers&team=user' className='black-14 user-dropdown-item'>
+            <Dropdown.Item
+                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                href='/account?tab=papers'
+                className='black-14 user-dropdown-item'>
                 Papers
             </Dropdown.Item>
             <Dropdown.Item href='/paper/add' className='user-dropdown-item__add'>
@@ -55,7 +74,10 @@ export const UserDropdownItems = isAdmin => {
                     + Add new
                 </Typography>
             </Dropdown.Item>
-            <Dropdown.Item href='/account?tab=tools&team=user' className='black-14 user-dropdown-item'>
+            <Dropdown.Item
+                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                href='/account?tab=tools'
+                className='black-14 user-dropdown-item'>
                 Tools
             </Dropdown.Item>
             <Dropdown.Item href='/tool/add' className='user-dropdown-item__add'>
@@ -68,7 +90,10 @@ export const UserDropdownItems = isAdmin => {
             </Dropdown.Item>
 
             {isAdmin && (
-                <Dropdown.Item href='/account?tab=usersroles&team=user' className='black-14 user-dropdown-item'>
+                <Dropdown.Item
+                    onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                    href='/account?tab=usersroles'
+                    className='black-14 user-dropdown-item'>
                     Users and roles
                 </Dropdown.Item>
             )}

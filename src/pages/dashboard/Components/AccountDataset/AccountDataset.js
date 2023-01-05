@@ -9,6 +9,7 @@ import { Button } from 'hdruk-react-core';
 import { LayoutContent } from 'components';
 import { activityLogService, datasetOnboardingService } from 'services';
 import { authUtils, dataSetHelperUtils } from 'utils';
+import { useAccountTeamSelected } from 'hooks';
 import { useAuth } from '../../../../context/AuthContext';
 
 import ActionBar from '../../../commonComponents/actionbar/ActionBar';
@@ -20,6 +21,7 @@ import AccountDatasetApproveModal from './AccountDatasetApproveModal';
 import AccountDatasetRejectModal from './AccountDatasetRejectModal';
 
 const AccountDataset = props => {
+    const { teamType } = useAccountTeamSelected();
     const { t } = useTranslation();
     const { id } = useParams();
     const history = useHistory();
@@ -36,7 +38,7 @@ const AccountDataset = props => {
     });
 
     const dataActivityLog = activityLogService.usePostActivityLog();
-    const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], team), [userState[0], team]);
+    const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], team, teamType), [userState[0], team, teamType]);
     const dataPublisher = datasetOnboardingService.useGetPublisher(publisherId);
 
     useEffect(() => {

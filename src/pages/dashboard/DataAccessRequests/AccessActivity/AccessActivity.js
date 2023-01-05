@@ -11,7 +11,7 @@ const AccessActivity = ({
     updatedAt,
     applicants = '',
     dateSubmitted = '',
-    userType = 'user',
+    teamType = 'user',
     publisher = '',
     applicationStatus,
     navigateToLocation,
@@ -67,7 +67,7 @@ const AccessActivity = ({
 
     const buildAccessRequest = () => {
         const hasWorkflow = !_.isEmpty(workflowName);
-        const isTeam = userType !== 'user';
+        const isTeam = teamType !== 'user';
         return (
             <>
                 <div className='box gray800-14'>Datasets</div>
@@ -118,7 +118,7 @@ const AccessActivity = ({
                                       .filter(version => version.applicationStatus === darHelperUtils.darStatus.submitted)
                                       .map(submittedVersion => {
                                           return (
-                                              userType !== 'user' && (
+                                              teamType !== 'user' && (
                                                   <button
                                                       id='startReview'
                                                       className='button-primary'

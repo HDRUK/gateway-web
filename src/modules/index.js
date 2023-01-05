@@ -1,3 +1,4 @@
+import AccountNavMenu from './AccountNavMenu';
 import AccountTeamFieldRepeater from './AccountTeamFieldRepeater';
 import AccountTeamEmailAlertModal from './AccountTeamEmailAlertModal';
 import AccountTeamGatewayEmail from './AccountTeamGatewayEmail';
@@ -9,6 +10,7 @@ import PermissionDescriptions from './PermissionDescriptions';
 import RelatedResourcesTab from './RelatedResourcesTab';
 
 export {
+    AccountNavMenu,
     AccountTeamFieldRepeater,
     AccountTeamEmailAlertModal,
     AccountTeamGatewayEmail,
@@ -17,6 +19,5 @@ export {
     AccountTeamMembersModal,
     AccountTeamNotificationsConfirmationModal,
     PermissionDescriptions,
-    RelatedResourcesTab
+    RelatedResourcesTab,
 };
-

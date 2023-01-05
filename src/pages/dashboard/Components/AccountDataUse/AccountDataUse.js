@@ -9,7 +9,7 @@ import DataUsePage from '../../../dataUse/DataUsePage';
 import DataUseUpload from '../../../dataUse/upload/DataUseUpload';
 import DataUseWidget from '../../../dataUse/widget/DataUseWidget';
 
-const AccountDataUse = ({ tabId, userType, teamId, publisherDetails }) => {
+const AccountDataUse = ({ tabId, teamType, teamId, publisherDetails }) => {
     const { userState } = useAuth();
     const [isTeamManager, setisTeamManager] = useState(false);
     const history = useHistory();
@@ -57,13 +57,11 @@ const AccountDataUse = ({ tabId, userType, teamId, publisherDetails }) => {
 
             {tabId === 'datause' && dataUseUpload && <DataUseUpload userState={userState} teamId={teamId} onSubmit={handleSubmitUpload} />}
 
-            {tabId === 'datause' && !dataUseUpload && (
-                <DataUsePage userState={userState} userType={userType} onClickDataUseUpload={handleClickUpload} />
-            )}
+            {tabId === 'datause' && !dataUseUpload && <DataUsePage userState={userState} onClickDataUseUpload={handleClickUpload} />}
 
             {/* TODO: GAT-1510:053 */}
             {tabId === 'datause_widget' &&
-                authUtils.getIsTypeCustodian(userType) &&
+                authUtils.getIsTypeCustodian(teamType) &&
                 isTeamManager &&
                 publisherDetails?.dataUse?.widget?.enabled && (
                     <DataUseWidget userState={userState} teamId={teamId} publisherDetails={publisherDetails} />

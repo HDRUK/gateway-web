@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { DATASETS_STATUS_ACTIVE, STATUS_ARCHIVE, STATUS_INREVIEW, STATUS_REJECTED } from '../../../../configs/constants';
 import '../../Dashboard.scss';
 
-const AccountDatasetsTabs = ({ counts = { inReview: 0, active: 0, rejected: 0, archive: 0 }, userType, onSelectTab, activeKey }) => {
+const AccountDatasetsTabs = ({ counts = { inReview: 0, active: 0, rejected: 0, archive: 0 }, teamType, onSelectTab, activeKey }) => {
     const { t } = useTranslation();
 
     return (
         <div className='tabsBackground mb-0'>
             <Row>
                 <Col sm={12} lg={12}>
-                    {userType === 'admin' ? (
+                    {teamType === 'admin' ? (
                         <Tabs className='dataAccessTabs gray700-13' activeKey={activeKey} onSelect={onSelectTab}>
                             <Tab
                                 eventKey={STATUS_INREVIEW}

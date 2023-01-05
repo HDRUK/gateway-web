@@ -6,7 +6,7 @@ import { STATUS_ARCHIVE, STATUS_INREVIEW } from '../../../../configs/constants';
 
 const props = {
     counts: { inReview: 1, active: 2, rejected: 3, archive: 4, 'active,draft': 5 },
-    userType: 'admin',
+    teamType: 'admin',
     onSelectTab: jest.fn(),
     activeKey: STATUS_INREVIEW,
 };
@@ -17,12 +17,16 @@ jest.mock('react', () => {
     return React;
 });
 
-let wrapper;
-
 describe('Given the AccountDatasetsTabs component', () => {
-    describe('When it is rendered and userType is admin', () => {
+    describe('When it is rendered and teamType is admin', () => {
+        let wrapper;
+
         beforeAll(() => {
             wrapper = testUtils.render(<AccountDatasetsTabs {...props} />);
+        });
+
+        afterAll(() => {
+            testUtils.cleanup();
         });
 
         it('Then matches the previous snapshot', () => {
@@ -35,9 +39,15 @@ describe('Given the AccountDatasetsTabs component', () => {
         });
     });
 
-    describe('when userType is not admin', () => {
+    describe('when teamType is not admin', () => {
+        let wrapper;
+
         beforeAll(() => {
-            wrapper.rerender(<AccountDatasetsTabs {...props} userType='user' />);
+            wrapper = testUtils.render(<AccountDatasetsTabs {...props} teamType='user' />);
+        });
+
+        afterAll(() => {
+            testUtils.cleanup();
         });
 
         it('Then matches the previous snapshot', () => {

@@ -7,12 +7,12 @@ import SVGIcon from '../../../../images/SVGIcon';
 import Loading from '../../../commonComponents/Loading';
 import { baseURL } from '../../../../configs/url.config';
 
-const Notes = ({ applicationId, settings, userState, userType, updateCount }) => {
+const Notes = ({ applicationId, settings, userState, teamType, updateCount }) => {
     const [currentNote, setCurrentNote] = useState('');
     const [notesThread, setNotesThread] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const noteType = userType.toUpperCase() === 'APPLICANT' ? 'DAR_Notes_Applicant' : 'DAR_Notes_Custodian';
+    const noteType = teamType.toUpperCase() === 'APPLICANT' ? 'DAR_Notes_Applicant' : 'DAR_Notes_Custodian';
     const notesEndRef = useRef(null);
     const btnRef = useRef();
 
@@ -47,7 +47,7 @@ const Notes = ({ applicationId, settings, userState, userType, updateCount }) =>
             messageType: noteType,
             messageBody: currentNote,
         });
-        setNotesThread([...notesThread, { name: userState[0].name, date: '01/01/2021', content: currentNote, userType }]);
+        setNotesThread([...notesThread, { name: userState[0].name, date: '01/01/2021', content: currentNote, teamType }]);
         setCurrentNote('');
         if (btnRef.current) {
             btnRef.current.removeAttribute('disabled');
@@ -69,7 +69,7 @@ const Notes = ({ applicationId, settings, userState, userType, updateCount }) =>
             return (
                 <>
                     <div className='info-msg no-messages'>
-                        {userType.toUpperCase() === 'APPLICANT'
+                        {teamType.toUpperCase() === 'APPLICANT'
                             ? 'Use notes to organise your thoughts and share ideas with your collaborators before sending the application.'
                             : 'Use notes to organise your thoughts and share ideas with other reviewers during the review process.'}
                         <br />
@@ -97,7 +97,7 @@ const Notes = ({ applicationId, settings, userState, userType, updateCount }) =>
 
     const getInfoMessage = () => {
         let message = 'Applicants cannot see your notes, reviewers can.';
-        if (userType.toUpperCase() === 'APPLICANT') {
+        if (teamType.toUpperCase() === 'APPLICANT') {
             message = 'Data custodians cannot see your notes, collaborators can.';
         }
         return (

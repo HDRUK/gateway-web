@@ -13,7 +13,7 @@ import EditDataUsePage from './pages/dataUse/edit/EditDataUse';
 import SearchPage from './pages/search/SearchPage';
 import CollectionPage from './pages/collections/CollectionPage';
 import PublicAnalyticsDashboard from './pages/publicDashboard/PublicAnalyticsDashboard';
-import Account from './pages/dashboard/Account';
+import AccountPage from './pages/AccountPage/AccountPage';
 import Unsubscribe from './pages/dashboard/Unsubscribe';
 import AddEditToolPage from './pages/tool/AddEditToolPage';
 import AddEditPaperPage from './pages/paper/AddEditPaperPage';
@@ -104,7 +104,7 @@ class HDRRouter extends Component {
                                 <h2>Application currently up</h2>
                             </Route>
                             {userState[0].loggedIn && !userState[0].profileComplete ? (
-                                <Route render={props => <Account {...props} userState={userState} profileComplete={false} />} />
+                                <Route render={props => <AccountPage {...props} userState={userState} profileComplete={false} />} />
                             ) : (
                                 ''
                             )}
@@ -141,7 +141,7 @@ class HDRRouter extends Component {
                                 userState={userState}
                             />
                             <GuardedRoute path='/data-access-request/:accessId' component={DataAccessRequest} userState={userState} />
-                            <GuardedRoute path='/account' component={Account} userState={userState} />
+                            <GuardedRoute path='/account' component={AccountPage} userState={userState} />
                             <GuardedRoute path='/collection/add' component={AddEditCollectionPage} userState={userState} />
                             <GuardedRoute path='/collection/edit/:collectionID' component={AddEditCollectionPage} userState={userState} />
                             <Route path='/collection/:collectionID' render={props => <CollectionPage {...props} userState={userState} />} />

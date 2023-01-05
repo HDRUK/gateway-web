@@ -16,7 +16,7 @@ import AccountDatasetsCreate from '../AccountDatasetsCreate';
 import AccountDatasetsContent from './AccountDatasetsContent';
 import AccountDatasetsTabs from './AccountDatasetsTabs';
 
-const AccountDatasets = ({ alert, userType, teamId }) => {
+const AccountDatasets = ({ alert, teamType, teamId }) => {
     const [key, setKey] = useState(alert ? alert.tab : '');
     const [statusCounts, setStatusCounts] = useState({});
     const { userState } = useAuth();
@@ -72,9 +72,9 @@ const AccountDatasets = ({ alert, userType, teamId }) => {
     }, []);
 
     useEffect(() => {
-        setPublisherId(authUtils.getPublisherId(userState[0], teamId));
-        setKey(userType === 'admin' ? STATUS_INREVIEW : alert.tab || DATASETS_STATUS_ACTIVE);
-    }, [teamId, userType]);
+        setPublisherId(authUtils.getPublisherId(userState[0], teamId, teamType));
+        setKey(teamType === 'admin' ? STATUS_INREVIEW : alert.tab || DATASETS_STATUS_ACTIVE);
+    }, [teamId, teamType]);
 
     useEffect(() => {
         if (publisherID && key) {
@@ -107,14 +107,14 @@ const AccountDatasets = ({ alert, userType, teamId }) => {
     }, [data]);
 
     const AccountDatasetsResults = useCallback(
-        ({ isLoading, isFetched, datasets, params, userType, count }) => (
+        ({ isLoading, isFetched, datasets, params, teamType, count }) => (
             <AccountDatasetsContent
                 isLoading={isLoading}
                 isFetched={isFetched}
                 data={datasets}
                 onSubmit={handleSubmit}
                 onReset={handleReset}
-                userType={userType}
+                teamType={teamType}
                 params={params}
                 status={key}
                 count={count}
@@ -135,17 +135,17 @@ const AccountDatasets = ({ alert, userType, teamId }) => {
                     isLoading={isDashboardLoading}
                     publisherID={publisherID}
                     alert={alert}
-                    userType={userType}
+                    teamType={teamType}
                 />
 
-                {isFetched && <AccountDatasetsTabs counts={statusCounts} onSelectTab={handleSelect} userType={userType} activeKey={key} />}
+                {isFetched && <AccountDatasetsTabs counts={statusCounts} onSelectTab={handleSelect} teamType={teamType} activeKey={key} />}
 
                 <AccountDatasetsResults
                     isLoading={isLoading}
                     isFetched={isFetched}
                     datasets={(data && data.data.data.results.listOfDatasets) || []}
                     params={params}
-                    userType={userType}
+                    teamType={teamType}
                     count={statusCounts[key]}
                 />
             </LayoutContent>

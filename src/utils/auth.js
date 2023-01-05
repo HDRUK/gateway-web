@@ -6,6 +6,7 @@ import { generalUtils } from 'utils';
 // TODO: GAT-1824 rewrite
 const getTeam = props => {
     const values = generalUtils.parseQueryString(window.location.search);
+
     let team;
 
     if (values.team === 'user') {
@@ -33,12 +34,31 @@ const getTeam = props => {
     return team;
 };
 
+const setHDRTeam = () => {
+    const values = generalUtils.parseQueryString(window.location.search);
+    const localStorageValue = values.userType === 'team' ? values.teamId : values.userType;
+    localStorage.setItem('HDR_TEAM', localStorageValue);
+};
+
+const getUserType = () => {
+    const values = generalUtils.parseQueryString(window.location.search);
+    return values.userType;
+};
+
+const getTeamId = () => {
+    const values = generalUtils.parseQueryString(window.location.search);
+    return values.teamId;
+};
+
 const getIsTypeCustodian = type => {
     return type !== 'user' && type !== 'admin';
 };
 
 const getIsTypeAdmin = type => {
     return type === 'admin';
+};
+const getIsTypeTeam = type => {
+    return type === 'team';
 };
 
 const getIsTypeUser = type => {
@@ -70,6 +90,7 @@ const userHasTeamRole = (userState, teamId, role) => {
         // eslint-disable-next-line no-underscore-dangle
         return t._id === teamId;
     })[0];
+
     return team && team.roles.some(r => role.includes(r));
 };
 
@@ -142,9 +163,9 @@ const returnApplicantIfTeamNotFound = (userState, teamId) => {
 };
 
 // TODO: GAT-1510 Investigate - similar to getIsTypeAdminOrApplicant above
-const getPublisherId = (userState, teamId) => {
+const getPublisherId = (userState, teamId, teamType) => {
     const { teams } = userState;
-    const foundAdmin = teams.filter(x => x.type === teamId);
+    const foundAdmin = teams.filter(x => x.type === teamType);
 
     if (!_.isEmpty(foundAdmin)) {
         return 'admin';
@@ -161,6 +182,7 @@ const getPublisherId = (userState, teamId) => {
 };
 
 export {
+    getIsTypeTeam,
     getHasTeamManagerRole,
     getPublisherId,
     returnApplicantIfTeamNotFound,
@@ -180,4 +202,7 @@ export {
     getIsUserRoleAdmin,
     getIsUserRoleDataCustodian,
     getIsUserRoleCreator,
+    setHDRTeam,
+    getUserType,
+    getTeamId,
 };
