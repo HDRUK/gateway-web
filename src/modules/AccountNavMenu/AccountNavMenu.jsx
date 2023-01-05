@@ -121,7 +121,7 @@ const AccountNavMenu = ({
                                 href={`/account?tab=${tabId}`}
                                 className='gray700-13'
                                 onClick={() => {
-                                    accountUtils.updateTeamType({ teamType: 'team', teamId: pub._id });
+                                    accountUtils.updateSelectedTeam({ teamType: 'team', teamId: pub._id });
                                 }}>
                                 {pub.name}
                             </Dropdown.Item>
@@ -150,7 +150,7 @@ const AccountNavMenu = ({
                     className='gray700-13'
                     href='/account?tab=datasets'
                     onClick={() => {
-                        accountUtils.updateTeamType({ teamType: 'admin' });
+                        accountUtils.updateSelectedTeam({ teamType: 'admin' });
                     }}>
                     HDR Admin
                 </Dropdown.Item>
@@ -179,7 +179,7 @@ const AccountNavMenu = ({
     const UserMenu = () => {
         return (
             <Dropdown.Item
-                onClick={() => accountUtils.updateTeamType({ teamType: 'user' })}
+                onClick={() => accountUtils.updateSelectedTeam({ teamType: 'user' })}
                 href='/account?tab=youraccount'
                 className='gray700-13'>
                 {userState[0].name || ''}

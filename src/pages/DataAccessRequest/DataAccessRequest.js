@@ -431,7 +431,7 @@ class DataAccessRequest extends Component {
         // 2. If user is custodian and the form is not in review, redirect the user to the DAR team dashboard
         // TODO: GAT-1510:062
         if (teamType === 'custodian' && applicationStatus === darHelperUtils.darStatus.submitted) {
-            accountUtils.updateTeamType({ teamType: 'team', teamId: publisher });
+            accountUtils.updateSelectedTeam({ teamType: 'team', teamId: publisher });
             const alert = {
                 publisher,
                 tab: 'submitted',
@@ -794,7 +794,7 @@ class DataAccessRequest extends Component {
             const lastSaved = darHelperUtils.saveTime();
             this.setState({ lastSaved });
 
-            accountUtils.updateTeamType({ teamType: 'user' });
+            accountUtils.updateSelectedTeam({ teamType: 'user' });
 
             this.props.history.push({
                 pathname: '/account',
@@ -1406,7 +1406,7 @@ class DataAccessRequest extends Component {
                     message: `You have successfully sent your recommendation for your assigned phase of ${this.state.aboutApplication.projectName} project`,
                 };
 
-                accountUtils.updateTeamType({ teamType: 'team', teamId: this.state.publisher });
+                accountUtils.updateSelectedTeam({ teamType: 'team', teamId: this.state.publisher });
 
                 // 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
                 this.props.history.push({
@@ -1620,7 +1620,7 @@ class DataAccessRequest extends Component {
                 // 3. hide screen modal for approve, reject, approve with comments
                 this.toggleActionModal();
 
-                accountUtils.updateTeamType({ teamType: 'team', teamId: this.state.publisher });
+                accountUtils.updateSelectedTeam({ teamType: 'team', teamId: this.state.publisher });
 
                 // 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
                 this.props.history.push({
@@ -1832,7 +1832,7 @@ class DataAccessRequest extends Component {
                 publisher: 'user',
             };
 
-            accountUtils.updateTeamType({ teamType: 'user' });
+            accountUtils.updateSelectedTeam({ teamType: 'user' });
 
             this.props.history.push({
                 pathname: '/account',

@@ -8,7 +8,7 @@ import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
 
 import { NotificationManager } from 'react-notifications';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Winterfell from 'winterfell';
 import { Button, Box, P, H5, Typography, Cta, Alert } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -19,6 +19,7 @@ import { Icon, Spinner, RenderMarkdown } from 'components';
 import { dataAccessRequestService, publishersService, questionbankService } from 'services';
 import { useAuth } from 'context/AuthContext';
 
+import { useAccountTeamSelected } from 'hooks';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
@@ -86,14 +87,12 @@ export const DataAccessRequestCustomiseForm = props => {
     const [showSaveAlert, setShowSaveAlert] = useState(true);
     const [isUploading, setIsUploading] = useState(false);
     const [isUploaded, setIsUploaded] = useState(false);
-
-    const location = useLocation();
-    const team = authUtils.getTeam({ location });
+    const { teamId } = useAccountTeamSelected();
 
     useEffect(() => {
-        if (!team || !userState) return;
-        setIsTeamAdmin(authUtils.getIsTeamAdmin(userState, team));
-    }, [team, userState]);
+        if (!teamId || !userState) return;
+        setIsTeamAdmin(authUtils.getIsTeamAdmin(userState, teamId));
+    }, [teamId, userState]);
 
     const patchSchemaRequest = dataAccessRequestService.usePatchSchema(null, {
         onError: ({ title, message }) => {

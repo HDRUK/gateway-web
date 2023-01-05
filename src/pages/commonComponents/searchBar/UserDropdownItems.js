@@ -14,19 +14,19 @@ export const UserDropdownItems = isAdmin => {
     return (
         <>
             <Dropdown.Item
-                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                onClick={accountUtils.updateSelectedTeam({ teamType: 'user' })}
                 href='/account?tab=youraccount'
                 className='black-14 user-dropdown-item'>
                 My Account
             </Dropdown.Item>
             <Dropdown.Item
-                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                onClick={accountUtils.updateSelectedTeam({ teamType: 'user' })}
                 href='/account?tab=dataaccessrequests'
                 className='black-14 user-dropdown-item'>
                 Data access requests
             </Dropdown.Item>
             <Dropdown.Item
-                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                onClick={accountUtils.updateSelectedTeam({ teamType: 'user' })}
                 href='/account?tab=collections'
                 className='black-14 user-dropdown-item'>
                 Collections
@@ -40,7 +40,7 @@ export const UserDropdownItems = isAdmin => {
                 </Typography>
             </Dropdown.Item>
             <Dropdown.Item
-                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                onClick={accountUtils.updateSelectedTeam({ teamType: 'user' })}
                 href='/account?tab=courses'
                 className='black-14 user-dropdown-item'>
                 Courses
@@ -55,13 +55,13 @@ export const UserDropdownItems = isAdmin => {
             </Dropdown.Item>
 
             <Dropdown.Item
-                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                onClick={accountUtils.updateSelectedTeam({ teamType: 'user' })}
                 href='/account?tab=datause'
                 className='black-14 user-dropdown-item'>
                 Data Uses
             </Dropdown.Item>
             <Dropdown.Item
-                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                onClick={accountUtils.updateSelectedTeam({ teamType: 'user' })}
                 href='/account?tab=papers'
                 className='black-14 user-dropdown-item'>
                 Papers
@@ -75,7 +75,7 @@ export const UserDropdownItems = isAdmin => {
                 </Typography>
             </Dropdown.Item>
             <Dropdown.Item
-                onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                onClick={accountUtils.updateSelectedTeam({ teamType: 'user' })}
                 href='/account?tab=tools'
                 className='black-14 user-dropdown-item'>
                 Tools
@@ -91,7 +91,7 @@ export const UserDropdownItems = isAdmin => {
 
             {isAdmin && (
                 <Dropdown.Item
-                    onClick={accountUtils.updateTeamType({ teamType: 'user' })}
+                    onClick={accountUtils.updateSelectedTeam({ teamType: 'user' })}
                     href='/account?tab=usersroles'
                     className='black-14 user-dropdown-item'>
                     Users and roles

@@ -20,13 +20,12 @@ import ActivityLogCard from '../ActivityLogCard';
 import AccountDatasetApproveModal from './AccountDatasetApproveModal';
 import AccountDatasetRejectModal from './AccountDatasetRejectModal';
 
-const AccountDataset = props => {
-    const { teamType } = useAccountTeamSelected();
+const AccountDataset = () => {
+    const { teamType, teamId } = useAccountTeamSelected();
     const { t } = useTranslation();
     const { id } = useParams();
     const history = useHistory();
     const { userState } = useAuth();
-    const [team, setTeam] = useState();
     const [currentDataset, setCurrentDataset] = useState();
     const [state, setState] = useState({
         showPrevious: false,
@@ -38,12 +37,10 @@ const AccountDataset = props => {
     });
 
     const dataActivityLog = activityLogService.usePostActivityLog();
-    const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], team, teamType), [userState[0], team, teamType]);
+    const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], teamId, teamType), [userState[0], teamId, teamType]);
     const dataPublisher = datasetOnboardingService.useGetPublisher(publisherId);
 
     useEffect(() => {
-        setTeam(authUtils.getTeam(props));
-
         if (publisherId && id) dataPublisher.mutate();
     }, [publisherId, id]);
 
@@ -127,7 +124,7 @@ const AccountDataset = props => {
                 history.push(`/account/datasets/${dataset.pid}`);
             }
         },
-        [id, dataPublisher.data, team]
+        [id, dataPublisher.data]
     );
 
     const { showPrevious, showNext, statusError, showRejectDatasetModal, showApproveDatasetModal } = state;
@@ -148,7 +145,7 @@ const AccountDataset = props => {
         history.push({
             pathname: `/account`,
             search: '?tab=datasets',
-            state: { alert, team, userState },
+            state: { alert, userState },
         });
     };
 
@@ -165,7 +162,7 @@ const AccountDataset = props => {
         history.push({
             pathname: `/account`,
             search: '?tab=datasets',
-            state: { alert, team },
+            state: { alert },
         });
     };
 

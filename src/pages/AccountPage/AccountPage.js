@@ -73,7 +73,7 @@ const AccountPage = ({ userState, location }) => {
     let saveNotificationsRef;
 
     const updateProfileStatus = () => {
-        accountUtils.updateTeamType({ teamType: 'user' });
+        accountUtils.updateSelectedTeam({ teamType: 'user' });
 
         history.push({
             pathname: '/account',

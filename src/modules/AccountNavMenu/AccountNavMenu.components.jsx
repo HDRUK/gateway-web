@@ -91,7 +91,7 @@ const UserNav = ({ tabId, userState }) => {
                     key={id}
                     icon={<BarChartIcon />}
                     activeClassName={getNavActiveClass(id, tabId)}
-                    onClick={() => accountUtils.updateTeamType({ teamType: 'user' })}
+                    onClick={() => accountUtils.updateSelectedTeam({ teamType: 'user' })}
                     to={`/account?tab=${id}`}
                     {...outerProps}
                 />
@@ -106,7 +106,7 @@ const AdminNav = ({ tabId }) => {
             <DashboardNavItem
                 icon={<UsersIcon />}
                 activeClassName={getNavActiveClass('datasets', tabId)}
-                onClick={() => accountUtils.updateTeamType({ teamType: 'admin' })}
+                onClick={() => accountUtils.updateSelectedTeam({ teamType: 'admin' })}
                 to='/account?tab=datasets'>
                 Datasets
             </DashboardNavItem>
@@ -114,7 +114,7 @@ const AdminNav = ({ tabId }) => {
             <DashboardNavItem
                 icon={<FlowIcon />}
                 activeClassName={getNavActiveClass('datause', tabId)}
-                onClick={() => accountUtils.updateTeamType({ teamType: 'admin' })}
+                onClick={() => accountUtils.updateSelectedTeam({ teamType: 'admin' })}
                 to='/account?tab=datause'>
                 Data Uses
             </DashboardNavItem>
@@ -122,7 +122,7 @@ const AdminNav = ({ tabId }) => {
             <DashboardNavItem
                 icon={<TeamsIcon />}
                 activeClassName={getNavActiveClass('teams', tabId)}
-                onClick={() => accountUtils.updateTeamType({ teamType: 'admin' })}
+                onClick={() => accountUtils.updateSelectedTeam({ teamType: 'admin' })}
                 to='/account?tab=teams'>
                 Teams
             </DashboardNavItem>
@@ -180,7 +180,7 @@ const TeamNav = ({
             <DashboardNavItem
                 icon={<SettingsIcon />}
                 activeClassName={getNavActiveClass('teamManagement', tabId)}
-                onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId })}
+                onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId })}
                 to='/account?tab=teamManagement'>
                 Team Management
             </DashboardNavItem>
@@ -220,7 +220,7 @@ const TeamNav = ({
                 <DashboardNavItem
                     icon={<ServerIcon />}
                     activeClassName={getNavActiveClass('datasets', tabId)}
-                    onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId })}
+                    onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId })}
                     to='/account?tab=datasets'>
                     Datasets
                 </DashboardNavItem>
@@ -240,7 +240,7 @@ const TeamNav = ({
             <DashboardNavItem
                 icon={<HelpIcon />}
                 activeClassName={getNavActiveClass('help', tabId)}
-                onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId })}
+                onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId })}
                 to='/account?tab=help'>
                 Help
             </DashboardNavItem>

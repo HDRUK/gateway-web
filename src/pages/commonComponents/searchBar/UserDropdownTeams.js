@@ -61,19 +61,19 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                         {authUtils.getIsTypeAdmin(team.type) ? (
                             <>
                                 <Dropdown.Item
-                                    onClick={() => accountUtils.updateTeamType({ teamType: 'admin' })}
+                                    onClick={() => accountUtils.updateSelectedTeam({ teamType: 'admin' })}
                                     href='/account?tab=datasets'
                                     className='black-14 user-dropdown-item'>
                                     Datasets
                                 </Dropdown.Item>
                                 <Dropdown.Item
-                                    onClick={() => accountUtils.updateTeamType({ teamType: 'admin' })}
+                                    onClick={() => accountUtils.updateSelectedTeam({ teamType: 'admin' })}
                                     href='/account?tab=datause'
                                     className='black-14 user-dropdown-item'>
                                     Data Uses
                                 </Dropdown.Item>
                                 <Dropdown.Item
-                                    onClick={() => accountUtils.updateTeamType({ teamType: 'admin' })}
+                                    onClick={() => accountUtils.updateSelectedTeam({ teamType: 'admin' })}
                                     href='/account?tab=teams'
                                     className='black-14 user-dropdown-item'
                                     data-testid='optTeams'>
@@ -83,7 +83,7 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                         ) : (
                             <>
                                 <Dropdown.Item
-                                    onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                    onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId: team._id })}
                                     href='/account?tab=teamManagement'
                                     className='black-14 user-dropdown-item'>
                                     Team Management
@@ -92,13 +92,13 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                                 {userHasTeamRole(team._id, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]) && (
                                     <>
                                         <Dropdown.Item
-                                            onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                            onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId: team._id })}
                                             href='/account?tab=dataaccessrequests'
                                             className='black-14 user-dropdown-item'>
                                             Data access requests
                                         </Dropdown.Item>
                                         <Dropdown.Item
-                                            onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                            onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId: team._id })}
                                             href='/account?tab=customisedataaccessrequests_guidance'
                                             className='black-14 user-dropdown-item'
                                             onClick={() => handleAnalytics('Clicked profile dropdown', 'Edit DAR form')}>
@@ -107,7 +107,7 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                                     </>
                                 )}
                                 <Dropdown.Item
-                                    onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                    onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId: team._id })}
                                     href='/account?tab=datause'
                                     className='black-14 user-dropdown-item'>
                                     Data Uses
@@ -115,7 +115,7 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                                 {/* TODO: GAT-1510:002 */}
                                 {userHasTeamRole(team._id, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.metadata_editor]) ? (
                                     <Dropdown.Item
-                                        onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                        onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId: team._id })}
                                         href='/account?tab=datasets'
                                         className='black-14 user-dropdown-item'>
                                         Datasets
@@ -124,7 +124,7 @@ const UserDropdownTeams = ({ isMobile = false }) => {
                                     ''
                                 )}
                                 <Dropdown.Item
-                                    onClick={() => accountUtils.updateTeamType({ teamType: 'team', teamId: team._id })}
+                                    onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId: team._id })}
                                     href='/account?tab=help'
                                     className='black-14 user-dropdown-item'>
                                     Help

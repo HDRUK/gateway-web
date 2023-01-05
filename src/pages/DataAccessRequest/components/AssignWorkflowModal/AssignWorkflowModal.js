@@ -59,7 +59,7 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
                         workflowId: workflow._id,
                     })
                     .then(() => {
-                        accountUtils.updateTeamType({ teamId: publisher, teamType: 'team' });
+                        accountUtils.updateSelectedTeam({ teamId: publisher, teamType: 'team' });
                         const alert = {
                             publisher,
                             nav: 'dataaccessrequests',

@@ -24,7 +24,7 @@ const MessageHeader = ({ userState, topic, modalRequired, onRequestAccess, onSho
 
     const onRouteChange = e => {
         e.preventDefault();
-        accountUtils.updateTeamType({ teamType: 'team', teamId: publisher });
+        accountUtils.updateSelectedTeam({ teamType: 'team', teamId: publisher });
         history.push({ pathname: `/account`, search: `?tab=dataaccessrequests` });
     };
 

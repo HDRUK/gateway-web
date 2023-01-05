@@ -22,7 +22,7 @@ const DashboardNavAccordion = ({ teamId, activeKey, tabId, eventKey, onSelect, d
                             to={`/account?tab=${id}`}
                             active={tabId === id}
                             onClick={() => {
-                                accountUtils.updateTeamType({ teamType: 'team', teamId });
+                                accountUtils.updateSelectedTeam({ teamType: 'team', teamId });
                                 handleAnalytics(`Clicked on ${id}`, text);
                             }}>
                             {text}

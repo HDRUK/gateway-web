@@ -133,7 +133,7 @@ class SearchBar extends Component {
 
     logout = e => {
         axios.get(baseURL + '/api/v1/auth/logout').then(res => {
-            if (localStorage.getItem('HDR_TEAM') !== null) localStorage.removeItem('HDR_TEAM');
+            accountUtils.resetSelectedTeam();
 
             window.location.reload();
         });
@@ -239,7 +239,7 @@ class SearchBar extends Component {
 
     getLink = (publisherName = '') => {
         if (!isEmpty(publisherName)) {
-            accountUtils.updateTeamType({ teamType: 'team', teamId: publisherName });
+            accountUtils.updateSelectedTeam({ teamType: 'team', teamId: publisherName });
             return `/account?tab=dataaccessrequests`;
         }
 
@@ -831,7 +831,7 @@ class SearchBar extends Component {
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
                                                                                                     onClick={() =>
-                                                                                                        accountUtils.updateTeamType({
+                                                                                                        accountUtils.updateSelectedTeam({
                                                                                                             teamType: 'team',
                                                                                                             teamId: dat.publisherName,
                                                                                                         })
@@ -927,7 +927,7 @@ class SearchBar extends Component {
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
                                                                                                     onClick={() =>
-                                                                                                        accountUtils.updateTeamType({
+                                                                                                        accountUtils.updateSelectedTeam({
                                                                                                             teamType: 'admin',
                                                                                                         })
                                                                                                     }

@@ -1,4 +1,4 @@
-const updateTeamType = ({ teamType, teamId }) => {
+const updateSelectedTeam = ({ teamType, teamId }) => {
     localStorage.setItem('teamType', teamType);
     if (!teamId) {
         localStorage.removeItem('teamId');
@@ -7,4 +7,9 @@ const updateTeamType = ({ teamType, teamId }) => {
     }
 };
 
-export { updateTeamType };
+const resetSelectedTeam = () => {
+    localStorage.removeItem('teamId');
+    localStorage.removeItem('teamType');
+};
+
+export { resetSelectedTeam, updateSelectedTeam };

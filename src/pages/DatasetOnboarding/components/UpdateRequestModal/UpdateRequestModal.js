@@ -21,7 +21,7 @@ const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicatio
     const onRequestUpdate = () => {
         if (!_.isEmpty(applicationId) && !_.isEmpty(publisher)) {
             axios.post(`${baseURL}/api/v1/data-access-request/${applicationId}/requestAmendments`).then(() => {
-                accountUtils.updateTeamType({ teamType: 'team', teamId: publisher });
+                accountUtils.updateSelectedTeam({ teamType: 'team', teamId: publisher });
 
                 const alert = {
                     publisher,
