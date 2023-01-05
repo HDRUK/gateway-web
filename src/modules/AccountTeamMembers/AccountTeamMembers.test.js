@@ -36,7 +36,7 @@ describe('Given the AccountTeamMembers component', () => {
         });
 
         afterEach(() => {
-            testUtils.waitFor();
+            testUtils.cleanup();
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -107,7 +107,7 @@ describe('Given the AccountTeamMembers component', () => {
         });
 
         afterEach(() => {
-            testUtils.waitFor();
+            testUtils.cleanup();
         });
 
         it('Then modal is displayed', () => {
@@ -133,7 +133,7 @@ describe('Given the AccountTeamMembers component', () => {
         });
 
         afterEach(() => {
-            testUtils.waitFor();
+            testUtils.cleanup();
         });
 
         describe('And add member is clicked', () => {
