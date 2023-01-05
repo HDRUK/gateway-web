@@ -1,3 +1,3 @@
-import usePersistState from './useAccountTeamSelected';
+import useAccountTeamSelected from './useAccountTeamSelected';
 
-export default usePersistState;
+export default useAccountTeamSelected;
