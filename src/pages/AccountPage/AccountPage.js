@@ -39,6 +39,7 @@ import { tabTypes } from '../dashboard/Team/teamUtil';
 import TeamHelp from '../dashboard/TeamHelp/TeamHelp';
 import WorkflowDashboard from '../dashboard/Workflows/WorkflowDashboard';
 import YourAccount from '../dashboard/YourAccount';
+import googleAnalytics from '../../tracking';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -49,7 +50,6 @@ const AccountPage = ({ userState, location }) => {
     const [dataAccessRequest, setDataAccessRequest] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [tabId, setTabId] = useState('');
-    const [searchString, setSearchString] = useState('');
     const [dashboardState, setDashboardState] = useState({});
     const [allowAccessRequestManagement, setAllowAccessRequestManagement] = useState(true);
     const [allowWorkflow, setAllowWorkflow] = useState(true);
@@ -89,6 +89,11 @@ const AccountPage = ({ userState, location }) => {
     useEffect(() => {
         const queryParams = generalUtils.parseQueryString(location.search);
         setTabId(queryParams.tab);
+
+        if (tabId !== queryParams.tab) {
+            googleAnalytics.recordVirtualPageView(queryParams.tab);
+        }
+
         setAccountUpdated(!!queryParams.accountUpdated);
     }, [location.search]);
 
@@ -249,11 +254,7 @@ const AccountPage = ({ userState, location }) => {
                 <div className='container-wrap'>
                     <AccountNavMenu
                         tabId={tabId}
-                        setDataAccessRequest={setDataAccessRequest}
                         setActiveAccordion={setActiveAccordion}
-                        setAlert={setAlert}
-                        setTabId={setTabId}
-                        alert={alert}
                         activeAccordion={activeAccordion}
                         allowAccessRequestManagement={allowAccessRequestManagement}
                         publisherDetails={publisherDetails}

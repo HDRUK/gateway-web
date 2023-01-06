@@ -3,17 +3,27 @@ import useAccountTeamSelected from './useAccountTeamSelected';
 
 const { localStorageUtils } = testUtils;
 
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useHistory: () => ({
+        push: mockHistoryPush,
+    }),
+}));
+
 describe('useAccountTeamSelected hook', () => {
     afterEach(() => {
         localStorageUtils.resetLocalStorage();
     });
 
-    it('should return undefined if values not set', () => {
+    it('should set teamType and redirect if values not set', () => {
         const wrapper = testUtils.renderHook(() => useAccountTeamSelected());
         expect(wrapper.result.current).toEqual({
-            teamType: undefined,
+            teamType: 'user',
             teamId: undefined,
         });
+        expect(mockHistoryPush).toHaveBeenCalledWith('/account?tab=youraccount');
     });
 
     it('should return values if values set in localstorage', () => {

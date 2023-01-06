@@ -840,7 +840,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                 {isTeamAdmin && (
                                     <Card>
                                         <Box p={5}>
-                                            <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
+                                            <AboutApplicationImport onUpload={handleImportUpload} userState={userState} />
                                         </Box>
                                     </Card>
                                 )}

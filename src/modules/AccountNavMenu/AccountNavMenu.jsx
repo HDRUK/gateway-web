@@ -4,10 +4,8 @@ import { Dropdown } from 'react-bootstrap';
 
 import { useAuth } from 'context/AuthContext';
 import { accountUtils, authUtils } from 'utils';
-import { PERMISSIONS_TEAM_ROLES } from 'consts';
 
 import { useAccountTeamSelected } from 'hooks';
-import googleAnalytics from '../../tracking';
 
 import { ReactComponent as ChevronRightSvg } from '../../images/chevron-bottom.svg';
 
@@ -37,69 +35,12 @@ const CustomMenu = forwardRef(({ children, style, className, 'aria-labelledby': 
     );
 });
 
-const AccountNavMenu = ({
-    tabId,
-    setDataAccessRequest,
-    setActiveAccordion,
-    setAlert,
-    setTabId,
-    alert,
-    activeAccordion,
-    allowAccessRequestManagement,
-    publisherDetails,
-    allowWorkflow,
-}) => {
+const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAccessRequestManagement, publisherDetails, allowWorkflow }) => {
     const { userState } = useAuth();
     const { teamId, teamType } = useAccountTeamSelected();
 
     const userHasTeamRole = role => {
         return authUtils.userHasTeamRole(userState, teamId, role);
-    };
-
-    // TODO - remove and distribute logic
-    const toggleNav = ({ selectedTabId = '', selectedUserType, selectedTeamId, ...rest }) => {
-        const tab = {};
-        let updatedTabId = alert?.nav || selectedTabId;
-        googleAnalytics.recordVirtualPageView(selectedTabId);
-        let updatedActiveAccordion = activeAccordion;
-        const [user] = userState;
-
-        // 2. make sure tabId is not empty
-        if (!_.isEmpty(updatedTabId)) {
-            // 3. need to check for teams returns {tabId: '', team: ''}; eg dataccessrequests&team=ALLIANCE
-            // const tab = generateTabObject(updatedTabId);
-            // 4. check if user has teams and the current nav is dataaccessrequests, keep expanded
-            if (!_.isEmpty(user.teams)) {
-                if (updatedTabId === 'dataaccessrequests' || updatedTabId === 'workflows' || updatedTabId === 'addeditworkflow') {
-                    updatedActiveAccordion = '0';
-                } else if (updatedTabId === 'datause' || updatedTabId === 'datause_widget') {
-                    updatedActiveAccordion = '2';
-                }
-            }
-
-            if (!_.isEmpty(selectedUserType)) {
-                localStorage.setItem('HDR_TEAM', tab.teamId || selectedUserType);
-                if (!authUtils.getIsTypeUser(selectedUserType) && !authUtils.getIsTypeAdmin(selectedUserType)) {
-                    if (_.isEmpty(updatedTabId) || !['dataaccessrequests', 'datasets', 'teamManagement'].includes(updatedTabId)) {
-                        // TODO: GAT-1510:004
-                        if (userHasTeamRole(tab.teamId, [PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]))
-                            updatedTabId = 'dataaccessrequests';
-                        // TODO: GAT-1510:005
-                        else if (userHasTeamRole(tab.teamId, PERMISSIONS_TEAM_ROLES.metadata_editor)) updatedTabId = 'datasets';
-                        else updatedTabId = 'teamManagement';
-                    }
-                }
-                // setUserType(selectedUserType);
-            } else if (localStorage.getItem('HDR_TEAM') === '') {
-                localStorage.setItem('HDR_TEAM', 'user');
-            }
-            // 5. set state
-            setTabId(updatedTabId);
-            // setTeamId(tab.teamId);
-            setAlert(!_.isEmpty(alert) ? alert : {});
-            setActiveAccordion(updatedActiveAccordion);
-            setDataAccessRequest({});
-        }
     };
 
     /**

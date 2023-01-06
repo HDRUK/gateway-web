@@ -237,21 +237,11 @@ class SearchBar extends Component {
         }
     }
 
-    getLink = (publisherName = '') => {
-        if (!isEmpty(publisherName)) {
-            accountUtils.updateSelectedTeam({ teamType: 'team', teamId: publisherName });
-            return `/account?tab=dataaccessrequests`;
-        }
-
-        return `/account?tab=dataaccessrequests`;
-    };
-
     getPublisherLink = data => {
         let { messageDescription, publisherName } = data;
-        let link = this.getLink(publisherName);
 
         return (
-            <a href={`${link}`} className='notificationInfo'>
+            <a href='/account?tab=dataaccessrequests' className='notificationInfo'>
                 {messageDescription}
             </a>
         );
