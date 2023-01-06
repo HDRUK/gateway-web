@@ -15,7 +15,6 @@ const DashboardNavAccordion = ({ teamId, activeKey, tabId, eventKey, onSelect, d
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={eventKey}>
                 <div>
-                    BOOOOO
                     {data.children.map(({ id, text }) => (
                         <DashboardSubNavItem
                             key={id}

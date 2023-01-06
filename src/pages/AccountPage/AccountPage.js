@@ -87,15 +87,23 @@ const AccountPage = ({ userState, location }) => {
     };
 
     useEffect(() => {
-        const queryParams = generalUtils.parseQueryString(window.location.search);
+        const queryParams = generalUtils.parseQueryString(location.search);
         setTabId(queryParams.tab);
         setAccountUpdated(!!queryParams.accountUpdated);
-    }, [window.location.search]);
+    }, [location.search]);
 
     // 1. used for DAR custodian update status of application
     useEffect(() => {
         if (!location?.state?.alert) return;
-        setAlert(location?.state?.alert);
+        const { state } = location;
+        const { alert } = state;
+
+        setAlert(alert);
+
+        if (alert.nav) {
+            setTabId(alert.nav);
+        }
+
         setTimeout(() => {
             setAlert({});
         }, 10000);
