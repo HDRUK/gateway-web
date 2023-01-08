@@ -11,6 +11,7 @@ import mswGetMembers from './teams/mockMsw';
 import mswGetUsers from './users/mockMsw';
 import mswGetTeams from '../../test/server/team';
 import { getRelatedObjectV1, getRelatedObjectTypeV1 } from '../../test/handlers/relatedResources/v1/handlers';
+import { getPublisherV1 } from '../../test/handlers/publishers/v1/handlers';
 
 const mswGetEnTranslations = rest.get(`http://localhost/locales/en/translation.json`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(translations));
@@ -40,6 +41,8 @@ const handlers = [
     ...mswGetTeams,
     getRelatedObjectV1(),
     getRelatedObjectTypeV1(),
+    getPublisherV1(),
+    loadCMSMenu(),
 ];
 
 export const server = setupServer.apply(null, handlers);

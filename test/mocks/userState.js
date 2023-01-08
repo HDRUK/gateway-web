@@ -28,7 +28,11 @@ const mockUserStateAdmin = [
 ];
 
 const mockUserStateManager = [{ email: 'dan@ackroyd.com', teams: [{ _id: '1234', roles: [PERMISSIONS_TEAM_ROLES.manager] }] }];
+const mockUserStateReviewer = [{ email: 'martin@short.com', teams: [{ _id: '5678', roles: [PERMISSIONS_TEAM_ROLES.reviewer] }] }];
+const mockUserStateMetadataEditor = [
+    { email: 'chevy@chase.com', teams: [{ _id: '9101', roles: [PERMISSIONS_TEAM_ROLES.metadata_editor] }] },
+];
 
 const mockUserStateNonManager = [{ email: 'john@candy.com', teams: [{ _id: '1234', roles: [] }] }];
 
-export { mockUserStateAdmin, mockUserStateManager, mockUserStateNonManager };
+export { mockUserStateMetadataEditor, mockUserStateReviewer, mockUserStateAdmin, mockUserStateManager, mockUserStateNonManager };
