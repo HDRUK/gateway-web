@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import { useState, useEffect, createRef } from 'react';
-import { Route, useHistory, withRouter } from 'react-router-dom';
+import { Route, useHistory, useLocation, withRouter } from 'react-router-dom';
 
 import { generalUtils, authUtils, accountUtils } from 'utils';
 import { PERMISSIONS_TEAM_ROLES } from 'consts';
@@ -40,10 +40,13 @@ import TeamHelp from '../dashboard/TeamHelp/TeamHelp';
 import WorkflowDashboard from '../dashboard/Workflows/WorkflowDashboard';
 import YourAccount from '../dashboard/YourAccount';
 import googleAnalytics from '../../tracking';
+import { useAuth } from 'context/AuthContext';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
-const AccountPage = ({ userState, location }) => {
+const AccountPage = () => {
+    const { userState } = useAuth();
+    const location = useLocation();
     const { teamId, teamType } = useAccountTeamSelected();
     const [teamManagementTab, setTeamManagementTab] = useState();
     const [innertab, setInnertab] = useState(null);
@@ -242,14 +245,7 @@ const AccountPage = ({ userState, location }) => {
     return (
         <Sentry.ErrorBoundary fallback={<ErrorModal />}>
             <DashboardProvider value={dashboardState}>
-                <SearchBar
-                    ref={searchBar}
-                    // searchString={searchString}
-                    // doSearchMethod={doSearch}
-                    // doUpdateSearchString={updateSearchString}
-                    doToggleDrawer={toggleDrawer}
-                    userState={userState}
-                />
+                <SearchBar ref={searchBar} doToggleDrawer={toggleDrawer} userState={userState} />
 
                 <div className='container-wrap'>
                     <AccountNavMenu
