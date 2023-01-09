@@ -1,0 +1,4425 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountPage Should render correctly for admin section manager 1`] = `
+<div>
+  <nav
+    class="navbarShown"
+  >
+    <div
+      class="searchBarBackground"
+      id="desktopSearchBar"
+    >
+      <div
+        class="whiteBackground row"
+      >
+        <div
+          class="ui-Box pr-0 pl-2 emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <a
+              href="http://localhost:3001"
+              style="cursor: pointer;"
+            >
+              <icon-mock />
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Explore
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Help
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Usage Data
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  About Us
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              href="http://localhost:3001/pages/latest-news"
+            >
+              News
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              data-testid="lnkCommunity"
+              href="https://discourse-dev.healthresearch.tools"
+            >
+              Community
+            </a>
+          </div>
+        </div>
+        <div
+          class="text-right"
+        >
+          <div
+            class="nav-wrapper"
+          >
+            <div
+              class="navBarLoginSpacing"
+            >
+              <button
+                class="ui-Button emotion-2"
+                data-testid="btnLogin"
+                id="myBtn"
+                style="cursor: pointer;"
+                type="button"
+              >
+                 
+                Sign in
+                 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="mobileSearchBar"
+    >
+      <div
+        class="searchBarBackground"
+      >
+        <div
+          class="ui-Box emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="dropdown"
+            >
+              <a
+                class="user-dropdown-menu"
+                href="#"
+              >
+                <icon-mock
+                  classname="hamBurgerHolder"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-10"
+          >
+            <div
+              id="mobileSearchBarHidden"
+              style="display: block;"
+            >
+              <div
+                class="navBarLogoSpacing"
+              >
+                <a
+                  href="http://localhost:3001"
+                >
+                  <icon-mock
+                    classname="ml-4 mt-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              >
+                HDR Admin
+              </span>
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datasets"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Datasets
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datause"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data Uses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=teams"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Teams
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for admin section metadata editor 1`] = `
+<div>
+  <nav
+    class="navbarShown"
+  >
+    <div
+      class="searchBarBackground"
+      id="desktopSearchBar"
+    >
+      <div
+        class="whiteBackground row"
+      >
+        <div
+          class="ui-Box pr-0 pl-2 emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <a
+              href="http://localhost:3001"
+              style="cursor: pointer;"
+            >
+              <icon-mock />
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Explore
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Help
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Usage Data
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  About Us
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              href="http://localhost:3001/pages/latest-news"
+            >
+              News
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              data-testid="lnkCommunity"
+              href="https://discourse-dev.healthresearch.tools"
+            >
+              Community
+            </a>
+          </div>
+        </div>
+        <div
+          class="text-right"
+        >
+          <div
+            class="nav-wrapper"
+          >
+            <div
+              class="navBarLoginSpacing"
+            >
+              <button
+                class="ui-Button emotion-2"
+                data-testid="btnLogin"
+                id="myBtn"
+                style="cursor: pointer;"
+                type="button"
+              >
+                 
+                Sign in
+                 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="mobileSearchBar"
+    >
+      <div
+        class="searchBarBackground"
+      >
+        <div
+          class="ui-Box emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="dropdown"
+            >
+              <a
+                class="user-dropdown-menu"
+                href="#"
+              >
+                <icon-mock
+                  classname="hamBurgerHolder"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-10"
+          >
+            <div
+              id="mobileSearchBarHidden"
+              style="display: block;"
+            >
+              <div
+                class="navBarLogoSpacing"
+              >
+                <a
+                  href="http://localhost:3001"
+                >
+                  <icon-mock
+                    classname="ml-4 mt-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              >
+                HDR Admin
+              </span>
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datasets"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Datasets
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datause"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data Uses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=teams"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Teams
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for admin section reviewer 1`] = `
+<div>
+  <nav
+    class="navbarShown"
+  >
+    <div
+      class="searchBarBackground"
+      id="desktopSearchBar"
+    >
+      <div
+        class="whiteBackground row"
+      >
+        <div
+          class="ui-Box pr-0 pl-2 emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <a
+              href="http://localhost:3001"
+              style="cursor: pointer;"
+            >
+              <icon-mock />
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Explore
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Help
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Usage Data
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  About Us
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              href="http://localhost:3001/pages/latest-news"
+            >
+              News
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              data-testid="lnkCommunity"
+              href="https://discourse-dev.healthresearch.tools"
+            >
+              Community
+            </a>
+          </div>
+        </div>
+        <div
+          class="text-right"
+        >
+          <div
+            class="nav-wrapper"
+          >
+            <div
+              class="navBarLoginSpacing"
+            >
+              <button
+                class="ui-Button emotion-2"
+                data-testid="btnLogin"
+                id="myBtn"
+                style="cursor: pointer;"
+                type="button"
+              >
+                 
+                Sign in
+                 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="mobileSearchBar"
+    >
+      <div
+        class="searchBarBackground"
+      >
+        <div
+          class="ui-Box emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="dropdown"
+            >
+              <a
+                class="user-dropdown-menu"
+                href="#"
+              >
+                <icon-mock
+                  classname="hamBurgerHolder"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-10"
+          >
+            <div
+              id="mobileSearchBarHidden"
+              style="display: block;"
+            >
+              <div
+                class="navBarLogoSpacing"
+              >
+                <a
+                  href="http://localhost:3001"
+                >
+                  <icon-mock
+                    classname="ml-4 mt-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              >
+                HDR Admin
+              </span>
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datasets"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Datasets
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datause"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data Uses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=teams"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Teams
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for admin section root admin 1`] = `
+<div>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              >
+                HDR Admin
+              </span>
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datasets"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Datasets
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datause"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data Uses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=teams"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Teams
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for team section manager 1`] = `
+<div>
+  <nav
+    class="navbarShown"
+  >
+    <div
+      class="searchBarBackground"
+      id="desktopSearchBar"
+    >
+      <div
+        class="whiteBackground row"
+      >
+        <div
+          class="ui-Box pr-0 pl-2 emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <a
+              href="http://localhost:3001"
+              style="cursor: pointer;"
+            >
+              <icon-mock />
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Explore
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Help
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Usage Data
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  About Us
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              href="http://localhost:3001/pages/latest-news"
+            >
+              News
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              data-testid="lnkCommunity"
+              href="https://discourse-dev.healthresearch.tools"
+            >
+              Community
+            </a>
+          </div>
+        </div>
+        <div
+          class="text-right"
+        >
+          <div
+            class="nav-wrapper"
+          >
+            <div
+              class="navBarLoginSpacing"
+            >
+              <button
+                class="ui-Button emotion-2"
+                data-testid="btnLogin"
+                id="myBtn"
+                style="cursor: pointer;"
+                type="button"
+              >
+                 
+                Sign in
+                 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="mobileSearchBar"
+    >
+      <div
+        class="searchBarBackground"
+      >
+        <div
+          class="ui-Box emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="dropdown"
+            >
+              <a
+                class="user-dropdown-menu"
+                href="#"
+              >
+                <icon-mock
+                  classname="hamBurgerHolder"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-10"
+          >
+            <div
+              id="mobileSearchBarHidden"
+              style="display: block;"
+            >
+              <div
+                class="navBarLogoSpacing"
+              >
+                <a
+                  href="http://localhost:3001"
+                >
+                  <icon-mock
+                    classname="ml-4 mt-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              />
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=teamManagement"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Team Management
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+        >
+          <div
+            class="accordion"
+          >
+            <button
+              class="verticalNavBar gray700-13 navLinkButton"
+              type="button"
+              variant="link"
+            >
+              <span
+                class="ui-Icon emotion-5"
+              >
+                <icon-mock />
+              </span>
+              <span
+                class="navLinkItem"
+              >
+                Data Uses
+              </span>
+            </button>
+            <div
+              class="collapse"
+            >
+              <div>
+                <a
+                  class="gray700-13  nav-block"
+                  href="/account?tab=datause"
+                >
+                  <span
+                    class="subLinkItem"
+                  >
+                    Dashboard
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=help"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Help
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for team section metadata editor 1`] = `
+<div>
+  <nav
+    class="navbarShown"
+  >
+    <div
+      class="searchBarBackground"
+      id="desktopSearchBar"
+    >
+      <div
+        class="whiteBackground row"
+      >
+        <div
+          class="ui-Box pr-0 pl-2 emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <a
+              href="http://localhost:3001"
+              style="cursor: pointer;"
+            >
+              <icon-mock />
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Explore
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Help
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Usage Data
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  About Us
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              href="http://localhost:3001/pages/latest-news"
+            >
+              News
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              data-testid="lnkCommunity"
+              href="https://discourse-dev.healthresearch.tools"
+            >
+              Community
+            </a>
+          </div>
+        </div>
+        <div
+          class="text-right"
+        >
+          <div
+            class="nav-wrapper"
+          >
+            <div
+              class="navBarLoginSpacing"
+            >
+              <button
+                class="ui-Button emotion-2"
+                data-testid="btnLogin"
+                id="myBtn"
+                style="cursor: pointer;"
+                type="button"
+              >
+                 
+                Sign in
+                 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="mobileSearchBar"
+    >
+      <div
+        class="searchBarBackground"
+      >
+        <div
+          class="ui-Box emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="dropdown"
+            >
+              <a
+                class="user-dropdown-menu"
+                href="#"
+              >
+                <icon-mock
+                  classname="hamBurgerHolder"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-10"
+          >
+            <div
+              id="mobileSearchBarHidden"
+              style="display: block;"
+            >
+              <div
+                class="navBarLogoSpacing"
+              >
+                <a
+                  href="http://localhost:3001"
+                >
+                  <icon-mock
+                    classname="ml-4 mt-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              />
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=teamManagement"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Team Management
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+        >
+          <div
+            class="accordion"
+          >
+            <button
+              class="verticalNavBar gray700-13 navLinkButton"
+              type="button"
+              variant="link"
+            >
+              <span
+                class="ui-Icon emotion-5"
+              >
+                <icon-mock />
+              </span>
+              <span
+                class="navLinkItem"
+              >
+                Data Uses
+              </span>
+            </button>
+            <div
+              class="collapse"
+            >
+              <div>
+                <a
+                  class="gray700-13  nav-block"
+                  href="/account?tab=datause"
+                >
+                  <span
+                    class="subLinkItem"
+                  >
+                    Dashboard
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=help"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Help
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for team section reviewer 1`] = `
+<div>
+  <nav
+    class="navbarShown"
+  >
+    <div
+      class="searchBarBackground"
+      id="desktopSearchBar"
+    >
+      <div
+        class="whiteBackground row"
+      >
+        <div
+          class="ui-Box pr-0 pl-2 emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <a
+              href="http://localhost:3001"
+              style="cursor: pointer;"
+            >
+              <icon-mock />
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Explore
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Help
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Usage Data
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  About Us
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              href="http://localhost:3001/pages/latest-news"
+            >
+              News
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              data-testid="lnkCommunity"
+              href="https://discourse-dev.healthresearch.tools"
+            >
+              Community
+            </a>
+          </div>
+        </div>
+        <div
+          class="text-right"
+        >
+          <div
+            class="nav-wrapper"
+          >
+            <div
+              class="navBarLoginSpacing"
+            >
+              <button
+                class="ui-Button emotion-2"
+                data-testid="btnLogin"
+                id="myBtn"
+                style="cursor: pointer;"
+                type="button"
+              >
+                 
+                Sign in
+                 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="mobileSearchBar"
+    >
+      <div
+        class="searchBarBackground"
+      >
+        <div
+          class="ui-Box emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="dropdown"
+            >
+              <a
+                class="user-dropdown-menu"
+                href="#"
+              >
+                <icon-mock
+                  classname="hamBurgerHolder"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-10"
+          >
+            <div
+              id="mobileSearchBarHidden"
+              style="display: block;"
+            >
+              <div
+                class="navBarLogoSpacing"
+              >
+                <a
+                  href="http://localhost:3001"
+                >
+                  <icon-mock
+                    classname="ml-4 mt-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              />
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=teamManagement"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Team Management
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+        >
+          <div
+            class="accordion"
+          >
+            <button
+              class="verticalNavBar gray700-13 navLinkButton"
+              type="button"
+              variant="link"
+            >
+              <span
+                class="ui-Icon emotion-5"
+              >
+                <icon-mock />
+              </span>
+              <span
+                class="navLinkItem"
+              >
+                Data Uses
+              </span>
+            </button>
+            <div
+              class="collapse"
+            >
+              <div>
+                <a
+                  class="gray700-13  nav-block"
+                  href="/account?tab=datause"
+                >
+                  <span
+                    class="subLinkItem"
+                  >
+                    Dashboard
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=help"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Help
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for team section root admin 1`] = `
+<div>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              >
+                Bill Murray
+              </span>
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=teamManagement"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Team Management
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+        >
+          <div
+            class="accordion"
+          >
+            <button
+              class="verticalNavBar gray700-13 navLinkButton"
+              type="button"
+              variant="link"
+            >
+              <span
+                class="ui-Icon emotion-0"
+              >
+                <icon-mock />
+              </span>
+              <span
+                class="navLinkItem"
+              >
+                Data Uses
+              </span>
+            </button>
+            <div
+              class="collapse"
+            >
+              <div>
+                <a
+                  class="gray700-13  nav-block"
+                  href="/account?tab=datause"
+                >
+                  <span
+                    class="subLinkItem"
+                  >
+                    Dashboard
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=help"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Help
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for user section manager 1`] = `
+<div>
+  <nav
+    class="navbarShown"
+  >
+    <div
+      class="searchBarBackground"
+      id="desktopSearchBar"
+    >
+      <div
+        class="whiteBackground row"
+      >
+        <div
+          class="ui-Box pr-0 pl-2 emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <a
+              href="http://localhost:3001"
+              style="cursor: pointer;"
+            >
+              <icon-mock />
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Explore
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Help
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Usage Data
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  About Us
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              href="http://localhost:3001/pages/latest-news"
+            >
+              News
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              data-testid="lnkCommunity"
+              href="https://discourse-dev.healthresearch.tools"
+            >
+              Community
+            </a>
+          </div>
+        </div>
+        <div
+          class="text-right"
+        >
+          <div
+            class="nav-wrapper"
+          >
+            <div
+              class="navBarLoginSpacing"
+            >
+              <button
+                class="ui-Button emotion-2"
+                data-testid="btnLogin"
+                id="myBtn"
+                style="cursor: pointer;"
+                type="button"
+              >
+                 
+                Sign in
+                 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="mobileSearchBar"
+    >
+      <div
+        class="searchBarBackground"
+      >
+        <div
+          class="ui-Box emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="dropdown"
+            >
+              <a
+                class="user-dropdown-menu"
+                href="#"
+              >
+                <icon-mock
+                  classname="hamBurgerHolder"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-10"
+          >
+            <div
+              id="mobileSearchBarHidden"
+              style="display: block;"
+            >
+              <div
+                class="navBarLogoSpacing"
+              >
+                <a
+                  href="http://localhost:3001"
+                >
+                  <icon-mock
+                    classname="ml-4 mt-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              />
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=dashboard"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Dashboard
+            </span>
+          </a>
+        </div>
+        <div
+          class="activeCard"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=youraccount"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Account
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=tools"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Tools
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=reviews"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Reviews
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datause"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data Uses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=papers"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Papers
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=courses"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Courses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=dataaccessrequests"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data access requests
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=collections"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Collections
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-1"
+        />
+        <div
+          class="col-10"
+        >
+          <div
+            class="mt-2 row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="rectangle"
+              >
+                <div
+                  class="gray800-14"
+                  style="text-align: center;"
+                >
+                  <img
+                    class=""
+                    src=""
+                  />
+                </div>
+                <div
+                  class="gray800-14"
+                  style="text-align: center;"
+                >
+                  <p>
+                    Loading...
+                  </p>
+                  <p />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-1"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for user section metadata editor 1`] = `
+<div>
+  <nav
+    class="navbarShown"
+  >
+    <div
+      class="searchBarBackground"
+      id="desktopSearchBar"
+    >
+      <div
+        class="whiteBackground row"
+      >
+        <div
+          class="ui-Box pr-0 pl-2 emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <a
+              href="http://localhost:3001"
+              style="cursor: pointer;"
+            >
+              <icon-mock />
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Explore
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Help
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Usage Data
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  About Us
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              href="http://localhost:3001/pages/latest-news"
+            >
+              News
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              data-testid="lnkCommunity"
+              href="https://discourse-dev.healthresearch.tools"
+            >
+              Community
+            </a>
+          </div>
+        </div>
+        <div
+          class="text-right"
+        >
+          <div
+            class="nav-wrapper"
+          >
+            <div
+              class="navBarLoginSpacing"
+            >
+              <button
+                class="ui-Button emotion-2"
+                data-testid="btnLogin"
+                id="myBtn"
+                style="cursor: pointer;"
+                type="button"
+              >
+                 
+                Sign in
+                 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="mobileSearchBar"
+    >
+      <div
+        class="searchBarBackground"
+      >
+        <div
+          class="ui-Box emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="dropdown"
+            >
+              <a
+                class="user-dropdown-menu"
+                href="#"
+              >
+                <icon-mock
+                  classname="hamBurgerHolder"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-10"
+          >
+            <div
+              id="mobileSearchBarHidden"
+              style="display: block;"
+            >
+              <div
+                class="navBarLogoSpacing"
+              >
+                <a
+                  href="http://localhost:3001"
+                >
+                  <icon-mock
+                    classname="ml-4 mt-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              />
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=dashboard"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Dashboard
+            </span>
+          </a>
+        </div>
+        <div
+          class="activeCard"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=youraccount"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Account
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=tools"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Tools
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=reviews"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Reviews
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datause"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data Uses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=papers"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Papers
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=courses"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Courses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=dataaccessrequests"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data access requests
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=collections"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Collections
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-1"
+        />
+        <div
+          class="col-10"
+        >
+          <div
+            class="mt-2 row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="rectangle"
+              >
+                <div
+                  class="gray800-14"
+                  style="text-align: center;"
+                >
+                  <img
+                    class=""
+                    src=""
+                  />
+                </div>
+                <div
+                  class="gray800-14"
+                  style="text-align: center;"
+                >
+                  <p>
+                    Loading...
+                  </p>
+                  <p />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-1"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for user section reviewer 1`] = `
+<div>
+  <nav
+    class="navbarShown"
+  >
+    <div
+      class="searchBarBackground"
+      id="desktopSearchBar"
+    >
+      <div
+        class="whiteBackground row"
+      >
+        <div
+          class="ui-Box pr-0 pl-2 emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <a
+              href="http://localhost:3001"
+              style="cursor: pointer;"
+            >
+              <icon-mock />
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Explore
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Help
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  Usage Data
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <div
+              class="cmsDropdown dropdown"
+            >
+              <a
+                class="cmsDropdownTitle"
+                href="#"
+              >
+                <span>
+                  About Us
+                </span>
+                <svg
+                  class="svg-16 floatRightChevron"
+                  data-testid="chevronbottom"
+                  height="100%"
+                  viewBox="0 0 18 18"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+                    fill="#475DA7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              href="http://localhost:3001/pages/latest-news"
+            >
+              News
+            </a>
+          </div>
+          <div
+            class="navBarLinkSpacing"
+          >
+            <a
+              class="black-14 cmsDropdownTitle"
+              data-testid="lnkCommunity"
+              href="https://discourse-dev.healthresearch.tools"
+            >
+              Community
+            </a>
+          </div>
+        </div>
+        <div
+          class="text-right"
+        >
+          <div
+            class="nav-wrapper"
+          >
+            <div
+              class="navBarLoginSpacing"
+            >
+              <button
+                class="ui-Button emotion-2"
+                data-testid="btnLogin"
+                id="myBtn"
+                style="cursor: pointer;"
+                type="button"
+              >
+                 
+                Sign in
+                 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="mobileSearchBar"
+    >
+      <div
+        class="searchBarBackground"
+      >
+        <div
+          class="ui-Box emotion-0"
+        >
+          <div
+            class="ui-Box emotion-0"
+          >
+            <div
+              class="dropdown"
+            >
+              <a
+                class="user-dropdown-menu"
+                href="#"
+              >
+                <icon-mock
+                  classname="hamBurgerHolder"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-10"
+          >
+            <div
+              id="mobileSearchBarHidden"
+              style="display: block;"
+            >
+              <div
+                class="navBarLogoSpacing"
+              >
+                <a
+                  href="http://localhost:3001"
+                >
+                  <icon-mock
+                    classname="ml-4 mt-3"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              />
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=dashboard"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Dashboard
+            </span>
+          </a>
+        </div>
+        <div
+          class="activeCard"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=youraccount"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Account
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=tools"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Tools
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=reviews"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Reviews
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datause"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data Uses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=papers"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Papers
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=courses"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Courses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=dataaccessrequests"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data access requests
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=collections"
+          >
+            <span
+              class="ui-Icon emotion-5"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Collections
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-1"
+        />
+        <div
+          class="col-10"
+        >
+          <div
+            class="mt-2 row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="rectangle"
+              >
+                <div
+                  class="gray800-14"
+                  style="text-align: center;"
+                >
+                  <img
+                    class=""
+                    src=""
+                  />
+                </div>
+                <div
+                  class="gray800-14"
+                  style="text-align: center;"
+                >
+                  <p>
+                    Loading...
+                  </p>
+                  <p />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-1"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountPage Should render correctly for user section root admin 1`] = `
+<div>
+  <div
+    class="container-wrap"
+  >
+    <div
+      class="col-sm-12 col-md-2 accountMenuHolder"
+    >
+      <div
+        class="account-menu"
+      >
+        <div
+          class="dropdown"
+        >
+          <a
+            href="#"
+          >
+            <div
+              class="teamSelectorHeader"
+            >
+              <span
+                class="gray700-13"
+              >
+                Bill Murray
+              </span>
+              <icon-mock
+                classname="dataClassArrow pointer"
+                fill="#475da7"
+              />
+            </div>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=dashboard"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Dashboard
+            </span>
+          </a>
+        </div>
+        <div
+          class="activeCard"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=youraccount"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Account
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=tools"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Tools
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=reviews"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Reviews
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=datause"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data Uses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=papers"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Papers
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=courses"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Courses
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=dataaccessrequests"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Data access requests
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=collections"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Collections
+            </span>
+          </a>
+        </div>
+        <div
+          class="accountNav"
+          role="link"
+        >
+          <a
+            class="verticalNavBar gray700-13 nav-link"
+            href="/account?tab=usersroles"
+          >
+            <span
+              class="ui-Icon emotion-0"
+            >
+              <icon-mock />
+            </span>
+            <span
+              class="navLinkItem"
+            >
+              Users and roles
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-10 margin-top-32"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-1"
+        />
+        <div
+          class="col-10"
+        >
+          <div
+            class="mt-2 row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="rectangle"
+              >
+                <div
+                  class="gray800-14"
+                  style="text-align: center;"
+                >
+                  <img
+                    class=""
+                    src=""
+                  />
+                </div>
+                <div
+                  class="gray800-14"
+                  style="text-align: center;"
+                >
+                  <p>
+                    Loading...
+                  </p>
+                  <p />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-1"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="sideDrawer close-drawer"
+  >
+    <div
+      class="sideDrawer-header"
+    >
+      <div>
+        Messages
+      </div>
+      <icon-mock
+        classname="sideDrawer-header--close"
+      />
+    </div>
+    <div
+      class="sideDrawer-noMessages"
+    >
+      <div>
+        No messages yet
+      </div>
+      <div>
+        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+      </div>
+    </div>
+  </div>
+</div>
+`;
