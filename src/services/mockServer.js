@@ -42,7 +42,6 @@ const handlers = [
     getRelatedObjectV1(),
     getRelatedObjectTypeV1(),
     getPublisherV1(),
-    loadCMSMenu(),
 ];
 
 export const server = setupServer.apply(null, handlers);
