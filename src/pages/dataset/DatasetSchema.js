@@ -1,5 +1,4 @@
-import React from 'react';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { JsonLd } from 'react-schemaorg';
 
 const DatasetSchema = ({ data }) => {
@@ -28,9 +27,9 @@ const DatasetSchema = ({ data }) => {
     };
 
     return (
-        <MetaTags>
+        <Helmet>
             <JsonLd item={renderSchema()} />
-        </MetaTags>
+        </Helmet>
     );
 };
 

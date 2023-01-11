@@ -1,4 +1,4 @@
-import { apiURL, apiV2URL } from '../../configs/url.config';
+import { apiUrlV1, apiUrlV2 } from '../../configs/url.config';
 import {
     deleteRequest,
     getRequest,
@@ -10,47 +10,47 @@ import {
 } from '../../utils/requests';
 
 const getTools = options => {
-    return getRequest(`${apiV2URL}/tools`, options);
+    return getRequest(`${apiUrlV2}/tools`, options);
 };
 
 const getTool = (_id, options) => {
-    return getRequest(`${apiURL}/tools/${_id}`, options);
+    return getRequest(`${apiUrlV1}/tools/${_id}`, options);
 };
 
 const getToolEdit = (_id, options) => {
-    return getRequest(`${apiURL}/tools/edit/${_id}`, options);
+    return getRequest(`${apiUrlV1}/tools/edit/${_id}`, options);
 };
 
 const getProjectTag = (_id, options) => {
-    return getRequest(`${apiURL}/tools/project/tag/${_id}`, options);
+    return getRequest(`${apiUrlV1}/tools/project/tag/${_id}`, options);
 };
 
 const postTool = (_id, data, options) => {
-    return postRequest(`${apiURL}/tools/${_id}`, data, options);
+    return postRequest(`${apiUrlV1}/tools/${_id}`, data, options);
 };
 
 const postReviewAdd = (data, options) => {
-    return postRequest(`${apiURL}/tools/review/add`, data, options);
+    return postRequest(`${apiUrlV1}/tools/review/add`, data, options);
 };
 
 const postToolsReply = (data, options) => {
-    return postRequest(`${apiURL}/tools/reply`, data, options);
+    return postRequest(`${apiUrlV1}/tools/reply`, data, options);
 };
 
 const putTool = (_id, data, options) => {
-    return putRequest(`${apiURL}/tools/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/tools/${_id}`, data, options);
 };
 
 const putReviewApprove = (data, options) => {
-    return putRequest(`${apiURL}/tools/review/approve`, data, options);
+    return putRequest(`${apiUrlV1}/tools/review/approve`, data, options);
 };
 
 const patchTool = (_id, data, options) => {
-    return patchRequest(`${apiURL}/tools/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/tools/${_id}`, data, options);
 };
 
 const deleteTool = (_id, options) => {
-    return deleteRequest(`${apiURL}/tools/${_id}`, options);
+    return deleteRequest(`${apiUrlV1}/tools/${_id}`, options);
 };
 
 const useGetTools = (requestOptions, mutateOptions) => {
@@ -141,7 +141,7 @@ const useDeleteTool = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getTools,
     getTool,
     getToolEdit,

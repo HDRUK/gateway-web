@@ -1,3 +1,4 @@
+import { generalUtils } from 'utils';
 import { regExpConfig } from './regex.config';
 
 /**
@@ -54,8 +55,11 @@ export const getWidgetAPI = () => {
     if (href.includes('.uat.')) {
         widgetAPIURL = 'https://uat-datause-widget.healthdatagateway.org';
     }
-    if (href.includes('.preprod.')) {
+    if (href.includes('.bau.')) {
         widgetAPIURL = 'https://preprod-datause-widget.preprod.hdruk.dev/';
+    }
+    if (href.includes('.preprod.')) {
+        widgetAPIURL = 'https://preprod-datause-widget.preprod.hdruk.dev';
     }
     return widgetAPIURL;
 };
@@ -66,13 +70,17 @@ export const addCmsGatewayApiHostname = path => {
 
     if (hostname.includes('uat.')) {
         webHostname = 'https://api.uat.healthdatagateway.org';
+    } else if (hostname.includes('bau.')) {
+        webHostname = 'https://api.bau.hdruk.dev';
     } else if (hostname.includes('preprod.')) {
         webHostname = 'https://api.preprod.hdruk.dev';
+    } else if (hostname.includes('dev.hdruk.dev')) {
+        webHostname = 'https://api.dev.hdruk.dev';
     } else if (hostname.includes('.cloudshell.dev') || hostname.includes('localhost')) {
         webHostname = 'http://localhost:3001';
     }
 
-    return `${webHostname}/${path}`;
+    return `${webHostname}/${generalUtils.trimFirstCharacter(path, '/')}`;
 };
 
 export const addCmsGatewayHostname = path => {
@@ -81,19 +89,26 @@ export const addCmsGatewayHostname = path => {
 
     if (hostname.includes('uat.')) {
         webHostname = 'https://web.uat.healthdatagateway.org';
+    } else if (hostname.includes('bau.')) {
+        webHostname = 'https://web.bau.hdruk.dev';
     } else if (hostname.includes('preprod.')) {
         webHostname = 'https://web.preprod.hdruk.dev';
+    } else if (hostname.includes('dev.hdruk.dev')) {
+        webHostname = 'https://web.dev.hdruk.dev';
     } else if (hostname.includes('.cloudshell.dev')) {
         webHostname = `https://web.${hostname.replace('web.', '')}`;
     } else if (hostname.includes('localhost')) {
         webHostname = 'http://localhost:3000';
     }
 
-    return `${webHostname}/${path}`;
+    return `${webHostname}/${generalUtils.trimFirstCharacter(path, '/')}`;
 };
 
 export const baseURL = _buildUrl('http');
 export const cmsURL = _buildUrl('cms');
-export const apiPath = `api/${process.env.REACT_APP_API_VERSION || 'v1'}`;
-export const apiURL = `${baseURL}/${apiPath}`;
-export const apiV2URL = `${baseURL}/api/v2`;
+
+export const apiPathV1 = 'api/v1';
+export const apiUrlV1 = `${baseURL}/${apiPathV1}`;
+
+export const apiPathV2 = 'api/v2';
+export const apiUrlV2 = `${baseURL}/${apiPathV2}`;

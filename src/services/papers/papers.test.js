@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL, apiV2URL } from '../../configs/url.config';
+import { apiUrlV1, apiUrlV2 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
-import service from './papers';
+import * as service from './papers';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the papers service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/papers`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV2}/papers`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the papers service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/papers/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/papers/1234`, {
                 option1: true,
             });
         });
@@ -54,7 +54,7 @@ describe('Given the papers service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/papers/edit/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/papers/edit/1234`, {
                 option1: true,
             });
         });
@@ -71,7 +71,7 @@ describe('Given the papers service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/papers/1234`,
+                `${apiUrlV1}/papers/1234`,
                 {
                     status: 'archive',
                 },
@@ -91,7 +91,7 @@ describe('Given the papers service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/papers/1234`,
+                `${apiUrlV1}/papers/1234`,
                 {
                     status: 'archive',
                 },
@@ -111,7 +111,7 @@ describe('Given the papers service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/papers/1234`,
+                `${apiUrlV1}/papers/1234`,
                 {
                     status: 'archive',
                 },
@@ -126,7 +126,7 @@ describe('Given the papers service', () => {
                 option1: true,
             });
 
-            expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/papers/1234`, {
+            expect(deleteRequest).toHaveBeenCalledWith(`${apiUrlV1}/papers/1234`, {
                 option1: true,
             });
         });

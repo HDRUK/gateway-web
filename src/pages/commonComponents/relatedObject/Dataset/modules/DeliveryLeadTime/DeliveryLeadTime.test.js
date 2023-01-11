@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen } from 'testUtils';
+import { testUtils } from '../../../../../../../test';
 import DeliveryLeadTime from './DeliveryLeadTime';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -12,7 +11,7 @@ let wrapper;
 describe('Given the DeliveryLeadTime component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<DeliveryLeadTime {...props} />);
+            wrapper = testUtils.render(<DeliveryLeadTime {...props} />);
         });
 
         it('should match the previous snapshot', async () => {
@@ -20,7 +19,7 @@ describe('Given the DeliveryLeadTime component', () => {
         });
 
         it('should display the correct lead time and label', () => {
-            expect(screen.getByTestId('deliveryLeadTime')).toHaveTextContent('Typical time to access: Variable');
+            expect(testUtils.screen.getByTestId('deliveryLeadTime')).toHaveTextContent('Typical time to access: Variable');
         });
     });
 });

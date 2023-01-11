@@ -1,9 +1,41 @@
 import _ from 'lodash';
 import removeMd from 'remove-markdown';
 import { format } from 'date-fns';
+import queryString from 'query-string';
+
 import { DISPLAY_DATE_STANDARD, DISPLAY_TIME_STANDARD } from '../configs/constants';
 
-export const isEditMode = (url = '') => {
+const trimFirstCharacter = (string, character) => {
+    if (string.substring(0, 1) !== character) return string;
+    return string.substring(1);
+};
+
+const stringifyQueryString = string => {
+    return queryString.stringify(string);
+};
+
+const parseQueryString = string => {
+    return queryString.parse(string);
+};
+
+const removeHTMLTags = (text, tags) => {
+    if (!text || typeof text !== 'string' || !tags) return '';
+
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+
+    doc.querySelectorAll('*').forEach(elm => {
+        if (elm.matches(tags)) {
+            elm.remove();
+        }
+        [...elm.attributes].forEach(attrib => {
+            elm.removeAttribute(attrib.name);
+        });
+    });
+
+    return doc.body.innerHTML.trim();
+};
+
+const isEditMode = (url = '') => {
     if (!_.isEmpty(url)) {
         const src = url.toLowerCase();
         if (src.includes('edit')) return true;
@@ -13,17 +45,17 @@ export const isEditMode = (url = '') => {
     return false;
 };
 
-export const toTitleCase = str => {
+const toTitleCase = str => {
     return str.replace(/\w\S*/g, txt => {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 };
 
-export const isPDFLink = link => {
+const isPDFLink = link => {
     return /\.pdf$/.test(link);
 };
 
-export const removeArrayItem = (arr, value) => {
+const removeArrayItem = (arr, value) => {
     const index = arr.indexOf(value);
     if (index > -1) {
         arr.splice(index, 1);
@@ -31,7 +63,7 @@ export const removeArrayItem = (arr, value) => {
     return arr;
 };
 
-export const stripMarkdown = (value = '', truncate = 0) => {
+const stripMarkdown = (value = '', truncate = 0) => {
     if (!_.isEmpty(value)) {
         if (truncate > 0) {
             value = value.substr(0, 255) + (value.length > 255 ? '...' : '');
@@ -41,7 +73,7 @@ export const stripMarkdown = (value = '', truncate = 0) => {
     return value;
 };
 
-export const dateFormats = (timestamp, formats = {}) => {
+const dateFormats = (timestamp, formats = {}) => {
     if (!timestamp) return {};
     const { dateFormat = DISPLAY_DATE_STANDARD, timeFormat = DISPLAY_TIME_STANDARD } = formats;
 
@@ -53,11 +85,11 @@ export const dateFormats = (timestamp, formats = {}) => {
     };
 };
 
-export const getParams = querystring => {
+const getParams = querystring => {
     return Object.fromEntries(new URLSearchParams(`${querystring}`));
 };
 
-export const flattenObject = (data, key) => {
+const flattenObject = (data, key) => {
     const flattened = [];
 
     if (data[key]) {
@@ -69,7 +101,7 @@ export const flattenObject = (data, key) => {
     return flattened;
 };
 
-export const replaceKey = (data, iteratee) => {
+const replaceKey = (data, iteratee) => {
     if (data) {
         const clonedData = [...data];
 
@@ -85,7 +117,7 @@ export const replaceKey = (data, iteratee) => {
     return data;
 };
 
-export const iterateDeep = (data, iteratee) => {
+const iterateDeep = (data, iteratee) => {
     const iterate = data => {
         if (Array.isArray(data)) {
             data.forEach(item => {
@@ -113,7 +145,7 @@ export const iterateDeep = (data, iteratee) => {
     return clonedData;
 };
 
-export const findAllByKey = (data, iteratee) => {
+const findAllByKey = (data, iteratee) => {
     const found = [];
 
     const findDeep = obj => {
@@ -137,7 +169,7 @@ export const findAllByKey = (data, iteratee) => {
     return found;
 };
 
-export const filterBranches = (filters, iteratee, children = 'children') => {
+const filterBranches = (filters, iteratee, children = 'children') => {
     const filteredNodes = [];
 
     const filter = (filters, parentNode) => {
@@ -173,7 +205,7 @@ export const filterBranches = (filters, iteratee, children = 'children') => {
     return filteredNodes;
 };
 
-export const diffObjects = (a, b) => {
+const diffObjects = (a, b) => {
     const compare = {
         ...a,
         ...b,
@@ -190,4 +222,25 @@ export const diffObjects = (a, b) => {
     return diff;
 };
 
-export const stripHtml = text => text.replace(/<\/?.+?>/gi, '');
+const stripHtml = text => text.replace(/<\/?.+?>/gi, '');
+
+export {
+    iterateDeep,
+    replaceKey,
+    flattenObject,
+    getParams,
+    dateFormats,
+    stripMarkdown,
+    removeArrayItem,
+    isPDFLink,
+    toTitleCase,
+    isEditMode,
+    removeHTMLTags,
+    findAllByKey,
+    filterBranches,
+    diffObjects,
+    stripHtml,
+    parseQueryString,
+    stringifyQueryString,
+    trimFirstCharacter,
+};

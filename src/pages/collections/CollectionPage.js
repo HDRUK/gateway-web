@@ -1,18 +1,18 @@
+import { createRef, useCallback, useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
 import { Col, Container, Pagination, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import ReactMarkdown from 'react-markdown';
 import 'react-tabs/style/react-tabs.css';
 import { Box } from 'hdruk-react-core';
-import { LayoutContent } from '../../components/Layout';
-import SearchControls from '../../components/SearchControls';
+
+import { generalUtils } from 'utils';
+import { LayoutContent, SearchControls, Alert, RenderMarkdown } from 'components';
+import { collectionsService } from 'services';
 import SVGIcon from '../../images/SVGIcon';
-import collectionsService from '../../services/collections';
 import googleAnalytics from '../../tracking';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
@@ -33,7 +33,6 @@ import PersonCollectionResults from './Components/PersonCollectionResults';
 import ToolCollectionResults from './Components/ToolCollectionResults';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import { MAXRESULTS } from './constants';
-import Alert from '../../components/Alert';
 
 export const CollectionPage = props => {
     const { t } = useTranslation();
@@ -59,7 +58,7 @@ export const CollectionPage = props => {
     const [sort, setSort] = useState('recentlyadded');
     const [discoursePostCount, setDiscoursePostCount] = useState(0);
     const [key, setKey] = useState('dataset');
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [showDrawer, setShowDrawer] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
@@ -78,7 +77,7 @@ export const CollectionPage = props => {
 
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setCollectionAdded(values.collectionAdded);
             setCollectionEdited(values.collectionEdited);
         }
@@ -186,7 +185,7 @@ export const CollectionPage = props => {
         }
     };
 
-    const handleSort = React.useCallback(({ value }, submitForm) => {
+    const handleSort = useCallback(({ value }, submitForm) => {
         submitForm();
 
         setSort(value);
@@ -194,7 +193,7 @@ export const CollectionPage = props => {
         googleAnalytics.recordEvent('Collections', `Sorted collection entities by ${value}`, 'Sort dropdown option changed');
     }, []);
 
-    const handleReset = React.useCallback(() => {
+    const handleReset = useCallback(() => {
         setSort('recentlyadded');
         setSearchString('');
 
@@ -204,7 +203,7 @@ export const CollectionPage = props => {
         });
     }, [key, objectData]);
 
-    const handleKeyDownEnter = React.useCallback(submitForm => {
+    const handleKeyDownEnter = useCallback(submitForm => {
         submitForm();
     }, []);
 
@@ -220,7 +219,7 @@ export const CollectionPage = props => {
         return [];
     };
 
-    const doCollectionsSearch = React.useCallback(
+    const doCollectionsSearch = useCallback(
         ({ search, sortBy }) => {
             const filteredCollectionItems = filterCollectionItems(objectData, search);
 
@@ -348,7 +347,7 @@ export const CollectionPage = props => {
                         </Row>
                         <Row>
                             <Col sm={12} lg={12} className='centerText'>
-                                <span className='black-28' data-test-id='collectionName'>
+                                <span className='black-28' data-testid='collectionName'>
                                     {collectionData.name}{' '}
                                 </span>
                             </Col>
@@ -398,8 +397,8 @@ export const CollectionPage = props => {
 
                         <Row className='pad-top-24'>
                             <Col sm={1} lg={1} />
-                            <Col sm={10} lg={10} data-test-id='collection-description' className='gray800-14 hdruk-section-body'>
-                                <ReactMarkdown source={collectionData.description} data-testid='collectionDescription' />
+                            <Col sm={10} lg={10} data-testid='collection-description' className='gray800-14 hdruk-section-body'>
+                                <RenderMarkdown source={collectionData.description} data-testid='collectionDescription' />
                             </Col>
                             <Col sm={1} lg={1} />
                         </Row>

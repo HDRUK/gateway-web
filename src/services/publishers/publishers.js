@@ -1,17 +1,17 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 
 import { getRequest, patchRequest, useMutationWithTranslations } from '../../utils/requests';
 
 const getPublisher = (_id, options) => {
-    return getRequest(`${apiURL}/publishers/${_id}`, options);
+    return getRequest(`${apiUrlV1}/publishers/${_id}`, options);
 };
 
 const patchModalContent = (_id, data, options) => {
-    return patchRequest(`${apiURL}/publishers/dataRequestModalContent/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/publishers/dataRequestModalContent/${_id}`, data, options);
 };
 
 const patchQuestionBank = (_id, data, options) => {
-    return patchRequest(`${apiURL}/publishers/${_id}/questionbank`, data, options);
+    return patchRequest(`${apiUrlV1}/publishers/${_id}/questionbank`, data, options);
 };
 
 const useGetPublisher = (requestOptions, mutateOptions) => {
@@ -55,7 +55,7 @@ const usePatchQuestionBank = (requestOptions, mutateOptions) => {
 };
 
 const patchPublisherDataUseWidget = (_id, data, options) => {
-    return patchRequest(`${apiURL}/publishers/${_id}/dataUseWidget`, data, options);
+    return patchRequest(`${apiUrlV1}/publishers/${_id}/dataUseWidget`, data, options);
 };
 
 const usePatchPublisherDataUseWidget = (requestOptions, mutateOptions) => {
@@ -73,7 +73,7 @@ const usePatchPublisherDataUseWidget = (requestOptions, mutateOptions) => {
     );
 };
 
-export default {
+export {
     getPublisher,
     patchModalContent,
     useGetPublisher,

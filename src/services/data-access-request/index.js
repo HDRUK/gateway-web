@@ -1,1 +1,1 @@
-export { default } from './data-access-request';
+export * from './data-access-request';

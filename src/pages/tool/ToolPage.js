@@ -1,20 +1,20 @@
+import { createRef, useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
 import { Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
 import Rating from 'react-rating';
 import 'react-tabs/style/react-tabs.css';
-import Alert from '../../components/Alert';
-import { LayoutContent } from '../../components/Layout';
+
+import { generalUtils } from 'utils';
+import { LayoutContent, Alert, RenderMarkdown } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as FullStarIconSvg } from '../../images/star.svg';
 import { ReactComponent as EmptyStarIconSvg } from '../../images/starempty.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -60,12 +60,12 @@ export const ToolDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
 
     // componentDidMount - on loading of tool detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setToolAdded(values.toolAdded);
             setToolEdited(values.toolEdited);
             setReviewAdded(values.reviewAdded);
@@ -355,7 +355,7 @@ export const ToolDetail = props => {
                             <div className='rectangle'>
                                 <Row>
                                     <Col className='line-height-normal'>
-                                        <span data-test-id='tool-name' className='black-16'>
+                                        <span data-testid='tool-name' className='black-16'>
                                             {toolData.name}
                                         </span>
                                     </Col>
@@ -431,8 +431,8 @@ export const ToolDetail = props => {
                                                         <Col
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
-                                                            data-test-id='tool-description'>
-                                                            <ReactMarkdown source={toolData.description} />
+                                                            data-testid='tool-description'>
+                                                            <RenderMarkdown source={toolData.description} />
                                                         </Col>
                                                     </Row>
                                                 </div>
@@ -448,7 +448,7 @@ export const ToolDetail = props => {
                                                         </Row>
                                                         <Row className='mt-3'>
                                                             <Col sm={12} className='gray800-14 hdruk-section-body'>
-                                                                <ReactMarkdown source={toolData.resultsInsights} />
+                                                                <RenderMarkdown source={toolData.resultsInsights} />
                                                             </Col>
                                                         </Row>
                                                     </div>
@@ -472,7 +472,7 @@ export const ToolDetail = props => {
                                                             <a
                                                                 href={toolData.link}
                                                                 rel='noopener noreferrer'
-                                                                data-test-id='tool-page-url'
+                                                                data-testid='tool-page-url'
                                                                 target='_blank'
                                                                 className='purple-14 text-break'>
                                                                 {toolData.link}
@@ -506,7 +506,7 @@ export const ToolDetail = props => {
                                                             <Col sm={2}>
                                                                 <span className='gray800-14'>Authors</span>
                                                             </Col>
-                                                            <Col sm={10} className='gray800-14 overflowWrap' data-test-id='tool-authors'>
+                                                            <Col sm={10} className='gray800-14 overflowWrap' data-testid='tool-authors'>
                                                                 {toolData.authorsNew}
                                                             </Col>
                                                         </Row>
@@ -532,7 +532,7 @@ export const ToolDetail = props => {
                                                         <Col sm={10} className='gray800-14'>
                                                             <a
                                                                 href={`/search?search=&tab=Tools&toolcategories=${toolData.categories.category}`}>
-                                                                <div data-test-id='tool-type' className='badge-tag'>
+                                                                <div data-testid='tool-type' className='badge-tag'>
                                                                     {toolData.categories.category}
                                                                 </div>
                                                             </a>
@@ -552,7 +552,7 @@ export const ToolDetail = props => {
                                                                               <div
                                                                                   className='badge-version'
                                                                                   key={i}
-                                                                                  data-test-id='tool-implementation'>
+                                                                                  data-testid='tool-implementation'>
                                                                                   <span>{obj.programmingLanguage}</span>
                                                                                   <span>{obj.version}</span>
                                                                               </div>

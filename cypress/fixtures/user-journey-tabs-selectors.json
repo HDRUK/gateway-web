@@ -1,0 +1,26 @@
+{
+    "journey_tools_tab": "#root > div.mainWrap > div > div:nth-child(2) > div > div.filters.filter-categories.row > div > nav > a:nth-child(2)",
+    "journey_data_uses_tab": "#root > div.mainWrap > div > div:nth-child(2) > div > div.filters.filter-categories.row > div > nav > a:nth-child(3)",
+    "journey_collections_tab": "#root > div.mainWrap > div > div:nth-child(2) > div > div.filters.filter-categories.row > div > nav > a:nth-child(4)",
+    "journey_courses_tab": "#root > div.mainWrap > div > div:nth-child(2) > div > div.filters.filter-categories.row > div > nav > a:nth-child(5)",
+    "journey_pages_tab": "#root > div.mainWrap > div > div:nth-child(2) > div > div.filters.filter-categories.row > div > nav > a:nth-child(6)",
+    "journey_people_tab": "#root > div.mainWrap > div > div:nth-child(2) > div > div.filters.filter-categories.row > div > nav > a:nth-child(7)",
+
+    "main_page_loaded_compare": "#root > div.mainWrap > div > div:nth-child(3) > div > div.col-lg-5.col-md-12.col-sm-12 > div",
+    "tools_tab_loaded_compare": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div > div:nth-child(1) > div > div > div:nth-child(2) > div.pad-top-16.col > div > div.ui-Box.css-1i8c2fc-Sn > div > div > span > span:nth-child(1)",
+    "data_uses_tab_loaded_compare": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div > div:nth-child(1) > div > div > div > div.pad-left-24.pad-right-24.pad-top-16.col > div.ui-Box.ui-Collapsable.css-1wzl2n1-Sn > div.ui-Box.css-1i8c2fc-Sn > div > span > span",
+    "collections_tab_loaded_compare": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div > div > div:nth-child(1) > div > div.flexCenter > div > div.collectionCardContent > div.noMargin.pad-bottom-4.row > a",
+    "courses_tab_loaded_compare": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div > div:nth-child(2) > div > div > div:nth-child(2) > div.pad-top-16.col-lg-12.col-sm-12 > div > div.ui-Box.css-1i8c2fc-Sn > div > div",
+    "pages_tab_loaded_compare": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div > div:nth-child(1) > div > div > div:nth-child(2) > div.pad-top-16.col-lg-12.col-sm-12 > div > div.ui-Box.css-1i8c2fc-Sn > div > div",
+    "people_tab_loaded_compare": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div > div:nth-child(1) > div > div > div > div.iconHolder.noPadding.widthAuto.col > div > span",
+
+    "dataset_link_compare": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div > div:nth-child(1)",
+
+    "dataset_link_container": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12",
+    "tool_link_container": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12",
+    "data_uses_link_container": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12",
+    "collection_link_container": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12",
+    "course_link_container": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div",
+    "page_link_container": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div",
+    "people_link_container": "#root > div.mainWrap > div > div:nth-child(4) > div > div.mt-2.mb-5.col-lg-9.col-md-12.col-sm-12 > div"
+}

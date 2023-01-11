@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import moment from 'moment';
 
 const Message = ({ messageDescription, createdBy, createdDate }) => {

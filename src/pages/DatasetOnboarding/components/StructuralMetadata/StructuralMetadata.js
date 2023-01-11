@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { isEmpty, some, find } from 'lodash';
 import axios from 'axios';
 import readXlsxFile from 'read-excel-file';
 import { Link } from 'react-router-dom';
 import { Row, Col, Alert, Table } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
+
+import { Icon } from 'components';
 import { ReactComponent as UploadSVG } from '../../../../images/upload.svg';
 import { baseURL } from '../../../../configs/url.config';
+
 import './StructuralMetadata.scss';
-import { Button } from 'hdruk-react-core';
-import Icon from '../../../../components/Icon';
 
 const StructuralMetadata = ({
     onStructuralMetaDataUpdate,
@@ -151,7 +153,7 @@ const StructuralMetadata = ({
         onStructuralMetaDataUpdate(newStructuralMetaData, newStructuralMetaDataErrors);
     }, [newStructuralMetaData, newStructuralMetaDataErrors]);
 
-    const hiddenFileInput = React.useRef(null);
+    const hiddenFileInput = useRef(null);
 
     const handleClick = () => {
         hiddenFileInput.current.click();
@@ -162,14 +164,14 @@ const StructuralMetadata = ({
             if (errors.error === 'required') {
                 return (
                     <>
-                        Error in row {errors.row}: "{errors.column}" is empty and should be "True" or "False"
+                        Error in row {errors.row}: "{errors.column}" is empty and should be TRUE or FALSE
                         <br />
                     </>
                 );
             }
             return (
                 <>
-                    Error in row {errors.row}: "{errors.column}" is "{errors.value}" and should be "True" or "False"
+                    Error in row {errors.row}: "{errors.column}" is "{errors.value}" and should be TRUE or FALSE
                     <br />
                 </>
             );

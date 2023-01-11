@@ -1,12 +1,12 @@
-import { apiURL, apiV2URL } from '../../configs/url.config';
+import { apiUrlV1, apiUrlV2 } from '../../configs/url.config';
 import { getRequest, useMutationWithTranslations } from '../../utils/requests';
 
 const getDatasets = options => {
-    return getRequest(`${apiV2URL}/datasets`, options);
+    return getRequest(`${apiUrlV2}/datasets`, options);
 };
 
 const getDataset = (_id, options) => {
-    return getRequest(`${apiURL}/datasets/${_id}`, options);
+    return getRequest(`${apiUrlV1}/datasets/${_id}`, options);
 };
 
 const useGetDatasets = (requestOptions, mutateOptions) => {
@@ -30,9 +30,4 @@ const useGetDataset = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
-    getDatasets,
-    getDataset,
-    useGetDatasets,
-    useGetDataset,
-};
+export { getDatasets, getDataset, useGetDatasets, useGetDataset };

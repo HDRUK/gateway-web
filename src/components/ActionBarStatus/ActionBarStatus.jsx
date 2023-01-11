@@ -1,6 +1,5 @@
-/** @jsx jsx */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
 import PropTypes from 'prop-types';
 import { Box } from 'hdruk-react-core';
 import { addCommonPropTypes } from '../../configs/propTypes';

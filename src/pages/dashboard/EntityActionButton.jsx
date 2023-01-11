@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Button, Modal, Dropdown } from 'react-bootstrap';
 import './Dashboard.scss';
 import _ from 'lodash';

@@ -1,4 +1,3 @@
-import React from 'react';
 import WorkflowHeader from './WorkflowHeader';
 import WorkflowStep from './WorkflowStep';
 

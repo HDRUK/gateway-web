@@ -1,4 +1,3 @@
-import React from 'react';
 import _ from 'lodash';
 import RelatedObject from '../../../commonComponents/relatedObject/RelatedObject';
 

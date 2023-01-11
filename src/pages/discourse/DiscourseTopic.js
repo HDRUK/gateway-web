@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import { Button, Modal, Row, Col } from 'react-bootstrap';
 import DiscoursePost from './DiscoursePost';
 import DiscourseAddPost from './DiscourseAddPost';

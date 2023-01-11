@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react';
 import * as formik from 'formik';
-import React from 'react';
 import SearchControls from '.';
 
 const mockOnSubmit = jest.fn();

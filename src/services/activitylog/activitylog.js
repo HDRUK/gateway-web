@@ -1,8 +1,8 @@
-import { apiV2URL } from '../../configs/url.config';
+import { apiUrlV2 } from '../../configs/url.config';
 import { postRequest, useMutationWithTranslations } from '../../utils/requests';
 
 const postActivityLog = (data, options) => {
-    return postRequest(`${apiV2URL}/activitylog`, data, options);
+    return postRequest(`${apiUrlV2}/activitylog`, data, options);
 };
 
 const usePostActivityLog = (requestOptions, mutateOptions) => {
@@ -12,7 +12,4 @@ const usePostActivityLog = (requestOptions, mutateOptions) => {
     });
 };
 
-export default {
-    postActivityLog,
-    usePostActivityLog,
-};
+export { postActivityLog, usePostActivityLog };

@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 
 export const mockGetPublisher = {
     success: true,
@@ -685,7 +685,7 @@ export const mockPostDataset = {
     },
 };
 
-export const mswGetPublisher = rest.get(`${apiURL}/dataset-onboarding/publisher/applicant`, (req, res, ctx) => {
+export const mswGetPublisher = rest.get(`${apiUrlV1}/dataset-onboarding/publisher/applicant`, (req, res, ctx) => {
     const search = req.url.searchParams.get('search');
     const sortBy = req.url.searchParams.get('sortBy');
 
@@ -705,11 +705,11 @@ export const mswGetPublisher = rest.get(`${apiURL}/dataset-onboarding/publisher/
     return res(ctx.status(200), ctx.json(mockGetPublisher));
 });
 
-export const mswGetPublisher404 = rest.get(`${apiURL}/dataset-onboarding/publisher/unknown`, (req, res, ctx) => {
+export const mswGetPublisher404 = rest.get(`${apiUrlV1}/dataset-onboarding/publisher/unknown`, (req, res, ctx) => {
     return res(ctx.status(404));
 });
 
-export const mswPostDataset = rest.post(`${apiURL}/dataset-onboarding`, (req, res, ctx) => {
+export const mswPostDataset = rest.post(`${apiUrlV1}/dataset-onboarding`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockPostDataset));
 });
 

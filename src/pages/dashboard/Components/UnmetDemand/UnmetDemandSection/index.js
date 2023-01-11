@@ -1,4 +1,3 @@
-import React from 'react';
 import UnmetDemand from '../../../DARComponents/UnmetDemand';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import featureEnabled from '../../../../../utils/featureSwitches/unmetDemands';
@@ -28,7 +27,7 @@ const UnmetDemandSection = ({ handleSelect, key, data, renderNoResults }) => {
 
                     <Row className='tabsBackground'>
                         <Col sm={12} lg={12}>
-                            <Tabs className='dataAccessTabs gray700-13' data-test-id='unmet-tabs' activeKey={key} onSelect={handleSelect}>
+                            <Tabs className='dataAccessTabs gray700-13' data-testid='unmet-tabs' activeKey={key} onSelect={handleSelect}>
                                 <Tab eventKey='Datasets' title={'Datasets'}></Tab>
                                 <Tab eventKey='Tools' title={'Tools'}></Tab>
                                 <Tab eventKey='Projects' title={'Projects'}></Tab>

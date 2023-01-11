@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 
-class MessageNotFound extends React.Component {
+class MessageNotFound extends Component {
     handleClick = () => {
         window.location.reload();
     };

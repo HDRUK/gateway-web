@@ -2,21 +2,23 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
-import React, { Component, Fragment } from 'react';
+import { createRef, Component, Fragment } from 'react';
 import { Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import ReactMarkdown from 'react-markdown';
+
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
-import Alert from '../../components/Alert';
+
+import { generalUtils } from 'utils';
+import { Alert, RenderMarkdown } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import googleAnalytics from '../../tracking';
 import DarHelper from '../../utils/DarHelper.util';
 import DarValidation from '../../utils/DarValidation.util';
 import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -66,7 +68,7 @@ class DataAccessRequest extends Component {
         this.onFormUpdate = this.onFormUpdate.bind(this);
         this.onHandleDataSetChange = this.onHandleDataSetChange.bind(this);
         this.onHandleActionTabChange = this.onHandleActionTabChange.bind(this);
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
 
         this.state = {
             _id: '',
@@ -201,7 +203,7 @@ class DataAccessRequest extends Component {
             //	b) Message Panel - route will contain only the 'publisherId' with historic state passed from the message panel component which includes datasetId(s)
             // 	c/d) Data Access Request User Area / Direct Link - route will contain a data access request 'accessId' which specifically links all associated data to one application
             const { datasetId, accessId, publisherId } = this.props.match.params;
-            const { version } = queryString.parse(window.location.search);
+            const { version } = generalUtils.parseQueryString(window.location.search);
             let countedQuestionAnswers = {},
                 totalQuestions = '';
 
@@ -2107,7 +2109,7 @@ class DataAccessRequest extends Component {
                                           item.active ? (
                                               <Fragment key={`pageContent-${idx}`}>
                                                   <p className='black-20-semibold mb-0'>{item.active ? item.title : ''}</p>
-                                                  <ReactMarkdown className='gray800-14' source={item.description} />
+                                                  <RenderMarkdown className='gray800-14' source={item.description} />
                                               </Fragment>
                                           ) : (
                                               ''

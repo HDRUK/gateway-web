@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+
+import { authService, personService } from 'services';
 import { AuthProvider } from './context/AuthContext';
-import authService from './services/auth';
-import personService from './services/person';
 import Loading from './pages/commonComponents/Loading';
 import { DEFAULT_USER_STATE } from './configs/constants';
 

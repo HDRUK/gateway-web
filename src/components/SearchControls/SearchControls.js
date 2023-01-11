@@ -1,4 +1,3 @@
-import React from 'react';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { Box } from 'hdruk-react-core';

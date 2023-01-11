@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
 import TextareaAutosize from 'react-textarea-autosize';

@@ -1,11 +1,11 @@
-import React from 'react';
+import { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { ReactComponent as TableSvg } from '../../../images/table.svg';
 import { ReactComponent as ChevronRightSvg } from '../../../images/chevron-right.svg';
 import { ReactComponent as GoldStar } from '../../../images/cd-star.svg';
 import '../Dataset.scss';
 
-class TechnicalMetadata extends React.Component {
+class TechnicalMetadata extends Component {
     state = {
         technicalMetadata: null,
         index: null,

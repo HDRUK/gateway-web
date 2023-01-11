@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiV2URL } from '../../configs/url.config';
+import { apiUrlV2 } from '../../configs/url.config';
 import { getRequest, patchRequest, postRequest } from '../../utils/requests';
-import service from './questionbank';
+import * as service from './questionbank';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the data-access-request service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/questionbank/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV2}/questionbank/1234`, {
                 option1: true,
             });
         });
@@ -47,7 +47,7 @@ describe('Given the data-access-request service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiV2URL}/questionbank/1234`,
+                `${apiUrlV2}/questionbank/1234`,
                 {
                     status: 'archive',
                 },
@@ -60,7 +60,7 @@ describe('Given the data-access-request service', () => {
         it('Then calls patchRequest with the correct arguments', async () => {
             await service.patchClearAll('1234', { option1: true });
 
-            expect(patchRequest).toHaveBeenCalledWith(`${apiV2URL}/questionbank/1234`, { option1: true });
+            expect(patchRequest).toHaveBeenCalledWith(`${apiUrlV2}/questionbank/1234`, { option1: true });
         });
     });
 
@@ -68,7 +68,7 @@ describe('Given the data-access-request service', () => {
         it('Then calls patchRequest with the correct arguments', async () => {
             await service.patchClearSection('1234', 'safepeople', { option1: true });
 
-            expect(patchRequest).toHaveBeenCalledWith(`${apiV2URL}/questionbank/1234?page=safepeople`, { option1: true });
+            expect(patchRequest).toHaveBeenCalledWith(`${apiUrlV2}/questionbank/1234?page=safepeople`, { option1: true });
         });
     });
 

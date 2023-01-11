@@ -1,1 +1,1 @@
-export { default } from './data-use-registers';
+export * from './data-use-registers';

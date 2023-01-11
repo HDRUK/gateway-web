@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { apiV2URL } from '../../configs/url.config';
+import { apiUrlV2 } from '../../configs/url.config';
 
 export const mockDatasetActivityLog = {
     success: true,
@@ -47,7 +47,7 @@ export const mockDatasetActivityLog = {
     ],
 };
 
-export const mswPostDatasetActivityLog = rest.post(`${apiV2URL}/activitylog`, (req, res, ctx) => {
+export const mswPostDatasetActivityLog = rest.post(`${apiUrlV2}/activitylog`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockDatasetActivityLog));
 });
 

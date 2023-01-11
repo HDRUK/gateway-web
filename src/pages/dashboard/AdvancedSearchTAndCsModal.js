@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -52,7 +52,7 @@ const AdvancedSearchTAndCsModal = ({ open, close, updateUserAcceptedAdvancedSear
                                 Cancel
                             </Button>
                             <Button
-                                data-test-id='agree-to-terms'
+                                data-testid='agree-to-terms'
                                 type='submit'
                                 onClick={() => {
                                     const elmnt = document.getElementById('accept-terms');

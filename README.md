@@ -54,13 +54,6 @@ npm start
 
 ## .env
 
-Skip preflight check needs to be true due to conflict with babel loader versions between storybook and react-scripts. Please create your own .env file with the following content:
+Skip preflight check needs to be true due to conflict with babel loader versions between storybook and react-scripts.
 
-```
-SKIP_PREFLIGHT_CHECK=true
-REACT_APP_API_VERSION=v1
-NODE_ENV=production
-REACT_APP_HOTJAR_CODE=2685642
-REACT_APP_HOTJAR_CODE_VERSION=6
-REACT_APP_METADATA_CATALOG=https://modelcatalogue.cs.ox.ac.uk/hdruk_live
-```
+Please create your own .env file with the content from .env.example

@@ -3,18 +3,20 @@ import '@testing-library/jest-dom';
 import * as rtl from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import Enzyme, { mount, render, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import React, { Suspense } from 'react';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { Suspense } from 'react';
+import * as React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'regenerator-runtime/runtime';
+import { DEFAULT_THEME } from 'hdruk-react-core';
+import { merge } from 'lodash';
+
 import { AuthProvider } from './context/AuthContext';
 import i18n from './i18n';
 import { mockUser } from './services/auth/mockData';
 import { theme } from './configs/theme';
 import 'jest-date-mock';
-import { DEFAULT_THEME } from 'hdruk-react-core';
-import { merge } from 'lodash';
 import { CmsProvider } from './context/CmsContext';
 
 Enzyme.configure({

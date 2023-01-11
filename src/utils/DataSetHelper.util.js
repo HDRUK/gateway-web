@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-let showLoginPanel = (window, title, contactPoint) => {
+const showLoginPanel = (window, title) => {
     document.getElementById('myModal').style.display = 'block';
     document.getElementById('loginWayFinder').style.display = 'none';
     document.getElementById('loginButtons').style.display = 'block';
@@ -36,14 +36,14 @@ const isArchived = dataset => {
 };
 
 const getPublisherID = (userState, team) => {
-    let { teams } = userState;
-    let foundAdmin = teams.filter(x => x.type === team);
+    const { teams } = userState;
+    const foundAdmin = teams.filter(x => x.type === team);
 
     if (!_.isEmpty(foundAdmin)) {
         return 'admin';
     }
 
-    let foundTeam = teams.filter(x => x._id === team);
+    const foundTeam = teams.filter(x => x._id === team);
     if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
         return ['applicant'];
     }
@@ -52,7 +52,7 @@ const getPublisherID = (userState, team) => {
 };
 
 export default {
-    showLoginPanel: showLoginPanel,
+    showLoginPanel,
     isNotActive,
     isInReview,
     isRejected,

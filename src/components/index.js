@@ -13,11 +13,15 @@ import FileSelector from './FileSelector';
 import Icon from './Icon';
 import IconButton from './IconButton';
 import Input from './Input';
-import { LayoutContent } from './Layout';
+import LayoutContent from './Layout';
 import LayoutBox from './LayoutBox';
+import Link from './Link';
 import ListInfo from './ListInfo';
 import Loading from './Loading';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from './Modal';
+import NotificationBadge from './NotificationBadge';
 import QualityScore from './QualityScore';
+import RenderMarkdown from './RenderMarkdown';
 import SearchControls from './SearchControls';
 import SearchInput from './SearchInput';
 import SortDropdown from './SortDropdown';
@@ -47,8 +51,15 @@ export {
     Input,
     LayoutContent,
     LayoutBox,
+    Link,
     ListInfo,
     Loading,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    NotificationBadge,
+    RenderMarkdown,
     SearchControls,
     SearchInput,
     SortDropdown,

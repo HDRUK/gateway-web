@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL, apiV2URL } from '../../configs/url.config';
+import { apiUrlV1, apiUrlV2 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
-import service from './tools';
+import * as service from './tools';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the tools service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiV2URL}/tools`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV2}/tools`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the tools service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/tools/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/tools/1234`, {
                 option1: true,
             });
         });
@@ -54,7 +54,7 @@ describe('Given the tools service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/tools/edit/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/tools/edit/1234`, {
                 option1: true,
             });
         });
@@ -66,7 +66,7 @@ describe('Given the tools service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/tools/project/tag/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/tools/project/tag/1234`, {
                 option1: true,
             });
         });
@@ -83,7 +83,7 @@ describe('Given the tools service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/tools/1234`,
+                `${apiUrlV1}/tools/1234`,
                 {
                     status: 'archive',
                 },
@@ -102,7 +102,7 @@ describe('Given the tools service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/tools/review/add`,
+                `${apiUrlV1}/tools/review/add`,
                 {
                     status: 'archive',
                 },
@@ -121,7 +121,7 @@ describe('Given the tools service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/tools/reply`,
+                `${apiUrlV1}/tools/reply`,
                 {
                     status: 'archive',
                 },
@@ -141,7 +141,7 @@ describe('Given the tools service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/tools/1234`,
+                `${apiUrlV1}/tools/1234`,
                 {
                     status: 'archive',
                 },
@@ -160,7 +160,7 @@ describe('Given the tools service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/tools/review/approve`,
+                `${apiUrlV1}/tools/review/approve`,
                 {
                     status: 'archive',
                 },
@@ -180,7 +180,7 @@ describe('Given the tools service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/tools/1234`,
+                `${apiUrlV1}/tools/1234`,
                 {
                     status: 'archive',
                 },
@@ -195,7 +195,7 @@ describe('Given the tools service', () => {
                 option1: true,
             });
 
-            expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/tools/1234`, {
+            expect(deleteRequest).toHaveBeenCalledWith(`${apiUrlV1}/tools/1234`, {
                 option1: true,
             });
         });

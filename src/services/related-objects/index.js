@@ -1,1 +1,1 @@
-export { default } from './related-objects';
+export * from './related-objects';

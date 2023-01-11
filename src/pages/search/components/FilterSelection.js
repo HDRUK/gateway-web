@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Caption, Box, Icon, Button } from 'hdruk-react-core';
 import FilterChip from './FilterChip';
 import { FilterCount } from './FilterCount';

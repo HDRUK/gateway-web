@@ -1,6 +1,5 @@
 import { render, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import React from 'react';
 import SearchResultsInfo from './SearchResultsInfo';
 import { server } from '../../../services/mockServer';
 

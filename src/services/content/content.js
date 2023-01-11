@@ -20,7 +20,4 @@ const useGetNon5SafesModalContentRequest = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
-    getNon5SafesModalContentRequest,
-    useGetNon5SafesModalContentRequest,
-};
+export { getNon5SafesModalContentRequest, useGetNon5SafesModalContentRequest };
