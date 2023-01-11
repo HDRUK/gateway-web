@@ -36,7 +36,6 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
         { notificationType: 'dataAccessRequest', optIn: false, subscribedEmails: [{ value: '', error: '' }], message: 'Test message' },
     ]);
     const [isTeamManager, setIsTeamManager] = useState(false);
-    const history = useHistory();
 
     useEffect(() => {
         if (!teamId || !userState) return;
@@ -165,12 +164,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
     };
 
     useEffect(() => {
-        // check if team exists, if not redirect
-        if (isEmpty(teamId)) {
-            history.push({ pathname: `/account`, search: `?tab=dashboard` });
-        } else {
-            localStorage.setItem('HDR_TEAM', teamId);
-        }
+        if (!teamId) return;
 
         // TODO: GAT-1510:019
         if (!authUtils.isTeamAdminNotManager(teamId, userState)) {

@@ -1,5 +1,4 @@
-import { render, fireEvent, screen, waitFor, within, cleanup } from 'testUtils';
-import { mocks } from '../../../test';
+import { mocks, testUtils } from '../../../test';
 import { server } from '../../services/mockServer';
 import AccountTeamMembers from './AccountTeamMembers';
 import * as Auth from '../../context/AuthContext';
@@ -33,11 +32,11 @@ describe('Given the AccountTeamMembers component', () => {
                 userState: mocks.userState.mockUserStateNonManager,
             });
 
-            wrapper = render(<AccountTeamMembers {...props} />);
+            wrapper = testUtils.render(<AccountTeamMembers {...props} />);
         });
 
         afterEach(() => {
-            cleanup();
+            testUtils.cleanup();
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -45,21 +44,21 @@ describe('Given the AccountTeamMembers component', () => {
         });
 
         it('Then shows a loader', async () => {
-            expect(screen.getByText('Loading...')).toMatchSnapshot();
+            expect(testUtils.screen.getByText('Loading...')).toMatchSnapshot();
         });
 
         it('Then matches the previous snapshot', async () => {
-            await waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
             expect(wrapper.container).toMatchSnapshot();
         });
 
         it('Then has the correct headings', async () => {
-            await waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
-            headers = screen.getAllByRole('rowgroup');
-            const row = within(headers[0]).getByRole('row');
-            const cells = within(row).getAllByRole('columnheader');
+            headers = testUtils.screen.getAllByRole('rowgroup');
+            const row = testUtils.within(headers[0]).getByRole('row');
+            const cells = testUtils.within(row).getAllByRole('columnheader');
 
             expect(cells[0].textContent).toEqual('Name');
             expect(cells[1].textContent).toEqual('Team Admin');
@@ -68,25 +67,25 @@ describe('Given the AccountTeamMembers component', () => {
         });
 
         it('Then has the correct first row', async () => {
-            await waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
-            headers = screen.getAllByRole('rowgroup');
-            const rows = within(headers[1]).getAllByRole('row');
-            const cells = within(rows[0]).getAllByRole('cell');
+            headers = testUtils.screen.getAllByRole('rowgroup');
+            const rows = testUtils.within(headers[1]).getAllByRole('row');
+            const cells = testUtils.within(rows[0]).getAllByRole('cell');
 
-            expect(within(cells[0]).getByRole('link').textContent).toEqual('John Smith');
-            expect(within(cells[0]).getByText('HDR UK')).toBeTruthy();
+            expect(testUtils.within(cells[0]).getByRole('link').textContent).toEqual('John Smith');
+            expect(testUtils.within(cells[0]).getByText('HDR UK')).toBeTruthy();
         });
 
         it('Then has the correct second row', async () => {
-            await waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
-            headers = screen.getAllByRole('rowgroup');
-            const rows = within(headers[1]).getAllByRole('row');
-            const cells = within(rows[1]).getAllByRole('cell');
+            headers = testUtils.screen.getAllByRole('rowgroup');
+            const rows = testUtils.within(headers[1]).getAllByRole('row');
+            const cells = testUtils.within(rows[1]).getAllByRole('cell');
 
-            expect(within(cells[0]).getByRole('link').textContent).toEqual('Jane Doe');
-            expect(within(cells[0]).getByText('Google')).toBeTruthy();
+            expect(testUtils.within(cells[0]).getByRole('link').textContent).toEqual('Jane Doe');
+            expect(testUtils.within(cells[0]).getByText('Google')).toBeTruthy();
         });
     });
 
@@ -96,23 +95,23 @@ describe('Given the AccountTeamMembers component', () => {
                 userState: mocks.userState.mockUserStateManager,
             });
 
-            render(<AccountTeamMembers {...props} />);
+            testUtils.render(<AccountTeamMembers {...props} />);
 
-            await waitFor(() => {
-                screen.getByText(/Add a new member/);
+            await testUtils.waitFor(() => {
+                testUtils.screen.getByText(/Add a new member/);
             });
 
-            const addMembersButton = screen.getByText(/Add a new member/);
+            const addMembersButton = testUtils.screen.getByText(/Add a new member/);
 
-            fireEvent.click(addMembersButton);
+            testUtils.fireEvent.click(addMembersButton);
         });
 
         afterEach(() => {
-            cleanup();
+            testUtils.cleanup();
         });
 
         it('Then modal is displayed', () => {
-            expect(screen.getByText('Add members to your team')).toBeInTheDocument();
+            expect(testUtils.screen.getByText('Add members to your team')).toBeInTheDocument();
         });
     });
 
@@ -122,36 +121,36 @@ describe('Given the AccountTeamMembers component', () => {
                 userState: mocks.userState.mockUserStateManager,
             });
 
-            render(<AccountTeamMembers {...props} />);
+            testUtils.render(<AccountTeamMembers {...props} />);
 
-            await waitFor(() => {
-                screen.getByText(/Add a new member/);
+            await testUtils.waitFor(() => {
+                testUtils.screen.getByText(/Add a new member/);
             });
 
-            const addMembersButton = screen.getByText(/Add a new member/);
+            const addMembersButton = testUtils.screen.getByText(/Add a new member/);
 
-            fireEvent.click(addMembersButton);
+            testUtils.fireEvent.click(addMembersButton);
         });
 
         afterEach(() => {
-            cleanup();
+            testUtils.cleanup();
         });
 
         describe('And add member is clicked', () => {
             it('Then has a new row', async () => {
-                await waitFor(() => {
-                    screen.getByText('Add members');
+                await testUtils.waitFor(() => {
+                    testUtils.screen.getByText('Add members');
                 });
 
-                const addMemberButton = screen.getByText('Add members');
+                const addMemberButton = testUtils.screen.getByText('Add members');
 
-                fireEvent.click(addMemberButton);
+                testUtils.fireEvent.click(addMemberButton);
 
-                const rows = within(headers[1]).getAllByRole('row');
-                const cells = within(rows[0]).getAllByRole('cell');
+                const rows = testUtils.within(headers[1]).getAllByRole('row');
+                const cells = testUtils.within(rows[0]).getAllByRole('cell');
 
-                expect(within(cells[0]).getByRole('link').textContent).toEqual('John Smith');
-                expect(within(cells[0]).getByText('HDR UK')).toBeTruthy();
+                expect(testUtils.within(cells[0]).getByRole('link').textContent).toEqual('John Smith');
+                expect(testUtils.within(cells[0]).getByText('HDR UK')).toBeTruthy();
             });
         });
 
@@ -159,12 +158,12 @@ describe('Given the AccountTeamMembers component', () => {
             let teamAdminCheckbox;
 
             beforeAll(() => {
-                const rows = within(headers[1]).getAllByRole('row');
-                const cells = within(rows[0]).getAllByRole('cell');
+                const rows = testUtils.within(headers[1]).getAllByRole('row');
+                const cells = testUtils.within(rows[0]).getAllByRole('cell');
 
-                teamAdminCheckbox = within(cells[1]).getByLabelText('Admin');
+                teamAdminCheckbox = testUtils.within(cells[1]).getByLabelText('Admin');
 
-                fireEvent.click(teamAdminCheckbox);
+                testUtils.fireEvent.click(teamAdminCheckbox);
             });
 
             it('Then checks the checkbox', () => {
@@ -176,16 +175,16 @@ describe('Given the AccountTeamMembers component', () => {
             let cell;
 
             beforeAll(() => {
-                const rows = within(headers[1]).getAllByRole('row');
-                const cells = within(rows[0]).getAllByRole('cell');
+                const rows = testUtils.within(headers[1]).getAllByRole('row');
+                const cells = testUtils.within(rows[0]).getAllByRole('cell');
 
-                cell = within(cells[2]);
+                cell = testUtils.within(cells[2]);
             });
 
             it('Then checks the manager checkbox', () => {
                 const checkbox = cell.getByLabelText('Manager');
 
-                fireEvent.click(checkbox);
+                testUtils.fireEvent.click(checkbox);
 
                 expect(checkbox.checked).toBeTruthy();
             });
@@ -193,7 +192,7 @@ describe('Given the AccountTeamMembers component', () => {
             it('Then checks the reviewer checkbox', () => {
                 const checkbox = cell.getByLabelText('Reviewer');
 
-                fireEvent.click(checkbox);
+                testUtils.fireEvent.click(checkbox);
 
                 expect(checkbox.checked).toBeTruthy();
             });
@@ -203,16 +202,16 @@ describe('Given the AccountTeamMembers component', () => {
             let cell;
 
             beforeAll(() => {
-                const rows = within(headers[1]).getAllByRole('row');
-                const cells = within(rows[0]).getAllByRole('cell');
+                const rows = testUtils.within(headers[1]).getAllByRole('row');
+                const cells = testUtils.within(rows[0]).getAllByRole('cell');
 
-                cell = within(cells[3]);
+                cell = testUtils.within(cells[3]);
             });
 
             it('Then checks the manager checkbox', () => {
                 const checkbox = cell.getByLabelText('Manager');
 
-                fireEvent.click(checkbox);
+                testUtils.fireEvent.click(checkbox);
 
                 expect(checkbox).toBeTruthy();
             });
@@ -220,7 +219,7 @@ describe('Given the AccountTeamMembers component', () => {
             it('Then checks the editor checkbox', () => {
                 const checkbox = cell.getByLabelText('Editor');
 
-                fireEvent.click(checkbox);
+                testUtils.fireEvent.click(checkbox);
 
                 expect(checkbox.checked).toBeTruthy();
             });

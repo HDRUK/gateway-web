@@ -1,9 +1,9 @@
-import { render } from 'testUtils';
+import { testUtils } from '../../../test';
 import AccountTeamMembersModal from './AccountTeamMembersModal';
 
 describe('AccountTeamMembersModal', () => {
     it('Then matches the previous snapshot', () => {
-        const wrapper = render(<AccountTeamMembersModal onClose={jest.fn()} isOpen teamId='1234' onMemberAdded={jest.fn()} />);
+        const wrapper = testUtils.render(<AccountTeamMembersModal onClose={jest.fn()} isOpen teamId='1234' onMemberAdded={jest.fn()} />);
 
         expect(wrapper.container).toMatchSnapshot();
     });

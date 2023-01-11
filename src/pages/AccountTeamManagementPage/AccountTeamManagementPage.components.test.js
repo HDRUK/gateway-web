@@ -1,4 +1,3 @@
-import { screen, render, cleanup, waitFor } from 'testUtils';
 import '@testing-library/jest-dom/extend-expect';
 import {
     MemberNotifications,
@@ -10,7 +9,7 @@ import {
     GeneratedAlerts,
     LoaderRow,
 } from './AccountTeamManagementPage.components';
-import { mocks } from '../../../test';
+import { mocks, testUtils } from '../../../test';
 import * as Auth from '../../context/AuthContext';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
@@ -22,7 +21,7 @@ describe('AccountTeamManagement components', () => {
         });
     });
     afterEach(() => {
-        cleanup();
+        testUtils.cleanup();
     });
     describe('MemberNotifications', () => {
         const memberNotifications = [{ optIn: true, notificationType: 'notifictionType1' }];
@@ -30,7 +29,7 @@ describe('AccountTeamManagement components', () => {
         const togglePersonalNotifications = jest.fn();
 
         it('should not render component if there are no member notifications', () => {
-            render(
+            testUtils.render(
                 <MemberNotifications
                     togglePersonalNotifications={togglePersonalNotifications}
                     memberNotifications={[]}
@@ -39,10 +38,10 @@ describe('AccountTeamManagement components', () => {
                 />
             );
 
-            expect(screen.queryByTestId('MemberNotifications')).not.toBeInTheDocument();
+            expect(testUtils.screen.queryByTestId('MemberNotifications')).not.toBeInTheDocument();
         });
         it('should render component if there are no notifications', () => {
-            render(
+            testUtils.render(
                 <MemberNotifications
                     togglePersonalNotifications={togglePersonalNotifications}
                     memberNotifications={memberNotifications}
@@ -51,7 +50,7 @@ describe('AccountTeamManagement components', () => {
                 />
             );
 
-            expect(screen.getByTestId('MemberNotifications')).toBeInTheDocument();
+            expect(testUtils.screen.getByTestId('MemberNotifications')).toBeInTheDocument();
         });
     });
 
@@ -69,7 +68,7 @@ describe('AccountTeamManagement components', () => {
         const handleRemoveClick = jest.fn();
         const handleAddClick = jest.fn();
         it('should not render component if there are no member notifications', () => {
-            render(
+            testUtils.render(
                 <TeamNotifications
                     teamGatewayNotifications={[]}
                     teamId={teamId}
@@ -80,10 +79,10 @@ describe('AccountTeamManagement components', () => {
                     userState={mocks.userState.mockUserStateManager}
                 />
             );
-            expect(screen.queryByTestId('TeamNotifications')).not.toBeInTheDocument();
+            expect(testUtils.screen.queryByTestId('TeamNotifications')).not.toBeInTheDocument();
         });
         it('should render component if there are no member notifications', () => {
-            render(
+            testUtils.render(
                 <TeamNotifications
                     teamGatewayNotifications={teamGatewayNotifications}
                     teamId={teamId}
@@ -94,7 +93,7 @@ describe('AccountTeamManagement components', () => {
                     userState={mocks.userState.mockUserStateManager}
                 />
             );
-            expect(screen.getByTestId('TeamNotifications')).toBeInTheDocument();
+            expect(testUtils.screen.getByTestId('TeamNotifications')).toBeInTheDocument();
         });
     });
 
@@ -109,7 +108,7 @@ describe('AccountTeamManagement components', () => {
         ];
         const teamId = '1234';
         it('should render content within child components', () => {
-            render(
+            testUtils.render(
                 <NotificationTab
                     memberNotifications={memberNotifications}
                     teamId={teamId}
@@ -123,18 +122,18 @@ describe('AccountTeamManagement components', () => {
                 />
             );
 
-            expect(screen.getByText('Email notifications')).toBeInTheDocument();
-            expect(screen.getByText('Send email notifications to my Gateway email address')).toBeInTheDocument();
-            expect(screen.getByText('Send email notifications to team email address')).toBeInTheDocument();
+            expect(testUtils.screen.getByText('Email notifications')).toBeInTheDocument();
+            expect(testUtils.screen.getByText('Send email notifications to my Gateway email address')).toBeInTheDocument();
+            expect(testUtils.screen.getByText('Send email notifications to team email address')).toBeInTheDocument();
         });
     });
 
     describe('EmailNotificationsHeader', () => {
         it('should ', () => {
-            render(<EmailNotificationsHeader />);
-            expect(screen.getByText('Email notifications')).toBeInTheDocument();
+            testUtils.render(<EmailNotificationsHeader />);
+            expect(testUtils.screen.getByText('Email notifications')).toBeInTheDocument();
             expect(
-                screen.getByText(
+                testUtils.screen.getByText(
                     'Team related email notifications will automatically be sent to each team members Gateway log in email. Data custodian managers can choose to send notifications to additional email accounts.'
                 )
             ).toBeInTheDocument();
@@ -146,17 +145,17 @@ describe('AccountTeamManagement components', () => {
         const onTabChange = jest.fn();
         const teamId = '1234';
         it('should render the tabs if not admin', async () => {
-            render(<TabsNav teamId={teamId} onTabChange={onTabChange} activeTabKey={activeTabKey} />);
-            await waitFor(() => {
-                expect(screen.getByText('Members')).toBeInTheDocument();
-                expect(screen.getByText('Notifications')).toBeInTheDocument();
+            testUtils.render(<TabsNav teamId={teamId} onTabChange={onTabChange} activeTabKey={activeTabKey} />);
+            await testUtils.waitFor(() => {
+                expect(testUtils.screen.getByText('Members')).toBeInTheDocument();
+                expect(testUtils.screen.getByText('Notifications')).toBeInTheDocument();
             });
         });
         it('should not render the tabs if admin', async () => {
             authSpy.mockReturnValue({
                 userState: mocks.userState.mockUserStateAdmin,
             });
-            render(
+            testUtils.render(
                 <TabsNav
                     teamId='5f7b1a2bce9f65e2ed83e7da'
                     onTabChange={onTabChange}
@@ -164,19 +163,19 @@ describe('AccountTeamManagement components', () => {
                     userState={mocks.userState.mockUserStateAdmin}
                 />
             );
-            await waitFor(() => {
-                expect(screen.queryByText('Members')).not.toBeInTheDocument();
-                expect(screen.queryByText('Notifications')).not.toBeInTheDocument();
+            await testUtils.waitFor(() => {
+                expect(testUtils.screen.queryByText('Members')).not.toBeInTheDocument();
+                expect(testUtils.screen.queryByText('Notifications')).not.toBeInTheDocument();
             });
         });
     });
 
     describe('TeamManagementHeader', () => {
         it('should render correct title and description', () => {
-            render(<TeamManagementHeader />);
-            expect(screen.getByText('Team management')).toBeInTheDocument();
+            testUtils.render(<TeamManagementHeader />);
+            expect(testUtils.screen.getByText('Team management')).toBeInTheDocument();
             expect(
-                screen.getByText(
+                testUtils.screen.getByText(
                     'Organise and manage team members and the teams email notifications. If you need assistance managing the team, please',
                     { exact: false }
                 )
@@ -190,16 +189,16 @@ describe('AccountTeamManagement components', () => {
                 { type: 'success', message: 'success message' },
                 { type: 'warning', message: 'warning message' },
             ];
-            render(<GeneratedAlerts alerts={alerts} />);
-            expect(screen.getByText('success message')).toBeInTheDocument();
-            expect(screen.getByText('warning message')).toBeInTheDocument();
+            testUtils.render(<GeneratedAlerts alerts={alerts} />);
+            expect(testUtils.screen.getByText('success message')).toBeInTheDocument();
+            expect(testUtils.screen.getByText('warning message')).toBeInTheDocument();
         });
     });
 
     describe('LoaderRow', () => {
         it('should render loader', () => {
-            render(<LoaderRow />);
-            expect(screen.getByText('Loading...')).toBeInTheDocument();
+            testUtils.render(<LoaderRow />);
+            expect(testUtils.screen.getByText('Loading...')).toBeInTheDocument();
         });
     });
 });

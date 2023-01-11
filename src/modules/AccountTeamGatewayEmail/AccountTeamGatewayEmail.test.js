@@ -1,8 +1,7 @@
-import { screen, render, waitFor } from 'testUtils';
+import { testUtils, mocks } from '../../../test';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamGatewayEmail from './AccountTeamGatewayEmail';
 import * as Auth from '../../context/AuthContext';
-import { mocks } from '../../../test';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
 
@@ -21,22 +20,22 @@ describe('Given the AccountTeamGatewayEmail component', () => {
                 userState: mocks.userState.mockUserStateNonManager,
             });
 
-            wrapper = render(<AccountTeamGatewayEmail {...props} />);
+            wrapper = testUtils.render(<AccountTeamGatewayEmail {...props} />);
         });
 
         it('Then should match the snapshot', async () => {
-            await waitFor(() => {
+            await testUtils.waitFor(() => {
                 expect(wrapper.container).toMatchSnapshot();
             });
         });
 
         it('Then should set the correct email', () => {
-            const emailInput = screen.getByDisplayValue('john@candy.com');
+            const emailInput = testUtils.screen.getByDisplayValue('john@candy.com');
             expect(emailInput).toHaveProperty('disabled');
         });
 
         it('Then should set the toggle correctly', () => {
-            const checkbox = screen.getByRole('checkbox', { hidden: true });
+            const checkbox = testUtils.screen.getByRole('checkbox', { hidden: true });
 
             expect(checkbox.checked).toBe(false);
         });
@@ -56,7 +55,7 @@ describe('Given the AccountTeamGatewayEmail component', () => {
 
             it('Then should render the correct message', () => {
                 expect(
-                    screen.queryByText(
+                    testUtils.screen.queryByText(
                         /You will need to add a team email to be able to save switching off notifications to your own Gateway email/
                     )
                 ).toBeTruthy();
@@ -73,9 +72,9 @@ describe('Given the AccountTeamGatewayEmail component', () => {
             });
 
             it('Then should not render the managers message', async () => {
-                waitFor(() => {
+                testUtils.waitFor(() => {
                     expect(
-                        screen.queryByText(
+                        testUtils.screen.queryByText(
                             /You will need to add a team email to be able to save switching off notifications to your own Gateway email/
                         )
                     ).not.toBeInTheDocument();
@@ -85,7 +84,7 @@ describe('Given the AccountTeamGatewayEmail component', () => {
 
         describe('And optIn is clicked', () => {
             beforeAll(() => {
-                screen.getByRole('checkbox', { hidden: true }).click();
+                testUtils.screen.getByRole('checkbox', { hidden: true }).click();
             });
 
             it('Then should call the correct method', () => {
@@ -100,7 +99,7 @@ describe('Given the AccountTeamGatewayEmail component', () => {
                 });
 
                 it('Then should check the toggle', () => {
-                    const checkbox = screen.getByRole('checkbox', { hidden: true });
+                    const checkbox = testUtils.screen.getByRole('checkbox', { hidden: true });
 
                     expect(checkbox.checked).toBe(true);
                 });

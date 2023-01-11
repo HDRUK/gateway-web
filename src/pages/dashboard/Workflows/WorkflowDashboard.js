@@ -1,9 +1,11 @@
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import _ from 'lodash';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+
 import Workflows from './Workflows';
 import AddEditWorkflow from './AddEditWorkflow';
 import WorkflowModal from './WorkflowModal';
-import axios from 'axios';
 import Loading from '../../commonComponents/Loading';
 import { baseURL } from '../../../configs/url.config';
 import {
@@ -18,13 +20,12 @@ import {
     modalConfigWorkflow,
 } from '../../../utils/Workflows.util';
 
-const WorkflowDashboard = ({ userState, team }) => {
+const WorkflowDashboard = ({ userState, teamId }) => {
     const [user] = userState;
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [workflows, setWorkflows] = useState([]);
     const [workflow, setWorkflow] = useState(defaultWorkflow);
     const [workflowId, setWorkflowId] = useState('');
-    const [teamId, setTeamId] = useState('');
     const [viewWorkflows, setViewWorkflows] = useState(true);
     const [modalConfig, setModalConfig] = useState(defaultModal);
     const [modalVisible, setModelVisible] = useState(false);
@@ -37,10 +38,11 @@ const WorkflowDashboard = ({ userState, team }) => {
         setViewWorkflows(!viewWorkflows);
     };
 
+    // TODO: GAT-1824 rewrite
     const getTeamById = () => {
         const team = localStorage.getItem('HDR_TEAM') || '';
         if (!_.isEmpty(user) && !_.isEmpty(team)) {
-            let { teams = [] } = user;
+            const { teams = [] } = user;
             if (!_.isEmpty(teams)) {
                 const teamObj = teams.find(to => to._id === team);
                 if (!_.isEmpty(teamObj)) {
@@ -51,26 +53,29 @@ const WorkflowDashboard = ({ userState, team }) => {
         return '';
     };
 
-    const getWorkflows = async (teamId = '') => {
+    const getWorkflows = async () => {
+        if (!teamId) return;
+
+        setLoading(true);
+
         await axios
             .get(`${baseURL}/api/v1/publishers/${teamId}/workflows`)
             .then(response => {
-                let {
-                    data: { workflows },
+                const {
+                    data: { workflows: workFlowsResponse },
                 } = response;
-                const workflowsArr = formatWorkflows(workflows);
+                const workflowsArr = formatWorkflows(workFlowsResponse);
                 setWorkflows(workflowsArr);
                 setLoading(false);
             })
-            .catch(err => {
+            .catch(() => {
                 setLoading(false);
-                console.error(err.message);
             });
     };
 
     const toggleApplications = (_id = '') => {
-        const workflow = toggleWorkflowApplications(workflows, _id);
-        setWorkflows(workflow);
+        const toggledWorkflows = toggleWorkflowApplications(workflows, _id);
+        setWorkflows(toggledWorkflows);
     };
 
     const toggleSection = (step = {}) => {
@@ -79,47 +84,44 @@ const WorkflowDashboard = ({ userState, team }) => {
     };
 
     const switchWorkflowView = () => {
-        let switchViewWorkflows = !viewWorkflows;
+        const switchViewWorkflows = !viewWorkflows;
         setViewWorkflows(switchViewWorkflows);
         if (switchViewWorkflows) getWorkflows();
     };
 
-    const onActionClick = async (key, _id) => {
-        let workflow = {};
-        if (!_.isEmpty(_id)) {
-            workflow = workflows.find(el => el._id === _id);
-            let { canEdit, canDelete, steps } = workflow;
-            switch (key) {
-                case actionKeys.EDIT:
-                    if (canEdit) {
-                        let wfSteps = mapWorkflowSteps(steps);
-                        workflow = {
-                            ...workflow,
-                            steps: wfSteps,
-                        };
-                        setWorkflow(workflow);
-                        setViewWorkflows(false);
-                    } else {
-                        toggleModal(modalactions.CANNOTEDITWORKFLOW);
-                    }
-                    break;
-                case actionKeys.DELETE:
-                    if (!canDelete) {
-                        toggleModal(modalactions.CANNOTDELETEWORKFLOW);
-                    } else {
-                        setWorkflowId(_id);
-                        toggleModal(modalactions.DELETEWORKFLOW);
-                    }
-                    break;
-                default:
-                    return '';
+    const toggleModal = async (type = '', action = '') => {
+        // 1. get basic modal config
+        if (!_.isEmpty(type)) {
+            const config = modalConfigWorkflow(type);
+            setModalConfig(config);
+            // 4. show / hide modal
+            setModelVisible(!modalVisible);
+        }
+
+        if (!_.isEmpty(action)) {
+            const { actionName = 'cancel' } = action;
+            const formattedActionName = actionName.toUpperCase();
+
+            if (formattedActionName === modalactions.DELETEWORKFLOW) {
+                await axios.delete(`${baseURL}/api/v1/workflows/${workflowId}`);
+                setWorkflowId('');
+                getWorkflows();
+                setModelVisible(!modalVisible);
+                return;
             }
+
+            if (formattedActionName === modalactions.CANCEL) {
+                setModelVisible(!modalVisible);
+                return;
+            }
+
+            setModelVisible(false);
         }
     };
 
     const mapWorkflowSteps = steps => {
         return [...steps].map(el => {
-            let reviewers = [...el.reviewers].map(r => r._id);
+            const reviewers = [...el.reviewers].map(r => r._id);
             return {
                 ...el,
                 reviewers,
@@ -127,74 +129,81 @@ const WorkflowDashboard = ({ userState, team }) => {
         });
     };
 
-    const updateWorkflow = workflow => {
-        if (!_.isEmpty(workflow)) {
-            setWorkflow(workflow);
-        }
-    };
+    const onActionClick = async (key, _id) => {
+        if (!_.isEmpty(_id)) {
+            const updatedWorkflow = workflows.find(el => el._id === _id);
+            const { canEdit, canDelete, steps } = updatedWorkflow;
+            if (key === actionKeys.EDIT) {
+                if (canEdit) {
+                    const wfSteps = mapWorkflowSteps(steps);
 
-    const toggleModal = async (type = '', action = '') => {
-        // 1. get basic modal config
-        if (!_.isEmpty(type)) {
-            let config = modalConfigWorkflow(type);
-            setModalConfig(config);
-            // 4. show / hide modal
-            setModelVisible(!modalVisible);
-        }
-
-        if (!_.isEmpty(action)) {
-            let { actionName = 'cancel' } = action;
-            switch (actionName.toUpperCase()) {
-                case modalactions.DELETEWORKFLOW:
-                    await axios.delete(`${baseURL}/api/v1/workflows/${workflowId}`);
-                    setWorkflowId('');
-                    getWorkflows(teamId);
-                    setModelVisible(!modalVisible);
-                    break;
-                case modalactions.CANCEL:
-                    setModelVisible(!modalVisible);
-                    break;
-                default:
-                    setModelVisible(false);
-                    break;
+                    setWorkflow({
+                        ...updatedWorkflow,
+                        steps: wfSteps,
+                    });
+                    setViewWorkflows(false);
+                } else {
+                    toggleModal(modalactions.CANNOTEDITWORKFLOW);
+                }
+            }
+            if (key === actionKeys.DELETE) {
+                if (!canDelete) {
+                    toggleModal(modalactions.CANNOTDELETEWORKFLOW);
+                } else {
+                    setWorkflowId(_id);
+                    toggleModal(modalactions.DELETEWORKFLOW);
+                }
             }
         }
     };
 
+    const updateWorkflow = updatedWorkflow => {
+        if (!_.isEmpty(updatedWorkflow)) {
+            setWorkflow(updatedWorkflow);
+        }
+    };
+
     useEffect(() => {
-        let teamId = getTeamById();
-        setTeamId(teamId);
-        setLoading(true);
-        getWorkflows(teamId);
+        getWorkflows();
         window.scrollTo(0, 0);
-    }, [team, viewWorkflows, getTeamById()]);
+    }, []);
 
     return (
-        <Fragment>
-            {loading ? (
-                <Loading />
-            ) : viewWorkflows ? (
-                <Workflows
-                    workflows={workflows}
-                    addWorkflow={addWorkflow}
-                    toggleApplications={toggleApplications}
-                    toggleSection={toggleSection}
-                    onActionClick={onActionClick}
-                />
-            ) : (
-                <AddEditWorkflow
-                    step={defaultStep}
-                    workflow={workflow}
-                    user={user}
-                    team={teamId}
-                    switchWorkflowView={switchWorkflowView}
-                    updateWorkflow={updateWorkflow}
-                />
-            )}
+        <>
+            {loading && <Loading />}
+            {!loading &&
+                (viewWorkflows ? (
+                    <Workflows
+                        workflows={workflows}
+                        addWorkflow={addWorkflow}
+                        toggleApplications={toggleApplications}
+                        toggleSection={toggleSection}
+                        onActionClick={onActionClick}
+                    />
+                ) : (
+                    <AddEditWorkflow
+                        step={defaultStep}
+                        workflow={workflow}
+                        team={teamId}
+                        switchWorkflowView={switchWorkflowView}
+                        updateWorkflow={updateWorkflow}
+                    />
+                ))}
 
             <WorkflowModal open={modalVisible} context={modalConfig} close={toggleModal} />
-        </Fragment>
+        </>
     );
+};
+
+WorkflowDashboard.propTypes = {
+    userState: PropTypes.arrayOf(
+        PropTypes.shape({
+            user: PropTypes.shape({
+                teams: PropTypes.arrayOf({ _id: PropTypes.number }),
+            }),
+        })
+    ).isRequired,
+    teamId: PropTypes.number.isRequired,
 };
 
 export default WorkflowDashboard;

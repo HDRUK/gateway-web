@@ -20,7 +20,7 @@ const Messages = ({
     toggleDrawer,
     setMessageDescription,
     userState,
-    userType,
+    teamType,
     updateCount,
     publisher,
     onLoad,
@@ -95,7 +95,7 @@ const Messages = ({
 
         setMessageThread([
             ...messageThread,
-            { name: userState[0].name, date: moment(Date.now()).format('D MMM YYYY HH:mm'), content: currentMessage, userType },
+            { name: userState[0].name, date: moment(Date.now()).format('D MMM YYYY HH:mm'), content: currentMessage, teamType },
         ]);
 
         setCurrentMessage('');
@@ -134,16 +134,16 @@ const Messages = ({
         // Map over messages and return each as a bubble styled depending on who sent it
         return messageThread.map(msg => {
             return (
-                <div className={userType.toUpperCase() === msg.userType.toUpperCase() ? 'message-sent' : 'message-received'}>
+                <div className={teamType.toUpperCase() === msg.teamType.toUpperCase() ? 'message-sent' : 'message-received'}>
                     <div
                         className={`${
-                            userType.toUpperCase() === msg.userType.toUpperCase() ? 'message-bubble-sent' : 'message-bubble-received'
+                            teamType.toUpperCase() === msg.teamType.toUpperCase() ? 'message-bubble-sent' : 'message-bubble-received'
                         } message-bubble`}>
                         <div className='message-metadata'>
                             <span>
                                 {msg.name}
                                 {/* TODO: GAT-1510:064 */}
-                                {msg.userType === 'custodian' ? <>{publisher ? ` (${publisher})` : ''}</> : ''}
+                                {msg.teamType === 'custodian' ? <>{publisher ? ` (${publisher})` : ''}</> : ''}
                             </span>
                             &nbsp;
                             <span>{msg.date}</span>

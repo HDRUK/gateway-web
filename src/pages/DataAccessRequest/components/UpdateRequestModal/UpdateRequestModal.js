@@ -3,6 +3,9 @@ import axios from 'axios';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
+
+import { accountUtils } from 'utils';
+
 import { baseURL } from '../../../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import './UpdateRequestModal.scss';
@@ -18,15 +21,17 @@ const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicatio
 
     const onRequestUpdate = e => {
         if (!_.isEmpty(applicationId) && !_.isEmpty(publisher)) {
-            axios.post(`${baseURL}/api/v1/data-access-request/${applicationId}/requestAmendments`).then(res => {
+            axios.post(`${baseURL}/api/v1/data-access-request/${applicationId}/requestAmendments`).then(() => {
+                accountUtils.updateSelectedTeam({ teamType: 'team', teamId: publisher });
+
                 const alert = {
                     publisher,
-                    nav: `dataaccessrequests&team=${publisher}`,
+                    nav: 'dataaccessrequests',
                     tab: 'inReview',
                     message: `You have successfully requested updates to ‘${projectName}’ application`,
                 };
                 // redirect to dashboard with alert
-                history.push({ pathname: `/account`, search: `?tab=dataaccessrequests&team=`, state: { alert } });
+                history.push({ pathname: `/account`, search: `?tab=dataaccessrequests`, state: { alert } });
             });
         }
     };

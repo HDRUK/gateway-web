@@ -1,3 +1,4 @@
+import * as accountUtils from './account.util';
 import * as authUtils from './auth';
 import * as darHelperUtils from './DarHelper.util';
 import * as darValidationUtils from './DarValidation.util';
@@ -13,6 +14,7 @@ import * as uploaderUtils from './Uploader.util';
 import * as workflowsUtils from './Workflows.util';
 
 export {
+    accountUtils,
     authUtils,
     darHelperUtils,
     darValidationUtils,

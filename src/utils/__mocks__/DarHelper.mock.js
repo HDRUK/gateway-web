@@ -4194,11 +4194,11 @@ export const updateRequestProps = {
     projectName: 'Test project',
     history: {
         pathname: `/account`,
-        search: `?tab=dataaccessrequests&team=`,
+        search: `?tab=dataaccessrequests`,
         state: {
             alert: {
                 publisher: 'Test publisher',
-                nav: `dataaccessrequests&team=Test publisher`,
+                nav: 'dataaccessrequests',
                 tab: 'inReview',
                 message: `You have successfully requested updates to ‘Test project’ application`,
             },

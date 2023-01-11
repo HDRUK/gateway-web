@@ -13,6 +13,8 @@ import { theme } from '../src/configs/theme';
 import { CmsProvider } from '../src/context/CmsContext';
 import i18n from '../src/i18n';
 import { mockUser } from '../src/services/auth/mockData';
+import localStorageMock from './mocks/localStorage';
+import * as localStorageUtils from './utils/localStorage';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -58,6 +60,8 @@ const removePortalContainer = div => {
     div.parentNode.removeChild(div);
 };
 
+Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+
 export * from '@testing-library/react';
 
-export { customRender as render, customRenderHook as renderHook, createPortalContainer, removePortalContainer };
+export { customRender as render, customRenderHook as renderHook, createPortalContainer, removePortalContainer, localStorageUtils };

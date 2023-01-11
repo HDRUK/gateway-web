@@ -9,6 +9,7 @@ import { Button } from 'hdruk-react-core';
 import { LayoutContent } from 'components';
 import { activityLogService, datasetOnboardingService } from 'services';
 import { authUtils, dataSetHelperUtils } from 'utils';
+import { useAccountTeamSelected } from 'hooks';
 import { useAuth } from '../../../../context/AuthContext';
 
 import ActionBar from '../../../commonComponents/actionbar/ActionBar';
@@ -19,12 +20,12 @@ import ActivityLogCard from '../ActivityLogCard';
 import AccountDatasetApproveModal from './AccountDatasetApproveModal';
 import AccountDatasetRejectModal from './AccountDatasetRejectModal';
 
-const AccountDataset = props => {
+const AccountDataset = () => {
+    const { teamType, teamId } = useAccountTeamSelected();
     const { t } = useTranslation();
     const { id } = useParams();
     const history = useHistory();
     const { userState } = useAuth();
-    const [team, setTeam] = useState();
     const [currentDataset, setCurrentDataset] = useState();
     const [state, setState] = useState({
         showPrevious: false,
@@ -36,12 +37,10 @@ const AccountDataset = props => {
     });
 
     const dataActivityLog = activityLogService.usePostActivityLog();
-    const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], team), [userState[0], team]);
+    const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], teamId, teamType), [userState[0], teamId, teamType]);
     const dataPublisher = datasetOnboardingService.useGetPublisher(publisherId);
 
     useEffect(() => {
-        setTeam(authUtils.getTeam(props));
-
         if (publisherId && id) dataPublisher.mutate();
     }, [publisherId, id]);
 
@@ -125,7 +124,7 @@ const AccountDataset = props => {
                 history.push(`/account/datasets/${dataset.pid}`);
             }
         },
-        [id, dataPublisher.data, team]
+        [id, dataPublisher.data]
     );
 
     const { showPrevious, showNext, statusError, showRejectDatasetModal, showApproveDatasetModal } = state;
@@ -146,7 +145,7 @@ const AccountDataset = props => {
         history.push({
             pathname: `/account`,
             search: '?tab=datasets',
-            state: { alert, team, userState },
+            state: { alert, userState },
         });
     };
 
@@ -163,7 +162,7 @@ const AccountDataset = props => {
         history.push({
             pathname: `/account`,
             search: '?tab=datasets',
-            state: { alert, team },
+            state: { alert },
         });
     };
 

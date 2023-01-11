@@ -15,7 +15,7 @@ const QuestionActionTabs = ({
     onHandleActionTabChange,
     toggleDrawer,
     setMessageDescription,
-    userType,
+    teamType,
     messagesCount,
     notesCount,
     isShared,
@@ -85,7 +85,7 @@ const QuestionActionTabs = ({
                                     applicationStatus={applicationStatus}
                                     toggleDrawer={toggleDrawer}
                                     setMessageDescription={setMessageDescription}
-                                    userType={userType}
+                                    teamType={teamType}
                                     updateCount={updateCount}
                                     publisher={publisher}
                                 />
@@ -118,7 +118,7 @@ const QuestionActionTabs = ({
                                     applicationId={applicationId}
                                     userState={userState}
                                     settings={settings}
-                                    userType={userType}
+                                    teamType={teamType}
                                     updateCount={updateCount}
                                 />
                             ) : (

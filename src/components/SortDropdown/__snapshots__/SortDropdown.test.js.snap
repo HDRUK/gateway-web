@@ -83,7 +83,7 @@ exports[`Given the SortDropdown component When it is rendered When it allows sor
         class="ui-SortDropdown__asc"
       >
         <span
-          class="ui-Icon emotion-4 emotion-5"
+          class="ui-Icon emotion-4"
         >
           <icon-mock />
         </span>

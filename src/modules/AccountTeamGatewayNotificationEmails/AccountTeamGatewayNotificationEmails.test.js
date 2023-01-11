@@ -1,12 +1,10 @@
-import { screen, render, cleanup } from 'testUtils';
+import { testUtils, mocks } from '../../../test';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTeamGatewayNotificationEmails from './AccountTeamGatewayNotificationEmails';
 import * as Auth from '../../context/AuthContext';
-import { mocks } from '../../../test';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
 
-const managerInTeamMock = jest.fn();
 const toggleTeamNotificationsMock = jest.fn();
 
 const props = {
@@ -25,11 +23,11 @@ describe('Given the AccountTeamGatewayNotificationEmails component', () => {
                     userState: mocks.userState.mockUserStateAdmin,
                 });
 
-                wrapper = render(<AccountTeamGatewayNotificationEmails {...props} />);
+                wrapper = testUtils.render(<AccountTeamGatewayNotificationEmails {...props} />);
             });
 
             afterAll(() => {
-                cleanup();
+                testUtils.cleanup();
             });
 
             it('Then should be empty', () => {
@@ -43,19 +41,19 @@ describe('Given the AccountTeamGatewayNotificationEmails component', () => {
                     userState: mocks.userState.mockUserStateManager,
                 });
 
-                render(<AccountTeamGatewayNotificationEmails {...props} />);
+                testUtils.render(<AccountTeamGatewayNotificationEmails {...props} />);
             });
 
             afterEach(() => {
-                cleanup();
+                testUtils.cleanup();
             });
 
             it('Then should render the form label', () => {
-                expect(screen.getByLabelText('Send email notifications to team email address')).toBeInTheDocument();
+                expect(testUtils.screen.getByLabelText('Send email notifications to team email address')).toBeInTheDocument();
             });
 
             it('Then should call the correct method', () => {
-                screen.getByRole('checkbox', { hidden: true }).click();
+                testUtils.screen.getByRole('checkbox', { hidden: true }).click();
                 expect(toggleTeamNotificationsMock).toHaveBeenCalledWith({ checked: true, id: 'notifictionType1' });
             });
         });

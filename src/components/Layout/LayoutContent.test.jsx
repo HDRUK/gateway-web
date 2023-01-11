@@ -1,4 +1,4 @@
-import { render, screen } from 'testUtils';
+import { testUtils } from '../../../test';
 
 import LayoutContent from './LayoutContent';
 
@@ -7,7 +7,7 @@ let wrapper;
 describe('Given the LayoutContent component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<LayoutContent>Content</LayoutContent>);
+            wrapper = testUtils.render(<LayoutContent>Content</LayoutContent>);
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -15,7 +15,7 @@ describe('Given the LayoutContent component', () => {
         });
 
         it('Then has the correct content', async () => {
-            expect(screen.getByText(/Content/)).toBeTruthy();
+            expect(testUtils.screen.getByText(/Content/)).toBeTruthy();
         });
     });
 });

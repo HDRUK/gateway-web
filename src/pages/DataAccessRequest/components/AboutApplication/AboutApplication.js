@@ -16,7 +16,7 @@ const AboutApplication = props => {
         key,
         activeAccordionCard,
         allowedNavigation,
-        userType,
+        teamType,
         toggleCard,
         toggleDrawer,
         onHandleDataSetChange,
@@ -77,7 +77,7 @@ const AboutApplication = props => {
                                 this later. If you’re not sure,{' '}
                                 <Link
                                     id='messageLink'
-                                    className={allowedNavigation && userType.toUpperCase() !== 'CUSTODIAN' ? '' : 'disabled'}
+                                    className={allowedNavigation && teamType.toUpperCase() !== 'CUSTODIAN' ? '' : 'disabled'}
                                     onClick={e => toggleDrawer()}>
                                     send a message to the data custodian
                                 </Link>{' '}
@@ -102,7 +102,7 @@ const AboutApplication = props => {
                                     <div className='errorMessages'>You must select at least one dataset</div>
                                 ) : null}
                                 <div className='panConfirm d-flex justify-content-end'>
-                                    {userType.toUpperCase() === 'APPLICANT' && !readOnly && (
+                                    {teamType.toUpperCase() === 'APPLICANT' && !readOnly && (
                                         <Button
                                             type='input'
                                             className={`confirm-button ${allowedNavigation ? '' : 'disabled'}`}
@@ -214,7 +214,7 @@ const AboutApplication = props => {
                                     </>
                                 ) : null}
                                 <div className='panConfirm d-flex justify-content-end'>
-                                    {userType.toUpperCase() === 'APPLICANT' && !readOnly && (
+                                    {teamType.toUpperCase() === 'APPLICANT' && !readOnly && (
                                         <Button
                                             type='input'
                                             variant='primary'
@@ -254,7 +254,7 @@ const AboutApplication = props => {
                                     too.
                                 </div>
                                 <div className='dar-form-check-group'>
-                                    {userType.toUpperCase() !== 'CUSTODIAN' && !readOnly && (
+                                    {teamType.toUpperCase() !== 'CUSTODIAN' && !readOnly && (
                                         <Button variant='secondary' onClick={e => toggleContributorModal()}>
                                             Add contributors
                                         </Button>
@@ -308,7 +308,7 @@ const AboutApplication = props => {
                                         I have read{' '}
                                         <Link
                                             id='howToRequestAccessLink'
-                                            className={allowedNavigation && userType.toUpperCase() !== 'CUSTODIAN' ? '' : 'disabled'}
+                                            className={allowedNavigation && teamType.toUpperCase() !== 'CUSTODIAN' ? '' : 'disabled'}
                                             onClick={e => {
                                                 e.preventDefault();
                                                 toggleModal(false, {
@@ -348,7 +348,7 @@ const AboutApplication = props => {
                                     understand the data and provide information on how to complete the data access application form.
                                 </div>
                                 <div className='dar-form-check-group'>
-                                    {userType.toUpperCase() !== 'CUSTODIAN' && (
+                                    {teamType.toUpperCase() !== 'CUSTODIAN' && (
                                         <Button variant='secondary' type='button' onClick={e => toggleDrawer()}>
                                             Send message
                                         </Button>

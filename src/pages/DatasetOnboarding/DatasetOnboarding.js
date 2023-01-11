@@ -48,7 +48,7 @@ import ErrorModal from '../commonComponents/errorModal';
 
 const CustomToggle = forwardRef(({ children, onClick }, ref) => (
     <a
-        href='javascript:void(0)'
+        href='#'
         ref={ref}
         onClick={e => {
             e.preventDefault();
@@ -1331,7 +1331,7 @@ class DatasetOnboarding extends Component {
                                 <a
                                     className={`linkButton white-14-semibold ml-2 ${allowedNavigation ? '' : 'disabled'}`}
                                     onClick={this.onClickSave}
-                                    href='javascript:void(0)'>
+                                    href='#'>
                                     Save now
                                 </a>
                             }

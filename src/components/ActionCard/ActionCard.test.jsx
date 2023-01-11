@@ -1,4 +1,4 @@
-import { render, screen } from 'testUtils';
+import { testUtils } from '../../../test';
 
 import ActionCard from './ActionCard';
 
@@ -13,7 +13,7 @@ let wrapper;
 describe('Given the ActionCard component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<ActionCard {...props} />);
+            wrapper = testUtils.render(<ActionCard {...props} />);
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -21,15 +21,15 @@ describe('Given the ActionCard component', () => {
         });
 
         it('Then has the correct title', () => {
-            expect(screen.getByText(/Title/)).toBeTruthy();
+            expect(testUtils.screen.getByText(/Title/)).toBeTruthy();
         });
 
         it('Then has the correct content', () => {
-            expect(screen.getByText(/Content/)).toBeTruthy();
+            expect(testUtils.screen.getByText(/Content/)).toBeTruthy();
         });
 
         it('Then has the correct action', () => {
-            expect(screen.getByText(/Action/)).toBeTruthy();
+            expect(testUtils.screen.getByText(/Action/)).toBeTruthy();
         });
     });
 });

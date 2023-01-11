@@ -7,6 +7,7 @@ import { NotificationManager } from 'react-notifications';
 import { dataUseRegistersService } from 'services';
 import { Alert, LayoutContent } from 'components';
 import { darHelperUtils } from 'utils';
+import { useAccountTeamSelected } from 'hooks';
 import googleAnalytics from '../../tracking';
 
 import Loading from '../commonComponents/Loading';
@@ -18,7 +19,7 @@ import Table from './DataUseTable';
 import DataUseApproveModal from './modals/DataUseApproveModal';
 import DataUseRejectModal from './modals/DataUseRejectModal';
 
-const DataUsePage = ({ onClickDataUseUpload, team }) => {
+const DataUsePage = ({ onClickDataUseUpload }) => {
     const { t } = useTranslation();
     const [row, setRow] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +32,7 @@ const DataUsePage = ({ onClickDataUseUpload, team }) => {
     const [showArchiveModal, setShowArchiveModal] = useState(false);
     const [showUnarchiveModal, setShowUnarchiveModal] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const { teamType, teamId } = useAccountTeamSelected();
 
     const dataUseRegistersByTeam = dataUseRegistersService.useGetDataUseRegistersByTeam(null, {
         onError: ({ title, message }) => {
@@ -45,11 +47,13 @@ const DataUsePage = ({ onClickDataUseUpload, team }) => {
     });
 
     useEffect(() => {
+        if (!teamType) return;
+
         const init = async () => {
             try {
                 const {
                     data: { data },
-                } = await dataUseRegistersByTeam.mutateAsync(team);
+                } = await dataUseRegistersByTeam.mutateAsync(teamId || teamType);
 
                 data.sort((a, b) => Date.parse(a.lastActivity) - Date.parse(b.lastActivity));
 
@@ -62,7 +66,7 @@ const DataUsePage = ({ onClickDataUseUpload, team }) => {
         };
 
         init();
-    }, [team, alert]);
+    }, [teamId, teamType, alert]);
 
     const handleAnalytics = (label, value) => {
         googleAnalytics.recordEvent('Data uses', label, value);
@@ -176,7 +180,7 @@ const DataUsePage = ({ onClickDataUseUpload, team }) => {
                             </div>
                             <div>
                                 <span className='gray700-13 '>
-                                    {team === 'user' ? t('datause.upload.pageInfoUser') : t('datause.upload.pageInfoTeam')}
+                                    {teamType === 'user' ? t('datause.upload.pageInfoUser') : t('datause.upload.pageInfoTeam')}
                                 </span>
                             </div>
                         </Col>
@@ -189,7 +193,7 @@ const DataUsePage = ({ onClickDataUseUpload, team }) => {
 
                                     onClickDataUseUpload();
                                 }}
-                                hidden={team === 'user' ? 'hidden' : ''}>
+                                hidden={teamType === 'user' ? 'hidden' : ''}>
                                 + Upload
                             </Button>
                         </Col>
@@ -199,43 +203,37 @@ const DataUsePage = ({ onClickDataUseUpload, team }) => {
                 <Row className=''>
                     <Col sm={12} lg={12}>
                         <Tabs
-                            defaultActiveKey={
-                                activeTab || (team === 'user' || (team !== 'user' && team !== 'admin') ? 'Active' : 'Pending approval')
-                            }
+                            defaultActiveKey={activeTab || (teamType === 'user' || teamType === 'team' ? 'Active' : 'Pending approval')}
                             className='gray700-13 data-use-tabs'>
                             {tabs.map(tabName => (
                                 <Tab
+                                    key={tabName}
                                     eventKey={tabName}
                                     title={
-                                        ((team === 'user' || (team !== 'user' && team !== 'admin')) &&
+                                        ((teamType === 'user' || teamType === 'team') &&
                                             tabName === 'Active' &&
                                             `${tabName} (${active.length})`) ||
-                                        ((team === 'admin' || (team !== 'user' && team !== 'admin')) &&
+                                        ((teamType === 'admin' || teamType === 'team') &&
                                             tabName === 'Pending approval' &&
                                             `${tabName} (${pending.length})`) ||
-                                        (team !== 'user' &&
-                                            team !== 'admin' &&
-                                            tabName === 'Rejected' &&
-                                            `${tabName} (${rejected.length})`) ||
-                                        (team !== 'user' && team !== 'admin' && tabName === 'Archived' && `${tabName} (${archived.length})`)
+                                        (teamType === 'team' && tabName === 'Rejected' && `${tabName} (${rejected.length})`) ||
+                                        (teamType === 'team' && tabName === 'Archived' && `${tabName} (${archived.length})`)
                                     }>
-                                    {(team === 'user' || (team !== 'user' && team !== 'admin')) && tabName === 'Active' && (
-                                        <Table data={currentActive} active team={team} onClickArchive={onClickArchive} />
+                                    {(teamType === 'user' || teamType === 'team') && tabName === 'Active' && (
+                                        <Table data={currentActive} active teamType={teamType} onClickArchive={onClickArchive} />
                                     )}
-                                    {(team === 'admin' || (team !== 'user' && team !== 'admin')) && tabName === 'Pending approval' && (
+                                    {(teamType === 'admin' || teamType === 'team') && tabName === 'Pending approval' && (
                                         <Table
-                                            team={team}
+                                            teamType={teamType}
                                             data={currentPending}
                                             pending
                                             onClickApprove={onClickApprove}
                                             onClickReject={onClickReject}
                                         />
                                     )}
-                                    {team !== 'user' && team !== 'admin' && tabName === 'Rejected' && (
-                                        <Table team={team} data={currentRejected} />
-                                    )}
-                                    {team !== 'user' && team !== 'admin' && tabName === 'Archived' && (
-                                        <Table team={team} data={currentArchived} archived onClickUnarchive={onClickUnarchive} />
+                                    {teamType === 'team' && tabName === 'Rejected' && <Table teamType={teamType} data={currentRejected} />}
+                                    {teamType === 'team' && tabName === 'Archived' && (
+                                        <Table teamType={teamType} data={currentArchived} archived onClickUnarchive={onClickUnarchive} />
                                     )}
 
                                     {!row.length && !isLoading && (

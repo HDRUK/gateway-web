@@ -1,20 +1,25 @@
-import { render, fireEvent, screen, cleanup } from 'testUtils';
+import { testUtils } from '../../../test';
 import { teamMembersMock } from '../../../test/mocks/teamsServiceMock';
 import { HeaderTooltip, NameCell, TeamAdminCell, DataAccessRequestCell, MetadataCell } from './AccountTeamMembers.components';
 import '@testing-library/jest-dom/extend-expect';
 
 const changeMock = jest.fn();
 
-let wrapper;
-
 describe('Given the AccountTeamMembers components', () => {
     afterEach(() => {
         changeMock.mockReset();
+        // testUtils.cleanup();
     });
 
     describe('When NameCell is rendered', () => {
+        let wrapper;
+
         beforeAll(() => {
-            wrapper = render(<NameCell member={teamMembersMock[0]} />);
+            wrapper = testUtils.render(<NameCell member={teamMembersMock[0]} />);
+        });
+
+        afterAll(() => {
+            testUtils.cleanup();
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -22,14 +27,16 @@ describe('Given the AccountTeamMembers components', () => {
         });
 
         it('Then shows a loader', async () => {
-            expect(screen.getByText(/John Smith/)).toBeTruthy();
-            expect(screen.getByText(/HDR UK/)).toBeTruthy();
+            expect(testUtils.screen.getByText(/John Smith/)).toBeTruthy();
+            expect(testUtils.screen.getByText(/HDR UK/)).toBeTruthy();
         });
     });
 
     describe('When TeamAdminCell is rendered', () => {
+        let wrapper;
+
         beforeAll(() => {
-            wrapper.rerender(
+            wrapper = testUtils.render(
                 <TeamAdminCell
                     member={teamMembersMock[0]}
                     onChange={changeMock}
@@ -40,21 +47,25 @@ describe('Given the AccountTeamMembers components', () => {
             );
         });
 
+        afterAll(() => {
+            testUtils.cleanup();
+        });
+
         it('Then matches the previous snapshot', async () => {
             expect(wrapper.container).toMatchSnapshot();
         });
 
         it('Then has the correct checkboxes checked', async () => {
-            const adminCheckbox = screen.getByLabelText('Admin');
+            const adminCheckbox = testUtils.screen.getByLabelText('Admin');
 
             expect(adminCheckbox.checked).toBeTruthy();
         });
 
         describe('And admin is clicked', () => {
             it('Then calls onChange', () => {
-                const checkbox = screen.getByLabelText('Admin');
+                const checkbox = testUtils.screen.getByLabelText('Admin');
 
-                fireEvent.click(checkbox);
+                testUtils.fireEvent.click(checkbox);
 
                 expect(changeMock).toHaveBeenCalled();
             });
@@ -62,8 +73,10 @@ describe('Given the AccountTeamMembers components', () => {
     });
 
     describe('When DataAccessRequestCell is rendered', () => {
+        let wrapper;
+
         beforeAll(() => {
-            wrapper.rerender(
+            wrapper = testUtils.render(
                 <DataAccessRequestCell
                     member={teamMembersMock[0]}
                     onChange={changeMock}
@@ -75,13 +88,17 @@ describe('Given the AccountTeamMembers components', () => {
             );
         });
 
+        afterAll(() => {
+            testUtils.cleanup();
+        });
+
         it('Then matches the previous snapshot', async () => {
             expect(wrapper.container).toMatchSnapshot();
         });
 
         it('Then has the correct checkboxes checked', async () => {
-            const managerCheckbox = screen.getByLabelText('Manager');
-            const reviewerCheckbox = screen.getByLabelText('Reviewer');
+            const managerCheckbox = testUtils.screen.getByLabelText('Manager');
+            const reviewerCheckbox = testUtils.screen.getByLabelText('Reviewer');
 
             expect(managerCheckbox.checked).toBeTruthy();
             expect(reviewerCheckbox.checked).toBeFalsy();
@@ -89,9 +106,9 @@ describe('Given the AccountTeamMembers components', () => {
 
         describe('And manager is clicked', () => {
             it('Then calls onChange', () => {
-                const checkbox = screen.getByLabelText('Manager');
+                const checkbox = testUtils.screen.getByLabelText('Manager');
 
-                fireEvent.click(checkbox);
+                testUtils.fireEvent.click(checkbox);
 
                 expect(changeMock).toHaveBeenCalled();
             });
@@ -99,9 +116,9 @@ describe('Given the AccountTeamMembers components', () => {
 
         describe('And reviewer is clicked', () => {
             it('Then calls onChange', () => {
-                const checkbox = screen.getByLabelText('Reviewer');
+                const checkbox = testUtils.screen.getByLabelText('Reviewer');
 
-                fireEvent.click(checkbox);
+                testUtils.fireEvent.click(checkbox);
 
                 expect(changeMock).toHaveBeenCalled();
             });
@@ -109,8 +126,10 @@ describe('Given the AccountTeamMembers components', () => {
     });
 
     describe('When MetadataCell is rendered', () => {
+        let wrapper;
+
         beforeAll(() => {
-            wrapper.rerender(
+            wrapper = testUtils.render(
                 <MetadataCell
                     member={teamMembersMock[0]}
                     onChange={changeMock}
@@ -122,13 +141,17 @@ describe('Given the AccountTeamMembers components', () => {
             );
         });
 
+        afterAll(() => {
+            testUtils.cleanup();
+        });
+
         it('Then matches the previous snapshot', async () => {
             expect(wrapper.container).toMatchSnapshot();
         });
 
         it('Then has the correct checkboxes checked', async () => {
-            const managerCheckbox = screen.getByLabelText('Manager');
-            const editorCheckbox = screen.getByLabelText('Editor');
+            const managerCheckbox = testUtils.screen.getByLabelText('Manager');
+            const editorCheckbox = testUtils.screen.getByLabelText('Editor');
 
             expect(managerCheckbox.checked).toBeTruthy();
             expect(editorCheckbox.checked).toBeFalsy();
@@ -136,9 +159,9 @@ describe('Given the AccountTeamMembers components', () => {
 
         describe('And manager is clicked', () => {
             it('Then calls onChange', () => {
-                const checkbox = screen.getByLabelText('Manager');
+                const checkbox = testUtils.screen.getByLabelText('Manager');
 
-                fireEvent.click(checkbox);
+                testUtils.fireEvent.click(checkbox);
 
                 expect(changeMock).toHaveBeenCalled();
             });
@@ -146,29 +169,26 @@ describe('Given the AccountTeamMembers components', () => {
 
         describe('And editor is clicked', () => {
             it('Then calls onChange', () => {
-                const checkbox = screen.getByLabelText('Editor');
+                const checkbox = testUtils.screen.getByLabelText('Editor');
 
-                fireEvent.click(checkbox);
+                testUtils.fireEvent.click(checkbox);
 
                 expect(changeMock).toHaveBeenCalled();
             });
         });
     });
     describe('When HeaderTooltip is rendered', () => {
-        afterEach(() => {
-            cleanup();
-        });
         it('Then renders just the heading', () => {
-            render(<HeaderTooltip header='My header' content='My content' />);
-            expect(screen.getByText('My header')).toBeInTheDocument();
-            expect(screen.queryByText('My content')).not.toBeInTheDocument();
+            testUtils.render(<HeaderTooltip header='My header' content='My content' />);
+            expect(testUtils.screen.getByText('My header')).toBeInTheDocument();
+            expect(testUtils.screen.queryByText('My content')).not.toBeInTheDocument();
         });
         it('When you mouseover the content is displayed', () => {
-            const { container } = render(<HeaderTooltip header='My header' content='My content' />);
+            const { container } = testUtils.render(<HeaderTooltip header='My header' content='My content' />);
             const iconTrigger = container.querySelector('icon-mock');
 
-            fireEvent.mouseOver(iconTrigger);
-            expect(screen.queryByText('My content')).toBeInTheDocument();
+            testUtils.fireEvent.mouseOver(iconTrigger);
+            expect(testUtils.screen.queryByText('My content')).toBeInTheDocument();
         });
     });
 });

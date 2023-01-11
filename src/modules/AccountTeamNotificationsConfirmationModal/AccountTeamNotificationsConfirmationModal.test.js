@@ -1,13 +1,13 @@
-import { render, screen, cleanup } from 'testUtils';
+import { testUtils } from '../../../test';
 import { teamNotificationsMock } from '../../../test/mocks/teamsServiceMock';
 import AccountTeamNotificationsConfirmationModal from './AccountTeamNotificationsConfirmationModal';
 
 describe('AccountTeamNotificationsConfirmationModal', () => {
     afterEach(() => {
-        cleanup();
+        testUtils.cleanup();
     });
     it('Then matches the previous snapshot', () => {
-        const wrapper = render(
+        const wrapper = testUtils.render(
             <AccountTeamNotificationsConfirmationModal
                 isOpen
                 onClose={jest.fn()}
@@ -22,7 +22,7 @@ describe('AccountTeamNotificationsConfirmationModal', () => {
         const onCloseMock = jest.fn();
         const onConfirmMock = jest.fn();
 
-        render(
+        testUtils.render(
             <AccountTeamNotificationsConfirmationModal
                 isOpen
                 onClose={onCloseMock}
@@ -31,7 +31,7 @@ describe('AccountTeamNotificationsConfirmationModal', () => {
             />
         );
 
-        const saveButton = screen.getByText('Save update');
+        const saveButton = testUtils.screen.getByText('Save update');
         saveButton.click();
         expect(onConfirmMock).toHaveBeenCalled();
     });
@@ -39,7 +39,7 @@ describe('AccountTeamNotificationsConfirmationModal', () => {
         const onCloseMock = jest.fn();
         const onConfirmMock = jest.fn();
 
-        render(
+        testUtils.render(
             <AccountTeamNotificationsConfirmationModal
                 isOpen
                 onClose={onCloseMock}
@@ -48,7 +48,7 @@ describe('AccountTeamNotificationsConfirmationModal', () => {
             />
         );
 
-        const noButton = screen.getByText('No, nevermind');
+        const noButton = testUtils.screen.getByText('No, nevermind');
         noButton.click();
         expect(onCloseMock).toHaveBeenCalled();
     });

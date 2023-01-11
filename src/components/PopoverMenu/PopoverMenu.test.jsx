@@ -1,4 +1,4 @@
-import { render, screen } from 'testUtils';
+import { testUtils } from '../../../test';
 
 import PopoverMenu from './PopoverMenu';
 import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
@@ -21,7 +21,7 @@ describe('Given the PopoverMenu component', () => {
         let wrapper;
 
         beforeAll(() => {
-            wrapper = render(<PopoverMenu {...props} />);
+            wrapper = testUtils.render(<PopoverMenu {...props} />);
         });
 
         it('Then matches the previous snapshot', async () => {
@@ -29,10 +29,10 @@ describe('Given the PopoverMenu component', () => {
         });
 
         it('Then renders the item label', () => {
-            expect(screen.getByText('Remove')).toBeInTheDocument();
+            expect(testUtils.screen.getByText('Remove')).toBeInTheDocument();
         });
         it('When the button is clicked it calls the action function', () => {
-            screen.getByRole('button').click();
+            testUtils.screen.getByRole('button').click();
             expect(mockFunction).toHaveBeenCalled();
         });
     });

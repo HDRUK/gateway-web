@@ -10,7 +10,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
 
-import { generalUtils, darValidationUtils, darHelperUtils, searchBarHelperUtils, authUtils } from 'utils';
+import { generalUtils, darValidationUtils, darHelperUtils, searchBarHelperUtils, authUtils, accountUtils } from 'utils';
 import { PERMISSIONS_TEAM_ROLES } from 'consts';
 import { Alert, RenderMarkdown } from 'components';
 
@@ -115,7 +115,7 @@ class DataAccessRequest extends Component {
             showContributorModal: false,
             showAssignWorkflowModal: false,
             readOnly: false,
-            userType: '',
+            teamType: '',
             answeredAmendments: 0,
             unansweredAmendments: 0,
             isWideForm: false,
@@ -395,7 +395,7 @@ class DataAccessRequest extends Component {
             aboutApplication = {},
             datasets,
             readOnly = false,
-            userType = 'APPLICANT',
+            teamType = 'APPLICANT',
             unansweredAmendments = 0,
             answeredAmendments = 0,
             mainApplicant,
@@ -430,10 +430,10 @@ class DataAccessRequest extends Component {
         }
         // 2. If user is custodian and the form is not in review, redirect the user to the DAR team dashboard
         // TODO: GAT-1510:062
-        if (userType === 'custodian' && applicationStatus === darHelperUtils.darStatus.submitted) {
+        if (teamType === 'custodian' && applicationStatus === darHelperUtils.darStatus.submitted) {
+            accountUtils.updateSelectedTeam({ teamType: 'team', teamId: publisher });
             const alert = {
                 publisher,
-                nav: `dataaccessrequests&team=${publisher}`,
                 tab: 'submitted',
             };
             this.props.history.push({
@@ -478,7 +478,7 @@ class DataAccessRequest extends Component {
             jsonSchema,
             inReviewMode,
             reviewSections,
-            userType,
+            teamType,
             areDatasetsAmended,
             allowsMultipleDatasets
         );
@@ -523,7 +523,7 @@ class DataAccessRequest extends Component {
             readOnly,
             answeredAmendments,
             unansweredAmendments,
-            userType,
+            teamType,
             userId,
             mainApplicant: `${firstname} ${lastname}${this.checkCurrentUser(userId) ? ' (you)' : ''}`,
             authorIds,
@@ -554,7 +554,7 @@ class DataAccessRequest extends Component {
      * @desc Function to inject static 'about' and 'files' pages and panels into schema
      * @returns {jsonSchmea} object
      */
-    injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = [], userType, areDatasetsAmended, allowsMultipleDatasets) {
+    injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = [], teamType, areDatasetsAmended, allowsMultipleDatasets) {
         let { pages, formPanels } = { ...jsonSchema };
         // formPanel {pageId: 'safePeople', panelId:'applicant'}
         let formPanel = {};
@@ -579,7 +579,7 @@ class DataAccessRequest extends Component {
 
         // if amendment has been made to datasets mark about application navigation with warning
         // TODO: GAT-1510:063
-        if (userType === 'custodian' && areDatasetsAmended) {
+        if (teamType === 'custodian' && areDatasetsAmended) {
             jsonSchema.pages[0].flag = 'WARNING';
         }
 
@@ -697,7 +697,7 @@ class DataAccessRequest extends Component {
                         jsonSchema,
                         false,
                         this.state.reviewSections,
-                        this.state.userType,
+                        this.state.teamType,
                         this.state.areDatasetsAmended,
                         true
                     );
@@ -793,6 +793,8 @@ class DataAccessRequest extends Component {
 
             const lastSaved = darHelperUtils.saveTime();
             this.setState({ lastSaved });
+
+            accountUtils.updateSelectedTeam({ teamType: 'user' });
 
             this.props.history.push({
                 pathname: '/account',
@@ -997,7 +999,7 @@ class DataAccessRequest extends Component {
             jsonSchema,
             this.state.inReviewMode,
             this.state.reviewSections,
-            this.state.userType,
+            this.state.teamType,
             this.state.areDatasetsAmended,
             true
         );
@@ -1120,7 +1122,7 @@ class DataAccessRequest extends Component {
             jsonSchema,
             this.state.inReviewMode,
             this.state.reviewSections,
-            this.state.userType,
+            this.state.teamType,
             this.state.areDatasetsAmended,
             true
         );
@@ -1134,7 +1136,7 @@ class DataAccessRequest extends Component {
                 amendmentIterations,
                 showSubmit:
                     this.state.applicationStatus === darHelperUtils.darStatus.inProgress ||
-                    (unansweredAmendments === 0 && answeredAmendments > 0 && this.state.userType === PERMISSIONS_TEAM_ROLES.applicant),
+                    (unansweredAmendments === 0 && answeredAmendments > 0 && this.state.teamType === PERMISSIONS_TEAM_ROLES.applicant),
             },
             _.isNil
         );
@@ -1399,10 +1401,13 @@ class DataAccessRequest extends Component {
                 // redirect to dashboard with message
                 let alert = {
                     publisher: this.state.publisher || '',
-                    nav: `dataaccessrequests&team=${this.state.publisher}`,
+                    nav: 'dataaccessrequests',
                     tab: 'inReview',
                     message: `You have successfully sent your recommendation for your assigned phase of ${this.state.aboutApplication.projectName} project`,
                 };
+
+                accountUtils.updateSelectedTeam({ teamType: 'team', teamId: this.state.publisher });
+
                 // 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
                 this.props.history.push({
                     pathname: `/account`,
@@ -1608,12 +1613,15 @@ class DataAccessRequest extends Component {
                 // 2. set alert object for screen
                 let alert = {
                     publisher: this.state.publisher || '',
-                    nav: `dataaccessrequests&team=${this.state.publisher}`,
+                    nav: 'dataaccessrequests',
                     tab: this.tabState[type],
                     message: `You have ${this.tabState[type]} the data access request for ${this.state.publisher}`,
                 };
                 // 3. hide screen modal for approve, reject, approve with comments
                 this.toggleActionModal();
+
+                accountUtils.updateSelectedTeam({ teamType: 'team', teamId: this.state.publisher });
+
                 // 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
                 this.props.history.push({
                     pathname: `/account`,
@@ -1823,6 +1831,9 @@ class DataAccessRequest extends Component {
                 message: `You have deleted the data access request for '${projectName}' project`,
                 publisher: 'user',
             };
+
+            accountUtils.updateSelectedTeam({ teamType: 'user' });
+
             this.props.history.push({
                 pathname: '/account',
                 search: '?tab=dataaccessrequests',
@@ -1873,7 +1884,7 @@ class DataAccessRequest extends Component {
                     key={this.state._id}
                     activeAccordionCard={this.state.activeAccordionCard}
                     allowedNavigation={this.state.allowedNavigation}
-                    userType={this.state.userType}
+                    teamType={this.state.teamType}
                     selectedDatasets={this.state.aboutApplication.selectedDatasets}
                     readOnly={this.state.readOnly || this.state.applicationStatus !== darHelperUtils.darStatus.inProgress}
                     projectNameValid={this.state.projectNameValid}
@@ -1962,7 +1973,7 @@ class DataAccessRequest extends Component {
             aboutApplication: { projectName = '', selectedDatasets },
             context,
             projectId,
-            userType,
+            teamType,
             actionModalConfig,
             roles,
             showEmailModal,
@@ -2034,11 +2045,11 @@ class DataAccessRequest extends Component {
                                 <a
                                     className={`linkButton white-14-semibold ml-2 ${allowedNavigation ? '' : 'disabled'}`}
                                     onClick={this.onClickSave}
-                                    href='javascript:void(0)'>
+                                    href='#'>
                                     Save now
                                 </a>
                             }
-                            {userType.toUpperCase() === 'APPLICANT' && !this.state.readOnly ? (
+                            {teamType.toUpperCase() === 'APPLICANT' && !this.state.readOnly ? (
                                 <a
                                     className={`linkButton white-14-semibold ml-2 ${allowedNavigation ? '' : 'disabled'}`}
                                     href='javascript:;'
@@ -2131,7 +2142,7 @@ class DataAccessRequest extends Component {
                                     onHandleActionTabChange={this.onHandleActionTabChange}
                                     toggleDrawer={this.toggleDrawer}
                                     setMessageDescription={this.setMessageDescription}
-                                    userType={userType}
+                                    teamType={teamType}
                                     messagesCount={this.state.messagesCount}
                                     notesCount={this.state.notesCount}
                                     isShared={this.state.isShared}
@@ -2163,7 +2174,7 @@ class DataAccessRequest extends Component {
                                     answeredAmendments={this.state.answeredAmendments}
                                     unansweredAmendments={this.state.unansweredAmendments}
                                 />
-                                {userType.toUpperCase() === 'APPLICANT' ? (
+                                {teamType.toUpperCase() === 'APPLICANT' ? (
                                     <ApplicantActionButtons
                                         allowedNavigation={allowedNavigation}
                                         isCloneable={this.state.isCloneable}

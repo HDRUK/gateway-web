@@ -16,14 +16,12 @@ import AccountDatasetsCreate from '../AccountDatasetsCreate';
 import AccountDatasetsContent from './AccountDatasetsContent';
 import AccountDatasetsTabs from './AccountDatasetsTabs';
 
-const AccountDatasets = props => {
-    const [key, setKey] = useState(props.alert ? props.alert.tab : '');
+const AccountDatasets = ({ alert, teamType, teamId }) => {
+    const [key, setKey] = useState(alert ? alert.tab : '');
     const [statusCounts, setStatusCounts] = useState({});
     const { userState } = useAuth();
     const { isFederated, isLoading: isDashboardLoading } = useDashboard();
     const [publisherID, setPublisherId] = useState();
-
-    const { team } = props;
 
     const searchOptions = useMemo(
         () => ({
@@ -74,9 +72,9 @@ const AccountDatasets = props => {
     }, []);
 
     useEffect(() => {
-        setPublisherId(authUtils.getPublisherId(userState[0], team));
-        setKey(team === 'admin' ? STATUS_INREVIEW : props.alert.tab || DATASETS_STATUS_ACTIVE);
-    }, [team]);
+        setPublisherId(authUtils.getPublisherId(userState[0], teamId, teamType));
+        setKey(teamType === 'admin' ? STATUS_INREVIEW : alert.tab || DATASETS_STATUS_ACTIVE);
+    }, [teamId, teamType]);
 
     useEffect(() => {
         if (publisherID && key) {
@@ -109,14 +107,14 @@ const AccountDatasets = props => {
     }, [data]);
 
     const AccountDatasetsResults = useCallback(
-        ({ isLoading, isFetched, datasets, params, team, count }) => (
+        ({ isLoading, isFetched, datasets, params, teamType, count }) => (
             <AccountDatasetsContent
                 isLoading={isLoading}
                 isFetched={isFetched}
                 data={datasets}
                 onSubmit={handleSubmit}
                 onReset={handleReset}
-                team={team}
+                teamType={teamType}
                 params={params}
                 status={key}
                 count={count}
@@ -136,18 +134,18 @@ const AccountDatasets = props => {
                     isFederated={isFederated}
                     isLoading={isDashboardLoading}
                     publisherID={publisherID}
-                    alert={props.alert}
-                    team={team}
+                    alert={alert}
+                    teamType={teamType}
                 />
 
-                {isFetched && <AccountDatasetsTabs counts={statusCounts} onSelectTab={handleSelect} team={team} activeKey={key} />}
+                {isFetched && <AccountDatasetsTabs counts={statusCounts} onSelectTab={handleSelect} teamType={teamType} activeKey={key} />}
 
                 <AccountDatasetsResults
                     isLoading={isLoading}
                     isFetched={isFetched}
                     datasets={(data && data.data.data.results.listOfDatasets) || []}
                     params={params}
-                    team={team}
+                    teamType={teamType}
                     count={statusCounts[key]}
                 />
             </LayoutContent>

@@ -9,9 +9,6 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
     <div>
       <div
         class="mt-2 row"
-        subtext="...sorry, this is taking longer than usual"
-        text="Loading..."
-        timeout="5000"
       >
         <div
           class="col"

@@ -22,7 +22,7 @@ import CmsDropdown from './CmsDropdown';
 import './SearchBar.scss';
 import UserDropdownItems from './UserDropdownItems';
 import UserDropdownTeams from './UserDropdownTeams';
-import { authUtils } from 'utils';
+import { authUtils, accountUtils } from 'utils';
 
 var baseURL = require('../BaseURL').getURL();
 const urlEnv = require('../BaseURL').getURLEnv();
@@ -30,7 +30,7 @@ const communityLink = require('../BaseURL').getDiscourseURL();
 
 const CustomToggle = forwardRef(({ children, onClick, subToggle }, ref) => (
     <a
-        href='javascript:void(0)'
+        href='#'
         ref={ref}
         onClick={e => {
             googleAnalytics.recordEvent('Search bar', 'Opened user notifications', 'Clicked search bar notification icon');
@@ -133,7 +133,7 @@ class SearchBar extends Component {
 
     logout = e => {
         axios.get(baseURL + '/api/v1/auth/logout').then(res => {
-            if (localStorage.getItem('HDR_TEAM') !== null) localStorage.removeItem('HDR_TEAM');
+            accountUtils.resetSelectedTeam();
 
             window.location.reload();
         });
@@ -237,18 +237,11 @@ class SearchBar extends Component {
         }
     }
 
-    getLink = (publisherName = '') => {
-        if (!isEmpty(publisherName)) return `/account?tab=dataaccessrequests&team=${publisherName}`;
-
-        return `/account?tab=dataaccessrequests`;
-    };
-
     getPublisherLink = data => {
         let { messageDescription, publisherName } = data;
-        let link = this.getLink(publisherName);
 
         return (
-            <a href={`${link}`} className='notificationInfo'>
+            <a href='/account?tab=dataaccessrequests' className='notificationInfo'>
                 {messageDescription}
             </a>
         );
@@ -827,7 +820,13 @@ class SearchBar extends Component {
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
-                                                                                                    href={`/account?tab=teamManagement&team=${dat.publisherName}`}
+                                                                                                    onClick={() =>
+                                                                                                        accountUtils.updateSelectedTeam({
+                                                                                                            teamType: 'team',
+                                                                                                            teamId: dat.publisherName,
+                                                                                                        })
+                                                                                                    }
+                                                                                                    href={`/account?tab=teamManagement`}
                                                                                                     class='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
@@ -917,9 +916,12 @@ class SearchBar extends Component {
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
-                                                                                                    href={
-                                                                                                        '/account?tab=datasets&team=admin'
+                                                                                                    onClick={() =>
+                                                                                                        accountUtils.updateSelectedTeam({
+                                                                                                            teamType: 'admin',
+                                                                                                        })
                                                                                                     }
+                                                                                                    href={'/account?tab=datasets'}
                                                                                                     className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
@@ -1007,7 +1009,7 @@ class SearchBar extends Component {
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
-                                                                                                    href={`/account?tab=datasets&team=${dat.datasetID}`}
+                                                                                                    href={`/account?tab=datasets&teamId=${dat.datasetID}`}
                                                                                                     className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
@@ -1490,9 +1492,7 @@ class SearchBar extends Component {
                                                                                                 {messageDateString + '\n'}
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
-                                                                                                <a
-                                                                                                    href='javascript:void(0)'
-                                                                                                    class='notificationInfo'>
+                                                                                                <a href='#' class='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
                                                                                             </div>
