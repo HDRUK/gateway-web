@@ -6,23 +6,29 @@ import { NotificationManager } from 'react-notifications';
 
 import { Table, LayoutContent } from 'components';
 import { PermissionDescriptions } from 'modules';
-import { PERMISSIONS_TEAM_MEMBER_ROLES, PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN } from 'consts';
-import { authUtils } from 'utils';
+import {
+    PERMISSIONS_TEAM_MEMBER_ROLES,
+    PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN,
+    ROLE_CUSTODIAN_DAR_MANAGER,
+    ROLE_CUSTODIAN_METADATA_MANAGER,
+    ROLE_CUSTODIAN_TEAM_ADMIN,
+} from 'consts';
+import { accountUtils, roleUtils } from 'utils';
 import { teamService } from 'services';
 
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
 import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { useAuth } from '../../context/AuthContext';
-import { ActionCell, DataAccessRequestCell, MetadataCell, NameCell, TeamAdminCell, HeaderTooltip } from './AccountTeamMembers.components';
+import { ActionCell, CheckboxCell, NameCell, HeaderTooltip } from './AccountTeamMembers.components';
 
 const AccountTeamMembers = ({ teamId }) => {
     const { userState } = useAuth();
     const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
-    const [checkboxes, setCheckboxes] = useState({});
+    const [checkboxValues, setCheckboxValues] = useState({});
     const { t } = useTranslation();
-    const [isTeamManager, setIsTeamManager] = useState(false);
+    const [isTeamAdmin, setIsTeamAdmin] = useState(false);
 
     const getMembersRequest = teamService.useGetMembers(null, {
         onError: ({ title, message }) => {
@@ -34,22 +40,21 @@ const AccountTeamMembers = ({ teamId }) => {
         const init = () => {
             if (teamId) {
                 getMembersRequest.mutateAsync(teamId).then(({ data: { members } }) => {
-                    /**
-                     * GAT-1678: currently static
-                     *
-                     * const initialCheckboxes = {};
-                     *
-                     * members.forEach((member) => {
-                     *   initialCheckboxes[someId] = someBoolean;
-                     * });
-                     *
-                     * setCheckboxes(initialCheckboxes);
-                     */
+                    const initialCheckboxes = {};
 
+                    members.forEach(member => {
+                        initialCheckboxes[member._id] = {};
+                        member.roles.forEach(role => {
+                            initialCheckboxes[member._id][role] = true;
+                        });
+                    });
+
+                    setCheckboxValues(initialCheckboxes);
                     setTeamMembers(members);
 
                     // TODO: GAT-1510:042
-                    setIsTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
+                    const team = accountUtils.getTeam(userState[0]?.teams, teamId);
+                    setIsTeamAdmin(roleUtils.getIsTeamAdmin(team));
                 });
             }
         };
@@ -73,11 +78,8 @@ const AccountTeamMembers = ({ teamId }) => {
         setTeamMembers(addedMembers);
     };
 
-    const handleCheckboxChange = useCallback(({ target: { id, checked } }) => {
-        setCheckboxes({
-            [id]: checked,
-            ...checkboxes,
-        });
+    const handleCheckboxChange = useCallback(({ role, checked, memberId }) => {
+        console.log({ role, checked, memberId });
     }, []);
 
     const columns = useMemo(
@@ -99,7 +101,13 @@ const AccountTeamMembers = ({ teamId }) => {
                     valign: 'top',
                 },
                 Cell: ({ row: { original } }) => (
-                    <TeamAdminCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />
+                    <CheckboxCell
+                        memberId={original._id}
+                        checkboxValues={checkboxValues}
+                        name={ROLE_CUSTODIAN_TEAM_ADMIN}
+                        label={t('admin')}
+                        onChange={handleCheckboxChange}
+                    />
                 ),
             },
             {
@@ -117,9 +125,23 @@ const AccountTeamMembers = ({ teamId }) => {
                 cellProps: {
                     valign: 'top',
                 },
-                Cell: ({ row: { original } }) => (
-                    <DataAccessRequestCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />
-                ),
+                Cell: ({ row: { original } }) =>
+                    [
+                        { name: ROLE_CUSTODIAN_DAR_MANAGER, label: t('manager') },
+                        {
+                            name: PERMISSIONS_TEAM_MEMBER_ROLES.reviewer,
+                            label: t('reviewer'),
+                        },
+                    ].map(checkbox => (
+                        <CheckboxCell
+                            key={checkbox.name}
+                            name={checkbox.name}
+                            memberId={original._id}
+                            checkboxValues={checkboxValues}
+                            label={checkbox.label}
+                            onChange={handleCheckboxChange}
+                        />
+                    )),
             },
             {
                 Header: (
@@ -136,7 +158,23 @@ const AccountTeamMembers = ({ teamId }) => {
                 cellProps: {
                     valign: 'top',
                 },
-                Cell: ({ row: { original } }) => <MetadataCell member={original} onChange={handleCheckboxChange} checkboxes={checkboxes} />,
+                Cell: ({ row: { original } }) =>
+                    [
+                        { name: ROLE_CUSTODIAN_METADATA_MANAGER, label: t('manager') },
+                        {
+                            name: PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor,
+                            label: t('editor'),
+                        },
+                    ].map(checkbox => (
+                        <CheckboxCell
+                            key={checkbox.name}
+                            name={checkbox.name}
+                            memberId={original._id}
+                            checkboxValues={checkboxValues}
+                            label={checkbox.label}
+                            onChange={handleCheckboxChange}
+                        />
+                    )),
             },
             {
                 Header: 'Further Actions',
@@ -151,7 +189,7 @@ const AccountTeamMembers = ({ teamId }) => {
                 },
             },
         ],
-        []
+        [checkboxValues]
     );
 
     if (getMembersRequest.isLoading) {
@@ -170,7 +208,7 @@ const AccountTeamMembers = ({ teamId }) => {
                     <Table columns={columns} data={teamMembers} />
                 </Card>
             )}
-            {isTeamManager && (
+            {isTeamAdmin && (
                 <Card>
                     <Box p={6} display='flex' justifyContent='center'>
                         <Button variant='primary' onClick={handleOpenModal}>

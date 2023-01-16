@@ -92,7 +92,7 @@ describe('Given the AccountTeamMembers component', () => {
     describe('And new member is clicked', () => {
         beforeEach(async () => {
             authSpy.mockReturnValue({
-                userState: mocks.userState.mockUserStateManager,
+                userState: mocks.userState.mockCustodianTeamAdmin,
             });
 
             testUtils.render(<AccountTeamMembers {...props} />);
@@ -100,7 +100,6 @@ describe('Given the AccountTeamMembers component', () => {
             await testUtils.waitFor(() => {
                 testUtils.screen.getByText(/Add a new member/);
             });
-
             const addMembersButton = testUtils.screen.getByText(/Add a new member/);
 
             testUtils.fireEvent.click(addMembersButton);
@@ -118,7 +117,7 @@ describe('Given the AccountTeamMembers component', () => {
     describe('And new member is clicked', () => {
         beforeEach(async () => {
             authSpy.mockReturnValue({
-                userState: mocks.userState.mockUserStateManager,
+                userState: mocks.userState.mockCustodianTeamAdmin,
             });
 
             testUtils.render(<AccountTeamMembers {...props} />);
@@ -154,7 +153,7 @@ describe('Given the AccountTeamMembers component', () => {
             });
         });
 
-        describe('And Team Admin is enabled', () => {
+        describe('And Team Admin is unchecked', () => {
             let teamAdminCheckbox;
 
             beforeAll(() => {
@@ -163,11 +162,13 @@ describe('Given the AccountTeamMembers component', () => {
 
                 teamAdminCheckbox = testUtils.within(cells[1]).getByLabelText('Admin');
 
+                expect(teamAdminCheckbox.checked).toBeTruthy();
+
                 testUtils.fireEvent.click(teamAdminCheckbox);
             });
 
             it('Then checks the checkbox', () => {
-                expect(teamAdminCheckbox.checked).toBeTruthy();
+                expect(teamAdminCheckbox.checked).toBeFalsy();
             });
         });
 
