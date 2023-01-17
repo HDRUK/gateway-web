@@ -49,7 +49,7 @@ CheckboxCell.propTypes = {
     memberId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    checkboxValues: PropTypes.objectOf(PropTypes.bool).isRequired,
+    checkboxValues: PropTypes.objectOf(PropTypes.objectOf(PropTypes.bool)).isRequired,
 };
 
 const HeaderTooltip = ({ header, content }) => (
