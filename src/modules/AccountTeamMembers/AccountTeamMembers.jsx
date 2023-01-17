@@ -104,7 +104,7 @@ const AccountTeamMembers = ({ teamId }) => {
                     <CheckboxCell
                         memberId={original._id}
                         checkboxValues={checkboxValues}
-                        name={ROLE_CUSTODIAN_TEAM_ADMIN}
+                        role={ROLE_CUSTODIAN_TEAM_ADMIN}
                         label={t('admin')}
                         onChange={handleCheckboxChange}
                     />
@@ -135,7 +135,7 @@ const AccountTeamMembers = ({ teamId }) => {
                     ].map(checkbox => (
                         <CheckboxCell
                             key={checkbox.name}
-                            name={checkbox.name}
+                            role={checkbox.name}
                             memberId={original._id}
                             checkboxValues={checkboxValues}
                             label={checkbox.label}
@@ -168,7 +168,7 @@ const AccountTeamMembers = ({ teamId }) => {
                     ].map(checkbox => (
                         <CheckboxCell
                             key={checkbox.name}
-                            name={checkbox.name}
+                            role={checkbox.name}
                             memberId={original._id}
                             checkboxValues={checkboxValues}
                             label={checkbox.label}

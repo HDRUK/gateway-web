@@ -39,7 +39,7 @@ describe('Given the AccountTeamMembers components', () => {
             wrapper = testUtils.render(
                 <CheckboxCell
                     memberId='1234'
-                    name={ROLE_CUSTODIAN_TEAM_ADMIN}
+                    role={ROLE_CUSTODIAN_TEAM_ADMIN}
                     checkboxValues={{
                         1234: { [ROLE_CUSTODIAN_TEAM_ADMIN]: true },
                     }}
