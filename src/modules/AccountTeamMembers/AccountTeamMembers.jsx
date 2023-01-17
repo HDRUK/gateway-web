@@ -125,23 +125,24 @@ const AccountTeamMembers = ({ teamId }) => {
                 cellProps: {
                     valign: 'top',
                 },
-                Cell: ({ row: { original } }) =>
-                    [
-                        { name: ROLE_CUSTODIAN_DAR_MANAGER, label: t('manager') },
-                        {
-                            name: PERMISSIONS_TEAM_MEMBER_ROLES.reviewer,
-                            label: t('reviewer'),
-                        },
-                    ].map(checkbox => (
+                Cell: ({ row: { original } }) => (
+                    <>
                         <CheckboxCell
-                            key={checkbox.name}
-                            role={checkbox.name}
                             memberId={original._id}
                             checkboxValues={checkboxValues}
-                            label={checkbox.label}
+                            role={ROLE_CUSTODIAN_DAR_MANAGER}
+                            label={t('manager')}
                             onChange={handleCheckboxChange}
                         />
-                    )),
+                        <CheckboxCell
+                            memberId={original._id}
+                            checkboxValues={checkboxValues}
+                            role={PERMISSIONS_TEAM_MEMBER_ROLES.reviewer}
+                            label={t('reviewer')}
+                            onChange={handleCheckboxChange}
+                        />
+                    </>
+                ),
             },
             {
                 Header: (
@@ -158,23 +159,24 @@ const AccountTeamMembers = ({ teamId }) => {
                 cellProps: {
                     valign: 'top',
                 },
-                Cell: ({ row: { original } }) =>
-                    [
-                        { name: ROLE_CUSTODIAN_METADATA_MANAGER, label: t('manager') },
-                        {
-                            name: PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor,
-                            label: t('editor'),
-                        },
-                    ].map(checkbox => (
+                Cell: ({ row: { original } }) => (
+                    <>
                         <CheckboxCell
-                            key={checkbox.name}
-                            role={checkbox.name}
                             memberId={original._id}
                             checkboxValues={checkboxValues}
-                            label={checkbox.label}
+                            role={ROLE_CUSTODIAN_METADATA_MANAGER}
+                            label={t('manager')}
                             onChange={handleCheckboxChange}
                         />
-                    )),
+                        <CheckboxCell
+                            memberId={original._id}
+                            checkboxValues={checkboxValues}
+                            role={PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor}
+                            label={t('editor')}
+                            onChange={handleCheckboxChange}
+                        />
+                    </>
+                ),
             },
             {
                 Header: 'Further Actions',
