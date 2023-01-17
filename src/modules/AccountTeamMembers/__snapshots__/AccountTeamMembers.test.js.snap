@@ -184,10 +184,11 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
               >
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
-                  for="5678_admin"
+                  for="5678_custodian.team.admin"
                 >
                   <input
-                    id="5678_admin"
+                    checked=""
+                    id="5678_custodian.team.admin"
                     type="checkbox"
                   />
                   <span
@@ -206,10 +207,10 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
               >
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
-                  for="5678_dataAccessRequest_manager"
+                  for="5678_custodian.dar.manager"
                 >
                   <input
-                    id="5678_dataAccessRequest_manager"
+                    id="5678_custodian.dar.manager"
                     type="checkbox"
                   />
                   <span
@@ -222,10 +223,10 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
                 </label>
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
-                  for="5678_dataAccessRequest_reviewer"
+                  for="5678_reviewer"
                 >
                   <input
-                    id="5678_dataAccessRequest_reviewer"
+                    id="5678_reviewer"
                     type="checkbox"
                   />
                   <span
@@ -244,10 +245,10 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
               >
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
-                  for="5678_metadata_manager"
+                  for="5678_custodian.metadata.manager"
                 >
                   <input
-                    id="5678_metadata_manager"
+                    id="5678_custodian.metadata.manager"
                     type="checkbox"
                   />
                   <span
@@ -326,10 +327,11 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
               >
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
-                  for="1234_admin"
+                  for="1234_custodian.team.admin"
                 >
                   <input
-                    id="1234_admin"
+                    checked=""
+                    id="1234_custodian.team.admin"
                     type="checkbox"
                   />
                   <span
@@ -348,10 +350,10 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
               >
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
-                  for="1234_dataAccessRequest_manager"
+                  for="1234_custodian.dar.manager"
                 >
                   <input
-                    id="1234_dataAccessRequest_manager"
+                    id="1234_custodian.dar.manager"
                     type="checkbox"
                   />
                   <span
@@ -364,10 +366,10 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
                 </label>
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
-                  for="1234_dataAccessRequest_reviewer"
+                  for="1234_reviewer"
                 >
                   <input
-                    id="1234_dataAccessRequest_reviewer"
+                    id="1234_reviewer"
                     type="checkbox"
                   />
                   <span
@@ -386,10 +388,10 @@ exports[`Given the AccountTeamMembers component When it is rendered Then matches
               >
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
-                  for="1234_metadata_manager"
+                  for="1234_custodian.metadata.manager"
                 >
                   <input
-                    id="1234_metadata_manager"
+                    id="1234_custodian.metadata.manager"
                     type="checkbox"
                   />
                   <span

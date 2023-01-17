@@ -8,6 +8,7 @@ import * as datasetOnboardingValidationUtils from './DatasetOnboardingValidation
 import * as generalUtils from './General.util';
 import * as modalHelperUtils from './ModalHelper.util';
 import * as requestsUtils from './requests';
+import * as roleUtils from './role.util';
 import * as routerUtils from './router';
 import * as searchBarHelperUtils from './SearchBarHelper.util';
 import * as uploaderUtils from './Uploader.util';
@@ -24,6 +25,7 @@ export {
     generalUtils,
     modalHelperUtils,
     requestsUtils,
+    roleUtils,
     routerUtils,
     searchBarHelperUtils,
     uploaderUtils,

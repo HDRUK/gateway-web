@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Checkbox, Popover, PopoverMenu } from 'components';
 import { useTranslation } from 'react-i18next';
+
 import { memberPropTypes } from '../../types';
 import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
 import { ReactComponent as QuestionMarkIcon } from '../../images/icons/question-mark.svg';
-
-const cellProps = {
-    member: memberPropTypes.isRequired,
-    onChange: PropTypes.func.isRequired,
-    checkboxes: PropTypes.objectOf(PropTypes.bool).isRequired,
-};
 
 const ActionCell = ({ member: { id }, onDeleteMember }) => {
     const { t } = useTranslation();
@@ -43,47 +38,19 @@ NameCell.propTypes = {
     member: memberPropTypes.isRequired,
 };
 
-const TeamAdminCell = ({ member: { id }, onChange, checkboxes }) => {
-    const { t } = useTranslation();
+const CheckboxCell = ({ onChange, memberId, role, label, checkboxValues }) => {
+    const handleChange = ({ target: { checked } }) => onChange({ memberId, role, checked });
 
-    const idAdmin = `${id}_admin`;
-
-    return <Checkbox label={t('admin')} onChange={onChange} checked={checkboxes[idAdmin]} id={idAdmin} />;
+    return <Checkbox label={label} onChange={handleChange} checked={!!checkboxValues?.[memberId]?.[role]} id={`${memberId}_${role}`} />;
 };
 
-TeamAdminCell.propTypes = cellProps;
-
-const DataAccessRequestCell = ({ member: { id }, onChange, checkboxes }) => {
-    const { t } = useTranslation();
-
-    const idDARManager = `${id}_dataAccessRequest_manager`;
-    const idDARReviewer = `${id}_dataAccessRequest_reviewer`;
-
-    return (
-        <>
-            <Checkbox label={t('manager')} onChange={onChange} checked={checkboxes[idDARManager]} id={idDARManager} />
-            <Checkbox label={t('reviewer')} onChange={onChange} checked={checkboxes[idDARReviewer]} id={idDARReviewer} />
-        </>
-    );
+CheckboxCell.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    memberId: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    checkboxValues: PropTypes.objectOf(PropTypes.objectOf(PropTypes.bool)).isRequired,
 };
-
-DataAccessRequestCell.propTypes = cellProps;
-
-const MetadataCell = ({ member: { id }, onChange, checkboxes }) => {
-    const { t } = useTranslation();
-
-    const idMetadataManager = `${id}_metadata_manager`;
-    const idMetadataEditor = `${id}_metadata_editor`;
-
-    return (
-        <>
-            <Checkbox label={t('manager')} onChange={onChange} checked={checkboxes[idMetadataManager]} id={idMetadataManager} />
-            <Checkbox label={t('editor')} onChange={onChange} checked={checkboxes[idMetadataEditor]} id={idMetadataEditor} />
-        </>
-    );
-};
-
-MetadataCell.propTypes = cellProps;
 
 const HeaderTooltip = ({ header, content }) => (
     <Box display='flex' alignItems='center'>
@@ -102,4 +69,4 @@ HeaderTooltip.propTypes = {
     content: PropTypes.node.isRequired,
 };
 
-export { ActionCell, NameCell, DataAccessRequestCell, TeamAdminCell, MetadataCell, HeaderTooltip };
+export { ActionCell, NameCell, CheckboxCell, HeaderTooltip };

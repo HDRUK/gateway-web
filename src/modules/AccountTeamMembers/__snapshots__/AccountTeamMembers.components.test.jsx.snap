@@ -1,75 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given the AccountTeamMembers components When DataAccessRequestCell is rendered Then matches the previous snapshot 1`] = `
+exports[`Given the AccountTeamMembers components When CheckboxCell is rendered Then matches the previous snapshot 1`] = `
 <div>
   <label
     class="ui-Checkbox emotion-0 emotion-1"
-    for="5678_dataAccessRequest_manager"
+    for="1234_custodian.team.admin"
   >
     <input
       checked=""
-      id="5678_dataAccessRequest_manager"
+      id="1234_custodian.team.admin"
       type="checkbox"
     />
     <span
       class="ui-Checkbox__label"
     >
       <span>
-        Manager
-      </span>
-    </span>
-  </label>
-  <label
-    class="ui-Checkbox emotion-0 emotion-1"
-    for="5678_dataAccessRequest_reviewer"
-  >
-    <input
-      id="5678_dataAccessRequest_reviewer"
-      type="checkbox"
-    />
-    <span
-      class="ui-Checkbox__label"
-    >
-      <span>
-        Reviewer
-      </span>
-    </span>
-  </label>
-</div>
-`;
-
-exports[`Given the AccountTeamMembers components When MetadataCell is rendered Then matches the previous snapshot 1`] = `
-<div>
-  <label
-    class="ui-Checkbox emotion-0 emotion-1"
-    for="5678_metadata_manager"
-  >
-    <input
-      checked=""
-      id="5678_metadata_manager"
-      type="checkbox"
-    />
-    <span
-      class="ui-Checkbox__label"
-    >
-      <span>
-        Manager
-      </span>
-    </span>
-  </label>
-  <label
-    class="ui-Checkbox emotion-0 emotion-1"
-    for="5678_metadata_editor"
-  >
-    <input
-      id="5678_metadata_editor"
-      type="checkbox"
-    />
-    <span
-      class="ui-Checkbox__label"
-    >
-      <span>
-        Editor
+        Admin
       </span>
     </span>
   </label>
@@ -91,27 +37,5 @@ exports[`Given the AccountTeamMembers components When NameCell is rendered Then 
   >
     HDR UK
   </p>
-</div>
-`;
-
-exports[`Given the AccountTeamMembers components When TeamAdminCell is rendered Then matches the previous snapshot 1`] = `
-<div>
-  <label
-    class="ui-Checkbox emotion-0 emotion-1"
-    for="5678_admin"
-  >
-    <input
-      checked=""
-      id="5678_admin"
-      type="checkbox"
-    />
-    <span
-      class="ui-Checkbox__label"
-    >
-      <span>
-        Admin
-      </span>
-    </span>
-  </label>
 </div>
 `;

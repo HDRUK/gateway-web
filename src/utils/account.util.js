@@ -12,4 +12,8 @@ const resetSelectedTeam = () => {
     localStorage.removeItem('teamType');
 };
 
-export { resetSelectedTeam, updateSelectedTeam };
+const getTeam = (teams, teamId) => {
+    return teams?.find(team => team._id === teamId);
+};
+
+export { getTeam, resetSelectedTeam, updateSelectedTeam };
