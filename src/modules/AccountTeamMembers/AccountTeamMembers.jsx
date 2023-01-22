@@ -13,9 +13,9 @@ import {
     ROLE_CUSTODIAN_METADATA_MANAGER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
 } from 'consts';
-import { accountUtils, roleUtils } from 'utils';
 import { teamService } from 'services';
 
+import { useRoles } from 'hooks';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
 import AccountTeamMembersModal from '../AccountTeamMembersModal';
@@ -24,11 +24,11 @@ import { ActionCell, CheckboxCell, NameCell, HeaderTooltip } from './AccountTeam
 
 const AccountTeamMembers = ({ teamId }) => {
     const { userState } = useAuth();
+    const { isCustodianTeamAdmin, isCustodianMetadataManager, isCustodianDarManager } = useRoles(teamId);
     const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
     const [checkboxValues, setCheckboxValues] = useState({});
     const { t } = useTranslation();
-    const [isTeamAdmin, setIsTeamAdmin] = useState(false);
 
     const getMembersRequest = teamService.useGetMembers(null, {
         onError: ({ title, message }) => {
@@ -51,10 +51,6 @@ const AccountTeamMembers = ({ teamId }) => {
 
                     setCheckboxValues(initialCheckboxes);
                     setTeamMembers(members);
-
-                    // TODO: GAT-1510:042
-                    const team = accountUtils.getTeam(userState[0]?.teams, teamId);
-                    setIsTeamAdmin(roleUtils.getIsTeamAdmin(team));
                 });
             }
         };
@@ -82,6 +78,24 @@ const AccountTeamMembers = ({ teamId }) => {
         console.log({ role, checked, memberId });
     }, []);
 
+    const getIsCheckboxDisabled = useCallback(
+        role => {
+            const darManagerHasPermission =
+                isCustodianDarManager && [ROLE_CUSTODIAN_DAR_MANAGER, PERMISSIONS_TEAM_MEMBER_ROLES.reviewer].includes(role);
+
+            const metadataManagerHasPermission =
+                isCustodianMetadataManager &&
+                [ROLE_CUSTODIAN_METADATA_MANAGER, PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor].includes(role);
+
+            if (isCustodianTeamAdmin || darManagerHasPermission || metadataManagerHasPermission) {
+                return false;
+            }
+
+            return true;
+        },
+        [isCustodianMetadataManager, isCustodianDarManager, isCustodianTeamAdmin]
+    );
+
     const columns = useMemo(
         () => [
             {
@@ -102,6 +116,7 @@ const AccountTeamMembers = ({ teamId }) => {
                 },
                 Cell: ({ row: { original } }) => (
                     <CheckboxCell
+                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN)}
                         memberId={original._id}
                         checkboxValues={checkboxValues}
                         role={ROLE_CUSTODIAN_TEAM_ADMIN}
@@ -128,6 +143,7 @@ const AccountTeamMembers = ({ teamId }) => {
                 Cell: ({ row: { original } }) => (
                     <>
                         <CheckboxCell
+                            disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER)}
                             memberId={original._id}
                             checkboxValues={checkboxValues}
                             role={ROLE_CUSTODIAN_DAR_MANAGER}
@@ -135,6 +151,7 @@ const AccountTeamMembers = ({ teamId }) => {
                             onChange={handleCheckboxChange}
                         />
                         <CheckboxCell
+                            disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.reviewer)}
                             memberId={original._id}
                             checkboxValues={checkboxValues}
                             role={PERMISSIONS_TEAM_MEMBER_ROLES.reviewer}
@@ -162,6 +179,7 @@ const AccountTeamMembers = ({ teamId }) => {
                 Cell: ({ row: { original } }) => (
                     <>
                         <CheckboxCell
+                            disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER)}
                             memberId={original._id}
                             checkboxValues={checkboxValues}
                             role={ROLE_CUSTODIAN_METADATA_MANAGER}
@@ -169,6 +187,7 @@ const AccountTeamMembers = ({ teamId }) => {
                             onChange={handleCheckboxChange}
                         />
                         <CheckboxCell
+                            disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor)}
                             memberId={original._id}
                             checkboxValues={checkboxValues}
                             role={PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor}
@@ -210,7 +229,7 @@ const AccountTeamMembers = ({ teamId }) => {
                     <Table columns={columns} data={teamMembers} />
                 </Card>
             )}
-            {isTeamAdmin && (
+            {isCustodianTeamAdmin && (
                 <Card>
                     <Box p={6} display='flex' justifyContent='center'>
                         <Button variant='primary' onClick={handleOpenModal}>
