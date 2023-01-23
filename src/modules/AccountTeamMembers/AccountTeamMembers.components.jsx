@@ -38,16 +38,25 @@ NameCell.propTypes = {
     member: memberPropTypes.isRequired,
 };
 
-const CheckboxCell = ({ onChange, memberId, role, label, checkboxValues }) => {
+const CheckboxCell = ({ onChange, memberId, role, label, checkboxValues, disabled }) => {
     const handleChange = ({ target: { checked } }) => onChange({ memberId, role, checked });
 
-    return <Checkbox label={label} onChange={handleChange} checked={!!checkboxValues?.[memberId]?.[role]} id={`${memberId}_${role}`} />;
+    return (
+        <Checkbox
+            disabled={disabled}
+            label={label}
+            onChange={handleChange}
+            checked={!!checkboxValues?.[memberId]?.[role]}
+            id={`${memberId}_${role}`}
+        />
+    );
 };
 
 CheckboxCell.propTypes = {
     onChange: PropTypes.func.isRequired,
     memberId: PropTypes.string.isRequired,
     role: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired,
     label: PropTypes.string.isRequired,
     checkboxValues: PropTypes.objectOf(PropTypes.objectOf(PropTypes.bool)).isRequired,
 };

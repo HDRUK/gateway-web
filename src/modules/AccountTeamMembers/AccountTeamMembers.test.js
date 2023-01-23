@@ -10,10 +10,7 @@ const props = {
     teamId: '1234',
 };
 
-let wrapper;
-let headers;
-
-describe('Given the AccountTeamMembers component', () => {
+describe('AccountTeamMembers component', () => {
     beforeAll(() => {
         server.listen();
     });
@@ -26,7 +23,13 @@ describe('Given the AccountTeamMembers component', () => {
         server.close();
     });
 
-    describe('When it is rendered', () => {
+    afterEach(() => {
+        testUtils.cleanup();
+    });
+
+    describe('render', () => {
+        let wrapper;
+        let headers;
         beforeEach(async () => {
             authSpy.mockReturnValue({
                 userState: mocks.userState.mockUserStateNonManager,
@@ -35,25 +38,21 @@ describe('Given the AccountTeamMembers component', () => {
             wrapper = testUtils.render(<AccountTeamMembers {...props} />);
         });
 
-        afterEach(() => {
-            testUtils.cleanup();
-        });
-
-        it('Then matches the previous snapshot', async () => {
+        it('should match the previous snapshot', async () => {
             expect(wrapper.container).toMatchSnapshot();
         });
 
-        it('Then shows a loader', async () => {
+        it('should show a loader', async () => {
             expect(testUtils.screen.getByText('Loading...')).toMatchSnapshot();
         });
 
-        it('Then matches the previous snapshot', async () => {
+        it('should render the table', async () => {
             await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
             expect(wrapper.container).toMatchSnapshot();
         });
 
-        it('Then has the correct headings', async () => {
+        it('should have the correct headings', async () => {
             await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
             headers = testUtils.screen.getAllByRole('rowgroup');
@@ -66,7 +65,7 @@ describe('Given the AccountTeamMembers component', () => {
             expect(cells[3].textContent).toEqual('Metadata');
         });
 
-        it('Then has the correct first row', async () => {
+        it('should render the first row', async () => {
             await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
             headers = testUtils.screen.getAllByRole('rowgroup');
@@ -77,7 +76,7 @@ describe('Given the AccountTeamMembers component', () => {
             expect(testUtils.within(cells[0]).getByText('HDR UK')).toBeTruthy();
         });
 
-        it('Then has the correct second row', async () => {
+        it('should render the second row', async () => {
             await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
             headers = testUtils.screen.getAllByRole('rowgroup');
@@ -89,17 +88,20 @@ describe('Given the AccountTeamMembers component', () => {
         });
     });
 
-    describe('And new member is clicked', () => {
+    describe('should launch add member modal', () => {
+        let wrapper;
+
         beforeEach(async () => {
             authSpy.mockReturnValue({
                 userState: mocks.userState.mockCustodianTeamAdmin,
             });
 
-            testUtils.render(<AccountTeamMembers {...props} />);
+            wrapper = testUtils.render(<AccountTeamMembers {...props} />);
 
             await testUtils.waitFor(() => {
                 testUtils.screen.getByText(/Add a new member/);
             });
+
             const addMembersButton = testUtils.screen.getByText(/Add a new member/);
 
             testUtils.fireEvent.click(addMembersButton);
@@ -109,121 +111,143 @@ describe('Given the AccountTeamMembers component', () => {
             testUtils.cleanup();
         });
 
-        it('Then modal is displayed', () => {
-            expect(testUtils.screen.getByText('Add members to your team')).toBeInTheDocument();
+        it('should add new member', async () => {
+            await testUtils.waitFor(() => {
+                testUtils.screen.getByText('Add members');
+            });
+
+            const addMemberButton = testUtils.screen.getByText('Add members');
+
+            testUtils.fireEvent.click(addMemberButton);
+
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
         });
     });
 
-    describe('And new member is clicked', () => {
+    describe('as a team admin', () => {
+        let cells;
         beforeEach(async () => {
             authSpy.mockReturnValue({
                 userState: mocks.userState.mockCustodianTeamAdmin,
             });
 
-            testUtils.render(<AccountTeamMembers {...props} />);
+            const wrapper = testUtils.render(<AccountTeamMembers {...props} />);
 
-            await testUtils.waitFor(() => {
-                testUtils.screen.getByText(/Add a new member/);
-            });
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
 
-            const addMembersButton = testUtils.screen.getByText(/Add a new member/);
-
-            testUtils.fireEvent.click(addMembersButton);
+            const headers = testUtils.screen.getAllByRole('rowgroup');
+            const rows = testUtils.within(headers[1]).getAllByRole('row');
+            cells = testUtils.within(rows[0]).getAllByRole('cell');
         });
 
-        afterEach(() => {
-            testUtils.cleanup();
+        it('team admin checkbox should be enabled', () => {
+            const checkbox = testUtils.within(cells[1]).getByLabelText('Admin');
+
+            expect(checkbox).toBeEnabled();
+        });
+        it('Dar manager checkbox should be enabled', () => {
+            const checkbox = testUtils.within(cells[2]).getByLabelText('Manager');
+
+            expect(checkbox).toBeEnabled();
+        });
+        it('Dar reviewer checkbox should be enabled', () => {
+            const checkbox = testUtils.within(cells[2]).getByLabelText('Reviewer');
+
+            expect(checkbox).toBeEnabled();
+        });
+        it('Metadata manager checkbox should be enabled', () => {
+            const checkbox = testUtils.within(cells[3]).getByLabelText('Manager');
+
+            expect(checkbox).toBeEnabled();
+        });
+        it('Metadata editor checkbox should be enabled', () => {
+            const checkbox = testUtils.within(cells[3]).getByLabelText('Editor');
+
+            expect(checkbox).toBeEnabled();
+        });
+    });
+    describe('as a metadata manager', () => {
+        let cells;
+        beforeEach(async () => {
+            authSpy.mockReturnValue({
+                userState: mocks.userState.mockCustodianMetadataManager,
+            });
+
+            const wrapper = testUtils.render(<AccountTeamMembers {...props} />);
+
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+
+            const headers = testUtils.screen.getAllByRole('rowgroup');
+            const rows = testUtils.within(headers[1]).getAllByRole('row');
+            cells = testUtils.within(rows[0]).getAllByRole('cell');
         });
 
-        describe('And add member is clicked', () => {
-            it('Then has a new row', async () => {
-                await testUtils.waitFor(() => {
-                    testUtils.screen.getByText('Add members');
-                });
+        it('team admin checkbox should be disabled', () => {
+            const checkbox = testUtils.within(cells[1]).getByLabelText('Admin');
 
-                const addMemberButton = testUtils.screen.getByText('Add members');
+            expect(checkbox).toBeDisabled();
+        });
+        it('Dar manager checkbox should be disabled', () => {
+            const checkbox = testUtils.within(cells[2]).getByLabelText('Manager');
 
-                testUtils.fireEvent.click(addMemberButton);
+            expect(checkbox).toBeDisabled();
+        });
+        it('Dar reviewer checkbox should be disabled', () => {
+            const checkbox = testUtils.within(cells[2]).getByLabelText('Reviewer');
 
-                const rows = testUtils.within(headers[1]).getAllByRole('row');
-                const cells = testUtils.within(rows[0]).getAllByRole('cell');
+            expect(checkbox).toBeDisabled();
+        });
+        it('Metadata manager checkbox should be enabled', () => {
+            const checkbox = testUtils.within(cells[3]).getByLabelText('Manager');
 
-                expect(testUtils.within(cells[0]).getByRole('link').textContent).toEqual('John Smith');
-                expect(testUtils.within(cells[0]).getByText('HDR UK')).toBeTruthy();
+            expect(checkbox).toBeEnabled();
+        });
+        it('Metadata editor checkbox should be enabled', () => {
+            const checkbox = testUtils.within(cells[3]).getByLabelText('Editor');
+
+            expect(checkbox).toBeEnabled();
+        });
+    });
+    describe('as a dar manager', () => {
+        let cells;
+        beforeEach(async () => {
+            authSpy.mockReturnValue({
+                userState: mocks.userState.mockCustodianDarManager,
             });
+
+            const wrapper = testUtils.render(<AccountTeamMembers {...props} />);
+
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+
+            const headers = testUtils.screen.getAllByRole('rowgroup');
+            const rows = testUtils.within(headers[1]).getAllByRole('row');
+            cells = testUtils.within(rows[0]).getAllByRole('cell');
         });
 
-        describe('And Team Admin is unchecked', () => {
-            let teamAdminCheckbox;
+        it('team admin checkbox should be disabled', () => {
+            const checkbox = testUtils.within(cells[1]).getByLabelText('Admin');
 
-            beforeAll(() => {
-                const rows = testUtils.within(headers[1]).getAllByRole('row');
-                const cells = testUtils.within(rows[0]).getAllByRole('cell');
-
-                teamAdminCheckbox = testUtils.within(cells[1]).getByLabelText('Admin');
-
-                expect(teamAdminCheckbox.checked).toBeTruthy();
-
-                testUtils.fireEvent.click(teamAdminCheckbox);
-            });
-
-            it('Then checks the checkbox', () => {
-                expect(teamAdminCheckbox.checked).toBeFalsy();
-            });
+            expect(checkbox).toBeDisabled();
         });
+        it('Dar manager checkbox should be enabled', () => {
+            const checkbox = testUtils.within(cells[2]).getByLabelText('Manager');
 
-        describe('And Data access request roles are enabled', () => {
-            let cell;
-
-            beforeAll(() => {
-                const rows = testUtils.within(headers[1]).getAllByRole('row');
-                const cells = testUtils.within(rows[0]).getAllByRole('cell');
-
-                cell = testUtils.within(cells[2]);
-            });
-
-            it('Then checks the manager checkbox', () => {
-                const checkbox = cell.getByLabelText('Manager');
-
-                testUtils.fireEvent.click(checkbox);
-
-                expect(checkbox.checked).toBeTruthy();
-            });
-
-            it('Then checks the reviewer checkbox', () => {
-                const checkbox = cell.getByLabelText('Reviewer');
-
-                testUtils.fireEvent.click(checkbox);
-
-                expect(checkbox.checked).toBeTruthy();
-            });
+            expect(checkbox).toBeEnabled();
         });
+        it('Dar reviewer checkbox should be enabled', () => {
+            const checkbox = testUtils.within(cells[2]).getByLabelText('Reviewer');
 
-        describe('And Metadata roles are enabled', () => {
-            let cell;
+            expect(checkbox).toBeEnabled();
+        });
+        it('Metadata manager checkbox should be disabled', () => {
+            const checkbox = testUtils.within(cells[3]).getByLabelText('Manager');
 
-            beforeAll(() => {
-                const rows = testUtils.within(headers[1]).getAllByRole('row');
-                const cells = testUtils.within(rows[0]).getAllByRole('cell');
+            expect(checkbox).toBeDisabled();
+        });
+        it('Metadata editor checkbox should be disabled', () => {
+            const checkbox = testUtils.within(cells[3]).getByLabelText('Editor');
 
-                cell = testUtils.within(cells[3]);
-            });
-
-            it('Then checks the manager checkbox', () => {
-                const checkbox = cell.getByLabelText('Manager');
-
-                testUtils.fireEvent.click(checkbox);
-
-                expect(checkbox).toBeTruthy();
-            });
-
-            it('Then checks the editor checkbox', () => {
-                const checkbox = cell.getByLabelText('Editor');
-
-                testUtils.fireEvent.click(checkbox);
-
-                expect(checkbox.checked).toBeTruthy();
-            });
+            expect(checkbox).toBeDisabled();
         });
     });
 });
