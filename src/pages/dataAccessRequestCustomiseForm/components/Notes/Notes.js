@@ -47,7 +47,7 @@ const Notes = ({ applicationId, settings, userState, teamType, updateCount }) =>
             messageType: noteType,
             messageBody: currentNote,
         });
-        setNotesThread([...notesThread, { name: userState[0].name, date: '01/01/2021', content: currentNote, teamType }]);
+        setNotesThread([...notesThread, { name: userState[0].name, date: '01/01/2021', content: currentNote, userType: teamType }]);
         setCurrentNote('');
         if (btnRef.current) {
             btnRef.current.removeAttribute('disabled');
