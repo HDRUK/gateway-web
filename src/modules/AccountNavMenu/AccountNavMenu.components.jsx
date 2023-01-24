@@ -56,7 +56,6 @@ const ACCORDIAN_CUSTOM_DAR_MENU = {
 
 const UserNav = ({ tabId }) => {
     const { isRootAdmin } = useAuth();
-    console.log('isRootAdmin: ', isRootAdmin);
     const TEAM_USERS_MENU = [
         {
             id: 'dashboard',
