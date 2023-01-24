@@ -1541,7 +1541,7 @@ class SearchPage extends Component {
 
     formatDataUseRegisterForDownload(dataUses) {
         let formattedDataUses = [];
-        console.log(dataUses);
+
         dataUses.forEach(dataUse => {
             const gatewayApplicants = dataUse.gatewayApplicantsDetails.map(applicant => {
                 return `${applicant.firstname} ${applicant.lastname} `;
