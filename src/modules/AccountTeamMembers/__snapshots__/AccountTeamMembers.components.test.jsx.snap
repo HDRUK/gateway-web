@@ -5,6 +5,7 @@ exports[`Given the AccountTeamMembers components When CheckboxCell is rendered T
   <label
     class="ui-Checkbox emotion-0 emotion-1"
     for="1234_custodian.team.admin"
+    title=""
   >
     <input
       checked=""
