@@ -83,7 +83,7 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
     const AdminMenu = () => {
         const [user] = userState;
         // TODO: GAT-1510:050
-        const isTypeAdmin = [...user.teams].filter(p => authUtils.getIsTypeAdmin(p.type));
+        const isTypeAdmin = [...user.teams].filter(p => authUtils.getIsTypeHDRAdmin(p.type));
 
         if (!_.isEmpty(isTypeAdmin)) {
             return (
@@ -147,10 +147,10 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
                 </Dropdown>
 
                 {/* TODO: GAT-1510:056 */}
-                {authUtils.getIsTypeUser(teamType) && <UserNav userState={userState} tabId={tabId} />}
+                {authUtils.getIsTypeUser(teamType) && <UserNav tabId={tabId} />}
 
                 {/* TODO: GAT-1510:054 */}
-                {authUtils.getIsTypeAdmin(teamType) && <AdminNav tabId={tabId} />}
+                {authUtils.getIsTypeHDRAdmin(teamType) && <AdminNav tabId={tabId} />}
 
                 {/* TODO: GAT-1510:052 */}
                 {authUtils.getIsTypeTeam(teamType) && (

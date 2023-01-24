@@ -332,12 +332,12 @@ const AccountPage = () => {
                                     )}
                                 {/* TODO: GAT-1510:011 */}
                                 {(userHasTeamRole([PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.metadata_editor]) ||
-                                    authUtils.getIsTypeAdmin(teamType)) &&
+                                    authUtils.getIsTypeHDRAdmin(teamType)) &&
                                     tabId === 'datasets' && (
                                         <AccountDatasets userState={userState} teamType={teamType} teamId={teamId} alert={alert} />
                                     )}
 
-                                {authUtils.getIsTypeAdmin(teamType) && tabId === 'teams' && (
+                                {authUtils.getIsTypeHDRAdmin(teamType) && tabId === 'teams' && (
                                     <AccountTeams userState={userState} alert={alert} />
                                 )}
 

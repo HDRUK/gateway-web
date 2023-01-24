@@ -48,6 +48,7 @@ describe('AccountPage', () => {
         it('root admin', () => {
             useAuth.mockReturnValue({
                 isTeamManager: false,
+                isRootAdmin: true,
                 managerInTeam: jest.fn(),
                 userState: mocks.userState.mockUserStateAdmin,
             });
@@ -97,6 +98,7 @@ describe('AccountPage', () => {
         it('root admin', () => {
             useAuth.mockReturnValue({
                 isTeamManager: false,
+                isRootAdmin: true,
                 managerInTeam: jest.fn(),
                 userState: mocks.userState.mockUserStateAdmin,
             });
@@ -146,6 +148,7 @@ describe('AccountPage', () => {
         it('root admin', () => {
             useAuth.mockReturnValue({
                 isTeamManager: false,
+                isRootAdmin: true,
                 managerInTeam: jest.fn(),
                 userState: mocks.userState.mockUserStateAdmin,
             });

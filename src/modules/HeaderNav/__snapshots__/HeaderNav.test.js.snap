@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderNav module should render on page load 1`] = `
+<div>
+  <div
+    class="navBarLoginSpacing"
+  >
+    <div
+      class="dropdown"
+      data-testid="ddUserNavigation"
+    >
+      <a
+        class="user-dropdown-menu"
+        href="#"
+      >
+        <p
+          class="ui-Typography emotion-0"
+          data-testid="lblUserName"
+        >
+          HDR Custodian
+        </p>
+        <span
+          class="accountDropDownGap"
+        />
+        <icon-mock />
+      </a>
+    </div>
+  </div>
+</div>
+`;
