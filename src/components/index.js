@@ -8,6 +8,9 @@ import BlockQuote from './BlockQuote';
 import Button from './Button';
 import Checkbox from './Checkbox';
 import CheckboxTree from './CheckboxTree';
+import CustomMenu from './CustomMenu';
+import CustomSubMenu from './CustomSubMenu';
+import CustomToggle from './CustomToggle';
 import Cta from './Cta';
 import Dropdown from './Dropdown';
 import FileSelector from './FileSelector';
@@ -49,6 +52,9 @@ export {
     Checkbox,
     CheckboxTree,
     Cta,
+    CustomMenu,
+    CustomSubMenu,
+    CustomToggle,
     Dropdown,
     FileSelector,
     Icon,

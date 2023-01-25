@@ -35,6 +35,7 @@ describe('AccountNavMenu', () => {
         it('root admin', () => {
             useAuth.mockReturnValue({
                 isTeamManager: false,
+                isRootAdmin: true,
                 managerInTeam: jest.fn(),
                 userState: mocks.userState.mockUserStateAdmin,
             });
@@ -84,6 +85,7 @@ describe('AccountNavMenu', () => {
         it('root admin', () => {
             useAuth.mockReturnValue({
                 isTeamManager: false,
+                isRootAdmin: true,
                 managerInTeam: jest.fn(),
                 userState: mocks.userState.mockUserStateAdmin,
             });
@@ -133,6 +135,7 @@ describe('AccountNavMenu', () => {
         it('root admin', () => {
             useAuth.mockReturnValue({
                 isTeamManager: false,
+                isRootAdmin: true,
                 managerInTeam: jest.fn(),
                 userState: mocks.userState.mockUserStateAdmin,
             });

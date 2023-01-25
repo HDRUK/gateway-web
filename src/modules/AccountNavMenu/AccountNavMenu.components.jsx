@@ -1,6 +1,7 @@
 import { PERMISSIONS_TEAM_ROLES } from 'consts';
-import { accountUtils, authUtils } from 'utils';
+import { accountUtils } from 'utils';
 
+import { useAuth } from 'context/AuthContext';
 import { ReactComponent as BarChartIcon } from '../../images/icons/bar-chart.svg';
 import { ReactComponent as FlowIcon } from '../../images/icons/flow.svg';
 import { ReactComponent as TeamsIcon } from '../../images/icons/teams.svg';
@@ -53,7 +54,8 @@ const ACCORDIAN_CUSTOM_DAR_MENU = {
     ],
 };
 
-const UserNav = ({ tabId, userState }) => {
+const UserNav = ({ tabId }) => {
+    const { isRootAdmin } = useAuth();
     const TEAM_USERS_MENU = [
         {
             id: 'dashboard',
@@ -81,7 +83,7 @@ const UserNav = ({ tabId, userState }) => {
         { id: 'dataaccessrequests', children: 'Data access requests', icon: <UsersIcon /> },
         { id: 'collections', children: 'Collections', icon: <BookmarkIcon /> },
         // TODO: GAT-1510:028
-        ...(authUtils.getIsRootRoleAdmin(userState) ? [{ id: 'usersroles', children: 'Users and roles', icon: <UsersIcon /> }] : []),
+        ...(isRootAdmin ? [{ id: 'usersroles', children: 'Users and roles', icon: <UsersIcon /> }] : []),
     ];
 
     return (

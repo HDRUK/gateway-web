@@ -2,7 +2,7 @@ import { useAuth } from 'context/AuthContext';
 import { useEffect, useState } from 'react';
 import { accountUtils, roleUtils } from 'utils';
 
-const useRoles = teamId => {
+const useCustodianRoles = teamId => {
     const { userState } = useAuth();
     const [isReviewer, setIsReviewer] = useState(false);
     const [isMetadataEditor, setIsMetadataEditor] = useState(false);
@@ -35,4 +35,4 @@ const useRoles = teamId => {
     };
 };
 
-export default useRoles;
+export default useCustodianRoles;

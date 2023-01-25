@@ -1,16 +1,15 @@
 import { cx } from '@emotion/css';
 import axios from 'axios';
-import { Button, Box } from 'hdruk-react-core';
+import { Box } from 'hdruk-react-core';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
-import { forwardRef, Children, Component, Fragment, useState } from 'react';
+import { forwardRef, Component, Fragment } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 
-import { NotificationBadge } from 'components';
+import { CustomMenu, NotificationBadge } from 'components';
 
 import { cmsURL } from '../../../configs/url.config';
-import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
 import { ReactComponent as ColourLogoSvg } from '../../../images/colour.svg';
 import { ReactComponent as ColourLogoSvgMobile } from '../../../images/colourMobile.svg';
 import { ReactComponent as HamBurgerSvg } from '../../../images/hamburger.svg';
@@ -20,9 +19,8 @@ import UatBanner from '../uatBanner/UatBanner';
 import '../uatBanner/UatBanner.scss';
 import CmsDropdown from './CmsDropdown';
 import './SearchBar.scss';
-import UserDropdownItems from './UserDropdownItems';
-import UserDropdownTeams from './UserDropdownTeams';
 import { authUtils, accountUtils } from 'utils';
+import { HeaderNav, HeaderNavMobile } from 'modules';
 
 var baseURL = require('../BaseURL').getURL();
 const urlEnv = require('../BaseURL').getURLEnv();
@@ -41,32 +39,6 @@ const CustomToggle = forwardRef(({ children, onClick, subToggle }, ref) => (
         {children}
     </a>
 ));
-
-const CustomMenu = forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
-    const [value] = useState('');
-
-    return (
-        <div ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
-            <ul className='list-unstyled  mb-0 mt-0'>
-                {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
-            </ul>
-        </div>
-    );
-});
-
-const CustomSubMenu = forwardRef(({ children, style, className, show, 'aria-labelledby': labeledBy }, ref) => {
-    const [value] = useState('');
-    if (show) {
-        return (
-            <Fragment ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
-                <ul className='list-unstyled'>
-                    {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
-                </ul>
-            </Fragment>
-        );
-    }
-    return null;
-});
 
 class SearchBar extends Component {
     _isMounted = false;
@@ -1166,87 +1138,7 @@ class SearchBar extends Component {
                                         }
                                     })()}
 
-                                    <div className='navBarLoginSpacing'>
-                                        {(() => {
-                                            if (userState[0].loggedIn === true) {
-                                                return (
-                                                    <Dropdown data-testid='ddUserNavigation'>
-                                                        <Dropdown.Toggle as={CustomToggle}>
-                                                            <span className='black-14' data-testid='lblUserName'>
-                                                                {userState[0].name}
-                                                            </span>
-                                                            <span className='accountDropDownGap'></span>
-                                                            <ChevronBottom />
-                                                        </Dropdown.Toggle>
-
-                                                        <Dropdown.Menu as={CustomMenu} className='desktopLoginMenu'>
-                                                            <Dropdown data-testid='ddUserNavigation'>
-                                                                {!isEmpty(userState[0].teams) ? (
-                                                                    <Fragment>
-                                                                        <Dropdown.Toggle
-                                                                            data-testid='ddUserNavigationToggle'
-                                                                            subToggle={true}
-                                                                            as={CustomToggle}>
-                                                                            <span
-                                                                                className='black-14'
-                                                                                data-testid='ddUserNavigationSubMenu'>
-                                                                                {userState[0].name}
-                                                                            </span>
-                                                                            <span className='addNewDropDownGap'></span>
-                                                                            <ChevronBottom />
-                                                                        </Dropdown.Toggle>
-                                                                        <Dropdown.Menu as={CustomSubMenu}>
-                                                                            {/* TODO: GAT-1510:025 */}
-                                                                            <UserDropdownItems
-                                                                                isAdmin={authUtils.getIsRootRoleAdmin(
-                                                                                    userState
-                                                                                )}></UserDropdownItems>
-                                                                        </Dropdown.Menu>
-                                                                    </Fragment>
-                                                                ) : (
-                                                                    <Fragment>
-                                                                        <Dropdown.Item className='black-14 user-dropdown-item'>
-                                                                            <span className='gray700-14' data-testid='lblUserName'>
-                                                                                {userState[0].name}
-                                                                            </span>
-                                                                        </Dropdown.Item>
-                                                                        {/* TODO: GAT-1510:026 */}
-                                                                        <UserDropdownItems
-                                                                            isAdmin={authUtils.getIsRootRoleAdmin(
-                                                                                userState
-                                                                            )}></UserDropdownItems>
-                                                                    </Fragment>
-                                                                )}
-                                                            </Dropdown>
-                                                            <UserDropdownTeams />
-                                                            <Dropdown.Divider className='mb-1 mt-1' />
-                                                            <Dropdown.Item
-                                                                onClick={this.logout}
-                                                                className='black-14 user-dropdown-item'
-                                                                data-testid='optLogout'>
-                                                                Sign out
-                                                            </Dropdown.Item>
-                                                        </Dropdown.Menu>
-                                                    </Dropdown>
-                                                );
-                                            } else {
-                                                return (
-                                                    <>
-                                                        <Button
-                                                            variant='secondary'
-                                                            id='myBtn'
-                                                            data-testid='btnLogin'
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={e => {
-                                                                this.showLoginModal();
-                                                            }}>
-                                                            Sign in
-                                                        </Button>
-                                                    </>
-                                                );
-                                            }
-                                        })()}
-                                    </div>
+                                    <HeaderNav showLoginModal={this.showLoginModal} logout={this.logout} />
                                 </div>
                             </div>
                         </Row>
@@ -1288,59 +1180,7 @@ class SearchBar extends Component {
                                             </Dropdown.Item>
 
                                             <Dropdown.Divider />
-                                            {(() => {
-                                                if (userState[0].loggedIn === true) {
-                                                    return (
-                                                        <>
-                                                            <Dropdown data-testid='ddUserNavigation'>
-                                                                <Fragment>
-                                                                    <Dropdown.Toggle
-                                                                        data-testid='ddUserNavigationToggle'
-                                                                        subToggle={true}
-                                                                        as={CustomToggle}>
-                                                                        <span className='black-14' data-testid='ddUserNavigationSubMenu'>
-                                                                            {userState[0].name}
-                                                                        </span>
-                                                                        <span className='addNewDropDownGap'></span>
-                                                                        <SVGIcon
-                                                                            name='chevronbottom'
-                                                                            fill={'#475DA7'}
-                                                                            className='svg-16 floatRightChevron'
-                                                                        />
-                                                                    </Dropdown.Toggle>
-                                                                    <Dropdown.Menu as={CustomSubMenu}>
-                                                                        {/* TODO: GAT-1510:027 */}
-                                                                        <UserDropdownItems
-                                                                            isAdmin={authUtils.getIsRootRoleAdmin(
-                                                                                userState
-                                                                            )}></UserDropdownItems>
-                                                                    </Dropdown.Menu>
-                                                                </Fragment>
-                                                            </Dropdown>
-                                                            <UserDropdownTeams isMobile={true} />
-                                                            <Dropdown.Divider className='mb-1 mt-1' />
-                                                            <Dropdown.Item
-                                                                onClick={this.logout}
-                                                                className='black-14 user-dropdown-item'
-                                                                data-testid='optLogout'>
-                                                                Sign out
-                                                            </Dropdown.Item>
-                                                        </>
-                                                    );
-                                                } else {
-                                                    return (
-                                                        <>
-                                                            <Dropdown.Item
-                                                                className='black-14'
-                                                                onClick={e => {
-                                                                    this.showLoginModal();
-                                                                }}>
-                                                                Sign / Create account
-                                                            </Dropdown.Item>
-                                                        </>
-                                                    );
-                                                }
-                                            })()}
+                                            <HeaderNavMobile showLoginModal={this.showLoginModal} logout={this.logout} />
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Box>

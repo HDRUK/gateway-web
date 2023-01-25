@@ -4,7 +4,7 @@ import useDebounce from './useDebounce';
 import useDOMChanged from './useDOMChanged';
 import usePersistState from './usePersistState';
 import useRetryAsync from './useRetryAsync';
-import useRoles from './useRoles';
+import useCustodianRoles from './useCustodianRoles';
 import useScript from './useScript';
 import useSearch from './useSearch';
 
@@ -12,7 +12,7 @@ export {
     useAccountTeamSelected,
     useCommonStyles,
     useDebounce,
-    useRoles,
+    useCustodianRoles,
     useDOMChanged,
     usePersistState,
     useRetryAsync,

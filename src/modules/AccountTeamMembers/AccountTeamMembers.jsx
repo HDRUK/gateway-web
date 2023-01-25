@@ -15,7 +15,7 @@ import {
 } from 'consts';
 import { teamService } from 'services';
 
-import { useRoles } from 'hooks';
+import { useCustodianRoles } from 'hooks';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
 import AccountTeamMembersModal from '../AccountTeamMembersModal';
@@ -24,7 +24,7 @@ import { ActionCell, CheckboxCell, NameCell, HeaderTooltip } from './AccountTeam
 
 const AccountTeamMembers = ({ teamId }) => {
     const { userState } = useAuth();
-    const { isCustodianTeamAdmin, isCustodianMetadataManager, isCustodianDarManager } = useRoles(teamId);
+    const { isCustodianTeamAdmin, isCustodianMetadataManager, isCustodianDarManager } = useCustodianRoles(teamId);
     const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
     const [checkboxValues, setCheckboxValues] = useState({});

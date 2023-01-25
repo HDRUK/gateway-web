@@ -6,9 +6,11 @@ const getIsTypeCustodian = type => {
     return type !== 'user' && type !== 'admin';
 };
 
-const getIsTypeAdmin = type => {
+/* type="admin" for HDRUK team */
+const getIsTypeHDRAdmin = type => {
     return type === 'admin';
 };
+
 const getIsTypeTeam = type => {
     return type === 'team';
 };
@@ -145,7 +147,7 @@ export {
     getTeamRoleNames,
     getIsTypePublisher,
     getIsTypeCustodian,
-    getIsTypeAdmin,
+    getIsTypeHDRAdmin,
     getIsTypeUser,
     getIsTeamAdmin,
     userHasTeamRole,
