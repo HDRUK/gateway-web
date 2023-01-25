@@ -7,10 +7,9 @@ on:
 
 env:
   PROJECT_ID: '${{ secrets.PROJECT_ID }}' # TODO: update Google Cloud project id.
-  GAR_LOCATION: '${{ secrets.GAR_LOCATION }}' # TODO: update Artifact Registry location
+  GAR_LOCATION: '${{ secrets.GAR_LOCATION_WEB }}' # TODO: update Artifact Registry location
   SERVICE: '${{ secrets.SERVICE_NAME }}' # TODO: update Cloud Run service name
   REGION: '${{ secrets.SERVICE_REGION }}' # TODO: update Cloud Run service region
-  DOCKER_USER: '${{ secrets.DOCKER_AUTH_USER }}'
   APP_NAME: '${{ secrets.APP_NAME }}'
   CLOUD_RUN_NAME: '${{ secrets.CLOUD_RUN_NAME }}'
 
