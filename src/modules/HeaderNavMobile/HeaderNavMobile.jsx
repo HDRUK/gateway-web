@@ -7,6 +7,7 @@ import { useAuth } from 'context/AuthContext';
 
 import { CustomSubMenu, CustomToggle } from 'components';
 import { CustodianNav, MyAccountNav, AdminNav } from 'modules';
+import { authUtils } from 'utils';
 import googleAnalytics from '../../tracking';
 import SVGIcon from '../../images/SVGIcon';
 
@@ -18,8 +19,8 @@ const HeaderNavMobile = ({ showLoginModal, logout }) => {
 
     useEffect(() => {
         const { teams } = user;
-        setHasHDRAdminTeam(!!teams.find(team => team.type === 'admin'));
-        setCustodianTeams(teams.filter(team => team.type !== 'admin'));
+        setHasHDRAdminTeam(!!teams.find(team => authUtils.getIsTypeHDRAdmin(team.type)));
+        setCustodianTeams(teams.filter(team => authUtils.getIsTypePublisher(team.type)));
     }, []);
 
     if (user.loggedIn) {

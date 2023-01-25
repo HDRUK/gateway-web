@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { useAuth } from 'context/AuthContext';
 import { CustomMenu, CustomToggle } from 'components';
 import { AdminNav, MyAccountNav, CustodianNav } from 'modules';
+import { authUtils } from 'utils';
 import googleAnalytics from '../../tracking';
 import { ReactComponent as ChevronBottom } from '../../images/chevron-bottom.svg';
 
@@ -17,8 +18,8 @@ const HeaderNav = ({ showLoginModal, logout }) => {
 
     useEffect(() => {
         const { teams } = user;
-        setHasHDRAdminTeam(!!teams.find(team => team.type === 'admin'));
-        setCustodianTeams(teams.filter(team => team.type !== 'admin'));
+        setHasHDRAdminTeam(!!teams.find(team => authUtils.getIsTypeHDRAdmin(team.type)));
+        setCustodianTeams(teams.filter(team => authUtils.getIsTypePublisher(team.type)));
     }, []);
 
     return (
