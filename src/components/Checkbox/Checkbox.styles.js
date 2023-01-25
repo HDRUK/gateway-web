@@ -45,7 +45,7 @@ export const root =
             }
 
             input:disabled + .ui-Checkbox__label::after {
-                ${mixins.disabled({ colors, variants, variant })}
+                ${mixins.disabled({ colors, variants, variant, disabledColor })}
             }
         `;
     };
@@ -93,6 +93,7 @@ export const mixins = {
 		left: 2px;
 		width: calc(${width} - 4px);
 		height: calc(${height} - 4px);
+		background: white
 	`,
     checked: ({ colors, variants, variant }) => `
 		background: ${colors[variants[variant].checkedBackground]};
@@ -114,7 +115,7 @@ export const mixins = {
 		align-items: center;
 		justify-content: center;
 	`,
-    disabled: ({ colors, variants, variant }) => `
-		background: ${colors[variants[variant].backgroundDisabled]};
+    disabled: ({ colors, disabledColor }) => `
+		background: ${colors[disabledColor]};
 	`,
 };
