@@ -17,7 +17,7 @@ const HeaderNav = ({ showLoginModal, logout }) => {
     const [hasHDRAdminTeam, setHasHDRAdminTeam] = useState(false);
 
     useEffect(() => {
-        const { teams } = user;
+        const { teams = [] } = user;
         setHasHDRAdminTeam(!!teams.find(team => authUtils.getIsTypeHDRAdmin(team.type)));
         setCustodianTeams(teams.filter(team => authUtils.getIsTypePublisher(team.type)));
     }, []);
