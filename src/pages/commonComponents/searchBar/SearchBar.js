@@ -210,10 +210,12 @@ class SearchBar extends Component {
     }
 
     getPublisherLink = data => {
-        let { messageDescription, publisherName } = data;
-
+        let { messageDescription, publisherName: teamId } = data;
         return (
-            <a href='/account?tab=dataaccessrequests' className='notificationInfo'>
+            <a
+                href='/account?tab=dataaccessrequests'
+                onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId })}
+                className='notificationInfo'>
                 {messageDescription}
             </a>
         );

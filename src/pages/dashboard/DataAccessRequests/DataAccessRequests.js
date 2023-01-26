@@ -4,7 +4,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 
-import { darHelperUtils } from 'utils';
+import { accountUtils, darHelperUtils } from 'utils';
 import { Alert, LayoutContent } from 'components';
 
 import { ReactComponent as Clock } from '../../../images/clock.svg';
@@ -63,42 +63,34 @@ class DataAccessRequestsNew extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        this.fetchDataAccessRequests(this.state);
+        this.setState({ alert: this.props.alert });
+        this.fetchDataAccessRequests();
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.teamId !== this.props.teamId) {
-            const teamFound = this.props.userState[0].teams.filter(t => {
-                return t._id === nextProps.teamId;
-            })[0];
-            let updatedProp = _.cloneDeep(nextProps);
-            updatedProp.teamTypeLabel = teamFound.name;
-
-            this.setState({ isLoading: true });
-            this.fetchDataAccessRequests(updatedProp);
+    componentDidUpdate(prevProps) {
+        if (this.props.teamId !== prevProps.teamId || this.props.teamType !== prevProps.teamType) {
+            this.fetchDataAccessRequests();
         }
-
-        this.setState({ alert: nextProps.alert });
     }
 
     componentWillUnmount() {
         clearTimeout(this.alertTimeOut);
     }
 
-    async fetchDataAccessRequests(nextProps) {
+    async fetchDataAccessRequests() {
         let data = [],
             avgDecisionTime = 0,
             canViewSubmitted = false;
-        let dataProps = { ...nextProps, key: 'all' };
+        let dataProps = { ...this.props, key: 'all' };
         // 1. if there is an alert set team and correct tab so it can display on the UI
         if (!_.isEmpty(this.state.alert)) {
             dataProps.teamTypeLabel = this.state.alert.publisher;
             dataProps.key = this.state.alert.tab;
         }
         // 2. check which API to call the user or custodian if a team and use team name
-        const teamExists = !_.isEmpty(dataProps.teamId);
-        if (teamExists && dataProps.teamType !== 'user') {
-            const response = await axios.get(`${baseURL}/api/v1/publishers/${dataProps.teamId}/dataaccessrequests`);
+        const teamFound = accountUtils.getTeam(this.props.userState[0].teams, dataProps.teamId);
+        if (teamFound && dataProps.teamType === 'team') {
+            const response = await axios.get(`${baseURL}/api/v1/publishers/${teamFound.name}/dataaccessrequests`);
             ({
                 data: { data, avgDecisionTime, canViewSubmitted },
             } = response);
