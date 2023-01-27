@@ -107,7 +107,9 @@ jobs:
     environment: legacy-dev
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: GAT-1887
 
       - name: Google Auth
         id: auth
@@ -119,7 +121,7 @@ jobs:
 
       - name: Read VERSION file
         id: getversion
-        run: echo "::set-output name=version::$(cat RELEASE.version)"
+        run: echo "::set-output name=version::$(cat Chart.yaml)"
           
       - name: Deploy to Cloud Run
         uses: actions-hub/gcloud@master
