@@ -10,8 +10,10 @@ on:
         branches: ['dev']
 
 jobs:
+    codeql:
+      uses: ./.github/workflows/codeql.yaml
     security_scanning:
-        needs: analyze
+        needs: codeql
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
