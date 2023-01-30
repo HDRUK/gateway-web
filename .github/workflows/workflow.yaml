@@ -11,7 +11,7 @@ on:
 
 jobs:
     codeql:
-      uses: ./.github/workflows/codeql.yaml
+      uses: ./.github/workflows/codeql.yml
     security_scanning:
         needs: codeql
         runs-on: ubuntu-latest
