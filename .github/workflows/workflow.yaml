@@ -11,6 +11,7 @@ on:
 
 jobs:
     security_scanning:
+        needs: analyze
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
