@@ -11,6 +11,7 @@ env:
 
 jobs:
   build:
+    needs: [analyze, security_scanning, npm_build_tests]
     # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: write
