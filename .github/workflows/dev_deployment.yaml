@@ -54,9 +54,17 @@ jobs:
           GAR_LOCATION: ${{ secrets.GAR_LOCATION }}
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
           GAR_NAME: ${{ secrets.GAR_NAME_WEB }}
-          
+          SKIP_PREFLIGHT_CHECK: ${{ secrets.SKIP_PREFLIGHT_CHECK }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          REACT_APP_HOTJAR_CODE: ${{ secrets.REACT_APP_HOTJAR_CODE }}
+          REACT_APP_HOTJAR_CODE_VERSION: ${{ secrets.REACT_APP_HOTJAR_CODE_VERSION }}
+          REACT_APP_METADATA_CATALOG_URL: ${{ secrets.REACT_APP_METADATA_CATALOG_URL }}
+          REACT_APP_NEWSLETTER_EXAMPLE_URL: ${{ secrets.REACT_APP_NEWSLETTER_EXAMPLE_URL }}
+          REACT_APP_TERMS_AND_CONDITIONS_URL: ${{ secrets.REACT_APP_TERMS_AND_CONDITIONS_URL }}
+          REACT_APP_GATEWAY_PRIVACY_POLICY_URL: ${{ secrets.REACT_APP_GATEWAY_PRIVACY_POLICY_URL }}
+          REACT_APP_FIVE_SAFES_URL: ${{ secrets.REACT_APP_FIVE_SAFES_URL }}
         run: |-
-          docker build -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} ./
+          docker build --build-arg '${{ env.SKIP_PREFLIGHT_CHECK }}' --build-arg '${{ env.NODE_ENV }}' --build-arg '${{ env.REACT_APP_HOTJAR_CODE }}' --build-arg '${{ env.REACT_APP_HOTJAR_CODE_VERSION }}' --build-arg '${{ env.REACT_APP_NEWSLETTER_EXAMPLE_URL }}' --build-arg '${{ env.REACT_APP_NEWSLETTER_EXAMPLE_URL }}' --build-arg '${{ env.REACT_APP_TERMS_AND_CONDITIONS_URL }}' --build-arg '${{ env.REACT_APP_GATEWAY_PRIVACY_POLICY_URL }}' --build-arg '${{ env.REACT_APP_FIVE_SAFES_URL }}' --cache-from gcr.io/hdruk-gateway-dev/hdruk-gateway-web:dev -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} ./
           docker push '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} 
       # END - Docker auth and build
 
