@@ -10,8 +10,10 @@ env:
   GAR_LOCATION: '${{ secrets.GAR_LOCATION }}' # TODO: update Artifact Registry location
 
 jobs:
+  codeql:
+      uses: ./.github/workflows/codeql.yml
   build:
-    needs: [analyze, security_scanning, npm_build_tests]
+    needs: codeql
     # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: write
