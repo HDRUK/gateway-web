@@ -62,13 +62,16 @@ class DataAccessRequestsNew extends Component {
     }
 
     componentDidMount() {
+        console.log('componentDidMount');
         window.scrollTo(0, 0);
         this.setState({ alert: this.props.alert });
         this.fetchDataAccessRequests();
     }
 
     componentDidUpdate(prevProps) {
+        console.log('componentDidUpdate');
         if (this.props.teamId !== prevProps.teamId || this.props.teamType !== prevProps.teamType) {
+            console.log('componentDidUpdate condition met');
             this.fetchDataAccessRequests();
         }
     }
@@ -78,10 +81,12 @@ class DataAccessRequestsNew extends Component {
     }
 
     async fetchDataAccessRequests() {
+        console.log('fetchDataAccessRequests');
         let data = [],
             avgDecisionTime = 0,
             canViewSubmitted = false;
         let dataProps = { ...this.props, key: 'all' };
+        console.log('this.props: ', this.props);
         // 1. if there is an alert set team and correct tab so it can display on the UI
         if (!_.isEmpty(this.state.alert)) {
             dataProps.teamTypeLabel = this.state.alert.publisher;
@@ -89,6 +94,8 @@ class DataAccessRequestsNew extends Component {
         }
         // 2. check which API to call the user or custodian if a team and use team name
         const teamFound = accountUtils.getTeam(this.props.userState[0].teams, dataProps.teamId);
+        console.log('dataProps.teamId: ', dataProps.teamId);
+        console.log('teamFound: ', teamFound);
         if (teamFound && dataProps.teamType === 'team') {
             const response = await axios.get(`${baseURL}/api/v1/publishers/${teamFound.name}/dataaccessrequests`);
             ({
