@@ -55,7 +55,6 @@ const CustodianNav = ({ team, isMobile }) => {
                                 if (typeof navItem.handleOtherActions === 'function') {
                                     navItem.handleOtherActions();
                                 }
-                                console.log(' team._id: ', team._id);
                                 accountUtils.updateSelectedTeam({ teamType: 'team', teamId: team._id });
                             }}
                             href={navItem.href}

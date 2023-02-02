@@ -5,11 +5,11 @@ import { useState, useEffect, createRef } from 'react';
 import { Route, useHistory, useLocation, withRouter } from 'react-router-dom';
 
 import { generalUtils, authUtils, accountUtils } from 'utils';
-import { PERMISSIONS_TEAM_ROLES } from 'consts';
 
 import { AccountTeamManagementPage } from 'pages';
 import { AccountNavMenu } from 'modules';
-import { useAccountTeamSelected } from 'hooks';
+import { useAccountTeamSelected, useCustodianRoles } from 'hooks';
+import { useAuth } from 'context/AuthContext';
 import { DashboardProvider } from '../../context/DashboardContext';
 import { ReactComponent as CheckSVG } from '../../images/check.svg';
 
@@ -40,7 +40,6 @@ import TeamHelp from '../dashboard/TeamHelp/TeamHelp';
 import WorkflowDashboard from '../dashboard/Workflows/WorkflowDashboard';
 import YourAccount from '../dashboard/YourAccount';
 import googleAnalytics from '../../tracking';
-import { useAuth } from 'context/AuthContext';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -48,6 +47,7 @@ const AccountPage = () => {
     const { userState } = useAuth();
     const location = useLocation();
     const { teamId, teamType } = useAccountTeamSelected();
+    const { isReviewer, isCustodianDarManager, isCustodianMetadataManager, isMetadataEditor } = useCustodianRoles(teamId);
     const [teamManagementTab, setTeamManagementTab] = useState();
     const [innertab, setInnertab] = useState(null);
     const [dataAccessRequest, setDataAccessRequest] = useState({});
@@ -118,7 +118,7 @@ const AccountPage = () => {
     }, [location?.state?.alert]);
 
     const getTeamDetails = async () => {
-        if (teamType === 'team') {
+        if (authUtils.getIsTypeTeam(teamType)) {
             setDashboardState({
                 isLoading: true,
             });
@@ -302,36 +302,35 @@ const AccountPage = () => {
                         <Route path='/account/datasets/:id' teamType={teamType} component={AccountDataset} />
 
                         {/* TODO: GAT-1510:058 */}
-                        {!authUtils.getIsTypeUser(teamType) && (
+                        {(authUtils.getIsTypeTeam(teamType) || authUtils.getIsTypeHDRAdmin(teamType)) && (
                             <>
                                 {/* TODO: GAT-1510:010 */}
-                                {allowAccessRequestManagement &&
-                                    userHasTeamRole([PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]) && (
-                                        <>
-                                            {' '}
-                                            {tabId === 'dataaccessrequests' &&
-                                                (_.isEmpty(dataAccessRequest) ? (
-                                                    <DataAccessRequests
-                                                        setDataAccessRequest={updateDataAccessRequest}
-                                                        userState={userState}
-                                                        teamId={teamId}
-                                                        teamType={teamType}
-                                                        alert={alert}
-                                                    />
-                                                ) : (
-                                                    <ActivityLog
-                                                        onClickStartReview={navigateToLocation}
-                                                        dataaccessrequest={dataAccessRequest}
-                                                        userState={userState}
-                                                        teamType={teamType}
-                                                        ref={activityLog}
-                                                        onUpdateLogs={loadActivityLogNotifications}
-                                                    />
-                                                ))}
-                                        </>
-                                    )}
+                                {allowAccessRequestManagement && [isReviewer, isCustodianDarManager].some(role => role) && (
+                                    <>
+                                        {' '}
+                                        {tabId === 'dataaccessrequests' &&
+                                            (_.isEmpty(dataAccessRequest) ? (
+                                                <DataAccessRequests
+                                                    setDataAccessRequest={updateDataAccessRequest}
+                                                    userState={userState}
+                                                    teamId={teamId}
+                                                    teamType={teamType}
+                                                    alert={alert}
+                                                />
+                                            ) : (
+                                                <ActivityLog
+                                                    onClickStartReview={navigateToLocation}
+                                                    dataaccessrequest={dataAccessRequest}
+                                                    userState={userState}
+                                                    teamType={teamType}
+                                                    ref={activityLog}
+                                                    onUpdateLogs={loadActivityLogNotifications}
+                                                />
+                                            ))}
+                                    </>
+                                )}
                                 {/* TODO: GAT-1510:011 */}
-                                {(userHasTeamRole([PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.metadata_editor]) ||
+                                {([isCustodianMetadataManager, isMetadataEditor].some(role => role) ||
                                     authUtils.getIsTypeHDRAdmin(teamType)) &&
                                     tabId === 'datasets' && (
                                         <AccountDatasets userState={userState} teamType={teamType} teamId={teamId} alert={alert} />
@@ -341,17 +340,17 @@ const AccountPage = () => {
                                     <AccountTeams userState={userState} alert={alert} />
                                 )}
 
-                                {(tabId === 'datause' || tabId === 'datause_widget') && (
+                                {isCustodianDarManager && (tabId === 'datause' || tabId === 'datause_widget') && (
                                     <AccountDataUse tabId={tabId} teamType={teamType} teamId={teamId} publisherDetails={publisherDetails} />
                                 )}
 
                                 {/* TODO: GAT-1510:012 */}
-                                {allowWorkflow && userHasTeamRole(PERMISSIONS_TEAM_ROLES.manager) && tabId === 'workflows' && (
+                                {allowWorkflow && isCustodianDarManager && tabId === 'workflows' && (
                                     <WorkflowDashboard userState={userState} teamId={teamId} />
                                 )}
 
                                 {/* TODO: GAT-1510:013 */}
-                                {(userHasTeamRole([PERMISSIONS_TEAM_ROLES.manager]) || authUtils.getIsTeamAdmin(userState, teamId)) &&
+                                {(isCustodianDarManager || authUtils.getIsTeamAdmin(userState, teamId)) &&
                                     (tabId === 'customisedataaccessrequests_applicationform' ||
                                         tabId === 'customisedataaccessrequests_guidance') && (
                                         <CustomiseDAR

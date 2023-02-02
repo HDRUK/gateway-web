@@ -1,4 +1,4 @@
-import { useAccountTeamSelected } from 'hooks';
+import useAccountTeamSelected from 'hooks/useAccountTeamSelected';
 import AccountPage from './AccountPage';
 import '@testing-library/jest-dom/extend-expect';
 import { testUtils, mocks } from '../../../test';
@@ -20,7 +20,8 @@ jest.mock('react-router-dom', () => {
     };
 });
 
-jest.mock('hooks');
+jest.mock('hooks/useAccountTeamSelected');
+
 jest.mock('../../context/AuthContext');
 
 describe('AccountPage', () => {
