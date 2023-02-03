@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
     - 'release'
+    - 'GAT-1887-UAT'
+
 
 env:
   PROJECT_ID: '${{ secrets.PROJECT_ID }}' # TODO: update Google Cloud project id.
