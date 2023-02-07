@@ -43,9 +43,9 @@ jobs:      # Deployment please don't modify anything here as the infrastructure 
         id: getversion
         run: echo "::set-output name=version::$(cat Chart.yaml)"
 
-      - name: Get SHA
-        id: getsha
-        run: echo ${{ needs.catchsha.outputs.GITHUB_SHA }}
+      # - name: Get SHA
+      #   id: getsha
+      #   run: echo ${{ needs.catchsha.outputs.GITHUB_SHA }}
 
       - name: Deploy to Cloud Run
         uses: actions-hub/gcloud@master
