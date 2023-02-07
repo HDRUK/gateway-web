@@ -43,9 +43,9 @@ const AccountTeamMembers = ({ teamId }) => {
                     const initialCheckboxes = {};
 
                     members.forEach(member => {
-                        initialCheckboxes[member._id] = {};
+                        initialCheckboxes[member.userId] = {};
                         member.roles.forEach(role => {
-                            initialCheckboxes[member._id][role] = true;
+                            initialCheckboxes[member.userId][role] = true;
                         });
                     });
 
@@ -74,8 +74,8 @@ const AccountTeamMembers = ({ teamId }) => {
         setTeamMembers(addedMembers);
     };
 
-    const handleCheckboxChange = useCallback(({ role, checked, memberId }) => {
-        console.log({ role, checked, memberId });
+    const handleCheckboxChange = useCallback(({ role, checked, userId }) => {
+        console.log({ role, checked, userId });
     }, []);
 
     const renderDisabledMessage = isDisabled => {
@@ -122,7 +122,7 @@ const AccountTeamMembers = ({ teamId }) => {
                     <CheckboxCell
                         title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN))}
                         disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN)}
-                        memberId={original._id}
+                        userId={original.userId}
                         checkboxValues={checkboxValues}
                         role={ROLE_CUSTODIAN_TEAM_ADMIN}
                         label={t('admin')}
@@ -150,7 +150,7 @@ const AccountTeamMembers = ({ teamId }) => {
                         <CheckboxCell
                             title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER))}
                             disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER)}
-                            memberId={original._id}
+                            userId={original.userId}
                             checkboxValues={checkboxValues}
                             role={ROLE_CUSTODIAN_DAR_MANAGER}
                             label={t('manager')}
@@ -159,7 +159,7 @@ const AccountTeamMembers = ({ teamId }) => {
                         <CheckboxCell
                             title={renderDisabledMessage(getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.reviewer))}
                             disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.reviewer)}
-                            memberId={original._id}
+                            userId={original.userId}
                             checkboxValues={checkboxValues}
                             role={PERMISSIONS_TEAM_MEMBER_ROLES.reviewer}
                             label={t('reviewer')}
@@ -188,7 +188,7 @@ const AccountTeamMembers = ({ teamId }) => {
                         <CheckboxCell
                             title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER))}
                             disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER)}
-                            memberId={original._id}
+                            userId={original.userId}
                             checkboxValues={checkboxValues}
                             role={ROLE_CUSTODIAN_METADATA_MANAGER}
                             label={t('manager')}
@@ -197,7 +197,7 @@ const AccountTeamMembers = ({ teamId }) => {
                         <CheckboxCell
                             title={renderDisabledMessage(getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor))}
                             disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor)}
-                            memberId={original._id}
+                            userId={original.userId}
                             checkboxValues={checkboxValues}
                             role={PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor}
                             label={t('editor')}

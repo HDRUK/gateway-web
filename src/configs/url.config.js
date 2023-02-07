@@ -116,3 +116,6 @@ export const apiUrlV1 = `${baseURL}/${apiPathV1}`;
 
 export const apiPathV2 = 'api/v2';
 export const apiUrlV2 = `${baseURL}/${apiPathV2}`;
+
+export const apiPathV3 = 'api/v3';
+export const apiUrlV3 = `${baseURL}/${apiPathV3}`;

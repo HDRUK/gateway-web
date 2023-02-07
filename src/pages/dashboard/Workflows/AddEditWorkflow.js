@@ -287,7 +287,6 @@ const AddEditWorkflow = props => {
                                                                                     Only members of your team can be added as reviewers.
                                                                                 </small>
                                                                                 <TypaheadMultiUser
-                                                                                    apiCall='teams'
                                                                                     team={team}
                                                                                     onHandleContributorChange={selected => {
                                                                                         setFieldValue(
