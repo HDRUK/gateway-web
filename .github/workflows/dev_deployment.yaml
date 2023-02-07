@@ -4,6 +4,11 @@ on:
   push:
     paths:
     - 'Chart.yaml'
+  workflow_call:
+    outputs:
+      GITHB_SHA: 
+        value: ${{ github.sha }}   # Map the workflow outputs to job outputs
+
 
 env:
   PROJECT_ID: '${{ secrets.PROJECT_ID }}' # TODO: update Google Cloud project id.
@@ -17,6 +22,8 @@ jobs:
       id-token: write
 
     runs-on: ubuntu-latest
+    # outputs:
+    #   run: echo ${{ github.sha }}
     environment: legacy-dev
     steps:
       - name: Checkout
@@ -141,4 +148,5 @@ jobs:
 
         with:
           args: run services update '${{ env.SERVICE_NAME }}' --image='${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} --region='${{ env.SERVICE_REGION }}' --project='${{ env.PROJECT_ID }}' 
+
       # If required, use the Cloud Run url output in later steps
