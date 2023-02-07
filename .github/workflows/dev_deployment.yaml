@@ -4,7 +4,7 @@ on:
   push:
     paths:
     - 'Chart.yaml'
-   workflow_call:
+  workflow_call:
     outputs:
       GITHB_SHA: 
         value: ${{ github.sha }}   # Map the workflow outputs to job outputs
