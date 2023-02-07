@@ -16,7 +16,7 @@ env:
 
 jobs:      # Deployment please don't modify anything here as the infrastructure is controlled by terraform any changes here please agree with chris and reuben
   catchsha:
-    uses: ./.github/workflows/dev_deployment.yaml@dev
+    uses: HDRUK/gateway-web/.github/workflows/dev_deployment.yaml@dev
 
   deploy:
     permissions:
