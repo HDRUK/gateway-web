@@ -14,7 +14,7 @@ env:
   PROJECT_ID: '${{ secrets.PROJECT_ID }}' # TODO: update Google Cloud project id.
   GAR_LOCATION: '${{ secrets.GAR_LOCATION }}' # TODO: update Artifact Registry location
 
-jobs:      # Deployment please don't modify anything here as the infrastructure is controlled by terraform any changes here please agree with chris and reuben
+jobs:      # Deployment please don't modify anything here as the infrastructure is controlled by terraform any changes here please agree with chris and reuben.
   # catchsha:
   #   uses: HDRUK/gateway-web/.github/workflows/dev_deployment.yaml@dev
 
