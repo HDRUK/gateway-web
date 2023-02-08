@@ -8,13 +8,13 @@ import { memberPropTypes } from '../../types';
 import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
 import { ReactComponent as QuestionMarkIcon } from '../../images/icons/question-mark.svg';
 
-const ActionCell = ({ member: { id }, onDeleteMember }) => {
+const ActionCell = ({ member: { userId }, onDeleteMember }) => {
     const { t } = useTranslation();
     const items = [
         {
             label: t('removeUser'),
             icon: WastebinIcon,
-            action: () => onDeleteMember(id),
+            action: () => onDeleteMember(userId),
         },
     ];
     return <Popover content={<PopoverMenu items={items} />} />;
@@ -38,8 +38,8 @@ NameCell.propTypes = {
     member: memberPropTypes.isRequired,
 };
 
-const CheckboxCell = ({ title, onChange, memberId, role, label, checkboxValues, disabled }) => {
-    const handleChange = ({ target: { checked } }) => onChange({ memberId, role, checked });
+const CheckboxCell = ({ title, onChange, userId, role, label, checkboxValues, disabled }) => {
+    const handleChange = ({ target: { checked } }) => onChange({ userId, role, checked });
 
     return (
         <Checkbox
@@ -47,15 +47,15 @@ const CheckboxCell = ({ title, onChange, memberId, role, label, checkboxValues, 
             disabled={disabled}
             label={label}
             onChange={handleChange}
-            checked={!!checkboxValues?.[memberId]?.[role]}
-            id={`${memberId}_${role}`}
+            checked={!!checkboxValues?.[userId]?.[role]}
+            id={`${userId}_${role}`}
         />
     );
 };
 
 CheckboxCell.propTypes = {
     onChange: PropTypes.func.isRequired,
-    memberId: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
     role: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     disabled: PropTypes.bool.isRequired,

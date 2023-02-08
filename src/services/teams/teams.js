@@ -1,8 +1,8 @@
-import { apiUrlV1 } from '../../configs/url.config';
+import { apiUrlV1, apiUrlV3 } from '../../configs/url.config';
 import { getRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const getMembers = (_id, options) => {
-    return getRequest(`${apiUrlV1}/teams/${_id}/members`, options);
+    return getRequest(`${apiUrlV3}/teams/${_id}/members`, options);
 };
 
 const getNotifications = (_id, options) => {

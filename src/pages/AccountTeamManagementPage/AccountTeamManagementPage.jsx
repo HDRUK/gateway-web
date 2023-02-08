@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import axios from 'axios';
 import PropTypes from 'prop-types';

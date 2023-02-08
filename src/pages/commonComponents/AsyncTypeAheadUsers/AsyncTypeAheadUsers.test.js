@@ -34,6 +34,10 @@ describe('Given the AsyncTypeAheadUsers component', () => {
             testUtils.fireEvent.click(input);
         });
 
+        afterAll(() => {
+            testUtils.cleanup();
+        });
+
         it('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
         });
@@ -67,12 +71,15 @@ describe('Given the AsyncTypeAheadUsers component', () => {
             testUtils.fireEvent.change(input, { target: { value: 'jack' } });
         });
 
+        afterAll(() => {
+            testUtils.cleanup();
+        });
         it('Then should have the correct value', () => {
             expect(input.value).toBe('jack');
         });
 
         it('Then should have the correct dropdown values', async () => {
-            await testUtils.waitFor(() => expect(wrapper.queryByText('Jack Leacher')).toBeTruthy());
+            await testUtils.waitFor(() => expect(wrapper.queryByText('Jack Reacher')).toBeTruthy());
             await testUtils.waitFor(() => expect(wrapper.queryByText('Jack Sparrow')).toBeTruthy());
         });
 

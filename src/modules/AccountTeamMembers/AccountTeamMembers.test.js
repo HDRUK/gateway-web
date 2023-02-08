@@ -72,8 +72,8 @@ describe('AccountTeamMembers component', () => {
             const rows = testUtils.within(headers[1]).getAllByRole('row');
             const cells = testUtils.within(rows[0]).getAllByRole('cell');
 
-            expect(testUtils.within(cells[0]).getByRole('link').textContent).toEqual('John Smith');
-            expect(testUtils.within(cells[0]).getByText('HDR UK')).toBeTruthy();
+            expect(testUtils.within(cells[0]).getByRole('link').textContent).toEqual('Leopoldo Hyatt');
+            expect(testUtils.within(cells[0]).getByText('Hermann, Leannon and Kuhlman')).toBeTruthy();
         });
 
         it('should render the second row', async () => {
@@ -83,8 +83,8 @@ describe('AccountTeamMembers component', () => {
             const rows = testUtils.within(headers[1]).getAllByRole('row');
             const cells = testUtils.within(rows[1]).getAllByRole('cell');
 
-            expect(testUtils.within(cells[0]).getByRole('link').textContent).toEqual('Jane Doe');
-            expect(testUtils.within(cells[0]).getByText('Google')).toBeTruthy();
+            expect(testUtils.within(cells[0]).getByRole('link').textContent).toEqual('Alberto Kreiger');
+            expect(testUtils.within(cells[0]).getByText('Paucek LLC')).toBeTruthy();
         });
     });
 
