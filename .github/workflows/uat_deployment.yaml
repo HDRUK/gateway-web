@@ -4,10 +4,6 @@ on:
   pull_request:
     branches:
     - 'release'
-    - 'GAT-1887-UAT'
-  push:
-    branches:
-      - "GAT-1887-UAT"
 
 
 env:
