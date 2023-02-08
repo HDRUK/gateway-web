@@ -73,7 +73,7 @@ jobs:
           REACT_APP_FIVE_SAFES_URL: ${{ secrets.REACT_APP_FIVE_SAFES_URL }}
         run: |-
           docker build -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:latest --build-arg SKIP_PREFLIGHT_CHECK='${{ env.SKIP_PREFLIGHT_CHECK }}' --build-arg NODE_ENV='${{ env.NODE_ENV }}' --build-arg REACT_APP_HOTJAR_CODE='${{ env.REACT_APP_HOTJAR_CODE }}' --build-arg REACT_APP_HOTJAR_CODE_VERSION='${{ env.REACT_APP_HOTJAR_CODE_VERSION }}' --build-arg REACT_APP_METADATA_CATALOG_URL='${{ env.REACT_APP_METADATA_CATALOG_URL }}' --build-arg REACT_APP_NEWSLETTER_EXAMPLE_URL='${{ env.REACT_APP_NEWSLETTER_EXAMPLE_URL }}' --build-arg REACT_APP_TERMS_AND_CONDITIONS_URL='${{ env.REACT_APP_TERMS_AND_CONDITIONS_URL }}' --build-arg REACT_APP_GATEWAY_PRIVACY_POLICY_URL='${{ env.REACT_APP_GATEWAY_PRIVACY_POLICY_URL }}' --build-arg REACT_APP_FIVE_SAFES_URL='${{ env.REACT_APP_FIVE_SAFES_URL }}' --cache-from gcr.io/hdruk-gateway-dev/hdruk-gateway-web:dev ./
-          docker push '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} --all-tags
+          docker push --all-tags '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}
       # END - Docker auth and build
 
 
