@@ -2,8 +2,10 @@ name: Deploy to Cloud Run
 
 on:
   pull_request:
+    types:
+      - closed
     branches:
-    - 'release'
+      - 'release'
 
 
 env:
@@ -13,8 +15,8 @@ env:
 jobs:      # Deployment please don't modify anything here as the infrastructure is controlled by terraform any changes here please agree with chris and reuben.
   # catchsha:
   #   uses: HDRUK/gateway-web/.github/workflows/dev_deployment.yaml@dev
-
   deploy:
+    if: github.event.pull_request.merged == true
     permissions:
       contents: write
       id-token: write
