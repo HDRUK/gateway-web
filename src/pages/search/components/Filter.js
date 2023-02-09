@@ -159,7 +159,7 @@ const TreeComponent = ({
                         <Filter
                             selected={selected}
                             data={node.filters}
-                            parentKey={node.alias}
+                            parentKey={node.alias || node.key}
                             highlighted={node.highlighted}
                             hasChildren
                             searchValue={searchValue}
