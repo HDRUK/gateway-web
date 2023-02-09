@@ -1,27 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { generalUtils } from 'utils';
 
 const useAccountTeamSelected = () => {
     const history = useHistory();
+    const location = useLocation();
     const [teamId, setTeamId] = useState();
     const [teamType, setTeamType] = useState();
 
     const redirectIfNotSet = () => {
-        setTeamType(localStorage.setItem('teamType', 'user'));
-        history.push('/account?tab=youraccount');
+        history.push('/account?tab=youraccount&teamType=user');
     };
 
     useEffect(() => {
-        const lsTeamType = localStorage.getItem('teamType');
-        const lsTeamId = localStorage.getItem('teamId');
+        const { search } = location;
+        const searchParams = generalUtils.parseQueryString(search);
 
-        if (!lsTeamType) {
+        if (!searchParams.teamType) {
             redirectIfNotSet();
         }
 
-        setTeamType(lsTeamType || 'user');
-        setTeamId(lsTeamId);
-    }, []);
+        setTeamType(searchParams.teamType || 'user');
+        setTeamId(searchParams.teamId);
+    }, [location]);
 
     return { teamType, teamId };
 };

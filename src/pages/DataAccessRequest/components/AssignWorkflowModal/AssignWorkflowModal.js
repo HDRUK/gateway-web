@@ -3,7 +3,6 @@ import { Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import axios from 'axios';
-import { accountUtils } from 'utils';
 import WorkflowsModal from './WorkflowsModal';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import { baseURL } from '../../../../configs/url.config';
@@ -59,7 +58,6 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
                         workflowId: workflow._id,
                     })
                     .then(() => {
-                        accountUtils.updateSelectedTeam({ teamId: publisher, teamType: 'team' });
                         const alert = {
                             publisher,
                             nav: 'dataaccessrequests',
@@ -67,7 +65,11 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
                             message: `You have successfully assigned a workflow`,
                         };
                         // redirect to dashboard with alert
-                        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests`, state: { alert } });
+                        history.push({
+                            pathname: `/account`,
+                            search: `?tab=dataaccessrequests&teamType=team&teamId=${publisher}`,
+                            state: { alert },
+                        });
                     });
             }
         }

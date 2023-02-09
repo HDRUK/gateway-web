@@ -1,12 +1,11 @@
 import { Dropdown } from 'react-bootstrap';
-import { accountUtils } from 'utils';
 import { NavWrapper } from 'modules';
 import PropTypes from 'prop-types';
 
 const AdminNav = ({ isMobile }) => {
     const adminItems = [
         {
-            href: '/account?tab=datasets',
+            href: '/account?tab=dataset',
             label: 'Datasets',
             dataTestId: '',
         },
@@ -26,8 +25,7 @@ const AdminNav = ({ isMobile }) => {
             {adminItems.map(item => (
                 <Dropdown.Item
                     key={item.label}
-                    onClick={() => accountUtils.updateSelectedTeam({ teamType: 'admin' })}
-                    href={item.href}
+                    href={`${item.href}&teamType=admin`}
                     data-testid={item.dataTestId}
                     className='black-14 user-dropdown-item'>
                     {item.label}

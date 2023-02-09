@@ -1,5 +1,4 @@
 import { Dropdown } from 'react-bootstrap';
-import { accountUtils } from 'utils';
 import { NavWrapper } from 'modules';
 import PropTypes from 'prop-types';
 import { useCustodianRoles } from 'hooks';
@@ -55,9 +54,8 @@ const CustodianNav = ({ team, isMobile }) => {
                                 if (typeof navItem.handleOtherActions === 'function') {
                                     navItem.handleOtherActions();
                                 }
-                                accountUtils.updateSelectedTeam({ teamType: 'team', teamId: team._id });
                             }}
-                            href={navItem.href}
+                            href={`${navItem.href}&teamType=team&teamId=${team._id}`}
                             className='black-14 user-dropdown-item'>
                             {navItem.label}
                         </Dropdown.Item>

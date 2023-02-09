@@ -35,7 +35,7 @@ exports[`AccountNavMenu Should render correctly for admin section manager 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datasets"
+          href="/account?tab=datasets&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -55,7 +55,7 @@ exports[`AccountNavMenu Should render correctly for admin section manager 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datause"
+          href="/account?tab=datause&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -75,7 +75,7 @@ exports[`AccountNavMenu Should render correctly for admin section manager 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=teams"
+          href="/account?tab=teams&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -129,7 +129,7 @@ exports[`AccountNavMenu Should render correctly for admin section metadata edito
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datasets"
+          href="/account?tab=datasets&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -149,7 +149,7 @@ exports[`AccountNavMenu Should render correctly for admin section metadata edito
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datause"
+          href="/account?tab=datause&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -169,7 +169,7 @@ exports[`AccountNavMenu Should render correctly for admin section metadata edito
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=teams"
+          href="/account?tab=teams&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -223,7 +223,7 @@ exports[`AccountNavMenu Should render correctly for admin section reviewer 1`] =
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datasets"
+          href="/account?tab=datasets&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -243,7 +243,7 @@ exports[`AccountNavMenu Should render correctly for admin section reviewer 1`] =
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datause"
+          href="/account?tab=datause&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -263,7 +263,7 @@ exports[`AccountNavMenu Should render correctly for admin section reviewer 1`] =
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=teams"
+          href="/account?tab=teams&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -317,7 +317,7 @@ exports[`AccountNavMenu Should render correctly for admin section root admin 1`]
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datasets"
+          href="/account?tab=datasets&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -337,7 +337,7 @@ exports[`AccountNavMenu Should render correctly for admin section root admin 1`]
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datause"
+          href="/account?tab=datause&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -357,7 +357,7 @@ exports[`AccountNavMenu Should render correctly for admin section root admin 1`]
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=teams"
+          href="/account?tab=teams&teamType=admin"
         >
           <span
             class="ui-Icon emotion-0"
@@ -409,7 +409,7 @@ exports[`AccountNavMenu Should render correctly for team section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=teamManagement"
+          href="/account?tab=teamManagement&teamType=team&teamId=2134"
         >
           <span
             class="ui-Icon emotion-0"
@@ -451,7 +451,7 @@ exports[`AccountNavMenu Should render correctly for team section manager 1`] = `
             <div>
               <a
                 class="gray700-13  nav-block"
-                href="/account?tab=datause"
+                href="/account?tab=datause&teamType=team&teamId=2134"
               >
                 <span
                   class="subLinkItem"
@@ -469,7 +469,7 @@ exports[`AccountNavMenu Should render correctly for team section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=help"
+          href="/account?tab=help&teamType=team&teamId=2134"
         >
           <span
             class="ui-Icon emotion-0"
@@ -521,7 +521,7 @@ exports[`AccountNavMenu Should render correctly for team section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=teamManagement"
+          href="/account?tab=teamManagement&teamType=team&teamId=2134"
         >
           <span
             class="ui-Icon emotion-0"
@@ -563,7 +563,7 @@ exports[`AccountNavMenu Should render correctly for team section metadata editor
             <div>
               <a
                 class="gray700-13  nav-block"
-                href="/account?tab=datause"
+                href="/account?tab=datause&teamType=team&teamId=2134"
               >
                 <span
                   class="subLinkItem"
@@ -581,7 +581,7 @@ exports[`AccountNavMenu Should render correctly for team section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=help"
+          href="/account?tab=help&teamType=team&teamId=2134"
         >
           <span
             class="ui-Icon emotion-0"
@@ -633,7 +633,7 @@ exports[`AccountNavMenu Should render correctly for team section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=teamManagement"
+          href="/account?tab=teamManagement&teamType=team&teamId=2134"
         >
           <span
             class="ui-Icon emotion-0"
@@ -675,7 +675,7 @@ exports[`AccountNavMenu Should render correctly for team section reviewer 1`] = 
             <div>
               <a
                 class="gray700-13  nav-block"
-                href="/account?tab=datause"
+                href="/account?tab=datause&teamType=team&teamId=2134"
               >
                 <span
                   class="subLinkItem"
@@ -693,7 +693,7 @@ exports[`AccountNavMenu Should render correctly for team section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=help"
+          href="/account?tab=help&teamType=team&teamId=2134"
         >
           <span
             class="ui-Icon emotion-0"
@@ -747,7 +747,7 @@ exports[`AccountNavMenu Should render correctly for team section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=teamManagement"
+          href="/account?tab=teamManagement&teamType=team&teamId=2134"
         >
           <span
             class="ui-Icon emotion-0"
@@ -789,7 +789,7 @@ exports[`AccountNavMenu Should render correctly for team section root admin 1`] 
             <div>
               <a
                 class="gray700-13  nav-block"
-                href="/account?tab=datause"
+                href="/account?tab=datause&teamType=team&teamId=2134"
               >
                 <span
                   class="subLinkItem"
@@ -807,7 +807,7 @@ exports[`AccountNavMenu Should render correctly for team section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=help"
+          href="/account?tab=help&teamType=team&teamId=2134"
         >
           <span
             class="ui-Icon emotion-0"
@@ -859,7 +859,7 @@ exports[`AccountNavMenu Should render correctly for user section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=dashboard"
+          href="/account?tab=dashboard&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -879,7 +879,7 @@ exports[`AccountNavMenu Should render correctly for user section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=youraccount"
+          href="/account?tab=youraccount&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -899,7 +899,7 @@ exports[`AccountNavMenu Should render correctly for user section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=tools"
+          href="/account?tab=tools&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -919,7 +919,7 @@ exports[`AccountNavMenu Should render correctly for user section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=reviews"
+          href="/account?tab=reviews&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -939,7 +939,7 @@ exports[`AccountNavMenu Should render correctly for user section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datause"
+          href="/account?tab=datause&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -959,7 +959,7 @@ exports[`AccountNavMenu Should render correctly for user section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=papers"
+          href="/account?tab=papers&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -979,7 +979,7 @@ exports[`AccountNavMenu Should render correctly for user section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=courses"
+          href="/account?tab=courses&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -999,7 +999,7 @@ exports[`AccountNavMenu Should render correctly for user section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=dataaccessrequests"
+          href="/account?tab=dataaccessrequests&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1019,7 +1019,7 @@ exports[`AccountNavMenu Should render correctly for user section manager 1`] = `
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=collections"
+          href="/account?tab=collections&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1071,7 +1071,7 @@ exports[`AccountNavMenu Should render correctly for user section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=dashboard"
+          href="/account?tab=dashboard&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1091,7 +1091,7 @@ exports[`AccountNavMenu Should render correctly for user section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=youraccount"
+          href="/account?tab=youraccount&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1111,7 +1111,7 @@ exports[`AccountNavMenu Should render correctly for user section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=tools"
+          href="/account?tab=tools&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1131,7 +1131,7 @@ exports[`AccountNavMenu Should render correctly for user section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=reviews"
+          href="/account?tab=reviews&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1151,7 +1151,7 @@ exports[`AccountNavMenu Should render correctly for user section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datause"
+          href="/account?tab=datause&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1171,7 +1171,7 @@ exports[`AccountNavMenu Should render correctly for user section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=papers"
+          href="/account?tab=papers&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1191,7 +1191,7 @@ exports[`AccountNavMenu Should render correctly for user section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=courses"
+          href="/account?tab=courses&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1211,7 +1211,7 @@ exports[`AccountNavMenu Should render correctly for user section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=dataaccessrequests"
+          href="/account?tab=dataaccessrequests&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1231,7 +1231,7 @@ exports[`AccountNavMenu Should render correctly for user section metadata editor
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=collections"
+          href="/account?tab=collections&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1283,7 +1283,7 @@ exports[`AccountNavMenu Should render correctly for user section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=dashboard"
+          href="/account?tab=dashboard&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1303,7 +1303,7 @@ exports[`AccountNavMenu Should render correctly for user section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=youraccount"
+          href="/account?tab=youraccount&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1323,7 +1323,7 @@ exports[`AccountNavMenu Should render correctly for user section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=tools"
+          href="/account?tab=tools&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1343,7 +1343,7 @@ exports[`AccountNavMenu Should render correctly for user section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=reviews"
+          href="/account?tab=reviews&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1363,7 +1363,7 @@ exports[`AccountNavMenu Should render correctly for user section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datause"
+          href="/account?tab=datause&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1383,7 +1383,7 @@ exports[`AccountNavMenu Should render correctly for user section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=papers"
+          href="/account?tab=papers&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1403,7 +1403,7 @@ exports[`AccountNavMenu Should render correctly for user section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=courses"
+          href="/account?tab=courses&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1423,7 +1423,7 @@ exports[`AccountNavMenu Should render correctly for user section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=dataaccessrequests"
+          href="/account?tab=dataaccessrequests&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1443,7 +1443,7 @@ exports[`AccountNavMenu Should render correctly for user section reviewer 1`] = 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=collections"
+          href="/account?tab=collections&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1497,7 +1497,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=dashboard"
+          href="/account?tab=dashboard&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1517,7 +1517,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=youraccount"
+          href="/account?tab=youraccount&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1537,7 +1537,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=tools"
+          href="/account?tab=tools&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1557,7 +1557,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=reviews"
+          href="/account?tab=reviews&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1577,7 +1577,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=datause"
+          href="/account?tab=datause&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1597,7 +1597,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=papers"
+          href="/account?tab=papers&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1617,7 +1617,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=courses"
+          href="/account?tab=courses&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1637,7 +1637,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=dataaccessrequests"
+          href="/account?tab=dataaccessrequests&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1657,7 +1657,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=collections"
+          href="/account?tab=collections&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"
@@ -1677,7 +1677,7 @@ exports[`AccountNavMenu Should render correctly for user section root admin 1`] 
       >
         <a
           class="verticalNavBar gray700-13 nav-link"
-          href="/account?tab=usersroles"
+          href="/account?tab=usersroles&teamType=user"
         >
           <span
             class="ui-Icon emotion-0"

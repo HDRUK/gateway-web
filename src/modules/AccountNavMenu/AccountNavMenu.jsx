@@ -3,7 +3,7 @@ import { forwardRef, useState, Children } from 'react';
 import { Dropdown } from 'react-bootstrap';
 
 import { useAuth } from 'context/AuthContext';
-import { accountUtils, authUtils } from 'utils';
+import { authUtils } from 'utils';
 
 import { useAccountTeamSelected } from 'hooks';
 
@@ -58,12 +58,7 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
                     return (
                         <>
                             {index === 0 ? <hr /> : ''}
-                            <Dropdown.Item
-                                href={`/account?tab=${tabId}`}
-                                className='gray700-13'
-                                onClick={() => {
-                                    accountUtils.updateSelectedTeam({ teamType: 'team', teamId: pub._id });
-                                }}>
+                            <Dropdown.Item href={`/account?tab=${tabId}&teamType=team&teamId=${pub._id}`} className='gray700-13'>
                                 {pub.name}
                             </Dropdown.Item>
                         </>
@@ -87,12 +82,7 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
 
         if (!_.isEmpty(isTypeAdmin)) {
             return (
-                <Dropdown.Item
-                    className='gray700-13'
-                    href='/account?tab=datasets'
-                    onClick={() => {
-                        accountUtils.updateSelectedTeam({ teamType: 'admin' });
-                    }}>
+                <Dropdown.Item className='gray700-13' href='/account?tab=datasets&teamType=admin'>
                     HDR Admin
                 </Dropdown.Item>
             );
@@ -119,10 +109,7 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
 
     const UserMenu = () => {
         return (
-            <Dropdown.Item
-                onClick={() => accountUtils.updateSelectedTeam({ teamType: 'user' })}
-                href='/account?tab=youraccount'
-                className='gray700-13'>
+            <Dropdown.Item href='/account?tab=youraccount&teamType=user' className='gray700-13'>
                 {userState[0].name || ''}
             </Dropdown.Item>
         );

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { useState, useEffect, createRef } from 'react';
 import { Route, useHistory, useLocation, withRouter } from 'react-router-dom';
 
-import { generalUtils, authUtils, accountUtils } from 'utils';
+import { generalUtils, authUtils } from 'utils';
 
 import { AccountTeamManagementPage } from 'pages';
 import { AccountNavMenu } from 'modules';
@@ -76,11 +76,9 @@ const AccountPage = () => {
     let saveNotificationsRef;
 
     const updateProfileStatus = () => {
-        accountUtils.updateSelectedTeam({ teamType: 'user' });
-
         history.push({
             pathname: '/account',
-            search: '?tab=youraccount',
+            search: '?tab=youraccount&teamType=user',
         });
 
         if (userState[0].terms) {

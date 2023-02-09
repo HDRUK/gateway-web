@@ -19,7 +19,7 @@ import UatBanner from '../uatBanner/UatBanner';
 import '../uatBanner/UatBanner.scss';
 import CmsDropdown from './CmsDropdown';
 import './SearchBar.scss';
-import { authUtils, accountUtils } from 'utils';
+import { authUtils } from 'utils';
 import { HeaderNav, HeaderNavMobile } from 'modules';
 
 var baseURL = require('../BaseURL').getURL();
@@ -105,8 +105,6 @@ class SearchBar extends Component {
 
     logout = e => {
         axios.get(baseURL + '/api/v1/auth/logout').then(res => {
-            accountUtils.resetSelectedTeam();
-
             window.location.reload();
         });
     };
@@ -212,10 +210,7 @@ class SearchBar extends Component {
     getPublisherLink = data => {
         let { messageDescription, publisherName: teamId } = data;
         return (
-            <a
-                href='/account?tab=dataaccessrequests'
-                onClick={() => accountUtils.updateSelectedTeam({ teamType: 'team', teamId })}
-                className='notificationInfo'>
+            <a href={`/account?tab=dataaccessrequests&teamType=team&teamId=${teamId}`} className='notificationInfo'>
                 {messageDescription}
             </a>
         );
@@ -794,13 +789,7 @@ class SearchBar extends Component {
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
-                                                                                                    onClick={() =>
-                                                                                                        accountUtils.updateSelectedTeam({
-                                                                                                            teamType: 'team',
-                                                                                                            teamId: dat.publisherName,
-                                                                                                        })
-                                                                                                    }
-                                                                                                    href={`/account?tab=teamManagement`}
+                                                                                                    href={`/account?tab=teamManagement&teamType=team&teamId=${dat.publisherName}`}
                                                                                                     class='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
@@ -890,12 +879,9 @@ class SearchBar extends Component {
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
-                                                                                                    onClick={() =>
-                                                                                                        accountUtils.updateSelectedTeam({
-                                                                                                            teamType: 'admin',
-                                                                                                        })
+                                                                                                    href={
+                                                                                                        '/account?tab=datasets&teamType=admin'
                                                                                                     }
-                                                                                                    href={'/account?tab=datasets'}
                                                                                                     className='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>
