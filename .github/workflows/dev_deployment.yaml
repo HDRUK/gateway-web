@@ -34,7 +34,7 @@ jobs:
       - name: Read VERSION file
         id: getversion
         # run: echo "::set-output name=version::$(cat Chart.yaml)"
-        run: echo "version=$(cat Chart.yaml) >> $GITHUB_OUTPUT"
+        run: echo "version=$(cat Chart.yaml)" >> $GITHUB_OUTPUT
       # To be used in Production pipeline
       # - uses: "marvinpinto/action-automatic-releases@latest"
       #   with:
@@ -137,7 +137,7 @@ jobs:
       - name: Read VERSION file
         id: getversion
         # run: echo "::set-output name=version::$(cat Chart.yaml)"
-        run: echo "version=$(cat Chart.yaml) >> $GITHUB_OUTPUT"
+        run: echo "version=$(cat Chart.yaml)" >> $GITHUB_OUTPUT
           
       - name: Deploy to Cloud Run
         uses: actions-hub/gcloud@master
