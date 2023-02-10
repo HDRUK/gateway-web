@@ -44,13 +44,16 @@ const AllTheProviders = ({ children, route }) => {
 
 AllTheProviders.propTypes = {
     children: PropTypes.node.isRequired,
-    route: PropTypes.arrayOf(PropTypes.string).isRequired,
+    route: PropTypes.arrayOf(PropTypes.string),
 };
 
-const customRender = (ui, { route = ['/'], ...options } = {}) =>
-    render(ui, { wrapper: AllTheProviders, ...options, initialProps: { route } });
+AllTheProviders.defaultProps = {
+    route: ['/'],
+};
 
-const customRenderHook = (ui, { route = ['/'], ...options } = {}) => {
+const customRender = (ui, { route, ...options } = {}) => render(ui, { wrapper: AllTheProviders, ...options, initialProps: { route } });
+
+const customRenderHook = (ui, { route, ...options } = {}) => {
     return renderHook(ui, { wrapper: AllTheProviders, ...options, initialProps: { route } });
 };
 

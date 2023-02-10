@@ -19,6 +19,10 @@
             "401": {
                 "title": "Unauthorised",
                 "message": "The request to this address was unauthorised"
+            },
+            "403": {
+                "title": "Unauthorised",
+                "message": "The request to this address was unauthorised"
             }
         },
         "errors": {

@@ -80,7 +80,7 @@ describe('Given the AsyncTypeAheadUsers component', () => {
 
         it('Then should have the correct dropdown values', async () => {
             await testUtils.waitFor(() => expect(wrapper.queryByText('Jack Reacher')).toBeTruthy());
-            await testUtils.waitFor(() => expect(wrapper.queryByText('Jack Sparrow')).toBeTruthy());
+            await testUtils.waitFor(() => expect(wrapper.queryByText('Tom Cruise')).toBeTruthy());
         });
 
         it('Then it should not have `Recently added` Header', async () => {
