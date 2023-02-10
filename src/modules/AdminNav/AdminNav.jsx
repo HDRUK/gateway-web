@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const AdminNav = ({ isMobile }) => {
     const adminItems = [
         {
-            href: '/account?tab=dataset',
+            href: '/account?tab=datasets',
             label: 'Datasets',
             dataTestId: '',
         },
