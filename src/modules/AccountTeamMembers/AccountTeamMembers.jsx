@@ -36,18 +36,30 @@ const AccountTeamMembers = ({ teamId }) => {
         },
     });
 
+    const patchMembersRequest = teamService.usePatchTeamMemberRequest(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
+
+    const populateCheckboxes = members => {
+        const initialCheckboxes = {};
+
+        members.forEach(member => {
+            initialCheckboxes[member.userId] = {};
+            member.roles.forEach(role => {
+                initialCheckboxes[member.userId][role] = true;
+            });
+        });
+
+        return initialCheckboxes;
+    };
+
     useEffect(() => {
         const init = () => {
             if (teamId) {
                 getMembersRequest.mutateAsync(teamId).then(({ data: { members } }) => {
-                    const initialCheckboxes = {};
-
-                    members.forEach(member => {
-                        initialCheckboxes[member.userId] = {};
-                        member.roles.forEach(role => {
-                            initialCheckboxes[member.userId][role] = true;
-                        });
-                    });
+                    const initialCheckboxes = populateCheckboxes(members);
 
                     setCheckboxValues(initialCheckboxes);
                     setTeamMembers(members);
@@ -74,9 +86,19 @@ const AccountTeamMembers = ({ teamId }) => {
         setTeamMembers(addedMembers);
     };
 
-    const handleCheckboxChange = useCallback(({ role, checked, userId }) => {
-        console.log({ role, checked, userId });
-    }, []);
+    const handleCheckboxChange = async ({ roles, userId }) => {
+        setCheckboxValues({ ...checkboxValues, [userId]: roles });
+
+        const {
+            data: { members },
+        } = await patchMembersRequest.mutateAsync({
+            teamId,
+            userId,
+            data: { roles: Object.keys(roles).filter(role => roles[role]) },
+        });
+
+        setTeamMembers(members);
+    };
 
     const renderDisabledMessage = isDisabled => {
         return isDisabled ? t('components.AccountTeamMembers.disabledMessage') : '';
@@ -100,127 +122,119 @@ const AccountTeamMembers = ({ teamId }) => {
         [isCustodianMetadataManager, isCustodianDarManager, isCustodianTeamAdmin]
     );
 
-    const columns = useMemo(
-        () => [
-            {
-                Header: t('name'),
-                accessor: 'name',
-                Cell: ({ row: { original } }) => <NameCell member={original} />,
+    const columns = [
+        {
+            Header: t('name'),
+            accessor: 'name',
+            Cell: ({ row: { original } }) => <NameCell member={original} />,
+        },
+        {
+            Header: (
+                <HeaderTooltip header={t('teamAdmin')} content={<PermissionDescriptions roles={[PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN]} />} />
+            ),
+            accessor: 'teamAdmin',
+            cellProps: {
+                valign: 'top',
             },
-            {
-                Header: (
-                    <HeaderTooltip
-                        header={t('teamAdmin')}
-                        content={<PermissionDescriptions roles={[PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN]} />}
-                    />
-                ),
-                accessor: 'teamAdmin',
-                cellProps: {
-                    valign: 'top',
-                },
-                Cell: ({ row: { original } }) => (
+            Cell: ({ row: { original } }) => (
+                <CheckboxCell
+                    title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN))}
+                    disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN)}
+                    userId={original.userId}
+                    checkboxValues={checkboxValues[original.userId]}
+                    role={ROLE_CUSTODIAN_TEAM_ADMIN}
+                    label={t('admin')}
+                    onChange={handleCheckboxChange}
+                />
+            ),
+        },
+        {
+            Header: (
+                <HeaderTooltip
+                    header={t('dataAccessRequest')}
+                    content={
+                        <PermissionDescriptions roles={[PERMISSIONS_TEAM_MEMBER_ROLES.manager, PERMISSIONS_TEAM_MEMBER_ROLES.reviewer]} />
+                    }
+                />
+            ),
+            accessor: 'dataAccessRequest',
+            cellProps: {
+                valign: 'top',
+            },
+            Cell: ({ row: { original } }) => (
+                <>
                     <CheckboxCell
-                        title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN))}
-                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN)}
+                        title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER))}
+                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER)}
                         userId={original.userId}
-                        checkboxValues={checkboxValues}
-                        role={ROLE_CUSTODIAN_TEAM_ADMIN}
-                        label={t('admin')}
+                        checkboxValues={checkboxValues[original.userId]}
+                        role={ROLE_CUSTODIAN_DAR_MANAGER}
+                        label={t('manager')}
                         onChange={handleCheckboxChange}
                     />
-                ),
-            },
-            {
-                Header: (
-                    <HeaderTooltip
-                        header={t('dataAccessRequest')}
-                        content={
-                            <PermissionDescriptions
-                                roles={[PERMISSIONS_TEAM_MEMBER_ROLES.manager, PERMISSIONS_TEAM_MEMBER_ROLES.reviewer]}
-                            />
-                        }
+                    <CheckboxCell
+                        title={renderDisabledMessage(getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.reviewer))}
+                        disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.reviewer)}
+                        userId={original.userId}
+                        checkboxValues={checkboxValues[original.userId]}
+                        role={PERMISSIONS_TEAM_MEMBER_ROLES.reviewer}
+                        label={t('reviewer')}
+                        onChange={handleCheckboxChange}
                     />
-                ),
-                accessor: 'dataAccessRequest',
-                cellProps: {
-                    valign: 'top',
-                },
-                Cell: ({ row: { original } }) => (
-                    <>
-                        <CheckboxCell
-                            title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER))}
-                            disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER)}
-                            userId={original.userId}
-                            checkboxValues={checkboxValues}
-                            role={ROLE_CUSTODIAN_DAR_MANAGER}
-                            label={t('manager')}
-                            onChange={handleCheckboxChange}
+                </>
+            ),
+        },
+        {
+            Header: (
+                <HeaderTooltip
+                    header={t('metadata')}
+                    content={
+                        <PermissionDescriptions
+                            roles={[PERMISSIONS_TEAM_MEMBER_ROLES.manager, PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor]}
                         />
-                        <CheckboxCell
-                            title={renderDisabledMessage(getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.reviewer))}
-                            disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.reviewer)}
-                            userId={original.userId}
-                            checkboxValues={checkboxValues}
-                            role={PERMISSIONS_TEAM_MEMBER_ROLES.reviewer}
-                            label={t('reviewer')}
-                            onChange={handleCheckboxChange}
-                        />
-                    </>
-                ),
+                    }
+                />
+            ),
+            accessor: 'metadata',
+            cellProps: {
+                valign: 'top',
             },
-            {
-                Header: (
-                    <HeaderTooltip
-                        header={t('metadata')}
-                        content={
-                            <PermissionDescriptions
-                                roles={[PERMISSIONS_TEAM_MEMBER_ROLES.manager, PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor]}
-                            />
-                        }
+            Cell: ({ row: { original } }) => (
+                <>
+                    <CheckboxCell
+                        title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER))}
+                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER)}
+                        userId={original.userId}
+                        checkboxValues={checkboxValues[original.userId]}
+                        role={ROLE_CUSTODIAN_METADATA_MANAGER}
+                        label={t('manager')}
+                        onChange={handleCheckboxChange}
                     />
-                ),
-                accessor: 'metadata',
-                cellProps: {
-                    valign: 'top',
-                },
-                Cell: ({ row: { original } }) => (
-                    <>
-                        <CheckboxCell
-                            title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER))}
-                            disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER)}
-                            userId={original.userId}
-                            checkboxValues={checkboxValues}
-                            role={ROLE_CUSTODIAN_METADATA_MANAGER}
-                            label={t('manager')}
-                            onChange={handleCheckboxChange}
-                        />
-                        <CheckboxCell
-                            title={renderDisabledMessage(getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor))}
-                            disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor)}
-                            userId={original.userId}
-                            checkboxValues={checkboxValues}
-                            role={PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor}
-                            label={t('editor')}
-                            onChange={handleCheckboxChange}
-                        />
-                    </>
-                ),
+                    <CheckboxCell
+                        title={renderDisabledMessage(getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor))}
+                        disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor)}
+                        userId={original.userId}
+                        checkboxValues={checkboxValues[original.userId]}
+                        role={PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor}
+                        label={t('editor')}
+                        onChange={handleCheckboxChange}
+                    />
+                </>
+            ),
+        },
+        {
+            Header: 'Further Actions',
+            id: 'actions',
+            Cell: ({ row: { original } }) => (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <ActionCell member={original} onDeleteMember={handleDeleteMember} />
+                </div>
+            ),
+            styles: {
+                width: '147px',
             },
-            {
-                Header: 'Further Actions',
-                id: 'actions',
-                Cell: ({ row: { original } }) => (
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <ActionCell member={original} onDeleteMember={handleDeleteMember} />
-                    </div>
-                ),
-                styles: {
-                    width: '147px',
-                },
-            },
-        ],
-        [checkboxValues]
-    );
+        },
+    ];
 
     if (getMembersRequest.isLoading) {
         return (

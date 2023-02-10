@@ -1,5 +1,12 @@
 import { apiUrlV1, apiUrlV3 } from '../../configs/url.config';
-import { getRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
+import {
+    getRequest,
+    patchRequest,
+    postRequest,
+    putRequest,
+    useMutationWithTranslations,
+    useQueryWithTranslations,
+} from '../../utils/requests';
 
 const getMembers = (_id, options) => {
     return getRequest(`${apiUrlV3}/teams/${_id}/members`, options);
@@ -27,6 +34,17 @@ const putNotificationMessage = (_id, data, options) => {
 
 const putNotifications = (_id, data, options) => {
     return putRequest(`${apiUrlV1}/teams/${_id}/notifications`, data, options);
+};
+
+const patchTeamMember = (teamId, userId, data, options) => {
+    return patchRequest(`${apiUrlV3}/teams/${teamId}/members/${userId}`, data, options);
+};
+
+const usePatchTeamMemberRequest = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(({ teamId, userId, data }) => patchTeamMember(teamId, userId, data, requestOptions), {
+        mutationKey: 'teams.patchMember',
+        ...mutateOptions,
+    });
 };
 
 const useGetMembers = (requestOptions, mutateOptions) => {
@@ -94,4 +112,5 @@ export {
     useAddMembers,
     usePutNotificationMessage,
     usePutNotifications,
+    usePatchTeamMemberRequest,
 };

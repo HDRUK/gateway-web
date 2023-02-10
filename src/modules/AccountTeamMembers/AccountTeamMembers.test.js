@@ -145,6 +145,19 @@ describe('AccountTeamMembers component', () => {
 
             expect(checkbox).toBeEnabled();
         });
+
+        it('should toggle checkbox on select', async () => {
+            const checkbox = testUtils.within(cells[1]).getByLabelText('Admin');
+
+            expect(checkbox).not.toBeChecked();
+
+            testUtils.fireEvent.click(checkbox);
+
+            await testUtils.waitFor(() => {
+                expect(testUtils.within(cells[1]).getByLabelText('Admin')).toBeChecked();
+            });
+        });
+
         it('Dar manager checkbox should be enabled', () => {
             const checkbox = testUtils.within(cells[2]).getByLabelText('Manager');
 

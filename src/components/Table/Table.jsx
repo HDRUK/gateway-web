@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 import { useTable } from 'react-table';
 import { cx } from '@emotion/css';
+import { useMemo } from 'react';
 import useCommonStyles from '../../hooks/useCommonStyles';
 import { COMMON_PROP_TYPES } from '../../configs/propTypes';
 import styles from './Table.styles';
@@ -9,9 +10,12 @@ import styles from './Table.styles';
 const Table = ({ className, columns, data, mt, mb, ml, mr, width, minWidth, maxWidth }) => {
     const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
 
+    const memoData = useMemo(() => data, [data]);
+    const memoColumns = useMemo(() => columns, [columns]);
+
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-        columns,
-        data,
+        columns: memoColumns,
+        data: memoData,
     });
 
     return (

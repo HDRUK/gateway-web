@@ -1,7 +1,6 @@
 import { Dropdown } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 
-import { accountUtils } from 'utils';
 import { useAuth } from 'context/AuthContext';
 import { useMemo } from 'react';
 import { AddNew, WithChevron, WithOutChevron } from './MyAccountNav.components';
@@ -94,8 +93,7 @@ const MyAccountNav = () => {
                         navItem.hasPermission && (
                             <Dropdown.Item
                                 key={navItem.href}
-                                onClick={accountUtils.updateSelectedTeam({ teamType: 'user' })}
-                                href={navItem.href}
+                                href={`${navItem.href}&teamType=user`}
                                 className='black-14 user-dropdown-item'>
                                 {navItem.labelContent}
                             </Dropdown.Item>

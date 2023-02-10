@@ -431,14 +431,13 @@ class DataAccessRequest extends Component {
         // 2. If user is custodian and the form is not in review, redirect the user to the DAR team dashboard
         // TODO: GAT-1510:062
         if (teamType === 'custodian' && applicationStatus === darHelperUtils.darStatus.submitted) {
-            accountUtils.updateSelectedTeam({ teamType: 'team', teamId: publisher });
             const alert = {
                 publisher,
                 tab: 'submitted',
             };
             this.props.history.push({
                 pathname: `/account`,
-                search: '?tab=dataaccessrequests',
+                search: `?tab=dataaccessrequests&teamType=team&teamId=${publisher}`,
                 state: { alert },
             });
         }
@@ -794,11 +793,9 @@ class DataAccessRequest extends Component {
             const lastSaved = darHelperUtils.saveTime();
             this.setState({ lastSaved });
 
-            accountUtils.updateSelectedTeam({ teamType: 'user' });
-
             this.props.history.push({
                 pathname: '/account',
-                search: '?tab=dataaccessrequests',
+                search: '?tab=dataaccessrequests&teamType=user',
                 state: { alert },
             });
         } catch (err) {
@@ -1406,12 +1403,10 @@ class DataAccessRequest extends Component {
                     message: `You have successfully sent your recommendation for your assigned phase of ${this.state.aboutApplication.projectName} project`,
                 };
 
-                accountUtils.updateSelectedTeam({ teamType: 'team', teamId: this.state.publisher });
-
                 // 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
                 this.props.history.push({
                     pathname: `/account`,
-                    search: '?tab=dataaccessrequests',
+                    search: `?tab=dataaccessrequests&teamType=team&teamId=${this.state.publisher}`,
                     state: { alert },
                 });
             })
@@ -1620,12 +1615,10 @@ class DataAccessRequest extends Component {
                 // 3. hide screen modal for approve, reject, approve with comments
                 this.toggleActionModal();
 
-                accountUtils.updateSelectedTeam({ teamType: 'team', teamId: this.state.publisher });
-
                 // 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
                 this.props.history.push({
                     pathname: `/account`,
-                    search: '?tab=dataaccessrequests',
+                    search: `?tab=dataaccessrequests&teamType=team&teamId=${this.state.publisher}`,
                     state: { alert },
                 });
                 break;
@@ -1832,11 +1825,9 @@ class DataAccessRequest extends Component {
                 publisher: 'user',
             };
 
-            accountUtils.updateSelectedTeam({ teamType: 'user' });
-
             this.props.history.push({
                 pathname: '/account',
-                search: '?tab=dataaccessrequests',
+                search: '?tab=dataaccessrequests&teamType=user',
                 state: { alert },
             });
         } catch (err) {
@@ -2309,6 +2300,7 @@ class DataAccessRequest extends Component {
                         open={this.state.updateRequestModal}
                         close={this.toggleUpdateRequestModal}
                         publisher={this.state.publisher}
+                        publisherId={this.state.datasets[0].publisher._id}
                         projectName={projectName}
                         applicationId={this.state._id}
                         fullAmendments={this.state.fullAmendments}

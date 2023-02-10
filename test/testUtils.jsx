@@ -24,7 +24,7 @@ const queryClient = new QueryClient({
     },
 });
 
-const AllTheProviders = ({ children }) => {
+const AllTheProviders = ({ children, route }) => {
     return (
         <I18nextProvider i18n={i18n}>
             <Suspense fallback='Loading'>
@@ -32,7 +32,7 @@ const AllTheProviders = ({ children }) => {
                     <AuthProvider value={{ userState: mockUser.data }}>
                         <QueryClientProvider client={queryClient}>
                             <CmsProvider>
-                                <MemoryRouter>{children}</MemoryRouter>
+                                <MemoryRouter initialEntries={route}>{children}</MemoryRouter>
                             </CmsProvider>
                         </QueryClientProvider>
                     </AuthProvider>
@@ -44,10 +44,18 @@ const AllTheProviders = ({ children }) => {
 
 AllTheProviders.propTypes = {
     children: PropTypes.node.isRequired,
+    route: PropTypes.arrayOf(PropTypes.string),
 };
 
-const customRender = (ui, options) => render(ui, { wrapper: AllTheProviders, ...options });
-const customRenderHook = (ui, options) => renderHook(ui, { wrapper: AllTheProviders, ...options });
+AllTheProviders.defaultProps = {
+    route: ['/'],
+};
+
+const customRender = (ui, { route, ...options } = {}) => render(ui, { wrapper: AllTheProviders, ...options, initialProps: { route } });
+
+const customRenderHook = (ui, { route, ...options } = {}) => {
+    return renderHook(ui, { wrapper: AllTheProviders, ...options, initialProps: { route } });
+};
 
 const createPortalContainer = () => {
     const div = document.createElement('div');

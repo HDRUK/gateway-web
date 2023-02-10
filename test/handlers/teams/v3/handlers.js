@@ -10,4 +10,11 @@ const getTeamsMembersV3 = ({ members = mockTeamsMembersV3 } = {}, status = 200) 
     });
 };
 
-export { getTeamsMembersV3, mockTeamsMembersV3 };
+const updateTeamsMembersV3 = (data, status = 200) => {
+    return rest.patch(`${apiUrlV3}/teams/:id/members/:userId`, (req, res, ctx) => {
+        const { params, body } = req;
+        return res(ctx.status(status), ctx.json({ members: [{ userId: params.userId, ...body, ...data }] }));
+    });
+};
+
+export { getTeamsMembersV3, mockTeamsMembersV3, updateTeamsMembersV3 };

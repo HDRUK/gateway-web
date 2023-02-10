@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Checkbox, Popover, PopoverMenu } from 'components';
 import { useTranslation } from 'react-i18next';
 
+import { memo, useMemo } from 'react';
 import { memberPropTypes } from '../../types';
 import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
 import { ReactComponent as QuestionMarkIcon } from '../../images/icons/question-mark.svg';
@@ -38,20 +39,17 @@ NameCell.propTypes = {
     member: memberPropTypes.isRequired,
 };
 
-const CheckboxCell = ({ title, onChange, userId, role, label, checkboxValues, disabled }) => {
-    const handleChange = ({ target: { checked } }) => onChange({ userId, role, checked });
+const CheckboxCell = memo(({ title, onChange, userId, role, label, checkboxValues, disabled }) => {
+    const handleChange = ({ target: { checked } }) => {
+        onChange({ userId, roles: { ...checkboxValues, [role]: checked } });
+    };
+
+    const isChecked = useMemo(() => !!checkboxValues?.[role], [checkboxValues, role]);
 
     return (
-        <Checkbox
-            title={title}
-            disabled={disabled}
-            label={label}
-            onChange={handleChange}
-            checked={!!checkboxValues?.[userId]?.[role]}
-            id={`${userId}_${role}`}
-        />
+        <Checkbox title={title} disabled={disabled} label={label} onChange={handleChange} checked={isChecked} id={`${userId}_${role}`} />
     );
-};
+});
 
 CheckboxCell.propTypes = {
     onChange: PropTypes.func.isRequired,

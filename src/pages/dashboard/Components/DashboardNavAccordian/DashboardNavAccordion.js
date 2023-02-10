@@ -2,7 +2,6 @@ import { Accordion } from 'react-bootstrap';
 
 import { Icon } from 'hdruk-react-core';
 
-import { accountUtils } from 'utils';
 import DashboardSubNavItem from '../DashboardSubNavItem';
 import handleAnalytics from '../../../dataAccessRequestCustomiseForm/handleAnalytics';
 
@@ -18,10 +17,9 @@ const DashboardNavAccordion = ({ teamId, activeKey, tabId, eventKey, onSelect, d
                     {data.children.map(({ id, text }) => (
                         <DashboardSubNavItem
                             key={id}
-                            to={`/account?tab=${id}`}
+                            to={`/account?tab=${id}&teamType=team&teamId=${teamId}`}
                             active={tabId === id}
                             onClick={() => {
-                                accountUtils.updateSelectedTeam({ teamType: 'team', teamId });
                                 handleAnalytics(`Clicked on ${id}`, text);
                             }}>
                             {text}

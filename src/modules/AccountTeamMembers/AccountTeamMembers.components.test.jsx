@@ -40,9 +40,7 @@ describe('Given the AccountTeamMembers components', () => {
                 <CheckboxCell
                     userId='1234'
                     role={ROLE_CUSTODIAN_TEAM_ADMIN}
-                    checkboxValues={{
-                        1234: { [ROLE_CUSTODIAN_TEAM_ADMIN]: true },
-                    }}
+                    checkboxValues={{ [ROLE_CUSTODIAN_TEAM_ADMIN]: true }}
                     label='Admin'
                     onChange={changeMock}
                 />
