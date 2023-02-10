@@ -54,6 +54,16 @@ describe('AccountNavMenu', () => {
             expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Edit DAR Form')).toBeInTheDocument();
             expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Help')).toBeInTheDocument();
         });
+        it('custodian metadata manager', () => {
+            useAuth.mockReturnValue({
+                userState: mocks.userState.mockCustodianMetadataManager,
+            });
+            testUtils.render(<AccountNavMenu {...props} />);
+
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Team Management')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Datasets')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Help')).toBeInTheDocument();
+        });
         it('custodian DAR reviewer', () => {
             useAuth.mockReturnValue({
                 userState: mocks.userState.mockUserStateReviewer,
@@ -75,16 +85,6 @@ describe('AccountNavMenu', () => {
             useAccountTeamSelected.mockReturnValue({
                 teamId: '9101',
                 teamType: 'team',
-            });
-            testUtils.render(<AccountNavMenu {...props} />);
-
-            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Team Management')).toBeInTheDocument();
-            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Datasets')).toBeInTheDocument();
-            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Help')).toBeInTheDocument();
-        });
-        it('custodian metadata manager', () => {
-            useAuth.mockReturnValue({
-                userState: mocks.userState.mockCustodianMetadataManager,
             });
             testUtils.render(<AccountNavMenu {...props} />);
 
