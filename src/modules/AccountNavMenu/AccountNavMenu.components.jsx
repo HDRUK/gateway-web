@@ -1,6 +1,5 @@
-import { PERMISSIONS_TEAM_ROLES } from 'consts';
-
 import { useAuth } from 'context/AuthContext';
+import { useCustodianRoles } from 'hooks';
 import { ReactComponent as BarChartIcon } from '../../images/icons/bar-chart.svg';
 import { ReactComponent as FlowIcon } from '../../images/icons/flow.svg';
 import { ReactComponent as TeamsIcon } from '../../images/icons/teams.svg';
@@ -127,16 +126,9 @@ const AdminNav = ({ tabId }) => {
     );
 };
 
-const TeamNav = ({
-    allowAccessRequestManagement,
-    userHasTeamRole,
-    teamId,
-    setActiveAccordion,
-    tabId,
-    activeAccordion,
-    publisherDetails,
-    allowWorkflow,
-}) => {
+const TeamNav = ({ allowAccessRequestManagement, teamId, setActiveAccordion, tabId, activeAccordion, publisherDetails, allowWorkflow }) => {
+    const { isCustodianDarManager, isReviewer, isCustodianMetadataManager, isMetadataEditor } = useCustodianRoles(teamId);
+
     const ACCORDIAN_DAR_MENU = {
         text: 'Data access requests',
         icon: <UsersIcon />,
@@ -146,7 +138,7 @@ const TeamNav = ({
                 id: 'dataaccessrequests',
             },
             // TODO: GAT-1510:006
-            ...(allowWorkflow && userHasTeamRole(PERMISSIONS_TEAM_ROLES.manager)
+            ...(allowWorkflow && isCustodianDarManager
                 ? [
                       {
                           id: 'workflows',
@@ -165,10 +157,7 @@ const TeamNav = ({
                 text: 'Dashboard',
                 id: 'datause',
             },
-            // TODO: GAT-1510:007
-            ...(userHasTeamRole([PERMISSIONS_TEAM_ROLES.manager]) && publisherDetails.dataUse?.widget?.enabled
-                ? [{ text: 'Data use widget', id: 'datause_widget' }]
-                : []),
+            ...(publisherDetails.dataUse?.widget?.enabled ? [{ text: 'Data use widget', id: 'datause_widget' }] : []),
         ],
     };
 
@@ -180,8 +169,8 @@ const TeamNav = ({
                 to={`/account?tab=teamManagement&teamType=team&teamId=${teamId}`}>
                 Team Management
             </DashboardNavItem>
-            {/* TODO: GAT-1510:008 */}
-            {allowAccessRequestManagement && userHasTeamRole([PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.reviewer]) && (
+
+            {allowAccessRequestManagement && [isCustodianDarManager, isReviewer].some(role => role) && (
                 <>
                     <div className={getNavActiveClass(['dataaccessrequests', 'workflows', 'addeditworkflow'], tabId)}>
                         <DashboardNavAccordion
@@ -193,7 +182,7 @@ const TeamNav = ({
                             teamId={teamId}
                         />
                     </div>
-                    {publisherDetails?.questionBank?.enabled && (
+                    {isCustodianDarManager && publisherDetails?.questionBank?.enabled && (
                         <div
                             className={getNavActiveClass(
                                 ['customisedataaccessrequests_guidance', 'customisedataaccessrequests_applicationform'],
@@ -211,8 +200,7 @@ const TeamNav = ({
                     )}
                 </>
             )}
-            {/* TODO: GAT-1510:009 */}
-            {userHasTeamRole([PERMISSIONS_TEAM_ROLES.manager, PERMISSIONS_TEAM_ROLES.metadata_editor]) && (
+            {[isCustodianMetadataManager, isMetadataEditor].some(role => role) && (
                 <DashboardNavItem
                     icon={<ServerIcon />}
                     activeClassName={getNavActiveClass('datasets', tabId)}
@@ -221,16 +209,18 @@ const TeamNav = ({
                 </DashboardNavItem>
             )}
 
-            <div className={getNavActiveClass(['datause', 'datause_widget'], tabId)}>
-                <DashboardNavAccordion
-                    onSelect={setActiveAccordion}
-                    tabId={tabId}
-                    activeKey={activeAccordion}
-                    eventKey='2'
-                    data={ACCORDIAN_DUR_MENU}
-                    teamId={teamId}
-                />
-            </div>
+            {isCustodianDarManager && (
+                <div className={getNavActiveClass(['datause', 'datause_widget'], tabId)}>
+                    <DashboardNavAccordion
+                        onSelect={setActiveAccordion}
+                        tabId={tabId}
+                        activeKey={activeAccordion}
+                        eventKey='2'
+                        data={ACCORDIAN_DUR_MENU}
+                        teamId={teamId}
+                    />
+                </div>
+            )}
 
             <DashboardNavItem
                 icon={<HelpIcon />}

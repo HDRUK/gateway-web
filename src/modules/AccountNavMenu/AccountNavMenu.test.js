@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { testUtils, mocks } from '../../../test';
 import { useAuth } from '../../context/AuthContext';
 
-jest.mock('hooks');
+jest.mock('hooks/useAccountTeamSelected');
 jest.mock('../../context/AuthContext');
 
 describe('AccountNavMenu', () => {
@@ -27,51 +27,70 @@ describe('AccountNavMenu', () => {
     describe('Should render correctly for team section', () => {
         beforeAll(() => {
             useAccountTeamSelected.mockReturnValue({
-                teamId: '2134',
+                teamId: '1234',
                 teamType: 'team',
             });
         });
 
-        it('root admin', () => {
+        it('team admin', () => {
             useAuth.mockReturnValue({
-                isTeamManager: false,
                 isRootAdmin: true,
-                managerInTeam: jest.fn(),
-                userState: mocks.userState.mockUserStateAdmin,
+                userState: mocks.userState.mockCustodianTeamAdmin,
             });
-            const wrapper = testUtils.render(<AccountNavMenu {...props} />);
+            testUtils.render(<AccountNavMenu {...props} />);
 
-            expect(wrapper.container).toMatchSnapshot();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Team Management')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Help')).toBeInTheDocument();
         });
-        it('manager', () => {
+        it('custodian DAR manager', () => {
             useAuth.mockReturnValue({
-                isTeamManager: true,
-                managerInTeam: jest.fn(),
-                userState: mocks.userState.mockUserStateManager,
+                userState: mocks.userState.mockCustodianDarManager,
             });
-            const wrapper = testUtils.render(<AccountNavMenu {...props} />);
 
-            expect(wrapper.container).toMatchSnapshot();
+            testUtils.render(<AccountNavMenu {...props} />);
+
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Team Management')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Data access requests')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Edit DAR Form')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Help')).toBeInTheDocument();
         });
-        it('reviewer', () => {
+        it('custodian DAR reviewer', () => {
             useAuth.mockReturnValue({
-                isTeamManager: false,
-                managerInTeam: jest.fn(),
                 userState: mocks.userState.mockUserStateReviewer,
             });
-            const wrapper = testUtils.render(<AccountNavMenu {...props} />);
+            useAccountTeamSelected.mockReturnValue({
+                teamId: '5678',
+                teamType: 'team',
+            });
+            testUtils.render(<AccountNavMenu {...props} />);
 
-            expect(wrapper.container).toMatchSnapshot();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Team Management')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Data access requests')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Help')).toBeInTheDocument();
         });
-        it('metadata editor', () => {
+        it('custodian metadata editor', () => {
             useAuth.mockReturnValue({
-                isTeamManager: false,
-                managerInTeam: jest.fn(),
                 userState: mocks.userState.mockUserStateMetadataEditor,
             });
-            const wrapper = testUtils.render(<AccountNavMenu {...props} />);
+            useAccountTeamSelected.mockReturnValue({
+                teamId: '9101',
+                teamType: 'team',
+            });
+            testUtils.render(<AccountNavMenu {...props} />);
 
-            expect(wrapper.container).toMatchSnapshot();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Team Management')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Datasets')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Help')).toBeInTheDocument();
+        });
+        it('custodian metadata manager', () => {
+            useAuth.mockReturnValue({
+                userState: mocks.userState.mockCustodianMetadataManager,
+            });
+            testUtils.render(<AccountNavMenu {...props} />);
+
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Team Management')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Datasets')).toBeInTheDocument();
+            expect(testUtils.within(testUtils.screen.getByTestId('accountNavMenu')).getByText('Help')).toBeInTheDocument();
         });
     });
     describe('Should render correctly for user section', () => {
@@ -84,47 +103,16 @@ describe('AccountNavMenu', () => {
 
         it('root admin', () => {
             useAuth.mockReturnValue({
-                isTeamManager: false,
                 isRootAdmin: true,
-                managerInTeam: jest.fn(),
+
                 userState: mocks.userState.mockUserStateAdmin,
             });
             const wrapper = testUtils.render(<AccountNavMenu {...props} />);
 
             expect(wrapper.container).toMatchSnapshot();
         });
-        it('manager', () => {
-            useAuth.mockReturnValue({
-                isTeamManager: true,
-                managerInTeam: jest.fn(),
-                userState: mocks.userState.mockUserStateManager,
-            });
-            const wrapper = testUtils.render(<AccountNavMenu {...props} />);
-
-            expect(wrapper.container).toMatchSnapshot();
-        });
-        it('reviewer', () => {
-            useAuth.mockReturnValue({
-                isTeamManager: false,
-                managerInTeam: jest.fn(),
-                userState: mocks.userState.mockUserStateReviewer,
-            });
-            const wrapper = testUtils.render(<AccountNavMenu {...props} />);
-
-            expect(wrapper.container).toMatchSnapshot();
-        });
-        it('metadata editor', () => {
-            useAuth.mockReturnValue({
-                isTeamManager: false,
-                managerInTeam: jest.fn(),
-                userState: mocks.userState.mockUserStateMetadataEditor,
-            });
-            const wrapper = testUtils.render(<AccountNavMenu {...props} />);
-
-            expect(wrapper.container).toMatchSnapshot();
-        });
     });
-    describe('Should render correctly for admin section', () => {
+    describe('Should render admin section', () => {
         beforeAll(() => {
             useAccountTeamSelected.mockReturnValue({
                 teamId: null,
@@ -132,42 +120,21 @@ describe('AccountNavMenu', () => {
             });
         });
 
-        it('root admin', () => {
+        it('as root admin', () => {
             useAuth.mockReturnValue({
-                isTeamManager: false,
                 isRootAdmin: true,
-                managerInTeam: jest.fn(),
+
                 userState: mocks.userState.mockUserStateAdmin,
             });
             const wrapper = testUtils.render(<AccountNavMenu {...props} />);
 
             expect(wrapper.container).toMatchSnapshot();
         });
-        it('manager', () => {
+        it('as non root admin', () => {
             useAuth.mockReturnValue({
-                isTeamManager: true,
-                managerInTeam: jest.fn(),
-                userState: mocks.userState.mockUserStateManager,
-            });
-            const wrapper = testUtils.render(<AccountNavMenu {...props} />);
+                isRootAdmin: false,
 
-            expect(wrapper.container).toMatchSnapshot();
-        });
-        it('reviewer', () => {
-            useAuth.mockReturnValue({
-                isTeamManager: false,
-                managerInTeam: jest.fn(),
-                userState: mocks.userState.mockUserStateReviewer,
-            });
-            const wrapper = testUtils.render(<AccountNavMenu {...props} />);
-
-            expect(wrapper.container).toMatchSnapshot();
-        });
-        it('metadata editor', () => {
-            useAuth.mockReturnValue({
-                isTeamManager: false,
-                managerInTeam: jest.fn(),
-                userState: mocks.userState.mockUserStateMetadataEditor,
+                userState: mocks.userState.mockUserStateAdmin,
             });
             const wrapper = testUtils.render(<AccountNavMenu {...props} />);
 
