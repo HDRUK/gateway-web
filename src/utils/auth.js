@@ -7,7 +7,7 @@ const getIsTypeCustodian = type => {
 };
 
 /* type="admin" for HDRUK team */
-const getIsTypeHDRAdmin = type => {
+const getIsTypeAdmin = type => {
     return type === 'admin';
 };
 
@@ -25,6 +25,10 @@ const getIsTypePublisher = type => {
 
 const getIsRootRoleAdmin = userState => {
     return userState[0].role === PERMISSIONS_ROOT_ROLES.admin;
+};
+
+const getIsHDRAdmin = userState => {
+    return userState[0].teams?.filter(team => getIsTypeAdmin(team.type));
 };
 
 const getIsUserRoleAdmin = role => {
@@ -143,11 +147,10 @@ export {
     isTeamMemberManager,
     getIsTypeAdminOrApplicant,
     getTeamMemberManagers,
-    getIsRootRoleAdmin,
     getTeamRoleNames,
     getIsTypePublisher,
     getIsTypeCustodian,
-    getIsTypeHDRAdmin,
+    getIsTypeAdmin,
     getIsTypeUser,
     getIsTeamAdmin,
     userHasTeamRole,
@@ -155,4 +158,6 @@ export {
     getIsUserRoleAdmin,
     getIsUserRoleDataCustodian,
     getIsUserRoleCreator,
+    getIsRootRoleAdmin,
+    getIsHDRAdmin,
 };
