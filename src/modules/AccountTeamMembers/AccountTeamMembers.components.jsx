@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Checkbox, Popover, PopoverMenu } from 'components';
 import { useTranslation } from 'react-i18next';
 
-import { memo, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { memberPropTypes } from '../../types';
 import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
 import { ReactComponent as QuestionMarkIcon } from '../../images/icons/question-mark.svg';
@@ -45,6 +45,9 @@ const CheckboxCell = memo(({ title, onChange, userId, role, label, checkboxValue
     };
 
     const isChecked = useMemo(() => !!checkboxValues?.[role], [checkboxValues, role]);
+    useEffect(() => {
+        console.log({ userId, role });
+    }, [isChecked]);
 
     return (
         <Checkbox title={title} disabled={disabled} label={label} onChange={handleChange} checked={isChecked} id={`${userId}_${role}`} />
@@ -58,7 +61,7 @@ CheckboxCell.propTypes = {
     title: PropTypes.string.isRequired,
     disabled: PropTypes.bool.isRequired,
     label: PropTypes.string.isRequired,
-    checkboxValues: PropTypes.objectOf(PropTypes.objectOf(PropTypes.bool)).isRequired,
+    checkboxValues: PropTypes.objectOf(PropTypes.bool).isRequired,
 };
 
 const HeaderTooltip = ({ header, content }) => (
