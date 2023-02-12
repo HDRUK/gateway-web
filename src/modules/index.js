@@ -11,6 +11,7 @@ import HeaderNav from './HeaderNav';
 import HeaderNavMobile from './HeaderNavMobile';
 import PermissionDescriptions from './PermissionDescriptions';
 import RelatedResourcesTab from './RelatedResourcesTab';
+import RemoveUserModal from './RemoveUserModal';
 import CustodianNav from './CustodianNav';
 import NavWrapper from './NavWrapper';
 import MyAccountNav from './MyAccountNav';
@@ -29,6 +30,7 @@ export {
     HeaderNavMobile,
     PermissionDescriptions,
     RelatedResourcesTab,
+    RemoveUserModal,
     CustodianNav,
     NavWrapper,
     MyAccountNav,

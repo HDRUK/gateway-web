@@ -9,13 +9,13 @@ import { memberPropTypes } from '../../types';
 import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
 import { ReactComponent as QuestionMarkIcon } from '../../images/icons/question-mark.svg';
 
-const ActionCell = ({ member: { userId }, onDeleteMember }) => {
+const ActionCell = ({ member, onDeleteMember }) => {
     const { t } = useTranslation();
     const items = [
         {
             label: t('removeUser'),
             icon: WastebinIcon,
-            action: () => onDeleteMember(userId),
+            action: () => onDeleteMember(member),
         },
     ];
     return <Popover content={<PopoverMenu items={items} />} />;

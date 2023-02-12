@@ -1,5 +1,6 @@
 import { apiUrlV1, apiUrlV3 } from '../../configs/url.config';
 import {
+    deleteRequest,
     getRequest,
     patchRequest,
     postRequest,
@@ -43,6 +44,17 @@ const patchTeamMember = (teamId, userId, data, options) => {
 const usePatchTeamMemberRequest = (requestOptions, mutateOptions) => {
     return useMutationWithTranslations(({ teamId, userId, data }) => patchTeamMember(teamId, userId, data, requestOptions), {
         mutationKey: 'teams.patchMember',
+        ...mutateOptions,
+    });
+};
+
+const deleteTeamMember = (teamId, userId, options) => {
+    return deleteRequest(`${apiUrlV3}/teams/${teamId}/members/${userId}`, options);
+};
+
+const useDeleteTeamMemberRequest = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(({ teamId, userId }) => deleteTeamMember(teamId, userId, requestOptions), {
+        mutationKey: 'teams.deleteMember',
         ...mutateOptions,
     });
 };
@@ -112,5 +124,6 @@ export {
     useAddMembers,
     usePutNotificationMessage,
     usePutNotifications,
+    useDeleteTeamMemberRequest,
     usePatchTeamMemberRequest,
 };

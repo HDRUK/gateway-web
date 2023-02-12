@@ -1,11 +1,11 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Card, Button, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
 
 import { Table, LayoutContent } from 'components';
-import { PermissionDescriptions } from 'modules';
+import { PermissionDescriptions, RemoveUserModal } from 'modules';
 import {
     PERMISSIONS_TEAM_MEMBER_ROLES,
     PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN,
@@ -27,6 +27,8 @@ const AccountTeamMembers = ({ teamId }) => {
     const { isCustodianTeamAdmin, isCustodianMetadataManager, isCustodianDarManager } = useCustodianRoles(teamId);
     const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
+    const [userToRemove, setUserToRemove] = useState(null);
+    const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [checkboxValues, setCheckboxValues] = useState({});
     const { t } = useTranslation();
 
@@ -37,6 +39,12 @@ const AccountTeamMembers = ({ teamId }) => {
     });
 
     const patchMembersRequest = teamService.usePatchTeamMemberRequest(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
+
+    const deleteMembersRequest = teamService.useDeleteTeamMemberRequest(null, {
         onError: ({ title, message }) => {
             NotificationManager.error(message, title, 10000);
         },
@@ -70,8 +78,11 @@ const AccountTeamMembers = ({ teamId }) => {
         init();
     }, [teamId, userState]);
 
-    const handleDeleteMember = id => {
-        console.log(`delete member: ${id}`);
+    const handleRemoveUser = () => {
+        setShowRemoveModal(false);
+        deleteMembersRequest.mutateAsync({ teamId, userId: userToRemove.userId }).then(() => {
+            setUserToRemove(null);
+        });
     };
 
     const handleCloseModal = useCallback(() => {
@@ -227,7 +238,13 @@ const AccountTeamMembers = ({ teamId }) => {
             id: 'actions',
             Cell: ({ row: { original } }) => (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <ActionCell member={original} onDeleteMember={handleDeleteMember} />
+                    <ActionCell
+                        member={original}
+                        onDeleteMember={() => {
+                            setUserToRemove(original);
+                            setShowRemoveModal(true);
+                        }}
+                    />
                 </div>
             ),
             styles: {
@@ -262,6 +279,12 @@ const AccountTeamMembers = ({ teamId }) => {
                 </Card>
             )}
             <AccountTeamMembersModal isOpen={showModal} onClose={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
+            <RemoveUserModal
+                isOpen={showRemoveModal}
+                memberName={`${userToRemove?.firstname} ${userToRemove?.lastname}`}
+                onClose={() => setShowRemoveModal(false)}
+                onRemove={handleRemoveUser}
+            />
         </LayoutContent>
     );
 };
