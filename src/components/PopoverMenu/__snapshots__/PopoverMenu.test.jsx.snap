@@ -4,6 +4,7 @@ exports[`Given the PopoverMenu component When it is rendered Then matches the pr
 <div>
   <ul
     class="emotion-0"
+    data-testid="popoverMenu"
   >
     <li
       class="emotion-1"

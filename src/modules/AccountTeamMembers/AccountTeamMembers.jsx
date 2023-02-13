@@ -1,10 +1,10 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Card, Button, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
 
-import { Table, LayoutContent } from 'components';
+import { Table, LayoutContent, ConfirmationModal } from 'components';
 import { PermissionDescriptions } from 'modules';
 import {
     PERMISSIONS_TEAM_MEMBER_ROLES,
@@ -22,11 +22,13 @@ import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { useAuth } from '../../context/AuthContext';
 import { ActionCell, CheckboxCell, NameCell, HeaderTooltip } from './AccountTeamMembers.components';
 
-const AccountTeamMembers = ({ teamId }) => {
-    const { userState } = useAuth();
+const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
+    const { userState, isHDRAdmin } = useAuth();
     const { isCustodianTeamAdmin, isCustodianMetadataManager, isCustodianDarManager } = useCustodianRoles(teamId);
     const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
+    const [userToRemove, setUserToRemove] = useState(null);
+    const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [checkboxValues, setCheckboxValues] = useState({});
     const { t } = useTranslation();
 
@@ -37,6 +39,12 @@ const AccountTeamMembers = ({ teamId }) => {
     });
 
     const patchMembersRequest = teamService.usePatchTeamMemberRequest(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
+
+    const deleteMembersRequest = teamService.useDeleteTeamMemberRequest(null, {
         onError: ({ title, message }) => {
             NotificationManager.error(message, title, 10000);
         },
@@ -70,8 +78,13 @@ const AccountTeamMembers = ({ teamId }) => {
         init();
     }, [teamId, userState]);
 
-    const handleDeleteMember = id => {
-        console.log(`delete member: ${id}`);
+    const handleRemoveUser = () => {
+        setShowRemoveModal(false);
+        deleteMembersRequest.mutateAsync({ teamId, userId: userToRemove.userId }).then(() => {
+            setUserToRemove(null);
+            setTeamMembers(teamMembers.filter(teamMember => teamMember.userId !== userToRemove.userId));
+            handleDisplayAlert('User has been removed');
+        });
     };
 
     const handleCloseModal = useCallback(() => {
@@ -227,7 +240,16 @@ const AccountTeamMembers = ({ teamId }) => {
             id: 'actions',
             Cell: ({ row: { original } }) => (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <ActionCell member={original} onDeleteMember={handleDeleteMember} />
+                    <ActionCell
+                        isHDRAdmin={isHDRAdmin}
+                        isCustodianTeamAdmin={isCustodianTeamAdmin}
+                        currentUser={userState[0]}
+                        member={original}
+                        onDeleteMember={() => {
+                            setUserToRemove(original);
+                            setShowRemoveModal(true);
+                        }}
+                    />
                 </div>
             ),
             styles: {
@@ -262,12 +284,20 @@ const AccountTeamMembers = ({ teamId }) => {
                 </Card>
             )}
             <AccountTeamMembersModal isOpen={showModal} onClose={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
+            <ConfirmationModal
+                title={`Are you sure you want to remove ${userToRemove?.firstname} ${userToRemove?.lastname}?`}
+                isOpen={showRemoveModal}
+                onClose={() => setShowRemoveModal(false)}
+                onSuccess={handleRemoveUser}
+                successLabel='Remove'
+            />
         </LayoutContent>
     );
 };
 
 AccountTeamMembers.propTypes = {
     teamId: PropTypes.string.isRequired,
+    handleDisplayAlert: PropTypes.func.isRequired,
 };
 
 export default AccountTeamMembers;

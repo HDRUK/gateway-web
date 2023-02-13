@@ -178,6 +178,13 @@ describe('AccountTeamMembers component', () => {
 
             expect(checkbox).toBeEnabled();
         });
+        it('Remove user button to be enabled', () => {
+            const popover = testUtils.within(cells[4]).getByRole('button');
+            popover.click();
+
+            const button = testUtils.within(testUtils.screen.getByTestId('popoverMenu')).getByRole('button');
+            expect(button).toBeEnabled();
+        });
     });
     describe('as a metadata manager', () => {
         let cells;
@@ -220,6 +227,13 @@ describe('AccountTeamMembers component', () => {
 
             expect(checkbox).toBeEnabled();
         });
+        it('Remove user button to be disabled', () => {
+            const popover = testUtils.within(cells[4]).getByRole('button');
+            popover.click();
+
+            const button = testUtils.within(testUtils.screen.getByTestId('popoverMenu')).getByRole('button');
+            expect(button).toBeDisabled();
+        });
     });
     describe('as a dar manager', () => {
         let cells;
@@ -261,6 +275,83 @@ describe('AccountTeamMembers component', () => {
             const checkbox = testUtils.within(cells[3]).getByLabelText('Editor');
 
             expect(checkbox).toBeDisabled();
+        });
+        it('Remove user button to be disabled', () => {
+            const popover = testUtils.within(cells[4]).getByRole('button');
+            popover.click();
+
+            const button = testUtils.within(testUtils.screen.getByTestId('popoverMenu')).getByRole('button');
+            expect(button).toBeDisabled();
+        });
+    });
+    describe('as a metadata editor', () => {
+        let cells;
+        beforeEach(async () => {
+            authSpy.mockReturnValue({
+                userState: mocks.userState.mockUserStateMetadataEditor,
+            });
+
+            const wrapper = testUtils.render(<AccountTeamMembers {...props} />);
+
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+
+            const headers = testUtils.screen.getAllByRole('rowgroup');
+            const rows = testUtils.within(headers[1]).getAllByRole('row');
+            cells = testUtils.within(rows[0]).getAllByRole('cell');
+        });
+        it('Remove user button to be disabled', () => {
+            const popover = testUtils.within(cells[4]).getByRole('button');
+            popover.click();
+
+            const button = testUtils.within(testUtils.screen.getByTestId('popoverMenu')).getByRole('button');
+            expect(button).toBeDisabled();
+        });
+    });
+    describe('as a DAR reviewer', () => {
+        let cells;
+        beforeEach(async () => {
+            authSpy.mockReturnValue({
+                userState: mocks.userState.mockUserStateReviewer,
+            });
+
+            const wrapper = testUtils.render(<AccountTeamMembers {...props} />);
+
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+
+            const headers = testUtils.screen.getAllByRole('rowgroup');
+            const rows = testUtils.within(headers[1]).getAllByRole('row');
+            cells = testUtils.within(rows[0]).getAllByRole('cell');
+        });
+        it('Remove user button to be disabled', () => {
+            const popover = testUtils.within(cells[4]).getByRole('button');
+            popover.click();
+
+            const button = testUtils.within(testUtils.screen.getByTestId('popoverMenu')).getByRole('button');
+            expect(button).toBeDisabled();
+        });
+    });
+    describe('as a non "team" admin and HDR admin', () => {
+        let cells;
+        beforeEach(async () => {
+            authSpy.mockReturnValue({
+                userState: mocks.userState.mockUserStateReviewer,
+                isHDRAdmin: true,
+            });
+
+            const wrapper = testUtils.render(<AccountTeamMembers {...props} />);
+
+            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
+
+            const headers = testUtils.screen.getAllByRole('rowgroup');
+            const rows = testUtils.within(headers[1]).getAllByRole('row');
+            cells = testUtils.within(rows[0]).getAllByRole('cell');
+        });
+        it('Remove user button to be enabled', () => {
+            const popover = testUtils.within(cells[4]).getByRole('button');
+            popover.click();
+
+            const button = testUtils.within(testUtils.screen.getByTestId('popoverMenu')).getByRole('button');
+            expect(button).toBeEnabled();
         });
     });
 });
