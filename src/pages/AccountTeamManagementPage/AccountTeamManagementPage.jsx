@@ -51,6 +51,18 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
         setAlertModal(!alertModal);
     };
 
+    const createAlert = message => {
+        // set alert message success save
+        setAlerts([{ message, type: 'success' }]);
+        // scroll to the top so we can see the notification
+        window.scrollTo(0, 0);
+        // remove after 5's alert
+        setTimeout(() => {
+            onTeamManagementSave(false, false);
+            setAlerts([]);
+        }, 5000);
+    };
+
     const updateNotifications = async () => {
         if (!isEmpty(teamGatewayNotifications) && teamId) {
             // format the subscribeEmails for the backend
@@ -67,15 +79,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
                 .then(() => {
                     // call parent set save button state
                     onTeamManagementSave(false, true);
-                    // set alert message success save
-                    setAlerts([{ message: 'You have successfully updated your email notifications', type: 'success' }]);
-                    // scroll to the top so we can see the notification
-                    window.scrollTo(0, 0);
-                    // remove after 5's alert
-                    setTimeout(() => {
-                        onTeamManagementSave(false, false);
-                        setAlerts([]);
-                    }, 5000);
+                    createAlert('You have successfully updated your email notifications');
                 })
                 .catch(err => {
                     console.error(err.message);
@@ -292,7 +296,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
                 <TeamManagementHeader />
                 <TabsNav teamId={teamId} activeTabKey={activeTabKey} onTabChange={onTabChange} />
             </LayoutContent>
-            {activeTabKey === ACCOUNT_TAB_TYPES.Members && <AccountTeamMembers teamId={teamId} />}
+            {activeTabKey === ACCOUNT_TAB_TYPES.Members && <AccountTeamMembers handleDisplayAlert={createAlert} teamId={teamId} />}
             {activeTabKey === ACCOUNT_TAB_TYPES.Notifications && (
                 <NotificationTab
                     memberNotifications={memberNotifications}

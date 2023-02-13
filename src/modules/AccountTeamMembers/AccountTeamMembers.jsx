@@ -22,8 +22,8 @@ import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { useAuth } from '../../context/AuthContext';
 import { ActionCell, CheckboxCell, NameCell, HeaderTooltip } from './AccountTeamMembers.components';
 
-const AccountTeamMembers = ({ teamId }) => {
-    const { userState } = useAuth();
+const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
+    const { userState, isHDRAdmin } = useAuth();
     const { isCustodianTeamAdmin, isCustodianMetadataManager, isCustodianDarManager } = useCustodianRoles(teamId);
     const [teamMembers, setTeamMembers] = useState([]);
     const [showModal, setShowModal] = useState();
@@ -82,6 +82,8 @@ const AccountTeamMembers = ({ teamId }) => {
         setShowRemoveModal(false);
         deleteMembersRequest.mutateAsync({ teamId, userId: userToRemove.userId }).then(() => {
             setUserToRemove(null);
+            setTeamMembers(teamMembers.filter(teamMember => teamMember.userId !== userToRemove.userId));
+            handleDisplayAlert('User has been removed');
         });
     };
 
@@ -239,6 +241,9 @@ const AccountTeamMembers = ({ teamId }) => {
             Cell: ({ row: { original } }) => (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <ActionCell
+                        isHDRAdmin={isHDRAdmin}
+                        isCustodianTeamAdmin={isCustodianTeamAdmin}
+                        currentUser={userState[0]}
                         member={original}
                         onDeleteMember={() => {
                             setUserToRemove(original);
@@ -291,6 +296,7 @@ const AccountTeamMembers = ({ teamId }) => {
 
 AccountTeamMembers.propTypes = {
     teamId: PropTypes.string.isRequired,
+    handleDisplayAlert: PropTypes.func.isRequired,
 };
 
 export default AccountTeamMembers;

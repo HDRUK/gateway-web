@@ -4,17 +4,24 @@ import { Link } from 'react-router-dom';
 import { Checkbox, Popover, PopoverMenu } from 'components';
 import { useTranslation } from 'react-i18next';
 
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { memberPropTypes } from '../../types';
 import { ReactComponent as WastebinIcon } from '../../images/icons/wastebin.svg';
 import { ReactComponent as QuestionMarkIcon } from '../../images/icons/question-mark.svg';
 
-const ActionCell = ({ member, onDeleteMember }) => {
+const ActionCell = ({ member, onDeleteMember, currentUser, isHDRAdmin, isCustodianTeamAdmin }) => {
     const { t } = useTranslation();
+    const isDisabled = useMemo(() => {
+        if (member.id === currentUser.id) return true;
+        if (isHDRAdmin || isCustodianTeamAdmin) return false;
+        return true;
+    }, [currentUser, member]);
+
     const items = [
         {
             label: t('removeUser'),
             icon: WastebinIcon,
+            disabled: isDisabled,
             action: () => onDeleteMember(member),
         },
     ];
@@ -24,6 +31,9 @@ const ActionCell = ({ member, onDeleteMember }) => {
 ActionCell.propTypes = {
     member: memberPropTypes.isRequired,
     onDeleteMember: PropTypes.func.isRequired,
+    currentUser: PropTypes.shape({ id: PropTypes.number }).isRequired,
+    isCustodianTeamAdmin: PropTypes.bool.isRequired,
+    isHDRAdmin: PropTypes.bool.isRequired,
 };
 
 const NameCell = ({ member: { lastname, firstname, id, bio, organisation } }) => (
@@ -45,9 +55,6 @@ const CheckboxCell = memo(({ title, onChange, userId, role, label, checkboxValue
     };
 
     const isChecked = useMemo(() => !!checkboxValues?.[role], [checkboxValues, role]);
-    useEffect(() => {
-        console.log({ userId, role });
-    }, [isChecked]);
 
     return (
         <Checkbox title={title} disabled={disabled} label={label} onChange={handleChange} checked={isChecked} id={`${userId}_${role}`} />

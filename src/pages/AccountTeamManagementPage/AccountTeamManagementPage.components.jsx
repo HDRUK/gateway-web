@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, LayoutContent, Link } from 'components';
+import { Alert, LayoutBox, LayoutContent, Link } from 'components';
 import { Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
 import { ACCOUNT_TAB_TYPES, SUPPORT_URL } from 'consts';
@@ -81,15 +81,15 @@ const GeneratedAlerts = ({ alerts }) => {
     if (isEmpty(alerts)) return null;
 
     return (
-        <div data-testid='GeneratedAlerts'>
+        <LayoutBox mt={1} mb={4} data-testid='GeneratedAlerts'>
             {alerts.map(({ type = '', message = '' }) => {
                 return (
-                    <Alert variant={type} key={`alert-${message}`} mt={2}>
+                    <Alert variant={type} key={`alert-${message}`} mt={1} mb={1}>
                         {message}
                     </Alert>
                 );
             })}
-        </div>
+        </LayoutBox>
     );
 };
 
