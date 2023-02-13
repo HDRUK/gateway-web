@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
 
-import { Table, LayoutContent } from 'components';
-import { PermissionDescriptions, RemoveUserModal } from 'modules';
+import { Table, LayoutContent, ConfirmationModal } from 'components';
+import { PermissionDescriptions } from 'modules';
 import {
     PERMISSIONS_TEAM_MEMBER_ROLES,
     PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN,
@@ -284,9 +284,9 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
                 </Card>
             )}
             <AccountTeamMembersModal isOpen={showModal} onClose={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
-            <RemoveUserModal
+            <ConfirmationModal
+                title={`Are you sure you want to remove ${userToRemove?.firstname} ${userToRemove?.lastname}?`}
                 isOpen={showRemoveModal}
-                memberName={`${userToRemove?.firstname} ${userToRemove?.lastname}`}
                 onClose={() => setShowRemoveModal(false)}
                 onRemove={handleRemoveUser}
             />

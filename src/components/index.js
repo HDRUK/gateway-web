@@ -8,6 +8,7 @@ import BlockQuote from './BlockQuote';
 import Button from './Button';
 import Checkbox from './Checkbox';
 import CheckboxTree from './CheckboxTree';
+import ConfirmationModal from './ConfirmationModal';
 import CustomMenu from './CustomMenu';
 import CustomSubMenu from './CustomSubMenu';
 import CustomToggle from './CustomToggle';
@@ -51,6 +52,7 @@ export {
     Button,
     Checkbox,
     CheckboxTree,
+    ConfirmationModal,
     Cta,
     CustomMenu,
     CustomSubMenu,
