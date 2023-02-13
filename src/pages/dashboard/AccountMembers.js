@@ -11,7 +11,7 @@ import { baseURL } from '../../configs/url.config';
 import '../../css/styles.scss';
 
 import './Dashboard.scss';
-import AccountMembersModal from './AccountMemberModal';
+import AccountMemberModal from './AccountMemberModal';
 
 const AccountMembers = props => {
     const [userState] = useState(props.userState);
@@ -153,7 +153,7 @@ const AccountMembers = props => {
                                 })
                             )}
 
-                            <AccountMembersModal
+                            <AccountMemberModal
                                 open={showAccountAddMemberModal}
                                 close={onShowAccountMembersModal}
                                 teamId={accountMembersId}
