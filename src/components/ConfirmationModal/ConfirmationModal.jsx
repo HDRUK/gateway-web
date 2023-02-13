@@ -4,7 +4,7 @@ import { Button } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
 import * as styles from './ConfirmationModal.styles';
 
-const ConfirmationModal = ({ title, isOpen, onClose, onRemove }) => {
+const ConfirmationModal = ({ title, isOpen, onClose, onSuccess, successLabel }) => {
     return (
         <Modal css={styles.modal} aria-labelledby='contained-modal-title-vcenter' show={isOpen} onHide={onClose} centered>
             <Modal.Body css={styles.modalBody}>{title}</Modal.Body>
@@ -12,8 +12,8 @@ const ConfirmationModal = ({ title, isOpen, onClose, onRemove }) => {
                 <Button variant='secondary' onClick={() => onClose()}>
                     Cancel
                 </Button>
-                <Button variant='primary' onClick={() => onRemove()}>
-                    Remove
+                <Button variant='primary' onClick={() => onSuccess()}>
+                    {successLabel}
                 </Button>
             </Modal.Footer>
         </Modal>
@@ -23,8 +23,13 @@ const ConfirmationModal = ({ title, isOpen, onClose, onRemove }) => {
 ConfirmationModal.propTypes = {
     isOpen: propTypes.bool.isRequired,
     onClose: propTypes.func.isRequired,
-    onRemove: propTypes.func.isRequired,
+    onSuccess: propTypes.func.isRequired,
     title: propTypes.string.isRequired,
+    successLabel: propTypes.string,
+};
+
+ConfirmationModal.defaultProps = {
+    successLabel: 'Confirm',
 };
 
 export default ConfirmationModal;

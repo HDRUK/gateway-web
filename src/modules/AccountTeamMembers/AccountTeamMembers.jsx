@@ -288,7 +288,8 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
                 title={`Are you sure you want to remove ${userToRemove?.firstname} ${userToRemove?.lastname}?`}
                 isOpen={showRemoveModal}
                 onClose={() => setShowRemoveModal(false)}
-                onRemove={handleRemoveUser}
+                onSuccess={handleRemoveUser}
+                successLabel='Remove'
             />
         </LayoutContent>
     );
