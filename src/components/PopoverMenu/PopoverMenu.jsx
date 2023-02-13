@@ -5,7 +5,7 @@ import * as styles from './PopoverMenu.styles';
 
 const PopoverMenu = ({ items }) => {
     return (
-        <ul css={styles.root}>
+        <ul data-testid='popoverMenu' css={styles.root}>
             {items.map(
                 (
                     { label, icon, action, disabled = false, iconFill = 'purple500', buttonVariant = 'secondaryAlt', iconSize = 'lg' },
