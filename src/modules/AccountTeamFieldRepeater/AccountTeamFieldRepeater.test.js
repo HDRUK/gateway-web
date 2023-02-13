@@ -8,8 +8,6 @@ const authSpy = jest.spyOn(Auth, 'useAuth');
 describe('AccountTeamFieldRepeater', () => {
     beforeAll(() => {
         authSpy.mockReturnValue({
-            isTeamManager: false,
-            managerInTeam: jest.fn(),
             userState: mocks.userState.mockUserStateManager,
         });
     });

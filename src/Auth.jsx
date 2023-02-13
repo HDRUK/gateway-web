@@ -10,6 +10,7 @@ import { DEFAULT_USER_STATE } from './configs/constants';
 const App = ({ children, showLoader }) => {
     const [userState, setUserState] = useState();
     const [isRootAdmin, setIsRootAdmin] = useState(false);
+    const [isHDRAdmin, setIsHDRAdmin] = useState(false);
     const statusResult = authService.useGetStatus();
     const personResult = personService.useGetPerson();
 
@@ -56,6 +57,7 @@ const App = ({ children, showLoader }) => {
     useEffect(() => {
         if (!userState) return;
         setIsRootAdmin(authUtils.getIsRootRoleAdmin(userState));
+        setIsHDRAdmin(authUtils.getIsHDRAdmin(userState));
     }, [userState]);
 
     const isLoading = personResult.isLoading || statusResult.isLoading;
@@ -66,6 +68,7 @@ const App = ({ children, showLoader }) => {
                 userState,
                 showError: personResult.isError || statusResult.isError,
                 isRootAdmin,
+                isHDRAdmin,
             }}>
             {showLoader && isLoading && (
                 <Container>

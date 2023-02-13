@@ -41,7 +41,7 @@ const teamNotificationsPropTypes = arrayOf(teamNotificationPropTypes);
 const memberPropTypes = shape({
     lastname: string,
     firstname: string,
-    userId: number,
+    userId: string,
     id: number,
     bio: string,
     organisation: string,

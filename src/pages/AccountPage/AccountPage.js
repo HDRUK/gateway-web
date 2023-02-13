@@ -179,10 +179,6 @@ const AccountPage = () => {
         setShowDrawer(showEnquiry);
     };
 
-    const userHasTeamRole = role => {
-        return authUtils.userHasTeamRole(userState, teamId, role);
-    };
-
     const onSaveNotificationsClick = () => {
         // using forward ref call our save function inside child component
         saveNotificationsRef();
@@ -300,7 +296,7 @@ const AccountPage = () => {
                         <Route path='/account/datasets/:id' teamType={teamType} component={AccountDataset} />
 
                         {/* TODO: GAT-1510:058 */}
-                        {(authUtils.getIsTypeTeam(teamType) || authUtils.getIsTypeHDRAdmin(teamType)) && (
+                        {(authUtils.getIsTypeTeam(teamType) || authUtils.getIsTypeAdmin(teamType)) && (
                             <>
                                 {/* TODO: GAT-1510:010 */}
                                 {allowAccessRequestManagement && [isReviewer, isCustodianDarManager].some(role => role) && (
@@ -329,12 +325,12 @@ const AccountPage = () => {
                                 )}
                                 {/* TODO: GAT-1510:011 */}
                                 {([isCustodianMetadataManager, isMetadataEditor].some(role => role) ||
-                                    authUtils.getIsTypeHDRAdmin(teamType)) &&
+                                    authUtils.getIsTypeAdmin(teamType)) &&
                                     tabId === 'datasets' && (
                                         <AccountDatasets userState={userState} teamType={teamType} teamId={teamId} alert={alert} />
                                     )}
 
-                                {authUtils.getIsTypeHDRAdmin(teamType) && tabId === 'teams' && (
+                                {authUtils.getIsTypeAdmin(teamType) && tabId === 'teams' && (
                                     <AccountTeams userState={userState} alert={alert} />
                                 )}
 

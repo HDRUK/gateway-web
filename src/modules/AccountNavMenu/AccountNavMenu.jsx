@@ -36,38 +36,27 @@ const CustomMenu = forwardRef(({ children, style, className, 'aria-labelledby': 
 });
 
 const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAccessRequestManagement, publisherDetails, allowWorkflow }) => {
-    const { userState } = useAuth();
+    const { userState, isHDRAdmin } = useAuth();
     const { teamId, teamType } = useAccountTeamSelected();
-
-    const userHasTeamRole = role => {
-        return authUtils.userHasTeamRole(userState, teamId, role);
-    };
 
     /**
      * [renderPublishers Renders out publishers for DAR nav menu]
      *
      * @return  {[Nav.item]}  [return Nav.Item]
      */
-    const TeamMenu = () => {
+    const TeamListMenu = () => {
         const [user] = userState;
-        if (!_.isEmpty(user.teams)) {
-            // TODO: GAT-1510:049
-            const filterPublishers = [...user.teams].filter(p => authUtils.getIsTypePublisher(p.type));
-            if (!_.isEmpty(filterPublishers)) {
-                return filterPublishers.map((pub, index) => {
-                    return (
-                        <>
-                            {index === 0 ? <hr /> : ''}
-                            <Dropdown.Item href={`/account?tab=${tabId}&teamType=team&teamId=${pub._id}`} className='gray700-13'>
-                                {pub.name}
-                            </Dropdown.Item>
-                        </>
-                    );
-                });
-            }
-            return '';
-        }
-        return '';
+        const filterPublishers = user.teams.filter(p => authUtils.getIsTypePublisher(p.type));
+        return filterPublishers.map((pub, index) => {
+            return (
+                <>
+                    {index === 0 ? <hr /> : ''}
+                    <Dropdown.Item href={`/account?tab=${tabId}&teamType=team&teamId=${pub._id}`} className='gray700-13'>
+                        {pub.name}
+                    </Dropdown.Item>
+                </>
+            );
+        });
     };
 
     /**
@@ -76,32 +65,24 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
      * @return  {[Nav.item]}  [return Nav.Item]
      */
     const AdminMenu = () => {
-        const [user] = userState;
-        // TODO: GAT-1510:050
-        const isTypeAdmin = [...user.teams].filter(p => authUtils.getIsTypeHDRAdmin(p.type));
-
-        if (!_.isEmpty(isTypeAdmin)) {
-            return (
-                <Dropdown.Item className='gray700-13' href='/account?tab=datasets&teamType=admin'>
-                    HDR Admin
-                </Dropdown.Item>
-            );
-        }
-        return '';
+        return (
+            <Dropdown.Item className='gray700-13' href='/account?tab=datasets&teamType=admin'>
+                HDR Admin
+            </Dropdown.Item>
+        );
     };
 
     const renderCurrentTeam = () => {
-        if (teamType === 'user') {
+        if (authUtils.getIsTypeUser(teamType)) {
             return <>{userState[0].name}</>;
         }
-        if (teamType === 'admin') {
+        if (authUtils.getIsTypeAdmin(teamType)) {
             return <>HDR Admin</>;
         }
 
         const teamFound = userState[0].teams.find(team => team._id === teamId);
 
         if (!teamFound) {
-            // setUserType('user');
             return <>{userState[0].name}</>;
         }
         return <>{teamFound.name}</>;
@@ -116,7 +97,7 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
     };
 
     return (
-        <div className='col-sm-12 col-md-2 accountMenuHolder'>
+        <div data-testid='accountNavMenu' className='col-sm-12 col-md-2 accountMenuHolder'>
             <div className='account-menu'>
                 <Dropdown>
                     <Dropdown.Toggle as={CustomToggle}>
@@ -128,8 +109,8 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
 
                     <Dropdown.Menu as={CustomMenu} className='teamSelectorMenu'>
                         <UserMenu />
-                        <AdminMenu />
-                        <TeamMenu />
+                        {isHDRAdmin && <AdminMenu />}
+                        <TeamListMenu />
                     </Dropdown.Menu>
                 </Dropdown>
 
@@ -137,13 +118,12 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
                 {authUtils.getIsTypeUser(teamType) && <UserNav tabId={tabId} />}
 
                 {/* TODO: GAT-1510:054 */}
-                {authUtils.getIsTypeHDRAdmin(teamType) && <AdminNav tabId={tabId} />}
+                {authUtils.getIsTypeAdmin(teamType) && <AdminNav tabId={tabId} />}
 
                 {/* TODO: GAT-1510:052 */}
                 {authUtils.getIsTypeTeam(teamType) && (
                     <TeamNav
                         allowAccessRequestManagement={allowAccessRequestManagement}
-                        userHasTeamRole={userHasTeamRole}
                         teamId={teamId}
                         setActiveAccordion={setActiveAccordion}
                         tabId={tabId}

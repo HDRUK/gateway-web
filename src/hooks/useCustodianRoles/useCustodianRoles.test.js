@@ -7,8 +7,6 @@ jest.mock('../../context/AuthContext');
 describe('useCustodianRoles hook', () => {
     it('should return default values if teamId does not exist', () => {
         useAuth.mockReturnValue({
-            isTeamManager: false,
-            managerInTeam: jest.fn(),
             userState: mocks.userState.mockCustodianMetadataManager,
         });
         const wrapper = testUtils.renderHook(() => useCustodianRoles());
@@ -23,8 +21,6 @@ describe('useCustodianRoles hook', () => {
 
     it('should return true for metadata manager', () => {
         useAuth.mockReturnValue({
-            isTeamManager: false,
-            managerInTeam: jest.fn(),
             userState: mocks.userState.mockCustodianMetadataManager,
         });
         const wrapper = testUtils.renderHook(() => useCustodianRoles('1234'));
@@ -40,8 +36,6 @@ describe('useCustodianRoles hook', () => {
 
     it('should return true for metadata editor', () => {
         useAuth.mockReturnValue({
-            isTeamManager: false,
-            managerInTeam: jest.fn(),
             userState: mocks.userState.mockUserStateMetadataEditor,
         });
         const wrapper = testUtils.renderHook(() => useCustodianRoles('9101'));
@@ -57,8 +51,6 @@ describe('useCustodianRoles hook', () => {
 
     it('should return true for team admin', () => {
         useAuth.mockReturnValue({
-            isTeamManager: false,
-            managerInTeam: jest.fn(),
             userState: mocks.userState.mockCustodianTeamAdmin,
         });
         const wrapper = testUtils.renderHook(() => useCustodianRoles('1234'));
@@ -74,8 +66,6 @@ describe('useCustodianRoles hook', () => {
 
     it('should return true for dar reviewer', () => {
         useAuth.mockReturnValue({
-            isTeamManager: false,
-            managerInTeam: jest.fn(),
             userState: mocks.userState.mockUserStateReviewer,
         });
         const wrapper = testUtils.renderHook(() => useCustodianRoles('5678'));
@@ -91,8 +81,6 @@ describe('useCustodianRoles hook', () => {
 
     it('should return true for dar manager', () => {
         useAuth.mockReturnValue({
-            isTeamManager: false,
-            managerInTeam: jest.fn(),
             userState: mocks.userState.mockCustodianDarManager,
         });
         const wrapper = testUtils.renderHook(() => useCustodianRoles('1234'));
