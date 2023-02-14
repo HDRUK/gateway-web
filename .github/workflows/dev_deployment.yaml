@@ -2,12 +2,14 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
+    branches:
+      - 'dev'  
     paths:
     - 'Chart.yaml'
-  workflow_call:
-    outputs:
-      GITHB_SHA: 
-        value: ${{ github.sha }}   # Map the workflow outputs to job outputs
+  # workflow_call:
+  #   outputs:
+  #     GITHB_SHA: 
+  #       value: ${{ github.sha }}   # Map the workflow outputs to job outputs
 
 
 env:
