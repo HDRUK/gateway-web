@@ -11,11 +11,12 @@ import { ReactComponent as QuestionMarkIcon } from '../../images/icons/question-
 
 const ActionCell = ({ member, onDeleteMember, currentUser, isHDRAdmin, isCustodianTeamAdmin }) => {
     const { t } = useTranslation();
+
     const isDisabled = useMemo(() => {
         if (member.id === currentUser.id) return true;
         if (isHDRAdmin || isCustodianTeamAdmin) return false;
         return true;
-    }, [currentUser, member]);
+    }, [currentUser, member, isHDRAdmin, isCustodianTeamAdmin]);
 
     const items = [
         {
