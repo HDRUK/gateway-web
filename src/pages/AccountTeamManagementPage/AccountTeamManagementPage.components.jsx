@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, LayoutBox, LayoutContent, Link } from 'components';
 import { Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';

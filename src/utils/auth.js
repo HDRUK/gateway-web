@@ -28,7 +28,7 @@ const getIsRootRoleAdmin = userState => {
 };
 
 const getIsHDRAdmin = userState => {
-    return userState[0].teams?.filter(team => getIsTypeAdmin(team.type));
+    return !!userState[0].teams?.find(team => getIsTypeAdmin(team.type));
 };
 
 const getIsUserRoleAdmin = role => {

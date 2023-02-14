@@ -131,6 +131,12 @@
                     "404": {
                         "message": "There has been a problem getting the members of this team"
                     }
+                },
+                "patchMember": {
+                    "403": {
+                        "title": "Not enough permissions",
+                        "message": "You are not authorised to perform this action"
+                    }
                 }
             }
         }
