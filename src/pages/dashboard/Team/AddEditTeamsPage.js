@@ -1,6 +1,6 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { Row, Col, Form, Dropdown, DropdownButton } from 'react-bootstrap';
-import { Typeahead } from 'react-bootstrap-typeahead';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -8,7 +8,7 @@ import NotificationManager from 'react-notifications';
 import { Box } from 'hdruk-react-core';
 
 import { LayoutContent, Switch } from 'components';
-import { publishersService } from 'services';
+import { publishersService, usersService } from 'services';
 
 import '../Dashboard.scss';
 import Loading from '../../commonComponents/Loading';
@@ -29,8 +29,9 @@ const AddEditTeamsPage = ({
     // state
     const [questionBank, setQuestionBank] = useState(questionBankEnabled);
     const [dataUseWidget, setDataUseWidget] = useState(dataUseWidgetEnabled);
-    const [isLoading, setLoading] = useState(false);
-    const [combinedTeamManagers, setCombinedTeamManagers] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [isAsyncLoading, setIsAsyncLoading] = useState(false);
+    const [combinedTeamManagers, setCombinedTeamManagers] = useState([]);
 
     const memberOfSelect = ['ALLIANCE', 'HUB', 'OTHER', 'NCS'];
 
@@ -45,21 +46,13 @@ const AddEditTeamsPage = ({
         formik.setFieldValue('memberOf', key);
     };
 
-    const getTeamManagerData = () => {
-        axios
-            .get(`${baseURL}/api/v1/users`)
-            .then(res => {
-                const userArray = [];
-                res.data.data.map(user => {
-                    userArray.push({ id: user.id, name: user.name });
-                });
-                setCombinedTeamManagers(userArray);
-            })
-            .catch(err => {
-                console.error(err.message);
-                alert('Failed to fetch users');
-            });
+    const handleSearch = async searchValue => {
+        setIsAsyncLoading(true);
+        const users = await usersService.searchUsers(encodeURI(searchValue));
+        setCombinedTeamManagers(users.data.data);
+        setIsAsyncLoading(false);
     };
+
     // Pass the useFormik() hook initial form values and a submit function that will
     // be called when the form is submitted
     const formik = useFormik({
@@ -78,7 +71,7 @@ const AddEditTeamsPage = ({
         }),
 
         onSubmit: async values => {
-            setLoading(true);
+            setIsLoading(true);
 
             let publisherId = editViewID;
             let alertText;
@@ -111,7 +104,7 @@ const AddEditTeamsPage = ({
                 },
             });
 
-            setLoading(false);
+            setIsLoading(false);
             setAlertFunction(alertText);
 
             cancelAddEdit();
@@ -124,11 +117,6 @@ const AddEditTeamsPage = ({
 
     const handleEnableDataUseWidget = useCallback(({ target: { checked } }) => {
         setDataUseWidget(checked);
-    }, []);
-
-    // lifecycle hook
-    useEffect(() => {
-        getTeamManagerData();
     }, []);
 
     if (isLoading) {
@@ -262,9 +250,13 @@ const AddEditTeamsPage = ({
                     <Row>
                         <Col sm={12} lg={12}>
                             <Form.Group className='pb-2'>
-                                <Typeahead
+                                <AsyncTypeahead
                                     id='teamManagers'
+                                    isLoading={isAsyncLoading}
+                                    filterBy={() => true}
+                                    minLength={3}
                                     name='teamManagers'
+                                    placeholder='Enter 3 characters to search'
                                     labelKey={
                                         editTeamsView
                                             ? combinedTeamManagers => `${combinedTeamManagers}`
@@ -288,6 +280,7 @@ const AddEditTeamsPage = ({
                                         formik.values.teamManagers = tempSelected;
                                         formik.setFieldTouched('teamManagers', true);
                                     }}
+                                    onSearch={handleSearch}
                                 />
                                 {formik.touched.teamManagers && formik.errors.teamManagers ? (
                                     <div className='errorMessages'>{formik.errors.teamManagers}</div>
