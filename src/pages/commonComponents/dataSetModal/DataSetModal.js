@@ -7,6 +7,7 @@ import { contentService } from 'services';
 import { RenderMarkdown } from 'components';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import DataSetHelper from '../../../utils/DataSetHelper.util';
+import googleAnalytics from '../../../tracking';
 
 import './DataSetModal.scss';
 
@@ -94,6 +95,11 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
                                     variant='secondary'
                                     mr={2}
                                     onClick={() => {
+                                        googleAnalytics.recordEvent(
+                                            'Data access request',
+                                            'Clicked DAR Modal - Start application',
+                                            'Start appliction modal button'
+                                        );
                                         isLoggedIn ? onCloseModal('SUBMIT_APPLICATION') : showLoginModal();
                                     }}>
                                     Start application
@@ -103,6 +109,11 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
                                 data-testid='dar-modal-make-enquiry-btn'
                                 className='addButton'
                                 onClick={() => {
+                                    googleAnalytics.recordEvent(
+                                        'Data access request',
+                                        'Clicked DAR Modal - Make an enquiry',
+                                        'Make an enquiry modal button'
+                                    );
                                     isLoggedIn ? onCloseModal('ENQUIRY') : showLoginModal();
                                 }}>
                                 Make an enquiry
