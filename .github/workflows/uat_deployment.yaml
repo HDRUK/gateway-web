@@ -2,8 +2,10 @@ name: Deploy to Cloud Run
 
 on:
   pull_request:
+    types:
+      - closed
     branches:
-    - 'release'
+      - 'release'
 
 
 env:
@@ -13,8 +15,8 @@ env:
 jobs:      # Deployment please don't modify anything here as the infrastructure is controlled by terraform any changes here please agree with chris and reuben.
   # catchsha:
   #   uses: HDRUK/gateway-web/.github/workflows/dev_deployment.yaml@dev
-
   deploy:
+    if: github.event.pull_request.merged == true
     permissions:
       contents: write
       id-token: write
@@ -25,7 +27,7 @@ jobs:      # Deployment please don't modify anything here as the infrastructure 
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: GAT-1887-UAT
+          ref: release
 
       - name: Google Auth
         id: auth
@@ -37,7 +39,8 @@ jobs:      # Deployment please don't modify anything here as the infrastructure 
 
       - name: Read VERSION file
         id: getversion
-        run: echo "::set-output name=version::$(cat Chart.yaml)"
+        # run: echo "::set-output name=version::$(cat Chart.yaml)"
+        run: echo "version=$(cat Chart.yaml)" >> $GITHUB_OUTPUT
 
       # - name: Get SHA
       #   id: getsha
