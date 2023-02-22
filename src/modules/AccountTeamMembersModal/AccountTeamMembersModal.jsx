@@ -43,7 +43,7 @@ const AccountTeamMembersModal = ({ isOpen, onClose, teamId, onMemberAdded }) => 
         }
     }
 
-    // TODO: GAT-1510:060
+    // TODO: GAT-391:GAT-1594 (add member)
     const roleSelect = [ROLES_MANAGER, ROLES_REVIEWER, ROLES_METADATA_EDITOR];
 
     const formik = useFormik({

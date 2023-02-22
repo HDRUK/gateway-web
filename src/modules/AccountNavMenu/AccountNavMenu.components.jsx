@@ -80,7 +80,6 @@ const UserNav = ({ tabId }) => {
         { id: 'courses', children: 'Courses', icon: <CoursesIcon /> },
         { id: 'dataaccessrequests', children: 'Data access requests', icon: <UsersIcon /> },
         { id: 'collections', children: 'Collections', icon: <BookmarkIcon /> },
-        // TODO: GAT-1510:028
         ...(isRootAdmin ? [{ id: 'usersroles', children: 'Users and roles', icon: <UsersIcon /> }] : []),
     ];
 
@@ -137,7 +136,6 @@ const TeamNav = ({ allowAccessRequestManagement, teamId, setActiveAccordion, tab
                 text: 'Applications',
                 id: 'dataaccessrequests',
             },
-            // TODO: GAT-1510:006
             ...(allowWorkflow && isCustodianDarManager
                 ? [
                       {

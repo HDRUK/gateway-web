@@ -19,7 +19,7 @@ import { Icon, Spinner, RenderMarkdown } from 'components';
 import { dataAccessRequestService, publishersService, questionbankService } from 'services';
 import { useAuth } from 'context/AuthContext';
 
-import { useAccountTeamSelected } from 'hooks';
+import { useAccountTeamSelected, useCustodianRoles } from 'hooks';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
@@ -57,7 +57,6 @@ export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
     const [searchBar] = useState(React.createRef());
     const { userState } = useAuth();
-    const [isTeamAdmin, setIsTeamAdmin] = useState(false);
     const [schemaId, setSchemaId] = useState('');
     const [publisherDetails, setPublisherDetails] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -88,11 +87,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const [isUploading, setIsUploading] = useState(false);
     const [isUploaded, setIsUploaded] = useState(false);
     const { teamId } = useAccountTeamSelected();
-
-    useEffect(() => {
-        if (!teamId || !userState) return;
-        setIsTeamAdmin(authUtils.getIsTeamAdmin(userState, teamId));
-    }, [teamId, userState]);
+    const { isCustodianTeamAdmin } = useCustodianRoles(teamId);
 
     const patchSchemaRequest = dataAccessRequestService.usePatchSchema(null, {
         onError: ({ title, message }) => {
@@ -836,8 +831,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                     </Box>
                                 </Card>
 
-                                {/* TODO: GAT-1510:055 */}
-                                {isTeamAdmin && (
+                                {isCustodianTeamAdmin && (
                                     <Card>
                                         <Box p={5}>
                                             <AboutApplicationImport onUpload={handleImportUpload} userState={userState} />

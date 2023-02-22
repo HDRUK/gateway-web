@@ -29,7 +29,7 @@ class YourAccount extends Component {
 
     doMessagesCall() {
         var apiToCall = '/api/v1/messages/' + this.state.userState[0].id;
-        // TODO: GAT-1510:038
+
         if (authUtils.getIsRootRoleAdmin(this.state.userState)) {
             apiToCall = '/api/v1/messages/admin/' + this.state.userState[0].id;
         }

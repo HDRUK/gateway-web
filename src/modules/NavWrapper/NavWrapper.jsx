@@ -13,15 +13,11 @@ const NavWrapper = ({ isMobile = false, children, name }) => {
             <Dropdown.Divider className='mb-1 mt-1' />
             <Dropdown>
                 <Dropdown.Toggle as={CustomToggleInner}>
-                    {/* TODO: GAT-1510:047 */}
                     <Typography color='grey800'>{name}</Typography>
                     <span className='addNewDropDownGap' />
                     {isMobile ? <SVGIcon name='chevronbottom' fill='#475DA7' className='svg-16 floatRightChevron' /> : <ChevronBottom />}
                 </Dropdown.Toggle>
-                <Dropdown.Menu as={CustomSubMenu}>
-                    {/* TODO: GAT-1510:048 */}
-                    {children}
-                </Dropdown.Menu>
+                <Dropdown.Menu as={CustomSubMenu}>{children}</Dropdown.Menu>
             </Dropdown>
         </div>
     );

@@ -9,7 +9,7 @@ const TeamGatewayNotificationEmails = ({ teamId, userHasRole, teamNotification, 
     const { optIn, notificationType } = teamNotification;
 
     useEffect(() => {
-        // TODO: GAT-1510:017
+        // TODO: GAT-391:GAT-1596 (notifications)
         setManager(userHasRole(teamId, PERMISSIONS_TEAM_ROLES.manager));
     }, [teamId, teamNotification]);
 

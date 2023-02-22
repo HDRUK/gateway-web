@@ -22,10 +22,7 @@ const WithChevron = ({ children, name }) => {
                 <span className='addNewDropDownGap' />
                 <ChevronBottom />
             </Dropdown.Toggle>
-            <Dropdown.Menu as={CustomSubMenu}>
-                {/* TODO: GAT-1510:025 */}
-                {children}
-            </Dropdown.Menu>
+            <Dropdown.Menu as={CustomSubMenu}>{children}</Dropdown.Menu>
         </>
     );
 };
@@ -43,7 +40,6 @@ const WithOutChevron = ({ children, name }) => {
                     {name}
                 </Typography>
             </Dropdown.Item>
-            {/* TODO: GAT-1510:026 */}
             {children}
         </>
     );

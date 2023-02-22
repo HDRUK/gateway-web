@@ -46,7 +46,6 @@ const HeaderNavMobile = ({ showLoginModal, logout }) => {
                             <SVGIcon name='chevronbottom' fill='#475DA7' className='svg-16 floatRightChevron' />
                         </Dropdown.Toggle>
                         <Dropdown.Menu as={CustomSubMenu}>
-                            {/* TODO: GAT-1510:027 */}
                             <MyAccountNav />
                         </Dropdown.Menu>
                     </>

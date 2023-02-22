@@ -70,23 +70,6 @@ const getTeamMemberManagers = (members = []) => {
     return members.filter(member => member?.roles?.includes(PERMISSIONS_TEAM_MEMBER_ROLES.manager));
 };
 
-const isTeamMemberManager = (userState, members = []) => {
-    return members.filter(m => m.id === userState[0].id).map(m => m.roles[0] === 'manager')[0];
-};
-
-const getTeamRoleNames = roles => {
-    const sortedRoles = (roles || []).sort();
-
-    const roleNames = {
-        manager: 'Manager',
-        reviewer: 'Reviewer',
-        metadata_editor: 'Metadata Editor',
-    };
-
-    // TODO: GAT-1510:043
-    return sortedRoles.map(role => roleNames[role]).join(', ');
-};
-
 const isTeamAdminNotManager = (teamId, userState) => {
     const team = userState[0].teams.filter(t => {
         // eslint-disable-next-line no-underscore-dangle
@@ -144,10 +127,8 @@ export {
     getHasTeamManagerRole,
     getPublisherId,
     returnApplicantIfTeamNotFound,
-    isTeamMemberManager,
     getIsTypeAdminOrApplicant,
     getTeamMemberManagers,
-    getTeamRoleNames,
     getIsTypePublisher,
     getIsTypeCustodian,
     getIsTypeAdmin,
