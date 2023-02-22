@@ -12,6 +12,7 @@ env:
   GAR_LOCATION: '${{ secrets.GAR_LOCATION }}' # TODO: update Artifact Registry location
   SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
   SLACK_CHANNEL: '${{ secrets.GITHUBACTIONS_SLACK_CHANNEL }}'
+  SLACK_RELEASE_CHANNEL: '${{ secrets.GITHUBACTIONS_SLACK_RELEASE_CHANNEL }}'
 
 jobs:      # Deployment please don't modify anything here as the infrastructure is controlled by terraform any changes here please agree with chris and reuben
 
@@ -73,3 +74,11 @@ jobs:      # Deployment please don't modify anything here as the infrastructure 
           channel: ${{ env.SLACK_CHANNEL }}
           message: Deploying {{ env.GITHUB_REF_NAME }} branch
         if: always()
+
+      - name: Send Release  Notification
+        id: releasenotificationsent
+        uses: act10ns/slack@v1
+        with:
+          channel: ${{ env.SLACK_RELEASE_CHANNEL }}
+          message: 'GAT Live Release -''${{ steps.getversion.outputs.version }}'' successfully finished'
+        if: success()
