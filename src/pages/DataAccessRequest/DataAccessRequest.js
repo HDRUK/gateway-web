@@ -429,7 +429,6 @@ class DataAccessRequest extends Component {
             ({ _id: publisherId, workflowEnabled } = datasets[0].publisher);
         }
         // 2. If user is custodian and the form is not in review, redirect the user to the DAR team dashboard
-        // TODO: GAT-1510:062
         if (teamType === 'custodian' && applicationStatus === darHelperUtils.darStatus.submitted) {
             const alert = {
                 publisher,
@@ -577,7 +576,6 @@ class DataAccessRequest extends Component {
         }
 
         // if amendment has been made to datasets mark about application navigation with warning
-        // TODO: GAT-1510:063
         if (teamType === 'custodian' && areDatasetsAmended) {
             jsonSchema.pages[0].flag = 'WARNING';
         }

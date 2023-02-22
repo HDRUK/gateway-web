@@ -78,7 +78,6 @@ const isTeamAdminNotManager = (teamId, userState) => {
     return team && team.isAdmin && !team.roles.includes(PERMISSIONS_TEAM_ROLES.manager);
 };
 
-// TODO: GAT-1510 Investigate - this does not always return a value
 const getIsTypeAdminOrApplicant = (userState, teamId) => {
     const { teams } = userState[0];
 
@@ -91,9 +90,10 @@ const getIsTypeAdminOrApplicant = (userState, teamId) => {
     if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
         return [PERMISSIONS_USER_TYPES.applicant];
     }
+
+    return [];
 };
 
-// TODO: GAT-1510 Investigate - this returns both PERMISSIONS_USER_TYPES and PERMISSIONS_TEAM_ROLES
 const returnApplicantIfTeamNotFound = (userState, teamId) => {
     const { teams } = userState[0];
     const foundTeam = teams.filter(team => team.name === teamId);
@@ -103,7 +103,6 @@ const returnApplicantIfTeamNotFound = (userState, teamId) => {
     return foundTeam[0].roles;
 };
 
-// TODO: GAT-1510 Investigate - similar to getIsTypeAdminOrApplicant above
 const getPublisherId = (userState, teamId, teamType) => {
     const { teams } = userState;
     const foundAdmin = teams.filter(x => x.type === teamType);

@@ -53,7 +53,7 @@ const AccountTeams = () => {
                 const teamManagersIds = [];
                 teams.map((team, index) => {
                     if (team.members.length > 0) {
-                        // TODO: GAT-1510:044
+                        // TODO: GAT-1510:044 (tracked)
                         const teamManagers = authUtils.getTeamMemberManagers(team.members);
                         teamManagers.map(memberId => {
                             teamManagersIds.push(memberId.memberid);

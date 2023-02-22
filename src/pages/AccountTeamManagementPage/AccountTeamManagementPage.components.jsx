@@ -49,7 +49,7 @@ const TabsNav = ({ activeTabKey, onTabChange, teamId }) => {
 
     useEffect(() => {
         if (!teamId || !userState) return;
-        //  TODO: GAT-1510:020
+        //  TODO: GAT-391:GAT-1596 (notifications)
         setIsTeamAdminNotManager(authUtils.isTeamAdminNotManager(teamId, userState));
     }, [teamId, userState]);
 

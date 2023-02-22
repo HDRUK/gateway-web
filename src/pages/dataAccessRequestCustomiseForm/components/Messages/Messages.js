@@ -129,7 +129,6 @@ const Messages = ({
                         <div className='message-metadata'>
                             <span>
                                 {msg.name}
-                                {/* TODO: GAT-1510:065 */}
                                 {msg.userType === 'custodian' ? <>{publisher ? ` (${publisher})` : ''}</> : ''}
                             </span>
                             &nbsp;

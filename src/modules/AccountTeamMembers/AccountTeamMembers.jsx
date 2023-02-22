@@ -8,7 +8,6 @@ import { Table, LayoutContent, ConfirmationModal } from 'components';
 import { PermissionDescriptions } from 'modules';
 import {
     PERMISSIONS_TEAM_MEMBER_ROLES,
-    PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN,
     ROLE_CUSTODIAN_DAR_MANAGER,
     ROLE_CUSTODIAN_METADATA_MANAGER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
@@ -142,9 +141,7 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
             Cell: ({ row: { original } }) => <NameCell member={original} />,
         },
         {
-            Header: (
-                <HeaderTooltip header={t('teamAdmin')} content={<PermissionDescriptions roles={[PERMISSIONS_TEAM_MEMBER_ROLE_ADMIN]} />} />
-            ),
+            Header: <HeaderTooltip header={t('teamAdmin')} content={<PermissionDescriptions roles={['admin']} />} />,
             accessor: 'teamAdmin',
             cellProps: {
                 valign: 'top',
