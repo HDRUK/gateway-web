@@ -47,7 +47,8 @@ const AccountPage = () => {
     const { userState } = useAuth();
     const location = useLocation();
     const { teamId, teamType } = useAccountTeamSelected();
-    const { isReviewer, isCustodianDarManager, isCustodianMetadataManager, isMetadataEditor } = useCustodianRoles(teamId);
+    const { isReviewer, isCustodianDarManager, isCustodianMetadataManager, isMetadataEditor, isCustodianTeamAdmin } =
+        useCustodianRoles(teamId);
     const [teamManagementTab, setTeamManagementTab] = useState();
     const [innertab, setInnertab] = useState(null);
     const [dataAccessRequest, setDataAccessRequest] = useState({});
@@ -252,7 +253,6 @@ const AccountPage = () => {
                     />
 
                     <div className='col-sm-12 col-md-10 margin-top-32'>
-                        {/* TODO: GAT-1510:057 */}
                         {authUtils.getIsTypeUser(teamType) && (
                             <>
                                 {tabId === 'dashboard' && <AccountAnalyticsDashboard userState={userState} />}
@@ -295,10 +295,8 @@ const AccountPage = () => {
 
                         <Route path='/account/datasets/:id' teamType={teamType} component={AccountDataset} />
 
-                        {/* TODO: GAT-1510:058 */}
                         {(authUtils.getIsTypeTeam(teamType) || authUtils.getIsTypeAdmin(teamType)) && (
                             <>
-                                {/* TODO: GAT-1510:010 */}
                                 {allowAccessRequestManagement && [isReviewer, isCustodianDarManager].some(role => role) && (
                                     <>
                                         {' '}
@@ -323,7 +321,7 @@ const AccountPage = () => {
                                             ))}
                                     </>
                                 )}
-                                {/* TODO: GAT-1510:011 */}
+
                                 {([isCustodianMetadataManager, isMetadataEditor].some(role => role) ||
                                     authUtils.getIsTypeAdmin(teamType)) &&
                                     tabId === 'datasets' && (
@@ -338,13 +336,11 @@ const AccountPage = () => {
                                     <AccountDataUse tabId={tabId} teamType={teamType} teamId={teamId} publisherDetails={publisherDetails} />
                                 )}
 
-                                {/* TODO: GAT-1510:012 */}
                                 {allowWorkflow && isCustodianDarManager && tabId === 'workflows' && (
                                     <WorkflowDashboard userState={userState} teamId={teamId} />
                                 )}
 
-                                {/* TODO: GAT-1510:013 */}
-                                {(isCustodianDarManager || authUtils.getIsTeamAdmin(userState, teamId)) &&
+                                {(isCustodianDarManager || isCustodianTeamAdmin) &&
                                     (tabId === 'customisedataaccessrequests_applicationform' ||
                                         tabId === 'customisedataaccessrequests_guidance') && (
                                         <CustomiseDAR

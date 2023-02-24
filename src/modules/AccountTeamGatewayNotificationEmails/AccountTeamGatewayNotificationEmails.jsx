@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Switch } from 'components';
 import { useAuth } from 'context/AuthContext';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,7 @@ const AccountTeamGatewayNotificationEmails = ({ teamId, teamNotification, toggle
 
     useEffect(() => {
         if (!teamId || !userState) return;
-        // TODO: GAT-1510:017
+        // TODO: GAT-391:GAT-1596 (notifications)
         setIsTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
     }, [teamId, userState]);
 

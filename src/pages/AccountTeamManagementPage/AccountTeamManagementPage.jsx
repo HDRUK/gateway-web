@@ -38,7 +38,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
 
     useEffect(() => {
         if (!teamId || !userState) return;
-        // TODO: GAT-1510:014
+        // TODO: GAT-391:GAT-1596 (notifications)
         setIsTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
     }, [teamId, userState]);
 
@@ -169,7 +169,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
     useEffect(() => {
         if (!teamId) return;
 
-        // TODO: GAT-1510:019
+        // TODO: GAT-391:GAT-1596 (notifications)
         if (!authUtils.isTeamAdminNotManager(teamId, userState)) {
             if (innerTab === ACCOUNT_TAB_TYPES.Notifications) {
                 onTabChange(innerTab);

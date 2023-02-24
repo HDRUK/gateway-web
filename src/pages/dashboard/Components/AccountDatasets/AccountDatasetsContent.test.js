@@ -176,7 +176,7 @@ describe('Given the AccountDatasetsContent component', () => {
                         completion,
                         isDraft: true,
                         listOfVersions,
-                        path: '/account/datasets/0a048419-0796-46fb-ad7d-91e650a6c742',
+                        path: '/account/datasets/0a048419-0796-46fb-ad7d-91e650a6c742?teamType=admin',
                         slaProps: expect.any(Object),
                     });
                 });

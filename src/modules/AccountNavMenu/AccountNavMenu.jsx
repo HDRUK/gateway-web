@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { forwardRef, useState, Children } from 'react';
 import { Dropdown } from 'react-bootstrap';
 
@@ -114,13 +113,10 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
                     </Dropdown.Menu>
                 </Dropdown>
 
-                {/* TODO: GAT-1510:056 */}
                 {authUtils.getIsTypeUser(teamType) && <UserNav tabId={tabId} />}
 
-                {/* TODO: GAT-1510:054 */}
                 {authUtils.getIsTypeAdmin(teamType) && <AdminNav tabId={tabId} />}
 
-                {/* TODO: GAT-1510:052 */}
                 {authUtils.getIsTypeTeam(teamType) && (
                     <TeamNav
                         allowAccessRequestManagement={allowAccessRequestManagement}

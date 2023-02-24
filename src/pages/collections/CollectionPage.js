@@ -537,7 +537,6 @@ export const CollectionPage = props => {
                 </Row>
             </Container>
 
-            {/* TODO: GAT-1510:021 */}
             {userState[0].loggedIn && (isRootAdmin || (collectionData.authors && collectionData.authors.includes(userState[0].id))) && (
                 <ActionBar userState={userState}>
                     <ResourcePageButtons data={collectionData} userState={userState} isCollection />

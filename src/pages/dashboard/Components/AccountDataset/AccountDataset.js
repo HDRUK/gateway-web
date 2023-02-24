@@ -121,7 +121,7 @@ const AccountDataset = () => {
             const { dataset } = getNextPage(i);
 
             if (dataset) {
-                history.push(`/account/datasets/${dataset.pid}`);
+                history.push(`/account/datasets/${dataset.pid}?teamType=${teamType}&teamId=${teamId}`);
             }
         },
         [id, dataPublisher.data]

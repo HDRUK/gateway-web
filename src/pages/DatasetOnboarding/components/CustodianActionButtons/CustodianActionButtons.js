@@ -24,7 +24,6 @@ const CustodianActionButtons = ({ allowedNavigation = false, onNextClick, onActi
                     <Button variant='secondary'>Make a decision</Button>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className='makeADecisionDropdown'>
-                    {/* TODO: GAT-1510:066 */}
                     {roles.includes('admin') && (
                         <>
                             <Row className='makeADecisionHeader'>

@@ -111,7 +111,7 @@ class SearchBar extends Component {
 
     doMessagesCall() {
         var apiToCall = '/api/v1/messages/' + this.state.userState[0].id;
-        // TODO: GAT-1510:023
+
         if (authUtils.getIsRootRoleAdmin(this.state.userState)) {
             apiToCall = '/api/v1/messages/admin/' + this.state.userState[0].id;
         }
@@ -128,7 +128,7 @@ class SearchBar extends Component {
 
     getNumberOfUnreadNotifications() {
         let apiToCall = '/api/v1/messages/numberofunread/' + this.state.userState[0].id;
-        // TODO: GAT-1510:024
+
         if (authUtils.getIsRootRoleAdmin(this.state.userState)) {
             apiToCall = '/api/v1/messages/numberofunread/admin/' + this.state.userState[0].id;
         }

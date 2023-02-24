@@ -336,7 +336,6 @@ export const AccountTools = () => {
                                                         </Col>
 
                                                         <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                            {/* TODO: GAT-1510:035 */}
                                                             {isRootAdmin ? (
                                                                 <DropdownButton
                                                                     variant='outline-secondary'
@@ -477,7 +476,6 @@ export const AccountTools = () => {
                                                         </Col>
 
                                                         <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                            {/* TODO: GAT-1510:036 */}
                                                             {isRootAdmin ? (
                                                                 <DropdownButton
                                                                     variant='outline-secondary'

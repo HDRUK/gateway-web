@@ -70,23 +70,6 @@ const getTeamMemberManagers = (members = []) => {
     return members.filter(member => member?.roles?.includes(PERMISSIONS_TEAM_MEMBER_ROLES.manager));
 };
 
-const isTeamMemberManager = (userState, members = []) => {
-    return members.filter(m => m.id === userState[0].id).map(m => m.roles[0] === 'manager')[0];
-};
-
-const getTeamRoleNames = roles => {
-    const sortedRoles = (roles || []).sort();
-
-    const roleNames = {
-        manager: 'Manager',
-        reviewer: 'Reviewer',
-        metadata_editor: 'Metadata Editor',
-    };
-
-    // TODO: GAT-1510:043
-    return sortedRoles.map(role => roleNames[role]).join(', ');
-};
-
 const isTeamAdminNotManager = (teamId, userState) => {
     const team = userState[0].teams.filter(t => {
         // eslint-disable-next-line no-underscore-dangle
@@ -95,7 +78,6 @@ const isTeamAdminNotManager = (teamId, userState) => {
     return team && team.isAdmin && !team.roles.includes(PERMISSIONS_TEAM_ROLES.manager);
 };
 
-// TODO: GAT-1510 Investigate - this does not always return a value
 const getIsTypeAdminOrApplicant = (userState, teamId) => {
     const { teams } = userState[0];
 
@@ -108,9 +90,10 @@ const getIsTypeAdminOrApplicant = (userState, teamId) => {
     if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
         return [PERMISSIONS_USER_TYPES.applicant];
     }
+
+    return [];
 };
 
-// TODO: GAT-1510 Investigate - this returns both PERMISSIONS_USER_TYPES and PERMISSIONS_TEAM_ROLES
 const returnApplicantIfTeamNotFound = (userState, teamId) => {
     const { teams } = userState[0];
     const foundTeam = teams.filter(team => team.name === teamId);
@@ -120,7 +103,6 @@ const returnApplicantIfTeamNotFound = (userState, teamId) => {
     return foundTeam[0].roles;
 };
 
-// TODO: GAT-1510 Investigate - similar to getIsTypeAdminOrApplicant above
 const getPublisherId = (userState, teamId, teamType) => {
     const { teams } = userState;
     const foundAdmin = teams.filter(x => x.type === teamType);
@@ -144,10 +126,8 @@ export {
     getHasTeamManagerRole,
     getPublisherId,
     returnApplicantIfTeamNotFound,
-    isTeamMemberManager,
     getIsTypeAdminOrApplicant,
     getTeamMemberManagers,
-    getTeamRoleNames,
     getIsTypePublisher,
     getIsTypeCustodian,
     getIsTypeAdmin,

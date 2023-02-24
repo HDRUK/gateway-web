@@ -55,7 +55,6 @@ const AccountDataUse = ({ tabId, teamType, teamId, publisherDetails }) => {
 
             {tabId === 'datause' && !dataUseUpload && <DataUsePage userState={userState} onClickDataUseUpload={handleClickUpload} />}
 
-            {/* TODO: GAT-1510:053 */}
             {tabId === 'datause_widget' &&
                 authUtils.getIsTypeTeam(teamType) &&
                 isCustodianDarManager &&

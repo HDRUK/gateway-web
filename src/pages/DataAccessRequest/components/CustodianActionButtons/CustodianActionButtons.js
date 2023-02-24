@@ -10,7 +10,6 @@ const CustodianActionButtons = ({
     onNextClick,
     onActionClick,
     applicationStatus,
-    // TODO: GAT-1510:059 Investigate - this value receives a combination of PERMISSIONS_USER_TYPES and PERMISSIONS_TEAM_ROLES
     roles,
     workflowEnabled = false,
     workflowAssigned,
@@ -21,6 +20,7 @@ const CustodianActionButtons = ({
     onWorkflowReviewDecisionClick,
     hasNext,
 }) => {
+    // TODO: GAT-391:GAT-1718 (DAR requests)
     const showRecommendationDropdown =
         applicationStatus === darHelperUtils.darStatus.inReview &&
         ((inReviewMode && !hasRecommended) || roles.includes('manager')) &&

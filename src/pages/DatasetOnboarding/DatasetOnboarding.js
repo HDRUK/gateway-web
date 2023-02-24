@@ -239,7 +239,6 @@ class DatasetOnboarding extends Component {
         let publisher = dataset.datasetv2.summary.publisher.identifier;
 
         this.setState({ roles: authUtils.getIsTypeAdminOrApplicant(this.props.userState, this.state.publisher) });
-        // TODO: GAT-1510:046
         if (
             this.state.roles.includes(PERMISSIONS_USER_TYPES.admin) &&
             applicationStatus === datasetOnboardingHelperUtils.datasetStatus.inReview
@@ -494,7 +493,7 @@ class DatasetOnboarding extends Component {
 
         if (isValid) {
             this.toggleActionModal('SUBMITFORREVIEW');
-            // TODO: GAT-1510:018
+            // TODO: GAT-1510:018 (tracked)
         } else if (authUtils.getIsTeamAdmin(this.props.userState, this.state.publisher)) {
             this.toggleActionModal('VALIDATIONERRORSADMIN');
         } else {

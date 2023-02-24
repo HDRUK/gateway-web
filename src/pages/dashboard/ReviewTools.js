@@ -39,7 +39,7 @@ class ReviewTools extends Component {
 
     doReviewCall() {
         this.setState({ isLoading: true });
-        // TODO: GAT-1510:039
+
         if (authUtils.getIsRootRoleAdmin(this.state.userState)) {
             axios.get(baseURL + '/api/v1/reviews/admin/pending').then(res => {
                 this.setState({ data: res.data.data, isLoading: false });
@@ -295,7 +295,6 @@ class ReviewTools extends Component {
                                                                 </Col>
 
                                                                 <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                    {/* TODO: GAT-1510:040 */}
                                                                     {authUtils.getIsRootRoleAdmin(userState) ? (
                                                                         <DropdownButton
                                                                             variant='outline-secondary'

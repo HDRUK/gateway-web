@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, Fragment } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { Tabs, Tab } from 'react-bootstrap/';
 import { capitalize, isEmpty } from 'lodash';
 import { darHelperUtils } from 'utils';
@@ -16,7 +16,7 @@ const QuestionActionTabs = ({
     onHandleActionTabChange,
     toggleDrawer,
     setMessageDescription,
-    teamType,
+    userType,
     isShared,
     updateCount,
     publisher,
@@ -115,7 +115,7 @@ const QuestionActionTabs = ({
                             applicationStatus={applicationStatus}
                             toggleDrawer={toggleDrawer}
                             setMessageDescription={setMessageDescription}
-                            teamType={teamType}
+                            userType={userType}
                             updateCount={handleUpdateMessagesCount}
                             publisher={publisher}
                             onLoad={handleMessagesLoad}
@@ -144,7 +144,7 @@ const QuestionActionTabs = ({
                             applicationId={applicationId}
                             userState={userState}
                             settings={settings}
-                            teamType={teamType}
+                            userType={userType}
                             updateCount={handleUpdateNotesCount}
                             onLoad={handleNotesLoad}
                             count={notesCount}

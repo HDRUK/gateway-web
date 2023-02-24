@@ -115,7 +115,7 @@ class DataAccessRequest extends Component {
             showContributorModal: false,
             showAssignWorkflowModal: false,
             readOnly: false,
-            teamType: '',
+            userType: '',
             answeredAmendments: 0,
             unansweredAmendments: 0,
             isWideForm: false,
@@ -395,7 +395,7 @@ class DataAccessRequest extends Component {
             aboutApplication = {},
             datasets,
             readOnly = false,
-            teamType = 'APPLICANT',
+            userType = 'APPLICANT',
             unansweredAmendments = 0,
             answeredAmendments = 0,
             mainApplicant,
@@ -429,8 +429,7 @@ class DataAccessRequest extends Component {
             ({ _id: publisherId, workflowEnabled } = datasets[0].publisher);
         }
         // 2. If user is custodian and the form is not in review, redirect the user to the DAR team dashboard
-        // TODO: GAT-1510:062
-        if (teamType === 'custodian' && applicationStatus === darHelperUtils.darStatus.submitted) {
+        if (userType === 'custodian' && applicationStatus === darHelperUtils.darStatus.submitted) {
             const alert = {
                 publisher,
                 tab: 'submitted',
@@ -477,7 +476,7 @@ class DataAccessRequest extends Component {
             jsonSchema,
             inReviewMode,
             reviewSections,
-            teamType,
+            userType,
             areDatasetsAmended,
             allowsMultipleDatasets
         );
@@ -522,7 +521,7 @@ class DataAccessRequest extends Component {
             readOnly,
             answeredAmendments,
             unansweredAmendments,
-            teamType,
+            userType,
             userId,
             mainApplicant: `${firstname} ${lastname}${this.checkCurrentUser(userId) ? ' (you)' : ''}`,
             authorIds,
@@ -553,7 +552,7 @@ class DataAccessRequest extends Component {
      * @desc Function to inject static 'about' and 'files' pages and panels into schema
      * @returns {jsonSchmea} object
      */
-    injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = [], teamType, areDatasetsAmended, allowsMultipleDatasets) {
+    injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = [], userType, areDatasetsAmended, allowsMultipleDatasets) {
         let { pages, formPanels } = { ...jsonSchema };
         // formPanel {pageId: 'safePeople', panelId:'applicant'}
         let formPanel = {};
@@ -577,8 +576,7 @@ class DataAccessRequest extends Component {
         }
 
         // if amendment has been made to datasets mark about application navigation with warning
-        // TODO: GAT-1510:063
-        if (teamType === 'custodian' && areDatasetsAmended) {
+        if (userType === 'custodian' && areDatasetsAmended) {
             jsonSchema.pages[0].flag = 'WARNING';
         }
 
@@ -696,7 +694,7 @@ class DataAccessRequest extends Component {
                         jsonSchema,
                         false,
                         this.state.reviewSections,
-                        this.state.teamType,
+                        this.state.userType,
                         this.state.areDatasetsAmended,
                         true
                     );
@@ -996,7 +994,7 @@ class DataAccessRequest extends Component {
             jsonSchema,
             this.state.inReviewMode,
             this.state.reviewSections,
-            this.state.teamType,
+            this.state.userType,
             this.state.areDatasetsAmended,
             true
         );
@@ -1119,7 +1117,7 @@ class DataAccessRequest extends Component {
             jsonSchema,
             this.state.inReviewMode,
             this.state.reviewSections,
-            this.state.teamType,
+            this.state.userType,
             this.state.areDatasetsAmended,
             true
         );
@@ -1133,7 +1131,7 @@ class DataAccessRequest extends Component {
                 amendmentIterations,
                 showSubmit:
                     this.state.applicationStatus === darHelperUtils.darStatus.inProgress ||
-                    (unansweredAmendments === 0 && answeredAmendments > 0 && this.state.teamType === PERMISSIONS_TEAM_ROLES.applicant),
+                    (unansweredAmendments === 0 && answeredAmendments > 0 && this.state.userType === PERMISSIONS_TEAM_ROLES.applicant),
             },
             _.isNil
         );
@@ -1875,7 +1873,7 @@ class DataAccessRequest extends Component {
                     key={this.state._id}
                     activeAccordionCard={this.state.activeAccordionCard}
                     allowedNavigation={this.state.allowedNavigation}
-                    teamType={this.state.teamType}
+                    userType={this.state.userType}
                     selectedDatasets={this.state.aboutApplication.selectedDatasets}
                     readOnly={this.state.readOnly || this.state.applicationStatus !== darHelperUtils.darStatus.inProgress}
                     projectNameValid={this.state.projectNameValid}
@@ -1964,7 +1962,7 @@ class DataAccessRequest extends Component {
             aboutApplication: { projectName = '', selectedDatasets },
             context,
             projectId,
-            teamType,
+            userType,
             actionModalConfig,
             roles,
             showEmailModal,
@@ -2040,7 +2038,7 @@ class DataAccessRequest extends Component {
                                     Save now
                                 </a>
                             }
-                            {teamType.toUpperCase() === 'APPLICANT' && !this.state.readOnly ? (
+                            {userType.toUpperCase() === 'APPLICANT' && !this.state.readOnly ? (
                                 <a
                                     className={`linkButton white-14-semibold ml-2 ${allowedNavigation ? '' : 'disabled'}`}
                                     href='javascript:;'
@@ -2133,7 +2131,7 @@ class DataAccessRequest extends Component {
                                     onHandleActionTabChange={this.onHandleActionTabChange}
                                     toggleDrawer={this.toggleDrawer}
                                     setMessageDescription={this.setMessageDescription}
-                                    teamType={teamType}
+                                    userType={userType}
                                     messagesCount={this.state.messagesCount}
                                     notesCount={this.state.notesCount}
                                     isShared={this.state.isShared}
@@ -2165,7 +2163,7 @@ class DataAccessRequest extends Component {
                                     answeredAmendments={this.state.answeredAmendments}
                                     unansweredAmendments={this.state.unansweredAmendments}
                                 />
-                                {teamType.toUpperCase() === 'APPLICANT' ? (
+                                {userType.toUpperCase() === 'APPLICANT' ? (
                                     <ApplicantActionButtons
                                         allowedNavigation={allowedNavigation}
                                         isCloneable={this.state.isCloneable}
