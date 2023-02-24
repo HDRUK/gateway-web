@@ -33,7 +33,7 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
         setSearchValue(value);
     }, []);
 
-    const getDatasetPath = id => `/account/datasets/${id}`;
+    const getDatasetPath = id => `/account/datasets/${id}?teamType=${teamType}`;
 
     const handleActivityLogClick = id => {
         history.push(getDatasetPath(id));
