@@ -120,7 +120,7 @@ const DatasetAboutCard = ({ v2data, section, showEmpty, toggleModal }) => {
                                     <AboutCardElement
                                         label='Last updated '
                                         description={v2data.modified}
-                                        tooltip='The last date when the information about this dataset was updated.'
+                                        tooltip='The last date when the information about this dataset was updated'
                                     />
                                 )}
                                 {showEmpty === false && isEmpty(v2data.version) ? (
