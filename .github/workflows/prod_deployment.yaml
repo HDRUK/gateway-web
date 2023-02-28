@@ -79,6 +79,7 @@ jobs:      # Deployment please don't modify anything here as the infrastructure 
         id: releasenotificationsent
         uses: act10ns/slack@v1
         with:
+          status: Completed
           channel: ${{ env.SLACK_RELEASE_CHANNEL }}
           message: 'GAT Live Release -''${{ steps.getversion.outputs.version }}'' successfully finished'
         if: success()
