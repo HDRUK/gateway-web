@@ -98,15 +98,15 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
         setTeamMembers(addedMembers);
     };
 
-    const handleCheckboxChange = async ({ roles, userId }) => {
-        setCheckboxValues({ ...checkboxValues, [userId]: roles });
+    const handleCheckboxChange = async ({ updatedRole, userId }) => {
+        setCheckboxValues({ ...checkboxValues, [userId]: { ...checkboxValues[userId], ...updatedRole } });
 
         const {
             data: { members },
         } = await patchMembersRequest.mutateAsync({
             teamId,
             userId,
-            data: { roles: Object.keys(roles).filter(role => roles[role]) },
+            data: updatedRole,
         });
 
         setTeamMembers(members);

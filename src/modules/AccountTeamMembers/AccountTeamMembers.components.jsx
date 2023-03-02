@@ -52,7 +52,7 @@ NameCell.propTypes = {
 
 const CheckboxCell = memo(({ title, onChange, userId, role, label, checkboxValues, disabled }) => {
     const handleChange = ({ target: { checked } }) => {
-        onChange({ userId, roles: { ...checkboxValues, [role]: checked } });
+        onChange({ userId, updatedRole: { [role]: checked } });
     };
 
     const isChecked = useMemo(() => !!checkboxValues?.[role], [checkboxValues, role]);
