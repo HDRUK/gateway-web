@@ -436,7 +436,7 @@ class DataAccessRequest extends Component {
             };
             this.props.history.push({
                 pathname: `/account`,
-                search: `?tab=dataaccessrequests&teamType=team&teamId=${publisher}`,
+                search: `?tab=dataaccessrequests&teamType=team&teamId=${publisherId}`,
                 state: { alert },
             });
         }
@@ -1404,7 +1404,7 @@ class DataAccessRequest extends Component {
                 // 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
                 this.props.history.push({
                     pathname: `/account`,
-                    search: `?tab=dataaccessrequests&teamType=team&teamId=${this.state.publisher}`,
+                    search: `?tab=dataaccessrequests&teamType=team&teamId=${this.state.datasets[0].publisher._id}`,
                     state: { alert },
                 });
             })
@@ -2200,7 +2200,7 @@ class DataAccessRequest extends Component {
                                         inReviewMode={this.state.inReviewMode}
                                         hasRecommended={this.state.hasRecommended}
                                         applicationStatus={applicationStatus}
-                                        roles={roles}
+                                        teamId={this.state.datasets[0].publisher._id}
                                         hasNext={
                                             !!darHelperUtils.findNextPanel(
                                                 this.state.activePanelId,

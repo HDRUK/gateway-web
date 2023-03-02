@@ -20,8 +20,7 @@ import {
     modalConfigWorkflow,
 } from '../../../utils/Workflows.util';
 
-const WorkflowDashboard = ({ userState, teamId }) => {
-    const [user] = userState;
+const WorkflowDashboard = ({ teamId }) => {
     const [loading, setLoading] = useState(false);
     const [workflows, setWorkflows] = useState([]);
     const [workflow, setWorkflow] = useState(defaultWorkflow);
@@ -36,21 +35,6 @@ const WorkflowDashboard = ({ userState, teamId }) => {
         setWorkflow(defaultWorkflow);
         // switch view
         setViewWorkflows(!viewWorkflows);
-    };
-
-    // TODO: GAT-1824 rewrite
-    const getTeamById = () => {
-        const team = localStorage.getItem('HDR_TEAM') || '';
-        if (!_.isEmpty(user) && !_.isEmpty(team)) {
-            const { teams = [] } = user;
-            if (!_.isEmpty(teams)) {
-                const teamObj = teams.find(to => to._id === team);
-                if (!_.isEmpty(teamObj)) {
-                    return teamObj._id;
-                }
-            }
-        }
-        return '';
     };
 
     const getWorkflows = async () => {
@@ -196,13 +180,6 @@ const WorkflowDashboard = ({ userState, teamId }) => {
 };
 
 WorkflowDashboard.propTypes = {
-    userState: PropTypes.arrayOf(
-        PropTypes.shape({
-            user: PropTypes.shape({
-                teams: PropTypes.arrayOf({ _id: PropTypes.number }),
-            }),
-        })
-    ).isRequired,
     teamId: PropTypes.number.isRequired,
 };
 
