@@ -94,9 +94,9 @@ const getIsTypeAdminOrApplicant = (userState, teamId) => {
     return [];
 };
 
-const returnApplicantIfTeamNotFound = (userState, teamId) => {
+const returnApplicantIfTeamNotFound = (userState, teamName) => {
     const { teams } = userState[0];
-    const foundTeam = teams.filter(team => team.name === teamId);
+    const foundTeam = teams.filter(team => team.name === teamName);
     if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
         return [PERMISSIONS_USER_TYPES.applicant];
     }

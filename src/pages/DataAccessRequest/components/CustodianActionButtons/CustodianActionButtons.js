@@ -1,4 +1,5 @@
 import { Button } from 'hdruk-react-core';
+import { useCustodianRoles } from 'hooks';
 import { darHelperUtils } from 'utils';
 import googleAnalytics from '../../../../tracking';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
@@ -10,7 +11,7 @@ const CustodianActionButtons = ({
     onNextClick,
     onActionClick,
     applicationStatus,
-    roles,
+    teamId,
     workflowEnabled = false,
     workflowAssigned,
     onWorkflowReview,
@@ -20,21 +21,22 @@ const CustodianActionButtons = ({
     onWorkflowReviewDecisionClick,
     hasNext,
 }) => {
-    // TODO: GAT-391:GAT-1718 (DAR requests)
+    const { isCustodianDarManager } = useCustodianRoles(teamId);
+
     const showRecommendationDropdown =
         applicationStatus === darHelperUtils.darStatus.inReview &&
-        ((inReviewMode && !hasRecommended) || roles.includes('manager')) &&
+        ((inReviewMode && !hasRecommended) || isCustodianDarManager) &&
         !parseInt(unansweredAmendments) > 0;
 
     const showReviewOptions = inReviewMode && !hasRecommended && workflowAssigned;
 
     const showAssignWorkflow =
-        applicationStatus === darHelperUtils.darStatus.inReview && roles.includes('manager') && workflowEnabled && !workflowAssigned;
+        applicationStatus === darHelperUtils.darStatus.inReview && isCustodianDarManager && workflowEnabled && !workflowAssigned;
 
     const showSendUpdateRequest =
         applicationStatus === darHelperUtils.darStatus.inReview &&
         activeParty === 'custodian' &&
-        roles.includes('manager') &&
+        isCustodianDarManager &&
         unansweredAmendments > 0;
 
     const manageOptions = [
@@ -90,7 +92,7 @@ const CustodianActionButtons = ({
                         onActionClick('Approve');
                         googleAnalytics.recordEvent('Data access request', 'Application approved', 'Application final decision made');
                     },
-                    isVisible: showRecommendationDropdown && roles.includes('manager'),
+                    isVisible: showRecommendationDropdown && isCustodianDarManager,
                 },
                 {
                     title: 'Approve with conditions',
@@ -102,7 +104,7 @@ const CustodianActionButtons = ({
                             'Application final decision made'
                         );
                     },
-                    isVisible: showRecommendationDropdown && roles.includes('manager'),
+                    isVisible: showRecommendationDropdown && isCustodianDarManager,
                 },
                 {
                     title: 'Reject',
@@ -110,7 +112,7 @@ const CustodianActionButtons = ({
                         onActionClick('Reject');
                         googleAnalytics.recordEvent('Data access request', 'Application rejected', 'Application final decision made');
                     },
-                    isVisible: showRecommendationDropdown && roles.includes('manager'),
+                    isVisible: showRecommendationDropdown && isCustodianDarManager,
                 },
             ],
         },

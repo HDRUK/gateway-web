@@ -336,9 +336,7 @@ const AccountPage = () => {
                                     <AccountDataUse tabId={tabId} teamType={teamType} teamId={teamId} publisherDetails={publisherDetails} />
                                 )}
 
-                                {allowWorkflow && isCustodianDarManager && tabId === 'workflows' && (
-                                    <WorkflowDashboard userState={userState} teamId={teamId} />
-                                )}
+                                {allowWorkflow && isCustodianDarManager && tabId === 'workflows' && <WorkflowDashboard teamId={teamId} />}
 
                                 {(isCustodianDarManager || isCustodianTeamAdmin) &&
                                     (tabId === 'customisedataaccessrequests_applicationform' ||
