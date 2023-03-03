@@ -1,14 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { isEmpty } from 'lodash';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-import { AccountTeamMembers, AccountTeamEmailAlertModal, AccountTeamNotificationsConfirmationModal } from 'modules';
+import {
+    AccountTeamMembers,
+    AccountTeamEmailAlertModal,
+    AccountTeamNotificationsConfirmationModal,
+    AccountTeamMembersModal,
+} from 'modules';
 import { ACCOUNT_TAB_TYPES, UI_ALERT_TYPES } from 'consts';
 import { LayoutContent } from 'components';
 import { useAuth } from 'context/AuthContext';
 import { authUtils } from 'utils';
 
+import { useCustodianRoles } from 'hooks';
+import { Box, Button } from 'hdruk-react-core';
+import { useTranslation } from 'react-i18next';
 import { baseURL } from '../../configs/url.config';
 
 import {
@@ -24,6 +32,7 @@ import { GeneratedAlerts, LoaderRow, NotificationTab, TabsNav, TeamManagementHea
 
 const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagementSave, onTeamManagementTabChange, onClearInnerTab }) => {
     const { userState } = useAuth();
+    const { isCustodianTeamAdmin, isCustodianDarManager, isCustodianMetadataManager } = useCustodianRoles(teamId);
     const [activeTabKey, setActiveTabKey] = useState(ACCOUNT_TAB_TYPES.Members);
     const [alerts, setAlerts] = useState([]);
     const [alertModal, setAlertModal] = useState(false);
@@ -31,10 +40,12 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
     const [isLoading, setLoading] = useState(false);
     const [memberNotifications, setMemberNotifications] = useState([{ optIn: true, notificationType: 'dataAccessRequest' }]);
     const [teamEmailModal, setTeamEmailModal] = useState(false);
+    const [showAddModal, setShowAddModal] = useState();
     const [teamGatewayNotifications, setTeamGatewayNotifications] = useState([
         { notificationType: 'dataAccessRequest', optIn: false, subscribedEmails: [{ value: '', error: '' }], message: 'Test message' },
     ]);
     const [isTeamManager, setIsTeamManager] = useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (!teamId || !userState) return;
@@ -285,6 +296,16 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
         if (persistUpdate) updateNotifications();
     };
 
+    const handleCloseAddModal = useCallback(() => {
+        setShowAddModal(false);
+    }, []);
+
+    const handleOpenAddModal = useCallback(() => {
+        setShowAddModal(true);
+    }, []);
+
+    const handleMemberAdded = () => {};
+
     if (isLoading) {
         return <LoaderRow />;
     }
@@ -293,7 +314,15 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
         <div data-testid='AccountTeamManagementPage'>
             <LayoutContent>
                 <GeneratedAlerts alerts={alerts} />
-                <TeamManagementHeader />
+                <TeamManagementHeader>
+                    {[isCustodianTeamAdmin, isCustodianDarManager, isCustodianMetadataManager].some(role => role) && (
+                        <Box pt={3} display='flex' justifyContent='center'>
+                            <Button variant='primary' onClick={handleOpenAddModal}>
+                                {t('components.AccountTeamMembers.members.add')}
+                            </Button>
+                        </Box>
+                    )}
+                </TeamManagementHeader>
                 <TabsNav teamId={teamId} activeTabKey={activeTabKey} onTabChange={onTabChange} />
             </LayoutContent>
             {activeTabKey === ACCOUNT_TAB_TYPES.Members && <AccountTeamMembers handleDisplayAlert={createAlert} teamId={teamId} />}
@@ -315,6 +344,12 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
                 onClose={toggleTeamEmailsModal}
                 onConfirm={toggleTeamEmailsModal}
                 teamNotifications={teamGatewayNotifications}
+            />
+            <AccountTeamMembersModal
+                isOpen={showAddModal}
+                onClose={handleCloseAddModal}
+                teamId={teamId}
+                onMemberAdded={handleMemberAdded}
             />
         </div>
     );

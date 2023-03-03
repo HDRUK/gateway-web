@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Card, Button, Box } from 'hdruk-react-core';
+import { Card } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
@@ -17,7 +17,6 @@ import { teamService } from 'services';
 import { useCustodianRoles } from 'hooks';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import Loading from '../../pages/commonComponents/Loading';
-import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { useAuth } from '../../context/AuthContext';
 import { ActionCell, CheckboxCell, NameCell, HeaderTooltip } from './AccountTeamMembers.components';
 
@@ -25,7 +24,6 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
     const { userState, isHDRAdmin } = useAuth();
     const { isCustodianTeamAdmin, isCustodianMetadataManager, isCustodianDarManager } = useCustodianRoles(teamId);
     const [teamMembers, setTeamMembers] = useState([]);
-    const [showModal, setShowModal] = useState();
     const [userToRemove, setUserToRemove] = useState(null);
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [checkboxValues, setCheckboxValues] = useState({});
@@ -84,18 +82,6 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
             setTeamMembers(teamMembers.filter(teamMember => teamMember.userId !== userToRemove.userId));
             handleDisplayAlert('User has been removed');
         });
-    };
-
-    const handleCloseModal = useCallback(() => {
-        setShowModal(false);
-    }, []);
-
-    const handleOpenModal = useCallback(() => {
-        setShowModal(true);
-    }, []);
-
-    const handleMemberAdded = addedMembers => {
-        setTeamMembers(addedMembers);
     };
 
     const handleCheckboxChange = async ({ updatedRole, userId }) => {
@@ -271,16 +257,6 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
                     <Table columns={columns} data={teamMembers} />
                 </Card>
             )}
-            {isCustodianTeamAdmin && (
-                <Card>
-                    <Box p={6} display='flex' justifyContent='center'>
-                        <Button variant='primary' onClick={handleOpenModal}>
-                            {t('components.AccountTeamMembers.members.add')}
-                        </Button>
-                    </Box>
-                </Card>
-            )}
-            <AccountTeamMembersModal isOpen={showModal} onClose={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
             <ConfirmationModal
                 title={`Are you sure you want to remove ${userToRemove?.firstname} ${userToRemove?.lastname}?`}
                 isOpen={showRemoveModal}
