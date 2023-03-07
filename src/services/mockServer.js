@@ -12,7 +12,7 @@ import mswGetUsers from './users/mockMsw';
 import mswGetTeams from '../../test/server/team';
 import { getRelatedObjectV1, getRelatedObjectTypeV1 } from '../../test/handlers/relatedResources/v1/handlers';
 import { getPublisherV1 } from '../../test/handlers/publishers/v1/handlers';
-import { getTeamsMembersV3, updateTeamsMembersV3 } from '../../test/handlers/teams/v3/handlers';
+import { getTeamsMembersV3, updateTeamsMembersV3, addTeamMembersV3 } from '../../test/handlers/teams/v3/handlers';
 
 const mswGetEnTranslations = rest.get(`http://localhost/locales/en/translation.json`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(translations));
@@ -45,6 +45,7 @@ const handlers = [
     getPublisherV1(),
     getTeamsMembersV3(),
     updateTeamsMembersV3(),
+    addTeamMembersV3(),
 ];
 
 export const server = setupServer.apply(null, handlers);

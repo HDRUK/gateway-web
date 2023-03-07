@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
-import { ROLES_ADMIN, ROLES_REVIEWER } from 'configs';
+import { ROLES_TEAM_ADMIN, ROLES_REVIEWER } from 'configs';
+import { ROLE_CUSTODIAN_TEAM_ADMIN } from 'consts';
 import { testUtils } from '../../../test';
 import PermissionDescriptions from './PermissionDescriptions';
 
@@ -12,11 +13,11 @@ describe('When PermissionDescriptions is rendered', () => {
         expect(container).toBeEmpty();
     });
     it('Then renders the specified role(s)', () => {
-        testUtils.render(<PermissionDescriptions roles={['admin']} />);
+        testUtils.render(<PermissionDescriptions roles={[ROLE_CUSTODIAN_TEAM_ADMIN]} />);
 
-        expect(testUtils.screen.getByText(`${ROLES_ADMIN.rolePlural}:`)).toBeInTheDocument();
-        expect(testUtils.screen.getByText(ROLES_ADMIN.roleDescription)).toBeInTheDocument();
-        expect(testUtils.screen.queryByText(`${ROLES_REVIEWER.rolePlural}:`)).not.toBeInTheDocument();
-        expect(testUtils.screen.queryByText(ROLES_REVIEWER.roleDescription)).not.toBeInTheDocument();
+        expect(testUtils.screen.getByText(`${ROLES_TEAM_ADMIN.tooltipLabel}:`)).toBeInTheDocument();
+        expect(testUtils.screen.getByText(ROLES_TEAM_ADMIN.tooltipDescription)).toBeInTheDocument();
+        expect(testUtils.screen.queryByText(`${ROLES_REVIEWER.tooltipLabel}:`)).not.toBeInTheDocument();
+        expect(testUtils.screen.queryByText(ROLES_REVIEWER.tooltipDescription)).not.toBeInTheDocument();
     });
 });
