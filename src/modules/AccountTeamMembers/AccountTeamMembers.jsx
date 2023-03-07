@@ -67,7 +67,6 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers }) => {
         setShowRemoveModal(false);
         deleteMembersRequest.mutateAsync({ teamId, userId: userToRemove.userId }).then(() => {
             setUserToRemove(null);
-            // setFilteredMembers(teamMembers.filter(teamMember => teamMember.userId !== userToRemove.userId));
             handleRemove([{ message: 'User has been removed', type: 'success' }]);
         });
     };
