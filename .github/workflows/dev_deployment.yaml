@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - 'dev'  
-#    paths:
-#    - 'Chart.yaml'
+  #   paths:
+  #    - 'Chart.yaml'
   # workflow_call:
   #   outputs:
   #     GITHB_SHA: 
