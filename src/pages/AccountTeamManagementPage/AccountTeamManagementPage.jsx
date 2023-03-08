@@ -11,7 +11,7 @@ import {
 } from 'modules';
 import { ACCOUNT_TAB_TYPES, UI_ALERT_TYPES } from 'consts';
 import { NotificationManager } from 'react-notifications';
-import { LayoutContent } from 'components';
+import { LayoutContent, Loading } from 'components';
 import { useAuth } from 'context/AuthContext';
 import { authUtils } from 'utils';
 
@@ -375,7 +375,15 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
                 <TabsNav teamId={teamId} activeTabKey={activeTabKey} onTabChange={onTabChange} />
             </LayoutContent>
             {activeTabKey === ACCOUNT_TAB_TYPES.Members && (
-                <AccountTeamMembers teamMembers={teamMembers} handleRemove={handleRemove} teamId={teamId} />
+                <>
+                    {getMembersRequest.isLoading ? (
+                        <LayoutContent>
+                            <Loading />
+                        </LayoutContent>
+                    ) : (
+                        <AccountTeamMembers teamMembers={teamMembers} handleRemove={handleRemove} teamId={teamId} />
+                    )}
+                </>
             )}
             {activeTabKey === ACCOUNT_TAB_TYPES.Notifications && (
                 <NotificationTab

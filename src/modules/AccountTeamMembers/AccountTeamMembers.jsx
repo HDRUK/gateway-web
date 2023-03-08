@@ -20,7 +20,7 @@ import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
 import { useAuth } from '../../context/AuthContext';
 import { ActionCell, CheckboxCell, NameCell, HeaderTooltip } from './AccountTeamMembers.components';
 
-const AccountTeamMembers = ({ teamId, handleRemove, teamMembers }) => {
+const AccountTeamMembers = ({ teamId, handleRemove, teamMembers = [] }) => {
     const [filteredMembers, setFilteredMembers] = useState([]);
     const { userState, isHDRAdmin } = useAuth();
     const { isCustodianTeamAdmin, isCustodianMetadataManager, isCustodianDarManager } = useCustodianRoles(teamId);
@@ -118,6 +118,9 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers }) => {
             cellProps: {
                 valign: 'top',
             },
+            styles: {
+                minWidth: '150px',
+            },
             Cell: ({ row: { original } }) => (
                 <CheckboxCell
                     title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN))}
@@ -140,6 +143,9 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers }) => {
             accessor: 'dataAccessRequest',
             cellProps: {
                 valign: 'top',
+            },
+            styles: {
+                minWidth: '150px',
             },
             Cell: ({ row: { original } }) => (
                 <>
@@ -171,6 +177,9 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers }) => {
                     content={<PermissionDescriptions roles={[ROLE_CUSTODIAN_METADATA_MANAGER, ROLE_CUSTODIAN_METADATA_EDITOR]} />}
                 />
             ),
+            styles: {
+                minWidth: '150px',
+            },
             accessor: 'metadata',
             cellProps: {
                 valign: 'top',

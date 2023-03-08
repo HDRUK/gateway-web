@@ -40,7 +40,7 @@
         "markdown-draft-js": "^2.4.0",
         "moment": "^2.25.3",
         "msw": "^0.35.0",
-        "p-limit": "^4.0.0",
+        "p-limit": "^3.0.0",
         "pluralize": "^8.0.0",
         "prop-types": "^15.8.1",
         "query-string": "^7.1.1",
