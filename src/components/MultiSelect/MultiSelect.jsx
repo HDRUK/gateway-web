@@ -50,6 +50,7 @@ const MultiSelect = ({ options, maxMenuHeight, onChange }) => {
                 components={{
                     Option,
                 }}
+                placeholder='Member role(s)'
                 maxMenuHeight={maxMenuHeight}
                 allowSelectAll
                 onChange={onChange}

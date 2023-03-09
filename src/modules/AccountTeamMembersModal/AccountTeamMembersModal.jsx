@@ -112,7 +112,7 @@ const AccountTeamMembersModal = ({ isOpen, onClose, teamId, onMembersAdded, onMe
                                     <h1 className='black-20-semibold'>Add members to your team</h1>
                                     <CloseButtonSvg className='accountMembersModal-head--close' onClick={() => onClose()} />
                                 </div>
-                                <p>Users that you want to add to your team must already have an account on the Gateway.</p>
+                                <p>Users that you want to add to your team must already have an account on the Gateway</p>
                             </div>
                             <FieldArray
                                 name='members'
@@ -129,7 +129,7 @@ const AccountTeamMembersModal = ({ isOpen, onClose, teamId, onMembersAdded, onMe
                                                         getUsersInfo={false}
                                                         currentUserId={userInfo.id}
                                                         multiple={false}
-                                                        placeholder='Enter 3 characters to search'
+                                                        placeholder='Enter 3 characters to search user'
                                                         className={
                                                             formik.touched.members &&
                                                             formik.touched.members[index] &&
@@ -211,7 +211,7 @@ const AccountTeamMembersModal = ({ isOpen, onClose, teamId, onMembersAdded, onMe
                                     }}>
                                     Cancel
                                 </Button>
-                                <Button type='submit'>Add members</Button>
+                                <Button type='submit'>Add member(s)</Button>
                             </div>
                         </div>
                     </Form>
