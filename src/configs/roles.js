@@ -8,8 +8,8 @@ const ROLES_REVIEWER = {
 };
 
 const ROLES_METADATA_EDITOR = {
-    label: 'Metadata editor',
-    rolePlural: 'Metadata editors',
+    label: 'Metadata Editor',
+    rolePlural: 'Metadata Editors',
     value: 'metadata_editor',
     tooltipLabel: 'Editors',
     tooltipDescription: 'Can add and create new versions of datasets.',

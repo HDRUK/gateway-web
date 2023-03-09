@@ -41,6 +41,7 @@ const MultiSelect = ({ options, maxMenuHeight, onChange }) => {
                             backgroundColor: theme.colors.grey200,
                         },
                     }),
+                    valueContainer: baseStyles => ({ ...baseStyles, fontSize: '14px' }),
                 }}
                 closeMenuOnSelect={false}
                 isMulti
