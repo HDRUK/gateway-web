@@ -445,3 +445,73 @@ export const theme = {
         },
     },
 };
+
+export const checkboxMixins = {
+    root: ({ width, disabled }) => `
+		position: relative;
+		padding-left: calc(${width} + 0.5rem);
+
+		input {
+			display: none;
+		}
+
+		${
+            !disabled
+                ? `&:hover {
+			cursor: pointer;
+			}`
+                : ''
+        }
+	`,
+    before: ({ colors, variants, variant, width, height }) => `
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		border-width: 2px;
+		border-style: solid;
+		border-color: ${colors[variants[variant].borderColor]};
+		width: ${width};
+		height: ${height};
+	`,
+    after: ({ width, height }) => `
+		content: '';
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		width: calc(${width} - 10px);
+		height: calc(${height} - 10px);
+	`,
+    disabledNotChecked: ({ width, height }) => `
+		content: '';
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: calc(${width} - 4px);
+		height: calc(${height} - 4px);
+		background: white
+	`,
+    checked: ({ colors, variants, variant }) => `
+		background: ${colors[variants[variant].checkedBackground]};
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	`,
+    partial: ({ width, height }) => `
+		content: '';
+		font-size: 22px;
+		color: white;
+		z-index: 1;
+		left: 0;
+		top: -1px;
+		position: absolute;
+		width: calc(${width} - 10px);
+		height: calc(${height} - 10px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	`,
+    disabled: ({ colors, disabledColor }) => `
+		background: ${colors[disabledColor]};
+	`,
+};

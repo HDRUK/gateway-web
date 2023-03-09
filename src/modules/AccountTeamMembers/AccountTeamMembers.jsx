@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Card, Button, Box } from 'hdruk-react-core';
+import { Card } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { NotificationManager } from 'react-notifications';
@@ -7,35 +7,27 @@ import { NotificationManager } from 'react-notifications';
 import { Table, LayoutContent, ConfirmationModal } from 'components';
 import { PermissionDescriptions } from 'modules';
 import {
-    PERMISSIONS_TEAM_MEMBER_ROLES,
     ROLE_CUSTODIAN_DAR_MANAGER,
     ROLE_CUSTODIAN_METADATA_MANAGER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
+    ROLE_CUSTODIAN_DAR_REVIEWER,
+    ROLE_CUSTODIAN_METADATA_EDITOR,
 } from 'consts';
 import { teamService } from 'services';
 
 import { useCustodianRoles } from 'hooks';
 import MessageNotFound from '../../pages/commonComponents/MessageNotFound';
-import Loading from '../../pages/commonComponents/Loading';
-import AccountTeamMembersModal from '../AccountTeamMembersModal';
 import { useAuth } from '../../context/AuthContext';
 import { ActionCell, CheckboxCell, NameCell, HeaderTooltip } from './AccountTeamMembers.components';
 
-const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
+const AccountTeamMembers = ({ teamId, handleRemove, teamMembers = [] }) => {
+    const [filteredMembers, setFilteredMembers] = useState([]);
     const { userState, isHDRAdmin } = useAuth();
     const { isCustodianTeamAdmin, isCustodianMetadataManager, isCustodianDarManager } = useCustodianRoles(teamId);
-    const [teamMembers, setTeamMembers] = useState([]);
-    const [showModal, setShowModal] = useState();
     const [userToRemove, setUserToRemove] = useState(null);
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [checkboxValues, setCheckboxValues] = useState({});
     const { t } = useTranslation();
-
-    const getMembersRequest = teamService.useGetMembers(null, {
-        onError: ({ title, message }) => {
-            NotificationManager.error(message, title, 10000);
-        },
-    });
 
     const patchMembersRequest = teamService.usePatchTeamMemberRequest(null, {
         onError: ({ title, message }) => {
@@ -49,10 +41,10 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
         },
     });
 
-    const populateCheckboxes = members => {
+    const populateCheckboxes = () => {
         const initialCheckboxes = {};
 
-        members.forEach(member => {
+        teamMembers.forEach(member => {
             initialCheckboxes[member.userId] = {};
             member.roles.forEach(role => {
                 initialCheckboxes[member.userId][role] = true;
@@ -63,39 +55,20 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
     };
 
     useEffect(() => {
-        const init = () => {
-            if (teamId) {
-                getMembersRequest.mutateAsync(teamId).then(({ data: { members } }) => {
-                    const initialCheckboxes = populateCheckboxes(members);
+        if (teamMembers) {
+            const initialCheckboxes = populateCheckboxes();
 
-                    setCheckboxValues(initialCheckboxes);
-                    setTeamMembers(members);
-                });
-            }
-        };
-
-        init();
-    }, [teamId, userState]);
+            setCheckboxValues(initialCheckboxes);
+            setFilteredMembers(teamMembers);
+        }
+    }, [teamMembers]);
 
     const handleRemoveUser = () => {
         setShowRemoveModal(false);
         deleteMembersRequest.mutateAsync({ teamId, userId: userToRemove.userId }).then(() => {
             setUserToRemove(null);
-            setTeamMembers(teamMembers.filter(teamMember => teamMember.userId !== userToRemove.userId));
-            handleDisplayAlert('User has been removed');
+            handleRemove([{ message: 'User has been removed', type: 'success' }]);
         });
-    };
-
-    const handleCloseModal = useCallback(() => {
-        setShowModal(false);
-    }, []);
-
-    const handleOpenModal = useCallback(() => {
-        setShowModal(true);
-    }, []);
-
-    const handleMemberAdded = addedMembers => {
-        setTeamMembers(addedMembers);
     };
 
     const handleCheckboxChange = async ({ updatedRole, userId }) => {
@@ -109,7 +82,7 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
             data: updatedRole,
         });
 
-        setTeamMembers(members);
+        setFilteredMembers(members.reverse());
     };
 
     const renderDisabledMessage = isDisabled => {
@@ -119,11 +92,10 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
     const getIsCheckboxDisabled = useCallback(
         role => {
             const darManagerHasPermission =
-                isCustodianDarManager && [ROLE_CUSTODIAN_DAR_MANAGER, PERMISSIONS_TEAM_MEMBER_ROLES.reviewer].includes(role);
+                isCustodianDarManager && [ROLE_CUSTODIAN_DAR_MANAGER, ROLE_CUSTODIAN_DAR_REVIEWER].includes(role);
 
             const metadataManagerHasPermission =
-                isCustodianMetadataManager &&
-                [ROLE_CUSTODIAN_METADATA_MANAGER, PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor].includes(role);
+                isCustodianMetadataManager && [ROLE_CUSTODIAN_METADATA_MANAGER, ROLE_CUSTODIAN_METADATA_EDITOR].includes(role);
 
             if (isCustodianTeamAdmin || darManagerHasPermission || metadataManagerHasPermission) {
                 return false;
@@ -141,10 +113,13 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
             Cell: ({ row: { original } }) => <NameCell member={original} />,
         },
         {
-            Header: <HeaderTooltip header={t('teamAdmin')} content={<PermissionDescriptions roles={['admin']} />} />,
+            Header: <HeaderTooltip header={t('teamAdmin')} content={<PermissionDescriptions roles={[ROLE_CUSTODIAN_TEAM_ADMIN]} />} />,
             accessor: 'teamAdmin',
             cellProps: {
                 valign: 'top',
+            },
+            styles: {
+                minWidth: '150px',
             },
             Cell: ({ row: { original } }) => (
                 <CheckboxCell
@@ -162,14 +137,15 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
             Header: (
                 <HeaderTooltip
                     header={t('dataAccessRequest')}
-                    content={
-                        <PermissionDescriptions roles={[PERMISSIONS_TEAM_MEMBER_ROLES.manager, PERMISSIONS_TEAM_MEMBER_ROLES.reviewer]} />
-                    }
+                    content={<PermissionDescriptions roles={[ROLE_CUSTODIAN_DAR_MANAGER, ROLE_CUSTODIAN_DAR_REVIEWER]} />}
                 />
             ),
             accessor: 'dataAccessRequest',
             cellProps: {
                 valign: 'top',
+            },
+            styles: {
+                minWidth: '150px',
             },
             Cell: ({ row: { original } }) => (
                 <>
@@ -183,11 +159,11 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
                         onChange={handleCheckboxChange}
                     />
                     <CheckboxCell
-                        title={renderDisabledMessage(getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.reviewer))}
-                        disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.reviewer)}
+                        title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_REVIEWER))}
+                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_REVIEWER)}
                         userId={original.userId}
                         checkboxValues={checkboxValues[original.userId]}
-                        role={PERMISSIONS_TEAM_MEMBER_ROLES.reviewer}
+                        role={ROLE_CUSTODIAN_DAR_REVIEWER}
                         label={t('reviewer')}
                         onChange={handleCheckboxChange}
                     />
@@ -198,13 +174,12 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
             Header: (
                 <HeaderTooltip
                     header={t('metadata')}
-                    content={
-                        <PermissionDescriptions
-                            roles={[PERMISSIONS_TEAM_MEMBER_ROLES.manager, PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor]}
-                        />
-                    }
+                    content={<PermissionDescriptions roles={[ROLE_CUSTODIAN_METADATA_MANAGER, ROLE_CUSTODIAN_METADATA_EDITOR]} />}
                 />
             ),
+            styles: {
+                minWidth: '150px',
+            },
             accessor: 'metadata',
             cellProps: {
                 valign: 'top',
@@ -221,11 +196,11 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
                         onChange={handleCheckboxChange}
                     />
                     <CheckboxCell
-                        title={renderDisabledMessage(getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor))}
-                        disabled={getIsCheckboxDisabled(PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor)}
+                        title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_EDITOR))}
+                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_EDITOR)}
                         userId={original.userId}
                         checkboxValues={checkboxValues[original.userId]}
-                        role={PERMISSIONS_TEAM_MEMBER_ROLES.metadata_editor}
+                        role={ROLE_CUSTODIAN_METADATA_EDITOR}
                         label={t('editor')}
                         onChange={handleCheckboxChange}
                     />
@@ -255,32 +230,14 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
         },
     ];
 
-    if (getMembersRequest.isLoading) {
-        return (
-            <LayoutContent>
-                <Loading />
-            </LayoutContent>
-        );
-    }
-
     return (
         <LayoutContent data-testid='AccountTeamMembers'>
             {teamMembers.length <= 0 && <MessageNotFound word='members' />}
             {teamMembers.length > 0 && (
                 <Card>
-                    <Table columns={columns} data={teamMembers} />
+                    <Table columns={columns} data={filteredMembers} />
                 </Card>
             )}
-            {isCustodianTeamAdmin && (
-                <Card>
-                    <Box p={6} display='flex' justifyContent='center'>
-                        <Button variant='primary' onClick={handleOpenModal}>
-                            {t('components.AccountTeamMembers.members.add')}
-                        </Button>
-                    </Box>
-                </Card>
-            )}
-            <AccountTeamMembersModal isOpen={showModal} onClose={handleCloseModal} teamId={teamId} onMemberAdded={handleMemberAdded} />
             <ConfirmationModal
                 title={`Are you sure you want to remove ${userToRemove?.firstname} ${userToRemove?.lastname}?`}
                 isOpen={showRemoveModal}
@@ -294,7 +251,8 @@ const AccountTeamMembers = ({ teamId, handleDisplayAlert }) => {
 
 AccountTeamMembers.propTypes = {
     teamId: PropTypes.string.isRequired,
-    handleDisplayAlert: PropTypes.func.isRequired,
+    handleRemove: PropTypes.func.isRequired,
+    teamMembers: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string, userId: PropTypes.string })).isRequired,
 };
 
 export default AccountTeamMembers;

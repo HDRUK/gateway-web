@@ -25,6 +25,7 @@ import ListInfo from './ListInfo';
 import Loading from './Loading';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from './Modal';
 import NotificationBadge from './NotificationBadge';
+import MultiSelect from './MultiSelect';
 import QualityScore from './QualityScore';
 import Popover from './Popover';
 import PopoverMenu from './PopoverMenu';
@@ -71,6 +72,7 @@ export {
     ModalBody,
     ModalFooter,
     ModalHeader,
+    MultiSelect,
     NotificationBadge,
     Popover,
     PopoverMenu,

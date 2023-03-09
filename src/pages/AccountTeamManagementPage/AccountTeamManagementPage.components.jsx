@@ -27,8 +27,9 @@ const LoaderRow = () => (
     </LayoutContent>
 );
 
-const TeamManagementHeader = () => {
+const TeamManagementHeader = ({ children }) => {
     const { t } = useTranslation();
+
     return (
         <Card data-testid='TeamManagementHeader' style={{ padding: '30px 20px' }}>
             <H5 mb={2}>{t('pages.AccountTeamManagement.title')}</H5>
@@ -39,8 +40,13 @@ const TeamManagementHeader = () => {
                 </Link>
                 .
             </P>
+            {children}
         </Card>
     );
+};
+
+TeamManagementHeader.propTypes = {
+    children: PropTypes.node.isRequired,
 };
 
 const TabsNav = ({ activeTabKey, onTabChange, teamId }) => {

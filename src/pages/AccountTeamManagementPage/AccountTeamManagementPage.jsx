@@ -1,14 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { isEmpty } from 'lodash';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-import { AccountTeamMembers, AccountTeamEmailAlertModal, AccountTeamNotificationsConfirmationModal } from 'modules';
+import {
+    AccountTeamMembers,
+    AccountTeamEmailAlertModal,
+    AccountTeamNotificationsConfirmationModal,
+    AccountTeamMembersModal,
+} from 'modules';
 import { ACCOUNT_TAB_TYPES, UI_ALERT_TYPES } from 'consts';
-import { LayoutContent } from 'components';
+import { NotificationManager } from 'react-notifications';
+import { LayoutContent, Loading } from 'components';
 import { useAuth } from 'context/AuthContext';
 import { authUtils } from 'utils';
 
+import { useCustodianRoles } from 'hooks';
+import { teamService } from 'services';
+import { Box, Button } from 'hdruk-react-core';
+import { useTranslation } from 'react-i18next';
 import { baseURL } from '../../configs/url.config';
 
 import {
@@ -24,22 +34,43 @@ import { GeneratedAlerts, LoaderRow, NotificationTab, TabsNav, TeamManagementHea
 
 const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagementSave, onTeamManagementTabChange, onClearInnerTab }) => {
     const { userState } = useAuth();
+    const { isCustodianTeamAdmin, isCustodianDarManager, isCustodianMetadataManager } = useCustodianRoles(teamId);
     const [activeTabKey, setActiveTabKey] = useState(ACCOUNT_TAB_TYPES.Members);
+    const [teamMembers, setTeamMembers] = useState([]);
     const [alerts, setAlerts] = useState([]);
     const [alertModal, setAlertModal] = useState(false);
     const [alertModalOptions, setAlertModalOptions] = useState({ title: '', body: '' });
     const [isLoading, setLoading] = useState(false);
     const [memberNotifications, setMemberNotifications] = useState([{ optIn: true, notificationType: 'dataAccessRequest' }]);
     const [teamEmailModal, setTeamEmailModal] = useState(false);
+    const [showAddModal, setShowAddModal] = useState();
     const [teamGatewayNotifications, setTeamGatewayNotifications] = useState([
         { notificationType: 'dataAccessRequest', optIn: false, subscribedEmails: [{ value: '', error: '' }], message: 'Test message' },
     ]);
     const [isTeamManager, setIsTeamManager] = useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (!teamId || !userState) return;
         // TODO: GAT-391:GAT-1596 (notifications)
         setIsTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
+    }, [teamId, userState]);
+
+    const getMembersRequest = teamService.useGetMembers(null, {
+        onError: ({ title, message }) => {
+            NotificationManager.error(message, title, 10000);
+        },
+    });
+
+    const getMembers = () => {
+        getMembersRequest.mutateAsync(teamId).then(({ data: { members } }) => {
+            setTeamMembers(members.reverse());
+        });
+    };
+
+    useEffect(() => {
+        if (!teamId) return;
+        getMembers();
     }, [teamId, userState]);
 
     // modal for notifications ensures one notification is selected
@@ -51,9 +82,9 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
         setAlertModal(!alertModal);
     };
 
-    const createAlert = message => {
+    const createAlert = newAlerts => {
         // set alert message success save
-        setAlerts([{ message, type: 'success' }]);
+        setAlerts(newAlerts);
         // scroll to the top so we can see the notification
         window.scrollTo(0, 0);
         // remove after 5's alert
@@ -79,7 +110,7 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
                 .then(() => {
                     // call parent set save button state
                     onTeamManagementSave(false, true);
-                    createAlert('You have successfully updated your email notifications');
+                    createAlert([{ message: 'You have successfully updated your email notifications', type: 'success' }]);
                 })
                 .catch(err => {
                     console.error(err.message);
@@ -285,6 +316,45 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
         if (persistUpdate) updateNotifications();
     };
 
+    const handleCloseAddModal = useCallback(() => {
+        setShowAddModal(false);
+    }, []);
+
+    const handleOpenAddModal = useCallback(() => {
+        setShowAddModal(true);
+    }, []);
+
+    const handleRemove = alert => {
+        getMembers();
+        createAlert(alert);
+    };
+
+    const handleMembersAdded = newUsers => {
+        let newAlerts = [];
+
+        const added = newUsers.filter(newUser => newUser.status === 'fulfilled');
+        const rejected = newUsers.filter(newUser => newUser.status === 'rejected');
+
+        if (added.length) {
+            const { value } = added[added.length - 1];
+            setTeamMembers(value.data.members.reverse());
+            newAlerts = [{ message: `${added.length} new member(s) successfully added to the team.`, type: 'success' }];
+        }
+
+        if (rejected.length) {
+            newAlerts = [
+                ...newAlerts,
+                { message: `There was a problem adding ${rejected.length} new member(s) to the team.`, type: 'danger' },
+            ];
+        }
+
+        createAlert(newAlerts);
+    };
+
+    const handleMembersFailed = () => {
+        createAlert([{ message: 'Failed to add member(s).', type: 'danger' }]);
+    };
+
     if (isLoading) {
         return <LoaderRow />;
     }
@@ -293,10 +363,28 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
         <div data-testid='AccountTeamManagementPage'>
             <LayoutContent>
                 <GeneratedAlerts alerts={alerts} />
-                <TeamManagementHeader />
+                <TeamManagementHeader>
+                    {[isCustodianTeamAdmin, isCustodianDarManager, isCustodianMetadataManager].some(role => role) && (
+                        <Box pt={3} display='flex' justifyContent='center'>
+                            <Button variant='primary' onClick={handleOpenAddModal}>
+                                {t('components.AccountTeamMembers.members.add')}
+                            </Button>
+                        </Box>
+                    )}
+                </TeamManagementHeader>
                 <TabsNav teamId={teamId} activeTabKey={activeTabKey} onTabChange={onTabChange} />
             </LayoutContent>
-            {activeTabKey === ACCOUNT_TAB_TYPES.Members && <AccountTeamMembers handleDisplayAlert={createAlert} teamId={teamId} />}
+            {activeTabKey === ACCOUNT_TAB_TYPES.Members && (
+                <>
+                    {getMembersRequest.isLoading ? (
+                        <LayoutContent>
+                            <Loading />
+                        </LayoutContent>
+                    ) : (
+                        <AccountTeamMembers teamMembers={teamMembers} handleRemove={handleRemove} teamId={teamId} />
+                    )}
+                </>
+            )}
             {activeTabKey === ACCOUNT_TAB_TYPES.Notifications && (
                 <NotificationTab
                     memberNotifications={memberNotifications}
@@ -316,6 +404,15 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
                 onConfirm={toggleTeamEmailsModal}
                 teamNotifications={teamGatewayNotifications}
             />
+            {showAddModal && (
+                <AccountTeamMembersModal
+                    isOpen={showAddModal}
+                    onClose={handleCloseAddModal}
+                    teamId={teamId}
+                    onMembersAdded={handleMembersAdded}
+                    onMembersFailed={handleMembersFailed}
+                />
+            )}
         </div>
     );
 };

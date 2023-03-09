@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { mixins } from '../Checkbox/Checkbox.styles';
+import { checkboxMixins } from 'configs/theme';
 
 export const root =
     ({ hasLeafIcon, hasParentIcon, checkboxVariant: variant }) =>
@@ -83,31 +83,31 @@ export const root =
             }
 
             input + .rct-checkbox .rct-icon::before {
-                ${mixins.before({ colors, variants, variant, width, height })}
+                ${checkboxMixins.before({ colors, variants, variant, width, height })}
             }
 
             input + .rct-checkbox .rct-icon::after {
-                ${mixins.after({ width, height })}
+                ${checkboxMixins.after({ width, height })}
             }
 
             input:disabled + .rct-checkbox .rct-icon-uncheck::after {
-                ${mixins.disabledNotChecked({ width, height })}
+                ${checkboxMixins.disabledNotChecked({ width, height })}
             }
 
             input + .rct-checkbox .rct-icon-check::after,
             input + .rct-checkbox .rct-icon-half-check::after {
-                ${mixins.checked({ colors, variants, variant })}
+                ${checkboxMixins.checked({ colors, variants, variant })}
             }
 
             input + .rct-checkbox .rct-icon-half-check::after {
-                ${mixins.partial({ width, height })}
+                ${checkboxMixins.partial({ width, height })}
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
 
             input:disabled + .rct-checkbox .rct-icon::after {
-                ${mixins.disabled({ colors, variants, variant })}
+                ${checkboxMixins.disabled({ colors, variants, variant })}
             }
 
             label:hover input ~ *,

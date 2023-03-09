@@ -4,49 +4,6 @@ exports[`AccountTeamMembers component render should match the previous snapshot 
 <div>
   <div
     class="ui-Box emotion-0"
-  >
-    <div />
-    <div>
-      <div
-        class="mt-2 row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="rectangle"
-          >
-            <div
-              class="gray800-14"
-              style="text-align: center;"
-            >
-              <img
-                class=""
-                src=""
-              />
-            </div>
-            <div
-              class="gray800-14"
-              style="text-align: center;"
-            >
-              <p>
-                Loading...
-              </p>
-              <p />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div />
-  </div>
-</div>
-`;
-
-exports[`AccountTeamMembers component render should render the table 1`] = `
-<div>
-  <div
-    class="ui-Box emotion-0"
     data-testid="AccountTeamMembers"
   >
     <div />
@@ -72,6 +29,7 @@ exports[`AccountTeamMembers component render should render the table 1`] = `
               <th
                 colspan="1"
                 role="columnheader"
+                style="min-width: 150px;"
               >
                 <div
                   class="ui-Box emotion-0"
@@ -97,6 +55,7 @@ exports[`AccountTeamMembers component render should render the table 1`] = `
               <th
                 colspan="1"
                 role="columnheader"
+                style="min-width: 150px;"
               >
                 <div
                   class="ui-Box emotion-0"
@@ -122,6 +81,7 @@ exports[`AccountTeamMembers component render should render the table 1`] = `
               <th
                 colspan="1"
                 role="columnheader"
+                style="min-width: 150px;"
               >
                 <div
                   class="ui-Box emotion-0"
@@ -622,17 +582,596 @@ exports[`AccountTeamMembers component render should render the table 1`] = `
           </tbody>
         </table>
       </div>
-      <div
-        class="container"
-      />
     </div>
     <div />
   </div>
 </div>
 `;
 
-exports[`AccountTeamMembers component render should show a loader 1`] = `
-<p>
-  Loading...
-</p>
+exports[`AccountTeamMembers component render should render the table 1`] = `
+<div>
+  <div
+    class="ui-Box emotion-0"
+    data-testid="AccountTeamMembers"
+  >
+    <div />
+    <div>
+      <div
+        class="ui-Card emotion-1"
+        role="article"
+      >
+        <table
+          class="emotion-2 emotion-3"
+          role="table"
+        >
+          <thead>
+            <tr
+              role="row"
+            >
+              <th
+                colspan="1"
+                role="columnheader"
+              >
+                Name
+              </th>
+              <th
+                colspan="1"
+                role="columnheader"
+                style="min-width: 150px;"
+              >
+                <div
+                  class="ui-Box emotion-0"
+                >
+                  Team Admin
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <button
+                      class="emotion-5"
+                    >
+                      <span
+                        class="ui-Icon emotion-6"
+                      >
+                        <icon-mock />
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </th>
+              <th
+                colspan="1"
+                role="columnheader"
+                style="min-width: 150px;"
+              >
+                <div
+                  class="ui-Box emotion-0"
+                >
+                  Data Access Request
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <button
+                      class="emotion-5"
+                    >
+                      <span
+                        class="ui-Icon emotion-6"
+                      >
+                        <icon-mock />
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </th>
+              <th
+                colspan="1"
+                role="columnheader"
+                style="min-width: 150px;"
+              >
+                <div
+                  class="ui-Box emotion-0"
+                >
+                  Metadata
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <button
+                      class="emotion-5"
+                    >
+                      <span
+                        class="ui-Icon emotion-6"
+                      >
+                        <icon-mock />
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </th>
+              <th
+                colspan="1"
+                role="columnheader"
+                style="width: 147px;"
+              >
+                Further Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            role="rowgroup"
+          >
+            <tr
+              role="row"
+            >
+              <td
+                data-label="name"
+                role="cell"
+              >
+                <a
+                  class="ui-Typography emotion-13"
+                  href="/person/3865545720202838"
+                >
+                  Leopoldo
+                   
+                  Hyatt
+                </a>
+                <p
+                  class="ui-Typography emotion-13"
+                >
+                  Hermann, Leannon and Kuhlman
+                </p>
+              </td>
+              <td
+                data-label="teamAdmin"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="2806784217812241_custodian.team.admin"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    disabled=""
+                    id="2806784217812241_custodian.team.admin"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Admin
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="dataAccessRequest"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="2806784217812241_custodian.dar.manager"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    checked=""
+                    disabled=""
+                    id="2806784217812241_custodian.dar.manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="2806784217812241_reviewer"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    disabled=""
+                    id="2806784217812241_reviewer"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Reviewer
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="metadata"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="2806784217812241_custodian.metadata.manager"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    disabled=""
+                    id="2806784217812241_custodian.metadata.manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="2806784217812241_metadata_editor"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    disabled=""
+                    id="2806784217812241_metadata_editor"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Editor
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="actions"
+                role="cell"
+              >
+                <div
+                  style="display: flex; justify-content: center;"
+                >
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="ui-Icon emotion-25"
+                    >
+                      <icon-mock
+                        fill="inherit"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr
+              role="row"
+            >
+              <td
+                data-label="name"
+                role="cell"
+              >
+                <a
+                  class="ui-Typography emotion-13"
+                  href="/person/2960545903183567"
+                >
+                  Alberto
+                   
+                  Kreiger
+                </a>
+                <p
+                  class="ui-Typography emotion-13"
+                >
+                  Paucek LLC
+                </p>
+              </td>
+              <td
+                data-label="teamAdmin"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6530658699027868_custodian.team.admin"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    checked=""
+                    disabled=""
+                    id="6530658699027868_custodian.team.admin"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Admin
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="dataAccessRequest"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6530658699027868_custodian.dar.manager"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    checked=""
+                    disabled=""
+                    id="6530658699027868_custodian.dar.manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6530658699027868_reviewer"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    disabled=""
+                    id="6530658699027868_reviewer"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Reviewer
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="metadata"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6530658699027868_custodian.metadata.manager"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    checked=""
+                    disabled=""
+                    id="6530658699027868_custodian.metadata.manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6530658699027868_metadata_editor"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    disabled=""
+                    id="6530658699027868_metadata_editor"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Editor
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="actions"
+                role="cell"
+              >
+                <div
+                  style="display: flex; justify-content: center;"
+                >
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="ui-Icon emotion-25"
+                    >
+                      <icon-mock
+                        fill="inherit"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr
+              role="row"
+            >
+              <td
+                data-label="name"
+                role="cell"
+              >
+                <a
+                  class="ui-Typography emotion-13"
+                  href="/person/5271081836217133"
+                >
+                  Angelita
+                   
+                  Wintheiser
+                </a>
+                <p
+                  class="ui-Typography emotion-13"
+                >
+                  Murray Inc
+                </p>
+              </td>
+              <td
+                data-label="teamAdmin"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6383919789063405_custodian.team.admin"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    checked=""
+                    disabled=""
+                    id="6383919789063405_custodian.team.admin"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Admin
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="dataAccessRequest"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6383919789063405_custodian.dar.manager"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    checked=""
+                    disabled=""
+                    id="6383919789063405_custodian.dar.manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6383919789063405_reviewer"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    disabled=""
+                    id="6383919789063405_reviewer"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Reviewer
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="metadata"
+                role="cell"
+                valign="top"
+              >
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6383919789063405_custodian.metadata.manager"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    checked=""
+                    disabled=""
+                    id="6383919789063405_custodian.metadata.manager"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Manager
+                    </span>
+                  </span>
+                </label>
+                <label
+                  class="ui-Checkbox emotion-15 emotion-16"
+                  for="6383919789063405_metadata_editor"
+                  title="You do not have permission to edit this"
+                >
+                  <input
+                    disabled=""
+                    id="6383919789063405_metadata_editor"
+                    type="checkbox"
+                  />
+                  <span
+                    class="ui-Checkbox__label"
+                  >
+                    <span>
+                      Editor
+                    </span>
+                  </span>
+                </label>
+              </td>
+              <td
+                data-label="actions"
+                role="cell"
+              >
+                <div
+                  style="display: flex; justify-content: center;"
+                >
+                  <div
+                    role="button"
+                    style="display: inline-block; line-height: 0;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="ui-Icon emotion-25"
+                    >
+                      <icon-mock
+                        fill="inherit"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div />
+  </div>
+</div>
 `;

@@ -18,7 +18,7 @@ const getNotifications = (_id, options) => {
 };
 
 const addMembers = (_id, data, options) => {
-    return postRequest(`${apiUrlV1}/teams/${_id}/members`, data, options);
+    return postRequest(`${apiUrlV3}/teams/${_id}/members`, data, options);
 };
 
 const postAdd = (data, options) => {

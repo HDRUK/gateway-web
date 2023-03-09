@@ -3,11 +3,14 @@ import { server } from '../../services/mockServer';
 import AccountTeamMembers from './AccountTeamMembers';
 import * as Auth from '../../context/AuthContext';
 import '@testing-library/jest-dom/extend-expect';
+import { mockTeamsMembersV3 } from '../../../test/handlers';
 
 const authSpy = jest.spyOn(Auth, 'useAuth');
 
 const props = {
     teamId: '1234',
+    handleRemove: jest.fn(),
+    teamMembers: mockTeamsMembersV3,
 };
 
 describe('AccountTeamMembers component', () => {
@@ -40,10 +43,6 @@ describe('AccountTeamMembers component', () => {
 
         it('should match the previous snapshot', async () => {
             expect(wrapper.container).toMatchSnapshot();
-        });
-
-        it('should show a loader', async () => {
-            expect(testUtils.screen.getByText('Loading...')).toMatchSnapshot();
         });
 
         it('should render the table', async () => {
@@ -85,42 +84,6 @@ describe('AccountTeamMembers component', () => {
 
             expect(testUtils.within(cells[0]).getByRole('link').textContent).toEqual('Alberto Kreiger');
             expect(testUtils.within(cells[0]).getByText('Paucek LLC')).toBeTruthy();
-        });
-    });
-
-    describe('should launch add member modal', () => {
-        let wrapper;
-
-        beforeEach(async () => {
-            authSpy.mockReturnValue({
-                userState: mocks.userState.mockCustodianTeamAdmin,
-            });
-
-            wrapper = testUtils.render(<AccountTeamMembers {...props} />);
-
-            await testUtils.waitFor(() => {
-                testUtils.screen.getByText(/Add a new member/);
-            });
-
-            const addMembersButton = testUtils.screen.getByText(/Add a new member/);
-
-            testUtils.fireEvent.click(addMembersButton);
-        });
-
-        afterEach(() => {
-            testUtils.cleanup();
-        });
-
-        it('should add new member', async () => {
-            await testUtils.waitFor(() => {
-                testUtils.screen.getByText('Add members');
-            });
-
-            const addMemberButton = testUtils.screen.getByText('Add members');
-
-            testUtils.fireEvent.click(addMemberButton);
-
-            await testUtils.waitFor(() => expect(wrapper.container.querySelector('table')).toBeTruthy());
         });
     });
 
