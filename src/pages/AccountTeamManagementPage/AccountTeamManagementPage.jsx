@@ -404,13 +404,15 @@ const AccountTeamManagementPage = ({ teamId, innerTab, forwardRef, onTeamManagem
                 onConfirm={toggleTeamEmailsModal}
                 teamNotifications={teamGatewayNotifications}
             />
-            <AccountTeamMembersModal
-                isOpen={showAddModal}
-                onClose={handleCloseAddModal}
-                teamId={teamId}
-                onMembersAdded={handleMembersAdded}
-                onMembersFailed={handleMembersFailed}
-            />
+            {showAddModal && (
+                <AccountTeamMembersModal
+                    isOpen={showAddModal}
+                    onClose={handleCloseAddModal}
+                    teamId={teamId}
+                    onMembersAdded={handleMembersAdded}
+                    onMembersFailed={handleMembersFailed}
+                />
+            )}
         </div>
     );
 };

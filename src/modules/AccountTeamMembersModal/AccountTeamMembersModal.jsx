@@ -72,11 +72,6 @@ const AccountTeamMembersModal = ({ isOpen, onClose, teamId, onMembersAdded, onMe
         getUserInfo().catch(console.error);
     }, []);
 
-    useEffect(() => {
-        if (isOpen) return;
-        formik.resetForm();
-    }, [isOpen]);
-
     const validRoles = useMemo(() => {
         let roles = [];
 
@@ -158,16 +153,14 @@ const AccountTeamMembersModal = ({ isOpen, onClose, teamId, onMembersAdded, onMe
                                                         }}
                                                         options={validRoles}
                                                     />
-                                                    {formik.touched.members &&
+                                                    {formik.errors &&
+                                                    formik.touched.members &&
                                                     formik.touched.members[index] &&
-                                                    formik.touched.members[index].role &&
-                                                    (formik.values.members[index].role === '' ||
-                                                        formik.values.members[index].role === 'Member role') &&
-                                                    formik.errors &&
+                                                    formik.touched.members[index].roles &&
                                                     formik.errors.members &&
                                                     formik.errors.members[index] &&
-                                                    formik.errors.members[index].role ? (
-                                                        <div className='errorMessages'>{formik.errors.members[index].role}</div>
+                                                    formik.errors.members[index].roles ? (
+                                                        <div className='errorMessages'>{formik.errors.members[index].roles}</div>
                                                     ) : null}
                                                 </Col>
                                                 <Col
