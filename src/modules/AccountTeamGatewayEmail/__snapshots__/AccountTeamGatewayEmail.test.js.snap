@@ -47,6 +47,7 @@ exports[`Given the AccountTeamGatewayEmail component And the user is a team admi
             disabled=""
             name="myGatewayEmail"
             style="background: rgb(238, 238, 238);"
+            title="You do not have permission to edit this"
             type="email"
             value="eddie@murphy.com"
           />
@@ -99,6 +100,7 @@ exports[`Given the AccountTeamGatewayEmail component And the user is not a team 
             disabled=""
             name="myGatewayEmail"
             style="background: rgb(238, 238, 238);"
+            title="You do not have permission to edit this"
             type="email"
             value="steve@martin.com"
           />

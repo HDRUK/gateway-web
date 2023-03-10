@@ -28,6 +28,7 @@ const AccountTeamGatewayEmail = ({ teamId, memberNotification, togglePersonalNot
                     style={{ background: '#eee' }}
                     label={t('components.AccountTeamGatewayEmail.emailLabel')}
                     type='email'
+                    title='You do not have permission to edit this'
                     name='myGatewayEmail'
                     value={`${userState[0]?.email}`}
                     aria-describedby={t('components.AccountTeamGatewayEmail.emailLabel')}
