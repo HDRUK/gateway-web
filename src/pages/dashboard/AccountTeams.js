@@ -51,9 +51,9 @@ const AccountTeams = () => {
             .then(res => {
                 const { teams } = res.data;
                 const teamManagersIds = [];
-                teams.map((team, index) => {
+                teams.map(team => {
                     if (team.members.length > 0) {
-                        // TODO: GAT-1510:044 (tracked)
+                        // TODO: GAT-1510:GAT-2079
                         const teamManagers = authUtils.getTeamMemberManagers(team.members);
                         teamManagers.map(memberId => {
                             teamManagersIds.push(memberId.memberid);

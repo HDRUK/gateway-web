@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given the AccountTeamGatewayEmail component When it renders And the user is a manager Then should match the snapshot 1`] = `
+exports[`Given the AccountTeamGatewayEmail component And the user is a team admin Then should match the snapshot 1`] = `
 <div>
   <label
     class="emotion-0 ui-Switch emotion-1"
@@ -28,31 +28,36 @@ exports[`Given the AccountTeamGatewayEmail component When it renders And the use
     class="ui-Box emotion-3"
   >
     <div
-      class="ui-Input emotion-4"
+      class="ui-Box emotion-3"
     >
-      <label
-        class="ui-Label emotion-5"
-      >
-        My Gateway email
-      </label>
       <div
-        class="ui-Box emotion-3"
+        class="emotion-5 form-group"
       >
-        <input
-          aria-describedby="My Gateway email"
-          class="emotion-7"
-          name="myGatewayEmail"
-          readonly=""
-          type="email"
-          value="dan@ackroyd.com"
-        />
+        <label
+          class="emotion-6 form-label"
+        >
+          My Gateway email
+        </label>
+        <div
+          class="ui-Input emotion-7 input-group"
+        >
+          <input
+            aria-describedby="My Gateway email"
+            class="form-control"
+            disabled=""
+            name="myGatewayEmail"
+            style="background: rgb(238, 238, 238);"
+            type="email"
+            value="eddie@murphy.com"
+          />
+        </div>
       </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`Given the AccountTeamGatewayEmail component When it renders Then should match the snapshot 1`] = `
+exports[`Given the AccountTeamGatewayEmail component And the user is not a team admin Then should match the snapshot 1`] = `
 <div>
   <label
     class="emotion-0 ui-Switch emotion-1"
@@ -75,24 +80,29 @@ exports[`Given the AccountTeamGatewayEmail component When it renders Then should
     class="ui-Box emotion-2"
   >
     <div
-      class="ui-Input emotion-3"
+      class="ui-Box emotion-2"
     >
-      <label
-        class="ui-Label emotion-4"
-      >
-        My Gateway email
-      </label>
       <div
-        class="ui-Box emotion-2"
+        class="emotion-4 form-group"
       >
-        <input
-          aria-describedby="My Gateway email"
-          class="emotion-6"
-          name="myGatewayEmail"
-          readonly=""
-          type="email"
-          value="john@candy.com"
-        />
+        <label
+          class="emotion-5 form-label"
+        >
+          My Gateway email
+        </label>
+        <div
+          class="ui-Input emotion-6 input-group"
+        >
+          <input
+            aria-describedby="My Gateway email"
+            class="form-control"
+            disabled=""
+            name="myGatewayEmail"
+            style="background: rgb(238, 238, 238);"
+            type="email"
+            value="steve@martin.com"
+          />
+        </div>
       </div>
     </div>
   </div>

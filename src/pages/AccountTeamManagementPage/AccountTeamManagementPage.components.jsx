@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Alert, LayoutBox, LayoutContent, Link } from 'components';
 import { Tabs, Tab } from 'react-bootstrap';
 import { isEmpty, upperFirst } from 'lodash';
@@ -8,8 +7,6 @@ import PropTypes from 'prop-types';
 import { teamNotificationsPropTypes } from 'types';
 import { Card, H5, P, Box } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from 'context/AuthContext';
-import { authUtils } from 'utils';
 import Loading from '../commonComponents/Loading';
 
 const EmailNotificationsHeader = () => {
@@ -49,18 +46,7 @@ TeamManagementHeader.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-const TabsNav = ({ activeTabKey, onTabChange, teamId }) => {
-    const { userState } = useAuth();
-    const [isTeamAdminNotManager, setIsTeamAdminNotManager] = useState(false);
-
-    useEffect(() => {
-        if (!teamId || !userState) return;
-        //  TODO: GAT-391:GAT-1596 (notifications)
-        setIsTeamAdminNotManager(authUtils.isTeamAdminNotManager(teamId, userState));
-    }, [teamId, userState]);
-
-    if (isTeamAdminNotManager) return null;
-
+const TabsNav = ({ activeTabKey, onTabChange }) => {
     return (
         <Card data-testid='TabsNav'>
             <Tabs fill activeKey={activeTabKey} onSelect={onTabChange}>
@@ -80,7 +66,6 @@ const TabsNav = ({ activeTabKey, onTabChange, teamId }) => {
 TabsNav.propTypes = {
     activeTabKey: PropTypes.string.isRequired,
     onTabChange: PropTypes.func.isRequired,
-    teamId: PropTypes.string.isRequired,
 };
 
 const GeneratedAlerts = ({ alerts }) => {

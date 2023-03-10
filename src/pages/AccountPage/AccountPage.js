@@ -8,7 +8,7 @@ import { generalUtils, authUtils } from 'utils';
 
 import { AccountTeamManagementPage } from 'pages';
 import { AccountNavMenu } from 'modules';
-import { useAccountTeamSelected, useCustodianRoles } from 'hooks';
+import { useAccountTeamSelected, useCustodianRoles, useQueryParam } from 'hooks';
 import { useAuth } from 'context/AuthContext';
 import { DashboardProvider } from '../../context/DashboardContext';
 import { ReactComponent as CheckSVG } from '../../images/check.svg';
@@ -49,8 +49,6 @@ const AccountPage = () => {
     const { teamId, teamType } = useAccountTeamSelected();
     const { isReviewer, isCustodianDarManager, isCustodianMetadataManager, isMetadataEditor, isCustodianTeamAdmin } =
         useCustodianRoles(teamId);
-    const [teamManagementTab, setTeamManagementTab] = useState();
-    const [innertab, setInnertab] = useState(null);
     const [dataAccessRequest, setDataAccessRequest] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [tabId, setTabId] = useState('');
@@ -73,6 +71,7 @@ const AccountPage = () => {
     const searchBar = createRef();
     const activityLog = createRef();
     const history = useHistory();
+    const { subTab } = useQueryParam();
 
     let saveNotificationsRef;
 
@@ -189,14 +188,6 @@ const AccountPage = () => {
     const onTeamManagementSave = (isSubmitting, savedTeamNotificationSuccess) => {
         setIsSubmitting(isSubmitting);
         setSavedTeamNotificationSuccess(savedTeamNotificationSuccess);
-    };
-
-    const onTeamManagementTabChange = tab => {
-        setTeamManagementTab(tab);
-    };
-
-    const onClearInnerTab = () => {
-        setInnertab(null);
     };
 
     const updateDataAccessRequest = (dar = {}) => {
@@ -356,15 +347,11 @@ const AccountPage = () => {
 
                                 {tabId === 'teamManagement' && (
                                     <AccountTeamManagementPage
-                                        userState={userState}
                                         teamId={teamId}
-                                        innerTab={innertab}
                                         forwardRef={c => {
                                             saveNotificationsRef = c;
                                         }}
                                         onTeamManagementSave={onTeamManagementSave}
-                                        onTeamManagementTabChange={onTeamManagementTabChange}
-                                        onClearInnerTab={onClearInnerTab}
                                     />
                                 )}
 
@@ -399,7 +386,7 @@ const AccountPage = () => {
                         selectedTopicId={selectedTopicId}
                     />
                 </SideDrawer>
-                {tabId === 'teamManagement' && teamManagementTab === tabTypes.Notifications && (
+                {tabId === 'teamManagement' && subTab === tabTypes.Notifications && (
                     <ActionBar userState={userState}>
                         <div>
                             <button

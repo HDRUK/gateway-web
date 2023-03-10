@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
 import './AccountTeamFieldRepeater.scss';
-import { useAuth } from 'context/AuthContext';
 import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import { subscribedEmailPropTypes, teamNotificationPropTypes } from 'types';
-import { authUtils } from 'utils';
+import { useCustodianRoles } from 'hooks';
 
 const AccountTeamFieldRepeaterAction = ({ subscribedEmails, notificationType, isManager, index, handleRemoveClick, handleAddClick }) => {
     if (!isManager) return null;
@@ -72,15 +70,8 @@ AccountTeamField.defaultProps = {
 };
 
 const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, handleFieldChange, handleRemoveClick, handleAddClick }) => {
-    const { userState } = useAuth();
-    const [isTeamManager, setIsTeamManager] = useState(false);
     const { subscribedEmails = [], notificationType = '' } = teamNotification;
-
-    useEffect(() => {
-        if (!teamId || !userState) return;
-        // TODO: GAT-391:GAT-1596 (notifications)
-        setIsTeamManager(authUtils.getHasTeamManagerRole(userState, teamId));
-    }, [teamId, userState]);
+    const { isCustodianTeamAdmin } = useCustodianRoles(teamId);
 
     return (
         <div key={`repeater-${id}`}>
@@ -88,7 +79,7 @@ const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, handleFieldCha
                 <div className='field-repeater' key={`repeater-section-${index}`}>
                     <AccountTeamField
                         id={index + 1}
-                        isManager={isTeamManager}
+                        isManager={isCustodianTeamAdmin}
                         subscribedEmail={value}
                         index={index}
                         notificationType={notificationType}
@@ -96,7 +87,7 @@ const AccountTeamFieldRepeater = ({ id, teamId, teamNotification, handleFieldCha
                     />
                     <AccountTeamFieldRepeaterAction
                         subscribedEmails={subscribedEmails}
-                        isManager={isTeamManager}
+                        isManager={isCustodianTeamAdmin}
                         notificationType={notificationType}
                         index={index}
                         handleRemoveClick={handleRemoveClick}
