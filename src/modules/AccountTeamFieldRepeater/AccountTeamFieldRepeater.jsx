@@ -47,6 +47,7 @@ const AccountTeamField = ({ id, isManager = false, subscribedEmail = {}, notific
                 type='text'
                 value={value}
                 disabled={!isManager}
+                title={isManager ? '' : 'You do not have permission to edit this'}
                 autoComplete='off'
             />
             {error && <div className='invalid-feedback'>{error}</div>}
