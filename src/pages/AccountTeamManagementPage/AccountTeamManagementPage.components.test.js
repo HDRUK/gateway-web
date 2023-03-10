@@ -151,23 +151,6 @@ describe('AccountTeamManagement components', () => {
                 expect(testUtils.screen.getByText('Notifications')).toBeInTheDocument();
             });
         });
-        it('should not render the tabs if admin', async () => {
-            authSpy.mockReturnValue({
-                userState: mocks.userState.mockUserStateAdmin,
-            });
-            testUtils.render(
-                <TabsNav
-                    teamId='5f7b1a2bce9f65e2ed83e7da'
-                    onTabChange={onTabChange}
-                    activeTabKey={activeTabKey}
-                    userState={mocks.userState.mockUserStateAdmin}
-                />
-            );
-            await testUtils.waitFor(() => {
-                expect(testUtils.screen.queryByText('Members')).not.toBeInTheDocument();
-                expect(testUtils.screen.queryByText('Notifications')).not.toBeInTheDocument();
-            });
-        });
     });
 
     describe('TeamManagementHeader', () => {

@@ -1,4 +1,5 @@
 import useAccountTeamSelected from 'hooks/useAccountTeamSelected';
+import useQueryParam from 'hooks/useQueryParam';
 import AccountPage from './AccountPage';
 import '@testing-library/jest-dom/extend-expect';
 import { testUtils, mocks } from '../../../test';
@@ -21,6 +22,7 @@ jest.mock('react-router-dom', () => {
 });
 
 jest.mock('hooks/useAccountTeamSelected');
+jest.mock('hooks/useQueryParam');
 
 jest.mock('../../context/AuthContext');
 
@@ -43,6 +45,9 @@ describe('AccountPage', () => {
             useAccountTeamSelected.mockReturnValue({
                 teamId: '1234',
                 teamType: 'team',
+            });
+            useQueryParam.mockReturnValue({
+                subNav: 'members',
             });
         });
 

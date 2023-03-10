@@ -164,7 +164,7 @@ const TeamNav = ({ allowAccessRequestManagement, teamId, setActiveAccordion, tab
             <DashboardNavItem
                 icon={<SettingsIcon />}
                 activeClassName={getNavActiveClass('teamManagement', tabId)}
-                to={`/account?tab=teamManagement&teamType=team&teamId=${teamId}`}>
+                to={`/account?tab=teamManagement&teamType=team&teamId=${teamId}&subTab=members`}>
                 Team Management
             </DashboardNavItem>
 

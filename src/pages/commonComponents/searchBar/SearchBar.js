@@ -789,7 +789,7 @@ class SearchBar extends Component {
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
                                                                                                 <a
-                                                                                                    href={`/account?tab=teamManagement&teamType=team&teamId=${dat.publisherName}`}
+                                                                                                    href={`/account?tab=teamManagement&teamType=team&teamId=${dat.publisherName}&subTab=members`}
                                                                                                     class='notificationInfo'>
                                                                                                     {dat.messageDescription}
                                                                                                 </a>

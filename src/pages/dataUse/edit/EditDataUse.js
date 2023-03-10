@@ -155,7 +155,7 @@ const EditDataUse = props => {
                 });
 
                 setDatasetsArray(!isEmpty(datasets) ? datasets : [{ pid: '', name: '' }]);
-                // TODO: GAT-1510:045 (tracked)
+                // TODO: GAT-1510:GAT-1723
                 setDisableInput(
                     !authUtils.userHasTeamRole(userState, res.data.publisher, [
                         PERMISSIONS_TEAM_ROLES.manager,

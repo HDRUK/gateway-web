@@ -48,19 +48,12 @@ describe('AccountTeamManagement Page', () => {
     });
     it('should render child components for notifications', async () => {
         const teamId = '1234';
-        const innertab = 'notifications';
+
         testUtils.act(() => {
-            testUtils.render(
-                <AccountTeamManagementPage
-                    teamId={teamId}
-                    innerTab={innertab}
-                    forwardRef={jest.fn()}
-                    onTeamManagementSave={jest.fn()}
-                    onTeamManagementTabChange={jest.fn()}
-                    onClearInnerTab={jest.fn()}
-                />
-            );
+            testUtils.render(<AccountTeamManagementPage teamId={teamId} forwardRef={jest.fn()} onTeamManagementSave={jest.fn()} />);
         });
+
+        testUtils.fireEvent.click(testUtils.screen.queryByText('Notifications'));
 
         await testUtils.waitFor(() => {
             expect(testUtils.screen.getByTestId('NotificationTab')).toBeInTheDocument();

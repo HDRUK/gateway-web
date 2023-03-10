@@ -9,7 +9,7 @@ const CustodianNav = ({ team, isMobile }) => {
 
     const navItems = [
         {
-            href: '/account?tab=teamManagement',
+            href: '/account?tab=teamManagement&subTab=members',
             label: 'Team Management',
             hasPermission: () => true,
         },

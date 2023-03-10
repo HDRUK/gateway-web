@@ -17,10 +17,10 @@ let wrapper;
 
 describe('Given the AccountTeamGatewayNotificationEmails component', () => {
     describe('When it renders', () => {
-        describe('And the user is not a manager', () => {
+        describe('And the user is not a team admin', () => {
             beforeAll(() => {
                 authSpy.mockReturnValue({
-                    userState: mocks.userState.mockUserStateAdmin,
+                    userState: mocks.userState.mockCustodianMetadataManager,
                 });
 
                 wrapper = testUtils.render(<AccountTeamGatewayNotificationEmails {...props} />);
@@ -35,10 +35,10 @@ describe('Given the AccountTeamGatewayNotificationEmails component', () => {
             });
         });
 
-        describe('And the user is a manager', () => {
+        describe('And the user is a team admin', () => {
             beforeEach(() => {
                 authSpy.mockReturnValue({
-                    userState: mocks.userState.mockUserStateManager,
+                    userState: mocks.userState.mockCustodianTeamAdmin,
                 });
 
                 testUtils.render(<AccountTeamGatewayNotificationEmails {...props} />);
