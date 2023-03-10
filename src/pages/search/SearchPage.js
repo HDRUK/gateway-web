@@ -1535,24 +1535,29 @@ class SearchPage extends Component {
         googleAnalytics.recordEvent('Data Use', `Download Results`, `Search values: ${url}`);
 
         axios.get(`${baseURL}/api/v2/data-use-registers/search?${url}`).then(response => {
-            this.formatDataUseRegisterForDownload(response.data.result);
+            this.formatDataUseRegisterForDownload(response.data.newPayload);
         });
     };
 
     formatDataUseRegisterForDownload(dataUses) {
         let formattedDataUses = [];
+
         dataUses.forEach(dataUse => {
             const gatewayApplicants = dataUse.gatewayApplicantsDetails.map(applicant => {
                 return `${applicant.firstname} ${applicant.lastname} `;
             });
 
-            const gatewayOutputsTools = dataUse.gatewayOutputsToolsInfo.map(tool => {
-                return `${tool.name} `;
-            });
+            // Removed because we've removed it from the payload due to excessive
+            // data size from unoptimised query
+            //
+            //
+            // const gatewayOutputsTools = dataUse.gatewayOutputsToolsInfo.map(tool => {
+            //     return `${tool.name} `;
+            // });
 
-            const gatewayOutputsPapers = dataUse.gatewayOutputsPapersInfo.map(paper => {
-                return `${paper.name} `;
-            });
+            // const gatewayOutputsPapers = dataUse.gatewayOutputsPapersInfo.map(paper => {
+            //     return `${paper.name} `;
+            // });
 
             formattedDataUses.push({
                 'Project ID': dataUse.projectIdText,
@@ -1588,8 +1593,8 @@ class SearchPage extends Component {
                 'Access Date': moment(dataUse.accessDate).format('DD/MM/YY'),
                 'Access Type': dataUse.accessType,
                 'Privacy Enhancements': dataUse.privacyEnhancements ? dataUse.privacyEnhancements.replace(/"/g, '""') : '',
-                'Gateway Research Outputs Tools': gatewayOutputsTools,
-                'Gateway Research Outputs Papers': gatewayOutputsPapers,
+                // 'Gateway Research Outputs Tools': gatewayOutputsTools,
+                // 'Gateway Research Outputs Papers': gatewayOutputsPapers,
                 'Research Outputs': dataUse.nonGatewayOutputs,
                 Keywords: dataUse.keywords,
             });
