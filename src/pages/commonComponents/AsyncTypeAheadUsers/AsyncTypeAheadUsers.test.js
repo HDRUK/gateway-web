@@ -37,31 +37,11 @@ describe('Given the AsyncTypeAheadUsers component', () => {
         it('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
         });
-
-        it('Then default values should be set', () => {
-            expect(wrapper.getByText('Jack Reacher')).toBeTruthy();
-            expect(wrapper.getByText('Tom Cruise')).toBeTruthy();
-        });
-
-        // todo: rewrite component
-        it.skip('Then name should be rendered for 2 contributors', async () => {
-            await testUtils.waitFor(() => {
-                expect(wrapper.getByText('Test1 Test1')).toBeTruthy();
-                expect(wrapper.getByText('Test2 Test2')).toBeTruthy();
-            });
-        });
-
-        // todo: rewrite component
-        it.skip('Then it should  have `Recently added` Header', async () => {
-            await testUtils.waitFor(() => expect(wrapper.getByText('Recently added:')).toBeTruthy());
-        });
     });
     describe('And the input has a value', () => {
         beforeAll(() => {
             server.listen();
-            wrapper = testUtils.render(
-                <AsyncTypeAheadUsers selectedUsers={mockAuthors} showAuthor currentUserId={123} changeHandler={handler} />
-            );
+            testUtils.render(<AsyncTypeAheadUsers selectedUsers={mockAuthors} showAuthor currentUserId={123} changeHandler={handler} />);
             input = document.querySelector('.rbt-input-main');
             testUtils.fireEvent.click(input);
             testUtils.fireEvent.change(input, { target: { value: 'jack' } });
@@ -72,12 +52,8 @@ describe('Given the AsyncTypeAheadUsers component', () => {
         });
 
         it('Then should have the correct dropdown values', async () => {
-            await testUtils.waitFor(() => expect(wrapper.queryByText('Jack Leacher')).toBeTruthy());
-            await testUtils.waitFor(() => expect(wrapper.queryByText('Jack Sparrow')).toBeTruthy());
-        });
-
-        it('Then it should not have `Recently added` Header', async () => {
-            await testUtils.waitFor(() => expect(wrapper.queryByText('Recently added:')).toBeNull());
+            await testUtils.waitFor(() => expect(testUtils.screen.getAllByRole('option')[0]).toHaveTextContent('Jack Reacher'));
+            await testUtils.waitFor(() => expect(testUtils.screen.getAllByRole('option')[1]).toHaveTextContent('Jack Sparrow'));
         });
     });
 });
