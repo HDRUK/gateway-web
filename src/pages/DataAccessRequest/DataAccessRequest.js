@@ -2285,7 +2285,7 @@ class DataAccessRequest extends Component {
                         <AsyncTypeAheadUsers
                             selectedUsers={this.state.authorIds}
                             changeHandler={this.updateContributors}
-                            getUsersInfo={true}
+                            shouldGetUsersInfo={true}
                             currentUserId={this.state.userId}
                         />
                     </ContributorModal>

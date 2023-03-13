@@ -29,7 +29,7 @@ export const mswSearchUsers = rest.get(`${apiUrlV1}/users/search/jack`, (req, re
         ctx.status(200),
         ctx.json({
             data: [
-                { id: 123, name: 'Jack Leacher' },
+                { id: 123, name: 'Jack Reacher' },
                 { id: 124, name: 'Jack Sparrow' },
             ],
         })

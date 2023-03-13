@@ -109,7 +109,7 @@ const Dataset = ({
     const searchTerm = generalUtils.parseQueryString(window.location.search).search
         ? generalUtils.parseQueryString(window.location.search).search
         : '';
-    const phenotypesSearched = data.datasetfields.phenotypes.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
+    const phenotypesSearched = data.datasetfields.phenotypes?.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
 
     return (
         <>

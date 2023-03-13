@@ -8,10 +8,11 @@ ARG REACT_APP_METADATA_CATALOG_URL
 ARG REACT_APP_NEWSLETTER_EXAMPLE_URL
 ARG REACT_APP_TERMS_AND_CONDITIONS_URL
 ARG REACT_APP_GATEWAY_PRIVACY_POLICY_URL
+ARG REACT_APP_FIVE_SAFES_URL
 
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
-RUN npm install --silent --legacy-peer-deps
+RUN npm install --silent
 COPY . /app
 RUN npm run build
 

@@ -27,15 +27,15 @@ const WorkflowModal = ({ open, close, context }) => {
                 {Object.keys(buttons).length > 0 && (
                     <div className='workflowModal-footer'>
                         <div className='workflowModal-footer--wrap'>
-                            {buttons.map(button => {
+                            {Object.keys(buttons).map(key => {
                                 return (
                                     <Button
-                                        variant={button.variant}
-                                        key={button.action}
-                                        className={button.class}
-                                        onClick={e => onClickAction(e, button)}>
-                                        {button.label}
-                                    </Button>
+                                        variant={buttons[key].variant}
+                                        key={buttons[key].action}
+                                        className={buttons[key].class}
+                                        onClick={e => onClickAction(e, buttons[key])}>
+                                        {buttons[key].label}
+                                       </Button>
                                 );
                             })}
                         </div>

@@ -1,6 +1,6 @@
 import { Accordion } from 'react-bootstrap';
 
-import { Icon } from 'components';
+import { Icon } from 'hdruk-react-core';
 
 import DashboardSubNavItem from '../DashboardSubNavItem';
 import handleAnalytics from '../../../dataAccessRequestCustomiseForm/handleAnalytics';
