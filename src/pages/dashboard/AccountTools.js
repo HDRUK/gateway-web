@@ -1,17 +1,19 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+
+import { LayoutContent } from 'components';
+import googleAnalytics from '../../tracking';
+
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import ActionModal from '../commonComponents/ActionModal/ActionModal';
-import googleAnalytics from '../../tracking';
-import { EntityActionButton } from './EntityActionButton.jsx';
+import { EntityActionButton } from './EntityActionButton';
 import { PaginationHelper } from '../commonComponents/PaginationHelper';
-import { LayoutContent } from '../../components/Layout';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+const baseURL = require('../commonComponents/BaseURL').getURL();
 
 export const AccountTools = props => {
     const [userState] = useState(props.userState);
@@ -65,9 +67,9 @@ export const AccountTools = props => {
 
         let apiUrl;
         if (typeof index === 'undefined') {
-            apiUrl = baseURL + `/api/v1/tools/getList?status=${key}`;
+            apiUrl = `${baseURL}/api/v1/tools/getList?status=${key}`;
         } else {
-            apiUrl = baseURL + `/api/v1/tools/getList?status=${key}&offset=${index}&limit=${maxResults}`;
+            apiUrl = `${baseURL}/api/v1/tools/getList?status=${key}&offset=${index}&limit=${maxResults}`;
         }
 
         axios.get(apiUrl).then(res => {
@@ -88,7 +90,7 @@ export const AccountTools = props => {
 
     const approveTool = (id, key, index, count) => {
         axios
-            .patch(baseURL + '/api/v1/tools/' + id, {
+            .patch(`${baseURL}/api/v1/tools/${id}`, {
                 activeflag: 'active',
             })
             .then(res => {
@@ -110,10 +112,10 @@ export const AccountTools = props => {
 
     const rejectTool = (id, rejectionReason, key, index, count) => {
         axios
-            .patch(baseURL + '/api/v1/tools/' + id, {
-                id: id,
+            .patch(`${baseURL}/api/v1/tools/${id}`, {
+                id,
                 activeflag: 'rejected',
-                rejectionReason: rejectionReason,
+                rejectionReason,
             })
             .then(res => {
                 if (shouldChangeTab()) {
@@ -134,8 +136,8 @@ export const AccountTools = props => {
 
     const archiveTool = id => {
         axios
-            .patch(baseURL + '/api/v1/tools/' + id, {
-                id: id,
+            .patch(`${baseURL}/api/v1/tools/${id}`, {
+                id,
                 activeflag: 'archive',
             })
             .then(res => {
@@ -154,7 +156,7 @@ export const AccountTools = props => {
     };
 
     const shouldChangeTab = () => {
-        return (key === 'pending' && reviewCount <= 1) || (key === 'archive' && archiveCount <= 1) ? true : false;
+        return !!((key === 'pending' && reviewCount <= 1) || (key === 'archive' && archiveCount <= 1));
     };
 
     if (isLoading) {
@@ -166,7 +168,7 @@ export const AccountTools = props => {
     }
 
     return (
-        <Fragment>
+        <>
             <LayoutContent>
                 <Row className='accountHeader'>
                     <Col sm={12} md={8}>
@@ -179,12 +181,11 @@ export const AccountTools = props => {
                     </Col>
                     <Col sm={12} md={4} style={{ textAlign: 'right' }}>
                         <Button
-                            data-test-id='add-tool-btn'
+                            data-testid='add-tool-btn'
                             variant='primary'
                             href='/tool/add'
                             className='addButton'
-                            onClick={() => googleAnalytics.recordEvent('Tools', 'Add a new tool', 'Tools dashboard button clicked')}
-                        >
+                            onClick={() => googleAnalytics.recordEvent('Tools', 'Add a new tool', 'Tools dashboard button clicked')}>
                             + Add a new tool
                         </Button>
                     </Col>
@@ -193,16 +194,16 @@ export const AccountTools = props => {
                 <Row className='tabsBackground'>
                     <Col sm={12} lg={12}>
                         <Tabs className='dataAccessTabs gray700-13' data-testid='toolTabs' activeKey={key} onSelect={handleSelect}>
-                            <Tab eventKey='active' data-testid='activeTab' title={'Active (' + activeCount + ')'}>
+                            <Tab eventKey='active' data-testid='activeTab' title={`Active (${activeCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='pending' data-testid='pendingTab' title={'Pending approval (' + reviewCount + ')'}>
+                            <Tab eventKey='pending' data-testid='pendingTab' title={`Pending approval (${reviewCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='rejected' data-testid='rejectedTab' title={'Rejected (' + rejectedCount + ')'}>
+                            <Tab eventKey='rejected' data-testid='rejectedTab' title={`Rejected (${rejectedCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='archive' data-testid='archiveTab' title={'Archive (' + archiveCount + ')'}>
+                            <Tab eventKey='archive' data-testid='archiveTab' title={`Archive (${archiveCount})`}>
                                 {' '}
                             </Tab>
                         </Tabs>
@@ -230,7 +231,7 @@ export const AccountTools = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Uploader(s)</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
 
@@ -242,50 +243,48 @@ export const AccountTools = props => {
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'active') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='toolEntryActive'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/tool/' + tool.id} className='black-14'>
-                                                                    {tool.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {tool.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : tool.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                <DropdownButton
-                                                                    variant='outline-secondary'
-                                                                    alignRight
-                                                                    title='Actions'
-                                                                    className='floatRight'
-                                                                >
-                                                                    <Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
-                                                                        Edit
-                                                                    </Dropdown.Item>
-                                                                    <EntityActionButton
-                                                                        id={tool.id}
-                                                                        action={archiveTool}
-                                                                        entity='tool'
-                                                                        actionType='archive'
-                                                                    />
-                                                                </DropdownButton>
-                                                            </Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='toolEntryActive'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/tool/${tool.id}`} className='black-14'>
+                                                                {tool.name}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {tool.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : tool.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                                                            <DropdownButton
+                                                                variant='outline-secondary'
+                                                                alignRight
+                                                                title='Actions'
+                                                                className='floatRight'>
+                                                                <Dropdown.Item href={`/tool/edit/${tool.id}`} className='black-14'>
+                                                                    Edit
+                                                                </Dropdown.Item>
+                                                                <EntityActionButton
+                                                                    id={tool.id}
+                                                                    action={archiveTool}
+                                                                    entity='tool'
+                                                                    actionType='archive'
+                                                                />
+                                                            </DropdownButton>
+                                                        </Col>
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -300,7 +299,7 @@ export const AccountTools = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
 
@@ -312,74 +311,69 @@ export const AccountTools = props => {
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'review') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='toolEntryPending'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/tool/' + tool.id} className='black-14'>
-                                                                    {tool.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {tool.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : tool.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                {userState[0].role === 'Admin' ? (
-                                                                    <DropdownButton
-                                                                        variant='outline-secondary'
-                                                                        alignRight
-                                                                        title='Actions'
-                                                                        className='floatRight'
-                                                                    >
-                                                                        <Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
-                                                                            Edit
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() =>
-                                                                                approveTool(tool.id, key, pendingIndex, reviewCount)
-                                                                            }
-                                                                            className='black-14'
-                                                                        >
-                                                                            Approve
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() => toggleActionModal()}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Reject
-                                                                        </Dropdown.Item>
-                                                                        <ActionModal
-                                                                            id={tool.id}
-                                                                            entityKey={'pending'}
-                                                                            entityIndex={pendingIndex}
-                                                                            entityCount={reviewCount}
-                                                                            open={showActionModal}
-                                                                            context={actionModalConfig}
-                                                                            updateApplicationStatus={rejectTool}
-                                                                            close={toggleActionModal}
-                                                                        />
-                                                                    </DropdownButton>
-                                                                ) : (
-                                                                    ''
-                                                                )}
-                                                            </Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='toolEntryPending'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/tool/${tool.id}`} className='black-14'>
+                                                                {tool.name}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {tool.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : tool.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                                                            {/* TODO: GAT-1510:035 */}
+                                                            {userState[0].role === 'Admin' ? (
+                                                                <DropdownButton
+                                                                    variant='outline-secondary'
+                                                                    alignRight
+                                                                    title='Actions'
+                                                                    className='floatRight'>
+                                                                    <Dropdown.Item href={`/tool/edit/${tool.id}`} className='black-14'>
+                                                                        Edit
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() => approveTool(tool.id, key, pendingIndex, reviewCount)}
+                                                                        className='black-14'>
+                                                                        Approve
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() => toggleActionModal()}
+                                                                        className='black-14'>
+                                                                        Reject
+                                                                    </Dropdown.Item>
+                                                                    <ActionModal
+                                                                        id={tool.id}
+                                                                        entityKey='pending'
+                                                                        entityIndex={pendingIndex}
+                                                                        entityCount={reviewCount}
+                                                                        open={showActionModal}
+                                                                        context={actionModalConfig}
+                                                                        updateApplicationStatus={rejectTool}
+                                                                        close={toggleActionModal}
+                                                                    />
+                                                                </DropdownButton>
+                                                            ) : (
+                                                                ''
+                                                            )}
+                                                        </Col>
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -394,7 +388,7 @@ export const AccountTools = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
 
@@ -406,38 +400,32 @@ export const AccountTools = props => {
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'rejected') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='toolEntryRejected'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/tool/' + tool.id} className='black-14'>
-                                                                    {tool.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {tool.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : tool.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-
-                                                            <Col
-                                                                sm={12}
-                                                                lg={3}
-                                                                style={{ textAlign: 'right' }}
-                                                                className='toolsButtons'
-                                                            ></Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='toolEntryRejected'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/tool/${tool.id}`} className='black-14'>
+                                                                {tool.name}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {tool.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : tool.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons' />
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -452,7 +440,7 @@ export const AccountTools = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
 
@@ -464,83 +452,79 @@ export const AccountTools = props => {
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'archive') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='toolEntryArchive'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/tool/' + tool.id} className='black-14'>
-                                                                    {tool.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {tool.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : tool.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                {userState[0].role === 'Admin' ? (
-                                                                    <DropdownButton
-                                                                        variant='outline-secondary'
-                                                                        alignRight
-                                                                        title='Actions'
-                                                                        className='floatRight'
-                                                                    >
-                                                                        <Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
-                                                                            Edit
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() =>
-                                                                                approveTool(tool.id, key, archiveIndex, archiveCount)
-                                                                            }
-                                                                            className='black-14'
-                                                                        >
-                                                                            Approve
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() => toggleActionModal()}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Reject
-                                                                        </Dropdown.Item>
-                                                                        <ActionModal
-                                                                            id={tool.id}
-                                                                            entityKey={'archive'}
-                                                                            entityIndex={archiveIndex}
-                                                                            entityCount={archiveCount}
-                                                                            open={showActionModal}
-                                                                            context={actionModalConfig}
-                                                                            updateApplicationStatus={rejectTool}
-                                                                            close={toggleActionModal}
-                                                                        />
-                                                                    </DropdownButton>
-                                                                ) : (
-                                                                    <DropdownButton
-                                                                        variant='outline-secondary'
-                                                                        alignRight
-                                                                        title='Actions'
-                                                                        className='floatRight'
-                                                                    >
-                                                                        <Dropdown.Item href={'/tool/edit/' + tool.id} className='black-14'>
-                                                                            Edit
-                                                                        </Dropdown.Item>
-                                                                    </DropdownButton>
-                                                                )}
-                                                            </Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='toolEntryArchive'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/tool/${tool.id}`} className='black-14'>
+                                                                {tool.name}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {tool.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : tool.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                                                            {/* TODO: GAT-1510:036 */}
+                                                            {userState[0].role === 'Admin' ? (
+                                                                <DropdownButton
+                                                                    variant='outline-secondary'
+                                                                    alignRight
+                                                                    title='Actions'
+                                                                    className='floatRight'>
+                                                                    <Dropdown.Item href={`/tool/edit/${tool.id}`} className='black-14'>
+                                                                        Edit
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() =>
+                                                                            approveTool(tool.id, key, archiveIndex, archiveCount)
+                                                                        }
+                                                                        className='black-14'>
+                                                                        Approve
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() => toggleActionModal()}
+                                                                        className='black-14'>
+                                                                        Reject
+                                                                    </Dropdown.Item>
+                                                                    <ActionModal
+                                                                        id={tool.id}
+                                                                        entityKey='archive'
+                                                                        entityIndex={archiveIndex}
+                                                                        entityCount={archiveCount}
+                                                                        open={showActionModal}
+                                                                        context={actionModalConfig}
+                                                                        updateApplicationStatus={rejectTool}
+                                                                        close={toggleActionModal}
+                                                                    />
+                                                                </DropdownButton>
+                                                            ) : (
+                                                                <DropdownButton
+                                                                    variant='outline-secondary'
+                                                                    alignRight
+                                                                    title='Actions'
+                                                                    className='floatRight'>
+                                                                    <Dropdown.Item href={`/tool/edit/${tool.id}`} className='black-14'>
+                                                                        Edit
+                                                                    </Dropdown.Item>
+                                                                </DropdownButton>
+                                                            )}
+                                                        </Col>
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -560,7 +544,7 @@ export const AccountTools = props => {
                                 paginationIndex={activeIndex}
                                 setPaginationIndex={setActiveIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -572,7 +556,7 @@ export const AccountTools = props => {
                                 paginationIndex={pendingIndex}
                                 setPaginationIndex={setPendingIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -584,7 +568,7 @@ export const AccountTools = props => {
                                 paginationIndex={rejectedIndex}
                                 setPaginationIndex={setRejectedIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -596,14 +580,14 @@ export const AccountTools = props => {
                                 paginationIndex={archiveIndex}
                                 setPaginationIndex={setArchiveIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
                     </div>
                 )}
             </LayoutContent>
-        </Fragment>
+        </>
     );
 };
 

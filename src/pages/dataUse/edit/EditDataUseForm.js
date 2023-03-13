@@ -1,21 +1,20 @@
 import { FieldArray, Formik, useFormik } from 'formik';
 import { isEmpty, isNil, isNumber } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useEffect, useState } from 'react';
-import { Accordion, Button, Card, Col, Form, Row } from 'react-bootstrap';
+import { useRef, useEffect, useState } from 'react';
+import { Accordion, Card, Col, Form, Row, Button } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import DatePicker from 'react-datepicker';
 import * as Yup from 'yup';
 import { NotificationManager } from 'react-notifications';
+
+import { dataUseRegistersService } from 'services';
 import { ReactComponent as Calendar } from '../../../images/calendaricon.svg';
 import SVGIcon from '../../../images/SVGIcon';
+
 import ActionBar from '../../commonComponents/actionbar/ActionBar';
 import RelatedObject from '../../commonComponents/relatedObject/RelatedObject';
 import RelatedResources from '../../commonComponents/relatedResources/RelatedResources';
-
-import dataUseRegistersService from '../../../services/data-use-registers';
-
-const baseURL = require('../../commonComponents/BaseURL').getURL();
 
 const windowUrl = window.location.origin;
 
@@ -51,18 +50,6 @@ const EditFormDataUse = props => {
     const initialValues = {
         safeOuputsArray: [{ id: '', name: '' }],
     };
-
-    const gatewayApps =
-        props &&
-        props.data &&
-        props.data.gatewayApplicants &&
-        props.data.gatewayApplicants.map(a => ({ label: a, value: a, type: 'gateway', icon: 'personiconwithbg' }));
-
-    const nonGatewayApps =
-        props &&
-        props.data &&
-        props.data.nonGatewayApplicants &&
-        props.data.nonGatewayApplicants.map(b => ({ label: b, value: b, type: 'nongateway' }));
 
     const laySummaryCount = e => {
         setLaySummaryCounter(e.target.value.length);
@@ -112,7 +99,7 @@ const EditFormDataUse = props => {
 
     const validateSchema = Yup.object().shape({});
 
-    const relatedResourcesRef = React.useRef();
+    const relatedResourcesRef = useRef();
 
     const formik = useFormik({
         initialValues: {
@@ -154,6 +141,7 @@ const EditFormDataUse = props => {
             organisationName: Yup.string().required('This cannot be empty'),
             projectTitle: Yup.string().required('This cannot be empty'),
             datasets: Yup.string().required('This cannot be empty'),
+            laySummary: Yup.string().max(3000, 'Maximum of 3,000 characters'),
         }),
 
         onSubmit: values => {
@@ -246,1340 +234,1282 @@ const EditFormDataUse = props => {
     return (
         <div>
             <div className='container'>
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={validateSchema}
-                    render={() => {
-                        return (
-                            <div>
-                                <Row className='margin-top-32'>
-                                    <Col sm={1} lg={1} />
-                                    <Col sm={10} lg={10}>
-                                        <div className='rectangle'>
-                                            <Row>
-                                                <Col sm={10} lg={10}>
-                                                    <p className='black-20 margin-bottom-0 pad-bottom-8'>Edit a data use</p>
-                                                </Col>
-                                                <Col sm={2} lg={2} className='text-right'>
-                                                    <span className='badge-datause'>
+                <Formik initialValues={initialValues} validationSchema={validateSchema}>
+                    {() => (
+                        <div>
+                            <Row className='margin-top-32'>
+                                <Col sm={1} lg={1} />
+                                <Col sm={10} lg={10}>
+                                    <div className='rectangle'>
+                                        <Row>
+                                            <Col sm={10} lg={10}>
+                                                <p className='black-20 margin-bottom-0 pad-bottom-8'>Edit a data use</p>
+                                            </Col>
+                                            <Col sm={2} lg={2} className='text-right'>
+                                                <span className='badge-datause'>
+                                                    <SVGIcon
+                                                        name='datauseicon'
+                                                        fill='#fff'
+                                                        className='badgeSvg mr-2'
+                                                        viewBox='-2 -2 22 22'
+                                                    />
+                                                    Data use
+                                                </span>
+                                            </Col>
+                                        </Row>
+                                        <p className='gray800-14 margin-bottom-0'>
+                                            A data use register is a public record of data an organisation has shared with other individuals
+                                            and organisations. Data uses help people understand how data is being used and why. Please edit
+                                            data uses to ensure that the information is accurate and up-to-date
+                                        </p>
+                                    </div>
+                                </Col>
+                                <Col sm={1} lg={10} />
+                            </Row>
+                            <Row className='pixelGapTop'>
+                                <Col sm={1} lg={1} />
+                                <Col sm={10} lg={10}>
+                                    <div className='rectangle'>
+                                        <Accordion defaultActiveKey='0' className='datause-accordion-header'>
+                                            <Card className='edit-datause-card'>
+                                                <Accordion.Toggle as={Button} variant='link' eventKey='0'>
+                                                    <Card.Header
+                                                        className='datause-accordion saved-search-arrow'
+                                                        onClick={() => (!safePeople ? setSafePeople(true) : setSafePeople(false))}>
                                                         <SVGIcon
-                                                            name='datauseicon'
+                                                            width='20px'
+                                                            height='20px'
+                                                            name='chevronbottom'
                                                             fill='#fff'
-                                                            className='badgeSvg mr-2'
-                                                            viewBox='-2 -2 22 22'
+                                                            className={safePeople ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
                                                         />
-                                                        Data use
-                                                    </span>
-                                                </Col>
-                                            </Row>
-                                            <p className='gray800-14 margin-bottom-0'>
-                                                A data use register is a public record of data an organisation has shared with other
-                                                individuals and organisations. Data uses help people understand how data is being used and
-                                                why. Please edit data uses to ensure that the information is accurate and up-to-date
-                                            </p>
-                                        </div>
-                                    </Col>
-                                    <Col sm={1} lg={10} />
-                                </Row>
-                                <Row className='pixelGapTop'>
-                                    <Col sm={1} lg={1} />
-                                    <Col sm={10} lg={10}>
-                                        <div className='rectangle'>
-                                            <Accordion defaultActiveKey='0' className='datause-accordion-header'>
-                                                <Card className='edit-datause-card'>
-                                                    <Accordion.Toggle as={Button} variant='link' eventKey='0'>
-                                                        <Card.Header
-                                                            className='datause-accordion saved-search-arrow'
-                                                            onClick={() => (!safePeople ? setSafePeople(true) : setSafePeople(false))}
-                                                        >
-                                                            <SVGIcon
-                                                                width='20px'
-                                                                height='20px'
-                                                                name='chevronbottom'
-                                                                fill='#fff'
-                                                                className={safePeople ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
-                                                            />
-                                                            Safe People
-                                                        </Card.Header>
-                                                    </Accordion.Toggle>
-                                                    <Accordion.Collapse className='datause-accordion-collapse' eventKey='0'>
-                                                        <Card.Body className='datause-card-body'>
-                                                            <Form>
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>Organisation name</Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        The name of the legal entity that signs the contract to access the
-                                                                        data
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        id='organisationName'
-                                                                        name='organisationName'
-                                                                        type='text'
-                                                                        className={
-                                                                            formik.touched.organisationName &&
-                                                                            formik.errors.organisationName
-                                                                                ? 'emptyFormInput addFormInput'
-                                                                                : 'addFormInput'
-                                                                        }
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.organisationName}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                    {formik.touched.organisationName && formik.errors.organisationName ? (
-                                                                        <div className='errorMessages'>
-                                                                            {formik.errors.organisationName}
-                                                                        </div>
-                                                                    ) : null}
-                                                                </Form.Group>
+                                                        Safe People
+                                                    </Card.Header>
+                                                </Accordion.Toggle>
+                                                <Accordion.Collapse className='datause-accordion-collapse' eventKey='0'>
+                                                    <Card.Body className='datause-card-body'>
+                                                        <Form>
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Organisation name</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    The name of the legal entity that signs the contract to access the data
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    id='organisationName'
+                                                                    name='organisationName'
+                                                                    type='text'
+                                                                    className={
+                                                                        formik.touched.organisationName && formik.errors.organisationName
+                                                                            ? 'emptyFormInput addFormInput'
+                                                                            : 'addFormInput'
+                                                                    }
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.organisationName}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                                {formik.touched.organisationName && formik.errors.organisationName ? (
+                                                                    <div className='errorMessages'>{formik.errors.organisationName}</div>
+                                                                ) : null}
+                                                            </Form.Group>
 
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>Organisation ID (optional)</Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        A unique identifier for an organisation that is preferably an
-                                                                        industry used standard such as{' '}
-                                                                        <a href='https://www.grid.ac/institutes' target='_blank'>
-                                                                            Grid.ac
-                                                                        </a>
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        id='organisationId'
-                                                                        name='organisationId'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.organisationId}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Organisation ID (optional)</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    A unique identifier for an organisation that is preferably an industry
+                                                                    used standard such as{' '}
+                                                                    <a href='https://www.grid.ac/institutes' target='_blank'>
+                                                                        Grid.ac
+                                                                    </a>
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    id='organisationId'
+                                                                    name='organisationId'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.organisationId}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
 
-                                                                <Form.Group>
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Organisation sector (optional)</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    The type of organisation that has signed a contract to access the data
+                                                                </p>
+
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='organisationSector'
+                                                                    name='organisationSector'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.organisationSector}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {organisationSectorList.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.organisationSector === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Applicant name(s) (optional)</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    The name of the Principal Investigator, as well as any other individuals
+                                                                    that have been authorised to use the data. If they are on the Gateway,
+                                                                    please provide their profile URL
+                                                                </p>
+                                                                <Typeahead
+                                                                    disabled={disableInput}
+                                                                    id='applicants'
+                                                                    labelKey={applicant => `${applicant.name}`}
+                                                                    allowNew
+                                                                    multiple
+                                                                    defaultSelected={formik.values.applicants}
+                                                                    options={applicantsList}
+                                                                    className='addFormInputTypeAhead'
+                                                                    onChange={selected => {
+                                                                        const tempSelected = [];
+                                                                        selected.forEach(selectedItem => {
+                                                                            selectedItem.customOption === true
+                                                                                ? tempSelected.push({
+                                                                                      id: isNumber(selectedItem.id)
+                                                                                          ? selectedItem.id
+                                                                                          : 'nonGateway',
+                                                                                      name: selectedItem.name || selectedItem.label,
+                                                                                  })
+                                                                                : tempSelected.push(selectedItem);
+                                                                        });
+                                                                        formik.values.applicants = tempSelected;
+                                                                    }}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Applicant ID (optional)</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    ORCID identifier. This provides a persistent digital identifier that you
+                                                                    own and control, and that distinguishes you from every other researcher.
+                                                                    An ORCID profile can be created at https://orcid.org/
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    id='applicantId'
+                                                                    name='applicantId'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.applicantId}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Funders/Sponsor (optional)</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    The name of any funders or sponsors involved in the project
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    id='fundersAndSponsors'
+                                                                    name='fundersAndSponsors'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.fundersAndSponsors}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    DEA accredited researcher? (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Depending on the type of data you are requesting, you might be required
+                                                                    to become an accredited researcher. Most access to data in the Secure
+                                                                    Research Service (SRS) will be by researchers accredited under the
+                                                                    Digital Economy Act 2017 (DEA). This specifies the accreditation status
+                                                                    of the principal applicant/researcher, as defined by the ONS Research
+                                                                    Code of Practice and Accreditation criteria
+                                                                </p>
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='accreditedResearcherStatus'
+                                                                    name='accreditedResearcherStatus'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.accreditedResearcherStatus}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {yesNoList.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.accreditedResearcherStatus === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    Sub-licence arrangements (if any)? (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Identifies whether there are any permissions for the applicant to share
+                                                                    the data beyond the named parties. e.g., NHS Digital may approve a data
+                                                                    release to the ONS, who then makes decisions about access to accredited
+                                                                    researchers undertaking approved projects in their own trusted research
+                                                                    environment.
+                                                                </p>
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='sublicenceArrangements'
+                                                                    name='sublicenceArrangements'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.sublicenceArrangements}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {yesNoList.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.sublicenceArrangements === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+                                                        </Form>
+                                                    </Card.Body>
+                                                </Accordion.Collapse>
+                                            </Card>
+                                            <Card className='edit-datause-card'>
+                                                <Accordion.Toggle as={Button} variant='link' eventKey='1'>
+                                                    <Card.Header
+                                                        className='datause-accordion saved-search-arrow'
+                                                        onClick={() => (!safeProject ? setSafeProject(true) : setSafeProject(false))}>
+                                                        <SVGIcon
+                                                            width='20px'
+                                                            height='20px'
+                                                            name='chevronbottom'
+                                                            fill='#fff'
+                                                            className={safeProject ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
+                                                        />
+                                                        Safe project
+                                                    </Card.Header>
+                                                </Accordion.Toggle>
+                                                <Accordion.Collapse className='datause-accordion-collapse' eventKey='1'>
+                                                    <Card.Body className='datause-card-body'>
+                                                        <Form>
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Project ID</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    A unique identifier for the project that is preferably an industry used
+                                                                    standard, such as IRAS ID. However for non-research projects, a unique
+                                                                    reference number created by the data custodian on receipt of the
+                                                                    application is sufficient
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={props.data.manualUpload ? disableInput : true}
+                                                                    id='projectIdText'
+                                                                    name='projectIdText'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.projectIdText}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Project title</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    The title of the project/research study/request that the applicant is
+                                                                    investigating through the use of health data
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    id='projectTitle'
+                                                                    name='projectTitle'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.projectTitle}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <div style={{ display: 'inline-block' }}>
+                                                                    <Form.Label className='black-14'>Lay summary (optional)</Form.Label>
+                                                                    <p className='gray800-13-opacity datause-edit-p'>
+                                                                        A concise and clear description of the project, (e.g. as required by
+                                                                        URKI in funding applications). It should outline the problem,
+                                                                        objectives and expected outcomes in language that is understandable
+                                                                        to the general public
+                                                                    </p>
+                                                                </div>
+                                                                <div style={{ display: 'inline-block', float: 'right' }}>
+                                                                    <span className='gray700-13'>
+                                                                        (<span id='currentLaySummaryCount'>{laySummaryCounter || 0}</span>
+                                                                        /3000)
+                                                                    </span>
+                                                                </div>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    data-testid='laySummary'
+                                                                    as='textarea'
+                                                                    id='laySummary'
+                                                                    name='laySummary'
+                                                                    type='text'
+                                                                    className={
+                                                                        formik.touched.laySummary && formik.errors.laySummary
+                                                                            ? 'emptyFormInput addFormInput descriptionInput'
+                                                                            : 'addFormInput descriptionInput'
+                                                                    }
+                                                                    onKeyUp={laySummaryCount}
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.laySummary}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                                {formik.touched.laySummary && formik.errors.laySummary ? (
+                                                                    <div className='errorMessages'>{formik.errors.laySummary}</div>
+                                                                ) : null}
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <div style={{ display: 'inline-block' }}>
                                                                     <Form.Label className='black-14'>
-                                                                        Organisation sector (optional)
+                                                                        Public benefit statement (optional)
                                                                     </Form.Label>
                                                                     <p className='gray800-13-opacity datause-edit-p'>
-                                                                        The type of organisation that has signed a contract to access the
-                                                                        data
+                                                                        A description in plain English of the anticipated outcomes, or
+                                                                        impact of project on the general public
                                                                     </p>
-
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='organisationSector'
-                                                                        name='organisationSector'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.organisationSector}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {organisationSectorList.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.organisationSector === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Applicant name(s) (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        The name of the Principal Investigator, as well as any other
-                                                                        individuals that have been authorised to use the data. If they are
-                                                                        on the Gateway, please provide their profile URL
-                                                                    </p>
-                                                                    <Typeahead
-                                                                        disabled={disableInput}
-                                                                        id='applicants'
-                                                                        labelKey={applicant => `${applicant.name}`}
-                                                                        allowNew
-                                                                        multiple
-                                                                        defaultSelected={formik.values.applicants}
-                                                                        options={applicantsList}
-                                                                        className='addFormInputTypeAhead'
-                                                                        onChange={selected => {
-                                                                            const tempSelected = [];
-                                                                            selected.forEach(selectedItem => {
-                                                                                selectedItem.customOption === true
-                                                                                    ? tempSelected.push({
-                                                                                          id: isNumber(selectedItem.id)
-                                                                                              ? selectedItem.id
-                                                                                              : 'nonGateway',
-                                                                                          name: selectedItem.name || selectedItem.label,
-                                                                                      })
-                                                                                    : tempSelected.push(selectedItem);
-                                                                            });
-                                                                            formik.values.applicants = tempSelected;
-                                                                        }}
-                                                                    />
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>Applicant ID (optional)</Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        ORCID identifier. This provides a persistent digital identifier that
-                                                                        you own and control, and that distinguishes you from every other
-                                                                        researcher. An ORCID profile can be created at https://orcid.org/
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        id='applicantId'
-                                                                        name='applicantId'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.applicantId}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>Funders/Sponsor (optional)</Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        The name of any funders or sponsors involved in the project
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        id='fundersAndSponsors'
-                                                                        name='fundersAndSponsors'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.fundersAndSponsors}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        DEA accredited researcher? (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Depending on the type of data you are requesting, you might be
-                                                                        required to become an accredited researcher. Most access to data in
-                                                                        the Secure Research Service (SRS) will be by researchers accredited
-                                                                        under the Digital Economy Act 2017 (DEA). This specifies the
-                                                                        accreditation status of the principal applicant/researcher, as
-                                                                        defined by the ONS Research Code of Practice and Accreditation
-                                                                        criteria
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='accreditedResearcherStatus'
-                                                                        name='accreditedResearcherStatus'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.accreditedResearcherStatus}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {yesNoList.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.accreditedResearcherStatus === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Sub-licence arrangements (if any)? (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Identifies whether there are any permissions for the applicant to
-                                                                        share the data beyond the named parties. e.g., NHS Digital may
-                                                                        approve a data release to the ONS, who then makes decisions about
-                                                                        access to accredited researchers undertaking approved projects in
-                                                                        their own trusted research environment.
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='sublicenceArrangements'
-                                                                        name='sublicenceArrangements'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.sublicenceArrangements}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {yesNoList.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.sublicenceArrangements === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-                                                            </Form>
-                                                        </Card.Body>
-                                                    </Accordion.Collapse>
-                                                </Card>
-                                                <Card className='edit-datause-card'>
-                                                    <Accordion.Toggle as={Button} variant='link' eventKey='1'>
-                                                        <Card.Header
-                                                            className='datause-accordion saved-search-arrow'
-                                                            onClick={() => (!safeProject ? setSafeProject(true) : setSafeProject(false))}
-                                                        >
-                                                            <SVGIcon
-                                                                width='20px'
-                                                                height='20px'
-                                                                name='chevronbottom'
-                                                                fill='#fff'
-                                                                className={
-                                                                    safeProject ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'
-                                                                }
-                                                            />
-                                                            Safe project
-                                                        </Card.Header>
-                                                    </Accordion.Toggle>
-                                                    <Accordion.Collapse className='datause-accordion-collapse' eventKey='1'>
-                                                        <Card.Body className='datause-card-body'>
-                                                            <Form>
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>Project ID</Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        A unique identifier for the project that is preferably an industry
-                                                                        used standard, such as IRAS ID. However for non-research projects, a
-                                                                        unique reference number created by the data custodian on receipt of
-                                                                        the application is sufficient
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={props.data.manualUpload ? disableInput : true}
-                                                                        id='projectIdText'
-                                                                        name='projectIdText'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.projectIdText}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>Project title</Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        The title of the project/research study/request that the applicant
-                                                                        is investigating through the use of health data
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        id='projectTitle'
-                                                                        name='projectTitle'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.projectTitle}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <div style={{ display: 'inline-block' }}>
-                                                                        <Form.Label className='black-14'>Lay summary (optional)</Form.Label>
-                                                                        <p className='gray800-13-opacity datause-edit-p'>
-                                                                            A concise and clear description of the project, (e.g. as
-                                                                            required by URKI in funding applications). It should outline the
-                                                                            problem, objectives and expected outcomes in language that is
-                                                                            understandable to the general public
-                                                                        </p>
+                                                                </div>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    data-testid='publicBenefitStatement'
+                                                                    as='textarea'
+                                                                    id='publicBenefitStatement'
+                                                                    name='publicBenefitStatement'
+                                                                    type='text'
+                                                                    className={
+                                                                        formik.touched.publicBenefitStatement &&
+                                                                        formik.errors.publicBenefitStatement
+                                                                            ? 'emptyFormInput addFormInput descriptionInput'
+                                                                            : 'addFormInput descriptionInput'
+                                                                    }
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.publicBenefitStatement}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                                {formik.touched.laySummary && formik.errors.publicBenefitStatement ? (
+                                                                    <div className='errorMessages'>
+                                                                        {formik.errors.publicBenefitStatement}
                                                                     </div>
-                                                                    <div style={{ display: 'inline-block', float: 'right' }}>
-                                                                        <span className='gray700-13'>
-                                                                            (
-                                                                            <span id='currentLaySummaryCount'>
-                                                                                {laySummaryCounter || 0}
-                                                                            </span>
-                                                                            /300)
-                                                                        </span>
-                                                                    </div>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        data-test-id='laySummary'
-                                                                        as='textarea'
-                                                                        id='laySummary'
-                                                                        name='laySummary'
-                                                                        type='text'
-                                                                        className={
-                                                                            formik.touched.laySummary && formik.errors.laySummary
-                                                                                ? 'emptyFormInput addFormInput descriptionInput'
-                                                                                : 'addFormInput descriptionInput'
-                                                                        }
-                                                                        onKeyUp={laySummaryCount}
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.laySummary}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                    {formik.touched.laySummary && formik.errors.laySummary ? (
-                                                                        <div className='errorMessages'>{formik.errors.laySummary}</div>
-                                                                    ) : null}
-                                                                </Form.Group>
+                                                                ) : null}
+                                                            </Form.Group>
 
-                                                                <Form.Group>
-                                                                    <div style={{ display: 'inline-block' }}>
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    Request category type (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    This categorises the 'purpose of the share' (i.e., research, policy
+                                                                    development, etc)
+                                                                </p>
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='requestCategoryType'
+                                                                    name='requestCategoryType'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.requestCategoryType}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {requestCategoryTypeList.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.requestCategoryType === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <div style={{ display: 'inline-block' }}>
+                                                                    <Form.Label className='black-14'>
+                                                                        Technical summary (optional)
+                                                                    </Form.Label>
+                                                                    <p className='gray800-13-opacity datause-edit-p'>
+                                                                        A summary of the proposed research, in a manner that is suitable for
+                                                                        a specialist reader
+                                                                    </p>
+                                                                </div>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    data-testid='technicalSummary'
+                                                                    as='textarea'
+                                                                    id='technicalSummary'
+                                                                    name='technicalSummary'
+                                                                    type='text'
+                                                                    className='addFormInput descriptionInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.technicalSummary}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    Other approval committees (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Reference to other decision-making bodies that the project has already
+                                                                    been authorised by
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    id='otherApprovalCommittees'
+                                                                    name='otherApprovalCommittees'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.otherApprovalCommittees}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Row>
+                                                                <Col>
+                                                                    {' '}
+                                                                    <Form.Group>
                                                                         <Form.Label className='black-14'>
-                                                                            Public benefit statement (optional)
+                                                                            Project start date (optional)
                                                                         </Form.Label>
                                                                         <p className='gray800-13-opacity datause-edit-p'>
-                                                                            A description in plain English of the anticipated outcomes, or
-                                                                            impact of project on the general public
+                                                                            The date the project is scheduled to start or actual start date
                                                                         </p>
-                                                                    </div>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        data-test-id='publicBenefitStatement'
-                                                                        as='textarea'
-                                                                        id='publicBenefitStatement'
-                                                                        name='publicBenefitStatement'
-                                                                        type='text'
-                                                                        className={
-                                                                            formik.touched.publicBenefitStatement &&
-                                                                            formik.errors.publicBenefitStatement
-                                                                                ? 'emptyFormInput addFormInput descriptionInput'
-                                                                                : 'addFormInput descriptionInput'
-                                                                        }
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.publicBenefitStatement}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                    {formik.touched.laySummary && formik.errors.publicBenefitStatement ? (
-                                                                        <div className='errorMessages'>
-                                                                            {formik.errors.publicBenefitStatement}
-                                                                        </div>
-                                                                    ) : null}
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Request category type (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        This categorises the 'purpose of the share' (i.e., research, policy
-                                                                        development, etc)
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='requestCategoryType'
-                                                                        name='requestCategoryType'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.requestCategoryType}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {requestCategoryTypeList.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.requestCategoryType === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <div style={{ display: 'inline-block' }}>
-                                                                        <Form.Label className='black-14'>
-                                                                            Technical summary (optional)
-                                                                        </Form.Label>
-                                                                        <p className='gray800-13-opacity datause-edit-p'>
-                                                                            A summary of the proposed research, in a manner that is suitable
-                                                                            for a specialist reader
-                                                                        </p>
-                                                                    </div>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        data-test-id='technicalSummary'
-                                                                        as='textarea'
-                                                                        id='technicalSummary'
-                                                                        name='technicalSummary'
-                                                                        type='text'
-                                                                        className='addFormInput descriptionInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.technicalSummary}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Other approval committees (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Reference to other decision-making bodies that the project has
-                                                                        already been authorised by
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        id='otherApprovalCommittees'
-                                                                        name='otherApprovalCommittees'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.otherApprovalCommittees}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
-
-                                                                <Row>
-                                                                    <Col>
-                                                                        {' '}
-                                                                        <Form.Group>
-                                                                            <Form.Label className='black-14'>
-                                                                                Project start date (optional)
-                                                                            </Form.Label>
-                                                                            <p className='gray800-13-opacity datause-edit-p'>
-                                                                                The date the project is scheduled to start or actual start
-                                                                                date
-                                                                            </p>
-                                                                            <span className='datause-datepicker'>
-                                                                                <DatePicker
-                                                                                    disabled={disableInput}
-                                                                                    id='projectStartDate'
-                                                                                    name='projectStartDate'
-                                                                                    dateFormat='dd/MM/yyyy'
-                                                                                    peekNextMonth
-                                                                                    showMonthDropdown
-                                                                                    showYearDropdown
-                                                                                    dropdownMode='select'
-                                                                                    selected={
-                                                                                        formik.values.projectStartDate
-                                                                                            ? new Date(formik.values.projectStartDate)
-                                                                                            : ''
-                                                                                    }
-                                                                                    onChange={date => {
-                                                                                        formik.values.projectStartDate = date;
-                                                                                        formik.setFieldValue();
-                                                                                    }}
-                                                                                    onBlur={formik.handleBlur}
-                                                                                />
-                                                                                <Calendar className='datePickerCalendar datause-calendar-svg' />
-                                                                            </span>
-                                                                        </Form.Group>
-                                                                    </Col>
-                                                                    <Col>
-                                                                        <Form.Group>
-                                                                            <Form.Label className='black-14'>
-                                                                                Project end date (optional)
-                                                                            </Form.Label>
-                                                                            <p className='gray800-13-opacity datause-edit-p'>
-                                                                                The date the project is scheduled to end or actual end date
-                                                                            </p>
-                                                                            <span className='datause-datepicker'>
-                                                                                <DatePicker
-                                                                                    disabled={disableInput}
-                                                                                    id='projectEndDate'
-                                                                                    name='projectEndDate'
-                                                                                    dateFormat='dd/MM/yyyy'
-                                                                                    peekNextMonth
-                                                                                    showMonthDropdown
-                                                                                    showYearDropdown
-                                                                                    dropdownMode='select'
-                                                                                    selected={
-                                                                                        formik.values.projectEndDate
-                                                                                            ? new Date(formik.values.projectEndDate)
-                                                                                            : ''
-                                                                                    }
-                                                                                    onChange={date => {
-                                                                                        formik.values.projectEndDate = date;
-                                                                                        formik.setFieldValue();
-                                                                                    }}
-                                                                                    onBlur={formik.handleBlur}
-                                                                                />
-                                                                                <Calendar className='datePickerCalendar datause-calendar-svg' />
-                                                                            </span>
-                                                                        </Form.Group>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row>
-                                                                    <Col md={6}>
-                                                                        <Form.Group>
-                                                                            <Form.Label className='black-14'>
-                                                                                Latest approval date (optional)
-                                                                            </Form.Label>
-                                                                            <p className='gray800-13-opacity datause-edit-p'>
-                                                                                The last date the data access request for this project was
-                                                                                approved by a data custodian
-                                                                            </p>
-																			<span className='datause-datepicker'>
-																				<DatePicker
-																					disabled={disableInput}
-																					id='latestApprovalDate'
-																					name='latestApprovalDate'
-																					dateFormat='dd/MM/yyyy'
-																					peekNextMonth
-																					showMonthDropdown
-																					showYearDropdown
-																					dropdownMode='select'
-																					selected={formik.values.latestApprovalDate ? new Date(formik.values.latestApprovalDate) : ''}
-																					onChange={date => {
-																						formik.values.latestApprovalDate = date;
-																						formik.setFieldValue();
-																					}}
-																					onBlur={formik.handleBlur}
-																				/>
-																				<Calendar className='datePickerCalendar datause-calendar-svg' />
-																				{formik.touched.latestApprovalDate && formik.errors.latestApprovalDate ? (
-																					<div className='errorMessages'>{formik.errors.latestApprovalDate}</div>
-																				) : null}
-																			</span>
-																		</Form.Group>
-																	</Col>
-																</Row>
-															</Form>
-														</Card.Body>
-													</Accordion.Collapse>
-												</Card>
-												<Card className='edit-datause-card'>
-													<Accordion.Toggle as={Button} variant='link' eventKey='2'>
-														<Card.Header
-															className='datause-accordion saved-search-arrow'
-															onClick={() => (!safeData ? setSafeData(true) : setSafeData(false))}>
-															<SVGIcon
-																width='20px'
-																height='20px'
-																name='chevronbottom'
-																fill={'#fff'}
-																className={safeData ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
-															/>
-															Safe data
-														</Card.Header>
-													</Accordion.Toggle>
-													<Accordion.Collapse className='datause-accordion-collapse' eventKey='2'>
-														<Card.Body className='datause-card-body'>
-															<Form>
-																<Form.Group>
-																	<Form.Label className='black-14'>Dataset(s) name</Form.Label>
-																	<p className='gray800-13-opacity datause-edit-p'>The name of the dataset(s) being accessed</p>
-																	<Typeahead
-																		disabled={props.data.manualUpload ? disableInput : true}
-																		id='datasets'
-																		labelKey={dataset => `${dataset.name}`}
-																		allowNew
-																		multiple
-																		defaultSelected={formik.values.datasets}
-																		options={datasetsList}
-																		className='addFormInputTypeAhead'
-																		onChange={selected => {
-																			var tempSelected = [];
-																			selected.forEach(selectedItem => {
-																				selectedItem.customOption === true
-																					? tempSelected.push({
-																							pid: isNumber(selectedItem.pid) ? selectedItem.pid : 'nonGateway',
-																							name: selectedItem.name || selectedItem.label,
-																					  })
-																					: tempSelected.push(selectedItem);
-																			});
-																			formik.values.datasets = tempSelected;
-																		}}
-																	/>
-																</Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Data sensitivity level (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        The level of identifiability of the data being accessed, as defined
-                                                                        by Understanding Patient Data{' '}
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='dataSensitivityLevel'
-                                                                        name='dataSensitivityLevel'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.dataSensitivityLevel}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {dataSensitivityLevelList.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.dataSensitivityLevel === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Legal basis for provision of data under Article 6 (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        The lawful basis for processing are set out in Article 6 of the
-                                                                        GDPR. At least one legal basis must apply whenever you process
-                                                                        personal data. Please select appropriate Article 6 lawful basis.
-                                                                        Processing shall be lawful only if and to the extent that at least
-                                                                        one of the following applies
-                                                                    </p>
-
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='legalBasisForDataArticle6'
-                                                                        name='legalBasisForDataArticle6'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.legalBasisForDataArticle6}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {legalBasisForDataArticle6List.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.legalBasisForDataArticle6 === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Lawful conditions for provision of data under Article 9 (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Processing of personal data revealing racial or ethnic origin,
-                                                                        political opinions, religious or philosophical beliefs, or trade
-                                                                        union membership, and the processing of genetic data, biometric data
-                                                                        for the purpose of uniquely identifying a natural person, data
-                                                                        concerning health or data concerning a natural person's sex life or
-                                                                        sexual orientation shall be prohibited. This does not apply if one
-                                                                        of the following applies
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='legalBasisForDataArticle9'
-                                                                        name='legalBasisForDataArticle9'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.legalBasisForDataArticle9}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {legalBasisForDataArticle9List.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.legalBasisForDataArticle9 === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Common law of duty of confidentiality (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        If confidential information is being disclosed , the organisations
-                                                                        holding this data (both the organisation disclosing the information
-                                                                        and the recipient organisation) must also have a lawful basis to
-                                                                        hold and use this information, and if applicable, have a condition
-                                                                        to hold and use special categories of confidential information, and
-                                                                        be fair and transparent about how they hold and use this data. In
-                                                                        England and Wales, if you are using section 251 of the NHS Act 2006
-                                                                        (s251) as a legal basis for identifiable data, you will need to
-                                                                        ensure that you have the latest approval letter and application. For
-                                                                        Scotland this application will be reviewed by the Public Benefit and
-                                                                        Privacy Panel. In Northern Ireland it will be considered by the
-                                                                        Privacy Advisory Committee. If you are using patient consent as the
-                                                                        legal basis, you will need to provide all relevant consent forms and
-                                                                        information leaflets.
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='dutyOfConfidentiality'
-                                                                        name='dutyOfConfidentiality'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.dutyOfConfidentiality}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {dutyOfConfidentialityList.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.dutyOfConfidentiality === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        National data opt-out applied? (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Specifies whether the preference for people to opt-out of their
-                                                                        confidential patient information being used for secondary use has
-                                                                        been applied to the data prior to release
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='nationalDataOptOut'
-                                                                        name='nationalDataOptOut'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.nationalDataOptOut}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {yesNoNotList.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.nationalDataOptOut === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Request frequency (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Determines whether this a 'one-off' request or a recurring dataset
-                                                                        to be provided over a specific time period
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='requestFrequency'
-                                                                        name='requestFrequency'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.requestFrequency}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {requestFrequencyList.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.requestFrequency === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        For linked datasets, specify how the linkage will take place
-                                                                        (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Specifies whether applicant intends for the datasets to be linked
-                                                                        with any additional datasets. Relevant information on the
-                                                                        organisations undertaking linkages and how the linkage will take
-                                                                        place must also be disclosed. As well as, a summary of the
-                                                                        risks/mitigations to be considered
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        data-test-id='datasetLinkageDescription'
-                                                                        as='textarea'
-                                                                        id='datasetLinkageDescription'
-                                                                        name='datasetLinkageDescription'
-                                                                        type='text'
-                                                                        className='addFormInput descriptionInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.datasetLinkageDescription}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Description of how the data will be used (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        A description of the specific patient identifiable fields that have
-                                                                        been included in the dataset(s) being accessed
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        data-test-id='confidentialDataDescription'
-                                                                        as='textarea'
-                                                                        id='confidentialDataDescription'
-                                                                        name='confidentialDataDescription'
-                                                                        type='text'
-                                                                        className='addFormInput descriptionInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.confidentialDataDescription}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        Release/Access date (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        The date the data access was granted and active research started
-                                                                    </p>
-                                                                    {/* <Form.Control type='text' placeholder='' defaultValue={props.data.accessDate} /> */}
-                                                                    <Row md={6}>
-                                                                        {' '}
-                                                                        <span className='datause-datepicker datapicker-releaseaccess'>
+                                                                        <span className='datause-datepicker'>
                                                                             <DatePicker
                                                                                 disabled={disableInput}
-                                                                                id='accessDate'
-                                                                                name='accessDate'
+                                                                                id='projectStartDate'
+                                                                                name='projectStartDate'
                                                                                 dateFormat='dd/MM/yyyy'
                                                                                 peekNextMonth
                                                                                 showMonthDropdown
                                                                                 showYearDropdown
                                                                                 dropdownMode='select'
                                                                                 selected={
-                                                                                    formik.values.accessDate
-                                                                                        ? new Date(formik.values.accessDate)
+                                                                                    formik.values.projectStartDate
+                                                                                        ? new Date(formik.values.projectStartDate)
                                                                                         : ''
                                                                                 }
                                                                                 onChange={date => {
-                                                                                    formik.values.accessDate = date;
+                                                                                    formik.values.projectStartDate = date;
                                                                                     formik.setFieldValue();
                                                                                 }}
                                                                                 onBlur={formik.handleBlur}
                                                                             />
                                                                             <Calendar className='datePickerCalendar datause-calendar-svg' />
                                                                         </span>
-                                                                    </Row>
-                                                                </Form.Group>
-                                                            </Form>
-                                                        </Card.Body>
-                                                    </Accordion.Collapse>
-                                                </Card>
-
-                                                <Card className='edit-datause-card'>
-                                                    <Accordion.Toggle as={Button} variant='link' eventKey='3'>
-                                                        <Card.Header
-                                                            className='datause-accordion saved-search-arrow'
-                                                            onClick={() => (!safeSettings ? setSafeSettings(true) : setSafeSettings(false))}
-                                                        >
-                                                            <SVGIcon
-                                                                width='20px'
-                                                                height='20px'
-                                                                name='chevronbottom'
-                                                                fill='#fff'
-                                                                className={
-                                                                    safeSettings ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'
-                                                                }
-                                                            />
-                                                            Safe settings
-                                                        </Card.Header>
-                                                    </Accordion.Toggle>
-                                                    <Accordion.Collapse className='datause-accordion-collapse' eventKey='3'>
-                                                        <Card.Body className='datause-card-body'>
-                                                            <Form>
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>Access type (optional)</Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Determines whether the data will be accessed within a Trusted
-                                                                        Research Environment (TRE) or via the traditional data release
-                                                                        modelDetermines whether the data will be accessed within a Trusted
-                                                                        Research Environment (TRE) or via the traditional data release model
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        as='select'
-                                                                        disabled={disableInput}
-                                                                        id='accessType'
-                                                                        name='accessType'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.accessType}
-                                                                        onBlur={formik.handleBlur}
-                                                                    >
-                                                                        {accessTypeList.map(l => (
-                                                                            <option
-                                                                                selected={formik.values.accessType === l}
-                                                                                value={l}
-                                                                                key={l}
-                                                                                eventKey={l}
-                                                                            >
-                                                                                {l}
-                                                                            </option>
-                                                                        ))}
-                                                                    </Form.Control>
-                                                                    {formik.touched.accessType && formik.errors.accessType ? (
-                                                                        <div
-                                                                            className='errorMessages margin-top-8'
-                                                                            data-test-id='user-account-sector-validation'
-                                                                        >
-                                                                            {formik.errors.accessType}
-                                                                        </div>
-                                                                    ) : null}
-                                                                </Form.Group>
-
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>
-                                                                        How has data been processed to enhance privacy? (optional)
-                                                                    </Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Description of the tools or software used to reduce level of
-                                                                        identifiable data being shared
-                                                                    </p>
-                                                                    <Form.Control
-                                                                        readOnly={disableInput}
-                                                                        id='privacyEnhancements'
-                                                                        name='privacyEnhancements'
-                                                                        type='text'
-                                                                        className='addFormInput'
-                                                                        onChange={formik.handleChange}
-                                                                        value={formik.values.privacyEnhancements}
-                                                                        onBlur={formik.handleBlur}
-                                                                    />
-                                                                </Form.Group>
-                                                            </Form>
-                                                        </Card.Body>
-                                                    </Accordion.Collapse>
-                                                </Card>
-
-                                                <Card className='edit-datause-card'>
-                                                    <Accordion.Toggle as={Button} variant='link' eventKey='4'>
-                                                        <Card.Header
-                                                            className='datause-accordion saved-search-arrow'
-                                                            onClick={() => (!safeOutput ? setSafeOutput(true) : setSafeOutput(false))}
-                                                        >
-                                                            <SVGIcon
-                                                                width='20px'
-                                                                height='20px'
-                                                                name='chevronbottom'
-                                                                fill='#fff'
-                                                                className={safeOutput ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
-                                                            />
-                                                            Safe output
-                                                        </Card.Header>
-                                                    </Accordion.Toggle>
-                                                    <Accordion.Collapse className='datause-accordion-collapse' eventKey='4'>
-                                                        <Card.Body className='datause-card-body'>
-                                                            <Form>
-                                                                <Row className='mt-2'>
-                                                                    <Col sm={12} lg={8}>
-                                                                        <p className='gray800-14 margin-bottom-0 pad-bottom-4'>
-                                                                            Link to research outputs (optional)
+                                                                    </Form.Group>
+                                                                </Col>
+                                                                <Col>
+                                                                    <Form.Group>
+                                                                        <Form.Label className='black-14'>
+                                                                            Project end date (optional)
+                                                                        </Form.Label>
+                                                                        <p className='gray800-13-opacity datause-edit-p'>
+                                                                            The date the project is scheduled to end or actual end date
                                                                         </p>
-                                                                        <p className='gray700-13 margin-bottom-0'>
-                                                                            A URL link to any academic or non-academic research outputs, as
-                                                                            they become available, including code used. If the link is to a
-                                                                            Gateway resource, this will automatically populate in related
-                                                                            resources.
+                                                                        <span className='datause-datepicker'>
+                                                                            <DatePicker
+                                                                                disabled={disableInput}
+                                                                                id='projectEndDate'
+                                                                                name='projectEndDate'
+                                                                                dateFormat='dd/MM/yyyy'
+                                                                                peekNextMonth
+                                                                                showMonthDropdown
+                                                                                showYearDropdown
+                                                                                dropdownMode='select'
+                                                                                selected={
+                                                                                    formik.values.projectEndDate
+                                                                                        ? new Date(formik.values.projectEndDate)
+                                                                                        : ''
+                                                                                }
+                                                                                onChange={date => {
+                                                                                    formik.values.projectEndDate = date;
+                                                                                    formik.setFieldValue();
+                                                                                }}
+                                                                                onBlur={formik.handleBlur}
+                                                                            />
+                                                                            <Calendar className='datePickerCalendar datause-calendar-svg' />
+                                                                        </span>
+                                                                    </Form.Group>
+                                                                </Col>
+                                                            </Row>
+                                                            <Row>
+                                                                <Col md={6}>
+                                                                    <Form.Group>
+                                                                        <Form.Label className='black-14'>
+                                                                            Latest approval date (optional)
+                                                                        </Form.Label>
+                                                                        <p className='gray800-13-opacity datause-edit-p'>
+                                                                            The last date the data access request for this project was
+                                                                            approved by a data custodian
                                                                         </p>
-                                                                    </Col>
+                                                                        <span className='datause-datepicker'>
+                                                                            <DatePicker
+                                                                                disabled={disableInput}
+                                                                                id='latestApprovalDate'
+                                                                                name='latestApprovalDate'
+                                                                                dateFormat='dd/MM/yyyy'
+                                                                                peekNextMonth
+                                                                                showMonthDropdown
+                                                                                showYearDropdown
+                                                                                dropdownMode='select'
+                                                                                selected={
+                                                                                    formik.values.latestApprovalDate
+                                                                                        ? new Date(formik.values.latestApprovalDate)
+                                                                                        : ''
+                                                                                }
+                                                                                onChange={date => {
+                                                                                    formik.values.latestApprovalDate = date;
+                                                                                    formik.setFieldValue();
+                                                                                }}
+                                                                                onBlur={formik.handleBlur}
+                                                                            />
+                                                                            <Calendar className='datePickerCalendar datause-calendar-svg' />
+                                                                            {formik.touched.latestApprovalDate &&
+                                                                            formik.errors.latestApprovalDate ? (
+                                                                                <div className='errorMessages'>
+                                                                                    {formik.errors.latestApprovalDate}
+                                                                                </div>
+                                                                            ) : null}
+                                                                        </span>
+                                                                    </Form.Group>
+                                                                </Col>
+                                                            </Row>
+                                                        </Form>
+                                                    </Card.Body>
+                                                </Accordion.Collapse>
+                                            </Card>
+                                            <Card className='edit-datause-card'>
+                                                <Accordion.Toggle as={Button} variant='link' eventKey='2'>
+                                                    <Card.Header
+                                                        className='datause-accordion saved-search-arrow'
+                                                        onClick={() => (!safeData ? setSafeData(true) : setSafeData(false))}>
+                                                        <SVGIcon
+                                                            width='20px'
+                                                            height='20px'
+                                                            name='chevronbottom'
+                                                            fill='#fff'
+                                                            className={safeData ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
+                                                        />
+                                                        Safe data
+                                                    </Card.Header>
+                                                </Accordion.Toggle>
+                                                <Accordion.Collapse className='datause-accordion-collapse' eventKey='2'>
+                                                    <Card.Body className='datause-card-body'>
+                                                        <Form>
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Dataset(s) name</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    The name of the dataset(s) being accessed
+                                                                </p>
+                                                                <Typeahead
+                                                                    disabled={props.data.manualUpload ? disableInput : true}
+                                                                    id='datasets'
+                                                                    labelKey={dataset => `${dataset.name}`}
+                                                                    allowNew
+                                                                    multiple
+                                                                    defaultSelected={formik.values.datasets}
+                                                                    options={datasetsList}
+                                                                    className='addFormInputTypeAhead'
+                                                                    onChange={selected => {
+                                                                        const tempSelected = [];
+                                                                        selected.forEach(selectedItem => {
+                                                                            selectedItem.customOption === true
+                                                                                ? tempSelected.push({
+                                                                                      pid: isNumber(selectedItem.pid)
+                                                                                          ? selectedItem.pid
+                                                                                          : 'nonGateway',
+                                                                                      name: selectedItem.name || selectedItem.label,
+                                                                                  })
+                                                                                : tempSelected.push(selectedItem);
+                                                                        });
+                                                                        formik.values.datasets = tempSelected;
+                                                                    }}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    Data sensitivity level (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    The level of identifiability of the data being accessed, as defined by
+                                                                    Understanding Patient Data{' '}
+                                                                </p>
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='dataSensitivityLevel'
+                                                                    name='dataSensitivityLevel'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.dataSensitivityLevel}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {dataSensitivityLevelList.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.dataSensitivityLevel === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    Legal basis for provision of data under Article 6 (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    The lawful basis for processing are set out in Article 6 of the GDPR. At
+                                                                    least one legal basis must apply whenever you process personal data.
+                                                                    Please select appropriate Article 6 lawful basis. Processing shall be
+                                                                    lawful only if and to the extent that at least one of the following
+                                                                    applies
+                                                                </p>
+
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='legalBasisForDataArticle6'
+                                                                    name='legalBasisForDataArticle6'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.legalBasisForDataArticle6}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {legalBasisForDataArticle6List.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.legalBasisForDataArticle6 === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    Lawful conditions for provision of data under Article 9 (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Processing of personal data revealing racial or ethnic origin, political
+                                                                    opinions, religious or philosophical beliefs, or trade union membership,
+                                                                    and the processing of genetic data, biometric data for the purpose of
+                                                                    uniquely identifying a natural person, data concerning health or data
+                                                                    concerning a natural person's sex life or sexual orientation shall be
+                                                                    prohibited. This does not apply if one of the following applies
+                                                                </p>
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='legalBasisForDataArticle9'
+                                                                    name='legalBasisForDataArticle9'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.legalBasisForDataArticle9}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {legalBasisForDataArticle9List.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.legalBasisForDataArticle9 === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    Common law of duty of confidentiality (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    If confidential information is being disclosed , the organisations
+                                                                    holding this data (both the organisation disclosing the information and
+                                                                    the recipient organisation) must also have a lawful basis to hold and
+                                                                    use this information, and if applicable, have a condition to hold and
+                                                                    use special categories of confidential information, and be fair and
+                                                                    transparent about how they hold and use this data. In England and Wales,
+                                                                    if you are using section 251 of the NHS Act 2006 (s251) as a legal basis
+                                                                    for identifiable data, you will need to ensure that you have the latest
+                                                                    approval letter and application. For Scotland this application will be
+                                                                    reviewed by the Public Benefit and Privacy Panel. In Northern Ireland it
+                                                                    will be considered by the Privacy Advisory Committee. If you are using
+                                                                    patient consent as the legal basis, you will need to provide all
+                                                                    relevant consent forms and information leaflets.
+                                                                </p>
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='dutyOfConfidentiality'
+                                                                    name='dutyOfConfidentiality'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.dutyOfConfidentiality}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {dutyOfConfidentialityList.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.dutyOfConfidentiality === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    National data opt-out applied? (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Specifies whether the preference for people to opt-out of their
+                                                                    confidential patient information being used for secondary use has been
+                                                                    applied to the data prior to release
+                                                                </p>
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='nationalDataOptOut'
+                                                                    name='nationalDataOptOut'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.nationalDataOptOut}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {yesNoNotList.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.nationalDataOptOut === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Request frequency (optional)</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Determines whether this a 'one-off' request or a recurring dataset to be
+                                                                    provided over a specific time period
+                                                                </p>
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='requestFrequency'
+                                                                    name='requestFrequency'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.requestFrequency}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {requestFrequencyList.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.requestFrequency === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    For linked datasets, specify how the linkage will take place (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Specifies whether applicant intends for the datasets to be linked with
+                                                                    any additional datasets. Relevant information on the organisations
+                                                                    undertaking linkages and how the linkage will take place must also be
+                                                                    disclosed. As well as, a summary of the risks/mitigations to be
+                                                                    considered
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    data-testid='datasetLinkageDescription'
+                                                                    as='textarea'
+                                                                    id='datasetLinkageDescription'
+                                                                    name='datasetLinkageDescription'
+                                                                    type='text'
+                                                                    className='addFormInput descriptionInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.datasetLinkageDescription}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    Description of how the data will be used (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    A description of the specific patient identifiable fields that have been
+                                                                    included in the dataset(s) being accessed
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    data-testid='confidentialDataDescription'
+                                                                    as='textarea'
+                                                                    id='confidentialDataDescription'
+                                                                    name='confidentialDataDescription'
+                                                                    type='text'
+                                                                    className='addFormInput descriptionInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.confidentialDataDescription}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Release/Access date (optional)</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    The date the data access was granted and active research started
+                                                                </p>
+                                                                {/* <Form.Control type='text' placeholder='' defaultValue={props.data.accessDate} /> */}
+                                                                <Row md={6}>
+                                                                    {' '}
+                                                                    <span className='datause-datepicker datapicker-releaseaccess'>
+                                                                        <DatePicker
+                                                                            disabled={disableInput}
+                                                                            id='accessDate'
+                                                                            name='accessDate'
+                                                                            dateFormat='dd/MM/yyyy'
+                                                                            peekNextMonth
+                                                                            showMonthDropdown
+                                                                            showYearDropdown
+                                                                            dropdownMode='select'
+                                                                            selected={
+                                                                                formik.values.accessDate
+                                                                                    ? new Date(formik.values.accessDate)
+                                                                                    : ''
+                                                                            }
+                                                                            onChange={date => {
+                                                                                formik.values.accessDate = date;
+                                                                                formik.setFieldValue();
+                                                                            }}
+                                                                            onBlur={formik.handleBlur}
+                                                                        />
+                                                                        <Calendar className='datePickerCalendar datause-calendar-svg' />
+                                                                    </span>
                                                                 </Row>
+                                                            </Form.Group>
+                                                        </Form>
+                                                    </Card.Body>
+                                                </Accordion.Collapse>
+                                            </Card>
 
-                                                                <Row className='mt-2'>
-                                                                    <FieldArray
-                                                                        name='document_links'
-                                                                        render={({ remove, push }) => (
-                                                                            <>
-                                                                                {safeOuputsArray.length > 0 &&
-                                                                                    safeOuputsArray.map((d, index) => (
-                                                                                        <>
-                                                                                            <Col sm={12} lg={10}>
-                                                                                                <Form.Group labelKey='safeOuputsArray'>
-                                                                                                    <Typeahead
-                                                                                                        id={`safeOuputsArray_${index}`}
-                                                                                                        className='addFormInput'
-                                                                                                        allowNew
-                                                                                                        options={safeOuputsList}
-                                                                                                        onChange={selected => {
-                                                                                                            if (!isEmpty(selected)) {
-                                                                                                                if (
-                                                                                                                    selected[0]
-                                                                                                                        .customOption ===
-                                                                                                                    true
-                                                                                                                ) {
-                                                                                                                    formik.values.safeOutput[
-                                                                                                                        index
-                                                                                                                    ] = {
-                                                                                                                        id: isNumber(
-                                                                                                                            selected[0].id
-                                                                                                                        )
-                                                                                                                            ? selected[0].id
-                                                                                                                            : 'nonGateway',
-                                                                                                                        name:
-                                                                                                                            selected[0]
-                                                                                                                                .name ||
-                                                                                                                            selected[0]
-                                                                                                                                .label,
-                                                                                                                    };
-                                                                                                                } else {
-                                                                                                                    formik.values.safeOutput[
-                                                                                                                        index
-                                                                                                                    ] = selected[0];
-                                                                                                                }
+                                            <Card className='edit-datause-card'>
+                                                <Accordion.Toggle as={Button} variant='link' eventKey='3'>
+                                                    <Card.Header
+                                                        className='datause-accordion saved-search-arrow'
+                                                        onClick={() => (!safeSettings ? setSafeSettings(true) : setSafeSettings(false))}>
+                                                        <SVGIcon
+                                                            width='20px'
+                                                            height='20px'
+                                                            name='chevronbottom'
+                                                            fill='#fff'
+                                                            className={safeSettings ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
+                                                        />
+                                                        Safe settings
+                                                    </Card.Header>
+                                                </Accordion.Toggle>
+                                                <Accordion.Collapse className='datause-accordion-collapse' eventKey='3'>
+                                                    <Card.Body className='datause-card-body'>
+                                                        <Form>
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Access type (optional)</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Determines whether the data will be accessed within a Trusted Research
+                                                                    Environment (TRE) or via the traditional data release modelDetermines
+                                                                    whether the data will be accessed within a Trusted Research Environment
+                                                                    (TRE) or via the traditional data release model
+                                                                </p>
+                                                                <Form.Control
+                                                                    as='select'
+                                                                    disabled={disableInput}
+                                                                    id='accessType'
+                                                                    name='accessType'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.accessType}
+                                                                    onBlur={formik.handleBlur}>
+                                                                    {accessTypeList.map(l => (
+                                                                        <option
+                                                                            selected={formik.values.accessType === l}
+                                                                            value={l}
+                                                                            key={l}
+                                                                            eventKey={l}>
+                                                                            {l}
+                                                                        </option>
+                                                                    ))}
+                                                                </Form.Control>
+                                                                {formik.touched.accessType && formik.errors.accessType ? (
+                                                                    <div
+                                                                        className='errorMessages margin-top-8'
+                                                                        data-testid='user-account-sector-validation'>
+                                                                        {formik.errors.accessType}
+                                                                    </div>
+                                                                ) : null}
+                                                            </Form.Group>
+
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>
+                                                                    How has data been processed to enhance privacy? (optional)
+                                                                </Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Description of the tools or software used to reduce level of
+                                                                    identifiable data being shared
+                                                                </p>
+                                                                <Form.Control
+                                                                    readOnly={disableInput}
+                                                                    id='privacyEnhancements'
+                                                                    name='privacyEnhancements'
+                                                                    type='text'
+                                                                    className='addFormInput'
+                                                                    onChange={formik.handleChange}
+                                                                    value={formik.values.privacyEnhancements}
+                                                                    onBlur={formik.handleBlur}
+                                                                />
+                                                            </Form.Group>
+                                                        </Form>
+                                                    </Card.Body>
+                                                </Accordion.Collapse>
+                                            </Card>
+
+                                            <Card className='edit-datause-card'>
+                                                <Accordion.Toggle as={Button} variant='link' eventKey='4'>
+                                                    <Card.Header
+                                                        className='datause-accordion saved-search-arrow'
+                                                        onClick={() => (!safeOutput ? setSafeOutput(true) : setSafeOutput(false))}>
+                                                        <SVGIcon
+                                                            width='20px'
+                                                            height='20px'
+                                                            name='chevronbottom'
+                                                            fill='#fff'
+                                                            className={safeOutput ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
+                                                        />
+                                                        Safe output
+                                                    </Card.Header>
+                                                </Accordion.Toggle>
+                                                <Accordion.Collapse className='datause-accordion-collapse' eventKey='4'>
+                                                    <Card.Body className='datause-card-body'>
+                                                        <Form>
+                                                            <Row className='mt-2'>
+                                                                <Col sm={12} lg={8}>
+                                                                    <p className='gray800-14 margin-bottom-0 pad-bottom-4'>
+                                                                        Link to research outputs (optional)
+                                                                    </p>
+                                                                    <p className='gray700-13 margin-bottom-0'>
+                                                                        A URL link to any academic or non-academic research outputs, as they
+                                                                        become available, including code used. If the link is to a Gateway
+                                                                        resource, this will automatically populate in related resources.
+                                                                    </p>
+                                                                </Col>
+                                                            </Row>
+
+                                                            <Row className='mt-2'>
+                                                                <FieldArray name='document_links'>
+                                                                    {({ remove, push }) => (
+                                                                        <>
+                                                                            {safeOuputsArray.length > 0 &&
+                                                                                safeOuputsArray.map((d, index) => (
+                                                                                    <>
+                                                                                        <Col sm={12} lg={10}>
+                                                                                            <Form.Group labelKey='safeOuputsArray'>
+                                                                                                <Typeahead
+                                                                                                    id={`safeOuputsArray_${index}`}
+                                                                                                    className='addFormInput'
+                                                                                                    allowNew
+                                                                                                    options={safeOuputsList}
+                                                                                                    onChange={selected => {
+                                                                                                        if (!isEmpty(selected)) {
+                                                                                                            if (
+                                                                                                                selected[0].customOption ===
+                                                                                                                true
+                                                                                                            ) {
+                                                                                                                formik.values.safeOutput[
+                                                                                                                    index
+                                                                                                                ] = {
+                                                                                                                    id: isNumber(
+                                                                                                                        selected[0].id
+                                                                                                                    )
+                                                                                                                        ? selected[0].id
+                                                                                                                        : 'nonGateway',
+                                                                                                                    name:
+                                                                                                                        selected[0].name ||
+                                                                                                                        selected[0].label,
+                                                                                                                };
+                                                                                                            } else {
+                                                                                                                formik.values.safeOutput[
+                                                                                                                    index
+                                                                                                                ] = selected[0];
                                                                                                             }
-                                                                                                        }}
-                                                                                                        selected={[
-                                                                                                            formik.values.safeOutput[index],
-                                                                                                        ]}
-                                                                                                        labelKey={output =>
-                                                                                                            `${output.name}`
                                                                                                         }
-                                                                                                    />
-                                                                                                </Form.Group>
-                                                                                            </Col>
-
-                                                                                            <Col
-                                                                                                style={{ paddingRight: '0px' }}
-                                                                                                className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'
-                                                                                            >
-                                                                                                <button
-                                                                                                    type='button'
-                                                                                                    className='plusMinusButton'
-                                                                                                    disabled={safeOuputsArray.length < 2}
-                                                                                                    onClick={() => {
-                                                                                                        remove(index);
-                                                                                                        safeOuputsArray.splice(index, 1);
                                                                                                     }}
-                                                                                                >
-                                                                                                    -
-                                                                                                </button>
-                                                                                                <button
-                                                                                                    data-test-id={`add-link-${index}`}
-                                                                                                    type='button'
-                                                                                                    disabled={
-                                                                                                        safeOuputsArray.length - 1 !== index
-                                                                                                    }
-                                                                                                    className='plusMinusButton'
-                                                                                                    onClick={() => {
-                                                                                                        push('');
-                                                                                                        safeOuputsArray.push({
-                                                                                                            id: '',
-                                                                                                            name: '',
-                                                                                                        });
-                                                                                                    }}
-                                                                                                >
-                                                                                                    +
-                                                                                                </button>
-                                                                                            </Col>
-                                                                                        </>
-                                                                                    ))}
-                                                                            </>
-                                                                        )}
-                                                                    />
-                                                                </Row>
-                                                            </Form>
-                                                        </Card.Body>
-                                                    </Accordion.Collapse>
-                                                </Card>
+                                                                                                    selected={[
+                                                                                                        formik.values.safeOutput[index],
+                                                                                                    ]}
+                                                                                                    labelKey={output => `${output.name}`}
+                                                                                                />
+                                                                                            </Form.Group>
+                                                                                        </Col>
 
-                                                <Card className='edit-datause-card'>
-                                                    <Accordion.Toggle as={Button} variant='link' eventKey='5'>
-                                                        <Card.Header
-                                                            className='datause-accordion saved-search-arrow'
-                                                            onClick={() => (!keywords ? setKeywords(true) : setKeywords(false))}
-                                                        >
-                                                            <SVGIcon
-                                                                width='20px'
-                                                                height='20px'
-                                                                name='chevronbottom'
-                                                                fill='#fff'
-                                                                className={keywords ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
-                                                            />
-                                                            Keywords
-                                                        </Card.Header>
-                                                    </Accordion.Toggle>
-                                                    <Accordion.Collapse className='datause-accordion-collapse' eventKey='5'>
-                                                        <Card.Body className='datause-card-body'>
-                                                            <Form>
-                                                                <Form.Group>
-                                                                    <Form.Label className='black-14'>Keywords (optional)</Form.Label>
-                                                                    <p className='gray800-13-opacity datause-edit-p'>
-                                                                        Select maximum 5 keywords that will help make your data use easily
-                                                                        searchable
-                                                                    </p>
-                                                                    <Typeahead
-                                                                        id='keywords'
-                                                                        labelKey='keywords'
-                                                                        allowNew
-                                                                        defaultSelected={formik.values.keywords}
-                                                                        multiple
-                                                                        options={props.keywordsData}
-                                                                        className='addFormInputTypeAhead'
-                                                                        onChange={selected => {
-                                                                            const tempSelected = [];
-                                                                            selected.forEach(selectedItem => {
-                                                                                selectedItem.customOption === true
-                                                                                    ? tempSelected.push(selectedItem.keywords)
-                                                                                    : tempSelected.push(selectedItem);
-                                                                            });
-                                                                            formik.values.keywords = tempSelected;
-                                                                        }}
-                                                                    />
-                                                                </Form.Group>
-                                                            </Form>
-                                                        </Card.Body>
-                                                    </Accordion.Collapse>
-                                                </Card>
-
-                                                <Card className='edit-datause-card'>
-                                                    <Accordion.Toggle as={Button} variant='link' eventKey='6'>
-                                                        <Card.Header
-                                                            className='datause-accordion saved-search-arrow'
-                                                            onClick={() =>
-                                                                !relatedResources ? setRelatedResources(true) : setRelatedResources(false)
-                                                            }
-                                                        >
-                                                            <SVGIcon
-                                                                width='20px'
-                                                                height='20px'
-                                                                name='chevronbottom'
-                                                                fill='#fff'
-                                                                className={
-                                                                    relatedResources ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'
-                                                                }
-                                                            />
-                                                            Related resources
-                                                        </Card.Header>
-                                                    </Accordion.Toggle>
-                                                    <Accordion.Collapse className='datause-accordion-collapse' eventKey='6'>
-                                                        <Card.Body className='datause-card-body'>
-                                                            <div className='datause-related-resources'>
-                                                                <p className='black-20-semibold'>Related resources </p>
-                                                                <p className='black-14'>(optional)</p>
-                                                            </div>
-
-                                                            <p className='gray800-13-opacity'>
-                                                                Link this to other papers, data uses, datasets, tools, courses and people.
-                                                                Resources must be added to the Gateway first.
-                                                            </p>
-                                                            <hr className='datause-border' />
-                                                            {props.relatedObjects.length === 0 ? (
-                                                                ''
-                                                            ) : (
-                                                                <div className='rectangle'>
-                                                                    {props.relatedObjects.map(object =>
-                                                                        !isNil(object.objectId) ? (
-                                                                            <RelatedObject
-                                                                                showRelationshipQuestion
-                                                                                objectId={object.objectId}
-                                                                                pid={object.pid}
-                                                                                objectType={object.objectType}
-                                                                                doRemoveObject={props.doRemoveObject}
-                                                                                doUpdateReason={updateReason}
-                                                                                reason={object.reason}
-                                                                                didDelete={props.didDelete}
-                                                                                updateDeleteFlag={props.updateDeleteFlag}
-                                                                                isLocked={object.isLocked}
-                                                                            />
-                                                                        ) : (
-                                                                            ''
-                                                                        )
+                                                                                        <Col
+                                                                                            style={{ paddingRight: '0px' }}
+                                                                                            className='col-sm-6 col-md-2 d-flex justify-content-center align-items-center setHeight'>
+                                                                                            <button
+                                                                                                type='button'
+                                                                                                className='plusMinusButton'
+                                                                                                disabled={safeOuputsArray.length < 2}
+                                                                                                onClick={() => {
+                                                                                                    remove(index);
+                                                                                                    safeOuputsArray.splice(index, 1);
+                                                                                                }}>
+                                                                                                -
+                                                                                            </button>
+                                                                                            <button
+                                                                                                data-testid={`add-link-${index}`}
+                                                                                                type='button'
+                                                                                                disabled={
+                                                                                                    safeOuputsArray.length - 1 !== index
+                                                                                                }
+                                                                                                className='plusMinusButton'
+                                                                                                onClick={() => {
+                                                                                                    push('');
+                                                                                                    safeOuputsArray.push({
+                                                                                                        id: '',
+                                                                                                        name: '',
+                                                                                                    });
+                                                                                                }}>
+                                                                                                +
+                                                                                            </button>
+                                                                                        </Col>
+                                                                                    </>
+                                                                                ))}
+                                                                        </>
                                                                     )}
-                                                                </div>
-                                                            )}
-                                                            {disableInput ? (
-                                                                ''
-                                                            ) : (
-                                                                <div className='rectangle flexCenter pixelGapTop'>
-                                                                    <Row>
-                                                                        <Col sm={1} lg={1} />
-                                                                        <Col sm={10} lg={10}>
-                                                                            <RelatedResources
-                                                                                ref={relatedResourcesRef}
-                                                                                searchString={props.searchString}
-                                                                                doSearchMethod={props.doSearchMethod}
-                                                                                doUpdateSearchString={props.doUpdateSearchString}
-                                                                                userState={props.userState}
-                                                                                datasetData={props.datasetData}
-                                                                                toolData={props.toolData}
-                                                                                datauseData={props.datauseData}
-                                                                                paperData={props.paperData}
-                                                                                personData={props.personData}
-                                                                                courseData={props.courseData}
-                                                                                summary={props.summary}
-                                                                                doAddToTempRelatedObjects={props.doAddToTempRelatedObjects}
-                                                                                tempRelatedObjectIds={props.tempRelatedObjectIds}
-                                                                                relatedObjects={props.relatedObjects}
-                                                                                doClearRelatedObjects={props.doClearRelatedObjects}
-                                                                                doAddToRelatedObjects={props.doAddToRelatedObjects}
-                                                                            />
-                                                                        </Col>
-                                                                        <Col sm={1} lg={10} />
-                                                                    </Row>
-                                                                </div>
-                                                            )}
-                                                        </Card.Body>
-                                                    </Accordion.Collapse>
-                                                </Card>
-                                            </Accordion>
-                                        </div>
-                                    </Col>
-                                    <Col sm={1} lg={10} />
-                                </Row>
-                                <Row>
-                                    <span className='formBottomGap' />
-                                </Row>
-                            </div>
-                        );
-                    }}
-                />
+                                                                </FieldArray>
+                                                            </Row>
+                                                        </Form>
+                                                    </Card.Body>
+                                                </Accordion.Collapse>
+                                            </Card>
+
+                                            <Card className='edit-datause-card'>
+                                                <Accordion.Toggle as={Button} variant='link' eventKey='5'>
+                                                    <Card.Header
+                                                        className='datause-accordion saved-search-arrow'
+                                                        onClick={() => (!keywords ? setKeywords(true) : setKeywords(false))}>
+                                                        <SVGIcon
+                                                            width='20px'
+                                                            height='20px'
+                                                            name='chevronbottom'
+                                                            fill='#fff'
+                                                            className={keywords ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'}
+                                                        />
+                                                        Keywords
+                                                    </Card.Header>
+                                                </Accordion.Toggle>
+                                                <Accordion.Collapse className='datause-accordion-collapse' eventKey='5'>
+                                                    <Card.Body className='datause-card-body'>
+                                                        <Form>
+                                                            <Form.Group>
+                                                                <Form.Label className='black-14'>Keywords (optional)</Form.Label>
+                                                                <p className='gray800-13-opacity datause-edit-p'>
+                                                                    Select maximum 5 keywords that will help make your data use easily
+                                                                    searchable
+                                                                </p>
+                                                                <Typeahead
+                                                                    id='keywords'
+                                                                    labelKey='keywords'
+                                                                    allowNew
+                                                                    defaultSelected={formik.values.keywords}
+                                                                    multiple
+                                                                    options={props.keywordsData}
+                                                                    className='addFormInputTypeAhead'
+                                                                    onChange={selected => {
+                                                                        const tempSelected = [];
+                                                                        selected.forEach(selectedItem => {
+                                                                            selectedItem.customOption === true
+                                                                                ? tempSelected.push(selectedItem.keywords)
+                                                                                : tempSelected.push(selectedItem);
+                                                                        });
+                                                                        formik.values.keywords = tempSelected;
+                                                                    }}
+                                                                />
+                                                            </Form.Group>
+                                                        </Form>
+                                                    </Card.Body>
+                                                </Accordion.Collapse>
+                                            </Card>
+
+                                            <Card className='edit-datause-card'>
+                                                <Accordion.Toggle as={Button} variant='link' eventKey='6'>
+                                                    <Card.Header
+                                                        className='datause-accordion saved-search-arrow'
+                                                        onClick={() =>
+                                                            !relatedResources ? setRelatedResources(true) : setRelatedResources(false)
+                                                        }>
+                                                        <SVGIcon
+                                                            width='20px'
+                                                            height='20px'
+                                                            name='chevronbottom'
+                                                            fill='#fff'
+                                                            className={
+                                                                relatedResources ? 'edit-datause-arrow' : 'flip180 edit-datause-arrow'
+                                                            }
+                                                        />
+                                                        Related resources
+                                                    </Card.Header>
+                                                </Accordion.Toggle>
+                                                <Accordion.Collapse className='datause-accordion-collapse' eventKey='6'>
+                                                    <Card.Body className='datause-card-body'>
+                                                        <div className='datause-related-resources'>
+                                                            <p className='black-20-semibold'>Related resources </p>
+                                                            <p className='black-14'>(optional)</p>
+                                                        </div>
+
+                                                        <p className='gray800-13-opacity'>
+                                                            Link this to other papers, data uses, datasets, tools, courses and people.
+                                                            Resources must be added to the Gateway first.
+                                                        </p>
+                                                        <hr className='datause-border' />
+                                                        {props.relatedObjects.length === 0 ? (
+                                                            ''
+                                                        ) : (
+                                                            <div className='rectangle'>
+                                                                {props.relatedObjects.map(object =>
+                                                                    !isNil(object.objectId) ? (
+                                                                        <RelatedObject
+                                                                            showRelationshipQuestion
+                                                                            objectId={object.objectId}
+                                                                            pid={object.pid}
+                                                                            objectType={object.objectType}
+                                                                            doRemoveObject={props.doRemoveObject}
+                                                                            doUpdateReason={updateReason}
+                                                                            reason={object.reason}
+                                                                            didDelete={props.didDelete}
+                                                                            updateDeleteFlag={props.updateDeleteFlag}
+                                                                            isLocked={object.isLocked}
+                                                                        />
+                                                                    ) : (
+                                                                        ''
+                                                                    )
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                        {disableInput ? (
+                                                            ''
+                                                        ) : (
+                                                            <div className='rectangle flexCenter pixelGapTop'>
+                                                                <Row>
+                                                                    <Col sm={1} lg={1} />
+                                                                    <Col sm={10} lg={10}>
+                                                                        <RelatedResources
+                                                                            ref={relatedResourcesRef}
+                                                                            searchString={props.searchString}
+                                                                            doSearchMethod={props.doSearchMethod}
+                                                                            doUpdateSearchString={props.doUpdateSearchString}
+                                                                            userState={props.userState}
+                                                                            datasetData={props.datasetData}
+                                                                            toolData={props.toolData}
+                                                                            datauseData={props.datauseData}
+                                                                            paperData={props.paperData}
+                                                                            personData={props.personData}
+                                                                            courseData={props.courseData}
+                                                                            summary={props.summary}
+                                                                            doAddToTempRelatedObjects={props.doAddToTempRelatedObjects}
+                                                                            tempRelatedObjectIds={props.tempRelatedObjectIds}
+                                                                            relatedObjects={props.relatedObjects}
+                                                                            doClearRelatedObjects={props.doClearRelatedObjects}
+                                                                            doAddToRelatedObjects={props.doAddToRelatedObjects}
+                                                                        />
+                                                                    </Col>
+                                                                    <Col sm={1} lg={10} />
+                                                                </Row>
+                                                            </div>
+                                                        )}
+                                                    </Card.Body>
+                                                </Accordion.Collapse>
+                                            </Card>
+                                        </Accordion>
+                                    </div>
+                                </Col>
+                                <Col sm={1} lg={10} />
+                            </Row>
+                            <Row>
+                                <span className='formBottomGap' />
+                            </Row>
+                        </div>
+                    )}
+                </Formik>
             </div>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} href='/account?tab=datause'>
-                        <Button variant='medium' className='cancelButton dark-14 mr-2'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=datause'>
+                        <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>
                     </a>
                     <Button
-                        data-test-id='add-datause-publish'
+                        data-testid='add-datause-publish'
                         variant='primary'
                         className='publishButton white-14-semibold mr-2'
                         type='submit'
-                        onClick={formik.handleSubmit}
-                    >
+                        onClick={formik.handleSubmit}>
                         Save
                     </Button>
                 </div>

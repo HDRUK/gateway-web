@@ -2,20 +2,23 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
-import queryString from 'query-string';
-import React, { Component, Fragment } from 'react';
-import { Button, Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
+import { createRef, Component, Fragment } from 'react';
+import { Col, Container, Modal, Row, Tooltip } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import ReactMarkdown from 'react-markdown';
+
 import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
-import Alert from '../../components/Alert';
+
+import { generalUtils } from 'utils';
+import { Alert, RenderMarkdown } from 'components';
 import { baseURL } from '../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import googleAnalytics from '../../tracking';
 import DarHelper from '../../utils/DarHelper.util';
 import DarValidation from '../../utils/DarValidation.util';
 import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -65,7 +68,7 @@ class DataAccessRequest extends Component {
         this.onFormUpdate = this.onFormUpdate.bind(this);
         this.onHandleDataSetChange = this.onHandleDataSetChange.bind(this);
         this.onHandleActionTabChange = this.onHandleActionTabChange.bind(this);
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
 
         this.state = {
             _id: '',
@@ -200,7 +203,7 @@ class DataAccessRequest extends Component {
             //	b) Message Panel - route will contain only the 'publisherId' with historic state passed from the message panel component which includes datasetId(s)
             // 	c/d) Data Access Request User Area / Direct Link - route will contain a data access request 'accessId' which specifically links all associated data to one application
             const { datasetId, accessId, publisherId } = this.props.match.params;
-            const { version } = queryString.parse(window.location.search);
+            const { version } = generalUtils.parseQueryString(window.location.search);
             let countedQuestionAnswers = {},
                 totalQuestions = '';
 
@@ -471,11 +474,15 @@ class DataAccessRequest extends Component {
         let modalContext = DarHelper.createModalContext(aboutApplication.selectedDatasets);
         let allowsMultipleDatasets = formType === '5 safe';
 
-        // 6. If multiple datasets are allowed, append 'before you begin' section
-        if (allowsMultipleDatasets) {
-            // we need to inject About and File sections if first time running
-            jsonSchema = this.injectStaticContent(jsonSchema, inReviewMode, reviewSections, userType, areDatasetsAmended);
-        }
+        jsonSchema = this.injectStaticContent(
+            jsonSchema,
+            inReviewMode,
+            reviewSections,
+            userType,
+            areDatasetsAmended,
+            allowsMultipleDatasets
+        );
+
         // 7. Hide show submit application
         if (applicationStatus === DarHelper.darStatus.inProgress) {
             if (applicationType === DarHelper.darApplicationTypes.amendment) {
@@ -547,7 +554,7 @@ class DataAccessRequest extends Component {
      * @desc Function to inject static 'about' and 'files' pages and panels into schema
      * @returns {jsonSchmea} object
      */
-    injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = [], userType, areDatasetsAmended) {
+    injectStaticContent(jsonSchema = {}, inReviewMode = false, reviewSections = [], userType, areDatasetsAmended, allowsMultipleDatasets) {
         let { pages, formPanels } = { ...jsonSchema };
         // formPanel {pageId: 'safePeople', panelId:'applicant'}
         let formPanel = {};
@@ -557,17 +564,16 @@ class DataAccessRequest extends Component {
         let aboutNavElementsExist = [...pages].find(page => page.pageId === DarHelper.darStaticPageIds.ABOUT);
         let additionalfilesNavElementsExist = [...pages].find(page => page.pageId === DarHelper.darStaticPageIds.ADDITIONALFILES);
 
-        if (!aboutNavElementsExist && !additionalfilesNavElementsExist) {
+        if (!aboutNavElementsExist && allowsMultipleDatasets) {
             jsonSchema.pages.unshift(DarHelper.staticContent.aboutPageNav);
-            jsonSchema.pages.push(DarHelper.staticContent.filesPageNav);
-
             jsonSchema.formPanels.unshift(DarHelper.staticContent.aboutPanel);
-            jsonSchema.formPanels.push(DarHelper.staticContent.filesPanel);
         }
 
-        if (additionalfilesNavElementsExist) {
+        if (!additionalfilesNavElementsExist) {
+            jsonSchema.pages.push(DarHelper.staticContent.filesPageNav);
+            jsonSchema.formPanels.push(DarHelper.staticContent.filesPanel);
+        } else {
             jsonSchema.formPanels.push(DarHelper.staticContent.additionalFilesPanel);
-
             jsonSchema.questionPanels.push(DarHelper.staticContent.additionalFilesQuestionPanel);
         }
 
@@ -691,7 +697,8 @@ class DataAccessRequest extends Component {
                         false,
                         this.state.reviewSections,
                         this.state.userType,
-                        this.state.areDatasetsAmended
+                        this.state.areDatasetsAmended,
+                        true
                     );
                 let schemaUpdates = _.omitBy(
                     {
@@ -986,7 +993,8 @@ class DataAccessRequest extends Component {
             this.state.inReviewMode,
             this.state.reviewSections,
             this.state.userType,
-            this.state.areDatasetsAmended
+            this.state.areDatasetsAmended,
+            true
         );
         // return the updated schema to allow it to be spread into state later
         return { jsonSchema, questionAnswers };
@@ -1108,7 +1116,8 @@ class DataAccessRequest extends Component {
             this.state.inReviewMode,
             this.state.reviewSections,
             this.state.userType,
-            this.state.areDatasetsAmended
+            this.state.areDatasetsAmended,
+            true
         );
 
         let stateObj = _.omitBy(
@@ -2100,7 +2109,7 @@ class DataAccessRequest extends Component {
                                           item.active ? (
                                               <Fragment key={`pageContent-${idx}`}>
                                                   <p className='black-20-semibold mb-0'>{item.active ? item.title : ''}</p>
-                                                  <ReactMarkdown className='gray800-14' source={item.description} />
+                                                  <RenderMarkdown className='gray800-14' source={item.description} />
                                               </Fragment>
                                           ) : (
                                               ''
@@ -2276,7 +2285,7 @@ class DataAccessRequest extends Component {
                         <AsyncTypeAheadUsers
                             selectedUsers={this.state.authorIds}
                             changeHandler={this.updateContributors}
-                            getUsersInfo={true}
+                            shouldGetUsersInfo={true}
                             currentUserId={this.state.userId}
                         />
                     </ContributorModal>
@@ -2328,12 +2337,10 @@ class DataAccessRequest extends Component {
                         </div>
                         <div className='workflowModal-footer'>
                             <div className='workflowModal-footer--wrap'>
-                                <Button variant='white' className='techDetailButton mr-2' onClick={e => this.toggleEmailModal(false)}>
+                                <Button variant='secondary' className='techDetailButton mr-2' onClick={e => this.toggleEmailModal(false)}>
                                     No, nevermind
                                 </Button>
-                                <Button variant='primary' className='white-14-semibold' onClick={this.onClickMailDAR}>
-                                    Email application
-                                </Button>
+                                <Button onClick={this.onClickMailDAR}>Email application</Button>
                             </div>
                         </div>
                     </Modal>

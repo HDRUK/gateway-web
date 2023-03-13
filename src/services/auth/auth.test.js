@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { addCmsGatewayApiHostname, apiPathV1, apiUrlV1 } from '../../configs/url.config';
 import { getRequest, postRequest } from '../../utils/requests';
-import service from './auth';
+import * as service from './auth';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -26,11 +26,11 @@ describe('Given the auth service', () => {
 
     describe('When getStatus is called', () => {
         it('Then calls getRequest with the correct arguments', async () => {
-            await service.getLogout({
+            await service.getStatus({
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/auth/logout`, {
+            expect(getRequest).toHaveBeenCalledWith(addCmsGatewayApiHostname(`${apiPathV1}/auth/status`), {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the auth service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/auth/logout`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/auth/logout`, {
                 option1: true,
             });
         });
@@ -58,7 +58,7 @@ describe('Given the auth service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/auth/register`,
+                `${apiUrlV1}/auth/register`,
                 {
                     status: 'archive',
                 },

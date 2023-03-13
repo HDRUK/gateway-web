@@ -1,1 +1,1 @@
-export { default } from './dataset-onboarding';
+export * from './dataset-onboarding';

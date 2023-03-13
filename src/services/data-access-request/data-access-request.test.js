@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, getRequest, patchRequest, postRequest, putRequest } from '../../utils/requests';
-import service from './data-access-request';
+import * as service from './data-access-request';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the data-access-request service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/data-access-request`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/data-access-request`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the data-access-request service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/data-access-request/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/data-access-request/1234`, {
                 option1: true,
             });
         });
@@ -54,7 +54,7 @@ describe('Given the data-access-request service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/data-access-request/datasets`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/data-access-request/datasets`, {
                 option1: true,
             });
         });
@@ -71,7 +71,7 @@ describe('Given the data-access-request service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/data-access-request/1234`,
+                `${apiUrlV1}/data-access-request/1234`,
                 {
                     status: 'archive',
                 },
@@ -91,7 +91,7 @@ describe('Given the data-access-request service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/data-access-request/1234/requestAmendments`,
+                `${apiUrlV1}/data-access-request/1234/requestAmendments`,
                 {
                     status: 'archive',
                 },
@@ -111,7 +111,7 @@ describe('Given the data-access-request service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/data-access-request/1234/actions`,
+                `${apiUrlV1}/data-access-request/1234/actions`,
                 {
                     status: 'archive',
                 },
@@ -131,7 +131,7 @@ describe('Given the data-access-request service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/data-access-request/1234/amendments`,
+                `${apiUrlV1}/data-access-request/1234/amendments`,
                 {
                     status: 'archive',
                 },
@@ -151,7 +151,7 @@ describe('Given the data-access-request service', () => {
             );
 
             expect(postRequest).toHaveBeenCalledWith(
-                `${apiURL}/data-access-request/1234/messages`,
+                `${apiUrlV1}/data-access-request/1234/messages`,
                 {
                     status: 'archive',
                 },
@@ -171,7 +171,7 @@ describe('Given the data-access-request service', () => {
             );
 
             expect(putRequest).toHaveBeenCalledWith(
-                `${apiURL}/data-access-request/1234`,
+                `${apiUrlV1}/data-access-request/1234`,
                 {
                     status: 'archive',
                 },
@@ -191,7 +191,7 @@ describe('Given the data-access-request service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/data-access-request/1234`,
+                `${apiUrlV1}/data-access-request/1234`,
                 {
                     status: 'archive',
                 },
@@ -211,7 +211,7 @@ describe('Given the data-access-request service', () => {
             );
 
             expect(patchRequest).toHaveBeenCalledWith(
-                `${apiURL}/data-access-request/schema/1234`,
+                `${apiUrlV1}/data-access-request/schema/1234`,
                 {
                     status: 'archive',
                 },
@@ -226,7 +226,7 @@ describe('Given the data-access-request service', () => {
                 option1: true,
             });
 
-            expect(deleteRequest).toHaveBeenCalledWith(`${apiURL}/data-access-request/1234`, {
+            expect(deleteRequest).toHaveBeenCalledWith(`${apiUrlV1}/data-access-request/1234`, {
                 option1: true,
             });
         });

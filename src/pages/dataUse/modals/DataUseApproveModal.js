@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import DarHelperUtil from '../../../utils/DarHelper.util';
 import './DataUseModals.scss';
@@ -11,8 +11,7 @@ const DataUseApproveModal = ({ isVisible, toggleModal, onConfirm }) => {
             onHide={toggleModal}
             aria-labelledby='contained-modal-title-vcenter'
             centered
-            className='dataUseApproveModal'
-        >
+            className='dataUseApproveModal'>
             <CloseButtonSvg className='dataUseApproveModal-close' onClick={toggleModal} />
             <div className='dataUseApproveModal-header'>
                 <h1 className='black-20-semibold mb-2'>Approve this data use?</h1>
@@ -21,16 +20,13 @@ const DataUseApproveModal = ({ isVisible, toggleModal, onConfirm }) => {
             <div className='dataUseApproveModal-body'>
                 <div className='dataUseApproveModal-footer'>
                     <div className='dataUseApproveModal-footer--wrap'>
-                        <Button variant='white' className='techDetailButton mr-2' onClick={toggleModal}>
+                        <Button variant='secondary' className='techDetailButton mr-2' onClick={toggleModal}>
                             No, nevermind
                         </Button>
                         <Button
-                            variant='primary'
-                            className='white-14-semibold'
                             onClick={() =>
                                 onConfirm(DarHelperUtil.dataUseRegisterStatus.INREVIEW, DarHelperUtil.dataUseRegisterStatus.ACTIVE)
-                            }
-                        >
+                            }>
                             Approve
                         </Button>
                     </div>

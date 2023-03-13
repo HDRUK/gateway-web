@@ -1,4 +1,3 @@
-import React from 'react';
 import LoginSSOButtons from './index';
 import _ from 'lodash';
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -35,7 +34,7 @@ describe('Given the LoginSSOButtons component', () => {
             expect(screen.queryByTestId('lastChoiceNote')).toBeNull();
         });
 
-        it('Then Suggest another Indentity Provider link should  be rendered', () => {
+        it('Then Suggest another Identity Provider link should  be rendered', () => {
             expect(screen.getByTestId('communityLink')).toHaveAttribute(
                 'href',
                 `${props.communityLink}/t/how-to-submit-a-feature-request-or-feedback/1`

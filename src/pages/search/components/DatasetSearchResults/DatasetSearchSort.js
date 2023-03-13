@@ -1,11 +1,10 @@
-import React from 'react';
-import SortDropdown from '../../../../components/SortDropdown';
+import { SortDropdown } from 'components';
 
 const DatasetSearchSort = ({ sort, onSort, search, ...outerProps }) => {
     return (
         <SortDropdown
             onSort={onSort}
-            defaultValue={search === '' ? 'metadata' : 'relevance'}
+            defaultValue='latest'
             value={sort}
             options={['relevance', 'popularity', 'metadata', 'latest', 'resources']}
             {...outerProps}

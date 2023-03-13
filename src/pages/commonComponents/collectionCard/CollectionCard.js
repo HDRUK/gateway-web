@@ -1,8 +1,8 @@
-import React from 'react';
+import { Component } from 'react';
 import { Row } from 'react-bootstrap';
 import './CollectionCard.scss';
 
-class CollectionCard extends React.Component {
+class CollectionCard extends Component {
     state = {
         data: [],
         entityCount: 0,

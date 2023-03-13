@@ -1,4 +1,4 @@
-import React from 'react';
+import { Button } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
 import './CommunicateDataCustodianModal.scss';
 
@@ -16,12 +16,12 @@ const CommunicateDataCustodianModal = ({ open, closed }) => {
                 and will provide information on how to complete the data access application form if appropriate.
             </Modal.Body>
             <Modal.Footer>
-                <button type='button' className='button-secondary mr-2' onClick={() => handleClose('SUBMIT_APPLICATION')}>
+                <Button variant='secondary' mr={2} onClick={() => handleClose('SUBMIT_APPLICATION')}>
                     Start application
-                </button>
-                <button type='button' className='btn btn-primary addButton' onClick={() => handleClose('ENQUIRY')}>
+                </Button>
+                <Button className='addButton' onClick={() => handleClose('ENQUIRY')}>
                     Make an enquiry
-                </button>
+                </Button>
             </Modal.Footer>
         </Modal>
     );

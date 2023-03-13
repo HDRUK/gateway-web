@@ -1,33 +1,33 @@
-import React, { Component, useState } from 'react';
+import { forwardRef, Children, Component, useState } from 'react';
 import axios from 'axios';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import moment from 'moment';
 import './AddToCollection.scss';
 import SVGIcon from '../../../images/SVGIcon';
+import { Button } from 'hdruk-react-core';
 
 var baseURL = require('../BaseURL').getURL();
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+const CustomToggle = forwardRef(({ children, onClick }, ref) => (
     <a
         href='javascript:void(0)'
         ref={ref}
         onClick={e => {
             e.preventDefault();
             onClick(e);
-        }}
-    >
+        }}>
         {children}
     </a>
 ));
 
-const CustomMenu = React.forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+const CustomMenu = forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
     const [value] = useState('');
 
     return (
         <div ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
             <ul className='list-unstyled margin-bottom-0'>
-                {React.Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
+                {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
             </ul>
         </div>
     );
@@ -121,7 +121,7 @@ class AddToCollection extends Component {
                             return (
                                 <Dropdown>
                                     <Dropdown.Toggle as={CustomToggle}>
-                                        <Button variant='medium' className='addToCollectionButton dark-14 mr-2'>
+                                        <Button variant='tertiary' className='addToCollectionButton mr-2'>
                                             Add to collection
                                         </Button>
                                     </Dropdown.Toggle>
@@ -134,8 +134,7 @@ class AddToCollection extends Component {
                                             return (
                                                 <div
                                                     className='gray800-14 addToCollectionItem pointer'
-                                                    onClick={() => this.updateCollection(dat)}
-                                                >
+                                                    onClick={() => this.updateCollection(dat)}>
                                                     <Row>
                                                         <Col sm={10} lg={10}>
                                                             {dat.name}

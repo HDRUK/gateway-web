@@ -1,6 +1,7 @@
 import { find, isEmpty, isUndefined, some } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { Col, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
@@ -8,11 +9,12 @@ import { Link, useHistory } from 'react-router-dom';
 import { SlideDown } from 'react-slidedown';
 import readXlsxFile from 'read-excel-file';
 import convertToJson from 'read-excel-file/schema';
-import Alert from '../../../components/Alert';
-import Loading from '../../../components/Loading';
+
+import { Alert, Loading } from 'components';
 import SVGIcon from '../../../images/SVGIcon';
-import dataUseRegistersService from '../../../services/data-use-registers';
+import { dataUseRegistersService } from 'services';
 import googleAnalytics from '../../../tracking';
+
 import ActionBar from '../../commonComponents/actionbar/ActionBar';
 import dataUseSchema from './DataUseSchema';
 import DataUseSubmitModal from './DataUseSubmitModal';
@@ -648,6 +650,7 @@ const DataUseUpload = ({ onSubmit, team, dataUsePage, userState }) => {
                         ''
                     )}
 
+                    {/* TODO: GAT-1510:051 */}
                     <DataUseSubmitModal
                         open={isSubmitModalVisible}
                         close={toggleSubmitModal}

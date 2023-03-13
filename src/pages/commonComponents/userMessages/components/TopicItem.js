@@ -1,6 +1,7 @@
-import React from 'react';
 import moment from 'moment';
-import NotificationBadge from 'react-notification-badge';
+
+import { NotificationBadge } from 'components';
+
 import '../UserMessages.scss';
 
 const TopicItem = props => {
@@ -15,11 +16,10 @@ const TopicItem = props => {
     };
     const setCreatedDate = () => {
         if (typeof createdDate !== 'undefined') {
-            let reg = /^.*new.*$/gim;
+            const reg = /^.*new.*$/gim;
             return reg.test(createdDate) ? 'New message' : moment(createdDate).format('DD MMM HH:mm');
-        } else {
-            return '';
         }
+        return '';
     };
 
     return (

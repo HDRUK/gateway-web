@@ -1,8 +1,10 @@
 import _ from 'lodash';
-import React, { Fragment, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SlideDown } from 'react-slidedown';
-import Checkbox from '../../../components/Checkbox';
+
+import { Checkbox } from 'components';
 import SVGIcon from '../../../images/SVGIcon';
+
 import { FilterCount } from './FilterCount';
 import { FilterSearch } from './FilterSearch';
 import { FilterClearSection } from './FilterClearSection';
@@ -12,7 +14,7 @@ import { isTree } from '../SearchPage';
 
 const CheckboxWrapper = ({ node = {}, highlighted = [], parentKey = '', onHandleInputChange }) => {
     let highlight = false;
-    const onHandleChange = React.useCallback(
+    const onHandleChange = useCallback(
         e => {
             onHandleInputChange(node, parentKey, e.target.checked);
         },
@@ -33,36 +35,10 @@ const CheckboxWrapper = ({ node = {}, highlighted = [], parentKey = '', onHandle
     );
 };
 
-const TreeHeader = ({ node }) => {
+const TreeHeader = ({ node, selected }) => {
     const { label, closed, beta = false } = node;
-    let count = 0;
 
-    const getParentCounts = tree => {
-        if (_.isEmpty(tree)) {
-            return;
-        }
-        tree.forEach(node => {
-            if (typeof node.selectedCount !== 'undefined') {
-                count += node.selectedCount;
-            }
-            if (typeof node.filters !== 'undefined' && !_.isEmpty(node.filters)) {
-                const child = getParentCounts(node.filters);
-                return child;
-            }
-        });
-        return count;
-    };
-
-    const renderCount = () => {
-        const parentCount = getParentCounts(node.filters) || node.selectedCount;
-        return parentCount > 0 ? (
-            <div className='node-micro__count'>
-                <FilterCount count={parentCount} />
-            </div>
-        ) : (
-            ''
-        );
-    };
+    const count = selected.filter(item => item.parentKey === node.alias).length;
 
     return (
         <>
@@ -71,14 +47,18 @@ const TreeHeader = ({ node }) => {
                 {beta ? <div className='node-beta'>BETA</div> : ''}
             </div>
             <div className='node-micro'>
-                {renderCount()}
+                {!!count && (
+                    <div className='node-micro__count'>
+                        <FilterCount count={count} />
+                    </div>
+                )}
                 <SVGIcon width='12px' height='12px' className={closed ? '' : 'flip180'} name='chevronbottom' fill='#475da7' />
             </div>
         </>
     );
 };
 
-const TreeItem = ({ node, highlighted, parentKey, hasChildren, onHandleInputChange, onHandleToggle }) => {
+const TreeItem = ({ node, selected, highlighted, parentKey, hasChildren, onHandleInputChange, onHandleToggle }) => {
     const toggleFilter = e => {
         e.preventDefault();
         onHandleToggle(node);
@@ -87,7 +67,7 @@ const TreeItem = ({ node, highlighted, parentKey, hasChildren, onHandleInputChan
     if (!_.isEmpty(node.key)) {
         return (
             <div className={hasChildren ? 'node-item' : 'node-header'} onClick={e => toggleFilter(e)}>
-                {hasChildren ? <TreeSubHeader node={node} /> : <TreeHeader node={node} />}
+                {hasChildren ? <TreeSubHeader node={node} /> : <TreeHeader node={node} selected={selected} />}
             </div>
         );
     }
@@ -153,6 +133,7 @@ const TreeComponent = ({
                 hasChildren={hasChildren}
                 onHandleInputChange={onHandleInputChange}
                 onHandleToggle={onHandleToggle}
+                selected={selected}
             />
             <SlideDown closed={false} className={hasChildren ? 'node-check-group' : 'node-single-group'}>
                 {hasControls() && (
@@ -178,7 +159,7 @@ const TreeComponent = ({
                         <Filter
                             selected={selected}
                             data={node.filters}
-                            parentKey={node.key}
+                            parentKey={node.alias || node.key}
                             highlighted={node.highlighted}
                             hasChildren
                             searchValue={searchValue}
@@ -223,30 +204,32 @@ const Filter = ({
 
                         return false;
                     })
-                    .map(node => (
-                        <div key={node.label} className={generateClassName(node)}>
-                            {generateClassName(node) !== 'node-subItem' ? (
-                                <TreeComponent
-                                    selected={selected}
-                                    key={node.id}
-                                    node={node}
-                                    parentKey={parentKey}
-                                    highlighted={node.highlighted}
-                                    hasChildren={hasChildren}
-                                    onHandleInputChange={onHandleInputChange}
-                                    onHandleToggle={onHandleToggle}
-                                    onHandleClearSection={onHandleClearSection}
-                                />
-                            ) : (
-                                <CheckboxWrapper
-                                    node={node}
-                                    highlighted={highlighted}
-                                    parentKey={parentKey}
-                                    onHandleInputChange={onHandleInputChange}
-                                />
-                            )}
-                        </div>
-                    ))}
+                    .map(node => {
+                        return (
+                            <div key={node.label} className={generateClassName(node)}>
+                                {generateClassName(node) !== 'node-subItem' ? (
+                                    <TreeComponent
+                                        selected={selected}
+                                        key={node.id}
+                                        node={node}
+                                        parentKey={parentKey}
+                                        highlighted={node.highlighted}
+                                        hasChildren={hasChildren}
+                                        onHandleInputChange={onHandleInputChange}
+                                        onHandleToggle={onHandleToggle}
+                                        onHandleClearSection={onHandleClearSection}
+                                    />
+                                ) : (
+                                    <CheckboxWrapper
+                                        node={node}
+                                        highlighted={highlighted}
+                                        parentKey={parentKey}
+                                        onHandleInputChange={onHandleInputChange}
+                                    />
+                                )}
+                            </div>
+                        );
+                    })}
         </>
     );
 };

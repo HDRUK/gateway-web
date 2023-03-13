@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { testUtils } from '../../../../../test';
 import '@testing-library/jest-dom/extend-expect';
 import RemoveButton from './RemoveButton';
 
@@ -11,7 +10,7 @@ let wrapper;
 describe('Given the Remove Button component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            wrapper = render(<RemoveButton {...props} />);
+            wrapper = testUtils.render(<RemoveButton {...props} />);
         });
 
         it('Then matches the previous snapshot', () => {
@@ -19,12 +18,12 @@ describe('Given the Remove Button component', () => {
         });
 
         it('Then Button should be rendered with SVG icon', () => {
-            expect(screen.getByTestId('remove-button')).toBeTruthy();
-            expect(screen.getByTestId('closeicon')).toBeTruthy();
+            expect(testUtils.screen.getByTestId('remove-button')).toBeTruthy();
+            expect(testUtils.screen.getByTestId('closeicon')).toBeTruthy();
         });
 
         it('Then onclick should call removeButtonHandler function', () => {
-            fireEvent.click(screen.getByTestId('remove-button'));
+            testUtils.fireEvent.click(testUtils.screen.getByTestId('remove-button'));
             expect(props.removeButtonHandler.mock.calls.length).toBe(1);
         });
     });

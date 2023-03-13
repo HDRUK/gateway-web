@@ -278,7 +278,7 @@ button,
     }
 
     .active {
-        border-bottom: 4px solid #3db28c !important;
+        border-bottom: 3px solid #3db28c !important;
         border-radius: 0 !important;
     }
 }
@@ -290,6 +290,7 @@ a.nav-item.nav-link {
 a.nav-item.nav-link.active {
     color: #2d2d2d !important;
     font-weight: bold !important;
+    background: transparent;
 }
 
 .comingSoonBadge {
@@ -526,6 +527,14 @@ input[type='radio']:checked:after {
     }
 }
 
+.tabsBackground__searchPage {
+    box-shadow: none;
+    background-color: transparent !important;
+    .nav-link {
+        padding: 0.7rem 1rem;
+    }
+}
+
 .tab-content {
     margin-top: 1px;
 }
@@ -580,12 +589,10 @@ svg:not(:root) {
 
 .cancelButton {
     width: 82px;
-    height: 40px;
 }
 
 .publishButton {
     width: 79px;
-    height: 40px;
 }
 
 .linkButton {
@@ -801,14 +808,12 @@ textarea:focus {
 }
 
 .techDetailButton {
-    height: 40px;
     width: 140px;
-    border: 2px solid $teal !important;
-    border-radius: 4px !important;
-    background-color: $white;
-    color: $indigo;
-    font-family: museo-sans-rounded;
-    font-size: 14px !important;
+}
+
+// TODO: Extend react-core Button component and remove this
+a.nested-button {
+    text-decoration: none !important;
 }
 
 .accountDropDownGap {
@@ -1499,7 +1504,6 @@ button a {
 
 .addToCollectionButton {
     width: 147px;
-    height: 40px;
 }
 
 .addToCollectionButton:focus {

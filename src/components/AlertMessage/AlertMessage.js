@@ -1,11 +1,12 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { cx } from '@emotion/css';
-import { jsx } from '@emotion/react';
+
+import { useCommonStyles } from 'hooks';
 import Icon from '../Icon';
-import useCommonStyles from '../../hooks/useCommonStyles';
 import { ReactComponent as CheckIcon } from '../../images/icons/tick.svg';
 import { ReactComponent as DangerIcon } from '../../images/icons/danger.svg';
 import { ReactComponent as InfoIcon } from '../../images/icons/info.svg';
+
 import * as styles from './AlertMessage.styles';
 
 const AlertMessage = ({ className, children, ml, mr, mb, mt, m, width, minWidth, maxWidth, variant, icon, ...outerProps }) => {

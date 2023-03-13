@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import { has, isEmpty } from 'lodash';
 import { draftToMarkdown, markdownToDraft } from 'markdown-draft-js';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
-import publishersService from '../../../../services/publishers';
+import { Button } from 'hdruk-react-core';
+
+import { publishersService } from 'services';
 import { WysiwygEditor } from '../../../commonComponents/WysiwygEditor/WysiwygEditor';
 import handleAnalytics from '../../../dataAccessRequestCustomiseForm/handleAnalytics';
-import './CustomiseDAREditGuidance.scss';
 
-const baseURL = require('../../../commonComponents/BaseURL').getURL();
+import './CustomiseDAREditGuidance.scss';
 
 export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => {
     const { t } = useTranslation();
@@ -32,7 +33,7 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
         },
     });
 
-    const handleConfirmOk = React.useCallback(() => {
+    const handleConfirmOk = useCallback(() => {
         const content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
 
         const { _id } = publisherDetails;
@@ -50,23 +51,23 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
         handleAnalytics('Clicked Publish button', 'Presubmission guidance');
     }, [publisherDetails._id, editorState.getCurrentContent()]);
 
-    const handlePublish = React.useCallback(() => {
+    const handlePublish = useCallback(() => {
         setShowConfirm(true);
     }, []);
 
-    const handleConfirmCancel = React.useCallback(() => {
+    const handleConfirmCancel = useCallback(() => {
         setShowConfirm(false);
     }, []);
 
-    const handleCancel = React.useCallback(() => {
+    const handleCancel = useCallback(() => {
         setShowCancel(true);
     }, []);
 
-    const handleCancelCancel = React.useCallback(() => {
+    const handleCancelCancel = useCallback(() => {
         setShowCancel(false);
     }, []);
 
-    const handleCancelOk = React.useCallback(() => {
+    const handleCancelOk = useCallback(() => {
         onHide();
     }, []);
 
@@ -74,7 +75,7 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
         header: t('DAR.customise.presubmissionGuidance.modal.title'),
         body: t('DAR.customise.presubmissionGuidance.modal.description', { publisherName }),
         cancel: (
-            <Button variant='medium' className='cancelButton dark-14 mr-2' onClick={handleCancel} data-testid='cancel-publish'>
+            <Button variant='tertiary' className='cancelButton mr-2' onClick={handleCancel} data-testid='cancel-publish'>
                 {t('buttons.cancel')}
             </Button>
         ),
@@ -96,17 +97,13 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
             header: t('DAR.customise.presubmissionGuidance.modal.publish.title'),
             body: t('DAR.customise.presubmissionGuidance.modal.publish.description', { publisherName }),
             cancel: (
-                <Button
-                    variant='medium'
-                    className='cancelButton dark-14 mr-2'
-                    onClick={handleConfirmCancel}
-                    data-testid='confirm-cancel-publish'>
+                <Button variant='tertiary' className='cancelButton mr-2' onClick={handleConfirmCancel} data-testid='confirm-cancel-publish'>
                     {t('buttons.neverMind')}
                 </Button>
             ),
             confirm: (
                 <Button
-                    data-test-id='add-collection-publish'
+                    data-testid='add-collection-publish'
                     variant='primary'
                     className='publishButton white-14-semibold'
                     type='submit'
@@ -120,13 +117,13 @@ export const CustomiseDAREditGuidance = ({ show, onHide, publisherDetails }) => 
             header: t('DAR.customise.presubmissionGuidance.modal.cancel.title'),
             body: t('DAR.customise.presubmissionGuidance.modal.cancel.description'),
             cancel: (
-                <Button variant='medium' className='cancelButton dark-14 mr-2' onClick={handleCancelCancel} data-testid='confirm-cancel'>
+                <Button variant='tertiary' className='cancelButton mr-2' onClick={handleCancelCancel} data-testid='confirm-cancel'>
                     {t('buttons.neverMind')}
                 </Button>
             ),
             confirm: (
                 <Button
-                    data-test-id='add-collection-publish'
+                    data-testid='add-collection-publish'
                     variant='primary'
                     className='publishButton white-14-semibold'
                     type='submit'

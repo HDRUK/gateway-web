@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react';
+import { Button } from 'hdruk-react-core';
 
 const MessageFooter = ({ onSubmitMessage, onMessageChange, value }) => {
     return (
-        <Fragment>
+        <>
             <form
                 onSubmit={e => {
                     onSubmitMessage(e);
-                }}
-            >
+                }}>
                 <div className='form-group'>
                     <textarea
                         className='form-control'
@@ -19,11 +18,11 @@ const MessageFooter = ({ onSubmitMessage, onMessageChange, value }) => {
                         }}
                     />
                 </div>
-                <button className='button-secondary' type='submit'>
+                <Button variant='secondary' type='submit'>
                     Submit
-                </button>
+                </Button>
             </form>
-        </Fragment>
+        </>
     );
 };
 

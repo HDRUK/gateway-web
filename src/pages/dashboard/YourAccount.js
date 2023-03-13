@@ -1,20 +1,23 @@
-import React, { Fragment, useState } from 'react';
+import { Component, Fragment, useState } from 'react';
 import axios from 'axios';
 import * as Yup from 'yup';
-import { Row, Col, Button, Alert, Form, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Row, Col, Alert, Form, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import queryString from 'query-string';
-import Loading from '../commonComponents/Loading';
-import './Dashboard.scss';
-import SVGIcon from '../../images/SVGIcon';
-import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
+import { Button } from 'hdruk-react-core';
 import TextareaAutosize from 'react-textarea-autosize';
-import Checkbox from '../../components/Checkbox';
+
+import { generalUtils } from 'utils';
+import { Checkbox } from 'components';
+import SVGIcon from '../../images/SVGIcon';
+
+import './Dashboard.scss';
+import Loading from '../commonComponents/Loading';
+import AlertBannerBlue from '../commonComponents/AlertBannerBlue';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class YourAccount extends React.Component {
+class YourAccount extends Component {
     // initialize our state
     state = {
         data: [],
@@ -42,7 +45,7 @@ class YourAccount extends React.Component {
 
     componentDidMount() {
         if (!!window.location.search) {
-            var values = queryString.parse(window.location.search);
+            var values = generalUtils.parseQueryString(window.location.search);
             this.setState({ isUpdated: values.accountUpdated });
         }
         this.getAccountDetails();
@@ -356,7 +359,7 @@ const YourAccountForm = props => {
                                             onChange={formik.handleChange}
                                             value={formik.values.firstname}
                                             onBlur={formik.handleBlur}
-                                            data-test-id='user-account-first-name'
+                                            data-testid='user-account-first-name'
                                         />
                                     </Col>
                                     <Col
@@ -377,7 +380,7 @@ const YourAccountForm = props => {
                                 </Row>
 
                                 {formik.touched.firstname && formik.errors.firstname ? (
-                                    <div className='errorMessages' data-test-id='user-account-first-name-validation'>
+                                    <div className='errorMessages' data-testid='user-account-first-name-validation'>
                                         {formik.errors.firstname}
                                     </div>
                                 ) : null}
@@ -399,7 +402,7 @@ const YourAccountForm = props => {
                                             onChange={formik.handleChange}
                                             value={formik.values.lastname}
                                             onBlur={formik.handleBlur}
-                                            data-test-id='user-account-last-name'
+                                            data-testid='user-account-last-name'
                                         />
                                     </Col>
                                     <Col
@@ -421,7 +424,7 @@ const YourAccountForm = props => {
                                     </Col>
                                 </Row>
                                 {formik.touched.lastname && formik.errors.lastname ? (
-                                    <div className='errorMessages' data-test-id='user-account-last-name-validation'>
+                                    <div className='errorMessages' data-testid='user-account-last-name-validation'>
                                         {formik.errors.lastname}
                                     </div>
                                 ) : null}
@@ -441,7 +444,7 @@ const YourAccountForm = props => {
                                             onChange={formik.handleChange}
                                             value={formik.values.email}
                                             onBlur={formik.handleBlur}
-                                            data-test-id='user-account-email-address'
+                                            data-testid='user-account-email-address'
                                         />
                                     </Col>
                                     <Col
@@ -467,7 +470,7 @@ const YourAccountForm = props => {
                                     </Col>
                                 </Row>
                                 {formik.touched.email && formik.errors.email ? (
-                                    <div className='errorMessages' data-test-id='user-account-email-address-validation'>
+                                    <div className='errorMessages' data-testid='user-account-email-address-validation'>
                                         {formik.errors.email}
                                     </div>
                                 ) : null}
@@ -511,7 +514,7 @@ const YourAccountForm = props => {
                                                     className='gray800-14 width-100'
                                                     key={sec}
                                                     eventKey={sec}
-                                                    data-test-id={`user-account-sector-option-${i}`}>
+                                                    data-testid={`user-account-sector-option-${i}`}>
                                                     {sec}
                                                 </Dropdown.Item>
                                             ))}
@@ -545,7 +548,7 @@ const YourAccountForm = props => {
                                     </Col>
                                 </Row>
                                 {formik.touched.sector && formik.errors.sector ? (
-                                    <div className='errorMessages margin-top-8' data-test-id='user-account-sector-validation'>
+                                    <div className='errorMessages margin-top-8' data-testid='user-account-sector-validation'>
                                         {formik.errors.sector}
                                     </div>
                                 ) : null}
@@ -558,7 +561,7 @@ const YourAccountForm = props => {
                                     <span className='gray700-13'>Your affiliation or company, if applicable</span>
                                     <Form.Group>
                                         <Row>
-                                            <Col sm={11} lg={11} data-test-id='user-account-organisation'>
+                                            <Col sm={11} lg={11} data-testid='user-account-organisation'>
                                                 <Typeahead
                                                     id='organisation'
                                                     name='organisation'
@@ -620,7 +623,7 @@ const YourAccountForm = props => {
                                         formik.values.organisation === '' &&
                                         formik.errors.organisation &&
                                         typeof formik.errors.organisation !== 'undefined' ? (
-                                            <div className='errorMessages' data-test-id='user-account-organisation-validation'>
+                                            <div className='errorMessages' data-testid='user-account-organisation-validation'>
                                                 {formik.errors.organisation}
                                             </div>
                                         ) : (
@@ -658,10 +661,10 @@ const YourAccountForm = props => {
                                             value={formik.values.bio}
                                             onBlur={formik.handleBlur}
                                             onKeyUp={bioCount}
-                                            data-test-id='user-account-bio'
+                                            data-testid='user-account-bio'
                                         />
                                         {formik.touched.bio && formik.errors.bio ? (
-                                            <div className='errorMessages' data-test-id='user-account-bio-validation'>
+                                            <div className='errorMessages' data-testid='user-account-bio-validation'>
                                                 {formik.errors.bio}
                                             </div>
                                         ) : null}
@@ -699,7 +702,7 @@ const YourAccountForm = props => {
                                 <Form.Label className='gray800-14'>Domain (optional)</Form.Label>
                                 <br />
                                 <Row>
-                                    <Col sm={11} lg={11} data-test-id='user-account-domain'>
+                                    <Col sm={11} lg={11} data-testid='user-account-domain'>
                                         <Typeahead
                                             id='tags.topics'
                                             labelKey='topics'
@@ -764,7 +767,7 @@ const YourAccountForm = props => {
                                             onChange={formik.handleChange}
                                             value={formik.values.link}
                                             onBlur={formik.handleBlur}
-                                            data-test-id='user-account-link'
+                                            data-testid='user-account-link'
                                         />
                                     </Col>
                                     <Col
@@ -810,7 +813,7 @@ const YourAccountForm = props => {
                                             onChange={formik.handleChange}
                                             value={formik.values.orcid}
                                             onBlur={formik.handleBlur}
-                                            data-test-id='user-account-orcid'
+                                            data-testid='user-account-orcid'
                                         />
                                     </Col>
                                     <Col
@@ -858,18 +861,18 @@ const YourAccountForm = props => {
                                                 href='https://www.hdruk.ac.uk/infrastructure/gateway/terms-and-conditions/'
                                                 target='_blank'
                                                 rel='noopener noreferrer'
-                                                data-test-id='user-account-terms-conditions-link'>
+                                                data-testid='user-account-terms-conditions-link'>
                                                 Terms and Conditions
                                             </a>
                                         </>
                                     }
-                                    data-test-id='user-account-terms-conditions'
+                                    data-testid='user-account-terms-conditions'
                                 />
                                 <Row className='mt-2'>
                                     {formik.touched.terms && formik.errors.terms ? (
                                         <div
                                             className='errorMessages margin-left-16'
-                                            data-test-id='user-account-terms-conditions-validation'>
+                                            data-testid='user-account-terms-conditions-validation'>
                                             {formik.errors.terms}
                                         </div>
                                     ) : null}
@@ -898,7 +901,7 @@ const YourAccountForm = props => {
                                             name='feedback'
                                             checked={formik.values.feedback}
                                             onChange={formik.handleChange}
-                                            data-test-id='user-account-feedback'
+                                            data-testid='user-account-feedback'
                                             label='I am happy to be contacted to share and give feedback on my experience with the Gateway'
                                             ml={4}
                                         />
@@ -919,7 +922,7 @@ const YourAccountForm = props => {
                                             name='news'
                                             checked={formik.values.news}
                                             onChange={formik.handleChange}
-                                            data-test-id='user-account-news'
+                                            data-testid='user-account-news'
                                             ml={4}
                                             label={
                                                 <>
@@ -958,15 +961,15 @@ const YourAccountForm = props => {
                 <Row className='mt-3 mb-5'>
                     <Col className='text-right'>
                         <Button
-                            variant='medium'
-                            className='dark-14 mr-2'
+                            variant='tertiary'
+                            className='mr-2'
                             onClick={e => {
                                 window.location.href = `/person/${props.userdata.id}`;
                             }}
-                            data-test-id='user-account-view-profile'>
+                            data-testid='user-account-view-profile'>
                             View my profile
                         </Button>
-                        <Button variant='primary' type='submit' className='addButton' data-test-id='user-account-save-changes'>
+                        <Button type='submit' className='addButton' data-testid='user-account-save-changes'>
                             Save changes
                         </Button>
                     </Col>

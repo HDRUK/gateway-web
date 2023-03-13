@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import './AdvancedSearchTAndCsModal.scss';
 import AdvancedSearchTAndCsContent from './AdvancedSearchTAndCsContent';
@@ -47,19 +48,18 @@ const AdvancedSearchTAndCsModal = ({ open, close, updateUserAcceptedAdvancedSear
 
                     <div className='advancedSearchTAndCModal-footer'>
                         <div className='advancedSearchTAndCModal-footer--wrap'>
-                            <button className='button-secondary' type='button' onClick={() => close()}>
+                            <Button variant='secondary' onClick={() => close()}>
                                 Cancel
-                            </button>
-                            <button
-                                data-test-id='agree-to-terms'
+                            </Button>
+                            <Button
+                                data-testid='agree-to-terms'
                                 type='submit'
-                                className='button-primary'
                                 onClick={() => {
                                     const elmnt = document.getElementById('accept-terms');
                                     if (elmnt && elmnt.scrollIntoView) elmnt.scrollIntoView();
                                 }}>
                                 Yes, I agree
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </Form>

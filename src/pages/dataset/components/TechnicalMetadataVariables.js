@@ -1,10 +1,10 @@
-import React from 'react';
+import { Component } from 'react';
 import { Col, Row, Collapse, Alert } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as VariableSvg } from '../../../images/variable.svg';
 import '../Dataset.scss';
 
-class TechnicalMetadataVariables extends React.Component {
+class TechnicalMetadataVariables extends Component {
     state = {
         open: false,
         flagClosed: true,

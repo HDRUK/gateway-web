@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import { Card, CardBody, Button } from 'hdruk-react-core';
-import Checkbox from '../../../components/Checkbox';
-import { LayoutContent } from '../../../components/Layout';
-import Typography from '../../../components/Typography';
-import useScript from '../../../hooks/useScript';
-import publishersService from '../../../services/publishers';
+
+import { LayoutContent, Typography, Checkbox } from 'components';
+import { useScript } from 'hooks';
+import { publishersService } from 'services';
+
 import AcceptModal from './AcceptModal';
 import DataUseWidgetCode from './widgetCode';
-import { getWidgetAPI } from '../../../configs/url.config';
 
 const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets/dist/hdruk-data-uses.js`;
 
+const baseURL = require('../../commonComponents/BaseURL').getURL();
+
 const DataUseWidget = ({ userState, team, publisherDetails }) => {
     const { t } = useTranslation();
-    const widgetAPIURL = `${getWidgetAPI()}/api/v1/data?search=&datausedatacustodian=${publisherDetails.name}&tab=Datauses`;
+    const widgetAPIURL = `${baseURL}/api/v1/search?search=&datausedatacustodian=${publisherDetails.name}&tab=Datauses`;
     useScript(WIDGET_MODULE);
     const [checked, setChecked] = useState(false);
     const [disabled, setDisabled] = useState(true);
@@ -28,7 +29,7 @@ const DataUseWidget = ({ userState, team, publisherDetails }) => {
 
     const accepted = publisherDetails?.dataUse?.widget?.accepted;
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (accepted) {
             setChecked(accepted);
             setDisabled(accepted);

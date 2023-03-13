@@ -1,8 +1,8 @@
-import React from 'react';
+import { Component } from 'react';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-class TypaheadCustom extends React.Component {
+class TypaheadCustom extends Component {
     constructor(props) {
         super(props);
         this.state = {

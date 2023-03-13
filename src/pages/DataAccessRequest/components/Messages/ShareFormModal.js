@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Button } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 
@@ -6,15 +6,14 @@ import './ShareFormModal.scss';
 
 const ShareFormModal = ({ open, close, messageWithoutSharing, messageAndShare }) => {
     return (
-        <Fragment>
+        <>
             <Modal
                 show={open}
                 onHide={close}
                 size='lg'
                 aria-labelledby='contained-modal-title-vcenter'
                 centered
-                className='contributorModal'
-            >
+                className='contributorModal'>
                 <div className='contributorModal-header'>
                     <div className='contributorModal-header--wrap'>
                         <div className='contributorModal-head'>
@@ -34,16 +33,14 @@ const ShareFormModal = ({ open, close, messageWithoutSharing, messageAndShare })
 
                 <div className='contributorModal-footer'>
                     <div className='contributorModal-footer--wrap'>
-                        <button className='button-secondary' onClick={() => messageWithoutSharing()}>
+                        <Button variant='secondary' onClick={() => messageWithoutSharing()}>
                             Message without sharing
-                        </button>
-                        <button className='button-primary' onClick={() => messageAndShare()}>
-                            Message and share
-                        </button>
+                        </Button>
+                        <Button onClick={() => messageAndShare()}>Message and share</Button>
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

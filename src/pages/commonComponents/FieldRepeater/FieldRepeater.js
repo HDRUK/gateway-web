@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Field from './Field';
 import FieldRepeaterAction from './FieldRepeaterAction';
 import { userTypes } from '../../dashboard/Team/teamUtil';
@@ -8,11 +8,12 @@ const FieldRepeater = ({ id, teamId, data, userHasRole, handleFieldChange, handl
     const [manager, setIsManager] = useState(false);
 
     const isManager = () => {
+        // TODO: GAT-1510:003
         const isManager = userHasRole(teamId, userTypes.MANAGER);
         setIsManager(isManager);
     };
 
-    let { subscribedEmails = [], notificationType = '' } = data;
+    const { subscribedEmails = [], notificationType = '' } = data;
 
     useEffect(() => {
         isManager();

@@ -1,7 +1,6 @@
-import React from 'react';
 import { render, waitForElementToBeRemoved, cleanup, screen, within } from '@testing-library/react';
 import { CollectionPage } from './CollectionPage';
-import service from '../../services/collections/collections';
+import * as service from '../../services/collections/collections';
 import { collectionPageData } from '../../../test/mocks/dataMock';
 
 jest.mock('../../services/collections/collections', () => ({

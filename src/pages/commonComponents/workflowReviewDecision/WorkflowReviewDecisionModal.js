@@ -1,6 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import _ from 'lodash';
+import { Button } from 'hdruk-react-core';
 import WorkflowReviewDecisionHeader from './WorkflowReviewDecisionHeader';
 import './WorkflowReviewDecision.scss';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -63,7 +64,7 @@ const WorkflowReviewDecisionModal = ({
     };
 
     const renderDeadline = () => {
-        let { deadline, deadlinePassed = false } = activePhase;
+        const { deadline, deadlinePassed = false } = activePhase;
         return (
             <span className={`${deadlinePassed ? 'app-red' : ''}`}>{deadlinePassed ? `${deadline} days ago` : `in ${deadline} days`}</span>
         );
@@ -76,9 +77,9 @@ const WorkflowReviewDecisionModal = ({
     useEffect(() => {
         const getActivePhase = () => {
             if (!_.isEmpty(workflow)) {
-                let { steps } = workflow;
+                const { steps } = workflow;
                 if (!_.isEmpty(steps)) {
-                    let activeStep = [...steps].find(s => s.active) || {};
+                    const activeStep = [...steps].find(s => s.active) || {};
                     setPhase(activeStep);
                 }
             }
@@ -87,7 +88,7 @@ const WorkflowReviewDecisionModal = ({
     }, [workflow]);
 
     return (
-        <Fragment>
+        <>
             <Modal show={open} onHide={close} size='lg' aria-labelledby='contained-modal-title-vcenter' centered className='reviewDecision'>
                 <WorkflowReviewDecisionHeader approved={approved} onClickAction={onClickAction} />
 
@@ -129,15 +130,13 @@ const WorkflowReviewDecisionModal = ({
                     </div>
                 </div>
                 <div className='reviewDecision-footer'>
-                    <button className='button-secondary' onClick={e => onClickAction(e, 'cancel')}>
+                    <Button variant='secondary' onClick={e => onClickAction(e, 'cancel')}>
                         No, nevermind
-                    </button>
-                    <button className='button-primary' onClick={e => onClickAction(e, 'reviewDecision')}>
-                        Send review decision
-                    </button>
+                    </Button>
+                    <Button onClick={e => onClickAction(e, 'reviewDecision')}>Send review decision</Button>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

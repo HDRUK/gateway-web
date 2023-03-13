@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from 'react';
+import { useState, Fragment, useRef } from 'react';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';

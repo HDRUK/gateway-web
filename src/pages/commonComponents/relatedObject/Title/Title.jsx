@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
+/** @jsxImportSource @emotion/react */
 import PropTypes from 'prop-types';
 import '../../CommonComponents.scss';
 import * as styles from '../Dataset/Dataset.styles';
@@ -11,18 +9,17 @@ const Title = props => {
         <>
             <a
                 onClick={onClickHandler}
-                className={className ? className : 'purple-bold-16'}
+                className={className || 'purple-bold-16'}
                 css={styles.pointer}
                 href={`/${type}/${id}`}
-                data-testid={`title-${type}-${id}`}
-            >
+                data-testid={`title-${type}-${id}`}>
                 {name}
             </a>
             {props.children}
         </>
     ) : (
         <>
-            <span className={className ? className : 'black-bold-16'} data-testid={`title-${type}-${id}`}>
+            <span className={className || 'black-bold-16'} data-testid={`title-${type}-${id}`}>
                 {' '}
                 {name}
             </span>

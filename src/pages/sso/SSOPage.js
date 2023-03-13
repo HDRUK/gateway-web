@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import axios from 'axios';
 import * as Sentry from '@sentry/react';

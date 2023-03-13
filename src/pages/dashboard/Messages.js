@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import Loading from '../commonComponents/Loading';
 import Row from 'react-bootstrap/Row';
@@ -9,7 +9,7 @@ import './Dashboard.scss';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 
-class YourAccount extends React.Component {
+class YourAccount extends Component {
     constructor(props) {
         super(props);
         this.state.userState = props.userState;
@@ -28,6 +28,7 @@ class YourAccount extends React.Component {
 
     doMessagesCall() {
         var apiToCall = '/api/v1/messages/' + this.state.userState[0].id;
+        // TODO: GAT-1510:038
         if (this.state.userState[0].role === 'Admin') {
             apiToCall = '/api/v1/messages/admin/' + this.state.userState[0].id;
         }

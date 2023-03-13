@@ -1,4 +1,4 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import {
     deleteRequest,
     getRequest,
@@ -10,39 +10,39 @@ import {
 } from '../../utils/requests';
 
 const getDatasetOnboardings = options => {
-    return getRequest(`${apiURL}/dataset-onboarding`, options);
+    return getRequest(`${apiUrlV1}/dataset-onboarding`, options);
 };
 
 const getDatasetOnboarding = (_id, options) => {
-    return getRequest(`${apiURL}/dataset-onboarding/${_id}`, options);
+    return getRequest(`${apiUrlV1}/dataset-onboarding/${_id}`, options);
 };
 
 const getPublisher = (_id, options) => {
-    return getRequest(`${apiURL}/dataset-onboarding/publisher/${_id}`, options);
+    return getRequest(`${apiUrlV1}/dataset-onboarding/publisher/${_id}`, options);
 };
 
 const getPublisherDetails = (_id, options) => {
-    return getRequest(`${apiURL}/publishers/${_id}`, options);
+    return getRequest(`${apiUrlV1}/publishers/${_id}`, options);
 };
 
 const postDatasetOnboarding = (data, options) => {
-    return postRequest(`${apiURL}/dataset-onboarding`, data, options);
+    return postRequest(`${apiUrlV1}/dataset-onboarding`, data, options);
 };
 
 const postDuplicate = (_id, data, options) => {
-    return postRequest(`${apiURL}/dataset-onboarding/duplicate/${_id}`, data, options);
+    return postRequest(`${apiUrlV1}/dataset-onboarding/duplicate/${_id}`, data, options);
 };
 
 const putDatasetOnboarding = (_id, data, options) => {
-    return putRequest(`${apiURL}/dataset-onboarding/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/dataset-onboarding/${_id}`, data, options);
 };
 
 const patchDatasetOnboarding = (_id, data, options) => {
-    return patchRequest(`${apiURL}/dataset-onboarding/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/dataset-onboarding/${_id}`, data, options);
 };
 
 const deleteDatasetOnboarding = (_id, options) => {
-    return deleteRequest(`${apiURL}/dataset-onboarding/delete/${_id}`, options);
+    return deleteRequest(`${apiUrlV1}/dataset-onboarding/delete/${_id}`, options);
 };
 
 const useGetDatasetOnboardings = (requestOptions, queryOptions) => {
@@ -106,7 +106,7 @@ const useDeleteDatasetOnboarding = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getDatasetOnboardings,
     getDatasetOnboarding,
     getPublisher,

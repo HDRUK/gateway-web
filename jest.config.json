@@ -1,11 +1,13 @@
 {
     "setupFiles": ["raf/polyfill", "<rootDir>/src/setupTests.js"],
+    "setupFilesAfterEnv": ["<rootDir>/test/customSerializer.js"],
     "moduleNameMapper": {
         "\\.(css|less|sass|scss)$": "<rootDir>/test/mocks/styleMock.js",
         "\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/mocks/fileMock.js",
         "\\.(svg)$": "<rootDir>/test/mocks/svgrMock.js",
         "public/(.*)": "<rootDir>/public/$1",
-        "lodash-es": "lodash"
+        "lodash-es": "lodash",
+        "react-markdown": "<rootDir>/node_modules/react-markdown/react-markdown.min.js"
     },
     "modulePaths": ["<rootDir>/public"],
     "coveragePathIgnorePatterns": [
@@ -28,5 +30,6 @@
         "P.js"
     ],
     "collectCoverageFrom": ["src/**/*.{js,jsx}"],
-    "roots": ["<rootDir>", "<rootDir>src"]
+    "roots": ["<rootDir>", "<rootDir>src"],
+    "moduleDirectories": ["src", "node_modules"]
 }

@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { isNil, isEmpty } from 'lodash';
-import { Form, Button, Row, Col, Container } from 'react-bootstrap';
+import { isEmpty } from 'lodash';
+import { Form, Row, Col, Container } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
+import moment from 'moment';
+import TextareaAutosize from 'react-textarea-autosize';
+import { Button } from 'hdruk-react-core';
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
-import moment from 'moment';
 import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
 import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorModal';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import googleAnalytics from '../../tracking';
-import TextareaAutosize from 'react-textarea-autosize';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
 import UploaderUtil from '../../utils/Uploader.util';
 import SVGIcon from '../../images/SVGIcon';
 import ToolTip from '../../images/imageURL-ToolTip.gif';
 import './Collections.scss';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
-let windowUrl = window.location.origin;
+const baseURL = require('../commonComponents/BaseURL').getURL();
+
+const windowUrl = window.location.origin;
 
 const AddEditCollectionForm = props => {
     const [uploadersList, setUploadersList] = useState([]);
@@ -66,27 +68,27 @@ const AddEditCollectionForm = props => {
             values.collectionCreator = props.userState[0];
             values.authors = uploadersList.map(uploader => uploader.id);
             if (props.isEdit) {
-                axios.put(baseURL + '/api/v1/collections/edit/' + props.data.id, values).then(res => {
-                    window.location.href = windowUrl + '/collection/' + props.data.id + '/?collectionEdited=true';
+                axios.put(`${baseURL}/api/v1/collections/edit/${props.data.id}`, values).then(res => {
+                    window.location.href = `${windowUrl}/collection/${props.data.id}/?collectionEdited=true`;
                 });
             } else {
-                axios.post(baseURL + '/api/v1/collections/add', values).then(res => {
-                    window.location.href = windowUrl + '/collection/' + res.data.id + '/?collectionAdded=true';
+                axios.post(`${baseURL}/api/v1/collections/add`, values).then(res => {
+                    window.location.href = `${windowUrl}/collection/${res.data.id}/?collectionAdded=true`;
                 });
             }
         },
     });
 
     const buildListOfUploaders = () => {
-        let listOfUploaders = [];
+        const listOfUploaders = [];
         if (props.isEdit) {
             props.data.authors.forEach(uploader => {
                 props.combinedUsers.forEach(user => {
                     if (user.id === uploader) {
                         if (props.userState[0].id === user.id) {
-                            listOfUploaders.push({ id: user.id, name: user.name + ' (You)' });
+                            listOfUploaders.push({ id: user.id, name: `${user.name} (You)` });
                             if (!user.name.includes('(You)')) {
-                                user.name = user.name + ' (You)';
+                                user.name += ' (You)';
                             }
                         } else {
                             listOfUploaders.push({ id: user.id, name: user.name });
@@ -97,9 +99,9 @@ const AddEditCollectionForm = props => {
         } else {
             props.combinedUsers.forEach(user => {
                 if (user.id === props.userState[0].id) {
-                    listOfUploaders.push({ id: user.id, name: user.name + ' (You)' });
+                    listOfUploaders.push({ id: user.id, name: `${user.name} (You)` });
                     if (!user.name.includes('(You)')) {
-                        user.name = user.name + ' (You)';
+                        user.name += ' (You)';
                     }
                 }
             });
@@ -171,8 +173,8 @@ const AddEditCollectionForm = props => {
         if (!inRelatedObject) {
             props.relatedObjects.push({
                 objectId: id,
-                pid: pid,
-                reason: reason,
+                pid,
+                reason,
                 objectType: type,
                 user: props.userState[0].name,
                 updated: moment().format('DD MMM YYYY'),
@@ -188,7 +190,7 @@ const AddEditCollectionForm = props => {
 
     const [isShown, setIsShown] = useState(false);
 
-    const relatedResourcesRef = React.useRef();
+    const relatedResourcesRef = useRef();
 
     return (
         <div>
@@ -197,18 +199,18 @@ const AddEditCollectionForm = props => {
                     open={showRemoveUploaderModal}
                     cancelUploaderRemoval={cancelUploaderRemoval}
                     confirmUploaderRemoval={confirmUploaderRemoval}
-                    entityType={'collection'}
+                    entityType='collection'
                     userState={props.userState}
                     uploaderToBeRemoved={uploaderToBeRemoved}
-                ></RemoveUploaderModal>
+                />
 
                 <RemoveUploaderErrorModal
                     open={showRemoveUploaderErrorModal}
                     cancelUploaderRemoval={cancelUploaderRemoval}
-                    entityType={'collection'}
+                    entityType='collection'
                     uploaderToBeRemoved={uploaderToBeRemoved}
                     removingOriginalUploader={removingOriginalUploader}
-                ></RemoveUploaderErrorModal>
+                />
                 <Row className='margin-top-32'>
                     <Col sm={1} lg={1} />
                     <Col sm={10} lg={10}>
@@ -236,7 +238,7 @@ const AddEditCollectionForm = props => {
                                 <Form.Group className='margin-bottom-24'>
                                     <span className='gray800-14'>Collection name</span>
                                     <Form.Control
-                                        data-test-id='collection-name'
+                                        data-testid='collection-name'
                                         id='name'
                                         name='name'
                                         type='text'
@@ -257,7 +259,7 @@ const AddEditCollectionForm = props => {
                                     <p className='gray700-13 margin-bottom-0'>Up to 5,000 characters</p>
                                     <TextareaAutosize
                                         as='textarea'
-                                        data-test-id='collection-description'
+                                        data-testid='collection-description'
                                         id='description'
                                         name='description'
                                         type='text'
@@ -282,7 +284,7 @@ const AddEditCollectionForm = props => {
                                     </p>
                                     <AsyncTypeAheadUsers
                                         selectedUsers={uploadersList}
-                                        showAuthor={true}
+                                        showAuthor
                                         currentUserId={props.userState[0].id}
                                         changeHandler={uploaderHandler}
                                     />
@@ -303,7 +305,7 @@ const AddEditCollectionForm = props => {
 									/> */}
                                 </Form.Group>
 
-                                <Form.Group className='margin-bottom-24' data-test-id='keywords'>
+                                <Form.Group className='margin-bottom-24' data-testid='keywords'>
                                     <p className='gray800-14 margin-bottom-0 pad-bottom-4'>Keywords</p>
                                     <p className='gray700-13 margin-bottom-0'>E.g. NCS, Charity, Disease etc.</p>
                                     <Typeahead
@@ -315,7 +317,7 @@ const AddEditCollectionForm = props => {
                                         options={props.combinedKeywords}
                                         className='addFormInputTypeAhead'
                                         onChange={selected => {
-                                            var tempSelected = [];
+                                            const tempSelected = [];
                                             selected.forEach(selectedItem => {
                                                 selectedItem.customOption === true
                                                     ? tempSelected.push(selectedItem.keywords)
@@ -338,8 +340,7 @@ const AddEditCollectionForm = props => {
                                             <span
                                                 className='purple-13'
                                                 onMouseEnter={() => setIsShown(true)}
-                                                onMouseLeave={() => setIsShown(false)}
-                                            >
+                                                onMouseLeave={() => setIsShown(false)}>
                                                 How to get an image URL
                                             </span>
                                             {isShown && <img src={ToolTip} alt='' id='imageToolTip' />}
@@ -367,13 +368,12 @@ const AddEditCollectionForm = props => {
                                     className='margin-bottom-8 pad-left-16 pointer'
                                     onClick={() => {
                                         updatePublicFlag();
-                                    }}
-                                >
+                                    }}>
                                     <span className='eyeColumn pad-right-8'>
                                         {formik.values.publicflag === true ? (
-                                            <SVGIcon name='eye' width={24} height={24} fill={'#475da7'} />
+                                            <SVGIcon name='eye' width={24} height={24} fill='#475da7' />
                                         ) : (
-                                            <SVGIcon name='eyeCrossed' width={24} height={24} fill={'#475da7'} />
+                                            <SVGIcon name='eyeCrossed' width={24} height={24} fill='#475da7' />
                                         )}
                                     </span>
                                     <span className='gray800-14'>
@@ -395,7 +395,7 @@ const AddEditCollectionForm = props => {
                                     return (
                                         <div className='relatedObjectRectangle'>
                                             <RelatedObject
-                                                showRelationshipQuestion={true}
+                                                showRelationshipQuestion
                                                 objectId={object.objectId}
                                                 pid={object.pid}
                                                 objectType={object.objectType}
@@ -404,7 +404,7 @@ const AddEditCollectionForm = props => {
                                                 reason={object.reason}
                                                 didDelete={props.didDelete}
                                                 updateDeleteFlag={props.updateDeleteFlag}
-                                                inCollection={true}
+                                                inCollection
                                             />
                                         </div>
                                     );
@@ -444,37 +444,30 @@ const AddEditCollectionForm = props => {
                 </Row>
 
                 <Row>
-                    <span className='formBottomGap'></span>
+                    <span className='formBottomGap' />
                 </Row>
             </Container>
 
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} href={'/account?tab=collections'}>
-                        <Button variant='medium' className='cancelButton dark-14 mr-2'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=collections'>
+                        <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>
                     </a>
 
                     <Button
-                        data-test-id='add-resource'
+                        data-testid='add-resource'
                         onClick={() => {
                             relatedResourcesRef.current.showModal();
                             googleAnalytics.recordVirtualPageView('Related resources modal');
                         }}
-                        variant='white'
-                        className='techDetailButton mr-2'
-                    >
+                        variant='secondary'
+                        className='techDetailButton mr-2'>
                         + Add resource
                     </Button>
 
-                    <Button
-                        data-test-id='add-collection-publish'
-                        variant='primary'
-                        className='publishButton white-14-semibold mr-2'
-                        type='submit'
-                        onClick={formik.handleSubmit}
-                    >
+                    <Button data-testid='add-collection-publish' className='publishButton mr-2' type='submit' onClick={formik.handleSubmit}>
                         Save
                     </Button>
                 </div>

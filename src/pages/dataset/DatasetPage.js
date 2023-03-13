@@ -1,22 +1,22 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import { cx } from '@emotion/css';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import { has, isEmpty, isNil, isUndefined } from 'lodash';
-import React, { Component, Fragment } from 'react';
-import { Box, Typography } from 'hdruk-react-core';
-import { Button, Col, Container, Dropdown, Row, Tab, Tabs } from 'react-bootstrap/';
+import { has, isEmpty, isNil } from 'lodash';
+import { createRef, Component, Fragment } from 'react';
+import { Button, Box, Typography } from 'hdruk-react-core';
+import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap/';
 import Linkify from 'react-linkify';
 import 'react-tabs/style/react-tabs.css';
-import Alert from '../../components/Alert';
-import { QualityScore } from '../../components';
+
+import { QualityScore, Alert, ToolTip, Icon } from 'components';
+import { RelatedResourcesTab } from 'modules';
 import { ReactComponent as GoldStar } from '../../images/cd-star.svg';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
 import { ReactComponent as InfoFillSVG } from '../../images/infofill.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
 import DataSetHelper from '../../utils/DataSetHelper.util';
+import { ReactComponent as Shield } from '../../images/shield.svg';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import CommunicateDataCustodianModal from '../commonComponents/communicateDataCustodianModal/CommunicateDataCustodianModal';
@@ -24,7 +24,6 @@ import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal/ErrorModal';
 import Loading from '../commonComponents/Loading';
 import MessageNotFound from '../commonComponents/MessageNotFound';
-import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
@@ -36,13 +35,10 @@ import DatasetAboutCard from './components/DatasetAboutCard';
 import DataUtitlityFramework from './components/DataUtilityFramework';
 import TechnicalDetailsPage from './components/TechnicalDetailsPage';
 import TechnicalMetadata from './components/TechnicalMetadata';
-import ToolTip from '../../components/ToolTip';
-import Icon from '../../components/Icon';
-import { ReactComponent as Shield } from '../../images/shield.svg';
 import './Dataset.scss';
 import DatasetSchema from './DatasetSchema';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+const baseURL = require('../commonComponents/BaseURL').getURL();
 var cmsURL = require('../commonComponents/BaseURL').getCMSURL();
 const env = require('../commonComponents/BaseURL').getURLEnv();
 
@@ -55,7 +51,6 @@ class DatasetDetail extends Component {
         technicalMetadata: [],
         collections: [],
         dataClassOpen: -1,
-        relatedObjects: [],
         isLoading: true,
         userState: [
             {
@@ -101,10 +96,6 @@ class DatasetDetail extends Component {
         cohortProfiling: [],
         datasetHasCohortProfiling: false,
         isCohortDiscovery: false,
-        relatedObjectsFiltered: [],
-        relatedResourcesSort: [],
-        relatedObjectsSearchValue: '',
-        sorting: 'showAll',
     };
 
     topicContext = {};
@@ -115,7 +106,7 @@ class DatasetDetail extends Component {
         this.state.userState = props.userState;
         this.handleMouseHover = this.handleMouseHover.bind(this);
         this.handleMouseHoverShield = this.handleMouseHoverShield.bind(this);
-        this.searchBar = React.createRef();
+        this.searchBar = createRef();
     }
 
     // on loading of tool detail page
@@ -146,8 +137,8 @@ class DatasetDetail extends Component {
                     isLatestVersion: res.data.isLatestVersion,
                     isDatasetArchived: res.data.isDatasetArchived,
                 });
-                await this.getTechnicalMetadata();
                 this.getCollections();
+                await this.getTechnicalMetadata();
                 if (!isEmpty(res.data.data.datasetv2)) {
                     this.updateV2Flags(res.data.data.datasetv2);
                     this.getEmptyFieldsCount(res.data.data.datasetv2);
@@ -172,10 +163,6 @@ class DatasetDetail extends Component {
                 };
 
                 this.updateCounter(this.state.data.datasetid, counter);
-
-                if (!isUndefined(res.data.data.relatedObjects)) {
-                    this.getAdditionalObjectInfo(res.data.data.relatedObjects);
-                }
 
                 if (!isEmpty(this.topicContext.title)) {
                     const publisherId = this.topicContext.title;
@@ -533,68 +520,6 @@ class DatasetDetail extends Component {
         };
     }
 
-    getAdditionalObjectInfo = async data => {
-        let tempObjects = [];
-        const promises = data.map(async (object, index) => {
-            if (object.objectType === 'course') {
-                await axios.get(baseURL + '/api/v1/relatedobject/course/' + object.objectId).then(res => {
-                    tempObjects.push({
-                        name: res.data.data[0].title,
-                        id: object.objectId,
-                        activeflag: res.data.data[0].activeflag,
-                    });
-                });
-            } else if (object.objectType === 'dataUseRegister') {
-                await axios.get(baseURL + '/api/v1/relatedobject/dataUseRegister/' + object.objectId).then(res => {
-                    tempObjects.push({
-                        id: object.objectId,
-                        activeflag: res.data.data[0].activeflag,
-                        projectTitle: res.data.data[0].projectTitle,
-                    });
-                });
-            } else {
-                await axios.get(baseURL + '/api/v1/relatedobject/' + object.objectId).then(res => {
-                    tempObjects.push({
-                        name: res.data.data[0].name,
-                        firstname: res.data.data[0].firstname || '',
-                        lastname: res.data.data[0].lastname || '',
-                        id: object.objectId,
-                        authors: res.data.data[0].authors,
-                        activeflag: res.data.data[0].activeflag,
-                    });
-                });
-            }
-        });
-        await Promise.all(promises);
-        this.setState({ objects: tempObjects });
-
-        this.getRelatedObjects();
-    };
-
-    getRelatedObjects = () => {
-        let tempRelatedObjects = [];
-        this.state.data.relatedObjects.map(object =>
-            this.state.objects.forEach(item => {
-                if (object.objectId === item.id && item.activeflag === 'active') {
-                    object['name'] = item.name || '';
-                    object['firstname'] = item.firstname || '';
-                    object['lastname'] = item.lastname || '';
-                    object['projectTitle'] = item.projectTitle || '';
-                    tempRelatedObjects.push(object);
-                }
-
-                if (object.objectId === item.id && item.activeflag === 'review' && item.authors.includes(this.state.userState[0].id)) {
-                    tempRelatedObjects.push(object);
-                }
-            })
-        );
-        this.setState({
-            relatedObjects: tempRelatedObjects,
-            relatedObjectsFiltered: tempRelatedObjects,
-            relatedResourcesSort: tempRelatedObjects,
-        });
-    };
-
     updateDiscoursePostCount = count => {
         this.setState({ discoursePostCount: count });
     };
@@ -698,55 +623,6 @@ class DatasetDetail extends Component {
         this.setState({ showCitationSuccess: true });
     };
 
-    onRelatedObjectsSearch = e => {
-        this.setState({ relatedObjectsSearchValue: e.target.value });
-    };
-
-    doRelatedObjectsSearch = async e => {
-        // Fires on enter on searchbar
-        if (e.key === 'Enter') {
-            this.setState({ relatedObjectsFiltered: [], relatedResourcesSort: [], sorting: 'showAll' });
-
-            const filteredRelatedResourceItems = await this.filterRelatedResourceItems(
-                this.state.relatedObjects,
-                this.state.relatedObjectsSearchValue
-            );
-
-            let tempFilteredData = filteredRelatedResourceItems.filter(dat => {
-                return dat !== '';
-            });
-            this.setState({ relatedObjectsFiltered: tempFilteredData, relatedResourcesSort: tempFilteredData });
-        }
-    };
-
-    filterRelatedResourceItems = (objectData, relatedObjectsSearchValue) =>
-        objectData.map(object => {
-            // Searching functionality - searches through object data and returns true if there is a match with the search term
-            if (
-                (has(object, 'name') ? object.name.toLowerCase().includes(relatedObjectsSearchValue.toLowerCase()) : false) ||
-                (has(object, 'title') ? object.title.toLowerCase().includes(relatedObjectsSearchValue.toLowerCase()) : false) ||
-                (has(object, 'firstname') ? object.firstname.toLowerCase().includes(relatedObjectsSearchValue.toLowerCase()) : false) ||
-                (has(object, 'lastname') ? object.lastname.toLowerCase().includes(relatedObjectsSearchValue.toLowerCase()) : false) ||
-                (has(object, 'projectTitle') ? object.projectTitle.toLowerCase().includes(relatedObjectsSearchValue.toLowerCase()) : false)
-            ) {
-                return object;
-            } else {
-                return '';
-            }
-        });
-
-    handleSort = async sort => {
-        this.setState({ relatedObjectsFiltered: [] });
-        googleAnalytics.recordEvent('Collections', `Sorted related resources by ${sort}`, 'Sort dropdown option changed');
-        let tempFilteredData = [];
-        if (sort === 'showAll') {
-            tempFilteredData = await this.state.relatedResourcesSort;
-        } else {
-            tempFilteredData = await this.state.relatedResourcesSort.filter(dat => dat.objectType === sort);
-        }
-        this.setState({ sorting: sort, relatedObjectsFiltered: tempFilteredData });
-    };
-
     render() {
         const {
             searchString,
@@ -757,7 +633,6 @@ class DatasetDetail extends Component {
             userState,
             alert = null,
             dataClassOpen,
-            relatedObjects,
             discoursePostCount,
             showDrawer,
             showModal,
@@ -777,10 +652,6 @@ class DatasetDetail extends Component {
             emptyFieldsCount,
             linkedDatasets,
             publisherLogoURL,
-            sorting,
-            relatedResourcesSort,
-            relatedObjectsFiltered,
-            relatedObjectsSearchValue,
         } = this.state;
 
         let publisherLogo = !isEmpty(v2data) && !isEmpty(v2data.summary.publisher.logo) ? v2data.summary.publisher.logo : publisherLogoURL;
@@ -802,9 +673,6 @@ class DatasetDetail extends Component {
             );
         }
 
-        if (isNil(data.relatedObjects)) {
-            data.relatedObjects = [];
-        }
         if (has(data, 'datasetfields.phenotypes') && data.datasetfields.phenotypes.length > 0) {
             data.datasetfields.phenotypes.sort((a, b) =>
                 a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0
@@ -935,7 +803,7 @@ class DatasetDetail extends Component {
                                         {this.state.isLatestVersion && !this.state.isDatasetArchived && (
                                             <Col sm={6} className='text-right'>
                                                 <button
-                                                    data-test-id='dataset-request-access-btn'
+                                                    data-testid='dataset-request-access-btn'
                                                     className='btn btn-primary addButton pointer float-right'
                                                     onClick={() => {
                                                         this.toggleModal();
@@ -1219,8 +1087,8 @@ class DatasetDetail extends Component {
                                                                                   <Col sm={3} m={3} lg={3}>
                                                                                       {relation.type === 'text' ? (
                                                                                           <Button
-                                                                                              variant='white'
-                                                                                              href={'/search?search=' + relation.title}
+                                                                                              variant='secondary'
+                                                                                              onClick={() => this.props.history.push(`/search?search=${encodeURIComponent(relation.title)}`)}
                                                                                               target='_blank'
                                                                                               className='gatewaySearchButton floatRightLinkedDataset'>
                                                                                               Search on gateway
@@ -1302,8 +1170,8 @@ class DatasetDetail extends Component {
                                                                                   <Col sm={3} m={3} lg={3}>
                                                                                       {relation.type === 'text' ? (
                                                                                           <Button
-                                                                                              variant='white'
-                                                                                              href={'/search?search=' + relation.title}
+                                                                                              variant='secondary'
+                                                                                              onClick={() => this.props.history.push(`/search?search=${encodeURIComponent(relation.title)}`)}
                                                                                               target='_blank'
                                                                                               className='gatewaySearchButton floatRightLinkedDataset'>
                                                                                               Search on gateway
@@ -1352,8 +1220,8 @@ class DatasetDetail extends Component {
                                                         <Col sm={12} lg={12} className='centerText'>
                                                             <Button
                                                                 onClick={() => this.showHideAllEmpty()}
-                                                                variant='medium'
-                                                                className='datasetEmptyButton dark-14 mr-2'>
+                                                                variant='tertiary'
+                                                                className='datasetEmptyButton mr-2'>
                                                                 {showEmpty === false
                                                                     ? `Show all empty fields (${emptyFieldsCount})`
                                                                     : `Hide all empty fields (${emptyFieldsCount})`}
@@ -1501,158 +1369,13 @@ class DatasetDetail extends Component {
                                             />
                                         </Tab>
 
-                                        <Tab eventKey='Related resources' title={'Related resources (' + relatedObjects.length + ')'}>
-                                            <>
-                                                <Row>
-                                                    <Col lg={8}>
-                                                        <span className='collectionsSearchBar form-control'>
-                                                            <span className='collectionsSearchIcon'>
-                                                                <SVGIcon
-                                                                    name='searchicon'
-                                                                    width={20}
-                                                                    height={20}
-                                                                    fill={'#2c8267'}
-                                                                    stroke='none'
-                                                                    type='submit'
-                                                                />
-                                                            </span>
-                                                            <span>
-                                                                <input
-                                                                    id='collectionsSearchBarInput'
-                                                                    type='text'
-                                                                    placeholder='Search within related resources'
-                                                                    onChange={this.onRelatedObjectsSearch}
-                                                                    value={relatedObjectsSearchValue}
-                                                                    onKeyDown={this.doRelatedObjectsSearch}
-                                                                />
-                                                            </span>
-                                                        </span>
-                                                    </Col>
-
-                                                    <Col lg={4} className='text-right'>
-                                                        <Dropdown className='sorting-dropdown' alignRight onSelect={this.handleSort}>
-                                                            <Dropdown.Toggle
-                                                                variant='info'
-                                                                id='dropdown-menu-align-right'
-                                                                className='gray800-14'>
-                                                                {(() => {
-                                                                    if (sorting !== 'showAll')
-                                                                        return `Show ${
-                                                                            sorting === 'dataUseRegister'
-                                                                                ? `data uses`
-                                                                                : sorting === 'people'
-                                                                                ? sorting
-                                                                                : `${sorting}s`
-                                                                        } (
-
-																	${relatedResourcesSort.filter(dat => dat.objectType === sorting).length})`;
-                                                                    else return `Show all resources (${relatedResourcesSort.length})`;
-                                                                })()}
-                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            </Dropdown.Toggle>
-                                                            <Dropdown.Menu>
-                                                                <Row
-                                                                    key={`ddl-item-showall`}
-                                                                    className={
-                                                                        sorting === 'showAll'
-                                                                            ? 'sort-dropdown-item sort-dropdown-item-selected sortingDropdown'
-                                                                            : 'sort-dropdown-item sortingDropdown'
-                                                                    }>
-                                                                    <Col xs={12} className='p-0'>
-                                                                        <Dropdown.Item eventKey={'showAll'} className='gray800-14'>
-                                                                            Show all resources ({relatedResourcesSort.length})
-                                                                        </Dropdown.Item>
-                                                                    </Col>
-                                                                    <div className='p-0 sortingCheckmark'>
-                                                                        {sorting === 'showAll' ? (
-                                                                            <SVGIcon
-                                                                                name='check'
-                                                                                width={20}
-                                                                                height={20}
-                                                                                visble='true'
-                                                                                style={{
-                                                                                    float: 'right',
-                                                                                    fill: '#3db28c',
-                                                                                    marginTop: '5px',
-                                                                                }}
-                                                                                fill={'#3db28c'}
-                                                                                stroke='none'
-                                                                            />
-                                                                        ) : null}
-                                                                    </div>
-                                                                </Row>
-                                                                {['dataset', 'tool', 'dataUseRegister', 'paper', 'course', 'person'].map(
-                                                                    item => {
-                                                                        return relatedResourcesSort.filter(dat => dat.objectType === item)
-                                                                            .length > 0 ? (
-                                                                            <Row
-                                                                                key={`ddl-item-${item}`}
-                                                                                className={
-                                                                                    sorting === item
-                                                                                        ? 'sort-dropdown-item sort-dropdown-item-selected sortingDropdown'
-                                                                                        : 'sort-dropdown-item sortingDropdown'
-                                                                                }>
-                                                                                <Col xs={12} className='p-0'>
-                                                                                    <Dropdown.Item eventKey={item} className='gray800-14'>
-                                                                                        Show{' '}
-                                                                                        {item === 'dataUseRegister'
-                                                                                            ? `data uses`
-                                                                                            : item === 'people'
-                                                                                            ? item
-                                                                                            : `${item}s`}{' '}
-                                                                                        (
-                                                                                        {
-                                                                                            relatedResourcesSort.filter(
-                                                                                                dat => dat.objectType === item
-                                                                                            ).length
-                                                                                        }
-                                                                                        )
-                                                                                    </Dropdown.Item>
-                                                                                </Col>
-                                                                                <div className='p-0 sortingCheckmark'>
-                                                                                    {sorting === item ? (
-                                                                                        <SVGIcon
-                                                                                            name='check'
-                                                                                            width={20}
-                                                                                            height={20}
-                                                                                            visble='true'
-                                                                                            style={{
-                                                                                                float: 'right',
-                                                                                                fill: '#3db28c',
-                                                                                                marginTop: '5px',
-                                                                                            }}
-                                                                                            fill={'#3db28c'}
-                                                                                            stroke='none'
-                                                                                        />
-                                                                                    ) : null}
-                                                                                </div>
-                                                                            </Row>
-                                                                        ) : (
-                                                                            ''
-                                                                        );
-                                                                    }
-                                                                )}
-                                                            </Dropdown.Menu>
-                                                        </Dropdown>
-                                                    </Col>
-                                                </Row>
-                                                {relatedObjectsFiltered.length <= 0 ? (
-                                                    <MessageNotFound word='related resources' />
-                                                ) : (
-                                                    relatedObjectsFiltered.map((object, index) => (
-                                                        <span key={index}>
-                                                            <RelatedObject
-                                                                relatedObject={object}
-                                                                objectType={object.objectType}
-                                                                activeLink={true}
-                                                                showRelationshipAnswer={true}
-                                                                datasetPublisher={object.datasetPublisher}
-                                                                datasetLogo={object.datasetLogo}
-                                                            />
-                                                        </span>
-                                                    ))
-                                                )}
-                                            </>
+                                        <Tab
+                                            eventKey='Related resources'
+                                            title={'Related resources (' + this.state.data?.relatedObjects?.length + ')'}>
+                                            <RelatedResourcesTab
+                                                relatedObjects={this.state.data?.relatedObjects}
+                                                authorId={this.state.userState[0].id}
+                                            />
                                         </Tab>
 
                                         <Tab eventKey='Collections' title={'Collections (' + collections.length + ')'}>

@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from 'react';
+import { forwardRef, Children, useState, Fragment } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 import { ReactComponent as ChevronBottom } from '../../../images/chevron-bottom.svg';
 import handleAnalytics from '../../dataAccessRequestCustomiseForm/handleAnalytics';
 
-const CustomToggleInner = React.forwardRef(({ children, onClick }, ref) => (
+const CustomToggleInner = forwardRef(({ children, onClick }, ref) => (
     <a
         href='javascript:void(0)'
         ref={ref}
@@ -17,17 +17,18 @@ const CustomToggleInner = React.forwardRef(({ children, onClick }, ref) => (
     </a>
 ));
 
-const CustomSubMenu = React.forwardRef(({ children, style, className, show, 'aria-labelledby': labeledBy }, ref) => {
+const CustomSubMenu = forwardRef(({ children, style, className, show, 'aria-labelledby': labeledBy }, ref) => {
     const [value] = useState('');
     if (show) {
         return (
             <Fragment ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
                 <ul className='list-unstyled'>
-                    {React.Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
+                    {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
                 </ul>
             </Fragment>
         );
     }
+    return null;
 });
 
 const UserDropdownTeams = props => {
@@ -46,6 +47,7 @@ const UserDropdownTeams = props => {
                 <Dropdown.Divider className='mb-1 mt-1' />
                 <Dropdown>
                     <Dropdown.Toggle as={CustomToggleInner}>
+                        {/* TODO: GAT-1510:047 */}
                         <span className='black-14'>{team.type === 'admin' ? 'HDR Admin' : team.name}</span>
                         <span className='addNewDropDownGap' />
                         {props.isMobile ? (
@@ -55,6 +57,7 @@ const UserDropdownTeams = props => {
                         )}
                     </Dropdown.Toggle>
                     <Dropdown.Menu as={CustomSubMenu}>
+                        {/* TODO: GAT-1510:048 */}
                         {team.type === 'admin' ? (
                             <>
                                 <Dropdown.Item href='/account?tab=datasets&team=admin' className='black-14 user-dropdown-item'>
@@ -66,7 +69,7 @@ const UserDropdownTeams = props => {
                                 <Dropdown.Item
                                     href='/account?tab=teams&team=admin'
                                     className='black-14 user-dropdown-item'
-                                    data-test-id='optTeams'>
+                                    data-testid='optTeams'>
                                     Teams
                                 </Dropdown.Item>
                             </>
@@ -77,6 +80,7 @@ const UserDropdownTeams = props => {
                                     className='black-14 user-dropdown-item'>
                                     Team Management
                                 </Dropdown.Item>
+                                {/* TODO: GAT-1510:001 */}
                                 {userHasRole(team._id, ['manager', 'reviewer']) && (
                                     <>
                                         <Dropdown.Item
@@ -95,6 +99,7 @@ const UserDropdownTeams = props => {
                                 <Dropdown.Item href={`/account?tab=datause&team=${team._id}`} className='black-14 user-dropdown-item'>
                                     Data Uses
                                 </Dropdown.Item>
+                                {/* TODO: GAT-1510:002 */}
                                 {userHasRole(team._id, ['manager', 'metadata_editor']) ? (
                                     <Dropdown.Item href={`/account?tab=datasets&team=${team._id}`} className='black-14 user-dropdown-item'>
                                         Datasets

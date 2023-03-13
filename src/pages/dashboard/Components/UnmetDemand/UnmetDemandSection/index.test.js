@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import UnmetDemandSection from '.';
 import featureEnabled from '../../../../../utils/featureSwitches/unmetDemands';

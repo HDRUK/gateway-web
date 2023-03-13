@@ -1,16 +1,19 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col, Button } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
+
+import { LayoutContent } from 'components';
+
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
-import '../../css/styles.scss';
-import './Dashboard.scss';
-import AccountMembersModal from './AccountMemberModal';
-import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
+import '../../css/styles.scss';
 
-export const AccountMembers = props => {
+import './Dashboard.scss';
+import AccountMemberModal from './AccountMemberModal';
+
+const AccountMembers = props => {
     const [userState] = useState(props.userState);
     const [isLoading, setIsLoading] = useState(true);
     const [members, setMembers] = useState([]);
@@ -23,14 +26,15 @@ export const AccountMembers = props => {
     }, [props]);
 
     useEffect(() => {
-        doMembersCall();
+        doMembersCall().catch(console.error);
     }, [accountMembersId]);
 
     const doMembersCall = async () => {
         if (accountMembersId) {
             setIsLoading(true);
-            await axios.get(baseURL + `/api/v1/teams/${accountMembersId}/members`).then(async res => {
+            await axios.get(`${baseURL}/api/v1/teams/${accountMembersId}/members`).then(async res => {
                 setMembers(res.data.members);
+                // TODO: GAT-1510:042
                 setUserIsManager(res.data.members.filter(m => m.id === userState[0].id).map(m => m.roles[0] === 'manager')[0]);
             });
         }
@@ -47,7 +51,8 @@ export const AccountMembers = props => {
 
     const renderRoles = roles => {
         if (!isEmpty(roles)) {
-            let sortedRoles = roles.sort();
+            const sortedRoles = roles.sort();
+            // TODO: GAT-1510:043
             return sortedRoles.map(role => `${roleList[role]}${roles.length > 1 && roles.indexOf(role) !== roles.length - 1 ? ', ' : ' '}`);
         }
         return '';
@@ -68,7 +73,7 @@ export const AccountMembers = props => {
     }
 
     return (
-        <Fragment>
+        <>
             <LayoutContent>
                 <div className='accountHeader d-flex'>
                     <Col sm={12} md={9}>
@@ -119,7 +124,7 @@ export const AccountMembers = props => {
                                 <div className='subHeaderFlex mt-3 gray800-14-bold'>
                                     <Col xs={5}>Name</Col>
                                     <Col xs={4}>Role</Col>
-                                    <Col xs={3}></Col>
+                                    <Col xs={3} />
                                 </div>
                             )}
                             {members.length <= 0 ? (
@@ -131,7 +136,7 @@ export const AccountMembers = props => {
                                     return (
                                         <div className='entryBoxFlex padding-left-20'>
                                             <Col sm={12} lg={5}>
-                                                <a href={'/person/' + m.id} className='purple-14'>
+                                                <a href={`/person/${m.id}`} className='purple-14'>
                                                     {m.firstname} {m.lastname}
                                                 </a>
                                                 <Row sm={5} lg={5}>
@@ -148,17 +153,17 @@ export const AccountMembers = props => {
                                 })
                             )}
 
-                            <AccountMembersModal
+                            <AccountMemberModal
                                 open={showAccountAddMemberModal}
                                 close={onShowAccountMembersModal}
                                 teamId={accountMembersId}
                                 onMemberAdded={onMemberAdded}
-                            ></AccountMembersModal>
+                            />
                         </div>
                     );
                 })()}
             </LayoutContent>
-        </Fragment>
+        </>
     );
 };
 

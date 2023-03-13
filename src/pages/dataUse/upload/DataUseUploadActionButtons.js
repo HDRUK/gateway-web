@@ -1,4 +1,5 @@
-import React from 'react';
+import { Button } from 'hdruk-react-core';
+import { useCallback } from 'react';
 import googleAnalytics from '../../../tracking';
 
 const DataUseUploadActionButtons = ({ onSubmit }) => {
@@ -6,16 +7,16 @@ const DataUseUploadActionButtons = ({ onSubmit }) => {
         googleAnalytics.recordEvent('Data uses', label, value);
     };
 
-    const handleSubmitDataUses = React.useCallback(() => {
+    const handleSubmitDataUses = useCallback(() => {
         handleAnalytics('Clicked submit data uses');
 
         onSubmit();
     }, []);
 
     return (
-        <button className='button-secondary' onClick={handleSubmitDataUses}>
+        <Button variant='secondary' onClick={handleSubmitDataUses}>
             Submit data uses
-        </button>
+        </Button>
     );
 };
 

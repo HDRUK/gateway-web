@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import RelatedResourcesModal from '../relatedResourcesModal/RelatedResourceModal';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import googleAnalytics from '../../../tracking';
 import './RelatedResources.scss';
 
-const RelatedResources = React.forwardRef((props, ref) => {
-    React.useImperativeHandle(ref, () => ({
+const RelatedResources = forwardRef((props, ref) => {
+    useImperativeHandle(ref, () => ({
         showModal() {
             handleShow();
         },
@@ -29,16 +30,15 @@ const RelatedResources = React.forwardRef((props, ref) => {
     return (
         <div className='flexCenter'>
             <Button
-                variant='white'
-                href={''}
+                variant='secondary'
+                href=''
                 target='_blank'
                 className='techDetailButton mr-2'
                 onClick={() => {
                     handleShow();
                     googleAnalytics.recordVirtualPageView('Related resources modal');
                 }}
-                ref={ref}
-            >
+                ref={ref}>
                 + Add resource
             </Button>
             <Modal show={show} onHide={handleClose} aria-labelledby='contained-modal-title-vcenter' className='relatedResourcesModal'>
@@ -74,14 +74,18 @@ const RelatedResources = React.forwardRef((props, ref) => {
                     />
                 </Modal.Body>
                 <Modal.Footer>
-                    <div class='flex-grow'>
+                    <div className='flex-grow'>
                         <span className='gray800-14'>{props.tempRelatedObjectIds.length} selected</span>
                     </div>
                     <div>
-                        <Button variant='white' className='techDetailButton mr-2' id='unselectButton' onClick={props.doClearRelatedObjects}>
+                        <Button
+                            variant='secondary'
+                            className='techDetailButton mr-2'
+                            id='unselectButton'
+                            onClick={props.doClearRelatedObjects}>
                             Unselect all
                         </Button>
-                        <Button variant='primary' className='white-14-semibold' id='addResources' onClick={addResources}>
+                        <Button id='addResources' onClick={addResources}>
                             Add resources
                         </Button>
                     </div>

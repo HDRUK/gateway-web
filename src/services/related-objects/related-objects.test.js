@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { getRequest } from '../../utils/requests';
-import service from './related-objects';
+import * as service from './related-objects';
 
 jest.mock('axios');
 jest.mock('../../utils/requests');
@@ -30,7 +30,7 @@ describe('Given the related objects service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/relatedobject/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/relatedobject/1234`, {
                 option1: true,
             });
         });
@@ -42,7 +42,7 @@ describe('Given the related objects service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/relatedobject/type/1234`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/relatedobject/type/1234`, {
                 option1: true,
             });
         });
@@ -54,7 +54,7 @@ describe('Given the related objects service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiURL}/relatedobject/linkeddatasets/5678`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/relatedobject/linkeddatasets/5678`, {
                 option1: true,
             });
         });

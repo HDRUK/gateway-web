@@ -1,13 +1,25 @@
-import React from 'react';
+/** @jsxImportSource @emotion/react */
+import { cx } from '@emotion/css';
+
 import PropTypes from 'prop-types';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-const renderTooltip = text => <Tooltip id='button-tooltip'>{text}</Tooltip>;
+import { useCommonStyles } from 'hooks';
 
-function ToolTip({ text, placement, ...outerProps }) {
+import * as styles from './ToolTip.styles';
+
+function ToolTip({ width, maxWidth, minWidth, text, placement, ...outerProps }) {
+    const commonStyles = useCommonStyles({ width, minWidth, maxWidth });
+
     return (
-        <OverlayTrigger placement={placement} overlay={renderTooltip(text)}>
+        <OverlayTrigger
+            placement={placement}
+            overlay={props => (
+                <Tooltip css={styles.root} className={cx(commonStyles, props.className)} {...props}>
+                    {text}
+                </Tooltip>
+            )}>
             {outerProps.children}
         </OverlayTrigger>
     );
@@ -16,11 +28,15 @@ function ToolTip({ text, placement, ...outerProps }) {
 ToolTip.propTypes = {
     text: PropTypes.node,
     placement: PropTypes.string,
+    width: PropTypes.string,
+    maxWidth: PropTypes.string,
+    minWidth: PropTypes.string,
 };
 
 ToolTip.defaultProps = {
     text: '',
-    placement: 'right',
+    placement: 'left',
+    maxWidth: '350px',
 };
 
 export default ToolTip;

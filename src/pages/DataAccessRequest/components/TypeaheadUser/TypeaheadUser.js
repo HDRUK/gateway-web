@@ -1,11 +1,11 @@
-import React from 'react';
+import { Component } from 'react';
 import _ from 'lodash';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import axios from 'axios';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { baseURL } from '../../../../configs/url.config';
 
-class TypaheadUser extends React.Component {
+class TypaheadUser extends Component {
     constructor(props) {
         super(props);
         this.state = {

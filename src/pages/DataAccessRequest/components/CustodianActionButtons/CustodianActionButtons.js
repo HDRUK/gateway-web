@@ -1,4 +1,3 @@
-import React, { Fragment } from 'react';
 import { Button } from 'hdruk-react-core';
 import googleAnalytics from '../../../../tracking';
 import DarHelper from '../../../../utils/DarHelper.util';
@@ -128,7 +127,7 @@ const CustodianActionButtons = ({
 
     return (
         <>
-            <ActionBarMenu label='Manage application' options={availableManageOptions} buttonClass='button-tertiary' />
+            <ActionBarMenu label='Manage application' options={availableManageOptions} variant='tertiary' />
             <ActionBarMenu label='Make a decision' options={availableDecisionOptions} />
 
             {showAssignWorkflow && (

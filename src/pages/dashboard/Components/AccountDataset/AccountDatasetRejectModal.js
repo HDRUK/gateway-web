@@ -1,11 +1,14 @@
 import { Formik } from 'formik';
-import React from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
+import { useCallback } from 'react';
+import { Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+
+import { datasetOnboardingService } from 'services';
 import { STATUS_INREVIEW, TEXTAREA_ROWS } from '../../../../configs/constants';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
-import datasetOnboardingService from '../../../../services/dataset-onboarding/dataset-onboarding';
+
 import './AccountDatasetDecisionModal.scss';
 
 const AccountDatasetRejectModal = ({ id, open, closed, goToNext, handleReject, showGoToNext }) => {
@@ -21,7 +24,7 @@ const AccountDatasetRejectModal = ({ id, open, closed, goToNext, handleReject, s
         await datasetOnboardingService.putDatasetOnboarding(id, payload);
     };
 
-    const handleSubmit = React.useCallback(
+    const handleSubmit = useCallback(
         async values => {
             const payload = {
                 ...values,
@@ -58,15 +61,14 @@ const AccountDatasetRejectModal = ({ id, open, closed, goToNext, handleReject, s
                         .max(1500, 'Description must be less than 1500 characters')
                         .required('Description should not be empty'),
                 })}
-                onSubmit={handleSubmit}
-            >
+                onSubmit={handleSubmit}>
                 {({ values, errors, handleChange, isValid, dirty, handleBlur, handleSubmit }) => (
                     <Form onSubmit={handleSubmit} onBlur={handleBlur}>
                         <div className='decisionModal-body'>
                             <div className='decisionModal-body--wrap'>
                                 <p data-testid='description'>{t('dataset.rejectModal.description')}</p>
                                 <Form.Group>
-                                    <label for='applicationStatusDesc' className='black-14'>
+                                    <label htmlFor='applicationStatusDesc' className='black-14'>
                                         {t('dataset.rejectModal.applicationStatus')}
                                         <span>{values.applicationStatusDesc.length}/1500</span>
                                     </label>
@@ -90,32 +92,29 @@ const AccountDatasetRejectModal = ({ id, open, closed, goToNext, handleReject, s
                         <div className='decisionModal-footer'>
                             <div data-testid='button-container' className='decisionModal-footer--wrap'>
                                 <Button
-                                    className='button-secondary'
+                                    variant='secondary'
                                     onClick={() => {
                                         closed();
-                                    }}
-                                >
+                                    }}>
                                     {t('dataset.rejectModal.buttons.cancel')}
                                 </Button>
                                 <Button
                                     disabled={!isValid || !dirty}
                                     type='submit'
                                     data-testid='reject-button'
-                                    className='button-secondary'
-                                    style={{ marginLeft: '10px' }}
-                                >
+                                    variant='secondary'
+                                    style={{ marginLeft: '10px' }}>
                                     {t('dataset.rejectModal.buttons.reject')}
                                 </Button>
                                 <Button
                                     disabled={!showGoToNext || !isValid || !dirty}
-                                    className='button-secondary'
+                                    variant='secondary'
                                     style={{ marginLeft: '10px' }}
                                     onClick={async () => {
                                         await rejectDataset(values);
 
                                         goToNext();
-                                    }}
-                                >
+                                    }}>
                                     {t('dataset.rejectModal.buttons.rejectAndGoToNext')}
                                 </Button>
                             </div>

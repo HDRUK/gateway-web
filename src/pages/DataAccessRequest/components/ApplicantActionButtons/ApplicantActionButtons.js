@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from 'hdruk-react-core';
 import googleAnalytics from '../../../../tracking';
 import DarHelper from '../../../../utils/DarHelper.util';
@@ -72,12 +71,7 @@ const ApplicantActionButtons = ({
 
     return (
         <>
-            <ActionBarMenu
-                label='Manage application'
-                options={availableOptions}
-                disabled={!allowedNavigation}
-                buttonClass='button-tertiary'
-            />
+            <ActionBarMenu label='Manage application' options={availableOptions} disabled={!allowedNavigation} variant='tertiary' />
 
             {showSubmit && (
                 <Button

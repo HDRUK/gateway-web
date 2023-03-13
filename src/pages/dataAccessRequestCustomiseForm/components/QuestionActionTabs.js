@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { Tabs, Tab } from 'react-bootstrap/';
 import Guidance from './Guidance/Guidance';
 import Messages from './Messages/Messages';

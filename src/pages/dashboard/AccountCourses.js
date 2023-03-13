@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+
+import { LayoutContent } from 'components';
+import googleAnalytics from '../../tracking';
+
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import ActionModal from '../commonComponents/ActionModal/ActionModal';
-import { EntityActionButton } from './EntityActionButton.jsx';
-import googleAnalytics from '../../tracking';
+import { EntityActionButton } from './EntityActionButton';
 import { PaginationHelper } from '../commonComponents/PaginationHelper';
-import { LayoutContent } from '../../components/Layout';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+const baseURL = require('../commonComponents/BaseURL').getURL();
 
 export const AccountCourses = props => {
     const [userState] = useState(props.userState);
@@ -65,9 +67,9 @@ export const AccountCourses = props => {
 
         let apiUrl;
         if (typeof index === 'undefined') {
-            apiUrl = baseURL + `/api/v1/course/getList?status=${key}`;
+            apiUrl = `${baseURL}/api/v1/course/getList?status=${key}`;
         } else {
-            apiUrl = baseURL + `/api/v1/course/getList?status=${key}&offset=${index}&limit=${maxResults}`;
+            apiUrl = `${baseURL}/api/v1/course/getList?status=${key}&offset=${index}&limit=${maxResults}`;
         }
 
         axios.get(apiUrl).then(res => {
@@ -90,7 +92,7 @@ export const AccountCourses = props => {
 
     const approveCourse = (id, key, index, count) => {
         axios
-            .patch(baseURL + '/api/v1/course/' + id, {
+            .patch(`${baseURL}/api/v1/course/${id}`, {
                 activeflag: 'active',
             })
             .then(res => {
@@ -112,10 +114,10 @@ export const AccountCourses = props => {
 
     const rejectCourse = (id, rejectionReason, key, index, count) => {
         axios
-            .patch(baseURL + '/api/v1/course/' + id, {
-                id: id,
+            .patch(`${baseURL}/api/v1/course/${id}`, {
+                id,
                 activeflag: 'rejected',
-                rejectionReason: rejectionReason,
+                rejectionReason,
             })
             .then(res => {
                 if (shouldChangeTab()) {
@@ -136,8 +138,8 @@ export const AccountCourses = props => {
 
     const archiveCourse = id => {
         axios
-            .patch(baseURL + '/api/v1/course/' + id, {
-                id: id,
+            .patch(`${baseURL}/api/v1/course/${id}`, {
+                id,
                 activeflag: 'archive',
             })
             .then(res => {
@@ -156,7 +158,7 @@ export const AccountCourses = props => {
     };
 
     const shouldChangeTab = () => {
-        return (key === 'pending' && reviewCount <= 1) || (key === 'archive' && archiveCount <= 1) ? true : false;
+        return !!((key === 'pending' && reviewCount <= 1) || (key === 'archive' && archiveCount <= 1));
     };
 
     if (isLoading) {
@@ -181,12 +183,11 @@ export const AccountCourses = props => {
                     </Col>
                     <Col sm={12} md={4} style={{ textAlign: 'right' }}>
                         <Button
-                            data-test-id='add-course-btn'
+                            data-testid='add-course-btn'
                             variant='primary'
                             href='/course/add'
                             className='addButton'
-                            onClick={() => googleAnalytics.recordEvent('Courses', 'Add a new course', 'Courses dashboard button clicked')}
-                        >
+                            onClick={() => googleAnalytics.recordEvent('Courses', 'Add a new course', 'Courses dashboard button clicked')}>
                             + Add a new course
                         </Button>
                     </Col>
@@ -195,16 +196,16 @@ export const AccountCourses = props => {
                 <Row className='tabsBackground'>
                     <Col sm={12} lg={12}>
                         <Tabs className='dataAccessTabs gray700-13' data-testid='courseTabs' activeKey={key} onSelect={handleSelect}>
-                            <Tab eventKey='active' title={'Active (' + activeCount + ')'}>
+                            <Tab eventKey='active' title={`Active (${activeCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='pending' title={'Pending approval (' + reviewCount + ')'}>
+                            <Tab eventKey='pending' title={`Pending approval (${reviewCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='rejected' title={'Rejected (' + rejectedCount + ')'}>
+                            <Tab eventKey='rejected' title={`Rejected (${rejectedCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='archive' title={'Archive (' + archiveCount + ')'}>
+                            <Tab eventKey='archive' title={`Archive (${archiveCount})`}>
                                 {' '}
                             </Tab>
                         </Tabs>
@@ -232,7 +233,7 @@ export const AccountCourses = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
 
@@ -244,53 +245,51 @@ export const AccountCourses = props => {
                                             coursesList.map((course, i) => {
                                                 if (course.activeflag !== 'active') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='courseEntryActive' key={i}>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/course/' + course.id} className='black-14'>
-                                                                    {course.title}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {course.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : course.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                <DropdownButton
-                                                                    variant='outline-secondary'
-                                                                    alignRight
-                                                                    title='Actions'
-                                                                    className='floatRight'
-                                                                >
-                                                                    <Dropdown.Item href={'/course/' + course.id} className='black-14'>
-                                                                        View
-                                                                    </Dropdown.Item>
-                                                                    <Dropdown.Item href={'/course/edit/' + course.id} className='black-14'>
-                                                                        Edit
-                                                                    </Dropdown.Item>
-                                                                    <EntityActionButton
-                                                                        id={course.id}
-                                                                        action={archiveCourse}
-                                                                        actionType='archive'
-                                                                        entity='course'
-                                                                    />
-                                                                </DropdownButton>
-                                                            </Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='courseEntryActive' key={i}>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/course/${course.id}`} className='black-14'>
+                                                                {course.title}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {course.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : course.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                                                            <DropdownButton
+                                                                variant='outline-secondary'
+                                                                alignRight
+                                                                title='Actions'
+                                                                className='floatRight'>
+                                                                <Dropdown.Item href={`/course/${course.id}`} className='black-14'>
+                                                                    View
+                                                                </Dropdown.Item>
+                                                                <Dropdown.Item href={`/course/edit/${course.id}`} className='black-14'>
+                                                                    Edit
+                                                                </Dropdown.Item>
+                                                                <EntityActionButton
+                                                                    id={course.id}
+                                                                    action={archiveCourse}
+                                                                    actionType='archive'
+                                                                    entity='course'
+                                                                />
+                                                            </DropdownButton>
+                                                        </Col>
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -305,7 +304,7 @@ export const AccountCourses = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
 
@@ -317,77 +316,71 @@ export const AccountCourses = props => {
                                             coursesList.map(course => {
                                                 if (course.activeflag !== 'review') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='courseEntryPending'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/course/' + course.id} className='black-14'>
-                                                                    {course.title}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {course.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : course.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                {userState[0].role === 'Admin' ? (
-                                                                    <DropdownButton
-                                                                        variant='outline-secondary'
-                                                                        alignRight
-                                                                        title='Actions'
-                                                                        className='floatRight'
-                                                                    >
-                                                                        <Dropdown.Item
-                                                                            href={'/course/edit/' + course.id}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Edit
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() =>
-                                                                                approveCourse(course.id, key, pendingIndex, reviewCount)
-                                                                            }
-                                                                            className='black-14'
-                                                                        >
-                                                                            Approve
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() => toggleActionModal()}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Reject
-                                                                        </Dropdown.Item>
-                                                                        <ActionModal
-                                                                            id={course.id}
-                                                                            entityKey={'pending'}
-                                                                            entityIndex={pendingIndex}
-                                                                            entityCount={reviewCount}
-                                                                            open={showActionModal}
-                                                                            context={actionModalConfig}
-                                                                            updateApplicationStatus={rejectCourse}
-                                                                            close={toggleActionModal}
-                                                                        />
-                                                                    </DropdownButton>
-                                                                ) : (
-                                                                    ''
-                                                                )}
-                                                            </Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='courseEntryPending'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/course/${course.id}`} className='black-14'>
+                                                                {course.title}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {course.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : course.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                                                            {/* TODO: GAT-1510:029 */}
+                                                            {userState[0].role === 'Admin' ? (
+                                                                <DropdownButton
+                                                                    variant='outline-secondary'
+                                                                    alignRight
+                                                                    title='Actions'
+                                                                    className='floatRight'>
+                                                                    <Dropdown.Item href={`/course/edit/${course.id}`} className='black-14'>
+                                                                        Edit
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() =>
+                                                                            approveCourse(course.id, key, pendingIndex, reviewCount)
+                                                                        }
+                                                                        className='black-14'>
+                                                                        Approve
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() => toggleActionModal()}
+                                                                        className='black-14'>
+                                                                        Reject
+                                                                    </Dropdown.Item>
+                                                                    <ActionModal
+                                                                        id={course.id}
+                                                                        entityKey='pending'
+                                                                        entityIndex={pendingIndex}
+                                                                        entityCount={reviewCount}
+                                                                        open={showActionModal}
+                                                                        context={actionModalConfig}
+                                                                        updateApplicationStatus={rejectCourse}
+                                                                        close={toggleActionModal}
+                                                                    />
+                                                                </DropdownButton>
+                                                            ) : (
+                                                                ''
+                                                            )}
+                                                        </Col>
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -402,7 +395,7 @@ export const AccountCourses = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
 
@@ -414,38 +407,32 @@ export const AccountCourses = props => {
                                             coursesList.map(course => {
                                                 if (course.activeflag !== 'rejected') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='courseEntryRejected'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/course/' + course.id} className='black-14'>
-                                                                    {course.title}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {course.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : course.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-
-                                                            <Col
-                                                                sm={12}
-                                                                lg={3}
-                                                                style={{ textAlign: 'right' }}
-                                                                className='toolsButtons'
-                                                            ></Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='courseEntryRejected'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/course/${course.id}`} className='black-14'>
+                                                                {course.title}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {course.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : course.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons' />
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -460,7 +447,7 @@ export const AccountCourses = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
 
@@ -472,88 +459,78 @@ export const AccountCourses = props => {
                                             coursesList.map(course => {
                                                 if (course.activeflag !== 'archive') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='courseEntryArchive'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/course/' + course.id} className='black-14'>
-                                                                    {course.title}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {course.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : course.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                {userState[0].role === 'Admin' ? (
-                                                                    <DropdownButton
-                                                                        variant='outline-secondary'
-                                                                        alignRight
-                                                                        title='Actions'
-                                                                        className='floatRight'
-                                                                    >
-                                                                        <Dropdown.Item
-                                                                            href={'/course/edit/' + course.id}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Edit
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() =>
-                                                                                approveCourse(course.id, key, archiveIndex, archiveCount)
-                                                                            }
-                                                                            className='black-14'
-                                                                        >
-                                                                            Approve
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() => toggleActionModal()}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Reject
-                                                                        </Dropdown.Item>
-                                                                        <ActionModal
-                                                                            id={course.id}
-                                                                            entityKey={'archive'}
-                                                                            entityIndex={archiveIndex}
-                                                                            entityCount={archiveCount}
-                                                                            open={showActionModal}
-                                                                            context={actionModalConfig}
-                                                                            updateApplicationStatus={rejectCourse}
-                                                                            close={toggleActionModal}
-                                                                        />
-                                                                    </DropdownButton>
-                                                                ) : (
-                                                                    <DropdownButton
-                                                                        variant='outline-secondary'
-                                                                        alignRight
-                                                                        title='Actions'
-                                                                        className='floatRight'
-                                                                    >
-                                                                        <Dropdown.Item
-                                                                            href={'/course/edit/' + course.id}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Edit
-                                                                        </Dropdown.Item>
-                                                                    </DropdownButton>
-                                                                )}
-                                                            </Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='courseEntryArchive'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(course.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/course/${course.id}`} className='black-14'>
+                                                                {course.title}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {course.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : course.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                                                            {/* TODO: GAT-1510:030 */}
+                                                            {userState[0].role === 'Admin' ? (
+                                                                <DropdownButton
+                                                                    variant='outline-secondary'
+                                                                    alignRight
+                                                                    title='Actions'
+                                                                    className='floatRight'>
+                                                                    <Dropdown.Item href={`/course/edit/${course.id}`} className='black-14'>
+                                                                        Edit
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() =>
+                                                                            approveCourse(course.id, key, archiveIndex, archiveCount)
+                                                                        }
+                                                                        className='black-14'>
+                                                                        Approve
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() => toggleActionModal()}
+                                                                        className='black-14'>
+                                                                        Reject
+                                                                    </Dropdown.Item>
+                                                                    <ActionModal
+                                                                        id={course.id}
+                                                                        entityKey='archive'
+                                                                        entityIndex={archiveIndex}
+                                                                        entityCount={archiveCount}
+                                                                        open={showActionModal}
+                                                                        context={actionModalConfig}
+                                                                        updateApplicationStatus={rejectCourse}
+                                                                        close={toggleActionModal}
+                                                                    />
+                                                                </DropdownButton>
+                                                            ) : (
+                                                                <DropdownButton
+                                                                    variant='outline-secondary'
+                                                                    alignRight
+                                                                    title='Actions'
+                                                                    className='floatRight'>
+                                                                    <Dropdown.Item href={`/course/edit/${course.id}`} className='black-14'>
+                                                                        Edit
+                                                                    </Dropdown.Item>
+                                                                </DropdownButton>
+                                                            )}
+                                                        </Col>
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -573,7 +550,7 @@ export const AccountCourses = props => {
                                 paginationIndex={activeIndex}
                                 setPaginationIndex={setActiveIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -585,7 +562,7 @@ export const AccountCourses = props => {
                                 paginationIndex={pendingIndex}
                                 setPaginationIndex={setPendingIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -597,7 +574,7 @@ export const AccountCourses = props => {
                                 paginationIndex={rejectedIndex}
                                 setPaginationIndex={setRejectedIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -609,7 +586,7 @@ export const AccountCourses = props => {
                                 paginationIndex={archiveIndex}
                                 setPaginationIndex={setArchiveIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}

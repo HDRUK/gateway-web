@@ -1,4 +1,11 @@
 {
+    "cms": {
+        "advancedSearch": {
+            "banner": {
+                "title": "Try these Advanced Search Methods"
+            }
+        }
+    },
     "services": {
         "status": {
             "404": {
@@ -158,6 +165,11 @@
         "dateUpdated": "Metadata last updated:",
         "dateUpdatedTooltip": "The last date when the information about this dataset was updated",
         "publishingFrequency": "Publishing frequency: ",
+        "typicalTimeToAccess": "Typical time to access: ",
+        "numberOfViews": {
+            "viewed": "Viewed",
+            "times": "times"
+        },
         "publishingFrequencyTooltip": "The frequency of publishing new data for this dataset",
         "inReview": "pending approval",
         "active": "Active",
@@ -280,7 +292,7 @@
         "advanced": {
             "cohortDiscovery": {
                 "title": "Cohort Discovery",
-                "description": "Search based on characteristics such as disease, age, and location. Queries are made on the actual dataset, not just metadata. Available on a limited number of datasets with more added monthly.",
+                "description": "Search to find cohorts in pseudonymised datasets based on characteristics such as disease, age, location. Available for a limited number of datasets, with more being added regularly.",
                 "action": "Search using Cohort Discovery",
                 "actionLoggedOut": "Sign in to use Cohort Discovery",
                 "mediaAlt": "Cohort Discovery feature image"
@@ -464,6 +476,17 @@
     "components": {
         "QualityScore": {
             "tooltip": "<p>Metadata richness score: {{score}}</p><p>The score relates to the amount of information available about the dataset, and not to the quality of the actual datasets.</p><p>Click to read more about how the score is calculated.</p><p>{{completeness_percent}} Weighted completeness %<br />{{error_percent}} Weighted error %</p>"
+        },
+        "Login": {
+            "description": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
+            "list": {
+                "description1": "Submit data access enquiries and applications",
+                "description2": "Add your own collections, papers and other resources",
+                "description3": "Use the Cohort Discovery advanced search tool"
+            },
+            "notLoading": "Click here if login screen does not load",
+            "linkLoginOptions": "Show all login options",
+            "descriptionButtons": "You can sign in or create a Gateway account with any of the organisations below, simply click your preferred organisation and follow the on-screen instructions:"
         }
     }
 }

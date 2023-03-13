@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+
+import { LayoutContent } from 'components';
+import googleAnalytics from '../../tracking';
+
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import ActionModal from '../commonComponents/ActionModal/ActionModal';
-import { EntityActionButton } from './EntityActionButton.jsx';
-import googleAnalytics from '../../tracking';
+import { EntityActionButton } from './EntityActionButton';
 import { PaginationHelper } from '../commonComponents/PaginationHelper';
-import { LayoutContent } from '../../components/Layout';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+const baseURL = require('../commonComponents/BaseURL').getURL();
 
 export const AccountPapers = props => {
     const [userState] = useState(props.userState);
@@ -66,9 +68,9 @@ export const AccountPapers = props => {
 
         let apiUrl;
         if (typeof index === 'undefined') {
-            apiUrl = baseURL + `/api/v1/papers/getList?status=${key}`;
+            apiUrl = `${baseURL}/api/v1/papers/getList?status=${key}`;
         } else {
-            apiUrl = baseURL + `/api/v1/papers/getList?status=${key}&offset=${index}&limit=${maxResults}`;
+            apiUrl = `${baseURL}/api/v1/papers/getList?status=${key}&offset=${index}&limit=${maxResults}`;
         }
 
         axios.get(apiUrl).then(res => {
@@ -91,7 +93,7 @@ export const AccountPapers = props => {
 
     const approvePaper = (id, key, index, count) => {
         axios
-            .patch(baseURL + '/api/v1/papers/' + id, {
+            .patch(`${baseURL}/api/v1/papers/${id}`, {
                 activeflag: 'active',
             })
             .then(res => {
@@ -113,10 +115,10 @@ export const AccountPapers = props => {
 
     const rejectPaper = (id, rejectionReason, key, index, count) => {
         axios
-            .patch(baseURL + '/api/v1/papers/' + id, {
-                id: id,
+            .patch(`${baseURL}/api/v1/papers/${id}`, {
+                id,
                 activeflag: 'rejected',
-                rejectionReason: rejectionReason,
+                rejectionReason,
             })
             .then(res => {
                 if (shouldChangeTab()) {
@@ -137,8 +139,8 @@ export const AccountPapers = props => {
 
     const archivePaper = id => {
         axios
-            .patch(baseURL + '/api/v1/papers/' + id, {
-                id: id,
+            .patch(`${baseURL}/api/v1/papers/${id}`, {
+                id,
                 activeflag: 'archive',
             })
             .then(res => {
@@ -157,7 +159,7 @@ export const AccountPapers = props => {
     };
 
     const shouldChangeTab = () => {
-        return (key === 'pending' && reviewCount <= 1) || (key === 'archive' && archiveCount <= 1) ? true : false;
+        return !!((key === 'pending' && reviewCount <= 1) || (key === 'archive' && archiveCount <= 1));
     };
 
     if (isLoading) {
@@ -182,12 +184,11 @@ export const AccountPapers = props => {
                     </Col>
                     <Col sm={12} md={4} style={{ textAlign: 'right' }}>
                         <Button
-                            data-test-id='add-paper-btn'
+                            data-testid='add-paper-btn'
                             variant='primary'
                             href='/paper/add'
                             className='addButton'
-                            onClick={() => googleAnalytics.recordEvent('Papers', 'Add a new paper', 'Papers dashboard button clicked')}
-                        >
+                            onClick={() => googleAnalytics.recordEvent('Papers', 'Add a new paper', 'Papers dashboard button clicked')}>
                             + Add a new paper
                         </Button>
                     </Col>
@@ -195,16 +196,16 @@ export const AccountPapers = props => {
                 <Row className='tabsBackground'>
                     <Col sm={12} lg={12}>
                         <Tabs className='dataAccessTabs gray700-13' data-testid='paperTabs' activeKey={key} onSelect={handleSelect}>
-                            <Tab eventKey='active' title={'Active (' + activeCount + ')'}>
+                            <Tab eventKey='active' title={`Active (${activeCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='pending' title={'Pending approval (' + reviewCount + ')'}>
+                            <Tab eventKey='pending' title={`Pending approval (${reviewCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='rejected' title={'Rejected (' + rejectedCount + ')'}>
+                            <Tab eventKey='rejected' title={`Rejected (${rejectedCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='archive' title={'Archive (' + archiveCount + ')'}>
+                            <Tab eventKey='archive' title={`Archive (${archiveCount})`}>
                                 {' '}
                             </Tab>
                         </Tabs>
@@ -232,7 +233,7 @@ export const AccountPapers = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Uploader(s)</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
                                         {activeCount <= 0 ? (
@@ -243,49 +244,47 @@ export const AccountPapers = props => {
                                             papersList.map((paper, i) => {
                                                 if (paper.activeflag !== 'active') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='paperEntryActive' key={i}>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/paper/' + paper.id} className='black-14'>
-                                                                    {paper.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {paper.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : paper.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                <DropdownButton
-                                                                    variant='outline-secondary'
-                                                                    alignRight
-                                                                    title='Actions'
-                                                                    className='floatRight'
-                                                                >
-                                                                    <Dropdown.Item href={'/paper/edit/' + paper.id} className='black-14'>
-                                                                        Edit
-                                                                    </Dropdown.Item>
-                                                                    <EntityActionButton
-                                                                        id={paper.id}
-                                                                        action={archivePaper}
-                                                                        entity='paper'
-                                                                        actionType='archive'
-                                                                    />
-                                                                </DropdownButton>
-                                                            </Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='paperEntryActive' key={i}>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/paper/${paper.id}`} className='black-14'>
+                                                                {paper.name}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {paper.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : paper.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                                                            <DropdownButton
+                                                                variant='outline-secondary'
+                                                                alignRight
+                                                                title='Actions'
+                                                                className='floatRight'>
+                                                                <Dropdown.Item href={`/paper/edit/${paper.id}`} className='black-14'>
+                                                                    Edit
+                                                                </Dropdown.Item>
+                                                                <EntityActionButton
+                                                                    id={paper.id}
+                                                                    action={archivePaper}
+                                                                    entity='paper'
+                                                                    actionType='archive'
+                                                                />
+                                                            </DropdownButton>
+                                                        </Col>
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -300,7 +299,7 @@ export const AccountPapers = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
                                         {reviewCount <= 0 ? (
@@ -311,76 +310,70 @@ export const AccountPapers = props => {
                                             papersList.map(paper => {
                                                 if (paper.activeflag !== 'review') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='paperEntryPending'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/paper/' + paper.id} className='black-14'>
-                                                                    {paper.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {paper.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : paper.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                {userState[0].role === 'Admin' ? (
-                                                                    <DropdownButton
-                                                                        variant='outline-secondary'
-                                                                        alignRight
-                                                                        title='Actions'
-                                                                        className='floatRight'
-                                                                    >
-                                                                        <Dropdown.Item
-                                                                            href={'/paper/edit/' + paper.id}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Edit
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() =>
-                                                                                approvePaper(paper.id, key, pendingIndex, reviewCount)
-                                                                            }
-                                                                            className='black-14'
-                                                                        >
-                                                                            Approve
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() => toggleActionModal()}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Reject
-                                                                        </Dropdown.Item>
-                                                                        <ActionModal
-                                                                            id={paper.id}
-                                                                            entityKey={'pending'}
-                                                                            entityIndex={pendingIndex}
-                                                                            entityCount={reviewCount}
-                                                                            open={showActionModal}
-                                                                            context={actionModalConfig}
-                                                                            updateApplicationStatus={rejectPaper}
-                                                                            close={toggleActionModal}
-                                                                        />
-                                                                    </DropdownButton>
-                                                                ) : (
-                                                                    ''
-                                                                )}
-                                                            </Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='paperEntryPending'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/paper/${paper.id}`} className='black-14'>
+                                                                {paper.name}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {paper.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : paper.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                                                            {/* TODO: GAT-1510:031 */}
+                                                            {userState[0].role === 'Admin' ? (
+                                                                <DropdownButton
+                                                                    variant='outline-secondary'
+                                                                    alignRight
+                                                                    title='Actions'
+                                                                    className='floatRight'>
+                                                                    <Dropdown.Item href={`/paper/edit/${paper.id}`} className='black-14'>
+                                                                        Edit
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() =>
+                                                                            approvePaper(paper.id, key, pendingIndex, reviewCount)
+                                                                        }
+                                                                        className='black-14'>
+                                                                        Approve
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() => toggleActionModal()}
+                                                                        className='black-14'>
+                                                                        Reject
+                                                                    </Dropdown.Item>
+                                                                    <ActionModal
+                                                                        id={paper.id}
+                                                                        entityKey='pending'
+                                                                        entityIndex={pendingIndex}
+                                                                        entityCount={reviewCount}
+                                                                        open={showActionModal}
+                                                                        context={actionModalConfig}
+                                                                        updateApplicationStatus={rejectPaper}
+                                                                        close={toggleActionModal}
+                                                                    />
+                                                                </DropdownButton>
+                                                            ) : (
+                                                                ''
+                                                            )}
+                                                        </Col>
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -395,7 +388,7 @@ export const AccountPapers = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
                                         {rejectedCount <= 0 ? (
@@ -406,37 +399,31 @@ export const AccountPapers = props => {
                                             papersList.map(paper => {
                                                 if (paper.activeflag !== 'rejected') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='paperEntryRejected'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/paper/' + paper.id} className='black-14'>
-                                                                    {paper.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {paper.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : paper.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-                                                            <Col
-                                                                sm={12}
-                                                                lg={3}
-                                                                style={{ textAlign: 'right' }}
-                                                                className='toolsButtons'
-                                                            ></Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='paperEntryRejected'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/paper/${paper.id}`} className='black-14'>
+                                                                {paper.name}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {paper.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : paper.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons' />
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -451,7 +438,7 @@ export const AccountPapers = props => {
                                                 <Col xs={2}>Last activity</Col>
                                                 <Col xs={5}>Name</Col>
                                                 <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
+                                                <Col xs={3} />
                                             </Row>
                                         )}
                                         {archiveCount <= 0 ? (
@@ -462,88 +449,78 @@ export const AccountPapers = props => {
                                             papersList.map(paper => {
                                                 if (paper.activeflag !== 'archive') {
                                                     return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='paperEntryArchive'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/paper/' + paper.id} className='black-14'>
-                                                                    {paper.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {paper.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : paper.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                {userState[0].role === 'Admin' ? (
-                                                                    <DropdownButton
-                                                                        variant='outline-secondary'
-                                                                        alignRight
-                                                                        title='Actions'
-                                                                        className='floatRight'
-                                                                    >
-                                                                        <Dropdown.Item
-                                                                            href={'/paper/edit/' + paper.id}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Edit
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() =>
-                                                                                approvePaper(paper.id, key, archiveIndex, archiveCount)
-                                                                            }
-                                                                            className='black-14'
-                                                                        >
-                                                                            Approve
-                                                                        </Dropdown.Item>
-                                                                        <Dropdown.Item
-                                                                            href='#'
-                                                                            onClick={() => toggleActionModal()}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Reject
-                                                                        </Dropdown.Item>
-                                                                        <ActionModal
-                                                                            id={paper.id}
-                                                                            entityKey={'archive'}
-                                                                            entityIndex={archiveIndex}
-                                                                            entityCount={archiveCount}
-                                                                            open={showActionModal}
-                                                                            context={actionModalConfig}
-                                                                            updateApplicationStatus={rejectPaper}
-                                                                            close={toggleActionModal}
-                                                                        />
-                                                                    </DropdownButton>
-                                                                ) : (
-                                                                    <DropdownButton
-                                                                        variant='outline-secondary'
-                                                                        alignRight
-                                                                        title='Actions'
-                                                                        className='floatRight'
-                                                                    >
-                                                                        <Dropdown.Item
-                                                                            href={'/paper/edit/' + paper.id}
-                                                                            className='black-14'
-                                                                        >
-                                                                            Edit
-                                                                        </Dropdown.Item>
-                                                                    </DropdownButton>
-                                                                )}
-                                                            </Col>
-                                                        </Row>
-                                                    );
                                                 }
+                                                return (
+                                                    <Row className='entryBox' data-testid='paperEntryArchive'>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {moment(paper.updatedAt).format('D MMMM YYYY HH:mm')}
+                                                        </Col>
+                                                        <Col sm={12} lg={5} className='pt-2'>
+                                                            <a href={`/paper/${paper.id}`} className='black-14'>
+                                                                {paper.name}
+                                                            </a>
+                                                        </Col>
+                                                        <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                                                            {paper.persons <= 0
+                                                                ? 'Author not listed'
+                                                                : paper.persons.map(person => {
+                                                                      return (
+                                                                          <span>
+                                                                              {person.firstname} {person.lastname} <br />
+                                                                          </span>
+                                                                      );
+                                                                  })}
+                                                        </Col>
+                                                        <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                                                            {/* TODO: GAT-1510:032 */}
+                                                            {userState[0].role === 'Admin' ? (
+                                                                <DropdownButton
+                                                                    variant='outline-secondary'
+                                                                    alignRight
+                                                                    title='Actions'
+                                                                    className='floatRight'>
+                                                                    <Dropdown.Item href={`/paper/edit/${paper.id}`} className='black-14'>
+                                                                        Edit
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() =>
+                                                                            approvePaper(paper.id, key, archiveIndex, archiveCount)
+                                                                        }
+                                                                        className='black-14'>
+                                                                        Approve
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item
+                                                                        href='#'
+                                                                        onClick={() => toggleActionModal()}
+                                                                        className='black-14'>
+                                                                        Reject
+                                                                    </Dropdown.Item>
+                                                                    <ActionModal
+                                                                        id={paper.id}
+                                                                        entityKey='archive'
+                                                                        entityIndex={archiveIndex}
+                                                                        entityCount={archiveCount}
+                                                                        open={showActionModal}
+                                                                        context={actionModalConfig}
+                                                                        updateApplicationStatus={rejectPaper}
+                                                                        close={toggleActionModal}
+                                                                    />
+                                                                </DropdownButton>
+                                                            ) : (
+                                                                <DropdownButton
+                                                                    variant='outline-secondary'
+                                                                    alignRight
+                                                                    title='Actions'
+                                                                    className='floatRight'>
+                                                                    <Dropdown.Item href={`/paper/edit/${paper.id}`} className='black-14'>
+                                                                        Edit
+                                                                    </Dropdown.Item>
+                                                                </DropdownButton>
+                                                            )}
+                                                        </Col>
+                                                    </Row>
+                                                );
                                             })
                                         )}
                                     </div>
@@ -563,7 +540,7 @@ export const AccountPapers = props => {
                                 paginationIndex={activeIndex}
                                 setPaginationIndex={setActiveIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -575,7 +552,7 @@ export const AccountPapers = props => {
                                 paginationIndex={pendingIndex}
                                 setPaginationIndex={setPendingIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -587,7 +564,7 @@ export const AccountPapers = props => {
                                 paginationIndex={rejectedIndex}
                                 setPaginationIndex={setRejectedIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -599,7 +576,7 @@ export const AccountPapers = props => {
                                 paginationIndex={archiveIndex}
                                 setPaginationIndex={setArchiveIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}

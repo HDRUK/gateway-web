@@ -1,10 +1,14 @@
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Button } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
+
+import { contentService } from 'services';
+import { RenderMarkdown } from 'components';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
-import contentService from '../../../services/content';
 import DataSetHelper from '../../../utils/DataSetHelper.util';
+import googleAnalytics from '../../../tracking';
+
 import './DataSetModal.scss';
 
 const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginModal }) => {
@@ -68,7 +72,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
                         </div>
                         {!_.isEmpty(screenData.dataRequestModalContent) &&
                         typeof screenData.dataRequestModalContent.header !== 'undefined' ? (
-                            <ReactMarkdown source={screenData.dataRequestModalContent.header} />
+                            <RenderMarkdown source={screenData.dataRequestModalContent.header} />
                         ) : (
                             ''
                         )}
@@ -77,7 +81,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
 
                 <div className={is5Safes ? 'appModal-body' : 'appModal-non-5safes-body'}>
                     {!_.isEmpty(screenData.dataRequestModalContent) && typeof screenData.dataRequestModalContent.body !== 'undefined' ? (
-                        <ReactMarkdown source={screenData.dataRequestModalContent.body} />
+                        <RenderMarkdown source={screenData.dataRequestModalContent.body} />
                     ) : (
                         showNon5SafesData()
                     )}
@@ -87,22 +91,33 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
                     {screenData.showActionButtons ? (
                         <div className='appModal-footer--wrap' data-testid='actionButtons'>
                             {is5Safes ? (
-                                <button
-                                    className='button-secondary mr-2'
+                                <Button
+                                    variant='secondary'
+                                    mr={2}
                                     onClick={() => {
+                                        googleAnalytics.recordEvent(
+                                            'Data access request',
+                                            'Clicked DAR Modal - Start application',
+                                            'Start appliction modal button'
+                                        );
                                         isLoggedIn ? onCloseModal('SUBMIT_APPLICATION') : showLoginModal();
                                     }}>
                                     Start application
-                                </button>
+                                </Button>
                             ) : null}
-                            <button
-                                data-test-id='dar-modal-make-enquiry-btn'
-                                className='btn btn-primary addButton'
+                            <Button
+                                data-testid='dar-modal-make-enquiry-btn'
+                                className='addButton'
                                 onClick={() => {
+                                    googleAnalytics.recordEvent(
+                                        'Data access request',
+                                        'Clicked DAR Modal - Make an enquiry',
+                                        'Make an enquiry modal button'
+                                    );
                                     isLoggedIn ? onCloseModal('ENQUIRY') : showLoginModal();
                                 }}>
                                 Make an enquiry
-                            </button>
+                            </Button>
                         </div>
                     ) : null}
                 </div>

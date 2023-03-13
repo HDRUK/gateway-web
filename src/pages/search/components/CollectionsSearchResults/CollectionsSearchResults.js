@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { omit } from '../../../../configs/propTypes';
 import CollectionCard from '../../../commonComponents/collectionCard/CollectionCard';
@@ -6,7 +6,7 @@ import SearchResults from '../../../commonComponents/SearchResults';
 import { PROP_TYPES_SEARCH_RESULTS } from '../../../commonComponents/SearchResults/SearchResults.propTypes';
 
 const CollectionsSearchResults = props => {
-    const mapResults = React.useCallback(data => {
+    const mapResults = useCallback(data => {
         return (
             <Row className='mt-2'>
                 {data.map(collection => {

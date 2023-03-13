@@ -1,12 +1,16 @@
-import React, { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, FeatureContent, Tag, Typography } from 'hdruk-react-core';
 import { useTranslation } from 'react-i18next';
 import googleAnalytics from '../../../tracking';
 import mediaUrl from '../../../images/feature-data-utility-wizard.png';
+import { addCmsGatewayHostname } from '../../../configs/url.config';
+import { useCms } from '../../../context/CmsContext';
+import { CMS_ACTION_OPEN_DATA_UTILITY_MODAL } from '../../../configs/constants';
 
-const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
+const AdvancedSearchDataUtilityWizard = ({ onClick, variant }) => {
     const { t } = useTranslation();
+    const { data, resetData } = useCms();
 
     const handleClicked = useCallback(() => {
         googleAnalytics.recordVirtualPageView('Data utility wizard');
@@ -15,9 +19,17 @@ const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
         onClick(1);
     }, []);
 
+    useEffect(() => {
+        if (data?.action === CMS_ACTION_OPEN_DATA_UTILITY_MODAL) {
+            resetData();
+
+            onClick(1);
+        }
+    }, [data]);
+
     return (
         <FeatureContent
-            variant='vertical'
+            variant={variant}
             header={
                 <Box display='flex' width='100%' alignItems='center'>
                     <Box flexGrow='1'>{t('search.advanced.dataUtilityWizard.title')}</Box>
@@ -27,15 +39,17 @@ const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
                 </Box>
             }
             body={<Typography>{t('search.advanced.dataUtilityWizard.description')}</Typography>}
-            media={<img src={mediaUrl} alt={t('search.advanced.dataUtilityWizard.mediaAlt')} />}
+            media={<img src={addCmsGatewayHostname(mediaUrl)} alt={t('search.advanced.dataUtilityWizard.mediaAlt')} />}
             actions={
                 <>
-                    <Button variant='secondary' mb={3} onClick={handleClicked}>
+                    <Button variant='secondary' mb={3} onClick={handleClicked} width={variant === 'horizontal' ? '100%' : 'auto'}>
                         {t('search.advanced.dataUtilityWizard.action')}
                     </Button>
-                    <a href='https://www.healthdatagateway.org/about/data-utility-wizard' target='_blank' rel='noreferrer'>
-                        <Typography color='purple500'>{t('learn.more')}</Typography>
-                    </a>
+                    {variant === 'vertical' && (
+                        <a href='https://www.healthdatagateway.org/about/data-utility-wizard' target='_blank' rel='noreferrer'>
+                            <Typography color='purple500'>{t('learn.more')}</Typography>
+                        </a>
+                    )}
                 </>
             }
             width='100%'
@@ -43,7 +57,12 @@ const AdvancedSearchDataUtilityWizard = ({ onClick }) => {
     );
 };
 
+AdvancedSearchDataUtilityWizard.defaultProps = {
+    variant: 'vertical',
+};
+
 AdvancedSearchDataUtilityWizard.propTypes = {
+    variant: PropTypes.oneOf(['horizontal', 'vertical']),
     onClick: PropTypes.func.isRequired,
 };
 

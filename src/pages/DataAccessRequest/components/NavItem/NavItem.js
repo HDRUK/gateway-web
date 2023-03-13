@@ -1,4 +1,3 @@
-import React from 'react';
 import { isEmpty } from 'lodash';
 import DarHelper from '../../../../utils/DarHelper.util';
 import '../../DataAccessRequest.scss';

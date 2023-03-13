@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { useMemo } from 'react';
+import { Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import './DataUseSubmitModal.scss';
 
 const DataUseSubmitModal = ({ open, close, confirm, isValid, hasDuplicates, recommendedFieldsMissing }) => {
-    const message = React.useMemo(() => {
+    const message = useMemo(() => {
         if (hasDuplicates) {
             return {
                 title: 'Submit data uses with duplicates',
@@ -14,7 +15,8 @@ const DataUseSubmitModal = ({ open, close, confirm, isValid, hasDuplicates, reco
                     </>
                 ),
             };
-        } else if (isValid && !recommendedFieldsMissing) {
+        }
+        if (isValid && !recommendedFieldsMissing) {
             return {
                 title: 'Submit data uses for review',
                 description: (
@@ -24,7 +26,8 @@ const DataUseSubmitModal = ({ open, close, confirm, isValid, hasDuplicates, reco
                     </>
                 ),
             };
-        } else if (isValid && recommendedFieldsMissing) {
+        }
+        if (isValid && recommendedFieldsMissing) {
             return {
                 title: 'Submit data uses without recommended minimum fields',
                 description: (
@@ -46,7 +49,8 @@ const DataUseSubmitModal = ({ open, close, confirm, isValid, hasDuplicates, reco
                     </>
                 ),
             };
-        } else if (!isValid) {
+        }
+        if (!isValid) {
             return {
                 title: 'Missing required fields',
                 description: (
@@ -70,7 +74,7 @@ const DataUseSubmitModal = ({ open, close, confirm, isValid, hasDuplicates, reco
     }, [isValid, hasDuplicates, recommendedFieldsMissing]);
 
     return (
-        <Fragment>
+        <>
             <Modal show={open} onHide={close} aria-labelledby='contained-modal-title-vcenter' centered className='dataUseSubmitModal'>
                 <CloseButtonSvg className='dataUseSubmitModal-close' onClick={close} />
                 <div className='dataUseSubmitModal-header'>
@@ -81,18 +85,16 @@ const DataUseSubmitModal = ({ open, close, confirm, isValid, hasDuplicates, reco
                     {isValid && (
                         <div className='dataUseSubmitModal-footer'>
                             <div className='dataUseSubmitModal-footer--wrap'>
-                                <Button variant='white' className='techDetailButton mr-2' onClick={close}>
+                                <Button variant='secondary' className='techDetailButton mr-2' onClick={close}>
                                     No, nevermind
                                 </Button>
-                                <Button variant='primary' className='white-14-semibold' onClick={confirm}>
-                                    Confirm submission
-                                </Button>
+                                <Button onClick={confirm}>Confirm submission</Button>
                             </div>
                         </div>
                     )}
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

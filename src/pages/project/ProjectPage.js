@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { createRef, useState, useEffect } from 'react';
+
 import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
-import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import moment from 'moment';
+
+import { generalUtils } from 'utils';
+import { LayoutContent, Alert, RenderMarkdown } from 'components';
+import SVGIcon from '../../images/SVGIcon';
+import googleAnalytics from '../../tracking';
+
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
 import Uploader from '../commonComponents/Uploader';
-import SVGIcon from '../../images/SVGIcon';
 import DiscourseTopic from '../discourse/DiscourseTopic';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
@@ -20,9 +24,6 @@ import ResourcePageButtons from '../commonComponents/resourcePageButtons/Resourc
 import ErrorModal from '../commonComponents/errorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import googleAnalytics from '../../tracking';
-import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -39,7 +40,7 @@ export const ProjectDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [userState] = useState(
         props.userState || [
             {
@@ -54,7 +55,7 @@ export const ProjectDetail = props => {
     // componentDidMount - on loading of project detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setProjectAdded(values.projectAdded);
             setProjectEdited(values.projectEdited);
         }
@@ -246,7 +247,7 @@ export const ProjectDetail = props => {
                         <Col sm={10} lg={10}>
                             <div className='rectangle'>
                                 <Row>
-                                    <Col data-test-id='project-name' className='line-height-normal'>
+                                    <Col data-testid='project-name' className='line-height-normal'>
                                         <span className='black-16'>{projectData.name}</span>
                                     </Col>
                                 </Row>
@@ -304,8 +305,8 @@ export const ProjectDetail = props => {
                                                         <Col
                                                             sm={12}
                                                             className='gray800-14 hdruk-section-body'
-                                                            data-test-id='project-description'>
-                                                            <ReactMarkdown source={projectData.description} />
+                                                            data-testid='project-description'>
+                                                            <RenderMarkdown source={projectData.description} />
                                                         </Col>
                                                     </Row>
                                                 </div>
@@ -323,8 +324,8 @@ export const ProjectDetail = props => {
                                                             <Col
                                                                 sm={12}
                                                                 className='gray800-14 hdruk-section-body'
-                                                                data-test-id='project-results'>
-                                                                <ReactMarkdown source={projectData.resultsInsights} />
+                                                                data-testid='project-results'>
+                                                                <RenderMarkdown source={projectData.resultsInsights} />
                                                             </Col>
                                                         </Row>
                                                     </div>
@@ -344,7 +345,7 @@ export const ProjectDetail = props => {
                                                         <Col sm={2} className='gray800-14'>
                                                             URL
                                                         </Col>
-                                                        <Col sm={10} data-test-id='link' className='gray800-14'>
+                                                        <Col sm={10} data-testid='link' className='gray800-14'>
                                                             <a
                                                                 href={projectData.link}
                                                                 rel='noopener noreferrer'
@@ -379,7 +380,7 @@ export const ProjectDetail = props => {
                                                             <Col sm={2}>
                                                                 <span className='gray800-14'>Collaborators</span>
                                                             </Col>
-                                                            <Col sm={10} className='gray800-14 overflowWrap' data-test-id='project-authors'>
+                                                            <Col sm={10} className='gray800-14 overflowWrap' data-testid='project-authors'>
                                                                 {projectData.authorsNew}
                                                             </Col>
                                                         </Row>
@@ -394,7 +395,7 @@ export const ProjectDetail = props => {
                                                             <Col
                                                                 sm={10}
                                                                 className='gray800-14 overflowWrap'
-                                                                data-test-id='project-leadResearcher'>
+                                                                data-testid='project-leadResearcher'>
                                                                 {projectData.leadResearcher}
                                                             </Col>
                                                         </Row>
@@ -405,7 +406,7 @@ export const ProjectDetail = props => {
                                                         <Col sm={2} className='gray800-14'>
                                                             Type
                                                         </Col>
-                                                        <Col sm={10} className='gray800-14' data-test-id='project-type'>
+                                                        <Col sm={10} className='gray800-14' data-testid='project-type'>
                                                             <a
                                                                 href={`/search?search=&tab=Projects&projectcategories=${projectData.categories.category}`}>
                                                                 <div className='badge-tag'>{projectData.categories.category}</div>
@@ -424,7 +425,7 @@ export const ProjectDetail = props => {
                                                                     return (
                                                                         <a
                                                                             href={`/search?search=&tab=Projects&projectfeatures=${keyword}`}
-                                                                            data-test-id={`keywords-${i}`}>
+                                                                            data-testid={`keywords-${i}`}>
                                                                             <div className='badge-tag'>{keyword}</div>
                                                                         </a>
                                                                     );
@@ -444,7 +445,7 @@ export const ProjectDetail = props => {
                                                                     return (
                                                                         <a
                                                                             href={`/search?search=&tab=Projects&projecttopics=${domain}`}
-                                                                            data-test-id={`domain-${i}`}>
+                                                                            data-testid={`domain-${i}`}>
                                                                             <div className='badge-tag'>{domain}</div>
                                                                         </a>
                                                                     );

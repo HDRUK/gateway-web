@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pagination, Row } from 'react-bootstrap';
 import Loading from '../Loading';
 import NoResults from '../NoResults';

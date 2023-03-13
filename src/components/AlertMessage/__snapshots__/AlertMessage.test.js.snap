@@ -3,13 +3,13 @@
 exports[`Given the AlertMessage component When it is rendered Then matches the previous snapshot 1`] = `
 <div>
   <div
-    class="css-1tuhzuv ui-AlertMessage css-ybf6od-AlertMessage"
+    class="emotion-0 ui-AlertMessage emotion-1"
   >
     <span
-      class="css-11ba2q0-AlertMessage"
+      class="emotion-2"
     >
       <span
-        class="ui-Icon css-1tuhzuv css-18xv0v4-Icon"
+        class="ui-Icon emotion-0 emotion-4"
       >
         <icon-mock
           fill="inherit"

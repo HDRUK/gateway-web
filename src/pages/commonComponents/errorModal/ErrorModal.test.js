@@ -1,5 +1,4 @@
-import { render } from '@testing-library/react';
-import React from 'react';
+import { testUtils } from '../../../../test';
 import ErrorModal from '.';
 
 const onClose = jest.fn();
@@ -15,13 +14,13 @@ let closeButton;
 describe('Given the ErrorModal component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            containerDiv = createPortalContainer();
+            containerDiv = testUtils.createPortalContainer();
 
-            wrapper = render(<ErrorModal {...props} container={containerDiv} />);
+            wrapper = testUtils.render(<ErrorModal {...props} container={containerDiv} />);
         });
 
         afterAll(() => {
-            removePortalContainer(containerDiv);
+            testUtils.removePortalContainer(containerDiv);
         });
 
         it('Then matches the previous snapshot', () => {
@@ -46,7 +45,7 @@ describe('Given the ErrorModal component', () => {
             beforeEach(() => {
                 closeButton = wrapper.getByTestId('close-button');
 
-                fireEvent.click(closeButton);
+                testUtils.fireEvent.click(closeButton);
             });
 
             afterAll(() => {
@@ -62,23 +61,23 @@ describe('Given the ErrorModal component', () => {
             });
 
             it('Then hides the modal', () => {
-                expect(location.pathname).toEqual('/');
+                expect(window.location.pathname).toEqual('/');
             });
         });
     });
 
     describe('And the modal is closed without onClose', () => {
         beforeAll(() => {
-            containerDiv = createPortalContainer();
+            containerDiv = testUtils.createPortalContainer();
 
-            wrapper = render(<ErrorModal container={containerDiv} />);
+            wrapper = testUtils.render(<ErrorModal container={containerDiv} />);
 
             closeButton = wrapper.getByTestId('close-button');
-            fireEvent.click(closeButton);
+            testUtils.fireEvent.click(closeButton);
         });
 
         afterAll(() => {
-            removePortalContainer(containerDiv);
+            testUtils.removePortalContainer(containerDiv);
         });
 
         it('Then doesnt call onClose', () => {

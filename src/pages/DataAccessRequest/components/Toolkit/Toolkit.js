@@ -1,5 +1,6 @@
-import React, { Fragment, useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { useState } from 'react';
+import { Button } from 'hdruk-react-core';
+import { Modal } from 'react-bootstrap';
 import '../DataAccessRequest.scss';
 
 function Toolkit() {
@@ -8,8 +9,8 @@ function Toolkit() {
     const handleShow = () => setShow(true);
 
     return (
-        <Fragment>
-            <Button variant='white' className='techDetailButton' onClick={handleShow}>
+        <>
+            <Button variant='secondary' className='techDetailButton' onClick={handleShow}>
                 View the toolkit
             </Button>
             <Modal show={show} onHide={handleClose} size='lg' aria-labelledby='contained-modal-title-vcenter' centered className='darModal'>
@@ -17,7 +18,7 @@ function Toolkit() {
                     {' '}
                 </iframe>
             </Modal>
-        </Fragment>
+        </>
     );
 }
 

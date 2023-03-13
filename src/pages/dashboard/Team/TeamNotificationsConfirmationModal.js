@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
 import { isEmpty } from 'lodash';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import './TeamEmailAlertModal.scss';
 
@@ -8,7 +8,7 @@ const TeamNotificationsConfirmationModal = ({ open, close, confirm, teamNotifica
     const buildEmailList = () => {
         if (!isEmpty(teamNotifications)) {
             return teamNotifications.map((notification, i) => {
-                let { subscribedEmails = [], notificationType = '' } = notification;
+                const { subscribedEmails = [], notificationType = '' } = notification;
                 if (!isEmpty(subscribedEmails)) {
                     return (
                         <div className='teamEmails' key={`teamEmail-${notificationType}-${i}`}>
@@ -25,14 +25,13 @@ const TeamNotificationsConfirmationModal = ({ open, close, confirm, teamNotifica
     };
 
     return (
-        <Fragment>
+        <>
             <Modal
                 show={open}
                 onHide={() => close(false)}
                 aria-labelledby='contained-modal-title-vcenter'
                 centered
-                className='teamNotificationsConfirmationEmail'
-            >
+                className='teamNotificationsConfirmationEmail'>
                 <div className='teamNotificationsConfirmationEmail-header'>
                     <h1 className='black-20-semibold'>Email notifications</h1>
                     <CloseButtonSvg className='deleteDraftModal-header--close' onClick={() => close(false)} />
@@ -46,16 +45,14 @@ const TeamNotificationsConfirmationModal = ({ open, close, confirm, teamNotifica
                 </div>
                 <div className='teamNotificationsConfirmationEmail-footer'>
                     <div className='teamNotificationsConfirmationEmail-footer--wrap'>
-                        <Button variant='white' className='techDetailButton mr-2' onClick={() => close(false)}>
+                        <Button variant='secondary' className='techDetailButton mr-2' onClick={() => close(false)}>
                             No, nevermind
                         </Button>
-                        <Button variant='primary' className='white-14-semibold' onClick={() => confirm(true)}>
-                            Save update
-                        </Button>
+                        <Button onClick={() => confirm(true)}>Save update</Button>
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

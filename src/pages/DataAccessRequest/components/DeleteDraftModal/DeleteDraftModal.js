@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import './DeleteDraftModal.scss';
 import googleAnalytics from '../../../../tracking';
 
 const DeleteDraftModal = ({ open, close, confirm }) => {
     return (
-        <Fragment>
+        <>
             <Modal show={open} onHide={close} aria-labelledby='contained-modal-title-vcenter' centered className='deleteDraftModal'>
                 <div className='deleteDraftModal-header'>
                     <h1 className='black-20-semibold'>Delete draft</h1>
@@ -18,23 +18,20 @@ const DeleteDraftModal = ({ open, close, confirm }) => {
                 </div>
                 <div className='deleteDraftModal-footer'>
                     <div className='deleteDraftModal-footer--wrap'>
-                        <Button variant='white' className='techDetailButton mr-2' onClick={close}>
+                        <Button variant='secondary' className='techDetailButton mr-2' onClick={close}>
                             No, nevermind
                         </Button>
                         <Button
-                            variant='primary'
-                            className='white-14-semibold'
                             onClick={() => {
                                 confirm();
                                 googleAnalytics.recordEvent('Data access request', 'Clicked confirm delete', 'Deleted draft application');
-                            }}
-                        >
+                            }}>
                             Delete draft
                         </Button>
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

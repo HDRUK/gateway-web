@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { isEmpty, has, isString } from 'lodash';
 import * as Yup from 'yup';
 import { Formik, Field, Form } from 'formik';
+import { Button } from 'hdruk-react-core';
 import TypeaheadDataset from '../../../DataAccessRequest/components/TypeaheadDataset/TypeaheadDataset';
 
 export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmit }) => {
@@ -110,7 +111,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
 
         if (Array.isArray(value)) {
             return [...value].reduce((message, val, index) => {
-                let { name = '' } = val;
+                const { name = '' } = val;
 
                 if (!isEmpty(name) && index !== 0) {
                     message += `, ${name}`;
@@ -130,7 +131,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
      * @desc  Handles formik valid submission, API call
      */
     const handleFormSubmission = async () => {
-        let {
+        const {
             current: { values },
         } = formRef;
 
@@ -141,7 +142,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
         // if keys loop and get readable values Applicant name: 'Rose Clarke'....
         if (keys.length) {
             // loop keys
-            for (let key of keys) {
+            for (const key of keys) {
                 // get readable quesiton
                 const { title } = valueMapper[key];
                 // get the value as we have different types, string...array etc
@@ -150,7 +151,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                 if (!isEmpty(value)) message += `\n ${title}: ${value}`;
             }
 
-            let data = {
+            const data = {
                 messageDescription: message.trim(),
                 firstMessage: values,
             };
@@ -167,7 +168,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
 
     return (
         <div className='enquiry-message-container'>
-            <div className='gray700-13 text-center' data-test-id='formIntroText'>
+            <div className='gray700-13 text-center' data-testid='formIntroText'>
                 Please provide details about your project and the data you are interested in.
             </div>
             <Formik
@@ -178,104 +179,103 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                 onSubmit={async () => {
                     await handleFormSubmission();
                 }}
-                data-test-id='formik'
-            >
+                data-testid='formik'>
                 {({ isSubmitting, values, errors, touched, setFieldValue }) => (
                     <Form autoComplete='off'>
                         <div className='enquiry-message-form'>
                             {/* APPLICANT NAME */}
                             <div className='form-group gray800-14'>
-                                <label htmlFor={`safepeopleprimaryapplicantfullname`} className='form-label'>
+                                <label htmlFor='safepeopleprimaryapplicantfullname' className='form-label'>
                                     Name *
                                 </label>
                                 <Field
                                     type='text'
-                                    name={`safepeopleprimaryapplicantfullname`}
-                                    data-test-id={`safepeopleprimaryapplicantfullname`}
+                                    name='safepeopleprimaryapplicantfullname'
+                                    data-testid='safepeopleprimaryapplicantfullname'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safepeopleprimaryapplicantfullname') ? 'is-invalid' : ''
                                     }`}
                                 />
                                 {hasErrors(touched, errors, 'safepeopleprimaryapplicantfullname') ? (
-                                    <div className='errorMessages'>{errors['safepeopleprimaryapplicantfullname']}</div>
+                                    <div className='errorMessages'>{errors.safepeopleprimaryapplicantfullname}</div>
                                 ) : null}
                             </div>
 
                             {/* ORGANISATION */}
                             <div className='form-group gray800-14'>
-                                <label htmlFor={`safepeopleprimaryapplicantorganisationname`} className='form-label'>
+                                <label htmlFor='safepeopleprimaryapplicantorganisationname' className='form-label'>
                                     Organisation *
                                 </label>
                                 <Field
                                     type='text'
-                                    name={`safepeopleprimaryapplicantorganisationname`}
-                                    data-test-id={`safepeopleprimaryapplicantorganisationname`}
+                                    name='safepeopleprimaryapplicantorganisationname'
+                                    data-testid='safepeopleprimaryapplicantorganisationname'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safepeopleprimaryapplicantorganisationname') ? 'is-invalid' : ''
                                     }`}
                                 />
                                 {hasErrors(touched, errors, 'safepeopleprimaryapplicantorganisationname') ? (
-                                    <div className='errorMessages'>{errors['safepeopleprimaryapplicantorganisationname']}</div>
+                                    <div className='errorMessages'>{errors.safepeopleprimaryapplicantorganisationname}</div>
                                 ) : null}
                             </div>
 
                             {/* EMAIL */}
                             <div className='form-group gray800-14'>
-                                <label htmlFor={`safepeopleprimaryapplicantemail`} className='form-label'>
+                                <label htmlFor='safepeopleprimaryapplicantemail' className='form-label'>
                                     Email *<span className='gray700-13'>Where do you want the data custodian to contact you?</span>
                                 </label>
                                 <Field
                                     type='email'
-                                    name={`safepeopleprimaryapplicantemail`}
-                                    data-test-id={`safepeopleprimaryapplicantemail`}
+                                    name='safepeopleprimaryapplicantemail'
+                                    data-testid='safepeopleprimaryapplicantemail'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safepeopleprimaryapplicantemail') ? 'is-invalid' : ''
                                     }`}
                                 />
                                 {hasErrors(touched, errors, 'safepeopleprimaryapplicantemail') ? (
-                                    <div className='errorMessages'>{errors['safepeopleprimaryapplicantemail']}</div>
+                                    <div className='errorMessages'>{errors.safepeopleprimaryapplicantemail}</div>
                                 ) : null}
                             </div>
 
                             {/* CONTACT NUMBER */}
                             <div className='form-group gray800-14'>
-                                <label htmlFor={`safepeopleprimaryapplicanttelephone`} className='form-label'>
+                                <label htmlFor='safepeopleprimaryapplicanttelephone' className='form-label'>
                                     Contact number (optional)
                                 </label>
                                 <Field
                                     type='text'
-                                    name={`safepeopleprimaryapplicanttelephone`}
-                                    data-test-id={`safepeoplesafepeopleprimaryapplicanttelephone`}
+                                    name='safepeopleprimaryapplicanttelephone'
+                                    data-testid='safepeoplesafepeopleprimaryapplicanttelephone'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safepeopleprimaryapplicanttelephone') ? 'is-invalid' : ''
                                     }`}
                                 />
                                 {hasErrors(touched, errors, 'safepeopleprimaryapplicanttelephone') ? (
-                                    <div className='errorMessages'>{errors['safepeopleprimaryapplicanttelephone']}</div>
+                                    <div className='errorMessages'>{errors.safepeopleprimaryapplicanttelephone}</div>
                                 ) : null}
                             </div>
 
                             {/* PROJECT TITLE */}
                             <div className='form-group gray800-14'>
-                                <label htmlFor={`safeprojectprojectdetailstitle`} className='form-label'>
+                                <label htmlFor='safeprojectprojectdetailstitle' className='form-label'>
                                     Project title *
                                 </label>
                                 <Field
                                     type='text'
-                                    name={`safeprojectprojectdetailstitle`}
-                                    data-test-id={`safeprojectprojectdetailstitle`}
+                                    name='safeprojectprojectdetailstitle'
+                                    data-testid='safeprojectprojectdetailstitle'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safeprojectprojectdetailstitle') ? 'is-invalid' : ''
                                     }`}
                                 />
                                 {hasErrors(touched, errors, 'safeprojectprojectdetailstitle') ? (
-                                    <div className='errorMessages'>{errors['safeprojectprojectdetailstitle']}</div>
+                                    <div className='errorMessages'>{errors.safeprojectprojectdetailstitle}</div>
                                 ) : null}
                             </div>
 
                             {/* PROJECT AIM */}
                             <div className='form-group gray800-14'>
-                                <label htmlFor={`safeprojectprojectdetailsaimsobjectivesrationale`} className='form-label'>
+                                <label htmlFor='safeprojectprojectdetailsaimsobjectivesrationale' className='form-label'>
                                     Research aim or question *
                                     <span className='gray700-13'>
                                         Please briefly explain the purpose of your research, why you require this dataset and when you
@@ -284,20 +284,20 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 </label>
                                 <Field
                                     as='textarea'
-                                    name={`safeprojectprojectdetailsaimsobjectivesrationale`}
-                                    data-test-id={`safeprojectprojectdetailsaimsobjectivesrationale`}
+                                    name='safeprojectprojectdetailsaimsobjectivesrationale'
+                                    data-testid='safeprojectprojectdetailsaimsobjectivesrationale'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safeprojectprojectdetailsaimsobjectivesrationale') ? 'is-invalid' : ''
                                     }`}
                                 />
                                 {hasErrors(touched, errors, 'safeprojectprojectdetailsaimsobjectivesrationale') ? (
-                                    <div className='errorMessages'>{errors['safeprojectprojectdetailsaimsobjectivesrationale']}</div>
+                                    <div className='errorMessages'>{errors.safeprojectprojectdetailsaimsobjectivesrationale}</div>
                                 ) : null}
                             </div>
 
                             {/* DATASETS  REQUESTED */}
                             <div className='form-group gray800-14'>
-                                <label htmlFor={`datasetsRequested`} className='form-label gray800-14'>
+                                <label htmlFor='datasetsRequested' className='form-label gray800-14'>
                                     Datasets of interest *
                                 </label>
                                 <TypeaheadDataset
@@ -317,7 +317,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
 
                             {/* DATASETS LINK WITH RADIO */}
                             <div className='form-group'>
-                                <label htmlFor={`safedata-otherdatasetsintentiontolinkdata`} className='form-label gray800-14'>
+                                <label htmlFor='safedata-otherdatasetsintentiontolinkdata' className='form-label gray800-14'>
                                     Are there other datasets you would like to link with the ones listed above? *
                                 </label>
                                 <div className='form-check'>
@@ -326,8 +326,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                         className={`
                         form-check-label 
                         gray800-14`}
-                                        htmlFor='safedata-otherdatasetsintentiontolinkdata'
-                                    >
+                                        htmlFor='safedata-otherdatasetsintentiontolinkdata'>
                                         Yes
                                     </label>
                                 </div>
@@ -337,8 +336,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                         className={`
                         form-check-label 
                         gray800-14`}
-                                        htmlFor='safedata-otherdatasetsintentiontolinkdata'
-                                    >
+                                        htmlFor='safedata-otherdatasetsintentiontolinkdata'>
                                         No
                                     </label>
                                 </div>
@@ -350,13 +348,13 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                             {/* IDENTIFY NAMES OF DATASETS */}
                             {values && values['safedata-otherdatasetsintentiontolinkdata'] === 'Yes' ? (
                                 <div className='form-group gray800-14'>
-                                    <label htmlFor={`safedataotherdatasetslinkadditionaldatasetslinkagedetails`} className='form-label'>
+                                    <label htmlFor='safedataotherdatasetslinkadditionaldatasetslinkagedetails' className='form-label'>
                                         Please provide the name or description of these datasets *
                                     </label>
                                     <Field
                                         as='textarea'
-                                        name={`safedataotherdatasetslinkadditionaldatasetslinkagedetails`}
-                                        data-test-id={`safedataotherdatasetslinkadditionaldatasetslinkagedetails`}
+                                        name='safedataotherdatasetslinkadditionaldatasetslinkagedetails'
+                                        data-testid='safedataotherdatasetslinkadditionaldatasetslinkagedetails'
                                         className={`form-control gray800-14 ${
                                             hasErrors(touched, errors, 'safedataotherdatasetslinkadditionaldatasetslinkagedetails')
                                                 ? 'is-invalid'
@@ -365,7 +363,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                     />
                                     {hasErrors(touched, errors, 'safedataotherdatasetslinkadditionaldatasetslinkagedetails') ? (
                                         <div className='errorMessages'>
-                                            {errors['safedataotherdatasetslinkadditionaldatasetslinkagedetails']}
+                                            {errors.safedataotherdatasetslinkadditionaldatasetslinkagedetails}
                                         </div>
                                     ) : null}
                                 </div>
@@ -375,7 +373,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
 
                             {/* PARTS OF DATASET INTERESTED IN */}
                             <div className='form-group'>
-                                <label htmlFor={`datasetsInterestedIn`} className='form-label gray800-14'>
+                                <label htmlFor='datasetsInterestedIn' className='form-label gray800-14'>
                                     Do you know which parts of the dataset you are interested in? *
                                 </label>
                                 <div className='form-check'>
@@ -384,8 +382,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                         className={`
                         form-check-label 
                         gray800-14`}
-                                        htmlFor='datasetsInterestedIn'
-                                    >
+                                        htmlFor='datasetsInterestedIn'>
                                         Yes
                                     </label>
                                 </div>
@@ -395,8 +392,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                         className={`
                         form-check-label 
                         gray800-14`}
-                                        htmlFor='datasetsInterestedIn'
-                                    >
+                                        htmlFor='datasetsInterestedIn'>
                                         No
                                     </label>
                                 </div>
@@ -408,19 +404,19 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                             {/* EXPLAIN PARTS  OF DATASETS */}
                             {values && values.datasetsInterestedIn === 'Yes' ? (
                                 <div className='form-group gray800-14'>
-                                    <label htmlFor={`safedatadatafieldsdatarequiredjustification`} className='form-label'>
+                                    <label htmlFor='safedatadatafieldsdatarequiredjustification' className='form-label'>
                                         Please explain which parts of the dataset *
                                     </label>
                                     <Field
                                         as='textarea'
-                                        name={`safedatadatafieldsdatarequiredjustification`}
-                                        data-test-id={`safedatadatafieldsdatarequiredjustification`}
+                                        name='safedatadatafieldsdatarequiredjustification'
+                                        data-testid='safedatadatafieldsdatarequiredjustification'
                                         className={`form-control gray800-14 ${
                                             hasErrors(touched, errors, 'safedatadatafieldsdatarequiredjustification') ? 'is-invalid' : ''
                                         }`}
                                     />
                                     {hasErrors(touched, errors, 'safedatadatafieldsdatarequiredjustification') ? (
-                                        <div className='errorMessages'>{errors['safedatadatafieldsdatarequiredjustification']}</div>
+                                        <div className='errorMessages'>{errors.safedatadatafieldsdatarequiredjustification}</div>
                                     ) : null}
                                 </div>
                             ) : (
@@ -429,7 +425,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
 
                             {/* FUNDING */}
                             <div className='form-group gray800-14'>
-                                <label htmlFor={`funding`} className='form-label'>
+                                <label htmlFor='funding' className='form-label'>
                                     Funding *
                                     <span className='gray700-13'>
                                         Please provide information on the status of funding for your project including who is expected to
@@ -438,8 +434,8 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 </label>
                                 <Field
                                     as='textarea'
-                                    name={`funding`}
-                                    data-test-id={`funding`}
+                                    name='funding'
+                                    data-testid='funding'
                                     className={`form-control ${hasErrors(touched, errors, 'funding') ? 'is-invalid' : ''}`}
                                 />
                                 {hasErrors(touched, errors, 'funding') ? <div className='errorMessages'>{errors.funding}</div> : null}
@@ -447,7 +443,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
 
                             {/* RESEARCH BENEFITS */}
                             <div className='form-group gray800-14'>
-                                <label htmlFor={`safeprojectprojectdetailspublicbenefitimpact`} className='form-label'>
+                                <label htmlFor='safeprojectprojectdetailspublicbenefitimpact' className='form-label'>
                                     Potential research benefits *
                                     <span className='gray700-13'>
                                         Please provide a short explanation of how your research would benefit the health and care system
@@ -455,22 +451,22 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 </label>
                                 <Field
                                     as='textarea'
-                                    name={`safeprojectprojectdetailspublicbenefitimpact`}
-                                    data-test-id={`safeprojectprojectdetailspublicbenefitimpact`}
+                                    name='safeprojectprojectdetailspublicbenefitimpact'
+                                    data-testid='safeprojectprojectdetailspublicbenefitimpact'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safeprojectprojectdetailspublicbenefitimpact') ? 'is-invalid' : ''
                                     }`}
                                 />
                                 {hasErrors(touched, errors, 'safeprojectprojectdetailspublicbenefitimpact') ? (
-                                    <div className='errorMessages'>{errors['safeprojectprojectdetailspublicbenefitimpact']}</div>
+                                    <div className='errorMessages'>{errors.safeprojectprojectdetailspublicbenefitimpact}</div>
                                 ) : null}
                             </div>
 
                             {/* SUBMIT */}
                             <div className='d-flex flex-row-reverse p-2'>
-                                <button className='button-secondary' type='submit'>
+                                <Button variant='secondary' type='submit'>
                                     Send message
-                                </button>
+                                </Button>
                             </div>
                         </div>
                         {/* <pre>{errors ? errors : ''}</pre> */}

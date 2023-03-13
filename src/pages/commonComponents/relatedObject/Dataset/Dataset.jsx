@@ -1,32 +1,34 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React, { useState, useEffect, useCallback } from 'react';
-import queryString from 'query-string';
+/** @jsxImportSource @emotion/react */
+import { useState, useEffect, useCallback } from 'react';
+
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash';
 import { cx } from '@emotion/css';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from 'hdruk-react-core';
+
+import { generalUtils } from 'utils';
+import { ToolTip, Icon, QualityScore } from 'components';
 import googleAnalytics from '../../../../tracking';
 import { dateFormats, stripMarkdown } from '../../../../utils/GeneralHelper.util';
+import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
+import { ReactComponent as Shield } from '../../../../images/shield.svg';
+import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
+import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
+import SVGIcon from '../../../../images/SVGIcon';
+
 import RemoveButton from '../RemoveButton/RemoveButton';
 import Title from '../Title/Title';
 import Description from '../Description/Description';
 import Tag from '../Tag/Tag';
-import ToolTip from '../../../../components/ToolTip/ToolTip';
-import Icon from '../../../../components/Icon';
-import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
-import { ReactComponent as Shield } from '../../../../images/shield.svg';
 import { dataset } from './constants';
 import * as styles from './Dataset.styles';
 import '../../CommonComponents.scss';
 import '../RelatedObject.scss';
 import ShowMore from '../../ShowMore';
-import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';
-import { ReactComponent as InfoOutlineIcon } from '../../../../images/icons/info-outline.svg';
-import { QualityScore } from '../../../../components';
-import SVGIcon from '../../../../images/SVGIcon';
+import DeliveryLeadTime from './modules/DeliveryLeadTime';
+import NumberOfViews from './modules/NumberOfViews';
 
 const Dataset = ({
     data,
@@ -51,7 +53,7 @@ const Dataset = ({
             publisher.label = name;
             publisher.showShield = !isNil(data.datasetv2.summary.publisher.memberOf);
             publisher.memberOf = data.datasetv2.summary.publisher.memberOf;
-        } else {
+        } else if (data.datasetfields.publisher) {
             const name = data.datasetfields.publisher;
             const publisherName = name.includes('>') ? name.split(' > ')[1].toUpperCase() : name.toUpperCase();
             publisher.name = publisherName;
@@ -101,11 +103,13 @@ const Dataset = ({
         },
     } = data;
 
-    const phenotypesSelected = queryString.parse(window.location.search).phenotypes
-        ? queryString.parse(window.location.search).phenotypes.split('::')
+    const phenotypesSelected = generalUtils.parseQueryString(window.location.search).phenotypes
+        ? generalUtils.parseQueryString(window.location.search).phenotypes.split('::')
         : [];
-    const searchTerm = queryString.parse(window.location.search).search ? queryString.parse(window.location.search).search : '';
-    const phenotypesSearched = data.datasetfields.phenotypes.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
+    const searchTerm = generalUtils.parseQueryString(window.location.search).search
+        ? generalUtils.parseQueryString(window.location.search).search
+        : '';
+    const phenotypesSearched = data.datasetfields.phenotypes?.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
 
     return (
         <>
@@ -123,28 +127,29 @@ const Dataset = ({
                         }}
                     />
                     <br />
-
                     <Box
-                        as={Typography}
                         mb={1}
                         display='flex'
                         alignItems='center'
                         className={cx('gray800-14', { underlined: !!activeLink })}
                         css={styles.pointer}
-                        onClick={() =>
-                            updateOnFilterBadge('publisher', {
-                                label: publisherDetails.label,
-                                parentKey: 'publisher',
-                            })
-                        }
                         data-testid={`publisher-${publisherDetails.name}`}>
                         {publisherDetails.showShield && (
                             <ToolTip text={`Member of ${publisherDetails.memberOf}`} placement='bottom-start'>
                                 <Icon svg={<Shield fill='inherit' />} size='2xl' />
                             </ToolTip>
                         )}
-                        &nbsp;
-                        {publisherDetails.name}
+                        <a
+                            role='button'
+                            onClick={() =>
+                                updateOnFilterBadge('publisher', {
+                                    value: publisherDetails.label,
+                                    label: publisherDetails.label,
+                                    parentKey: 'datasetpublisher',
+                                })
+                            }>
+                            {publisherDetails.name}
+                        </a>
                     </Box>
                 </Col>
                 <Col xs={5} sm={3} className={isLocked ? 'lockSVG' : ''}>
@@ -176,14 +181,14 @@ const Dataset = ({
                         variant='caption'
                         display='flex'
                         alignItems='center'
-                        css={styles.publishingFrequencyContainer}
+                        justifyContent={{ sm: 'end' }}
                         mt={1}
                         mb={1}>
-                        {data.datasetv2.provenance?.temporal?.accrualPeriodicity && (
+                        {data.datasetv2?.provenance?.temporal?.accrualPeriodicity && (
                             <>
                                 {t('dataset.publishingFrequency')}
                                 {data.datasetv2.provenance.temporal.accrualPeriodicity}
-                                <ToolTip placement='left' text={t('dataset.publishingFrequencyTooltip')}>
+                                <ToolTip placement='bottom-end' maxWidth='550px' text={t('dataset.publishingFrequencyTooltip')}>
                                     <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
                                 </ToolTip>
                             </>
@@ -264,6 +269,14 @@ const Dataset = ({
                     </ShowMore>
                 </Col>
                 {!showRelationshipQuestion && <Description type={data.type} description={getDescription()} />}
+            </Row>
+            <Row className='pad-left-24 pad-right-24 pad-bottom-16'>
+                <Col sm={12} lg={6}>
+                    <NumberOfViews count={data.counter} />
+                </Col>
+                <Col sm={12} lg={6}>
+                    <DeliveryLeadTime deliveryLeadTime={data.datasetv2?.accessibility?.access?.deliveryLeadTime} />
+                </Col>
             </Row>
         </>
     );

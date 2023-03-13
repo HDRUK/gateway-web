@@ -1,5 +1,4 @@
-import React from 'react';
-import SortDropdown from '../../../../components/SortDropdown';
+import { SortDropdown } from 'components';
 
 const CollectionsSearchSort = ({ sort, onSort, search, ...outerProps }) => {
     return (

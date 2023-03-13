@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -50,7 +50,7 @@ const SaveModal = ({ ...props }) => {
                 </p>
                 <label className='black-14'>Title</label>
                 <Form.Control
-                    data-test-id='saved-preference-name'
+                    data-testid='saved-preference-name'
                     id='name'
                     name='name'
                     type='text'

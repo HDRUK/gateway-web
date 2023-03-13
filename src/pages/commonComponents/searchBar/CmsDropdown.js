@@ -1,15 +1,16 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import { forwardRef, Children, useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import '../CommonComponents.scss';
 import { Dropdown } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 
 const baseURL = require('../BaseURL');
+
 const cmsURL = baseURL.getCMSURL();
 const env = baseURL.getURLEnv();
 const local = 'local';
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+const CustomToggle = forwardRef(({ children, onClick }, ref) => (
     <a
         href='javascript:void(0)'
         ref={ref}
@@ -17,36 +18,36 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         onClick={e => {
             e.preventDefault();
             onClick(e);
-        }}
-    >
+        }}>
         {children}
-        <SVGIcon name='chevronbottom' fill={'#475DA7'} className='svg-16 floatRightChevron' />
+        <SVGIcon name='chevronbottom' fill='#475DA7' className='svg-16 floatRightChevron' />
     </a>
 ));
 
-const CustomMenu = React.forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+const CustomMenu = forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
     const [value] = useState('');
 
     return (
         <div ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
             <ul className='list-unstyled'>
-                {React.Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
+                {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
             </ul>
         </div>
     );
 });
 
-const CustomSubMenu = React.forwardRef(({ children, style, className, show, 'aria-labelledby': labeledBy }, ref) => {
+const CustomSubMenu = forwardRef(({ children, style, className, show, 'aria-labelledby': labeledBy }, ref) => {
     const [value] = useState('');
     if (show) {
         return (
             <Fragment ref={ref} style={style} className={className} aria-labelledby={labeledBy}>
                 <ul className='list-unstyled'>
-                    {React.Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
+                    {Children.toArray(children).filter(child => !value || child.props.children.toLowerCase().startsWith(value))}
                 </ul>
             </Fragment>
         );
     }
+    return null;
 });
 
 export const CmsDropdown = props => {
@@ -54,9 +55,8 @@ export const CmsDropdown = props => {
     const [dropdownLinks, setDropdownLinks] = useState('');
     const [isMobile] = useState(props.isMobile);
 
-    //componentDidMount - on loading of page detail page
     useEffect(() => {
-        let url = env === local ? 'https://uatbeta.healthdatagateway.org' : cmsURL;
+        const url = env === local ? 'https://uatbeta.healthdatagateway.org' : cmsURL;
 
         axios
             .get(`${url}/${dropdownUrl}`, { withCredentials: false })
@@ -67,14 +67,14 @@ export const CmsDropdown = props => {
     }, []);
 
     const getDropdownTitle = dropdownUrl => {
-        let dropdownUrls = new Map([
+        const dropdownUrls = new Map([
             ['exploreDropdown', 'Explore'],
             ['helpDropdown', 'Help'],
             ['usageDataDropdown', 'Usage Data'],
             ['aboutUsDropdown', 'About Us'],
         ]);
 
-        let dropdownTitle = dropdownUrls.get(dropdownUrl.trim());
+        const dropdownTitle = dropdownUrls.get(dropdownUrl.trim());
 
         return dropdownTitle;
     };
@@ -82,7 +82,7 @@ export const CmsDropdown = props => {
     return (
         <Dropdown className='cmsDropdown'>
             <Dropdown.Toggle as={CustomToggle}>
-                <span className='black-14'>{getDropdownTitle(dropdownUrl)}</span>
+                <span>{getDropdownTitle(dropdownUrl)}</span>
             </Dropdown.Toggle>
 
             <Dropdown.Menu as={isMobile === true ? CustomSubMenu : CustomMenu} className='cmsDropdownMenu'>

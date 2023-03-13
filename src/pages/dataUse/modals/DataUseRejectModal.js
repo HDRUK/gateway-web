@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
+import TextareaAutosize from 'react-textarea-autosize';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import DarHelperUtil from '../../../utils/DarHelper.util';
-import TextareaAutosize from 'react-textarea-autosize';
 import './DataUseModals.scss';
 
 const DataUseRejectModal = ({ isVisible, toggleModal, onConfirm }) => {
@@ -28,8 +29,7 @@ const DataUseRejectModal = ({ isVisible, toggleModal, onConfirm }) => {
             onHide={toggleModal}
             aria-labelledby='contained-modal-title-vcenter'
             centered
-            className='dataUseRejectModal'
-        >
+            className='dataUseRejectModal'>
             <CloseButtonSvg className='dataUseRejectModal-close' onClick={toggleModal} />
             <div className='dataUseRejectModal-header'>
                 <h1 className='black-20-semibold mb-2'>Reject this data use?</h1>
@@ -54,14 +54,14 @@ const DataUseRejectModal = ({ isVisible, toggleModal, onConfirm }) => {
                     name='rejectionReason'
                     onChange={e => updateCount(e)}
                     value={rejectionReason}
-                ></TextareaAutosize>
+                />
 
                 {!isValid && (
                     <div className='dataUseRejectModal-error'>This cannot be longer then {rejectionReasonMaxLength} characters</div>
                 )}
                 <div className='dataUseRejectModal-footer'>
                     <div className='dataUseRejectModal-footer--wrap'>
-                        <Button variant='white' className='techDetailButton mr-2' onClick={toggleModal}>
+                        <Button variant='secondary' className='techDetailButton mr-2' onClick={toggleModal}>
                             No, nevermind
                         </Button>
                         <Button
@@ -74,8 +74,7 @@ const DataUseRejectModal = ({ isVisible, toggleModal, onConfirm }) => {
                                     DarHelperUtil.dataUseRegisterStatus.REJECTED,
                                     rejectionReason
                                 )
-                            }
-                        >
+                            }>
                             Reject and send message
                         </Button>
                     </div>

@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { Button } from 'hdruk-react-core';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import './DeleteManualEventModal.scss';
 
 const DeleteManualEventModal = ({ open, close, confirm }) => {
     return (
-        <Fragment>
+        <>
             <Modal show={open} onHide={close} aria-labelledby='contained-modal-title-vcenter' centered className='deleteEventModal'>
                 <CloseButtonSvg className='deleteEventModal-close' onClick={close} />
                 <div className='deleteEventModal-header'>
@@ -18,17 +18,15 @@ const DeleteManualEventModal = ({ open, close, confirm }) => {
                 <div className='deleteEventModal-body'>
                     <div className='deleteEventModal-footer'>
                         <div className='deleteEventModal-footer--wrap'>
-                            <Button variant='white' className='techDetailButton mr-2' onClick={close}>
+                            <Button variant='secondary' className='techDetailButton mr-2' onClick={close}>
                                 No, nevermind
                             </Button>
-                            <Button variant='primary' className='white-14-semibold' onClick={confirm}>
-                                Delete event
-                            </Button>
+                            <Button onClick={confirm}>Delete event</Button>
                         </div>
                     </div>
                 </div>
             </Modal>
-        </Fragment>
+        </>
     );
 };
 

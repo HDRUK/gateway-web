@@ -1,5 +1,4 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
-import React from 'react';
 import AdvancedSearchDataUtilityWizard from '.';
 
 const props = {
@@ -11,6 +10,8 @@ let wrapper;
 describe('Given the AdvancedSearchDataUtilityWizard component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
+            redefineWindow();
+
             wrapper = render(<AdvancedSearchDataUtilityWizard {...props} />, {
                 wrapper: Providers,
             });

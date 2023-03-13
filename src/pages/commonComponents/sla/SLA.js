@@ -1,4 +1,3 @@
-import React from 'react';
 import './SLA.scss';
 
 export default ({ classProperty = '', text = '', icon }) => {

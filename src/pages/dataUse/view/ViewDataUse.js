@@ -1,20 +1,18 @@
 import * as Sentry from '@sentry/react';
 import _, { isEmpty } from 'lodash';
-import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
-import { Col, Container, Row, Tab, Tabs, Tooltip } from 'react-bootstrap';
+import { createRef, useCallback, useEffect, useState } from 'react';
+import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import 'react-tabs/style/react-tabs.css';
 import { Box } from 'hdruk-react-core';
-import Alert from '../../../components/Alert';
-import { LayoutContent } from '../../../components/Layout';
-import SearchControls from '../../../components/SearchControls';
+
+import { generalUtils } from 'utils';
+import { Alert, LayoutContent, SearchControls } from 'components';
+import { collectionsService, dataUseRegistersService, relatedObjectsService } from 'services';
 import SVGIcon from '../../../images/SVGIcon';
-import collectionsService from '../../../services/collections';
-import dataUseRegistersService from '../../../services/data-use-registers';
-import relatedObjectsService from '../../../services/related-objects';
 import googleAnalytics from '../../../tracking';
+
 import ActionBar from '../../commonComponents/actionbar/ActionBar';
 import CollectionCard from '../../commonComponents/collectionCard/CollectionCard';
 import DataSetModal from '../../commonComponents/dataSetModal/DataSetModal';
@@ -49,7 +47,7 @@ export const DataUseView = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [userState] = useState(
         props.userState || [
             {
@@ -96,7 +94,7 @@ export const DataUseView = props => {
     // componentDidMount - on loading of page detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setDataUseAdded(values.dataUseAdded);
             setDataUseEdited(values.dataUseEdited);
         }
@@ -300,7 +298,7 @@ export const DataUseView = props => {
         submitForm();
     };
 
-    const doRelatedObjectsSearch = React.useCallback(() => {
+    const doRelatedObjectsSearch = useCallback(() => {
         doRelatedObjectsQuery({
             search: relatedObjectsSearchValue,
             sortBy: 'showAll',
@@ -324,7 +322,7 @@ export const DataUseView = props => {
             return '';
         });
 
-    const handleSort = React.useCallback(
+    const handleSort = useCallback(
         async (sort, submitForm) => {
             handleAnalytics(`Sorted related resources`, sort);
 
@@ -423,7 +421,7 @@ export const DataUseView = props => {
                                 <div className='rectangle'>
                                     <Row>
                                         <Col>
-                                            <span data-test-id='datause-name' className='black-16' data-testid='title'>
+                                            <span className='black-16' data-testid='title'>
                                                 {dataUseData.projectTitle}
                                             </span>
                                             <br />

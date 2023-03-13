@@ -1,12 +1,12 @@
 import _ from 'lodash';
-import React from 'react';
+import { useCallback } from 'react';
 import { omit } from '../../../../configs/propTypes';
 import RelatedObject from '../../../commonComponents/relatedObject/RelatedObject';
 import SearchResults from '../../../commonComponents/SearchResults';
 import { PROP_TYPES_SEARCH_RESULTS } from '../../../commonComponents/SearchResults/SearchResults.propTypes';
 
 const DatasetSearchResults = ({ updateOnFilterBadge, ...outerProps }) => {
-    const mapResults = React.useCallback(
+    const mapResults = useCallback(
         data => {
             return data.map(dataset => {
                 let datasetPublisher;

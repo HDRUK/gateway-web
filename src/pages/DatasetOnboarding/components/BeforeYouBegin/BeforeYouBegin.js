@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Accordion, Card } from 'react-bootstrap';
 import DarHelper from '../../../../utils/DarHelper.util';
 

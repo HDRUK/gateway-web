@@ -1,5 +1,3 @@
-import React from 'react';
-
 const NoFiles = () => {
     return (
         <div className='no-files'>
