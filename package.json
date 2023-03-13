@@ -38,7 +38,7 @@
         "lodash": "^4.17.21",
         "markdown-draft-js": "^2.4.0",
         "moment": "^2.25.3",
-        "msw": "^0.35.0",
+        "msw": "^0.44.0",
         "pluralize": "^8.0.0",
         "prop-types": "^15.8.1",
         "query-string": "^7.1.1",
@@ -86,7 +86,7 @@
         "uniqid": "^5.2.0",
         "uuid": "^8.3.1",
         "winterfell": "github:HDRUK/Winterfell",
-        "yup": "^0.28.1"
+        "yup": "^0.30.0"
     },
     "scripts": {
         "start": "GENERATE_SOURCEMAP=false react-scripts start",
@@ -137,7 +137,7 @@
         "@storybook/addon-links": "^6.3.8",
         "@storybook/node-logger": "^6.3.8",
         "@storybook/preset-create-react-app": "^1.2.0",
-        "@storybook/react": "^6.1.21",
+        "@storybook/react": "^6.5.14",
         "@testing-library/dom": "^8.7.2",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^12.1.0",
