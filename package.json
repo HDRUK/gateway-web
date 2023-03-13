@@ -86,7 +86,7 @@
         "uniqid": "^5.2.0",
         "uuid": "^8.3.1",
         "winterfell": "github:HDRUK/Winterfell",
-        "yup": "^0.28.1"
+        "yup": "^0.30.0"
     },
     "scripts": {
         "start": "GENERATE_SOURCEMAP=false react-scripts start",
