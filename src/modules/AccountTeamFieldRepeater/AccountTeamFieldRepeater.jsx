@@ -5,22 +5,20 @@ import { subscribedEmailPropTypes, teamNotificationPropTypes } from 'types';
 import { useCustodianRoles } from 'hooks';
 
 const AccountTeamFieldRepeaterAction = ({ subscribedEmails, notificationType, isManager, index, handleRemoveClick, handleAddClick }) => {
-    if (!isManager) return null;
-
     return (
         <div className='field-action' key={`field-action-${index}`}>
             <button
                 type='button'
                 onClick={() => handleRemoveClick(index, notificationType)}
                 className='plusMinusButton'
-                disabled={subscribedEmails.length === 1}>
+                disabled={subscribedEmails.length === 1 || !isManager}>
                 -
             </button>
             <button
                 type='button'
                 onClick={() => handleAddClick(notificationType)}
                 className='plusMinusButton'
-                disabled={subscribedEmails.length - 1 !== index}>
+                disabled={subscribedEmails.length - 1 !== index || !isManager}>
                 +
             </button>
         </div>

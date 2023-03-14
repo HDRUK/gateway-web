@@ -13,8 +13,6 @@ const props = {
     toggleTeamNotifications: toggleTeamNotificationsMock,
 };
 
-let wrapper;
-
 describe('Given the AccountTeamGatewayNotificationEmails component', () => {
     describe('When it renders', () => {
         describe('And the user is not a team admin', () => {
@@ -23,7 +21,7 @@ describe('Given the AccountTeamGatewayNotificationEmails component', () => {
                     userState: mocks.userState.mockCustodianMetadataManager,
                 });
 
-                wrapper = testUtils.render(<AccountTeamGatewayNotificationEmails {...props} />);
+                testUtils.render(<AccountTeamGatewayNotificationEmails {...props} />);
             });
 
             afterAll(() => {
@@ -31,7 +29,7 @@ describe('Given the AccountTeamGatewayNotificationEmails component', () => {
             });
 
             it('Then should be empty', () => {
-                expect(wrapper.container).toBeEmpty();
+                expect(testUtils.screen.getByLabelText('Send email notifications to team email address')).toBeDisabled();
             });
         });
 

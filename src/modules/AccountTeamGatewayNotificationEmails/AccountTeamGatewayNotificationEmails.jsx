@@ -8,10 +8,10 @@ const AccountTeamGatewayNotificationEmails = ({ teamId, teamNotification, toggle
     const { t } = useTranslation();
     const { isCustodianTeamAdmin } = useCustodianRoles(teamId);
 
-    if (!isCustodianTeamAdmin || !teamId) return null;
     return (
         <div data-testid='AccountTeamGatewayNotificationEmails'>
             <Switch
+                disabled={!isCustodianTeamAdmin}
                 checked={teamNotification.optIn}
                 onChange={({ target: { checked } }) => toggleTeamNotifications({ checked, id: teamNotification.notificationType })}
                 label={t('notifications.teamEmailText')}
