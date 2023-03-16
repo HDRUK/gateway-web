@@ -169,7 +169,7 @@ exports[`AccountTeamMembers component render should match the previous snapshot 
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
                   for="2806784217812241_custodian.dar.manager"
-                  title="You do not have permission to edit this"
+                  title="All team members must have at least one role. Please contact your team admin to remove a team member."
                 >
                   <input
                     checked=""
@@ -757,7 +757,7 @@ exports[`AccountTeamMembers component render should render the table 1`] = `
                 <label
                   class="ui-Checkbox emotion-15 emotion-16"
                   for="2806784217812241_custodian.dar.manager"
-                  title="You do not have permission to edit this"
+                  title="All team members must have at least one role. Please contact your team admin to remove a team member."
                 >
                   <input
                     checked=""

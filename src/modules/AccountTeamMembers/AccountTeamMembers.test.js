@@ -121,10 +121,10 @@ describe('AccountTeamMembers component', () => {
             });
         });
 
-        it('Dar manager checkbox should be enabled', () => {
+        it('Dar manager checkbox should be disabled as one role', () => {
             const checkbox = testUtils.within(cells[2]).getByLabelText('Manager');
 
-            expect(checkbox).toBeEnabled();
+            expect(checkbox).toBeDisabled();
         });
         it('Dar reviewer checkbox should be enabled', () => {
             const checkbox = testUtils.within(cells[2]).getByLabelText('Reviewer');
@@ -141,7 +141,7 @@ describe('AccountTeamMembers component', () => {
 
             expect(checkbox).toBeEnabled();
         });
-        it('Remove user button to be enabled', () => {
+        it('Remove member button to be enabled', () => {
             const popover = testUtils.within(cells[4]).getByRole('button');
             popover.click();
 
@@ -190,7 +190,7 @@ describe('AccountTeamMembers component', () => {
 
             expect(checkbox).toBeEnabled();
         });
-        it('Remove user button to be disabled', () => {
+        it('Remove member button to be disabled', () => {
             const popover = testUtils.within(cells[4]).getByRole('button');
             popover.click();
 
@@ -219,10 +219,10 @@ describe('AccountTeamMembers component', () => {
 
             expect(checkbox).toBeDisabled();
         });
-        it('Dar manager checkbox should be enabled', () => {
+        it('Dar manager checkbox should be disabled as one role', () => {
             const checkbox = testUtils.within(cells[2]).getByLabelText('Manager');
 
-            expect(checkbox).toBeEnabled();
+            expect(checkbox).toBeDisabled();
         });
         it('Dar reviewer checkbox should be enabled', () => {
             const checkbox = testUtils.within(cells[2]).getByLabelText('Reviewer');
@@ -239,7 +239,7 @@ describe('AccountTeamMembers component', () => {
 
             expect(checkbox).toBeDisabled();
         });
-        it('Remove user button to be disabled', () => {
+        it('Remove member button to be disabled', () => {
             const popover = testUtils.within(cells[4]).getByRole('button');
             popover.click();
 
@@ -262,7 +262,7 @@ describe('AccountTeamMembers component', () => {
             const rows = testUtils.within(headers[1]).getAllByRole('row');
             cells = testUtils.within(rows[0]).getAllByRole('cell');
         });
-        it('Remove user button to be disabled', () => {
+        it('Remove member button to be disabled', () => {
             const popover = testUtils.within(cells[4]).getByRole('button');
             popover.click();
 
@@ -285,7 +285,7 @@ describe('AccountTeamMembers component', () => {
             const rows = testUtils.within(headers[1]).getAllByRole('row');
             cells = testUtils.within(rows[0]).getAllByRole('cell');
         });
-        it('Remove user button to be disabled', () => {
+        it('Remove member button to be disabled', () => {
             const popover = testUtils.within(cells[4]).getByRole('button');
             popover.click();
 
@@ -309,7 +309,7 @@ describe('AccountTeamMembers component', () => {
             const rows = testUtils.within(headers[1]).getAllByRole('row');
             cells = testUtils.within(rows[0]).getAllByRole('cell');
         });
-        it('Remove user button to be enabled', () => {
+        it('Remove member button to be enabled', () => {
             const popover = testUtils.within(cells[4]).getByRole('button');
             popover.click();
 

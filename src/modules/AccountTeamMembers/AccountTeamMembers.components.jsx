@@ -20,7 +20,7 @@ const ActionCell = ({ member, onDeleteMember, currentUser, isHDRAdmin, isCustodi
 
     const items = [
         {
-            label: t('removeUser'),
+            label: t('removeMember'),
             icon: WastebinIcon,
             disabled: isDisabled,
             action: () => onDeleteMember(member),

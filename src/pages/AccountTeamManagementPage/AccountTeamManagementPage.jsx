@@ -404,15 +404,8 @@ const AccountTeamManagementPage = ({ teamId, forwardRef, onTeamManagementSave })
 
 AccountTeamManagementPage.propTypes = {
     teamId: PropTypes.string.isRequired,
-    innerTab: PropTypes.oneOf([ACCOUNT_TAB_TYPES.Notifications, ACCOUNT_TAB_TYPES.Members]),
     forwardRef: PropTypes.func.isRequired,
     onTeamManagementSave: PropTypes.func.isRequired,
-    // onTeamManagementTabChange: PropTypes.func.isRequired,
-    // onClearInnerTab: PropTypes.func.isRequired,
-};
-
-AccountTeamManagementPage.defaultProps = {
-    innerTab: ACCOUNT_TAB_TYPES.Members,
 };
 
 export default AccountTeamManagementPage;
