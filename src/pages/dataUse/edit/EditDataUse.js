@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react';
-import { PERMISSIONS_TEAM_ROLES } from 'consts';
+import { ROLE_CUSTODIAN_DAR_MANAGER, ROLE_CUSTODIAN_DAR_REVIEWER } from 'consts';
 import { isArray, isEmpty } from 'lodash';
 import moment from 'moment';
 import { createRef, useEffect, useState } from 'react';
@@ -155,12 +155,8 @@ const EditDataUse = props => {
                 });
 
                 setDatasetsArray(!isEmpty(datasets) ? datasets : [{ pid: '', name: '' }]);
-                // TODO: GAT-1510:GAT-1723
                 setDisableInput(
-                    !authUtils.userHasTeamRole(userState, res.data.publisher, [
-                        PERMISSIONS_TEAM_ROLES.manager,
-                        PERMISSIONS_TEAM_ROLES.reviewer,
-                    ])
+                    !authUtils.userHasTeamRole(userState, res.data.publisher, [ROLE_CUSTODIAN_DAR_MANAGER, ROLE_CUSTODIAN_DAR_REVIEWER])
                 );
                 setIsLoading(false);
             });
