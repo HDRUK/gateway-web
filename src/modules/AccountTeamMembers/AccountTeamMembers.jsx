@@ -88,7 +88,17 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers = [] }) => {
     const getIsCheckboxDisabled = useCallback(
         (role, userId) => {
             const roleKeys = Object.entries(checkboxValues[userId])
-                .filter(item => item[1])
+                .filter(
+                    item =>
+                        item[1] &&
+                        [
+                            ROLE_CUSTODIAN_DAR_MANAGER,
+                            ROLE_CUSTODIAN_DAR_REVIEWER,
+                            ROLE_CUSTODIAN_METADATA_MANAGER,
+                            ROLE_CUSTODIAN_METADATA_EDITOR,
+                            ROLE_CUSTODIAN_TEAM_ADMIN,
+                        ].includes(item[0])
+                )
                 .map(item => item[0]);
 
             if (roleKeys.length === 1 && roleKeys.includes(role)) {
