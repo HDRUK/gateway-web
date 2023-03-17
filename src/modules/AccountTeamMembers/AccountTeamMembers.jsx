@@ -85,12 +85,19 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers = [] }) => {
         setFilteredMembers(members.reverse());
     };
 
-    const renderDisabledMessage = isDisabled => {
-        return isDisabled ? t('components.AccountTeamMembers.disabledMessage') : '';
-    };
-
     const getIsCheckboxDisabled = useCallback(
-        role => {
+        (role, userId) => {
+            const roleKeys = Object.entries(checkboxValues[userId])
+                .filter(item => item[1])
+                .map(item => item[0]);
+
+            if (roleKeys.length === 1 && roleKeys.includes(role)) {
+                if (isCustodianTeamAdmin) {
+                    return { value: true, message: t('components.AccountTeamMembers.lastRoleAdmin') };
+                }
+                return { value: true, message: t('components.AccountTeamMembers.lastRoleNonAdmin') };
+            }
+
             const darManagerHasPermission =
                 isCustodianDarManager && [ROLE_CUSTODIAN_DAR_MANAGER, ROLE_CUSTODIAN_DAR_REVIEWER].includes(role);
 
@@ -98,12 +105,12 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers = [] }) => {
                 isCustodianMetadataManager && [ROLE_CUSTODIAN_METADATA_MANAGER, ROLE_CUSTODIAN_METADATA_EDITOR].includes(role);
 
             if (isCustodianTeamAdmin || darManagerHasPermission || metadataManagerHasPermission) {
-                return false;
+                return { value: false, message: '' };
             }
 
-            return true;
+            return { value: true, message: t('components.AccountTeamMembers.disabledMessage') };
         },
-        [isCustodianMetadataManager, isCustodianDarManager, isCustodianTeamAdmin]
+        [isCustodianMetadataManager, isCustodianDarManager, isCustodianTeamAdmin, checkboxValues]
     );
 
     const columns = [
@@ -121,17 +128,20 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers = [] }) => {
             styles: {
                 minWidth: '150px',
             },
-            Cell: ({ row: { original } }) => (
-                <CheckboxCell
-                    title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN))}
-                    disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN)}
-                    userId={original.userId}
-                    checkboxValues={checkboxValues[original.userId]}
-                    role={ROLE_CUSTODIAN_TEAM_ADMIN}
-                    label={t('admin')}
-                    onChange={handleCheckboxChange}
-                />
-            ),
+            Cell: ({ row: { original } }) => {
+                const isAdminDisabled = getIsCheckboxDisabled(ROLE_CUSTODIAN_TEAM_ADMIN, original.userId);
+                return (
+                    <CheckboxCell
+                        title={isAdminDisabled.message}
+                        disabled={isAdminDisabled.value}
+                        userId={original.userId}
+                        checkboxValues={checkboxValues[original.userId]}
+                        role={ROLE_CUSTODIAN_TEAM_ADMIN}
+                        label={t('admin')}
+                        onChange={handleCheckboxChange}
+                    />
+                );
+            },
         },
         {
             Header: (
@@ -147,28 +157,32 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers = [] }) => {
             styles: {
                 minWidth: '150px',
             },
-            Cell: ({ row: { original } }) => (
-                <>
-                    <CheckboxCell
-                        title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER))}
-                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER)}
-                        userId={original.userId}
-                        checkboxValues={checkboxValues[original.userId]}
-                        role={ROLE_CUSTODIAN_DAR_MANAGER}
-                        label={t('manager')}
-                        onChange={handleCheckboxChange}
-                    />
-                    <CheckboxCell
-                        title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_REVIEWER))}
-                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_REVIEWER)}
-                        userId={original.userId}
-                        checkboxValues={checkboxValues[original.userId]}
-                        role={ROLE_CUSTODIAN_DAR_REVIEWER}
-                        label={t('reviewer')}
-                        onChange={handleCheckboxChange}
-                    />
-                </>
-            ),
+            Cell: ({ row: { original } }) => {
+                const isManagerDisabled = getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_MANAGER, original.userId);
+                const isReviewedDisabled = getIsCheckboxDisabled(ROLE_CUSTODIAN_DAR_REVIEWER, original.userId);
+                return (
+                    <>
+                        <CheckboxCell
+                            title={isManagerDisabled.message}
+                            disabled={isManagerDisabled.value}
+                            userId={original.userId}
+                            checkboxValues={checkboxValues[original.userId]}
+                            role={ROLE_CUSTODIAN_DAR_MANAGER}
+                            label={t('manager')}
+                            onChange={handleCheckboxChange}
+                        />
+                        <CheckboxCell
+                            title={isReviewedDisabled.message}
+                            disabled={isReviewedDisabled.value}
+                            userId={original.userId}
+                            checkboxValues={checkboxValues[original.userId]}
+                            role={ROLE_CUSTODIAN_DAR_REVIEWER}
+                            label={t('reviewer')}
+                            onChange={handleCheckboxChange}
+                        />
+                    </>
+                );
+            },
         },
         {
             Header: (
@@ -184,28 +198,32 @@ const AccountTeamMembers = ({ teamId, handleRemove, teamMembers = [] }) => {
             cellProps: {
                 valign: 'top',
             },
-            Cell: ({ row: { original } }) => (
-                <>
-                    <CheckboxCell
-                        title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER))}
-                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER)}
-                        userId={original.userId}
-                        checkboxValues={checkboxValues[original.userId]}
-                        role={ROLE_CUSTODIAN_METADATA_MANAGER}
-                        label={t('manager')}
-                        onChange={handleCheckboxChange}
-                    />
-                    <CheckboxCell
-                        title={renderDisabledMessage(getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_EDITOR))}
-                        disabled={getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_EDITOR)}
-                        userId={original.userId}
-                        checkboxValues={checkboxValues[original.userId]}
-                        role={ROLE_CUSTODIAN_METADATA_EDITOR}
-                        label={t('editor')}
-                        onChange={handleCheckboxChange}
-                    />
-                </>
-            ),
+            Cell: ({ row: { original } }) => {
+                const isManagerDisabled = getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_MANAGER, original.userId);
+                const isEditorDisabled = getIsCheckboxDisabled(ROLE_CUSTODIAN_METADATA_EDITOR, original.userId);
+                return (
+                    <>
+                        <CheckboxCell
+                            title={isManagerDisabled.message}
+                            disabled={isManagerDisabled.value}
+                            userId={original.userId}
+                            checkboxValues={checkboxValues[original.userId]}
+                            role={ROLE_CUSTODIAN_METADATA_MANAGER}
+                            label={t('manager')}
+                            onChange={handleCheckboxChange}
+                        />
+                        <CheckboxCell
+                            title={isEditorDisabled.message}
+                            disabled={isEditorDisabled.value}
+                            userId={original.userId}
+                            checkboxValues={checkboxValues[original.userId]}
+                            role={ROLE_CUSTODIAN_METADATA_EDITOR}
+                            label={t('editor')}
+                            onChange={handleCheckboxChange}
+                        />
+                    </>
+                );
+            },
         },
         {
             Header: 'Further Actions',
