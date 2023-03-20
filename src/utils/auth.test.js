@@ -1,4 +1,11 @@
-import { userHasTeamRole, getIsTeamAdmin, isTeamAdminNotManager } from './auth';
+import {
+    ROLE_CUSTODIAN_DAR_MANAGER,
+    ROLE_CUSTODIAN_DAR_REVIEWER,
+    ROLE_CUSTODIAN_METADATA_EDITOR,
+    ROLE_CUSTODIAN_METADATA_MANAGER,
+    ROLE_CUSTODIAN_TEAM_ADMIN,
+} from 'consts';
+import { userHasTeamRole, getIsTeamAdmin, isTeamAdminNotManager, getCustodianTeamAdmins } from './auth';
 
 describe('Given the auth helpers', () => {
     const userStateMock = [
@@ -60,6 +67,32 @@ describe('Given the auth helpers', () => {
         it('should be truthy as the user has at least one role which matches', () => {
             const teamIdMock = '3333';
             expect(userHasTeamRole(userStateMock, teamIdMock, ['reviewer', 'editor'])).toBeTruthy();
+        });
+    });
+    describe('When getCustodianTeamAdmins is called', () => {
+        it('should return just team admins', () => {
+            const teamMock = {
+                members: [
+                    { roles: [ROLE_CUSTODIAN_TEAM_ADMIN], memberid: '1111' },
+                    { roles: [ROLE_CUSTODIAN_DAR_MANAGER], memberid: '2222' },
+                    { roles: [ROLE_CUSTODIAN_DAR_REVIEWER], memberid: '3333' },
+                    { roles: [ROLE_CUSTODIAN_METADATA_MANAGER], memberid: '4444' },
+                    { roles: [ROLE_CUSTODIAN_METADATA_EDITOR], memberid: '5555' },
+                    { roles: [ROLE_CUSTODIAN_TEAM_ADMIN, ROLE_CUSTODIAN_METADATA_EDITOR], memberid: '6666' },
+                ],
+                users: [
+                    { firstname: 'John', _id: '1111' },
+                    { firstname: 'Dan', _id: '2222' },
+                    { firstname: 'Chevy', _id: '3333' },
+                    { firstname: 'Martin', _id: '4444' },
+                    { firstname: 'Leslie', _id: '5555' },
+                    { firstname: 'Eddie', _id: '6666' },
+                ],
+            };
+            expect(getCustodianTeamAdmins(teamMock)).toEqual([
+                { firstname: 'John', _id: '1111' },
+                { firstname: 'Eddie', _id: '6666' },
+            ]);
         });
     });
 });

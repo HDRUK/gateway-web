@@ -22,7 +22,6 @@ const AccountTeams = () => {
     const [teams, setTeams] = useState();
     const [teamsCount, setTeamsCount] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
-    const [teamManagersIds, setTeamManagersIds] = useState();
     const [viewTeams, setViewTeams] = useState(true);
     const [editTeamsView, setEditTeamsView] = useState(false);
     const [editViewID, setEditViewID] = useState(false);
@@ -49,20 +48,8 @@ const AccountTeams = () => {
         axios
             .get(`${baseURL}/api/v1/teams`)
             .then(res => {
-                const { teams } = res.data;
-                const teamManagersIds = [];
-                teams.map(team => {
-                    if (team.members.length > 0) {
-                        // TODO: GAT-1510:GAT-2079
-                        const teamManagers = authUtils.getTeamMemberManagers(team.members);
-                        teamManagers.map(memberId => {
-                            teamManagersIds.push(memberId.memberid);
-                        });
-                    }
-                });
-                setTeams(teams);
-                setTeamsCount(teams.length);
-                setTeamManagersIds(teamManagersIds);
+                setTeams(res.data.teams);
+                setTeamsCount(res.data.teams.length);
                 setLoading(false);
             })
             .catch(err => {
@@ -156,7 +143,7 @@ const AccountTeams = () => {
                     <Row className='subHeader mt-3 gray800-14-bold'>
                         <Col sm={2}>Updated</Col>
                         <Col sm={2}>Data custodian</Col>
-                        <Col sm={2}>Team manager(s)</Col>
+                        <Col sm={2}>Team admin(s)</Col>
                         <Col sm={2} className='text-center'>
                             Members
                         </Col>
@@ -172,7 +159,7 @@ const AccountTeams = () => {
                                         <TeamInfo
                                             updatedAt={team.updatedAt}
                                             publisher={team.publisher}
-                                            teamManagers={team.users.filter(user => teamManagersIds.includes(user._id))}
+                                            teamManagers={authUtils.getCustodianTeamAdmins(team)}
                                             membersCount={team.membersCount}
                                             editTeam={editTeam}
                                         />
