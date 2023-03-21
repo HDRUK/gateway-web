@@ -69,7 +69,7 @@ const getHasTeamManagerRole = (userState, teamId) => {
 
 const getIsTeamAdmin = (userState, teamId) => {
     // eslint-disable-next-line no-underscore-dangle
-    const found = userState[0]?.teams.find(team => teamId === team._id && team.isAdmin);
+    const found = userState[0]?.teams.find(team => teamId === team._id && getIsTypeAdmin(team.type));
     return !!found;
 };
 
