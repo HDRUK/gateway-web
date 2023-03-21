@@ -1,6 +1,13 @@
 import _ from 'lodash';
 
-import { PERMISSIONS_TEAM_ROLES, PERMISSIONS_ROOT_ROLES, PERMISSIONS_USER_TYPES, ROLE_CUSTODIAN_TEAM_ADMIN } from 'consts';
+import {
+    PERMISSIONS_TEAM_ROLES,
+    PERMISSIONS_ROOT_ROLES,
+    PERMISSIONS_USER_TYPES,
+    ROLE_CUSTODIAN_TEAM_ADMIN,
+    ROLE_CUSTODIAN_DAR_MANAGER,
+    ROLE_CUSTODIAN_METADATA_MANAGER,
+} from 'consts';
 
 const getIsTypeCustodian = type => {
     return type !== 'user' && type !== 'admin';
@@ -68,7 +75,12 @@ const getIsTeamAdmin = (userState, teamId) => {
 
 const getCustodianTeamAdmins = team => {
     const teamAdminIds = team.members
-        .filter(member => member.roles?.filter(role => role === ROLE_CUSTODIAN_TEAM_ADMIN).length > 0)
+        .filter(
+            member =>
+                member.roles?.filter(role =>
+                    [ROLE_CUSTODIAN_TEAM_ADMIN, ROLE_CUSTODIAN_DAR_MANAGER, ROLE_CUSTODIAN_METADATA_MANAGER].includes(role)
+                ).length > 0
+        )
         .map(member => member.memberid);
     return team.users?.filter(user => teamAdminIds?.includes(user._id));
 };

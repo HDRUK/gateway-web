@@ -91,6 +91,8 @@ describe('Given the auth helpers', () => {
             };
             expect(getCustodianTeamAdmins(teamMock)).toEqual([
                 { firstname: 'John', _id: '1111' },
+                { firstname: 'Dan', _id: '2222' },
+                { firstname: 'Martin', _id: '4444' },
                 { firstname: 'Eddie', _id: '6666' },
             ]);
         });

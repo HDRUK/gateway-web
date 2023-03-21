@@ -143,7 +143,7 @@ const AccountTeams = () => {
                     <Row className='subHeader mt-3 gray800-14-bold'>
                         <Col sm={2}>Updated</Col>
                         <Col sm={2}>Data custodian</Col>
-                        <Col sm={2}>Team admin(s)</Col>
+                        <Col sm={2}>Team admin/manager(s)</Col>
                         <Col sm={2} className='text-center'>
                             Members
                         </Col>
