@@ -660,6 +660,9 @@ export const formSchema = {
                             {
                                 text: 'DAILY',
                                 value: 'DAILY',
+                            },{
+                                text: 'IN PROGRESS',
+                                value: 'IN PROGRESS',
                             },
                             {
                                 text: 'OTHER',

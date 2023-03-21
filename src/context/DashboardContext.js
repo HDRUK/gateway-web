@@ -1,7 +1,7 @@
-import React from 'react';
+import { createContext, useContext } from 'react';
 
-export const DashboardContext = React.createContext({});
+export const DashboardContext = createContext({});
 
-export const useDashboard = () => React.useContext(DashboardContext);
+export const useDashboard = () => useContext(DashboardContext);
 
 export const DashboardProvider = DashboardContext.Provider;

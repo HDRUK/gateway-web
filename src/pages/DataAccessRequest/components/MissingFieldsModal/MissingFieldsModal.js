@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Modal } from 'react-bootstrap';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import './MissingFieldsModal.scss';

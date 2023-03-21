@@ -1,13 +1,14 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import isEmpty from 'lodash';
-import '../Messages/Messages.scss';
 import axios from 'axios';
-import TextareaAutosize from 'react-textarea-autosize';
 import { Box, Button } from 'hdruk-react-core';
+
+import { Textarea } from 'components';
 import SVGIcon from '../../../../images/SVGIcon';
-import Loading from '../../../commonComponents/Loading';
 import { baseURL } from '../../../../configs/url.config';
-import Textarea from '../../../../components/Textarea/Textarea';
+
+import Loading from '../../../commonComponents/Loading';
+import '../Messages/Messages.scss';
 
 const Notes = ({ applicationId, settings, userState, userType, updateCount, count, onLoad }) => {
     const [currentNote, setCurrentNote] = useState('');

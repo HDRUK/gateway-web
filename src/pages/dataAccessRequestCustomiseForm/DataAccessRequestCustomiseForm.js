@@ -2,28 +2,27 @@ import * as Sentry from '@sentry/react';
 import { t } from 'i18next';
 import { cloneDeep, isEmpty, isEqual, isNil, reduce, uniq } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import * as React from 'react';
 import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Trans } from 'react-i18next';
-import ReactMarkdown from 'react-markdown';
+
 import { NotificationManager } from 'react-notifications';
 import { useHistory, useLocation } from 'react-router-dom';
-import 'react-tabs/style/react-tabs.css';
 import Winterfell from 'winterfell';
-import { Button, Box, P, H5, Typography, Cta } from 'hdruk-react-core';
-import Alert from '../../components/Alert';
-import Icon from '../../components/Icon';
-import Spinner from '../../components/Spinner/Spinner';
+import { Button, Box, P, H5, Typography, Cta, Alert } from 'hdruk-react-core';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import 'react-tabs/style/react-tabs.css';
+
+import { Icon, Spinner, RenderMarkdown } from 'components';
+import { dataAccessRequestService, publishersService, questionbankService } from 'services';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
-import darService from '../../services/data-access-request';
-import publishersService from '../../services/publishers';
-import questionbankService from '../../services/questionbank';
 import { getTeam, isPublisherAdmin } from '../../utils/auth';
 import helpers from '../../utils/DarHelper.util';
 import { diffObjects } from '../../utils/GeneralHelper.util';
+
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../commonComponents/ActionBarMenu/ActionBarMenu';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
@@ -100,7 +99,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const location = useLocation();
     const team = getTeam({ location });
 
-    const patchSchemaRequest = darService.usePatchSchema(null, {
+    const patchSchemaRequest = dataAccessRequestService.usePatchSchema(null, {
         onError: ({ title, message }) => {
             setIsUploading(false);
 
@@ -643,16 +642,18 @@ export const DataAccessRequestCustomiseForm = props => {
 
                         return (
                             <Alert variant='info' mb={3} mt={1}>
-                                {on && (
-                                    <Trans i18nKey='DAR.customise.optionalQuestionsIncluded'>
-                                        ,<strong>{{ includedExcluded }}</strong>
-                                    </Trans>
-                                )}
-                                {!on && (
-                                    <Trans i18nKey='DAR.customise.optionalQuestionsExcluded'>
-                                        ,<strong>{{ includedExcluded }}</strong>
-                                    </Trans>
-                                )}
+                                <P>
+                                    {on && (
+                                        <Trans i18nKey='DAR.customise.optionalQuestionsIncluded'>
+                                            ,<strong>{{ includedExcluded }}</strong>
+                                        </Trans>
+                                    )}
+                                    {!on && (
+                                        <Trans i18nKey='DAR.customise.optionalQuestionsExcluded'>
+                                            ,<strong>{{ includedExcluded }}</strong>
+                                        </Trans>
+                                    )}
+                                </P>
                             </Alert>
                         );
                     }}
@@ -819,12 +820,12 @@ export const DataAccessRequestCustomiseForm = props => {
                         </div>
 
                         <Alert variant='info' icon={<Icon svg={<Clock />} size='lg' />} onClose={handleClose} dismissable mb={2} mr={2}>
-                            {t('DAR.customise.saveAlert')}
+                            <P>{t('DAR.customise.saveAlert')}</P>
                         </Alert>
 
                         {isUploaded && (
                             <Alert variant='success' dismissable onClose={handleSuccessClose} mb={2} mr={2}>
-                                {t('DAR.customise.uploadAlert')}
+                                <P>{t('DAR.customise.uploadAlert')}</P>
                             </Alert>
                         )}
 
@@ -860,7 +861,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                               color={activePanelId === 'about' ? 'grey500' : 'inherit'}
                                               as='div'>
                                               <H5 color='inherit'>{item.active ? item.title : ''}</H5>
-                                              <ReactMarkdown source={item.description} />
+                                              <RenderMarkdown source={item.description} />
                                           </Typography>
                                       ) : (
                                           ''

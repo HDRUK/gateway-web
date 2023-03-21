@@ -1,22 +1,24 @@
-import React from 'react';
+import { Component } from 'react';
 import { Row, Col, Alert } from 'react-bootstrap';
 import { has } from 'lodash';
-import Loading from '../Loading';
+import { Button } from 'hdruk-react-core';
+
+import { relatedObjectsService } from 'services';
 import SVGIcon from '../../../images/SVGIcon';
+
+import Loading from '../Loading';
 import Dataset from './Dataset/Dataset';
 import Tool from './Tool/Tool';
 import Paper from './Paper/Paper';
 import Course from './Course/Course';
 import Person from './Person/Person';
-import relatedObjectService from '../../../services/related-objects';
 import './RelatedObject.scss';
 import ShowMore from '../ShowMore';
-import { Button } from 'hdruk-react-core';
 
 var cmsURL = require('../BaseURL').getCMSURL();
 const env = require('../BaseURL').getURLEnv();
 
-class RelatedObject extends React.Component {
+class RelatedObject extends Component {
     state = {
         relatedObject: [],
         reason: '',
@@ -39,17 +41,23 @@ class RelatedObject extends React.Component {
             this.state.inCollection = props.inCollection;
         }
         // what the hell is going on here
-        if (props.data) {
-            this.state.isCohortDiscovery = props.data.isCohortDiscovery || false;
-            this.state.data = props.data || [];
-            this.state.isLoading = false;
-        } else if (props.objectId) {
-            this.state.relatedObject = props.relatedObject;
-            this.state.reason = props.reason;
-            this.getRelatedObjectFromApi(props.objectId, props.objectType);
+        if (props.shouldFetchObjectsFromApi) {
+            if (props.data) {
+                this.state.isCohortDiscovery = props.data.isCohortDiscovery || false;
+                this.state.data = props.data || [];
+                this.state.isLoading = false;
+            } else if (props.objectId) {
+                this.state.relatedObject = props.relatedObject;
+                this.state.reason = props.reason;
+                this.getRelatedObjectFromApi(props.objectId, props.objectType);
+            } else {
+                this.state.relatedObject = props.relatedObject;
+                this.getRelatedObjectFromApi(this.state.relatedObject.objectId, this.state.relatedObject.objectType);
+            }
         } else {
-            this.state.relatedObject = props.relatedObject;
-            this.getRelatedObjectFromApi(this.state.relatedObject.objectId, this.state.relatedObject.objectType);
+            this.state.isCohortDiscovery = props.relatedObject?.isCohortDiscovery || false;
+            this.state.data = props.relatedObject || {};
+            this.state.isLoading = false;
         }
     }
 
@@ -77,8 +85,7 @@ class RelatedObject extends React.Component {
     getRelatedObjectFromApi = (id, type) => {
         //need to handle error if no id is found
         this.setState({ isLoading: true });
-
-        relatedObjectService.getRelatedObjectByType(id, type).then(res => {
+        relatedObjectsService.getRelatedObjectByType(id, type).then(res => {
             this.setState({
                 data: res.data.data[0],
                 isCohortDiscovery: res.data.data[0].isCohortDiscovery || false,
@@ -382,6 +389,7 @@ class RelatedObject extends React.Component {
 
 RelatedObject.defaultProps = {
     onClick: () => {},
+    shouldFetchObjectsFromApi: true,
 };
 
 export default RelatedObject;

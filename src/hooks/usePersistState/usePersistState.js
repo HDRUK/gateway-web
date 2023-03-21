@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 const usePersistState = () => {
     const ref = useRef({});
     const [state, setState] = useState({});
 
-    const updateState = React.useCallback(
+    const updateState = useCallback(
         (key, value) => {
             ref.current = {
                 ...ref.current,

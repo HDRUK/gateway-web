@@ -1,8 +1,8 @@
 import { rest } from 'msw';
-import { addCmsGatewayApiHostname, apiPath } from '../../configs/url.config';
+import { addCmsGatewayApiHostname, apiPathV1 } from '../../configs/url.config';
 import { mockUser } from './mockData';
 
-export const mswGetAuthStatus = rest.get(addCmsGatewayApiHostname(`${apiPath}/auth/status`), (req, res, ctx) => {
+export const mswGetAuthStatus = rest.get(addCmsGatewayApiHostname(`${apiPathV1}/auth/status`), (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({

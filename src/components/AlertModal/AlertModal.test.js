@@ -1,5 +1,4 @@
-import { render, createPortalContainer, removePortalContainer } from 'testUtils';
-import React from 'react';
+import { testUtils } from '../../../test';
 import AlertModal from '.';
 
 let wrapper;
@@ -16,13 +15,13 @@ let containerDiv;
 describe('Given the AlertModal component', () => {
     describe('When it is rendered', () => {
         beforeAll(() => {
-            containerDiv = createPortalContainer();
+            containerDiv = testUtils.createPortalContainer();
 
-            wrapper = render(<AlertModal {...props} container={containerDiv} />);
+            wrapper = testUtils.render(<AlertModal {...props} container={containerDiv} />);
         });
 
         afterAll(() => {
-            removePortalContainer(containerDiv);
+            testUtils.removePortalContainer(containerDiv);
         });
 
         it('Then matches the previous snapshot', () => {

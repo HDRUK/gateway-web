@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from 'hdruk-react-core';
 import googleAnalytics from '../../../../tracking';
 import DarHelper from '../../../../utils/DarHelper.util';

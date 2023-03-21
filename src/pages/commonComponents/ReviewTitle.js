@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,7 +7,7 @@ import Loading from './Loading';
 
 var baseURL = require('./BaseURL').getURL();
 
-class ReviewTitle extends React.Component {
+class ReviewTitle extends Component {
     constructor(props) {
         super(props);
         this.state.id = props.id;

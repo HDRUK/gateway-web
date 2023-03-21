@@ -1,1 +1,1 @@
-export { default } from './tools';
+export * from './tools';

@@ -1,5 +1,4 @@
 import { render, waitFor } from '@testing-library/react';
-import React from 'react';
 import FilterTree from '.';
 import { findAllByKey } from '../../../../utils/GeneralHelper.util';
 import { mockDatasetFilters } from '../../../../services/search/mockMsw';

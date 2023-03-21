@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { isEmpty, has, isString } from 'lodash';
 import * as Yup from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -168,7 +168,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
 
     return (
         <div className='enquiry-message-container'>
-            <div className='gray700-13 text-center' data-test-id='formIntroText'>
+            <div className='gray700-13 text-center' data-testid='formIntroText'>
                 Please provide details about your project and the data you are interested in.
             </div>
             <Formik
@@ -179,7 +179,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                 onSubmit={async () => {
                     await handleFormSubmission();
                 }}
-                data-test-id='formik'>
+                data-testid='formik'>
                 {({ isSubmitting, values, errors, touched, setFieldValue }) => (
                     <Form autoComplete='off'>
                         <div className='enquiry-message-form'>
@@ -191,7 +191,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 <Field
                                     type='text'
                                     name='safepeopleprimaryapplicantfullname'
-                                    data-test-id='safepeopleprimaryapplicantfullname'
+                                    data-testid='safepeopleprimaryapplicantfullname'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safepeopleprimaryapplicantfullname') ? 'is-invalid' : ''
                                     }`}
@@ -209,7 +209,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 <Field
                                     type='text'
                                     name='safepeopleprimaryapplicantorganisationname'
-                                    data-test-id='safepeopleprimaryapplicantorganisationname'
+                                    data-testid='safepeopleprimaryapplicantorganisationname'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safepeopleprimaryapplicantorganisationname') ? 'is-invalid' : ''
                                     }`}
@@ -227,7 +227,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 <Field
                                     type='email'
                                     name='safepeopleprimaryapplicantemail'
-                                    data-test-id='safepeopleprimaryapplicantemail'
+                                    data-testid='safepeopleprimaryapplicantemail'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safepeopleprimaryapplicantemail') ? 'is-invalid' : ''
                                     }`}
@@ -245,7 +245,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 <Field
                                     type='text'
                                     name='safepeopleprimaryapplicanttelephone'
-                                    data-test-id='safepeoplesafepeopleprimaryapplicanttelephone'
+                                    data-testid='safepeoplesafepeopleprimaryapplicanttelephone'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safepeopleprimaryapplicanttelephone') ? 'is-invalid' : ''
                                     }`}
@@ -263,7 +263,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 <Field
                                     type='text'
                                     name='safeprojectprojectdetailstitle'
-                                    data-test-id='safeprojectprojectdetailstitle'
+                                    data-testid='safeprojectprojectdetailstitle'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safeprojectprojectdetailstitle') ? 'is-invalid' : ''
                                     }`}
@@ -285,7 +285,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 <Field
                                     as='textarea'
                                     name='safeprojectprojectdetailsaimsobjectivesrationale'
-                                    data-test-id='safeprojectprojectdetailsaimsobjectivesrationale'
+                                    data-testid='safeprojectprojectdetailsaimsobjectivesrationale'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safeprojectprojectdetailsaimsobjectivesrationale') ? 'is-invalid' : ''
                                     }`}
@@ -354,7 +354,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                     <Field
                                         as='textarea'
                                         name='safedataotherdatasetslinkadditionaldatasetslinkagedetails'
-                                        data-test-id='safedataotherdatasetslinkadditionaldatasetslinkagedetails'
+                                        data-testid='safedataotherdatasetslinkadditionaldatasetslinkagedetails'
                                         className={`form-control gray800-14 ${
                                             hasErrors(touched, errors, 'safedataotherdatasetslinkadditionaldatasetslinkagedetails')
                                                 ? 'is-invalid'
@@ -410,7 +410,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                     <Field
                                         as='textarea'
                                         name='safedatadatafieldsdatarequiredjustification'
-                                        data-test-id='safedatadatafieldsdatarequiredjustification'
+                                        data-testid='safedatadatafieldsdatarequiredjustification'
                                         className={`form-control gray800-14 ${
                                             hasErrors(touched, errors, 'safedatadatafieldsdatarequiredjustification') ? 'is-invalid' : ''
                                         }`}
@@ -435,7 +435,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 <Field
                                     as='textarea'
                                     name='funding'
-                                    data-test-id='funding'
+                                    data-testid='funding'
                                     className={`form-control ${hasErrors(touched, errors, 'funding') ? 'is-invalid' : ''}`}
                                 />
                                 {hasErrors(touched, errors, 'funding') ? <div className='errorMessages'>{errors.funding}</div> : null}
@@ -452,7 +452,7 @@ export const EnquiryMessage = ({ topic, onDatasetsRequested, onFirstMessageSubmi
                                 <Field
                                     as='textarea'
                                     name='safeprojectprojectdetailspublicbenefitimpact'
-                                    data-test-id='safeprojectprojectdetailspublicbenefitimpact'
+                                    data-testid='safeprojectprojectdetailspublicbenefitimpact'
                                     className={`form-control gray800-14 ${
                                         hasErrors(touched, errors, 'safeprojectprojectdetailspublicbenefitimpact') ? 'is-invalid' : ''
                                     }`}

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import Workflow from './Workflow';
 import WorkflowEmpty from './WorkflowEmpty';
 

@@ -1,4 +1,4 @@
-import { apiURL, apiV2URL } from '../../configs/url.config';
+import { apiUrlV1, apiUrlV2 } from '../../configs/url.config';
 import {
     deleteRequest,
     getRequest,
@@ -10,31 +10,31 @@ import {
 } from '../../utils/requests';
 
 const getPapers = options => {
-    return getRequest(`${apiV2URL}/papers`, options);
+    return getRequest(`${apiUrlV2}/papers`, options);
 };
 
 const getPaper = (_id, options) => {
-    return getRequest(`${apiURL}/papers/${_id}`, options);
+    return getRequest(`${apiUrlV1}/papers/${_id}`, options);
 };
 
 const getEdit = (_id, options) => {
-    return getRequest(`${apiURL}/papers/edit/${_id}`, options);
+    return getRequest(`${apiUrlV1}/papers/edit/${_id}`, options);
 };
 
 const postPaper = (_id, data, options) => {
-    return postRequest(`${apiURL}/papers/${_id}`, data, options);
+    return postRequest(`${apiUrlV1}/papers/${_id}`, data, options);
 };
 
 const putPaper = (_id, data, options) => {
-    return putRequest(`${apiURL}/papers/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/papers/${_id}`, data, options);
 };
 
 const patchPaper = (_id, data, options) => {
-    return patchRequest(`${apiURL}/papers/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/papers/${_id}`, data, options);
 };
 
 const deletePaper = (_id, options) => {
-    return deleteRequest(`${apiURL}/papers/${_id}`, options);
+    return deleteRequest(`${apiUrlV1}/papers/${_id}`, options);
 };
 
 const useGetPapers = (requestOptions, mutateOptions) => {
@@ -96,7 +96,7 @@ const useDeletePaper = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getPapers,
     getPaper,
     getEdit,

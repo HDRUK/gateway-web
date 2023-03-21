@@ -1,4 +1,3 @@
-import React from 'react';
 import './AdvancedSearchRequestAccessModal.scss';
 import { Form } from 'react-bootstrap';
 
@@ -356,7 +355,7 @@ const AdvancedSearchTAndCsContent = props => {
                         </div>
                         <div className='mt-2'>
                             {formik.touched.terms && formik.errors.terms ? (
-                                <div className='errorMessages ml-1' data-test-id='advanced-search-terms-conditions-validation'>
+                                <div className='errorMessages ml-1' data-testid='advanced-search-terms-conditions-validation'>
                                     {formik.errors.terms}
                                 </div>
                             ) : null}

@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize } from 'lodash';
 import { Box, Caption } from 'hdruk-react-core';

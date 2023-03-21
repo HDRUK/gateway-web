@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col, Button } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
+
+import { LayoutContent } from 'components';
+
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
-import '../../css/styles.scss';
-import './Dashboard.scss';
-import AccountMembersModal from './AccountMemberModal';
-import { LayoutContent } from '../../components/Layout';
 import { baseURL } from '../../configs/url.config';
+import '../../css/styles.scss';
 
-export const AccountMembers = props => {
+import './Dashboard.scss';
+import AccountMemberModal from './AccountMemberModal';
+
+const AccountMembers = props => {
     const [userState] = useState(props.userState);
     const [isLoading, setIsLoading] = useState(true);
     const [members, setMembers] = useState([]);
@@ -150,7 +153,7 @@ export const AccountMembers = props => {
                                 })
                             )}
 
-                            <AccountMembersModal
+                            <AccountMemberModal
                                 open={showAccountAddMemberModal}
                                 close={onShowAccountMembersModal}
                                 teamId={accountMembersId}

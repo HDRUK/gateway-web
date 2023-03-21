@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import { Card, CardBody, Button } from 'hdruk-react-core';
-import Checkbox from '../../../components/Checkbox';
-import { LayoutContent } from '../../../components/Layout';
-import Typography from '../../../components/Typography';
-import useScript from '../../../hooks/useScript';
-import publishersService from '../../../services/publishers';
+
+import { LayoutContent, Typography, Checkbox } from 'components';
+import { useScript } from 'hooks';
+import { publishersService } from 'services';
+
 import AcceptModal from './AcceptModal';
 import DataUseWidgetCode from './widgetCode';
 
@@ -29,7 +29,7 @@ const DataUseWidget = ({ userState, team, publisherDetails }) => {
 
     const accepted = publisherDetails?.dataUse?.widget?.accepted;
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (accepted) {
             setChecked(accepted);
             setDisabled(accepted);

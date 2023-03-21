@@ -1,18 +1,20 @@
 import { Formik } from 'formik';
 import { Button } from 'hdruk-react-core';
-import React, { Suspense } from 'react';
+import { useCallback, Suspense } from 'react';
 import { Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+
+import { datasetOnboardingService } from 'services';
 import { STATUS_INREVIEW, TEXTAREA_ROWS } from '../../../../configs/constants';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
-import datasetOnboardingService from '../../../../services/dataset-onboarding/dataset-onboarding';
+
 import './AccountDatasetDecisionModal.scss';
 
 const AccountDatasetApproveModal = ({ id, open, closed, goToNext, showGoToNext, handleApprove }) => {
     const { t } = useTranslation();
 
-    const approveDataset = React.useCallback(
+    const approveDataset = useCallback(
         async values => {
             const payload = {
                 ...values,
@@ -25,7 +27,7 @@ const AccountDatasetApproveModal = ({ id, open, closed, goToNext, showGoToNext, 
         [id]
     );
 
-    const handleSubmit = React.useCallback(
+    const handleSubmit = useCallback(
         async values => {
             await approveDataset(values);
 

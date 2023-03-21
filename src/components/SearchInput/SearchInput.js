@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useRef, useCallback } from 'react';
 import { omit } from '../../configs/propTypes';
 import Icon from '../Icon';
 import Input from '../Input';
@@ -9,9 +9,9 @@ import { PROP_TYPES_INPUT } from '../Input/Input.propTypes';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 
 const SearchInput = ({ value, onReset, ...outerProps }) => {
-    const inputRef = React.useRef(null);
+    const inputRef = useRef(null);
 
-    const handleReset = React.useCallback(
+    const handleReset = useCallback(
         e => {
             if (onReset) onReset(e, inputRef.current);
         },

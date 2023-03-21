@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,15 +7,17 @@ import FormData from 'form-data';
 import { t } from 'i18next';
 import { filesize } from 'humanize';
 import { Button } from 'hdruk-react-core';
+
+import { Icon } from 'components';
+import { useRetryAsync } from 'hooks';
 import { ReactComponent as UploadSVG } from '../../../../images/upload.svg';
-import { fileStatus } from './files.util';
 import { baseURL } from '../../../../configs/url.config';
+
+import { fileStatus } from './files.util';
 import './Uploads.scss';
 import UploadFiles from './UploadFiles';
 import AllFiles from './AllFiles';
 import NoFiles from './NoFiles';
-import Icon from '../../../../components/Icon';
-import useRetryAsync from '../../../../hooks/useRetryAsync/useRetryAsync';
 
 const Uploads = ({ id, files, onFilesUpdate, readOnly, description, header, disabled }) => {
     const maxSize = 10485760;

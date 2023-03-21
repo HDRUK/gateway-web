@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import _ from 'lodash';
 import * as Yup from 'yup';
 import { Formik, Field, Form, FieldArray } from 'formik';
@@ -231,9 +231,8 @@ const AddEditWorkflow = props => {
                                     </div>
                                     {/* CLOSE MAIN-HEADER */}
                                     <div className='main-body'>
-                                        <FieldArray
-                                            name='steps'
-                                            render={({ push }) => (
+                                        <FieldArray name='steps'>
+                                            {({ push }) => (
                                                 <div>
                                                     {values.steps.length > 0 &&
                                                         values.steps.map((node, index) => {
@@ -470,7 +469,7 @@ const AddEditWorkflow = props => {
                                                     {/* CLOSE FOOTER */}
                                                 </div>
                                             )}
-                                        />
+                                        </FieldArray>
                                         {/* CLOSE FIELD-ARRAY */}
                                     </div>
                                     {/* CLOSE MAIN-BODY */}

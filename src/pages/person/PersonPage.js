@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { createRef, useState, useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import PersonTitle from './components/PersonTitle';
@@ -33,7 +33,7 @@ const PersonDetail = props => {
     const [showDrawer, setShowDrawer] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
 
     useEffect(() => {
         getDataSearchFromDb();

@@ -1,8 +1,10 @@
 import _ from 'lodash';
-import React, { Fragment, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SlideDown } from 'react-slidedown';
-import Checkbox from '../../../components/Checkbox';
+
+import { Checkbox } from 'components';
 import SVGIcon from '../../../images/SVGIcon';
+
 import { FilterCount } from './FilterCount';
 import { FilterSearch } from './FilterSearch';
 import { FilterClearSection } from './FilterClearSection';
@@ -12,7 +14,7 @@ import { isTree } from '../SearchPage';
 
 const CheckboxWrapper = ({ node = {}, highlighted = [], parentKey = '', onHandleInputChange }) => {
     let highlight = false;
-    const onHandleChange = React.useCallback(
+    const onHandleChange = useCallback(
         e => {
             onHandleInputChange(node, parentKey, e.target.checked);
         },
@@ -157,7 +159,7 @@ const TreeComponent = ({
                         <Filter
                             selected={selected}
                             data={node.filters}
-                            parentKey={node.alias}
+                            parentKey={node.alias || node.key}
                             highlighted={node.highlighted}
                             hasChildren
                             searchValue={searchValue}

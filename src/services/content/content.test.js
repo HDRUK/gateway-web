@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { getRequest } from '../../utils/requests';
-import service from './content';
+import * as service from './content';
 import { UATCMSURL } from './content.constants';
 
 jest.doMock('../../pages/commonComponents/BaseURL', () => ({

@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { cloneDeep, remove, isArray } from 'lodash';
 
-class MultiField extends React.Component {
+class MultiField extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,7 +11,7 @@ class MultiField extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (this.props.value !== nextProps.value) this.setState({ value: this.updateValue(nextProps.value) });
     }
 

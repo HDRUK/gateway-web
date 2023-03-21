@@ -1,7 +1,6 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import PaperCollectionResults from './index';
-import service from '../../../../services/related-objects/related-objects';
+import * as service from '../../../../services/related-objects/related-objects';
 
 jest.mock('../../../../services/related-objects/related-objects', () => ({ __esModule: true, getRelatedObject: jest.fn() }));
 

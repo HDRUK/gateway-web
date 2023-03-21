@@ -1,5 +1,4 @@
 import { Button } from 'hdruk-react-core';
-import React from 'react';
 
 const MessageFooter = ({ onSubmitMessage, onMessageChange, value }) => {
     return (

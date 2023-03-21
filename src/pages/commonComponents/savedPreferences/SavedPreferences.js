@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col, Tab, Tabs } from 'react-bootstrap';
 import './SavedPreferences.scss';
 import { Caption, Button, H6, H5, Box, P, Input } from 'hdruk-react-core';
@@ -137,7 +137,7 @@ const SavedPreferences = ({ onHide, viewSaved, activeTab, saveName, saveSuccess,
                                 <Box flexGrow='1' mr={2}>
                                     <Input
                                         label='Title'
-                                        data-test-id='saved-preference-name'
+                                        data-testid='saved-preference-name'
                                         id='name'
                                         name='name'
                                         type='text'

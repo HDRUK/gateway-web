@@ -1,4 +1,3 @@
-import React from 'react';
 import DarHelperUtil from '../../utils/DarHelper.util';
 import { Modal, Button } from 'react-bootstrap';
 

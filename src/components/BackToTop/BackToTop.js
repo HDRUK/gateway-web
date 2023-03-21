@@ -1,6 +1,6 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
-import { jsx } from '@emotion/react';
+
 import { IconButton } from 'hdruk-react-core';
 import PropTypes from 'prop-types';
 import * as styles from './BackToTop.styles';

@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 
 export const mockContributorsInfo = [
     {
@@ -45,7 +45,7 @@ export const mockContributorsInfo = [
     },
 ];
 
-export const mswGetContributors = rest.get(`${apiURL}/data-access-request/prepopulate-contributors/123`, (req, res, ctx) => {
+export const mswGetContributors = rest.get(`${apiUrlV1}/data-access-request/prepopulate-contributors/123`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({

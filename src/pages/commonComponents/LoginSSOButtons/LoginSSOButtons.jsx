@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { useEffect, useReducer, Fragment } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -31,8 +30,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
         <div>
             {chunk(ssoBtnsState, 2).map((arr, index) => (
                 <Fragment key={index}>
-                    <br />
-                    <Row className='mt-2'>
+                    <Row className='mt-3'>
                         <Col sm={0} lg={1} />
                         {arr.map((value, i) => (
                             <Col sm={6} lg={5} key={value.id + i} className='mt-1'>
@@ -48,7 +46,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
                                             <img
                                                 src={lastChoiceSVG}
                                                 css={styles.lastChoiceBtnImg}
-                                                data-testid={value.id + '-lastChoice'}
+                                                data-testid={`${value.id}-lastChoice`}
                                                 alt='lastChoice'
                                             />
                                         ) : null}
@@ -56,7 +54,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
                                 </div>
                             </Col>
                         ))}
-                        <Col sm={0} lg={1} key={'col-1-' + index} />
+                        <Col sm={0} lg={1} key={`col-1-${index}`} />
                     </Row>
                 </Fragment>
             ))}
@@ -71,7 +69,7 @@ function LoginSSOButtons({ ssoBtnsConfig, communityLink, clickHandler, lastChoic
                                 href={`${communityLink}/t/how-to-submit-a-feature-request-or-feedback/1`}
                                 data-testid='communityLink'
                                 rel='noopener noreferrer'>
-                                Suggest another Indentity Provider
+                                Suggest another Identity Provider
                             </a>
                         </span>
                     </Col>

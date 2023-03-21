@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { createRef, useState, useEffect } from 'react';
+
 import axios from 'axios';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
-import queryString from 'query-string';
 import { Container, Row, Col, Tabs, Tab, Dropdown } from 'react-bootstrap';
 import moment from 'moment';
+
+import { generalUtils } from 'utils';
+import { LayoutContent, Alert, RenderMarkdown } from 'components';
+import SVGIcon from '../../images/SVGIcon';
+import googleAnalytics from '../../tracking';
+
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import Loading from '../commonComponents/Loading';
-import SVGIcon from '../../images/SVGIcon';
-import DiscourseTopic from '../discourse/DiscourseTopic';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ResourcePageButtons from '../commonComponents/resourcePageButtons/ResourcePageButtons';
 import ErrorModal from '../commonComponents/errorModal';
 import CollectionCard from '../commonComponents/collectionCard/CollectionCard';
-import './Course.scss';
+import DiscourseTopic from '../discourse/DiscourseTopic';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import googleAnalytics from '../../tracking';
-import { LayoutContent } from '../../components/Layout';
-import Alert from '../../components/Alert';
+import './Course.scss';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
@@ -41,7 +42,7 @@ export const CourseDetail = props => {
     const [showModal, setShowModal] = useState(false);
     const [context, setContext] = useState({});
     const [collections, setCollections] = useState([]);
-    const [searchBar] = useState(React.createRef());
+    const [searchBar] = useState(createRef());
     const [searchString, setSearchString] = useState('');
     const [userState] = useState(
         props.userState || [
@@ -57,7 +58,7 @@ export const CourseDetail = props => {
     // componentDidMount - on loading of course detail page
     useEffect(() => {
         if (window.location.search) {
-            const values = queryString.parse(window.location.search);
+            const values = generalUtils.parseQueryString(window.location.search);
             setCourseAdded(values.courseAdded);
             setCourseEdited(values.courseEdited);
         }
@@ -315,14 +316,14 @@ export const CourseDetail = props => {
                             <div className='rectangle'>
                                 <Row>
                                     <Col>
-                                        <span data-test-id='course-title' className='black-16'>
+                                        <span data-testid='course-title' className='black-16'>
                                             {courseData.title}
                                         </span>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <span data-test-id='course-provider' className='black-14'>
+                                        <span data-testid='course-provider' className='black-14'>
                                             {courseData.provider}
                                         </span>
                                     </Col>
@@ -389,9 +390,9 @@ export const CourseDetail = props => {
                                                     <Row className='mt-3'>
                                                         <Col
                                                             sm={12}
-                                                            data-test-id='course-description'
+                                                            data-testid='course-description'
                                                             className='gray800-14 hdruk-section-body'>
-                                                            <ReactMarkdown source={courseData.description} />
+                                                            <RenderMarkdown source={courseData.description} />
                                                         </Col>
                                                     </Row>
                                                 </div>
@@ -407,7 +408,7 @@ export const CourseDetail = props => {
                                                         </Row>
                                                         <Row className='mt-3'>
                                                             <Col sm={12} className='gray800-14 hdruk-section-body'>
-                                                                <ReactMarkdown source={courseData.resultsInsights} />
+                                                                <RenderMarkdown source={courseData.resultsInsights} />
                                                             </Col>
                                                         </Row>
                                                     </div>
@@ -429,7 +430,7 @@ export const CourseDetail = props => {
                                                         </Col>
                                                         <Col sm={10} className='gray800-14'>
                                                             <a
-                                                                data-test-id='course-url'
+                                                                data-testid='course-url'
                                                                 href={courseData.link}
                                                                 rel='noopener noreferrer'
                                                                 target='_blank'
@@ -480,7 +481,7 @@ export const CourseDetail = props => {
                                                         <Col sm={2} className='gray800-14'>
                                                             Course location
                                                         </Col>
-                                                        <Col sm={10} className='gray-deep-14 overflowWrap' data-test-id='course-location'>
+                                                        <Col sm={10} className='gray-deep-14 overflowWrap' data-testid='course-location'>
                                                             {courseData.location ? (
                                                                 courseData.location
                                                             ) : (
@@ -538,7 +539,7 @@ export const CourseDetail = props => {
                                                         return (
                                                             <div className='margin-top-24'>
                                                                 <Row className='gray800-14-opacity'>
-                                                                    <Col sm={12} data-test-id='course-date'>
+                                                                    <Col sm={12} data-testid='course-date'>
                                                                         {courseOption.flexibleDates
                                                                             ? 'Flexible'
                                                                             : moment(courseOption.startDate).format('dddd Do MMMM YYYY')}
@@ -552,7 +553,7 @@ export const CourseDetail = props => {
                                                                         <Col
                                                                             sm={10}
                                                                             className='gray-deep-14 overflowWrap'
-                                                                            data-test-id='course-duration'>
+                                                                            data-testid='course-duration'>
                                                                             {courseOption.studyMode} | {courseOption.studyDurationNumber}{' '}
                                                                             {courseOption.studyDurationMeasure}
                                                                         </Col>
@@ -576,7 +577,7 @@ export const CourseDetail = props => {
                                                                                     <Col
                                                                                         sm={10}
                                                                                         className='gray-deep-14 overflowWrap'
-                                                                                        data-test-id='course-fees'>
+                                                                                        data-testid='course-fees'>
                                                                                         {fee.feeDescription} | £{fee.feeAmount}{' '}
                                                                                         {fee.feePer ? (
                                                                                             <>per {fee.feePer.toLowerCase()}</>
@@ -619,8 +620,8 @@ export const CourseDetail = props => {
                                                                         <a
                                                                             href={`/search?search=&tab=Courses&courseentrylevel=${entry.level}`}>
                                                                             <div className='badge-version'>
-                                                                                <span data-test-id='entry-level'>{entry.level}</span>
-                                                                                <span data-test-id='entry-subject'>{entry.subject}</span>
+                                                                                <span data-testid='entry-level'>{entry.level}</span>
+                                                                                <span data-testid='entry-subject'>{entry.subject}</span>
                                                                             </div>
                                                                         </a>
                                                                     ) : entry.level && !entry.subject ? (

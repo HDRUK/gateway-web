@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { Button } from 'hdruk-react-core';
@@ -33,11 +33,11 @@ const MessageHeader = ({ userState, topic, modalRequired, onRequestAccess, onSho
     return (
         <>
             <div className='messageArea-header-desc'>
-                <h1 className='black-20 ' data-test-id='headerTitle'>
+                <h1 className='black-20 ' data-testid='headerTitle'>
                     {topic.title}
                 </h1>
                 {topic.tags.map((tag, index) => (
-                    <div key={`tag-${index}`} className='badge-tag' data-test-id={`headerTag-${index}`}>
+                    <div key={`tag-${index}`} className='badge-tag' data-testid={`headerTag-${index}`}>
                         {tag.name || tag}
                     </div>
                 ))}

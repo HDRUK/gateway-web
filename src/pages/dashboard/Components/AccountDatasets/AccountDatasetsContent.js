@@ -1,15 +1,16 @@
 import pluralize from 'pluralize';
-import React, { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Box } from 'hdruk-react-core';
-import Icon from '../../../../components/Icon';
-import SearchControls from '../../../../components/SearchControls';
+
+import { Icon, SearchControls } from 'components';
 import { DATASETS_STATUS_ACTIVE, STATUS_ARCHIVE, STATUS_INREVIEW, STATUS_REJECTED } from '../../../../configs/constants';
 import DatasetCard from '../../../commonComponents/DatasetCard';
 import MessageNotFound from '../../../commonComponents/MessageNotFound';
 import SearchResults from '../../../commonComponents/SearchResults';
 import { ReactComponent as EyeIcon } from '../../../../images/eye.svg';
+
 import '../../Dashboard.scss';
 
 const options = ['latest', 'alphabetic', 'metadata'];
@@ -28,7 +29,7 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
 
     const { t } = useTranslation();
 
-    const handleChange = React.useCallback(value => {
+    const handleChange = useCallback(value => {
         setSearchValue(value);
     }, []);
 
@@ -38,11 +39,11 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
         history.push(getDatasetPath(id));
     };
 
-    const handleKeyDownEnter = React.useCallback(submitForm => {
+    const handleKeyDownEnter = useCallback(submitForm => {
         submitForm();
     }, []);
 
-    const handleSort = React.useCallback(
+    const handleSort = useCallback(
         (data, submitForm) => {
             setSortValue(data);
 
@@ -51,11 +52,11 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
         [searchValue]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         setSearchValue(search);
     }, [search]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (sortBy && sortDirection) {
             setSortValue({
                 value: sortBy,
@@ -64,7 +65,7 @@ const AccountDatasetsContent = ({ data = [], onSubmit, onReset, isLoading, isFet
         }
     }, [sortBy, sortDirection]);
 
-    const hasActivityHistory = React.useCallback(dataset => dataset.listOfVersions.length > 0 && team === 'admin', [team]);
+    const hasActivityHistory = useCallback(dataset => dataset.listOfVersions.length > 0 && team === 'admin', [team]);
 
     const getDatasetCardProps = dataset => {
         const datasetCardProps = {};

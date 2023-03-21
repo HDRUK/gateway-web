@@ -1,4 +1,3 @@
-import React from 'react';
 import Cookies from 'js-cookie';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { CmsProvider, useCms, withCms } from '.';

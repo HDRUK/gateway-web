@@ -1,23 +1,24 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
+
 import { ReactComponent as Clock } from '../../../images/clock.svg';
+import { baseURL } from '../../../configs/url.config';
+import DarHelperUtil from '../../../utils/DarHelper.util';
+import { Alert, LayoutContent } from 'components';
+
 import Loading from '../../commonComponents/Loading';
 import SLA from '../../commonComponents/sla/SLA';
 import TimeDuration from '../../commonComponents/timeDuration/TimeDuration';
 import WorkflowReviewStepsModal from '../../commonComponents/workflowReviewStepsModal/WorkflowReviewStepsModal';
 import CommentItem from './CommentItem/CommentItem';
 import AccessActivity from './AccessActivity/AccessActivity';
-import { baseURL } from '../../../configs/url.config';
-import DarHelperUtil from '../../../utils/DarHelper.util';
 import VersionSelector from '../../commonComponents/versionSelector/VersionSelector';
 import './DataAccessRequests.scss';
-import Alert from '../../../components/Alert';
-import { LayoutContent } from '../../../components/Layout';
 
-class DataAccessRequestsNew extends React.Component {
+class DataAccessRequestsNew extends Component {
     durationLookups = ['inProgress', 'submitted', 'inReview'];
     finalDurationLookups = ['rejected', 'approved', 'approved with conditions'];
 
@@ -66,7 +67,7 @@ class DataAccessRequestsNew extends React.Component {
         this.fetchDataAccessRequests(this.state);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.team !== this.props.team) {
             const teamIs = this.props.userState[0].teams.filter(t => {
                 return t._id === nextProps.team;

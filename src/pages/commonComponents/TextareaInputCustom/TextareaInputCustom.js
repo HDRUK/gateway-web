@@ -1,8 +1,8 @@
-import React from 'react';
+import { Component } from 'react';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import TextareaAutosize from 'react-textarea-autosize';
 
-class TextareaInputCustom extends React.Component {
+class TextareaInputCustom extends Component {
     constructor(props) {
         super(props);
         this.state = {

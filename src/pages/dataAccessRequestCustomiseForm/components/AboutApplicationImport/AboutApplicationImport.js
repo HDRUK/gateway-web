@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { H5, P, Button } from 'hdruk-react-core';
-import FileSelector from '../../../../components/FileSelector';
 
-const AboutApplicationImport = ({ userState, team, onUpload }) => {
+import { FileSelector } from 'components';
+
+const AboutApplicationImport = ({ onUpload }) => {
     const [fileText, setFileText] = useState('');
 
     const handleUpload = useCallback(

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from 'hdruk-react-core';
 import { Modal } from 'react-bootstrap';
 import './CommunicateDataCustodianModal.scss';

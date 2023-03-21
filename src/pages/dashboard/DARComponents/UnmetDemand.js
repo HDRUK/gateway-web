@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { Col, Row, Button, Accordion } from 'react-bootstrap';
 import SVGIcon from '../../../images/SVGIcon';
 import '../Dashboard.scss';
 
-class UnmetDemand extends React.Component {
+class UnmetDemand extends Component {
     state = {
         data: '',
         flagClosed: true,
@@ -57,7 +57,7 @@ class UnmetDemand extends React.Component {
         return (
             <div>
                 <div>
-                    <Row className='entryBox' data-test-id='unmetDemand-search'>
+                    <Row className='entryBox' data-testid='unmetDemand-search'>
                         <Accordion defaultActiveKey='1' style={{ width: '100%' }}>
                             <Accordion.Toggle
                                 as={Button}
@@ -65,8 +65,7 @@ class UnmetDemand extends React.Component {
                                 eventKey='0'
                                 onClick={this.updateFlag}
                                 data-testid='accordion-toggle'
-                                style={{ width: '100%', paddingLeft: '0px' }}
-                            >
+                                style={{ width: '100%', paddingLeft: '0px' }}>
                                 <Row>
                                     <Col sm={1} lg={1} className='gray800-14'>
                                         <SVGIcon
@@ -83,8 +82,7 @@ class UnmetDemand extends React.Component {
                                                 <a
                                                     href={'/search?search=' + data._id}
                                                     className='searchTermLink'
-                                                    data-test-id='unmetDemand-search-term'
-                                                >
+                                                    data-testid='unmetDemand-search-term'>
                                                     {' '}
                                                     {data._id}{' '}
                                                 </a>
@@ -92,12 +90,12 @@ class UnmetDemand extends React.Component {
                                         </span>
                                     </Col>
                                     <Col sm={2} lg={2} className='gray800-14'>
-                                        <span style={{ float: 'left' }} data-test-id='unmetDemand-search-count'>
+                                        <span style={{ float: 'left' }} data-testid='unmetDemand-search-count'>
                                             {!data || !data.count ? 'number of searches' : data.count}
                                         </span>
                                     </Col>
                                     <Col sm={2} lg={2} className='gray800-14'>
-                                        <span style={{ float: 'left' }} data-test-id='unmetDemand-search-results'>
+                                        <span style={{ float: 'left' }} data-testid='unmetDemand-search-results'>
                                             {this.getNumberOfResults(data)}
                                         </span>
                                     </Col>

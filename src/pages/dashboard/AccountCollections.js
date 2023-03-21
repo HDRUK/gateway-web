@@ -1,18 +1,90 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+
+import { LayoutContent } from 'components';
+
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
-import { EntityActionButton } from './EntityActionButton.jsx';
+import { EntityActionButton } from './EntityActionButton';
 import googleAnalytics from '../../tracking';
 import { PaginationHelper } from '../commonComponents/PaginationHelper';
-import { LayoutContent } from '../../components/Layout';
 
-var baseURL = require('../commonComponents/BaseURL').getURL();
+const baseURL = require('../commonComponents/BaseURL').getURL();
 
-const AccountCollections = props => {
+const ArchiveComponent = ({ collection, unarchiveCollection, deleteCollection }) => {
+    return (
+        <Row className='entryBox' data-testid='collectionEntryArchive'>
+            <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                {moment(collection.updatedAt).format('D MMMM YYYY HH:mm')}
+            </Col>
+            <Col sm={12} lg={5} className='pt-2'>
+                <a href={`/collection/${collection.id}`} className='black-14'>
+                    {collection.name}
+                </a>
+            </Col>
+            <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                {collection.persons <= 0
+                    ? 'Author not listed'
+                    : collection.persons.map(person => {
+                          return (
+                              <span>
+                                  {person.firstname} {person.lastname} <br />
+                              </span>
+                          );
+                      })}
+            </Col>
+            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                <DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
+                    <Dropdown.Item href={`/collection/edit/${collection.id}`} className='black-14'>
+                        Edit
+                    </Dropdown.Item>
+                    <EntityActionButton id={collection.id} action={unarchiveCollection} actionType='unarchive' entity='collection' />
+                    <EntityActionButton id={collection.id} action={deleteCollection} actionType='delete' entity='collection' />
+                </DropdownButton>
+            </Col>
+        </Row>
+    );
+};
+
+const ActiveComponent = ({ collection, archiveCollection, deleteCollection }) => {
+    return (
+        <Row className='entryBox' data-testid='collectionEntryActive'>
+            <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                {moment(collection.updatedAt).format('D MMMM YYYY HH:mm')}
+            </Col>
+            <Col sm={12} lg={5} className='pt-2'>
+                <a href={`/collection/${collection.id}`} className='black-14'>
+                    {collection.name}
+                </a>
+            </Col>
+            <Col sm={12} lg={2} className='pt-2 gray800-14'>
+                {collection.persons <= 0
+                    ? 'Author not listed'
+                    : collection.persons.map((person, index) => {
+                          return (
+                              <span key={index}>
+                                  {person.firstname} {person.lastname} <br />
+                              </span>
+                          );
+                      })}
+            </Col>
+
+            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
+                <DropdownButton variant='outline-secondary' alignRight title='Actions' className='floatRight'>
+                    <Dropdown.Item href={`/collection/edit/${collection.id}`} className='black-14'>
+                        Edit
+                    </Dropdown.Item>
+                    <EntityActionButton id={collection.id} action={archiveCollection} actionType='archive' entity='collection' />
+                    <EntityActionButton id={collection.id} action={deleteCollection} actionType='delete' entity='collection' />
+                </DropdownButton>
+            </Col>
+        </Row>
+    );
+};
+const AccountCollections = () => {
     const [key, setKey] = useState('active');
     const [collectionsList, setCollectionsList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -48,9 +120,9 @@ const AccountCollections = props => {
 
         let apiUrl;
         if (typeof index === 'undefined') {
-            apiUrl = baseURL + `/api/v1/collections/getList?status=${key}`;
+            apiUrl = `${baseURL}/api/v1/collections/getList?status=${key}`;
         } else {
-            apiUrl = baseURL + `/api/v1/collections/getList?status=${key}&offset=${index}&limit=${maxResults}`;
+            apiUrl = `${baseURL}/api/v1/collections/getList?status=${key}&offset=${index}&limit=${maxResults}`;
         }
 
         axios.get(apiUrl).then(res => {
@@ -70,7 +142,7 @@ const AccountCollections = props => {
 
     const unarchiveCollection = id => {
         axios
-            .put(baseURL + '/api/v1/collections/status/' + id, {
+            .put(`${baseURL}/api/v1/collections/status/${id}`, {
                 activeflag: 'active',
             })
             .then(res => {
@@ -87,7 +159,7 @@ const AccountCollections = props => {
     };
 
     const deleteCollection = id => {
-        axios.delete(baseURL + '/api/v1/collections/delete/' + id).then(res => {
+        axios.delete(`${baseURL}/api/v1/collections/delete/${id}`).then(res => {
             if (shouldChangeTab()) {
                 setKey('active');
                 doCollectionsCall('active', true, activeIndex);
@@ -119,7 +191,7 @@ const AccountCollections = props => {
 
     const archiveCollection = id => {
         axios
-            .put(baseURL + '/api/v1/collections/status/' + id, {
+            .put(`${baseURL}/api/v1/collections/status/${id}`, {
                 activeflag: 'archive',
             })
             .then(res => {
@@ -134,7 +206,7 @@ const AccountCollections = props => {
     };
 
     const shouldChangeTab = () => {
-        return key === 'archive' && archiveCount <= 1 ? true : false;
+        return !!(key === 'archive' && archiveCount <= 1);
     };
 
     if (isLoading) {
@@ -159,14 +231,13 @@ const AccountCollections = props => {
                     </Col>
                     <Col sm={12} md={4} style={{ textAlign: 'right' }}>
                         <Button
-                            data-test-id='add-collection-btn'
+                            data-testid='add-collection-btn'
                             variant='primary'
                             href='/collection/add'
                             className='addButton'
                             onClick={() =>
                                 googleAnalytics.recordEvent('Collections', 'Add a new collection', 'Collections dashboard button clicked')
-                            }
-                        >
+                            }>
                             + Create a collection
                         </Button>
                     </Col>
@@ -175,10 +246,10 @@ const AccountCollections = props => {
                 <Row className='tabsBackground'>
                     <Col sm={12} lg={12}>
                         <Tabs data-testid='collectionTabs' className='dataAccessTabs gray700-13' activeKey={key} onSelect={handleSelect}>
-                            <Tab eventKey='active' title={'Active (' + activeCount + ')'}>
+                            <Tab eventKey='active' title={`Active (${activeCount})`}>
                                 {' '}
                             </Tab>
-                            <Tab eventKey='archive' title={'Archive (' + archiveCount + ')'}>
+                            <Tab eventKey='archive' title={`Archive (${archiveCount})`}>
                                 {' '}
                             </Tab>
                         </Tabs>
@@ -193,171 +264,72 @@ const AccountCollections = props => {
                     </Row>
                 )}
 
-                {!isResultsLoading &&
-                    (() => {
-                        switch (key) {
-                            case 'active':
+                {!isResultsLoading && key === 'active' && (
+                    <div>
+                        {activeCount <= 0 ? (
+                            ''
+                        ) : (
+                            <Row className='subHeader mt-3 gray800-14-bold'>
+                                <Col xs={2}>Last activity</Col>
+                                <Col xs={5}>Name</Col>
+                                <Col xs={2}>Author</Col>
+                                <Col xs={3} />
+                            </Row>
+                        )}
+
+                        {activeCount <= 0 ? (
+                            <Row className='margin-right-15' data-testid='collectionEntryMessageNotFound'>
+                                <MessageNotFound word='collections' />
+                            </Row>
+                        ) : (
+                            collectionsList.map(collection => {
+                                if (collection.activeflag !== 'active') {
+                                    return <></>;
+                                }
                                 return (
-                                    <div>
-                                        {activeCount <= 0 ? (
-                                            ''
-                                        ) : (
-                                            <Row className='subHeader mt-3 gray800-14-bold'>
-                                                <Col xs={2}>Last activity</Col>
-                                                <Col xs={5}>Name</Col>
-                                                <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
-                                            </Row>
-                                        )}
-
-                                        {activeCount <= 0 ? (
-                                            <Row className='margin-right-15' data-testid='collectionEntryMessageNotFound'>
-                                                <MessageNotFound word='collections' />
-                                            </Row>
-                                        ) : (
-                                            collectionsList.map(collection => {
-                                                if (collection.activeflag !== 'active') {
-                                                    return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='collectionEntryActive'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(collection.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/collection/' + collection.id} className='black-14'>
-                                                                    {collection.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {collection.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : collection.persons.map((person, index) => {
-                                                                          return (
-                                                                              <span key={index}>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                <DropdownButton
-                                                                    variant='outline-secondary'
-                                                                    alignRight
-                                                                    title='Actions'
-                                                                    className='floatRight'
-                                                                >
-                                                                    <Dropdown.Item
-                                                                        href={'/collection/edit/' + collection.id}
-                                                                        className='black-14'
-                                                                    >
-                                                                        Edit
-                                                                    </Dropdown.Item>
-                                                                    <EntityActionButton
-                                                                        id={collection.id}
-                                                                        action={archiveCollection}
-                                                                        actionType='archive'
-                                                                        entity='collection'
-                                                                    />
-                                                                    <EntityActionButton
-                                                                        id={collection.id}
-                                                                        action={deleteCollection}
-                                                                        actionType='delete'
-                                                                        entity='collection'
-                                                                    />
-                                                                </DropdownButton>
-                                                            </Col>
-                                                        </Row>
-                                                    );
-                                                }
-                                            })
-                                        )}
-                                    </div>
+                                    <ActiveComponent
+                                        collection={collection}
+                                        archiveCollection={archiveCollection}
+                                        deleteCollection={deleteCollection}
+                                    />
                                 );
-                            case 'archive':
+                            })
+                        )}
+                    </div>
+                )}
+
+                {!isResultsLoading && key === 'archive' && (
+                    <div>
+                        {archiveCount <= 0 ? (
+                            ''
+                        ) : (
+                            <Row className='subHeader mt-3 gray800-14-bold'>
+                                <Col xs={2}>Last activity</Col>
+                                <Col xs={5}>Name</Col>
+                                <Col xs={2}>Author</Col>
+                                <Col xs={3} />
+                            </Row>
+                        )}
+                        {archiveCount <= 0 ? (
+                            <Row className='margin-right-15'>
+                                <MessageNotFound word='collections' />
+                            </Row>
+                        ) : (
+                            collectionsList.map(collection => {
+                                if (collection.activeflag !== 'archive') {
+                                    return <></>;
+                                }
                                 return (
-                                    <div>
-                                        {archiveCount <= 0 ? (
-                                            ''
-                                        ) : (
-                                            <Row className='subHeader mt-3 gray800-14-bold'>
-                                                <Col xs={2}>Last activity</Col>
-                                                <Col xs={5}>Name</Col>
-                                                <Col xs={2}>Author</Col>
-                                                <Col xs={3}></Col>
-                                            </Row>
-                                        )}
-
-                                        {archiveCount <= 0 ? (
-                                            <Row className='margin-right-15'>
-                                                <MessageNotFound word='collections' />
-                                            </Row>
-                                        ) : (
-                                            collectionsList.map(collection => {
-                                                if (collection.activeflag !== 'archive') {
-                                                    return <></>;
-                                                } else {
-                                                    return (
-                                                        <Row className='entryBox' data-testid='collectionEntryArchive'>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {moment(collection.updatedAt).format('D MMMM YYYY HH:mm')}
-                                                            </Col>
-                                                            <Col sm={12} lg={5} className='pt-2'>
-                                                                <a href={'/collection/' + collection.id} className='black-14'>
-                                                                    {collection.name}
-                                                                </a>
-                                                            </Col>
-                                                            <Col sm={12} lg={2} className='pt-2 gray800-14'>
-                                                                {collection.persons <= 0
-                                                                    ? 'Author not listed'
-                                                                    : collection.persons.map(person => {
-                                                                          return (
-                                                                              <span>
-                                                                                  {person.firstname} {person.lastname} <br />
-                                                                              </span>
-                                                                          );
-                                                                      })}
-                                                            </Col>
-
-                                                            <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                                <DropdownButton
-                                                                    variant='outline-secondary'
-                                                                    alignRight
-                                                                    title='Actions'
-                                                                    className='floatRight'
-                                                                >
-                                                                    <Dropdown.Item
-                                                                        href={'/collection/edit/' + collection.id}
-                                                                        className='black-14'
-                                                                    >
-                                                                        Edit
-                                                                    </Dropdown.Item>
-                                                                    <EntityActionButton
-                                                                        id={collection.id}
-                                                                        action={unarchiveCollection}
-                                                                        actionType='unarchive'
-                                                                        entity='collection'
-                                                                    />
-                                                                    <EntityActionButton
-                                                                        id={collection.id}
-                                                                        action={deleteCollection}
-                                                                        actionType='delete'
-                                                                        entity='collection'
-                                                                    />
-                                                                </DropdownButton>
-                                                            </Col>
-                                                        </Row>
-                                                    );
-                                                }
-                                            })
-                                        )}
-                                    </div>
+                                    <ArchiveComponent
+                                        collection={collection}
+                                        unarchiveCollection={unarchiveCollection}
+                                        deleteCollection={deleteCollection}
+                                    />
                                 );
-                            default:
-                                return key;
-                        }
-                    })()}
+                            })
+                        )}
+                    </div>
+                )}
 
                 {!isResultsLoading && (
                     <div className='text-center entityDashboardPagination'>
@@ -369,7 +341,7 @@ const AccountCollections = props => {
                                 paginationIndex={activeIndex}
                                 setPaginationIndex={setActiveIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}
@@ -381,7 +353,7 @@ const AccountCollections = props => {
                                 paginationIndex={archiveIndex}
                                 setPaginationIndex={setArchiveIndex}
                                 maxResults={maxResults}
-                            ></PaginationHelper>
+                            />
                         ) : (
                             ''
                         )}

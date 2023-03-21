@@ -1,4 +1,3 @@
-import React from 'react';
 import { SlideDown } from 'react-slidedown';
 import _ from 'lodash';
 import SLA from '../sla/SLA';

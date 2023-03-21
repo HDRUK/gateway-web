@@ -1,16 +1,16 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { isEmpty, isBoolean } from 'lodash';
-import { onLoad } from '@sentry/react';
-import TextareaAutosize from 'react-textarea-autosize';
 import { Button, Box } from 'hdruk-react-core';
+
+import { Textarea } from 'components';
+import { baseURL } from '../../../../configs/url.config';
+import DarHelper from '../../../../utils/DarHelper.util';
+
 import ShareFormModal from './ShareFormModal';
 import Loading from '../../../commonComponents/Loading';
 import './Messages.scss';
-import { baseURL } from '../../../../configs/url.config';
-import DarHelper from '../../../../utils/DarHelper.util';
-import Textarea from '../../../../components/Textarea/Textarea';
 
 const Messages = ({
     applicationId,

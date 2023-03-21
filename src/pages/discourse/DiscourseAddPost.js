@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import styles from './Discourse.module.scss';
 
 class DiscourseAddPost extends Component {

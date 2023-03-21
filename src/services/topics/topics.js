@@ -1,4 +1,4 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import {
     deleteRequest,
     getRequest,
@@ -10,27 +10,27 @@ import {
 } from '../../utils/requests';
 
 const getTopics = options => {
-    return getRequest(`${apiURL}/topics`, options);
+    return getRequest(`${apiUrlV1}/topics`, options);
 };
 
 const getTopic = (_id, options) => {
-    return getRequest(`${apiURL}/topics/${_id}`, options);
+    return getRequest(`${apiUrlV1}/topics/${_id}`, options);
 };
 
 const postTopic = (_id, data, options) => {
-    return postRequest(`${apiURL}/topics/${_id}`, data, options);
+    return postRequest(`${apiUrlV1}/topics/${_id}`, data, options);
 };
 
 const putTopic = (_id, data, options) => {
-    return putRequest(`${apiURL}/topics/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/topics/${_id}`, data, options);
 };
 
 const patchTopic = (_id, data, options) => {
-    return patchRequest(`${apiURL}/topics/${_id}`, data, options);
+    return patchRequest(`${apiUrlV1}/topics/${_id}`, data, options);
 };
 
 const deleteTopic = (_id, options) => {
-    return deleteRequest(`${apiURL}/topics/${_id}`, options);
+    return deleteRequest(`${apiUrlV1}/topics/${_id}`, options);
 };
 
 const useGetTopics = (requestOptions, queryOptions) => {
@@ -78,7 +78,7 @@ const useDeleteTopic = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
+export {
     getTopics,
     getTopic,
     postTopic,

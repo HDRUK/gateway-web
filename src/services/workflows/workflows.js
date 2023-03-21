@@ -1,16 +1,16 @@
-import { apiURL } from '../../configs/url.config';
+import { apiUrlV1 } from '../../configs/url.config';
 import { deleteRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
 
 const postWorkflow = (data, options) => {
-    return postRequest(`${apiURL}/workflows`, data, options);
+    return postRequest(`${apiUrlV1}/workflows`, data, options);
 };
 
 const putWorkflow = (_id, data, options) => {
-    return putRequest(`${apiURL}/workflows/${_id}`, data, options);
+    return putRequest(`${apiUrlV1}/workflows/${_id}`, data, options);
 };
 
 const deleteWorkflow = (_id, options) => {
-    return deleteRequest(`${apiURL}/workflows/${_id}`, options);
+    return deleteRequest(`${apiUrlV1}/workflows/${_id}`, options);
 };
 
 const usePostWorkflow = (requestOptions, mutateOptions) => {
@@ -27,7 +27,7 @@ const usePutWorkflow = (requestOptions, mutateOptions) => {
     });
 };
 
-export const useDeleteWorkflow = (requestOptions, queryOptions) => {
+const useDeleteWorkflow = (requestOptions, queryOptions) => {
     return useQueryWithTranslations({
         queryKey: 'workflows.deleteWorkflow',
         ...queryOptions,
@@ -35,11 +35,4 @@ export const useDeleteWorkflow = (requestOptions, queryOptions) => {
     });
 };
 
-export default {
-    postWorkflow,
-    putWorkflow,
-    deleteWorkflow,
-    usePostWorkflow,
-    usePutWorkflow,
-    useDeleteWorkflow,
-};
+export { postWorkflow, putWorkflow, deleteWorkflow, usePostWorkflow, usePutWorkflow, useDeleteWorkflow };

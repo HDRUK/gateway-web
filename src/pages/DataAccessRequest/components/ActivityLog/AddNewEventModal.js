@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal, Form, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -59,7 +58,7 @@ const AddNewEventModal = ({ dataaccessrequest, isOpened, close, onClickAddEvent 
                         <Row className='ml-0 mr-0 mb-3'>
                             <Form.Label className='mb-0 gray800-14'>Description</Form.Label>
                             <Form.Control
-                                data-test-id='description'
+                                data-testid='description'
                                 id='description'
                                 name='description'
                                 type='text'
@@ -73,7 +72,7 @@ const AddNewEventModal = ({ dataaccessrequest, isOpened, close, onClickAddEvent 
                             />
 
                             {formik.touched.description && formik.errors.description ? (
-                                <div className='errorMessages' data-test-id='description-validation'>
+                                <div className='errorMessages' data-testid='description-validation'>
                                     {formik.errors.description}
                                 </div>
                             ) : null}
@@ -109,7 +108,7 @@ const AddNewEventModal = ({ dataaccessrequest, isOpened, close, onClickAddEvent 
                                     <Calendar className='datePickerCalendar' />
                                 </div>
                                 {formik.touched.timestamp && formik.errors.timestamp ? (
-                                    <div className='errorMessages' data-test-id='timestamp-validation'>
+                                    <div className='errorMessages' data-testid='timestamp-validation'>
                                         {formik.errors.timestamp}
                                     </div>
                                 ) : null}
@@ -132,7 +131,7 @@ const AddNewEventModal = ({ dataaccessrequest, isOpened, close, onClickAddEvent 
                                             className='gray800-14 width-100'
                                             key={version.detailedTitle}
                                             eventKey={version.detailedTitle}
-                                            data-test-id={`selectedVersionTitle-option-${i}`}>
+                                            data-testid={`selectedVersionTitle-option-${i}`}>
                                             {version.detailedTitle}
                                         </Dropdown.Item>
                                     ))
@@ -146,7 +145,7 @@ const AddNewEventModal = ({ dataaccessrequest, isOpened, close, onClickAddEvent 
                                 <Button variant='secondary' className='techDetailButton mr-2' onClick={onCloseModal}>
                                     No, nevermind
                                 </Button>
-                                <Button type='submit' data-test-id='add-event'>
+                                <Button type='submit' data-testid='add-event'>
                                     Add event
                                 </Button>
                             </div>

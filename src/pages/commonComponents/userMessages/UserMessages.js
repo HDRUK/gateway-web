@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
 import axios from 'axios';
@@ -416,7 +416,7 @@ const UserMessages = ({ userState, topicContext, closed, toggleModal, drawerIsOp
                 <div className='sideDrawer-noMessages'>
                     <div>No messages yet</div>
                     <div>
-                        Use messages to clarify questions with the data custodian before statring your application to request access to the
+                        Use messages to clarify questions with the data custodian before starting your application to request access to the
                         data. Select a dataset and make an enquiry.
                     </div>
                 </div>

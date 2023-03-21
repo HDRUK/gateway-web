@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { Box } from 'hdruk-react-core';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
-import { LayoutContent } from '../../components/Layout';
+
+import { LayoutContent } from 'components';
 import { baseURL } from '../../configs/url.config';
+
 import Loading from '../commonComponents/Loading';
 import './Dashboard.scss';
 import AddEditTeamsPage from './Team/AddEditTeamsPage';
@@ -145,12 +147,7 @@ const AccountTeams = () => {
                             </Row>
                         </Col>
                         <Col sm={12} md={4} style={{ textAlign: 'right' }}>
-                            <Button
-                                data-test-id='add-team-btn'
-                                variant='primary'
-                                href=''
-                                className='addButton'
-                                onClick={() => createTeam()}>
+                            <Button data-testid='add-team-btn' variant='primary' href='' className='addButton' onClick={() => createTeam()}>
                                 + Add a new team
                             </Button>
                         </Col>
