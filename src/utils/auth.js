@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { PERMISSIONS_TEAM_ROLES, PERMISSIONS_ROOT_ROLES, PERMISSIONS_TEAM_MEMBER_ROLES, PERMISSIONS_USER_TYPES } from 'consts';
+import { PERMISSIONS_TEAM_ROLES, PERMISSIONS_ROOT_ROLES, PERMISSIONS_USER_TYPES, ROLE_CUSTODIAN_TEAM_ADMIN } from 'consts';
 
 const getIsTypeCustodian = type => {
     return type !== 'user' && type !== 'admin';
@@ -66,8 +66,11 @@ const getIsTeamAdmin = (userState, teamId) => {
     return !!found;
 };
 
-const getTeamMemberManagers = (members = []) => {
-    return members.filter(member => member?.roles?.includes(PERMISSIONS_TEAM_MEMBER_ROLES.manager));
+const getCustodianTeamAdmins = team => {
+    const teamAdminIds = team.members
+        .filter(member => member.roles?.filter(role => role === ROLE_CUSTODIAN_TEAM_ADMIN).length > 0)
+        .map(member => member.memberid);
+    return team.users?.filter(user => teamAdminIds?.includes(user._id));
 };
 
 const isTeamAdminNotManager = (teamId, userState) => {
@@ -127,7 +130,7 @@ export {
     getPublisherId,
     returnApplicantIfTeamNotFound,
     getIsTypeAdminOrApplicant,
-    getTeamMemberManagers,
+    getCustodianTeamAdmins,
     getIsTypePublisher,
     getIsTypeCustodian,
     getIsTypeAdmin,
