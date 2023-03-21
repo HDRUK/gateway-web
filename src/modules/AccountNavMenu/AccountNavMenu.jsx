@@ -50,7 +50,7 @@ const AccountNavMenu = ({ tabId, setActiveAccordion, activeAccordion, allowAcces
             return (
                 <>
                     {index === 0 ? <hr /> : ''}
-                    <Dropdown.Item href={`/account?tab=${tabId}&teamType=team&teamId=${pub._id}`} className='gray700-13'>
+                    <Dropdown.Item href={`/account?tab=teamManagement&teamType=team&teamId=${pub._id}`} className='gray700-13'>
                         {pub.name}
                     </Dropdown.Item>
                 </>
