@@ -16,17 +16,17 @@ const MyAccountNav = () => {
 
     const navItems = [
         {
-            href: '/account?tab=youraccount',
+            href: '/account?tab=youraccount&teamType=user',
             labelContent: 'My Account',
             hasPermission: true,
         },
         {
-            href: '/account?tab=dataaccessrequests',
+            href: '/account?tab=dataaccessrequests&teamType=user',
             labelContent: 'Data access requests',
             hasPermission: true,
         },
         {
-            href: '/account?tab=collections',
+            href: '/account?tab=collections&teamType=user',
             labelContent: 'Collections',
             hasPermission: true,
         },
@@ -38,7 +38,7 @@ const MyAccountNav = () => {
             hasPermission: true,
         },
         {
-            href: '/account?tab=courses',
+            href: '/account?tab=courses&teamType=user',
             labelContent: 'Courses',
             hasPermission: true,
         },
@@ -50,12 +50,12 @@ const MyAccountNav = () => {
             hasPermission: true,
         },
         {
-            href: '/account?tab=datause',
+            href: '/account?tab=datause&teamType=user',
             labelContent: 'Data Uses',
             hasPermission: true,
         },
         {
-            href: '/account?tab=papers',
+            href: '/account?tab=papers&teamType=user',
             labelContent: 'Papers',
             hasPermission: true,
         },
@@ -65,16 +65,17 @@ const MyAccountNav = () => {
             hasPermission: true,
         },
         {
-            href: '/account?tab=tools',
+            href: '/account?tab=tools&teamType=user',
             labelContent: 'Tools',
             hasPermission: true,
         },
         {
             href: '/tool/add',
             labelContent: <AddNew handleClick={() => handleRecordEvent('Tools', 'Add a new tool', 'Search bar add new link clicked')} />,
+            hasPermission: true,
         },
         {
-            href: '/account?tab=usersroles',
+            href: '/account?tab=usersroles&teamType=user',
             labelContent: ' Users and roles',
             hasPermission: isRootAdmin,
         },
@@ -91,10 +92,7 @@ const MyAccountNav = () => {
                 {navItems.map(navItem => {
                     return (
                         navItem.hasPermission && (
-                            <Dropdown.Item
-                                key={navItem.href}
-                                href={`${navItem.href}&teamType=user`}
-                                className='black-14 user-dropdown-item'>
+                            <Dropdown.Item key={navItem.href} href={navItem.href} className='black-14 user-dropdown-item'>
                                 {navItem.labelContent}
                             </Dropdown.Item>
                         )
