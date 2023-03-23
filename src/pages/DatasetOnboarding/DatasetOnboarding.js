@@ -493,7 +493,6 @@ class DatasetOnboarding extends Component {
 
         if (isValid) {
             this.toggleActionModal('SUBMITFORREVIEW');
-            // TODO: GAT-1510:GAT-2115
         } else if (authUtils.getIsTeamAdmin(this.props.userState, this.state.publisher)) {
             this.toggleActionModal('VALIDATIONERRORSADMIN');
         } else {
