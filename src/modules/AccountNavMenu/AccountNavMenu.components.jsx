@@ -127,6 +127,7 @@ const AdminNav = ({ tabId }) => {
 
 const TeamNav = ({ allowAccessRequestManagement, teamId, setActiveAccordion, tabId, activeAccordion, publisherDetails, allowWorkflow }) => {
     const { isCustodianDarManager, isReviewer, isCustodianMetadataManager, isMetadataEditor } = useCustodianRoles(teamId);
+    const { isHDRAdmin } = useAuth();
 
     const ACCORDIAN_DAR_MENU = {
         text: 'Data access requests',
@@ -168,7 +169,7 @@ const TeamNav = ({ allowAccessRequestManagement, teamId, setActiveAccordion, tab
                 Team Management
             </DashboardNavItem>
 
-            {allowAccessRequestManagement && [isCustodianDarManager, isReviewer].some(role => role) && (
+            {allowAccessRequestManagement && [isCustodianDarManager, isReviewer, isHDRAdmin].some(role => role) && (
                 <>
                     <div className={getNavActiveClass(['dataaccessrequests', 'workflows', 'addeditworkflow'], tabId)}>
                         <DashboardNavAccordion
@@ -180,7 +181,7 @@ const TeamNav = ({ allowAccessRequestManagement, teamId, setActiveAccordion, tab
                             teamId={teamId}
                         />
                     </div>
-                    {isCustodianDarManager && publisherDetails?.questionBank?.enabled && (
+                    {[isCustodianDarManager, isHDRAdmin].some(role => role) && publisherDetails?.questionBank?.enabled && (
                         <div
                             className={getNavActiveClass(
                                 ['customisedataaccessrequests_guidance', 'customisedataaccessrequests_applicationform'],
@@ -198,7 +199,7 @@ const TeamNav = ({ allowAccessRequestManagement, teamId, setActiveAccordion, tab
                     )}
                 </>
             )}
-            {[isCustodianMetadataManager, isMetadataEditor].some(role => role) && (
+            {[isCustodianMetadataManager, isMetadataEditor, isHDRAdmin].some(role => role) && (
                 <DashboardNavItem
                     icon={<ServerIcon />}
                     activeClassName={getNavActiveClass('datasets', tabId)}
@@ -207,7 +208,7 @@ const TeamNav = ({ allowAccessRequestManagement, teamId, setActiveAccordion, tab
                 </DashboardNavItem>
             )}
 
-            {isCustodianDarManager && (
+            {[isCustodianDarManager, isHDRAdmin].some(role => role) && (
                 <div className={getNavActiveClass(['datause', 'datause_widget'], tabId)}>
                     <DashboardNavAccordion
                         onSelect={setActiveAccordion}

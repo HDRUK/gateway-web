@@ -2,10 +2,12 @@ import { Dropdown } from 'react-bootstrap';
 import { NavWrapper } from 'modules';
 import PropTypes from 'prop-types';
 import { useCustodianRoles } from 'hooks';
+import { useAuth } from 'context/AuthContext';
 import handleAnalytics from '../../pages/dataAccessRequestCustomiseForm/handleAnalytics';
 
 const CustodianNav = ({ team, isMobile }) => {
     const { isReviewer, isCustodianDarManager, isCustodianMetadataManager, isMetadataEditor } = useCustodianRoles(team._id);
+    const { isHDRAdmin } = useAuth();
 
     const navItems = [
         {
@@ -16,7 +18,7 @@ const CustodianNav = ({ team, isMobile }) => {
         {
             href: '/account?tab=dataaccessrequests',
             label: 'Data access requests',
-            hasPermission: () => [isReviewer, isCustodianDarManager].some(role => role),
+            hasPermission: () => [isReviewer, isCustodianDarManager, isHDRAdmin].some(role => role),
         },
         {
             handleOtherActions: () => {
@@ -24,17 +26,17 @@ const CustodianNav = ({ team, isMobile }) => {
             },
             href: '/account?tab=customisedataaccessrequests_guidance',
             label: 'Edit DAR Form',
-            hasPermission: () => [isCustodianDarManager].some(role => role),
+            hasPermission: () => [isCustodianDarManager, isHDRAdmin].some(role => role),
         },
         {
             href: '/account?tab=datause',
             label: 'Data Uses',
-            hasPermission: () => [isCustodianDarManager].some(role => role),
+            hasPermission: () => [isCustodianDarManager, isHDRAdmin].some(role => role),
         },
         {
             href: '/account?tab=datasets',
             label: 'Datasets',
-            hasPermission: () => [isCustodianMetadataManager, isMetadataEditor].some(role => role),
+            hasPermission: () => [isCustodianMetadataManager, isMetadataEditor, isHDRAdmin].some(role => role),
         },
         {
             href: '/account?tab=help',

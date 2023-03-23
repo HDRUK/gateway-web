@@ -44,7 +44,7 @@ import googleAnalytics from '../../tracking';
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
 const AccountPage = () => {
-    const { userState } = useAuth();
+    const { userState, isHDRAdmin } = useAuth();
     const location = useLocation();
     const { teamId, teamType } = useAccountTeamSelected();
     const { isReviewer, isCustodianDarManager, isCustodianMetadataManager, isMetadataEditor, isCustodianTeamAdmin } =
@@ -288,7 +288,7 @@ const AccountPage = () => {
 
                         {(authUtils.getIsTypeTeam(teamType) || authUtils.getIsTypeAdmin(teamType)) && (
                             <>
-                                {allowAccessRequestManagement && [isReviewer, isCustodianDarManager].some(role => role) && (
+                                {allowAccessRequestManagement && [isReviewer, isCustodianDarManager, isHDRAdmin].some(role => role) && (
                                     <>
                                         {' '}
                                         {tabId === 'dataaccessrequests' &&
@@ -313,7 +313,7 @@ const AccountPage = () => {
                                     </>
                                 )}
 
-                                {([isCustodianMetadataManager, isMetadataEditor].some(role => role) ||
+                                {([isCustodianMetadataManager, isMetadataEditor, isHDRAdmin].some(role => role) ||
                                     authUtils.getIsTypeAdmin(teamType)) &&
                                     tabId === 'datasets' && (
                                         <AccountDatasets userState={userState} teamType={teamType} teamId={teamId} alert={alert} />
@@ -323,13 +323,21 @@ const AccountPage = () => {
                                     <AccountTeams userState={userState} alert={alert} />
                                 )}
 
-                                {isCustodianDarManager && (tabId === 'datause' || tabId === 'datause_widget') && (
-                                    <AccountDataUse tabId={tabId} teamType={teamType} teamId={teamId} publisherDetails={publisherDetails} />
+                                {[isCustodianDarManager, isHDRAdmin].some(role => role) &&
+                                    (tabId === 'datause' || tabId === 'datause_widget') && (
+                                        <AccountDataUse
+                                            tabId={tabId}
+                                            teamType={teamType}
+                                            teamId={teamId}
+                                            publisherDetails={publisherDetails}
+                                        />
+                                    )}
+
+                                {allowWorkflow && [isCustodianDarManager, isHDRAdmin].some(role => role) && tabId === 'workflows' && (
+                                    <WorkflowDashboard teamId={teamId} />
                                 )}
 
-                                {allowWorkflow && isCustodianDarManager && tabId === 'workflows' && <WorkflowDashboard teamId={teamId} />}
-
-                                {(isCustodianDarManager || isCustodianTeamAdmin) &&
+                                {[isCustodianDarManager, isCustodianTeamAdmin, isHDRAdmin].some(role => role) &&
                                     (tabId === 'customisedataaccessrequests_applicationform' ||
                                         tabId === 'customisedataaccessrequests_guidance') && (
                                         <CustomiseDAR
