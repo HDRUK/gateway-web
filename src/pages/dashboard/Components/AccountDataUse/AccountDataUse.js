@@ -32,7 +32,7 @@ const AccountDataUse = ({ tabId, teamType, teamId, publisherDetails }) => {
     const handleAlertClose = useCallback(() => {
         setAlertMessage('');
 
-        history.replace('/account?tab=datause', { state: null });
+        history.replace(`/account?tab=datause&teamType=${teamType}&teamId=${teamId}`, { state: null });
     }, [history]);
 
     useEffect(() => {

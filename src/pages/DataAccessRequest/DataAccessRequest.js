@@ -1586,7 +1586,7 @@ class DataAccessRequest extends Component {
         e.preventDefault();
         this.props.history.push({
             pathname: `/account`,
-            search: '?tab=dataaccessrequests',
+            search: '?tab=dataaccessrequests&teamType=user',
         });
     };
 
@@ -1616,7 +1616,7 @@ class DataAccessRequest extends Component {
                 // 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
                 this.props.history.push({
                     pathname: `/account`,
-                    search: `?tab=dataaccessrequests&teamType=team&teamId=${this.state.publisher}`,
+                    search: `?tab=dataaccessrequests&teamType=team&teamId=${this.state.datasets[0].publisher._id}`,
                     state: { alert },
                 });
                 break;

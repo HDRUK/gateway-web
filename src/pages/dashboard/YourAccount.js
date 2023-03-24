@@ -291,7 +291,7 @@ const YourAccountForm = props => {
 
         onSubmit: values => {
             axios.put(baseURL + '/api/v1/person', values).then(res => {
-                window.location.href = '/account?tab=youraccount&accountUpdated=true';
+                window.location.href = '/account?tab=youraccount&teamType=user&accountUpdated=true';
             });
         },
     });

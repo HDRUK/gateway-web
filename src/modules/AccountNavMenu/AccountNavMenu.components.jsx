@@ -137,7 +137,7 @@ const TeamNav = ({ allowAccessRequestManagement, teamId, setActiveAccordion, tab
                 text: 'Applications',
                 id: 'dataaccessrequests',
             },
-            ...(allowWorkflow && isCustodianDarManager
+            ...(allowWorkflow && [isCustodianDarManager, isHDRAdmin].some(role => role)
                 ? [
                       {
                           id: 'workflows',

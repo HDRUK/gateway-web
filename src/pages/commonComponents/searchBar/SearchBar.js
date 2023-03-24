@@ -207,10 +207,10 @@ class SearchBar extends Component {
         }
     }
 
-    getPublisherLink = data => {
+    getPublisherLink = (data, tabName) => {
         let { messageDescription, publisherName: teamId } = data;
         return (
-            <a href={`/account?tab=dataaccessrequests&teamType=team&teamId=${teamId}`} className='notificationInfo'>
+            <a href={`/account?tab=${tabName}&teamType=team&teamId=${teamId}`} className='notificationInfo'>
                 {messageDescription}
             </a>
         );
@@ -446,11 +446,7 @@ class SearchBar extends Component {
                                                                                                 {messageDateString + '\n'}
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
-                                                                                                <a
-                                                                                                    href={`/account?tab=workflows`}
-                                                                                                    className='notificationInfo'>
-                                                                                                    {dat.messageDescription}
-                                                                                                </a>
+                                                                                                {this.getPublisherLink(dat, 'workflows')}
                                                                                             </div>
                                                                                         </Col>
                                                                                         <Col xs={2}>
@@ -534,7 +530,10 @@ class SearchBar extends Component {
                                                                                                 {messageDateString + '\n'}
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
-                                                                                                {this.getPublisherLink(dat)}
+                                                                                                {this.getPublisherLink(
+                                                                                                    dat,
+                                                                                                    'dataaccessrequests'
+                                                                                                )}
                                                                                             </div>
                                                                                         </Col>
                                                                                         <Col xs={2}>
@@ -574,11 +573,10 @@ class SearchBar extends Component {
                                                                                                 {messageDateString + '\n'}
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
-                                                                                                <a
-                                                                                                    href={`/account?tab=dataaccessrequests`}
-                                                                                                    className='notificationInfo'>
-                                                                                                    {dat.messageDescription}
-                                                                                                </a>
+                                                                                                {this.getPublisherLink(
+                                                                                                    dat,
+                                                                                                    'dataaccessrequests'
+                                                                                                )}
                                                                                             </div>
                                                                                         </Col>
                                                                                         <Col xs={2}>
@@ -968,11 +966,7 @@ class SearchBar extends Component {
                                                                                                 {messageDateString + '\n'}
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
-                                                                                                <a
-                                                                                                    href={`/account?tab=datasets&teamId=${dat.datasetID}`}
-                                                                                                    className='notificationInfo'>
-                                                                                                    {dat.messageDescription}
-                                                                                                </a>
+                                                                                                {this.getPublisherLink(dat, 'datasets')}
                                                                                             </div>
                                                                                         </Col>
                                                                                         <Col xs={2}>

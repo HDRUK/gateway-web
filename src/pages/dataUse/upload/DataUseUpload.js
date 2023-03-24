@@ -163,7 +163,7 @@ const DataUseUpload = ({ onSubmit, teamId, userState }) => {
 
             history.push({
                 pathname: '/account',
-                search: '?tab=datause',
+                search: `?tab=datause&teamId=${teamId}&teamType=team`,
                 state: {
                     alert: {
                         message: `Pending approval. ${t('datause.upload.SuccessfulUpload')}`,

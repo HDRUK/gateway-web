@@ -144,7 +144,7 @@ const AccountDataset = () => {
 
         history.push({
             pathname: `/account`,
-            search: '?tab=datasets',
+            search: `?tab=datasets&teamType=${teamType}&teamId=${teamId}`,
             state: { alert, userState },
         });
     };
@@ -161,7 +161,7 @@ const AccountDataset = () => {
 
         history.push({
             pathname: `/account`,
-            search: '?tab=datasets',
+            search: `?tab=datasets&teamType=${teamType}&teamId=${teamId}`,
             state: { alert },
         });
     };
@@ -209,17 +209,17 @@ const AccountDataset = () => {
         if (dataPublisher.data && !filterCurrentDataset(dataPublisher.data.data.data.results.listOfDatasets)) {
             NotificationManager.error('The accessed dataset does not exist', 'Page not found', 10000);
 
-            return <Redirect to='/account?tab=datasets' />;
+            return <Redirect to={`/account?tab=datasets&teamType=${teamType}&teamId=${teamId}`} />;
         }
         if (statusError) {
             NotificationManager.error('The status of the dataset must be in review', 'Invalid status', 10000);
 
-            return <Redirect to='/account?tab=datasets' />;
+            return <Redirect to={`/account?tab=datasets&teamType=${teamType}&teamId=${teamId}`} />;
         }
     } else if (dataPublisher.isError) {
         NotificationManager.error('You do not have permission to access this resource', 'Unauthorised', 10000);
 
-        return <Redirect to='/account?tab=youraccount' />;
+        return <Redirect to={`/account?tab=youraccount&teamType=${teamType}&teamId=${teamId}`} />;
     }
 
     return currentDataset ? (
