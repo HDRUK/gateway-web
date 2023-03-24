@@ -12,7 +12,7 @@ describe('Given the auth helpers', () => {
         {
             teams: [
                 { _id: '1111', roles: ['manager'], isAdmin: true },
-                { _id: '2222', roles: ['reviewer'], isAdmin: true, type: "admin" },
+                { _id: '2222', roles: ['reviewer'], isAdmin: true },
                 { _id: '3333', roles: ['reviewer', 'manager'] },
                 { _id: '4444', roles: ['manager'], isAdmin: false },
                 { _id: '5555', roles: ['reviewer'], isAdmin: false },
