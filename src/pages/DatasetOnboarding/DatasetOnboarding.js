@@ -870,7 +870,7 @@ class DatasetOnboarding extends Component {
         e.preventDefault();
         this.props.history.push({
             pathname: `/account`,
-            search: '?tab=datasets',
+            search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
             state: { team: this.state.publisher },
         });
     };
@@ -915,8 +915,8 @@ class DatasetOnboarding extends Component {
                     };
                     this.props.history.push({
                         pathname: '/account',
-                        search: '?tab=datasets',
-                        state: { alert, team: this.state.publisher },
+                        search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
+                        state: { alert },
                     });
                 } catch (err) {
                     console.log(err);
@@ -941,8 +941,8 @@ class DatasetOnboarding extends Component {
 
                 this.props.history.push({
                     pathname: '/account',
-                    search: '?tab=datasets',
-                    state: { alert, team: 'admin' },
+                    search: '?tab=datasets&teamType=admin',
+                    state: { alert },
                 });
                 break;
             case 'ARCHIVE':
@@ -960,8 +960,8 @@ class DatasetOnboarding extends Component {
                     };
                     this.props.history.push({
                         pathname: '/account',
-                        search: '?tab=datasets',
-                        state: { alert, team: this.state.publisher },
+                        search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
+                        state: { alert },
                     });
                 } catch (err) {
                     console.log(err);
@@ -974,7 +974,7 @@ class DatasetOnboarding extends Component {
                         applicationStatus: this.applicationState[type],
                     };
                     // 1. Update action status
-                    const response = await axios.put(`${baseURL}/api/v1/dataset-onboarding/${_id}`, body);
+                    await axios.put(`${baseURL}/api/v1/dataset-onboarding/${_id}`, body);
                 } catch (err) {
                     console.log(err);
                 }
@@ -995,8 +995,8 @@ class DatasetOnboarding extends Component {
 
                     this.props.history.push({
                         pathname: '/account',
-                        search: '?tab=datasets',
-                        state: { alert, team: this.state.publisher },
+                        search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
+                        state: { alert },
                     });
                 } catch (err) {
                     console.log(err);
@@ -1019,8 +1019,8 @@ class DatasetOnboarding extends Component {
 
                     this.props.history.push({
                         pathname: '/account',
-                        search: '?tab=datasets',
-                        state: { alert, team: this.state.publisher },
+                        search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
+                        state: { alert },
                     });
                 } catch (err) {
                     console.log(err);

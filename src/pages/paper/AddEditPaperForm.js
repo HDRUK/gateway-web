@@ -682,7 +682,7 @@ const AddEditPaperForm = props => {
 
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=papers'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=papers&teamType=user'>
                         <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>

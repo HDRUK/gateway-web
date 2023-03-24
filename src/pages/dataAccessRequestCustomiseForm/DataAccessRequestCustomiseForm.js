@@ -255,7 +255,7 @@ export const DataAccessRequestCustomiseForm = props => {
         e.preventDefault();
         history.push({
             pathname: `/account`,
-            search: '?tab=customisedataaccessrequests_applicationform',
+            search: `?tab=customisedataaccessrequests_applicationform&teamType=team&teamId=${publisherDetails._id}`,
         });
     };
 
@@ -306,7 +306,7 @@ export const DataAccessRequestCustomiseForm = props => {
         handleAnalytics('Clicked Publish button', 'Application form');
         history.push({
             pathname: `/account`,
-            search: '?tab=customisedataaccessrequests_applicationform',
+            search: `?tab=customisedataaccessrequests_applicationform&teamType=team&teamId=${publisherDetails._id}`,
             state: {
                 alert: {
                     message: `You have successfully published the data access application form for ${publisherDetails.publisherDetails.name} applications`,
