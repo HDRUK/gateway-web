@@ -5,6 +5,9 @@ WORKDIR /usr/src
 
 COPY . /usr/src
 
+ENV WATCHPACK_POLLING true
+ENV NEXT_WEBPACK_USEPOLLING true
+
 RUN npm install
 
 EXPOSE 3000
