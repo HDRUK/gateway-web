@@ -9,8 +9,8 @@ docker_build(
     ref='hdruk/' + cfg.get('name'),
     context='.',
     live_update=[
-        sync('./src', '/usr/src'),
-        run('npm install', trigger='./package-lock.json')
+        sync('.', '/usr/src'),
+        run('npm install', trigger='./package-lock.json'),
     ]
 )
 
