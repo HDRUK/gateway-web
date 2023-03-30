@@ -1,5 +1,5 @@
 import { Loading } from "@/components";
-import { useUser } from "@/lib/hooks";
+import { useUser } from "@/hooks";
 
 const Welcome = () => {
 	const { user, error } = useUser();

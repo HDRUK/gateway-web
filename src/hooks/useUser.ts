@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 import { Error, User } from "@/interfaces";
-import { apiService } from "@/lib/services";
+import { apiService } from "@/services";
 
 interface UserResponse {
 	user?: User;
