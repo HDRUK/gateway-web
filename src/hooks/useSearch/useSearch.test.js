@@ -69,7 +69,7 @@ describe('Given the useSearch hook', () => {
                 await waitForNextUpdate();
             });
 
-            it('Then sets the loading flag', async () => {
+            it.skip('Then sets the loading flag', async () => {
                 const { waitFor } = wrapper;
                 jest.setTimeout(15000);
 

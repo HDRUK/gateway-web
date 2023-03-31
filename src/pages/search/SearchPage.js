@@ -1547,14 +1547,12 @@ class SearchPage extends Component {
                 return `${applicant.firstname} ${applicant.lastname} `;
             });
 
-            // Removed because we've removed it from the payload due to excessive
-            // data size from unoptimised query
-            //
-            //
+            // Removed as this was killing the API - see comments on:
+            // https://hdruk.atlassian.net/browse/GAT-1932
             // const gatewayOutputsTools = dataUse.gatewayOutputsToolsInfo.map(tool => {
             //     return `${tool.name} `;
             // });
-
+            //
             // const gatewayOutputsPapers = dataUse.gatewayOutputsPapersInfo.map(paper => {
             //     return `${paper.name} `;
             // });
