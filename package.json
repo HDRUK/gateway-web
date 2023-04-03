@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
+    "test:watch": "jest --watch",
     "coverage": "jest --coverage"
   },
   "dependencies": {
@@ -24,7 +25,10 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "babel-jest": "^29.5.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^29.5.0",
+    "jest-css-modules": "^2.1.0",
     "jest-environment-jsdom": "^29.5.0"
   }
 }
