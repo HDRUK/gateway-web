@@ -1,6 +1,9 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
-const getRequest = async <T>(url: string, options?: any): Promise<T> => {
+const getRequest = async <T>(
+	url: string,
+	options?: AxiosRequestConfig
+): Promise<T> => {
 	return await axios.get(url, options).then((res) => res.data);
 };
 
