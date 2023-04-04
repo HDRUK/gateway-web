@@ -1,13 +1,13 @@
 import React from "react";
 import { render, screen, waitFor } from "../testUtils";
-import Home from "@/pages";
 import { userV1 } from "@/mocks/data";
+import { Welcome } from "@/modules";
 
-describe("HomePage", () => {
-	it("should render the homepage and text contents", async () => {
+describe("Welcome", () => {
+	it("should render the welcome message", async () => {
 		const textToFind = `Welcome ${userV1.firstname} ${userV1.lastname}`;
 
-		render(<Home />);
+		render(<Welcome />);
 
 		await waitFor(() => {
 			const textContent = screen.getByText(textToFind);
