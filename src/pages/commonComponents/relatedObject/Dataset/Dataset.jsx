@@ -109,7 +109,9 @@ const Dataset = ({
     const searchTerm = generalUtils.parseQueryString(window.location.search).search
         ? generalUtils.parseQueryString(window.location.search).search
         : '';
-    const phenotypesSearched = data.datasetfields.phenotypes?.filter(phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase());
+    const phenotypesSearched = data.datasetfields.phenotypes?.filter(
+        phenotype => phenotype.name.toLowerCase() === searchTerm.toLowerCase()
+    );
 
     return (
         <>
@@ -167,7 +169,8 @@ const Dataset = ({
             <Row className='pad-left-24 pad-right-24'>
                 <Col sm={12} md={6}>
                     <Box ml={1} as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
-                        {t('dataset.dateUpdated')} {dateFormats(data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
+                        {t('dataset.dateUpdated')}{' '}
+                        {dateFormats(data.updatedAt || data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
                         <ToolTip text={t('dataset.dateUpdatedTooltip')}>
                             <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
                         </ToolTip>
