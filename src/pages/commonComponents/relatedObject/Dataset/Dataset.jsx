@@ -170,7 +170,7 @@ const Dataset = ({
                 <Col sm={12} md={6}>
                     <Box ml={1} as={Typography} color='green600' variant='caption' display='flex' alignItems='center' mt={1} mb={1}>
                         {t('dataset.dateUpdated')}{' '}
-                        {dateFormats(data.updatedAt || data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
+                        {dateFormats(data.updated || data.latestUpdate, { dateFormat: DISPLAY_DATE_SLASH }).dateOnly}
                         <ToolTip text={t('dataset.dateUpdatedTooltip')}>
                             <Icon svg={<InfoOutlineIcon fill='inherit' />} size='lg' ml={1} />
                         </ToolTip>
