@@ -1,17 +1,17 @@
 interface ErrorItem {
-	reason: string;
-	message: string;
-	metadata: {
-		prop: string;
-		value: string;
-	};
+    reason: string;
+    message: string;
+    metadata: {
+        prop: string;
+        value: string;
+    };
 }
 
 interface Error {
-	code: number;
-	status: string;
-	message: string;
-	errors: ErrorItem[];
+    code: number;
+    status: string;
+    message: string;
+    errors: ErrorItem[];
 }
 
 export type { Error, ErrorItem };
