@@ -58,7 +58,7 @@ jobs:      # Deployment please don't modify anything here as the infrastructure 
       # If required, use the Cloud Run url output in later steps
       - name: Deploy Notification
         id: deploynotificationsent
-        uses: act10ns/slack@v1
+        uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
