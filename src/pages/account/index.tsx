@@ -1,11 +1,14 @@
 import { GetServerSideProps } from "next";
 import { useTags } from "@/hooks";
 import { Head } from "@/components";
-import { apiService } from "@/services";
-import axios from "axios";
+/** 
+     * Commenting out until connection with Laravel is resolved
+     * 
+    import { apiService } from "@/services";
+    import axios from "axios";
+*/
 
-function Account({ data }) {
-    console.log("data: ", data);
+function Account() {
     const { tags } = useTags();
 
     return (

@@ -1,5 +1,4 @@
-import Auth from "@/components/Auth";
-import Layout from "@/components/Layout";
+import { Auth, Layout } from "@/components";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";

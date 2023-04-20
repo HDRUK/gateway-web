@@ -1,9 +1,10 @@
-import { userV1 } from "@/mocks/data";
+import config from "@/config";
+import { tagsV1 } from "@/mocks/data";
 import { apiService } from "@/services";
 
 describe("get", () => {
-	it("should return user", async () => {
-		const response = await apiService.getRequest("api/user");
-		expect(response).toEqual(userV1);
-	});
+    it("should return tags", async () => {
+        const response = await apiService.getRequest(config.tagsV1Url);
+        expect(response).toEqual(tagsV1.data);
+    });
 });

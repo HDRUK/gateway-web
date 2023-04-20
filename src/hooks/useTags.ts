@@ -18,7 +18,7 @@ const useTags = (): TagsResponse => {
 
     return {
         error,
-        isLoading: !!data && !!error,
+        isLoading: !data && !error,
         tags: data,
     };
 };
