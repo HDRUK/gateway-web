@@ -14,10 +14,10 @@ function Account() {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway" />
-            <div style={{ color: "red" }}>
-                <h1>My account</h1>
-                <h2>Tags</h2>
-                <ul>
+            <div>
+                <h1 style={{ marginBottom: "10px" }}>My account</h1>
+                <h2 style={{ marginBottom: "10px" }}>Tags</h2>
+                <ul style={{ marginLeft: "20px" }}>
                     {tags?.map(tag => (
                         <li key={tag.id}>{tag.type}</li>
                     ))}
