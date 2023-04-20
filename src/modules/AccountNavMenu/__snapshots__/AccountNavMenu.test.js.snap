@@ -1,0 +1,426 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountNavMenu Should render admin section as non root admin 1`] = `
+<div>
+  <div
+    class="col-sm-12 col-md-2 accountMenuHolder"
+    data-testid="accountNavMenu"
+  >
+    <div
+      class="account-menu"
+    >
+      <div
+        class="dropdown"
+      >
+        <a
+          href="#"
+        >
+          <div
+            class="teamSelectorHeader"
+          >
+            <span
+              class="gray700-13"
+            >
+              HDR Admin
+            </span>
+            <icon-mock
+              classname="dataClassArrow pointer"
+              fill="#475da7"
+            />
+          </div>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=datasets&teamType=admin"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Datasets
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=datause&teamType=admin"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Data Uses
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=teams&teamType=admin"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Teams
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountNavMenu Should render admin section as root admin 1`] = `
+<div>
+  <div
+    class="col-sm-12 col-md-2 accountMenuHolder"
+    data-testid="accountNavMenu"
+  >
+    <div
+      class="account-menu"
+    >
+      <div
+        class="dropdown"
+      >
+        <a
+          href="#"
+        >
+          <div
+            class="teamSelectorHeader"
+          >
+            <span
+              class="gray700-13"
+            >
+              HDR Admin
+            </span>
+            <icon-mock
+              classname="dataClassArrow pointer"
+              fill="#475da7"
+            />
+          </div>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=datasets&teamType=admin"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Datasets
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=datause&teamType=admin"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Data Uses
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=teams&teamType=admin"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Teams
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountNavMenu Should render correctly for user section root admin 1`] = `
+<div>
+  <div
+    class="col-sm-12 col-md-2 accountMenuHolder"
+    data-testid="accountNavMenu"
+  >
+    <div
+      class="account-menu"
+    >
+      <div
+        class="dropdown"
+      >
+        <a
+          href="#"
+        >
+          <div
+            class="teamSelectorHeader"
+          >
+            <span
+              class="gray700-13"
+            >
+              Bill Murray
+            </span>
+            <icon-mock
+              classname="dataClassArrow pointer"
+              fill="#475da7"
+            />
+          </div>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=dashboard&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Dashboard
+          </span>
+        </a>
+      </div>
+      <div
+        class="activeCard"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=youraccount&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Account
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=tools&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Tools
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=reviews&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Reviews
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=datause&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Data Uses
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=papers&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Papers
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=courses&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Courses
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=dataaccessrequests&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Data access requests
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=collections&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Collections
+          </span>
+        </a>
+      </div>
+      <div
+        class="accountNav"
+        role="link"
+      >
+        <a
+          class="verticalNavBar gray700-13 nav-link"
+          href="/account?tab=usersroles&teamType=user"
+        >
+          <span
+            class="ui-Icon emotion-0"
+          >
+            <icon-mock />
+          </span>
+          <span
+            class="navLinkItem"
+          >
+            Users and roles
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

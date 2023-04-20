@@ -4,29 +4,25 @@ exports[`Given the AccountDatasets component When it is rendered Then matches th
 <div>
   <div>
     <div
-      class="ui-LayoutContent row"
+      class="ui-Box emotion-0"
     >
-      <div
-        class="ui-LayoutContent--left col-1"
-      />
-      <div
-        class="ui-LayoutContent--content col-10"
-      >
+      <div />
+      <div>
         <div
           class="ui-Box emotion-0"
         >
           <div
-            class="ui-Alert emotion-1"
+            class="ui-Alert emotion-2"
           >
             <div
-              class="ui-Alert__icon emotion-2"
+              class="ui-Alert__icon emotion-3"
             >
               <icon
                 svg="[object Object]"
               />
             </div>
             <div
-              class="emotion-3"
+              class="emotion-4"
             >
               Message goes here
             </div>
@@ -77,9 +73,7 @@ exports[`Given the AccountDatasets component When it is rendered Then matches th
           Submit
         </button>
       </div>
-      <div
-        class="ui-LayoutContent--right col-1"
-      />
+      <div />
     </div>
   </div>
 </div>

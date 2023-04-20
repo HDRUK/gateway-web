@@ -1,4 +1,4 @@
-import DatasetOnboardingHelper from './DatasetOnboardingHelper.util';
+import * as DatasetOnboardingHelper from './DatasetOnboardingHelper.util';
 
 const updatesSubmitted = {
     'provenance/temporal/distributionReleaseDate': {

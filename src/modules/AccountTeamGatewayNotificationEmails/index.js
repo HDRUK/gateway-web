@@ -1,0 +1,3 @@
+import AccountTeamGatewayNotificationEmails from './AccountTeamGatewayNotificationEmails';
+
+export default AccountTeamGatewayNotificationEmails;

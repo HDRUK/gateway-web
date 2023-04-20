@@ -2,19 +2,20 @@ import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import { has, isEmpty, isNil } from 'lodash';
 import { createRef, Component, Fragment } from 'react';
-import { Button, Box, Typography } from 'hdruk-react-core';
-import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap/';
+import { Button, Box, Typography, Icon } from 'hdruk-react-core';
+import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import Linkify from 'react-linkify';
 import 'react-tabs/style/react-tabs.css';
 
-import { QualityScore, Alert, ToolTip, Icon } from 'components';
+import { QualityScore, Alert, ToolTip } from 'components';
 import { RelatedResourcesTab } from 'modules';
+import { dataSetHelperUtils } from 'utils';
+
 import { ReactComponent as GoldStar } from '../../images/cd-star.svg';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
 import { ReactComponent as InfoFillSVG } from '../../images/infofill.svg';
 import SVGIcon from '../../images/SVGIcon';
 import googleAnalytics from '../../tracking';
-import DataSetHelper from '../../utils/DataSetHelper.util';
 import { ReactComponent as Shield } from '../../images/shield.svg';
 
 import ActionBar from '../commonComponents/actionbar/ActionBar';
@@ -550,7 +551,7 @@ class DatasetDetail extends Component {
     };
 
     showLoginModal = title => {
-        DataSetHelper.showLoginPanel(window, title);
+        dataSetHelperUtils.showLoginPanel(window, title);
     };
 
     toggleDrawer = () => {
@@ -1088,7 +1089,13 @@ class DatasetDetail extends Component {
                                                                                       {relation.type === 'text' ? (
                                                                                           <Button
                                                                                               variant='secondary'
-                                                                                              onClick={() => this.props.history.push(`/search?search=${encodeURIComponent(relation.title)}`)}
+                                                                                              onClick={() =>
+                                                                                                  this.props.history.push(
+                                                                                                      `/search?search=${encodeURIComponent(
+                                                                                                          relation.title
+                                                                                                      )}`
+                                                                                                  )
+                                                                                              }
                                                                                               target='_blank'
                                                                                               className='gatewaySearchButton floatRightLinkedDataset'>
                                                                                               Search on gateway
@@ -1171,7 +1178,13 @@ class DatasetDetail extends Component {
                                                                                       {relation.type === 'text' ? (
                                                                                           <Button
                                                                                               variant='secondary'
-                                                                                              onClick={() => this.props.history.push(`/search?search=${encodeURIComponent(relation.title)}`)}
+                                                                                              onClick={() =>
+                                                                                                  this.props.history.push(
+                                                                                                      `/search?search=${encodeURIComponent(
+                                                                                                          relation.title
+                                                                                                      )}`
+                                                                                                  )
+                                                                                              }
                                                                                               target='_blank'
                                                                                               className='gatewaySearchButton floatRightLinkedDataset'>
                                                                                               Search on gateway

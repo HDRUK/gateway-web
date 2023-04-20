@@ -1,6 +1,7 @@
 import { Button } from 'hdruk-react-core';
+import { useCustodianRoles } from 'hooks';
+import { darHelperUtils } from 'utils';
 import googleAnalytics from '../../../../tracking';
-import DarHelper from '../../../../utils/DarHelper.util';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
 
 const CustodianActionButtons = ({
@@ -10,7 +11,7 @@ const CustodianActionButtons = ({
     onNextClick,
     onActionClick,
     applicationStatus,
-    roles,
+    teamId,
     workflowEnabled = false,
     workflowAssigned,
     onWorkflowReview,
@@ -20,21 +21,29 @@ const CustodianActionButtons = ({
     onWorkflowReviewDecisionClick,
     hasNext,
 }) => {
+    const { isCustodianDarManager } = useCustodianRoles(teamId);
+
     const showRecommendationDropdown =
-        applicationStatus === DarHelper.darStatus.inReview &&
-        ((inReviewMode && !hasRecommended) || roles.includes('manager')) &&
+        applicationStatus === darHelperUtils.darStatus.inReview &&
+        ((inReviewMode && !hasRecommended) || isCustodianDarManager) &&
         !parseInt(unansweredAmendments) > 0;
 
     const showReviewOptions = inReviewMode && !hasRecommended && workflowAssigned;
 
     const showAssignWorkflow =
-        applicationStatus === DarHelper.darStatus.inReview && roles.includes('manager') && workflowEnabled && !workflowAssigned;
+        applicationStatus === darHelperUtils.darStatus.inReview && isCustodianDarManager && workflowEnabled && !workflowAssigned;
 
     const showSendUpdateRequest =
-        applicationStatus === DarHelper.darStatus.inReview &&
+        applicationStatus === darHelperUtils.darStatus.inReview &&
         activeParty === 'custodian' &&
-        roles.includes('manager') &&
+        isCustodianDarManager &&
         unansweredAmendments > 0;
+
+    console.log('applicationStatus: ', applicationStatus);
+    console.log('darHelperUtils.darStatus.inReviewtatus: ', darHelperUtils.darStatus.inReview);
+    console.log('activeParty: ', activeParty);
+    console.log('isCustodianDarManager: ', isCustodianDarManager);
+    console.log('unansweredAmendments: ', unansweredAmendments);
 
     const manageOptions = [
         {
@@ -47,7 +56,7 @@ const CustodianActionButtons = ({
                         onWorkflowReview();
                         googleAnalytics.recordVirtualPageView('workflow recommendations modal');
                     },
-                    isVisible: applicationStatus === DarHelper.darStatus.inReview,
+                    isVisible: applicationStatus === darHelperUtils.darStatus.inReview,
                 },
             ],
         },
@@ -89,7 +98,7 @@ const CustodianActionButtons = ({
                         onActionClick('Approve');
                         googleAnalytics.recordEvent('Data access request', 'Application approved', 'Application final decision made');
                     },
-                    isVisible: showRecommendationDropdown && roles.includes('manager'),
+                    isVisible: showRecommendationDropdown && isCustodianDarManager,
                 },
                 {
                     title: 'Approve with conditions',
@@ -101,7 +110,7 @@ const CustodianActionButtons = ({
                             'Application final decision made'
                         );
                     },
-                    isVisible: showRecommendationDropdown && roles.includes('manager'),
+                    isVisible: showRecommendationDropdown && isCustodianDarManager,
                 },
                 {
                     title: 'Reject',
@@ -109,7 +118,7 @@ const CustodianActionButtons = ({
                         onActionClick('Reject');
                         googleAnalytics.recordEvent('Data access request', 'Application rejected', 'Application final decision made');
                     },
-                    isVisible: showRecommendationDropdown && roles.includes('manager'),
+                    isVisible: showRecommendationDropdown && isCustodianDarManager,
                 },
             ],
         },

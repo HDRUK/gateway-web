@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { apiUrlV1 } from '../../configs/url.config';
 
-export const mockNextInReviewDataset = {
+const mockNextInReviewDataset = {
     _id: '60929068c794e1288d4ec704',
     pid: 'd5c99a71-c039-4a0b-9171-dba8a1c33154',
     activeflag: 'inReview',
@@ -96,7 +96,7 @@ export const mockNextInReviewDataset = {
     },
 };
 
-export const mockInReviewDataset = {
+const mockInReviewDataset = {
     _id: '60929068c794e1288d4ec704',
     pid: '0a048419-0796-46fb-ad7d-91e650a6c742',
     activeflag: 'inReview',
@@ -191,7 +191,7 @@ export const mockInReviewDataset = {
     },
 };
 
-export const mockRejectedDataset = {
+const mockRejectedDataset = {
     _id: '60929068c794e1288d4ec704',
     type: 'dataset',
     name: 'COVID-19 Symptom Tracker Dataset',
@@ -288,7 +288,7 @@ export const mockRejectedDataset = {
     activeflag: 'rejected',
 };
 
-export const mswGetInReviewDataset = rest.get(`${apiUrlV1}/datasets/0a048419-0796-46fb-ad7d-91e650a6c742`, (req, res, ctx) => {
+const mswGetInReviewDataset = rest.get(`${apiUrlV1}/datasets/0a048419-0796-46fb-ad7d-91e650a6c742`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -297,7 +297,7 @@ export const mswGetInReviewDataset = rest.get(`${apiUrlV1}/datasets/0a048419-079
     );
 });
 
-export const mswGetNextInReviewDataset = rest.get(`${apiUrlV1}/datasets/d5c99a71-c039-4a0b-9171-dba8a1c33154`, (req, res, ctx) => {
+const mswGetNextInReviewDataset = rest.get(`${apiUrlV1}/datasets/d5c99a71-c039-4a0b-9171-dba8a1c33154`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -306,7 +306,7 @@ export const mswGetNextInReviewDataset = rest.get(`${apiUrlV1}/datasets/d5c99a71
     );
 });
 
-export const mswGetRejectedDataset = rest.get(`${apiUrlV1}/datasets/1f509fe7-e94f-48fe-af6a-81f2bf8a5270`, (req, res, ctx) => {
+const mswGetRejectedDataset = rest.get(`${apiUrlV1}/datasets/1f509fe7-e94f-48fe-af6a-81f2bf8a5270`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -315,7 +315,7 @@ export const mswGetRejectedDataset = rest.get(`${apiUrlV1}/datasets/1f509fe7-e94
     );
 });
 
-export const mswGetInvalidDataset = rest.get(`${apiUrlV1}/datasets/invalid`, (req, res, ctx) => {
+const mswGetInvalidDataset = rest.get(`${apiUrlV1}/datasets/invalid`, (req, res, ctx) => {
     return res(ctx.status(404));
 });
 

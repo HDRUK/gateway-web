@@ -6,11 +6,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Button } from 'hdruk-react-core';
 
 import { AlertMessage } from 'components';
+import { SUPPORT_CREATE_URL } from '../../../../consts';
+
 import { ReactComponent as PaperSVG } from '../../../../images/paper.svg';
 import { ReactComponent as ArrowDownSVG } from '../../../../images/arrow-down.svg';
 import { ReactComponent as TrashSVG } from '../../../../images/trash-alt-solid.svg';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
-import { SUPPORT_CREATE_URL } from '../../../../configs/constants';
 
 import { concatFileName, fileStatus, readableFileSize } from './files.util';
 
@@ -96,7 +97,7 @@ export const AllFiles = ({ files, downloadFile, deleteFile, readOnly }) => {
                                     {status === fileStatus.ERROR ? (
                                         <AlertMessage variant='danger'>
                                             <Trans i18nKey='DAR.upload.virus.error'>
-                                                {{ name }},<a href={SUPPORT_CREATE_URL} target='_blank' />
+                                                {{ name }},<a href={SUPPORT_CREATE_URL} target='_blank' rel='noreferrer' />
                                             </Trans>
                                         </AlertMessage>
                                     ) : status === fileStatus.QUARANTINED ? (

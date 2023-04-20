@@ -57,15 +57,19 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
                     .put(`${baseURL}/api/v1/data-access-request/${applicationId}/assignworkflow`, {
                         workflowId: workflow._id,
                     })
-                    .then(res => {
+                    .then(() => {
                         const alert = {
                             publisher,
-                            nav: `dataaccessrequests&team=${publisher}`,
+                            nav: 'dataaccessrequests',
                             tab: 'inReview',
                             message: `You have successfully assigned a workflow`,
                         };
                         // redirect to dashboard with alert
-                        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests&team=`, state: { alert } });
+                        history.push({
+                            pathname: `/account`,
+                            search: `?tab=dataaccessrequests&teamType=team&teamId=${publisher}`,
+                            state: { alert },
+                        });
                     });
             }
         }

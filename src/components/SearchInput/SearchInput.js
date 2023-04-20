@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useRef, useCallback } from 'react';
+import { Icon } from 'hdruk-react-core';
 import { omit } from '../../configs/propTypes';
-import Icon from '../Icon';
 import Input from '../Input';
 import { ReactComponent as SearchIcon } from '../../images/search.svg';
 import { ReactComponent as ClearIcon } from '../../images/clear.svg';

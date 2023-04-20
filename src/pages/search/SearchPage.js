@@ -16,7 +16,7 @@ import { ReactComponent as ColourLogoSvg } from '../../images/colour.svg';
 import { ReactComponent as ArrowUpSvg } from '../../images/icons/arrow-up.svg';
 import { ReactComponent as SearchSvg } from '../../images/search.svg';
 import googleAnalytics from '../../tracking';
-import { findAllByKey, getParams, iterateDeep } from '../../utils/GeneralHelper.util';
+import { findAllByKey, getParams, iterateDeep } from '../../utils/General.util';
 
 import AdvancedSearchCohortDiscovery from '../commonComponents/AdvancedSearchCohortDiscovery';
 import AdvancedSearchDataUtilityWizard from '../commonComponents/AdvancedSearchDataUtilityWizard/AdvancedSearchDataUtilityWizard';

@@ -1,10 +1,10 @@
-import { render, createEvent, waitFor } from '@testing-library/react';
+import { testUtils } from '../../../../../test';
 import AccountDatasetsCreate from '.';
 import { server } from '../../../../services/mockServer';
 
 let wrapper;
 
-const props = { publisherID: 'admin', team: '1234', alert: { message: 'Sample message' }, isFederated: false, isLoading: false };
+const props = { publisherID: 'admin', teamId: '1234', alert: { message: 'Sample message' }, isFederated: false, isLoading: false };
 
 describe('Given the AccountDatasetsCreate component', () => {
     beforeAll(() => {
@@ -21,9 +21,7 @@ describe('Given the AccountDatasetsCreate component', () => {
 
     describe('When it is rendered', () => {
         beforeAll(async () => {
-            wrapper = render(<AccountDatasetsCreate {...props} />, {
-                wrapper: Providers,
-            });
+            wrapper = testUtils.render(<AccountDatasetsCreate {...props} />);
         });
 
         it('Then matches the previous snapshot', () => {
@@ -33,9 +31,9 @@ describe('Given the AccountDatasetsCreate component', () => {
         describe('And "Add new dataset" is clicked', () => {
             it('Then calls preventDefault', async () => {
                 const button = wrapper.queryByText(/Add a new dataset/i);
-                const buttonEvent = createEvent.click(button, { cancelable: true });
+                const buttonEvent = testUtils.createEvent.click(button, { cancelable: true });
 
-                fireEvent.click(button, buttonEvent);
+                testUtils.fireEvent.click(button, buttonEvent);
 
                 expect(wrapper.container).toMatchSnapshot();
             });

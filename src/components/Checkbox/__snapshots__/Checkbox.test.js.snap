@@ -5,6 +5,7 @@ exports[`Given the Checkbox component When it is rendered Then matches the previ
   <label
     class="ui-Checkbox additional-classname emotion-0 emotion-1"
     for="sampleLabel"
+    title=""
   >
     <input
       id="sampleLabel"

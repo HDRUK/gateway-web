@@ -448,6 +448,7 @@ input[type='checkbox']:checked:after {
     visibility: visible;
     border: solid 2px #d6d6d6;
     padding-top: 2px;
+    padding-left: 3px;
 }
 
 input[type='radio']:after {
@@ -698,7 +699,7 @@ textarea:focus {
 /* RBTS ARE THE STYLES FOR TYPEAHEAD INPUTS */
 .rbt-input {
     font-family: museo-sans-rounded !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
     font-weight: 500 !important;
     color: $gray-700 !important;
 }

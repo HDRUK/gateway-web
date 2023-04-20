@@ -31,7 +31,7 @@ const Loading = ({ text, subText, timeout, ...outerProps }) => {
 
 Loading.propTypes = {
     text: PropTypes.string,
-    subText: PropTypes.string,
+    subText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     timeout: PropTypes.number,
 };
 

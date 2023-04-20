@@ -8,6 +8,9 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import moment from 'moment';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Button } from 'hdruk-react-core';
+
+import { uploaderUtils } from 'utils';
+
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
@@ -15,7 +18,6 @@ import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorMod
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import googleAnalytics from '../../tracking';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
-import UploaderUtil from '../../utils/Uploader.util';
 import SVGIcon from '../../images/SVGIcon';
 import ToolTip from '../../images/imageURL-ToolTip.gif';
 import './Collections.scss';
@@ -34,7 +36,7 @@ const AddEditCollectionForm = props => {
 
     useEffect(() => {
         async function getUploaderData() {
-            setUploadersList(await UploaderUtil.buildListOfUploaders(props.data.authors, props.userState[0]));
+            setUploadersList(await uploaderUtils.buildListOfUploaders(props.data.authors, props.userState[0]));
         }
         getUploaderData();
     }, []);
@@ -450,7 +452,7 @@ const AddEditCollectionForm = props => {
 
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=collections'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=collections&teamType=user'>
                         <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>

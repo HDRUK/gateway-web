@@ -36,7 +36,4 @@ const buildListOfUploaders = async (authorIds, currentUser) => {
     return listOfUploaders;
 };
 
-export default {
-    buildListOfUploaders,
-    getUserInfo,
-};
+export { buildListOfUploaders, getUserInfo };

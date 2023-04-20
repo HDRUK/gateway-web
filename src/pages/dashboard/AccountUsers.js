@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Row, Col, Button, Modal, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
 
 import { LayoutContent } from 'components';
+import { authUtils } from 'utils';
 
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import Loading from '../commonComponents/Loading';
@@ -64,11 +65,10 @@ class AccountUsers extends Component {
         var dataCustodianCount = 0;
         var adminCount = 0;
 
-        // TODO: GAT-1510:037
         data.forEach(user => {
-            if (user.role === 'Creator') userCount++;
-            else if (user.role === 'DataCustodian') dataCustodianCount++;
-            else if (user.role === 'Admin') adminCount++;
+            if (authUtils.getIsUserRoleCreator(user.role)) userCount++;
+            else if (authUtils.getIsUserRoleDataCustodian(user.role)) dataCustodianCount++;
+            else if (authUtils.getIsUserRoleAdmin(user.role)) adminCount++;
         });
 
         return (

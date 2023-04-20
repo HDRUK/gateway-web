@@ -39,7 +39,7 @@ const AccountMemberModal = ({ open, close, teamId, onMemberAdded }) => {
             roleDescription: 'Can review applications assigned to them.',
         },
         {
-            role: 'Metadata editor',
+            role: 'Metadata Editor',
             value: 'metadata_editor',
             roleDescription: 'Can add and create new versions of datasets',
         },

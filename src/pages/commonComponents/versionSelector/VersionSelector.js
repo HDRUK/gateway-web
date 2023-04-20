@@ -19,14 +19,13 @@ const VersionSelector = ({ selectedVersion = 'Version 1.0', versionList, display
     const CustomToggle = forwardRef(({ children, onClick }, ref) => (
         <a
             id='versionSelector'
-            href='javascript:void(0)'
+            href='#'
             ref={ref}
             onClick={e => {
                 e.preventDefault();
                 onToggleClick(e);
                 onClick(e);
-            }}
-        >
+            }}>
             {children}
         </a>
     ));
@@ -54,7 +53,7 @@ const VersionSelector = ({ selectedVersion = 'Version 1.0', versionList, display
                             <div>{version.detailedTitle}</div>
                             <div className='menu-item-check'>
                                 {selectedVersion.includes(version.number) && (
-                                    <SVGIcon name='checkicon' width={16} height={16} viewbox='0 0 16 16' fill={'#2c8267'} />
+                                    <SVGIcon name='checkicon' width={16} height={16} viewbox='0 0 16 16' fill='#2c8267' />
                                 )}
                             </div>
                         </Dropdown.Item>
