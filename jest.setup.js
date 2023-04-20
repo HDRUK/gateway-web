@@ -3,13 +3,13 @@ import "@testing-library/jest-dom/extend-expect";
 import { server } from "./mocks/server";
 
 beforeAll(() => {
-	server.listen();
+    server.listen();
 });
 
 afterAll(() => {
-	server.close();
+    server.close();
 });
 
 afterEach(() => {
-	server.resetHandlers();
+    server.resetHandlers();
 });

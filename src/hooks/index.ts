@@ -1,3 +1,4 @@
 import useUser from "./useUser";
+import useTags from "./useTags";
 
-export { useUser };
+export { useUser, useTags };
