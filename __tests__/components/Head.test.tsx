@@ -1,5 +1,5 @@
 import React from "react";
-import { Head } from "@/components";
+import Head from "@/components/Head";
 import { render } from "../testUtils";
 
 describe("Head", () => {

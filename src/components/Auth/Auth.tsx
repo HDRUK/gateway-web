@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { useUser } from "@/hooks";
+import useUser from "@/hooks/useUser";
 import ProtectedRoute from "../ProtectedRoute";
 import Loading from "../Loading";
 

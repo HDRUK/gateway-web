@@ -1,4 +1,4 @@
-import { useUser } from "@/hooks";
+import useUser from "@/hooks/useUser";
 import { tagsV1 } from "@/mocks/data";
 import { server } from "@/mocks/server";
 import { getTagsV1 } from "@/mocks/handlers/tags";

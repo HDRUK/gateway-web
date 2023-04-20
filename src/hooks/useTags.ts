@@ -1,7 +1,8 @@
 import useSWR from "swr";
 
-import { Error, Tag } from "@/interfaces";
-import { apiService } from "@/services";
+import { Tag } from "@/interfaces/Tag";
+import { Error } from "@/interfaces/Error";
+import { getRequest } from "@/services/api";
 import config from "@/config";
 
 interface TagsResponse {
@@ -11,10 +12,7 @@ interface TagsResponse {
 }
 
 const useTags = (): TagsResponse => {
-    const { data, error } = useSWR<Tag[]>(
-        config.tagsV1Url,
-        apiService.getRequest
-    );
+    const { data, error } = useSWR<Tag[]>(config.tagsV1Url, getRequest);
 
     return {
         error,

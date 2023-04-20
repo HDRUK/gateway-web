@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios";
-import { http } from "@/utils";
+import http from "@/utils/http";
 
 const getRequest = async <T>(
     url: string,

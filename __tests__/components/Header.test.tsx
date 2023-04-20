@@ -1,5 +1,5 @@
 import React from "react";
-import { Header } from "@/components";
+import Header from "@/components/Header";
 import { server } from "@/mocks/server";
 import { getTagsV1 } from "@/mocks/handlers/tags";
 import { render, screen, waitFor } from "../testUtils";

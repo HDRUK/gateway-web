@@ -1,5 +1,5 @@
 import React from "react";
-import { Loading } from "@/components";
+import Loading from "@/components/Loading";
 import { render } from "../testUtils";
 
 describe("Loading", () => {

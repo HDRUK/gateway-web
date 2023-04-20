@@ -1,4 +1,4 @@
-import { Head } from "@/components";
+import Head from "@/components/Head";
 
 export default function Home() {
     return <Head title="Health Data Research Innovation Gateway" />;

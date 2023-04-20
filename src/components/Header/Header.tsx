@@ -1,5 +1,5 @@
 import config from "@/config";
-import { useUser } from "@/hooks";
+import useUser from "@/hooks/useUser";
 import Link from "next/link";
 import Loading from "../Loading";
 
@@ -30,7 +30,7 @@ const loggedOutLinks: LinkItem[] = [
     },
 ];
 
-const Header = () => {
+function Header() {
     const { isLoggedIn, isLoading } = useUser();
 
     if (isLoading) return <Loading />;
@@ -72,6 +72,6 @@ const Header = () => {
             </ul>
         </div>
     );
-};
+}
 
 export default Header;

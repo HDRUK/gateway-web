@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
-import { useTags } from "@/hooks";
-import { Head } from "@/components";
+import useTags from "@/hooks/useTags";
+import Head from "@/components/Head";
 /** 
      * Commenting out until connection with Laravel is resolved
      * 
-    import { apiService } from "@/services";
+    import { getRequest } from "@/services/api";
     import axios from "axios";
 */
 
@@ -19,7 +19,7 @@ function Account() {
                 <h2>Tags</h2>
                 <ul>
                     {tags?.map(tag => (
-                        <li key={tag.type}>{tag.type}</li>
+                        <li key={tag.id}>{tag.type}</li>
                     ))}
                 </ul>
             </div>

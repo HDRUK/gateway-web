@@ -1,13 +1,11 @@
-import { User } from "@/interfaces";
 import { faker } from "@faker-js/faker";
+import { User } from "@/interfaces";
 
-const generateUserV1 = (data = {}): { data: User } => {
+const generateUserV1 = (data = {}): User => {
     return {
-        data: {
-            firstname: faker.name.firstName(),
-            lastname: faker.name.lastName(),
-            ...data,
-        },
+        firstname: faker.name.firstName(),
+        lastname: faker.name.lastName(),
+        ...data,
     };
 };
 

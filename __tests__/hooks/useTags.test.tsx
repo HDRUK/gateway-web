@@ -1,4 +1,4 @@
-import { useTags } from "@/hooks";
+import useTags from "@/hooks/useTags";
 import { tagsV1 } from "@/mocks/data";
 import { server } from "@/mocks/server";
 import { getTagsV1 } from "@/mocks/handlers/tags";

@@ -1,5 +1,5 @@
 import React from "react";
-import { ProtectedRoute } from "@/components";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import { render } from "../testUtils";
 
 describe("ProtectedRoute", () => {
