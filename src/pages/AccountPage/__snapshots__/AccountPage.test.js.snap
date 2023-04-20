@@ -522,7 +522,7 @@ exports[`AccountPage Should render admin section 1`] = `
         No messages yet
       </div>
       <div>
-        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+        Use messages to clarify questions with the data custodian before starting your application to request access to the data. Select a dataset and make an enquiry.
       </div>
     </div>
   </div>
@@ -1051,7 +1051,7 @@ exports[`AccountPage Should render user section as non root admin 1`] = `
         No messages yet
       </div>
       <div>
-        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+        Use messages to clarify questions with the data custodian before starting your application to request access to the data. Select a dataset and make an enquiry.
       </div>
     </div>
   </div>
@@ -1600,7 +1600,7 @@ exports[`AccountPage Should render user section as root admin 1`] = `
         No messages yet
       </div>
       <div>
-        Use messages to clarify questions with the data custodian before statring your application to request access to the data. Select a dataset and make an enquiry.
+        Use messages to clarify questions with the data custodian before starting your application to request access to the data. Select a dataset and make an enquiry.
       </div>
     </div>
   </div>

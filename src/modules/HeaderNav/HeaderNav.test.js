@@ -7,7 +7,7 @@ describe('HeaderNav module', () => {
     });
 
     it('should render on page load', () => {
-        const wrapper = testUtils.render(<HeaderNav ishowLoginModal={() => {}} logout={() => {}} />);
+        const wrapper = testUtils.render(<HeaderNav showLoginModal={() => {}} logout={() => {}} />);
         expect(wrapper.container).toMatchSnapshot();
     });
 });
