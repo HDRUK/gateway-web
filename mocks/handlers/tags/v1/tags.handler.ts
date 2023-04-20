@@ -1,9 +1,9 @@
-import config from "@/config";
-import { User } from "@/interfaces";
-import { userV1 } from "@/mocks/data";
 import { rest } from "msw";
+import config from "@/config";
+import { Tag } from "@/interfaces";
+import { tagsV1 } from "@/mocks/data";
 
-const getTagsV1 = (data = userV1, status = 200) => {
+const getTagsV1 = (data = tagsV1, status = 200) => {
     return rest.get(config.tagsV1Url, (req, res, ctx) => {
         if (status !== 200) {
             return res(
@@ -11,8 +11,7 @@ const getTagsV1 = (data = userV1, status = 200) => {
                 ctx.json(`Request failed with status code ${status}`)
             );
         }
-
-        return res(ctx.status(status), ctx.json<User>(data));
+        return res(ctx.status(status), ctx.json<Tag[]>(data?.data));
     });
 };
 

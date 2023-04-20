@@ -16,7 +16,7 @@ describe("useTags", () => {
 
         await waitFor(() => {
             expect(result.current.error).not.toBeDefined();
-            expect(result.current.tags).toEqual(tagsV1.data);
+            expect(result.current.tags).toEqual(tagsV1);
         });
     });
     it("should return error if 404 returned", async () => {

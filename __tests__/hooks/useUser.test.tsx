@@ -1,9 +1,12 @@
 import { useUser } from "@/hooks";
-import { userV1 } from "@/mocks/data";
+import { tagsV1 } from "@/mocks/data";
 import { server } from "@/mocks/server";
 import { getTagsV1 } from "@/mocks/handlers/tags";
 import { renderHook, waitFor } from "../testUtils";
 
+/**
+ * todo: Needs updating once api/user endpoint is implemented
+ */
 describe("useUser", () => {
     it("should eventually return the user", async () => {
         const { result } = renderHook(() => useUser());
@@ -17,7 +20,7 @@ describe("useUser", () => {
 
         await waitFor(() => {
             expect(result.current.error).not.toBeDefined();
-            expect(result.current.user).toEqual(userV1.data);
+            expect(result.current.user).toEqual(tagsV1);
         });
     });
     it("should return error if 404 returned", async () => {

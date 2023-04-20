@@ -13,7 +13,7 @@ interface UserResponse {
 
 const useUser = (): UserResponse => {
     const { data, error } = useSWR<User>(
-        config.tagsV1Url, // replace with user endpoint once implemented
+        config.tagsV1Url, // todo: replace with user endpoint once implemented
         apiService.getRequest
     );
 
