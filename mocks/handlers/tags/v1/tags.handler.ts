@@ -1,22 +1,22 @@
-import { userV1 } from "@/mocks/data";
 import { rest } from "msw";
-import { User } from "@/interfaces/User";
+import config from "@/config";
+import { Tag } from "@/interfaces/Tag";
+import { tagsV1 } from "@/mocks/data";
 
 interface Response {
-    data: User;
+    data: Tag[];
 }
 
-const getUserV1 = (data = userV1, status = 200) => {
-    return rest.get("api/user", (req, res, ctx) => {
+const getTagsV1 = (data = tagsV1, status = 200) => {
+    return rest.get(config.tagsV1Url, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),
                 ctx.json(`Request failed with status code ${status}`)
             );
         }
-
         return res(ctx.status(status), ctx.json<Response>({ data }));
     });
 };
 
-export { getUserV1 };
+export { getTagsV1 };

@@ -1,45 +1,39 @@
-import useUser from "@/hooks/useUser";
+import useTags from "@/hooks/useTags";
 import { tagsV1 } from "@/mocks/data";
 import { server } from "@/mocks/server";
 import { getTagsV1 } from "@/mocks/handlers/tags";
 import { renderHook, waitFor } from "../testUtils";
 
-/**
- * todo: Needs updating once api/user endpoint is implemented
- */
-describe("useUser", () => {
-    it("should eventually return the user", async () => {
-        const { result } = renderHook(() => useUser());
+describe("useTags", () => {
+    it("should eventually return the tags", async () => {
+        const { result } = renderHook(() => useTags());
 
         expect(result.current).toEqual({
             error: undefined,
             isLoading: true,
-            isLoggedIn: false,
-            user: undefined,
+            tags: undefined,
         });
 
         await waitFor(() => {
             expect(result.current.error).not.toBeDefined();
-            expect(result.current.user).toEqual(tagsV1);
+            expect(result.current.tags).toEqual(tagsV1);
         });
     });
     it("should return error if 404 returned", async () => {
         server.use(getTagsV1(undefined, 404));
 
-        const { result } = renderHook(() => useUser());
+        const { result } = renderHook(() => useTags());
 
         expect(result.current).toEqual({
             error: undefined,
             isLoading: true,
-            isLoggedIn: false,
-            user: undefined,
+            tags: undefined,
         });
 
         await waitFor(() => {
-            expect(result.current.user).not.toBeDefined();
+            expect(result.current.tags).not.toBeDefined();
             expect(result.current.error).toBeDefined();
             expect(result.current.isLoading).toBeFalsy();
-            expect(result.current.isLoggedIn).toBeFalsy();
         });
     });
 });
