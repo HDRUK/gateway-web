@@ -3,10 +3,10 @@ import Layout from "@/components/Layout";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
+import { appWithTranslation } from "next-i18next";
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
     const { isProtected } = pageProps;
-
     return (
         <SWRConfig
             value={{
@@ -22,4 +22,6 @@ export default function App({ Component, pageProps }: AppProps) {
             </Layout>
         </SWRConfig>
     );
-}
+};
+
+export default appWithTranslation(App);

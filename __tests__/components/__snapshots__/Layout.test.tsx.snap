@@ -30,7 +30,7 @@ exports[`Layout should render component 1`] = `
           <a
             href="/account"
           >
-            My Account
+            HeaderNav.labels.myAccount
           </a>
         </li>
       </ul>
@@ -43,9 +43,8 @@ exports[`Layout should render component 1`] = `
     <div
       style="text-align: center; width: 100%; padding: 20px;"
     >
-      ©HDR UK 
-      2023
-      . All rights reserved.
+      ©
+      Footer.text
     </div>
   </div>
 </div>

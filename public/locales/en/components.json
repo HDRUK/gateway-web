@@ -1,0 +1,20 @@
+{
+    "Footer": {
+        "text": "HDR UK {{year}}. All rights reserved."
+    },
+    "HeaderNav": {
+        "labels": {
+            "myAccount": "My Account",
+            "azure": "Azure",
+            "linkedIn": "LinkedIn",
+            "google": "Google"
+        }
+    },
+    "Loading": {
+        "text": "Loading..."
+    },
+    "ProtectedRoute": {
+        "title": "Protected route",
+        "text": "You must be logged in to view this content"
+    }
+}
