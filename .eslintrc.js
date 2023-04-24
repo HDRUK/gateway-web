@@ -7,14 +7,12 @@ module.exports = {
             jsx: true,
         },
     },
-
     env: {
         browser: true,
         node: true,
         es6: true,
         jest: true,
     },
-
     settings: {
         react: {
             version: "detect",
@@ -25,7 +23,6 @@ module.exports = {
             },
         },
     },
-
     plugins: [
         "react",
         "react-hooks",
@@ -43,8 +40,8 @@ module.exports = {
         "plugin:prettier/recommended",
         "plugin:security/recommended",
         "plugin:react-hooks/recommended",
+        "plugin:storybook/recommended",
     ],
-
     rules: {
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-explicit-any": "error",
@@ -87,8 +84,12 @@ module.exports = {
         "no-return-await": "off",
         "prettier/prettier": [
             "error",
-            { endOfLine: "auto" },
-            { usePrettierrc: true },
+            {
+                endOfLine: "auto",
+            },
+            {
+                usePrettierrc: true,
+            },
         ],
     },
 };
