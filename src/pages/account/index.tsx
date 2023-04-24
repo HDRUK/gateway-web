@@ -1,37 +1,40 @@
 import { GetServerSideProps } from "next";
-import useTags from "@/hooks/useTags";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import config from "@/config";
-import { createTag } from "@/services/tags";
+import { createFilter } from "@/services/filters";
+import useFilters from "@/hooks/useFilters";
 
 function Account() {
-    const { tags, mutate } = useTags();
+    const { filters, mutate } = useFilters();
 
-    const addTag = async () => {
+    const addFilter = async () => {
         const payload = {
             type: "features",
+            enabled: true,
+            value: "features",
+            keys: "features",
         };
-        await createTag(payload);
+        await createFilter(payload);
         console.log("I will mutate");
-        mutate(config.tagsV1Url);
+        mutate(config.filtersV1Url);
     };
 
     return (
         <>
             <Head title="Health Data Research Innovation Gateway" />
             <div>
-                <h2 style={{ marginBottom: "10px" }}>Tags</h2>
+                <h2 style={{ marginBottom: "10px" }}>Filters</h2>
                 <ul style={{ marginLeft: "20px" }}>
-                    {tags?.map(tag => (
-                        <li key={tag.id}>{tag.type}</li>
+                    {filters?.map(filter => (
+                        <li key={filter.id}>{filter.type}</li>
                     ))}
                 </ul>
                 <button
                     onClick={() => {
-                        addTag();
+                        addFilter();
                     }}>
-                    Add tag
+                    Add filter
                 </button>
             </div>
         </>

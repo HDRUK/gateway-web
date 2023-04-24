@@ -1,8 +1,8 @@
 import useSWR from "swr";
 
-import { Error, User } from "@/interfaces";
 import { getRequest } from "@/services/api";
 import config from "@/config";
+import { Error, User } from "@/interfaces";
 
 interface UserResponse {
     user: User | undefined;
@@ -13,7 +13,7 @@ interface UserResponse {
 
 const useUser = (): UserResponse => {
     const { data, error } = useSWR<User>(
-        config.tagsV1Url, // todo: replace with user endpoint once implemented
+        config.filtersV1Url, // todo: replace with user endpoint once implemented
         getRequest
     );
 

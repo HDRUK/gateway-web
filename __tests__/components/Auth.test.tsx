@@ -1,12 +1,12 @@
 import React from "react";
 import Auth from "@/components/Auth";
-import { getTagsV1 } from "@/mocks/handlers/tags";
 import { server } from "@/mocks/server";
+import { getFiltersV1 } from "@/mocks/handlers/filters";
 import { render, screen, waitFor } from "../testUtils";
 
 describe("Auth", () => {
     it("should render the protected route if `isProtected` and not authorised", async () => {
-        server.use(getTagsV1(undefined, 401));
+        server.use(getFiltersV1(undefined, 401));
 
         render(
             <Auth isProtected>

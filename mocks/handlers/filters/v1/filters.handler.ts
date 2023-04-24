@@ -1,14 +1,14 @@
 import { rest } from "msw";
 import config from "@/config";
-import { Tag } from "@/interfaces/Tag";
-import { tagsV1, tagV1 } from "@/mocks/data";
+import { Filter } from "@/interfaces/Filter";
+import { filtersV1, filterV1 } from "@/mocks/data";
 
 interface GetResponse {
-    data: Tag[];
+    data: Filter[];
 }
 
-const getTagsV1 = (data = tagsV1, status = 200) => {
-    return rest.get(config.tagsV1Url, (req, res, ctx) => {
+const getFiltersV1 = (data = filtersV1, status = 200) => {
+    return rest.get(config.filtersV1Url, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),
@@ -20,11 +20,11 @@ const getTagsV1 = (data = tagsV1, status = 200) => {
 };
 
 interface PostResponse {
-    data: Tag;
+    data: Filter;
 }
 
-const postTagV1 = (data = tagV1, status = 200) => {
-    return rest.post(config.tagsV1Url, (req, res, ctx) => {
+const postFilterV1 = (data = filterV1, status = 200) => {
+    return rest.post(config.filtersV1Url, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),
@@ -35,4 +35,4 @@ const postTagV1 = (data = tagV1, status = 200) => {
     });
 };
 
-export { getTagsV1, postTagV1 };
+export { getFiltersV1, postFilterV1 };

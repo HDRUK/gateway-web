@@ -7,7 +7,7 @@ describe("Account", () => {
         render(<Account />);
 
         await waitFor(() => {
-            expect(screen.getByText("Tags")).toBeInTheDocument();
+            expect(screen.getByText("Filters")).toBeInTheDocument();
         });
     });
 });
