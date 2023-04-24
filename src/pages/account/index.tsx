@@ -1,12 +1,7 @@
 import { GetServerSideProps } from "next";
 import useTags from "@/hooks/useTags";
 import Head from "@/components/Head";
-/** 
-     * Commenting out until connection with Laravel is resolved
-     * 
-    import { getRequest } from "@/services/api";
-    import axios from "axios";
-*/
+import { loadServerSideLocales } from "@/utils/locale";
 
 function Account() {
     const { tags } = useTags();
@@ -15,7 +10,6 @@ function Account() {
         <>
             <Head title="Health Data Research Innovation Gateway" />
             <div>
-                <h1 style={{ marginBottom: "10px" }}>My account</h1>
                 <h2 style={{ marginBottom: "10px" }}>Tags</h2>
                 <ul style={{ marginLeft: "20px" }}>
                     {tags?.map(tag => (
@@ -27,21 +21,10 @@ function Account() {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    /** 
-     * Commenting out until connection with Laravel is resolved
-     * 
-    const res = await axios.get("http://localhost:8000/api/status", {
-        withCredentials: true,
-        headers: {
-            Cookie: req.headers.cookie,
-        },
-    });
-    const data = await res.data;
-     */
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     return {
         props: {
-            // data,
+            ...(await loadServerSideLocales(locale)),
             isProtected: true,
         },
     };

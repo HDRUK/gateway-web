@@ -1,5 +1,9 @@
+import { useTranslation } from "next-i18next";
+
 const Loading = () => {
-    return <div>loading...</div>;
+    const { t } = useTranslation("components");
+
+    return <div>{t("Loading.text")}</div>;
 };
 
 export default Loading;

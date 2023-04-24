@@ -6,10 +6,10 @@ exports[`ProtectedRoute should render component 1`] = `
     style="border: 2px solid #ff3030; padding: 40px;"
   >
     <h1>
-      Protected route
+      ProtectedRoute.title
     </h1>
     <p>
-      You must be logged in to view this content
+      ProtectedRoute.text
     </p>
   </div>
 </div>

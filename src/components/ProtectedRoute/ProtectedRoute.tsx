@@ -1,8 +1,12 @@
+import { useTranslation } from "next-i18next";
+
 const ProtectedRoute = () => {
+    const { t } = useTranslation("components");
+
     return (
         <div style={{ border: "2px solid #ff3030", padding: "40px" }}>
-            <h1>Protected route</h1>
-            <p>You must be logged in to view this content</p>
+            <h1>{t("ProtectedRoute.title")}</h1>
+            <p>{t("ProtectedRoute.text")}</p>
         </div>
     );
 };

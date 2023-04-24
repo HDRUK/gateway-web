@@ -3,7 +3,7 @@
 exports[`Loading should render component 1`] = `
 <div>
   <div>
-    loading...
+    Loading.text
   </div>
 </div>
 `;

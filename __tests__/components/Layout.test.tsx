@@ -11,7 +11,9 @@ describe("Layout", () => {
         );
 
         await waitFor(() => {
-            expect(screen.getByText("My Account")).toBeInTheDocument();
+            expect(
+                screen.getByText("HeaderNav.labels.myAccount")
+            ).toBeInTheDocument();
         });
 
         expect(wrapper.container).toMatchSnapshot();

@@ -15,7 +15,8 @@ describe("Auth", () => {
         );
 
         await waitFor(() => {
-            expect(screen.getByText("Protected route")).toBeTruthy();
+            expect(screen.getByText("ProtectedRoute.title")).toBeTruthy();
+            expect(screen.getByText("ProtectedRoute.text")).toBeTruthy();
         });
     });
     it("should render public content if `isProtected` and authorised", async () => {
