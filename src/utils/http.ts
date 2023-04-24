@@ -9,6 +9,7 @@ axiosInstance.interceptors.request.use(reqConfig => {
         ...reqConfig,
     };
     req.withCredentials = true;
+
     return req;
 });
 

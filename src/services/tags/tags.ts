@@ -1,7 +1,10 @@
 import config from "@/config";
+import { Tag } from "@/interfaces/Tag";
 import { postRequest } from "../api";
 
-const createTag = async data => {
+type Payload = Pick<Tag, "type">;
+
+const createTag = async (data: Payload) => {
     return postRequest(config.tagsV1Url, data);
 };
 

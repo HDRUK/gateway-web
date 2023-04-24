@@ -1,14 +1,14 @@
 import config from "@/config";
-import { Tag } from "@/interfaces/Tag";
-import { tagsV1 } from "@/mocks/data";
+import { Tag, TagTypes } from "@/interfaces/Tag";
+import { tagV1 } from "@/mocks/data";
 import { postRequest } from "@/services/api";
 
 describe("post", () => {
-    it("should create tags", async () => {
+    it("should post payload", async () => {
         const payload = {
-            foo: "bar",
+            type: "features" as TagTypes,
         };
-        const response = await postRequest<Tag[]>(config.tagsV1Url, payload);
-        expect(response).toEqual(tagsV1);
+        const response = await postRequest<Tag>(config.tagsV1Url, payload);
+        expect(response).toEqual(tagV1);
     });
 });

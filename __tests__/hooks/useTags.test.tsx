@@ -12,6 +12,7 @@ describe("useTags", () => {
             error: undefined,
             isLoading: true,
             tags: undefined,
+            mutate: expect.any(Function),
         });
 
         await waitFor(() => {
@@ -28,6 +29,7 @@ describe("useTags", () => {
             error: undefined,
             isLoading: true,
             tags: undefined,
+            mutate: expect.any(Function),
         });
 
         await waitFor(() => {
