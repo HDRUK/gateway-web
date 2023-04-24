@@ -7,8 +7,8 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(reqConfig => {
     const req: InternalAxiosRequestConfig = {
         ...reqConfig,
-        withCredentials: true,
     };
+    req.withCredentials = true;
     return req;
 });
 

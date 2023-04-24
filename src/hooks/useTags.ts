@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR, { KeyedMutator } from "swr";
 
 import { Tag } from "@/interfaces/Tag";
 import { Error } from "@/interfaces/Error";
@@ -9,15 +9,17 @@ interface TagsResponse {
     tags: Tag[] | undefined;
     error: Error | undefined;
     isLoading: boolean;
+    mutate: KeyedMutator<string>;
 }
 
 const useTags = (): TagsResponse => {
-    const { data, error } = useSWR<Tag[]>(config.tagsV1Url, getRequest);
+    const { data, error, mutate } = useSWR<Tag[]>(config.tagsV1Url, getRequest);
 
     return {
         error,
         isLoading: !data && !error,
         tags: data,
+        mutate,
     };
 };
 

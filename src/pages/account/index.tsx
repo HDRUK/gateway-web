@@ -2,9 +2,20 @@ import { GetServerSideProps } from "next";
 import useTags from "@/hooks/useTags";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
+import config from "@/config";
+import { createTag } from "@/services/tags";
 
 function Account() {
-    const { tags } = useTags();
+    const { tags, mutate } = useTags();
+
+    const addTag = async () => {
+        const payload = {
+            type: "features",
+        };
+        await createTag(payload);
+        console.log("I will mutate");
+        mutate(config.tagsV1Url);
+    };
 
     return (
         <>
@@ -16,6 +27,12 @@ function Account() {
                         <li key={tag.id}>{tag.type}</li>
                     ))}
                 </ul>
+                <button
+                    onClick={() => {
+                        addTag();
+                    }}>
+                    Add tag
+                </button>
             </div>
         </>
     );
