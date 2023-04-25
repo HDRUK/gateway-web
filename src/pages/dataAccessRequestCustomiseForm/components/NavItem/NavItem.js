@@ -1,6 +1,6 @@
-import { Fragment } from 'react';
 import { isEmpty } from 'lodash';
-import DarHelper from '../../../../utils/DarHelper.util';
+
+import { darHelperUtils } from 'utils';
 import '../../../DataAccessRequest/DataAccessRequest.scss';
 
 const NavItem = ({ parentForm, questionPanels, onFormSwitchPanel, activePanelId, enabled, notForReview, navHeader }) => {
@@ -24,7 +24,7 @@ const NavItem = ({ parentForm, questionPanels, onFormSwitchPanel, activePanelId,
                     return (
                         <li className={classes} style={{ cursor: 'pointer' }} key={index} onClick={e => onClickItem(e, item)}>
                             <span>{navHeader || item.navHeader}</span>
-                            <span>{item.flag && <i className={DarHelper.flagPanelIcons[item.flag]} />}</span>
+                            <span>{item.flag && <i className={darHelperUtils.flagPanelIcons[item.flag]} />}</span>
                         </li>
                     );
                 }

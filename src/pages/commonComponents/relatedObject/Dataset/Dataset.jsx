@@ -11,7 +11,7 @@ import { Box, Typography } from 'hdruk-react-core';
 import { generalUtils } from 'utils';
 import { ToolTip, Icon, QualityScore } from 'components';
 import googleAnalytics from '../../../../tracking';
-import { dateFormats, stripMarkdown } from '../../../../utils/GeneralHelper.util';
+import { dateFormats, stripMarkdown } from '../../../../utils/General.util';
 import { ReactComponent as LockSVG } from '../../../../images/icon-security.svg';
 import { ReactComponent as Shield } from '../../../../images/shield.svg';
 import { DISPLAY_DATE_SLASH } from '../../../../configs/constants';

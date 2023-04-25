@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
+import { authUtils } from 'utils';
 
 const autoCompleteLookUps = { fullname: ['orcid', 'email', 'bio'] };
 
@@ -535,8 +536,7 @@ const injectReadonlyStaticContent = (jsonSchema = {}, questionStatuses = {}, pub
         questionPanels.push(staticContent.additionalFilesQuestionPanel);
     }
 
-    // TODO: GAT-1510:041
-    if (userState[0].role === 'Admin' && !exportExists) {
+    if (authUtils.getIsRootRoleAdmin(userState) && !exportExists) {
         injectExportConfigContent({ jsonSchema, ...questionStatuses }, pages, formPanels, questionPanels);
     }
 
@@ -759,7 +759,7 @@ const isQuestionOff = questionStatus => {
     return questionStatus === 0;
 };
 
-export default {
+export {
     findPageByQuestionSet,
     findQuestionSet,
     findQuestion,

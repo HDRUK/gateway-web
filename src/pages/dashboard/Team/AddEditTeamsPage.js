@@ -66,7 +66,7 @@ const AddEditTeamsPage = ({
         validationSchema: Yup.object({
             name: Yup.string().required('Please enter an organisation name'),
             memberOf: Yup.string().required('Please select a membership'),
-            teamManagers: Yup.string().required('Please select a team manager'),
+            teamManagers: Yup.string().required('Please select a team admin'),
             contactPoint: Yup.string().email('Please enter a valid email'),
         }),
 
@@ -239,11 +239,9 @@ const AddEditTeamsPage = ({
 
                     <Row>
                         <Col sm={12} lg={12}>
-                            <p className='gray800-14 mb-0'>Team manager</p>
+                            <p className='gray800-14 mb-0'>Team admin</p>
                             <p className='gray700-13 mb-0'>
-                                Assign at least one team manager. They will be able to manage members, create and assign workflows, review
-                                applications that are assigned to them and make the final decision on data access request applications. They
-                                cannot be removed once the team is published
+                            Can manage the existing members of your team, add new members, manage the teams notifications preferences like adding and editing the team email address
                             </p>
                         </Col>
                     </Row>

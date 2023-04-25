@@ -1,4 +1,4 @@
-import UploaderUtil from './Uploader.util';
+import * as UploaderUtil from './Uploader.util';
 import { server } from '../services/mockServer';
 
 let wrapper;

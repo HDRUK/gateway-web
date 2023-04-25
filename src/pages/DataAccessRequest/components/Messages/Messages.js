@@ -5,8 +5,8 @@ import { isEmpty, isBoolean } from 'lodash';
 import { Button, Box } from 'hdruk-react-core';
 
 import { Textarea } from 'components';
+import { darHelperUtils } from 'utils';
 import { baseURL } from '../../../../configs/url.config';
-import DarHelper from '../../../../utils/DarHelper.util';
 
 import ShareFormModal from './ShareFormModal';
 import Loading from '../../../commonComponents/Loading';
@@ -56,7 +56,7 @@ const Messages = ({
         if (!message) {
             return;
         }
-        if ((!isBoolean(applicationIsShared) || !applicationIsShared) && applicationStatus === DarHelper.darStatus.inProgress) {
+        if ((!isBoolean(applicationIsShared) || !applicationIsShared) && applicationStatus === darHelperUtils.darStatus.inProgress) {
             onShowShareFormModal();
         } else {
             sendMessage(message);

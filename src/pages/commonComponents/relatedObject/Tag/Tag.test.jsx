@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { toTitleCase } from '../../../../utils/GeneralHelper.util';
+import { toTitleCase } from '../../../../utils/General.util';
 import Tag from './Tag';
 
 const props = {

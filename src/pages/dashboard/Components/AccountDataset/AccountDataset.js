@@ -8,9 +8,9 @@ import { Button } from 'hdruk-react-core';
 
 import { LayoutContent } from 'components';
 import { activityLogService, datasetOnboardingService } from 'services';
+import { authUtils, dataSetHelperUtils } from 'utils';
+import { useAccountTeamSelected } from 'hooks';
 import { useAuth } from '../../../../context/AuthContext';
-import { getTeam } from '../../../../utils/auth';
-import DataSetHelper from '../../../../utils/DataSetHelper.util';
 
 import ActionBar from '../../../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../../../commonComponents/ActionBarMenu/ActionBarMenu';
@@ -20,12 +20,12 @@ import ActivityLogCard from '../ActivityLogCard';
 import AccountDatasetApproveModal from './AccountDatasetApproveModal';
 import AccountDatasetRejectModal from './AccountDatasetRejectModal';
 
-const AccountDataset = props => {
+const AccountDataset = () => {
+    const { teamType, teamId } = useAccountTeamSelected();
     const { t } = useTranslation();
     const { id } = useParams();
     const history = useHistory();
     const { userState } = useAuth();
-    const [team, setTeam] = useState();
     const [currentDataset, setCurrentDataset] = useState();
     const [state, setState] = useState({
         showPrevious: false,
@@ -37,18 +37,16 @@ const AccountDataset = props => {
     });
 
     const dataActivityLog = activityLogService.usePostActivityLog();
-    const publisherId = React.useMemo(() => DataSetHelper.getPublisherID(userState[0], team), [userState[0], team]);
+    const publisherId = React.useMemo(() => authUtils.getPublisherId(userState[0], teamId, teamType), [userState[0], teamId, teamType]);
     const dataPublisher = datasetOnboardingService.useGetPublisher(publisherId);
 
     useEffect(() => {
-        setTeam(getTeam(props));
-
         if (publisherId && id) dataPublisher.mutate();
     }, [publisherId, id]);
 
     const getValidDatasets = listOfDatasets => {
         return listOfDatasets.filter(dataset => {
-            return DataSetHelper.isInReview(dataset) && parseFloat(dataset.datasetVersion) > 1;
+            return dataSetHelperUtils.isInReview(dataset) && parseFloat(dataset.datasetVersion) > 1;
         });
     };
 
@@ -123,10 +121,10 @@ const AccountDataset = props => {
             const { dataset } = getNextPage(i);
 
             if (dataset) {
-                history.push(`/account/datasets/${dataset.pid}`);
+                history.push(`/account/datasets/${dataset.pid}?teamType=${teamType}&teamId=${teamId}`);
             }
         },
-        [id, dataPublisher.data, team]
+        [id, dataPublisher.data]
     );
 
     const { showPrevious, showNext, statusError, showRejectDatasetModal, showApproveDatasetModal } = state;
@@ -146,8 +144,8 @@ const AccountDataset = props => {
 
         history.push({
             pathname: `/account`,
-            search: '?tab=datasets',
-            state: { alert, team, userState },
+            search: `?tab=datasets&teamType=${teamType}&teamId=${teamId}`,
+            state: { alert, userState },
         });
     };
 
@@ -163,8 +161,8 @@ const AccountDataset = props => {
 
         history.push({
             pathname: `/account`,
-            search: '?tab=datasets',
-            state: { alert, team },
+            search: `?tab=datasets&teamType=${teamType}&teamId=${teamId}`,
+            state: { alert },
         });
     };
 
@@ -211,17 +209,17 @@ const AccountDataset = props => {
         if (dataPublisher.data && !filterCurrentDataset(dataPublisher.data.data.data.results.listOfDatasets)) {
             NotificationManager.error('The accessed dataset does not exist', 'Page not found', 10000);
 
-            return <Redirect to='/account?tab=datasets' />;
+            return <Redirect to={`/account?tab=datasets&teamType=${teamType}&teamId=${teamId}`} />;
         }
         if (statusError) {
             NotificationManager.error('The status of the dataset must be in review', 'Invalid status', 10000);
 
-            return <Redirect to='/account?tab=datasets' />;
+            return <Redirect to={`/account?tab=datasets&teamType=${teamType}&teamId=${teamId}`} />;
         }
     } else if (dataPublisher.isError) {
         NotificationManager.error('You do not have permission to access this resource', 'Unauthorised', 10000);
 
-        return <Redirect to='/account?tab=youraccount' />;
+        return <Redirect to={`/account?tab=youraccount&teamType=${teamType}&teamId=${teamId}`} />;
     }
 
     return currentDataset ? (

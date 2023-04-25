@@ -1,4 +1,4 @@
-import { generalUtils } from 'utils';
+import * as generalUtils from 'utils/General.util';
 import { regExpConfig } from './regex.config';
 
 /**
@@ -68,7 +68,9 @@ export const addCmsGatewayApiHostname = path => {
     const { hostname } = window.location;
     let webHostname = 'https://api.www.healthdatagateway.org';
 
-    if (hostname.includes('uat.')) {
+    if (hostname.includes('uat2.')) {
+        webHostname = 'https://api.uat2.healthdatagateway.org';
+    } else if (hostname.includes('uat.')) {
         webHostname = 'https://api.uat.healthdatagateway.org';
     } else if (hostname.includes('bau.')) {
         webHostname = 'https://api.bau.hdruk.dev';
@@ -87,7 +89,9 @@ export const addCmsGatewayHostname = path => {
     const { hostname } = window.location;
     let webHostname = 'https://web.www.healthdatagateway.org';
 
-    if (hostname.includes('uat.')) {
+    if (hostname.includes('uat2.')) {
+        webHostname = 'https://web.uat2.healthdatagateway.org';
+    } else if (hostname.includes('uat.')) {
         webHostname = 'https://web.uat.healthdatagateway.org';
     } else if (hostname.includes('bau.')) {
         webHostname = 'https://web.bau.hdruk.dev';
@@ -112,3 +116,6 @@ export const apiUrlV1 = `${baseURL}/${apiPathV1}`;
 
 export const apiPathV2 = 'api/v2';
 export const apiUrlV2 = `${baseURL}/${apiPathV2}`;
+
+export const apiPathV3 = 'api/v3';
+export const apiUrlV3 = `${baseURL}/${apiPathV3}`;

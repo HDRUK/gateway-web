@@ -288,6 +288,7 @@ const AccountCollections = () => {
                                 }
                                 return (
                                     <ActiveComponent
+                                        key={collection.id}
                                         collection={collection}
                                         archiveCollection={archiveCollection}
                                         deleteCollection={deleteCollection}
@@ -321,6 +322,7 @@ const AccountCollections = () => {
                                 }
                                 return (
                                     <ArchiveComponent
+                                        key={collection.id}
                                         collection={collection}
                                         unarchiveCollection={unarchiveCollection}
                                         deleteCollection={deleteCollection}

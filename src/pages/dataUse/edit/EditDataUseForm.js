@@ -318,7 +318,10 @@ const EditFormDataUse = props => {
                                                                 <p className='gray800-13-opacity datause-edit-p'>
                                                                     A unique identifier for an organisation that is preferably an industry
                                                                     used standard such as{' '}
-                                                                    <a href='https://www.grid.ac/institutes' target='_blank'>
+                                                                    <a
+                                                                        href='https://www.grid.ac/institutes'
+                                                                        target='_blank'
+                                                                        rel='noreferrer'>
                                                                         Grid.ac
                                                                     </a>
                                                                 </p>
@@ -1499,7 +1502,7 @@ const EditFormDataUse = props => {
             </div>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=datause'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=datause&teamType=user'>
                         <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>

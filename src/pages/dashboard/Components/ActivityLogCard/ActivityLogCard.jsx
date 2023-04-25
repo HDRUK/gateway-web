@@ -6,12 +6,13 @@ import { Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 import { BlockQuote, ListInfo, Timeline } from 'components';
+import { datasetOnboardingHelperUtils } from 'utils';
+
 import approved from '../../../../images/Application_approved.svg';
 import rejected from '../../../../images/Application_rejected.svg';
 import updated from '../../../../images/Updates_requested.svg';
 import versionCreated from '../../../../images/Versions_created.svg';
-import DatasetOnboardingHelper from '../../../../utils/DatasetOnboardingHelper.util';
-import { dateFormats } from '../../../../utils/GeneralHelper.util';
+import { dateFormats } from '../../../../utils/General.util';
 
 import SLA from '../../../commonComponents/sla/SLA';
 import * as styles from './ActivityLogCard.styles';
@@ -54,8 +55,8 @@ const ActivityLogCard = props => {
                                 <Col sm={6} lg={6}>
                                     <span css={styles.applicationStatus} data-testid='status'>
                                         <SLA
-                                            classProperty={DatasetOnboardingHelper.datasetStatusColours[applicationStatus]}
-                                            text={DatasetOnboardingHelper.datasetSLAText[applicationStatus]}
+                                            classProperty={datasetOnboardingHelperUtils.datasetStatusColours[applicationStatus]}
+                                            text={datasetOnboardingHelperUtils.datasetSLAText[applicationStatus]}
                                         />
                                     </span>
                                 </Col>
@@ -101,7 +102,7 @@ const ActivityLogCard = props => {
                                                             )}
                                                             {event.datasetUpdates &&
                                                                 event.datasetUpdates.map((item, i) => {
-                                                                    const log = DatasetOnboardingHelper.getUpdatesSubmittedLog(item);
+                                                                    const log = datasetOnboardingHelperUtils.getUpdatesSubmittedLog(item);
 
                                                                     return (
                                                                         <div data-testid={`event-detailed-text-${index}-${i}`}>

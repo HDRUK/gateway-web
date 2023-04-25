@@ -3,7 +3,7 @@ import { OverlayTrigger, Tooltip, Row, Button, Accordion } from 'react-bootstrap
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 
-import DatasetOnboardingHelper from '../../utils/DatasetOnboardingHelper.util';
+import { datasetOnboardingHelperUtils } from 'utils';
 import SVGIcon from '../../images/SVGIcon';
 
 import SLA from './sla/SLA';
@@ -55,22 +55,24 @@ const DatasetCard = props => {
                         <div className='datasetHeader-status'>
                             {datasetStatus === 'draft' ? (
                                 <TimeDuration
-                                    text={`${DatasetOnboardingHelper.calculateTimeDifference(timeStamps.created)} days since start`}
+                                    text={`${datasetOnboardingHelperUtils.calculateTimeDifference(timeStamps.created)} days since start`}
                                 />
                             ) : (
                                 ''
                             )}
                             {datasetStatus === 'inReview' ? (
                                 <TimeDuration
-                                    text={`${DatasetOnboardingHelper.calculateTimeDifference(timeStamps.submitted)} days since submission`}
+                                    text={`${datasetOnboardingHelperUtils.calculateTimeDifference(
+                                        timeStamps.submitted
+                                    )} days since submission`}
                                 />
                             ) : (
                                 ''
                             )}
 
                             <SLA
-                                classProperty={DatasetOnboardingHelper.datasetStatusColours[datasetStatus]}
-                                text={DatasetOnboardingHelper.datasetSLAText[datasetStatus]}
+                                classProperty={datasetOnboardingHelperUtils.datasetStatusColours[datasetStatus]}
+                                text={datasetOnboardingHelperUtils.datasetSLAText[datasetStatus]}
                                 {...slaProps}
                             />
 
@@ -78,8 +80,8 @@ const DatasetCard = props => {
                                 <>
                                     &nbsp;&nbsp;
                                     <SLA
-                                        classProperty={DatasetOnboardingHelper.datasetStatusColours.active}
-                                        text={DatasetOnboardingHelper.datasetSLAText.active}
+                                        classProperty={datasetOnboardingHelperUtils.datasetStatusColours.active}
+                                        text={datasetOnboardingHelperUtils.datasetSLAText.active}
                                         {...slaProps}
                                     />
                                 </>
@@ -104,7 +106,7 @@ const DatasetCard = props => {
                                       </div>
                                   </OverlayTrigger>
                               ))
-                            : ''}
+                            : null}
                     </div>
 
                     <div className='body'>
@@ -141,27 +143,24 @@ const DatasetCard = props => {
                                         </Accordion.Toggle>
                                         <Accordion.Collapse eventKey='0' style={{ paddingRight: '20px' }}>
                                             <>
-                                                {listOfVersions.map(datasetVersion => (
-                                                    <>
-                                                        {datasetVersion.datasetVersion !== version ? (
-                                                            <a
-                                                                href='javascript:void(0)'
-                                                                className='version-list'
-                                                                onClick={e => {
-                                                                    e.stopPropagation();
-                                                                    window.location.href = `/dataset-onboarding/${datasetVersion._id}`;
-                                                                }}>
-                                                                {datasetVersion.datasetVersion}
-                                                                {datasetVersion.activeflag === 'draft' ? ' (Draft)' : ''}
-                                                                {datasetVersion.activeflag === 'active' ? ' (Live)' : ''}
-                                                                {datasetVersion.activeflag === 'rejected' ? ' (Rejected)' : ''}
-                                                                {datasetVersion.activeflag === 'inReview' ? ' (Pending)' : ''}
-                                                            </a>
-                                                        ) : (
-                                                            ''
-                                                        )}
-                                                    </>
-                                                ))}
+                                                {listOfVersions.map(datasetVersion =>
+                                                    datasetVersion.datasetVersion !== version ? (
+                                                        <a
+                                                            key={datasetVersion._id}
+                                                            href='#'
+                                                            className='version-list'
+                                                            onClick={e => {
+                                                                e.stopPropagation();
+                                                                window.location.href = `/dataset-onboarding/${datasetVersion._id}`;
+                                                            }}>
+                                                            {datasetVersion.datasetVersion}
+                                                            {datasetVersion.activeflag === 'draft' ? ' (Draft)' : ''}
+                                                            {datasetVersion.activeflag === 'active' ? ' (Live)' : ''}
+                                                            {datasetVersion.activeflag === 'rejected' ? ' (Rejected)' : ''}
+                                                            {datasetVersion.activeflag === 'inReview' ? ' (Pending)' : ''}
+                                                        </a>
+                                                    ) : null
+                                                )}
                                             </>
                                         </Accordion.Collapse>
                                     </Accordion>

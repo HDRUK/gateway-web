@@ -3,12 +3,13 @@ import axios from 'axios';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'hdruk-react-core';
+
 import { baseURL } from '../../../../configs/url.config';
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import './UpdateRequestModal.scss';
 import googleAnalytics from '../../../../tracking';
 
-const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicationId, projectName = '' }) => {
+const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicationId, projectName = '', publisherId }) => {
     const history = useHistory();
 
     const onHandleClose = e => {
@@ -18,15 +19,19 @@ const UpdateRequestModal = ({ open, close, fullAmendments, publisher, applicatio
 
     const onRequestUpdate = e => {
         if (!_.isEmpty(applicationId) && !_.isEmpty(publisher)) {
-            axios.post(`${baseURL}/api/v1/data-access-request/${applicationId}/requestAmendments`).then(res => {
+            axios.post(`${baseURL}/api/v1/data-access-request/${applicationId}/requestAmendments`).then(() => {
                 const alert = {
                     publisher,
-                    nav: `dataaccessrequests&team=${publisher}`,
+                    nav: 'dataaccessrequests',
                     tab: 'inReview',
                     message: `You have successfully requested updates to ‘${projectName}’ application`,
                 };
                 // redirect to dashboard with alert
-                history.push({ pathname: `/account`, search: `?tab=dataaccessrequests&team=`, state: { alert } });
+                history.push({
+                    pathname: `/account`,
+                    search: `?tab=dataaccessrequests&teamType=team&teamId=${publisherId}`,
+                    state: { alert },
+                });
             });
         }
     };

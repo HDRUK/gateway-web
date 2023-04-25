@@ -5,8 +5,8 @@ import { Modal } from 'react-bootstrap';
 
 import { contentService } from 'services';
 import { RenderMarkdown } from 'components';
+import { dataSetHelperUtils } from 'utils';
 import { ReactComponent as CloseButtonSvg } from '../../../images/close-alt.svg';
-import DataSetHelper from '../../../utils/DataSetHelper.util';
 import googleAnalytics from '../../../tracking';
 
 import './DataSetModal.scss';
@@ -43,7 +43,7 @@ const DataSetModal = ({ open, closed, context, userState, is5Safes, showLoginMod
             // 2. close modal and do not show enquiry - false;
             closed(false);
             // 3. Show the loginPanel
-            DataSetHelper.showLoginPanel(window, _.isEmpty(title) ? screenData.subTitle : title);
+            dataSetHelperUtils.showLoginPanel(window, _.isEmpty(title) ? screenData.subTitle : title);
         } else {
             // 4. do normal operation
             closed(action);

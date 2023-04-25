@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { apiUrlV1 } from '../../configs/url.config';
+import { apiUrlV1, apiUrlV3 } from '../../configs/url.config';
 import { getRequest, postRequest, putRequest } from '../../utils/requests';
 import * as service from './teams';
 
@@ -30,7 +30,7 @@ describe('Given the teams service', () => {
                 option1: true,
             });
 
-            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV1}/teams/1234/members`, {
+            expect(getRequest).toHaveBeenCalledWith(`${apiUrlV3}/teams/1234/members`, {
                 option1: true,
             });
         });

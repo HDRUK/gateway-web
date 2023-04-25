@@ -6,14 +6,13 @@ import './Search.scss';
 
 const CustomToggle = forwardRef(({ children, onClick, title }, ref) => (
     <a
-        href='javascript:void(0)'
+        href='#'
         aria-label={'Filter for ' + title}
         ref={ref}
         onClick={e => {
             e.preventDefault();
             onClick(e);
-        }}
-    >
+        }}>
         {children}
     </a>
 ));

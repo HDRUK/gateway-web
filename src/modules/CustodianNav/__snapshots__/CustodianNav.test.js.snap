@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustodianNav module should render for desktop 1`] = `
+<div>
+  <div>
+    <div
+      class="mb-1 mt-1 dropdown-divider"
+      role="separator"
+    />
+    <div
+      class="dropdown"
+    >
+      <a
+        class="dropdown-sub-menu"
+        href="#"
+      >
+        <p
+          class="ui-Typography emotion-0"
+        >
+          Team name
+        </p>
+        <span
+          class="addNewDropDownGap"
+        />
+        <icon-mock />
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`CustodianNav module should render for mobile 1`] = `
+<div>
+  <div>
+    <div
+      class="mb-1 mt-1 dropdown-divider"
+      role="separator"
+    />
+    <div
+      class="dropdown"
+    >
+      <a
+        class="dropdown-sub-menu"
+        href="#"
+      >
+        <p
+          class="ui-Typography emotion-0"
+        >
+          Team name
+        </p>
+        <span
+          class="addNewDropDownGap"
+        />
+        <svg
+          class="svg-16 floatRightChevron"
+          data-testid="chevronbottom"
+          height="100%"
+          viewBox="0 0 18 18"
+          width="100%"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <path
+            d="M12.41,16.41 C12.178,16.41 11.947,16.33 11.759,16.169 L4,9.519 L5.302,8 L12.41,14.093 L19.518,8 L20.82,9.519 L13.061,16.169 C12.873,16.33 12.642,16.41 12.41,16.41 Z"
+            fill="#475DA7"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+`;

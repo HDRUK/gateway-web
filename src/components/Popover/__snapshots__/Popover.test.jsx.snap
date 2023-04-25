@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Popover component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    role="button"
+    style="display: inline-block; line-height: 0;"
+    tabindex="0"
+  >
+    <span
+      class="ui-Icon emotion-0"
+    >
+      <icon-mock
+        fill="inherit"
+      />
+    </span>
+  </div>
+</div>
+`;

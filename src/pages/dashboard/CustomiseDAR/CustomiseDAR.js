@@ -9,7 +9,7 @@ import { generalUtils } from 'utils';
 import { Alert, LayoutContent } from 'components';
 import { personService, publishersService } from 'services';
 import SVGIcon from '../../../images/SVGIcon';
-import { stripHtml } from '../../../utils/GeneralHelper.util';
+import { stripHtml } from '../../../utils/General.util';
 
 import CustomiseDAREditGuidance from '../Components/CustomiseDAREditGuidance';
 import StatusBadge from './Components/StatusBadge';
