@@ -1,23 +1,20 @@
 import { GetServerSideProps } from "next";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
-import config from "@/config";
-import { createFilter } from "@/services/filters";
 import useFilters from "@/hooks/useFilters";
+import config from "@/config";
+import usePostItem from "@/hooks/usePostItem";
+import { Filter } from "@/interfaces/Filter";
+import { generateFilterV1 } from "@/mocks/data";
 
 function Account() {
-    const { filters, mutate } = useFilters();
+    const { filters } = useFilters();
+    const createFilter = usePostItem<Filter>(config.filtersV1Url, filters);
 
     const addFilter = async () => {
-        const payload = {
-            type: "features",
-            enabled: true,
-            value: "features",
-            keys: "features",
-        };
-        await createFilter(payload);
-        console.log("I will mutate");
-        mutate(config.filtersV1Url);
+        const filter = generateFilterV1();
+        delete filter.id;
+        createFilter(filter);
     };
 
     return (
