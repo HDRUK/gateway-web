@@ -1,15 +1,15 @@
 import { GetServerSideProps } from "next";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
-import useFilters from "@/hooks/useFilters";
 import config from "@/config";
-import usePostItem from "@/hooks/usePostItem";
 import { Filter } from "@/interfaces/Filter";
 import { generateFilterV1 } from "@/mocks/data";
+import useGet from "@/hooks/useGet";
+import usePost from "@/hooks/usePost";
 
 function Account() {
-    const { filters } = useFilters();
-    const createFilter = usePostItem<Filter>(config.filtersV1Url, filters);
+    const { data: filters } = useGet<Filter[]>(config.filtersV1Url);
+    const createFilter = usePost<Filter>(config.filtersV1Url);
 
     const addFilter = async () => {
         const filter = generateFilterV1({ enabled: true });

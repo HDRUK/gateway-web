@@ -1,31 +1,31 @@
 import { MutatorOptions, useSWRConfig } from "swr";
 import { postRequest } from "@/services/api";
+import useGet from "./useGet";
 
-const usePostItem = <T>(
-    key: string,
-    items: T[] | undefined,
-    options?: MutatorOptions
-) => {
+const usePost = <T>(key: string, options?: MutatorOptions) => {
     const { mutate } = useSWRConfig();
+    const { data } = useGet(key);
 
-    const createItem = (payload: Omit<T, "id">) => {
+    return (payload: Omit<T, "id">) => {
         mutate(
             key,
             async () => {
                 const id = await postRequest(key, payload);
-                return [...(items || []), { ...payload, id }];
+                return Array.isArray(data)
+                    ? [...data, { ...payload, id }]
+                    : { ...payload, id };
             },
             {
                 // data to immediately update the client cache
-                optimisticData: [...(items || []), payload],
+                optimisticData: Array.isArray(data)
+                    ? [...data, payload]
+                    : payload,
                 // rollback if the remote mutation errors
                 rollbackOnError: true,
                 ...options,
             }
         );
     };
-
-    return createItem;
 };
 
-export default usePostItem;
+export default usePost;
