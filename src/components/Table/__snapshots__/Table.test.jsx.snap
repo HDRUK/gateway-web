@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the Table component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <table
+    class="emotion-0 additional-classname emotion-1"
+    role="table"
+  >
+    <thead>
+      <tr
+        role="row"
+      >
+        <th
+          colspan="1"
+          role="columnheader"
+        >
+          Name
+        </th>
+        <th
+          colspan="1"
+          role="columnheader"
+        >
+          Role
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      role="rowgroup"
+    >
+      <tr
+        role="row"
+      >
+        <td
+          data-label="name"
+          role="cell"
+        >
+          Kymme Hayley
+        </td>
+        <td
+          data-label="role"
+          role="cell"
+        >
+          Admin
+        </td>
+      </tr>
+      <tr
+        role="row"
+      >
+        <td
+          data-label="name"
+          role="cell"
+        >
+          Peter Hammans
+        </td>
+        <td
+          data-label="role"
+          role="cell"
+        >
+          Admin
+        </td>
+      </tr>
+      <tr
+        role="row"
+      >
+        <td
+          data-label="name"
+          role="cell"
+        >
+          Geeta Kotecha
+        </td>
+        <td
+          data-label="role"
+          role="cell"
+        >
+          Admin
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

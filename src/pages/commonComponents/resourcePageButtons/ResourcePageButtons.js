@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Button } from 'hdruk-react-core';
+import { useAuth } from 'context/AuthContext';
 import AddToCollection from '../addToCollection/AddToCollection';
 
 const ResourcePageButtons = props => {
     const [type, setType] = useState('');
+    const { isRootAdmin } = useAuth();
 
     useEffect(() => {
         if (props.isCollection === true) {
@@ -13,7 +15,6 @@ const ResourcePageButtons = props => {
         }
     }, [props.data.type, props.isCollection]);
 
-    // TODO: GAT-1510:022
     return (
         <div className='floatRight row'>
             {props.userState[0].loggedIn &&
@@ -21,7 +22,7 @@ const ResourcePageButtons = props => {
             props.data.type !== 'dataUseRegister' &&
             ((props.data.authors && props.data.authors.includes(props.userState[0].id)) ||
                 (props.data.creator && props.data.creator[0].id === props.userState[0].id) ||
-                props.userState[0].role === 'Admin') ? (
+                isRootAdmin) ? (
                 <Button
                     data-testid='action-bar-edit'
                     variant='secondary'

@@ -33,10 +33,11 @@ import PersonCollectionResults from './Components/PersonCollectionResults';
 import ToolCollectionResults from './Components/ToolCollectionResults';
 import MessageNotFound from '../commonComponents/MessageNotFound';
 import { MAXRESULTS } from './constants';
+import { useAuth } from 'context/AuthContext';
 
 export const CollectionPage = props => {
     const { t } = useTranslation();
-
+    const { isRootAdmin } = useAuth();
     const [collectionData, setCollectionData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isResultsLoading, setIsResultsLoading] = useState(true);
@@ -536,13 +537,11 @@ export const CollectionPage = props => {
                 </Row>
             </Container>
 
-            {/* TODO: GAT-1510:021 */}
-            {userState[0].loggedIn &&
-                (userState[0].role === 'Admin' || (collectionData.authors && collectionData.authors.includes(userState[0].id))) && (
-                    <ActionBar userState={userState}>
-                        <ResourcePageButtons data={collectionData} userState={userState} isCollection />
-                    </ActionBar>
-                )}
+            {userState[0].loggedIn && (isRootAdmin || (collectionData.authors && collectionData.authors.includes(userState[0].id))) && (
+                <ActionBar userState={userState}>
+                    <ResourcePageButtons data={collectionData} userState={userState} isCollection />
+                </ActionBar>
+            )}
 
             <SideDrawer open={showDrawer} closed={toggleDrawer}>
                 <UserMessages userState={userState[0]} closed={toggleDrawer} toggleModal={toggleModal} drawerIsOpen={showDrawer} />

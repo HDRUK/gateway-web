@@ -2,22 +2,21 @@ import { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Alert, LayoutContent } from 'components';
+import { authUtils } from 'utils';
+import { useCustodianRoles } from 'hooks';
 import { useAuth } from '../../../../context/AuthContext';
-import { isCustodian, userHasRole } from '../../../../utils/auth';
 
 import DataUsePage from '../../../dataUse/DataUsePage';
 import DataUseUpload from '../../../dataUse/upload/DataUseUpload';
 import DataUseWidget from '../../../dataUse/widget/DataUseWidget';
-import { userTypes } from '../../Team/teamUtil';
 
-const AccountDataUse = ({ tabId, team, publisherDetails }) => {
+const AccountDataUse = ({ tabId, teamType, teamId, publisherDetails }) => {
     const { userState } = useAuth();
+    const { isCustodianDarManager } = useCustodianRoles(teamId);
     const history = useHistory();
     const {
         location: { state: historyState },
     } = history;
-    // TODO: GAT-1510:015
-    const isManager = userHasRole(userState, team, userTypes.MANAGER);
 
     const [dataUseUpload, setDataUseUpload] = useState(false);
     const [alertMessage, setAlertMessage] = useState(false);
@@ -33,7 +32,7 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
     const handleAlertClose = useCallback(() => {
         setAlertMessage('');
 
-        history.replace('/account?tab=datause', { state: null });
+        history.replace(`/account?tab=datause&teamType=${teamType}&teamId=${teamId}`, { state: null });
     }, [history]);
 
     useEffect(() => {
@@ -52,16 +51,16 @@ const AccountDataUse = ({ tabId, team, publisherDetails }) => {
                 </LayoutContent>
             )}
 
-            {tabId === 'datause' && dataUseUpload && <DataUseUpload userState={userState} team={team} onSubmit={handleSubmitUpload} />}
+            {tabId === 'datause' && dataUseUpload && <DataUseUpload userState={userState} teamId={teamId} onSubmit={handleSubmitUpload} />}
 
-            {tabId === 'datause' && !dataUseUpload && (
-                <DataUsePage userState={userState} team={team} onClickDataUseUpload={handleClickUpload} />
-            )}
+            {tabId === 'datause' && !dataUseUpload && <DataUsePage userState={userState} onClickDataUseUpload={handleClickUpload} />}
 
-            {/* TODO: GAT-1510:053 */}
-            {tabId === 'datause_widget' && isCustodian(team) && isManager && publisherDetails?.dataUse?.widget?.enabled && (
-                <DataUseWidget userState={userState} team={team} publisherDetails={publisherDetails} />
-            )}
+            {tabId === 'datause_widget' &&
+                authUtils.getIsTypeTeam(teamType) &&
+                isCustodianDarManager &&
+                publisherDetails?.dataUse?.widget?.enabled && (
+                    <DataUseWidget userState={userState} teamId={teamId} publisherDetails={publisherDetails} />
+                )}
         </>
     );
 };

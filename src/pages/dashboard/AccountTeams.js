@@ -3,6 +3,7 @@ import { Box } from 'hdruk-react-core';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { Alert, Button, Col, Pagination, Row } from 'react-bootstrap';
+import { authUtils } from 'utils';
 
 import { LayoutContent } from 'components';
 import { baseURL } from '../../configs/url.config';
@@ -21,7 +22,6 @@ const AccountTeams = () => {
     const [teams, setTeams] = useState();
     const [teamsCount, setTeamsCount] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
-    const [teamManagersIds, setTeamManagersIds] = useState();
     const [viewTeams, setViewTeams] = useState(true);
     const [editTeamsView, setEditTeamsView] = useState(false);
     const [editViewID, setEditViewID] = useState(false);
@@ -48,20 +48,8 @@ const AccountTeams = () => {
         axios
             .get(`${baseURL}/api/v1/teams`)
             .then(res => {
-                const { teams } = res.data;
-                const teamManagersIds = [];
-                teams.map((team, index) => {
-                    if (team.members.length > 0) {
-                        // TODO: GAT-1510:044
-                        const teamManagers = team.members.filter(member => member.roles.includes('manager'));
-                        teamManagers.map(memberId => {
-                            teamManagersIds.push(memberId.memberid);
-                        });
-                    }
-                });
-                setTeams(teams);
-                setTeamsCount(teams.length);
-                setTeamManagersIds(teamManagersIds);
+                setTeams(res.data.teams);
+                setTeamsCount(res.data.teams.length);
                 setLoading(false);
             })
             .catch(err => {
@@ -155,7 +143,7 @@ const AccountTeams = () => {
                     <Row className='subHeader mt-3 gray800-14-bold'>
                         <Col sm={2}>Updated</Col>
                         <Col sm={2}>Data custodian</Col>
-                        <Col sm={2}>Team manager(s)</Col>
+                        <Col sm={2}>Team admin/manager(s)</Col>
                         <Col sm={2} className='text-center'>
                             Members
                         </Col>
@@ -171,7 +159,7 @@ const AccountTeams = () => {
                                         <TeamInfo
                                             updatedAt={team.updatedAt}
                                             publisher={team.publisher}
-                                            teamManagers={team.users.filter(user => teamManagersIds.includes(user._id))}
+                                            teamManagers={authUtils.getCustodianTeamAdmins(team)}
                                             membersCount={team.membersCount}
                                             editTeam={editTeam}
                                         />

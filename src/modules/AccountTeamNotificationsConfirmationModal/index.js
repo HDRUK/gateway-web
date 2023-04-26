@@ -1,0 +1,3 @@
+import AccountTeamNotificationsConfirmationModal from './AccountTeamNotificationsConfirmationModal';
+
+export default AccountTeamNotificationsConfirmationModal;

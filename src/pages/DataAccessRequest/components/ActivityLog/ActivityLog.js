@@ -5,9 +5,9 @@ import { forwardRef, useImperativeHandle, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { Alert } from 'components';
-import { baseURL } from '../../../../configs/url.config';
-import DarHelperUtil from '../../../../utils/DarHelper.util';
+import { darHelperUtils } from 'utils';
 
+import { baseURL } from '../../../../configs/url.config';
 import SLA from '../../../commonComponents/sla/SLA';
 import WorkflowReviewStepsModal from '../../../commonComponents/workflowReviewStepsModal/WorkflowReviewStepsModal';
 import AccessActivity from '../../../dashboard/DataAccessRequests/AccessActivity/AccessActivity';
@@ -16,7 +16,7 @@ import ActivityLogVersionCard from './ActivityLogVersionCard';
 import AddNewEventModal from './AddNewEventModal';
 import DeleteManualEventModal from './DeleteManualEventModal';
 
-const ActivityLog = forwardRef(({ dataaccessrequest, team, onClickStartReview, onUpdateLogs }, ref) => {
+const ActivityLog = forwardRef(({ dataaccessrequest, teamType, onClickStartReview, onUpdateLogs }, ref) => {
     useImperativeHandle(ref, () => ({
         showAddNewEventModal() {
             toggleAddNewEventModal();
@@ -120,7 +120,7 @@ const ActivityLog = forwardRef(({ dataaccessrequest, team, onClickStartReview, o
                     'Date submitted': activityLog.meta.dateSubmitted,
                     'Days since submission': activityLog.meta.daysSinceSubmission,
                     'Time with applicants': activityLog.meta.timeWithApplicants,
-                    'Application status': DarHelperUtil.darSLAText[activityLog.meta.applicationStatus],
+                    'Application status': darHelperUtils.darSLAText[activityLog.meta.applicationStatus],
                     'Activity date': moment(event.timestamp).format('D MMMM YYYY HH:mm'),
                     Activity: event.plainText,
                     'Activity details': event.detailedText,
@@ -170,28 +170,28 @@ const ActivityLog = forwardRef(({ dataaccessrequest, team, onClickStartReview, o
                                     <h1>{projectName}</h1>
                                 </div>
                                 <div className='header-version-status'>
-                                    {applicationType === DarHelperUtil.darApplicationTypes.amendment &&
-                                    applicationStatus !== DarHelperUtil.darStatus.approved &&
-                                    applicationStatus !== DarHelperUtil.darStatus['approved with conditions'] &&
-                                    applicationStatus !== DarHelperUtil.darStatus.rejected ? (
+                                    {applicationType === darHelperUtils.darApplicationTypes.amendment &&
+                                    applicationStatus !== darHelperUtils.darStatus.approved &&
+                                    applicationStatus !== darHelperUtils.darStatus['approved with conditions'] &&
+                                    applicationStatus !== darHelperUtils.darStatus.rejected ? (
                                         <>
                                             <SLA
-                                                classProperty={DarHelperUtil.darStatusColours[applicationStatus]}
+                                                classProperty={darHelperUtils.darStatusColours[applicationStatus]}
                                                 text={
-                                                    applicationStatus === DarHelperUtil.darStatus.inProgress
+                                                    applicationStatus === darHelperUtils.darStatus.inProgress
                                                         ? 'Pre-submission amendment'
                                                         : 'Amendment in review'
                                                 }
                                             />
                                             <SLA
-                                                classProperty={DarHelperUtil.darStatusColours.approved}
-                                                text={DarHelperUtil.darSLAText.approved}
+                                                classProperty={darHelperUtils.darStatusColours.approved}
+                                                text={darHelperUtils.darSLAText.approved}
                                             />
                                         </>
                                     ) : (
                                         <SLA
-                                            classProperty={DarHelperUtil.darStatusColours[applicationStatus]}
-                                            text={DarHelperUtil.darSLAText[applicationStatus]}
+                                            classProperty={darHelperUtils.darStatusColours[applicationStatus]}
+                                            text={darHelperUtils.darSLAText[applicationStatus]}
                                             applicationType={applicationType}
                                         />
                                     )}
@@ -205,7 +205,7 @@ const ActivityLog = forwardRef(({ dataaccessrequest, team, onClickStartReview, o
                                     updatedAt={updatedAt}
                                     applicants={applicants}
                                     dateSubmitted={dateSubmitted}
-                                    team={team}
+                                    teamType={teamType}
                                     workflow={workflow}
                                     workflowName={workflowName}
                                     workflowCompleted={workflowCompleted}
@@ -231,7 +231,7 @@ const ActivityLog = forwardRef(({ dataaccessrequest, team, onClickStartReview, o
                 <Col xs={1} />
                 <Col>
                     {activityLogs.map(version => {
-                        return <ActivityLogVersionCard version={version} team={team} onDeleteEventClick={onDeleteEventClick} />;
+                        return <ActivityLogVersionCard version={version} teamType={teamType} onDeleteEventClick={onDeleteEventClick} />;
                     })}
                 </Col>
                 <Col xs={1} />

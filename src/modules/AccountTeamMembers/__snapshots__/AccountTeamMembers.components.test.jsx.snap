@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AccountTeamMembers components When CheckboxCell is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <label
+    class="ui-Checkbox emotion-0 emotion-1"
+    for="1234_custodian.team.admin"
+    title=""
+  >
+    <input
+      checked=""
+      id="1234_custodian.team.admin"
+      type="checkbox"
+    />
+    <span
+      class="ui-Checkbox__label"
+    >
+      <span>
+        Admin
+      </span>
+    </span>
+  </label>
+</div>
+`;
+
+exports[`Given the AccountTeamMembers components When NameCell is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <a
+    class="ui-Typography emotion-0"
+    href="/person/5678"
+  >
+    John
+     
+    Smith
+  </a>
+  <p
+    class="ui-Typography emotion-0"
+  >
+    HDR UK
+  </p>
+</div>
+`;

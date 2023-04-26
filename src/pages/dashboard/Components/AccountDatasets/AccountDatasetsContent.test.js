@@ -15,12 +15,6 @@ const searchResultsSpy = jest.spyOn(SearchResults, 'default');
 const searchControlsSpy = jest.spyOn(SearchControls, 'default');
 const datasetCardSpy = jest.spyOn(DatasetCard, 'default');
 
-jest.mock('../../../../components/Icon', () => ({ onClick }) => (
-    <span onClick={onClick} className='icon-mock'>
-        Icon
-    </span>
-));
-
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useHistory: () => ({
@@ -34,7 +28,7 @@ const props = {
     isLoading: true,
     isFetched: false,
     status: STATUS_INREVIEW,
-    team: 'admin',
+    teamType: 'admin',
     count: 19,
     params: { search: 'covid', sortBy: 'latest', sortDirection: 'desc', maxResults: 1000 },
 };
@@ -149,7 +143,7 @@ describe('Given the AccountDatasetsContent component', () => {
                 });
 
                 it('Then should change history onClick', async () => {
-                    const sla = wrapper.container.querySelectorAll('.sla-icons .icon-mock')[0];
+                    const sla = wrapper.container.querySelectorAll('.sla-icons .ui-Icon')[0];
 
                     await testUtils.fireEvent.click(sla, '1234');
 
@@ -182,7 +176,7 @@ describe('Given the AccountDatasetsContent component', () => {
                         completion,
                         isDraft: true,
                         listOfVersions,
-                        path: '/account/datasets/0a048419-0796-46fb-ad7d-91e650a6c742',
+                        path: '/account/datasets/0a048419-0796-46fb-ad7d-91e650a6c742?teamType=admin',
                         slaProps: expect.any(Object),
                     });
                 });

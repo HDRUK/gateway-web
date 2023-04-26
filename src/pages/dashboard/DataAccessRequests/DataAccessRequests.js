@@ -4,10 +4,11 @@ import _ from 'lodash';
 import moment from 'moment';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 
+import { accountUtils, darHelperUtils } from 'utils';
+import { Alert, LayoutContent } from 'components';
+
 import { ReactComponent as Clock } from '../../../images/clock.svg';
 import { baseURL } from '../../../configs/url.config';
-import DarHelperUtil from '../../../utils/DarHelper.util';
-import { Alert, LayoutContent } from 'components';
 
 import Loading from '../../commonComponents/Loading';
 import SLA from '../../commonComponents/sla/SLA';
@@ -36,7 +37,7 @@ class DataAccessRequestsNew extends Component {
         preSubmissionCount: 0,
         submittedCount: 0,
         inReviewCount: 0,
-        team: 'user',
+        teamTypeLabel: '',
         avgDecisionTime: 0,
         alert: {},
         showWorkflowReviewModal: false,
@@ -48,58 +49,50 @@ class DataAccessRequestsNew extends Component {
         super(props);
         this.state.userState = props.userState;
 
-        const teamIs = props.userState[0].teams.filter(t => {
-            return t._id === props.team;
+        const teamFound = props.userState[0].teams.filter(t => {
+            return t._id === props.teamId;
         })[0];
-        if (!_.isEmpty(teamIs)) {
-            this.state.team = teamIs.name;
-        } else {
-            this.state.team = 'user';
+        if (!_.isEmpty(teamFound)) {
+            this.state.teamTypeLabel = teamFound.name;
         }
         if (!_.isEmpty(props.alert)) {
             this.state.alert = props.alert;
-            this.state.team = props.alert.publisher;
+            this.state.teamTypeLabel = props.alert.publisher;
         }
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        this.fetchDataAccessRequests(this.state);
+        this.setState({ alert: this.props.alert });
+        this.fetchDataAccessRequests();
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.team !== this.props.team) {
-            const teamIs = this.props.userState[0].teams.filter(t => {
-                return t._id === nextProps.team;
-            })[0];
-            let updatedProp = _.cloneDeep(nextProps);
-            updatedProp.team = teamIs.name;
-
-            this.setState({ isLoading: true });
-            this.fetchDataAccessRequests(updatedProp);
+    componentDidUpdate(prevProps) {
+        if (this.props.teamId !== prevProps.teamId || this.props.teamType !== prevProps.teamType) {
+            this.fetchDataAccessRequests();
         }
-
-        this.setState({ alert: nextProps.alert });
     }
 
     componentWillUnmount() {
         clearTimeout(this.alertTimeOut);
     }
 
-    async fetchDataAccessRequests(nextProps) {
+    async fetchDataAccessRequests() {
         let data = [],
             avgDecisionTime = 0,
             canViewSubmitted = false;
-        let dataProps = { ...nextProps, key: 'all' };
+        let dataProps = { ...this.props, key: 'all' };
+
         // 1. if there is an alert set team and correct tab so it can display on the UI
         if (!_.isEmpty(this.state.alert)) {
-            dataProps.team = this.state.alert.publisher;
+            dataProps.teamTypeLabel = this.state.alert.publisher;
             dataProps.key = this.state.alert.tab;
         }
         // 2. check which API to call the user or custodian if a team and use team name
-        const teamExists = !_.isEmpty(dataProps.team) ? true : false;
-        if (teamExists && dataProps.team !== 'user') {
-            const response = await axios.get(`${baseURL}/api/v1/publishers/${dataProps.team}/dataaccessrequests`);
+        const teamFound = accountUtils.getTeam(this.props.userState[0].teams, dataProps.teamId);
+
+        if (teamFound && dataProps.teamType === 'team') {
+            const response = await axios.get(`${baseURL}/api/v1/publishers/${teamFound.name}/dataaccessrequests`);
             ({
                 data: { data, avgDecisionTime, canViewSubmitted },
             } = response);
@@ -112,12 +105,11 @@ class DataAccessRequestsNew extends Component {
         // 3. modifies approve with conditions to approved
         let screenData = this.formatScreenData(data);
         // 4. count stats
-        let counts = DarHelperUtil.generateStatusCounts(screenData);
+        let counts = darHelperUtils.generateStatusCounts(screenData);
         // 5. set state
         this.setState({
             data: screenData,
             isLoading: false,
-            team: dataProps.team,
             avgDecisionTime,
             canViewSubmitted,
             ...counts,
@@ -135,12 +127,12 @@ class DataAccessRequestsNew extends Component {
     };
 
     onTabChange = key => {
-        let statusKey = DarHelperUtil.darStatus[key];
+        let statusKey = darHelperUtils.darStatus[key];
         let { data } = this.state;
 
         if (statusKey === 'all') {
             let screenData = [...data].reduce((arr, item) => {
-                if (item.applicationStatus !== DarHelperUtil.darStatus.inProgress || this.state.team === 'user') {
+                if (item.applicationStatus !== darHelperUtils.darStatus.inProgress || this.props.teamType === 'user') {
                     arr.push({
                         ...item,
                     });
@@ -195,7 +187,7 @@ class DataAccessRequestsNew extends Component {
                     ...arr,
                     {
                         ...item,
-                        applicationStatus: DarHelperUtil.darStatus[`${applicationStatus}`],
+                        applicationStatus: darHelperUtils.darStatus[`${applicationStatus}`],
                     },
                 ];
             }, []);
@@ -221,7 +213,7 @@ class DataAccessRequestsNew extends Component {
         const decisionApprovedType = decisionApproved ? 'No issues found:' : 'Issues found:';
         if (!_.isEmpty(applicationStatusDesc) && !_.isEmpty(applicationStatus)) {
             if (this.finalDurationLookups.includes(applicationStatus)) {
-                return <CommentItem text={applicationStatusDesc} title={DarHelperUtil.darCommentTitle[applicationStatus]} />;
+                return <CommentItem text={applicationStatusDesc} title={darHelperUtils.darCommentTitle[applicationStatus]} />;
             }
         } else if (decisionMade && !this.finalDurationLookups.includes(applicationStatus)) {
             return (
@@ -242,21 +234,21 @@ class DataAccessRequestsNew extends Component {
             createdAt,
             dateSubmitted,
             decisionDuration = '',
-            applicationType = DarHelperUtil.darApplicationTypes.initial,
+            applicationType = darHelperUtils.darApplicationTypes.initial,
         } = accessRequest;
         let diff = 0;
         let sinceText = '';
 
-        if (applicationStatus === DarHelperUtil.darStatus.inProgress) {
+        if (applicationStatus === darHelperUtils.darStatus.inProgress) {
             sinceText = 'since start';
             diff = this.calculateTimeDifference(createdAt);
-        } else if (applicationStatus === DarHelperUtil.darStatus.submitted || applicationStatus === DarHelperUtil.darStatus.inReview) {
-            sinceText = applicationType === DarHelperUtil.darApplicationTypes.initial ? 'since submission' : 'since resubmission';
+        } else if (applicationStatus === darHelperUtils.darStatus.submitted || applicationStatus === darHelperUtils.darStatus.inReview) {
+            sinceText = applicationType === darHelperUtils.darApplicationTypes.initial ? 'since submission' : 'since resubmission';
             diff = this.calculateTimeDifference(dateSubmitted);
         } else if (
-            applicationStatus === DarHelperUtil.darStatus.approved ||
-            applicationStatus === DarHelperUtil.darStatus['approved with conditions'] ||
-            applicationStatus === DarHelperUtil.darStatus.rejected
+            applicationStatus === darHelperUtils.darStatus.approved ||
+            applicationStatus === darHelperUtils.darStatus['approved with conditions'] ||
+            applicationStatus === darHelperUtils.darStatus.rejected
         ) {
             if (!_.isEmpty(decisionDuration.toString())) {
                 sinceText = 'total';
@@ -314,6 +306,8 @@ class DataAccessRequestsNew extends Component {
     };
 
     render() {
+        const { teamType } = this.props;
+
         const {
             isLoading,
             approvedCount,
@@ -322,7 +316,7 @@ class DataAccessRequestsNew extends Component {
             submittedCount,
             inReviewCount,
             allCount,
-            team,
+            teamTypeLabel,
             alert,
             screenData,
             avgDecisionTime,
@@ -350,9 +344,7 @@ class DataAccessRequestsNew extends Component {
                         <div className='accountHeader dataAccessHeader'>
                             <Col xs={8}>
                                 <Row>
-                                    <div className='black-20'>
-                                        Data access request applications {!_.isEmpty(team) && team !== 'user' ? team : ''}
-                                    </div>
+                                    <div className='black-20'>Data access request applications {teamTypeLabel}</div>
                                     <div className='gray700-13'>Manage forms and applications</div>
                                     <div>
                                         <Clock /> {`${avgDecisionTime > 0 ? avgDecisionTime : '-'} days`}{' '}
@@ -367,7 +359,7 @@ class DataAccessRequestsNew extends Component {
                             <Col sm={12} lg={12}>
                                 <Tabs className='dataAccessTabs gray700-13' activeKey={this.state.key} onSelect={this.onTabChange}>
                                     <Tab eventKey='all' title={'All (' + allCount + ')'}></Tab>
-                                    {preSubmissionCount > 0 || team === 'user' ? (
+                                    {preSubmissionCount > 0 || teamType === 'user' ? (
                                         <Tab eventKey='inProgress' title={'Pre-submission (' + preSubmissionCount + ')'}></Tab>
                                     ) : (
                                         ''
@@ -380,7 +372,7 @@ class DataAccessRequestsNew extends Component {
                             </Col>
                         </div>
 
-                        {team !== 'user' && this.state.key === 'inProgress' ? this.generatePreSubmissionWarning() : ''}
+                        {teamType !== 'user' && this.state.key === 'inProgress' ? this.generatePreSubmissionWarning() : ''}
 
                         {screenData.map((request, i) => {
                             let {
@@ -434,24 +426,24 @@ class DataAccessRequestsNew extends Component {
                                                 </div>
                                                 <div className='header-version-status'>
                                                     {this.renderDuration(request)}
-                                                    {applicationType === DarHelperUtil.darApplicationTypes.amendment &&
-                                                    applicationStatus !== DarHelperUtil.darStatus.approved &&
-                                                    applicationStatus !== DarHelperUtil.darStatus['approved with conditions'] &&
-                                                    applicationStatus !== DarHelperUtil.darStatus.rejected ? (
+                                                    {applicationType === darHelperUtils.darApplicationTypes.amendment &&
+                                                    applicationStatus !== darHelperUtils.darStatus.approved &&
+                                                    applicationStatus !== darHelperUtils.darStatus['approved with conditions'] &&
+                                                    applicationStatus !== darHelperUtils.darStatus.rejected ? (
                                                         <>
                                                             <SLA
-                                                                classProperty={DarHelperUtil.darStatusColours[applicationStatus]}
-                                                                text={DarHelperUtil.darAmendmentSLAText[applicationStatus]}
+                                                                classProperty={darHelperUtils.darStatusColours[applicationStatus]}
+                                                                text={darHelperUtils.darAmendmentSLAText[applicationStatus]}
                                                             />
                                                             <SLA
-                                                                classProperty={DarHelperUtil.darStatusColours['approved']}
-                                                                text={DarHelperUtil.darSLAText['approved']}
+                                                                classProperty={darHelperUtils.darStatusColours['approved']}
+                                                                text={darHelperUtils.darSLAText['approved']}
                                                             />
                                                         </>
                                                     ) : (
                                                         <SLA
-                                                            classProperty={DarHelperUtil.darStatusColours[applicationStatus]}
-                                                            text={DarHelperUtil.darSLAText[applicationStatus]}
+                                                            classProperty={darHelperUtils.darStatusColours[applicationStatus]}
+                                                            text={darHelperUtils.darSLAText[applicationStatus]}
                                                         />
                                                     )}
                                                 </div>
@@ -464,7 +456,7 @@ class DataAccessRequestsNew extends Component {
                                                     updatedAt={updatedAt}
                                                     applicants={applicants}
                                                     dateSubmitted={dateSubmitted}
-                                                    team={team}
+                                                    teamType={teamType}
                                                     workflow={workflow}
                                                     workflowName={workflowName}
                                                     workflowCompleted={workflowCompleted}

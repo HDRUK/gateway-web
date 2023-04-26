@@ -22,12 +22,17 @@ const Checkbox = ({
     label: textLabel,
     id,
     disabled,
+    title,
     ...outerProps
 }) => {
     const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
 
     return (
-        <label htmlFor={id} css={styles.root({ variant, partial, disabled })} className={cx('ui-Checkbox', className, commonStyles)}>
+        <label
+            title={title}
+            htmlFor={id}
+            css={styles.root({ variant, partial, disabled })}
+            className={cx('ui-Checkbox', className, commonStyles)}>
             <input type='checkbox' id={id} {...outerProps} disabled={disabled} />
             <span className='ui-Checkbox__label'>
                 <span>{textLabel}</span>
@@ -41,12 +46,14 @@ Checkbox.propTypes = addCommonPropTypes({
     onChange: PropTypes.func,
     variant: PropTypes.oneOf(['primary', 'secondary']),
     id: PropTypes.string,
+    title: PropTypes.string,
     partial: PropTypes.bool,
 });
 
 Checkbox.defaultProps = {
     variant: 'primary',
     partial: false,
+    title: '',
 };
 
 export default Checkbox;

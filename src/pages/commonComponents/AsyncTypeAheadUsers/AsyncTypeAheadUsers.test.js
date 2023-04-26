@@ -34,6 +34,10 @@ describe('Given the AsyncTypeAheadUsers component', () => {
             testUtils.fireEvent.click(input);
         });
 
+        afterAll(() => {
+            testUtils.cleanup();
+        });
+
         it('Then matches the previous snapshot', () => {
             expect(wrapper.container).toMatchSnapshot();
         });
@@ -47,6 +51,9 @@ describe('Given the AsyncTypeAheadUsers component', () => {
             testUtils.fireEvent.change(input, { target: { value: 'jack' } });
         });
 
+        afterAll(() => {
+            testUtils.cleanup();
+        });
         it('Then should have the correct value', () => {
             expect(input.value).toBe('jack');
         });

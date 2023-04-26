@@ -5,11 +5,11 @@ import _ from 'lodash';
 import axios from 'axios';
 
 import { Alert } from 'components';
+import { darHelperUtils } from 'utils';
+
 import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.svg';
 import SVGIcon from '../../../../images/SVGIcon';
 import { baseURL } from '../../../../configs/url.config';
-import DarHelperUtil from '../../../../utils/DarHelper.util';
-
 import SLA from '../../../commonComponents/sla/SLA';
 import TimeDuration from '../../../commonComponents/timeDuration/TimeDuration';
 import './DuplicateApplicationModal.scss';
@@ -102,8 +102,8 @@ const DuplicateApplicationModal = ({ isOpen, closeModal, duplicateApplication, s
                                     <div className='status'>
                                         {renderDuration(createdAt)}
                                         <SLA
-                                            classProperty={DarHelperUtil.darStatusColours[request.applicationStatus]}
-                                            text={DarHelperUtil.darSLAText[request.applicationStatus]}
+                                            classProperty={darHelperUtils.darStatusColours[request.applicationStatus]}
+                                            text={darHelperUtils.darSLAText[request.applicationStatus]}
                                         />
                                     </div>
                                 </div>

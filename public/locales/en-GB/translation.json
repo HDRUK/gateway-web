@@ -19,6 +19,10 @@
             "401": {
                 "title": "Unauthorised",
                 "message": "The request to this address was unauthorised"
+            },
+            "403": {
+                "title": "Unauthorised",
+                "message": "The request to this address was unauthorised"
             }
         },
         "errors": {
@@ -121,6 +125,19 @@
                         "message": "There has been a problem updating the terms and conditions"
                     }
                 }
+            },
+            "teams": {
+                "getMembers": {
+                    "404": {
+                        "message": "There has been a problem getting the members of this team"
+                    }
+                },
+                "patchMember": {
+                    "403": {
+                        "title": "Not enough permissions",
+                        "message": "You are not authorised to perform this action"
+                    }
+                }
             }
         }
     },
@@ -158,9 +175,20 @@
     },
     "next": "Next",
     "previous": "Previous",
+    "members": "Members",
+    "metadata": "Metadata",
+    "teamAdmin": "Team Admin",
+    "dataAccessRequest": "Data Access Request",
+    "name": "Name",
+    "editor": "Editor",
+    "manager": "Manager",
+    "reviewer": "Reviewer",
+    "removeMember": "Remove member",
+    "admin": "Admin",
     "guidance.inEdit": "Guidance in edit",
     "guidance.unedited": "Guidance unedited",
     "guidance.edited": "Guidance edited",
+    "team.email": "Team email",
     "dataset": {
         "dateUpdated": "Metadata last updated:",
         "dateUpdatedTooltip": "The last date when the information about this dataset was updated",
@@ -320,7 +348,8 @@
         "cancel": "Cancel",
         "confirm": "Confirm",
         "publish": "Publish",
-        "clearUpdates": "Clear updates"
+        "clearUpdates": "Clear updates",
+        "saveUpdate": "Save update"
     },
     "sortby": {
         "selected": {
@@ -477,6 +506,28 @@
         "QualityScore": {
             "tooltip": "<p>Metadata richness score: {{score}}</p><p>The score relates to the amount of information available about the dataset, and not to the quality of the actual datasets.</p><p>Click to read more about how the score is calculated.</p><p>{{completeness_percent}} Weighted completeness %<br />{{error_percent}} Weighted error %</p>"
         },
+        "AccountTeamMembers": {
+            "disabledMessage": "You do not have permission to edit this",
+            "lastRoleAdmin": "All team members must have at least one role. If you would like to remove a team member, the ‘Remove member’ button can be found in the further actions column.",
+            "lastRoleNonAdmin": "All team members must have at least one role. Please contact your team admin to remove a team member.",
+            "members": {
+                "description1": "To remove team members or change their roles, please raise a support ticket at the following link",
+                "description2": "Managers can manage members, create and assign workflows, review applications that are assigned to them and make the final decision on data access request applications.",
+                "description3": "Reviewers can review applications that are assigned to them.",
+                "add": "+ Add a new member"
+            }
+        },
+        "AccountTeamGatewayEmail": {
+            "optIn": {
+                "switch": "Send email notifications to my Gateway email address",
+                "description": "You will need to add a team email to be able to save switching off notifications to your own Gateway email."
+            },
+            "emailLabel": "My Gateway email"
+        },
+        "AccountTeamNotificationsConfirmationModal": {
+            "title": "Email notifications",
+            "description": "Are you sure you want to save your update to email notifications? Please make sure any team email addresses you have entered are correct."
+        },
         "Login": {
             "description": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
             "list": {
@@ -487,6 +538,15 @@
             "notLoading": "Click here if login screen does not load",
             "linkLoginOptions": "Show all login options",
             "descriptionButtons": "You can sign in or create a Gateway account with any of the organisations below, simply click your preferred organisation and follow the on-screen instructions:"
+        }
+    },
+    "pages": {
+        "AccountTeamManagement": {
+            "title": "Team management",
+            "description": "Organise and manage team members and the teams email notifications. If you need assistance managing the team, please",
+            "supportLinkText": "raise a support ticket",
+            "emailNotificationsTitle": "Email notifications",
+            "emailNotificationsDescription": "Team related email notifications will automatically be sent to each team members Gateway log in email. Data custodian managers can choose to send notifications to additional email accounts."
         }
     }
 }

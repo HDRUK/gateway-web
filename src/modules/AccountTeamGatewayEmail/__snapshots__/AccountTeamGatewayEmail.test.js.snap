@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the AccountTeamGatewayEmail component And the user is a team admin Then should match the snapshot 1`] = `
+<div>
+  <label
+    class="emotion-0 ui-Switch emotion-1"
+  >
+    <input
+      type="checkbox"
+      variant="primary"
+    />
+    <div
+      class="ui-SwitchControl"
+    >
+      <div>
+        <div>
+          Send email notifications to my Gateway email address
+        </div>
+        <div
+          class="ui-Message emotion-2"
+        >
+          You will need to add a team email to be able to save switching off notifications to your own Gateway email.
+        </div>
+      </div>
+    </div>
+  </label>
+  <div
+    class="ui-Box emotion-3"
+  >
+    <div
+      class="ui-Box emotion-3"
+    >
+      <div
+        class="emotion-5 form-group"
+      >
+        <label
+          class="emotion-6 form-label"
+        >
+          My Gateway email
+        </label>
+        <div
+          class="ui-Input emotion-7 input-group"
+        >
+          <input
+            aria-describedby="My Gateway email"
+            class="form-control"
+            disabled=""
+            name="myGatewayEmail"
+            style="background: rgb(238, 238, 238);"
+            title="You do not have permission to edit this"
+            type="email"
+            value="eddie@murphy.com"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Given the AccountTeamGatewayEmail component And the user is not a team admin Then should match the snapshot 1`] = `
+<div>
+  <label
+    class="emotion-0 ui-Switch emotion-1"
+  >
+    <input
+      type="checkbox"
+      variant="primary"
+    />
+    <div
+      class="ui-SwitchControl"
+    >
+      <div>
+        <div>
+          Send email notifications to my Gateway email address
+        </div>
+      </div>
+    </div>
+  </label>
+  <div
+    class="ui-Box emotion-2"
+  >
+    <div
+      class="ui-Box emotion-2"
+    >
+      <div
+        class="emotion-4 form-group"
+      >
+        <label
+          class="emotion-5 form-label"
+        >
+          My Gateway email
+        </label>
+        <div
+          class="ui-Input emotion-6 input-group"
+        >
+          <input
+            aria-describedby="My Gateway email"
+            class="form-control"
+            disabled=""
+            name="myGatewayEmail"
+            style="background: rgb(238, 238, 238);"
+            title="You do not have permission to edit this"
+            type="email"
+            value="steve@martin.com"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

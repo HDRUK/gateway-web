@@ -10,7 +10,7 @@ import AddEditPaperForm from './AddEditPaperForm';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import { isEditMode } from '../../utils/GeneralHelper.util';
+import { isEditMode } from '../../utils/General.util';
 import './Paper.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 var baseURL = require('../commonComponents/BaseURL').getURL();

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { has, isEmpty, isString, isObject } from 'lodash';
 import moment from 'moment';
 import { ReactComponent as CalendarSvg } from '../../../../images/calendaricon.svg';
-import { stripMarkdown } from '../../../../utils/GeneralHelper.util';
+import { stripMarkdown } from '../../../../utils/General.util';
 import SVGIcon from '../../../../images/SVGIcon';
 import RemoveButton from '../RemoveButton/RemoveButton';
 import Title from '../Title/Title';

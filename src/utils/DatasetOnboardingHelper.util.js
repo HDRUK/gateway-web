@@ -980,14 +980,7 @@ const removeStaticPages = (schema = {}) => {
     };
 };
 
-const _buildCompletionWheels = completionObj => {
-    Object.keys(completionObj).forEach((section, completion) => {
-        console.log(section);
-        console.log(completion);
-    });
-};
-
-const _calculateTimeDifference = startTime => {
+const calculateTimeDifference = startTime => {
     const start = moment(startTime);
     const end = moment();
     return end.diff(start, 'days');
@@ -1009,7 +1002,7 @@ const getLocationsObj = values => {
     });
 };
 
-export default {
+export {
     questionSetToDuplicate,
     insertSchemaUpdates,
     removeQuestionReferences,
@@ -1040,8 +1033,7 @@ export default {
     userTypes,
     amendmentStatuses,
     removeStaticPages,
-    calculateTimeDifference: _calculateTimeDifference,
-    buildCompletionWheels: _buildCompletionWheels,
+    calculateTimeDifference,
     getUpdatesSubmittedLog,
     getLocationsObj,
 };

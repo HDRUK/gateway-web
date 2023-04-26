@@ -23,7 +23,7 @@ const MessageHeader = ({ userState, topic, modalRequired, onRequestAccess, onSho
 
     const onRouteChange = e => {
         e.preventDefault();
-        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests&team=${publisher}`, state: { team: publisher } });
+        history.push({ pathname: `/account`, search: `?tab=dataaccessrequests&teamType=team&teamId=${publisher}` });
     };
 
     useEffect(() => {
