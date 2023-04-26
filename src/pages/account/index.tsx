@@ -12,7 +12,7 @@ function Account() {
     const createFilter = usePostItem<Filter>(config.filtersV1Url, filters);
 
     const addFilter = async () => {
-        const filter = generateFilterV1();
+        const filter = generateFilterV1({ enabled: true });
         delete filter.id;
         createFilter(filter);
     };
