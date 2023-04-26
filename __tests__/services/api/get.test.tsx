@@ -1,11 +1,11 @@
 import config from "@/config";
-import { Tag } from "@/interfaces/Tag";
-import { tagsV1 } from "@/mocks/data";
+import { Filter } from "@/interfaces/Filter";
+import { filtersV1 } from "@/mocks/data";
 import { getRequest } from "@/services/api";
 
 describe("get", () => {
-    it("should return tags", async () => {
-        const response = await getRequest<Tag[]>(config.tagsV1Url);
-        expect(response).toEqual(tagsV1);
+    it("should return filters", async () => {
+        const response = await getRequest<Filter[]>(config.filtersV1Url);
+        expect(response).toEqual(filtersV1);
     });
 });

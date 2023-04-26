@@ -1,7 +1,7 @@
 import useUser from "@/hooks/useUser";
-import { tagsV1 } from "@/mocks/data";
+import { filtersV1 } from "@/mocks/data";
 import { server } from "@/mocks/server";
-import { getTagsV1 } from "@/mocks/handlers/tags";
+import { getFiltersV1 } from "@/mocks/handlers/filters";
 import { renderHook, waitFor } from "../testUtils";
 
 /**
@@ -20,11 +20,11 @@ describe("useUser", () => {
 
         await waitFor(() => {
             expect(result.current.error).not.toBeDefined();
-            expect(result.current.user).toEqual(tagsV1);
+            expect(result.current.user).toEqual(filtersV1);
         });
     });
     it("should return error if 404 returned", async () => {
-        server.use(getTagsV1(undefined, 404));
+        server.use(getFiltersV1(undefined, 404));
 
         const { result } = renderHook(() => useUser());
 

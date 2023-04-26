@@ -1,21 +1,38 @@
 import { GetServerSideProps } from "next";
-import useTags from "@/hooks/useTags";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
+import config from "@/config";
+import { Filter } from "@/interfaces/Filter";
+import { generateFilterV1 } from "@/mocks/data";
+import useGet from "@/hooks/useGet";
+import usePost from "@/hooks/usePost";
 
 function Account() {
-    const { tags } = useTags();
+    const { data: filters } = useGet<Filter[]>(config.filtersV1Url);
+    const createFilter = usePost<Filter>(config.filtersV1Url);
+
+    const addFilter = async () => {
+        const filter = generateFilterV1({ enabled: true });
+        delete filter.id;
+        createFilter(filter);
+    };
 
     return (
         <>
             <Head title="Health Data Research Innovation Gateway" />
             <div>
-                <h2 style={{ marginBottom: "10px" }}>Tags</h2>
+                <h2 style={{ marginBottom: "10px" }}>Filters</h2>
                 <ul style={{ marginLeft: "20px" }}>
-                    {tags?.map(tag => (
-                        <li key={tag.id}>{tag.type}</li>
+                    {filters?.map(filter => (
+                        <li key={filter.id}>{filter.type}</li>
                     ))}
                 </ul>
+                <button
+                    onClick={() => {
+                        addFilter();
+                    }}>
+                    Add filter
+                </button>
             </div>
         </>
     );

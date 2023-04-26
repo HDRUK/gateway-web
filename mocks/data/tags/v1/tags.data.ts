@@ -23,6 +23,7 @@ const generateTagsV1 = (length = 3, data = {}): Tag[] => {
     return Array.from({ length }).map(() => generateTagV1(data));
 };
 
+const tagV1 = generateTagV1();
 const tagsV1 = Array.from({ length: 3 }).map(() => generateTagV1());
 
-export { generateTagsV1, tagsV1 };
+export { generateTagsV1, tagsV1, tagV1 };

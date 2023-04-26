@@ -1,0 +1,57 @@
+export type FilterType =
+    | "dataset"
+    | "collection"
+    | "tool"
+    | "course"
+    | "project"
+    | "paper"
+    | "dataUseRegister";
+
+export type FilterKey =
+    | "phenotype"
+    | "features"
+    | "publisher"
+    | "damaQualityDimension"
+    | "researchEnvironment"
+    | "spatial"
+    | "typicalAgeRange"
+    | "physicalSampleAvailability"
+    | "followup"
+    | "pathway"
+    | "purpose"
+    | "source"
+    | "collectionSituation"
+    | "accrualPeriodicity"
+    | "deliveryLeadTime"
+    | "jurisdiction"
+    | "dataProcessor"
+    | "dataController"
+    | "vocabularyEncodingScheme"
+    | "conformsTo"
+    | "language"
+    | "format"
+    | "keywords"
+    | "type"
+    | "programmingLanguage"
+    | "domain"
+    | "startDate"
+    | "provider"
+    | "location"
+    | "studyMode"
+    | "award"
+    | "entryRequirements"
+    | "competencyFramework"
+    | "nationalPriorityAreas"
+    | "organisationName"
+    | "organisationSector"
+    | "fundersAndSponsors";
+
+interface Filter {
+    id: number;
+    keys: FilterKey;
+    enabled: boolean;
+    type: FilterType;
+    value: string;
+}
+
+export type { Filter };

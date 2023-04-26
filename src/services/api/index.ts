@@ -1,3 +1,4 @@
 import { getRequest } from "./get";
+import { postRequest } from "./post";
 
-export { getRequest };
+export { getRequest, postRequest };

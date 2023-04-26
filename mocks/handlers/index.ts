@@ -1,4 +1,4 @@
 import { getUserV1 } from "./user";
-import { getTagsV1 } from "./tags";
+import { getFiltersV1, postFilterV1 } from "./filters";
 
-export const handlers = [getUserV1(), getTagsV1()];
+export const handlers = [getUserV1(), getFiltersV1(), postFilterV1()];
