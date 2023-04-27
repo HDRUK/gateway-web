@@ -10,6 +10,9 @@ const config: StorybookConfig = {
         name: "@storybook/nextjs",
         options: {},
     },
+    features: {
+        emotionAlias: false,
+    },
     docs: {
         autodocs: "tag",
     },
