@@ -11,6 +11,7 @@ const AccountTeamGatewayNotificationEmails = ({ teamId, teamNotification, toggle
     return (
         <div data-testid='AccountTeamGatewayNotificationEmails'>
             <Switch
+                title={isCustodianTeamAdmin ? '' : 'You do not have permission to edit this'}
                 disabled={!isCustodianTeamAdmin}
                 checked={teamNotification.optIn}
                 onChange={({ target: { checked } }) => toggleTeamNotifications({ checked, id: teamNotification.notificationType })}

@@ -47,12 +47,12 @@ describe('AccountTeamManagement utils', () => {
             ];
             const expectedResult = [
                 {
-                    subscribedEmails: [{ value: 'mock value 1', error: 'mock error' }],
+                    subscribedEmails: ['mock value 1'],
                     optIn: true,
                     notificationType: 'notificationType1',
                 },
                 {
-                    subscribedEmails: [{ value: 'mock value 2', error: '' }],
+                    subscribedEmails: ['mock value 2'],
                     optIn: true,
                     notificationType: 'notificationType2',
                 },
