@@ -100,7 +100,7 @@ const AccountTeamManagementPage = ({ teamId, forwardRef, onTeamManagementSave })
             // param 1: isSubmitting, params 2: savedTeamNotificationSuccess
             onTeamManagementSave(true, false);
             await axios
-                .put(`${baseURL}/api/v1/teams/${teamId}/notifications`, data)
+                .put(`${baseURL}/api/v3/teams/${teamId}/notifications`, data)
                 .then(() => {
                     // call parent set save button state
                     onTeamManagementSave(false, true);
@@ -154,7 +154,7 @@ const AccountTeamManagementPage = ({ teamId, forwardRef, onTeamManagementSave })
         if (!isEmpty(teamId)) {
             setLoading(true);
             axios
-                .get(`${baseURL}/api/v1/teams/${teamId}/notifications`)
+                .get(`${baseURL}/api/v3/teams/${teamId}/notifications`)
                 .then(res => {
                     let messages;
                     // will need updated once more notification types are defined
