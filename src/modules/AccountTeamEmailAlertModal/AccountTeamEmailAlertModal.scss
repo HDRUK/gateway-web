@@ -14,7 +14,7 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
-        padding: 32px 32px 0 32px;
+        padding: 24px;
 
         h1 {
             width: 90%;
@@ -22,8 +22,8 @@
 
         &--close {
             position: absolute;
-            top: 17px;
-            right: 25px;
+            top: 24px;
+            right: 24px;
             width: 16px;
             height: 16px;
             fill: $indigo;
