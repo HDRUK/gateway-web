@@ -9,11 +9,11 @@ import { addCommonPropTypes } from '../../configs/propTypes';
 import * as styles from './Switch.styles';
 import SwitchControl from './SwitchControl';
 
-const Switch = ({ className, mt, mb, ml, mr, width, minWidth, maxWidth, label: textLabel, id, disabled, ...outerProps }) => {
+const Switch = ({ className, mt, mb, ml, mr, width, minWidth, maxWidth, label: textLabel, id, disabled, title, ...outerProps }) => {
     const commonStyles = useCommonStyles({ mt, mb, ml, mr, width, minWidth, maxWidth });
 
     return (
-        <label htmlFor={id} css={styles.root({ disabled })} className={cx(className, commonStyles, 'ui-Switch')}>
+        <label title={title} htmlFor={id} css={styles.root({ disabled })} className={cx(className, commonStyles, 'ui-Switch')}>
             <input type='checkbox' id={id} {...outerProps} disabled={disabled} />
             <SwitchControl>{textLabel}</SwitchControl>
         </label>

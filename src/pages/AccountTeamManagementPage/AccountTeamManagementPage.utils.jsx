@@ -43,7 +43,7 @@ const formatSubscribedEmails = teamGatewayNotifications => {
             return item.value !== '';
         });
 
-        return [...arr, { ...teamNotification, subscribedEmails: filteredEmails }];
+        return [...arr, { ...teamNotification, subscribedEmails: filteredEmails.map(filteredEmail => filteredEmail.value) }];
     }, []);
 };
 
