@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
-export const theme = createTheme({
+const theme = createTheme({
     palette: {
         primary: {
             main: "#556cd6",
@@ -13,7 +13,6 @@ export const theme = createTheme({
             main: red.A400,
         },
     },
-    typography: {
-        fontFamily: "museo-sans-rounded",
-    },
 });
+
+export default theme;

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/Link";
 import HeaderNav from "../HeaderNav/HeaderNav";
 
 function Header() {
@@ -6,16 +6,14 @@ function Header() {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
             <ul
                 style={{
-                    padding: "20px",
                     display: "inline-block",
                     listStyle: "none",
                 }}>
                 <li
                     style={{
                         display: "inline-block",
-                        paddingLeft: "10px",
                     }}>
-                    <Link href="/">Home</Link>
+                    <Link href="/" label="Home" />
                 </li>
             </ul>
             <HeaderNav />

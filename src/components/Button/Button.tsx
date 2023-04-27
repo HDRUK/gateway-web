@@ -1,20 +1,22 @@
 import React from "react";
-import "./button.css";
+import MuiButton from "@mui/material/Button";
 
 interface ButtonProps {
-    variant: string;
+    color: "primary" | "secondary" | "success" | "error" | "info" | "warning";
+    variant: "contained" | "outlined" | "text";
     children: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
-    variant = "primary",
+    color = "primary",
+    variant = "contained",
     children,
     ...rest
 }) => {
     return (
-        <button type="button" className={`button ${variant} `} {...rest}>
+        <MuiButton color={color} variant={variant} {...rest}>
             {children}
-        </button>
+        </MuiButton>
     );
 };
 

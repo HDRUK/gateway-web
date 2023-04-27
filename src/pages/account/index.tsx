@@ -6,6 +6,7 @@ import { Filter } from "@/interfaces/Filter";
 import { generateFilterV1 } from "@/mocks/data";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
+import Button from "@/components/Button";
 
 function Account() {
     const { data: filters } = useGet<Filter[]>(config.filtersV1Url);
@@ -27,12 +28,13 @@ function Account() {
                         <li key={filter.id}>{filter.type}</li>
                     ))}
                 </ul>
-                <button
+                <Button
+                    color="primary"
                     onClick={() => {
                         addFilter();
                     }}>
                     Add filter
-                </button>
+                </Button>
             </div>
         </>
     );

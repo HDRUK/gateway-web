@@ -15,18 +15,18 @@ type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
     args: {
-        variant: "primary",
+        color: "primary",
     },
 };
 
 export const Secondary: Story = {
     args: {
-        variant: "secondary",
+        color: "secondary",
     },
 };
 
-export const Danger: Story = {
+export const Error: Story = {
     args: {
-        variant: "danger",
+        color: "error",
     },
 };
