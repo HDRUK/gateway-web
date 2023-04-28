@@ -1,13 +1,7 @@
 import React from "react";
-import MuiButton from "@mui/material/Button";
+import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 
-interface ButtonProps {
-    color: "primary" | "secondary" | "success" | "error" | "info" | "warning";
-    variant: "contained" | "outlined" | "text";
-    children: string;
-}
-
-const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<MuiButtonProps> = ({
     color = "primary",
     variant = "contained",
     children,

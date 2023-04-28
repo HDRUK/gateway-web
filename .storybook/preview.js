@@ -1,8 +1,6 @@
-import type { Preview } from "@storybook/react";
-import { theme } from "../src/config/Theme";
-import { ThemeProvider } from "@emotion/react";
+import { withMuiTheme } from "./withMuiTheme.decorator";
 
-const preview: Preview = {
+const preview = {
     parameters: {
         actions: { argTypesRegex: "^on[A-Z].*" },
         controls: {
@@ -22,10 +20,4 @@ const preview: Preview = {
 
 export default preview;
 
-export const decorators = [
-    Story => (
-        <ThemeProvider theme={theme}>
-            <Story />
-        </ThemeProvider>
-    ),
-];
+export const decorators = [withMuiTheme];

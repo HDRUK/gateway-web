@@ -10,11 +10,22 @@ const config: StorybookConfig = {
         name: "@storybook/nextjs",
         options: {},
     },
-    features: {
-        emotionAlias: false,
-    },
+    features: {},
     docs: {
         autodocs: "tag",
+    },
+    typescript: {
+        check: false,
+        checkOptions: {},
+        reactDocgen: "react-docgen-typescript",
+        reactDocgenTypescriptOptions: {
+            shouldExtractLiteralValuesFromEnum: true, // makes union prop types like variant and size appear as select controls
+            shouldRemoveUndefinedFromOptional: true, // makes string and boolean types that can be undefined appear as inputs and switches
+            propFilter: prop =>
+                prop.parent
+                    ? !/node_modules\/(?!@mui)/.test(prop.parent.fileName)
+                    : true,
+        },
     },
 };
 export default config;
