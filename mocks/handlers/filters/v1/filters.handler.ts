@@ -35,4 +35,21 @@ const postFilterV1 = (data = filterV1, status = 200) => {
     });
 };
 
-export { getFiltersV1, postFilterV1 };
+interface PutResponse {
+    data: Filter;
+}
+
+const putFilterV1 = (data = filterV1, status = 200) => {
+    // update to `rest.put` as part of ticket GAT-2244
+    return rest.patch(`${config.filtersV1Url}/:id`, (req, res, ctx) => {
+        if (status !== 200) {
+            return res(
+                ctx.status(status),
+                ctx.json(`Request failed with status code ${status}`)
+            );
+        }
+        return res(ctx.status(status), ctx.json<PutResponse>({ data }));
+    });
+};
+
+export { getFiltersV1, postFilterV1, putFilterV1 };
