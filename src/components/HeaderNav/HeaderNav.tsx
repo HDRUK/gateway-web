@@ -1,6 +1,6 @@
 import config from "@/config";
+import Link from "@/components/Link";
 import useUser from "@/hooks/useUser";
-import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import Loading from "../Loading";
 
@@ -43,7 +43,6 @@ function HeaderNav() {
     return (
         <ul
             style={{
-                padding: "20px",
                 display: "inline-block",
                 listStyle: "none",
             }}>
@@ -54,7 +53,7 @@ function HeaderNav() {
                         display: "inline-block",
                         paddingLeft: "10px",
                     }}>
-                    <Link href={link.href}>{link.label}</Link>
+                    <Link href={link.href} label={link.label} />
                 </li>
             ))}
         </ul>

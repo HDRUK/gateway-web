@@ -1,11 +1,27 @@
+import * as React from "react";
+import { AppProps } from "next/app";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import theme from "@/config/theme";
+import createEmotionCache from "@/config/createEmotionCache";
 import Auth from "@/components/Auth";
 import Layout from "@/components/Layout";
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { appWithTranslation } from "next-i18next";
 
-const App = ({ Component, pageProps }: AppProps) => {
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
+
+export interface MyAppProps extends AppProps {
+    emotionCache?: EmotionCache;
+}
+
+const App = ({
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps,
+}: MyAppProps) => {
     const { isProtected } = pageProps;
     return (
         <SWRConfig
@@ -15,13 +31,17 @@ const App = ({ Component, pageProps }: AppProps) => {
                     console.log({ error, key });
                 },
             }}>
-            <Layout>
-                <Auth isProtected={isProtected}>
-                    <Component {...pageProps} />
-                </Auth>
-            </Layout>
+            <CacheProvider value={emotionCache}>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Layout>
+                        <Auth isProtected={isProtected}>
+                            <Component {...pageProps} />
+                        </Auth>
+                    </Layout>
+                </ThemeProvider>
+            </CacheProvider>
         </SWRConfig>
     );
 };
-
 export default appWithTranslation(App);
