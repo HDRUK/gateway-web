@@ -32,9 +32,10 @@ function Account() {
                 <h2 style={{ marginBottom: "10px" }}>Filters</h2>
                 <ul style={{ marginLeft: "20px" }}>
                     {filters?.map(filter => (
-                        <li key={filter.id}>
+                        <li key={filter.id} style={{ marginBottom: "10px" }}>
                             {filter.type}{" "}
                             <Button
+                                variant="text"
                                 color="primary"
                                 size="small"
                                 onClick={() => {
