@@ -40,8 +40,8 @@ interface PutResponse {
 }
 
 const putFilterV1 = (data = filterV1, status = 200) => {
-    //  to be replaced with PUT as part of GAT-2244
-    return rest.patch(config.filtersV1Url, (req, res, ctx) => {
+    // update to `rest.put` as part of ticket GAT-2244
+    return rest.patch(`${config.filtersV1Url}/:id`, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),

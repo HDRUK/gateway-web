@@ -6,7 +6,7 @@ const putRequest = async <T>(
     data: unknown,
     options?: AxiosRequestConfig
 ): Promise<T> => {
-    //  to be replaced with PUT as part of GAT-2244
+    // update to `rest.put` as part of ticket GAT-2244
     return await http.patch(url, data, options).then(res => res.data?.data);
 };
 

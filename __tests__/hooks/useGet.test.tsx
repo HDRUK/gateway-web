@@ -7,7 +7,7 @@ import { User } from "@/interfaces/User";
 import { Filter } from "@/interfaces/Filter";
 import { renderHook, waitFor } from "../testUtils";
 
-describe("useGetItems", () => {
+describe("useGet", () => {
     it("should eventually return the single item", async () => {
         const { result } = renderHook(() => useGet<User>(config.userV1Url));
 

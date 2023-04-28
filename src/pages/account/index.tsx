@@ -33,7 +33,7 @@ function Account() {
                 <ul style={{ marginLeft: "20px" }}>
                     {filters?.map(filter => (
                         <li key={filter.id}>
-                            {filter.type}
+                            {filter.type}{" "}
                             <Button
                                 color="primary"
                                 size="small"
