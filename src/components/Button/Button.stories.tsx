@@ -2,7 +2,7 @@
 
 // Replace your-framework with the name of your framework
 import type { Meta, StoryObj } from "@storybook/react";
-
+import Stack from "@mui/material/Stack";
 import Button from "./Button";
 
 const meta: Meta<typeof Button> = {
@@ -12,53 +12,45 @@ const meta: Meta<typeof Button> = {
      */
     title: "Button",
     component: Button,
-    argTypes: {
-        variant: {
-            options: ["contained", "outlined", "text"],
-            control: { type: "radio" },
-        },
-        color: {
-            options: ["primary", "secondary"],
-            control: { type: "radio" },
-        },
-    },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-/*
- *👇 Render functions are a framework specific feature to allow you control on how the component renders.
- * See https://storybook.js.org/docs/react/api/csf
- * to learn how to use render functions.
- */
+export const Playground = (args: any) => <Button {...args} />;
+Playground.args = {
+    children: "I'm a button",
+};
+
 export const Color: Story = {
     render: () => (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "10px",
-            }}>
-            <Button color="primary">Primary button</Button>
-            <Button color="secondary">Secondary button</Button>
-        </div>
+        <Stack spacing={2} maxWidth={300}>
+            <Button color="inherit">Inherit</Button>
+            <Button color="primary">Primary</Button>
+            <Button color="secondary">Secondary</Button>
+            <Button color="success">Success</Button>
+            <Button color="error">Error</Button>
+            <Button color="info">Info</Button>
+            <Button color="warning">Warning</Button>
+        </Stack>
+    ),
+};
+export const Size: Story = {
+    render: () => (
+        <Stack spacing={2} maxWidth={300}>
+            <Button size="small">Small</Button>
+            <Button size="medium">Medium</Button>
+            <Button size="large">Large</Button>
+        </Stack>
     ),
 };
 export const Variant: Story = {
     render: () => (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "10px",
-            }}>
-            <Button variant="contained">Contained button</Button>
-            <Button variant="outlined">Outlined button</Button>
-            <Button variant="text">Text button</Button>
-        </div>
+        <Stack spacing={2} maxWidth={300}>
+            <Button variant="contained">Contained</Button>
+            <Button variant="outlined">Outlined</Button>
+            <Button variant="text">Text</Button>
+        </Stack>
     ),
 };
