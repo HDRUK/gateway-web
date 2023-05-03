@@ -7,7 +7,7 @@ const putRequest = async <T>(
     options?: AxiosRequestConfig
 ): Promise<T> => {
     // update to `rest.put` as part of ticket GAT-2244
-    return await http.patch(url, data, options).then(res => res.data?.data);
+    return await http.put(url, data, options).then(res => res.data?.data);
 };
 
 export { putRequest };
