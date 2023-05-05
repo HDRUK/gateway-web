@@ -1,8 +1,8 @@
 import { MutatorOptions, useSWRConfig } from "swr";
-import { putRequest } from "@/services/api/put";
+import { deleteRequest } from "@/services/api/delete";
 import useGet from "./useGet";
 
-const usePut = <T extends { id?: number }>(
+const useDelete = <T extends { id?: number }>(
     key: string,
     options?: MutatorOptions
 ) => {
@@ -13,7 +13,7 @@ const usePut = <T extends { id?: number }>(
         mutate(
             key,
             async () => {
-                const id = await putRequest(`${key}/${payload.id}`, payload);
+                await deleteRequest(`${key}/${payload.id}`);
                 return Array.isArray(data)
                     ? data.map(item =>
                           item.id === payload.id ? payload : item
@@ -35,4 +35,4 @@ const usePut = <T extends { id?: number }>(
     };
 };
 
-export default usePut;
+export default useDelete;
