@@ -1,6 +1,6 @@
 import { MutatorOptions, useSWRConfig } from "swr";
-import useGet from "./useGet";
 import { putRequest } from "@/services/api/put";
+import useGet from "./useGet";
 
 const usePut = <T extends { id?: number }>(
     key: string,

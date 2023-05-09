@@ -8,11 +8,13 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import Button from "@/components/Button";
 import usePut from "@/hooks/usePut";
+import useDelete from "@/hooks/useDelete";
 
 function Account() {
     const { data: filters } = useGet<Filter[]>(config.filtersV1Url);
     const createFilter = usePost<Filter>(config.filtersV1Url);
     const updateFilter = usePut<Filter>(config.filtersV1Url);
+    const deleteFilter = useDelete(config.filtersV1Url);
 
     const addFilter = async () => {
         const filter = generateFilterV1({ enabled: true });
@@ -23,6 +25,10 @@ function Account() {
     const update = async (id: number) => {
         const filter = generateFilterV1({ enabled: true, id, type: "course" });
         updateFilter(filter);
+    };
+
+    const deleteHandler = async (id: number) => {
+        deleteFilter(id);
     };
 
     return (
@@ -38,10 +44,15 @@ function Account() {
                                 variant="text"
                                 color="primary"
                                 size="small"
-                                onClick={() => {
-                                    update(filter.id);
-                                }}>
+                                onClick={() => update(filter.id)}>
                                 Change filter
+                            </Button>
+                            <Button
+                                variant="text"
+                                color="primary"
+                                size="small"
+                                onClick={() => deleteHandler(filter.id)}>
+                                Delete
                             </Button>
                         </li>
                     ))}
