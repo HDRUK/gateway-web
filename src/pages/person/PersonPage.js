@@ -1,8 +1,9 @@
 import { createRef, useState, useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
-import PersonTitle from './components/PersonTitle';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import _ from 'lodash';
+import PersonTitle from './components/PersonTitle';
 import SearchBar from '../commonComponents/searchBar/SearchBar';
 import DataSet from '../commonComponents/DataSet';
 import Tool from '../commonComponents/Tool';
@@ -13,8 +14,8 @@ import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import ErrorModal from '../commonComponents/errorModal';
-import _ from 'lodash';
-let baseURL = require('../commonComponents/BaseURL').getURL();
+
+const baseURL = require('../commonComponents/BaseURL').getURL();
 
 const PersonDetail = props => {
     const [searchString, setSearchString] = useState('');
@@ -36,13 +37,14 @@ const PersonDetail = props => {
     const [searchBar] = useState(createRef());
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         getDataSearchFromDb();
     }, []);
 
     const getDataSearchFromDb = () => {
         setIsLoading(true);
 
-        axios.get(baseURL + '/api/v1/person/' + props.match.params.personID).then(res => {
+        axios.get(`${baseURL}/api/v1/person/${props.match.params.personID}`).then(res => {
             if (_.isNil(res.data)) {
                 window.localStorage.setItem('redirectMsg', `Person not found for Id: ${props.match.params.personID}`);
                 props.history.push({ pathname: '/search?search=', search: '' });
@@ -59,7 +61,7 @@ const PersonDetail = props => {
     };
 
     const doSearch = e => {
-        //fires on enter on searchbar
+        // fires on enter on searchbar
         if (e.key === 'Enter') window.location.href = `/search?search=${encodeURIComponent(searchString)}`;
     };
 
@@ -88,7 +90,7 @@ const PersonDetail = props => {
         );
     }
 
-    let tools = [];
+    const tools = [];
     let reviews = [];
 
     if (data.tools.length > 0) {
@@ -121,23 +123,23 @@ const PersonDetail = props => {
                     userState={userState}
                 />
                 <Container className='mb-5'>
-                    <PersonTitle data={data} activeLink={true} />
+                    <PersonTitle data={data} activeLink />
 
                     <Row className='mt-3'>
                         <Col sm={1} lg={1} />
                         <Col sm={10} lg={10}>
                             <div>
                                 <Tabs className='tabsBackground gray700-13'>
-                                    <Tab eventKey='Tools' title={'Tools (' + tools.length + ')'}>
+                                    <Tab eventKey='Tools' title={`Tools (${tools.length})`}>
                                         {tools.length <= 0 ? (
                                             <MessageNotFound word='tools' />
                                         ) : (
                                             tools.map(tool => {
-                                                return <Tool id={tool.id} activeLink={true} />;
+                                                return <Tool id={tool.id} activeLink />;
                                             })
                                         )}
                                     </Tab>
-                                    <Tab eventKey='Reviews' title={'Reviews (' + reviews.length + ')'}>
+                                    <Tab eventKey='Reviews' title={`Reviews (${reviews.length})`}>
                                         {reviews.length <= 0 ? (
                                             <MessageNotFound word='reviews' />
                                         ) : (
@@ -146,11 +148,11 @@ const PersonDetail = props => {
                                             })
                                         )}
                                     </Tab>
-                                    <Tab eventKey='Data sets' title={'Data sets (' + data.datasetids.length + ')'}>
+                                    <Tab eventKey='Data sets' title={`Data sets (${data.datasetids.length})`}>
                                         {data.datasetids.length <= 0 ? (
                                             <MessageNotFound word='data sets' />
                                         ) : (
-                                            data.datasetids.map(id => <DataSet id={id} activeLink={true} />)
+                                            data.datasetids.map(id => <DataSet id={id} activeLink />)
                                         )}
                                     </Tab>
                                 </Tabs>
