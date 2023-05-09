@@ -1,8 +1,6 @@
-import { filterV1, userV1 } from "@/mocks/data";
+import { filtersV1, userV1 } from "@/mocks/data";
 import useDelete from "@/hooks/useDelete";
 import config from "@/config";
-import { Filter } from "@/interfaces/Filter";
-import { User } from "@/interfaces/User";
 import { act, renderHook, waitFor } from "../testUtils";
 
 const mockMutate = jest.fn();
@@ -20,26 +18,26 @@ describe("useDelete", () => {
         jest.clearAllMocks();
     });
 
-    it("should call mutate with correct arguments for deleteing the item", async () => {
-        const { result } = renderHook(() => useDelete<User>(config.userV1Url));
-        const { current: createFunction } = result;
+    it("should call mutate with correct arguments for deleting the item", async () => {
+        const { result } = renderHook(() => useDelete(config.userV1Url));
+        const { current: deleteFunction } = result;
 
-        await createFunction(userV1);
+        await deleteFunction(userV1.id);
 
         await waitFor(() =>
             expect(mockMutate).toHaveBeenCalledWith(
                 config.userV1Url,
                 expect.any(Function),
-                { optimisticData: userV1, rollbackOnError: true }
+                { optimisticData: {}, rollbackOnError: true }
             )
         );
     });
     it("should call mutate with correct arguments for deleting an item in an array", async () => {
-        const { result } = renderHook(() =>
-            useDelete<Filter>(config.filtersV1Url)
-        );
+        const { result } = renderHook(() => useDelete(config.filtersV1Url));
+        const { current: deleteFunction } = result;
+
         act(() => {
-            result.current(filterV1);
+            deleteFunction(filtersV1[0].id);
         });
 
         await waitFor(() => expect(mockMutate).toHaveBeenCalled());

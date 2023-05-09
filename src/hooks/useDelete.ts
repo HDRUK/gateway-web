@@ -2,31 +2,24 @@ import { MutatorOptions, useSWRConfig } from "swr";
 import { deleteRequest } from "@/services/api/delete";
 import useGet from "./useGet";
 
-const useDelete = <T extends { id?: number }>(
-    key: string,
-    options?: MutatorOptions
-) => {
+const useDelete = (key: string, options?: MutatorOptions) => {
     const { mutate } = useSWRConfig();
     const { data } = useGet(key);
 
-    return (payload: T) => {
+    return (id: number) => {
         mutate(
             key,
             async () => {
-                await deleteRequest(`${key}/${payload.id}`);
+                await deleteRequest(`${key}/${id}`);
                 return Array.isArray(data)
-                    ? data.map(item =>
-                          item.id === payload.id ? payload : item
-                      )
-                    : payload;
+                    ? data.filter(item => item.id !== id)
+                    : {};
             },
             {
                 // data to immediately update the client cache
                 optimisticData: Array.isArray(data)
-                    ? data.map(item =>
-                          item.id === payload.id ? payload : item
-                      )
-                    : payload,
+                    ? data.filter(item => item.id !== id)
+                    : {},
                 // rollback if the remote mutation errors
                 rollbackOnError: true,
                 ...options,

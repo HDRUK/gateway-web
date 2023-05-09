@@ -52,10 +52,10 @@ const putFilterV1 = (data = filterV1, status = 200) => {
 };
 
 interface DeleteResponse {
-    data: Filter;
+    message: string;
 }
 
-const deleteFilterV1 = (data = filterV1, status = 200) => {
+const deleteFilterV1 = (status = 200) => {
     return rest.delete(`${config.filtersV1Url}/:id`, (req, res, ctx) => {
         if (status !== 200) {
             return res(
@@ -63,7 +63,10 @@ const deleteFilterV1 = (data = filterV1, status = 200) => {
                 ctx.json(`Request failed with status code ${status}`)
             );
         }
-        return res(ctx.status(status), ctx.json<DeleteResponse>({ data }));
+        return res(
+            ctx.status(status),
+            ctx.json<DeleteResponse>({ message: "success" })
+        );
     });
 };
 

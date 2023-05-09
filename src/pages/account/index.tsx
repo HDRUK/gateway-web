@@ -14,7 +14,7 @@ function Account() {
     const { data: filters } = useGet<Filter[]>(config.filtersV1Url);
     const createFilter = usePost<Filter>(config.filtersV1Url);
     const updateFilter = usePut<Filter>(config.filtersV1Url);
-    const deleteFilter = useDelete<Filter>(config.filtersV1Url);
+    const deleteFilter = useDelete(config.filtersV1Url);
 
     const addFilter = async () => {
         const filter = generateFilterV1({ enabled: true });
@@ -28,8 +28,7 @@ function Account() {
     };
 
     const deleteHandler = async (id: number) => {
-        const filter = generateFilterV1({ id });
-        deleteFilter(filter);
+        deleteFilter(id);
     };
 
     return (

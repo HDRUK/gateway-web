@@ -1,14 +1,12 @@
 import config from "@/config";
-import { Filter } from "@/interfaces/Filter";
-import { filterV1, generateFilterV1 } from "@/mocks/data";
+import { generateNumber } from "@/mocks/data/generic";
 import { deleteRequest } from "@/services/api";
 
 describe("delete", () => {
-    it("should delete payload", async () => {
-        const payload = generateFilterV1();
-        const response = await deleteRequest<Filter>(
-            `${config.filtersV1Url}/${payload.id}`
+    it("should return delete payload", async () => {
+        const response = await deleteRequest(
+            `${config.filtersV1Url}/${generateNumber()}`
         );
-        expect(response).toEqual(filterV1);
+        expect(response).toEqual({ message: "success" });
     });
 });
