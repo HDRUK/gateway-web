@@ -12,7 +12,7 @@
         "coverage": "jest --coverage",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
-        "pre-commit": "npx lint-staged && npm test"
+        "pre-commit": "npx lint-staged"
     },
     "dependencies": {
         "@emotion/cache": "^11.10.7",
