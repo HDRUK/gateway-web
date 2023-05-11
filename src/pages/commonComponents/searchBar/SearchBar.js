@@ -19,7 +19,7 @@ import UatBanner from '../uatBanner/UatBanner';
 import '../uatBanner/UatBanner.scss';
 import CmsDropdown from './CmsDropdown';
 import './SearchBar.scss';
-import { authUtils } from 'utils';
+import { authUtils, roleUtils, accountUtils } from 'utils';
 import { HeaderNav, HeaderNavMobile } from 'modules';
 
 var baseURL = require('../BaseURL').getURL();
@@ -207,8 +207,18 @@ class SearchBar extends Component {
         }
     }
 
+    getDarLink = data => {
+        const team = accountUtils.getTeam(this.state.userState[0]?.teams, data.publisherName);
+        const isReviewer = roleUtils.getIsReviewer(team?.roles);
+
+        const tab = isReviewer ? 'dataaccessrequests' : 'workflows';
+
+        return this.getPublisherLink(data, tab);
+    };
+
     getPublisherLink = (data, tabName) => {
         let { messageDescription, publisherName: teamId } = data;
+
         return (
             <a href={`/account?tab=${tabName}&teamType=team&teamId=${teamId}`} className='notificationInfo'>
                 {messageDescription}
@@ -446,7 +456,7 @@ class SearchBar extends Component {
                                                                                                 {messageDateString + '\n'}
                                                                                             </div>
                                                                                             <div className='notificationInfoHolder'>
-                                                                                                {this.getPublisherLink(dat, 'workflows')}
+                                                                                                {this.getDarLink(dat)}
                                                                                             </div>
                                                                                         </Col>
                                                                                         <Col xs={2}>
