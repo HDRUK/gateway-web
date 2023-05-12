@@ -18,7 +18,7 @@ import { ApiError } from "@/components/CustomNotifications";
 const clientSideEmotionCache = createEmotionCache();
 
 export interface MyAppProps extends AppProps {
-    emotionCache?: EmotionCache;
+    emotionCache: EmotionCache;
 }
 
 const logError = (error: Error, info: { componentStack: string }) => {
