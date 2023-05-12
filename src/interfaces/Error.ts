@@ -1,6 +1,5 @@
 interface Error {
-    code: number;
-    status: string;
+    status: number;
     message: string;
     title: string;
     errors: string[];
