@@ -1502,7 +1502,10 @@ const EditFormDataUse = props => {
             </div>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=datause&teamType=user'>
+                    <a
+                        style={{ cursor: 'pointer' }}
+                        className='nested-button'
+                        href={`/account?tab=datause&teamType=team&teamId=${props.data?.publisher}`}>
                         <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>
