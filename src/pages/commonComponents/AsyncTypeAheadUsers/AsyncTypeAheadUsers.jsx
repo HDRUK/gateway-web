@@ -42,6 +42,8 @@ function AsyncTypeAheadUsers({ currentUserId, selectedUsers, shouldGetUsersInfo,
     useEffect(() => {
         if (selectedUsers && shouldGetUsersInfo) {
             getUsersInfo(selectedUsers);
+        } else {
+            setSelected(selectedUsers);
         }
     }, [selectedUsers, shouldGetUsersInfo]);
 
