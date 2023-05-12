@@ -26,6 +26,7 @@ const putRequest = async <T>(
                 errorNotification({
                     errorResponse: error.response,
                     props,
+                    method: "put",
                 });
             }
         });

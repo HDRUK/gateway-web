@@ -12,21 +12,24 @@
             }
         },
         "error": {
-            "404": {
-                "title": "Page not found",
-                "message": "The requested resource could not be found"
+            "status": {
+                "400": "Invalid argument",
+                "401": "Invalid authentication credentials",
+                "403": "Permission denied",
+                "404": "Resource not found",
+                "500": "There has been a server error"
             },
-            "500": {
-                "title": "Server error",
-                "message": "An error was encountered on the server at the requested address"
+            "put": {
+                "message": "There has been a problem updating {{item}}(s)"
             },
-            "401": {
-                "title": "Unauthorised",
-                "message": "The request to this address was unauthorised"
+            "post": {
+                "message": "There has been a problem creating {{item}}(s)"
             },
-            "403": {
-                "title": "Unauthorised",
-                "message": "The request to this address was unauthorised"
+            "delete": {
+                "message": "There has been a problem deleting {{item}}(s)"
+            },
+            "get": {
+                "message": "There has been a problem fetching {{item}}(s)"
             }
         }
     },

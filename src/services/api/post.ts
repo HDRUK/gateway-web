@@ -26,6 +26,7 @@ const postRequest = async <T>(
                 errorNotification({
                     errorResponse: error.response,
                     props,
+                    method: "post",
                 });
             }
         });

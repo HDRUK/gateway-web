@@ -6,18 +6,23 @@ import notificationService from "../notification";
 interface ErrorNotificationProps {
     props: NotificationOptions;
     errorResponse: AxiosResponse<Error>;
+    method: "delete" | "post" | "put" | "get";
 }
 
 const errorNotification = ({
     errorResponse,
+    method,
     props,
 }: ErrorNotificationProps) => {
-    const { t, ...notificationProps } = props;
-    const { data } = errorResponse || {};
+    const { t, i18n, ...notificationProps } = props;
+    const { data, status } = errorResponse || {};
 
-    const title = t(`common.error.${errorResponse?.status}.title`);
-    const message =
-        data?.message || t(`common.error.${errorResponse?.status}.message`);
+    const fallbackTitle = i18n.exists(`api:common.error.status.${status}`)
+        ? t(`api:common.error.status.${status}`)
+        : "There has been an error";
+
+    const title = data?.title || fallbackTitle;
+    const message = data?.message || t(`api:common.error.${method}.message`);
 
     notificationService.apiError(message, {
         title,

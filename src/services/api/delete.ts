@@ -22,6 +22,7 @@ const deleteRequest = async (url: string, options: RequestOptions) => {
                 errorNotification({
                     errorResponse: error.response,
                     props,
+                    method: "delete",
                 });
             }
         });
