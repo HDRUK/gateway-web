@@ -1,6 +1,6 @@
 import useSWR, { KeyedMutator } from "swr";
 import { Error } from "@/interfaces/Error";
-import { getRequest } from "@/services/api";
+import apiService from "@/services/api";
 
 interface Response<T> {
     data: T | undefined;
@@ -10,7 +10,7 @@ interface Response<T> {
 }
 
 const useGet = <T>(key: string): Response<T> => {
-    const { data, error, mutate } = useSWR<T>(key, getRequest);
+    const { data, error, mutate } = useSWR<T>(key, apiService.getRequest);
 
     return {
         error,

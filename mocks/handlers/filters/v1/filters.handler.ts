@@ -2,6 +2,7 @@ import { rest } from "msw";
 import config from "@/config";
 import { Filter } from "@/interfaces/Filter";
 import { filtersV1, filterV1 } from "@/mocks/data";
+import { errorResponseV1 } from "@/mocks/data/api/v1";
 
 interface GetResponse {
     data: Filter[];
@@ -58,10 +59,7 @@ interface DeleteResponse {
 const deleteFilterV1 = (status = 200) => {
     return rest.delete(`${config.filtersV1Url}/:id`, (req, res, ctx) => {
         if (status !== 200) {
-            return res(
-                ctx.status(status),
-                ctx.json(`Request failed with status code ${status}`)
-            );
+            return res(ctx.status(status), ctx.json(errorResponseV1(status)));
         }
         return res(
             ctx.status(status),

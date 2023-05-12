@@ -10,11 +10,30 @@ import Button from "@/components/Button";
 import usePut from "@/hooks/usePut";
 import useDelete from "@/hooks/useDelete";
 
+const localeKey = "filter";
+const itemName = "Filter";
+
 function Account() {
     const { data: filters } = useGet<Filter[]>(config.filtersV1Url);
+
     const createFilter = usePost<Filter>(config.filtersV1Url);
-    const updateFilter = usePut<Filter>(config.filtersV1Url);
-    const deleteFilter = useDelete(config.filtersV1Url);
+
+    const updateFilter = usePut<Filter>(config.filtersV1Url, {
+        itemName,
+    });
+
+    const deleteFilter = useDelete(config.filtersV1Url, {
+        localeKey,
+        itemName,
+        actions: (
+            <Button
+                color="error"
+                size="small"
+                onClick={() => console.log("call custom function")}>
+                Custom action
+            </Button>
+        ),
+    });
 
     const addFilter = async () => {
         const filter = generateFilterV1({ enabled: true });

@@ -1,19 +1,34 @@
 import { MutatorOptions, useSWRConfig } from "swr";
-import { putRequest } from "@/services/api/put";
+import apiService from "@/services/api";
+import { useTranslation } from "next-i18next";
+import { ReactNode } from "react";
 import useGet from "./useGet";
 
-const usePut = <T extends { id?: number }>(
-    key: string,
-    options?: MutatorOptions
-) => {
+interface Options extends MutatorOptions {
+    localeKey?: string;
+    itemName?: string;
+    actions?: ReactNode;
+}
+
+const usePut = <T extends { id?: number }>(key: string, options?: Options) => {
     const { mutate } = useSWRConfig();
     const { data } = useGet(key);
+    const { t, i18n } = useTranslation("api");
+    const { localeKey, itemName, actions, ...mutatorOptions } = options || {};
 
     return (payload: T) => {
         mutate(
             key,
             async () => {
-                const id = await putRequest(`${key}/${payload.id}`, payload);
+                await apiService.putRequest(`${key}/${payload.id}`, payload, {
+                    notificationOptions: {
+                        localeKey,
+                        itemName,
+                        t,
+                        i18n,
+                        actions,
+                    },
+                });
                 return Array.isArray(data)
                     ? data.map(item =>
                           item.id === payload.id ? payload : item
@@ -27,9 +42,8 @@ const usePut = <T extends { id?: number }>(
                           item.id === payload.id ? payload : item
                       )
                     : payload,
-                // rollback if the remote mutation errors
                 rollbackOnError: true,
-                ...options,
+                ...mutatorOptions,
             }
         );
     };

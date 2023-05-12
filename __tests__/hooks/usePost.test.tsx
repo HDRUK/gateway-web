@@ -21,7 +21,9 @@ describe("usePost", () => {
     });
 
     it("should call mutate with correct arguments for updating a single item", async () => {
-        const { result } = renderHook(() => usePost<User>(config.userV1Url));
+        const { result } = renderHook(() =>
+            usePost<User>(config.userV1Url, {})
+        );
         const { current: createFunction } = result;
 
         await createFunction(userV1);
@@ -36,7 +38,7 @@ describe("usePost", () => {
     });
     it("should call mutate with correct arguments for updating an item in an array", async () => {
         const { result } = renderHook(() =>
-            usePost<Filter>(config.filtersV1Url)
+            usePost<Filter>(config.filtersV1Url, {})
         );
         act(() => {
             result.current(filterV1);

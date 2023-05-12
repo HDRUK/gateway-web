@@ -1,0 +1,40 @@
+{
+    "common": {
+        "success": {
+            "put": {
+                "message": "{{item}} successfully updated"
+            },
+            "post": {
+                "message": "{{item}} successfully created"
+            },
+            "delete": {
+                "message": "{{item}} successfully deleted"
+            }
+        },
+        "error": {
+            "404": {
+                "title": "Page not found",
+                "message": "The requested resource could not be found"
+            },
+            "500": {
+                "title": "Server error",
+                "message": "An error was encountered on the server at the requested address"
+            },
+            "401": {
+                "title": "Unauthorised",
+                "message": "The request to this address was unauthorised"
+            },
+            "403": {
+                "title": "Unauthorised",
+                "message": "The request to this address was unauthorised"
+            }
+        }
+    },
+    "filter": {
+        "success": {
+            "delete": {
+                "message": "This is a custom DELETE success message for 'filter'"
+            }
+        }
+    }
+}

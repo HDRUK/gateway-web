@@ -1,16 +1,34 @@
 import { MutatorOptions, useSWRConfig } from "swr";
-import { deleteRequest } from "@/services/api/delete";
+import apiService from "@/services/api";
+import { useTranslation } from "next-i18next";
+import { ReactNode } from "react";
 import useGet from "./useGet";
 
-const useDelete = (key: string, options?: MutatorOptions) => {
+interface Options extends MutatorOptions {
+    localeKey?: string;
+    itemName?: string;
+    actions?: ReactNode;
+}
+
+const useDelete = (key: string, options?: Options) => {
     const { mutate } = useSWRConfig();
     const { data } = useGet(key);
+    const { t, i18n } = useTranslation("api");
+    const { localeKey, itemName, actions, ...mutatorOptions } = options || {};
 
     return (id: number) => {
         mutate(
             key,
             async () => {
-                await deleteRequest(`${key}/${id}`);
+                await apiService.deleteRequest(`${key}/${id}`, {
+                    notificationOptions: {
+                        localeKey,
+                        itemName,
+                        t,
+                        i18n,
+                        actions,
+                    },
+                });
                 return Array.isArray(data)
                     ? data.filter(item => item.id !== id)
                     : {};
@@ -20,9 +38,8 @@ const useDelete = (key: string, options?: MutatorOptions) => {
                 optimisticData: Array.isArray(data)
                     ? data.filter(item => item.id !== id)
                     : {},
-                // rollback if the remote mutation errors
                 rollbackOnError: true,
-                ...options,
+                ...mutatorOptions,
             }
         );
     };
