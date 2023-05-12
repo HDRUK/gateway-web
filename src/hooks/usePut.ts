@@ -7,14 +7,14 @@ import useGet from "./useGet";
 interface Options extends MutatorOptions {
     localeKey?: string;
     itemName?: string;
-    actions?: ReactNode;
+    action?: ReactNode;
 }
 
 const usePut = <T extends { id?: number }>(key: string, options?: Options) => {
     const { mutate } = useSWRConfig();
     const { data } = useGet(key);
     const { t, i18n } = useTranslation("api");
-    const { localeKey, itemName, actions, ...mutatorOptions } = options || {};
+    const { localeKey, itemName, action, ...mutatorOptions } = options || {};
 
     return (payload: T) => {
         mutate(
@@ -26,7 +26,7 @@ const usePut = <T extends { id?: number }>(key: string, options?: Options) => {
                         itemName,
                         t,
                         i18n,
-                        actions,
+                        action,
                     },
                 });
                 return Array.isArray(data)

@@ -13,7 +13,7 @@ import Button from "../Button";
 interface ApiErrorProps extends CustomContentProps {
     id: string;
     showDismissButton: boolean;
-    actions: ReactNode;
+    action: ReactNode;
     title: string;
     message: string;
     errors: { title: string; message: string }[];
@@ -21,10 +21,7 @@ interface ApiErrorProps extends CustomContentProps {
 
 // todo: this is an example and will need design input
 const ApiError = React.forwardRef<HTMLDivElement, ApiErrorProps>(
-    (
-        { id, message, title, errors, actions, showDismissButton = true },
-        ref
-    ) => {
+    ({ id, message, title, errors, action, showDismissButton = true }, ref) => {
         const handleDismiss = useCallback(() => {
             closeSnackbar(id);
         }, [id]);
@@ -69,7 +66,7 @@ const ApiError = React.forwardRef<HTMLDivElement, ApiErrorProps>(
                                 Dismiss
                             </Button>
                         )}
-                        {actions}
+                        {action}
                     </CardActions>
                 </Card>
             </SnackbarContent>

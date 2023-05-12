@@ -25,9 +25,9 @@ function Account() {
     const deleteFilter = useDelete(config.filtersV1Url, {
         localeKey,
         itemName,
-        actions: (
+        action: (
             <Button
-                color="error"
+                color="primary"
                 size="small"
                 onClick={() => console.log("call custom function")}>
                 Custom action

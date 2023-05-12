@@ -9,7 +9,7 @@ interface NotificationOptions extends OptionsWithExtraProps<VariantType> {
     itemName?: string;
     t: TFunction;
     i18n: I18n;
-    actions?: ReactNode;
+    action?: ReactNode;
 }
 
 interface RequestOptions {
