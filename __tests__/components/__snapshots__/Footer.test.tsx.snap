@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should render component 1`] = `
+<div>
+  <div
+    style="text-align: center; width: 100%; padding: 20px;"
+  >
+    ©
+    Footer.text
+  </div>
+</div>
+`;

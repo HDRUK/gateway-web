@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gateway-web
+spec:
+  containers:
+    - name: gateway-web
+      image: hdruk/gateway-web:latest
+      ports:
+        - containerPort: 3000
