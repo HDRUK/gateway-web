@@ -4,6 +4,8 @@ import {
     renderHook,
     RenderHookOptions,
     RenderOptions,
+    RenderResult,
+    RenderHookResult,
 } from "@testing-library/react";
 import { SWRConfig } from "swr";
 
@@ -18,8 +20,6 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
     );
 };
 
-const WrapperWithTrans = Wrapper;
-
 const customRender = (
     ui: React.ReactElement<
         unknown,
@@ -30,7 +30,7 @@ const customRender = (
         HTMLElement,
         HTMLElement
     >
-): unknown => render(ui, { wrapper: WrapperWithTrans, ...options });
+): RenderResult => render(ui, { wrapper: Wrapper, ...options });
 
 const customRenderHook = (
     ui: (initialProps: unknown) => unknown,
@@ -42,7 +42,8 @@ const customRenderHook = (
               HTMLElement
           >
         | undefined
-): unknown => renderHook(ui, { wrapper: WrapperWithTrans, ...options });
+): RenderHookResult<unknown, unknown> =>
+    renderHook(ui, { wrapper: Wrapper, ...options });
 
 export * from "@testing-library/react";
 
