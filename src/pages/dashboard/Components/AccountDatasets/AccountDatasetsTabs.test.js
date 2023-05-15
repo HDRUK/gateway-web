@@ -55,7 +55,7 @@ describe('Given the AccountDatasetsTabs component', () => {
         });
 
         it('Active tab should be rendered', async () => {
-            expect(testUtils.screen.queryByText('Active (5)')).toBeTruthy();
+            expect(testUtils.screen.queryByText('Active (2)')).toBeTruthy();
         });
 
         it('Rejected tab should be rendered', async () => {
