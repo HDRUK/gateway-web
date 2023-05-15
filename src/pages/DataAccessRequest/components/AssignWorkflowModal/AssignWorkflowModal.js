@@ -8,7 +8,7 @@ import { ReactComponent as CloseButtonSvg } from '../../../../images/close-alt.s
 import { baseURL } from '../../../../configs/url.config';
 import googleAnalytics from '../../../../tracking';
 
-const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId }) => {
+const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId, publisherId }) => {
     // workflow(s) state // this.state.steps = [];
     const [workflowsArr, setWorkflow] = useState([]);
     // state for workflow has been selected
@@ -64,10 +64,11 @@ const AssignWorkflowModal = ({ open, close, workflows, publisher, applicationId 
                             tab: 'inReview',
                             message: `You have successfully assigned a workflow`,
                         };
+
                         // redirect to dashboard with alert
                         history.push({
                             pathname: `/account`,
-                            search: `?tab=dataaccessrequests&teamType=team&teamId=${publisher}`,
+                            search: `?tab=dataaccessrequests&teamType=team&teamId=${publisherId}`,
                             state: { alert },
                         });
                     });
