@@ -6,6 +6,15 @@ import '../../Dashboard.scss';
 const AccountDatasetsTabs = ({ counts = { inReview: 0, active: 0, rejected: 0, archive: 0 }, teamType, onSelectTab, activeKey }) => {
     const { t } = useTranslation();
 
+    const activeAndDraft = () => {
+        const activeCount = Number.isInteger(counts.active) ? counts.active : 0;
+        const draftCount = Number.isInteger(counts.draft) ? counts.draft : 0;
+
+        if (activeKey === 'active') return activeCount;
+
+        return activeCount + draftCount;
+    };
+
     return (
         <div className='tabsBackground mb-0'>
             <Row>
@@ -25,7 +34,7 @@ const AccountDatasetsTabs = ({ counts = { inReview: 0, active: 0, rejected: 0, a
                             <Tab
                                 eventKey={DATASETS_STATUS_ACTIVE}
                                 title={t('tabs.counts.active', {
-                                    count: counts[DATASETS_STATUS_ACTIVE],
+                                    count: activeAndDraft(),
                                 })}>
                                 {' '}
                             </Tab>
