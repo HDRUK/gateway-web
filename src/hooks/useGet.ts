@@ -20,7 +20,8 @@ interface Options {
 const useGet = <T>(key: string, options?: Options): Response<T> => {
     const { t, i18n } = useTranslation("api");
     const { localeKey, itemName, action } = options || {};
-    const { data, error, mutate } = useSWR<T>(key, () =>
+
+    const { data, error, mutate, isLoading } = useSWR<T>(key, () =>
         apiService.getRequest(key, {
             notificationOptions: {
                 localeKey,
@@ -34,7 +35,7 @@ const useGet = <T>(key: string, options?: Options): Response<T> => {
 
     return {
         error,
-        isLoading: !data && !error,
+        isLoading,
         data,
         mutate,
     };

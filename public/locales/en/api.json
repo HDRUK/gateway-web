@@ -20,16 +20,16 @@
                 "500": "There has been a server error"
             },
             "put": {
-                "message": "There has been a problem updating {{item}}(s)"
+                "message": "There has been a problem updating {{item}}"
             },
             "post": {
-                "message": "There has been a problem creating {{item}}(s)"
+                "message": "There has been a problem creating {{item}}"
             },
             "delete": {
-                "message": "There has been a problem deleting {{item}}(s)"
+                "message": "There has been a problem deleting {{item}}"
             },
             "get": {
-                "message": "There has been a problem fetching {{item}}(s)"
+                "message": "There has been a problem fetching {{item}}"
             }
         }
     },

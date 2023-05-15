@@ -22,7 +22,11 @@ const errorNotification = ({
         : "There has been an error";
 
     const title = data?.title || fallbackTitle;
-    const message = data?.message || t(`api:common.error.${method}.message`);
+    const message =
+        data?.message ||
+        t(`api:common.error.${method}.message`, {
+            item: props.itemName || "Item",
+        });
 
     notificationService.apiError(message, {
         title,
