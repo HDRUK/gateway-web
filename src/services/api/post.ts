@@ -1,12 +1,35 @@
-import { AxiosRequestConfig } from "axios";
 import http from "@/utils/http";
+import { RequestOptions } from "@/interfaces/Api";
+import { errorNotification, successNotification } from "./utils";
 
 const postRequest = async <T>(
     url: string,
     data: unknown,
-    options?: AxiosRequestConfig
+    options: RequestOptions
 ): Promise<T> => {
-    return await http.post(url, data, options).then(res => res.data?.data);
+    const { axiosOptions = {}, notificationOptions } = options;
+    const { notificationsOn = true, ...props } = notificationOptions;
+
+    return await http
+        .post(url, data, axiosOptions)
+        .then(res => {
+            if (notificationsOn) {
+                successNotification({
+                    method: "post",
+                    props,
+                });
+            }
+            return res.data?.data;
+        })
+        .catch(error => {
+            if (notificationsOn) {
+                errorNotification({
+                    errorResponse: error.response,
+                    props,
+                    method: "post",
+                });
+            }
+        });
 };
 
 export { postRequest };

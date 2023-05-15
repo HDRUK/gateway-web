@@ -1,6 +1,6 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-const allTranslations = ["common", "components"];
+const allTranslations = ["api", "common", "components"];
 
 const loadServerSideLocales = async (
     locale = "en",

@@ -12,7 +12,8 @@ interface UserResponse {
 
 const useUser = (): UserResponse => {
     const { data, error, isLoading } = useGet<User>(
-        config.filtersV1Url // todo: replace with user endpoint once implemented
+        config.filtersV1Url, // todo: replace with user endpoint once implemented
+        { itemName: "User" }
     );
 
     return {

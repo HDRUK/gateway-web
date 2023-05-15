@@ -1,6 +1,8 @@
 import useSWR, { KeyedMutator } from "swr";
 import { Error } from "@/interfaces/Error";
-import { getRequest } from "@/services/api";
+import apiService from "@/services/api";
+import { useTranslation } from "next-i18next";
+import { ReactNode } from "react";
 
 interface Response<T> {
     data: T | undefined;
@@ -9,12 +11,31 @@ interface Response<T> {
     mutate: KeyedMutator<T>;
 }
 
-const useGet = <T>(key: string): Response<T> => {
-    const { data, error, mutate } = useSWR<T>(key, getRequest);
+interface Options {
+    localeKey?: string;
+    itemName?: string;
+    action?: ReactNode;
+}
+
+const useGet = <T>(key: string, options?: Options): Response<T> => {
+    const { t, i18n } = useTranslation("api");
+    const { localeKey, itemName, action } = options || {};
+
+    const { data, error, mutate, isLoading } = useSWR<T>(key, () =>
+        apiService.getRequest(key, {
+            notificationOptions: {
+                localeKey,
+                itemName,
+                t,
+                i18n,
+                action,
+            },
+        })
+    );
 
     return {
         error,
-        isLoading: !data && !error,
+        isLoading,
         data,
         mutate,
     };

@@ -91,5 +91,6 @@ module.exports = {
                 usePrettierrc: true,
             },
         ],
+        "no-undef": "off",
     },
 };

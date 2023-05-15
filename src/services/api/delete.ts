@@ -1,15 +1,31 @@
-import { AxiosRequestConfig } from "axios";
 import http from "@/utils/http";
+import { RequestOptions } from "@/interfaces/Api";
+import { errorNotification, successNotification } from "./utils";
 
-type DeleteResponse = {
-    message: string;
-};
+const deleteRequest = async (url: string, options: RequestOptions) => {
+    const { axiosOptions = {}, notificationOptions } = options;
+    const { notificationsOn = true, ...props } = notificationOptions;
 
-const deleteRequest = async (
-    url: string,
-    options?: AxiosRequestConfig
-): Promise<DeleteResponse> => {
-    return await http.delete(url, options).then(res => res.data);
+    return http
+        .delete(url, axiosOptions)
+        .then(res => {
+            if (notificationsOn) {
+                successNotification({
+                    method: "delete",
+                    props,
+                });
+            }
+            return res.data;
+        })
+        .catch(error => {
+            if (notificationsOn) {
+                errorNotification({
+                    errorResponse: error.response,
+                    props,
+                    method: "delete",
+                });
+            }
+        });
 };
 
 export { deleteRequest };
