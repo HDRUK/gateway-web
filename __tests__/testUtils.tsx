@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
     render,
     renderHook,
@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import { SWRConfig } from "swr";
 
-const Wrapper = ({ children }: { children: any }) => {
+const Wrapper = ({ children }: { children: ReactNode }) => {
     return (
         <SWRConfig
             value={{
@@ -18,14 +18,19 @@ const Wrapper = ({ children }: { children: any }) => {
     );
 };
 
+const WrapperWithTrans = Wrapper;
+
 const customRender = (
-    ui: React.ReactElement<any, string | React.JSXElementConstructor<any>>,
+    ui: React.ReactElement<
+        unknown,
+        string | React.JSXElementConstructor<unknown>
+    >,
     options?: RenderOptions<
         typeof import("@testing-library/dom/types/queries"),
         HTMLElement,
         HTMLElement
     >
-): any => render(ui, { wrapper: Wrapper, ...options });
+): unknown => render(ui, { wrapper: WrapperWithTrans, ...options });
 
 const customRenderHook = (
     ui: (initialProps: unknown) => unknown,
@@ -37,7 +42,7 @@ const customRenderHook = (
               HTMLElement
           >
         | undefined
-): any => renderHook(ui, { wrapper: Wrapper, ...options });
+): unknown => renderHook(ui, { wrapper: WrapperWithTrans, ...options });
 
 export * from "@testing-library/react";
 
