@@ -419,7 +419,7 @@ class DataAccessRequest extends Component {
         let {
             datasetfields: { publisher },
         } = datasets[0];
-        let { firstname, lastname } = mainApplicant;
+        let { firstname, lastname } = mainApplicant || {};
         let showSubmit = false;
         let submitButtonText = 'Submit application';
 

@@ -8,18 +8,18 @@ import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
 
 import { NotificationManager } from 'react-notifications';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Winterfell from 'winterfell';
 import { Button, Box, P, H5, Typography, Cta, Alert } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-tabs/style/react-tabs.css';
 
-import { authUtils, generalUtils, darHelperUtils } from 'utils';
+import { generalUtils, darHelperUtils } from 'utils';
 import { Icon, Spinner, RenderMarkdown } from 'components';
 import { dataAccessRequestService, publishersService, questionbankService } from 'services';
 import { useAuth } from 'context/AuthContext';
 
-import { useAccountTeamSelected, useCustodianRoles } from 'hooks';
+import { useCustodianRoles } from 'hooks';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
@@ -55,6 +55,7 @@ const questionActions = {
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
+    const { publisherID } = useParams();
     const [searchBar] = useState(React.createRef());
     const { userState } = useAuth();
     const [schemaId, setSchemaId] = useState('');
@@ -86,8 +87,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const [showSaveAlert, setShowSaveAlert] = useState(true);
     const [isUploading, setIsUploading] = useState(false);
     const [isUploaded, setIsUploaded] = useState(false);
-    const { teamId } = useAccountTeamSelected();
-    const { isCustodianTeamAdmin } = useCustodianRoles(teamId);
+    const { isCustodianTeamAdmin } = useCustodianRoles(publisherID);
 
     const patchSchemaRequest = dataAccessRequestService.usePatchSchema(null, {
         onError: ({ title, message }) => {

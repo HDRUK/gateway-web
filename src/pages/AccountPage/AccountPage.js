@@ -95,6 +95,10 @@ const AccountPage = () => {
             googleAnalytics.recordVirtualPageView(queryParams.tab);
         }
 
+        if (queryParams.tab !== 'dataaccessrequests') {
+            setDataAccessRequest({});
+        }
+
         setAccountUpdated(!!queryParams.accountUpdated);
     }, [location.search]);
 
