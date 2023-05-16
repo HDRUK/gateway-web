@@ -39,12 +39,6 @@ const CustodianActionButtons = ({
         isCustodianDarManager &&
         unansweredAmendments > 0;
 
-    console.log('applicationStatus: ', applicationStatus);
-    console.log('darHelperUtils.darStatus.inReviewtatus: ', darHelperUtils.darStatus.inReview);
-    console.log('activeParty: ', activeParty);
-    console.log('isCustodianDarManager: ', isCustodianDarManager);
-    console.log('unansweredAmendments: ', unansweredAmendments);
-
     const manageOptions = [
         {
             description: 'Manage application:',
