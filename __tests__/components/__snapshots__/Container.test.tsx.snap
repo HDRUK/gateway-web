@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container should render component 1`] = `
+<div>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthDesktop css-lavn1x-MuiContainer-root"
+    style="background-color: white;"
+  >
+    Container content
+  </div>
+</div>
+`;

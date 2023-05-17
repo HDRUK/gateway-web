@@ -9,6 +9,8 @@ import usePost from "@/hooks/usePost";
 import Button from "@/components/Button";
 import usePut from "@/hooks/usePut";
 import useDelete from "@/hooks/useDelete";
+import BoxContainer from "@/components/BoxContainer";
+import Box from "@/components/Box";
 
 const localeKey = "filter";
 const itemName = "Filter";
@@ -53,37 +55,56 @@ function Account() {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway" />
-            <div>
-                <h2 style={{ marginBottom: "10px" }}>Filters</h2>
-                <ul style={{ marginLeft: "20px" }}>
-                    {filters?.map(filter => (
-                        <li key={filter.id} style={{ marginBottom: "10px" }}>
-                            {filter.type}{" "}
-                            <Button
-                                variant="text"
-                                color="primary"
-                                size="small"
-                                onClick={() => update(filter.id)}>
-                                Change filter
-                            </Button>
-                            <Button
-                                variant="text"
-                                color="primary"
-                                size="small"
-                                onClick={() => deleteHandler(filter.id)}>
-                                Delete
-                            </Button>
-                        </li>
-                    ))}
-                </ul>
-                <Button
-                    color="primary"
-                    onClick={() => {
-                        addFilter();
-                    }}>
-                    Add filter
-                </Button>
-            </div>
+            <BoxContainer
+                sx={{
+                    gridTemplateColumns: {
+                        mobile: "repeat(1, 1fr)",
+                        tablet: "repeat(5, 1fr)",
+                    },
+                    gap: {
+                        mobile: 0,
+                        tablet: 1,
+                    },
+                }}>
+                <Box
+                    sx={{ gridColumn: { tablet: "span 2", laptop: "span 1" } }}>
+                    <h2>Menu</h2>
+                </Box>
+                <Box
+                    sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
+                    <h2 style={{ marginBottom: "10px" }}>Filters</h2>
+                    <ul style={{ marginLeft: "20px" }}>
+                        {filters?.map(filter => (
+                            <li
+                                key={filter.id}
+                                style={{ marginBottom: "10px" }}>
+                                {filter.type}{" "}
+                                <Button
+                                    variant="text"
+                                    color="primary"
+                                    size="small"
+                                    onClick={() => update(filter.id)}>
+                                    Change filter
+                                </Button>
+                                <Button
+                                    variant="text"
+                                    color="primary"
+                                    size="small"
+                                    onClick={() => deleteHandler(filter.id)}>
+                                    Delete
+                                </Button>
+                            </li>
+                        ))}
+                    </ul>
+                    <Button
+                        color="primary"
+                        onClick={() => {
+                            addFilter();
+                        }}>
+                        Add filter
+                    </Button>
+                </Box>
+            </BoxContainer>
         </>
     );
 }
