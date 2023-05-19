@@ -14,7 +14,7 @@ type Story = StoryObj<typeof SignInDialog>;
 const DialogHookExample = () => {
     const { showDialog } = useDialog();
     return (
-        <Button onClick={() => showDialog(SignInDialog)}>Launch modal</Button>
+        <Button onClick={() => showDialog(SignInDialog)}>Launch Dialog</Button>
     );
 };
 
