@@ -13,6 +13,7 @@ import Auth from "@/components/Auth";
 import Layout from "@/components/Layout";
 import "@/styles/global.css";
 import { ApiError } from "@/components/CustomNotifications";
+import DialogProvider from "@/providers/Dialog";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -43,20 +44,22 @@ const App = ({
             <CacheProvider value={emotionCache}>
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
-                    <Layout>
-                        <ErrorBoundary
-                            fallback={<div>Something went wrong</div>}
-                            onError={logError}>
-                            <SnackbarProvider
-                                Components={{
-                                    apiError: ApiError,
-                                }}
-                            />
-                            <Auth isProtected={isProtected}>
-                                <Component {...pageProps} />
-                            </Auth>
-                        </ErrorBoundary>
-                    </Layout>
+                    <DialogProvider>
+                        <Layout>
+                            <ErrorBoundary
+                                fallback={<div>Something went wrong</div>}
+                                onError={logError}>
+                                <SnackbarProvider
+                                    Components={{
+                                        apiError: ApiError,
+                                    }}
+                                />
+                                <Auth isProtected={isProtected}>
+                                    <Component {...pageProps} />
+                                </Auth>
+                            </ErrorBoundary>
+                        </Layout>
+                    </DialogProvider>
                 </ThemeProvider>
             </CacheProvider>
         </SWRConfig>
