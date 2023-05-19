@@ -36,6 +36,18 @@ const theme = createTheme({
         },
         background: { default: "#f6f7f8" },
     },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    "&:hover": {
+                        borderWidth: 2,
+                    },
+                    borderWidth: 2,
+                },
+            },
+        },
+    },
 });
 
 export default theme;

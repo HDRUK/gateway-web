@@ -1,12 +1,12 @@
 import * as React from "react";
-import DialogTitle from "@mui/material/DialogTitle";
-import Dialog from "@mui/material/Dialog";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import MuiDialog from "@mui/material/Dialog";
+import MuiDialogContent from "@mui/material/DialogContent";
 import config from "@/config";
 
 import Link from "@/components/Link";
 import { useTranslation } from "react-i18next";
 import useDialog from "@/hooks/useDialog";
-import Box from "@/components/Box";
 
 interface LinkItem {
     label: string;
@@ -15,28 +15,27 @@ interface LinkItem {
 
 const SignInDialog = () => {
     const { hideDialog } = useDialog();
-    const { t } = useTranslation("components");
+    const { t } = useTranslation("modules");
 
     const providerLinks: LinkItem[] = [
         {
-            label: t("HeaderNav.labels.azure"),
+            label: t("dialogs.SignInDialog.socialProviders.azure"),
             href: config.authAzureV1Url,
         },
         {
-            label: t("HeaderNav.labels.linkedIn"),
+            label: t("dialogs.SignInDialog.socialProviders.linkedIn"),
             href: config.authLinkedinV1Url,
         },
         {
-            label: t("HeaderNav.labels.google"),
+            label: t("dialogs.SignInDialog.socialProviders.google"),
             href: config.authGoogleV1Url,
         },
     ];
 
     return (
-        <Dialog maxWidth="tablet" onClose={hideDialog} open>
-            <Box>
-                <DialogTitle>Sign in or create a new account</DialogTitle>
-
+        <MuiDialog fullWidth maxWidth="tablet" onClose={hideDialog} open>
+            <MuiDialogTitle>{t("dialogs.SignInDialog.title")}</MuiDialogTitle>
+            <MuiDialogContent>
                 <p>
                     Anyone can search and view datasets, collections and other
                     resources with or without an account. Creating an account
@@ -66,8 +65,8 @@ const SignInDialog = () => {
                         </li>
                     ))}
                 </ul>
-            </Box>
-        </Dialog>
+            </MuiDialogContent>
+        </MuiDialog>
     );
 };
 

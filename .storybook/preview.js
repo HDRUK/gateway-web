@@ -1,4 +1,5 @@
 import { withMuiTheme } from "./withMuiTheme.decorator";
+import { withDialog } from "./withDialog.decorator";
 
 const preview = {
     parameters: {
@@ -20,4 +21,4 @@ const preview = {
 
 export default preview;
 
-export const decorators = [withMuiTheme];
+export const decorators = [withMuiTheme, withDialog];
