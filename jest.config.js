@@ -15,6 +15,7 @@ const customJestConfig = {
         "^@/pages/(.*)$": "<rootDir>/src/pages/$1",
         "^@/modules/(.*)$": "<rootDir>/src/modules/$1",
         "^@/components/(.*)$": "<rootDir>/src/components/$1",
+        "^@/providers/(.*)$": "<rootDir>/src/providers/$1",
         "^@/utils/(.*)$": "<rootDir>/src/utils/$1",
     },
     testPathIgnorePatterns: [

@@ -1,7 +1,10 @@
-import config from "@/config";
 import Link from "@/components/Link";
 import useUser from "@/hooks/useUser";
 import { useTranslation } from "next-i18next";
+import useDialog from "@/hooks/useDialog";
+import { Button } from "@mui/material";
+import SignInDialog from "@/modules/dialogs/SignInDialog";
+import useModal from "@/hooks/useModal";
 import Loading from "../Loading";
 
 interface LinkItem {
@@ -10,6 +13,9 @@ interface LinkItem {
 }
 
 function HeaderNav() {
+    const { showDialog } = useDialog();
+    const { showModal } = useModal();
+
     const { t } = useTranslation("components");
 
     const { isLoggedIn, isLoading } = useUser();
@@ -21,42 +27,38 @@ function HeaderNav() {
         },
     ];
 
-    const loggedOutLinks: LinkItem[] = [
-        {
-            label: t("HeaderNav.labels.azure"),
-            href: config.authAzureV1Url,
-        },
-        {
-            label: t("HeaderNav.labels.linkedIn"),
-            href: config.authLinkedinV1Url,
-        },
-        {
-            label: t("HeaderNav.labels.google"),
-            href: config.authGoogleV1Url,
-        },
-    ];
+    const loggedOutLinks: LinkItem[] = [];
 
     if (isLoading) return <Loading />;
 
     const links = isLoggedIn ? loggedInLinks : loggedOutLinks;
 
     return (
-        <ul
-            style={{
-                display: "inline-block",
-                listStyle: "none",
-            }}>
-            {links.map(link => (
-                <li
-                    key={link.href}
-                    style={{
-                        display: "inline-block",
-                        paddingLeft: "10px",
-                    }}>
-                    <Link href={link.href} label={link.label} />
-                </li>
-            ))}
-        </ul>
+        <>
+            <ul
+                style={{
+                    display: "inline-block",
+                    listStyle: "none",
+                }}>
+                {links.map(link => (
+                    <li
+                        key={link.href}
+                        style={{
+                            display: "inline-block",
+                            paddingLeft: "10px",
+                        }}>
+                        <Link href={link.href} label={link.label} />
+                    </li>
+                ))}
+            </ul>
+            <Button onClick={() => showDialog(SignInDialog)}>Sign in</Button>
+            <Button
+                onClick={() =>
+                    showModal({ onSuccess: () => console.log("success") })
+                }>
+                Another modal
+            </Button>
+        </>
     );
 }
 
