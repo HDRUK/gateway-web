@@ -1,10 +1,12 @@
 import * as React from "react";
-import MuiDialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
 import config from "@/config";
 
 import Link from "@/components/Link";
 import { useTranslation } from "react-i18next";
-import Dialog from "@/components/Dialog";
+import useDialog from "@/hooks/useDialog";
+import Box from "@/components/Box";
 
 interface LinkItem {
     label: string;
@@ -12,26 +14,29 @@ interface LinkItem {
 }
 
 const SignInDialog = () => {
-    const { t } = useTranslation("modules");
+    const { hideDialog } = useDialog();
+    const { t } = useTranslation("components");
 
     const providerLinks: LinkItem[] = [
         {
-            label: t("dialogs.SignInDialog.socialProviders.azure"),
+            label: t("HeaderNav.labels.azure"),
             href: config.authAzureV1Url,
         },
         {
-            label: t("dialogs.SignInDialog.socialProviders.linkedIn"),
+            label: t("HeaderNav.labels.linkedIn"),
             href: config.authLinkedinV1Url,
         },
         {
-            label: t("dialogs.SignInDialog.socialProviders.google"),
+            label: t("HeaderNav.labels.google"),
             href: config.authGoogleV1Url,
         },
     ];
 
     return (
-        <Dialog title={t("dialogs.SignInDialog.title")}>
-            <MuiDialogContent>
+        <Dialog maxWidth="tablet" onClose={hideDialog} open>
+            <Box>
+                <DialogTitle>Sign in or create a new account</DialogTitle>
+
                 <p>
                     Anyone can search and view datasets, collections and other
                     resources with or without an account. Creating an account
@@ -61,7 +66,7 @@ const SignInDialog = () => {
                         </li>
                     ))}
                 </ul>
-            </MuiDialogContent>
+            </Box>
         </Dialog>
     );
 };
