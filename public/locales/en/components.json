@@ -4,10 +4,7 @@
     },
     "HeaderNav": {
         "labels": {
-            "myAccount": "My Account",
-            "azure": "Azure",
-            "linkedIn": "LinkedIn",
-            "google": "Google"
+            "myAccount": "My Account"
         }
     },
     "Loading": {

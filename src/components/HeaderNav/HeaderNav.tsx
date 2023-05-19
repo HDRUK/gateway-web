@@ -54,7 +54,18 @@ function HeaderNav() {
             <Button onClick={() => showDialog(SignInDialog)}>Sign in</Button>
             <Button
                 onClick={() =>
-                    showModal({ onSuccess: () => console.log("success") })
+                    showModal({
+                        title: "This is a modal",
+                        onCancel: () => console.log("cancel"),
+                        onSuccess: () => console.log("success"),
+                        content: (
+                            <>
+                                You can sign in or create a Gateway account with
+                                any of the organisations below, simply click
+                                your preferred
+                            </>
+                        ),
+                    })
                 }>
                 Another modal
             </Button>
