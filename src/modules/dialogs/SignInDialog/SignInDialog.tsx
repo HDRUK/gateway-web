@@ -1,12 +1,10 @@
 import * as React from "react";
-import MuiDialogTitle from "@mui/material/DialogTitle";
-import MuiDialog from "@mui/material/Dialog";
 import MuiDialogContent from "@mui/material/DialogContent";
 import config from "@/config";
 
 import Link from "@/components/Link";
 import { useTranslation } from "react-i18next";
-import useDialog from "@/hooks/useDialog";
+import Dialog from "@/components/Dialog";
 
 interface LinkItem {
     label: string;
@@ -14,7 +12,6 @@ interface LinkItem {
 }
 
 const SignInDialog = () => {
-    const { hideDialog } = useDialog();
     const { t } = useTranslation("modules");
 
     const providerLinks: LinkItem[] = [
@@ -33,8 +30,7 @@ const SignInDialog = () => {
     ];
 
     return (
-        <MuiDialog fullWidth maxWidth="tablet" onClose={hideDialog} open>
-            <MuiDialogTitle>{t("dialogs.SignInDialog.title")}</MuiDialogTitle>
+        <Dialog title={t("dialogs.SignInDialog.title")}>
             <MuiDialogContent>
                 <p>
                     Anyone can search and view datasets, collections and other
@@ -66,7 +62,7 @@ const SignInDialog = () => {
                     ))}
                 </ul>
             </MuiDialogContent>
-        </MuiDialog>
+        </Dialog>
     );
 };
 

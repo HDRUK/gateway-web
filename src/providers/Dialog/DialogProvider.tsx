@@ -1,7 +1,7 @@
 import React, { createContext, useMemo, ReactNode } from "react";
 
 type dialogComponentType = React.ElementType | null;
-export type dialogPropsType = { [key: string]: unknown };
+export type dialogPropsType = { [key: string]: ReactNode };
 
 export interface GlobalDialogContextProps {
     showDialog: (

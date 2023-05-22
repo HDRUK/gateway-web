@@ -35,6 +35,7 @@ exports[`Layout should render component 1`] = `
             HeaderNav.labels.myAccount
           </a>
         </li>
+         
       </ul>
     </div>
     <main>
