@@ -1,13 +1,13 @@
 import MuiDialog, { DialogProps } from "@mui/material/Dialog";
 import MuiDialogTitle from "@mui/material/DialogTitle";
-import MuiDialogContent from "@mui/material/DialogContent";
 import MuiDialogActions from "@mui/material/DialogActions";
+import MuiDialogContent from "@mui/material/DialogContent";
 import React, { ReactNode } from "react";
 import useDialog from "@/hooks/useDialog";
 import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import Button from "../Button";
+import ModalButtons from "../ModalButtons";
 
 export interface ModalProps {
     content: ReactNode;
@@ -34,13 +34,6 @@ const Modal = () => {
         title,
         styleProps = {},
     } = dialogProps as unknown as ModalProps;
-
-    const handleSuccess = () => {
-        if (typeof onSuccess === "function") {
-            onSuccess();
-        }
-        hideModal();
-    };
 
     const handleCancel = () => {
         if (typeof onCancel === "function") {
@@ -72,16 +65,12 @@ const Modal = () => {
             <MuiDialogTitle>{title}</MuiDialogTitle>
             <MuiDialogContent>{content}</MuiDialogContent>
             <MuiDialogActions>
-                <Button
-                    key="cancel"
-                    variant="outlined"
-                    color="secondary"
-                    onClick={handleCancel}>
-                    {cancelText || "Cancel"}
-                </Button>
-                <Button key="confirm" onClick={handleSuccess}>
-                    {confirmText || "Confirm"}
-                </Button>
+                <ModalButtons
+                    onSuccess={onSuccess}
+                    onCancel={onCancel}
+                    cancelText={cancelText}
+                    confirmText={confirmText}
+                />
             </MuiDialogActions>
         </MuiDialog>
     );

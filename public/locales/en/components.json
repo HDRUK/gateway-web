@@ -4,7 +4,8 @@
     },
     "HeaderNav": {
         "labels": {
-            "myAccount": "My Account"
+            "myAccount": "My Account",
+            "signIn": "Sign in"
         }
     },
     "Loading": {

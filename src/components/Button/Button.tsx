@@ -1,11 +1,8 @@
-import React from "react";
+import React, { ComponentPropsWithoutRef } from "react";
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 
 type ButtonBaseProps = Pick<MuiButtonProps, "variant" | "size" | "color">;
-export interface ButtonProps extends ButtonBaseProps {
-    children: string | React.ReactNode;
-    onClick: () => void;
-}
+export type ButtonProps = ButtonBaseProps & ComponentPropsWithoutRef<"button">;
 
 const Button: React.FC<ButtonProps> = ({
     color = "primary",

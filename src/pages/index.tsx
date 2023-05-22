@@ -3,7 +3,6 @@ import type { GetServerSideProps } from "next";
 import { loadServerSideLocales } from "@/utils/locale";
 import Box from "@/components/Box";
 import Container from "@/components/Container";
-import BoxContainer from "@/components/BoxContainer";
 
 export default function Home() {
     return (
@@ -23,33 +22,6 @@ export default function Home() {
                         scientific discovery.
                     </p>
                 </Box>
-                <BoxContainer sx={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-                    <Box sx={{ bgcolor: "background.default" }}>
-                        <h3>Container 1</h3>
-                    </Box>
-                    <Box sx={{ bgcolor: "background.default" }}>
-                        <h3>Container 2</h3>
-                    </Box>
-                    <Box sx={{ bgcolor: "background.default" }}>
-                        <h3>Container 3</h3>
-                    </Box>
-                </BoxContainer>
-                <Box sx={{ p: 5 }}>
-                    <h2>More content here</h2>
-                    <p>
-                        Join the thousands of researchers and scientists
-                        worldwide who are already using the Gateway for research
-                        and scientific discovery.
-                    </p>
-                </Box>
-                <BoxContainer sx={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
-                    <Box sx={{ bgcolor: "background.default" }}>
-                        <h3>Container 1</h3>
-                    </Box>
-                    <Box sx={{ bgcolor: "background.default" }}>
-                        <h3>Container 2</h3>
-                    </Box>
-                </BoxContainer>
             </Container>
         </>
     );
