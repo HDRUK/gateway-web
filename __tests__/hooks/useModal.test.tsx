@@ -83,4 +83,26 @@ describe("useModal", () => {
             expect(props.onSuccess).toHaveBeenCalled();
         });
     });
+    it("should call onClose prop when selecting `Close` icon", async () => {
+        const { result } = renderHook(() => useModal());
+
+        const props = {
+            title: "This is a modal",
+            onCancel: jest.fn(),
+        };
+
+        act(() => {
+            result.current.showModal(props);
+        });
+
+        await waitFor(() => {
+            expect(screen.getByText(props.title)).toBeInTheDocument();
+        });
+
+        fireEvent.click(screen.getByTestId("modal-close-icon"));
+
+        await waitFor(() => {
+            expect(props.onCancel).toHaveBeenCalled();
+        });
+    });
 });
