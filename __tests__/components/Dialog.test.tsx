@@ -7,7 +7,7 @@ describe("Dialog", () => {
         expect(await screen.getByText("Dialog title")).toBeInTheDocument();
         expect(await screen.getByText("Dialog content")).toBeInTheDocument();
     });
-    it("should render title / content", async () => {
+    it("should call onClose function when clicking close icon", async () => {
         const closeMock = jest.fn();
         render(
             <Dialog onClose={closeMock} title="Dialog title">
