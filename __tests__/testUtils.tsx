@@ -8,6 +8,7 @@ import {
     RenderHookResult,
 } from "@testing-library/react";
 import { SWRConfig } from "swr";
+import DialogProvider from "@/providers/Dialog";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
     return (
@@ -15,7 +16,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
             value={{
                 provider: () => new Map(),
             }}>
-            {children}
+            <DialogProvider>{children}</DialogProvider>
         </SWRConfig>
     );
 };

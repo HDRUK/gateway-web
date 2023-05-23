@@ -19,16 +19,9 @@ const Dialog = ({
     styleProps,
     children,
     showCloseButton,
+    onClose,
 }: DialogProps) => {
-    const {
-        hideDialog,
-        store: { dialogProps },
-    } = useDialog() as GlobalDialogContextProps;
-
-    const {
-        onClose,
-        // styleProps = {},
-    } = dialogProps as unknown as DialogProps;
+    const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
     const handleClose = (props: unknown) => {
         if (typeof onClose === "function") {
@@ -48,6 +41,7 @@ const Dialog = ({
         <MuiDialog {...props} onClose={handleClose}>
             {showCloseButton && (
                 <IconButton
+                    data-testid="dialog-close-icon"
                     aria-label="close"
                     onClick={handleClose}
                     sx={{

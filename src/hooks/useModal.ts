@@ -6,11 +6,12 @@ import {
 import { useContext } from "react";
 
 const useModal = () => {
-    const { showDialog, ...rest } = useContext(GlobalDialogContext);
+    const { showDialog, hideDialog, ...rest } = useContext(GlobalDialogContext);
 
     return {
         showModal: (props: dialogPropsType | undefined) =>
             showDialog(Modal, props),
+        hideModal: hideDialog,
         ...rest,
     };
 };
