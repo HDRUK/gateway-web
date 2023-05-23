@@ -11,7 +11,7 @@ describe("HeaderNav", () => {
 
         await waitFor(() => {
             expect(
-                screen.getByText("HeaderNav.labels.google")
+                screen.getByText("HeaderNav.labels.signIn")
             ).toBeInTheDocument();
         });
     });
