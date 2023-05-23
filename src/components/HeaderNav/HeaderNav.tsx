@@ -2,7 +2,7 @@ import Link from "@/components/Link";
 import useUser from "@/hooks/useUser";
 import { useTranslation } from "next-i18next";
 import useDialog from "@/hooks/useDialog";
-import { Button } from "@mui/material";
+import Button from "@/components/Button";
 import SignInDialog from "@/modules/dialogs/SignInDialog";
 import Loading from "../Loading";
 
