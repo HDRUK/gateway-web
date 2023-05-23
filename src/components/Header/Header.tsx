@@ -3,7 +3,12 @@ import HeaderNav from "../HeaderNav/HeaderNav";
 
 function Header() {
     return (
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div
+            style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+            }}>
             <ul
                 style={{
                     display: "inline-block",

@@ -44,11 +44,11 @@ function HeaderNav() {
                             }}>
                             <Link href={link.href} label={link.label} />
                         </li>
-                    ))}{" "}
+                    ))}
                 </ul>
             )}
             {!isLoggedIn && (
-                <Button onClick={() => showDialog(SignInDialog)}>
+                <Button size="small" onClick={() => showDialog(SignInDialog)}>
                     {t("HeaderNav.labels.signIn")}
                 </Button>
             )}
