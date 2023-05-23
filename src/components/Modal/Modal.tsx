@@ -52,6 +52,7 @@ const Modal = () => {
     return (
         <MuiDialog {...props} onClose={handleCancel}>
             <IconButton
+                data-testid="modal-close-icon"
                 aria-label="close"
                 onClick={handleCancel}
                 sx={{
