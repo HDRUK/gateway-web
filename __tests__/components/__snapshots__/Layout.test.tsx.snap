@@ -3,7 +3,7 @@
 exports[`Layout should render component 1`] = `
 <div>
   <div
-    style="width: 100%; padding: 20px; font-family: arial;"
+    style="width: 100%; font-family: arial;"
   >
     <div
       style="display: flex; justify-content: space-between; align-items: center;"
@@ -43,10 +43,107 @@ exports[`Layout should render component 1`] = `
       </div>
     </main>
     <div
-      style="text-align: center; width: 100%; padding: 20px;"
+      class="css-nhw023-Footer"
     >
-      ©
-      Footer.text
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthDesktop css-1af3zf9-MuiContainer-root-Footer"
+      >
+        <img
+          alt="HDRUK logo"
+          data-nimg="1"
+          decoding="async"
+          height="130"
+          loading="lazy"
+          src="/_next/image?url=%2Fimg.jpg&w=384&q=75"
+          srcset="/_next/image?url=%2Fimg.jpg&w=256&q=75 1x, /_next/image?url=%2Fimg.jpg&w=384&q=75 2x"
+          style="color: transparent;"
+          width="130"
+        />
+        <ul
+          class="css-1cjflei-Footer"
+        >
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              href="https://www.hdruk.ac.uk/"
+            >
+              HDR UK
+            </a>
+          </li>
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              href="/about-us"
+            >
+              About
+            </a>
+          </li>
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              href="/contact-us"
+            >
+              Contact us
+            </a>
+          </li>
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              href="https://twitter.com/HDR_UK"
+            >
+              <span
+                class="css-wm98oe-Footer"
+              >
+                <img
+                  alt="Twitter logo"
+                  data-nimg="1"
+                  decoding="async"
+                  height="17"
+                  loading="lazy"
+                  src="/_next/image?url=%2Fimg.jpg&w=48&q=75"
+                  srcset="/_next/image?url=%2Fimg.jpg&w=32&q=75 1x, /_next/image?url=%2Fimg.jpg&w=48&q=75 2x"
+                  style="color: transparent;"
+                  width="17"
+                />
+                <span>
+                  Twitter
+                </span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              href="https://www.linkedin.com/company/healthdataresearchuk/"
+            >
+              <span
+                class="css-wm98oe-Footer"
+              >
+                <img
+                  alt="LinkedIn logo"
+                  data-nimg="1"
+                  decoding="async"
+                  height="17"
+                  loading="lazy"
+                  src="/_next/image?url=%2Fimg.jpg&w=48&q=75"
+                  srcset="/_next/image?url=%2Fimg.jpg&w=32&q=75 1x, /_next/image?url=%2Fimg.jpg&w=48&q=75 2x"
+                  style="color: transparent;"
+                  width="17"
+                />
+                <span>
+                  LinkedIn
+                </span>
+              </span>
+            </a>
+          </li>
+        </ul>
+        <div
+          class="css-106tbuj-Footer"
+        >
+          ©
+          Footer.text
+        </div>
+      </div>
     </div>
   </div>
 </div>
