@@ -48,14 +48,17 @@ function Header() {
                     sx={{
                         display: { mobile: "none", tablet: "block" },
                     }}>
-                    <Link href="/">
-                        <Image
-                            src="/assets/gateway_main.svg"
-                            width={110}
-                            height={50}
-                            alt="home-logo"
-                        />
-                    </Link>
+                    <Link
+                        href="/"
+                        label={
+                            <Image
+                                src="/assets/gateway_main.svg"
+                                width={110}
+                                height={50}
+                                alt="home-logo"
+                            />
+                        }
+                    />
                 </Box>
                 <IconButton
                     size="large"
@@ -129,23 +132,23 @@ function Header() {
                         <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
                     </Typography>
                     <Link
-                        href="/news"
+                        href="/"
+                        label="News"
                         sx={{
                             color: "#53575A",
                             mr: "25px",
                             textDecoration: "none",
-                        }}>
-                        News
-                    </Link>
+                        }}
+                    />
                     <Link
-                        href="/community"
+                        href="/"
+                        label="News"
                         sx={{
                             color: "#53575A",
                             mr: "25px",
                             textDecoration: "none",
-                        }}>
-                        Community
-                    </Link>
+                        }}
+                    />
                 </Box>
                 <CustomButton
                     variant="outlined"
