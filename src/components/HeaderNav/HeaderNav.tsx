@@ -2,9 +2,8 @@ import Link from "@/components/Link";
 import useUser from "@/hooks/useUser";
 import { useTranslation } from "next-i18next";
 import useDialog from "@/hooks/useDialog";
-import { Button } from "@mui/material";
+import Button from "@/components/Button";
 import SignInDialog from "@/modules/dialogs/SignInDialog";
-import useModal from "@/hooks/useModal";
 import Loading from "../Loading";
 
 interface LinkItem {
@@ -14,7 +13,6 @@ interface LinkItem {
 
 function HeaderNav() {
     const { showDialog } = useDialog();
-    const { showModal } = useModal();
 
     const { t } = useTranslation("components");
 
@@ -27,37 +25,10 @@ function HeaderNav() {
         },
     ];
 
-    const loggedOutLinks: LinkItem[] = [];
-
     if (isLoading) return <Loading />;
 
     return (
         <>
-<<<<<<< HEAD
-            <ul
-                style={{
-                    display: "inline-block",
-                    listStyle: "none",
-                }}>
-                {links.map(link => (
-                    <li
-                        key={link.href}
-                        style={{
-                            display: "inline-block",
-                            paddingLeft: "10px",
-                        }}>
-                        <Link href={link.href} label={link.label} />
-                    </li>
-                ))}
-            </ul>
-            <Button onClick={() => showDialog(SignInDialog)}>Sign in</Button>
-            <Button
-                onClick={() =>
-                    showModal({ onSuccess: () => console.log("success") })
-                }>
-                Another modal
-            </Button>
-=======
             {isLoggedIn && (
                 <ul
                     style={{
@@ -81,7 +52,6 @@ function HeaderNav() {
                     {t("HeaderNav.labels.signIn")}
                 </Button>
             )}
->>>>>>> f6dff77 (rebasing dev)
         </>
     );
 }
