@@ -33,6 +33,7 @@ function HeaderNav() {
 
     return (
         <>
+<<<<<<< HEAD
             <ul
                 style={{
                     display: "inline-block",
@@ -56,6 +57,31 @@ function HeaderNav() {
                 }>
                 Another modal
             </Button>
+=======
+            {isLoggedIn && (
+                <ul
+                    style={{
+                        display: "inline-block",
+                        listStyle: "none",
+                    }}>
+                    {loggedInLinks.map(link => (
+                        <li
+                            key={link.href}
+                            style={{
+                                display: "inline-block",
+                                paddingLeft: "10px",
+                            }}>
+                            <Link href={link.href} label={link.label} />
+                        </li>
+                    ))}
+                </ul>
+            )}
+            {!isLoggedIn && (
+                <Button size="small" onClick={() => showDialog(SignInDialog)}>
+                    {t("HeaderNav.labels.signIn")}
+                </Button>
+            )}
+>>>>>>> f6dff77 (rebasing dev)
         </>
     );
 }
