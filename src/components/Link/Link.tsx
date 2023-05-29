@@ -1,17 +1,17 @@
 import NextLink from "next/link";
 import MuiLink from "@mui/material/Link";
-import { LinkProps } from "@mui/material";
+import { LinkProps as MuiLinkProps } from "@mui/material";
+import { ReactNode } from "react";
 
-interface LinkProp extends LinkProps {
+interface LinkProps extends MuiLinkProps {
     href: string;
-    // eslint-disable-next-line react/require-default-props
-    label?: string;
+    label: ReactNode;
 }
 
-const Link = ({ href, label, children, variant, ...rest }: LinkProp) => {
+const Link = ({ href, label, variant, ...props }: LinkProps) => {
     return (
-        <MuiLink {...rest} href={href} component={NextLink} variant={variant}>
-            {label || children}
+        <MuiLink href={href} component={NextLink} variant={variant} {...props}>
+            {label}
         </MuiLink>
     );
 };

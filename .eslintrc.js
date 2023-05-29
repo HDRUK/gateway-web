@@ -43,6 +43,7 @@ module.exports = {
         "plugin:storybook/recommended",
     ],
     rules: {
+        "react/no-unknown-property": ["error", { ignore: ["css"] }],
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-explicit-any": "error",
         "react/react-in-jsx-scope": "off",
