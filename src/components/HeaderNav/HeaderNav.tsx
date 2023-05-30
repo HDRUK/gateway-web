@@ -1,10 +1,15 @@
+/** @jsxImportSource @emotion/react */
+
 import Link from "@/components/Link";
 import useUser from "@/hooks/useUser";
 import { useTranslation } from "next-i18next";
 import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
 import SignInDialog from "@/modules/dialogs/SignInDialog";
+import { Box, Typography } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Loading from "../Loading";
+import * as styles from "./HeaderNav.styles";
 
 interface LinkItem {
     label: string;
@@ -29,6 +34,39 @@ function HeaderNav() {
 
     return (
         <>
+            <Box
+                sx={{
+                    flexGrow: 1,
+                    justifyContent: "flex-start",
+                    display: {
+                        tablet: "none",
+                        mobile: "none",
+                        laptop: "flex",
+                    },
+                }}>
+                <Typography css={styles.navItem}>
+                    Explore
+                    <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
+                </Typography>
+                <Typography css={styles.navItem}>
+                    Help
+                    <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
+                </Typography>
+                <Typography css={styles.navItem}>
+                    Usage data
+                    <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
+                </Typography>
+                <Typography css={styles.navItem}>
+                    About us
+                    <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
+                </Typography>
+                <Link href="/news" label="News" css={styles.navLink} />
+                <Link
+                    href="/community"
+                    label="Community"
+                    css={styles.navLink}
+                />
+            </Box>
             {isLoggedIn && (
                 <ul
                     style={{
@@ -48,7 +86,10 @@ function HeaderNav() {
                 </ul>
             )}
             {!isLoggedIn && (
-                <Button size="small" onClick={() => showDialog(SignInDialog)}>
+                <Button
+                    css={styles.signInBtn}
+                    size="small"
+                    onClick={() => showDialog(SignInDialog)}>
                     {t("HeaderNav.labels.signIn")}
                 </Button>
             )}
