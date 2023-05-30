@@ -60,7 +60,9 @@ function HeaderNav() {
                     About us
                     <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
                 </Typography>
+                {/* news route to be implemented */}
                 <Link href="/news" label="News" css={styles.navLink} />
+                {/* community route to be implemented */}
                 <Link
                     href="/community"
                     label="Community"

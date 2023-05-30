@@ -1,13 +1,25 @@
 import React from "react";
-import Header from "@/components/Header";
-import { render, screen, waitFor } from "../testUtils";
+import { render } from "@testing-library/react";
+import Header from "../../src/components/Header/Header";
 
 describe("Header", () => {
-    it("should render component", async () => {
-        render(<Header />);
+    it("renders the header component", () => {
+        const { getByRole, getByAltText } = render(<Header />);
 
-        await waitFor(() => {
-            expect(screen.getByText("Home")).toBeInTheDocument();
-        });
+        // Assert that the header component is rendered
+        const headerComponent = getByRole("banner");
+        expect(headerComponent).toBeInTheDocument();
+
+        // Assert that the logo image is rendered
+        const logoImage = getByAltText("Gateway home logo");
+        expect(logoImage).toBeInTheDocument();
+
+        // Assert that the menu icon button is rendered
+        const menuIconButton = getByRole("button", { name: "open drawer" });
+        expect(menuIconButton).toBeInTheDocument();
+
+        // // Assert that the header navigation component is rendered
+        // const headerNavComponent = getByRole("navigation");
+        // expect(headerNavComponent).toBeInTheDocument();
     });
 });

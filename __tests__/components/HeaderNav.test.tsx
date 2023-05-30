@@ -24,4 +24,30 @@ describe("HeaderNav", () => {
             ).toBeInTheDocument();
         });
     });
+    it("renders explore navigation items", () => {
+        render(<HeaderNav />);
+
+        const exploreItem = screen.getByText("Explore");
+        expect(exploreItem).toBeInTheDocument();
+
+        const helpItem = screen.getByText("Help");
+        expect(helpItem).toBeInTheDocument();
+
+        const usageDataItem = screen.getByText("Usage data");
+        expect(usageDataItem).toBeInTheDocument();
+
+        const aboutUsItem = screen.getByText("About us");
+        expect(aboutUsItem).toBeInTheDocument();
+        const newsLink = screen.getByText("News");
+        expect(newsLink).toBeInTheDocument();
+
+        const communityLink = screen.getByText("Community");
+        expect(communityLink).toBeInTheDocument();
+    });
+    it("renders sign-in button when user is not logged in", () => {
+        render(<HeaderNav />);
+
+        const signInButton = screen.getByText("Sign In");
+        expect(signInButton).toBeInTheDocument();
+    });
 });
