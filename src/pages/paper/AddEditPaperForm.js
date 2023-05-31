@@ -8,15 +8,17 @@ import moment from 'moment';
 import { isNil, isEmpty } from 'lodash';
 import { Button } from 'hdruk-react-core';
 import TextareaAutosize from 'react-textarea-autosize';
+
+import { uploaderUtils } from 'utils';
+
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
 import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
 import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorModal';
-import { isPDFLink, removeArrayItem } from '../../utils/GeneralHelper.util';
+import { isPDFLink, removeArrayItem } from '../../utils/General.util';
 import googleAnalytics from '../../tracking';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
-import UploaderUtil from '../../utils/Uploader.util';
 import { ReactComponent as InfoSVG } from '../../images/info.svg';
 import SVGIcon from '../../images/SVGIcon';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -52,7 +54,7 @@ const AddEditPaperForm = props => {
     const originalUploader = props.isEdit ? props.data.uploader : props.userState[0].id;
     useEffect(() => {
         async function getUploaderData() {
-            setUploadersList(await UploaderUtil.buildListOfUploaders(props.data.authors, props.userState[0]));
+            setUploadersList(await uploaderUtils.buildListOfUploaders(props.data.authors, props.userState[0]));
         }
         getUploaderData();
     }, []);
@@ -680,7 +682,7 @@ const AddEditPaperForm = props => {
 
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=papers'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=papers&teamType=user'>
                         <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>

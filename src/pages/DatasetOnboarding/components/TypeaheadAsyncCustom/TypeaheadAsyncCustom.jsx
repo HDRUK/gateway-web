@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 
 import { Icon, Typeahead } from 'components';
 import { locationService } from 'services';
-import DatasetOnboardingHelperUtil from '../../../../utils/DatasetOnboardingHelper.util';
+import { datasetOnboardingHelperUtils } from 'utils';
+
 import { ReactComponent as SearchIcon } from '../../../../images/search.svg';
 
 import * as styles from './TypeaheadAsyncCustom.styles';
@@ -24,7 +25,7 @@ function TypeaheadAsyncCustom(props) {
         }
     }, [props.value]);
 
-    const getFormattedValues = values => DatasetOnboardingHelperUtil.getLocationsObj(values);
+    const getFormattedValues = values => datasetOnboardingHelperUtils.getLocationsObj(values);
 
     const handleSearch = async query => {
         if (isNaN(query)) {

@@ -4189,16 +4189,17 @@ export const updateRequestProps = {
     fullAmendments: {
         'Safe People | Applicant': [{ question: 'Test question', answer: 'Test answer' }],
     },
+    publisherId: '1234',
     publisher: 'Test publisher',
     applicationId: '55aa66bb',
     projectName: 'Test project',
     history: {
         pathname: `/account`,
-        search: `?tab=dataaccessrequests&team=`,
+        search: `?tab=dataaccessrequests&teamType=team&teamId=1234`,
         state: {
             alert: {
                 publisher: 'Test publisher',
-                nav: `dataaccessrequests&team=Test publisher`,
+                nav: 'dataaccessrequests',
                 tab: 'inReview',
                 message: `You have successfully requested updates to ‘Test project’ application`,
             },

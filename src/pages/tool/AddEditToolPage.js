@@ -11,7 +11,7 @@ import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { isEditMode } from '../../utils/GeneralHelper.util';
+import { isEditMode } from '../../utils/General.util';
 
 var baseURL = require('../commonComponents/BaseURL').getURL();
 

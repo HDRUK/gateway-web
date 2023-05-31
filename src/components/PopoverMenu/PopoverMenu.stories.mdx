@@ -1,0 +1,37 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import PopoverMenu from './PopoverMenu';
+import WastebinIcon from '../../images/icons/wastebin.svg';
+import SVG from 'react-inlinesvg';
+
+<Meta title='Core/PopoverMenu' component={PopoverMenu} />
+
+<Canvas>
+    <Story name='Basic'>
+        {props => {
+            const items = [
+                { label: 'Without icon', action: () => console.log('without icon clicked') },
+                { label: 'With icon', icon: () => <SVG src={WastebinIcon} />, action: () => console.log('with icon clicked') },
+                {
+                    label: 'With icon (+fill)',
+                    icon: () => <SVG src={WastebinIcon} />,
+                    iconFill: 'red',
+                    action: () => console.log('item 2 clicked'),
+                },
+                {
+                    label: 'With icon (+size)',
+                    icon: () => <SVG src={WastebinIcon} />,
+                    iconSize: 'xs',
+                    action: () => console.log('item 2 clicked'),
+                },
+                {
+                    label: 'With button variant',
+                    icon: () => <SVG src={WastebinIcon} />,
+                    action: () => console.log('item 2 clicked'),
+                    iconFill: 'white',
+                    buttonVariant: 'primary',
+                },
+            ];
+            return <PopoverMenu {...props} items={items} />;
+        }}
+    </Story>
+</Canvas>

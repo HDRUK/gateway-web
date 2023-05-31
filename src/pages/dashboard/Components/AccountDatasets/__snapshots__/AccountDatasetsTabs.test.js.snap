@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given the AccountDatasetsTabs component When it is rendered and team is admin Then matches the previous snapshot 1`] = `
+exports[`Given the AccountDatasetsTabs component When it is rendered and teamType is admin Then matches the previous snapshot 1`] = `
 <div>
   <div
     class="tabsBackground mb-0"
@@ -42,7 +42,7 @@ exports[`Given the AccountDatasetsTabs component When it is rendered and team is
 </div>
 `;
 
-exports[`Given the AccountDatasetsTabs component when team is not admin Then matches the previous snapshot 1`] = `
+exports[`Given the AccountDatasetsTabs component when teamType is not admin Then matches the previous snapshot 1`] = `
 <div>
   <div
     class="tabsBackground mb-0"
@@ -64,7 +64,7 @@ exports[`Given the AccountDatasetsTabs component when team is not admin Then mat
             href="#"
             role="tab"
           >
-            Active (5)
+            Active (2)
           </a>
           <a
             aria-selected="true"

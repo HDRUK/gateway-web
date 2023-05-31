@@ -8,6 +8,9 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import { isNil, isEmpty } from 'lodash';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Button } from 'hdruk-react-core';
+
+import { uploaderUtils } from 'utils';
+
 import RemoveUploaderModal from '../commonComponents/RemoveUploaderModal';
 import RemoveUploaderErrorModal from '../commonComponents/RemoveUploaderErrorModal';
 import RelatedResources from '../commonComponents/relatedResources/RelatedResources';
@@ -15,7 +18,6 @@ import RelatedObject from '../commonComponents/relatedObject/RelatedObject';
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import googleAnalytics from '../../tracking';
 import AsyncTypeAheadUsers from '../commonComponents/AsyncTypeAheadUsers';
-import UploaderUtil from '../../utils/Uploader.util';
 import SVGIcon from '../../images/SVGIcon';
 import './Tool.scss';
 
@@ -51,7 +53,7 @@ const AddEditToolForm = props => {
     const originalUploader = props.isEdit ? props.data.uploader : props.userState[0].id;
     useEffect(() => {
         async function getUploaderData() {
-            setUploadersList(await UploaderUtil.buildListOfUploaders(props.data.authors, props.userState[0]));
+            setUploadersList(await uploaderUtils.buildListOfUploaders(props.data.authors, props.userState[0]));
         }
         getUploaderData();
     }, []);
@@ -703,7 +705,7 @@ const AddEditToolForm = props => {
             </div>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=tools'>
+                    <a style={{ cursor: 'pointer' }} className='nested-button' href='/account?tab=tools&teamType=user'>
                         <Button variant='tertiary' className='cancelButton mr-2'>
                             Cancel
                         </Button>

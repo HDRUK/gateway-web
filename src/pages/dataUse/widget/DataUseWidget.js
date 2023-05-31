@@ -15,7 +15,7 @@ const WIDGET_MODULE = `https://unpkg.com/hdruk-gateway-widgets/dist/hdruk-data-u
 
 const baseURL = require('../../commonComponents/BaseURL').getURL();
 
-const DataUseWidget = ({ userState, team, publisherDetails }) => {
+const DataUseWidget = ({ userState, teamId, publisherDetails }) => {
     const { t } = useTranslation();
     const widgetAPIURL = `${baseURL}/api/v1/search?search=&datausedatacustodian=${publisherDetails.name}&tab=Datauses`;
     useScript(WIDGET_MODULE);
@@ -71,7 +71,7 @@ const DataUseWidget = ({ userState, team, publisherDetails }) => {
 
         if (!accepted) {
             await patchPublisherDataUseRequest.mutateAsync({
-                _id: team,
+                _id: teamId,
                 data: {
                     accepted: true,
                     acceptedByUserId: userState[0].id,

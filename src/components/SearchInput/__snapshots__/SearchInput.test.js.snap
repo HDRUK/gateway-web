@@ -14,12 +14,11 @@ exports[`Given the SearchInput component When it is rendered Then matches the pr
         <div
           class="emotion-3 input-group-prepend"
         >
-          <button
-            fill="green700"
-            svg="[object Object]"
+          <span
+            class="ui-Icon emotion-4"
           >
-            Icon
-          </button>
+            <icon-mock />
+          </span>
         </div>
         <input
           class="form-control"

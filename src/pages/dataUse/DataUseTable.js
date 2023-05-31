@@ -4,7 +4,7 @@ import { Table, Dropdown } from 'react-bootstrap';
 
 import googleAnalytics from '../../tracking';
 
-const DataUseTable = ({ team, data, active, pending, archived, onClickArchive, onClickUnarchive, onClickApprove, onClickReject }) => {
+const DataUseTable = ({ teamType, data, active, pending, archived, onClickArchive, onClickUnarchive, onClickApprove, onClickReject }) => {
     const handleAnalytics = (label, value) => {
         googleAnalytics.recordEvent('Data uses', label, value);
     };
@@ -43,13 +43,12 @@ const DataUseTable = ({ team, data, active, pending, archived, onClickArchive, o
 
     const renderGatewayDatasets = dataUse => {
         const datasets = dataUse.gatewayDatasetsInfo.map(gatewayDataset => (
-            <div>
+            <div key={gatewayDataset.pid}>
                 <Link
                     className='data-use-link'
                     to={`/dataset/${gatewayDataset.pid}`}
                     target='_blank'
-                    onClick={() => handleClickDataset(gatewayDataset.pid)}
-                >
+                    onClick={() => handleClickDataset(gatewayDataset.pid)}>
                     {gatewayDataset.name}
                 </Link>
             </div>
@@ -60,7 +59,9 @@ const DataUseTable = ({ team, data, active, pending, archived, onClickArchive, o
 
     const renderNonGatewayDatasets = dataUse => {
         const datasets = dataUse.nonGatewayDatasets.map(nonGatewayDataset => (
-            <div className='data-use-namedDataset'>{nonGatewayDataset}</div>
+            <div key={nonGatewayDataset} className='data-use-namedDataset'>
+                {nonGatewayDataset}
+            </div>
         ));
 
         return datasets;
@@ -68,31 +69,30 @@ const DataUseTable = ({ team, data, active, pending, archived, onClickArchive, o
 
     return (
         <Table className='data-use-table black-14'>
-            <tr>
-                <th>Last activity</th>
-                <th>Project Title</th>
-                <th>Dataset(s)</th>
-                {(active || pending || archived) && <th />}
-            </tr>
+            <thead>
+                <tr>
+                    <th>Last activity</th>
+                    <th>Project Title</th>
+                    <th>Dataset(s)</th>
+                    {(active || pending || archived) && <th />}
+                </tr>
+            </thead>
             <tbody>
                 {data.map(dataUse => (
-                    <tr>
+                    <tr key={dataUse.id}>
                         <td>{moment(dataUse.lastActivity).format('DD/MM/YYYY')}</td>
                         <td>
                             <Link
                                 className='data-use-link'
                                 to={`/datause/${dataUse.id}`}
                                 target='_blank'
-                                onClick={() => handleClickDatause(dataUse.id)}
-                            >
+                                onClick={() => handleClickDatause(dataUse.id)}>
                                 {dataUse.projectTitle}
                             </Link>
                             <p>{dataUse.organisationName}</p>
                         </td>
                         <td>
-                            <p>
-                                {renderGatewayDatasets(dataUse)} {renderNonGatewayDatasets(dataUse)}
-                            </p>
+                            {renderGatewayDatasets(dataUse)} {renderNonGatewayDatasets(dataUse)}
                         </td>
                         {(active || pending || archived) && (
                             <td style={{ width: '130px' }}>
@@ -103,13 +103,13 @@ const DataUseTable = ({ team, data, active, pending, archived, onClickArchive, o
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
                                             <Dropdown.Item href={`/datauseRegister/edit/${dataUse.id}`}>Edit</Dropdown.Item>
-                                            {team !== 'user' && (
+                                            {teamType !== 'user' && (
                                                 <Dropdown.Item onClick={() => handleClickArchive(dataUse.id)}>Archive</Dropdown.Item>
                                             )}
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 )}
-                                {pending && team === 'admin' && (
+                                {pending && teamType === 'admin' && (
                                     <Dropdown>
                                         <Dropdown.Toggle variant='outline-secondary' className='data-use-action'>
                                             Actions

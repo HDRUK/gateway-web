@@ -126,7 +126,7 @@ const AddEditCourseForm = props => {
             </Container>
             <ActionBar userState={props.userState}>
                 <div className='floatRight'>
-                    <a style={{ cursor: 'pointer' }} href='/account?tab=courses'>
+                    <a style={{ cursor: 'pointer' }} href='/account?tab=courses&teamType=user'>
                         <Button variant='tertiary' mr={2}>
                             Cancel
                         </Button>

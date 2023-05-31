@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 
 import { CheckboxTree } from 'components';
-import { filterBranches } from '../../../../utils/GeneralHelper.util';
+import { filterBranches } from '../../../../utils/General.util';
 
 const FilterTree = ({ node, filters, highlighted, checked, expanded, onCheck, searchValue }) => {
     const treeRef = useRef();

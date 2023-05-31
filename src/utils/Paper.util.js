@@ -1,4 +1,4 @@
-import { removeHTMLTags } from './GeneralHelper.util';
+import { removeHTMLTags } from './General.util';
 
 const formatPaperDescription = text => {
     if (!text || typeof text !== 'string') return '';

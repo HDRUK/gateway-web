@@ -51,7 +51,7 @@ const ApplicantActionButtons = ({
     return (
         <>
             {showDeleteDraft ? (
-                <a href='javascript:void(0)' onClick={e => onShowDeleteDraftModal()}>
+                <a href='#' onClick={e => onShowDeleteDraftModal()}>
                     {' '}
                     <span className='rejected-red-semibold-14 deleteDraftDataset cursorPointer'>Delete draft</span>{' '}
                 </a>

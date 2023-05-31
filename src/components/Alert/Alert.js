@@ -9,7 +9,7 @@ import { ReactComponent as DangerIcon } from '../../images/icons/danger.svg';
 import { ReactComponent as InfoIcon } from '../../images/icons/info.svg';
 import { PROP_TYPES_LAYOUTBOX } from '../LayoutBox/LayoutBox.propTypes';
 
-import * as styles from './Alert.styles.js';
+import * as styles from './Alert.styles';
 
 const Alert = ({
     icon,

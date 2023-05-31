@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the PopoverMenu component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <ul
+    class="emotion-0"
+    data-testid="popoverMenu"
+  >
+    <li
+      class="emotion-1"
+    >
+      <button
+        class="ui-Button emotion-2"
+        type="button"
+      >
+        <span
+          class="ui-Icon emotion-3"
+        >
+          <icon-mock />
+        </span>
+         
+        Remove
+         
+      </button>
+    </li>
+  </ul>
+</div>
+`;

@@ -8,7 +8,7 @@ const ActionBarMenu = ({ label, options = [], disabled, variant = 'secondary', a
     const CustomToggle = forwardRef(({ children, onClick }, ref) => (
         <a
             className='nested-button'
-            href='javascript:void(0)'
+            href='#'
             ref={ref}
             onClick={e => {
                 e.preventDefault();

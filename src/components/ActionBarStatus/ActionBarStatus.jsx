@@ -3,7 +3,7 @@ import { cx } from '@emotion/css';
 import PropTypes from 'prop-types';
 import { Box } from 'hdruk-react-core';
 import { addCommonPropTypes } from '../../configs/propTypes';
-import { dateFormats } from '../../utils/GeneralHelper.util';
+import { dateFormats } from '../../utils/General.util';
 
 const ActionBarStatus = ({ status, dataset, totalQuestions, className, mt, mb, ml, mr, width, minWidth, maxWidth, ...outerProps }) => {
     const {

@@ -4,21 +4,19 @@ import Winterfell from 'winterfell';
 import * as Sentry from '@sentry/react';
 import _ from 'lodash';
 import axios from 'axios';
-
 import 'react-tabs/style/react-tabs.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import moment from 'moment';
 
+import { authUtils, datasetOnboardingHelperUtils, datasetOnboardingValidationUtils, searchBarHelperUtils } from 'utils';
+import { PERMISSIONS_USER_TYPES } from 'consts';
 import { ActionBarStatus, RenderMarkdown } from 'components';
 import { datasetOnboardingService } from 'services';
-import DatasetOnboardingValidation from '../../utils/DatasetOnboardingValidation.util';
-import DatasetOnboardingHelper from '../../utils/DatasetOnboardingHelper.util';
-import SearchBarHelperUtil from '../../utils/SearchBarHelper.util';
+
 import { baseURL } from '../../configs/url.config';
 import SVGIcon from '../../images/SVGIcon';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
-import DatasetOnboardingHelperUtil from '../../utils/DatasetOnboardingHelper.util';
 
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import TypeaheadCustom from './components/TypeaheadCustom/TypeaheadCustom';
@@ -48,16 +46,9 @@ import ActionModal from './components/ActionModal/ActionModal';
 import { formSchema } from './formSchema';
 import ErrorModal from '../commonComponents/errorModal';
 
-/* export const DatasetOnboarding = props => {
-    const [id] = useState('');
-    
-
-
-} */
-
 const CustomToggle = forwardRef(({ children, onClick }, ref) => (
     <a
-        href='javascript:void(0)'
+        href='#'
         ref={ref}
         onClick={e => {
             e.preventDefault();
@@ -197,9 +188,9 @@ class DatasetOnboarding extends Component {
                 console.error(error);
             }
 
-            countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(this);
+            countedQuestionAnswers = datasetOnboardingHelperUtils.totalQuestionsAnswered(this);
             totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered`;
-            let percentageCompleted = DatasetOnboardingHelperUtil.getCompletionPercentages(this);
+            let percentageCompleted = datasetOnboardingHelperUtils.getCompletionPercentages(this);
             if (!_.isEmpty(this.state.structuralMetadata) && _.isEmpty(this.state.structuralMetadataErrors))
                 percentageCompleted.updatedCompletion.structural = 100;
             else percentageCompleted.updatedCompletion.structural = 0;
@@ -247,9 +238,12 @@ class DatasetOnboarding extends Component {
 
         let publisher = dataset.datasetv2.summary.publisher.identifier;
 
-        this.setState({ roles: this.getUserRoles() });
-        // TODO: GAT-1510:046
-        if (this.state.roles.includes('admin') && applicationStatus === DatasetOnboardingHelper.datasetStatus.inReview) userType = 'ADMIN';
+        this.setState({ roles: authUtils.getIsTypeAdminOrApplicant(this.props.userState, this.state.publisher) });
+        if (
+            this.state.roles.includes(PERMISSIONS_USER_TYPES.admin) &&
+            applicationStatus === datasetOnboardingHelperUtils.datasetStatus.inReview
+        )
+            userType = 'ADMIN';
 
         jsonSchema = this.injectStaticContent(jsonSchema, inReviewMode, reviewSections);
         jsonSchema = this.injectObservations(jsonSchema, questionAnswers);
@@ -257,17 +251,17 @@ class DatasetOnboarding extends Component {
         let isLatestVersion = listOfDatasets[0]._id === _id ? true : false;
         let isThereALiveVersion = listOfDatasets.filter(x => x.activeflag === 'active').length > 0 ? true : false;
 
-        if (applicationStatus === DatasetOnboardingHelper.datasetStatus.draft) {
+        if (applicationStatus === datasetOnboardingHelperUtils.datasetStatus.draft) {
             showSubmit = true;
             showDeleteDraft = true;
             //if (isLatestVersion) showArchive = true;
-        } else if (applicationStatus === DatasetOnboardingHelper.datasetStatus.rejected) {
+        } else if (applicationStatus === datasetOnboardingHelperUtils.datasetStatus.rejected) {
             if (isLatestVersion) showCreateNewVersion = true;
             readOnly = true;
-        } else if (applicationStatus === DatasetOnboardingHelper.datasetStatus.archive) {
+        } else if (applicationStatus === datasetOnboardingHelperUtils.datasetStatus.archive) {
             if (!isThereALiveVersion && isLatestVersion) showCreateNewVersion = true;
             readOnly = true;
-        } else if (applicationStatus !== DatasetOnboardingHelper.datasetStatus.inReview) {
+        } else if (applicationStatus !== datasetOnboardingHelperUtils.datasetStatus.inReview) {
             if (isLatestVersion) showCreateNewVersion = true;
             showArchive = true;
             readOnly = true;
@@ -290,8 +284,8 @@ class DatasetOnboarding extends Component {
             amendmentIterations,
             applicationStatus,
             activePanelId: initialPanel,
-            isWideForm: initialPanel === DatasetOnboardingHelper.darStaticPageIds.BEFOREYOUBEGIN,
-            isTableForm: initialPanel === DatasetOnboardingHelper.darStaticPageIds.STRUCTURAL,
+            isWideForm: initialPanel === datasetOnboardingHelperUtils.darStaticPageIds.BEFOREYOUBEGIN,
+            isTableForm: initialPanel === datasetOnboardingHelperUtils.darStaticPageIds.STRUCTURAL,
             isLoading: false,
             name,
             datasetVersion,
@@ -318,7 +312,7 @@ class DatasetOnboarding extends Component {
      * @returns {jsonSchmea} object
      */
     injectObservations(jsonSchema = {}, questionAnswers = {}) {
-        let { questions } = DatasetOnboardingHelperUtil.findQuestionSet('observations', {
+        let { questions } = datasetOnboardingHelperUtils.findQuestionSet('observations', {
             ...jsonSchema,
         });
         let listOfObservationFields = questions.map(x => x.questionId).flat();
@@ -337,8 +331,8 @@ class DatasetOnboarding extends Component {
         });
 
         listOfObservationUniqueIds.forEach(uniqueId => {
-            let duplicateQuestionSet = DatasetOnboardingHelperUtil.questionSetToDuplicate('add-observations', { ...jsonSchema }, uniqueId);
-            jsonSchema = DatasetOnboardingHelperUtil.insertSchemaUpdates('add-observations', duplicateQuestionSet, { ...jsonSchema });
+            let duplicateQuestionSet = datasetOnboardingHelperUtils.questionSetToDuplicate('add-observations', { ...jsonSchema }, uniqueId);
+            jsonSchema = datasetOnboardingHelperUtils.insertSchemaUpdates('add-observations', duplicateQuestionSet, { ...jsonSchema });
         });
 
         return jsonSchema;
@@ -355,15 +349,16 @@ class DatasetOnboarding extends Component {
         let formPanel = {};
         let currentPageIdx = 0;
         // check if About page has been injected
-        let navElementsExist = [...pages].find(page => page.pageId === DatasetOnboardingHelper.darStaticPageIds.BEFOREYOUBEGIN) || false;
+        let navElementsExist =
+            [...pages].find(page => page.pageId === datasetOnboardingHelperUtils.darStaticPageIds.BEFOREYOUBEGIN) || false;
         // 2. About page does not exist
         if (!navElementsExist) {
             // Append 'about' & 'files' panel and nav item
-            jsonSchema.pages.unshift(DatasetOnboardingHelper.staticContent.beforeYouBeginPageNav);
-            jsonSchema.pages.push(DatasetOnboardingHelper.staticContent.structuralPageNav);
+            jsonSchema.pages.unshift(datasetOnboardingHelperUtils.staticContent.beforeYouBeginPageNav);
+            jsonSchema.pages.push(datasetOnboardingHelperUtils.staticContent.structuralPageNav);
             // Add form panel for 'about' & 'files'
-            jsonSchema.formPanels.unshift(DatasetOnboardingHelper.staticContent.beforeYouBeginPanel);
-            jsonSchema.formPanels.push(DatasetOnboardingHelper.staticContent.structuralPanel);
+            jsonSchema.formPanels.unshift(datasetOnboardingHelperUtils.staticContent.beforeYouBeginPanel);
+            jsonSchema.formPanels.push(datasetOnboardingHelperUtils.staticContent.structuralPanel);
         }
         // if activePanel, find active formPanel from formPanels, find pageId index from pages array
         if (!_.isEmpty(this.state.activePanelId)) {
@@ -378,8 +373,8 @@ class DatasetOnboarding extends Component {
         jsonSchema.pages = [...jsonSchema.pages].map(page => {
             let inReview =
                 [...reviewSections].includes(page.pageId.toLowerCase()) ||
-                page.pageId === DatasetOnboardingHelper.darStaticPageIds.BEFOREYOUBEGIN ||
-                page.pageId === DatasetOnboardingHelper.darStaticPageIds.STRUCTURAL;
+                page.pageId === datasetOnboardingHelperUtils.darStaticPageIds.BEFOREYOUBEGIN ||
+                page.pageId === datasetOnboardingHelperUtils.darStaticPageIds.STRUCTURAL;
 
             return { ...page, inReview: inReviewMode && inReview };
         });
@@ -403,7 +398,7 @@ class DatasetOnboarding extends Component {
                 let qId = questionId.toLowerCase();
                 let lookupAutoComplete = [...lookup].includes(qId);
                 if (lookupAutoComplete)
-                    questionAnswers = DatasetOnboardingHelper.autoComplete(qId, uniqueId, {
+                    questionAnswers = datasetOnboardingHelperUtils.autoComplete(qId, uniqueId, {
                         ...questionAnswers,
                     });
             }
@@ -412,17 +407,17 @@ class DatasetOnboarding extends Component {
             let totalQuestions = '';
             // 3. total questions answered
             if (activePanelId === 'beforeYouBegin' || activePanelId === 'structural') {
-                countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(this);
+                countedQuestionAnswers = datasetOnboardingHelperUtils.totalQuestionsAnswered(this);
                 totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered`;
             } else {
-                countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(
+                countedQuestionAnswers = datasetOnboardingHelperUtils.totalQuestionsAnswered(
                     this,
                     this.state.activePanelId,
                     questionAnswers
                 );
                 totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions}/${countedQuestionAnswers.totalQuestions}  questions answered in this section`;
             }
-            let percentageCompleted = DatasetOnboardingHelperUtil.getCompletionPercentages(this);
+            let percentageCompleted = datasetOnboardingHelperUtils.getCompletionPercentages(this);
             if (!_.isEmpty(this.state.structuralMetadata) && _.isEmpty(this.state.structuralMetadataErrors))
                 percentageCompleted.updatedCompletion.structural = 100;
             else percentageCompleted.updatedCompletion.structural = 0;
@@ -430,7 +425,7 @@ class DatasetOnboarding extends Component {
             this.setState({ totalQuestions, completion: percentageCompleted.updatedCompletion });
             // 5. remove blank vals from questionAnswers
             let data = _.pickBy({ ...this.state.questionAnswers, ...questionAnswers }, _.identity);
-            const lastSaved = DatasetOnboardingHelper.saveTime();
+            const lastSaved = datasetOnboardingHelperUtils.saveTime();
             // 6. create dataObject
             let dataObj = { key: 'questionAnswers', data };
             // 7. Immediately update the state
@@ -466,7 +461,7 @@ class DatasetOnboarding extends Component {
 				let schemaUpdates = 	_.omitBy({
 					unansweredAmendments,
 					answeredAmendments,
-					showSubmit: applicationStatus === DatasetOnboardingHelper.datasetStatus.inProgress || answeredAmendments > 0,
+					showSubmit: applicationStatus === datasetOnboardingHelperUtils.datasetStatus.inProgress || answeredAmendments > 0,
 					jsonSchema
 				}, _.isNil);
 
@@ -485,21 +480,20 @@ class DatasetOnboarding extends Component {
      * @params  Object{questionAnswers}
      */
     onFormSubmit = async () => {
-        let invalidQuestions = DatasetOnboardingValidation.getQuestionPanelInvalidQuestions(
+        let invalidQuestions = datasetOnboardingValidationUtils.getQuestionPanelInvalidQuestions(
             Winterfell,
             this.state.jsonSchema.questionSets,
             this.state.questionAnswers
         );
 
-        let validationSectionMessages = DatasetOnboardingValidation.buildInvalidSectionMessages(Winterfell, invalidQuestions);
-        let inValidMessages = DatasetOnboardingValidation.buildInvalidMessages(Winterfell, invalidQuestions);
-        let errors = DatasetOnboardingValidation.formatValidationObj(inValidMessages, [...this.state.jsonSchema.questionPanels]);
+        let validationSectionMessages = datasetOnboardingValidationUtils.buildInvalidSectionMessages(Winterfell, invalidQuestions);
+        let inValidMessages = datasetOnboardingValidationUtils.buildInvalidMessages(Winterfell, invalidQuestions);
+        let errors = datasetOnboardingValidationUtils.formatValidationObj(inValidMessages, [...this.state.jsonSchema.questionPanels]);
         let isValid = Object.keys(errors).length ? false : true;
 
         if (isValid) {
             this.toggleActionModal('SUBMITFORREVIEW');
-            // TODO: GAT-1510:018
-        } else if (this.userRoleIsAdmin(this.state.publisher)) {
+        } else if (authUtils.getIsTeamAdmin(this.props.userState, this.state.publisher)) {
             this.toggleActionModal('VALIDATIONERRORSADMIN');
         } else {
             let activePage = _.get(_.keys({ ...errors }), 0);
@@ -526,7 +520,7 @@ class DatasetOnboarding extends Component {
             // 4. PATCH the data
             const response = await axios.patch(`${baseURL}/api/v1/dataset-onboarding/${id}`, params);
             // 6. Get saved time
-            const lastSaved = DatasetOnboardingHelper.saveTime();
+            const lastSaved = datasetOnboardingHelperUtils.saveTime();
             // 5. Set state
             this.setState({ [`${key}`]: { ...data }, lastSaved });
         } catch (err) {
@@ -599,17 +593,17 @@ class DatasetOnboarding extends Component {
             let totalQuestions = '';
             // if in the about panel, retrieve question answers count for entire application
             if (panelId === 'beforeYouBegin' || panelId === 'structural') {
-                countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(this);
+                countedQuestionAnswers = datasetOnboardingHelperUtils.totalQuestionsAnswered(this);
                 totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions || 0}/${
                     countedQuestionAnswers.totalQuestions || 0
                 }  questions answered`;
             } else {
-                countedQuestionAnswers = DatasetOnboardingHelperUtil.totalQuestionsAnswered(this, panelId);
+                countedQuestionAnswers = datasetOnboardingHelperUtils.totalQuestionsAnswered(this, panelId);
                 totalQuestions = `${countedQuestionAnswers.totalAnsweredQuestions || 0}/${
                     countedQuestionAnswers.totalQuestions || 0
                 }  questions answered in this section`;
             }
-            let percentageCompleted = DatasetOnboardingHelperUtil.getCompletionPercentages(this);
+            let percentageCompleted = datasetOnboardingHelperUtils.getCompletionPercentages(this);
             if (!_.isEmpty(this.state.structuralMetadata) && _.isEmpty(this.state.structuralMetadataErrors))
                 percentageCompleted.updatedCompletion.structural = 100;
             else percentageCompleted.updatedCompletion.structural = 0;
@@ -631,7 +625,7 @@ class DatasetOnboarding extends Component {
 
     onClickSave = e => {
         e.preventDefault();
-        const lastSaved = DatasetOnboardingHelper.saveTime();
+        const lastSaved = datasetOnboardingHelperUtils.saveTime();
         this.setState({ lastSaved });
     };
 
@@ -645,28 +639,28 @@ class DatasetOnboarding extends Component {
     onQuestionClick = async (questionSetId = '', questionId = '') => {
         let questionSet, jsonSchema, questionAnswers, schema;
 
-        questionSet = DatasetOnboardingHelperUtil.findQuestionSet(questionSetId, {
+        questionSet = datasetOnboardingHelperUtils.findQuestionSet(questionSetId, {
             ...this.state.jsonSchema,
         });
 
         if (!_.isEmpty(questionSet) && !_.isEmpty(questionId)) {
             // remove about and files from pages to stop duplicate, about / files added to DAR on init
-            schema = DatasetOnboardingHelperUtil.removeStaticPages({ ...this.state.jsonSchema });
+            schema = datasetOnboardingHelperUtils.removeStaticPages({ ...this.state.jsonSchema });
 
             let {
                 input: { action },
-            } = DatasetOnboardingHelperUtil.findQuestion(questionId, questionSet);
+            } = datasetOnboardingHelperUtils.findQuestion(questionId, questionSet);
             switch (action) {
                 case 'addObservation':
-                    let duplicateQuestionSet = DatasetOnboardingHelperUtil.questionSetToDuplicate(questionSetId, { ...schema });
-                    jsonSchema = DatasetOnboardingHelperUtil.insertSchemaUpdates(questionSetId, duplicateQuestionSet, { ...schema });
+                    let duplicateQuestionSet = datasetOnboardingHelperUtils.questionSetToDuplicate(questionSetId, { ...schema });
+                    jsonSchema = datasetOnboardingHelperUtils.insertSchemaUpdates(questionSetId, duplicateQuestionSet, { ...schema });
                     this.setState({
                         jsonSchema,
                     });
                     break;
                 case 'removeObservation':
-                    jsonSchema = DatasetOnboardingHelperUtil.removeQuestionReferences(questionSetId, questionId, { ...schema });
-                    questionAnswers = DatasetOnboardingHelperUtil.removeQuestionAnswers(questionId, { ...this.state.questionAnswers });
+                    jsonSchema = datasetOnboardingHelperUtils.removeQuestionReferences(questionSetId, questionId, { ...schema });
+                    questionAnswers = datasetOnboardingHelperUtils.removeQuestionAnswers(questionId, { ...this.state.questionAnswers });
                     await this.updateApplication({ key: 'questionAnswers', data: questionAnswers });
                     break;
                 default:
@@ -684,7 +678,7 @@ class DatasetOnboarding extends Component {
     onQuestionAction = async (e = '', questionSetId = '', questionId = '', key = '') => {
         let mode, stateObj;
         switch (key) {
-            case DatasetOnboardingHelper.actionKeys.GUIDANCE:
+            case datasetOnboardingHelperUtils.actionKeys.GUIDANCE:
                 const activeGuidance = this.getActiveQuestionGuidance(questionId);
                 if (!_.isEmpty(e)) {
                     this.removeActiveQuestionClass();
@@ -692,18 +686,18 @@ class DatasetOnboarding extends Component {
                 }
                 this.setState({ activeGuidance });
                 break;
-            case DatasetOnboardingHelper.actionKeys.REQUESTAMENDMENT:
-                mode = DatasetOnboardingHelper.amendmentModes.ADDED;
+            case datasetOnboardingHelperUtils.actionKeys.REQUESTAMENDMENT:
+                mode = datasetOnboardingHelperUtils.amendmentModes.ADDED;
                 stateObj = await this.postQuestionAction(questionSetId, questionId, mode);
                 this.setState({ ...stateObj });
                 break;
-            case DatasetOnboardingHelper.actionKeys.CANCELREQUEST:
-                mode = DatasetOnboardingHelper.amendmentModes.REMOVED;
+            case datasetOnboardingHelperUtils.actionKeys.CANCELREQUEST:
+                mode = datasetOnboardingHelperUtils.amendmentModes.REMOVED;
                 stateObj = await this.postQuestionAction(questionSetId, questionId, mode);
                 this.setState({ ...stateObj });
                 break;
-            case DatasetOnboardingHelper.actionKeys.REVERTTOPREVIOUSANSWER:
-                mode = DatasetOnboardingHelper.amendmentModes.REVERTED;
+            case datasetOnboardingHelperUtils.actionKeys.REVERTTOPREVIOUSANSWER:
+                mode = datasetOnboardingHelperUtils.amendmentModes.REVERTED;
                 stateObj = await this.postQuestionAction(questionSetId, questionId, mode);
                 this.setState({ ...stateObj });
                 break;
@@ -730,7 +724,7 @@ class DatasetOnboarding extends Component {
             questions = questionList.map(({ questions }) => questions).flat();
             if (!_.isEmpty(questions)) {
                 // 2. loop over and find active question
-                let activeQuestion = DatasetOnboardingHelper.getActiveQuestion([...questions], questionId);
+                let activeQuestion = datasetOnboardingHelperUtils.getActiveQuestion([...questions], questionId);
                 if (!_.isEmpty(activeQuestion)) {
                     const { guidance } = activeQuestion;
                     return guidance;
@@ -798,7 +792,7 @@ class DatasetOnboarding extends Component {
     };
 
     onStructuralMetaDataUpdate = (structuralMetadata, structuralMetadataErrors) => {
-        let percentageCompleted = DatasetOnboardingHelperUtil.getCompletionPercentages(this);
+        let percentageCompleted = datasetOnboardingHelperUtils.getCompletionPercentages(this);
         if (!_.isEmpty(structuralMetadata) && _.isEmpty(structuralMetadataErrors)) percentageCompleted.updatedCompletion.structural = 100;
         else percentageCompleted.updatedCompletion.structural = 0;
         this.setState({
@@ -861,7 +855,7 @@ class DatasetOnboarding extends Component {
     toggleActionModal = (type = '') => {
         let actionModalConfig = {};
         // 1. get basic modal config
-        if (!_.isEmpty(type)) actionModalConfig = DatasetOnboardingHelper.configActionModal(type);
+        if (!_.isEmpty(type)) actionModalConfig = datasetOnboardingHelperUtils.configActionModal(type);
         // 2. set state for hide/show/config modal
         this.setState(prevState => {
             return {
@@ -875,7 +869,7 @@ class DatasetOnboarding extends Component {
         e.preventDefault();
         this.props.history.push({
             pathname: `/account`,
-            search: '?tab=datasets',
+            search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
             state: { team: this.state.publisher },
         });
     };
@@ -910,7 +904,7 @@ class DatasetOnboarding extends Component {
                     let { _id } = this.state;
                     // 1. POST
                     await axios.post(`${baseURL}/api/v1/dataset-onboarding/${_id}`, {});
-                    const lastSaved = DatasetOnboardingHelper.saveTime();
+                    const lastSaved = datasetOnboardingHelperUtils.saveTime();
                     this.setState({ lastSaved });
 
                     let alert = {
@@ -920,8 +914,8 @@ class DatasetOnboarding extends Component {
                     };
                     this.props.history.push({
                         pathname: '/account',
-                        search: '?tab=datasets',
-                        state: { alert, team: this.state.publisher },
+                        search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
+                        state: { alert },
                     });
                 } catch (err) {
                     console.log(err);
@@ -946,8 +940,8 @@ class DatasetOnboarding extends Component {
 
                 this.props.history.push({
                     pathname: '/account',
-                    search: '?tab=datasets',
-                    state: { alert, team: 'admin' },
+                    search: '?tab=datasets&teamType=admin',
+                    state: { alert },
                 });
                 break;
             case 'ARCHIVE':
@@ -965,8 +959,8 @@ class DatasetOnboarding extends Component {
                     };
                     this.props.history.push({
                         pathname: '/account',
-                        search: '?tab=datasets',
-                        state: { alert, team: this.state.publisher },
+                        search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
+                        state: { alert },
                     });
                 } catch (err) {
                     console.log(err);
@@ -979,7 +973,7 @@ class DatasetOnboarding extends Component {
                         applicationStatus: this.applicationState[type],
                     };
                     // 1. Update action status
-                    const response = await axios.put(`${baseURL}/api/v1/dataset-onboarding/${_id}`, body);
+                    await axios.put(`${baseURL}/api/v1/dataset-onboarding/${_id}`, body);
                 } catch (err) {
                     console.log(err);
                 }
@@ -1000,8 +994,8 @@ class DatasetOnboarding extends Component {
 
                     this.props.history.push({
                         pathname: '/account',
-                        search: '?tab=datasets',
-                        state: { alert, team: this.state.publisher },
+                        search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
+                        state: { alert },
                     });
                 } catch (err) {
                     console.log(err);
@@ -1024,8 +1018,8 @@ class DatasetOnboarding extends Component {
 
                     this.props.history.push({
                         pathname: '/account',
-                        search: '?tab=datasets',
-                        state: { alert, team: this.state.publisher },
+                        search: `?tab=datasets&teamType=team&teamId=${this.state.publisher}`,
+                        state: { alert },
                     });
                 } catch (err) {
                     console.log(err);
@@ -1042,80 +1036,11 @@ class DatasetOnboarding extends Component {
             case 'CONFIRMAPPROVALCONDITIONS':
             case 'CONFIRMREJECTION':
             case 'CONFIRMAPPROVAL':
-                //let { _id } = this.state;
-                /*const body = {
-					applicationStatus: this.applicationState[type],
-					applicationStatusDesc: statusDesc,
-				};*/
-
-                /* // 1. Update action status
-				const response = await axios.put(`${baseURL}/api/v1/data-access-request/${_id}`, body);
-				// 2. set alert object for screen
-				let alert = {
-					publisher: this.state.publisher || '',
-					nav: `dataaccessrequests&team=${this.state.publisher}`,
-					tab: this.tabState[type],
-					message: `You have ${this.tabState[type]} the data access request for ${this.state.publisher}`,
-				};
-				// 3. hide screen modal for approve, reject, approve with comments
-				this.toggleActionModal();
-				// 4. redirect with Publisher name, Status: reject, approved, key of tab: presubmission, inreview, approved, rejected
-				this.props.history.push({
-					pathname: `/account`,
-					search: '?tab=dataaccessrequests',
-					state: { alert },
-				}); */
                 break;
             default:
                 this.toggleActionModal();
         }
     };
-
-    getUserRoles() {
-        let { teams } = this.props.userState[0];
-
-        let foundAdmin = teams.filter(x => x.type === 'admin');
-        if (!_.isEmpty(foundAdmin)) {
-            return ['admin'];
-        }
-
-        let foundTeam = teams.filter(team => team.name === this.state.publisher);
-        if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
-            return ['applicant'];
-        }
-
-        /* let { teams } = props.userState[0];
-		let foundAdmin = teams.filter(x => x.type === team);
-		if (!_.isEmpty(foundAdmin)) {
-			return 'admin';
-		}
-		let foundTeam = teams.filter(x => x.name === team);
-		if (_.isEmpty(teams) || _.isEmpty(foundTeam)) {
-			return ['applicant']; //pass back to user
-		}
-
-		return foundTeam[0]._id; */
-    }
-
-    userHasRole = (teamId, role) => {
-        const team = this.props.userState[0].teams.filter(t => {
-            return t._id === teamId;
-        })[0];
-        return team && team.roles.includes(role);
-    };
-
-    userRoleIsAdmin = teamId => {
-        const team = this.props.userState[0].teams.filter(t => {
-            return t._id === teamId;
-        })[0];
-        return team && team.isAdmin;
-    };
-
-    /* renderTooltip = props => (
-		<Tooltip className='tool-tip' style={{ width: '240px' }}>
-			{props}
-		</Tooltip>
-	); */
 
     /**
      * OnUpdateRequest
@@ -1158,7 +1083,7 @@ class DatasetOnboarding extends Component {
                         // Get the list of questions for questionPanelId from questionSets
                         ({ questions } = [...questionSets].find(questionSet => questionSet.questionSetId === questionSetId));
                         // Get question checks for nested questions also
-                        ({ question } = DatasetOnboardingHelper.getActiveQuestion(questions, key));
+                        ({ question } = datasetOnboardingHelperUtils.getActiveQuestion(questions, key));
                         // Safe People | Applicant
                         let location = `${page} | ${section}`;
                         // build up our object of data for display
@@ -1346,10 +1271,10 @@ class DatasetOnboarding extends Component {
                         ref={this.searchBar}
                         searchString={searchString}
                         doSearchMethod={e => {
-                            SearchBarHelperUtil.doSearch(e, this);
+                            searchBarHelperUtils.doSearch(e, this);
                         }}
                         doUpdateSearchString={e => {
-                            SearchBarHelperUtil.updateSearchString(e, this);
+                            searchBarHelperUtils.updateSearchString(e, this);
                         }}
                         doToggleDrawer={e => this.toggleDrawer()}
                         userState={userState}
@@ -1399,12 +1324,12 @@ class DatasetOnboarding extends Component {
                             </span>
                         </Col>
                         <Col sm={12} md={4} className='d-flex justify-content-end align-items-center banner-right'>
-                            <span className='white-14-semibold'>{DatasetOnboardingHelper.getSavedAgo(lastSaved)}</span>
+                            <span className='white-14-semibold'>{datasetOnboardingHelperUtils.getSavedAgo(lastSaved)}</span>
                             {
                                 <a
                                     className={`linkButton white-14-semibold ml-2 ${allowedNavigation ? '' : 'disabled'}`}
                                     onClick={this.onClickSave}
-                                    href='javascript:void(0)'>
+                                    href='#'>
                                     Save now
                                 </a>
                             }
@@ -1464,7 +1389,10 @@ class DatasetOnboarding extends Component {
                                                         );
                                                 })()}
 
-                                                <div> {item.flag && <i className={DatasetOnboardingHelper.flagIcons[item.flag]} />}</div>
+                                                <div>
+                                                    {' '}
+                                                    {item.flag && <i className={datasetOnboardingHelperUtils.flagIcons[item.flag]} />}
+                                                </div>
                                             </div>
                                         </span>
                                         {item.active && (
@@ -1520,8 +1448,8 @@ class DatasetOnboarding extends Component {
                         <div className='action-bar'>
                             <div className='action-bar--questions'>
                                 <SLA
-                                    classProperty={DatasetOnboardingHelper.datasetStatusColours[applicationStatus]}
-                                    text={DatasetOnboardingHelper.datasetSLAText[applicationStatus]}
+                                    classProperty={datasetOnboardingHelperUtils.datasetStatusColours[applicationStatus]}
+                                    text={datasetOnboardingHelperUtils.datasetSLAText[applicationStatus]}
                                 />
                                 <ActionBarStatus status={applicationStatus} totalQuestions={totalQuestions} dataset={dataset} />
                             </div>

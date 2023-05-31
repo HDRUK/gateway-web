@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
-import { ReactComponent as ArrowDownSvg } from '../../../images/stock.svg';
 import { SlideDown } from 'react-slidedown';
+import { ReactComponent as ArrowDownSvg } from '../../../images/stock.svg';
 import './TeamHelp.scss';
 import Loading from '../../commonComponents/Loading';
 import { baseURL } from '../../../configs/url.config';
@@ -19,8 +19,8 @@ const TeamHelp = () => {
     const getTeamHelp = async () => {
         try {
             setLoading(true);
-            let response = await axios.get(`${baseURL}/api/v1/help/team`);
-            let helpFAQ = response.data.help.map(r => ({ ...r, closed: true }));
+            const response = await axios.get(`${baseURL}/api/v1/help/team`);
+            const helpFAQ = response.data.help.map(r => ({ ...r, closed: true }));
             setHelp(helpFAQ);
             setLoading(false);
         } catch (err) {
@@ -29,7 +29,7 @@ const TeamHelp = () => {
     };
 
     const toggleHelp = index => {
-        let helpArr = [...help].map((h, i) => {
+        const helpArr = [...help].map((h, i) => {
             return {
                 ...h,
                 closed: i === index ? !h.closed : h.closed,
@@ -47,7 +47,7 @@ const TeamHelp = () => {
     }
 
     return (
-        <Fragment>
+        <>
             <Row>
                 <Col sm={1} lg={1} />
                 <Col sm={10} lg={10}>
@@ -60,7 +60,7 @@ const TeamHelp = () => {
                         {help.length > 0 &&
                             help.map((h, i) => {
                                 return (
-                                    <Fragment>
+                                    <div key={h.question}>
                                         <div className='mainTeamCard' onClick={e => toggleHelp(i)}>
                                             <Row className='ml-0 teamQuestion'>
                                                 <ArrowDownSvg className={h.closed ? 'margin-top-6' : 'flip180 margin-top-6'} />
@@ -72,14 +72,14 @@ const TeamHelp = () => {
                                                 <div className='gray800-14'>{h.answer}</div>
                                             </div>
                                         </SlideDown>
-                                    </Fragment>
+                                    </div>
                                 );
                             })}
                     </div>
                 </Col>
                 <Col sm={1} lg={1} />
             </Row>
-        </Fragment>
+        </>
     );
 };
 

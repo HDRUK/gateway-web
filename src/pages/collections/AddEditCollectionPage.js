@@ -8,7 +8,7 @@ import moment from 'moment';
 import SideDrawer from '../commonComponents/sidedrawer/SideDrawer';
 import UserMessages from '../commonComponents/userMessages/UserMessages';
 import DataSetModal from '../commonComponents/dataSetModal/DataSetModal';
-import { isEditMode } from '../../utils/GeneralHelper.util';
+import { isEditMode } from '../../utils/General.util';
 import AddEditCollectionForm from './AddEditCollectionForm';
 import ErrorModal from '../commonComponents/errorModal';
 import './Collections.scss';

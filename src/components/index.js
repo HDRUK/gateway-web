@@ -1,4 +1,5 @@
 import ActionBarStatus from './ActionBarStatus';
+import ActionCard from './ActionCard';
 import Alert from './Alert';
 import AlertMessage from './AlertMessage';
 import AlertModal from './AlertModal';
@@ -7,6 +8,10 @@ import BlockQuote from './BlockQuote';
 import Button from './Button';
 import Checkbox from './Checkbox';
 import CheckboxTree from './CheckboxTree';
+import ConfirmationModal from './ConfirmationModal';
+import CustomMenu from './CustomMenu';
+import CustomSubMenu from './CustomSubMenu';
+import CustomToggle from './CustomToggle';
 import Cta from './Cta';
 import Dropdown from './Dropdown';
 import FileSelector from './FileSelector';
@@ -20,13 +25,17 @@ import ListInfo from './ListInfo';
 import Loading from './Loading';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from './Modal';
 import NotificationBadge from './NotificationBadge';
+import MultiSelect from './MultiSelect';
 import QualityScore from './QualityScore';
+import Popover from './Popover';
+import PopoverMenu from './PopoverMenu';
 import RenderMarkdown from './RenderMarkdown';
 import SearchControls from './SearchControls';
 import SearchInput from './SearchInput';
 import SortDropdown from './SortDropdown';
 import Spinner from './Spinner';
 import Switch from './Switch';
+import Table from './Table';
 import Textarea from './Textarea';
 import Timeline from './Timeline';
 import ToolTip from './ToolTip';
@@ -35,6 +44,7 @@ import Typography from './Typography';
 
 export {
     ActionBarStatus,
+    ActionCard,
     Alert,
     AlertMessage,
     AlertModal,
@@ -43,7 +53,11 @@ export {
     Button,
     Checkbox,
     CheckboxTree,
+    ConfirmationModal,
     Cta,
+    CustomMenu,
+    CustomSubMenu,
+    CustomToggle,
     Dropdown,
     FileSelector,
     Icon,
@@ -58,13 +72,17 @@ export {
     ModalBody,
     ModalFooter,
     ModalHeader,
+    MultiSelect,
     NotificationBadge,
+    Popover,
+    PopoverMenu,
     RenderMarkdown,
     SearchControls,
     SearchInput,
     SortDropdown,
     Spinner,
     Switch,
+    Table,
     Textarea,
     Timeline,
     ToolTip,

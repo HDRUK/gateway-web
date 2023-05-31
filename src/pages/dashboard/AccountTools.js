@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Row, Col, Button, Tabs, Tab, DropdownButton, Dropdown } from 'react-bootstrap';
+import { useAuth } from 'context/AuthContext';
 
 import { LayoutContent } from 'components';
 import googleAnalytics from '../../tracking';
@@ -15,8 +16,8 @@ import { PaginationHelper } from '../commonComponents/PaginationHelper';
 
 const baseURL = require('../commonComponents/BaseURL').getURL();
 
-export const AccountTools = props => {
-    const [userState] = useState(props.userState);
+export const AccountTools = () => {
+    const { isRootAdmin } = useAuth();
     const [key, setKey] = useState('active');
     const [toolsList, setToolsList] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -242,10 +243,10 @@ export const AccountTools = props => {
                                         ) : (
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'active') {
-                                                    return <></>;
+                                                    return null;
                                                 }
                                                 return (
-                                                    <Row className='entryBox' data-testid='toolEntryActive'>
+                                                    <Row key={tool.id} className='entryBox' data-testid='toolEntryActive'>
                                                         <Col sm={12} lg={2} className='pt-2 gray800-14'>
                                                             {moment(tool.updatedAt).format('D MMMM YYYY HH:mm')}
                                                         </Col>
@@ -259,7 +260,7 @@ export const AccountTools = props => {
                                                                 ? 'Author not listed'
                                                                 : tool.persons.map(person => {
                                                                       return (
-                                                                          <span>
+                                                                          <span key={`${person.firstname} ${person.lastname}`}>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
                                                                       );
@@ -310,7 +311,7 @@ export const AccountTools = props => {
                                         ) : (
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'review') {
-                                                    return <></>;
+                                                    return null;
                                                 }
                                                 return (
                                                     <Row className='entryBox' data-testid='toolEntryPending'>
@@ -327,7 +328,7 @@ export const AccountTools = props => {
                                                                 ? 'Author not listed'
                                                                 : tool.persons.map(person => {
                                                                       return (
-                                                                          <span>
+                                                                          <span key={`${person.firstname} ${person.lastname}`}>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
                                                                       );
@@ -335,8 +336,7 @@ export const AccountTools = props => {
                                                         </Col>
 
                                                         <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                            {/* TODO: GAT-1510:035 */}
-                                                            {userState[0].role === 'Admin' ? (
+                                                            {isRootAdmin ? (
                                                                 <DropdownButton
                                                                     variant='outline-secondary'
                                                                     alignRight
@@ -399,7 +399,7 @@ export const AccountTools = props => {
                                         ) : (
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'rejected') {
-                                                    return <></>;
+                                                    return null;
                                                 }
                                                 return (
                                                     <Row className='entryBox' data-testid='toolEntryRejected'>
@@ -416,7 +416,7 @@ export const AccountTools = props => {
                                                                 ? 'Author not listed'
                                                                 : tool.persons.map(person => {
                                                                       return (
-                                                                          <span>
+                                                                          <span key={`${person.firstname} ${person.lastname}`}>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
                                                                       );
@@ -451,7 +451,7 @@ export const AccountTools = props => {
                                         ) : (
                                             toolsList.map(tool => {
                                                 if (tool.activeflag !== 'archive') {
-                                                    return <></>;
+                                                    return null;
                                                 }
                                                 return (
                                                     <Row className='entryBox' data-testid='toolEntryArchive'>
@@ -468,7 +468,7 @@ export const AccountTools = props => {
                                                                 ? 'Author not listed'
                                                                 : tool.persons.map(person => {
                                                                       return (
-                                                                          <span>
+                                                                          <span key={`${person.firstname} ${person.lastname}`}>
                                                                               {person.firstname} {person.lastname} <br />
                                                                           </span>
                                                                       );
@@ -476,8 +476,7 @@ export const AccountTools = props => {
                                                         </Col>
 
                                                         <Col sm={12} lg={3} style={{ textAlign: 'right' }} className='toolsButtons'>
-                                                            {/* TODO: GAT-1510:036 */}
-                                                            {userState[0].role === 'Admin' ? (
+                                                            {isRootAdmin ? (
                                                                 <DropdownButton
                                                                     variant='outline-secondary'
                                                                     alignRight

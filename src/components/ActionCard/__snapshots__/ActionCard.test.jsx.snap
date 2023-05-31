@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the ActionCard component When it is rendered Then matches the previous snapshot 1`] = `
+<div>
+  <div
+    class="ui-Card emotion-0"
+    role="article"
+  >
+    <div
+      class="ui-CardBody emotion-1"
+    >
+      <div
+        class="ui-Box emotion-2"
+      >
+        <div
+          class="ui-Box emotion-2"
+        >
+          <h5
+            class="ui-Typography emotion-4"
+          >
+            Title
+          </h5>
+          Content
+        </div>
+        <div
+          class="ui-Box emotion-2"
+        >
+          Action
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

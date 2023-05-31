@@ -33,6 +33,54 @@ exports[`Given the AsyncTypeAheadUsers component When it is rendered Then matche
               class="rbt-input-wrapper"
             >
               <div
+                class="rbt-token rbt-token-removeable"
+                option="[object Object]"
+                tabindex="0"
+              >
+                Jack Reacher
+                <button
+                  aria-label="Remove"
+                  class="close rbt-close rbt-token-remove-button"
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                  <span
+                    class="sr-only"
+                  >
+                    Remove
+                  </span>
+                </button>
+              </div>
+              <div
+                class="rbt-token rbt-token-removeable"
+                option="[object Object]"
+                tabindex="0"
+              >
+                Tom Cruise
+                <button
+                  aria-label="Remove"
+                  class="close rbt-close rbt-token-remove-button"
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                  <span
+                    class="sr-only"
+                  >
+                    Remove
+                  </span>
+                </button>
+              </div>
+              <div
                 style="display: flex; flex: 1; height: 100%; position: relative;"
               >
                 <input
@@ -40,7 +88,7 @@ exports[`Given the AsyncTypeAheadUsers component When it is rendered Then matche
                   aria-haspopup="listbox"
                   autocomplete="off"
                   class="rbt-input-main"
-                  placeholder="Search"
+                  placeholder=""
                   style="background-color: transparent; border: 0px; box-shadow: none; cursor: inherit; outline: none; padding: 0px; width: 100%; z-index: 1;"
                   type="text"
                   value=""

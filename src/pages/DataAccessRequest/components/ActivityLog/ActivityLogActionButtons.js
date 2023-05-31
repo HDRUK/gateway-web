@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import { CSVLink } from 'react-csv';
 import { Button } from 'hdruk-react-core';
-import DarHelperUtil from '../../../../utils/DarHelper.util';
+import { darHelperUtils } from 'utils';
 
-const ActivityLogActionButtons = ({ team, latestVersion, onClickAddNewEvent, activityLog, onClickStartReview }) => {
+const ActivityLogActionButtons = ({ teamType, latestVersion, onClickAddNewEvent, activityLog, onClickStartReview }) => {
     const [activityLogs, setActivityLogs] = useState([]);
     const [exportFileName, setExportFileName] = useState('');
 
@@ -21,17 +21,17 @@ const ActivityLogActionButtons = ({ team, latestVersion, onClickAddNewEvent, act
                 </Button>
             </CSVLink>
 
-            {team !== 'user' && (
+            {teamType !== 'user' && (
                 <Button variant='secondary' onClick={() => onClickAddNewEvent()}>
                     + Add new event
                 </Button>
             )}
 
             {(Object.values(latestVersion.versionTree) || [])
-                .filter(version => version.applicationStatus === DarHelperUtil.darStatus.submitted)
+                .filter(version => version.applicationStatus === darHelperUtils.darStatus.submitted)
                 .map(submittedVersion => {
                     return (
-                        team !== 'user' && (
+                        teamType !== 'user' && (
                             <Button
                                 id='startReview'
                                 onClick={e => {
@@ -43,7 +43,7 @@ const ActivityLogActionButtons = ({ team, latestVersion, onClickAddNewEvent, act
                     );
                 })}
 
-            {(team === 'user' || latestVersion.applicationStatus !== DarHelperUtil.darStatus.submitted) && (
+            {(teamType === 'user' || latestVersion.applicationStatus !== darHelperUtils.darStatus.submitted) && (
                 <a href={latestVersion.versions[0].link}>
                     <Button>View application form</Button>
                 </a>

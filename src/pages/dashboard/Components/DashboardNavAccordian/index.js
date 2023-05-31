@@ -1,3 +1,3 @@
-import DashboardNavAccordian from './DashboardNavAccordion';
+import DashboardNavAccordion from './DashboardNavAccordion';
 
-export default DashboardNavAccordian;
+export default DashboardNavAccordion;

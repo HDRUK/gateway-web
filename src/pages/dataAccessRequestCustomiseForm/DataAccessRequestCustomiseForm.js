@@ -8,20 +8,21 @@ import { Card, Col, Container, Modal, Row } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
 
 import { NotificationManager } from 'react-notifications';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Winterfell from 'winterfell';
 import { Button, Box, P, H5, Typography, Cta, Alert } from 'hdruk-react-core';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-tabs/style/react-tabs.css';
 
+import { generalUtils, darHelperUtils } from 'utils';
 import { Icon, Spinner, RenderMarkdown } from 'components';
 import { dataAccessRequestService, publishersService, questionbankService } from 'services';
+import { useAuth } from 'context/AuthContext';
+
+import { useCustodianRoles } from 'hooks';
 import { ReactComponent as CloseButtonSvg } from '../../images/close-alt.svg';
 import { ReactComponent as Clock } from '../../images/icons/blue_clock.svg';
 import { ReactComponent as ClockIcon } from '../../images/icons/clock.svg';
-import { getTeam, isPublisherAdmin } from '../../utils/auth';
-import helpers from '../../utils/DarHelper.util';
-import { diffObjects } from '../../utils/GeneralHelper.util';
 
 import ActionBar from '../commonComponents/actionbar/ActionBar';
 import ActionBarMenu from '../commonComponents/ActionBarMenu/ActionBarMenu';
@@ -54,22 +55,13 @@ const questionActions = {
 
 export const DataAccessRequestCustomiseForm = props => {
     const history = useHistory();
+    const { publisherID } = useParams();
     const [searchBar] = useState(React.createRef());
-
+    const { userState } = useAuth();
     const [schemaId, setSchemaId] = useState('');
     const [publisherDetails, setPublisherDetails] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [searchString, setSearchString] = useState('');
-    const [userState] = useState(
-        props.userState || [
-            {
-                loggedIn: false,
-                role: 'Reader',
-                id: null,
-                name: null,
-            },
-        ]
-    );
     const [showDrawer, setShowDrawer] = useState(false);
     const [lastSaved, setLastSaved] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -95,9 +87,7 @@ export const DataAccessRequestCustomiseForm = props => {
     const [showSaveAlert, setShowSaveAlert] = useState(true);
     const [isUploading, setIsUploading] = useState(false);
     const [isUploaded, setIsUploaded] = useState(false);
-
-    const location = useLocation();
-    const team = getTeam({ location });
+    const { isCustodianTeamAdmin } = useCustodianRoles(publisherID);
 
     const patchSchemaRequest = dataAccessRequestService.usePatchSchema(null, {
         onError: ({ title, message }) => {
@@ -126,7 +116,7 @@ export const DataAccessRequestCustomiseForm = props => {
             },
         } = await questionbankService.getQuestionbankItem(publisherID);
 
-        const newJsonSchema = helpers.injectReadonlyStaticContent(
+        const newJsonSchema = darHelperUtils.injectReadonlyStaticContent(
             { ...masterSchema, ...classSchema, ...questionActions },
             { questionStatus, questionSetStatus, guidance },
             publisher.publisherDetails,
@@ -134,7 +124,7 @@ export const DataAccessRequestCustomiseForm = props => {
         );
 
         const newPanelId = panelId || newJsonSchema.formPanels[0].panelId;
-        const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
+        const pageId = darHelperUtils.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
         setUnpublishedGuidance(unpublishedGuidance || []);
         setSchemaId(schemaId);
@@ -171,7 +161,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
         const newQuestionStatus = {
             ...questionStatus,
-            ...helpers.changeStatusByQuestionSetId(checked ? 1 : 0, questionSetId, newJsonSchema),
+            ...darHelperUtils.changeStatusByQuestionSetId(checked ? 1 : 0, questionSetId, newJsonSchema),
         };
 
         const newQuestionSetStatus = {
@@ -209,7 +199,7 @@ export const DataAccessRequestCustomiseForm = props => {
 
     const onSwitchChange = async (questionId, value) => {
         const newJsonSchema = { ...jsonSchema };
-        const questionSet = helpers.findQuestionSetByQuestionId(questionId, newJsonSchema);
+        const questionSet = darHelperUtils.findQuestionSetByQuestionId(questionId, newJsonSchema);
 
         questionStatus[questionId] = value ? 1 : 0;
 
@@ -265,7 +255,7 @@ export const DataAccessRequestCustomiseForm = props => {
         e.preventDefault();
         history.push({
             pathname: `/account`,
-            search: '?tab=customisedataaccessrequests_applicationform',
+            search: `?tab=customisedataaccessrequests_applicationform&teamType=team&teamId=${publisherDetails._id}`,
         });
     };
 
@@ -316,7 +306,7 @@ export const DataAccessRequestCustomiseForm = props => {
         handleAnalytics('Clicked Publish button', 'Application form');
         history.push({
             pathname: `/account`,
-            search: '?tab=customisedataaccessrequests_applicationform',
+            search: `?tab=customisedataaccessrequests_applicationform&teamType=team&teamId=${publisherDetails._id}`,
             state: {
                 alert: {
                     message: `You have successfully published the data access application form for ${publisherDetails.publisherDetails.name} applications`,
@@ -494,7 +484,7 @@ export const DataAccessRequestCustomiseForm = props => {
     }, [activePanelId, publisherDetails._id]);
 
     const handleClearSection = React.useCallback(async () => {
-        const page = helpers.findPageByQuestionSet(activePanelId, jsonSchema);
+        const page = darHelperUtils.findPageByQuestionSet(activePanelId, jsonSchema);
 
         await questionbankService.patchClearSection(publisherDetails._id, page.pageId);
 
@@ -530,7 +520,7 @@ export const DataAccessRequestCustomiseForm = props => {
             },
         } = await questionbankService.getQuestionbankItem(publisherDetails._id);
 
-        const newJsonSchema = helpers.injectReadonlyStaticContent(
+        const newJsonSchema = darHelperUtils.injectReadonlyStaticContent(
             { ...uploadJsonSchema, ...classSchema, ...questionActions },
             {},
             publisherDetails,
@@ -538,11 +528,11 @@ export const DataAccessRequestCustomiseForm = props => {
         );
         const newPanelId = newJsonSchema.formPanels[0].panelId;
 
-        const pageId = helpers.findPageIdByQuestionSet(newPanelId, newJsonSchema);
+        const pageId = darHelperUtils.findPageIdByQuestionSet(newPanelId, newJsonSchema);
 
-        const updatedGuidance = diffObjects(guidance, uploadGuidance);
-        const updatedQuestionStatus = diffObjects(questionStatus, uploadQuestionStatus);
-        const updatedQuestionSetStatus = diffObjects(questionSetStatus, uploadQuestionSetStatus);
+        const updatedGuidance = generalUtils.diffObjects(guidance, uploadGuidance);
+        const updatedQuestionStatus = generalUtils.diffObjects(questionStatus, uploadQuestionStatus);
+        const updatedQuestionSetStatus = generalUtils.diffObjects(questionSetStatus, uploadQuestionSetStatus);
 
         const params = {
             countOfChanges:
@@ -725,7 +715,7 @@ export const DataAccessRequestCustomiseForm = props => {
         );
     }
 
-    const page = helpers.findPageByQuestionSet(activePanelId, jsonSchema);
+    const page = darHelperUtils.findPageByQuestionSet(activePanelId, jsonSchema);
 
     return (
         <Sentry.ErrorBoundary fallback={<ErrorModal />}>
@@ -841,11 +831,10 @@ export const DataAccessRequestCustomiseForm = props => {
                                     </Box>
                                 </Card>
 
-                                {/* TODO: GAT-1510:055 */}
-                                {isPublisherAdmin(userState, team) && (
+                                {isCustodianTeamAdmin && (
                                     <Card>
                                         <Box p={5}>
-                                            <AboutApplicationImport onUpload={handleImportUpload} userState={userState} team={team} />
+                                            <AboutApplicationImport onUpload={handleImportUpload} userState={userState} />
                                         </Box>
                                     </Card>
                                 )}
@@ -892,7 +881,7 @@ export const DataAccessRequestCustomiseForm = props => {
                                         <main className='gray800-14'>
                                             <CustomiseGuidance
                                                 activeGuidance={newGuidance[activeQuestion] || activeGuidance}
-                                                isLocked={helpers.isQuestionLocked(questionStatus[activeQuestion])}
+                                                isLocked={darHelperUtils.isQuestionLocked(questionStatus[activeQuestion])}
                                                 onGuidanceChange={onGuidanceChange}
                                                 activeQuestion={activeQuestion}
                                                 activePanel={activePanel}

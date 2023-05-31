@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, waitFor } from '@testing-library/react';
-import DatasetOnboardingHelper from '../../../../utils/DatasetOnboardingHelper.util';
-import { dateFormats } from '../../../../utils/GeneralHelper.util';
+import { datasetSLAText } from '../../../../utils/DatasetOnboardingHelper.util';
+import { dateFormats } from '../../../../utils/General.util';
 import ActivityLogCard from './ActivityLogCard';
 import mockData from './mockData';
 import { server } from '../../../../services/mockServer';
@@ -33,7 +33,7 @@ describe('Given the ActivityLogCard component', () => {
             await waitFor(() => expect(wrapper.queryByText('Submitted 8 November 2021')).toBeTruthy());
         });
         it('Then  Status should be rendered', () => {
-            const statusText = DatasetOnboardingHelper.datasetSLAText[props.meta.applicationStatus];
+            const statusText = datasetSLAText[props.meta.applicationStatus];
             expect(screen.getByTestId('status')).toHaveTextContent(statusText);
         });
 

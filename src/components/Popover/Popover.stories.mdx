@@ -1,0 +1,71 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Popover from './Popover';
+import PopoverMenu from '../PopoverMenu';
+import WastebinIcon from '../../images/icons/wastebin.svg';
+import { Box, P } from 'hdruk-react-core';
+import SVG from 'react-inlinesvg';
+
+<Meta title='Core/Popover' component={Popover} />
+
+<Canvas>
+    <Story name='Basic'>
+        {props => {
+            return (
+                <>
+                    <Box mb={6}>
+                        <P weight='bold' mb={2}>
+                            Default trigger (ellipsis)
+                        </P>
+                        <Popover {...props} content={<div>My content</div>} />
+                    </Box>
+                    <Box mb={6}>
+                        <P weight='bold' mb={2}>
+                            Custom trigger
+                        </P>
+                        <Popover {...props} trigger='My custom trigger' content={<div>My content</div>} />
+                    </Box>
+                </>
+            );
+        }}
+    </Story>
+    <Story name='With PopoverMenu'>
+        {props => {
+            const items = [
+                { label: 'Item 1', icon: () => <SVG src={WastebinIcon} />, action: () => console.log('item 1 clicked') },
+                { label: 'Item 2', icon: () => <SVG src={WastebinIcon} />, action: () => console.log('item 2 clicked') },
+            ];
+            return (
+                <>
+                    <Box mb={6}>
+                        <P weight='bold' mb={2}>
+                            With PopoverMenu
+                        </P>
+                        <Popover {...props} content={<PopoverMenu items={items} />} />
+                    </Box>
+                </>
+            );
+        }}
+    </Story>
+    <Story name='Positions'>
+        {props => {
+            const items = [
+                { label: 'Item 1', icon: () => <SVG src={WastebinIcon} />, action: () => console.log('item 1 clicked') },
+                { label: 'Item 2', icon: () => <SVG src={WastebinIcon} />, action: () => console.log('item 2 clicked') },
+            ];
+            const variants = [
+                { label: 'default (bottom)' },
+                { position: 'left', label: 'left' },
+                { position: 'top', label: 'top' },
+                { position: 'right', label: 'right' },
+            ];
+            return variants.map(variant => (
+                <Box mb={6}>
+                    <P weight='bold' mb={2}>
+                        {variant.label}
+                    </P>
+                    <Popover {...props} position={variant.position} content={<div>My content</div>} items={items} />
+                </Box>
+            ));
+        }}
+    </Story>
+</Canvas>

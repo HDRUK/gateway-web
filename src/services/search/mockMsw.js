@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { apiUrlV1 } from '../../configs/url.config';
 
-export const mockDatasetFilters = [
+const mockDatasetFilters = [
     {
         id: 1,
         label: 'Publisher',
@@ -3762,7 +3762,7 @@ export const mockDatasetFilters = [
     },
 ];
 
-export const mswGetSearch = rest.get(`${apiUrlV1}/search`, (req, res, ctx) => {
+const mswGetSearch = rest.get(`${apiUrlV1}/search`, (req, res, ctx) => {
     return res(
         ctx.status(200),
         ctx.json({
@@ -3771,4 +3771,5 @@ export const mswGetSearch = rest.get(`${apiUrlV1}/search`, (req, res, ctx) => {
     );
 });
 
+export { mockDatasetFilters };
 export default [mswGetSearch];

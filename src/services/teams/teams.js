@@ -1,8 +1,16 @@
-import { apiUrlV1 } from '../../configs/url.config';
-import { getRequest, postRequest, putRequest, useMutationWithTranslations, useQueryWithTranslations } from '../../utils/requests';
+import { apiUrlV1, apiUrlV3 } from '../../configs/url.config';
+import {
+    deleteRequest,
+    getRequest,
+    patchRequest,
+    postRequest,
+    putRequest,
+    useMutationWithTranslations,
+    useQueryWithTranslations,
+} from '../../utils/requests';
 
 const getMembers = (_id, options) => {
-    return getRequest(`${apiUrlV1}/teams/${_id}/members`, options);
+    return getRequest(`${apiUrlV3}/teams/${_id}/members`, options);
 };
 
 const getNotifications = (_id, options) => {
@@ -10,7 +18,7 @@ const getNotifications = (_id, options) => {
 };
 
 const addMembers = (_id, data, options) => {
-    return postRequest(`${apiUrlV1}/teams/${_id}/members`, data, options);
+    return postRequest(`${apiUrlV3}/teams/${_id}/members`, data, options);
 };
 
 const postAdd = (data, options) => {
@@ -29,11 +37,32 @@ const putNotifications = (_id, data, options) => {
     return putRequest(`${apiUrlV1}/teams/${_id}/notifications`, data, options);
 };
 
-const useGetMembers = (requestOptions, queryOptions) => {
-    return useQueryWithTranslations({
-        queryKey: 'teams.getMembers',
-        ...queryOptions,
-        queryFn: _id => getMembers(_id, requestOptions),
+const patchTeamMember = (teamId, userId, data, options) => {
+    return patchRequest(`${apiUrlV3}/teams/${teamId}/members/${userId}`, data, options);
+};
+
+const usePatchTeamMemberRequest = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(({ teamId, userId, data }) => patchTeamMember(teamId, userId, data, requestOptions), {
+        mutationKey: 'teams.patchMember',
+        ...mutateOptions,
+    });
+};
+
+const deleteTeamMember = (teamId, userId, options) => {
+    return deleteRequest(`${apiUrlV3}/teams/${teamId}/members/${userId}`, options);
+};
+
+const useDeleteTeamMemberRequest = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(({ teamId, userId }) => deleteTeamMember(teamId, userId, requestOptions), {
+        mutationKey: 'teams.deleteMember',
+        ...mutateOptions,
+    });
+};
+
+const useGetMembers = (requestOptions, mutateOptions) => {
+    return useMutationWithTranslations(id => getMembers(id, requestOptions), {
+        mutationKey: 'teams.getMembers',
+        ...mutateOptions,
     });
 };
 
@@ -95,4 +124,6 @@ export {
     useAddMembers,
     usePutNotificationMessage,
     usePutNotifications,
+    useDeleteTeamMemberRequest,
+    usePatchTeamMemberRequest,
 };

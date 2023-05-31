@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import PropTypes from 'prop-types';
-import { toTitleCase } from '../../../../utils/GeneralHelper.util';
+import { toTitleCase } from '../../../../utils/General.util';
 import * as styles from '../Dataset/Dataset.styles';
 import '../../CommonComponents.scss';
 

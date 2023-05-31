@@ -4,11 +4,11 @@ import UpdateRequestModal from './UpdateRequestModal';
 import { updateRequestProps } from '../../../../utils/__mocks__/DarHelper.mock';
 import '@testing-library/jest-dom/extend-expect';
 
-let wrapped;
 const props = updateRequestProps;
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
     useHistory: () => ({
         push: mockHistoryPush,
     }),
@@ -16,12 +16,12 @@ jest.mock('react-router-dom', () => ({
 
 beforeEach(() => {
     moxios.install();
-    wrapped = testUtils.render(<UpdateRequestModal {...props} />);
+    testUtils.render(<UpdateRequestModal {...props} />);
 });
 
 afterEach(() => {
     moxios.uninstall();
-    wrapped.unmount();
+    testUtils.cleanup();
 });
 
 /**
@@ -31,7 +31,7 @@ afterEach(() => {
  * 3. When 'Request Updates' clicked fire event call API
  */
 
-describe('UpdateRequestModal component <UpdateRequestModal />', () => {
+describe('UpdateRequestModal component', () => {
     it('will display a list of requested changes', () => {
         expect(testUtils.screen.getAllByText('Test question').length).toEqual(1);
     });
@@ -47,9 +47,7 @@ describe('UpdateRequestModal component <UpdateRequestModal />', () => {
     it('will display `Request updates button`', () => {
         expect(testUtils.screen.getByText('Request update')).toBeInTheDocument();
     });
-});
 
-describe('UpdateRequestModal actions <UpdateRequestModal />', () => {
     it('Calls the parent function to close the modal', () => {
         const button = testUtils.screen.getByText('No, nevermind');
         expect(testUtils.screen.getByText('Update answer request')).toBeInTheDocument();
@@ -64,6 +62,7 @@ describe('UpdateRequestModal actions <UpdateRequestModal />', () => {
         button.click();
         // else where in the code axios.post() will occur
         // moxis test our response
+
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request

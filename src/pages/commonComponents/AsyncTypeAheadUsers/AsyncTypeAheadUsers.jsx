@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { Icon } from 'hdruk-react-core';
 import { Typeahead } from 'components';
 import { usersService } from 'services';
+import { uploaderUtils } from 'utils';
 
 import { ReactComponent as SearchIcon } from '../../../images/search.svg';
-import UploaderUtil from '../../../utils/Uploader.util';
 
 import * as styles from './AsyncTypeAheadUsers.styles';
 
@@ -28,7 +28,7 @@ function AsyncTypeAheadUsers({ currentUserId, selectedUsers, shouldGetUsersInfo,
             contributors
                 .filter(id => id !== currentUserId)
                 .map(async id => {
-                    const userInfo = await UploaderUtil.getUserInfo(id);
+                    const userInfo = await uploaderUtils.getUserInfo(id);
                     if (userInfo) {
                         return { id: userInfo.id, name: `${userInfo.firstname} ${userInfo.lastname}` };
                     }
@@ -42,6 +42,8 @@ function AsyncTypeAheadUsers({ currentUserId, selectedUsers, shouldGetUsersInfo,
     useEffect(() => {
         if (selectedUsers && shouldGetUsersInfo) {
             getUsersInfo(selectedUsers);
+        } else {
+            setSelected(selectedUsers);
         }
     }, [selectedUsers, shouldGetUsersInfo]);
 
