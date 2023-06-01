@@ -75,6 +75,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     marginLeft: 0,
+                    marginTop: 0,
                 },
             },
         },
@@ -88,6 +89,7 @@ const theme = createTheme({
         MuiInputBase: {
             styleOverrides: {
                 root: {
+                    marginTop: 3,
                     "& fieldset": {
                         borderWidth: 2,
                     },
@@ -95,10 +97,6 @@ const theme = createTheme({
                         {
                             borderColor: colors.green400,
                         },
-                    // "&.MuiOutlinedInput-root:focus .MuiOutlinedInput-notchedOutline":
-                    //     {
-                    //         borderColor: palette.colors.green400,
-                    //     },
                     "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
                         {
                             borderColor: colors.green400,

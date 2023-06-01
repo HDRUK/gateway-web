@@ -11,7 +11,7 @@ exports[`TextField should render icon 1`] = `
       This is a label
     </p>
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-1fwe7an-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-1xu79hs-MuiInputBase-root-MuiOutlinedInput-root"
     >
       <div
         class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-outlined MuiInputAdornment-sizeMedium mui-style-ittuaa-MuiInputAdornment-root"

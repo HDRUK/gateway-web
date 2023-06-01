@@ -2,7 +2,7 @@ import React from "react";
 import Label from "@/components/Label";
 import { render, screen } from "../testUtils";
 
-describe("Head", () => {
+describe("Label", () => {
     it("should render label", async () => {
         render(<Label label="This is a label" />);
 
