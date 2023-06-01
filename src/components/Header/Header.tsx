@@ -11,26 +11,28 @@ function Header() {
     return (
         <AppBar position="static" color="transparent" css={styles.appbar}>
             <Toolbar css={styles.toolbar}>
-                <Link
-                    href="/"
-                    label={
-                        <Image
-                            src="/images/logos/gateway_main.svg"
-                            width={110}
-                            height={50}
-                            alt="Gateway home logo"
-                        />
-                    }
-                    css={styles.homeLogo}
-                />
-                <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="open drawer"
-                    css={styles.menuIcon}>
-                    <MenuIcon />
-                </IconButton>
+                <div css={styles.logoIconBox}>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        aria-label="open drawer"
+                        css={styles.menuIcon}>
+                        <MenuIcon sx={{ fill: "#475DA7" }} />
+                    </IconButton>
+                    <Link
+                        href="/"
+                        label={
+                            <Image
+                                src="/images/logos/gateway_main.svg"
+                                width={110}
+                                height={50}
+                                alt="Gateway home logo"
+                            />
+                        }
+                        css={styles.homeLogo}
+                    />
+                </div>
+
                 <HeaderNav />
             </Toolbar>
         </AppBar>

@@ -30,44 +30,32 @@ function HeaderNav() {
         },
     ];
 
+    const navItems = ["Explore", "Help", "Usage data", "About us"];
+    const navLinks = [
+        { label: "News", href: "/news" },
+        { label: "Community", href: "/community" },
+    ];
+
     if (isLoading) return <Loading />;
 
     return (
         <>
-            <Box
-                sx={{
-                    flexGrow: 1,
-                    justifyContent: "flex-start",
-                    display: {
-                        tablet: "none",
-                        mobile: "none",
-                        laptop: "flex",
-                    },
-                }}>
-                <Typography css={styles.navItem}>
-                    Explore
-                    <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
-                </Typography>
-                <Typography css={styles.navItem}>
-                    Help
-                    <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
-                </Typography>
-                <Typography css={styles.navItem}>
-                    Usage data
-                    <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
-                </Typography>
-                <Typography css={styles.navItem}>
-                    About us
-                    <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
-                </Typography>
-                {/* news route to be implemented */}
-                <Link href="/news" label="News" css={styles.navLink} />
-                {/* community route to be implemented */}
-                <Link
-                    href="/community"
-                    label="Community"
-                    css={styles.navLink}
-                />
+            <Box css={styles.navBox}>
+                {navItems.map(item => (
+                    <Typography css={styles.navItem}>
+                        {item}
+                        <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
+                    </Typography>
+                ))}
+
+                {/* news route andcommunity route to be implemented */}
+                {navLinks.map(item => (
+                    <Link
+                        href={item.href}
+                        label={item.label}
+                        css={styles.navLink}
+                    />
+                ))}
             </Box>
             {isLoggedIn && (
                 <ul
@@ -88,10 +76,7 @@ function HeaderNav() {
                 </ul>
             )}
             {!isLoggedIn && (
-                <Button
-                    css={styles.signInBtn}
-                    size="small"
-                    onClick={() => showDialog(SignInDialog)}>
+                <Button size="small" onClick={() => showDialog(SignInDialog)}>
                     {t("HeaderNav.labels.signIn")}
                 </Button>
             )}
