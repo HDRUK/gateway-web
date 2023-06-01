@@ -3,7 +3,7 @@
 exports[`Box should render component 1`] = `
 <div>
   <div
-    class="MuiBox-root css-1ytu6zl"
+    class="MuiBox-root mui-style-1ytu6zl"
   >
     Box content
   </div>

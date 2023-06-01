@@ -3,7 +3,7 @@
 exports[`BoxContainer should render component 1`] = `
 <div>
   <div
-    class="MuiBox-root css-5fbagg"
+    class="MuiBox-root mui-style-5fbagg"
   >
     BoxContainer content
   </div>

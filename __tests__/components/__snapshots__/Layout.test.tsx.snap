@@ -15,7 +15,7 @@ exports[`Layout should render component 1`] = `
           style="display: inline-block;"
         >
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1bhi0za-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-elgjrb-MuiTypography-root-MuiLink-root"
             href="/"
           >
             Home
@@ -29,7 +29,7 @@ exports[`Layout should render component 1`] = `
           style="display: inline-block; padding-left: 10px;"
         >
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1bhi0za-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-elgjrb-MuiTypography-root-MuiLink-root"
             href="/account"
           >
             HeaderNav.labels.myAccount
@@ -43,10 +43,10 @@ exports[`Layout should render component 1`] = `
       </div>
     </main>
     <div
-      class="css-nhw023-Footer"
+      class="mui-style-nhw023-Footer"
     >
       <div
-        class="MuiContainer-root MuiContainer-maxWidthDesktop css-1af3zf9-MuiContainer-root-Footer"
+        class="MuiContainer-root MuiContainer-maxWidthDesktop mui-style-tykmfd-MuiContainer-root-Footer"
       >
         <img
           alt="HDRUK logo"
@@ -60,11 +60,11 @@ exports[`Layout should render component 1`] = `
           width="130"
         />
         <ul
-          class="css-1cjflei-Footer"
+          class="mui-style-1cjflei-Footer"
         >
           <li>
             <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-c9khpo-MuiTypography-root-MuiLink-root"
               href="https://www.hdruk.ac.uk/"
             >
               HDR UK
@@ -72,7 +72,7 @@ exports[`Layout should render component 1`] = `
           </li>
           <li>
             <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-c9khpo-MuiTypography-root-MuiLink-root"
               href="/about-us"
             >
               About
@@ -80,7 +80,7 @@ exports[`Layout should render component 1`] = `
           </li>
           <li>
             <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-c9khpo-MuiTypography-root-MuiLink-root"
               href="/contact-us"
             >
               Contact us
@@ -88,11 +88,11 @@ exports[`Layout should render component 1`] = `
           </li>
           <li>
             <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-c9khpo-MuiTypography-root-MuiLink-root"
               href="https://twitter.com/HDR_UK"
             >
               <span
-                class="css-wm98oe-Footer"
+                class="mui-style-wm98oe-Footer"
               >
                 <img
                   alt="Twitter logo"
@@ -113,11 +113,11 @@ exports[`Layout should render component 1`] = `
           </li>
           <li>
             <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1e2b5y3-MuiTypography-root-MuiLink-root"
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-c9khpo-MuiTypography-root-MuiLink-root"
               href="https://www.linkedin.com/company/healthdataresearchuk/"
             >
               <span
-                class="css-wm98oe-Footer"
+                class="mui-style-wm98oe-Footer"
               >
                 <img
                   alt="LinkedIn logo"
@@ -138,7 +138,7 @@ exports[`Layout should render component 1`] = `
           </li>
         </ul>
         <div
-          class="css-106tbuj-Footer"
+          class="mui-style-106tbuj-Footer"
         >
           ©
           Footer.text

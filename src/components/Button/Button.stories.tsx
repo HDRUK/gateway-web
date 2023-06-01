@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Stack from "@mui/material/Stack";
+import React from "react";
 import Button, { ButtonProps } from "./Button";
 
 const meta: Meta<typeof Button> = {

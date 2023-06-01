@@ -8,7 +8,12 @@ import {
     RenderHookResult,
 } from "@testing-library/react";
 import { SWRConfig } from "swr";
-import DialogProvider from "@/providers/Dialog";
+import { CacheProvider, ThemeProvider } from "@emotion/react";
+import DialogProvider from "../src/providers/Dialog";
+import theme from "../src/config/theme";
+import createEmotionCache from "../src/config/createEmotionCache";
+
+const clientSideEmotionCache = createEmotionCache();
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
     return (
@@ -16,7 +21,11 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
             value={{
                 provider: () => new Map(),
             }}>
-            <DialogProvider>{children}</DialogProvider>
+            <CacheProvider value={clientSideEmotionCache}>
+                <ThemeProvider theme={theme}>
+                    <DialogProvider>{children}</DialogProvider>
+                </ThemeProvider>
+            </CacheProvider>
         </SWRConfig>
     );
 };
