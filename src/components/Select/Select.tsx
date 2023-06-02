@@ -25,6 +25,7 @@ export interface SelectProps {
     label: string;
     info?: string;
     iconRight?: boolean;
+    disabled?: boolean;
     options: { value: string | number; label: string }[];
     multiple?: boolean;
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -90,6 +91,7 @@ const Select = (props: SelectProps) => {
         name,
         rules,
         multiple,
+        disabled,
     } = props;
 
     const theme = useTheme();
@@ -129,6 +131,7 @@ const Select = (props: SelectProps) => {
                 sx={{ fontSize: 14 }}
                 inputRef={ref}
                 error={!!error}
+                disabled={disabled}
                 input={<OutlinedInput />}
                 {...fieldProps}>
                 {options.map(option => (
@@ -156,6 +159,7 @@ Select.defaultProps = {
     rules: {},
     multiple: false,
     iconRight: false,
+    disabled: false,
 };
 
 export default Select;

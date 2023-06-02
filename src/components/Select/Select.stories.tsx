@@ -77,6 +77,13 @@ const DummyComponent = () => {
                     control={control}
                     name="fifth"
                 />
+                <SelectComponent
+                    label="disabled"
+                    disabled
+                    options={options}
+                    control={control}
+                    name="fifth"
+                />
                 <Button type="submit">Submit</Button>
             </Stack>
         </Form>
