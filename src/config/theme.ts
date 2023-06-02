@@ -41,7 +41,7 @@ const palette = {
         main: "#475DA7",
     },
     secondary: {
-        main: "#19857b",
+        main: colors.green400,
     },
     error: {
         main: colors.red700,
@@ -63,9 +63,18 @@ const theme = createTheme({
     components: {
         MuiButton: {
             styleOverrides: {
-                contained: {
+                root: {
+                    textTransform: "none",
                     "&:hover": {
                         borderWidth: 2,
+                    },
+                },
+                outlined: {
+                    color: colors.grey800,
+                    borderWidth: 2,
+                    "&:hover": {
+                        color: colors.white,
+                        background: colors.green400,
                     },
                 },
             },

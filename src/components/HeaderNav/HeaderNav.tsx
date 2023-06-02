@@ -44,7 +44,7 @@ function HeaderNav() {
                 {navItems.map(item => (
                     <Typography css={styles.navItem}>
                         {item}
-                        <ExpandMoreIcon sx={{ fill: "#475DA7" }} />
+                        <ExpandMoreIcon color="primary" />
                     </Typography>
                 ))}
 
@@ -76,7 +76,11 @@ function HeaderNav() {
                 </ul>
             )}
             {!isLoggedIn && (
-                <Button size="small" onClick={() => showDialog(SignInDialog)}>
+                <Button
+                    size="small"
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => showDialog(SignInDialog)}>
                     {t("HeaderNav.labels.signIn")}
                 </Button>
             )}

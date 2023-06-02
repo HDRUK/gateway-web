@@ -16,13 +16,13 @@ exports[`Layout should render component 1`] = `
         >
           <button
             aria-label="open drawer"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart MuiIconButton-sizeLarge mui-style-flqyz3-MuiButtonBase-root-MuiIconButton-root-Header"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart MuiIconButton-sizeLarge mui-style-tprg66-MuiButtonBase-root-MuiIconButton-root-Header"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-5xmdy0-MuiSvgIcon-root"
               data-testid="MenuIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -55,12 +55,12 @@ exports[`Layout should render component 1`] = `
           class="MuiBox-root mui-style-42l0n5-HeaderNav"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 mui-style-ip43sf-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-1dit9pu-MuiTypography-root"
           >
             Explore
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-5xmdy0-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -71,12 +71,12 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <p
-            class="MuiTypography-root MuiTypography-body1 mui-style-ip43sf-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-1dit9pu-MuiTypography-root"
           >
             Help
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-5xmdy0-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -87,12 +87,12 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <p
-            class="MuiTypography-root MuiTypography-body1 mui-style-ip43sf-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-1dit9pu-MuiTypography-root"
           >
             Usage data
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-5xmdy0-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -103,12 +103,12 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <p
-            class="MuiTypography-root MuiTypography-body1 mui-style-ip43sf-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-1dit9pu-MuiTypography-root"
           >
             About us
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-5xmdy0-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -119,13 +119,13 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1gus5zt-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1mzdq2s-MuiTypography-root-MuiLink-root"
             href="/news"
           >
             News
           </a>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1gus5zt-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1mzdq2s-MuiTypography-root-MuiLink-root"
             href="/community"
           >
             Community

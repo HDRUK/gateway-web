@@ -17,7 +17,7 @@ function Header() {
                         edge="start"
                         aria-label="open drawer"
                         css={styles.menuIcon}>
-                        <MenuIcon sx={{ fill: "#475DA7" }} />
+                        <MenuIcon color="primary" />
                     </IconButton>
                     <Link
                         href="/"

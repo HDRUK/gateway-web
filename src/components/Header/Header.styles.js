@@ -22,7 +22,6 @@ export const homeLogo = css({
 
 export const menuIcon = css({
     marginRight: 2,
-    fill: "#475DA7",
     "@media (min-width: 1023px)": {
         display: "none",
     },

@@ -10,19 +10,21 @@ export const navBox = css({
     },
 });
 
-export const navItem = css({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#53575A",
-    marginRight: "25px",
-    cursor: "pointer",
-    fontSize: "14px",
-});
+export const navItem = theme =>
+    css({
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        color: theme.palette.colors.grey700,
+        marginRight: "25px",
+        cursor: "pointer",
+        fontSize: "14px",
+    });
 
-export const navLink = css({
-    color: "#53575A",
-    marginRight: "25px",
-    textDecoration: "none",
-    fontSize: "14px",
-});
+export const navLink = theme =>
+    css({
+        color: theme.palette.colors.grey700,
+        marginRight: "25px",
+        textDecoration: "none",
+        fontSize: "14px",
+    });
