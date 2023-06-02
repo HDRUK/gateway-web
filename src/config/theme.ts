@@ -63,7 +63,7 @@ const theme = createTheme({
     components: {
         MuiButton: {
             styleOverrides: {
-                root: {
+                contained: {
                     "&:hover": {
                         borderWidth: 2,
                         backgroundColor: "#3DB28C",
@@ -72,8 +72,6 @@ const theme = createTheme({
                     },
                     borderWidth: 2,
                     padding: "10px 16px",
-                    width: "75px",
-                    height: "40px",
                     border: "2px solid #3db28c",
                     borderRadius: "4px",
                     fontWeight: "400",

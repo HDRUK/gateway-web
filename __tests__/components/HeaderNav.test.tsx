@@ -2,7 +2,7 @@ import React from "react";
 import HeaderNav from "@/components/HeaderNav";
 import { server } from "@/mocks/server";
 import { getFiltersV1 } from "@/mocks/handlers/filters";
-import { render, screen, waitFor } from "../testUtils";
+import { fireEvent, render, screen, waitFor } from "../testUtils";
 
 describe("HeaderNav", () => {
     it("should render logged out component", async () => {
@@ -24,30 +24,43 @@ describe("HeaderNav", () => {
             ).toBeInTheDocument();
         });
     });
-    it("renders explore navigation items", () => {
+    it("renders explore navigation items", async () => {
         render(<HeaderNav />);
 
-        const exploreItem = screen.getByText("Explore");
-        expect(exploreItem).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText("Explore")).toBeInTheDocument();
+        });
 
-        const helpItem = screen.getByText("Help");
-        expect(helpItem).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText("Help")).toBeInTheDocument();
+        });
 
-        const usageDataItem = screen.getByText("Usage data");
-        expect(usageDataItem).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText("Usage data")).toBeInTheDocument();
+        });
 
-        const aboutUsItem = screen.getByText("About us");
-        expect(aboutUsItem).toBeInTheDocument();
-        const newsLink = screen.getByText("News");
-        expect(newsLink).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText("About us")).toBeInTheDocument();
+        });
 
-        const communityLink = screen.getByText("Community");
-        expect(communityLink).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText("News")).toBeInTheDocument();
+        });
+
+        await waitFor(() => {
+            expect(screen.getByText("Community")).toBeInTheDocument();
+        });
     });
-    it("renders sign-in button when user is not logged in", () => {
+
+    it("on click of sign-in button, opens up sign-in dialog modal", async () => {
+        server.use(getFiltersV1(undefined, 401));
         render(<HeaderNav />);
 
-        const signInButton = screen.getByText("Sign In");
-        expect(signInButton).toBeInTheDocument();
+        await waitFor(() => {
+            fireEvent.click(screen.getByText("HeaderNav.labels.signIn"));
+            expect(
+                screen.getByText("dialogs.SignInDialog.socialProviders.google")
+            ).toBeInTheDocument();
+        });
     });
 });

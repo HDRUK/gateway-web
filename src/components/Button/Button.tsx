@@ -1,7 +1,10 @@
 import React, { ComponentPropsWithoutRef } from "react";
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 
-type ButtonBaseProps = Pick<MuiButtonProps, "variant" | "size" | "color">;
+type ButtonBaseProps = Pick<
+    MuiButtonProps,
+    "variant" | "size" | "color" | "sx"
+>;
 export type ButtonProps = ButtonBaseProps & ComponentPropsWithoutRef<"button">;
 
 const Button: React.FC<ButtonProps> = ({
