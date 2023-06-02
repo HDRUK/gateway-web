@@ -83,6 +83,7 @@ function Account() {
                                     variant="text"
                                     color="primary"
                                     size="small"
+                                    sx={{ margin: "0 5px" }}
                                     onClick={() => update(filter.id)}>
                                     Change filter
                                 </Button>

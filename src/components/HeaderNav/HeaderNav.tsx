@@ -1,10 +1,15 @@
+/** @jsxImportSource @emotion/react */
+
 import Link from "@/components/Link";
 import useUser from "@/hooks/useUser";
 import { useTranslation } from "next-i18next";
 import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
 import SignInDialog from "@/modules/dialogs/SignInDialog";
+import { Box, Typography } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Loading from "../Loading";
+import * as styles from "./HeaderNav.styles";
 
 interface LinkItem {
     label: string;
@@ -25,10 +30,33 @@ function HeaderNav() {
         },
     ];
 
+    const navItems = ["Explore", "Help", "Usage data", "About us"];
+    const navLinks = [
+        { label: "News", href: "/news" },
+        { label: "Community", href: "/community" },
+    ];
+
     if (isLoading) return <Loading />;
 
     return (
         <>
+            <Box css={styles.navBox}>
+                {navItems.map(item => (
+                    <Typography css={styles.navItem}>
+                        {item}
+                        <ExpandMoreIcon color="primary" />
+                    </Typography>
+                ))}
+
+                {/* news route andcommunity route to be implemented */}
+                {navLinks.map(item => (
+                    <Link
+                        href={item.href}
+                        label={item.label}
+                        css={styles.navLink}
+                    />
+                ))}
+            </Box>
             {isLoggedIn && (
                 <ul
                     style={{
@@ -48,7 +76,11 @@ function HeaderNav() {
                 </ul>
             )}
             {!isLoggedIn && (
-                <Button size="small" onClick={() => showDialog(SignInDialog)}>
+                <Button
+                    size="small"
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => showDialog(SignInDialog)}>
                     {t("HeaderNav.labels.signIn")}
                 </Button>
             )}

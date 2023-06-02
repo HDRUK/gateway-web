@@ -41,7 +41,7 @@ const palette = {
         main: "#475DA7",
     },
     secondary: {
-        main: "#19857b",
+        main: colors.green400,
     },
     error: {
         main: colors.red700,
@@ -63,11 +63,32 @@ const theme = createTheme({
     components: {
         MuiButton: {
             styleOverrides: {
-                root: {
+                root: ({ ownerState, theme: _theme }) => ({
                     "&:hover": {
                         borderWidth: 2,
                     },
                     borderWidth: 2,
+                    textTransform: "none",
+                    borderColor:
+                        ownerState.color === "inherit"
+                            ? _theme.palette.primary.main
+                            : _theme.palette[ownerState.color || "primary"]
+                                  ?.main,
+                }),
+                outlined: ({ ownerState, theme: _theme }) => {
+                    return {
+                        color: colors.grey800,
+                        borderWidth: 2,
+                        "&:hover": {
+                            color: colors.white,
+                            background:
+                                ownerState.color === "inherit"
+                                    ? _theme.palette.primary.main
+                                    : _theme.palette[
+                                          ownerState.color || "primary"
+                                      ]?.main,
+                        },
+                    };
                 },
             },
         },
