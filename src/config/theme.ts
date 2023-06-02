@@ -63,19 +63,32 @@ const theme = createTheme({
     components: {
         MuiButton: {
             styleOverrides: {
-                root: {
-                    textTransform: "none",
+                root: ({ ownerState, theme: _theme }) => ({
                     "&:hover": {
                         borderWidth: 2,
                     },
-                },
-                outlined: {
-                    color: colors.grey800,
                     borderWidth: 2,
-                    "&:hover": {
-                        color: colors.white,
-                        background: colors.green400,
-                    },
+                    textTransform: "none",
+                    borderColor:
+                        ownerState.color === "inherit"
+                            ? _theme.palette.primary.main
+                            : _theme.palette[ownerState.color || "primary"]
+                                  ?.main,
+                }),
+                outlined: ({ ownerState, theme: _theme }) => {
+                    return {
+                        color: colors.grey800,
+                        borderWidth: 2,
+                        "&:hover": {
+                            color: colors.white,
+                            background:
+                                ownerState.color === "inherit"
+                                    ? _theme.palette.primary.main
+                                    : _theme.palette[
+                                          ownerState.color || "primary"
+                                      ]?.main,
+                        },
+                    };
                 },
             },
         },
