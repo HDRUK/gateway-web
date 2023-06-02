@@ -6,23 +6,23 @@ exports[`Layout should render component 1`] = `
     style="width: 100%; font-family: arial;"
   >
     <header
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorTransparent MuiAppBar-positionStatic css-1x5zvn9-MuiPaper-root-MuiAppBar-root-Header"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorTransparent MuiAppBar-positionStatic mui-style-1x5zvn9-MuiPaper-root-MuiAppBar-root-Header"
     >
       <div
-        class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-7lf7dp-MuiToolbar-root-Header"
+        class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular mui-style-153v6g9-MuiToolbar-root-Header"
       >
         <div
-          class="css-c07qjs-Header"
+          class="mui-style-c07qjs-Header"
         >
           <button
             aria-label="open drawer"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart MuiIconButton-sizeLarge css-flqyz3-MuiButtonBase-root-MuiIconButton-root-Header"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart MuiIconButton-sizeLarge mui-style-flqyz3-MuiButtonBase-root-MuiIconButton-root-Header"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
               data-testid="MenuIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -32,11 +32,11 @@ exports[`Layout should render component 1`] = `
               />
             </svg>
             <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
             />
           </button>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-elgjrb-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-nzklu2-MuiTypography-root-MuiLink-root-Header"
             href="/"
           >
             <img
@@ -52,16 +52,15 @@ exports[`Layout should render component 1`] = `
           </a>
         </div>
         <div
-          class="MuiBox-root css-42l0n5-HeaderNav"
+          class="MuiBox-root mui-style-42l0n5-HeaderNav"
         >
-          <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-elgjrb-MuiTypography-root-MuiLink-root"
-            href="/account"
+          <p
+            class="MuiTypography-root MuiTypography-body1 mui-style-ip43sf-MuiTypography-root"
           >
             Explore
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -72,12 +71,12 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ip43sf-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-ip43sf-MuiTypography-root"
           >
             Help
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -88,12 +87,12 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ip43sf-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-ip43sf-MuiTypography-root"
           >
             Usage data
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -104,12 +103,12 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ip43sf-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-ip43sf-MuiTypography-root"
           >
             About us
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-im5ouq-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-im5ouq-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -120,13 +119,13 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-19baaq-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1gus5zt-MuiTypography-root-MuiLink-root"
             href="/news"
           >
             News
           </a>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-19baaq-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1gus5zt-MuiTypography-root-MuiLink-root"
             href="/community"
           >
             Community
@@ -139,7 +138,7 @@ exports[`Layout should render component 1`] = `
             style="display: inline-block; padding-left: 10px;"
           >
             <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1bhi0za-MuiTypography-root-MuiLink-root"
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-elgjrb-MuiTypography-root-MuiLink-root"
               href="/account"
             >
               HeaderNav.labels.myAccount
