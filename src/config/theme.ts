@@ -1,5 +1,11 @@
 import { createTheme } from "@mui/material/styles";
 
+declare module "@mui/material/SvgIcon" {
+    interface SvgIconPropsSizeOverrides {
+        xsmall: true;
+    }
+}
+
 declare module "@mui/material/styles" {
     interface BreakpointOverrides {
         xs: false;
@@ -61,6 +67,16 @@ const theme = createTheme({
     },
     palette,
     components: {
+        MuiSvgIcon: {
+            variants: [
+                {
+                    props: { fontSize: "xsmall" },
+                    style: {
+                        fontSize: "0.8rem",
+                    },
+                },
+            ],
+        },
         MuiButton: {
             styleOverrides: {
                 root: ({ ownerState, theme: _theme }) => ({

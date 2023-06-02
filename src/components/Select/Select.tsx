@@ -3,14 +3,13 @@
 import {
     FormControl,
     FormHelperText,
-    InputAdornment,
     OutlinedInput,
-    IconButton,
     SvgIconTypeMap,
-    Select,
+    Select as MuiSelect,
     MenuItem,
+    ListItemIcon,
+    ListItemText,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Cancel";
 
 import { useTheme } from "@emotion/react";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
@@ -22,26 +21,79 @@ import {
 } from "react-hook-form";
 import Label from "../Label";
 
-export interface TextfieldProps {
+export interface SelectProps {
     label: string;
-    placeholder?: string;
     info?: string;
+    iconRight?: boolean;
+    options: { value: string | number; label: string }[];
+    multiple?: boolean;
     // eslint-disable-next-line @typescript-eslint/ban-types
     icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
         muiName: string;
     };
-    setValue?: (name: string, value: string | number) => void;
     name: string;
     control: Control;
     rules?: UseControllerProps<FieldValues, string>;
 }
 
-const Textfield = (props: TextfieldProps) => {
-    const { label, placeholder, info, icon, control, name, rules, setValue } =
-        props;
+interface MenuItemContentProps {
+    iconRight: boolean;
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
+        muiName: string;
+    };
+    option: { value: string | number; label: string };
+}
+
+const MenuItemContent = ({ iconRight, icon, option }: MenuItemContentProps) => {
+    const Icon = icon;
+
+    if (!Icon) return <ListItemText>{option.label}</ListItemText>;
+
+    if (!iconRight) {
+        return (
+            <>
+                <ListItemIcon>
+                    <Icon
+                        sx={{ marginRight: "0.4rem" }}
+                        fontSize="small"
+                        color="primary"
+                    />
+                </ListItemIcon>
+                <ListItemText> {option.label}</ListItemText>
+            </>
+        );
+    }
+
+    return (
+        <>
+            <ListItemText> {option.label}</ListItemText>
+            <ListItemIcon sx={{ minWidth: 0 }}>
+                <Icon
+                    sx={{ marginRight: 0 }}
+                    fontSize="xsmall"
+                    color="primary"
+                />
+            </ListItemIcon>
+        </>
+    );
+};
+
+const Select = (props: SelectProps) => {
+    const {
+        label,
+        info,
+        icon,
+        iconRight,
+        options,
+        control,
+        name,
+        rules,
+        multiple,
+    } = props;
 
     const theme = useTheme();
-    const Icon = icon;
+
     const {
         field: { ref, ...fieldProps },
         fieldState: { error },
@@ -53,8 +105,6 @@ const Textfield = (props: TextfieldProps) => {
             required: { value: rules.required, message: "This is required" },
         },
     });
-
-    const showClearButton = typeof setValue === "function";
 
     return (
         <FormControl fullWidth sx={{ m: 1 }}>
@@ -72,48 +122,25 @@ const Textfield = (props: TextfieldProps) => {
                     {info}
                 </FormHelperText>
             )}
-            {/* <OutlinedInput
-                size="small"
-                sx={{ fontSize: 14 }}
-                placeholder={placeholder}
-                {...(icon &&
-                    Icon && {
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <Icon fontSize="small" color="primary" />
-                            </InputAdornment>
-                        ),
-                    })}
-                {...(showClearButton && {
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <IconButton
-                                disableRipple
-                                aria-label="clear text"
-                                onClick={() => setValue(fieldProps.name, "")}
-                                edge="end">
-                                <CloseIcon color="disabled" fontSize="small" />
-                            </IconButton>
-                        </InputAdornment>
-                    ),
-                })}
-                inputRef={ref}
-                error={!!error}
-                {...fieldProps}
-            /> */}
 
-            <Select
+            <MuiSelect
                 size="small"
+                multiple={multiple}
                 sx={{ fontSize: 14 }}
-                placeholder={placeholder}
                 inputRef={ref}
                 error={!!error}
+                input={<OutlinedInput />}
                 {...fieldProps}>
-                <MenuItem disabled value="">
-                    <em>Placeholder</em>
-                </MenuItem>
-                <MenuItem value={1}>Option 1</MenuItem>
-            </Select>
+                {options.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                        <MenuItemContent
+                            iconRight={iconRight}
+                            icon={icon}
+                            option={option}
+                        />
+                    </MenuItem>
+                ))}
+            </MuiSelect>
             {error && (
                 <FormHelperText sx={{ fontSize: 14 }} error>
                     {error.message}
@@ -123,12 +150,12 @@ const Textfield = (props: TextfieldProps) => {
     );
 };
 
-Textfield.defaultProps = {
-    placeholder: "",
+Select.defaultProps = {
     info: "",
     icon: undefined,
     rules: {},
-    setValue: undefined,
+    multiple: false,
+    iconRight: false,
 };
 
-export default Textfield;
+export default Select;

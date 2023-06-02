@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import SelectComponent from "@/components/Select";
 import { useForm } from "react-hook-form";
 import React from "react";
-import AddAPhoto from "@mui/icons-material/AddAPhoto";
+import DoneIcon from "@mui/icons-material/Done";
 import { Stack } from "@mui/material";
 import Form from "@/components/Form";
 import Button from "../Button/Button";
@@ -37,36 +37,43 @@ const DummyComponent = () => {
 
     const onSubmit = data => console.log(data);
 
+    const options = [
+        { label: "one", value: 1 },
+        { label: "two", value: 2 },
+        { label: "three", value: 3 },
+        { label: "four", value: 4 },
+    ];
+
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
                 <SelectComponent
-                    placeholder="Enter value here"
-                    label="with placeholder"
-                    control={control}
-                    name="first"
-                />
-                <SelectComponent
                     label="is required"
                     rules={{ required: true }}
+                    options={options}
                     control={control}
                     name="second"
                 />
                 <SelectComponent
                     label="with info"
                     info="Info goes here"
+                    options={options}
                     control={control}
                     name="third"
                 />
                 <SelectComponent
-                    label="with clear button"
+                    label="with icon left"
                     control={control}
+                    icon={DoneIcon}
+                    options={options}
                     name="fourth"
                     setValue={setValue}
                 />
                 <SelectComponent
-                    label="with icon"
-                    icon={AddAPhoto}
+                    label="with icon right"
+                    icon={DoneIcon}
+                    iconRight
+                    options={options}
                     control={control}
                     name="fifth"
                 />
