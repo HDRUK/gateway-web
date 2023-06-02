@@ -26,6 +26,7 @@ export interface SelectProps {
     info?: string;
     iconRight?: boolean;
     disabled?: boolean;
+    invertListItem?: boolean;
     options: { value: string | number; label: string }[];
     multiple?: boolean;
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -43,10 +44,16 @@ interface MenuItemContentProps {
     icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
         muiName: string;
     };
+    invertListItem: boolean;
     option: { value: string | number; label: string };
 }
 
-const MenuItemContent = ({ iconRight, icon, option }: MenuItemContentProps) => {
+const MenuItemContent = ({
+    iconRight,
+    icon,
+    option,
+    invertListItem,
+}: MenuItemContentProps) => {
     const Icon = icon;
 
     if (!Icon) return <ListItemText>{option.label}</ListItemText>;
@@ -92,6 +99,7 @@ const Select = (props: SelectProps) => {
         rules,
         multiple,
         disabled,
+        invertListItem,
     } = props;
 
     const theme = useTheme();
@@ -160,6 +168,7 @@ Select.defaultProps = {
     multiple: false,
     iconRight: false,
     disabled: false,
+    invertListItem: false,
 };
 
 export default Select;

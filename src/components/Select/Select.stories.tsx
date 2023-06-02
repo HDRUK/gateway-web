@@ -22,6 +22,8 @@ export type FormData = {
     third: string;
     fourth: string;
     fifth: string;
+    sixth: string;
+    seventh: string;
 };
 
 const DummyComponent = () => {
@@ -32,6 +34,8 @@ const DummyComponent = () => {
             third: "",
             fourth: "",
             fifth: "",
+            sixth: "",
+            seventh: "",
         },
     });
 
@@ -42,6 +46,9 @@ const DummyComponent = () => {
         { label: "two", value: 2 },
         { label: "three", value: 3 },
         { label: "four", value: 4 },
+        { label: "fifth", value: 5 },
+        { label: "sixth", value: 6 },
+        { label: "seventh", value: 7 },
     ];
 
     return (
@@ -82,7 +89,14 @@ const DummyComponent = () => {
                     disabled
                     options={options}
                     control={control}
-                    name="fifth"
+                    name="sixth"
+                />
+                <SelectComponent
+                    label="invert list item"
+                    invertListItem
+                    options={options}
+                    control={control}
+                    name="seventh"
                 />
                 <Button type="submit">Submit</Button>
             </Stack>
