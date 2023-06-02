@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Label should render asterick 1`] = `
+<div>
+  <p
+    class="MuiTypography-root MuiTypography-body2 mui-style-uahsa5-MuiTypography-root-Label"
+  >
+    This is a label
+  </p>
+</div>
+`;

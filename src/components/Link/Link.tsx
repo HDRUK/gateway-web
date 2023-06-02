@@ -1,9 +1,9 @@
 import NextLink from "next/link";
 import MuiLink from "@mui/material/Link";
-import { TypographyProps } from "@mui/material";
+import { LinkProps as MuiLinkProps } from "@mui/material";
 import { ReactNode } from "react";
 
-interface LinkProps extends TypographyProps {
+interface LinkProps extends MuiLinkProps {
     href: string;
     label: ReactNode;
 }
