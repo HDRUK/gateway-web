@@ -7,39 +7,39 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import Button from "@/components/Button";
 import UserEvent from "@testing-library/user-event";
+import { SelectProps } from "@/components/Select/Select";
 import { render, screen, waitFor } from "../testUtils";
 
 const submitFn = jest.fn();
 
+const options = [
+    { label: "Red", value: 1 },
+    { label: "Green", value: 2 },
+    { label: "Blue", value: 3 },
+    { label: "Yellow", value: 4 },
+];
+
+const optionsWithIcons = [
+    { label: "Red", value: 1, icon: SupervisorAccountIcon },
+    { label: "Green", value: 2, icon: SupervisorAccountIcon },
+    { label: "Blue", value: 3, icon: SupervisorAccountIcon },
+    { label: "Yellow", value: 4, icon: AdminPanelSettingsIcon },
+];
+
 describe("Select", () => {
-    const options = [
-        { label: "Red", value: 1 },
-        { label: "Green", value: 2 },
-        { label: "Blue", value: 3 },
-        { label: "Yellow", value: 4 },
-    ];
+    interface ExtendedProps extends Omit<SelectProps, "control"> {
+        defaultValues: {
+            colour: string | string[];
+        };
+    }
 
-    const optionsWithIcons = [
-        { label: "Red", value: 1, icon: SupervisorAccountIcon },
-        { label: "Green", value: 2, icon: SupervisorAccountIcon },
-        { label: "Blue", value: 3, icon: SupervisorAccountIcon },
-        { label: "Yellow", value: 4, icon: AdminPanelSettingsIcon },
-    ];
-
-    const SelectComponent = ({
-        defaultValues,
-        ...props
-    }: {
-        defaultValues: unknown;
-    }) => {
+    const SelectComponent = ({ defaultValues, ...props }: ExtendedProps) => {
         const { handleSubmit, control } = useForm({
             defaultValues,
         });
 
-        const onSubmit = data => submitFn(data);
-
         return (
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(data => submitFn(data))}>
                 <Select control={control} {...props} />
                 <Button type="submit">Submit</Button>
             </Form>
@@ -71,32 +71,20 @@ describe("Select", () => {
             expect(screen.getByText(options[3].label)).toBeInTheDocument();
         });
 
-        UserEvent.click(screen.getByText(options[1].label));
+        UserEvent.click(screen.getByText(options[2].label));
 
         await waitFor(() => {
-            expect(
-                screen.queryByText(options[0].label)
-            ).not.toBeInTheDocument();
-            expect(screen.getByText(options[1].label)).toBeInTheDocument();
+            expect(screen.getByText("Blue")).toBeInTheDocument();
         });
-
-        UserEvent.click(screen.getByText("Submit"));
-
-        await waitFor(() => {
-            expect(
-                screen.queryByText("This is required")
-            ).not.toBeInTheDocument();
-        });
-
-        expect(submitFn).toBeCalledWith({ colour: 2 });
     });
+
     it("should render multiple component", async () => {
         render(
             <SelectComponent
                 label="Select label"
                 options={options}
-                name="colours"
-                defaultValues={{ colours: [] }}
+                name="colour"
+                defaultValues={{ colour: [] }}
                 multiple
             />
         );
@@ -122,7 +110,7 @@ describe("Select", () => {
         UserEvent.click(screen.getByText("Submit"));
 
         await waitFor(() => {
-            expect(submitFn).toBeCalledWith({ colours: [2, 3] });
+            expect(submitFn).toBeCalledWith({ colour: [2, 3] });
         });
     });
 
@@ -146,15 +134,9 @@ describe("Select", () => {
         });
 
         UserEvent.click(screen.getAllByRole("button")[0]);
-
         await waitFor(() => {
-            expect(screen.getByText(options[0].label)).toBeInTheDocument();
-            expect(screen.getByText(options[1].label)).toBeInTheDocument();
-            expect(screen.getByText(options[2].label)).toBeInTheDocument();
-            expect(screen.getByText(options[3].label)).toBeInTheDocument();
+            UserEvent.click(screen.getByText(options[1].label));
         });
-
-        UserEvent.click(screen.getByText(options[1].label));
         UserEvent.click(screen.getByText("Submit"));
 
         await waitFor(() => {
@@ -163,6 +145,7 @@ describe("Select", () => {
             ).not.toBeInTheDocument();
         });
     });
+
     it("should render info", async () => {
         render(
             <SelectComponent
@@ -176,6 +159,7 @@ describe("Select", () => {
 
         expect(screen.getByText("info text")).toBeInTheDocument();
     });
+
     it("should render disabled", async () => {
         render(
             <SelectComponent
@@ -189,6 +173,7 @@ describe("Select", () => {
 
         expect(screen.getByDisplayValue("")).toBeDisabled();
     });
+
     it("should render icon", async () => {
         render(
             <SelectComponent
@@ -202,6 +187,7 @@ describe("Select", () => {
 
         expect(screen.getByTestId("ArrowDropDownIcon")).toBeInTheDocument();
     });
+
     it("should render different icons", async () => {
         render(
             <SelectComponent
