@@ -3,21 +3,21 @@ import { IconType } from "@/interfaces/Ui";
 import { ListItemIcon, ListItemText } from "@mui/material";
 
 interface MenuItemContentProps {
-    iconRight: boolean;
+    iconRight?: boolean;
     icon?: IconType;
-    invertListItem: boolean;
-    option: { value: string | number; label: string; icon?: IconType };
+    invertListItem?: boolean;
+    label: string;
 }
 
 const MenuItemContent = ({
     iconRight,
     icon,
-    option,
+    label,
     invertListItem,
 }: MenuItemContentProps) => {
     const Icon = icon;
 
-    if (!Icon) return <ListItemText>{option.label}</ListItemText>;
+    if (!Icon) return <ListItemText>{label}</ListItemText>;
 
     if (!iconRight) {
         return (
@@ -32,14 +32,14 @@ const MenuItemContent = ({
                         color="primary"
                     />
                 </ListItemIcon>
-                <ListItemText> {option.label}</ListItemText>
+                <ListItemText> {label}</ListItemText>
             </>
         );
     }
 
     return (
         <>
-            <ListItemText> {option.label}</ListItemText>
+            <ListItemText> {label}</ListItemText>
             <ListItemIcon sx={{ marginRight: "-20px" }}>
                 <Icon
                     sx={{
@@ -57,6 +57,8 @@ const MenuItemContent = ({
 
 MenuItemContent.defaultProps = {
     icon: undefined,
+    iconRight: false,
+    invertListItem: false,
 };
 
 export default MenuItemContent;

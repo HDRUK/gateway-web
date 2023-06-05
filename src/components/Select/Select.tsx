@@ -123,10 +123,10 @@ const Select = (props: SelectProps) => {
                         key={option.value}
                         value={option.value}>
                         <MenuItemContent
-                            iconRight={iconRight || false}
+                            iconRight={iconRight}
                             icon={icon || option.icon}
-                            option={option}
-                            invertListItem={invertListItem || false}
+                            label={option.label}
+                            invertListItem={invertListItem}
                         />
                     </MenuItem>
                 ))}
