@@ -16,7 +16,7 @@ exports[`Layout should render component 1`] = `
         >
           <button
             aria-label="open drawer"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart MuiIconButton-sizeLarge mui-style-tprg66-MuiButtonBase-root-MuiIconButton-root-Header"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeStart MuiIconButton-sizeLarge mui-style-1cdo6o7-MuiButtonBase-root-MuiIconButton-root-Header"
             tabindex="0"
             type="button"
           >
