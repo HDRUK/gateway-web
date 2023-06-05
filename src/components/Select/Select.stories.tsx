@@ -2,9 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 import SelectComponent from "@/components/Select";
 import { useForm } from "react-hook-form";
 import React from "react";
-import DoneIcon from "@mui/icons-material/Done";
+
 import { Stack } from "@mui/material";
 import Form from "@/components/Form";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import BackupIcon from "@mui/icons-material/Backup";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import Button from "../Button/Button";
 
 const meta: Meta<typeof Form> = {
@@ -24,6 +28,7 @@ export type FormData = {
     fifth: string;
     sixth: string;
     seventh: string;
+    eighth: string[];
 };
 
 const DummyComponent = () => {
@@ -36,19 +41,24 @@ const DummyComponent = () => {
             fifth: "",
             sixth: "",
             seventh: "",
+            eighth: [],
         },
     });
 
     const onSubmit = data => console.log(data);
 
     const options = [
-        { label: "one", value: 1 },
-        { label: "two", value: 2 },
-        { label: "three", value: 3 },
-        { label: "four", value: 4 },
-        { label: "fifth", value: 5 },
-        { label: "sixth", value: 6 },
-        { label: "seventh", value: 7 },
+        { label: "Red", value: 1 },
+        { label: "Green", value: 2 },
+        { label: "Blue", value: 3 },
+        { label: "Yellow", value: 4 },
+    ];
+
+    const optionsWithIcons = [
+        { label: "Red", value: 1, icon: SupervisorAccountIcon },
+        { label: "Green", value: 2, icon: SupervisorAccountIcon },
+        { label: "Blue", value: 3, icon: AdminPanelSettingsIcon },
+        { label: "Yellow", value: 4, icon: AdminPanelSettingsIcon },
     ];
 
     return (
@@ -59,26 +69,33 @@ const DummyComponent = () => {
                     rules={{ required: true }}
                     options={options}
                     control={control}
-                    name="second"
+                    name="first"
                 />
                 <SelectComponent
                     label="with info"
                     info="Info goes here"
                     options={options}
                     control={control}
-                    name="third"
+                    name="second"
                 />
                 <SelectComponent
                     label="with icon left"
                     control={control}
-                    icon={DoneIcon}
+                    icon={AccountCircleIcon}
                     options={options}
+                    name="third"
+                    setValue={setValue}
+                />
+                <SelectComponent
+                    label="with different icons"
+                    control={control}
+                    options={optionsWithIcons}
                     name="fourth"
                     setValue={setValue}
                 />
                 <SelectComponent
                     label="with icon right"
-                    icon={DoneIcon}
+                    icon={BackupIcon}
                     iconRight
                     options={options}
                     control={control}
@@ -94,9 +111,17 @@ const DummyComponent = () => {
                 <SelectComponent
                     label="invert list item"
                     invertListItem
+                    icon={AccountCircleIcon}
                     options={options}
                     control={control}
                     name="seventh"
+                />
+                <SelectComponent
+                    label="multiple"
+                    multiple
+                    options={options}
+                    control={control}
+                    name="eighth"
                 />
                 <Button type="submit">Submit</Button>
             </Stack>

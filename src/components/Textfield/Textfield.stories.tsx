@@ -22,6 +22,7 @@ export type FormData = {
     third: string;
     fourth: string;
     fifth: string;
+    sixth: string;
 };
 
 const DummyComponent = () => {
@@ -32,6 +33,7 @@ const DummyComponent = () => {
             third: "",
             fourth: "",
             fifth: "",
+            sixth: "",
         },
     });
 
@@ -69,6 +71,12 @@ const DummyComponent = () => {
                     icon={AddAPhoto}
                     control={control}
                     name="fifth"
+                />
+                <Textfield
+                    label="disabled"
+                    disabled
+                    control={control}
+                    name="sixth"
                 />
                 <Button type="submit">Submit</Button>
             </Stack>

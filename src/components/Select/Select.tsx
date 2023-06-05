@@ -4,22 +4,23 @@ import {
     FormControl,
     FormHelperText,
     OutlinedInput,
-    SvgIconTypeMap,
     Select as MuiSelect,
     MenuItem,
-    ListItemIcon,
-    ListItemText,
 } from "@mui/material";
 
 import { useTheme } from "@emotion/react";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
 import {
     Control,
     FieldValues,
     UseControllerProps,
     useController,
 } from "react-hook-form";
+import { IconType } from "@/interfaces/Ui";
 import Label from "../Label";
+import MenuItemContent from "../SelectMenuItem/SelectMenuItem";
+
+type ValueType = string | number;
+type OptionsType = { value: ValueType; label: string; icon?: IconType }[];
 
 export interface SelectProps {
     label: string;
@@ -27,64 +28,26 @@ export interface SelectProps {
     iconRight?: boolean;
     disabled?: boolean;
     invertListItem?: boolean;
-    options: { value: string | number; label: string }[];
+    options: OptionsType;
     multiple?: boolean;
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-        muiName: string;
-    };
+    icon?: IconType;
     name: string;
     control: Control;
     rules?: UseControllerProps<FieldValues, string>;
 }
 
-interface MenuItemContentProps {
-    iconRight: boolean;
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-        muiName: string;
-    };
-    invertListItem: boolean;
-    option: { value: string | number; label: string };
-}
-
-const MenuItemContent = ({
-    iconRight,
-    icon,
-    option,
-    invertListItem,
-}: MenuItemContentProps) => {
-    const Icon = icon;
-
-    if (!Icon) return <ListItemText>{option.label}</ListItemText>;
-
-    if (!iconRight) {
-        return (
-            <>
-                <ListItemIcon>
-                    <Icon
-                        sx={{ marginRight: "0.4rem" }}
-                        fontSize="small"
-                        color="primary"
-                    />
-                </ListItemIcon>
-                <ListItemText> {option.label}</ListItemText>
-            </>
-        );
+const renderValue = (
+    selected: ValueType | ValueType[],
+    options: OptionsType,
+    multiple: boolean
+) => {
+    if (multiple && Array.isArray(selected)) {
+        return options
+            .filter(option => selected.includes(option.value))
+            .map(option => option.label)
+            .join(", ");
     }
-
-    return (
-        <>
-            <ListItemText> {option.label}</ListItemText>
-            <ListItemIcon sx={{ minWidth: 0 }}>
-                <Icon
-                    sx={{ marginRight: 0 }}
-                    fontSize="xsmall"
-                    color="primary"
-                />
-            </ListItemIcon>
-        </>
-    );
+    return options.find(option => option.value === selected)?.label;
 };
 
 const Select = (props: SelectProps) => {
@@ -122,6 +85,9 @@ const Select = (props: SelectProps) => {
                 required={rules?.required}
                 htmlFor="outlined-adornment-amount"
                 label={label}
+                sx={{
+                    ...(disabled && { color: theme.palette.colors.grey600 }),
+                }}
             />
             {info && (
                 <FormHelperText
@@ -141,13 +107,26 @@ const Select = (props: SelectProps) => {
                 error={!!error}
                 disabled={disabled}
                 input={<OutlinedInput />}
+                renderValue={selected =>
+                    renderValue(selected, options, !!multiple)
+                }
                 {...fieldProps}>
                 {options.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
+                    <MenuItem
+                        color="secondary"
+                        sx={{
+                            ...(invertListItem && {
+                                background: theme.palette.primary.main,
+                                color: "white",
+                            }),
+                        }}
+                        key={option.value}
+                        value={option.value}>
                         <MenuItemContent
-                            iconRight={iconRight}
-                            icon={icon}
+                            iconRight={iconRight || false}
+                            icon={icon || option.icon}
                             option={option}
+                            invertListItem={invertListItem || false}
                         />
                     </MenuItem>
                 ))}
