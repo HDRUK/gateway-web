@@ -1,5 +1,11 @@
 import { createTheme } from "@mui/material/styles";
 
+declare module "@mui/material/SvgIcon" {
+    interface SvgIconPropsSizeOverrides {
+        xsmall: true;
+    }
+}
+
 declare module "@mui/material/styles" {
     interface BreakpointOverrides {
         xs: false;
@@ -61,6 +67,39 @@ const theme = createTheme({
     },
     palette,
     components: {
+        MuiSvgIcon: {
+            variants: [
+                {
+                    props: { fontSize: "xsmall" },
+                    style: {
+                        fontSize: "0.8rem",
+                    },
+                },
+            ],
+        },
+        MuiButtonBase: {
+            styleOverrides: {
+                root: ({ ownerState, theme: _theme }) => {
+                    return {
+                        "&.MuiMenuItem-root:hover": {
+                            ...(ownerState.children?.props?.invertListItem && {
+                                background: _theme.palette.primary.dark,
+                            }),
+                        },
+                        "&.MuiMenuItem-root.Mui-selected": {
+                            ...(ownerState.children?.props?.invertListItem && {
+                                background: _theme.palette.primary.dark,
+                            }),
+                        },
+                        "&.MuiMenuItem-root.Mui-selected:hover": {
+                            ...(ownerState.children?.props?.invertListItem && {
+                                background: _theme.palette.primary.dark,
+                            }),
+                        },
+                    };
+                },
+            },
+        },
         MuiButton: {
             styleOverrides: {
                 root: ({ ownerState, theme: _theme }) => ({
@@ -125,6 +164,10 @@ const theme = createTheme({
                     "&.MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline":
                         {
                             borderColor: palette.error.main,
+                        },
+                    "&.MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline":
+                        {
+                            borderColor: palette.colors.grey400,
                         },
                 },
             },
