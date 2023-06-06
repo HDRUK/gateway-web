@@ -16,7 +16,7 @@ import { Control, useController } from "react-hook-form";
 import Label from "../Label";
 import CharacterLimit from "../CharacterLimit";
 
-export interface TextfieldProps {
+export interface TextFieldBaseProps {
     label: string;
     placeholder?: string;
     info?: string;
@@ -35,7 +35,7 @@ export interface TextfieldProps {
     required?: boolean;
 }
 
-const Textfield = (props: TextfieldProps) => {
+const TextFieldBase = (props: TextFieldBaseProps) => {
     const {
         label,
         disabled,
@@ -134,7 +134,7 @@ const Textfield = (props: TextfieldProps) => {
     );
 };
 
-Textfield.defaultProps = {
+TextFieldBase.defaultProps = {
     placeholder: "",
     info: "",
     disabled: false,
@@ -147,4 +147,4 @@ Textfield.defaultProps = {
     limit: undefined,
 };
 
-export default Textfield;
+export default TextFieldBase;

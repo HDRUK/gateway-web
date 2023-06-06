@@ -11,11 +11,11 @@ const defaultValues = { firstName: "", lastName: "", email: "", sector: "" };
 
 const validationSchema = yup
     .object({
-        firstName: yup.string().required(),
-        lastName: yup.string().required(),
-        email: yup.string().required(),
-        sector: yup.string().required(),
-        bio: yup.string().max(500),
+        firstName: yup.string().required().label("First name"),
+        lastName: yup.string().required().label("Last name"),
+        email: yup.string().required().label("Primary email"),
+        sector: yup.string().required().label("Sector"),
+        bio: yup.string().max(500).label("Bio"),
     })
     .required();
 

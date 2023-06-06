@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Textfield from "@/components/Textfield";
+import TextFieldComponent from "@/components/TextField";
 import { useForm } from "react-hook-form";
 import React from "react";
 import AddAPhoto from "@mui/icons-material/AddAPhoto";
@@ -42,38 +42,38 @@ const DummyComponent = () => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
-                <Textfield
+                <TextFieldComponent
                     placeholder="Enter value here"
                     label="with placeholder"
                     control={control}
                     name="first"
                 />
-                <Textfield
+                <TextFieldComponent
                     label="is required"
                     rules={{ required: true }}
                     control={control}
                     name="second"
                 />
-                <Textfield
+                <TextFieldComponent
                     label="with info"
                     info="Info goes here"
                     control={control}
                     name="third"
                 />
-                <Textfield
+                <TextFieldComponent
                     label="with clear button"
                     control={control}
                     name="fourth"
                     showClearButton
                     setValue={setValue}
                 />
-                <Textfield
+                <TextFieldComponent
                     label="with icon"
                     icon={AddAPhoto}
                     control={control}
                     name="fifth"
                 />
-                <Textfield
+                <TextFieldComponent
                     label="disabled"
                     disabled
                     control={control}

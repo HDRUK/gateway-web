@@ -1,5 +1,5 @@
 import React from "react";
-import Textfield from "@/components/Textfield";
+import TextField from "@/components/TextField";
 import AddAPhoto from "@mui/icons-material/AddAPhoto";
 import { useForm } from "react-hook-form";
 import { render, screen } from "../testUtils";
@@ -9,7 +9,7 @@ describe("TextField", () => {
     const Component = (props: any) => {
         const { control } = useForm();
         return (
-            <Textfield
+            <TextField
                 label="This is a label"
                 name="fieldName"
                 control={control}

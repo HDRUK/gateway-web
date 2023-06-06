@@ -2,9 +2,6 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Form from "@/components/Form";
 import Head from "@/components/Head";
-import Select from "@/components/Select";
-import TextArea from "@/components/TextArea";
-import Textfield from "@/components/Textfield";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { useForm } from "react-hook-form";
@@ -15,13 +12,13 @@ import {
     ProfileFormData,
     profileDefaultValues,
     profileFormFields,
-    profileSchema,
+    profileValidationSchema,
 } from "@/config/forms/profile";
 import InputWrapper from "@/components/InputWrapper";
 
 const Profile = () => {
     const { control, handleSubmit } = useForm<ProfileFormData>({
-        resolver: yupResolver(profileSchema),
+        resolver: yupResolver(profileValidationSchema),
         defaultValues: profileDefaultValues,
     });
 

@@ -1,21 +1,23 @@
+import React from "react";
 import Select from "../Select";
 import { SelectProps } from "../Select/Select";
 import TextArea from "../TextArea";
 import { TextAreaProps } from "../TextArea/TextArea";
-import Textfield from "../Textfield";
-import { TextfieldProps } from "../Textfield/Textfield";
+import TextField from "../TextField";
+import { TextFieldBaseProps } from "../TextFieldBase/TextFieldBase";
 
 type ComponentTypes = "textField" | "select" | "textArea";
-type InputType = TextfieldProps | SelectProps | TextAreaProps;
+type InputType = TextFieldBaseProps | SelectProps | TextAreaProps;
 
 interface InputWrapperProps {
     component: ComponentTypes;
 }
 
-type Props = InputType & InputWrapperProps;
-const InputWrapper = ({ component, ...props }: Props) => {
+type CombinedProps = InputType & InputWrapperProps;
+
+const InputWrapper = ({ component, ...props }: CombinedProps) => {
     const inputs = {
-        textField: Textfield,
+        textField: TextField,
         select: Select,
         textArea: TextArea,
     };
@@ -25,8 +27,6 @@ const InputWrapper = ({ component, ...props }: Props) => {
     if (!Component) {
         throw Error(`${component} is not a valid input component`);
     }
-
-    console.log(Component instanceof Select);
 
     return <Component {...props} />;
 };

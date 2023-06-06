@@ -1,16 +1,18 @@
-import Textfield from "@/components/Textfield";
-import { TextfieldProps } from "../Textfield/Textfield";
+import TextFieldBase from "@/components/TextFieldBase";
+import { TextFieldBaseProps } from "../TextFieldBase/TextFieldBase";
 
-export interface TextAreaProps extends TextfieldProps {
+export interface TextAreaProps extends TextFieldBaseProps {
     rows?: number;
+    limit?: number;
 }
 
-const TextArea = ({ rows, ...props }: TextAreaProps) => {
-    return <Textfield {...props} multiline rows={rows} />;
+const TextArea = ({ rows, limit, ...props }: TextAreaProps) => {
+    return <TextFieldBase {...props} limit={limit} multiline rows={rows} />;
 };
 
 TextArea.defaultProps = {
     rows: 4,
+    limit: undefined,
 };
 
 export default TextArea;
