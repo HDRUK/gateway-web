@@ -64,6 +64,7 @@ const DummyComponent = () => {
                     label="with clear button"
                     control={control}
                     name="fourth"
+                    showClearButton
                     setValue={setValue}
                 />
                 <Textfield

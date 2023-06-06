@@ -42,7 +42,7 @@ function HeaderNav() {
         <>
             <Box css={styles.navBox}>
                 {navItems.map(item => (
-                    <Typography css={styles.navItem}>
+                    <Typography key={item} css={styles.navItem}>
                         {item}
                         <ExpandMoreIcon color="primary" />
                     </Typography>
@@ -51,6 +51,7 @@ function HeaderNav() {
                 {/* news route andcommunity route to be implemented */}
                 {navLinks.map(item => (
                     <Link
+                        key={item.label}
                         href={item.href}
                         label={item.label}
                         css={styles.navLink}

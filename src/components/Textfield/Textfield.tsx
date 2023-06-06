@@ -12,13 +12,9 @@ import CloseIcon from "@mui/icons-material/Cancel";
 
 import { useTheme } from "@emotion/react";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import {
-    Control,
-    FieldValues,
-    UseControllerProps,
-    useController,
-} from "react-hook-form";
+import { Control, useController } from "react-hook-form";
 import Label from "../Label";
+import CharacterLimit from "../CharacterLimit";
 
 export interface TextfieldProps {
     label: string;
@@ -30,9 +26,13 @@ export interface TextfieldProps {
     };
     setValue?: (name: string, value: string | number) => void;
     name: string;
-    disabled: boolean;
+    multiline?: boolean;
+    rows?: number;
+    limit?: number;
+    disabled?: boolean;
+    showClearButton?: boolean;
     control: Control;
-    rules?: UseControllerProps<FieldValues, string>;
+    required?: boolean;
 }
 
 const Textfield = (props: TextfieldProps) => {
@@ -42,10 +42,14 @@ const Textfield = (props: TextfieldProps) => {
         placeholder,
         info,
         icon,
+        required,
+        limit,
+        rows,
+        multiline,
         control,
         name,
-        rules,
         setValue,
+        showClearButton,
     } = props;
 
     const theme = useTheme();
@@ -56,18 +60,18 @@ const Textfield = (props: TextfieldProps) => {
     } = useController({
         name,
         control,
-        rules: {
-            ...rules,
-            required: { value: rules.required, message: "This is required" },
-        },
     });
 
-    const showClearButton = typeof setValue === "function";
+    if (showClearButton && setValue === undefined) {
+        throw Error(
+            "You must pass `setValue` if you would like to show the clear button"
+        );
+    }
 
     return (
         <FormControl fullWidth sx={{ m: 1 }}>
             <Label
-                required={rules?.required}
+                required={required}
                 htmlFor="outlined-adornment-amount"
                 label={label}
                 sx={{
@@ -83,9 +87,12 @@ const Textfield = (props: TextfieldProps) => {
                     {info}
                 </FormHelperText>
             )}
+            {limit && <CharacterLimit count={0} limit={limit} />}
             <OutlinedInput
                 size="small"
                 disabled={disabled}
+                multiline={multiline}
+                rows={rows}
                 sx={{ fontSize: 14 }}
                 placeholder={placeholder}
                 {...(icon &&
@@ -102,7 +109,11 @@ const Textfield = (props: TextfieldProps) => {
                             <IconButton
                                 disableRipple
                                 aria-label="clear text"
-                                onClick={() => setValue(fieldProps.name, "")}
+                                onClick={() => {
+                                    if (typeof setValue === "function") {
+                                        setValue(fieldProps.name, "");
+                                    }
+                                }}
                                 edge="end">
                                 <CloseIcon color="disabled" fontSize="small" />
                             </IconButton>
@@ -126,9 +137,14 @@ const Textfield = (props: TextfieldProps) => {
 Textfield.defaultProps = {
     placeholder: "",
     info: "",
+    disabled: false,
+    required: false,
+    multiline: false,
+    rows: undefined,
     icon: undefined,
-    rules: {},
     setValue: undefined,
+    showClearButton: false,
+    limit: undefined,
 };
 
 export default Textfield;

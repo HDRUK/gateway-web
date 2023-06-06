@@ -23,7 +23,8 @@ function Header() {
                         href="/"
                         label={
                             <Image
-                                src="/images/logos/gateway_main.svg"
+                                src="/images/logos/gateway-main.svg"
+                                priority
                                 width={110}
                                 height={50}
                                 alt="Gateway home logo"
