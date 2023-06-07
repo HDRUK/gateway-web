@@ -44,8 +44,7 @@ exports[`Layout should render component 1`] = `
               data-nimg="1"
               decoding="async"
               height="50"
-              loading="lazy"
-              src="/images/logos/gateway_main.svg"
+              src="/images/logos/gateway-main.svg"
               style="color: transparent;"
               width="110"
             />

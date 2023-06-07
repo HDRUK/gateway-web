@@ -15,16 +15,44 @@ import {
     profileValidationSchema,
 } from "@/config/forms/profile";
 import InputWrapper from "@/components/InputWrapper";
+import useGet from "@/hooks/useGet";
+import config from "@/config";
+import { useMemo } from "react";
+import { Sector } from "@/interfaces/Sector";
+import usePut from "@/hooks/usePut";
+import { User } from "@/interfaces/User";
+import useUser from "@/hooks/useUser";
 
 const Profile = () => {
+    const { user } = useUser();
+    const { data: sectors = [] } = useGet<Sector[]>(config.sectorsV1Url);
+    const updateProfile = usePut<User>(config.userV1Url);
+
     const { control, handleSubmit } = useForm<ProfileFormData>({
         resolver: yupResolver(profileValidationSchema),
         defaultValues: profileDefaultValues,
     });
 
-    const submitForm = data => {
-        console.log("data: ", data);
+    const submitForm = (formData: ProfileFormData) => {
+        updateProfile({ ...user, ...formData });
     };
+
+    const hydratedFormFields = useMemo(
+        () =>
+            profileFormFields.map(field => {
+                if (field.name === "sector_id") {
+                    return {
+                        ...field,
+                        options: sectors.map(sector => ({
+                            value: sector.id,
+                            label: sector.name,
+                        })),
+                    };
+                }
+                return field;
+            }),
+        [sectors]
+    );
 
     return (
         <>
@@ -52,15 +80,24 @@ const Profile = () => {
                         icons. Your details are also used when you make a data
                         access request application.
                     </p>
-                    <Form onSubmit={handleSubmit(submitForm)}>
-                        {profileFormFields.map(field => (
+                    <Form
+                        sx={{ maxWidth: 1000 }}
+                        onSubmit={handleSubmit(submitForm)}>
+                        {hydratedFormFields.map(field => (
                             <InputWrapper
                                 key={field.name}
                                 control={control}
                                 {...field}
                             />
                         ))}
-                        <Button type="submit">Save changes</Button>
+                        <Box
+                            sx={{
+                                p: 0,
+                                display: "flex",
+                                justifyContent: "end",
+                            }}>
+                            <Button type="submit">Save changes</Button>
+                        </Box>
                     </Form>
                 </Box>
             </BoxContainer>

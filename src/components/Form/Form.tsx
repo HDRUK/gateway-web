@@ -1,14 +1,17 @@
+import { Box, BoxProps } from "@mui/material";
 import React, { ComponentPropsWithoutRef, ReactNode } from "react";
 
-export interface FormProps extends ComponentPropsWithoutRef<"form"> {
+export interface FormPropsBase {
     children: ReactNode;
 }
 
+type FormProps = BoxProps & FormPropsBase & ComponentPropsWithoutRef<"form">;
+
 const Form = ({ children, ...props }: FormProps) => {
     return (
-        <form noValidate {...props}>
+        <Box component="form" noValidate {...props}>
             {children}
-        </form>
+        </Box>
     );
 };
 

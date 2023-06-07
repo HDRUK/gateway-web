@@ -1,5 +1,6 @@
 import React from "react";
 import Select from "@/components/Select";
+import * as yup from "yup";
 
 import { useForm } from "react-hook-form";
 import Form from "@/components/Form";
@@ -8,6 +9,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import Button from "@/components/Button";
 import UserEvent from "@testing-library/user-event";
 import { SelectProps } from "@/components/Select/Select";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { render, screen, waitFor } from "../testUtils";
 
 const submitFn = jest.fn();
@@ -33,8 +35,15 @@ describe("Select", () => {
         };
     }
 
+    const validationSchema = yup
+        .object({
+            colour: yup.string().required().label("Colour"),
+        })
+        .required();
+
     const SelectComponent = ({ defaultValues, ...props }: ExtendedProps) => {
         const { handleSubmit, control } = useForm({
+            ...(props.required && { resolver: yupResolver(validationSchema) }),
             defaultValues,
         });
 
@@ -121,7 +130,7 @@ describe("Select", () => {
                 options={options}
                 defaultValues={{ colour: "" }}
                 name="colour"
-                rules={{ required: true }}
+                required
             />
         );
 
@@ -130,7 +139,9 @@ describe("Select", () => {
         UserEvent.click(screen.getByText("Submit"));
 
         await waitFor(() => {
-            expect(screen.getByText("This is required")).toBeInTheDocument();
+            expect(
+                screen.getByText("Colour is a required field")
+            ).toBeInTheDocument();
         });
 
         UserEvent.click(screen.getAllByRole("button")[0]);
@@ -141,7 +152,7 @@ describe("Select", () => {
 
         await waitFor(() => {
             expect(
-                screen.queryByText("This is required")
+                screen.queryByText("Colour is a required field")
             ).not.toBeInTheDocument();
         });
     });
