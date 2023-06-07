@@ -1,7 +1,6 @@
 import { useTheme } from "@emotion/react";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { useMemo } from "react";
-import Box from "../Box";
 
 interface CharacterLimitProps {
     limit: number;

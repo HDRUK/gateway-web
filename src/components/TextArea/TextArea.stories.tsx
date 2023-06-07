@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import TextFieldComponent from "@/components/TextField";
+import TextAreaComponent from "@/components/TextArea";
 import { useForm } from "react-hook-form";
 import React from "react";
-import AddAPhoto from "@mui/icons-material/AddAPhoto";
 import { Stack } from "@mui/material";
 import Form from "@/components/Form";
 import * as yup from "yup";
@@ -11,7 +10,7 @@ import Button from "../Button/Button";
 
 const meta: Meta<typeof Form> = {
     component: Form,
-    title: "Forms/TextField",
+    title: "Forms/TextArea",
 };
 
 export default meta;
@@ -24,7 +23,6 @@ export type FormData = {
     third: string;
     fourth: string;
     fifth: string;
-    sixth: string;
 };
 
 const validationSchema = yup
@@ -34,14 +32,13 @@ const validationSchema = yup
     .required();
 
 const DummyComponent = () => {
-    const { handleSubmit, setValue, control } = useForm<FormData>({
+    const { handleSubmit, getValues, control } = useForm<FormData>({
         defaultValues: {
             first: "",
             second: "",
             third: "",
             fourth: "",
             fifth: "",
-            sixth: "",
         },
         resolver: yupResolver(validationSchema),
     });
@@ -51,42 +48,36 @@ const DummyComponent = () => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
-                <TextFieldComponent
-                    placeholder="Enter value here"
-                    label="with placeholder"
+                <TextAreaComponent
+                    getValues={getValues}
+                    limit={150}
+                    label="with character limit"
                     control={control}
                     name="first"
                 />
-                <TextFieldComponent
+                <TextAreaComponent
                     label="is required"
                     required
                     control={control}
                     name="second"
                 />
-                <TextFieldComponent
+                <TextAreaComponent
                     label="with info"
                     info="Info goes here"
                     control={control}
                     name="third"
                 />
-                <TextFieldComponent
-                    label="with clear button"
-                    control={control}
-                    name="fourth"
-                    showClearButton
-                    setValue={setValue}
-                />
-                <TextFieldComponent
-                    label="with icon"
-                    icon={AddAPhoto}
-                    control={control}
-                    name="fifth"
-                />
-                <TextFieldComponent
+                <TextAreaComponent
                     label="disabled"
                     disabled
                     control={control}
-                    name="sixth"
+                    name="fourth"
+                />
+                <TextAreaComponent
+                    label="custom rows"
+                    rows={2}
+                    control={control}
+                    name="fifth"
                 />
                 <Button type="submit">Submit</Button>
             </Stack>
@@ -94,6 +85,6 @@ const DummyComponent = () => {
     );
 };
 
-export const TextField: Story = {
+export const TextArea: Story = {
     render: () => <DummyComponent />,
 };

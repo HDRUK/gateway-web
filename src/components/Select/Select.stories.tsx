@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import SelectComponent from "@/components/Select";
 import { useForm } from "react-hook-form";
 import React from "react";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Stack } from "@mui/material";
 import Form from "@/components/Form";
@@ -31,6 +33,12 @@ export type FormData = {
     eighth: string[];
 };
 
+const validationSchema = yup
+    .object({
+        first: yup.string().required().label("First"),
+    })
+    .required();
+
 const DummyComponent = () => {
     const { handleSubmit, setValue, control } = useForm<FormData>({
         defaultValues: {
@@ -43,6 +51,7 @@ const DummyComponent = () => {
             seventh: "",
             eighth: [],
         },
+        resolver: yupResolver(validationSchema),
     });
 
     const onSubmit = data => console.log(data);
@@ -66,7 +75,7 @@ const DummyComponent = () => {
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
                 <SelectComponent
                     label="is required"
-                    rules={{ required: true }}
+                    required
                     options={options}
                     control={control}
                     name="first"

@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Checkbox from "@/components/Checkbox";
+import CheckboxComponent from "@/components/Checkbox";
 import { Stack } from "@mui/material";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
 import React from "react";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../Button/Button";
 
 const meta: Meta<typeof Form> = {
@@ -17,19 +19,26 @@ type Story = StoryObj<typeof Form>;
 
 export type FormData = {
     first: string;
-    second: string;
+    second: boolean;
     third: string;
     fourth: string;
-    fifth: string;
 };
+
+const validationSchema = yup
+    .object({
+        second: yup.boolean().required().oneOf([true]),
+    })
+    .required();
 
 const DummyComponent = () => {
     const { handleSubmit, control } = useForm<FormData>({
         defaultValues: {
             first: "",
-            second: "",
+            second: false,
             third: "",
+            fourth: "",
         },
+        resolver: yupResolver(validationSchema),
     });
 
     const onSubmit = (data: unknown) => console.log(data);
@@ -37,28 +46,28 @@ const DummyComponent = () => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
-                <Checkbox
+                <CheckboxComponent
                     label="Simple Checkbox"
-                    control={control}
-                    name="second"
-                />
-                <Checkbox
-                    label="Required Checkbox"
-                    rules={{ required: true }}
                     control={control}
                     name="first"
                 />
-                <Checkbox
-                    label="Disabled Checkbox"
-                    disabled
+                <CheckboxComponent
+                    label="Required Checkbox"
+                    required
                     control={control}
                     name="second"
                 />
-                <Checkbox
+                <CheckboxComponent
+                    label="Disabled Checkbox"
+                    disabled
+                    control={control}
+                    name="third"
+                />
+                <CheckboxComponent
                     label="indeterminate Checkbox"
                     indeterminate
                     control={control}
-                    name="third"
+                    name="fourth"
                 />
                 <Button type="submit">Submit</Button>
             </Stack>
@@ -66,6 +75,6 @@ const DummyComponent = () => {
     );
 };
 
-export const Checkbox1: Story = {
+export const Checkbox: Story = {
     render: () => <DummyComponent />,
 };
