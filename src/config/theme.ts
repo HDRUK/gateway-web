@@ -172,6 +172,24 @@ const theme = createTheme({
                 },
             },
         },
+        MuiCheckbox: {
+            styleOverrides: {
+                root: {
+                    "&.MuiCheckbox-colorError": {
+                        color: palette.error.main,
+                    },
+                },
+            },
+        },
+        MuiFormControlLabel: {
+            styleOverrides: {
+                root: {
+                    "&.Mui-error": {
+                        color: palette.error.main,
+                    },
+                },
+            },
+        },
     },
 });
 
