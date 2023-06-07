@@ -9,12 +9,7 @@ import {
 } from "@mui/material";
 
 import { useTheme } from "@emotion/react";
-import {
-    Control,
-    FieldValues,
-    UseControllerProps,
-    useController,
-} from "react-hook-form";
+import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import Label from "../Label";
 import MenuItemContent from "../SelectMenuItem/SelectMenuItem";
@@ -33,7 +28,7 @@ export interface SelectProps {
     icon?: IconType;
     name: string;
     control: Control;
-    rules?: UseControllerProps<FieldValues, string>;
+    required?: boolean;
 }
 
 const renderValue = (
@@ -59,7 +54,7 @@ const Select = (props: SelectProps) => {
         options,
         control,
         name,
-        rules,
+        required,
         multiple,
         disabled,
         invertListItem,
@@ -73,16 +68,12 @@ const Select = (props: SelectProps) => {
     } = useController({
         name,
         control,
-        rules: {
-            ...rules,
-            required: { value: rules.required, message: "This is required" },
-        },
     });
 
     return (
-        <FormControl fullWidth sx={{ m: 1 }}>
+        <FormControl fullWidth sx={{ m: 0, mb: 2 }}>
             <Label
-                required={rules?.required}
+                required={required}
                 htmlFor="outlined-adornment-amount"
                 label={label}
                 sx={{
@@ -143,7 +134,8 @@ const Select = (props: SelectProps) => {
 Select.defaultProps = {
     info: "",
     icon: undefined,
-    rules: {},
+
+    required: false,
     multiple: false,
     iconRight: false,
     disabled: false,

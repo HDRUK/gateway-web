@@ -8,7 +8,7 @@ interface Response {
 }
 
 const getUserV1 = (data = userV1, status = 200) => {
-    return rest.get(config.userV1Url, (req, res, ctx) => {
+    return rest.get(config.usersV1Url, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),

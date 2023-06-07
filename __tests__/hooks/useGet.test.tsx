@@ -9,7 +9,7 @@ import { renderHook, waitFor } from "../testUtils";
 
 describe("useGet", () => {
     it("should eventually return the single item", async () => {
-        const { result } = renderHook(() => useGet<User>(config.userV1Url));
+        const { result } = renderHook(() => useGet<User>(config.usersV1Url));
 
         expect(result.current).toEqual({
             error: undefined,
@@ -43,7 +43,7 @@ describe("useGet", () => {
     it("should return error if 404 returned", async () => {
         server.use(getUserV1(undefined, 404));
 
-        const { result } = renderHook(() => useGet<User>(config.userV1Url));
+        const { result } = renderHook(() => useGet<User>(config.usersV1Url));
 
         expect(result.current).toEqual({
             error: undefined,

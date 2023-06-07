@@ -5,7 +5,8 @@ const config = {
     authLinkedinV1Url: `${apiV1}/auth/linkedin`,
     authAzureV1Url: `${apiV1}/auth/azure`,
     filtersV1Url: `${apiV1}/filters`,
-    userV1Url: `${apiV1}/user`, // dummy api needs to be confirmed
+    sectorsV1Url: `${apiV1}/sectors`,
+    usersV1Url: `${apiV1}/users`,
     tagsV1Url: `${apiV1}/tags`,
 };
 

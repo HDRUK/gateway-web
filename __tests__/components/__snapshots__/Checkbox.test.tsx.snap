@@ -3,13 +3,13 @@
 exports[`Checkbox checkbox snapshot 1`] = `
 <div>
   <div
-    class="MuiFormControl-root MuiFormControl-fullWidth mui-style-1w4vsez-MuiFormControl-root"
+    class="MuiFormControl-root MuiFormControl-fullWidth mui-style-vd0s50-MuiFormControl-root"
   >
     <label
       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-1pwbvyj-MuiFormControlLabel-root"
     >
       <span
-        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-root MuiCheckbox-colorSecondary mui-style-1ssywe4-MuiButtonBase-root-MuiCheckbox-root"
+        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-root MuiCheckbox-colorSecondary mui-style-dzoou-MuiButtonBase-root-MuiCheckbox-root"
       >
         <input
           class="PrivateSwitchBase-input mui-style-1m9pwf3"

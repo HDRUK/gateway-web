@@ -3,7 +3,7 @@
 exports[`TextField should render icon 1`] = `
 <div>
   <div
-    class="MuiFormControl-root MuiFormControl-fullWidth mui-style-1w4vsez-MuiFormControl-root"
+    class="MuiFormControl-root MuiFormControl-fullWidth mui-style-vd0s50-MuiFormControl-root"
   >
     <p
       class="MuiTypography-root MuiTypography-body2 mui-style-gum3jj-MuiTypography-root-Label"

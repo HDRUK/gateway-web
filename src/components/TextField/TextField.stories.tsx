@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Textfield from "@/components/Textfield";
+import TextFieldComponent from "@/components/TextField";
 import { useForm } from "react-hook-form";
 import React from "react";
 import AddAPhoto from "@mui/icons-material/AddAPhoto";
 import { Stack } from "@mui/material";
 import Form from "@/components/Form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../Button/Button";
 
 const meta: Meta<typeof Form> = {
@@ -25,6 +27,12 @@ export type FormData = {
     sixth: string;
 };
 
+const validationSchema = yup
+    .object({
+        second: yup.string().required().label("Second"),
+    })
+    .required();
+
 const DummyComponent = () => {
     const { handleSubmit, setValue, control } = useForm<FormData>({
         defaultValues: {
@@ -35,6 +43,7 @@ const DummyComponent = () => {
             fifth: "",
             sixth: "",
         },
+        resolver: yupResolver(validationSchema),
     });
 
     const onSubmit = data => console.log(data);
@@ -42,37 +51,38 @@ const DummyComponent = () => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
-                <Textfield
+                <TextFieldComponent
                     placeholder="Enter value here"
                     label="with placeholder"
                     control={control}
                     name="first"
                 />
-                <Textfield
+                <TextFieldComponent
                     label="is required"
-                    rules={{ required: true }}
+                    required
                     control={control}
                     name="second"
                 />
-                <Textfield
+                <TextFieldComponent
                     label="with info"
                     info="Info goes here"
                     control={control}
                     name="third"
                 />
-                <Textfield
+                <TextFieldComponent
                     label="with clear button"
                     control={control}
                     name="fourth"
+                    showClearButton
                     setValue={setValue}
                 />
-                <Textfield
+                <TextFieldComponent
                     label="with icon"
                     icon={AddAPhoto}
                     control={control}
                     name="fifth"
                 />
-                <Textfield
+                <TextFieldComponent
                     label="disabled"
                     disabled
                     control={control}

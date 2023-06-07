@@ -12,15 +12,12 @@ import CloseIcon from "@mui/icons-material/Cancel";
 
 import { useTheme } from "@emotion/react";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import {
-    Control,
-    FieldValues,
-    UseControllerProps,
-    useController,
-} from "react-hook-form";
+import { Control, useController } from "react-hook-form";
+import { useMemo } from "react";
 import Label from "../Label";
+import CharacterLimit from "../CharacterLimit";
 
-export interface TextfieldProps {
+export interface TextFieldBaseProps {
     label: string;
     placeholder?: string;
     info?: string;
@@ -28,24 +25,34 @@ export interface TextfieldProps {
     icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
         muiName: string;
     };
+    getValues?: (name: string) => unknown;
     setValue?: (name: string, value: string | number) => void;
     name: string;
-    disabled: boolean;
+    multiline?: boolean;
+    rows?: number;
+    limit?: number;
+    disabled?: boolean;
+    showClearButton?: boolean;
     control: Control;
-    rules?: UseControllerProps<FieldValues, string>;
+    required?: boolean;
 }
 
-const Textfield = (props: TextfieldProps) => {
+const TextFieldBase = (props: TextFieldBaseProps) => {
     const {
         label,
         disabled,
         placeholder,
         info,
         icon,
+        required,
+        limit,
+        rows,
+        multiline,
         control,
         name,
-        rules,
         setValue,
+        getValues,
+        showClearButton,
     } = props;
 
     const theme = useTheme();
@@ -56,18 +63,33 @@ const Textfield = (props: TextfieldProps) => {
     } = useController({
         name,
         control,
-        rules: {
-            ...rules,
-            required: { value: rules.required, message: "This is required" },
-        },
     });
 
-    const showClearButton = typeof setValue === "function";
+    if (showClearButton && setValue === undefined) {
+        throw Error(
+            "You must pass `setValue` if you would like to show the clear button"
+        );
+    }
+    if (limit && getValues === undefined) {
+        throw Error(
+            "You must pass `getValues` if you would like to show the character count"
+        );
+    }
+
+    const characterCount = useMemo(() => {
+        if (typeof getValues !== "function") return 0;
+
+        const field = getValues(fieldProps.name);
+
+        if (!field || typeof field !== "string") return 0;
+
+        return field.length;
+    }, [fieldProps, getValues]);
 
     return (
-        <FormControl fullWidth sx={{ m: 1 }}>
+        <FormControl fullWidth sx={{ m: 0, mb: 2 }}>
             <Label
-                required={rules?.required}
+                required={required}
                 htmlFor="outlined-adornment-amount"
                 label={label}
                 sx={{
@@ -83,9 +105,12 @@ const Textfield = (props: TextfieldProps) => {
                     {info}
                 </FormHelperText>
             )}
+            {limit && <CharacterLimit count={characterCount} limit={limit} />}
             <OutlinedInput
                 size="small"
                 disabled={disabled}
+                multiline={multiline}
+                rows={rows}
                 sx={{ fontSize: 14 }}
                 placeholder={placeholder}
                 {...(icon &&
@@ -102,7 +127,11 @@ const Textfield = (props: TextfieldProps) => {
                             <IconButton
                                 disableRipple
                                 aria-label="clear text"
-                                onClick={() => setValue(fieldProps.name, "")}
+                                onClick={() => {
+                                    if (typeof setValue === "function") {
+                                        setValue(fieldProps.name, "");
+                                    }
+                                }}
                                 edge="end">
                                 <CloseIcon color="disabled" fontSize="small" />
                             </IconButton>
@@ -123,12 +152,18 @@ const Textfield = (props: TextfieldProps) => {
     );
 };
 
-Textfield.defaultProps = {
+TextFieldBase.defaultProps = {
     placeholder: "",
     info: "",
+    disabled: false,
+    required: false,
+    multiline: false,
+    rows: undefined,
     icon: undefined,
-    rules: {},
     setValue: undefined,
+    getValues: undefined,
+    showClearButton: false,
+    limit: undefined,
 };
 
-export default Textfield;
+export default TextFieldBase;

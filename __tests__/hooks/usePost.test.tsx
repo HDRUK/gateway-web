@@ -21,14 +21,14 @@ describe("usePost", () => {
     });
 
     it("should call mutate with correct arguments for updating a single item", async () => {
-        const { result } = renderHook(() => usePost<User>(config.userV1Url));
+        const { result } = renderHook(() => usePost<User>(config.usersV1Url));
         const { current: createFunction } = result;
 
         await createFunction(userV1);
 
         await waitFor(() =>
             expect(mockMutate).toHaveBeenCalledWith(
-                config.userV1Url,
+                config.usersV1Url,
                 expect.any(Function),
                 { optimisticData: userV1, rollbackOnError: true }
             )

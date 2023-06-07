@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import CheckboxComponent from "@/components/Checkbox";
-import { Stack } from "@mui/material";
-import Form from "@/components/Form";
+import TextAreaComponent from "@/components/TextArea";
 import { useForm } from "react-hook-form";
 import React from "react";
+import { Stack } from "@mui/material";
+import Form from "@/components/Form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../Button/Button";
 
 const meta: Meta<typeof Form> = {
     component: Form,
-    title: "Forms/Checkbox",
+    title: "Forms/TextArea",
 };
 
 export default meta;
@@ -19,55 +19,65 @@ type Story = StoryObj<typeof Form>;
 
 export type FormData = {
     first: string;
-    second: boolean;
+    second: string;
     third: string;
     fourth: string;
+    fifth: string;
 };
 
 const validationSchema = yup
     .object({
-        second: yup.boolean().required().oneOf([true]),
+        second: yup.string().required().label("Second"),
     })
     .required();
 
 const DummyComponent = () => {
-    const { handleSubmit, control } = useForm<FormData>({
+    const { handleSubmit, getValues, control } = useForm<FormData>({
         defaultValues: {
             first: "",
-            second: false,
+            second: "",
             third: "",
             fourth: "",
+            fifth: "",
         },
         resolver: yupResolver(validationSchema),
     });
 
-    const onSubmit = (data: unknown) => console.log(data);
+    const onSubmit = data => console.log(data);
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
-                <CheckboxComponent
-                    label="Simple Checkbox"
+                <TextAreaComponent
+                    getValues={getValues}
+                    limit={150}
+                    label="with character limit"
                     control={control}
                     name="first"
                 />
-                <CheckboxComponent
-                    label="Required Checkbox"
+                <TextAreaComponent
+                    label="is required"
                     required
                     control={control}
                     name="second"
                 />
-                <CheckboxComponent
-                    label="Disabled Checkbox"
-                    disabled
+                <TextAreaComponent
+                    label="with info"
+                    info="Info goes here"
                     control={control}
                     name="third"
                 />
-                <CheckboxComponent
-                    label="indeterminate Checkbox"
-                    indeterminate
+                <TextAreaComponent
+                    label="disabled"
+                    disabled
                     control={control}
                     name="fourth"
+                />
+                <TextAreaComponent
+                    label="custom rows"
+                    rows={2}
+                    control={control}
+                    name="fifth"
                 />
                 <Button type="submit">Submit</Button>
             </Stack>
@@ -75,6 +85,6 @@ const DummyComponent = () => {
     );
 };
 
-export const Checkbox: Story = {
+export const TextArea: Story = {
     render: () => <DummyComponent />,
 };
