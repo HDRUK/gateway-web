@@ -14,7 +14,7 @@ const validationSchema = yup
         firstname: yup.string().required().label("First name"),
         lastname: yup.string().required().label("Last name"),
         email: yup.string().email().required().label("Primary email"),
-        sector_id: yup.string().required().label("Sector"),
+        sector_id: yup.number().required().label("Sector"),
         bio: yup.string().max(500).label("Bio"),
     })
     .required();

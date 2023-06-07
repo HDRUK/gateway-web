@@ -6,7 +6,7 @@ const config = {
     authAzureV1Url: `${apiV1}/auth/azure`,
     filtersV1Url: `${apiV1}/filters`,
     sectorsV1Url: `${apiV1}/sectors`,
-    userV1Url: `${apiV1}/user`,
+    usersV1Url: `${apiV1}/users`,
     tagsV1Url: `${apiV1}/tags`,
 };
 

@@ -19,14 +19,14 @@ describe("useDelete", () => {
     });
 
     it("should call mutate with correct arguments for deleting the item", async () => {
-        const { result } = renderHook(() => useDelete(config.userV1Url));
+        const { result } = renderHook(() => useDelete(config.usersV1Url));
         const { current: deleteFunction } = result;
 
         await deleteFunction(userV1.id);
 
         await waitFor(() =>
             expect(mockMutate).toHaveBeenCalledWith(
-                config.userV1Url,
+                config.usersV1Url,
                 expect.any(Function),
                 { optimisticData: {}, rollbackOnError: true }
             )

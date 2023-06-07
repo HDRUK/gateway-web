@@ -6,6 +6,7 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import jwtDecode from "jwt-decode";
 
 import Button from "@/components/Button";
 import {
@@ -21,16 +22,18 @@ import { useMemo } from "react";
 import { Sector } from "@/interfaces/Sector";
 import usePut from "@/hooks/usePut";
 import { User } from "@/interfaces/User";
-import useUser from "@/hooks/useUser";
 
-const Profile = () => {
-    const { user } = useUser();
+interface ProfileProps {
+    user: User;
+}
+
+const Profile = ({ user }: ProfileProps) => {
     const { data: sectors = [] } = useGet<Sector[]>(config.sectorsV1Url);
-    const updateProfile = usePut<User>(config.userV1Url);
+    const updateProfile = usePut<User>(config.usersV1Url);
 
-    const { control, handleSubmit } = useForm<ProfileFormData>({
+    const { control, handleSubmit, getValues } = useForm<ProfileFormData>({
         resolver: yupResolver(profileValidationSchema),
-        defaultValues: profileDefaultValues,
+        defaultValues: { ...profileDefaultValues, ...user },
     });
 
     const submitForm = (formData: ProfileFormData) => {
@@ -85,6 +88,7 @@ const Profile = () => {
                         onSubmit={handleSubmit(submitForm)}>
                         {hydratedFormFields.map(field => (
                             <InputWrapper
+                                getValues={getValues}
                                 key={field.name}
                                 control={control}
                                 {...field}
@@ -105,9 +109,15 @@ const Profile = () => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+    req,
+    locale,
+}) => {
+    const jwt = req.cookies.token;
+    const { user } = jwtDecode(jwt);
     return {
         props: {
+            user,
             ...(await loadServerSideLocales(locale)),
             isProtected: true,
         },

@@ -13,6 +13,7 @@ import CloseIcon from "@mui/icons-material/Cancel";
 import { useTheme } from "@emotion/react";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Control, useController } from "react-hook-form";
+import { useMemo } from "react";
 import Label from "../Label";
 import CharacterLimit from "../CharacterLimit";
 
@@ -24,6 +25,7 @@ export interface TextFieldBaseProps {
     icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
         muiName: string;
     };
+    getValues?: (name: string) => unknown;
     setValue?: (name: string, value: string | number) => void;
     name: string;
     multiline?: boolean;
@@ -49,6 +51,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
         control,
         name,
         setValue,
+        getValues,
         showClearButton,
     } = props;
 
@@ -67,6 +70,21 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
             "You must pass `setValue` if you would like to show the clear button"
         );
     }
+    if (limit && getValues === undefined) {
+        throw Error(
+            "You must pass `getValues` if you would like to show the character count"
+        );
+    }
+
+    const characterCount = useMemo(() => {
+        if (typeof getValues !== "function") return 0;
+
+        const field = getValues(fieldProps.name);
+
+        if (!field || typeof field !== "string") return 0;
+
+        return field.length;
+    }, [fieldProps, getValues]);
 
     return (
         <FormControl fullWidth sx={{ m: 0, mb: 2 }}>
@@ -87,7 +105,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
                     {info}
                 </FormHelperText>
             )}
-            {limit && <CharacterLimit count={0} limit={limit} />}
+            {limit && <CharacterLimit count={characterCount} limit={limit} />}
             <OutlinedInput
                 size="small"
                 disabled={disabled}
@@ -143,6 +161,7 @@ TextFieldBase.defaultProps = {
     rows: undefined,
     icon: undefined,
     setValue: undefined,
+    getValues: undefined,
     showClearButton: false,
     limit: undefined,
 };

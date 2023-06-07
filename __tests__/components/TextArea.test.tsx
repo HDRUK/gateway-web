@@ -5,13 +5,14 @@ import { render, screen } from "../testUtils";
 
 describe("TextArea", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const Component = (props: any) => {
-        const { control } = useForm();
+    const Component = ({ limit, ...props }: any) => {
+        const { control, getValues } = useForm();
         return (
             <TextArea
                 label="This is a label"
                 name="description"
                 control={control}
+                {...(limit && { limit, getValues })}
                 {...props}
             />
         );
