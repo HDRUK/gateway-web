@@ -29,6 +29,7 @@ const customJestConfig = {
         "<rootDir>/__tests__/testUtils.tsx",
         "<rootDir>/node_modules",
         "<rootDir>/mocks",
+        "<rootDir>/src/config",
     ],
 };
 

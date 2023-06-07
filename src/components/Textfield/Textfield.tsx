@@ -30,13 +30,23 @@ export interface TextfieldProps {
     };
     setValue?: (name: string, value: string | number) => void;
     name: string;
+    disabled: boolean;
     control: Control;
     rules?: UseControllerProps<FieldValues, string>;
 }
 
 const Textfield = (props: TextfieldProps) => {
-    const { label, placeholder, info, icon, control, name, rules, setValue } =
-        props;
+    const {
+        label,
+        disabled,
+        placeholder,
+        info,
+        icon,
+        control,
+        name,
+        rules,
+        setValue,
+    } = props;
 
     const theme = useTheme();
     const Icon = icon;
@@ -60,6 +70,9 @@ const Textfield = (props: TextfieldProps) => {
                 required={rules?.required}
                 htmlFor="outlined-adornment-amount"
                 label={label}
+                sx={{
+                    ...(disabled && { color: theme.palette.colors.grey600 }),
+                }}
             />
             {info && (
                 <FormHelperText
@@ -72,6 +85,7 @@ const Textfield = (props: TextfieldProps) => {
             )}
             <OutlinedInput
                 size="small"
+                disabled={disabled}
                 sx={{ fontSize: 14 }}
                 placeholder={placeholder}
                 {...(icon &&

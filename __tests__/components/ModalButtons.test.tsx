@@ -23,6 +23,26 @@ describe("ModalButtons", () => {
             expect(cancelFn).toHaveBeenCalled();
         });
     });
+    it("should submit form if confirmType set to 'submit'", async () => {
+        const submitFn = jest.fn(e => e.preventDefault());
+
+        const FormComponent = () => {
+            return (
+                <form onSubmit={submitFn}>
+                    <ModalButtons confirmType="submit" />
+                </form>
+            );
+        };
+
+        render(<FormComponent />);
+
+        fireEvent.click(screen.getByText("Confirm"));
+
+        await waitFor(() => {
+            expect(submitFn).toHaveBeenCalled();
+        });
+    });
+
     it("should call custom confirm function", async () => {
         const confirmFn = jest.fn();
         render(<ModalButtons onSuccess={confirmFn} />);
