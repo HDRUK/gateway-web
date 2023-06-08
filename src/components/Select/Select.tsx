@@ -101,7 +101,8 @@ const Select = (props: SelectProps) => {
                 renderValue={selected =>
                     renderValue(selected, options, !!multiple)
                 }
-                {...fieldProps}>
+                {...fieldProps}
+                value={fieldProps.value ?? ""}>
                 {options.map(option => (
                     <MenuItem
                         color="secondary"

@@ -7,12 +7,15 @@ import TextField from "../TextField";
 import { TextFieldBaseProps } from "../TextFieldBase/TextFieldBase";
 import Checkbox from "../Checkbox";
 import { CheckboxProps } from "../Checkbox/Checkbox";
+import CheckboxRow from "../CheckboxRow";
+import { CheckboxRowProps } from "../CheckboxRow/CheckboxRow";
 
-type ComponentTypes = "textField" | "select" | "textArea";
+type ComponentTypes = "checkbox" | "textField" | "select" | "textArea";
 type InputType =
     | TextFieldBaseProps
     | SelectProps
     | TextAreaProps
+    | CheckboxRowProps
     | CheckboxProps;
 
 interface InputWrapperProps {
@@ -23,6 +26,7 @@ type CombinedProps = InputType & InputWrapperProps;
 
 const InputWrapper = ({ component, ...props }: CombinedProps) => {
     const inputs = {
+        checkboxRow: CheckboxRow,
         checkbox: Checkbox,
         textField: TextField,
         select: Select,

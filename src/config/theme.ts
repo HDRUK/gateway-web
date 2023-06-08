@@ -180,6 +180,7 @@ const theme = createTheme({
                     "&.MuiCheckbox-colorError": {
                         color: palette.error.main,
                     },
+                    "& .MuiSvgIcon-root": { fontSize: 32 },
                 },
             },
         },

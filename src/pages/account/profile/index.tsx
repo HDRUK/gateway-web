@@ -10,7 +10,6 @@ import jwtDecode from "jwt-decode";
 
 import Button from "@/components/Button";
 import {
-    ProfileFormData,
     profileDefaultValues,
     profileFormFields,
     profileValidationSchema,
@@ -22,6 +21,7 @@ import { useMemo } from "react";
 import { Sector } from "@/interfaces/Sector";
 import usePut from "@/hooks/usePut";
 import { User } from "@/interfaces/User";
+import ProfileKeepingUpdated from "@/modules/ProfileKeepingUpdated";
 
 interface ProfileProps {
     user: User;
@@ -31,12 +31,12 @@ const Profile = ({ user }: ProfileProps) => {
     const { data: sectors = [] } = useGet<Sector[]>(config.sectorsV1Url);
     const updateProfile = usePut<User>(config.usersV1Url);
 
-    const { control, handleSubmit, getValues } = useForm<ProfileFormData>({
+    const { control, handleSubmit, getValues } = useForm<User>({
         resolver: yupResolver(profileValidationSchema),
         defaultValues: { ...profileDefaultValues, ...user },
     });
 
-    const submitForm = (formData: ProfileFormData) => {
+    const submitForm = (formData: User) => {
         updateProfile({ ...user, ...formData });
     };
 
@@ -94,6 +94,8 @@ const Profile = ({ user }: ProfileProps) => {
                                 {...field}
                             />
                         ))}
+
+                        <ProfileKeepingUpdated control={control} />
                         <Box
                             sx={{
                                 p: 0,
