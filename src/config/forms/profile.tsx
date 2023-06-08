@@ -1,13 +1,20 @@
 import * as yup from "yup";
 
-export type ProfileFormData = {
-    firstname: string;
-    lastname: string;
-    email: string;
-    sector_id: string;
+const defaultValues = {
+    firstname: "",
+    lastname: "",
+    email: "",
+    sector_id: "",
+    provider: "",
+    contact_news: false,
+    contact_feedback: false,
+    organisation: "",
+    bio: "",
+    domain: "",
+    link: "",
+    orcid: "",
+    terms: false,
 };
-
-const defaultValues = { firstname: "", lastname: "", email: "", sector_id: "" };
 
 const validationSchema = yup
     .object({
@@ -16,6 +23,9 @@ const validationSchema = yup
         email: yup.string().email().required().label("Primary email"),
         sector_id: yup.number().required().label("Sector"),
         bio: yup.string().max(500).label("Bio"),
+        terms: yup.boolean().required().oneOf([true]),
+        contact_news: yup.boolean(),
+        contact_feedback: yup.boolean(),
     })
     .required();
 
@@ -77,9 +87,31 @@ const formFields = [
         name: "orcid",
         component: "textField",
     },
+    {
+        label: "I agree to the HDRUK Terms and Conditions",
+        name: "terms",
+        component: "checkbox",
+        required: true,
+    },
+];
+
+const contactFormFields = [
+    {
+        title: "Feedback",
+        label: "I am happy to be contacted to share and give feedback on my experience with the Gateway",
+        name: "contact_feedback",
+        component: "checkboxRow",
+    },
+    {
+        title: "News",
+        label: "I want to receive news, updates and curated marketing from the Gateway",
+        name: "contact_news",
+        component: "checkboxRow",
+    },
 ];
 
 export {
+    contactFormFields as profileContactFormFields,
     defaultValues as profileDefaultValues,
     validationSchema as profileValidationSchema,
     formFields as profileFormFields,

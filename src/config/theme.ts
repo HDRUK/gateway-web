@@ -176,18 +176,24 @@ const theme = createTheme({
         MuiCheckbox: {
             styleOverrides: {
                 root: {
+                    color: palette.colors.grey400,
                     "&.MuiCheckbox-colorError": {
                         color: palette.error.main,
                     },
+                    "& .MuiSvgIcon-root": { fontSize: 32 },
                 },
             },
         },
         MuiFormControlLabel: {
             styleOverrides: {
                 root: {
+                    fontSize: 14,
                     "&.Mui-error": {
                         color: palette.error.main,
                     },
+                },
+                asterisk: {
+                    color: palette.error.main,
                 },
             },
         },

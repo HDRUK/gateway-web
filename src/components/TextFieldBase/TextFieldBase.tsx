@@ -141,6 +141,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
                 inputRef={ref}
                 error={!!error}
                 {...fieldProps}
+                value={fieldProps.value ?? ""}
             />
 
             {error && (
