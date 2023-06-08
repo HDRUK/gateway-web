@@ -3,6 +3,9 @@
 import MuiCheckbox from "@mui/material/Checkbox";
 import { FormControl, FormControlLabel } from "@mui/material";
 import { Control, useController } from "react-hook-form";
+import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
+import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
+import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
 
 export interface CheckboxProps {
     label: string;
@@ -29,7 +32,11 @@ const Checkbox = (props: CheckboxProps) => {
                         color={error !== undefined ? "error" : "secondary"}
                         disableRipple
                         size="medium"
+                        icon={<CheckBoxOutlineBlankSharpIcon />}
+                        checkedIcon={<CheckBoxSharpIcon />}
+                        indeterminateIcon={<IndeterminateCheckBoxSharpIcon />}
                         inputRef={ref}
+                        sx={{ fontSize: 14 }}
                         {...rest}
                         {...fieldProps}
                     />

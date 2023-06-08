@@ -16,6 +16,7 @@ const validationSchema = yup
         email: yup.string().email().required().label("Primary email"),
         sector_id: yup.number().required().label("Sector"),
         bio: yup.string().max(500).label("Bio"),
+        terms: yup.boolean().required().oneOf([true]),
     })
     .required();
 
@@ -76,6 +77,12 @@ const formFields = [
         label: "ORCID",
         name: "orcid",
         component: "textField",
+    },
+    {
+        label: "I agree to the HDRUK Terms and Conditions",
+        name: "terms",
+        component: "checkbox",
+        required: true,
     },
 ];
 
