@@ -6,7 +6,7 @@ exports[`CheckboxRow should render component 1`] = `
     class="MuiBox-root mui-style-dikix3"
   >
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-hmndj9-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 mui-style-suwqkk-MuiTypography-root"
     >
       Name
     </p>
@@ -14,10 +14,10 @@ exports[`CheckboxRow should render component 1`] = `
       class="MuiFormControl-root MuiFormControl-fullWidth mui-style-2dhluk-MuiFormControl-root"
     >
       <label
-        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-17dmab4-MuiFormControlLabel-root"
+        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-k156ro-MuiFormControlLabel-root"
       >
         <span
-          class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-root MuiCheckbox-colorSecondary mui-style-1k6n0jr-MuiButtonBase-root-MuiCheckbox-root"
+          class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-root MuiCheckbox-colorSecondary mui-style-prlcy8-MuiButtonBase-root-MuiCheckbox-root"
         >
           <input
             class="PrivateSwitchBase-input mui-style-1m9pwf3"
@@ -38,7 +38,7 @@ exports[`CheckboxRow should render component 1`] = `
           </svg>
         </span>
         <span
-          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-ahj2mt-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-qcxu8i-MuiTypography-root"
         >
           checkbox label
         </span>

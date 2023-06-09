@@ -54,7 +54,7 @@ exports[`Layout should render component 1`] = `
           class="MuiBox-root mui-style-42l0n5-HeaderNav"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 mui-style-1dit9pu-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-t7csq7-MuiTypography-root"
           >
             Explore
             <svg
@@ -70,7 +70,7 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <p
-            class="MuiTypography-root MuiTypography-body1 mui-style-1dit9pu-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-t7csq7-MuiTypography-root"
           >
             Help
             <svg
@@ -86,7 +86,7 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <p
-            class="MuiTypography-root MuiTypography-body1 mui-style-1dit9pu-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-t7csq7-MuiTypography-root"
           >
             Usage data
             <svg
@@ -102,7 +102,7 @@ exports[`Layout should render component 1`] = `
             </svg>
           </p>
           <p
-            class="MuiTypography-root MuiTypography-body1 mui-style-1dit9pu-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 mui-style-t7csq7-MuiTypography-root"
           >
             About us
             <svg
