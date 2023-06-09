@@ -10,7 +10,13 @@ import { CheckboxProps } from "../Checkbox/Checkbox";
 import CheckboxRow from "../CheckboxRow";
 import { CheckboxRowProps } from "../CheckboxRow/CheckboxRow";
 
-type ComponentTypes = "checkbox" | "textField" | "select" | "textArea";
+type ComponentTypes =
+    | "CheckboxRow"
+    | "Checkbox"
+    | "TextField"
+    | "Select"
+    | "TextArea";
+
 type InputType =
     | TextFieldBaseProps
     | SelectProps
@@ -25,12 +31,17 @@ interface InputWrapperProps {
 type CombinedProps = InputType & InputWrapperProps;
 
 const InputWrapper = ({ component, ...props }: CombinedProps) => {
+    if (props.customComponent) {
+        const CustomComponent = props.customComponent;
+        return <CustomComponent {...props} />;
+    }
+
     const inputs = {
-        checkboxRow: CheckboxRow,
-        checkbox: Checkbox,
-        textField: TextField,
-        select: Select,
-        textArea: TextArea,
+        CheckboxRow,
+        Checkbox,
+        TextField,
+        Select,
+        TextArea,
     };
 
     const Component = inputs[component as ComponentTypes];

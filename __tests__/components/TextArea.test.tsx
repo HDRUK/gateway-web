@@ -41,4 +41,22 @@ describe("TextArea", () => {
         expect(screen.getByText("500 character limit")).toBeInTheDocument();
         expect(screen.getByText("(500/500)")).toBeInTheDocument();
     });
+    it("should throw Error if `limit` set but not provided `getValues", async () => {
+        const ComponentToThrow = () => {
+            const { control } = useForm();
+            return (
+                <TextArea
+                    label="This is a label"
+                    name="description"
+                    control={control}
+                    limit={20}
+                />
+            );
+        };
+        expect(() => {
+            render(<ComponentToThrow />);
+        }).toThrowError(
+            "You must pass `getValues` if you would like to show the character count"
+        );
+    });
 });

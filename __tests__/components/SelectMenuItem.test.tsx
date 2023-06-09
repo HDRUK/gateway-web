@@ -30,4 +30,11 @@ describe("SelectedMenuItem", () => {
         expect(screen.getByTestId("AccountCircleIcon")).toBeInTheDocument();
         expect(wrapper.container).toMatchSnapshot();
     });
+    it("should render invertListItem component ", async () => {
+        const wrapper = render(
+            <SelectMenuItem invertListItem label="Menu label" />
+        );
+
+        expect(wrapper.container).toMatchSnapshot();
+    });
 });

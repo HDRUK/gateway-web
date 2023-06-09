@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 import {
     profileDefaultValues,
     profileFormFields,
+    profileContactFormFields,
     profileValidationSchema,
 } from "@/config/forms/profile";
 import InputWrapper from "@/components/InputWrapper";
@@ -21,7 +22,7 @@ import { useMemo } from "react";
 import { Sector } from "@/interfaces/Sector";
 import usePut from "@/hooks/usePut";
 import { User } from "@/interfaces/User";
-import ProfileKeepingUpdated from "@/modules/ProfileKeepingUpdated";
+import KeepingUpdated from "@/modules/profile/KeepingUpdated";
 
 interface ProfileProps {
     user: User;
@@ -95,7 +96,10 @@ const Profile = ({ user }: ProfileProps) => {
                             />
                         ))}
 
-                        <ProfileKeepingUpdated control={control} />
+                        <KeepingUpdated
+                            fields={profileContactFormFields}
+                            control={control}
+                        />
                         <Box
                             sx={{
                                 p: 0,

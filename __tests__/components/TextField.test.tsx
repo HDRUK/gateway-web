@@ -39,4 +39,11 @@ describe("TextField", () => {
 
         expect(wrapper.container).toMatchSnapshot();
     });
+    it("should throw Error if `showClearButton` set but not provided `setValue`", async () => {
+        expect(() => {
+            render(<Component showClearButton />);
+        }).toThrowError(
+            "You must pass `setValue` if you would like to show the clear button"
+        );
+    });
 });

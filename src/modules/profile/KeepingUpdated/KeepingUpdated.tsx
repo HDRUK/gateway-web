@@ -1,14 +1,15 @@
 import Box from "@/components/Box";
-import CheckboxRow from "@/components/CheckboxRow/CheckboxRow";
-import { profileContactFormFields } from "@/config/forms/profile";
+import CheckboxRow from "@/components/CheckboxRow";
 import { Divider, Typography } from "@mui/material";
 import { Fragment } from "react";
+import { Control } from "react-hook-form";
 
-interface ProfileKeepingUpdatedProps {
-    control: string;
+interface KeepingUpdatedProps {
+    control: Control;
+    fields: { title: string; label: string; name: string; component: string }[];
 }
 
-const ProfileKeepingUpdated = ({ control }: ProfileKeepingUpdatedProps) => {
+const KeepingUpdated = ({ control, fields }: KeepingUpdatedProps) => {
     return (
         <Box sx={{ padding: 0 }}>
             <Divider />
@@ -20,7 +21,7 @@ const ProfileKeepingUpdated = ({ control }: ProfileKeepingUpdatedProps) => {
                 }}>
                 Keeping you updated
             </Typography>
-            {profileContactFormFields.map(field => (
+            {fields.map(field => (
                 <Fragment key={field.name}>
                     <Divider />
                     <CheckboxRow control={control} {...field} />
@@ -39,4 +40,4 @@ const ProfileKeepingUpdated = ({ control }: ProfileKeepingUpdatedProps) => {
     );
 };
 
-export default ProfileKeepingUpdated;
+export default KeepingUpdated;
