@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 import {
     profileDefaultValues,
     profileFormFields,
+    profileContactFormFields,
     profileValidationSchema,
 } from "@/config/forms/profile";
 import InputWrapper from "@/components/InputWrapper";
@@ -95,7 +96,10 @@ const Profile = ({ user }: ProfileProps) => {
                             />
                         ))}
 
-                        <KeepingUpdated control={control} />
+                        <KeepingUpdated
+                            fields={profileContactFormFields}
+                            control={control}
+                        />
                         <Box
                             sx={{
                                 p: 0,

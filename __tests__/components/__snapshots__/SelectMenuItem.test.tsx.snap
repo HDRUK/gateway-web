@@ -73,3 +73,17 @@ exports[`SelectedMenuItem should render component with right position icon 1`] =
   </div>
 </div>
 `;
+
+exports[`SelectedMenuItem should render invertListItem component  1`] = `
+<div>
+  <div
+    class="MuiListItemText-root mui-style-tlelie-MuiListItemText-root"
+  >
+    <span
+      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-12rcprn-MuiTypography-root"
+    >
+      Menu label
+    </span>
+  </div>
+</div>
+`;
