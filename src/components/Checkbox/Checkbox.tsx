@@ -43,7 +43,7 @@ const Checkbox = (props: CheckboxProps) => {
                         checkedIcon={<CheckBoxSharpIcon />}
                         indeterminateIcon={<IndeterminateCheckBoxSharpIcon />}
                         inputRef={ref}
-                        sx={{ fontSize: 14, ...checkboxSx }}
+                        sx={{ ...checkboxSx }}
                         {...rest}
                         {...fieldProps}
                     />

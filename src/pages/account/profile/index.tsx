@@ -21,7 +21,7 @@ import { useMemo } from "react";
 import { Sector } from "@/interfaces/Sector";
 import usePut from "@/hooks/usePut";
 import { User } from "@/interfaces/User";
-import ProfileKeepingUpdated from "@/modules/ProfileKeepingUpdated";
+import KeepingUpdated from "@/modules/profile/KeepingUpdated";
 
 interface ProfileProps {
     user: User;
@@ -95,7 +95,7 @@ const Profile = ({ user }: ProfileProps) => {
                             />
                         ))}
 
-                        <ProfileKeepingUpdated control={control} />
+                        <KeepingUpdated control={control} />
                         <Box
                             sx={{
                                 p: 0,

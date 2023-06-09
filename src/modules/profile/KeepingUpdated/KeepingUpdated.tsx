@@ -4,11 +4,11 @@ import { profileContactFormFields } from "@/config/forms/profile";
 import { Divider, Typography } from "@mui/material";
 import { Fragment } from "react";
 
-interface ProfileKeepingUpdatedProps {
+interface KeepingUpdatedProps {
     control: string;
 }
 
-const ProfileKeepingUpdated = ({ control }: ProfileKeepingUpdatedProps) => {
+const KeepingUpdated = ({ control }: KeepingUpdatedProps) => {
     return (
         <Box sx={{ padding: 0 }}>
             <Divider />
@@ -39,4 +39,4 @@ const ProfileKeepingUpdated = ({ control }: ProfileKeepingUpdatedProps) => {
     );
 };
 
-export default ProfileKeepingUpdated;
+export default KeepingUpdated;

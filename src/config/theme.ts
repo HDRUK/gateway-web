@@ -22,6 +22,7 @@ declare module "@mui/material/styles" {
 
 const colors = {
     white: "#fff",
+    orange: "#FE9A2D",
     green400: "#3DB28C",
     grey: "#F6F7F8",
     grey100: "#F6F7F8",
@@ -58,6 +59,11 @@ const palette = {
 };
 
 const theme = createTheme({
+    typography: {
+        body1: {
+            fontSize: 14,
+        },
+    },
     breakpoints: {
         values: {
             mobile: 0,
@@ -191,6 +197,9 @@ const theme = createTheme({
                     "&.Mui-error": {
                         color: palette.error.main,
                     },
+                },
+                label: {
+                    fontSize: 14,
                 },
                 asterisk: {
                     color: palette.error.main,
