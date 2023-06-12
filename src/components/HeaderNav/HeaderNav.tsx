@@ -8,35 +8,32 @@ import Button from "@/components/Button";
 import SignInDialog from "@/modules/dialogs/SignInDialog";
 import { Box, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Loading from "../Loading";
+import AccountNavigation from "@/modules/AccountNavigation";
+import { useState } from "react";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useTheme } from "@emotion/react";
 import * as styles from "./HeaderNav.styles";
-
-interface LinkItem {
-    label: string;
-    href: string;
-}
+import InitialsBadge from "../InitialsBadge";
 
 function HeaderNav() {
     const { showDialog } = useDialog();
+    const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
+        null
+    );
 
+    const theme = useTheme();
     const { t } = useTranslation("components");
 
-    const { isLoggedIn, isLoading } = useUser();
-
-    const loggedInLinks: LinkItem[] = [
-        {
-            label: t("HeaderNav.labels.myAccount"),
-            href: "/account",
-        },
-    ];
+    const { isLoggedIn, user } = useUser();
+    const handleOpenNav = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElement(event.currentTarget);
+    };
 
     const navItems = ["Explore", "Help", "Usage data", "About us"];
     const navLinks = [
         { label: "News", href: "/news" },
         { label: "Community", href: "/community" },
     ];
-
-    if (isLoading) return <Loading />;
 
     return (
         <>
@@ -59,22 +56,27 @@ function HeaderNav() {
                 ))}
             </Box>
             {isLoggedIn && (
-                <ul
-                    style={{
-                        display: "inline-block",
-                        listStyle: "none",
-                    }}>
-                    {loggedInLinks.map(link => (
-                        <li
-                            key={link.href}
-                            style={{
-                                display: "inline-block",
-                                paddingLeft: "10px",
-                            }}>
-                            <Link href={link.href} label={link.label} />
-                        </li>
-                    ))}
-                </ul>
+                <>
+                    <Box sx={{ display: "flex" }}>
+                        <InitialsBadge fullName={user.name} />
+                        <Button
+                            disableRipple
+                            sx={{
+                                marginLeft: "5px",
+                                color: theme.palette.colors.grey800,
+                            }}
+                            variant="text"
+                            onClick={handleOpenNav}>
+                            {user?.firstname}
+                            <ArrowDropDownIcon color="primary" />
+                        </Button>
+                    </Box>
+
+                    <AccountNavigation
+                        anchorElement={anchorElement}
+                        onCloseMenu={() => setAnchorElement(null)}
+                    />
+                </>
             )}
             {!isLoggedIn && (
                 <Button

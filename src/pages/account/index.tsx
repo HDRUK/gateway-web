@@ -11,6 +11,7 @@ import usePut from "@/hooks/usePut";
 import useDelete from "@/hooks/useDelete";
 import BoxContainer from "@/components/BoxContainer";
 import Box from "@/components/Box";
+import { getUserFromToken } from "@/utils/general";
 
 const localeKey = "filter";
 const itemName = "Filter";
@@ -67,9 +68,10 @@ function Account() {
                     },
                 }}>
                 <Box
-                    sx={{ gridColumn: { tablet: "span 2", laptop: "span 1" } }}>
-                    <h2>Menu</h2>
-                </Box>
+                    sx={{
+                        gridColumn: { tablet: "span 2", laptop: "span 1" },
+                    }}
+                />
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <h2 style={{ marginBottom: "10px" }}>Filters</h2>
@@ -110,9 +112,13 @@ function Account() {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+    locale,
+    req,
+}) => {
     return {
         props: {
+            user: getUserFromToken(req.cookies),
             ...(await loadServerSideLocales(locale)),
             isProtected: true,
         },

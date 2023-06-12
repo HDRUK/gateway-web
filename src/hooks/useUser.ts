@@ -1,26 +1,18 @@
-import config from "@/config";
-import { Error } from "@/interfaces/Error";
 import { User } from "@/interfaces/User";
-import useGet from "./useGet";
+import { useContext } from "react";
+import { GlobalAuthContext } from "@/providers/Auth/AuthProvider";
 
 interface UserResponse {
     user: User | undefined;
-    error: Error | undefined;
-    isLoading: boolean;
     isLoggedIn: boolean;
 }
 
 const useUser = (): UserResponse => {
-    const { data, error, isLoading } = useGet<User>(
-        config.filtersV1Url, // todo: replace with user endpoint once implemented
-        { itemName: "User" }
-    );
+    const { user, isLoggedIn } = useContext(GlobalAuthContext);
 
     return {
-        error,
-        isLoading,
-        isLoggedIn: !!data && !error,
-        user: data,
+        isLoggedIn,
+        user,
     };
 };
 

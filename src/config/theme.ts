@@ -206,6 +206,14 @@ const theme = createTheme({
                 },
             },
         },
+        MuiMenu: {
+            styleOverrides: {
+                paper: {
+                    borderRadius: 0,
+                    boxShadow: "1px 1px 3px 0 rgba(0,0,0,.09)",
+                },
+            },
+        },
     },
 });
 

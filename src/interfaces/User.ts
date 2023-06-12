@@ -2,6 +2,7 @@ interface User {
     id: number;
     firstname: string;
     lastname: string;
+    name: string;
     email: string;
     sector_id: string;
     organisation: string;

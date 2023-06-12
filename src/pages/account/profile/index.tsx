@@ -6,7 +6,6 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import jwtDecode from "jwt-decode";
 
 import Button from "@/components/Button";
 import {
@@ -23,6 +22,7 @@ import { Sector } from "@/interfaces/Sector";
 import usePut from "@/hooks/usePut";
 import { User } from "@/interfaces/User";
 import KeepingUpdated from "@/modules/profile/KeepingUpdated";
+import { getUserFromToken } from "@/utils/general";
 
 interface ProfileProps {
     user: User;
@@ -73,9 +73,10 @@ const Profile = ({ user }: ProfileProps) => {
                     },
                 }}>
                 <Box
-                    sx={{ gridColumn: { tablet: "span 2", laptop: "span 1" } }}>
-                    <h2>Menu</h2>
-                </Box>
+                    sx={{
+                        gridColumn: { tablet: "span 2", laptop: "span 1" },
+                    }}
+                />
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <h2 style={{ marginBottom: "10px" }}>Your profile</h2>
@@ -119,11 +120,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     req,
     locale,
 }) => {
-    const jwt = req.cookies.token;
-    const { user } = jwtDecode(jwt);
     return {
         props: {
-            user,
+            user: getUserFromToken(req.cookies),
             ...(await loadServerSideLocales(locale)),
             isProtected: true,
         },
