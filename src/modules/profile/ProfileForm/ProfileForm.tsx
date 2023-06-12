@@ -19,6 +19,7 @@ import usePut from "@/hooks/usePut";
 import { User } from "@/interfaces/User";
 import KeepingUpdated from "@/modules/profile/KeepingUpdated";
 import useUser from "@/hooks/useUser";
+import Loading from "@/components/Loading";
 
 const ProfileForm = () => {
     const { user } = useUser();
@@ -63,7 +64,7 @@ const ProfileForm = () => {
         reset(profile);
     }, [reset, profile]);
 
-    if (isLoading) return <div>dsfdsf</div>;
+    if (isLoading) return <Loading />;
 
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
