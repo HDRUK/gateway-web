@@ -4,7 +4,7 @@ import Link from "@/components/Link";
 import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, IconButton, Toolbar } from "@mui/material";
-import HeaderNav from "../HeaderNav/HeaderNav";
+import HeaderNav from "@/modules/HeaderNav";
 import * as styles from "./Header.styles";
 
 function Header() {

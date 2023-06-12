@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderNav from "@/components/HeaderNav";
+import HeaderNav from "@/modules/HeaderNav";
 import { server } from "@/mocks/server";
 import { getFiltersV1 } from "@/mocks/handlers/filters";
 import { fireEvent, render, screen, waitFor } from "../testUtils";

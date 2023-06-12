@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import useUser from "@/hooks/useUser";
-import ProtectedRoute from "../ProtectedRoute";
-import Loading from "../Loading";
+import Loading from "@/components/Loading";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 type AuthProps = {
     children: ReactElement;

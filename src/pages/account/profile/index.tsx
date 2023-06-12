@@ -1,63 +1,12 @@
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Form from "@/components/Form";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-
-import Button from "@/components/Button";
-import {
-    profileDefaultValues,
-    profileFormFields,
-    profileContactFormFields,
-    profileValidationSchema,
-} from "@/config/forms/profile";
-import InputWrapper from "@/components/InputWrapper";
-import useGet from "@/hooks/useGet";
-import config from "@/config";
-import { useMemo } from "react";
-import { Sector } from "@/interfaces/Sector";
-import usePut from "@/hooks/usePut";
-import { User } from "@/interfaces/User";
-import KeepingUpdated from "@/modules/profile/KeepingUpdated";
 import { getUserFromToken } from "@/utils/general";
+import ProfileForm from "@/modules/profile/ProfileForm";
 
-interface ProfileProps {
-    user: User;
-}
-
-const Profile = ({ user }: ProfileProps) => {
-    const { data: sectors = [] } = useGet<Sector[]>(config.sectorsV1Url);
-    const updateProfile = usePut<User>(config.usersV1Url);
-
-    const { control, handleSubmit, getValues } = useForm<User>({
-        resolver: yupResolver(profileValidationSchema),
-        defaultValues: { ...profileDefaultValues, ...user },
-    });
-
-    const submitForm = (formData: User) => {
-        updateProfile({ ...user, ...formData });
-    };
-
-    const hydratedFormFields = useMemo(
-        () =>
-            profileFormFields.map(field => {
-                if (field.name === "sector_id") {
-                    return {
-                        ...field,
-                        options: sectors.map(sector => ({
-                            value: sector.id,
-                            label: sector.name,
-                        })),
-                    };
-                }
-                return field;
-            }),
-        [sectors]
-    );
-
+const Profile = () => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My account - Profile" />
@@ -84,31 +33,7 @@ const Profile = ({ user }: ProfileProps) => {
                         Your details are used when you make a data access
                         request application.
                     </p>
-                    <Form
-                        sx={{ maxWidth: 1000 }}
-                        onSubmit={handleSubmit(submitForm)}>
-                        {hydratedFormFields.map(field => (
-                            <InputWrapper
-                                getValues={getValues}
-                                key={field.name}
-                                control={control}
-                                {...field}
-                            />
-                        ))}
-
-                        <KeepingUpdated
-                            fields={profileContactFormFields}
-                            control={control}
-                        />
-                        <Box
-                            sx={{
-                                p: 0,
-                                display: "flex",
-                                justifyContent: "end",
-                            }}>
-                            <Button type="submit">Save changes</Button>
-                        </Box>
-                    </Form>
+                    <ProfileForm />
                 </Box>
             </BoxContainer>
         </>
