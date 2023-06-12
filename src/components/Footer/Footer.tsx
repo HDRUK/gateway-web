@@ -58,11 +58,9 @@ const Footer = () => {
                 <ul css={styles.list}>
                     {links.map(link => (
                         <li key={link.href}>
-                            <Link
-                                css={styles.link}
-                                href={link.href}
-                                label={link.label}
-                            />
+                            <Link css={styles.link} href={link.href}>
+                                {link.label}
+                            </Link>
                         </li>
                     ))}
                 </ul>

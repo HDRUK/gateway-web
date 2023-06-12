@@ -50,9 +50,9 @@ function HeaderNav() {
                     <Link
                         key={item.label}
                         href={item.href}
-                        label={item.label}
-                        css={styles.navLink}
-                    />
+                        css={styles.navLink}>
+                        {item.label}
+                    </Link>
                 ))}
             </Box>
             {isLoggedIn && (

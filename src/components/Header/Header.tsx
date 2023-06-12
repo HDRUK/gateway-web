@@ -19,19 +19,16 @@ function Header() {
                         css={styles.menuIcon}>
                         <MenuIcon color="primary" />
                     </IconButton>
-                    <Link
-                        href="/"
-                        label={
-                            <Image
-                                src="/images/logos/gateway-main.svg"
-                                priority
-                                width={110}
-                                height={50}
-                                alt="Gateway home logo"
-                            />
-                        }
-                        css={styles.homeLogo}
-                    />
+                    <Link href="/" css={styles.homeLogo}>
+                        {" "}
+                        <Image
+                            src="/images/logos/gateway-main.svg"
+                            priority
+                            width={110}
+                            height={50}
+                            alt="Gateway home logo"
+                        />
+                    </Link>
                 </div>
 
                 <HeaderNav />

@@ -53,16 +53,15 @@ const AccountNavigation = ({
             onClose={handleCloseUserMenu}
             open={Boolean(anchorElement)}>
             {links.map(link => (
-                <MenuItem
-                    sx={{ width: 220 }}
-                    key={link.label}
-                    onClick={handleCloseUserMenu}>
-                    <Link
-                        label={link.label}
-                        underline="hover"
-                        href={link.href}
-                    />
-                </MenuItem>
+                <Link underline="hover" href={link.href}>
+                    <MenuItem
+                        sx={{ width: 220 }}
+                        key={link.label}
+                        LinkComponent={Link}
+                        onClick={handleCloseUserMenu}>
+                        {link.label}
+                    </MenuItem>
+                </Link>
             ))}
         </Menu>
     );
