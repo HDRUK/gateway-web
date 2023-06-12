@@ -81,9 +81,8 @@ const Profile = ({ user }: ProfileProps) => {
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <h2 style={{ marginBottom: "10px" }}>Your profile</h2>
                     <p>
-                        You can control what appears on your profile using the
-                        icons. Your details are also used when you make a data
-                        access request application.
+                        Your details are used when you make a data access
+                        request application.
                     </p>
                     <Form
                         sx={{ maxWidth: 1000 }}
