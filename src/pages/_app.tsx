@@ -9,7 +9,7 @@ import { appWithTranslation } from "next-i18next";
 import { SnackbarProvider } from "notistack";
 import { ErrorBoundary } from "react-error-boundary";
 import theme from "@/config/theme";
-import Auth from "@/components/Auth";
+import AuthRouteCheck from "@/components/AuthRouteCheck";
 import Layout from "@/components/Layout";
 import "@/styles/global.css";
 import { ApiError } from "@/components/CustomNotifications";
@@ -56,9 +56,9 @@ const App = ({
                                             apiError: ApiError,
                                         }}
                                     />
-                                    <Auth isProtected={isProtected}>
+                                    <AuthRouteCheck isProtected={isProtected}>
                                         <Component {...pageProps} />
-                                    </Auth>
+                                    </AuthRouteCheck>
                                 </ErrorBoundary>
                             </Layout>
                         </AuthProvider>

@@ -7,8 +7,8 @@ interface AuthToken {
 
 const getUserFromToken = (
     cookies: Partial<{ [key: string]: string }>
-): undefined | User => {
-    if (!cookies?.token) return undefined;
+): null | User => {
+    if (!cookies?.token) return null;
     const { user } = jwtDecode<AuthToken>(cookies.token);
     return user;
 };

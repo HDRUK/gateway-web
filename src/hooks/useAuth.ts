@@ -2,12 +2,12 @@ import { User } from "@/interfaces/User";
 import { useContext } from "react";
 import { GlobalAuthContext } from "@/providers/Auth/AuthProvider";
 
-interface UserResponse {
+interface AuthResponse {
     user: User | undefined;
     isLoggedIn: boolean;
 }
 
-const useUser = (): UserResponse => {
+const useAuth = (): AuthResponse => {
     const { user, isLoggedIn } = useContext(GlobalAuthContext);
 
     return {
@@ -16,4 +16,4 @@ const useUser = (): UserResponse => {
     };
 };
 
-export default useUser;
+export default useAuth;

@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-import useUser from "@/hooks/useUser";
 import { useTranslation } from "next-i18next";
 import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
@@ -11,7 +10,7 @@ import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTheme } from "@emotion/react";
 import InitialsBadge from "@/components/InitialsBadge";
-import Loading from "@/components/Loading";
+import useAuth from "@/hooks/useAuth";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();
@@ -22,18 +21,17 @@ const AccountNavWrapper = () => {
     const theme = useTheme();
     const { t } = useTranslation("components");
 
-    const { isLoggedIn, user, isLoading } = useUser();
+    const { isLoggedIn, user } = useAuth();
+
     const handleOpenNav = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElement(event.currentTarget);
     };
-
-    if (isLoading) return <Loading />;
 
     if (isLoggedIn) {
         return (
             <>
                 <Box sx={{ display: "flex" }}>
-                    <InitialsBadge fullName={user.name} />
+                    <InitialsBadge fullName={user?.name} />
                     <Button
                         disableRipple
                         sx={{

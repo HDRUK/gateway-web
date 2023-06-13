@@ -1,17 +1,14 @@
 import React from "react";
-import Auth from "@/components/Auth";
-import { server } from "@/mocks/server";
-import { getFiltersV1 } from "@/mocks/handlers/filters";
+import AuthRouteCheck from "@/components/AuthRouteCheck";
 import { render, screen, waitFor } from "../testUtils";
 
-describe("Auth", () => {
+describe("AuthRouteCheck", () => {
     it("should render the protected route if `isProtected` and not authorised", async () => {
-        server.use(getFiltersV1(undefined, 401));
-
         render(
-            <Auth isProtected>
+            <AuthRouteCheck isProtected>
                 <div>content</div>
-            </Auth>
+            </AuthRouteCheck>,
+            { wrapperProps: { user: null } }
         );
 
         await waitFor(() => {
@@ -21,9 +18,9 @@ describe("Auth", () => {
     });
     it("should render public content if `isProtected` and authorised", async () => {
         render(
-            <Auth isProtected>
+            <AuthRouteCheck isProtected>
                 <div>Public component</div>
-            </Auth>
+            </AuthRouteCheck>
         );
 
         await waitFor(() => {
@@ -32,9 +29,9 @@ describe("Auth", () => {
     });
     it("should render a public component", async () => {
         render(
-            <Auth>
+            <AuthRouteCheck>
                 <div>Public component</div>
-            </Auth>
+            </AuthRouteCheck>
         );
 
         await waitFor(() => {

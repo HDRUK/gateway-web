@@ -18,18 +18,20 @@ import { Sector } from "@/interfaces/Sector";
 import usePut from "@/hooks/usePut";
 import { User } from "@/interfaces/User";
 import KeepingUpdated from "@/modules/profile/KeepingUpdated";
-import useUser from "@/hooks/useUser";
 import Loading from "@/components/Loading";
+import useAuth from "@/hooks/useAuth";
 
 const ProfileForm = () => {
-    const { user } = useUser();
-    const { data: profile } = useGet<User>(`${config.usersV1Url}/${user.id}`);
-    const { data: sectors = [], isLoading } = useGet<Sector[]>(
-        config.sectorsV1Url
+    const { user } = useAuth();
+    const { data: profile, isLoading: isUserLoading } = useGet<User>(
+        `${config.usersV1Url}/${user?.id}`
     );
-    const updateProfile = usePut<User>(config.usersV1Url, {
+    const updateProfile = usePut<User>(`${config.usersV1Url}/${user?.id}`, {
         itemName: "Profile",
     });
+    const { data: sectors = [], isLoading: isSectorLoading } = useGet<Sector[]>(
+        config.sectorsV1Url
+    );
 
     const hydratedFormFields = useMemo(
         () =>
@@ -59,12 +61,12 @@ const ProfileForm = () => {
 
     useEffect(() => {
         if (!profile) {
-            return; // loading
+            return;
         }
         reset(profile);
     }, [reset, profile]);
 
-    if (isLoading) return <Loading />;
+    if (isUserLoading || isSectorLoading) return <Loading />;
 
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>

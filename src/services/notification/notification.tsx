@@ -20,12 +20,12 @@ const notification = (
     options?: OptionsWithExtraProps<VariantType>
 ) => {
     return enqueueSnackbar(message, {
+        ...options,
         anchorOrigin: {
             vertical: "top",
             horizontal: "right",
-            ...options.anchorOrigin,
+            ...(options?.anchorOrigin && { ...options?.anchorOrigin }),
         },
-        ...options,
         variant,
     });
 };

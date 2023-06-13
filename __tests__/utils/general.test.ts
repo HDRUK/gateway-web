@@ -8,9 +8,9 @@ jest.mock("jwt-decode", () => () => ({ user: generatedUser }));
 
 describe("general", () => {
     describe("getUserFromToken", () => {
-        it("should return undefined if no token present", () => {
+        it("should return null if no token present", () => {
             const user = getUserFromToken({});
-            expect(user).toBeUndefined();
+            expect(user).toBeNull();
         });
         it("should return user", () => {
             const user = getUserFromToken({ token: "encryptedTokenValue" });

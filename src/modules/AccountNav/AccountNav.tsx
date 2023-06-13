@@ -50,7 +50,7 @@ const AccountNav = ({ anchorElement, onCloseMenu }: AccountNavProps) => {
             onClose={handleCloseUserMenu}
             open={Boolean(anchorElement)}>
             {links.map(link => (
-                <Link underline="hover" href={link.href}>
+                <Link key={link.label} underline="hover" href={link.href}>
                     <MenuItem
                         sx={{ width: 220 }}
                         key={link.label}
