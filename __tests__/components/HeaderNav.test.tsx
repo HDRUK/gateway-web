@@ -1,13 +1,11 @@
 import React from "react";
-import HeaderNav from "@/components/HeaderNav";
-import { server } from "@/mocks/server";
-import { getFiltersV1 } from "@/mocks/handlers/filters";
+import HeaderNav from "@/modules/HeaderNav";
+import { userV1 } from "@/mocks/data";
 import { fireEvent, render, screen, waitFor } from "../testUtils";
 
 describe("HeaderNav", () => {
     it("should render logged out component", async () => {
-        server.use(getFiltersV1(undefined, 401));
-        render(<HeaderNav />);
+        render(<HeaderNav />, { wrapperProps: { user: null } });
 
         await waitFor(() => {
             expect(
@@ -19,9 +17,7 @@ describe("HeaderNav", () => {
         render(<HeaderNav />);
 
         await waitFor(() => {
-            expect(
-                screen.getByText("HeaderNav.labels.myAccount")
-            ).toBeInTheDocument();
+            expect(screen.getByText(userV1.firstname)).toBeInTheDocument();
         });
     });
     it("renders explore navigation items", async () => {
@@ -53,8 +49,7 @@ describe("HeaderNav", () => {
     });
 
     it("on click of sign-in button, opens up sign-in dialog modal", async () => {
-        server.use(getFiltersV1(undefined, 401));
-        render(<HeaderNav />);
+        render(<HeaderNav />, { wrapperProps: { user: null } });
 
         await waitFor(() => {
             fireEvent.click(screen.getByText("HeaderNav.labels.signIn"));

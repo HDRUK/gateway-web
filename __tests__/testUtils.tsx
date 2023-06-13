@@ -9,13 +9,16 @@ import {
 } from "@testing-library/react";
 import { SWRConfig } from "swr";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
+import AuthProvider from "@/providers/Auth";
+import { userV1 } from "@/mocks/data";
+import { User } from "@/interfaces/User";
 import DialogProvider from "../src/providers/Dialog";
 import theme from "../src/config/theme";
 import createEmotionCache from "../src/config/createEmotionCache";
 
 const clientSideEmotionCache = createEmotionCache();
 
-const Wrapper = ({ children }: { children: ReactNode }) => {
+const Wrapper = ({ children, user }: { user?: User; children: ReactNode }) => {
     return (
         <SWRConfig
             value={{
@@ -23,37 +26,63 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
             }}>
             <CacheProvider value={clientSideEmotionCache}>
                 <ThemeProvider theme={theme}>
-                    <DialogProvider>{children}</DialogProvider>
+                    <AuthProvider user={user}>
+                        <DialogProvider>{children}</DialogProvider>
+                    </AuthProvider>
                 </ThemeProvider>
             </CacheProvider>
         </SWRConfig>
     );
 };
 
+Wrapper.defaultProps = {
+    user: userV1,
+};
+
+interface OptionProps
+    extends RenderOptions<
+        typeof import("@testing-library/dom/types/queries"),
+        HTMLElement,
+        HTMLElement
+    > {
+    wrapperProps: Record<string, unknown>;
+}
+
 const customRender = (
     ui: React.ReactElement<
         unknown,
         string | React.JSXElementConstructor<unknown>
     >,
-    options?: RenderOptions<
+    options?: OptionProps
+): RenderResult => {
+    const { wrapperProps, ...rest } = options || {};
+
+    return render(ui, {
+        wrapper: props => <Wrapper {...props} {...wrapperProps} />,
+        ...rest,
+    });
+};
+
+interface OptionHookProps
+    extends RenderHookOptions<
+        unknown,
         typeof import("@testing-library/dom/types/queries"),
         HTMLElement,
         HTMLElement
-    >
-): RenderResult => render(ui, { wrapper: Wrapper, ...options });
+    > {
+    wrapperProps: Record<string, unknown>;
+}
 
 const customRenderHook = (
     ui: (initialProps: unknown) => unknown,
-    options?:
-        | RenderHookOptions<
-              unknown,
-              typeof import("@testing-library/dom/types/queries"),
-              HTMLElement,
-              HTMLElement
-          >
-        | undefined
-): RenderHookResult<unknown, unknown> =>
-    renderHook(ui, { wrapper: Wrapper, ...options });
+    options?: OptionHookProps
+): RenderHookResult<unknown, unknown> => {
+    const { wrapperProps, ...rest } = options || {};
+    return renderHook(ui, {
+        wrapper: props => <Wrapper {...props} {...wrapperProps} />,
+        ...rest,
+    });
+};
 
 export * from "@testing-library/react";
 

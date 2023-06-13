@@ -1,17 +1,14 @@
 import React, { ReactElement } from "react";
-import useUser from "@/hooks/useUser";
+import useAuth from "@/hooks/useAuth";
 import ProtectedRoute from "../ProtectedRoute";
-import Loading from "../Loading";
 
-type AuthProps = {
+type AuthRouteCheckProps = {
     children: ReactElement;
     isProtected?: boolean;
 };
 
-const Auth = ({ children, isProtected }: AuthProps) => {
-    const { isLoggedIn, isLoading } = useUser();
-
-    if (isLoading) return <Loading />;
+const AuthRouteCheck = ({ children, isProtected }: AuthRouteCheckProps) => {
+    const { isLoggedIn } = useAuth();
 
     if (isProtected && !isLoggedIn) {
         return <ProtectedRoute />;
@@ -20,8 +17,8 @@ const Auth = ({ children, isProtected }: AuthProps) => {
     return children;
 };
 
-Auth.defaultProps = {
+AuthRouteCheck.defaultProps = {
     isProtected: false,
 };
 
-export default Auth;
+export default AuthRouteCheck;

@@ -20,7 +20,7 @@ const usePut = <T extends { id?: number }>(key: string, options?: Options) => {
         mutate(
             key,
             async () => {
-                await apiService.putRequest(`${key}/${payload.id}`, payload, {
+                await apiService.putRequest(key, payload, {
                     notificationOptions: {
                         localeKey,
                         itemName,

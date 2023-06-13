@@ -57,7 +57,7 @@ const SignInDialog = () => {
                     }}>
                     {providerLinks.map(link => (
                         <li key={link.href}>
-                            <Link href={link.href} label={link.label} />
+                            <Link href={link.href}>{link.label}</Link>
                         </li>
                     ))}
                 </ul>
