@@ -11,12 +11,11 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTheme } from "@emotion/react";
 import InitialsBadge from "@/components/InitialsBadge";
 import useAuth from "@/hooks/useAuth";
-import useLogout from "@/hooks/useLogout";
+import logout from "@/utils/logout";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();
 
-    const logout = useLogout();
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );

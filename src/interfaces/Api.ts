@@ -7,8 +7,8 @@ interface NotificationOptions extends OptionsWithExtraProps<VariantType> {
     notificationsOn?: boolean;
     localeKey?: string;
     itemName?: string;
-    t: TFunction;
-    i18n: I18n;
+    t?: TFunction;
+    i18n?: I18n;
     action?: ReactNode;
 }
 
