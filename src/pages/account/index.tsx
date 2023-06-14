@@ -11,7 +11,7 @@ import usePut from "@/hooks/usePut";
 import useDelete from "@/hooks/useDelete";
 import BoxContainer from "@/components/BoxContainer";
 import Box from "@/components/Box";
-import { getUserFromToken } from "@/utils/general";
+import { getUserFromToken } from "@/utils/cookies";
 
 const localeKey = "filter";
 const itemName = "Filter";

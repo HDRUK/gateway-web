@@ -6,13 +6,23 @@ const links = [{ label: "Profile", href: "/account/profile" }];
 
 interface AccountNavProps {
     onCloseMenu: () => void;
+    onLogout: () => void;
     anchorElement: null | HTMLElement;
 }
 
-const AccountNav = ({ anchorElement, onCloseMenu }: AccountNavProps) => {
+const AccountNav = ({
+    anchorElement,
+    onCloseMenu,
+    onLogout,
+}: AccountNavProps) => {
     const handleCloseUserMenu = () => {
         if (typeof onCloseMenu === "function") {
             onCloseMenu();
+        }
+    };
+    const handleLogout = () => {
+        if (typeof onLogout === "function") {
+            onLogout();
         }
     };
 
@@ -60,6 +70,13 @@ const AccountNav = ({ anchorElement, onCloseMenu }: AccountNavProps) => {
                     </MenuItem>
                 </Link>
             ))}
+            <MenuItem
+                sx={{ width: 220 }}
+                color="primary"
+                LinkComponent={Link}
+                onClick={handleLogout}>
+                Logout
+            </MenuItem>
         </Menu>
     );
 };
