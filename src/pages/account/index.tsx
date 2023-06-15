@@ -12,12 +12,20 @@ import useDelete from "@/hooks/useDelete";
 import BoxContainer from "@/components/BoxContainer";
 import Box from "@/components/Box";
 import { getUserFromToken } from "@/utils/cookies";
+import Pagination from "@/components/Pagination";
+import { useState, useEffect } from "react";
 
 const localeKey = "filter";
 const itemName = "Filter";
 
 function Account() {
-    const { data: filters } = useGet<Filter[]>(config.filtersV1Url);
+    const [pageNumber, setPageNumber] = useState(1);
+
+    // eslint-disable-next-line camelcase
+    const { data: filters } = useGet<Filter[]>(
+        `${config.filtersV1Url}?page=${pageNumber}`
+    );
+    const res1 = useGet(`${config.filtersV1Url}?page=${pageNumber}`);
 
     const createFilter = usePost<Filter>(config.filtersV1Url);
 
@@ -38,6 +46,16 @@ function Account() {
         ),
     });
 
+    useEffect(() => {
+        async function data1() {
+            const response = await fetch(
+                `${config.filtersV1Url}?page=${pageNumber}`
+            ).then(res => res.json());
+            if (response) console.log("fetch", response);
+        }
+        data1();
+    }, [pageNumber]);
+
     const addFilter = async () => {
         const filter = generateFilterV1({ enabled: true });
         delete filter.id;
@@ -52,6 +70,9 @@ function Account() {
     const deleteHandler = async (id: number) => {
         deleteFilter(id);
     };
+
+    const paginationHandler = (_: unknown, page: number) => setPageNumber(page);
+    if (res1) console.log("data", res1);
 
     return (
         <>
@@ -75,7 +96,7 @@ function Account() {
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <h2 style={{ marginBottom: "10px" }}>Filters</h2>
-                    <ul style={{ marginLeft: "20px" }}>
+                    <ul style={{ marginLeft: "20px", height: "auto" }}>
                         {filters?.map(filter => (
                             <li
                                 key={filter.id}
@@ -106,6 +127,12 @@ function Account() {
                         }}>
                         Add filter
                     </Button>
+                    <Pagination
+                        count={3}
+                        onChange={paginationHandler}
+                        variant="outlined"
+                        shape="rounded"
+                    />
                 </Box>
             </BoxContainer>
         </>
