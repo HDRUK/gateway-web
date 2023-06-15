@@ -23,6 +23,7 @@
         "@faker-js/faker": "^7.6.0",
         "@hookform/resolvers": "^3.1.0",
         "@mui/icons-material": "^5.11.16",
+        "@mui/lab": "^5.0.0-alpha.134",
         "@mui/material": "^5.13.0",
         "@types/node": "18.14.4",
         "@types/react": "18.0.28",

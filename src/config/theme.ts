@@ -110,7 +110,21 @@ const theme = createTheme({
                                 background: _theme.palette.primary.dark,
                             }),
                         },
+                        "&.MuiTab-root": {
+                            textTransform: "initial",
+                        },
+                        "&.MuiTab-root.Mui-selected": {
+                            color: palette.colors.grey900,
+                        },
                     };
+                },
+            },
+        },
+        MuiTabs: {
+            styleOverrides: {
+                indicator: {
+                    height: 3,
+                    backgroundColor: palette.secondary.main,
                 },
             },
         },
