@@ -3,7 +3,7 @@ import type { GetServerSideProps } from "next";
 import { loadServerSideLocales } from "@/utils/locale";
 import Box from "@/components/Box";
 import Container from "@/components/Container";
-import { getUserFromToken } from "@/utils/general";
+import { getUserFromToken } from "@/utils/cookies";
 
 export default function Home() {
     return (

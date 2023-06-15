@@ -3,8 +3,8 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import { getUserFromToken } from "@/utils/general";
 import ProfileForm from "@/modules/profile/ProfileForm";
+import { getUserFromToken } from "@/utils/cookies";
 
 const Profile = () => {
     return (

@@ -11,9 +11,11 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTheme } from "@emotion/react";
 import InitialsBadge from "@/components/InitialsBadge";
 import useAuth from "@/hooks/useAuth";
+import logout from "@/utils/logout";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();
+
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
@@ -25,6 +27,10 @@ const AccountNavWrapper = () => {
 
     const handleOpenNav = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElement(event.currentTarget);
+    };
+
+    const handleLogout = () => {
+        logout();
     };
 
     if (isLoggedIn) {
@@ -48,6 +54,7 @@ const AccountNavWrapper = () => {
                 <AccountNav
                     anchorElement={anchorElement}
                     onCloseMenu={() => setAnchorElement(null)}
+                    onLogout={handleLogout}
                 />
             </>
         );

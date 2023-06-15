@@ -1,4 +1,11 @@
 import { createTheme } from "@mui/material/styles";
+import { buttonLinkStyle } from "./overrides";
+
+declare module "@mui/material/Button" {
+    interface ButtonPropsVariantOverrides {
+        link: true;
+    }
+}
 
 declare module "@mui/material/SvgIcon" {
     interface SvgIconPropsSizeOverrides {
@@ -108,6 +115,22 @@ const theme = createTheme({
             },
         },
         MuiButton: {
+            variants: [
+                {
+                    props: { variant: "link" },
+                    style: {
+                        color: palette.primary.main,
+                        ...buttonLinkStyle,
+                    },
+                },
+                {
+                    props: { variant: "link", color: "secondary" },
+                    style: {
+                        color: palette.secondary.main,
+                        ...buttonLinkStyle,
+                    },
+                },
+            ],
             styleOverrides: {
                 root: ({ ownerState, theme: _theme }) => ({
                     "&:hover": {
