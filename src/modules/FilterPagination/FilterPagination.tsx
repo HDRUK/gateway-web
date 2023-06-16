@@ -1,27 +1,23 @@
-import config from "@/config";
 import { Filter } from "@/interfaces/Filter";
 import useGet from "@/hooks/useGet";
 import Button from "@/components/Button";
-import { useMemo } from "react";
 import Loading from "@/components/Loading";
 
 interface FilterPaginationProps {
-    pageNumber: number;
+    pageUrl: string;
     onUpdate?: (id: number) => void;
     onDelete?: (id: number) => void;
 }
 
 function FilterPagination({
-    pageNumber,
+    pageUrl,
     onUpdate,
     onDelete,
 }: FilterPaginationProps) {
-    const paginationKey = useMemo(
-        () => `${config.filtersV1Url}?page=${pageNumber}`,
-        [pageNumber]
-    );
-
-    const { data, isLoading } = useGet<Filter[]>(paginationKey, {
+    const { data, isLoading } = useGet<{
+        lastPage: number;
+        list: Filter[];
+    }>(pageUrl, {
         withPagination: true,
     });
 

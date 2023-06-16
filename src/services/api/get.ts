@@ -16,12 +16,14 @@ const getRequest = async <T>(
 
             const {
                 data: list,
-                last_page: pageCount,
+                last_page: lastPage,
+                next_page_url: nextPageUrl,
                 ...rest
             } = res.data || {};
             return {
                 list,
-                pageCount,
+                lastPage,
+                nextPageUrl,
                 ...rest,
             };
         })

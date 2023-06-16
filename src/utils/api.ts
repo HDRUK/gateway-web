@@ -19,7 +19,7 @@ const deleteOptimisticData = ({
             list: (data as PaginationResponse)?.list.filter(
                 item => item.id !== id
             ),
-            pageCount: (data as PaginationResponse)?.pageCount,
+            lastPage: (data as PaginationResponse)?.lastPage,
         };
     }
 
@@ -36,7 +36,7 @@ const deleteMutateData = ({
             list: (data as PaginationResponse)?.list?.filter(
                 item => item.id !== id
             ),
-            pageCount: (data as PaginationResponse)?.pageCount,
+            lastPage: (data as PaginationResponse)?.lastPage,
         };
     }
 
@@ -51,7 +51,7 @@ const postOptimisticData = ({
     if (options?.withPagination) {
         return {
             list: (data as PaginationResponse)?.list || [],
-            pageCount: (data as PaginationResponse)?.pageCount,
+            lastPage: (data as PaginationResponse)?.lastPage,
         };
     }
     return Array.isArray(data) ? [...data, { ...payload }] : { ...payload };
@@ -61,7 +61,7 @@ const postMutateData = ({ options = {}, data, payload, id }: FnProps) => {
     if (options?.withPagination) {
         return {
             list: (data as PaginationResponse)?.list || [],
-            pageCount: (data as PaginationResponse)?.pageCount,
+            lastPage: (data as PaginationResponse)?.lastPage,
         };
     }
 
@@ -80,7 +80,7 @@ const putOptimisticData = ({
             list: (data as PaginationResponse)?.list.map(item =>
                 item.id === payload.id ? payload : item
             ),
-            pageCount: (data as PaginationResponse)?.pageCount,
+            lastPage: (data as PaginationResponse)?.lastPage,
         };
     }
 
@@ -99,7 +99,7 @@ const putMutateData = ({
             list: (data as PaginationResponse)?.list?.map(item =>
                 item.id === payload.id ? payload : item
             ),
-            pageCount: (data as PaginationResponse)?.pageCount,
+            lastPage: (data as PaginationResponse)?.lastPage,
         };
     }
     return Array.isArray(data)
@@ -117,6 +117,7 @@ const ThrowPaginationError = (options: HttpOptions | undefined) => {
         );
     }
 };
+
 export {
     deleteOptimisticData,
     deleteMutateData,

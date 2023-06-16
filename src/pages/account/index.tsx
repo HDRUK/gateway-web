@@ -1,79 +1,11 @@
 import { GetServerSideProps } from "next";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
-import config from "@/config";
-import { Filter } from "@/interfaces/Filter";
-import { generateFilterV1 } from "@/mocks/data";
-import useGet from "@/hooks/useGet";
-import usePost from "@/hooks/usePost";
-import Button from "@/components/Button";
-import usePut from "@/hooks/usePut";
-import useDelete from "@/hooks/useDelete";
 import BoxContainer from "@/components/BoxContainer";
 import Box from "@/components/Box";
 import { getUserFromToken } from "@/utils/cookies";
-import Pagination from "@/components/Pagination";
-import { useState, useMemo } from "react";
-import FilterPagination from "@/modules/FilterPagination";
-
-const localeKey = "filter";
-const itemName = "Filter";
 
 function Account() {
-    const [pageNumber, setPageNumber] = useState(1);
-
-    const paginationKey = useMemo(
-        () => `${config.filtersV1Url}?page=${pageNumber}`,
-        [pageNumber]
-    );
-
-    const { data, isLoading } = useGet<Filter[]>(paginationKey, {
-        withPagination: true,
-    });
-
-    const { pageCount } = data || {};
-
-    const createFilter = usePost<Filter>(config.filtersV1Url, {
-        withPagination: true,
-        paginationKey,
-    });
-
-    const updateFilter = usePut<Filter>(config.filtersV1Url, {
-        itemName,
-        withPagination: true,
-        paginationKey,
-    });
-
-    const deleteFilter = useDelete(config.filtersV1Url, {
-        localeKey,
-        withPagination: true,
-        paginationKey,
-        itemName,
-        action: (
-            <Button
-                color="primary"
-                size="small"
-                onClick={() => console.log("call custom function")}>
-                Custom action
-            </Button>
-        ),
-    });
-
-    const addFilter = async () => {
-        const filter = generateFilterV1({ enabled: true });
-        delete filter.id;
-        createFilter(filter);
-    };
-
-    const update = (id: number) => {
-        const filter = generateFilterV1({ enabled: true, id, type: "course" });
-        updateFilter(filter);
-    };
-
-    const deleteHandler = (id: number) => {
-        deleteFilter(id);
-    };
-
     return (
         <>
             <Head title="Health Data Research Innovation Gateway" />
@@ -94,31 +26,10 @@ function Account() {
                     }}
                 />
                 <Box
-                    sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>Filters</h2>
-                    <FilterPagination
-                        pageNumber={pageNumber}
-                        onUpdate={update}
-                        onDelete={deleteHandler}
-                    />
-                    <div style={{ display: "none" }}>
-                        <FilterPagination pageNumber={pageNumber + 1} />
-                    </div>
-                    <Button
-                        color="primary"
-                        onClick={() => {
-                            addFilter();
-                        }}>
-                        Add filter
-                    </Button>
-                    <Pagination
-                        isLoading={isLoading}
-                        count={pageCount}
-                        onChange={(
-                            e: React.ChangeEvent<unknown>,
-                            page: number
-                        ) => setPageNumber(page)}
-                    />
+                    sx={{
+                        gridColumn: { tablet: "span 3", laptop: "span 4" },
+                    }}>
+                    <h2>My account</h2>
                 </Box>
             </BoxContainer>
         </>

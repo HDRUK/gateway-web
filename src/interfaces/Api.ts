@@ -29,7 +29,8 @@ interface HttpOptions extends MutatorOptions {
 
 interface PaginationResponse {
     list: { id: string | number }[]; // renamed from BE prop `data`
-    pageCount: number; // renamed from BE prop `last_page`
+    lastPage: number; // renamed from BE prop `last_page`
+    nextPageUrl: string | null; // renamed from `next_page_url`
 
     // below props not currently used:
     current_page: string;
@@ -41,7 +42,6 @@ interface PaginationResponse {
         label: string;
         active: boolean;
     }[];
-    next_page_url: string | null;
     path: string;
     per_page: number;
     prev_page_url: string | null;
