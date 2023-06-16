@@ -14,6 +14,7 @@ import Box from "@/components/Box";
 import { getUserFromToken } from "@/utils/cookies";
 import Pagination from "@/components/Pagination";
 import { useState, useMemo } from "react";
+import FilterPagination from "@/modules/FilterPagination";
 
 const localeKey = "filter";
 const itemName = "Filter";
@@ -30,7 +31,8 @@ function Account() {
         withPagination: true,
     });
 
-    const { list, pageCount } = data || {};
+    const { pageCount } = data || {};
+
     const createFilter = usePost<Filter>(config.filtersV1Url, {
         withPagination: true,
         paginationKey,
@@ -63,12 +65,12 @@ function Account() {
         createFilter(filter);
     };
 
-    const update = async (id: number) => {
+    const update = (id: number) => {
         const filter = generateFilterV1({ enabled: true, id, type: "course" });
         updateFilter(filter);
     };
 
-    const deleteHandler = async (id: number) => {
+    const deleteHandler = (id: number) => {
         deleteFilter(id);
     };
 
@@ -94,30 +96,14 @@ function Account() {
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <h2 style={{ marginBottom: "10px" }}>Filters</h2>
-                    <ul style={{ marginLeft: "20px", height: "auto" }}>
-                        {list?.map(filter => (
-                            <li
-                                key={filter.id}
-                                style={{ marginBottom: "10px" }}>
-                                {filter.type}{" "}
-                                <Button
-                                    variant="text"
-                                    color="primary"
-                                    size="small"
-                                    sx={{ margin: "0 5px" }}
-                                    onClick={() => update(filter.id)}>
-                                    Change filter
-                                </Button>
-                                <Button
-                                    variant="text"
-                                    color="primary"
-                                    size="small"
-                                    onClick={() => deleteHandler(filter.id)}>
-                                    Delete
-                                </Button>
-                            </li>
-                        ))}
-                    </ul>
+                    <FilterPagination
+                        pageNumber={pageNumber}
+                        onUpdate={update}
+                        onDelete={deleteHandler}
+                    />
+                    <div style={{ display: "none" }}>
+                        <FilterPagination pageNumber={pageNumber + 1} />
+                    </div>
                     <Button
                         color="primary"
                         onClick={() => {
