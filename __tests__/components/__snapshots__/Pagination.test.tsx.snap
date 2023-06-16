@@ -20,12 +20,12 @@ exports[`Pagination renders without crashing 1`] = `
           <svg
             aria-hidden="true"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
-            data-testid="NavigateBeforeIcon"
+            data-testid="ArrowLeftIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
             <path
-              d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+              d="m14 7-5 5 5 5V7z"
             />
           </svg>
         </button>
@@ -126,12 +126,12 @@ exports[`Pagination renders without crashing 1`] = `
           <svg
             aria-hidden="true"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
-            data-testid="NavigateNextIcon"
+            data-testid="ArrowRightIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
             <path
-              d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+              d="m10 17 5-5-5-5v10z"
             />
           </svg>
           <span
