@@ -13,7 +13,7 @@ import BoxContainer from "@/components/BoxContainer";
 import Box from "@/components/Box";
 import { getUserFromToken } from "@/utils/cookies";
 import Pagination from "@/components/Pagination";
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 
 const localeKey = "filter";
 const itemName = "Filter";
@@ -21,20 +21,31 @@ const itemName = "Filter";
 function Account() {
     const [pageNumber, setPageNumber] = useState(1);
 
-    // eslint-disable-next-line camelcase
-    const { data: filters } = useGet<Filter[]>(
-        `${config.filtersV1Url}?page=${pageNumber}`
+    const paginationKey = useMemo(
+        () => `${config.filtersV1Url}?page=${pageNumber}`,
+        [pageNumber]
     );
-    const res1 = useGet(`${config.filtersV1Url}?page=${pageNumber}`);
 
-    const createFilter = usePost<Filter>(config.filtersV1Url);
+    const { data, isLoading } = useGet<Filter[]>(paginationKey, {
+        withPagination: true,
+    });
+
+    const { list, pageCount } = data || {};
+    const createFilter = usePost<Filter>(config.filtersV1Url, {
+        withPagination: true,
+        paginationKey,
+    });
 
     const updateFilter = usePut<Filter>(config.filtersV1Url, {
         itemName,
+        withPagination: true,
+        paginationKey,
     });
 
     const deleteFilter = useDelete(config.filtersV1Url, {
         localeKey,
+        withPagination: true,
+        paginationKey,
         itemName,
         action: (
             <Button
@@ -45,16 +56,6 @@ function Account() {
             </Button>
         ),
     });
-
-    useEffect(() => {
-        async function data1() {
-            const response = await fetch(
-                `${config.filtersV1Url}?page=${pageNumber}`
-            ).then(res => res.json());
-            if (response) console.log("fetch", response);
-        }
-        data1();
-    }, [pageNumber]);
 
     const addFilter = async () => {
         const filter = generateFilterV1({ enabled: true });
@@ -70,9 +71,6 @@ function Account() {
     const deleteHandler = async (id: number) => {
         deleteFilter(id);
     };
-
-    const paginationHandler = (_: unknown, page: number) => setPageNumber(page);
-    if (res1) console.log("data", res1);
 
     return (
         <>
@@ -97,7 +95,7 @@ function Account() {
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <h2 style={{ marginBottom: "10px" }}>Filters</h2>
                     <ul style={{ marginLeft: "20px", height: "auto" }}>
-                        {filters?.map(filter => (
+                        {list?.map(filter => (
                             <li
                                 key={filter.id}
                                 style={{ marginBottom: "10px" }}>
@@ -128,10 +126,12 @@ function Account() {
                         Add filter
                     </Button>
                     <Pagination
-                        count={3}
-                        onChange={paginationHandler}
-                        variant="outlined"
-                        shape="rounded"
+                        isLoading={isLoading}
+                        count={pageCount}
+                        onChange={(
+                            e: React.ChangeEvent<unknown>,
+                            page: number
+                        ) => setPageNumber(page)}
                     />
                 </Box>
             </BoxContainer>

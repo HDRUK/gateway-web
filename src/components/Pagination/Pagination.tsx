@@ -1,16 +1,21 @@
-import MuiPagination from "@mui/material/Pagination";
+import MuiPagination, {
+    PaginationProps as MuiPaginationProps,
+} from "@mui/material/Pagination";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import PaginationItem from "@mui/material/PaginationItem";
 
-interface PaginationProps {
-    count: number;
-    variant: "outlined" | "text";
-    shape: "circular" | "rounded";
-    onChange: (_: unknown, page: number) => void;
+interface PaginationProps extends MuiPaginationProps {
+    isLoading: boolean;
 }
 
-const Pagination = (props: PaginationProps) => {
+const Pagination = ({
+    isLoading,
+    variant = "outlined",
+    shape = "rounded",
+    ...rest
+}: PaginationProps) => {
+    if (isLoading) return null;
     return (
         <MuiPagination
             renderItem={item => (
@@ -19,7 +24,9 @@ const Pagination = (props: PaginationProps) => {
                     {...item}
                 />
             )}
-            {...props}
+            variant={variant}
+            shape={shape}
+            {...rest}
         />
     );
 };

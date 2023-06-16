@@ -1,26 +1,27 @@
-import { MutatorOptions, useSWRConfig } from "swr";
+import { useSWRConfig } from "swr";
 import apiService from "@/services/api";
 import { useTranslation } from "next-i18next";
-import { ReactNode } from "react";
+import {
+    ThrowPaginationError,
+    deleteMutateData,
+    deleteOptimisticData,
+} from "@/utils/api";
+import { HttpOptions } from "@/interfaces/Api";
 import useGet from "./useGet";
 
-interface Options extends MutatorOptions {
-    localeKey?: string;
-    itemName?: string;
-    action?: ReactNode;
-}
-
-const useDelete = (key: string, options?: Options) => {
+const useDelete = (url: string, options?: HttpOptions) => {
     const { mutate } = useSWRConfig();
-    const { data } = useGet(key);
+    const { data } = useGet(options?.paginationKey || url);
     const { t, i18n } = useTranslation("api");
     const { localeKey, itemName, action, ...mutatorOptions } = options || {};
 
+    ThrowPaginationError(options);
+
     return (id: number) => {
         mutate(
-            key,
+            options?.paginationKey || url,
             async () => {
-                await apiService.deleteRequest(`${key}/${id}`, {
+                await apiService.deleteRequest(`${url}/${id}`, {
                     notificationOptions: {
                         localeKey,
                         itemName,
@@ -29,15 +30,11 @@ const useDelete = (key: string, options?: Options) => {
                         action,
                     },
                 });
-                return Array.isArray(data)
-                    ? data.filter(item => item.id !== id)
-                    : {};
+                return deleteMutateData({ options, data, id });
             },
             {
                 // data to immediately update the client cache
-                optimisticData: Array.isArray(data)
-                    ? data.filter(item => item.id !== id)
-                    : {},
+                optimisticData: deleteOptimisticData({ options, data, id }),
                 rollbackOnError: true,
                 ...mutatorOptions,
             }
