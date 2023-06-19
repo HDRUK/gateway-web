@@ -8,24 +8,20 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { ReactNode } from "react";
 
 export interface AccordionProps extends Omit<MuiAccordionProps, "children"> {
-    accordionHeading: string | ReactNode;
-    detailContents: string;
+    heading: string | ReactNode;
+    contents: string;
 }
 
-const Accordion = ({
-    accordionHeading,
-    detailContents,
-    ...rest
-}: AccordionProps) => {
+const Accordion = ({ heading, contents, ...rest }: AccordionProps) => {
     return (
         <div>
             <MuiAccordion {...rest}>
                 <MuiAccordionSummary
                     expandIcon={<ArrowDropDownIcon color="primary" />}>
-                    {accordionHeading}
+                    {heading}
                 </MuiAccordionSummary>
                 <MuiAccordionDetails>
-                    <Typography>{detailContents}</Typography>
+                    <Typography>{contents}</Typography>
                 </MuiAccordionDetails>
             </MuiAccordion>
         </div>

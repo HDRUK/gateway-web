@@ -44,8 +44,8 @@ const DummyComponent = () => {
                 }) => (
                     <Accordion
                         expanded={expanded === accordion.id}
-                        accordionHeading={accordion.heasing}
-                        detailContents={accordion.details}
+                        heading={accordion.heasing}
+                        contents={accordion.details}
                         onChange={(event, isExpanded) =>
                             handleChange(isExpanded, accordion.id)
                         }

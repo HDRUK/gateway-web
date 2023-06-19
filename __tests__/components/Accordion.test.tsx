@@ -2,45 +2,27 @@ import Accordion from "@/components/Accordion";
 import { render, screen } from "../testUtils";
 
 describe("Accordion", () => {
-    const accordionHeading = "Accordion Summary";
-    const detailContents = "Detail Contents";
+    const heading = "Accordion Summary";
+    const contents = "Detail Contents";
 
     it("renders without crashing", () => {
-        render(
-            <Accordion
-                accordionHeading={accordionHeading}
-                detailContents={detailContents}
-            />
-        );
+        render(<Accordion heading={heading} contents={contents} />);
     });
 
     it("displays the accordion summary correctly", () => {
-        render(
-            <Accordion
-                accordionHeading={accordionHeading}
-                detailContents={detailContents}
-            />
-        );
+        render(<Accordion heading={heading} contents={contents} />);
 
-        expect(screen.getByText(accordionHeading)).toBeInTheDocument();
+        expect(screen.getByText(heading)).toBeInTheDocument();
     });
 
     it("displays the detail contents correctly", () => {
-        render(
-            <Accordion
-                accordionHeading={accordionHeading}
-                detailContents={detailContents}
-            />
-        );
+        render(<Accordion heading={heading} contents={contents} />);
 
-        expect(screen.getByText(detailContents)).toBeInTheDocument();
+        expect(screen.getByText(contents)).toBeInTheDocument();
     });
     it("should render component", async () => {
         const wrapper = render(
-            <Accordion
-                accordionHeading={accordionHeading}
-                detailContents={detailContents}
-            />
+            <Accordion heading={heading} contents={contents} />
         );
 
         expect(wrapper.container).toMatchSnapshot();
