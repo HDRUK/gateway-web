@@ -3,32 +3,26 @@ import Pagination from "@/components/Pagination";
 
 describe("Pagination", () => {
     it("renders without crashing", () => {
-        const wrapper = render(
-            <Pagination
-                count={10}
-                variant="outlined"
-                shape="rounded"
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                onChange={() => {}}
-            />
-        );
+        const wrapper = render(<Pagination count={10} onChange={() => null} />);
         expect(wrapper.container).toMatchSnapshot();
     });
 
     it("calls onChange callback", () => {
         const handleChange = jest.fn();
         const { getByText } = render(
-            <Pagination
-                count={10}
-                variant="outlined"
-                shape="circular"
-                onChange={handleChange}
-            />
+            <Pagination count={10} onChange={handleChange} />
         );
 
         const pageTwoButton = getByText("2");
         fireEvent.click(pageTwoButton);
 
-        expect(handleChange).toHaveBeenCalled();
+        expect(handleChange).toHaveBeenCalledWith(expect.any(Object), 2);
+    });
+    it("should return empty div if still loading", () => {
+        const wrapper = render(
+            <Pagination count={10} isLoading onChange={() => null} />
+        );
+
+        expect(wrapper.container).toMatchSnapshot();
     });
 });

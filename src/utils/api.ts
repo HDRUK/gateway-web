@@ -31,16 +31,7 @@ const deleteMutateData = ({
     data,
     id,
 }: Pick<FnProps, "options" | "data" | "id">) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list?.filter(
-                item => item.id !== id
-            ),
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
-
-    return Array.isArray(data) ? data.filter(item => item.id !== id) : {};
+    return deleteOptimisticData({ options, data, id });
 };
 
 const postOptimisticData = ({
@@ -94,17 +85,7 @@ const putMutateData = ({
     data,
     payload,
 }: Pick<FnProps, "options" | "data" | "payload">) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list?.map(item =>
-                item.id === payload.id ? payload : item
-            ),
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
-    return Array.isArray(data)
-        ? data.map(item => (item.id === payload.id ? payload : item))
-        : payload;
+    return putOptimisticData({ options, data, payload });
 };
 
 const ThrowPaginationError = (options: HttpOptions | undefined) => {

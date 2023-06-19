@@ -4,7 +4,7 @@ exports[`Pagination renders without crashing 1`] = `
 <div>
   <nav
     aria-label="pagination navigation"
-    class="MuiPagination-root MuiPagination-outlined css-1oj2twp-MuiPagination-root"
+    class="MuiPagination-root MuiPagination-text css-1oj2twp-MuiPagination-root"
   >
     <ul
       class="MuiPagination-ul css-wjh20t-MuiPagination-ul"
@@ -12,7 +12,7 @@ exports[`Pagination renders without crashing 1`] = `
       <li>
         <button
           aria-label="Go to previous page"
-          class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded Mui-disabled MuiPaginationItem-previousNext css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root"
+          class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-text MuiPaginationItem-circular Mui-disabled MuiPaginationItem-previousNext css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root"
           disabled=""
           tabindex="-1"
           type="button"
@@ -34,7 +34,7 @@ exports[`Pagination renders without crashing 1`] = `
         <button
           aria-current="true"
           aria-label="page 1"
-          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded Mui-selected MuiPaginationItem-page css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root"
+          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-text MuiPaginationItem-circular Mui-selected MuiPaginationItem-page css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root"
           tabindex="0"
           type="button"
         >
@@ -47,7 +47,7 @@ exports[`Pagination renders without crashing 1`] = `
       <li>
         <button
           aria-label="Go to page 2"
-          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root"
+          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-text MuiPaginationItem-circular MuiPaginationItem-page css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root"
           tabindex="0"
           type="button"
         >
@@ -60,7 +60,7 @@ exports[`Pagination renders without crashing 1`] = `
       <li>
         <button
           aria-label="Go to page 3"
-          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root"
+          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-text MuiPaginationItem-circular MuiPaginationItem-page css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root"
           tabindex="0"
           type="button"
         >
@@ -73,7 +73,7 @@ exports[`Pagination renders without crashing 1`] = `
       <li>
         <button
           aria-label="Go to page 4"
-          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root"
+          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-text MuiPaginationItem-circular MuiPaginationItem-page css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root"
           tabindex="0"
           type="button"
         >
@@ -86,7 +86,7 @@ exports[`Pagination renders without crashing 1`] = `
       <li>
         <button
           aria-label="Go to page 5"
-          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root"
+          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-text MuiPaginationItem-circular MuiPaginationItem-page css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root"
           tabindex="0"
           type="button"
         >
@@ -98,7 +98,7 @@ exports[`Pagination renders without crashing 1`] = `
       </li>
       <li>
         <div
-          class="MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-ellipsis css-1v2lvtn-MuiPaginationItem-root"
+          class="MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-text MuiPaginationItem-circular MuiPaginationItem-ellipsis css-1v2lvtn-MuiPaginationItem-root"
         >
           …
         </div>
@@ -106,7 +106,7 @@ exports[`Pagination renders without crashing 1`] = `
       <li>
         <button
           aria-label="Go to page 10"
-          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root"
+          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-text MuiPaginationItem-circular MuiPaginationItem-page css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root"
           tabindex="0"
           type="button"
         >
@@ -119,7 +119,7 @@ exports[`Pagination renders without crashing 1`] = `
       <li>
         <button
           aria-label="Go to next page"
-          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-previousNext css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root"
+          class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-text MuiPaginationItem-circular MuiPaginationItem-previousNext css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root"
           tabindex="0"
           type="button"
         >
@@ -143,3 +143,5 @@ exports[`Pagination renders without crashing 1`] = `
   </nav>
 </div>
 `;
+
+exports[`Pagination should return empty div if still loading 1`] = `<div />`;
