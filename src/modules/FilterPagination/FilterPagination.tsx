@@ -38,7 +38,7 @@ function FilterPagination({
     if (isLoading) return <Loading />;
 
     return (
-        <ul style={{ marginLeft: "20px", height: "auto" }}>
+        <ul style={{ marginLeft: "20px" }}>
             {list?.map(filter => (
                 <li key={filter.id} style={{ marginBottom: "10px" }}>
                     {filter.type}{" "}

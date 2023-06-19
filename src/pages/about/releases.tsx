@@ -1,36 +1,87 @@
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
-import { GetServerSideProps } from "next";
-import { getUserFromToken } from "@/utils/cookies";
 import Tabs from "@/components/Tabs";
 import { useState } from "react";
 import Container from "@/components/Container";
+import { getReleaseNotes } from "@/utils/cms";
+import { getYear, format } from "date-fns";
+import { Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import Accordion from "@/components/Accordion";
+import { ReleaseNotesResponse } from "@/interfaces/Releases";
 
-const Releases = () => {
+interface ReleasesProps {
+    allReleases: ReleaseNotesResponse;
+}
+
+const Releases = ({ allReleases }: ReleasesProps) => {
+    const theme = useTheme();
+    const [expanded, setExpanded] = useState<string | null>(null);
     const [selectedTab, setSelectedTab] = useState("2023");
 
-    const tabs = [
-        {
-            label: "2023",
-            value: "2023",
-            content: <div>2023 content</div>,
-        },
-        {
-            label: "2022",
-            value: "2022",
-            content: <div>2022 content</div>,
-        },
-        {
-            label: "2021",
-            value: "2021",
-            content: <div>2021 content</div>,
-        },
-        {
-            label: "2020",
-            value: "2020",
-            content: <div>2020 content</div>,
-        },
-    ];
+    const getReleaseByYear = (releases, year) => {
+        if (!releases) return;
+        return releases
+            .map(release => release.node)
+            .filter(release => {
+                const releaseYear = getYear(new Date(release.date)).toString();
+                return releaseYear === year;
+            });
+    };
+
+    const handleChange = (isExpanded: boolean, panel: string) => {
+        console.log("isExpanded: ", isExpanded);
+        console.log("panel: ", panel);
+        setExpanded(isExpanded ? panel : null);
+    };
+
+    const generatedReleases = () => {
+        return ["2023", "2022", "2021", "2020"].map(year => {
+            const releases = getReleaseByYear(allReleases, year);
+
+            const hydratedReleases = {
+                label: year,
+                value: year,
+                content: (
+                    <div>
+                        {!releases.length && <p>No releases for {year}</p>}
+                        {releases?.map(release => (
+                            <div key={release.date}>
+                                <Accordion
+                                    expanded={expanded === release.id}
+                                    heading={
+                                        <Typography>{release.title}</Typography>
+                                    }
+                                    onChange={(event, isExpanded) =>
+                                        handleChange(isExpanded, release.id)
+                                    }
+                                    contents={
+                                        <>
+                                            <Typography
+                                                color={
+                                                    theme.palette.colors.grey500
+                                                }>
+                                                {format(
+                                                    new Date(release.date),
+                                                    "MM/dd/yyyy"
+                                                )}
+                                            </Typography>
+                                            <div
+                                                dangerouslySetInnerHTML={{
+                                                    __html: release.content,
+                                                }}
+                                            />
+                                        </>
+                                    }
+                                />
+                            </div>
+                        ))}
+                    </div>
+                ),
+            };
+            return hydratedReleases;
+        });
+    };
 
     const handleTabChange = (tab: string) => {
         setSelectedTab(tab);
@@ -44,22 +95,19 @@ const Releases = () => {
                     centered
                     value={selectedTab}
                     onChange={handleTabChange}
-                    tabs={tabs}
+                    tabs={generatedReleases()}
                 />
             </Container>
         </>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-    req,
-    locale,
-}) => {
+export const getStaticProps = async () => {
+    const allReleases = await getReleaseNotes();
+
     return {
-        props: {
-            user: getUserFromToken(req.cookies),
-            ...(await loadServerSideLocales(locale)),
-        },
+        props: { allReleases, ...(await loadServerSideLocales()) },
+        revalidate: 10,
     };
 };
 
