@@ -5,8 +5,12 @@ describe("Accordion", () => {
     const heading = "Accordion Summary";
     const contents = "Detail Contents";
 
-    it("renders without crashing", () => {
-        render(<Accordion heading={heading} contents={contents} />);
+    it("should render component", async () => {
+        const wrapper = render(
+            <Accordion heading={heading} contents={contents} />
+        );
+
+        expect(wrapper.container).toMatchSnapshot();
     });
 
     it("displays the accordion summary correctly", () => {
@@ -19,12 +23,5 @@ describe("Accordion", () => {
         render(<Accordion heading={heading} contents={contents} />);
 
         expect(screen.getByText(contents)).toBeInTheDocument();
-    });
-    it("should render component", async () => {
-        const wrapper = render(
-            <Accordion heading={heading} contents={contents} />
-        );
-
-        expect(wrapper.container).toMatchSnapshot();
     });
 });

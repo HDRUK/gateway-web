@@ -9,7 +9,7 @@ import { ReactNode } from "react";
 
 export interface AccordionProps extends Omit<MuiAccordionProps, "children"> {
     heading: string | ReactNode;
-    contents: string;
+    contents: string | ReactNode;
 }
 
 const Accordion = ({ heading, contents, ...rest }: AccordionProps) => {

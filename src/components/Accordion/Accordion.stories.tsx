@@ -15,17 +15,17 @@ const DummyComponent = () => {
     const accordionData = [
         {
             id: "panel1",
-            heasing: "Accordion 1",
+            heading: "Accordion 1",
             details: "Accordion 1 details",
         },
         {
             id: "panel2",
-            heasing: "Accordion 2",
+            heading: "Accordion 2",
             details: "Accordion 2 details",
         },
         {
             id: "panel3",
-            heasing: "Accordion 3",
+            heading: "Accordion 3",
             details: "Accordion 3 details",
         },
     ];
@@ -39,12 +39,12 @@ const DummyComponent = () => {
             {accordionData.map(
                 (accordion: {
                     id: string;
-                    heasing: string;
+                    heading: string;
                     details: string;
                 }) => (
                     <Accordion
                         expanded={expanded === accordion.id}
-                        heading={accordion.heasing}
+                        heading={accordion.heading}
                         contents={accordion.details}
                         onChange={(event, isExpanded) =>
                             handleChange(isExpanded, accordion.id)
@@ -56,10 +56,17 @@ const DummyComponent = () => {
     );
 };
 
+const Heading = () => <div>React Element as Heading</div>;
+const Content = () => <div>React Element as Content</div>;
+
 export const SimpleAccordion: Story = {
     render: (props: AccordionProps) => <Accordion {...props} />,
 };
 
 export const AccordionGroup: Story = {
     render: () => <DummyComponent />,
+};
+
+export const ReactElementAccordion: Story = {
+    render: () => <Accordion heading={<Heading />} contents={<Content />} />,
 };
