@@ -21,6 +21,7 @@ const AccountNav = ({
             onCloseMenu();
         }
     };
+
     const handleLogout = () => {
         if (typeof onLogout === "function") {
             onLogout();

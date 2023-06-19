@@ -6,12 +6,27 @@ const getRequest = async <T>(
     url: string,
     options: RequestOptions
 ): Promise<T> => {
-    const { axiosOptions = {}, notificationOptions } = options;
+    const { withPagination, axiosOptions = {}, notificationOptions } = options;
     const { notificationsOn = true, ...props } = notificationOptions;
 
     return await http
         .get(url, axiosOptions)
-        .then(res => res.data?.data)
+        .then(res => {
+            if (!withPagination) return res.data?.data;
+
+            const {
+                data: list,
+                last_page: lastPage,
+                next_page_url: nextPageUrl,
+                ...rest
+            } = res.data || {};
+            return {
+                list,
+                lastPage,
+                nextPageUrl,
+                ...rest,
+            };
+        })
         .catch(error => {
             if (notificationsOn) {
                 errorNotification({

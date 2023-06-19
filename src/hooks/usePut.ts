@@ -1,26 +1,30 @@
-import { MutatorOptions, useSWRConfig } from "swr";
+import { useSWRConfig } from "swr";
 import apiService from "@/services/api";
 import { useTranslation } from "next-i18next";
-import { ReactNode } from "react";
+import { HttpOptions } from "@/interfaces/Api";
+import {
+    ThrowPaginationError,
+    putMutateData,
+    putOptimisticData,
+} from "@/utils/api";
 import useGet from "./useGet";
 
-interface Options extends MutatorOptions {
-    localeKey?: string;
-    itemName?: string;
-    action?: ReactNode;
-}
-
-const usePut = <T extends { id?: number }>(key: string, options?: Options) => {
+const usePut = <T extends { id?: number }>(
+    url: string,
+    options?: HttpOptions
+) => {
     const { mutate } = useSWRConfig();
-    const { data } = useGet(key);
+    const { data } = useGet(options?.paginationKey || url);
     const { t, i18n } = useTranslation("api");
     const { localeKey, itemName, action, ...mutatorOptions } = options || {};
 
+    ThrowPaginationError(options);
+
     return (payload: T) => {
         mutate(
-            key,
+            options?.paginationKey || url,
             async () => {
-                await apiService.putRequest(key, payload, {
+                await apiService.putRequest(`${url}/${payload.id}`, payload, {
                     notificationOptions: {
                         localeKey,
                         itemName,
@@ -29,19 +33,11 @@ const usePut = <T extends { id?: number }>(key: string, options?: Options) => {
                         action,
                     },
                 });
-                return Array.isArray(data)
-                    ? data.map(item =>
-                          item.id === payload.id ? payload : item
-                      )
-                    : payload;
+                return putMutateData({ options, data, payload });
             },
             {
                 // data to immediately update the client cache
-                optimisticData: Array.isArray(data)
-                    ? data.map(item =>
-                          item.id === payload.id ? payload : item
-                      )
-                    : payload,
+                optimisticData: putOptimisticData({ options, data, payload }),
                 rollbackOnError: true,
                 ...mutatorOptions,
             }

@@ -251,6 +251,12 @@ const theme = createTheme({
                 },
             },
         },
+        MuiPagination: {
+            defaultProps: {
+                variant: "outlined",
+                shape: "rounded",
+            },
+        },
     },
 });
 
