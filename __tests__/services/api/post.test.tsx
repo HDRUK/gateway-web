@@ -1,4 +1,4 @@
-import config from "@/config";
+import vars from "@/config/vars";
 import { Filter, FilterType } from "@/interfaces/Filter";
 import { filterV1 } from "@/mocks/data";
 import { postFilterV1 } from "@/mocks/handlers/filters";
@@ -26,7 +26,7 @@ describe("post", () => {
             type: "features" as FilterType,
         };
         const response = await apiService.postRequest<Filter>(
-            config.filtersV1Url,
+            vars.filtersV1Url,
             payload,
             {
                 notificationOptions: {
@@ -44,7 +44,7 @@ describe("post", () => {
         const payload = {
             type: "features" as FilterType,
         };
-        await apiService.postRequest<Filter>(config.filtersV1Url, payload, {
+        await apiService.postRequest<Filter>(vars.filtersV1Url, payload, {
             notificationOptions: {
                 notificationsOn: true,
                 ...translationProps,
@@ -61,7 +61,7 @@ describe("post", () => {
         const payload = {
             type: "features" as FilterType,
         };
-        await apiService.postRequest<Filter>(config.filtersV1Url, payload, {
+        await apiService.postRequest<Filter>(vars.filtersV1Url, payload, {
             notificationOptions: {
                 notificationsOn: true,
                 ...translationProps,

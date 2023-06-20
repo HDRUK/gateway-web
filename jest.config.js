@@ -10,8 +10,9 @@ const customJestConfig = {
     moduleNameMapper: {
         "^@/mocks/(.*)$": "<rootDir>/mocks/$1",
         "^@/services/(.*)$": "<rootDir>/src/services/$1",
+        "^@/images/(.*)$": "<rootDir>/src/images/$1",
         "^@/hooks/(.*)$": "<rootDir>/src/hooks/$1",
-        "^@/config": "<rootDir>/src/config",
+        "^@/config/(.*)$": "<rootDir>/src/config/$1",
         "^@/pages/(.*)$": "<rootDir>/src/pages/$1",
         "^@/modules/(.*)$": "<rootDir>/src/modules/$1",
         "^@/components/(.*)$": "<rootDir>/src/components/$1",

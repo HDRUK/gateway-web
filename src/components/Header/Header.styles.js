@@ -5,6 +5,7 @@ export const appbar = css({
     flexDirection: "row",
     padding: "12px 16px",
     boxShadow: "none",
+    background: "white",
 });
 
 export const toolbar = css({

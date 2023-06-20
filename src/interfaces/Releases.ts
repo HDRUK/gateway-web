@@ -1,13 +1,15 @@
 interface Release {
-    node: {
-        title: string;
-        date: string;
-        content: string;
-    };
+    id: string;
+    title: string;
+    date: string;
+    content: string;
+}
+interface ReleaseNode {
+    node: Release;
 }
 
 interface ReleaseNotesResponse {
-    posts: { edges: Release[] };
+    posts: { edges: ReleaseNode[] };
 }
 
-export type { Release, ReleaseNotesResponse };
+export type { ReleaseNode, Release, ReleaseNotesResponse };

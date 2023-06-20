@@ -1,3 +1,4 @@
+import vars from "@/config/vars";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { ReleaseNotesResponse } from "@/interfaces/Releases";
 import { postRequest } from "@/services/api/post";
@@ -7,7 +8,7 @@ const fetchFromCMS = async <T>(
     { variables }: Record<string, unknown> = {}
 ): Promise<T> => {
     return await postRequest<T>(
-        process.env.WORDPRESS_API_URL || "",
+        vars.wordPressApiUrl || "",
         {
             query,
             variables,

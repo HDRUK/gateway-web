@@ -4,6 +4,8 @@ import Container from "@/components/Container";
 import { getReleaseNotes } from "@/utils/cms";
 import { ReleaseNotesResponse } from "@/interfaces/Releases";
 import ReleaseTabs from "@/modules/ReleaseTabs";
+import Banner from "@/components/Banner";
+import BannerImage from "../../../public/images/banners/release-notes.png";
 
 interface ReleasesProps {
     allReleases: ReleaseNotesResponse;
@@ -13,6 +15,7 @@ const Releases = ({ allReleases }: ReleasesProps) => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - About - Releases" />
+            <Banner title="Gateway Releases" src={BannerImage} />
             <Container sx={{ background: "white" }}>
                 <ReleaseTabs allReleases={allReleases} />
             </Container>

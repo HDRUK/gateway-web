@@ -12,7 +12,6 @@ import {
 } from "@/config/forms/profile";
 import InputWrapper from "@/components/InputWrapper";
 import useGet from "@/hooks/useGet";
-import config from "@/config";
 import { useEffect, useMemo } from "react";
 import { Sector } from "@/interfaces/Sector";
 import usePut from "@/hooks/usePut";
@@ -20,17 +19,18 @@ import { User } from "@/interfaces/User";
 import KeepingUpdated from "@/modules/profile/KeepingUpdated";
 import Loading from "@/components/Loading";
 import useAuth from "@/hooks/useAuth";
+import vars from "@/config/vars";
 
 const ProfileForm = () => {
     const { user } = useAuth();
     const { data: profile, isLoading: isUserLoading } = useGet<User>(
-        `${config.usersV1Url}/${user?.id}`
+        `${vars.usersV1Url}/${user?.id}`
     );
-    const updateProfile = usePut<User>(`${config.usersV1Url}/${user?.id}`, {
+    const updateProfile = usePut<User>(`${vars.usersV1Url}/${user?.id}`, {
         itemName: "Profile",
     });
     const { data: sectors = [], isLoading: isSectorLoading } = useGet<Sector[]>(
-        config.sectorsV1Url
+        vars.sectorsV1Url
     );
 
     const hydratedFormFields = useMemo(

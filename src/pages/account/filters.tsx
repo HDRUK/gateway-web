@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
-import config from "@/config";
+import vars from "@/config/vars";
 import { Filter } from "@/interfaces/Filter";
 import { generateFilterV1 } from "@/mocks/data";
 import useGet from "@/hooks/useGet";
@@ -29,7 +29,7 @@ function Account() {
     const [pageNumber, setPageNumber] = useState(1);
 
     const paginationKey = useMemo(
-        () => `${config.filtersV1Url}?page=${pageNumber}`,
+        () => `${vars.filtersV1Url}?page=${pageNumber}`,
         [pageNumber]
     );
 
@@ -39,18 +39,18 @@ function Account() {
 
     const { lastPage, nextPageUrl } = data || {};
 
-    const createFilter = usePost<Filter>(config.filtersV1Url, {
+    const createFilter = usePost<Filter>(vars.filtersV1Url, {
         withPagination: true,
         paginationKey,
     });
 
-    const updateFilter = usePut<Filter>(config.filtersV1Url, {
+    const updateFilter = usePut<Filter>(vars.filtersV1Url, {
         itemName,
         withPagination: true,
         paginationKey,
     });
 
-    const deleteFilter = useDelete(config.filtersV1Url, {
+    const deleteFilter = useDelete(vars.filtersV1Url, {
         localeKey,
         withPagination: true,
         paginationKey,
