@@ -1,5 +1,5 @@
-interface Releases {
-    nodes: {
+interface Release {
+    node: {
         title: string;
         date: string;
         content: string;
@@ -7,7 +7,7 @@ interface Releases {
 }
 
 interface ReleaseNotesResponse {
-    posts: { edges: Releases[] };
+    posts: { edges: Release[] };
 }
 
-export type { ReleaseNotesResponse };
+export type { Release, ReleaseNotesResponse };
