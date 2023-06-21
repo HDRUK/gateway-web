@@ -1,6 +1,5 @@
 import Tabs from "@/components/Tabs";
 import { useMemo, useState } from "react";
-import { format } from "date-fns";
 import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import Accordion from "@/components/Accordion";
@@ -15,7 +14,15 @@ interface ReleaseTabProps {
 }
 
 const IntroContent = () => (
-    <Box>
+    <Box
+        sx={{
+            bgcolor: "transparent",
+            padding: {
+                mobile: "20px 40px",
+                tablet: "40px 100px 20px",
+                desktop: "40px 120px 20px",
+            },
+        }}>
         <p>
             The Gateway requires a significant volume of design and development
             work to deliver our vision and ambition. To achieve this our teams
@@ -58,33 +65,19 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                             <p>There are no releases for {year}</p>
                         )}
                         {releases.map(release => (
-                            <div key={release.date}>
-                                <Accordion
-                                    expanded={expanded === release.id}
-                                    heading={
-                                        <Typography>{release.title}</Typography>
-                                    }
-                                    onChange={(event, isExpanded) =>
-                                        handleChange(isExpanded, release.id)
-                                    }
-                                    contents={
-                                        <>
-                                            <Typography
-                                                color={
-                                                    theme.palette.colors.grey500
-                                                }>
-                                                {format(
-                                                    new Date(release.date),
-                                                    "MM/dd/yyyy"
-                                                )}
-                                            </Typography>
-                                            <WPContent
-                                                content={release.content}
-                                            />
-                                        </>
-                                    }
-                                />
-                            </div>
+                            <Accordion
+                                key={release.date}
+                                expanded={expanded === release.id}
+                                heading={
+                                    <Typography>{release.title}</Typography>
+                                }
+                                onChange={(event, isExpanded) =>
+                                    handleChange(isExpanded, release.id)
+                                }
+                                contents={
+                                    <WPContent content={release.content} />
+                                }
+                            />
                         ))}
                     </div>
                 ),
@@ -100,8 +93,8 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
             value={selectedTab}
             onChange={handleTabChange}
             tabs={generatedReleases}
-            tabBoxSx={{ paddingTop: 0 }}
-            rootBoxSx={{ paddingTop: 0 }}
+            tabBoxSx={{ padding: 0 }}
+            rootBoxSx={{ padding: 0 }}
         />
     );
 };

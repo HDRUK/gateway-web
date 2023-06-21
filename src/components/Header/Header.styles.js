@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 
 export const appbar = css({
-    marginBottom: "10px",
     flexDirection: "row",
     padding: "12px 16px",
     boxShadow: "none",

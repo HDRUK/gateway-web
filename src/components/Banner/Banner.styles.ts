@@ -6,9 +6,11 @@ export const banner = css({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    height: "200px",
 });
 
 export const content = css({
+    zIndex: 1,
     position: "absolute",
     display: "flex",
     textAlign: "center",

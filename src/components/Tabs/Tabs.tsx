@@ -43,7 +43,7 @@ const Tabs = ({
                 <Box
                     sx={{
                         paddingBottom: 0,
-                        boxShadow: "0px 15px 5px -14px rgba(0,0,0,.09)",
+                        boxShadow: "0px 3px 5px -3px rgba(0,0,0,.09)",
                         ...tabBoxSx,
                     }}>
                     <MuiTabList centered={centered} onChange={handleChange}>

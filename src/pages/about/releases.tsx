@@ -16,7 +16,7 @@ const Releases = ({ allReleases }: ReleasesProps) => {
         <>
             <Head title="Health Data Research Innovation Gateway - About - Releases" />
             <Banner title="Gateway Releases" src={BannerImage} />
-            <Container sx={{ background: "white" }}>
+            <Container sx={{ background: "white", padding: 0 }}>
                 <ReleaseTabs allReleases={allReleases} />
             </Container>
         </>

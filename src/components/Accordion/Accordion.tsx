@@ -13,15 +13,13 @@ export interface AccordionProps extends Omit<MuiAccordionProps, "children"> {
 
 const Accordion = ({ heading, contents, ...rest }: AccordionProps) => {
     return (
-        <div>
-            <MuiAccordion {...rest}>
-                <MuiAccordionSummary
-                    expandIcon={<ArrowDropDownIcon color="primary" />}>
-                    {heading}
-                </MuiAccordionSummary>
-                <MuiAccordionDetails>{contents}</MuiAccordionDetails>
-            </MuiAccordion>
-        </div>
+        <MuiAccordion {...rest}>
+            <MuiAccordionSummary
+                expandIcon={<ArrowDropDownIcon color="primary" />}>
+                {heading}
+            </MuiAccordionSummary>
+            <MuiAccordionDetails>{contents}</MuiAccordionDetails>
+        </MuiAccordion>
     );
 };
 

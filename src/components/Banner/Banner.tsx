@@ -17,7 +17,7 @@ const Banner = ({ title, subTitle, src }: BannerProps) => {
                 <Typography style={{ fontSize: 40 }}>{title}</Typography>
                 {subTitle && <Typography>{subTitle}</Typography>}
             </div>
-            <Image src={src} alt={title} />
+            <Image style={{ objectFit: "cover" }} fill src={src} alt={title} />
         </div>
     );
 };

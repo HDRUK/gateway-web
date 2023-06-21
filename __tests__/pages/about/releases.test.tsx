@@ -40,11 +40,8 @@ describe("Releases", () => {
 
         await waitFor(() => {
             expect(screen.getByText("mock title 1")).toBeInTheDocument();
-            expect(screen.getByText("06/12/2023")).toBeInTheDocument();
             expect(screen.queryByText("mock title 2")).not.toBeInTheDocument();
-            expect(screen.queryByText("06/12/2022")).not.toBeInTheDocument();
             expect(screen.getByText("mock title 3")).toBeInTheDocument();
-            expect(screen.getByText("08/12/2023")).toBeInTheDocument();
         });
     });
 });
