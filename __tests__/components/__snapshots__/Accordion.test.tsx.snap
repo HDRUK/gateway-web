@@ -8,7 +8,7 @@ exports[`Accordion should render component 1`] = `
     >
       <div
         aria-expanded="false"
-        class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters mui-style-16puya-MuiButtonBase-root-MuiAccordionSummary-root"
+        class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters mui-style-1466v7k-MuiButtonBase-root-MuiAccordionSummary-root"
         role="button"
         tabindex="0"
       >
