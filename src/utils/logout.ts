@@ -1,8 +1,8 @@
 import apiService from "@/services/api";
-import config from "@/config";
+import vars from "@/config/vars";
 
 const logout = () => {
-    apiService.postRequest(config.logoutV1Url, null, {
+    apiService.postRequest(vars.logoutV1Url, null, {
         notificationOptions: {
             notificationsOn: false,
         },

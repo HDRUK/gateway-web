@@ -1,6 +1,6 @@
 import React from "react";
 import SignInDialog from "@/modules/dialogs/SignInDialog";
-import config from "@/config";
+import vars from "@/config/vars";
 import { render, screen, waitFor } from "../../testUtils";
 
 describe("SignInDialog", () => {
@@ -19,7 +19,7 @@ describe("SignInDialog", () => {
             "dialogs.SignInDialog.socialProviders.azure"
         );
         expect(azureButton).toBeInTheDocument();
-        expect(azureButton).toHaveAttribute("href", config.authAzureV1Url);
+        expect(azureButton).toHaveAttribute("href", vars.authAzureV1Url);
     });
     it("should render google link", async () => {
         render(<SignInDialog />);
@@ -27,7 +27,7 @@ describe("SignInDialog", () => {
             "dialogs.SignInDialog.socialProviders.google"
         );
         expect(googleButton).toBeInTheDocument();
-        expect(googleButton).toHaveAttribute("href", config.authGoogleV1Url);
+        expect(googleButton).toHaveAttribute("href", vars.authGoogleV1Url);
     });
     it("should render linkedIn link", async () => {
         render(<SignInDialog />);
@@ -35,9 +35,6 @@ describe("SignInDialog", () => {
             "dialogs.SignInDialog.socialProviders.linkedIn"
         );
         expect(linkedInButton).toBeInTheDocument();
-        expect(linkedInButton).toHaveAttribute(
-            "href",
-            config.authLinkedinV1Url
-        );
+        expect(linkedInButton).toHaveAttribute("href", vars.authLinkedinV1Url);
     });
 });

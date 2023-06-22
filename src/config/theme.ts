@@ -257,6 +257,29 @@ const theme = createTheme({
                 shape: "rounded",
             },
         },
+        MuiAccordion: {
+            styleOverrides: {
+                root: {
+                    "&.Mui-expanded": {
+                        margin: 0,
+                    },
+                },
+            },
+        },
+        MuiAccordionSummary: {
+            styleOverrides: {
+                root: {
+                    "&.Mui-expanded": {
+                        minHeight: "48px",
+                    },
+                },
+                content: {
+                    "&.Mui-expanded": {
+                        margin: 0,
+                    },
+                },
+            },
+        },
     },
 });
 

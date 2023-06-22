@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WPContent should render component 1`] = `
+<div>
+  <div
+    class="mui-style-1qaot9c-WPContent"
+  >
+    
+
+    <p>
+      This month we are pleased to share improvements to the usability of the search results page. Plus, we release our data use register widget.
+    </p>
+    
+
+  </div>
+</div>
+`;

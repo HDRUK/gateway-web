@@ -1,6 +1,6 @@
 import * as React from "react";
 import MuiDialogContent from "@mui/material/DialogContent";
-import config from "@/config";
+import vars from "@/config/vars";
 
 import Link from "@/components/Link";
 import { useTranslation } from "react-i18next";
@@ -17,15 +17,15 @@ const SignInDialog = () => {
     const providerLinks: LinkItem[] = [
         {
             label: t("dialogs.SignInDialog.socialProviders.azure"),
-            href: config.authAzureV1Url,
+            href: vars.authAzureV1Url,
         },
         {
             label: t("dialogs.SignInDialog.socialProviders.linkedIn"),
-            href: config.authLinkedinV1Url,
+            href: vars.authLinkedinV1Url,
         },
         {
             label: t("dialogs.SignInDialog.socialProviders.google"),
-            href: config.authGoogleV1Url,
+            href: vars.authGoogleV1Url,
         },
     ];
 
