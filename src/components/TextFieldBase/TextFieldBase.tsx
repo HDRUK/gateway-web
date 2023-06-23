@@ -53,6 +53,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
         setValue,
         getValues,
         showClearButton,
+        ...inputProps
     } = props;
 
     const theme = useTheme();
@@ -142,6 +143,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
                 error={!!error}
                 {...fieldProps}
                 value={fieldProps.value ?? ""}
+                {...inputProps}
             />
 
             {error && (

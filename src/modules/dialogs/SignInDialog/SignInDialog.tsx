@@ -3,8 +3,11 @@ import MuiDialogContent from "@mui/material/DialogContent";
 import vars from "@/config/vars";
 
 import Link from "@/components/Link";
+import SignUpDialog from "@/modules/dialogs/SignUpDialog";
 import { useTranslation } from "react-i18next";
 import Dialog from "@/components/Dialog";
+import Button from "@/components/Button";
+import useDialog from "@/hooks/useDialog";
 
 interface LinkItem {
     label: string;
@@ -12,6 +15,7 @@ interface LinkItem {
 }
 
 const SignInDialog = () => {
+    const { showDialog } = useDialog();
     const { t } = useTranslation("modules");
 
     const providerLinks: LinkItem[] = [
@@ -61,6 +65,9 @@ const SignInDialog = () => {
                         </li>
                     ))}
                 </ul>
+                <Button onClick={() => showDialog(SignUpDialog)}>
+                    {t("dialogs.SignInDialog.signUp")}
+                </Button>
             </MuiDialogContent>
         </Dialog>
     );

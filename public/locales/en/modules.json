@@ -2,11 +2,16 @@
     "dialogs": {
         "SignInDialog": {
             "title": "Sign in or create a new account",
+            "signUp": "Register with username/password",
             "socialProviders": {
                 "azure": "Azure",
                 "linkedIn": "LinkedIn",
                 "google": "Google"
             }
+        },
+        "SignUpDialog": {
+            "title": "Register",
+            "button": "Register"
         }
     }
 }

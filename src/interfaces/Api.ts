@@ -22,6 +22,7 @@ interface RequestOptions {
 interface HttpOptions extends MutatorOptions {
     localeKey?: string;
     itemName?: string;
+    data?: unknown;
     paginationKey?: string;
     withPagination?: boolean;
     action?: ReactNode;
