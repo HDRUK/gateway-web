@@ -15,6 +15,7 @@ import "@/styles/global.css";
 import { ApiError } from "@/components/CustomNotifications";
 import DialogProvider from "@/providers/Dialog";
 import AuthProvider from "@/providers/Auth";
+import ActionBarProvider from "@/providers/ActionBar";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -46,22 +47,27 @@ const App = ({
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
                     <DialogProvider>
-                        <AuthProvider user={user}>
-                            <Layout>
-                                <ErrorBoundary
-                                    fallback={<div>Something went wrong</div>}
-                                    onError={logError}>
-                                    <SnackbarProvider
-                                        Components={{
-                                            apiError: ApiError,
-                                        }}
-                                    />
-                                    <AuthRouteCheck isProtected={isProtected}>
-                                        <Component {...pageProps} />
-                                    </AuthRouteCheck>
-                                </ErrorBoundary>
-                            </Layout>
-                        </AuthProvider>
+                        <ActionBarProvider>
+                            <AuthProvider user={user}>
+                                <Layout>
+                                    <ErrorBoundary
+                                        fallback={
+                                            <div>Something went wrong</div>
+                                        }
+                                        onError={logError}>
+                                        <SnackbarProvider
+                                            Components={{
+                                                apiError: ApiError,
+                                            }}
+                                        />
+                                        <AuthRouteCheck
+                                            isProtected={isProtected}>
+                                            <Component {...pageProps} />
+                                        </AuthRouteCheck>
+                                    </ErrorBoundary>
+                                </Layout>
+                            </AuthProvider>
+                        </ActionBarProvider>
                     </DialogProvider>
                 </ThemeProvider>
             </CacheProvider>
