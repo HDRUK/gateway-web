@@ -1,8 +1,8 @@
 import { filterV1, userV1 } from "@/mocks/data";
 import usePost from "@/hooks/usePost";
-import config from "@/config";
 import { Filter } from "@/interfaces/Filter";
 import { User } from "@/interfaces/User";
+import vars from "@/config/vars";
 import { act, renderHook, waitFor } from "../testUtils";
 
 const mockMutate = jest.fn();
@@ -21,23 +21,21 @@ describe("usePost", () => {
     });
 
     it("should call mutate with correct arguments for updating a single item", async () => {
-        const { result } = renderHook(() => usePost<User>(config.usersV1Url));
+        const { result } = renderHook(() => usePost<User>(vars.usersV1Url));
         const { current: createFunction } = result;
 
         await createFunction(userV1);
 
         await waitFor(() =>
             expect(mockMutate).toHaveBeenCalledWith(
-                config.usersV1Url,
+                vars.usersV1Url,
                 expect.any(Function),
                 { optimisticData: userV1, rollbackOnError: true }
             )
         );
     });
     it("should call mutate with correct arguments for updating an item in an array", async () => {
-        const { result } = renderHook(() =>
-            usePost<Filter>(config.filtersV1Url)
-        );
+        const { result } = renderHook(() => usePost<Filter>(vars.filtersV1Url));
         act(() => {
             result.current(filterV1);
         });

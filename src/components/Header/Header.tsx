@@ -9,7 +9,7 @@ import * as styles from "./Header.styles";
 
 function Header() {
     return (
-        <AppBar position="static" color="transparent" css={styles.appbar}>
+        <AppBar position="static" css={styles.appbar}>
             <Toolbar css={styles.toolbar}>
                 <div css={styles.logoIconBox}>
                     <IconButton

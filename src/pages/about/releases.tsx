@@ -1,65 +1,37 @@
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
-import { GetServerSideProps } from "next";
-import { getUserFromToken } from "@/utils/cookies";
-import Tabs from "@/components/Tabs";
-import { useState } from "react";
 import Container from "@/components/Container";
+import { getReleaseNotes } from "@/utils/cms";
+import { ReleaseNode } from "@/interfaces/Releases";
+import ReleaseTabs from "@/modules/ReleaseTabs";
+import Banner from "@/components/Banner";
+import BannerImage from "../../../public/images/banners/release-notes.png";
 
-const Releases = () => {
-    const [selectedTab, setSelectedTab] = useState("2023");
+interface ReleasesProps {
+    allReleases: ReleaseNode[];
+}
 
-    const tabs = [
-        {
-            label: "2023",
-            value: "2023",
-            content: <div>2023 content</div>,
-        },
-        {
-            label: "2022",
-            value: "2022",
-            content: <div>2022 content</div>,
-        },
-        {
-            label: "2021",
-            value: "2021",
-            content: <div>2021 content</div>,
-        },
-        {
-            label: "2020",
-            value: "2020",
-            content: <div>2020 content</div>,
-        },
-    ];
-
-    const handleTabChange = (tab: string) => {
-        setSelectedTab(tab);
-    };
-
+const Releases = ({ allReleases }: ReleasesProps) => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - About - Releases" />
-            <Container sx={{ background: "white" }}>
-                <Tabs
-                    centered
-                    value={selectedTab}
-                    onChange={handleTabChange}
-                    tabs={tabs}
-                />
+            <Banner title="Gateway Releases" src={BannerImage} />
+            <Container sx={{ background: "white", padding: 0 }}>
+                <ReleaseTabs allReleases={allReleases} />
             </Container>
         </>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-    req,
-    locale,
-}) => {
+export const getStaticProps = async () => {
+    const allReleases = await getReleaseNotes();
+
     return {
         props: {
-            user: getUserFromToken(req.cookies),
-            ...(await loadServerSideLocales(locale)),
+            allReleases,
+            ...(await loadServerSideLocales()),
         },
+        revalidate: 10,
     };
 };
 
