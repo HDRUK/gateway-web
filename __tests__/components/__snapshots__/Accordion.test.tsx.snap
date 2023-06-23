@@ -12,7 +12,10 @@ exports[`Accordion should render component 1`] = `
       tabindex="0"
     >
       <div
-        class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters mui-style-6koi57-MuiAccordionSummary-content"
+        aria-expanded="false"
+        class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters mui-style-1466v7k-MuiButtonBase-root-MuiAccordionSummary-root"
+        role="button"
+        tabindex="0"
       >
         Accordion Summary
       </div>
