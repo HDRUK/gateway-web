@@ -11,7 +11,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTheme } from "@emotion/react";
 import InitialsBadge from "@/components/InitialsBadge";
 import useAuth from "@/hooks/useAuth";
-import logout from "@/utils/logout";
+import useLogout from "@/hooks/useLogout";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();
@@ -19,6 +19,7 @@ const AccountNavWrapper = () => {
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
+    const logout = useLogout();
 
     const theme = useTheme();
     const { t } = useTranslation("components");

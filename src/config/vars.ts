@@ -5,6 +5,7 @@ const vars = {
     authLinkedinV1Url: `${apiV1}/auth/linkedin`,
     authAzureV1Url: `${apiV1}/auth/azure`,
     logoutV1Url: `${apiV1}/logout`,
+    logoutInternalUrl: `/api/logout`,
     filtersV1Url: `${apiV1}/filters`,
     sectorsV1Url: `${apiV1}/sectors`,
     usersV1Url: `${apiV1}/users`,
