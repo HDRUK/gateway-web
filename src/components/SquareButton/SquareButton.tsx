@@ -1,28 +1,36 @@
 /** @jsxImportSource @emotion/react */
 
-import AddIcon from "@mui/icons-material/Add";
 import { useTheme } from "@emotion/react";
+import { ButtonProps } from "../Button/Button";
 import Button from "../Button";
 import * as styles from "./SquareButton.styles";
 
-export interface SquareButtonProps {
-    children?: string;
+export interface SquareButtonProps extends ButtonProps {
+    icon?: React.ReactNode;
 }
 
-const SquareButton = ({ children }: SquareButtonProps) => {
+const SquareButton = ({
+    children,
+    icon,
+    color = "primary",
+}: SquareButtonProps) => {
     const theme = useTheme();
     return (
-        <Button disableRipple variant="text" css={styles.squareButton(theme)}>
-            {children === "Create API" && (
-                <AddIcon sx={{ height: "22px", width: "22px" }} />
-            )}
-            {children}
+        <Button
+            disableRipple
+            color={color}
+            variant="text"
+            css={styles.squareButton(theme, color)}>
+            <>
+                {icon}
+                {children}
+            </>
         </Button>
     );
 };
 
 SquareButton.defaultProps = {
-    children: "",
+    icon: undefined,
 };
 
 export default SquareButton;

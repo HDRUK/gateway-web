@@ -1,7 +1,7 @@
 import SquareButton from "@/components/SquareButton";
 import { render, screen } from "../testUtils";
 
-describe("SquareButton from App Component", () => {
+describe("SquareButton", () => {
     it("Should render component", () => {
         const wrapper = render(<SquareButton />);
         expect(wrapper.container).toBeInTheDocument();
@@ -11,10 +11,11 @@ describe("SquareButton from App Component", () => {
         render(<SquareButton>{childText}</SquareButton>);
         expect(screen.getByText(childText)).toBeInTheDocument();
     });
-    it('renders the AddIcon when child text is "Create API"', () => {
-        const childText = "Create API";
-        render(<SquareButton>{childText}</SquareButton>);
-        const addIcon = screen.getByTestId("AddIcon");
-        expect(addIcon).toBeInTheDocument();
+    it("renders the icon if passed as prop", () => {
+        const childText = "With icon";
+        const icon = <span data-testid="icon" />;
+        render(<SquareButton icon={icon}>{childText}</SquareButton>);
+        const renderedIcon = screen.getByTestId("icon");
+        expect(renderedIcon).toBeInTheDocument();
     });
 });

@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-export const squareButton = theme =>
+export const squareButton = (theme, color) =>
     css({
         height: "300px",
         width: "300px",
@@ -10,9 +10,11 @@ export const squareButton = theme =>
         fontSize: "28px",
         lineHeight: "34px",
         fontWeight: "400px",
+        borderRadius: "0",
         "&:hover": {
-            backgroundColor: theme.palette.primary.main,
-            color: "#fff",
-            fill: "#fff",
+            // eslint-disable-next-line security/detect-object-injection
+            backgroundColor: theme.palette[color].main,
+            color: theme.palette.colors.white,
+            fill: theme.palette.colors.white,
         },
     });
