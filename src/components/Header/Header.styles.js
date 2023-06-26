@@ -3,8 +3,9 @@ import { css } from "@emotion/react";
 export const appbar = css({
     flexDirection: "row",
     padding: "12px 16px",
-    boxShadow: "none",
     background: "white",
+    marginBottom: "5px",
+    boxShadow: "1px 1px 3px 0 rgba(0,0,0,.09)",
 });
 
 export const toolbar = css({
