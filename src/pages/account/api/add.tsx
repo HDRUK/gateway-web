@@ -5,9 +5,9 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { getUserFromToken } from "@/utils/cookies";
 import ActionBar from "@/components/ActionBar";
-import AppRegistrationForm from "@/modules/AppRegistration/AppRegistration.form";
+import AppRegistrationForm from "@/modules/ApiManagement/RegistrationForm";
 
-const AppRegistration = () => {
+const Add = () => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
@@ -55,4 +55,4 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
 };
 
-export default AppRegistration;
+export default Add;

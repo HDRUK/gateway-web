@@ -1,8 +1,8 @@
 import Button from "@/components/Button";
 import useActionBar from "@/hooks/useActionBar";
-import AppRegistrationActionBar from "./AppRegistration.actionBar";
+import AppRegistrationActionBar from "./RegistrationActionBar";
 
-const AppRegistrationForm = () => {
+const ApiRegistrationForm = () => {
     const { showBar, hideBar } = useActionBar();
 
     const onSuccess = () => {
@@ -31,4 +31,4 @@ const AppRegistrationForm = () => {
     );
 };
 
-export default AppRegistrationForm;
+export default ApiRegistrationForm;

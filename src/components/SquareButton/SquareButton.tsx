@@ -13,6 +13,7 @@ const SquareButton = ({
     children,
     icon,
     color = "primary",
+    ...rest
 }: SquareButtonProps) => {
     const theme = useTheme();
     return (
@@ -20,7 +21,8 @@ const SquareButton = ({
             disableRipple
             color={color}
             variant="text"
-            css={styles.squareButton(theme, color)}>
+            css={styles.squareButton(theme, color)}
+            {...rest}>
             <>
                 {icon}
                 {children}
