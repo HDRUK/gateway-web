@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import useActionBar from "@/hooks/useActionBar";
-import AppRegActionBar from "../actionBars/AppRegActionBar";
+import AppRegistrationActionBar from "./AppRegistration.actionBar";
 
 const AppRegistrationForm = () => {
     const { showBar, hideBar } = useActionBar();
@@ -9,14 +9,20 @@ const AppRegistrationForm = () => {
         hideBar();
     };
 
+    const onCancel = () => {
+        hideBar();
+    };
+
     return (
         <div>
             <Button
                 onClick={() =>
-                    showBar(AppRegActionBar, {
-                        status: "draft",
-                        text: "1/12 questions answered in this section",
+                    showBar("AppRegistration", {
+                        component: AppRegistrationActionBar,
+                        cancelText: "Discard",
+                        confirmText: "Save",
                         onSuccess,
+                        onCancel,
                     })
                 }>
                 show action bar

@@ -1,24 +1,43 @@
 /** @jsxImportSource @emotion/react */
 
 import useActionBar from "@/hooks/useActionBar";
-import { ReactNode } from "react";
 import * as styles from "./ActionBar.styles";
-
-export interface ActionBarProps {
-    children: ReactNode;
-}
+import ModalButtons from "../ModalButtons";
 
 const ActionBar = () => {
     const { store } = useActionBar();
-    const { component, props } = store || {};
+    const { props, name } = store;
+    const {
+        component,
+        confirmText,
+        confirmType,
+        cancelText,
+        onCancel,
+        onSuccess,
+        ...rest
+    } = props;
 
-    if (!component) return null;
+    if (!name) return null;
 
-    const Component = component;
+    const Component = component as React.ComponentType;
 
     return (
-        <div css={styles.root}>
-            <Component {...props} />
+        <div css={styles.root(!!component)}>
+            {component && <Component {...rest} />}
+            <div
+                style={{
+                    display: "inline-flex",
+                    flexWrap: "wrap",
+                    gap: "12px",
+                }}>
+                <ModalButtons
+                    onSuccess={onSuccess}
+                    onCancel={onCancel}
+                    confirmText={confirmText}
+                    cancelText={cancelText}
+                    confirmType={confirmType}
+                />
+            </div>
         </div>
     );
 };

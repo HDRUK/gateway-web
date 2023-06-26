@@ -1,14 +1,15 @@
+import { ModalButtonProps } from "@/components/ModalButtons/ModalButtons";
 import React, { createContext, useMemo, ReactNode } from "react";
 
-type componentType = React.ElementType | null;
-export type propsType = { [key: string]: ReactNode | (() => void) };
-
+export interface ActionBarProps extends ModalButtonProps {
+    component?: React.ElementType | null;
+}
 export interface GlobalActionBarContextProps {
-    showBar: (component: componentType, props?: propsType) => void;
+    showBar: (name: string, props: ActionBarProps) => void;
     hideBar: () => void;
     store: {
-        component: componentType;
-        props?: propsType;
+        name: string;
+        props: ActionBarProps;
     };
 }
 
@@ -18,7 +19,7 @@ const initalState: GlobalActionBarContextProps = {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     hideBar: () => {},
     store: {
-        component: null,
+        name: "",
         props: {},
     },
 };
@@ -31,21 +32,22 @@ interface ActionBarProviderProps {
 
 const ActionBarProvider: React.FC<ActionBarProviderProps> = ({ children }) => {
     const [store, setStore] = React.useState<{
-        component: componentType;
-        props?: propsType;
-    }>({ component: null, props: {} });
+        name: string;
+        props: ActionBarProps;
+    }>({ name: "", props: {} });
+
     const value = useMemo(
         () => ({
             store,
-            showBar: (component: componentType, props?: propsType) => {
+            showBar: (name: string, props: ActionBarProps) => {
                 setStore({
-                    component,
+                    name,
                     props,
                 });
             },
             hideBar: () => {
                 setStore({
-                    component: null,
+                    name: "",
                     props: {},
                 });
             },

@@ -5,7 +5,7 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { getUserFromToken } from "@/utils/cookies";
 import ActionBar from "@/components/ActionBar";
-import AppRegistrationForm from "@/modules/AppRegistrationForm";
+import AppRegistrationForm from "@/modules/AppRegistration/AppRegistration.form";
 
 const AppRegistration = () => {
     return (
