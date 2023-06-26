@@ -1,5 +1,8 @@
+/** @jsxImportSource @emotion/react */
+
 import useActionBar from "@/hooks/useActionBar";
 import { ReactNode } from "react";
+import * as styles from "./ActionBar.styles";
 
 export interface ActionBarProps {
     children: ReactNode;
@@ -14,7 +17,7 @@ const ActionBar = () => {
     const Component = component;
 
     return (
-        <div style={{ border: "red 1px solid" }}>
+        <div css={styles.root}>
             <Component {...props} />
         </div>
     );

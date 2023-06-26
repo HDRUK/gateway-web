@@ -1,6 +1,18 @@
 import React, { createContext, useMemo, ReactNode } from "react";
 
-const initalState: unknown = {
+type componentType = React.ElementType | null;
+export type propsType = { [key: string]: ReactNode | (() => void) };
+
+export interface GlobalActionBarContextProps {
+    showBar: (component: componentType, props?: propsType) => void;
+    hideBar: () => void;
+    store: {
+        component: componentType;
+        props?: propsType;
+    };
+}
+
+const initalState: GlobalActionBarContextProps = {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     showBar: () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -19,13 +31,13 @@ interface ActionBarProviderProps {
 
 const ActionBarProvider: React.FC<ActionBarProviderProps> = ({ children }) => {
     const [store, setStore] = React.useState<{
-        component: ReactNode;
-        props?: unknown;
+        component: componentType;
+        props?: propsType;
     }>({ component: null, props: {} });
     const value = useMemo(
         () => ({
             store,
-            showBar: (component: ReactNode, props?: unknown) => {
+            showBar: (component: componentType, props?: propsType) => {
                 setStore({
                     component,
                     props,

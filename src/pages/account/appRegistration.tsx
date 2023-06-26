@@ -29,15 +29,15 @@ const AppRegistration = () => {
                 />
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>Your profile</h2>
+                    <h2 style={{ marginBottom: "10px" }}>API Management</h2>
                     <p>
-                        Your details are used when you make a data access
-                        request application.
+                        Manage and edit your &quot;how to request access&quot;
+                        information, your data access request workflows
                     </p>
                     <AppRegistrationForm />
                 </Box>
-                <ActionBar />
             </BoxContainer>
+            <ActionBar />
         </>
     );
 };
