@@ -1,9 +1,10 @@
 import { ModalButtonProps } from "@/components/ModalButtons/ModalButtons";
 import React, { createContext, useMemo, ReactNode } from "react";
 
-export interface ActionBarProps extends ModalButtonProps {
-    component?: React.ElementType | null;
-}
+type ActionBarProps = { [key: string]: unknown } & ModalButtonProps & {
+        component?: React.ElementType | null;
+    };
+
 export interface GlobalActionBarContextProps {
     showBar: (name: string, props: ActionBarProps) => void;
     hideBar: () => void;

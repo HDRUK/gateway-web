@@ -16,3 +16,9 @@ export const root = (hasComponent: boolean) =>
             flexDirection: "row",
         },
     });
+
+export const ButtonWrapper = css({
+    display: "inline-flex",
+    flexWrap: "wrap",
+    gap: "12px",
+});

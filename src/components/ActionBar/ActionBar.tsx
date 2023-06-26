@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /** @jsxImportSource @emotion/react */
 
 import useActionBar from "@/hooks/useActionBar";
@@ -24,12 +25,7 @@ const ActionBar = () => {
     return (
         <div css={styles.root(!!component)}>
             {component && <Component {...rest} />}
-            <div
-                style={{
-                    display: "inline-flex",
-                    flexWrap: "wrap",
-                    gap: "12px",
-                }}>
+            <div css={styles.ButtonWrapper}>
                 <ModalButtons
                     onSuccess={onSuccess}
                     onCancel={onCancel}
