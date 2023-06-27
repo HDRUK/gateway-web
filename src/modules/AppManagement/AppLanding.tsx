@@ -3,8 +3,7 @@ import SquareButton from "@/components/SquareButton";
 import AddIcon from "@mui/icons-material/Add";
 import { Typography } from "@mui/material";
 import Link from "@/components/Link";
-import Image from "next/image";
-import paper from "../../../public/assets/icons/paper.svg";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 const LandingPage = () => {
     return (
@@ -15,8 +14,17 @@ const LandingPage = () => {
                 flexDirection: "column",
                 alignItems: "center",
             }}>
-            <div style={{ display: "flex" }}>
-                <Image src={paper} alt="paper icon" height="24" width="24" />
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "10px",
+                }}>
+                <DescriptionOutlinedIcon
+                    color="primary"
+                    fontSize="large"
+                    sx={{ marginRight: "10px" }}
+                />
                 <Link
                     href="/"
                     color="primary"
