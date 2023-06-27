@@ -4,11 +4,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { Typography } from "@mui/material";
 import Link from "@/components/Link";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import paper from "../../../public/assets/icons/paper.svg";
 
 const LandingPage = () => {
-    const router = useRouter();
     return (
         <Box
             sx={{
@@ -27,21 +25,18 @@ const LandingPage = () => {
                 </Link>
             </div>
             <Box sx={{ display: "flex", gap: "40px" }}>
-                <SquareButton
-                    color="primary"
-                    icon={<AddIcon sx={{ fontSize: "41px" }} />}
-                    onClick={() =>
-                        router.push("/account/appRegistration/appManagement")
-                    }>
-                    Create API
-                </SquareButton>
-                <SquareButton
-                    color="primary"
-                    onClick={() =>
-                        router.push("/account/appRegistration/apiList")
-                    }>
-                    Manage API
-                </SquareButton>
+                <Link
+                    underline="none"
+                    href="/account/team/team-1/app-management/create">
+                    <SquareButton icon={<AddIcon sx={{ fontSize: "41px" }} />}>
+                        Create API
+                    </SquareButton>
+                </Link>
+                <Link
+                    underline="none"
+                    href="/account/team/team-1/app-management/list">
+                    <SquareButton>Manage API</SquareButton>
+                </Link>
             </Box>
             <Typography sx={{ fontSize: "20px" }}>
                 *HDRUK cannot create application registrations on behalf of

@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import { useTheme } from "@emotion/react";
-import { ButtonProps } from "../Button/Button";
-import Button from "../Button";
+import Button from "@/components/Button";
+import { ButtonProps } from "@/components/Button/Button";
 import * as styles from "./SquareButton.styles";
 
 export interface SquareButtonProps extends ButtonProps {

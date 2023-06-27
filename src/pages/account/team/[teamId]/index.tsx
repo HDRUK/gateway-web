@@ -4,9 +4,11 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { getUserFromToken } from "@/utils/cookies";
-import LandingPage from "@/modules/ApiManagement/LandingPage";
+import Link from "@/components/Link";
+import { useRouter } from "next/router";
 
-const Add = () => {
+const TeamLandingPage = () => {
+    const router = useRouter();
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
@@ -24,12 +26,17 @@ const Add = () => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
+                    }}>
+                    <Link
+                        href={`/account/team/${router.query.teamId}/app-management`}>
+                        App Management
+                    </Link>
+                </Box>
+                <Box
+                    sx={{
+                        gridColumn: { tablet: "span 3", laptop: "span 4" },
                     }}
                 />
-                <Box
-                    sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <LandingPage />
-                </Box>
             </BoxContainer>
         </>
     );
@@ -48,4 +55,4 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
 };
 
-export default Add;
+export default TeamLandingPage;
