@@ -9,6 +9,7 @@ import AccountNavWrapper from "../AccountNavWrapper";
 function HeaderNav() {
     const navItems = ["Explore", "Help", "Usage data", "About us"];
     const navLinks = [
+        { label: "Releases", href: "/about/releases" },
         { label: "News", href: "/news" },
         { label: "Community", href: "/community" },
     ];

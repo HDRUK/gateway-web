@@ -21,7 +21,7 @@ const LandingPage = () => {
                     href="/"
                     color="primary"
                     sx={{ textDecoration: "none", fontSize: "16px" }}>
-                    Link to how to create an API (placeholder)
+                    Link to how to create an API
                 </Link>
             </div>
             <Box sx={{ display: "flex", gap: "40px" }}>
