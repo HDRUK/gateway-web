@@ -4,10 +4,12 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { getUserFromToken } from "@/utils/cookies";
-import ActionBar from "@/components/ActionBar";
-import AppRegistrationForm from "@/modules/AppRegistration/AppRegistration.form";
+import AppLanding from "@/modules/AppManagement/AppLanding";
+import Link from "@/components/Link";
+import { useRouter } from "next/router";
 
-const AppRegistration = () => {
+const AppLandingPage = () => {
+    const router = useRouter();
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
@@ -25,19 +27,17 @@ const AppRegistration = () => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
-                    }}
-                />
+                    }}>
+                    <Link
+                        href={`/account/team/${router.query.teamId}/app-management`}>
+                        App Management
+                    </Link>
+                </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>API Management</h2>
-                    <p>
-                        Manage and edit your &quot;how to request access&quot;
-                        information, your data access request workflows
-                    </p>
-                    <AppRegistrationForm />
+                    <AppLanding />
                 </Box>
             </BoxContainer>
-            <ActionBar />
         </>
     );
 };
@@ -55,4 +55,4 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
 };
 
-export default AppRegistration;
+export default AppLandingPage;

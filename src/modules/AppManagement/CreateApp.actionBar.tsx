@@ -1,4 +1,4 @@
-const AppRegistrationActionBar = () => {
+const CreateActionBar = () => {
     // These props could be passed via `showBar` fn in AppRegistration.form
     const status = "draft";
     const text = "1/12 questions answered in this section";
@@ -20,4 +20,4 @@ const AppRegistrationActionBar = () => {
     );
 };
 
-export default AppRegistrationActionBar;
+export default CreateActionBar;

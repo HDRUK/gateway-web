@@ -3,7 +3,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Link from "@/components/Link";
 import Button from "@/components/Button";
 
-const links = [{ label: "Profile", href: "/account/profile" }];
+const links = [
+    { label: "Profile", href: "/account/profile" },
+    { label: "Team 1", href: "/account/team/team-1" },
+];
 
 interface AccountNavProps {
     onCloseMenu: () => void;
