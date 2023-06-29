@@ -5,7 +5,7 @@ import useGet from "./useGet";
 interface AuthResponse {
     user: User | undefined;
     isLoading: boolean;
-    isLoggedIn: boolean | undefined;
+    isLoggedIn: boolean;
 }
 
 const useAuth = (): AuthResponse => {
@@ -17,7 +17,7 @@ const useAuth = (): AuthResponse => {
     return {
         isLoading,
         user: data?.user,
-        isLoggedIn: data?.isLoggedIn,
+        isLoggedIn: !!data?.isLoggedIn,
     };
 };
 

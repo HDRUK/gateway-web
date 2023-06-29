@@ -20,8 +20,8 @@ const useSignIn = () => {
         hideDialog();
         setTimeout(() => {
             router.push("/account");
+            mutate(apis.authInternalUrl);
         }, 500);
-        mutate(apis.authInternalUrl);
     };
 };
 
