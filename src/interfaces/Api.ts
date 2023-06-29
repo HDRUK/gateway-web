@@ -5,7 +5,8 @@ import { ReactNode } from "react";
 import { MutatorOptions } from "swr";
 
 interface NotificationOptions extends OptionsWithExtraProps<VariantType> {
-    notificationsOn?: boolean;
+    successNotificationsOn?: boolean;
+    errorNotificationsOn?: boolean;
     localeKey?: string;
     itemName?: string;
     t?: TFunction;
@@ -21,6 +22,8 @@ interface RequestOptions {
 
 interface HttpOptions extends MutatorOptions {
     localeKey?: string;
+    successNotificationsOn?: boolean;
+    errorNotificationsOn?: boolean;
     itemName?: string;
     data?: unknown;
     paginationKey?: string;

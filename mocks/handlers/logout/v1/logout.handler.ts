@@ -1,12 +1,12 @@
 import { rest } from "msw";
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 
 interface Response {
     message: string;
 }
 
 const getLogoutV1 = (status = 200) => {
-    return rest.get(vars.logoutV1Url, (req, res, ctx) => {
+    return rest.get(apis.logoutV1Url, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),

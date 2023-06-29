@@ -15,6 +15,8 @@ const usePost = <T>(url: string, options?: HttpOptions) => {
         localeKey,
         itemName,
         action,
+        successNotificationsOn,
+        errorNotificationsOn,
         data = {},
         ...mutatorOptions
     } = options || {};
@@ -32,6 +34,8 @@ const usePost = <T>(url: string, options?: HttpOptions) => {
                         notificationOptions: {
                             localeKey,
                             itemName,
+                            successNotificationsOn,
+                            errorNotificationsOn,
                             t,
                             i18n,
                             action,

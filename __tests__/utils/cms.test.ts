@@ -1,7 +1,7 @@
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import * as apiService from "@/services/api/post";
 import { getReleaseNotes, fetchFromCMS } from "@/utils/cms";
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 
 jest.mock("@/services/api/post", () => {
     return {
@@ -26,9 +26,14 @@ describe("cms utils", () => {
           `;
             fetchFromCMS(mockQuery);
             expect(apiService.postRequest).toBeCalledWith(
-                vars.wordPressApiUrl,
+                apis.wordPressApiUrl,
                 { query: mockQuery, variables: undefined },
-                { notificationOptions: { notificationsOn: false } }
+                {
+                    notificationOptions: {
+                        successNotificationsOn: false,
+                        errorNotificationsOn: false,
+                    },
+                }
             );
         });
     });
@@ -36,9 +41,14 @@ describe("cms utils", () => {
         it("should call post with release note params", async () => {
             await getReleaseNotes();
             expect(apiService.postRequest).toBeCalledWith(
-                vars.wordPressApiUrl,
+                apis.wordPressApiUrl,
                 { query: GetReleaseNotesQuery, variables: undefined },
-                { notificationOptions: { notificationsOn: false } }
+                {
+                    notificationOptions: {
+                        successNotificationsOn: false,
+                        errorNotificationsOn: false,
+                    },
+                }
             );
         });
     });

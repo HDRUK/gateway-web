@@ -1,4 +1,4 @@
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { ReleaseNotesResponse } from "@/interfaces/Releases";
 import { postRequest } from "@/services/api/post";
@@ -8,12 +8,17 @@ const fetchFromCMS = async <T>(
     { variables }: Record<string, unknown> = {}
 ): Promise<T> => {
     return await postRequest<T>(
-        vars.wordPressApiUrl || "",
+        apis.wordPressApiUrl || "",
         {
             query,
             variables,
         },
-        { notificationOptions: { notificationsOn: false } }
+        {
+            notificationOptions: {
+                successNotificationsOn: false,
+                errorNotificationsOn: false,
+            },
+        }
     );
 };
 

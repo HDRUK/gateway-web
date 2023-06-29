@@ -3,7 +3,7 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import { getUserFromToken } from "@/utils/cookies";
+
 import Link from "@/components/Link";
 import { useRouter } from "next/router";
 
@@ -42,15 +42,10 @@ const TeamLandingPage = () => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-    req,
-    locale,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     return {
         props: {
-            user: getUserFromToken(req.cookies),
             ...(await loadServerSideLocales(locale)),
-            isProtected: true,
         },
     };
 };

@@ -1,6 +1,6 @@
-interface SignUp {
+interface SignIn {
     password: string;
     email: string;
 }
 
-export type { SignUp };
+export type { SignIn };

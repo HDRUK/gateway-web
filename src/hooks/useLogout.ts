@@ -1,16 +1,17 @@
 import { useRouter } from "next/router";
 import { getRequest } from "@/services/api/get";
-import vars from "@/config/vars";
+import apis from "@/config/apis";
+import { useSWRConfig } from "swr";
 
 const useLogout = () => {
     const router = useRouter();
+    const { mutate } = useSWRConfig();
 
     return async () => {
-        await getRequest(vars.logoutInternalUrl, {
-            notificationOptions: {
-                notificationsOn: false,
-            },
+        await getRequest(apis.logoutInternalUrl, {
+            notificationOptions: { errorNotificationsOn: false },
         });
+        mutate(apis.authInternalUrl, { data: undefined });
         router.push("/");
     };
 };

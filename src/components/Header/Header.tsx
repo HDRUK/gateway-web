@@ -20,7 +20,6 @@ function Header() {
                         <MenuIcon color="primary" />
                     </IconButton>
                     <Link href="/" css={styles.homeLogo}>
-                        {" "}
                         <Image
                             src="/images/logos/gateway-main.svg"
                             priority

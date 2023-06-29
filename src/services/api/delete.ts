@@ -4,12 +4,16 @@ import { errorNotification, successNotification } from "./utils";
 
 const deleteRequest = async (url: string, options: RequestOptions) => {
     const { axiosOptions = {}, notificationOptions } = options;
-    const { notificationsOn = true, ...props } = notificationOptions;
+    const {
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
+        ...props
+    } = notificationOptions;
 
     return http
         .delete(url, axiosOptions)
         .then(res => {
-            if (notificationsOn) {
+            if (successNotificationsOn) {
                 successNotification({
                     method: "delete",
                     props,
@@ -18,7 +22,7 @@ const deleteRequest = async (url: string, options: RequestOptions) => {
             return res.data;
         })
         .catch(error => {
-            if (notificationsOn) {
+            if (errorNotificationsOn) {
                 errorNotification({
                     errorResponse: error.response,
                     props,

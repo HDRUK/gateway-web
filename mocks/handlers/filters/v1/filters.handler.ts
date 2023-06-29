@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 import { Filter } from "@/interfaces/Filter";
 import { filtersV1, filterV1 } from "@/mocks/data";
 import { errorResponseV1 } from "@/mocks/data/api/v1";
@@ -9,7 +9,7 @@ interface GetResponse {
 }
 
 const getFiltersV1 = (data = filtersV1, status = 200) => {
-    return rest.get(vars.filtersV1Url, (req, res, ctx) => {
+    return rest.get(apis.filtersV1Url, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),
@@ -25,7 +25,7 @@ interface PostResponse {
 }
 
 const postFilterV1 = (data = filterV1, status = 200) => {
-    return rest.post(vars.filtersV1Url, (req, res, ctx) => {
+    return rest.post(apis.filtersV1Url, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),
@@ -41,7 +41,7 @@ interface PutResponse {
 }
 
 const putFilterV1 = (data = filterV1, status = 200) => {
-    return rest.put(`${vars.filtersV1Url}/:id`, (req, res, ctx) => {
+    return rest.put(`${apis.filtersV1Url}/:id`, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),
@@ -57,7 +57,7 @@ interface DeleteResponse {
 }
 
 const deleteFilterV1 = (status = 200) => {
-    return rest.delete(`${vars.filtersV1Url}/:id`, (req, res, ctx) => {
+    return rest.delete(`${apis.filtersV1Url}/:id`, (req, res, ctx) => {
         if (status !== 200) {
             return res(ctx.status(status), ctx.json(errorResponseV1(status)));
         }

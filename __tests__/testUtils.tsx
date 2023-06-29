@@ -9,9 +9,6 @@ import {
 } from "@testing-library/react";
 import { SWRConfig } from "swr";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
-import AuthProvider from "@/providers/Auth";
-import { userV1 } from "@/mocks/data";
-import { User } from "@/interfaces/User";
 import ActionBarProvider from "@/providers/ActionBar";
 import DialogProvider from "../src/providers/Dialog";
 import theme from "../src/config/theme";
@@ -19,7 +16,7 @@ import createEmotionCache from "../src/config/createEmotionCache";
 
 const clientSideEmotionCache = createEmotionCache();
 
-const Wrapper = ({ children, user }: { user?: User; children: ReactNode }) => {
+const Wrapper = ({ children }: { children: ReactNode }) => {
     return (
         <SWRConfig
             value={{
@@ -27,19 +24,13 @@ const Wrapper = ({ children, user }: { user?: User; children: ReactNode }) => {
             }}>
             <CacheProvider value={clientSideEmotionCache}>
                 <ThemeProvider theme={theme}>
-                    <AuthProvider user={user}>
-                        <ActionBarProvider>
-                            <DialogProvider>{children}</DialogProvider>
-                        </ActionBarProvider>
-                    </AuthProvider>
+                    <ActionBarProvider>
+                        <DialogProvider>{children}</DialogProvider>
+                    </ActionBarProvider>
                 </ThemeProvider>
             </CacheProvider>
         </SWRConfig>
     );
-};
-
-Wrapper.defaultProps = {
-    user: userV1,
 };
 
 interface OptionProps

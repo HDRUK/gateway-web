@@ -30,7 +30,7 @@ const formFields = [
 ];
 
 export {
-    defaultValues as signUpDefaultValues,
-    validationSchema as signUpValidationSchema,
-    formFields as signUpFormFields,
+    defaultValues as signInDefaultValues,
+    validationSchema as signInValidationSchema,
+    formFields as signInFormFields,
 };
