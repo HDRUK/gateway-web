@@ -1,3 +1,4 @@
+import { colors } from "@/config/theme";
 import { css } from "@emotion/react";
 
 export const squareButton = (theme, color) =>
@@ -14,7 +15,7 @@ export const squareButton = (theme, color) =>
         "&:hover": {
             // eslint-disable-next-line security/detect-object-injection
             backgroundColor: theme.palette[color].main,
-            color: theme.palette.colors.white,
-            fill: theme.palette.colors.white,
+            color: colors.white,
+            fill: colors.white,
         },
     });

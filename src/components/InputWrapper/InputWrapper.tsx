@@ -1,4 +1,5 @@
-import React from "react";
+import React, { ElementType } from "react";
+import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import Select from "../Select";
 import { SelectProps } from "../Select/Select";
 import TextArea from "../TextArea";
@@ -10,13 +11,6 @@ import { CheckboxProps } from "../Checkbox/Checkbox";
 import CheckboxRow from "../CheckboxRow";
 import { CheckboxRowProps } from "../CheckboxRow/CheckboxRow";
 
-type ComponentTypes =
-    | "CheckboxRow"
-    | "Checkbox"
-    | "TextField"
-    | "Select"
-    | "TextArea";
-
 type InputType =
     | TextFieldBaseProps
     | SelectProps
@@ -25,15 +19,17 @@ type InputType =
     | CheckboxProps;
 
 interface InputWrapperProps {
+    customComponent?: ElementType;
     component: ComponentTypes;
 }
 
 type CombinedProps = InputType & InputWrapperProps;
 
 const InputWrapper = ({ component, ...props }: CombinedProps) => {
-    if (props.customComponent) {
-        const CustomComponent = props.customComponent;
-        return <CustomComponent {...props} />;
+    const { customComponent, ...rest } = props;
+    if (customComponent) {
+        const CustomComponent = customComponent;
+        return <CustomComponent {...rest} />;
     }
 
     const inputs = {
@@ -44,13 +40,17 @@ const InputWrapper = ({ component, ...props }: CombinedProps) => {
         TextArea,
     };
 
-    const Component = inputs[component as ComponentTypes];
+    const Component = inputs[component as ComponentTypes] as ElementType;
 
     if (!Component) {
         throw Error(`${component} is not a valid input component`);
     }
 
-    return <Component {...props} />;
+    return <Component {...rest} />;
+};
+
+InputWrapper.defaultProps = {
+    customComponent: null,
 };
 
 export default InputWrapper;

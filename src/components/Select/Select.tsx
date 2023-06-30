@@ -8,9 +8,9 @@ import {
     MenuItem,
 } from "@mui/material";
 
-import { useTheme } from "@emotion/react";
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
+import { colors } from "@/config/theme";
 import Label from "../Label";
 import MenuItemContent from "../SelectMenuItem/SelectMenuItem";
 
@@ -60,8 +60,6 @@ const Select = (props: SelectProps) => {
         invertListItem,
     } = props;
 
-    const theme = useTheme();
-
     const {
         field: { ref, ...fieldProps },
         fieldState: { error },
@@ -77,14 +75,16 @@ const Select = (props: SelectProps) => {
                 htmlFor="outlined-adornment-amount"
                 label={label}
                 sx={{
-                    ...(disabled && { color: theme.palette.colors.grey600 }),
+                    ...(disabled && {
+                        color: colors.grey600,
+                    }),
                 }}
             />
             {info && (
                 <FormHelperText
                     sx={{
                         fontSize: 13,
-                        color: theme.palette.colors.grey700,
+                        color: colors.grey700,
                     }}>
                     {info}
                 </FormHelperText>
@@ -108,7 +108,7 @@ const Select = (props: SelectProps) => {
                         color="secondary"
                         sx={{
                             ...(invertListItem && {
-                                background: theme.palette.primary.main,
+                                background: theme => theme.palette.primary.main,
                                 color: "white",
                             }),
                         }}

@@ -1,5 +1,6 @@
 import SocialProviders from "@/modules/profile/SocialProviders";
 import * as yup from "yup";
+import { inputComponents } from ".";
 
 const defaultValues = {
     firstname: "",
@@ -34,20 +35,20 @@ const formFields = [
     {
         label: "First name",
         name: "firstname",
-        component: "TextField",
+        component: inputComponents.TextField,
         required: true,
     },
     {
         label: "Last name",
         name: "lastname",
-        component: "TextField",
+        component: inputComponents.TextField,
         required: true,
     },
     {
         label: "Primary email",
         info: "Please enter your primary email address as this will be used for all contact from Health Data Research no matter how you choose to sign in",
         name: "email",
-        component: "TextField",
+        component: inputComponents.TextField,
         required: true,
     },
     {
@@ -60,43 +61,43 @@ const formFields = [
         info: "Select one of the sectors your work falls under below",
         name: "sector_id",
         options: [],
-        component: "Select",
+        component: inputComponents.Select,
         required: true,
     },
     {
         label: "Organisation",
         info: "Please specify your affiliation or company",
         name: "organisation",
-        component: "TextField",
+        component: inputComponents.TextField,
     },
     {
         label: "Bio",
         info: "Please provide a short description of who you are",
         name: "bio",
-        component: "TextArea",
+        component: inputComponents.TextArea,
         limit: 500,
     },
     {
         label: "Domain",
         info: "Add any keywords that describe your organisation and role. E.g. clinician, epilepsy",
         name: "domain",
-        component: "TextField",
+        component: inputComponents.TextField,
     },
     {
         label: "Link",
         info: "Social media, research gate, anywhere that people can go to find out more about you",
         name: "link",
-        component: "TextField",
+        component: inputComponents.TextField,
     },
     {
         label: "ORCID",
         name: "orcid",
-        component: "TextField",
+        component: inputComponents.TextField,
     },
     {
         label: "I agree to the HDRUK Terms and Conditions",
         name: "terms",
-        component: "Checkbox",
+        component: inputComponents.Checkbox,
         required: true,
     },
 ];
@@ -106,13 +107,13 @@ const contactFormFields = [
         title: "Feedback",
         label: "I am happy to be contacted to share and give feedback on my experience with the Gateway",
         name: "contact_feedback",
-        component: "CheckboxRow",
+        component: inputComponents.CheckboxRow,
     },
     {
         title: "News",
         label: "I want to receive news, updates and curated marketing from the Gateway",
         name: "contact_news",
-        component: "CheckboxRow",
+        component: inputComponents.CheckboxRow,
     },
 ];
 
