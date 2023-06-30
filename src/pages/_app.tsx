@@ -9,12 +9,10 @@ import { appWithTranslation } from "next-i18next";
 import { SnackbarProvider } from "notistack";
 import { ErrorBoundary } from "react-error-boundary";
 import theme from "@/config/theme";
-import AuthRouteCheck from "@/components/AuthRouteCheck";
 import Layout from "@/components/Layout";
 import "@/styles/global.css";
 import { ApiError } from "@/components/CustomNotifications";
 import DialogProvider from "@/providers/Dialog";
-import AuthProvider from "@/providers/Auth";
 import ActionBarProvider from "@/providers/ActionBar";
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -34,7 +32,6 @@ const App = ({
     emotionCache = clientSideEmotionCache,
     pageProps,
 }: MyAppProps) => {
-    const { isProtected, user } = pageProps;
     return (
         <SWRConfig
             value={{
@@ -48,25 +45,18 @@ const App = ({
                     <CssBaseline />
                     <DialogProvider>
                         <ActionBarProvider>
-                            <AuthProvider user={user}>
-                                <Layout>
-                                    <ErrorBoundary
-                                        fallback={
-                                            <div>Something went wrong</div>
-                                        }
-                                        onError={logError}>
-                                        <SnackbarProvider
-                                            Components={{
-                                                apiError: ApiError,
-                                            }}
-                                        />
-                                        <AuthRouteCheck
-                                            isProtected={isProtected}>
-                                            <Component {...pageProps} />
-                                        </AuthRouteCheck>
-                                    </ErrorBoundary>
-                                </Layout>
-                            </AuthProvider>
+                            <Layout>
+                                <ErrorBoundary
+                                    fallback={<div>Something went wrong</div>}
+                                    onError={logError}>
+                                    <SnackbarProvider
+                                        Components={{
+                                            apiError: ApiError,
+                                        }}
+                                    />
+                                    <Component {...pageProps} />
+                                </ErrorBoundary>
+                            </Layout>
                         </ActionBarProvider>
                     </DialogProvider>
                 </ThemeProvider>

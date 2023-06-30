@@ -1,4 +1,4 @@
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 import { rest } from "msw";
 
 interface Response {
@@ -6,7 +6,7 @@ interface Response {
 }
 
 const getLogoutInternal = (status = 200) => {
-    return rest.get(vars.logoutInternalUrl, (req, res, ctx) => {
+    return rest.get(apis.logoutInternalUrl, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),

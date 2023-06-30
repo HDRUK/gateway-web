@@ -5,12 +5,10 @@ interface AuthToken {
     user: User;
 }
 
-const getUserFromToken = (
-    cookies: Partial<{ [key: string]: string }>
-): null | User => {
-    if (!cookies?.token) return null;
-    const { user } = jwtDecode<AuthToken>(cookies.token);
-    return user;
+const getUserFromToken = (token: string | undefined): null | User => {
+    if (!token) return null;
+    const response = jwtDecode<AuthToken>(token);
+    return response?.user;
 };
 
 export { getUserFromToken };

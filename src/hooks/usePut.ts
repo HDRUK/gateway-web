@@ -16,7 +16,14 @@ const usePut = <T extends { id?: number }>(
     const { mutate } = useSWRConfig();
     const { data } = useGet(options?.paginationKey || url);
     const { t, i18n } = useTranslation("api");
-    const { localeKey, itemName, action, ...mutatorOptions } = options || {};
+    const {
+        localeKey,
+        itemName,
+        action,
+        successNotificationsOn,
+        errorNotificationsOn,
+        ...mutatorOptions
+    } = options || {};
 
     ThrowPaginationError(options);
 
@@ -28,6 +35,8 @@ const usePut = <T extends { id?: number }>(
                     notificationOptions: {
                         localeKey,
                         itemName,
+                        successNotificationsOn,
+                        errorNotificationsOn,
                         t,
                         i18n,
                         action,

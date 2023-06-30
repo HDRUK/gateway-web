@@ -1,4 +1,4 @@
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 import { generateNumber } from "@/mocks/data/generic";
 import apiService from "@/services/api";
 import * as apiUtils from "@/services/api/utils";
@@ -22,10 +22,11 @@ const translationProps = {
 describe("delete", () => {
     it("should return the DELETE payload api success", async () => {
         const response = await apiService.deleteRequest(
-            `${vars.filtersV1Url}/${generateNumber()}`,
+            `${apis.filtersV1Url}/${generateNumber()}`,
             {
                 notificationOptions: {
-                    notificationsOn: false,
+                    successNotificationsOn: false,
+                    errorNotificationsOn: false,
                     ...translationProps,
                 },
             }
@@ -36,11 +37,10 @@ describe("delete", () => {
     });
     it("should call the success notification on api success", async () => {
         await apiService.deleteRequest(
-            `${vars.filtersV1Url}/${generateNumber()}`,
+            `${apis.filtersV1Url}/${generateNumber()}`,
             {
                 notificationOptions: {
                     ...translationProps,
-                    notificationsOn: true,
                 },
             }
         );
@@ -52,10 +52,9 @@ describe("delete", () => {
     it("should call the error notification on api error", async () => {
         server.use(deleteFilterV1(401));
         await apiService.deleteRequest(
-            `${vars.filtersV1Url}/${generateNumber()}`,
+            `${apis.filtersV1Url}/${generateNumber()}`,
             {
                 notificationOptions: {
-                    notificationsOn: true,
                     ...translationProps,
                 },
             }

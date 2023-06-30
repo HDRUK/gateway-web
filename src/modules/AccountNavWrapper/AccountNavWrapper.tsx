@@ -3,8 +3,8 @@
 import { useTranslation } from "next-i18next";
 import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
-import SignInDialog from "@/modules/dialogs/SignInDialog";
-import { Box } from "@mui/material";
+import ProvidersDialog from "@/modules/dialogs/ProvidersDialog";
+import { Box, CircularProgress } from "@mui/material";
 import AccountNav from "@/modules/AccountNav";
 import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -15,16 +15,13 @@ import useLogout from "@/hooks/useLogout";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();
-
+    const logout = useLogout();
+    const theme = useTheme();
+    const { t } = useTranslation("components");
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
-    const logout = useLogout();
-
-    const theme = useTheme();
-    const { t } = useTranslation("components");
-
-    const { isLoggedIn, user } = useAuth();
+    const { isLoggedIn, user, isLoading } = useAuth();
 
     const handleOpenNav = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElement(event.currentTarget);
@@ -33,6 +30,10 @@ const AccountNavWrapper = () => {
     const handleLogout = () => {
         logout();
     };
+
+    if (isLoading) {
+        return <CircularProgress color="secondary" />;
+    }
 
     if (isLoggedIn) {
         return (
@@ -51,7 +52,6 @@ const AccountNavWrapper = () => {
                         <ArrowDropDownIcon color="primary" />
                     </Button>
                 </Box>
-
                 <AccountNav
                     anchorElement={anchorElement}
                     onCloseMenu={() => setAnchorElement(null)}
@@ -66,7 +66,7 @@ const AccountNavWrapper = () => {
             size="small"
             variant="outlined"
             color="secondary"
-            onClick={() => showDialog(SignInDialog)}>
+            onClick={() => showDialog(ProvidersDialog)}>
             {t("HeaderNav.labels.signIn")}
         </Button>
     );

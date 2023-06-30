@@ -19,18 +19,18 @@ import { User } from "@/interfaces/User";
 import KeepingUpdated from "@/modules/profile/KeepingUpdated";
 import Loading from "@/components/Loading";
 import useAuth from "@/hooks/useAuth";
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 
 const ProfileForm = () => {
     const { user } = useAuth();
     const { data: profile, isLoading: isUserLoading } = useGet<User>(
-        `${vars.usersV1Url}/${user?.id}`
+        `${apis.usersV1Url}/${user?.id}`
     );
-    const updateProfile = usePut<User>(`${vars.usersV1Url}/${user?.id}`, {
+    const updateProfile = usePut<User>(`${apis.usersV1Url}/${user?.id}`, {
         itemName: "Profile",
     });
     const { data: sectors = [], isLoading: isSectorLoading } = useGet<Sector[]>(
-        vars.sectorsV1Url
+        apis.sectorsV1Url
     );
 
     const hydratedFormFields = useMemo(

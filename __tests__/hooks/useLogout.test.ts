@@ -1,6 +1,6 @@
 import * as apiService from "@/services/api/get";
 import useLogout from "@/hooks/useLogout";
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 
 import { act } from "react-dom/test-utils";
 import { useRouter } from "next/router";
@@ -31,9 +31,11 @@ describe("useLogout", () => {
 
         await waitFor(() => {
             expect(apiService.getRequest).toBeCalledWith(
-                vars.logoutInternalUrl,
+                apis.logoutInternalUrl,
                 {
-                    notificationOptions: { notificationsOn: false },
+                    notificationOptions: {
+                        errorNotificationsOn: false,
+                    },
                 }
             );
             expect(pushMock).toBeCalledWith("/");

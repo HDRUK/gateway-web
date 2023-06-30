@@ -1,18 +1,23 @@
+import apis from "@/config/apis";
 import { User } from "@/interfaces/User";
-import { useContext } from "react";
-import { GlobalAuthContext } from "@/providers/Auth/AuthProvider";
+import useGet from "./useGet";
 
 interface AuthResponse {
     user: User | undefined;
+    isLoading: boolean;
     isLoggedIn: boolean;
 }
 
 const useAuth = (): AuthResponse => {
-    const { user, isLoggedIn } = useContext(GlobalAuthContext);
+    const { isLoading, data } = useGet<{
+        isLoggedIn: boolean;
+        user?: User;
+    }>(apis.authInternalUrl);
 
     return {
-        isLoggedIn,
-        user,
+        isLoading,
+        user: data?.user,
+        isLoggedIn: !!data?.isLoggedIn,
     };
 };
 

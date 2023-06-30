@@ -1,67 +1,65 @@
 import * as React from "react";
 import MuiDialogContent from "@mui/material/DialogContent";
-import vars from "@/config/vars";
 
-import Link from "@/components/Link";
 import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
 import Dialog from "@/components/Dialog";
-
-interface LinkItem {
-    label: string;
-    href: string;
-}
+import MuiDialogActions from "@mui/material/DialogActions";
+import ModalButtons from "@/components/ModalButtons";
+import Box from "@/components/Box";
+import InputWrapper from "@/components/InputWrapper";
+import {
+    signInDefaultValues,
+    signInFormFields,
+    signInValidationSchema,
+} from "@/config/forms/signIn";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SignIn } from "@/interfaces/SignIn";
+import useSignIn from "@/hooks/useSignIn";
 
 const SignInDialog = () => {
     const { t } = useTranslation("modules");
+    const signIn = useSignIn();
 
-    const providerLinks: LinkItem[] = [
-        {
-            label: t("dialogs.SignInDialog.socialProviders.azure"),
-            href: vars.authAzureV1Url,
-        },
-        {
-            label: t("dialogs.SignInDialog.socialProviders.linkedIn"),
-            href: vars.authLinkedinV1Url,
-        },
-        {
-            label: t("dialogs.SignInDialog.socialProviders.google"),
-            href: vars.authGoogleV1Url,
-        },
-    ];
+    const { control, handleSubmit, getValues } = useForm<SignIn>({
+        resolver: yupResolver(signInValidationSchema),
+        defaultValues: { ...signInDefaultValues },
+    });
+
+    const onFormSubmit = async (data: SignIn) => {
+        await signIn(data);
+    };
 
     return (
         <Dialog title={t("dialogs.SignInDialog.title")}>
-            <MuiDialogContent>
-                <p>
-                    Anyone can search and view datasets, collections and other
-                    resources with or without an account. Creating an account
-                    allows you to:
-                </p>
-
-                <ul>
-                    <li>Submit data access enquiries and applications</li>
-                    <li>
-                        Add your own collections, papers and other resources
-                    </li>
-                    <li>Use the Cohort Discovery advanced search tool</li>
-                </ul>
-                <p>
-                    You can sign in or create a Gateway account with any of the
-                    organisations below, simply click your preferred
-                    organisation and follow the on-screen instructions:
-                </p>
-                <ul
-                    style={{
-                        listStyle: "none",
-                        marginLeft: 0,
-                    }}>
-                    {providerLinks.map(link => (
-                        <li key={link.href}>
-                            <Link href={link.href}>{link.label}</Link>
-                        </li>
+            <Box
+                onSubmit={handleSubmit(onFormSubmit)}
+                component="form"
+                sx={{
+                    p: 0,
+                    "& .MuiTextField-root": {
+                        m: 1,
+                        display: "flex",
+                        width: "25ch",
+                    },
+                }}>
+                <MuiDialogContent>
+                    {signInFormFields.map(field => (
+                        <InputWrapper
+                            getValues={getValues}
+                            key={field.name}
+                            control={control}
+                            {...field}
+                        />
                     ))}
-                </ul>
-            </MuiDialogContent>
+                </MuiDialogContent>
+                <MuiDialogActions>
+                    <ModalButtons
+                        confirmText={t("dialogs.SignInDialog.button") || ""}
+                        confirmType="submit"
+                    />
+                </MuiDialogActions>
+            </Box>
         </Dialog>
     );
 };

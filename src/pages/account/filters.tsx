@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 import { Filter } from "@/interfaces/Filter";
 import { generateFilterV1 } from "@/mocks/data";
 import useGet from "@/hooks/useGet";
@@ -9,7 +9,7 @@ import usePost from "@/hooks/usePost";
 import Button from "@/components/Button";
 import usePut from "@/hooks/usePut";
 import useDelete from "@/hooks/useDelete";
-import { getUserFromToken } from "@/utils/cookies";
+
 import Pagination from "@/components/Pagination";
 import { useState, useMemo } from "react";
 import FilterPagination from "@/modules/FilterPagination";
@@ -29,7 +29,7 @@ function Account() {
     const [pageNumber, setPageNumber] = useState(1);
 
     const paginationKey = useMemo(
-        () => `${vars.filtersV1Url}?page=${pageNumber}`,
+        () => `${apis.filtersV1Url}?page=${pageNumber}`,
         [pageNumber]
     );
 
@@ -39,18 +39,19 @@ function Account() {
 
     const { lastPage, nextPageUrl } = data || {};
 
-    const createFilter = usePost<Filter>(vars.filtersV1Url, {
+    const createFilter = usePost<Filter>(apis.filtersV1Url, {
         withPagination: true,
         paginationKey,
+        data,
     });
 
-    const updateFilter = usePut<Filter>(vars.filtersV1Url, {
+    const updateFilter = usePut<Filter>(apis.filtersV1Url, {
         itemName,
         withPagination: true,
         paginationKey,
     });
 
-    const deleteFilter = useDelete(vars.filtersV1Url, {
+    const deleteFilter = useDelete(apis.filtersV1Url, {
         localeKey,
         withPagination: true,
         paginationKey,
@@ -120,15 +121,10 @@ function Account() {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-    locale,
-    req,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     return {
         props: {
-            user: getUserFromToken(req.cookies),
             ...(await loadServerSideLocales(locale)),
-            isProtected: true,
         },
     };
 };

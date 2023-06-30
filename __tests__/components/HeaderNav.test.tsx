@@ -1,11 +1,14 @@
 import React from "react";
 import HeaderNav from "@/modules/HeaderNav";
 import { userV1 } from "@/mocks/data";
+import { server } from "@/mocks/server";
+import { getAuthInternal } from "@/mocks/handlers/auth";
 import { fireEvent, render, screen, waitFor } from "../testUtils";
 
 describe("HeaderNav", () => {
     it("should render logged out component", async () => {
-        render(<HeaderNav />, { wrapperProps: { user: null } });
+        server.use(getAuthInternal(null));
+        render(<HeaderNav />);
 
         await waitFor(() => {
             expect(
@@ -49,12 +52,15 @@ describe("HeaderNav", () => {
     });
 
     it("on click of sign-in button, opens up sign-in dialog modal", async () => {
-        render(<HeaderNav />, { wrapperProps: { user: null } });
+        server.use(getAuthInternal(null));
+        render(<HeaderNav />);
 
         await waitFor(() => {
             fireEvent.click(screen.getByText("HeaderNav.labels.signIn"));
             expect(
-                screen.getByText("dialogs.SignInDialog.socialProviders.google")
+                screen.getByText(
+                    "dialogs.ProvidersDialog.socialProviders.google"
+                )
             ).toBeInTheDocument();
         });
     });

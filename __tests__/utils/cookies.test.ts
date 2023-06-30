@@ -9,11 +9,11 @@ jest.mock("jwt-decode", () => () => ({ user: generatedUser }));
 describe("cookies", () => {
     describe("getUserFromToken", () => {
         it("should return null if no token present", () => {
-            const user = getUserFromToken({});
+            const user = getUserFromToken(undefined);
             expect(user).toBeNull();
         });
         it("should return user", () => {
-            const user = getUserFromToken({ token: "encryptedTokenValue" });
+            const user = getUserFromToken("encryptedTokenValue");
             expect(user).toEqual(generatedUser);
         });
     });

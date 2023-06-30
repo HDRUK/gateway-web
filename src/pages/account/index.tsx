@@ -3,7 +3,6 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import BoxContainer from "@/components/BoxContainer";
 import Box from "@/components/Box";
-import { getUserFromToken } from "@/utils/cookies";
 
 function Account() {
     return (
@@ -36,15 +35,10 @@ function Account() {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-    locale,
-    req,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     return {
         props: {
-            user: getUserFromToken(req.cookies),
             ...(await loadServerSideLocales(locale)),
-            isProtected: true,
         },
     };
 };

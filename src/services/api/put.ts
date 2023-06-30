@@ -8,12 +8,16 @@ const putRequest = async <T>(
     options: RequestOptions
 ): Promise<T> => {
     const { axiosOptions = {}, notificationOptions } = options;
-    const { notificationsOn = true, ...props } = notificationOptions;
+    const {
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
+        ...props
+    } = notificationOptions;
 
     return await http
         .put(url, data, axiosOptions)
         .then(res => {
-            if (notificationsOn) {
+            if (successNotificationsOn) {
                 successNotification({
                     method: "put",
                     props,
@@ -22,7 +26,7 @@ const putRequest = async <T>(
             return res.data?.data;
         })
         .catch(error => {
-            if (notificationsOn) {
+            if (errorNotificationsOn) {
                 errorNotification({
                     errorResponse: error.response,
                     props,

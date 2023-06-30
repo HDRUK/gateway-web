@@ -34,6 +34,7 @@ function HeaderNav() {
                     </Link>
                 ))}
             </Box>
+
             <AccountNavWrapper />
         </>
     );

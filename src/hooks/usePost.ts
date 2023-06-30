@@ -7,13 +7,19 @@ import {
     postMutateData,
     postOptimisticData,
 } from "@/utils/api";
-import useGet from "./useGet";
 
 const usePost = <T>(url: string, options?: HttpOptions) => {
     const { mutate } = useSWRConfig();
-    const { data } = useGet(options?.paginationKey || url);
     const { t, i18n } = useTranslation("api");
-    const { localeKey, itemName, action, ...mutatorOptions } = options || {};
+    const {
+        localeKey,
+        itemName,
+        action,
+        successNotificationsOn,
+        errorNotificationsOn,
+        data = {},
+        ...mutatorOptions
+    } = options || {};
 
     ThrowPaginationError(options);
 
@@ -28,6 +34,8 @@ const usePost = <T>(url: string, options?: HttpOptions) => {
                         notificationOptions: {
                             localeKey,
                             itemName,
+                            successNotificationsOn,
+                            errorNotificationsOn,
                             t,
                             i18n,
                             action,
