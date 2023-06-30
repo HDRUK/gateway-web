@@ -1,15 +1,24 @@
 import Box from "@/components/Box";
-import CheckboxRow from "@/components/CheckboxRow";
+import InputWrapper from "@/components/InputWrapper";
+import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { Divider, Typography } from "@mui/material";
 import { Fragment } from "react";
-import { Control } from "react-hook-form";
+import { Control, FieldValues } from "react-hook-form";
 
-interface KeepingUpdatedProps {
-    control: Control;
-    fields: { title: string; label: string; name: string; component: string }[];
+interface KeepingUpdatedProps<T extends FieldValues> {
+    control: Control<T>;
+    fields: {
+        title: string;
+        label: string;
+        name: string;
+        component: ComponentTypes;
+    }[];
 }
 
-const KeepingUpdated = ({ control, fields }: KeepingUpdatedProps) => {
+function KeepingUpdated<T extends FieldValues>({
+    control,
+    fields,
+}: KeepingUpdatedProps<T>) {
     return (
         <Box sx={{ padding: 0 }}>
             <Divider />
@@ -24,7 +33,7 @@ const KeepingUpdated = ({ control, fields }: KeepingUpdatedProps) => {
             {fields.map(field => (
                 <Fragment key={field.name}>
                     <Divider />
-                    <CheckboxRow control={control} {...field} />
+                    <InputWrapper control={control} {...field} />
                 </Fragment>
             ))}
 
@@ -38,6 +47,6 @@ const KeepingUpdated = ({ control, fields }: KeepingUpdatedProps) => {
             </Typography>
         </Box>
     );
-};
+}
 
 export default KeepingUpdated;

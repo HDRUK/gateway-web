@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { inputComponents } from ".";
 
 const defaultValues = {
     email: "",
@@ -16,14 +17,14 @@ const formFields = [
     {
         label: "Email",
         name: "email",
-        component: "TextField",
+        component: inputComponents.TextField,
         type: "email",
         required: true,
     },
     {
         label: "Password",
         name: "password",
-        component: "TextField",
+        component: inputComponents.TextField,
         type: "password",
         required: true,
     },

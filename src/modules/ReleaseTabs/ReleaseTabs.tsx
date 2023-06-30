@@ -1,7 +1,6 @@
 import Tabs from "@/components/Tabs";
 import { useMemo, useState } from "react";
 import { Typography } from "@mui/material";
-import { useTheme } from "@emotion/react";
 import Accordion from "@/components/Accordion";
 import { ReleaseNode } from "@/interfaces/Releases";
 
@@ -40,7 +39,6 @@ const IntroContent = () => (
 );
 
 const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
-    const theme = useTheme();
     const [expanded, setExpanded] = useState<string | null>(null);
     const [selectedTab, setSelectedTab] = useState("2023");
 
@@ -84,7 +82,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
             };
             return hydratedReleases;
         });
-    }, [allReleases, expanded, theme.palette.colors.grey500]);
+    }, [allReleases, expanded]);
 
     return (
         <Tabs

@@ -1,4 +1,4 @@
-import { useTheme } from "@emotion/react";
+import { colors } from "@/config/theme";
 import { Typography, Box } from "@mui/material";
 import { useMemo } from "react";
 
@@ -8,8 +8,6 @@ interface CharacterLimitProps {
 }
 
 const CharacterLimit = ({ limit, count }: CharacterLimitProps) => {
-    const theme = useTheme();
-
     const countValue = useMemo(() => limit - count, [limit, count]);
 
     return (
@@ -19,10 +17,10 @@ const CharacterLimit = ({ limit, count }: CharacterLimitProps) => {
                 display: "flex",
                 justifyContent: "space-between",
             }}>
-            <Typography color={theme.palette.colors.grey500} fontSize={13}>
+            <Typography color={colors.grey500} fontSize={13}>
                 {limit} character limit
             </Typography>
-            <Typography color={theme.palette.colors.grey500} fontSize={13}>
+            <Typography color={colors.grey500} fontSize={13}>
                 ({countValue}/{limit})
             </Typography>
         </Box>
