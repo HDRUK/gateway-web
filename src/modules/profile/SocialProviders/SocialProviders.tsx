@@ -2,10 +2,10 @@
 
 import Box from "@/components/Box";
 import Label from "@/components/Label";
-import { useTheme } from "@emotion/react";
 
 import Image from "next/image";
 
+import { colors } from "@/config/theme";
 import * as styles from "./SocialProviders.styles";
 
 interface SocialProvidersProps {
@@ -15,8 +15,6 @@ interface SocialProvidersProps {
 }
 
 const SocialProviders = ({ label, getValues, name }: SocialProvidersProps) => {
-    const theme = useTheme();
-
     const socialProviders = [
         { label: "Google", value: "google", image: "google-logo.png" },
         { label: "LinkedIn", value: "linkedIn", image: "linkedIn-logo.png" },
@@ -34,7 +32,7 @@ const SocialProviders = ({ label, getValues, name }: SocialProvidersProps) => {
                             background: "white",
                             opacity:
                                 getValues(name) === provider.value ? 1 : 0.5,
-                            border: `2px solid ${theme.palette.colors.grey400}`,
+                            border: `2px solid ${colors.grey400}`,
                             borderRadius: "4px",
                             display: "flex",
                             gap: "12px",
@@ -52,7 +50,7 @@ const SocialProviders = ({ label, getValues, name }: SocialProvidersProps) => {
                             height="20"
                         />
                         {getValues(name) === provider.value && (
-                            <span css={styles.dot(theme)} />
+                            <span css={styles.dot} />
                         )}
                         <div>Sign in with {provider.label}</div>
                     </Box>

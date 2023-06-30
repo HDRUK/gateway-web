@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Cancel";
 
-import { useTheme } from "@emotion/react";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Control, useController } from "react-hook-form";
 import { useMemo } from "react";
+import { colors } from "@/config/theme";
 import Label from "../Label";
 import CharacterLimit from "../CharacterLimit";
 
@@ -56,7 +56,6 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
         ...inputProps
     } = props;
 
-    const theme = useTheme();
     const Icon = icon;
     const {
         field: { ref, ...fieldProps },
@@ -94,14 +93,16 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
                 htmlFor="outlined-adornment-amount"
                 label={label}
                 sx={{
-                    ...(disabled && { color: theme.palette.colors.grey600 }),
+                    ...(disabled && {
+                        color: colors.grey600,
+                    }),
                 }}
             />
             {info && (
                 <FormHelperText
                     sx={{
                         fontSize: 13,
-                        color: theme.palette.colors.grey700,
+                        color: colors.grey700,
                     }}>
                     {info}
                 </FormHelperText>

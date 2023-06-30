@@ -8,15 +8,14 @@ import { Box, CircularProgress } from "@mui/material";
 import AccountNav from "@/modules/AccountNav";
 import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useTheme } from "@emotion/react";
 import InitialsBadge from "@/components/InitialsBadge";
 import useAuth from "@/hooks/useAuth";
 import useLogout from "@/hooks/useLogout";
+import { colors } from "@/config/theme";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();
     const logout = useLogout();
-    const theme = useTheme();
     const { t } = useTranslation("components");
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -44,7 +43,7 @@ const AccountNavWrapper = () => {
                         disableRipple
                         sx={{
                             marginLeft: "5px",
-                            color: theme.palette.colors.grey800,
+                            color: colors.grey800,
                         }}
                         variant="text"
                         onClick={handleOpenNav}>

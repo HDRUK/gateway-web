@@ -27,7 +27,7 @@ declare module "@mui/material/styles" {
     }
 }
 
-const colors = {
+export const colors = {
     white: "#fff",
     orange: "#FE9A2D",
     green400: "#3DB28C",
@@ -62,7 +62,6 @@ const palette = {
         main: colors.red700,
     },
     background: { default: "#f6f7f8" },
-    colors,
 };
 
 const theme = createTheme({
@@ -114,7 +113,7 @@ const theme = createTheme({
                             textTransform: "initial",
                         },
                         "&.MuiTab-root.Mui-selected": {
-                            color: palette.colors.grey900,
+                            color: colors.grey900,
                         },
                     };
                 },
@@ -211,7 +210,7 @@ const theme = createTheme({
                         },
                     "&.MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline":
                         {
-                            borderColor: palette.colors.grey400,
+                            borderColor: colors.grey400,
                         },
                 },
             },
@@ -219,7 +218,7 @@ const theme = createTheme({
         MuiCheckbox: {
             styleOverrides: {
                 root: {
-                    color: palette.colors.grey400,
+                    color: colors.grey400,
                     "&.MuiCheckbox-colorError": {
                         color: palette.error.main,
                     },
