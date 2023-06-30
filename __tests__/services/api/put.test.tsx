@@ -1,4 +1,4 @@
-import config from "@/config";
+import apis from "@/config/apis";
 import { Filter } from "@/interfaces/Filter";
 import { filterV1, generateFilterV1 } from "@/mocks/data";
 import apiService from "@/services/api";
@@ -24,12 +24,13 @@ describe("put", () => {
     it("should return the PUT payload on api success", async () => {
         const payload = generateFilterV1();
         const response = await apiService.putRequest<Filter>(
-            `${config.filtersV1Url}/${payload.id}`,
+            `${apis.filtersV1Url}/${payload.id}`,
             payload,
             {
                 notificationOptions: {
                     ...translationProps,
-                    notificationsOn: false,
+                    successNotificationsOn: false,
+                    errorNotificationsOn: false,
                 },
             }
         );
@@ -40,12 +41,11 @@ describe("put", () => {
     it("should call the success notification on api success", async () => {
         const payload = generateFilterV1();
         await apiService.putRequest<Filter>(
-            `${config.filtersV1Url}/${payload.id}`,
+            `${apis.filtersV1Url}/${payload.id}`,
             payload,
             {
                 notificationOptions: {
                     ...translationProps,
-                    notificationsOn: true,
                 },
             }
         );
@@ -58,12 +58,11 @@ describe("put", () => {
         server.use(putFilterV1(undefined, 401));
         const payload = generateFilterV1();
         await apiService.putRequest<Filter>(
-            `${config.filtersV1Url}/${payload.id}`,
+            `${apis.filtersV1Url}/${payload.id}`,
             payload,
             {
                 notificationOptions: {
                     ...translationProps,
-                    notificationsOn: true,
                 },
             }
         );

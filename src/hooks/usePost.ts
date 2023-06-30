@@ -1,43 +1,52 @@
-import { MutatorOptions, useSWRConfig } from "swr";
+import { useSWRConfig } from "swr";
 import apiService from "@/services/api";
 import { useTranslation } from "next-i18next";
-import { ReactNode } from "react";
-import useGet from "./useGet";
+import { HttpOptions } from "@/interfaces/Api";
+import {
+    ThrowPaginationError,
+    postMutateData,
+    postOptimisticData,
+} from "@/utils/api";
 
-interface Options extends MutatorOptions {
-    localeKey?: string;
-    itemName?: string;
-    action?: ReactNode;
-}
-
-const usePost = <T>(key: string, options?: Options) => {
+const usePost = <T>(url: string, options?: HttpOptions) => {
     const { mutate } = useSWRConfig();
-    const { data } = useGet(key);
     const { t, i18n } = useTranslation("api");
-    const { localeKey, itemName, action, ...mutatorOptions } = options || {};
+    const {
+        localeKey,
+        itemName,
+        action,
+        successNotificationsOn,
+        errorNotificationsOn,
+        data = {},
+        ...mutatorOptions
+    } = options || {};
+
+    ThrowPaginationError(options);
 
     return (payload: Omit<T, "id">) => {
         mutate(
-            key,
+            options?.paginationKey || url,
             async () => {
-                const id = await apiService.postRequest(key, payload, {
-                    notificationOptions: {
-                        localeKey,
-                        itemName,
-                        t,
-                        i18n,
-                        action,
-                    },
-                });
-                return Array.isArray(data)
-                    ? [...data, { ...payload, id }]
-                    : { ...payload, id };
+                const id: string | number = await apiService.postRequest(
+                    url,
+                    payload,
+                    {
+                        notificationOptions: {
+                            localeKey,
+                            itemName,
+                            successNotificationsOn,
+                            errorNotificationsOn,
+                            t,
+                            i18n,
+                            action,
+                        },
+                    }
+                );
+                return postMutateData({ options, data, payload, id });
             },
             {
                 // data to immediately update the client cache
-                optimisticData: Array.isArray(data)
-                    ? [...data, { ...payload }]
-                    : { ...payload },
+                optimisticData: postOptimisticData({ options, data, payload }),
                 rollbackOnError: true,
                 ...mutatorOptions,
             }

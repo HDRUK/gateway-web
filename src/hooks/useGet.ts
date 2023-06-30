@@ -13,16 +13,17 @@ interface Response<T> {
 
 interface Options {
     localeKey?: string;
+    withPagination?: boolean;
     itemName?: string;
     action?: ReactNode;
 }
 
-const useGet = <T>(key: string, options?: Options): Response<T> => {
+const useGet = <T>(url: string, options?: Options): Response<T> => {
     const { t, i18n } = useTranslation("api");
     const { localeKey, itemName, action } = options || {};
 
-    const { data, error, mutate, isLoading } = useSWR<T>(key, () =>
-        apiService.getRequest(key, {
+    const { data, error, mutate, isLoading } = useSWR<T>(url, () => {
+        return apiService.getRequest(url, {
             notificationOptions: {
                 localeKey,
                 itemName,
@@ -30,8 +31,9 @@ const useGet = <T>(key: string, options?: Options): Response<T> => {
                 i18n,
                 action,
             },
-        })
-    );
+            withPagination: options?.withPagination,
+        });
+    });
 
     return {
         error,

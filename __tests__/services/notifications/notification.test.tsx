@@ -11,6 +11,10 @@ describe("Notification Service", () => {
         notificationService.apiError("mockMessage");
         expect(notistack.enqueueSnackbar).toBeCalledWith("mockMessage", {
             action: expect.any(Function),
+            anchorOrigin: {
+                horizontal: "right",
+                vertical: "top",
+            },
             persist: "true",
             variant: "apiError",
         });
@@ -19,6 +23,10 @@ describe("Notification Service", () => {
     it("should call correct props for `error` notification", () => {
         notificationService.error("mockMessage");
         expect(notistack.enqueueSnackbar).toBeCalledWith("mockMessage", {
+            anchorOrigin: {
+                horizontal: "right",
+                vertical: "top",
+            },
             variant: "error",
         });
     });
@@ -26,6 +34,10 @@ describe("Notification Service", () => {
     it("should call correct props for `success` notification", () => {
         notificationService.success("mockMessage");
         expect(notistack.enqueueSnackbar).toBeCalledWith("mockMessage", {
+            anchorOrigin: {
+                horizontal: "right",
+                vertical: "top",
+            },
             variant: "success",
         });
     });
@@ -33,6 +45,10 @@ describe("Notification Service", () => {
     it("should call correct props for `warning` notification", () => {
         notificationService.warning("mockMessage");
         expect(notistack.enqueueSnackbar).toBeCalledWith("mockMessage", {
+            anchorOrigin: {
+                horizontal: "right",
+                vertical: "top",
+            },
             variant: "warning",
         });
     });
@@ -40,6 +56,10 @@ describe("Notification Service", () => {
     it("should call correct props for `info` notification", () => {
         notificationService.info("mockMessage");
         expect(notistack.enqueueSnackbar).toBeCalledWith("mockMessage", {
+            anchorOrigin: {
+                horizontal: "right",
+                vertical: "top",
+            },
             variant: "info",
         });
     });

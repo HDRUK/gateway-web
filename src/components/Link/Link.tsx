@@ -1,16 +1,15 @@
 import NextLink from "next/link";
 import MuiLink from "@mui/material/Link";
-import { TypographyProps } from "@mui/material";
+import { LinkProps as MuiLinkProps } from "@mui/material";
 
-interface LinkProps extends TypographyProps {
+interface LinkProps extends MuiLinkProps {
     href: string;
-    label: string;
 }
 
-const Link = ({ href, label, variant }: LinkProps) => {
+const Link = ({ href, children, variant, ...props }: LinkProps) => {
     return (
-        <MuiLink href={href} component={NextLink} variant={variant}>
-            {label}
+        <MuiLink href={href} component={NextLink} variant={variant} {...props}>
+            {children}
         </MuiLink>
     );
 };

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Stack from "@mui/material/Stack";
-import Button from "./Button";
+import React from "react";
+import Button, { ButtonProps } from "./Button";
 
 const meta: Meta<typeof Button> = {
     component: Button,
@@ -10,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Playground = (args: unknown) => <Button {...args} />;
+export const Playground = (args: ButtonProps) => <Button {...args} />;
 Playground.args = {
     children: "I'm a button",
 };
@@ -43,6 +44,7 @@ export const Variant: Story = {
             <Button variant="contained">Contained</Button>
             <Button variant="outlined">Outlined</Button>
             <Button variant="text">Text</Button>
+            <Button variant="link">Link</Button>
         </Stack>
     ),
 };

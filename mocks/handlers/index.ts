@@ -5,6 +5,8 @@ import {
     putFilterV1,
     deleteFilterV1,
 } from "./filters";
+import { getLogoutV1, getLogoutInternal } from "./logout";
+import { getAuthInternal } from "./auth";
 
 export const handlers = [
     getUserV1(),
@@ -12,4 +14,7 @@ export const handlers = [
     postFilterV1(),
     putFilterV1(),
     deleteFilterV1(),
+    getLogoutV1(),
+    getLogoutInternal(),
+    getAuthInternal(),
 ];

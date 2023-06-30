@@ -8,21 +8,25 @@ const postRequest = async <T>(
     options: RequestOptions
 ): Promise<T> => {
     const { axiosOptions = {}, notificationOptions } = options;
-    const { notificationsOn = true, ...props } = notificationOptions;
+    const {
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
+        ...props
+    } = notificationOptions;
 
     return await http
         .post(url, data, axiosOptions)
         .then(res => {
-            if (notificationsOn) {
+            if (successNotificationsOn) {
                 successNotification({
                     method: "post",
                     props,
                 });
             }
-            return res.data?.data;
+            return res.data?.data || res;
         })
         .catch(error => {
-            if (notificationsOn) {
+            if (errorNotificationsOn) {
                 errorNotification({
                     errorResponse: error.response,
                     props,

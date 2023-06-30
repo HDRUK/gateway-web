@@ -1,4 +1,4 @@
-import config from "@/config";
+import apis from "@/config/apis";
 import { Filter } from "@/interfaces/Filter";
 import { filtersV1 } from "@/mocks/data";
 import apiService from "@/services/api";
@@ -6,10 +6,11 @@ import apiService from "@/services/api";
 describe("get", () => {
     it("should return filters", async () => {
         const response = await apiService.getRequest<Filter[]>(
-            config.filtersV1Url,
+            apis.filtersV1Url,
             {
                 notificationOptions: {
-                    notificationsOn: false,
+                    successNotificationsOn: false,
+                    errorNotificationsOn: false,
                     t: jest.fn(),
                     i18n: expect.any(Function),
                 },

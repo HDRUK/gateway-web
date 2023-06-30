@@ -8,6 +8,13 @@ import {
     RenderHookResult,
 } from "@testing-library/react";
 import { SWRConfig } from "swr";
+import { CacheProvider, ThemeProvider } from "@emotion/react";
+import ActionBarProvider from "@/providers/ActionBar";
+import DialogProvider from "../src/providers/Dialog";
+import theme from "../src/config/theme";
+import createEmotionCache from "../src/config/createEmotionCache";
+
+const clientSideEmotionCache = createEmotionCache();
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
     return (
@@ -15,35 +22,61 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
             value={{
                 provider: () => new Map(),
             }}>
-            {children}
+            <CacheProvider value={clientSideEmotionCache}>
+                <ThemeProvider theme={theme}>
+                    <ActionBarProvider>
+                        <DialogProvider>{children}</DialogProvider>
+                    </ActionBarProvider>
+                </ThemeProvider>
+            </CacheProvider>
         </SWRConfig>
     );
 };
+
+interface OptionProps
+    extends RenderOptions<
+        typeof import("@testing-library/dom/types/queries"),
+        HTMLElement,
+        HTMLElement
+    > {
+    wrapperProps: Record<string, unknown>;
+}
 
 const customRender = (
     ui: React.ReactElement<
         unknown,
         string | React.JSXElementConstructor<unknown>
     >,
-    options?: RenderOptions<
+    options?: OptionProps
+): RenderResult => {
+    const { wrapperProps, ...rest } = options || {};
+
+    return render(ui, {
+        wrapper: props => <Wrapper {...props} {...wrapperProps} />,
+        ...rest,
+    });
+};
+
+interface OptionHookProps
+    extends RenderHookOptions<
+        unknown,
         typeof import("@testing-library/dom/types/queries"),
         HTMLElement,
         HTMLElement
-    >
-): RenderResult => render(ui, { wrapper: Wrapper, ...options });
+    > {
+    wrapperProps: Record<string, unknown>;
+}
 
 const customRenderHook = (
     ui: (initialProps: unknown) => unknown,
-    options?:
-        | RenderHookOptions<
-              unknown,
-              typeof import("@testing-library/dom/types/queries"),
-              HTMLElement,
-              HTMLElement
-          >
-        | undefined
-): RenderHookResult<unknown, unknown> =>
-    renderHook(ui, { wrapper: Wrapper, ...options });
+    options?: OptionHookProps
+): RenderHookResult<unknown, unknown> => {
+    const { wrapperProps, ...rest } = options || {};
+    return renderHook(ui, {
+        wrapper: props => <Wrapper {...props} {...wrapperProps} />,
+        ...rest,
+    });
+};
 
 export * from "@testing-library/react";
 
