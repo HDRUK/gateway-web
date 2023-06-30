@@ -4,8 +4,12 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import ProfileForm from "@/modules/profile/ProfileForm";
+import useAuth from "@/hooks/useAuth";
+import { CircularProgress } from "@mui/material";
 
 const Profile = () => {
+    const { isLoading } = useAuth();
+
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My account - Profile" />
@@ -32,7 +36,11 @@ const Profile = () => {
                         Your details are used when you make a data access
                         request application.
                     </p>
-                    <ProfileForm />
+                    {isLoading ? (
+                        <CircularProgress color="secondary" />
+                    ) : (
+                        <ProfileForm />
+                    )}
                 </Box>
             </BoxContainer>
         </>

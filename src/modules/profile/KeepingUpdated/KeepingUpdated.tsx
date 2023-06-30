@@ -1,5 +1,5 @@
 import Box from "@/components/Box";
-import CheckboxRow from "@/components/CheckboxRow";
+import InputWrapper from "@/components/InputWrapper";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { Divider, Typography } from "@mui/material";
 import { Fragment } from "react";
@@ -33,7 +33,7 @@ function KeepingUpdated<T extends FieldValues>({
             {fields.map(field => (
                 <Fragment key={field.name}>
                     <Divider />
-                    <CheckboxRow control={control} {...field} />
+                    <InputWrapper control={control} {...field} />
                 </Fragment>
             ))}
 

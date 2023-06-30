@@ -30,7 +30,7 @@ exports[`KeepingUpdated should render content 1`] = `
         <label
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-k156ro-MuiFormControlLabel-root"
         >
-          <checkboxrow
+          <span
             class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-root MuiCheckbox-colorSecondary mui-style-1l6qy21-MuiButtonBase-root-MuiCheckbox-root"
           >
             <input
@@ -50,7 +50,7 @@ exports[`KeepingUpdated should render content 1`] = `
                 d="M19 5v14H5V5h14m2-2H3v18h18V3z"
               />
             </svg>
-          </checkboxrow>
+          </span>
           <span
             class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-qcxu8i-MuiTypography-root"
           >

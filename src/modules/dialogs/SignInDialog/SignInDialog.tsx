@@ -45,7 +45,7 @@ const SignInDialog = () => {
                 }}>
                 <MuiDialogContent>
                     {signInFormFields.map(field => (
-                        <InputWrapper
+                        <InputWrapper<SignIn>
                             getValues={getValues}
                             key={field.name}
                             control={control}

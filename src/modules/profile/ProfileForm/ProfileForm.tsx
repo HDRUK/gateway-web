@@ -18,15 +18,12 @@ import usePut from "@/hooks/usePut";
 import { User } from "@/interfaces/User";
 import KeepingUpdated from "@/modules/profile/KeepingUpdated";
 import Loading from "@/components/Loading";
-import useAuth from "@/hooks/useAuth";
 import apis from "@/config/apis";
+import useAuth from "@/hooks/useAuth";
 
 const ProfileForm = () => {
     const { user } = useAuth();
-    const { data: profile, isLoading: isUserLoading } = useGet<User>(
-        `${apis.usersV1Url}/${user?.id}`
-    );
-    const updateProfile = usePut<User>(`${apis.usersV1Url}/${user?.id}`, {
+    const updateProfile = usePut<User>(apis.usersV1Url, {
         itemName: "Profile",
     });
     const { data: sectors = [], isLoading: isSectorLoading } = useGet<Sector[]>(
@@ -52,26 +49,26 @@ const ProfileForm = () => {
 
     const { control, handleSubmit, getValues, reset } = useForm<User>({
         resolver: yupResolver(profileValidationSchema),
-        defaultValues: { ...profileDefaultValues, ...profile },
+        defaultValues: { ...profileDefaultValues, ...user },
     });
 
     const submitForm = (formData: User) => {
-        updateProfile({ ...profile, ...formData });
+        updateProfile({ ...user, ...formData });
     };
 
     useEffect(() => {
-        if (!profile) {
+        if (!user) {
             return;
         }
-        reset(profile);
-    }, [reset, profile]);
+        reset(user);
+    }, [reset, user]);
 
-    if (isUserLoading || isSectorLoading) return <Loading />;
+    if (isSectorLoading) return <Loading />;
 
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
             {hydratedFormFields.map(field => (
-                <InputWrapper
+                <InputWrapper<User>
                     getValues={getValues}
                     key={field.name}
                     control={control}

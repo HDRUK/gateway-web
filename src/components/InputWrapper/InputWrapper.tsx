@@ -1,5 +1,7 @@
 import React, { ElementType } from "react";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
+import { inputComponents } from "@/config/forms";
+import { FieldValues, UseFormGetValues } from "react-hook-form";
 import Select from "../Select";
 import { SelectProps } from "../Select/Select";
 import TextArea from "../TextArea";
@@ -18,18 +20,20 @@ type InputType =
     | CheckboxRowProps
     | CheckboxProps;
 
-interface InputWrapperProps {
+interface InputWrapperProps<T extends FieldValues> {
     customComponent?: ElementType;
     component: ComponentTypes;
+    getValues?: UseFormGetValues<T>;
 }
 
-type CombinedProps = InputType & InputWrapperProps;
-
-const InputWrapper = ({ component, ...props }: CombinedProps) => {
-    const { customComponent, ...rest } = props;
+function InputWrapper<T extends FieldValues>({
+    component,
+    ...props
+}: InputWrapperProps<T> & InputType) {
+    const { customComponent, getValues, ...rest } = props;
     if (customComponent) {
         const CustomComponent = customComponent;
-        return <CustomComponent {...rest} />;
+        return <CustomComponent getValues={getValues} {...rest} />;
     }
 
     const inputs = {
@@ -45,12 +49,17 @@ const InputWrapper = ({ component, ...props }: CombinedProps) => {
     if (!Component) {
         throw Error(`${component} is not a valid input component`);
     }
+    const textProps = {
+        ...((component === inputComponents.TextArea ||
+            component === inputComponents.TextField) && { getValues }),
+    };
 
-    return <Component {...rest} />;
-};
+    return <Component {...textProps} {...rest} />;
+}
 
 InputWrapper.defaultProps = {
     customComponent: null,
+    getValues: undefined,
 };
 
 export default InputWrapper;
