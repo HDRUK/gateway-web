@@ -42,6 +42,7 @@ function Account() {
     const createFilter = usePost<Filter>(apis.filtersV1Url, {
         withPagination: true,
         paginationKey,
+        data,
     });
 
     const updateFilter = usePut<Filter>(apis.filtersV1Url, {
