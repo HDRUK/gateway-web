@@ -298,6 +298,10 @@ const theme = createTheme({
                                 opacity: 1,
                                 border: 0,
                             },
+                            "& .MuiSwitch-input": {
+                                left: "-290%",
+                                width: "400%",
+                            },
                             "&.Mui-disabled + .MuiSwitch-track": {
                                 opacity: 0.5,
                             },
@@ -312,6 +316,10 @@ const theme = createTheme({
                         borderRadius: 26 / 2,
                         backgroundColor: palette.error.main,
                         opacity: 1,
+                    },
+                    "& .MuiSwitch-input": {
+                        width: "400%",
+                        left: "-10%",
                     },
                 },
             },
