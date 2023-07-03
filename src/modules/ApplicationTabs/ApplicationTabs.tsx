@@ -1,5 +1,5 @@
 import Tabs from "@/components/Tabs";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 
@@ -7,7 +7,7 @@ import Box from "@/components/Box";
 import ApplicationForm from "../application/ApplicationForm";
 
 const ApplicationTabs = () => {
-    const theme = useTheme();
+    // const theme = useTheme();
 
     const [selectedTab, setSelectedTab] = useState("App Info");
 
@@ -24,12 +24,12 @@ const ApplicationTabs = () => {
         {
             label: "Auth",
             value: "Auth",
-            content: <><p>Placeholder for Auth Tab</p></>
+            content: <Typography>Placeholder for Auth Tab</Typography>
         },
         {
             label: "Scopes/Permissions",
             value: "Scopes/Permissions",
-            content: <><p>Placeholder for Scopes/Permissions Tab</p></>
+            content: <Typography>Placeholder for Scopes/Permissions Tab</Typography>
         }
     ];
 

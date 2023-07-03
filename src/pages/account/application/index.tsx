@@ -45,9 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
     return {
         props: {
-            user: getUserFromToken(req.cookies),
             ...(await loadServerSideLocales(locale)),
-            isProtected: true,
         },
     };
 };
