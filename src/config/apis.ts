@@ -16,6 +16,7 @@ const apis = {
     filtersV1Url: `${apiV1Url}/filters`,
     sectorsV1Url: `${apiV1Url}/sectors`,
     tagsV1Url: `${apiV1Url}/tags`,
+    applicationsV1Url: `${apiV1Url}/applications`,
     wordPressApiUrl:
         process.env.WORDPRESS_API_URL ||
         "https://wordpresspoc-pljgro4dzq-ew.a.run.app/graphql",

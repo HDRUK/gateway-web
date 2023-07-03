@@ -17,12 +17,12 @@ import { Application } from "@/interfaces/Application";
 import DeleteApplication from "@/modules/application/DeleteApplication";
 // import Loading from "@/components/Loading";
 import useAuth from "@/hooks/useAuth";
-import vars from "@/config/vars";
+import apis from "@/config/apis";
 
 const ApplicationForm = () => {
     const { user } = useAuth();
 
-    const updateApplication = usePost<Application>(`${vars.applicationsV1Url}`, {
+    const updateApplication = usePost<Application>(`${apis.applicationsV1Url}`, {
         itemName: "Application",
     });
 
