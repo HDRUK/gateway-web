@@ -27,7 +27,7 @@ const validationSchema = yup
     })
     .required();
 
-const toggleLabels = {
+const switchLabels = {
     checkedLabel: "On",
     unCheckedLabel: "Off",
 };
@@ -44,8 +44,8 @@ const DummyComp = () => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
-                <Switch {...toggleLabels} control={control} name="first" />
-                <Switch {...toggleLabels} control={control} name="second" />
+                <Switch {...switchLabels} control={control} name="first" />
+                <Switch {...switchLabels} control={control} name="second" />
                 <Button type="submit">Submit</Button>
             </Stack>
         </Form>

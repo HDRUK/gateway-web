@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
 import { Stack, Typography, FormControl, SxProps } from "@mui/material";
-import MuiSwitch, { SwitchProps } from "@mui/material/Switch";
+import MuiSwitch, { SwitchProps as MuiSwitchProps } from "@mui/material/Switch";
 import { Control, useController } from "react-hook-form";
 
-export interface toggleButtonProps extends SwitchProps {
+export interface SwitchProps extends MuiSwitchProps {
     checkedLabel: string;
     unCheckedLabel: string;
     name: string;
@@ -13,7 +13,7 @@ export interface toggleButtonProps extends SwitchProps {
     formControlSx?: SxProps;
 }
 
-const Switch = (props: toggleButtonProps) => {
+const Switch = (props: SwitchProps) => {
     const {
         unCheckedLabel,
         checkedLabel,
