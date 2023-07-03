@@ -12,6 +12,7 @@ function HeaderNav() {
         { label: "Releases", href: "/about/releases" },
         { label: "News", href: "/news" },
         { label: "Community", href: "/community" },
+        { label: "Applications", href: "/account/application" },
     ];
 
     return (
