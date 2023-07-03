@@ -306,6 +306,11 @@ const theme = createTheme({
                                 opacity: 0.5,
                             },
                         },
+
+                        "& .MuiSwitch-input": {
+                            width: "400%",
+                            left: "-10%",
+                        },
                     },
                     "& .MuiSwitch-thumb": {
                         boxSizing: "border-box",
@@ -316,10 +321,6 @@ const theme = createTheme({
                         borderRadius: 26 / 2,
                         backgroundColor: palette.error.main,
                         opacity: 1,
-                    },
-                    "& .MuiSwitch-input": {
-                        width: "400%",
-                        left: "-10%",
                     },
                 },
             },
