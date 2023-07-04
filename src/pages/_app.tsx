@@ -11,7 +11,10 @@ import { ErrorBoundary } from "react-error-boundary";
 import theme from "@/config/theme";
 import Layout from "@/components/Layout";
 import "@/styles/global.css";
-import { ApiError } from "@/components/CustomNotifications";
+import { ApiError } from "@/components/CustomNotifications/ApiError";
+import { ApiSuccess } from "@/components/CustomNotifications/ApiSuccess";
+import { ApiWarning } from "@/components/CustomNotifications/ApiWarning";
+import { ApiInfo } from "@/components/CustomNotifications/ApiInfo";
 import DialogProvider from "@/providers/Dialog";
 import ActionBarProvider from "@/providers/ActionBar";
 
@@ -52,10 +55,18 @@ const App = ({
                                     <SnackbarProvider
                                         Components={{
                                             apiError: ApiError,
+                                            apiSuccess: ApiSuccess,
+                                            apiWarning: ApiWarning,
+                                            apiInfo: ApiInfo,
                                         }}
                                     />
                                     <Component {...pageProps} />
                                 </ErrorBoundary>
+                                {/* <SnackbarProvider
+                                    Components={{
+
+                                    }}
+                                /> */}
                             </Layout>
                         </ActionBarProvider>
                     </DialogProvider>

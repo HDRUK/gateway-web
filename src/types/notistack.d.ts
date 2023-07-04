@@ -5,6 +5,11 @@ declare module "notistack" {
             title: string;
             message: string;
             errors: { title: string; message: string }[];
-        };
+        },
+        apiSuccess: {
+            showDismissButton: boolean;
+            title: string;
+            message: string;
+        },
     }
 }
