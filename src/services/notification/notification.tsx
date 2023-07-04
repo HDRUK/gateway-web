@@ -37,25 +37,24 @@ const success = (
     return notification(message, "success", options);
 };
 
+const apiSuccess = (
+    message: SnackbarKey,
+    options?: OptionsWithExtraProps<VariantType>
+) => {
+    return notification(message, "apiSuccess", {
+        persist: "true",
+        action: (snackbarId: SnackbarKey) => {
+            <DismissButton snackbarId={snackbarId} />
+        },
+        ...options,
+    });
+};
+
 const error = (
     message: SnackbarKey,
     options?: OptionsWithExtraProps<VariantType>
 ) => {
     return notification(message, "error", options);
-};
-
-const warning = (
-    message: SnackbarKey,
-    options?: OptionsWithExtraProps<VariantType>
-) => {
-    return notification(message, "warning", options);
-};
-
-const info = (
-    message: SnackbarKey,
-    options?: OptionsWithExtraProps<VariantType>
-) => {
-    return notification(message, "info", options);
 };
 
 const apiError = (
@@ -71,4 +70,44 @@ const apiError = (
     });
 };
 
-export { apiError, error, success, warning, info };
+const warning = (
+    message: SnackbarKey,
+    options?: OptionsWithExtraProps<VariantType>
+) => {
+    return notification(message, "warning", options);
+};
+
+const apiWarning = (
+    message: SnackbarKey,
+    options?: OptionsWithExtraProps<VariantType>
+) => {
+    return notification(message, "apiWarning", {
+        persist: "true",
+        action: (snackbarId: SnackbarKey) => (
+            <DismissButton snackbarId={snackbarId} />
+        ),
+        ...options,
+    });
+};
+
+const info = (
+    message: SnackbarKey,
+    options?: OptionsWithExtraProps<VariantType>
+) => {
+    return notification(message, "info", options);
+};
+
+const apiInfo = (
+    message: SnackbarKey,
+    options?: OptionsWithExtraProps<VariantType>
+) => {
+    return notification(message, "apiInfo", {
+        persist: "true",
+        action: (snackbarId: SnackbarKey) => (
+            <DismissButton snackbarId={snackbarId} />
+        ),
+        ...options,
+    });
+};
+
+export { apiError, error, apiSuccess, success, apiWarning, warning, apiInfo, info };

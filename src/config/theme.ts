@@ -1,5 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import { buttonLinkStyle } from "./overrides";
+import { cp } from "fs";
 
 declare module "@mui/material/Button" {
     interface ButtonPropsVariantOverrides {
@@ -59,6 +60,12 @@ const palette = {
         main: colors.green400,
     },
     error: {
+        main: colors.red700,
+    },
+    errorBackground: {
+        main: colors.red50,
+    },
+    errorBorder: {
         main: colors.red700,
     },
     background: { default: "#f6f7f8" },
