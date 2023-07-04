@@ -279,6 +279,51 @@ const theme = createTheme({
                 },
             },
         },
+        MuiSwitch: {
+            styleOverrides: {
+                root: {
+                    width: 80,
+                    height: 24,
+                    padding: 0,
+                    "& .MuiSwitch-switchBase": {
+                        padding: 0,
+                        margin: 2,
+                        transitionDuration: "300ms",
+                        "&.Mui-checked": {
+                            transform: "translateX(56px)",
+                            color: colors.white,
+                            "& + .MuiSwitch-track": {
+                                backgroundColor: palette.secondary.main,
+                                opacity: 1,
+                                border: 0,
+                            },
+                            "& .MuiSwitch-input": {
+                                left: "-290%",
+                                width: "400%",
+                            },
+                            "&.Mui-disabled + .MuiSwitch-track": {
+                                opacity: 0.5,
+                            },
+                        },
+
+                        "& .MuiSwitch-input": {
+                            width: "400%",
+                            left: "-10%",
+                        },
+                    },
+                    "& .MuiSwitch-thumb": {
+                        boxSizing: "border-box",
+                        width: 20,
+                        height: 20,
+                    },
+                    "& .MuiSwitch-track": {
+                        borderRadius: 26 / 2,
+                        backgroundColor: palette.error.main,
+                        opacity: 1,
+                    },
+                },
+            },
+        },
     },
 });
 
