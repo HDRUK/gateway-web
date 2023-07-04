@@ -52,7 +52,7 @@ const successNotification = ({ props, method }: SuccessNotificationProps) => {
               item: props.itemName || "Item",
           });
 
-    notificationService.success(message, { ...notificationProps });
+    notificationService.apiSuccess(message, { ...notificationProps });
 };
 
 export { errorNotification, successNotification };
