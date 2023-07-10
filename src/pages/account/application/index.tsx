@@ -28,10 +28,10 @@ const Application = () => {
                 />
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>Application Management</h2>
-                    <p>
-                        Use this page to register your application with use.
-                    </p>
+                    <h2 style={{ marginBottom: "10px" }}>
+                        Application Management
+                    </h2>
+                    <p>Use this page to register your application with use.</p>
                     <ApplicationTabs />
                 </Box>
             </BoxContainer>
