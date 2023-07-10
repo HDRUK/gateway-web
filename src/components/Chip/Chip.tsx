@@ -1,10 +1,10 @@
-import Chip from "@mui/material/Chip";
+import Chip, { ChipProps } from "@mui/material/Chip";
 
-interface ChipProps {
+interface ChipComponentProps extends ChipProps {
     label: string;
 }
 
-const ChipComponent = ({ label, ...rest }: ChipProps) => {
+const ChipComponent = ({ label, ...rest }: ChipComponentProps) => {
     return <Chip label={label} {...rest} />;
 };
 
