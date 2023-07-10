@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { useRouter } from "next/router";
-import MuiLink from "@mui/material/Link";
+import Button from "@/components/Button";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import * as styles from "./BackButton.styles";
 
@@ -13,16 +13,17 @@ const BackButton = ({ label, ...props }: BackButtonProps) => {
     const router = useRouter();
 
     return (
-        <MuiLink
+        <Button
             sx={{
                 verticalAlign: "middle",
             }}
+            variant="link"
             onClick={() => router.back()}
             css={styles.backButton()}
             {...props}>
             <ArrowLeftIcon />
             {label}
-        </MuiLink>
+        </Button>
     );
 };
 

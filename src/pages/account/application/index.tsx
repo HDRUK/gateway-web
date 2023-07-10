@@ -5,6 +5,7 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { getUserFromToken } from "@/utils/cookies";
 import ApplicationTabs from "@/modules/ApplicationTabs";
+import BackButton from "@/components/BackButton";
 
 const Application = () => {
     return (
@@ -21,6 +22,7 @@ const Application = () => {
                         tablet: 1,
                     },
                 }}>
+                <BackButton label="Back..." />
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
