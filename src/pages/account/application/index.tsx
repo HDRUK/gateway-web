@@ -5,6 +5,7 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { getUserFromToken } from "@/utils/cookies";
 import ApplicationTabs from "@/modules/ApplicationTabs";
+import BackButton from "@/components/BackButton";
 
 const Application = () => {
     return (
@@ -21,6 +22,7 @@ const Application = () => {
                         tablet: 1,
                     },
                 }}>
+                <BackButton label="Back..." />
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
@@ -28,10 +30,10 @@ const Application = () => {
                 />
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>Application Management</h2>
-                    <p>
-                        Use this page to register your application with use.
-                    </p>
+                    <h2 style={{ marginBottom: "10px" }}>
+                        Application Management
+                    </h2>
+                    <p>Use this page to register your application with use.</p>
                     <ApplicationTabs />
                 </Box>
             </BoxContainer>
