@@ -6,7 +6,6 @@ import { GetServerSideProps } from "next";
 import ProfileForm from "@/modules/profile/ProfileForm";
 import useAuth from "@/hooks/useAuth";
 import { CircularProgress } from "@mui/material";
-import Chip from "@/components/Chip";
 
 const Profile = () => {
     const { isLoading } = useAuth();
