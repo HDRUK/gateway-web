@@ -29,7 +29,7 @@ const DummyComp = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 20, maxWidth: 240 }}>
                 <Upload
-                    inputRef={register}
+                    {...register("upload")}
                     control={control}
                     label="Upload"
                     name="upload"

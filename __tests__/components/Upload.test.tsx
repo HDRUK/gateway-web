@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { render, screen } from "../testUtils";
 
 describe("Upload", () => {
+    // As we are passing the props as any type, added eslint disable line
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Component = (props: any) => {
         const label = "Upload File";

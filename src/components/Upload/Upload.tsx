@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { FormControl, SxProps } from "@mui/material";
+import { FormControl, FormControlLabel, SxProps } from "@mui/material";
 import Input, { InputProps } from "@mui/material/Input";
 import { Control, useController } from "react-hook-form";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
@@ -29,23 +29,26 @@ const Upload = (props: UploadProps) => {
     return (
         <FormControl
             fullWidth
-            sx={{ m: 0, mb: 2, ...formControlSx }}
+            sx={{ m: 0, mb: 2, width: "110px", ...formControlSx }}
             error={!!error}>
-            <Input
-                id="file-upload"
-                type="file"
-                {...rest}
-                {...fieldProps}
-                inputRef={ref}
-                sx={{ ...uploadSx }}
+            <FormControlLabel
+                control={
+                    <Input
+                        id="file-upload"
+                        type="file"
+                        {...rest}
+                        {...fieldProps}
+                        inputRef={ref}
+                        sx={{ ...uploadSx }}
+                    />
+                }
+                label={
+                    <span css={styles.uploadLabel({ theme })}>
+                        <UploadFileIcon color="primary" />
+                        {label}
+                    </span>
+                }
             />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label htmlFor="file-upload">
-                <span css={styles.uploadLabel({ theme })}>
-                    <UploadFileIcon color="primary" />
-                    {label}
-                </span>
-            </label>
         </FormControl>
     );
 };
