@@ -1,15 +1,17 @@
 import * as yup from "yup";
 
 const defaultValues = {
-    publicAppName: "",
-    tag: "",
+    name: "",
+    image_link: "",
+    tags: [],
     description: "",
 };
 
 const validationSchema = yup
     .object({
-        publicAppName: yup.string().required().label("Public app name"),
-        tag: yup.string().label("Add tag"),
+        name: yup.string().required().label("Name"),
+        image_link: yup.string().required().label("App Logo"),
+        tags: yup.array().label("Tags"),
         description: yup.string().required().label("Description"),
     })
     .required();
@@ -17,23 +19,23 @@ const validationSchema = yup
 const formFields = [
     {
         label: "Public app name",
-        name: "publicAppName",
+        name: "name",
         component: "TextField",
         required: true,
     },
     {
         // Placeholder until component is built
         label: "App logo",
-        name: "logo",
+        name: "image_link",
         component: "TextField",
         required: false,
     },
-    {
-        label: "Add tag",
-        name: "tag",
-        component: "TextField",
-        required: false,
-    },
+    // {
+    //     label: "Add tag",
+    //     name: "tags",
+    //     component: "TextField",
+    //     required: false,
+    // },
     {
         label: "Description",
         name: "description",

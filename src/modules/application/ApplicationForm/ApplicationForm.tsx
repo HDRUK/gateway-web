@@ -10,45 +10,55 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-// import useGet from "@/hooks/useGet";
 import { useEffect, useMemo } from "react";
 import usePost from "@/hooks/usePost";
 import { Application } from "@/interfaces/Application";
 import DeleteApplication from "@/modules/application/DeleteApplication";
-// import Loading from "@/components/Loading";
 import useAuth from "@/hooks/useAuth";
 import apis from "@/config/apis";
+import { useRouter } from "next/router";
+import useGet from "@/hooks/useGet";
+import Loading from "@/components/Loading";
 
 const ApplicationForm = () => {
     const { user } = useAuth();
+    const router = useRouter();
+    const { id } = router.query;
 
-    const updateApplication = usePost<Application>(`${apis.applicationsV1Url}`, {
-        itemName: "Application",
-    });
+    const updateApplication = usePost<Application>(
+        `${apis.applicationsV1Url}`,
+        {
+            itemName: "Application",
+        }
+    );
 
     const hydratedFormFields = useMemo(
         () =>
             applicationFormFields.map(field => {
                 return field;
             }),
-            []
+        []
     );
+
+    const { data: application, isLoading: isApplicationLoading } =
+        useGet<Application>(`${apis.applicationsV1Url}/${id}`);
 
     const { control, handleSubmit, getValues } = useForm<Application>({
         resolver: yupResolver(applicationValidationSchema),
-        defaultValues: { ...applicationDefaultValues },
+        defaultValues: { ...applicationDefaultValues, ...application },
     });
 
     const submitForm = (formData: Application) => {
         updateApplication({ ...applicationDefaultValues, ...formData });
     };
 
-    // useEffect(() => {
-    //     if (!application) {
-    //         return;
-    //     }
-    //     reset(application);
-    // }, [reset, application]);
+    useEffect(() => {
+        if (!application) {
+            return;
+        }
+    }, [application]);
+
+    if (isApplicationLoading) return <Loading />;
 
     return (
         <>
@@ -56,7 +66,9 @@ const ApplicationForm = () => {
                 sx={{
                     display: "flex",
                 }}>
-                <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
+                <Form
+                    sx={{ maxWidth: 1000 }}
+                    onSubmit={handleSubmit(submitForm)}>
                     {hydratedFormFields.map(field => (
                         <InputWrapper
                             getValues={getValues}
