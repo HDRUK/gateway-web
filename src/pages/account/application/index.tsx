@@ -3,9 +3,9 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import { getUserFromToken } from "@/utils/cookies";
 import ApplicationTabs from "@/modules/ApplicationTabs";
 import BackButton from "@/components/BackButton";
+import { Typography } from "@mui/material";
 
 const Application = () => {
     return (
@@ -33,7 +33,9 @@ const Application = () => {
                     <h2 style={{ marginBottom: "10px" }}>
                         Application Management
                     </h2>
-                    <p>Use this page to register your application with use.</p>
+                    <Typography>
+                        Use this page to register your application with us.
+                    </Typography>
                     <ApplicationTabs />
                 </Box>
             </BoxContainer>

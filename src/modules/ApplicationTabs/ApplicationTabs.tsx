@@ -1,9 +1,7 @@
 import Tabs from "@/components/Tabs";
 import { useState } from "react";
 import { Typography } from "@mui/material";
-import { useTheme } from "@emotion/react";
 
-import Box from "@/components/Box";
 import ApplicationForm from "../application/ApplicationForm";
 
 const ApplicationTabs = () => {
@@ -19,18 +17,26 @@ const ApplicationTabs = () => {
         {
             label: "App Info",
             value: "App Info",
-            content: <ApplicationForm />
+            content: <ApplicationForm />,
         },
         {
             label: "Auth",
             value: "Auth",
-            content: <Typography>Placeholder for Auth Tab</Typography>
+            content: (
+                <Typography component="span">
+                    Placeholder for Auth Tab
+                </Typography>
+            ),
         },
         {
             label: "Scopes/Permissions",
             value: "Scopes/Permissions",
-            content: <Typography>Placeholder for Scopes/Permissions Tab</Typography>
-        }
+            content: (
+                <Typography component="span">
+                    Placeholder for Scopes/Permissions Tab
+                </Typography>
+            ),
+        },
     ];
 
     return (
@@ -42,7 +48,7 @@ const ApplicationTabs = () => {
             tabBoxSx={{ padding: 0 }}
             rootBoxSx={{ padding: 0 }}
         />
-    )
+    );
 };
 
 export default ApplicationTabs;

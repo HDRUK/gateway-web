@@ -9,33 +9,30 @@ interface DeleteApplicationProps {
 
 const DeleteApplication = ({ control }: DeleteApplicationProps) => {
     return (
-        <>
-            <Box sx={{ padding: 0 }}>
-                <Divider />
-                <Typography
+        <Box sx={{ padding: 0 }}>
+            <Divider />
+            <Typography
+                component="span"
+                sx={{
+                    fontWeight: "normal",
+                    paddingTop: 2,
+                }}>
+                Delete this app
+            </Typography>
+            <Typography component="span" sx={{ marginTop: 1, marginBottom: 4 }}>
+                Permanently delete this app from your management page. This act is irreversible.
+                <Box
                     sx={{
-                        fontWeight: "normal",
-                        paddingTop: 2,
+                        p: 0,
+                        display: "flex",
+                        justifyContent: "end",
                     }}>
-                    Delete this app
-                </Typography>
-                <Typography sx={{ marginTop: 1, marginBottom: 4 }}>
-                    Permanently delete this app from your management page. This act is irreversible.
-                    <Box
-                        sx={{
-                            p: 0,
-                            display: "flex",
-                            justifyContent: "end",
-                        }}>
-                        <Button
-                            type="submit"
-                            variant="outlined"
-                        >
-                        Delete App</Button>
-                    </Box>
-                </Typography>
-            </Box>
-        </>
+                    <Button type="submit" variant="outlined">
+                        Delete App
+                    </Button>
+                </Box>
+            </Typography>
+        </Box>
     );
 };
 
