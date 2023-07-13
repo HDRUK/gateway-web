@@ -4,8 +4,8 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import ApplicationTabs from "@/modules/ApplicationTabs";
-import BackButton from "@/components/BackButton";
 import { Typography } from "@mui/material";
+import LeftNav from "@/modules/LeftNav";
 
 const Application = () => {
     return (
@@ -13,6 +13,8 @@ const Application = () => {
             <Head title="Health Data Research Innovation Gateway - My account - Applications" />
             <BoxContainer
                 sx={{
+                    // display: "flex",
+                    // justifyContent: "flex-start",
                     gridTemplateColumns: {
                         mobile: "repeat(1, 1fr)",
                         tablet: "repeat(5, 1fr)",
@@ -22,12 +24,10 @@ const Application = () => {
                         tablet: 1,
                     },
                 }}>
-                <BackButton label="Back..." />
                 <Box
-                    sx={{
-                        gridColumn: { tablet: "span 2", laptop: "span 1" },
-                    }}
-                />
+                    sx={{ gridColumn: { tablet: "span 2", laptop: "span 1" } }}>
+                    <LeftNav />
+                </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <h2 style={{ marginBottom: "10px" }}>

@@ -6,6 +6,7 @@ import { GetServerSideProps } from "next";
 import ProfileForm from "@/modules/profile/ProfileForm";
 import useAuth from "@/hooks/useAuth";
 import { CircularProgress } from "@mui/material";
+import LeftNav from "@/modules/LeftNav";
 
 const Profile = () => {
     const { isLoading } = useAuth();
@@ -27,8 +28,9 @@ const Profile = () => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
-                    }}
-                />
+                    }}>
+                    <LeftNav />
+                </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <h2 style={{ marginBottom: "10px" }}>Your profile</h2>
