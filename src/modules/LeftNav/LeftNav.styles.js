@@ -3,7 +3,6 @@ import { css } from "@emotion/react";
 
 export const navBox = css({
     flexGrow: 1,
-    // justifyContent: "flex-start",
     minWidth: "300px",
     display: "grid",
     gridTemplateRows: "repeat(5, 1fr)",

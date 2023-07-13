@@ -10,12 +10,13 @@ import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import ExpandMoreIcon from "@mui/icons-material/ExpandMore"; // Left in for next update for collapsable nav
 
 import * as styles from "./LeftNav.styles";
 
 function LeftNav() {
     const navItems = [
+        // TODO: Update links when pages are available to do so
         { icon: <SettingsOutlinedIcon />, label: "Team Management", href: "#" },
         {
             icon: <FolderSharedOutlinedIcon />,

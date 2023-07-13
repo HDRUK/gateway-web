@@ -13,8 +13,6 @@ const Application = () => {
             <Head title="Health Data Research Innovation Gateway - My account - Applications" />
             <BoxContainer
                 sx={{
-                    // display: "flex",
-                    // justifyContent: "flex-start",
                     gridTemplateColumns: {
                         mobile: "repeat(1, 1fr)",
                         tablet: "repeat(5, 1fr)",
