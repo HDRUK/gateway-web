@@ -11,6 +11,20 @@ export const navBox = css({
     },
 });
 
+export const navBoxMobile = css({
+    flexDirection: "column",
+    marginTop: "75px",
+    position: "absolute",
+    background: "#fff",
+});
+
+export const navLinkWrapper = css({
+    "@media (max-width: 1023px)": {
+        display: "flex",
+        flexDirection: "column",
+    },
+});
+
 export const navItem = css({
     display: "flex",
     justifyContent: "center",
@@ -19,6 +33,13 @@ export const navItem = css({
     marginRight: "25px",
     cursor: "pointer",
     fontSize: "14px",
+    ":hover": {
+        background: "tranparent",
+    },
+    "@media (max-width: 1023px)": {
+        justifyContent: "space-between",
+        width: "100%",
+    },
 });
 
 export const navLink = css({
@@ -26,4 +47,5 @@ export const navLink = css({
     marginRight: "25px",
     textDecoration: "none",
     fontSize: "14px",
+    padding: "6px 8px",
 });
