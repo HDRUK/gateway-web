@@ -34,7 +34,7 @@ export const navItem = css({
     cursor: "pointer",
     fontSize: "14px",
     ":hover": {
-        background: "tranparent",
+        background: "transparent",
     },
     "@media (max-width: 1023px)": {
         justifyContent: "space-between",

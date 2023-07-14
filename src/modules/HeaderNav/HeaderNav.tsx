@@ -54,7 +54,7 @@ function HeaderNav({ showNavList }: HeaderNavProps) {
     );
     const [subMenu, setSubMenu] = useState<
         undefined | { label: string; href: string }[]
-    >([]);
+    >();
 
     const handleOpenNav = (
         event: React.MouseEvent<HTMLElement>,
