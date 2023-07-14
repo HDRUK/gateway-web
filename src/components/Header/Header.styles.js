@@ -16,6 +16,15 @@ export const toolbar = css({
     padding: "0",
 });
 
+export const menuWrapper = css({
+    display: "flex",
+    flexDirection: "row",
+    position: "relative",
+    "@media (max-width: 1023px)": {
+        flexDirection: "column",
+    },
+});
+
 export const homeLogo = css({
     marginRight: "40px",
     height: "50px",

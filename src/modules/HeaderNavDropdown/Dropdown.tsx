@@ -1,37 +1,19 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@/components/Link";
-import Button from "@/components/Button";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
-const links = [
-    { label: "Profile", href: "/account/profile" },
-    { label: "Team 1", href: "/account/team/team-1" },
-];
-
-interface AccountNavProps {
+interface DropdownProps {
     onCloseMenu: () => void;
-    onLogout: () => void;
     anchorElement: null | HTMLElement;
+    dropMenus: { label: string; href: string }[];
 }
 
-const AccountNav = ({
-    anchorElement,
-    onCloseMenu,
-    onLogout,
-}: AccountNavProps) => {
+const Dropdown = ({ onCloseMenu, anchorElement, dropMenus }: DropdownProps) => {
     const handleCloseUserMenu = () => {
         if (typeof onCloseMenu === "function") {
             onCloseMenu();
         }
     };
-
-    const handleLogout = () => {
-        if (typeof onLogout === "function") {
-            onLogout();
-        }
-    };
-
     return (
         <Menu
             PaperProps={{
@@ -39,6 +21,11 @@ const AccountNav = ({
                 sx: {
                     overflow: "visible",
                     mt: 1.5,
+                    "@media (max-width: 1023px)": {
+                        position: "absolute",
+                        marginLeft: "142px",
+                        mt: "-37px",
+                    },
                     "& .MuiAvatar-root": {
                         width: 32,
                         height: 32,
@@ -61,29 +48,23 @@ const AccountNav = ({
             }}
             id="account-nav"
             anchorEl={anchorElement}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            transformOrigin={{ horizontal: "left", vertical: "top" }}
+            anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
             onClose={handleCloseUserMenu}
             open={Boolean(anchorElement)}>
-            {links.map(link => (
-                <Link key={link.label} underline="hover" href={link.href}>
+            {dropMenus.map(link => (
+                <Link key={link.label} href={link.href}>
                     <MenuItem
                         sx={{ width: 220 }}
                         key={link.label}
                         LinkComponent={Link}
                         onClick={handleCloseUserMenu}>
-                        <ChevronLeftIcon />
                         {link.label}
                     </MenuItem>
                 </Link>
             ))}
-            <Button variant="link">
-                <MenuItem sx={{ width: 220 }} onClick={handleLogout}>
-                    Logout
-                </MenuItem>
-            </Button>
         </Menu>
     );
 };
 
-export default AccountNav;
+export default Dropdown;
