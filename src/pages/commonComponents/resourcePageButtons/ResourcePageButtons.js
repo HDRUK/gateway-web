@@ -23,13 +23,13 @@ const ResourcePageButtons = props => {
             ((props.data.authors && props.data.authors.includes(props.userState[0].id)) ||
                 (props.data.creator && props.data.creator[0].id === props.userState[0].id) ||
                 isRootAdmin) ? (
-                <Button
+                <a
                     data-testid='action-bar-edit'
                     variant='secondary'
                     href={`/${type}/edit/${props.data.id}`}
                     className='techDetailButton mr-2'>
                     Edit
-                </Button>
+                </a>
             ) : (
                 ''
             )}
