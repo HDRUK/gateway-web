@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from 'hdruk-react-core';
 import { useAuth } from 'context/AuthContext';
+import { Link } from 'react-router-dom';
 import AddToCollection from '../addToCollection/AddToCollection';
 
 const ResourcePageButtons = props => {
@@ -23,13 +24,14 @@ const ResourcePageButtons = props => {
             ((props.data.authors && props.data.authors.includes(props.userState[0].id)) ||
                 (props.data.creator && props.data.creator[0].id === props.userState[0].id) ||
                 isRootAdmin) ? (
-                <a
-                    data-testid='action-bar-edit'
-                    variant='secondary'
-                    href={`/${type}/edit/${props.data.id}`}
-                    className='techDetailButton mr-2'>
-                    Edit
-                </a>
+                    <Link to={`/${type}/edit/${props.data.id}`}>
+                        <Button
+                            data-testid='action-bar-edit'
+                            variant='secondary'
+                            className='techDetailButton mr-2'>
+                            Edit
+                        </Button>
+                    </Link>
             ) : (
                 ''
             )}
