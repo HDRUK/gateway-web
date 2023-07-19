@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - 'dev'
-      - 
+      - 'GAT-2588'
 
 env:
   PROJECT_ID: '${{ secrets.PROJECT_ID }}'
