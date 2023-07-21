@@ -15,7 +15,7 @@ jest.mock("@/services/notification/notification", () => {
         ...jest.requireActual("@/services/notification/notification"),
         apiError: jest.fn(),
         error: jest.fn(),
-        success: jest.fn(),
+        apiSuccess: jest.fn(),
         warning: jest.fn(),
         info: jest.fn(),
         __esModule: true,
@@ -114,7 +114,7 @@ describe("Api Service - Utils", () => {
                 },
             },
         });
-        expect(notificationService.success).toBeCalledWith(
+        expect(notificationService.apiSuccess).toBeCalledWith(
             "api:common.success.put.message",
             {}
         );
@@ -167,7 +167,7 @@ describe("Api Service - Utils", () => {
                 },
             },
         });
-        expect(notificationService.success).toBeCalledWith(
+        expect(notificationService.apiSuccess).toBeCalledWith(
             "api:aLocaleKey.success.put.message",
             { localeKey: "aLocaleKey" }
         );
