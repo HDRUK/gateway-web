@@ -76,6 +76,12 @@ function HeaderNav({ showNavList }: HeaderNavProps) {
         },
         {
             label: "About us",
+            dropMenus: [
+                {
+                    label: "Our mission and purpose",
+                    href: "/about/our-mission-and-purpose",
+                },
+            ],
         },
     ];
     const navLinks = [
