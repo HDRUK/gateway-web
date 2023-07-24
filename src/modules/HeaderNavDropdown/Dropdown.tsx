@@ -1,11 +1,15 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@/components/Link";
+import { Typography } from "@mui/material";
+import StorageIcon from "@mui/icons-material/Storage";
+import BoxContainer from "@/components/BoxContainer";
+import Box from "@/components/Box";
 
 interface DropdownProps {
     onCloseMenu: () => void;
     anchorElement: null | HTMLElement;
-    dropMenus: { label: string; href: string }[];
+    dropMenus: { label: string; href: string; subtext: string }[];
 }
 
 const Dropdown = ({ onCloseMenu, anchorElement, dropMenus }: DropdownProps) => {
@@ -21,6 +25,8 @@ const Dropdown = ({ onCloseMenu, anchorElement, dropMenus }: DropdownProps) => {
                 sx: {
                     overflow: "visible",
                     mt: 1.5,
+                    border: 1,
+                    padding: "2px",
                     "@media (max-width: 1023px)": {
                         position: "absolute",
                         marginLeft: "142px",
@@ -53,15 +59,31 @@ const Dropdown = ({ onCloseMenu, anchorElement, dropMenus }: DropdownProps) => {
             onClose={handleCloseUserMenu}
             open={Boolean(anchorElement)}>
             {dropMenus.map(link => (
-                <Link key={link.label} href={link.href}>
-                    <MenuItem
-                        sx={{ width: 220 }}
+                <>
+                    <Link
                         key={link.label}
-                        LinkComponent={Link}
-                        onClick={handleCloseUserMenu}>
-                        {link.label}
-                    </MenuItem>
-                </Link>
+                        href={link.href}
+                        sx={{
+                            textDecoration: "none",
+                            color: "#000",
+                        }}>
+                        <MenuItem
+                            sx={{
+                                fontSize: "14pt",
+                            }}
+                            key={link.label}
+                            LinkComponent={Link}
+                            onClick={handleCloseUserMenu}>
+                            <StorageIcon /> &nbsp;{link.label}
+                        </MenuItem>
+                    </Link>
+                    <Typography
+                        sx={{
+                            marginLeft: "5px",
+                        }}>
+                        {link.subtext}
+                    </Typography>
+                </>
             ))}
         </Menu>
     );

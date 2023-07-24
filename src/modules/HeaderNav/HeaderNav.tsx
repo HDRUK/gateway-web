@@ -17,11 +17,55 @@ function HeaderNav({ showNavList }: HeaderNavProps) {
         {
             label: "Explore",
             dropMenus: [
-                { label: "test1", href: "/test1" },
-                { label: "test2", href: "/test2" },
-                { label: "test3", href: "/test2" },
-                { label: "test4", href: "/test2" },
-                { label: "test5", href: "/test2" },
+                {
+                    icon: "",
+                    label: "Datasets",
+                    href: "#",
+                    subtext: "Information about datasets available",
+                },
+                {
+                    icon: "",
+                    label: "Tools",
+                    href: "#",
+                    subtext: "Software, scripts, any useful resources",
+                },
+                {
+                    icon: "",
+                    label: "Projects",
+                    href: "#",
+                    subtext: "Projects approved by data custodians",
+                },
+                {
+                    icon: "",
+                    label: "Papers",
+                    href: "#",
+                    subtext: "Pre-prints, papers and articles",
+                },
+                {
+                    icon: "",
+                    label: "Courses",
+                    href: "#",
+                    subtext: "Courses and qualifications",
+                },
+                {
+                    icon: "",
+                    label: "People",
+                    href: "#",
+                    subtext: "Users with an account on the Gateway",
+                },
+                {
+                    icon: "",
+                    label: "Cohort Discovery",
+                    href: "#",
+                    subtext:
+                        "Remote querying on multiple clinical databases in situ",
+                },
+                {
+                    icon: "",
+                    label: "Data Utility Wizard",
+                    href: "#",
+                    subtext: "Improves accuracy of searches for datasets",
+                },
             ],
         },
         {
