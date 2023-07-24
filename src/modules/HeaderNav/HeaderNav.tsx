@@ -17,11 +17,47 @@ function HeaderNav({ showNavList }: HeaderNavProps) {
         {
             label: "Explore",
             dropMenus: [
-                { label: "test1", href: "/test1" },
-                { label: "test2", href: "/test2" },
-                { label: "test3", href: "/test2" },
-                { label: "test4", href: "/test2" },
-                { label: "test5", href: "/test2" },
+                {
+                    label: "Datasets",
+                    href: "#",
+                    subtext: "Information about datasets available",
+                },
+                {
+                    label: "Tools",
+                    href: "#",
+                    subtext: "Software, scripts, any useful resources",
+                },
+                {
+                    label: "Projects",
+                    href: "#",
+                    subtext: "Projects approved by data custodians",
+                },
+                {
+                    label: "Papers",
+                    href: "#",
+                    subtext: "Pre-prints, papers and articles",
+                },
+                {
+                    label: "Courses",
+                    href: "#",
+                    subtext: "Courses and qualifications",
+                },
+                {
+                    label: "People",
+                    href: "#",
+                    subtext: "Users with an account on the Gateway",
+                },
+                {
+                    label: "Cohort Discovery",
+                    href: "#",
+                    subtext:
+                        "Remote querying on multiple clinical databases in situ",
+                },
+                {
+                    label: "Data Utility Wizard",
+                    href: "#",
+                    subtext: "Improves accuracy of searches for datasets",
+                },
             ],
         },
         {
