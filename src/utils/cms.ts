@@ -1,5 +1,6 @@
 import apis from "@/config/apis";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
+import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
 import { ReleaseNotesResponse } from "@/interfaces/Releases";
 import { postRequest } from "@/services/api/post";
 
@@ -27,4 +28,11 @@ const getReleaseNotes = async () => {
     return data?.posts?.edges || null;
 };
 
-export { fetchFromCMS, getReleaseNotes };
+const getMissionAndPurposes = async () => {
+    const data = await fetchFromCMS<MissionAndPurposesResponse>(
+        GetMissionAndPurposesQuery
+    );
+    return data?.posts?.edges || null;
+};
+
+export { fetchFromCMS, getReleaseNotes, getMissionAndPurposes };
