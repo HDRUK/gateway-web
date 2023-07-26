@@ -7,11 +7,6 @@ import useAuth from "@/hooks/useAuth";
 
 import { useEffect } from "react";
 
-let links = [
-    { label: "Profile", href: "/account/profile" },
-    // { label: "Team 1", href: "/account/team/team-1" },
-];
-
 interface AccountNavProps {
     onCloseMenu: () => void;
     onLogout: () => void;
@@ -23,6 +18,10 @@ const AccountNav = ({
     onCloseMenu,
     onLogout,
 }: AccountNavProps) => {
+    let links = [
+        { id: -99, label: "Profile", href: "/account/profile" },
+    ];
+
     const { user } = useAuth();
 
     const handleCloseUserMenu = () => {
@@ -38,19 +37,18 @@ const AccountNav = ({
     };
 
     useEffect(() => {
-        if (!user.teams) {
+        if (!user) {
             return;
         }
-
-        user.teams.map(team => {
-            if (!links.includes(team.id)) {
-                links.push({
-                    label: team.name,
-                    href: `/account/team/${team.id}`,
-                });
-            }
-        });
     }, [user]);
+
+    user.teams.map(team => {
+        let t = { id: team.id, label: team.name, href: `/account/team/${team.id}` };
+
+        if (!links.includes(t)) {
+            links.push(t);
+        }
+    });
 
     return (
         <Menu
