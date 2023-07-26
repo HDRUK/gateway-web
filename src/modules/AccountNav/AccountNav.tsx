@@ -3,10 +3,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Link from "@/components/Link";
 import Button from "@/components/Button";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import useAuth from "@/hooks/useAuth";
 
-const links = [
+import { useEffect } from "react";
+
+let links = [
     { label: "Profile", href: "/account/profile" },
-    { label: "Team 1", href: "/account/team/team-1" },
+    // { label: "Team 1", href: "/account/team/team-1" },
 ];
 
 interface AccountNavProps {
@@ -20,6 +23,8 @@ const AccountNav = ({
     onCloseMenu,
     onLogout,
 }: AccountNavProps) => {
+    const { user } = useAuth();
+
     const handleCloseUserMenu = () => {
         if (typeof onCloseMenu === "function") {
             onCloseMenu();
@@ -31,6 +36,21 @@ const AccountNav = ({
             onLogout();
         }
     };
+
+    useEffect(() => {
+        if (!user.teams) {
+            return;
+        }
+
+        user.teams.map(team => {
+            if (!links.includes(team.id)) {
+                links.push({
+                    label: team.name,
+                    href: `/account/team/${team.id}`,
+                });
+            }
+        });
+    }, [user]);
 
     return (
         <Menu

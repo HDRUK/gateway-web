@@ -8,6 +8,7 @@ import ActionBar from "@/components/ActionBar";
 import CreateApp from "@/modules/AppManagement/CreateApp";
 import Link from "@/components/Link";
 import { useRouter } from "next/router";
+import LeftNav from "@/modules/LeftNav";
 
 const CreateAppPage = () => {
     const router = useRouter();
@@ -29,10 +30,11 @@ const CreateAppPage = () => {
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
                     }}>
-                    <Link
+                    <LeftNav teamId={router.query.teamId} />
+                    {/* <Link
                         href={`/account/team/${router.query.teamId}/app-management`}>
                         App Management
-                    </Link>
+                    </Link> */}
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
