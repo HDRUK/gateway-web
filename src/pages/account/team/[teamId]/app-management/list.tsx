@@ -7,6 +7,8 @@ import { GetServerSideProps } from "next";
 import ActionBar from "@/components/ActionBar";
 import Link from "@/components/Link";
 import { useRouter } from "next/router";
+import ApplicationList from "@/modules/ApplicationList";
+import LeftNav from "@/modules/LeftNav";
 
 const ListAppPage = () => {
     const router = useRouter();
@@ -28,14 +30,12 @@ const ListAppPage = () => {
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
                     }}>
-                    <Link
-                        href={`/account/team/${router.query.teamId}/app-management`}>
-                        App Management
-                    </Link>
+                    <LeftNav teamId={router.query.teamId} />
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <h2 style={{ marginBottom: "10px" }}>API List</h2>
+                    <ApplicationList />
                 </Box>
             </BoxContainer>
             <ActionBar />

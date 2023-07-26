@@ -3,6 +3,7 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
+import LeftNav from "@/modules/LeftNav";
 
 import Link from "@/components/Link";
 import { useRouter } from "next/router";
@@ -27,10 +28,11 @@ const TeamLandingPage = () => {
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
                     }}>
-                    <Link
+                    <LeftNav teamId={router.query.teamId} />
+                    {/* <Link
                         href={`/account/team/${router.query.teamId}/app-management`}>
-                        App Management
-                    </Link>
+                        
+                    </Link> */}
                 </Box>
                 <Box
                     sx={{

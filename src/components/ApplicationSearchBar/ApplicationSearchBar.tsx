@@ -18,7 +18,7 @@ const ApplicationSearchBar = () => {
                     label=""
                     name="search-apps"
                     style={{
-                        width: "1000px",
+                        width: "800px",
                         alignItems: "center",
                     }}
                 />

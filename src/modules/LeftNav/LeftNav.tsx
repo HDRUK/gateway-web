@@ -14,7 +14,11 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import * as styles from "./LeftNav.styles";
 
-function LeftNav() {
+interface LeftNavProps {
+    teamId?: string | string[] | undefined;
+}
+
+const LeftNav = ({ teamId }: LeftNavProps) => {
     const navItems = [
         // TODO: Update links when pages are available to do so
         { icon: <SettingsOutlinedIcon />, label: "Team Management", href: "#" },
@@ -28,7 +32,10 @@ function LeftNav() {
         {
             icon: <DescriptionOutlinedIcon />,
             label: "Integrations",
-            href: "/account/application",
+            href:
+                teamId === null
+                    ? "null"
+                    : `/account/team/${teamId}/app-management`,
             expandable: true,
         },
         { icon: <HelpOutlineOutlinedIcon />, label: "Help", href: "#" },
@@ -38,23 +45,31 @@ function LeftNav() {
         <Box css={styles.navBox}>
             {navItems.map(item => (
                 <Typography css={styles.navItem}>
-                    {item.icon}
-                    <Link
-                        key={item.label}
-                        href={item.href}
-                        css={styles.navLink}>
-                        {item.label}
-                    </Link>
-                    {item.expandable && (
-                        <ChevronRightIcon
-                            color="primary"
-                            css={styles.expandIcon}
-                        />
+                    {item.href !== "null" && (
+                        <>
+                            {item.icon}
+                            <Link
+                                key={item.label}
+                                href={item.href}
+                                css={styles.navLink}>
+                                {item.label}
+                            </Link>
+                            {item.expandable && (
+                                <ChevronRightIcon
+                                    color="primary"
+                                    css={styles.expandIcon}
+                                />
+                            )}
+                        </>
                     )}
                 </Typography>
             ))}
         </Box>
     );
-}
+};
+
+LeftNav.defaultProps = {
+    teamId: null,
+};
 
 export default LeftNav;

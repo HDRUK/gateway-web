@@ -4,8 +4,11 @@ import AddIcon from "@mui/icons-material/Add";
 import { Typography } from "@mui/material";
 import Link from "@/components/Link";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import { useRouter } from "next/router";
 
 const LandingPage = () => {
+    const router = useRouter();
+
     return (
         <Box
             sx={{
@@ -35,14 +38,14 @@ const LandingPage = () => {
             <Box sx={{ display: "flex", gap: "40px" }}>
                 <Link
                     underline="none"
-                    href="/account/team/team-1/app-management/create">
+                    href={`/account/team/${router.query.teamId}/app-management/create`}>
                     <SquareButton icon={<AddIcon sx={{ fontSize: "41px" }} />}>
                         Create API
                     </SquareButton>
                 </Link>
                 <Link
                     underline="none"
-                    href="/account/team/team-1/app-management/list">
+                    href={`/account/team/${router.query.teamId}/app-management/list`}>
                     <SquareButton>Manage API</SquareButton>
                 </Link>
             </Box>
