@@ -1,5 +1,3 @@
-import { loadServerSideLocales } from "@/utils/locale";
-import { GetServerSideProps } from "next";
 import BackButton from "@/components/BackButton";
 import ApplicationListItem from "@/components/ApplicationListItem";
 import { Application } from "@/interfaces/Application";
@@ -9,10 +7,6 @@ import useGet from "@/hooks/useGet";
 import ApplicationSearchBar from "@/components/ApplicationSearchBar";
 import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
-
-interface ApplicationListItemProps {
-    name: string;
-}
 
 const ApplicationList = () => {
     const { data: applicationsList = [], isLoading: isApplicationListLoading } =

@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import ToggleButton from "@/components/Switch";
 
 const defaultValues = {
     name: "",
@@ -17,6 +18,13 @@ const validationSchema = yup
     .required();
 
 const formFields = [
+    {
+        unCheckedLabel: "Deactivated",
+        checkedLabel: "Activated",
+        name: "enabled",
+        customComponent: ToggleButton,
+        required: true,
+    },
     {
         label: "Public app name",
         name: "name",

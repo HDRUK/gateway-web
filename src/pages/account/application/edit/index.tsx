@@ -6,8 +6,17 @@ import { GetServerSideProps } from "next";
 import ApplicationTabs from "@/modules/ApplicationTabs";
 import { Typography } from "@mui/material";
 import LeftNav from "@/modules/LeftNav";
+import apis from "@/config/apis";
+import { useRouter } from "next/router";
+import useGet from "@/hooks/useGet";
+import { Application } from "@/interfaces/Application";
 
-const Application = () => {
+const EditApplication = () => {
+    const router = useRouter();
+    const { id } = router.query;
+    const { data: application, isLoading: isApplicationLoading } =
+        useGet<Application>(`${apis.applicationsV1Url}/${id}`);
+
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My account - Applications" />
@@ -52,4 +61,4 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
 };
 
-export default Application;
+export default EditApplication;

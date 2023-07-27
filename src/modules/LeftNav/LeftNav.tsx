@@ -44,12 +44,11 @@ const LeftNav = ({ teamId }: LeftNavProps) => {
     return (
         <Box css={styles.navBox}>
             {navItems.map(item => (
-                <Typography css={styles.navItem}>
+                <Typography css={styles.navItem} key={item.label}>
                     {item.href !== "null" && (
                         <>
                             {item.icon}
                             <Link
-                                key={item.label}
                                 href={item.href}
                                 css={styles.navLink}>
                                 {item.label}

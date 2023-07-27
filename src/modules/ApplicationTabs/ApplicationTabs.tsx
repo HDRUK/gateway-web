@@ -2,7 +2,7 @@ import Tabs from "@/components/Tabs";
 import { useState } from "react";
 import { Typography } from "@mui/material";
 
-import ApplicationForm from "../application/ApplicationForm";
+import EditApplicationForm from "../application/EditApplicationForm";
 
 const ApplicationTabs = () => {
     // const theme = useTheme();
@@ -17,7 +17,7 @@ const ApplicationTabs = () => {
         {
             label: "App Info",
             value: "App Info",
-            content: <ApplicationForm />,
+            content: <EditApplicationForm />,
         },
         {
             label: "Auth",

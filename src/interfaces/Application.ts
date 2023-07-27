@@ -9,10 +9,10 @@ interface Application {
     description?: string;
     team_id?: number;
     user_id?: number;
-    enabled?: boolean;
+    enabled: boolean;
     created_at?: string;
     updated_at?: string;
-    tags?: Tag[];
+    // tags?: Tag[];
 }
 
 export type { Application };
