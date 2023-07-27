@@ -10,8 +10,7 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { useEffect, useMemo } from "react";
-import usePost from "@/hooks/usePost";
+import { useEffect, useMemo, useState } from "react";
 import { Application } from "@/interfaces/Application";
 import DeleteApplication from "@/modules/application/DeleteApplication";
 import useAuth from "@/hooks/useAuth";
@@ -19,18 +18,15 @@ import apis from "@/config/apis";
 import { useRouter } from "next/router";
 import useGet from "@/hooks/useGet";
 import Loading from "@/components/Loading";
+import usePut from "@/hooks/usePut";
 
-const ApplicationForm = () => {
+const EditApplicationForm = () => {
     const { user } = useAuth();
     const router = useRouter();
-    const { id } = router.query;
+    const { id, teamId } = router.query;
 
-    const updateApplication = usePost<Application>(
-        `${apis.applicationsV1Url}`,
-        {
-            itemName: "Application",
-        }
-    );
+    const { data: application, isLoading: isApplicationLoading } =
+        useGet<Application>(`${apis.applicationsV1Url}/${id}`);
 
     const hydratedFormFields = useMemo(
         () =>
@@ -40,8 +36,7 @@ const ApplicationForm = () => {
         []
     );
 
-    const { data: application, isLoading: isApplicationLoading } =
-        useGet<Application>(`${apis.applicationsV1Url}/${id}`);
+    const [ applicationStatus, setApplicationStatus ] = useState(false);
 
     const { control, handleSubmit, getValues } = useForm<Application>({
         resolver: yupResolver(applicationValidationSchema),
@@ -52,20 +47,32 @@ const ApplicationForm = () => {
         updateApplication({ ...applicationDefaultValues, ...formData });
     };
 
+    const handleApplicationStatusChange = (checked: boolean) => {
+        setApplicationStatus(checked);
+    };
+
+    const updateApplication = usePut<Application>(
+        `${apis.applicationsV1Url}`,
+        {
+            itemName: "Application",
+        }
+    );
+
     useEffect(() => {
         if (!application) {
             return;
         }
+
+        setApplicationStatus(application.enabled);
+
     }, [application]);
+
 
     if (isApplicationLoading) return <Loading />;
 
     return (
         <>
-            <Box
-                sx={{
-                    display: "flex",
-                }}>
+            <Box>
                 <Form
                     sx={{ maxWidth: 1000 }}
                     onSubmit={handleSubmit(submitForm)}>
@@ -95,4 +102,4 @@ const ApplicationForm = () => {
     );
 };
 
-export default ApplicationForm;
+export default EditApplicationForm;

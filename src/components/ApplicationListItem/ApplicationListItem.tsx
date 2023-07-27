@@ -5,6 +5,7 @@ import ChipComponent from "@/components/Chip";
 import { Application } from "@/interfaces/Application";
 import { Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const ApplicationListItem = ({
     name,
@@ -21,9 +22,12 @@ const ApplicationListItem = ({
         month: "long",
     });
 
+    const router = useRouter();
+    const { teamId } = router.query;
+
     return (
         <Link
-            href={`/account/application?id=${id}`}
+            href={`/account/application/edit?id=${id}&teamId=${teamId}`}
             style={{
                 textDecoration: "none",
                 color: "#000",
