@@ -10,24 +10,18 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Application } from "@/interfaces/Application";
 import DeleteApplication from "@/modules/application/DeleteApplication";
-import useAuth from "@/hooks/useAuth";
 import apis from "@/config/apis";
-import { useRouter } from "next/router";
-import useGet from "@/hooks/useGet";
 import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
 
-const EditApplicationForm = () => {
-    const { user } = useAuth();
-    const router = useRouter();
-    const { id, teamId } = router.query;
+interface EditApplicationFormProps {
+    application: Application,
+};
 
-    const { data: application, isLoading: isApplicationLoading } =
-        useGet<Application>(`${apis.applicationsV1Url}/${id}`);
-
+const EditApplicationForm = (application: EditApplicationFormProps) => {
     const hydratedFormFields = useMemo(
         () =>
             applicationFormFields.map(field => {
@@ -36,19 +30,13 @@ const EditApplicationForm = () => {
         []
     );
 
-    const [ applicationStatus, setApplicationStatus ] = useState(false);
-
     const { control, handleSubmit, getValues } = useForm<Application>({
         resolver: yupResolver(applicationValidationSchema),
-        defaultValues: { ...applicationDefaultValues, ...application },
+        defaultValues: { ...applicationDefaultValues, ...application.application },
     });
 
     const submitForm = (formData: Application) => {
         updateApplication({ ...applicationDefaultValues, ...formData });
-    };
-
-    const handleApplicationStatusChange = (checked: boolean) => {
-        setApplicationStatus(checked);
     };
 
     const updateApplication = usePut<Application>(
@@ -63,12 +51,9 @@ const EditApplicationForm = () => {
             return;
         }
 
-        setApplicationStatus(application.enabled);
-
     }, [application]);
 
-
-    if (isApplicationLoading) return <Loading />;
+    if (!application) return <Loading />;
 
     return (
         <>

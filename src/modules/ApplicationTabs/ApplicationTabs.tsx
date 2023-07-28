@@ -3,9 +3,18 @@ import { useState } from "react";
 import { Typography } from "@mui/material";
 
 import EditApplicationForm from "../application/EditApplicationForm";
+import { useRouter } from "next/router";
+import apis from "@/config/apis";
+import useGet from "@/hooks/useGet";
+import AuthDetails from "../application/AuthDetails";
+import { Application } from "@/interfaces/Application";
 
 const ApplicationTabs = () => {
     // const theme = useTheme();
+    const router = useRouter();
+    const { id } = router.query;
+    const { data: application, isLoading: isApplicationLoading } =
+        useGet<Application>(`${apis.applicationsV1Url}/${id}`);
 
     const [selectedTab, setSelectedTab] = useState("App Info");
 
@@ -17,14 +26,14 @@ const ApplicationTabs = () => {
         {
             label: "App Info",
             value: "App Info",
-            content: <EditApplicationForm />,
+            content: <EditApplicationForm application={application} />,
         },
         {
             label: "Auth",
             value: "Auth",
             content: (
                 <Typography component="span">
-                    Placeholder for Auth Tab
+                    <AuthDetails application={application} />
                 </Typography>
             ),
         },
