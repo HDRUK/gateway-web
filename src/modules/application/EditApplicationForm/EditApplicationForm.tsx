@@ -20,13 +20,17 @@ import useGet from "@/hooks/useGet";
 import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
 
-const EditApplicationForm = () => {
-    const { user } = useAuth();
-    const router = useRouter();
-    const { id, teamId } = router.query;
+interface EditApplicationFormProps {
+    application: Application,
+};
 
-    const { data: application, isLoading: isApplicationLoading } =
-        useGet<Application>(`${apis.applicationsV1Url}/${id}`);
+const EditApplicationForm = (application: EditApplicationFormProps) => {
+    // const { user } = useAuth();
+    // const router = useRouter();
+    // const { id, teamId } = router.query;
+
+    // const { data: application, isLoading: isApplicationLoading } =
+    //     useGet<Application>(`${apis.applicationsV1Url}/${id}`);
 
     const hydratedFormFields = useMemo(
         () =>
@@ -36,20 +40,20 @@ const EditApplicationForm = () => {
         []
     );
 
-    const [ applicationStatus, setApplicationStatus ] = useState(false);
+    // const [ applicationStatus, setApplicationStatus ] = useState(false);
 
     const { control, handleSubmit, getValues } = useForm<Application>({
         resolver: yupResolver(applicationValidationSchema),
-        defaultValues: { ...applicationDefaultValues, ...application },
+        defaultValues: { ...applicationDefaultValues, ...application.application },
     });
 
     const submitForm = (formData: Application) => {
         updateApplication({ ...applicationDefaultValues, ...formData });
     };
 
-    const handleApplicationStatusChange = (checked: boolean) => {
-        setApplicationStatus(checked);
-    };
+    // const handleApplicationStatusChange = (checked: boolean) => {
+    //     setApplicationStatus(checked);
+    // };
 
     const updateApplication = usePut<Application>(
         `${apis.applicationsV1Url}`,
@@ -63,12 +67,12 @@ const EditApplicationForm = () => {
             return;
         }
 
-        setApplicationStatus(application.enabled);
-
     }, [application]);
 
 
-    if (isApplicationLoading) return <Loading />;
+    if (!application) return <Loading />;
+
+    console.log(application);
 
     return (
         <>
