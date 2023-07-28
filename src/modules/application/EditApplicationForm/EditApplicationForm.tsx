@@ -10,13 +10,10 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Application } from "@/interfaces/Application";
 import DeleteApplication from "@/modules/application/DeleteApplication";
-import useAuth from "@/hooks/useAuth";
 import apis from "@/config/apis";
-import { useRouter } from "next/router";
-import useGet from "@/hooks/useGet";
 import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
 
@@ -25,13 +22,6 @@ interface EditApplicationFormProps {
 };
 
 const EditApplicationForm = (application: EditApplicationFormProps) => {
-    // const { user } = useAuth();
-    // const router = useRouter();
-    // const { id, teamId } = router.query;
-
-    // const { data: application, isLoading: isApplicationLoading } =
-    //     useGet<Application>(`${apis.applicationsV1Url}/${id}`);
-
     const hydratedFormFields = useMemo(
         () =>
             applicationFormFields.map(field => {
@@ -39,8 +29,6 @@ const EditApplicationForm = (application: EditApplicationFormProps) => {
             }),
         []
     );
-
-    // const [ applicationStatus, setApplicationStatus ] = useState(false);
 
     const { control, handleSubmit, getValues } = useForm<Application>({
         resolver: yupResolver(applicationValidationSchema),
@@ -50,10 +38,6 @@ const EditApplicationForm = (application: EditApplicationFormProps) => {
     const submitForm = (formData: Application) => {
         updateApplication({ ...applicationDefaultValues, ...formData });
     };
-
-    // const handleApplicationStatusChange = (checked: boolean) => {
-    //     setApplicationStatus(checked);
-    // };
 
     const updateApplication = usePut<Application>(
         `${apis.applicationsV1Url}`,
@@ -69,10 +53,7 @@ const EditApplicationForm = (application: EditApplicationFormProps) => {
 
     }, [application]);
 
-
     if (!application) return <Loading />;
-
-    console.log(application);
 
     return (
         <>
