@@ -10,15 +10,23 @@ import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore"; // Left in for next update for collapsable nav
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import * as styles from "./LeftNav.styles";
+import apis from "@/config/apis";
+import useGet from "@/hooks/useGet";
+import Loading from "@/components/Loading";
+import { Team } from "@/interfaces/Team";
+import BoxContainer from "@/components/BoxContainer";
 
 interface LeftNavProps {
     teamId?: string | string[] | undefined;
 }
 
 const LeftNav = ({ teamId }: LeftNavProps) => {
+    const { data: team, isLoading: isTeamLoading } = 
+        useGet<Team>(`${apis.teamsV1Url}/${teamId}`);
+
     const navItems = [
         // TODO: Update links when pages are available to do so
         { icon: <SettingsOutlinedIcon />, label: "Team Management", href: "#" },
@@ -41,8 +49,31 @@ const LeftNav = ({ teamId }: LeftNavProps) => {
         { icon: <HelpOutlineOutlinedIcon />, label: "Help", href: "#" },
     ];
 
+    // useEffect(() => {
+    //     if (!team) {
+    //         console.log('am here');
+    //         return;
+    //     }
+
+    //     console.log(team);
+    // }, [team]);
+
+    if (isTeamLoading) { return <Loading /> };
+
     return (
         <Box css={styles.navBox}>
+            <BoxContainer
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                }}>
+                <Box>
+                    <Typography>{team.name}</Typography>
+                </Box>
+                <Box>
+                    <ExpandMoreIcon />
+                </Box>
+            </BoxContainer>
             {navItems.map(item => (
                 <Typography css={styles.navItem} key={item.label}>
                     {item.href !== "null" && (
