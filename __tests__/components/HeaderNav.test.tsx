@@ -12,25 +12,10 @@ describe("HeaderNav", () => {
 
         await waitFor(() => {
             expect(screen.getByText("Explore")).toBeInTheDocument();
-        });
-
-        await waitFor(() => {
             expect(screen.getByText("Help")).toBeInTheDocument();
-        });
-
-        await waitFor(() => {
             expect(screen.getByText("Usage data")).toBeInTheDocument();
-        });
-
-        await waitFor(() => {
             expect(screen.getByText("About us")).toBeInTheDocument();
-        });
-
-        await waitFor(() => {
             expect(screen.getByText("News")).toBeInTheDocument();
-        });
-
-        await waitFor(() => {
             expect(screen.getByText("Community")).toBeInTheDocument();
         });
     });
@@ -38,7 +23,14 @@ describe("HeaderNav", () => {
         render(<Component />);
         await waitFor(() => {
             fireEvent.click(screen.getByText("Explore"));
-            expect(screen.getByText("test1")).toBeInTheDocument();
+            expect(screen.getByText("Datasets")).toBeInTheDocument();
+            expect(screen.getByText("Tools")).toBeInTheDocument();
+            expect(screen.getByText("Projects")).toBeInTheDocument();
+            expect(screen.getByText("Papers")).toBeInTheDocument();
+            expect(screen.getByText("Courses")).toBeInTheDocument();
+            expect(screen.getByText("People")).toBeInTheDocument();
+            expect(screen.getByText("Cohort Discovery")).toBeInTheDocument();
+            expect(screen.getByText("Data Utility Wizard")).toBeInTheDocument();
         });
     });
 });

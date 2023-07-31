@@ -2,12 +2,13 @@ import Tabs from "@/components/Tabs";
 import { useState } from "react";
 import { Typography } from "@mui/material";
 
-import EditApplicationForm from "../application/EditApplicationForm";
 import { useRouter } from "next/router";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
-import AuthDetails from "../application/AuthDetails";
 import { Application } from "@/interfaces/Application";
+
+import AuthDetails from "../application/AuthDetails";
+import EditApplicationForm from "../application/EditApplicationForm";
 
 const ApplicationTabs = () => {
     // const theme = useTheme();
@@ -20,7 +21,7 @@ const ApplicationTabs = () => {
 
     const handleTabChange = (tab: string) => {
         setSelectedTab(tab);
-    }
+    };
 
     const applicationTabs = [
         {

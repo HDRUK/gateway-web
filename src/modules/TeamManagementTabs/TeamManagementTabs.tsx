@@ -2,7 +2,7 @@ import Tabs from "@/components/Tabs";
 import { Typography } from "@mui/material";
 import { useState } from "react";
 
-const tabsList = [ 
+const tabsList = [
     {
         label: "Members",
         value: "Members",
@@ -11,7 +11,7 @@ const tabsList = [
                 Placeholder for Members Tab
             </Typography>
         ),
-    }, 
+    },
     {
         label: "Notifications",
         value: "Notifications",

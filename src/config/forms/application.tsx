@@ -50,7 +50,7 @@ const formFields = [
         component: "TextArea",
         limit: 300,
         required: true,
-    }
+    },
 ];
 
 export {

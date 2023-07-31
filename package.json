@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "test": "jest --silent",
+        "test": "jest --clearCache && jest --detectOpenHandles --forceExit",
         "test:watch": "jest --watch",
         "coverage": "jest --coverage",
         "storybook": "storybook dev -p 6006",
