@@ -6,7 +6,7 @@ const defaultValues = {
     firstname: "",
     lastname: "",
     email: "",
-    sector_id: "",
+    sector_id: 1,
     provider: "",
     contact_news: false,
     contact_feedback: false,
@@ -23,7 +23,11 @@ const validationSchema = yup
         firstname: yup.string().required().label("First name"),
         lastname: yup.string().required().label("Last name"),
         email: yup.string().email().required().label("Primary email"),
-        sector_id: yup.number().required().label("Sector"),
+        sector_id: yup
+            .number()
+            .moreThan(1, "You must select a Sector")
+            .required()
+            .label("Sector"),
         bio: yup.string().max(500).label("Bio"),
         terms: yup.boolean().required().oneOf([true]),
         contact_news: yup.boolean(),
