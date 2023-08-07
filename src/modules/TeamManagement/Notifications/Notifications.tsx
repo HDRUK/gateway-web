@@ -1,0 +1,59 @@
+import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
+import { Typography } from "@mui/material";
+import { useState } from "react";
+
+const Notifications = () => {
+    const notificationList = [
+        {
+            label: "Metadata managers receive notifications for;",
+            items: [
+                "New teammember added",
+                "FMA integration status",
+                "Add dataset",
+                "Edit dataset",
+                "Archive dataset",
+                "Tool uploaded",
+                "Paper uploaded",
+                "Course uploaded",
+            ],
+        },
+    ];
+
+    return (
+        <BoxContainer>
+            <Box>
+                <Typography
+                    sx={{
+                        fontWeight: 500,
+                        fontSize: "18px",
+                        marginBottom: "12px",
+                    }}>
+                    Email notifications
+                </Typography>
+                <Typography>
+                    Team related email notifications will automatically be sent
+                    to each team members gateway log in email. Data custodian
+                    managers can choose to send notifications to additional
+                    email accounts.
+                </Typography>
+            </Box>
+            <Box>
+                <Typography>
+                    Metadata managers receive notifications for;
+                    <ul>
+                        <li>
+                            New team member added
+                        </li>
+                        <li>
+                            FMA integration status
+                        </li>
+
+                    </ul>
+                </Typography>
+            </Box>
+        </BoxContainer>
+    );
+};
+
+export default Notifications;

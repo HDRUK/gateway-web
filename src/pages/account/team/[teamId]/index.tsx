@@ -8,7 +8,7 @@ import LeftNav from "@/modules/LeftNav";
 import Link from "@/components/Link";
 import { useRouter } from "next/router";
 import { Typography } from "@mui/material";
-import TeamManagementTabs from "@/modules/TeamManagementTabs";
+import TeamManagementTabs from "@/modules/TeamManagement/TeamManagementTabs";
 
 const TeamLandingPage = () => {
     const router = useRouter();
@@ -47,7 +47,8 @@ const TeamLandingPage = () => {
                             </Typography>
                         </Box>
                         <Box>
-                            Organise and manage team members and the teams email notifications.
+                            Organise and manage team members and the teams
+                            email notifications.
                         </Box>
                         <Box>
                             <TeamManagementTabs />

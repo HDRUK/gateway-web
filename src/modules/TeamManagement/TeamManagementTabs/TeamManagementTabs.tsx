@@ -1,6 +1,7 @@
 import Tabs from "@/components/Tabs";
 import { Typography } from "@mui/material";
 import { useState } from "react";
+import Notifications from "@/modules/TeamManagement/Notifications";
 
 const tabsList = [
     {
@@ -17,7 +18,7 @@ const tabsList = [
         value: "Notifications",
         content: (
             <Typography component="span">
-                Placeholder for Notifications Tab
+                <Notifications />
             </Typography>
         ),
     },

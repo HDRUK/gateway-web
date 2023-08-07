@@ -7,7 +7,7 @@ const getRequest = async <T>(
     options: RequestOptions
 ): Promise<T> => {
     const { withPagination, axiosOptions = {}, notificationOptions } = options;
-    const { errorNotificationsOn = true, ...props } = notificationOptions;
+    const { errorNotificationsOn = false, ...props } = notificationOptions;
 
     return await http
         .get(url, axiosOptions)
