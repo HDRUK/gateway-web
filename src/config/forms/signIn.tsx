@@ -8,7 +8,11 @@ const defaultValues = {
 
 const validationSchema = yup
     .object({
-        email: yup.string().email().required().label("Email"),
+        email: yup
+            .string()
+            .email("You must enter a valid email")
+            .required()
+            .label("Email"),
         password: yup.string().required().label("Password"),
     })
     .required();
@@ -18,7 +22,7 @@ const formFields = [
         label: "Email",
         name: "email",
         component: inputComponents.TextField,
-        type: "email",
+        // type: "email",
         required: true,
     },
     {
