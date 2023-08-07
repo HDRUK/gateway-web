@@ -12,20 +12,23 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import * as styles from "./LeftNav.styles";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import Loading from "@/components/Loading";
 import { Team } from "@/interfaces/Team";
 import BoxContainer from "@/components/BoxContainer";
 
+import * as styles from "./LeftNav.styles";
+
 interface LeftNavProps {
     teamId?: string | string[] | undefined;
 }
 
 const LeftNav = ({ teamId }: LeftNavProps) => {
-    const { data: team, isLoading: isTeamLoading } = 
-        useGet<Team>(`${apis.teamsV1Url}/${teamId}`);
+    const { data: team, isLoading: isTeamLoading } =
+        teamId !== null
+            ? useGet<Team>(`${apis.teamsV1Url}/${teamId}`)
+            : { data: null, isLoading: false };
 
     const navItems = [
         // TODO: Update links when pages are available to do so
@@ -49,37 +52,32 @@ const LeftNav = ({ teamId }: LeftNavProps) => {
         { icon: <HelpOutlineOutlinedIcon />, label: "Help", href: "#" },
     ];
 
-    // useEffect(() => {
-    //     if (!team) {
-    //         console.log('am here');
-    //         return;
-    //     }
-
-    //     console.log(team);
-    // }, [team]);
-
-    if (isTeamLoading) { return <Loading /> };
+    if (isTeamLoading) {
+        return <Loading />;
+    }
 
     return (
         <Box css={styles.navBox}>
-            <BoxContainer
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                }}>
-                <Box>
-                    <Typography>{team.name}</Typography>
-                </Box>
-                <Box>
-                    <ExpandMoreIcon />
-                </Box>
-            </BoxContainer>
+            {team != null && (
+                <BoxContainer
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                    }}>
+                    <Box>
+                        <Typography>{team.name}</Typography>
+                    </Box>
+                    <Box>
+                        <ExpandMoreIcon />
+                    </Box>
+                </BoxContainer>
+            )}
             {navItems.map(item => (
                 <Typography css={styles.navItem} key={item.label}>
                     {item.href !== "null" && (
                         <>
                             {item.icon}
-                            <Link
+                            <Link 
                                 href={item.href}
                                 css={styles.navLink}>
                                 {item.label}
