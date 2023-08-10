@@ -1,3 +1,5 @@
+import { User } from "@/interfaces/User";
+
 interface Team {
     id: number,
     name: string,
@@ -11,6 +13,7 @@ interface Team {
     contact_point: string,
     application_form_updated_by: string,
     application_form_updated_on: string,
+    users: User[],
 }
 
 export type { Team };

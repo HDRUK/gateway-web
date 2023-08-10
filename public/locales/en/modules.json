@@ -12,6 +12,11 @@
         "SignInDialog": {
             "title": "Sign in",
             "button": "Sign in"
+        },
+        "AddTeamMemberDialog": {
+            "title": "Add members to your team",
+            "confirmButton": "Add member(s)",
+            "cancelButton": "Cancel"
         }
     }
 }
