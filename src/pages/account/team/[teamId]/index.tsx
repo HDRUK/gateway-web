@@ -47,8 +47,12 @@ const TeamLandingPage = () => {
                             </Typography>
                         </Box>
                         <Box>
-                            Organise and manage team members and the teams
-                            email notifications.
+                            Organise and manage team members and the teams email
+                            notifications. If you need assistance managing the
+                            team, please{" "}
+                            <Link href="https://www.google.com/">
+                                raise a support ticket
+                            </Link>
                         </Box>
                         <Box>
                             <TeamManagementTabs />

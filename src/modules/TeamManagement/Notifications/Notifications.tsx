@@ -1,7 +1,6 @@
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import { Typography } from "@mui/material";
-import { useState } from "react";
 
 const Notifications = () => {
     const notificationList = [
@@ -41,16 +40,11 @@ const Notifications = () => {
             <Box>
                 <Typography>
                     Metadata managers receive notifications for;
-                    <ul>
-                        <li>
-                            New team member added
-                        </li>
-                        <li>
-                            FMA integration status
-                        </li>
-
-                    </ul>
                 </Typography>
+                <ul>
+                    <li>New team member added</li>
+                    <li>FMA integration status</li>
+                </ul>
             </Box>
         </BoxContainer>
     );
