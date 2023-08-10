@@ -132,7 +132,7 @@ const AddTeamMemberDialog = () => {
                             }}
                         >
                             {roleOptions.map((role) => (
-                                <MenuItem key={role.name} value={`${role.name}`}>
+                                <MenuItem key={role.name} value={role.name}>
                                     <Checkbox checked={selectedRoles.indexOf(role.name) > -1}/>
                                     <ListItemText
                                         sx={{

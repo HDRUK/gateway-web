@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 
 export const typeAheadDropDown = (theme, color) =>
     css({
-        boxShadow: "box-shadow: 8px 7px 18px -3px rgba(0,0,0,0.75)",
+
         "ul:before": {
         },
         "ul": {
@@ -12,6 +12,7 @@ export const typeAheadDropDown = (theme, color) =>
             textAlign: "left",
             margin: 0,
             padding: 0,
+            boxShadow: "8px 7px 18px -3px rgba(0,0,0,0.75)",
         },
         "li": {
             padding: "10px 5px",
