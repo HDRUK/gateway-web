@@ -23,7 +23,7 @@ const Missions = ({ allMissionsAndPurposes }: MissionAndPurposesProps) => {
                     )}
                     {allMissionsAndPurposes.map(mission => (
                         <div>
-                            <div 
+                            <div
                                 style={{
                                     fontWeight: "bolder",
                                     fontSize: "16pt",

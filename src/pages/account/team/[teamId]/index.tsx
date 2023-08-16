@@ -9,12 +9,30 @@ import Link from "@/components/Link";
 import { useRouter } from "next/router";
 import { Typography } from "@mui/material";
 import TeamManagementTabs from "@/modules/TeamManagement/TeamManagementTabs";
+import AddTeamMemberDialog from "@/modules/dialogs/AddTeamMemberDialog";
+import Button from "@/components/Button";
+
+import AddIcon from "@mui/icons-material/Add";
+import useDialog from "@/hooks/useDialog";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
+import Loading from "@/components/Loading";
+import { Team } from "@/interfaces/Team";
 
 const TeamLandingPage = () => {
     const router = useRouter();
+    const { teamId } = router.query;
+    const { showDialog } = useDialog();
+
+    const { data: teamUserList = [], isLoading: isTeamListLoading } = useGet<
+        Team[]
+    >(`${apis.teamsV1Url}/${teamId}`);
+
+    if (isTeamListLoading) return <Loading />;
+
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
+            <Head title="Health Data Research Innovation Gateway - My account - Team Management" />
             <BoxContainer
                 sx={{
                     gridTemplateColumns: {
@@ -51,11 +69,22 @@ const TeamLandingPage = () => {
                             notifications. If you need assistance managing the
                             team, please{" "}
                             <Link href="https://www.google.com/">
-                                raise a support ticket
+                                raise a support ticket (!! NEEDS SUPPORT LINK
+                                HERE !!)
                             </Link>
                         </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                            }}>
+                            <Button
+                                onClick={() => showDialog(AddTeamMemberDialog)}>
+                                <AddIcon /> Add a new member
+                            </Button>
+                        </Box>
                         <Box>
-                            <TeamManagementTabs />
+                            <TeamManagementTabs users={teamUserList} />
                         </Box>
                     </BoxContainer>
                 </Box>
