@@ -1,10 +1,6 @@
 import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
 import React, { ReactNode, useCallback } from "react";
-import {
-    CardActions,
-    CardContent,
-    CardHeader,
-} from "@mui/material";
+import { CardActions, CardContent, CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import Button from "../../Button";
 

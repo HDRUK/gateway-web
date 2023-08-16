@@ -44,7 +44,7 @@ const apiSuccess = (
     return notification(message, "apiSuccess", {
         persist: "true",
         action: (snackbarId: SnackbarKey) => {
-            <DismissButton snackbarId={snackbarId} />
+            <DismissButton snackbarId={snackbarId} />;
         },
         ...options,
     });
@@ -110,4 +110,13 @@ const apiInfo = (
     });
 };
 
-export { apiError, error, apiSuccess, success, apiWarning, warning, apiInfo, info };
+export {
+    apiError,
+    error,
+    apiSuccess,
+    success,
+    apiWarning,
+    warning,
+    apiInfo,
+    info,
+};

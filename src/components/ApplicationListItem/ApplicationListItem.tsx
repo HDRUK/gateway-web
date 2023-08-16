@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /** @jsxImportSource @emotion/react */
 
 import Box from "@/components/Box";
@@ -60,9 +61,11 @@ const ApplicationListItem = ({
                     sx={{
                         m: 0.2,
                     }}>
-                    {enabled ?
-                        <ChipComponent label="Activated" color="success" /> : <ChipComponent label="Deactivated" color="error" />
-                    }
+                    {enabled ? (
+                        <ChipComponent label="Activated" color="success" />
+                    ) : (
+                        <ChipComponent label="Deactivated" color="error" />
+                    )}
 
                     {tags.map(tag => (
                         <ChipComponent label={tag.description} />
