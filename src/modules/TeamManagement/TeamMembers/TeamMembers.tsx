@@ -15,24 +15,25 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import MoreIcon from "@mui/icons-material/MoreHoriz";
 import HelpIcon from "@mui/icons-material/HelpOutline";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import Popover from "@mui/material/Popover";
 import DeleteIcon from "@mui/icons-material/DeleteForever";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import theme from "@/config/theme";
+import useDialog from "@/hooks/useDialog";
+import DeleteTeamMemberDialog from "@/modules/dialogs/DeleteTeamMemberDialog";
 
 const TeamMembers = () => {
     const router = useRouter();
+    const { showDialog } = useDialog();
     const { teamId } = router.query;
     const [popoverNumber, setPopoverNumber] = useState(0);
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const [furtherActionsAnchorEl, setFurtherActionsAnchorEl] =
         useState<HTMLButtonElement | null>(null);
     const [furtherActionsOpen, setFurtherActionsOpen] = useState(false);
+    const [alertVisible, setAlertVisible] = useState(false);
 
     const handlePopoverClick = (
         event: MouseEvent<HTMLButtonElement>,
@@ -42,20 +43,13 @@ const TeamMembers = () => {
         setPopoverNumber(id);
     };
 
-    const handleFurtherActionsClick = (
-        event: MouseEvent<HTMLButtonElement>
-    ) => {
-        setFurtherActionsAnchorEl(event.currentTarget);
-        setFurtherActionsOpen(!furtherActionsOpen);
-    };
-
     const handleClose = () => {
         setAnchorEl(null);
     };
 
-    const handleFurtherActionsClose = () => {
-        setFurtherActionsOpen(!furtherActionsOpen);
-    };
+    const showAlertCallback = () => {
+        setAlertVisible(true);
+    }
 
     const openPopover = Boolean(anchorEl);
 
@@ -131,7 +125,9 @@ const TeamMembers = () => {
                             return user.id !== 1 ? (
                                 <TableRow key={user.name}>
                                     <TableCell component="th" scope="row">
-                                        {user.firstname} {user.lastname}
+                                        <Typography>
+                                            {user.firstname} {user.lastname}
+                                        </Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Checkbox
@@ -170,44 +166,21 @@ const TeamMembers = () => {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <MoreIcon
+                                        <DeleteIcon
                                             sx={{
                                                 color: theme.palette.primary.main,
                                             }}
-                                            onClick={event =>
-                                                handleFurtherActionsClick(event)
+                                            onClick={() =>
+                                                showDialog(
+                                                    DeleteTeamMemberDialog,
+                                                    {
+                                                        user: user,
+                                                        callback:
+                                                            showAlertCallback,
+                                                    }
+                                                )
                                             }
                                         />
-                                        <Menu
-                                            id="remove-user-menu"
-                                            anchorEl={furtherActionsAnchorEl}
-                                            open={furtherActionsOpen}
-                                            onClose={handleClose}
-                                            MenuListProps={{
-                                                "aria-labelledby":
-                                                    "remove-user-button",
-                                            }}>
-                                            <Box
-                                                sx={{
-                                                    display: "flex",
-                                                }}>
-                                                <DeleteIcon
-                                                    sx={{
-                                                        marginTop: 1.5,
-                                                        color: theme.palette.primary.main,
-                                                    }}
-                                                />
-                                                <MenuItem
-                                                    onClick={
-                                                        handleFurtherActionsClose
-                                                    }
-                                                    sx={{
-                                                        color: theme.palette.primary.main,
-                                                    }}>
-                                                    Remove user
-                                                </MenuItem>
-                                            </Box>
-                                        </Menu>
                                     </TableCell>
                                 </TableRow>
                             ) : (

@@ -17,6 +17,11 @@
             "title": "Add members to your team",
             "confirmButton": "Add member(s)",
             "cancelButton": "Cancel"
+        },
+        "DeleteTeamMemberDialog": {
+            "title": "Are you sure you want to remove %%USER_NAME%%?",
+            "confirmButton": "Remove",
+            "cancelButton": "Cancel"
         }
     }
 }
