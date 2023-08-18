@@ -9,19 +9,28 @@ import {
 import { HttpOptions } from "@/interfaces/Api";
 import useGet from "./useGet";
 
-const useDelete = (url: string, options?: HttpOptions) => {
+const useDelete = (
+    url: string,
+    options?: HttpOptions,
+    urlOverride?: boolean
+) => {
     const { mutate } = useSWRConfig();
-    const { data } = useGet(options?.paginationKey || url);
     const { t, i18n } = useTranslation("api");
     const { localeKey, itemName, action, ...mutatorOptions } = options || {};
+    let data = {};
+
+    if (!urlOverride) {
+        data = useGet(options?.paginationKey || url);
+    }
 
     ThrowPaginationError(options);
 
     return (id: number) => {
+        const urlTemp = urlOverride ? url : `${url}/${id}`;
         mutate(
             options?.paginationKey || url,
             async () => {
-                await apiService.deleteRequest(`${url}/${id}`, {
+                await apiService.deleteRequest(urlTemp, {
                     notificationOptions: {
                         localeKey,
                         itemName,
