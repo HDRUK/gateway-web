@@ -62,9 +62,9 @@ const ApplicationListItem = ({
                         m: 0.2,
                     }}>
                     {enabled ? (
-                        <ChipComponent label="Activated" color="success" />
+                        <ChipComponent label="Enabled" color="success" />
                     ) : (
-                        <ChipComponent label="Deactivated" color="error" />
+                        <ChipComponent label="Disabled" color="error" />
                     )}
 
                     {tags.map(tag => (
