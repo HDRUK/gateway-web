@@ -11,23 +11,25 @@ export const navBox = css({
 
 export const navItem = css({
     color: colors.grey700,
-    marginRight: "25px",
-    padding: "14px",
+    padding: "14px 0",
     cursor: "pointer",
     fontSize: "14px",
     display: "flex",
     alignItems: "center",
     flexWrap: "wrap",
+    "&:hover > svg:last-child": {
+        transform: "rotate(90deg)",
+    },
 });
 
 export const navLink = css({
     color: colors.grey700,
-    marginRight: "25px",
     marginLeft: "20px",
     textDecoration: "none",
     fontSize: "14px",
     alignItems: "middle",
     textAlign: "left",
+    flex: 1,
 });
 
 export const expandIcon = css({

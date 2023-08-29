@@ -10,7 +10,6 @@ import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
@@ -18,6 +17,7 @@ import Loading from "@/components/Loading";
 import { Team } from "@/interfaces/Team";
 import BoxContainer from "@/components/BoxContainer";
 
+import { useMemo } from "react";
 import * as styles from "./LeftNav.styles";
 
 interface LeftNavProps {
@@ -30,26 +30,45 @@ const LeftNav = ({ teamId }: LeftNavProps) => {
         { shouldFetch: !!teamId }
     );
 
+    const isTeam = useMemo(() => !!teamId, [teamId]);
+
     const navItems = [
         // TODO: Update links when pages are available to do so
-        { icon: <SettingsOutlinedIcon />, label: "Team Management", href: "#" },
-        {
-            icon: <FolderSharedOutlinedIcon />,
-            label: "Your Profile",
-            href: "/account/profile",
-        },
+        ...(isTeam
+            ? [
+                  {
+                      icon: <SettingsOutlinedIcon />,
+                      label: "Team Management",
+                      href: `/account/team/${teamId}`,
+                  },
+              ]
+            : []),
+        ...(!isTeam
+            ? [
+                  {
+                      icon: <FolderSharedOutlinedIcon />,
+                      label: "Your Profile",
+                      href: "/account/profile",
+                  },
+              ]
+            : []),
         { icon: <StorageOutlinedIcon />, label: "Datasets", href: "#" },
         { icon: <SchemaOutlinedIcon />, label: "Data Uses", href: "#" },
-        {
-            icon: <DescriptionOutlinedIcon />,
-            label: "Integrations",
-            href:
-                teamId === null
-                    ? "null"
-                    : `/account/team/${teamId}/app-management`,
-            expandable: true,
-        },
-        { icon: <HelpOutlineOutlinedIcon />, label: "Help", href: "#" },
+        ...(isTeam
+            ? [
+                  {
+                      icon: <DescriptionOutlinedIcon />,
+                      label: "Integrations",
+                      href: `/account/team/${teamId}/app-management`,
+                      expandable: true,
+                  },
+                  {
+                      icon: <HelpOutlineOutlinedIcon />,
+                      label: "Help",
+                      href: "#",
+                  },
+              ]
+            : []),
     ];
 
     if (isTeamLoading) {
@@ -66,9 +85,6 @@ const LeftNav = ({ teamId }: LeftNavProps) => {
                     }}>
                     <Box>
                         <Typography>{team.name}</Typography>
-                    </Box>
-                    <Box>
-                        <ExpandMoreIcon />
                     </Box>
                 </BoxContainer>
             )}

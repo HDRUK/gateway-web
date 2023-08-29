@@ -18,7 +18,10 @@ const AccountNav = ({
 }: AccountNavProps) => {
     const { user } = useAuth();
     const links = [
-        { id: -99, label: `${user?.firstname} team`, href: "/account/profile" },
+        {
+            label: `${user?.firstname} ${user?.lastname}`,
+            href: "/account/profile",
+        },
     ];
 
     const handleCloseUserMenu = () => {
