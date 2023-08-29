@@ -29,19 +29,16 @@ const ImgMediaCard = (props: ImgMediaCardProps) => {
           {props.description}
         </Typography>
       </CardContent>
-      <CardActions
-          sx={{ display: 'flex', justifyContent: 'center' }}
-      >
-      <Link 
-        sx={{ width: '100%' }}
-        underline="none"
-        href={props.href}>
-          <Button
-            sx={{ width: '100%' }}
-          >  
-            {props.buttonText} 
-          </Button>
-      </Link>
+      <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Link 
+          sx={{ width: '100%' }}
+          underline="none"
+          href={props.href}
+          >
+            <Button sx={{ width: '100%' }}>  
+              {props.buttonText} 
+            </Button>
+        </Link>
       </CardActions>
     </Card>
   );
