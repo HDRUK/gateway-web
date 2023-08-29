@@ -19,8 +19,8 @@ const validationSchema = yup
 
 const formFields = [
     {
-        unCheckedLabel: "Deactivated",
-        checkedLabel: "Activated",
+        unCheckedLabel: "Disabled",
+        checkedLabel: "Enabled",
         name: "enabled",
         customComponent: ToggleButton,
         required: true,

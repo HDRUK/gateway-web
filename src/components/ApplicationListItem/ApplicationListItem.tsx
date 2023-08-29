@@ -62,14 +62,23 @@ const ApplicationListItem = ({
                         m: 0.2,
                     }}>
                     {enabled ? (
-                        <ChipComponent label="Activated" color="success" />
+                        <ChipComponent label="Enabled" color="success" />
                     ) : (
-                        <ChipComponent label="Deactivated" color="error" />
+                        <ChipComponent label="Disabled" color="error" />
                     )}
 
-                    {tags.map(tag => (
+                    {/* Place holder for which scopes/permissions have been seleted for the app */}
+                    <ChipComponent 
+                        label={'{{api.scope.permission}}'} 
+                        color="info"
+                        sx={{
+                            marginLeft: 1,
+                        }}
+                    /> 
+                    {/*tags.map(tag => (
                         <ChipComponent label={tag.description} />
-                    ))}
+                    ))*/}
+
                 </Box>
                 <Box
                     sx={{
