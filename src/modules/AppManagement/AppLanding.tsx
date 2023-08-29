@@ -38,13 +38,13 @@ const LandingPage = () => {
             </div>
             <Box sx={{ display: "flex", gap: "40px" }}>
                 <ImgMediaCard 
-                    img="/images/banners/our-mission-and-purpose.png"
+                    img="https://place-hold.it/300"
                     href={`/account/team/${router.query.teamId}/app-management/create`}
                     description="Create API-keys and link to the Gateway"
                     buttonText="Create API-Key"
                 />
                 <ImgMediaCard 
-                    img="/images/banners/our-mission-and-purpose.png"
+                    img="https://place-hold.it/300"
                     href={`/account/team/${router.query.teamId}/app-management/list`}
                     description="Manage your linked APIs"
                     buttonText="Manage API"

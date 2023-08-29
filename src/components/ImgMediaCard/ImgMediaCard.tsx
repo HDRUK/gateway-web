@@ -18,10 +18,10 @@ interface ImgMediaCardProps {
 const ImgMediaCard = (props: ImgMediaCardProps) => {
 
   return (
-    <Card sx={{ maxWidth: 280, flex: 1, display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ maxWidth: 380, flex: 1, display: 'flex', flexDirection: 'column' }}>
       <CardMedia
         component="img"
-        height={140}
+        height={200}
         image={props.img}
       />
       <CardContent sx={{ flex: 1, textAlign: 'center' }} >
@@ -33,17 +33,18 @@ const ImgMediaCard = (props: ImgMediaCardProps) => {
           sx={{ display: 'flex', justifyContent: 'center' }}
       >
       <Link 
+        sx={{ width: '100%' }}
         underline="none"
         href={props.href}>
-          <Button>  {props.buttonText} </Button>
+          <Button
+            sx={{ width: '100%' }}
+          >  
+            {props.buttonText} 
+          </Button>
       </Link>
       </CardActions>
     </Card>
   );
 }
-
-
-
-
 
 export default ImgMediaCard;
