@@ -11,7 +11,15 @@ import useDialog from "@/hooks/useDialog";
 import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
 import useDelete from "@/hooks/useDelete";
 
-const DeleteTeamMemberDialog = (user: User, callback: Function) => {
+interface DeleteTeamMemberDialogProps {
+    user: User;
+    callback: () => void;
+}
+
+const DeleteTeamMemberDialog = ({
+    user,
+    callback,
+}: DeleteTeamMemberDialogProps) => {
     const router = useRouter();
     const { teamId } = router.query;
     const { t } = useTranslation("modules");
@@ -19,15 +27,15 @@ const DeleteTeamMemberDialog = (user: User, callback: Function) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
     const deleteTeamMember = useDelete(
-        `${apis.teamsV1Url}/${teamId}/users/${user.user.id}`,
+        `${apis.teamsV1Url}/${teamId}/users/${user.id}`,
         {
             itemName: `User`,
-        },
-        true
+            overideUrl: true,
+        }
     );
 
     const handleDelete = () => {
-        deleteTeamMember(user.user.id);
+        deleteTeamMember(user.id);
         hideDialog();
 
         if (typeof callback === "function") {
@@ -48,11 +56,7 @@ const DeleteTeamMemberDialog = (user: User, callback: Function) => {
                     padding: 5,
                     marginTop: 5,
                 }}>
-                {title.replace(
-                    "%%USER_NAME%%",
-                    // eslint-disable-next-line react/destructuring-assignment
-                    user.user.name
-                )}
+                {title.replace("%%USER_NAME%%", user.name)}
             </MuiDialogContent>
             <MuiDialogActions
                 sx={{

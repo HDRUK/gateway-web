@@ -1,4 +1,3 @@
-import Box from "@/components/Box";
 import Loading from "@/components/Loading";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
@@ -49,7 +48,7 @@ const TeamMembers = () => {
 
     const showAlertCallback = () => {
         setAlertVisible(true);
-    }
+    };
 
     const openPopover = Boolean(anchorEl);
 
@@ -168,13 +167,14 @@ const TeamMembers = () => {
                                     <TableCell>
                                         <DeleteIcon
                                             sx={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.primary
+                                                    .main,
                                             }}
                                             onClick={() =>
                                                 showDialog(
                                                     DeleteTeamMemberDialog,
                                                     {
-                                                        user: user,
+                                                        user,
                                                         callback:
                                                             showAlertCallback,
                                                     }

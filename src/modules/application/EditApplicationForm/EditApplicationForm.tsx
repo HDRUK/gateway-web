@@ -10,7 +10,7 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Application } from "@/interfaces/Application";
 import DeleteApplication from "@/modules/application/DeleteApplication";
 import apis from "@/config/apis";
@@ -18,8 +18,8 @@ import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
 
 interface EditApplicationFormProps {
-    application: Application,
-};
+    application?: Application;
+}
 
 const EditApplicationForm = (application: EditApplicationFormProps) => {
     const hydratedFormFields = useMemo(
@@ -32,26 +32,19 @@ const EditApplicationForm = (application: EditApplicationFormProps) => {
 
     const { control, handleSubmit, getValues } = useForm<Application>({
         resolver: yupResolver(applicationValidationSchema),
-        defaultValues: { ...applicationDefaultValues, ...application.application },
+        defaultValues: {
+            ...applicationDefaultValues,
+            ...application?.application,
+        },
+    });
+
+    const updateApplication = usePut<Application>(`${apis.applicationsV1Url}`, {
+        itemName: "Application",
     });
 
     const submitForm = (formData: Application) => {
         updateApplication({ ...applicationDefaultValues, ...formData });
     };
-
-    const updateApplication = usePut<Application>(
-        `${apis.applicationsV1Url}`,
-        {
-            itemName: "Application",
-        }
-    );
-
-    useEffect(() => {
-        if (!application) {
-            return;
-        }
-
-    }, [application]);
 
     if (!application) return <Loading />;
 

@@ -17,10 +17,11 @@ const DeleteApplication = ({ control }: DeleteApplicationProps) => {
                     fontWeight: "normal",
                     paddingTop: 2,
                 }}>
-                Delete this app
-            </Typography>
+                Delete this app.
+            </Typography>{" "}
             <Typography component="span" sx={{ marginTop: 1, marginBottom: 4 }}>
-                Permanently delete this app from your management page. This act is irreversible.
+                Permanently delete this app from your management page. This act
+                is irreversible.
                 <Box
                     sx={{
                         p: 0,

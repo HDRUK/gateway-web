@@ -5,7 +5,6 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
 import ActionBar from "@/components/ActionBar";
-import Link from "@/components/Link";
 import { useRouter } from "next/router";
 import ApplicationList from "@/modules/ApplicationList";
 import LeftNav from "@/modules/LeftNav";

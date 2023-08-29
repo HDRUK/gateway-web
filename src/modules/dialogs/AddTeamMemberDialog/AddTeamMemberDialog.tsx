@@ -136,7 +136,7 @@ const AddTeamMemberDialog = () => {
                             height: "37px",
                             marginTop: "23px",
                         }}>
-                        {roleOptions.map((role) => (
+                        {roleOptions.map(role => (
                             <MenuItem key={role.name} value={role.name}>
                                 <Checkbox
                                     checked={

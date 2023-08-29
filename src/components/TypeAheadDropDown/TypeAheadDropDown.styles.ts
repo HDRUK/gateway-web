@@ -1,8 +1,9 @@
 import { colors } from "@/config/theme";
 import { css } from "@emotion/react";
+import { Palette, PaletteColor, Theme } from "@mui/material/styles";
 
-export const typeAheadDropDown = (theme, color) =>
-    css({
+export const typeAheadDropDown = (theme: Theme, color: string) => {
+    return css({
         "ul:before": {},
         ul: {
             position: "relative",
@@ -17,7 +18,9 @@ export const typeAheadDropDown = (theme, color) =>
             cursor: "pointer",
         },
         "li:hover": {
-            background: theme.palette[color].main,
+            background: (theme.palette[color as keyof Palette] as PaletteColor)
+                .main,
             color: colors.white,
         },
     });
+};

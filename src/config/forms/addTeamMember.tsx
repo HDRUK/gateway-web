@@ -1,6 +1,6 @@
 import * as yup from "yup";
+import SearchIcon from "@mui/icons-material/SearchRounded";
 import { inputComponents } from ".";
-import SearchIcon from '@mui/icons-material/SearchRounded';
 
 const defaultValues = {
     name: "",

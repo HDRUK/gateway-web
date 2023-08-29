@@ -25,10 +25,10 @@ interface LeftNavProps {
 }
 
 const LeftNav = ({ teamId }: LeftNavProps) => {
-    const { data: team, isLoading: isTeamLoading } =
-        teamId !== null
-            ? useGet<Team>(`${apis.teamsV1Url}/${teamId}`)
-            : { data: null, isLoading: false };
+    const { data: team, isLoading: isTeamLoading } = useGet<Team>(
+        `${apis.teamsV1Url}/${teamId}`,
+        { shouldFetch: !!teamId }
+    );
 
     const navItems = [
         // TODO: Update links when pages are available to do so
@@ -77,9 +77,7 @@ const LeftNav = ({ teamId }: LeftNavProps) => {
                     {item.href !== "null" && (
                         <>
                             {item.icon}
-                            <Link 
-                                href={item.href}
-                                css={styles.navLink}>
+                            <Link href={item.href} css={styles.navLink}>
                                 {item.label}
                             </Link>
                             {item.expandable && (

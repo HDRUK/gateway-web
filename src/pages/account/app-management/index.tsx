@@ -45,10 +45,7 @@ const AppManagement = () => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-    req,
-    locale,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     return {
         props: {
             ...(await loadServerSideLocales(locale)),

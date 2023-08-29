@@ -11,11 +11,11 @@ import AuthDetails from "../application/AuthDetails";
 import EditApplicationForm from "../application/EditApplicationForm";
 
 const ApplicationTabs = () => {
-    // const theme = useTheme();
     const router = useRouter();
     const { id } = router.query;
-    const { data: application, isLoading: isApplicationLoading } =
-        useGet<Application>(`${apis.applicationsV1Url}/${id}`);
+    const { data: application } = useGet<Application>(
+        `${apis.applicationsV1Url}/${id}`
+    );
 
     const [selectedTab, setSelectedTab] = useState("App Info");
 

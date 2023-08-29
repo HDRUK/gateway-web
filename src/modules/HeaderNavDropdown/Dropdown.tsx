@@ -3,8 +3,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Link from "@/components/Link";
 import { Typography } from "@mui/material";
 import StorageIcon from "@mui/icons-material/Storage";
-import BoxContainer from "@/components/BoxContainer";
-import Box from "@/components/Box";
 
 interface DropdownProps {
     onCloseMenu: () => void;
