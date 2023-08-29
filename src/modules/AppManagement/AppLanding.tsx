@@ -1,5 +1,6 @@
 import Box from "@/components/Box";
 import SquareButton from "@/components/SquareButton";
+import ImgMediaCard from "@/components/ImgMediaCard";
 import AddIcon from "@mui/icons-material/Add";
 import { Typography } from "@mui/material";
 import Link from "@/components/Link";
@@ -36,22 +37,21 @@ const LandingPage = () => {
                 </Link>
             </div>
             <Box sx={{ display: "flex", gap: "40px" }}>
-                <Link
-                    underline="none"
-                    href={`/account/team/${router.query.teamId}/app-management/create`}>
-                    <SquareButton icon={<AddIcon sx={{ fontSize: "41px" }} />}>
-                        Create API
-                    </SquareButton>
-                </Link>
-                <Link
-                    underline="none"
-                    href={`/account/team/${router.query.teamId}/app-management/list`}>
-                    <SquareButton>Manage API</SquareButton>
-                </Link>
+                <ImgMediaCard 
+                    img="/images/banners/our-mission-and-purpose.png"
+                    href={`/account/team/${router.query.teamId}/app-management/create`}
+                    description="Create API-keys and link to the Gateway"
+                    buttonText="Create API-Key"
+                />
+                <ImgMediaCard 
+                    img="/images/banners/our-mission-and-purpose.png"
+                    href={`/account/team/${router.query.teamId}/app-management/list`}
+                    description="Manage your linked APIs"
+                    buttonText="Manage API"
+                />
             </Box>
             <Typography sx={{ fontSize: "20px" }}>
-                *HDRUK cannot create application registrations on behalf of
-                users
+                HDR UK cannot create application registrations on behalf of users
             </Typography>
         </Box>
     );
