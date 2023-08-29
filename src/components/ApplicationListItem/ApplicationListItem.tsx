@@ -67,9 +67,18 @@ const ApplicationListItem = ({
                         <ChipComponent label="Disabled" color="error" />
                     )}
 
-                    {tags.map(tag => (
+                    {/* Place holder for which scopes/permissions have been seleted for the app */}
+                    <ChipComponent 
+                        label={'{{api.scope.permission}}'} 
+                        color="info"
+                        sx={{
+                            marginLeft: 1,
+                        }}
+                    /> 
+                    {/*tags.map(tag => (
                         <ChipComponent label={tag.description} />
-                    ))}
+                    ))*/}
+
                 </Box>
                 <Box
                     sx={{
