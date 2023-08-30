@@ -28,11 +28,14 @@ const ListAppPage = () => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
+                        bgcolor: "white",
                     }}>
                     <LeftNav teamId={router.query.teamId} />
                 </Box>
                 <Box
-                    sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
+                    sx={{
+                        gridColumn: { tablet: "span 3", laptop: "span 4" },
+                    }}>
                     <h2 style={{ marginBottom: "10px" }}>API List</h2>
                     <ApplicationList />
                 </Box>

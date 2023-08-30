@@ -10,33 +10,29 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { useMemo } from "react";
 import { Application } from "@/interfaces/Application";
 import DeleteApplication from "@/modules/application/DeleteApplication";
 import apis from "@/config/apis";
 import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
+import { useEffect } from "react";
 
 interface EditApplicationFormProps {
     application?: Application;
 }
 
-const EditApplicationForm = (application: EditApplicationFormProps) => {
-    const hydratedFormFields = useMemo(
-        () =>
-            applicationFormFields.map(field => {
-                return field;
-            }),
-        []
-    );
-
-    const { control, handleSubmit, getValues } = useForm<Application>({
+const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
+    const { control, handleSubmit, getValues, reset } = useForm<Application>({
         resolver: yupResolver(applicationValidationSchema),
         defaultValues: {
             ...applicationDefaultValues,
-            ...application?.application,
+            ...application,
         },
     });
+
+    useEffect(() => {
+        reset(application);
+    }, [application, reset]);
 
     const updateApplication = usePut<Application>(`${apis.applicationsV1Url}`, {
         itemName: "Application",
@@ -54,7 +50,7 @@ const EditApplicationForm = (application: EditApplicationFormProps) => {
                 <Form
                     sx={{ maxWidth: 1000 }}
                     onSubmit={handleSubmit(submitForm)}>
-                    {hydratedFormFields.map(field => (
+                    {applicationFormFields.map(field => (
                         <InputWrapper
                             getValues={getValues}
                             key={field.name}
@@ -78,6 +74,10 @@ const EditApplicationForm = (application: EditApplicationFormProps) => {
             </Box>
         </>
     );
+};
+
+EditApplicationForm.defaultProps = {
+    application: {},
 };
 
 export default EditApplicationForm;

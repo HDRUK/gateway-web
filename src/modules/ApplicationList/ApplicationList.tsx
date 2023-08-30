@@ -20,7 +20,7 @@ const ApplicationList = () => {
                 sx={{
                     gridColumn: { tablet: "span 2", laptop: "span 1" },
                 }}>
-                <BackButton label="Back" />
+                <BackButton label="Back to integrations" />
             </Box>
             <Box
                 sx={{
@@ -31,6 +31,7 @@ const ApplicationList = () => {
             </Box>
             {applicationsList.map(application => (
                 <ApplicationListItem
+                    key={application.id}
                     id={application.id}
                     name={application.name}
                     app_id={application.app_id}

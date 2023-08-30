@@ -27,6 +27,7 @@ const AppLandingPage = () => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
+                        bgcolor: "white",
                     }}>
                     <LeftNav teamId={router.query.teamId} />
                 </Box>

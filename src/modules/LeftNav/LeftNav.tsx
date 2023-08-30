@@ -52,10 +52,18 @@ const LeftNav = ({ teamId }: LeftNavProps) => {
                   },
               ]
             : []),
-        { icon: <StorageOutlinedIcon />, label: "Datasets", href: "#" },
-        { icon: <SchemaOutlinedIcon />, label: "Data Uses", href: "#" },
         ...(isTeam
             ? [
+                  {
+                      icon: <StorageOutlinedIcon />,
+                      label: "Datasets",
+                      href: `/account/team/${teamId}/datasets`,
+                  },
+                  {
+                      icon: <SchemaOutlinedIcon />,
+                      label: "Data Uses",
+                      href: `/account/team/${teamId}/data-uses`,
+                  },
                   {
                       icon: <DescriptionOutlinedIcon />,
                       label: "Integrations",
@@ -65,7 +73,7 @@ const LeftNav = ({ teamId }: LeftNavProps) => {
                   {
                       icon: <HelpOutlineOutlinedIcon />,
                       label: "Help",
-                      href: "#",
+                      href: `/account/team/${teamId}/help`,
                   },
               ]
             : []),

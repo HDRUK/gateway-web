@@ -3,6 +3,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Link from "@/components/Link";
 import { Typography } from "@mui/material";
 import StorageIcon from "@mui/icons-material/Storage";
+import { Fragment } from "react";
 
 interface DropdownProps {
     onCloseMenu: () => void;
@@ -57,7 +58,7 @@ const Dropdown = ({ onCloseMenu, anchorElement, dropMenus }: DropdownProps) => {
             onClose={handleCloseUserMenu}
             open={Boolean(anchorElement)}>
             {dropMenus.map(link => (
-                <>
+                <Fragment key={link.href}>
                     <Link
                         key={link.label}
                         href={link.href}
@@ -81,7 +82,7 @@ const Dropdown = ({ onCloseMenu, anchorElement, dropMenus }: DropdownProps) => {
                         }}>
                         {link.subtext}
                     </Typography>
-                </>
+                </Fragment>
             ))}
         </Menu>
     );

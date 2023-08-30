@@ -3,17 +3,15 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import ProfileForm from "@/modules/profile/ProfileForm";
-import useAuth from "@/hooks/useAuth";
-import { CircularProgress } from "@mui/material";
+import { useRouter } from "next/router";
 import LeftNav from "@/modules/LeftNav";
+import { Typography } from "@mui/material";
 
-const Profile = () => {
-    const { isLoading } = useAuth();
-
+const TeamDatasetsPage = () => {
+    const router = useRouter();
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - Profile" />
+            <Head title="Health Data Research Innovation Gateway - My account - Datasets" />
             <BoxContainer
                 sx={{
                     gridTemplateColumns: {
@@ -30,20 +28,17 @@ const Profile = () => {
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
                         bgcolor: "white",
                     }}>
-                    <LeftNav />
+                    <LeftNav teamId={router.query.teamId} />
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>Your profile</h2>
-                    <p>
-                        Your details are used when you make a data access
-                        request application.
-                    </p>
-                    {isLoading ? (
-                        <CircularProgress color="secondary" />
-                    ) : (
-                        <ProfileForm />
-                    )}
+                    <Typography
+                        sx={{
+                            fontWeight: 500,
+                            fontSize: "14pt",
+                        }}>
+                        Datasets
+                    </Typography>
                 </Box>
             </BoxContainer>
         </>
@@ -58,4 +53,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default Profile;
+export default TeamDatasetsPage;

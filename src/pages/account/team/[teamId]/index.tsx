@@ -14,21 +14,10 @@ import Button from "@/components/Button";
 
 import AddIcon from "@mui/icons-material/Add";
 import useDialog from "@/hooks/useDialog";
-import useGet from "@/hooks/useGet";
-import apis from "@/config/apis";
-import Loading from "@/components/Loading";
-import { Team } from "@/interfaces/Team";
 
 const TeamLandingPage = () => {
     const router = useRouter();
-    const { teamId } = router.query;
     const { showDialog } = useDialog();
-
-    const { data: teamUserList = [], isLoading: isTeamListLoading } = useGet<
-        Team[]
-    >(`${apis.teamsV1Url}/${teamId}`);
-
-    if (isTeamListLoading) return <Loading />;
 
     return (
         <>
@@ -47,6 +36,7 @@ const TeamLandingPage = () => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
+                        bgcolor: "white",
                     }}>
                     <LeftNav teamId={router.query.teamId} />
                 </Box>
@@ -84,7 +74,7 @@ const TeamLandingPage = () => {
                             </Button>
                         </Box>
                         <Box>
-                            <TeamManagementTabs users={teamUserList} />
+                            <TeamManagementTabs />
                         </Box>
                     </BoxContainer>
                 </Box>
