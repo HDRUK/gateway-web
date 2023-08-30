@@ -8,27 +8,26 @@ import { Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const ApplicationListItem = ({
-    name,
-    id,
-    description,
-    created_at,
-    tags,
-    enabled,
-    app_id,
-}: Application) => {
-    const formattedDate = new Date(created_at).toLocaleDateString("en", {
-        year: "numeric",
-        day: "2-digit",
-        month: "long",
-    });
+interface ApplicationListItemProps {
+    application: Application;
+}
+
+const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
+    const formattedDate = new Date(application.created_at).toLocaleDateString(
+        "en",
+        {
+            year: "numeric",
+            day: "2-digit",
+            month: "long",
+        }
+    );
 
     const router = useRouter();
     const { teamId } = router.query;
 
     return (
         <Link
-            href={`/account/application/edit?id=${id}&teamId=${teamId}`}
+            href={`/account/team/${teamId}/app-management/list/${application.id}`}
             style={{
                 textDecoration: "none",
                 color: "#000",
@@ -45,7 +44,7 @@ const ApplicationListItem = ({
                         padding: "10px",
                         fontSize: 14,
                     }}>
-                    {name}
+                    {application.name}
                 </Typography>
                 <Box>
                     <Typography
@@ -61,24 +60,20 @@ const ApplicationListItem = ({
                     sx={{
                         m: 0.2,
                     }}>
-                    {enabled ? (
+                    {application.enabled ? (
                         <ChipComponent label="Enabled" color="success" />
                     ) : (
                         <ChipComponent label="Disabled" color="error" />
                     )}
 
-                    {/* Place holder for which scopes/permissions have been seleted for the app */}
-                    <ChipComponent 
-                        label={'{{api.scope.permission}}'} 
+                    {/* Place holder for which scopes/permissions have been selected for the app */}
+                    <ChipComponent
+                        label="{{api.scope.permission}}"
                         color="info"
                         sx={{
                             marginLeft: 1,
                         }}
-                    /> 
-                    {/*tags.map(tag => (
-                        <ChipComponent label={tag.description} />
-                    ))*/}
-
+                    />
                 </Box>
                 <Box
                     sx={{
@@ -86,9 +81,11 @@ const ApplicationListItem = ({
                         gridTemplateRows: "repeat(2, 1fr)",
                         gridColumn: "span 3",
                     }}>
-                    <Typography component="span">APP ID: {app_id}</Typography>
                     <Typography component="span">
-                        Description: {description}
+                        APP ID: {application.app_id}
+                    </Typography>
+                    <Typography component="span">
+                        Description: {application.description}
                     </Typography>
                 </Box>
             </Box>

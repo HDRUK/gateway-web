@@ -12,9 +12,9 @@ import EditApplicationForm from "../application/EditApplicationForm";
 
 const ApplicationTabs = () => {
     const router = useRouter();
-    const { id } = router.query;
+    const { appId } = router.query;
     const { data: application } = useGet<Application>(
-        `${apis.applicationsV1Url}/${id}`
+        `${apis.applicationsV1Url}/${appId}`
     );
 
     const [selectedTab, setSelectedTab] = useState("App Info");

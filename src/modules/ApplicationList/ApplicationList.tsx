@@ -32,13 +32,7 @@ const ApplicationList = () => {
             {applicationsList.map(application => (
                 <ApplicationListItem
                     key={application.id}
-                    id={application.id}
-                    name={application.name}
-                    app_id={application.app_id}
-                    description={application.description}
-                    created_at={application.created_at}
-                    tags={application.tags}
-                    enabled={application.enabled}
+                    application={application}
                 />
             ))}
         </BoxContainer>
