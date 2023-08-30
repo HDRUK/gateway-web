@@ -18,13 +18,12 @@ import { Team } from "@/interfaces/Team";
 import BoxContainer from "@/components/BoxContainer";
 
 import { useMemo } from "react";
+import { useRouter } from "next/router";
 import * as styles from "./LeftNav.styles";
 
-interface LeftNavProps {
-    teamId?: string | string[] | undefined;
-}
-
-const LeftNav = ({ teamId }: LeftNavProps) => {
+const LeftNav = () => {
+    const router = useRouter();
+    const { teamId } = router.query;
     const { data: team, isLoading: isTeamLoading } = useGet<Team>(
         `${apis.teamsV1Url}/${teamId}`,
         { shouldFetch: !!teamId }

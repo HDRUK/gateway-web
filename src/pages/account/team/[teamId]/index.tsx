@@ -6,7 +6,6 @@ import { GetServerSideProps } from "next";
 import LeftNav from "@/modules/LeftNav";
 
 import Link from "@/components/Link";
-import { useRouter } from "next/router";
 import { Typography } from "@mui/material";
 import TeamManagementTabs from "@/modules/TeamManagement/TeamManagementTabs";
 import AddTeamMemberDialog from "@/modules/dialogs/AddTeamMemberDialog";
@@ -16,7 +15,6 @@ import AddIcon from "@mui/icons-material/Add";
 import useDialog from "@/hooks/useDialog";
 
 const TeamLandingPage = () => {
-    const router = useRouter();
     const { showDialog } = useDialog();
 
     return (
@@ -38,7 +36,7 @@ const TeamLandingPage = () => {
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
                         bgcolor: "white",
                     }}>
-                    <LeftNav teamId={router.query.teamId} />
+                    <LeftNav />
                 </Box>
                 <Box
                     sx={{
