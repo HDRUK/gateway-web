@@ -37,7 +37,7 @@ const LandingPage = () => {
             <Box sx={{ display: "flex", gap: "40px" }}>
                 <ImgMediaCard
                     img="https://place-hold.it/300"
-                    href={`/account/team/${router.query.teamId}/api-management/integrations/create`}
+                    href={`/account/team/${router.query.teamId}/integrations/api-management/create`}
                     description="Create API-keys and link to the Gateway"
                     buttonText="Create API-Key"
                 />
