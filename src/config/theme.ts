@@ -285,6 +285,13 @@ const theme = createTheme({
                 },
             },
         },
+        MuiList: {
+            styleOverrides: {
+                root: {
+                    padding: 0,
+                },
+            },
+        },
         MuiSwitch: {
             styleOverrides: {
                 root: {

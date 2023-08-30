@@ -1,7 +1,5 @@
 import Box from "@/components/Box";
-import SquareButton from "@/components/SquareButton";
 import ImgMediaCard from "@/components/ImgMediaCard";
-import AddIcon from "@mui/icons-material/Add";
 import { Typography } from "@mui/material";
 import Link from "@/components/Link";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
@@ -37,21 +35,22 @@ const LandingPage = () => {
                 </Link>
             </div>
             <Box sx={{ display: "flex", gap: "40px" }}>
-                <ImgMediaCard 
+                <ImgMediaCard
                     img="https://place-hold.it/300"
-                    href={`/account/team/${router.query.teamId}/app-management/create`}
+                    href={`/account/team/${router.query.teamId}/api-management/integrations/create`}
                     description="Create API-keys and link to the Gateway"
                     buttonText="Create API-Key"
                 />
-                <ImgMediaCard 
+                <ImgMediaCard
                     img="https://place-hold.it/300"
-                    href={`/account/team/${router.query.teamId}/app-management/list`}
+                    href={`/account/team/${router.query.teamId}/integrations/api-management/list`}
                     description="Manage your linked APIs"
                     buttonText="Manage API"
                 />
             </Box>
             <Typography sx={{ fontSize: "20px" }}>
-                HDR UK cannot create application registrations on behalf of users
+                HDR UK cannot create application registrations on behalf of
+                users
             </Typography>
         </Box>
     );

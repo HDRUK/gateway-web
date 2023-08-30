@@ -14,7 +14,7 @@ import Button from "@/components/Button";
 import AddIcon from "@mui/icons-material/Add";
 import useDialog from "@/hooks/useDialog";
 
-const TeamLandingPage = () => {
+const TeamManagementPage = () => {
     const { showDialog } = useDialog();
 
     return (
@@ -89,4 +89,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default TeamLandingPage;
+export default TeamManagementPage;

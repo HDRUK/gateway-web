@@ -27,7 +27,7 @@ const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
 
     return (
         <Link
-            href={`/account/team/${teamId}/app-management/list/${application.id}`}
+            href={`/account/team/${teamId}/integrations/api-management/list/${application.id}`}
             style={{
                 textDecoration: "none",
                 color: "#000",

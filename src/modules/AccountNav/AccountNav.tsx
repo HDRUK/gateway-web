@@ -40,7 +40,7 @@ const AccountNav = ({
         const t = {
             id: team.id,
             label: team.name,
-            href: `/account/team/${team.id}`,
+            href: `/account/team/${team.id}/team-management`,
         };
 
         if (!links.includes(t)) {

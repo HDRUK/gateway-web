@@ -20,7 +20,7 @@ const ApplicationList = () => {
                 sx={{
                     gridColumn: { tablet: "span 2", laptop: "span 1" },
                 }}>
-                <BackButton label="Back to integrations" />
+                <BackButton label="Back to app selection" />
             </Box>
             <Box
                 sx={{
