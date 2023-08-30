@@ -81,12 +81,7 @@ const LeftNav = () => {
         {
             icon: <SchemaOutlinedIcon />,
             label: "Data Uses",
-            subItems: [
-                {
-                    label: "D2",
-                    href: `/account/team/${teamId}/data-uses/1`,
-                },
-            ],
+            href: `/account/team/${teamId}/data-uses/`,
         },
         {
             icon: <DescriptionOutlinedIcon />,
