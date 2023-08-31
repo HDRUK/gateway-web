@@ -3,18 +3,18 @@
 exports[`SocialProviders should render content 1`] = `
 <div>
   <div
-    class="MuiBox-root mui-style-63gnwr"
+    class="MuiBox-root mui-style-v1crop"
   >
     <p
-      class="MuiTypography-root MuiTypography-body2 mui-style-6nt85k-MuiTypography-root-Label"
+      class="MuiTypography-root MuiTypography-body2 mui-style-1cyqjq3-MuiTypography-root-Label"
     >
       Your preferred sign in method
     </p>
     <div
-      class="MuiBox-root mui-style-126vzu2"
+      class="MuiBox-root mui-style-sg1m7l"
     >
       <div
-        class="MuiBox-root mui-style-1udxldu"
+        class="MuiBox-root mui-style-z8xd21"
       >
         <img
           alt="Google"
@@ -36,7 +36,7 @@ exports[`SocialProviders should render content 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root mui-style-1c3zhnu"
+        class="MuiBox-root mui-style-1cgyyae"
       >
         <img
           alt="LinkedIn"
@@ -55,7 +55,7 @@ exports[`SocialProviders should render content 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root mui-style-1c3zhnu"
+        class="MuiBox-root mui-style-1cgyyae"
       >
         <img
           alt="Microsoft"
