@@ -1,6 +1,6 @@
 import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
+import Card from "@/components/Card";
 import { Application } from "@/interfaces/Application";
 import { Typography } from "@mui/material";
 
@@ -10,8 +10,8 @@ interface AuthDetailsProps {
 
 const AuthDetails = ({ application }: AuthDetailsProps) => {
     return (
-        <>
-            <BoxContainer
+        <Box sx={{ gap: 1, display: "grid", padding: 0 }}>
+            <Card
                 sx={{
                     display: "flex",
                     justifyContent: "space-evenly",
@@ -46,8 +46,8 @@ const AuthDetails = ({ application }: AuthDetailsProps) => {
                         Copy
                     </Button>
                 </Box>
-            </BoxContainer>
-            <BoxContainer
+            </Card>
+            <Card
                 sx={{
                     display: "flex",
                     justifyContent: "space-evenly",
@@ -82,8 +82,8 @@ const AuthDetails = ({ application }: AuthDetailsProps) => {
                         Copy
                     </Button>
                 </Box>
-            </BoxContainer>
-        </>
+            </Card>
+        </Box>
     );
 };
 

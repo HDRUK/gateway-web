@@ -292,6 +292,51 @@ const theme = createTheme({
                 },
             },
         },
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 0,
+                    boxShadow: "1px 1px 3px 0px rgba(0, 0, 0, 0.09)",
+                },
+            },
+        },
+        MuiCard: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 0,
+                    boxShadow: "1px 1px 3px 0px rgba(0, 0, 0, 0.09)",
+                },
+            },
+        },
+        MuiDialogTitle: {
+            styleOverrides: {
+                root: {
+                    fontSize: "1.3rem",
+                },
+            },
+        },
+        MuiTypography: {
+            styleOverrides: {
+                root: {
+                    fontSize: "0.875rem",
+                },
+                h2: {
+                    fontSize: "1.3rem",
+                    fontWeight: 400,
+                    marginBottom: 3,
+                },
+                h3: {
+                    fontSize: "1.1rem",
+                    fontWeight: 400,
+                    marginBottom: 2,
+                },
+                h4: {
+                    fontSize: "1rem",
+                    fontWeight: 400,
+                    marginBottom: 2,
+                },
+            },
+        },
         MuiSwitch: {
             styleOverrides: {
                 root: {

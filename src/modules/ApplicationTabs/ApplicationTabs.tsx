@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
-
 import AuthDetails from "../application/AuthDetails";
 import EditApplicationForm from "../application/EditApplicationForm";
 
@@ -32,11 +31,7 @@ const ApplicationTabs = () => {
         {
             label: "Auth",
             value: "Auth",
-            content: (
-                <Typography component="span">
-                    <AuthDetails application={application} />
-                </Typography>
-            ),
+            content: <AuthDetails application={application} />,
         },
         {
             label: "Scopes/Permissions",

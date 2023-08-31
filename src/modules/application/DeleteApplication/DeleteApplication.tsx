@@ -1,6 +1,6 @@
 import Box from "@/components/Box";
 import Button from "@/components/Button";
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Control } from "react-hook-form";
 
 interface DeleteApplicationProps {
@@ -9,30 +9,24 @@ interface DeleteApplicationProps {
 
 const DeleteApplication = ({ control }: DeleteApplicationProps) => {
     return (
-        <Box sx={{ padding: 0 }}>
-            <Divider />
-            <Typography
-                component="span"
+        <Box sx={{ padding: 0, display: "flex", alignItems: "center" }}>
+            <Box sx={{ flex: 1 }}>
+                <Typography variant="h3">Delete this app</Typography>
+                <Typography>
+                    Permanently delete this app from your management page. This
+                    act is irreversible.
+                </Typography>
+            </Box>
+            <Box
                 sx={{
-                    fontWeight: "normal",
-                    paddingTop: 2,
+                    p: 0,
+                    display: "flex",
+                    justifyContent: "end",
                 }}>
-                Delete this app.
-            </Typography>{" "}
-            <Typography component="span" sx={{ marginTop: 1, marginBottom: 4 }}>
-                Permanently delete this app from your management page. This act
-                is irreversible.
-                <Box
-                    sx={{
-                        p: 0,
-                        display: "flex",
-                        justifyContent: "end",
-                    }}>
-                    <Button type="submit" variant="outlined">
-                        Delete App
-                    </Button>
-                </Box>
-            </Typography>
+                <Button type="submit" variant="outlined" color="secondary">
+                    Delete App
+                </Button>
+            </Box>
         </Box>
     );
 };

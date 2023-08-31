@@ -6,6 +6,8 @@ import { GetServerSideProps } from "next";
 import ApplicationTabs from "@/modules/ApplicationTabs";
 import { Typography } from "@mui/material";
 import LeftNav from "@/modules/LeftNav";
+import Paper from "@/components/Paper";
+import BackButton from "@/components/BackButton";
 
 const EditApplication = () => {
     return (
@@ -31,13 +33,17 @@ const EditApplication = () => {
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>
-                        Application Management
-                    </h2>
-                    <Typography>
-                        Use this page to register your application with us.
-                    </Typography>
-                    <ApplicationTabs />
+                    <BackButton label="Back to API selection" />
+                    <Paper>
+                        <Box>
+                            <Typography variant="h2">API Management</Typography>
+                            <Typography>
+                                Use this page to register your application with
+                                us.
+                            </Typography>
+                        </Box>
+                        <ApplicationTabs />
+                    </Paper>
                 </Box>
             </BoxContainer>
         </>

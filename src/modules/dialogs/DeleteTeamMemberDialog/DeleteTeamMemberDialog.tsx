@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import useDialog from "@/hooks/useDialog";
 import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
 import useDelete from "@/hooks/useDelete";
+import { Typography } from "@mui/material";
 
 interface DeleteTeamMemberDialogProps {
     user: User;
@@ -48,23 +49,18 @@ const DeleteTeamMemberDialog = ({
     };
 
     return (
-        <Dialog title="" showCloseButton={false}>
-            <MuiDialogContent
-                sx={{
-                    textAlign: "center",
-                    fontSize: "14pt",
-                    padding: 5,
-                    marginTop: 5,
-                }}>
-                {title.replace("%%USER_NAME%%", user.name)}
+        <Dialog title="Delete a user" showCloseButton={false}>
+            <MuiDialogContent>
+                <Typography>
+                    {title.replace("%%USER_NAME%%", user.name)}
+                </Typography>
             </MuiDialogContent>
-            <MuiDialogActions
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: 5,
-                }}>
-                <Button autoFocus onClick={onCancel}>
+            <MuiDialogActions>
+                <Button
+                    variant="outlined"
+                    autoFocus
+                    color="secondary"
+                    onClick={onCancel}>
                     {t("dialogs.DeleteTeamMemberDialog.cancelButton") || ""}
                 </Button>
 

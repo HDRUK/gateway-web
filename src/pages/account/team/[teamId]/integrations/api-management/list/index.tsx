@@ -7,6 +7,7 @@ import { GetServerSideProps } from "next";
 import ActionBar from "@/components/ActionBar";
 import ApplicationList from "@/modules/ApplicationList";
 import LeftNav from "@/modules/LeftNav";
+import BackButton from "@/components/BackButton";
 
 const ListAppPage = () => {
     return (
@@ -34,7 +35,8 @@ const ListAppPage = () => {
                     sx={{
                         gridColumn: { tablet: "span 3", laptop: "span 4" },
                     }}>
-                    <h2 style={{ marginBottom: "10px" }}>API List</h2>
+                    <BackButton label="Back to API Management" />
+
                     <ApplicationList />
                 </Box>
             </BoxContainer>

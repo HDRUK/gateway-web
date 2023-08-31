@@ -1,4 +1,3 @@
-import BackButton from "@/components/BackButton";
 import ApplicationListItem from "@/components/ApplicationListItem";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
@@ -16,12 +15,6 @@ const ApplicationList = () => {
 
     return (
         <BoxContainer>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 1" },
-                }}>
-                <BackButton label="Back to app selection" />
-            </Box>
             <Box
                 sx={{
                     p: 0,

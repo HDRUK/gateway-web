@@ -5,8 +5,9 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import ProfileForm from "@/modules/profile/ProfileForm";
 import useAuth from "@/hooks/useAuth";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import LeftNav from "@/modules/LeftNav";
+import Paper from "@/components/Paper";
 
 const Profile = () => {
     const { isLoading } = useAuth();
@@ -34,16 +35,20 @@ const Profile = () => {
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>Your profile</h2>
-                    <p>
-                        Your details are used when you make a data access
-                        request application.
-                    </p>
-                    {isLoading ? (
-                        <CircularProgress color="secondary" />
-                    ) : (
-                        <ProfileForm />
-                    )}
+                    <Paper>
+                        <Box>
+                            <Typography variant="h2">Your profile</Typography>
+                            <Typography sx={{ marginBottom: 4 }}>
+                                Your details are used when you make a data
+                                access request application.
+                            </Typography>
+                            {isLoading ? (
+                                <CircularProgress color="secondary" />
+                            ) : (
+                                <ProfileForm />
+                            )}
+                        </Box>
+                    </Paper>
                 </Box>
             </BoxContainer>
         </>

@@ -7,6 +7,9 @@ import { GetServerSideProps } from "next";
 import ActionBar from "@/components/ActionBar";
 import CreateApp from "@/modules/AppManagement/CreateApp";
 import LeftNav from "@/modules/LeftNav";
+import { Typography } from "@mui/material";
+import Paper from "@/components/Paper";
+import BackButton from "@/components/BackButton";
 
 const CreateAppPage = () => {
     return (
@@ -32,12 +35,18 @@ const CreateAppPage = () => {
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>API Management</h2>
-                    <p>
-                        Manage and edit your &quot;how to request access&quot;
-                        information, your data access request workflows
-                    </p>
-                    <CreateApp />
+                    <BackButton label="Back to API Management" />
+                    <Paper>
+                        <Box>
+                            <Typography variant="h2">Create API</Typography>
+                            <Typography>
+                                Manage and edit your &quot;how to request
+                                access&quot; information, your data access
+                                request workflows
+                            </Typography>
+                            <CreateApp />
+                        </Box>
+                    </Paper>
                 </Box>
             </BoxContainer>
             <ActionBar />

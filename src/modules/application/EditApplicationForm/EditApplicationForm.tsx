@@ -16,6 +16,7 @@ import apis from "@/config/apis";
 import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
 import { useEffect } from "react";
+import { Divider } from "@mui/material";
 
 interface EditApplicationFormProps {
     application?: Application;
@@ -70,6 +71,7 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
                 </Form>
             </Box>
             <Box>
+                <Divider />
                 <DeleteApplication control={control} />
             </Box>
         </>

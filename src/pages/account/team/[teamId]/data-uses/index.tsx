@@ -5,6 +5,7 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import LeftNav from "@/modules/LeftNav";
 import { Typography } from "@mui/material";
+import Paper from "@/components/Paper";
 
 const TeamDataUsesPage = () => {
     return (
@@ -30,13 +31,11 @@ const TeamDataUsesPage = () => {
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <Typography
-                        sx={{
-                            fontWeight: 500,
-                            fontSize: "14pt",
-                        }}>
-                        Data uses
-                    </Typography>
+                    <Paper>
+                        <Box>
+                            <Typography variant="h2">Data uses</Typography>
+                        </Box>
+                    </Paper>
                 </Box>
             </BoxContainer>
         </>

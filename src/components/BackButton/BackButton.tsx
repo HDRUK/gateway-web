@@ -13,6 +13,7 @@ const BackButton = ({ label, ...rest }: BackButtonProps) => {
 
     return (
         <Button
+            sx={{ marginBottom: 2 }}
             variant="link"
             onClick={() => router.back()}
             startIcon={<ArrowBackIosNewIcon />}

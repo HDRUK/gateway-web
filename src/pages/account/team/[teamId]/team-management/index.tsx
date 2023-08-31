@@ -43,35 +43,31 @@ const TeamManagementPage = () => {
                         gridColumn: { tablet: "span 3", laptop: "span 4" },
                     }}>
                     <BoxContainer>
-                        <Box>
-                            <Typography
-                                sx={{
-                                    fontWeight: 500,
-                                    fontSize: "14pt",
-                                }}>
+                        <Box sx={{ bgcolor: "white" }}>
+                            <Typography variant="h2">
                                 Team management
                             </Typography>
-                        </Box>
-                        <Box>
-                            Organise and manage team members and the teams email
-                            notifications. If you need assistance managing the
-                            team, please{" "}
-                            <Link href="https://www.google.com/">
-                                raise a support ticket (!! NEEDS SUPPORT LINK
-                                HERE !!)
-                            </Link>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                justifyContent: "center",
-                            }}>
-                            <Button
-                                onClick={() => showDialog(AddTeamMemberDialog)}>
-                                <AddIcon /> Add a new member
-                            </Button>
-                        </Box>
-                        <Box>
+                            <Typography>
+                                Organise and manage team members and the teams
+                                email notifications. If you need assistance
+                                managing the team, please{" "}
+                                <Link href="https://www.google.com/">
+                                    raise a support ticket (!! NEEDS SUPPORT
+                                    LINK HERE !!)
+                                </Link>
+                            </Typography>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                }}>
+                                <Button
+                                    onClick={() =>
+                                        showDialog(AddTeamMemberDialog)
+                                    }>
+                                    <AddIcon /> Add a new member
+                                </Button>
+                            </Box>
                             <TeamManagementTabs />
                         </Box>
                     </BoxContainer>

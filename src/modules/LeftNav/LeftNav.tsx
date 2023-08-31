@@ -26,7 +26,7 @@ import Loading from "@/components/Loading";
 import { Team } from "@/interfaces/Team";
 import BoxContainer from "@/components/BoxContainer";
 
-import { ReactNode, useMemo, useState } from "react";
+import { Fragment, ReactNode, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { colors } from "@/config/theme";
 
@@ -129,13 +129,13 @@ const LeftNav = () => {
                 {navItems.map(item =>
                     !item.subItems ? (
                         <Link
+                            key={item.label}
                             href={item.href || ""}
                             passHref
                             underline="none"
                             sx={{ color: colors.grey700 }}>
                             <ListItemButton
                                 selected={item.href?.includes(asPath)}
-                                component="a"
                                 sx={{ paddingLeft: 1 }}>
                                 <ListItemIcon sx={{ minWidth: "40px" }}>
                                     {item.icon}
@@ -144,7 +144,7 @@ const LeftNav = () => {
                             </ListItemButton>
                         </Link>
                     ) : (
-                        <>
+                        <Fragment key={item.label}>
                             <ListItemButton
                                 onClick={() => toggleMenu(item)}
                                 component="button"
@@ -177,11 +177,10 @@ const LeftNav = () => {
                                                     selected={subItem.href?.includes(
                                                         asPath
                                                     )}
-                                                    component="a"
                                                     sx={{ pl: 4 }}>
                                                     <ListItemText
                                                         sx={{
-                                                            paddingLeft: "10px",
+                                                            paddingLeft: "17px",
                                                         }}
                                                         primary={subItem.label}
                                                     />
@@ -191,7 +190,7 @@ const LeftNav = () => {
                                     })}
                                 </List>
                             </Collapse>
-                        </>
+                        </Fragment>
                     )
                 )}
             </List>
