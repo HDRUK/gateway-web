@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AccountNav from "@/modules/AccountNav";
+import { userV1 } from "@/mocks/data";
 import { fireEvent, render, screen, waitFor } from "../testUtils";
 
 const DemoComponent = (props: {
@@ -63,11 +64,12 @@ describe("AccountNav", () => {
 
         fireEvent.click(screen.getByText("open nav"));
 
+        const fullname = `${userV1.firstname} ${userV1.lastname}`;
         await waitFor(() => {
-            expect(screen.getByText("Profile")).toBeInTheDocument();
+            expect(screen.getByText(fullname)).toBeInTheDocument();
         });
 
-        fireEvent.click(screen.getByText("Profile"));
+        fireEvent.click(screen.getByText(fullname));
 
         expect(onCloseMenu).toHaveBeenCalled();
     });
