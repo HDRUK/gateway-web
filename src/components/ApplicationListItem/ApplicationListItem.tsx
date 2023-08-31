@@ -13,7 +13,6 @@ const ApplicationListItem = ({
     id,
     description,
     created_at,
-    tags,
     enabled,
     app_id,
 }: Application) => {

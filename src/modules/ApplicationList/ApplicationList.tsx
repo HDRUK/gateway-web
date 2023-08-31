@@ -4,15 +4,22 @@ import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import Loading from "@/components/Loading";
 import useGet from "@/hooks/useGet";
+import { useState, useEffect } from "react";
 import ApplicationSearchBar from "@/components/ApplicationSearchBar";
 import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
 
-const ApplicationList = () => {
-    const { data: applicationsList = [], isLoading: isApplicationListLoading } =
-        useGet<Application[]>(apis.applicationsV1Url);
 
-    if (isApplicationListLoading) return <Loading />;
+const ApplicationList = () => {
+
+    const [filterQuery,setFilterQuery] = useState('');
+
+    const { 
+        data: applicationsList = [], 
+        isLoading: isApplicationListLoading ,
+        mutate: mutate,
+    } = useGet<Application[]>(`${apis.applicationsV1Url}?${filterQuery}`);
+   
 
     return (
         <BoxContainer>
@@ -26,20 +33,23 @@ const ApplicationList = () => {
                 sx={{
                     p: 0,
                     display: "flex",
-                }}>
-                <ApplicationSearchBar />
+                }}
+            >
+                <ApplicationSearchBar setFilterQuery={setFilterQuery} />
             </Box>
-            {applicationsList.map(application => (
-                <ApplicationListItem
-                    id={application.id}
-                    name={application.name}
-                    app_id={application.app_id}
-                    description={application.description}
-                    created_at={application.created_at}
-                    tags={application.tags}
-                    enabled={application.enabled}
-                />
-            ))}
+            {
+                isApplicationListLoading ? <Loading /> :
+                applicationsList.map(application => (
+                    <ApplicationListItem
+                        id={application.id}
+                        name={application.name}
+                        app_id={application.app_id}
+                        description={application.description}
+                        created_at={application.created_at}
+                        enabled={application.enabled}
+                    />
+                ))
+            }
         </BoxContainer>
     );
 };
