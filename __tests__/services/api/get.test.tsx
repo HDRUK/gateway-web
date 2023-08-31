@@ -43,7 +43,9 @@ describe("get", () => {
         });
 
         expect(apiUtils.errorNotification).toHaveBeenCalledWith({
-            errorResponse: "ra",
+            errorResponse: expect.objectContaining({
+                data: "Request failed with status code 401",
+            }),
             method: "get",
             props: expect.any(Object),
         });
