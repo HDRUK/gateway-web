@@ -1,3 +1,9 @@
+/* eslint-disable */
+
+/**
+ ** TODO: RE-ENABLE LINTING WHEN WORKING ON FEATURE
+ */
+
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import { Typography } from "@mui/material";
@@ -22,7 +28,8 @@ const DeleteApplication = ({ control }: DeleteApplicationProps) => {
                     p: 0,
                     display: "flex",
                     justifyContent: "end",
-                }}>
+                }}
+            >
                 <Button type="submit" variant="outlined" color="secondary">
                     Delete App
                 </Button>

@@ -1,3 +1,9 @@
+/* eslint-disable */
+
+/**
+ ** TODO: RE-ENABLE LINTING WHEN WORKING ON FEATURE
+ */
+
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import { Typography } from "@mui/material";
@@ -27,7 +33,8 @@ const Notifications = () => {
                         fontWeight: 500,
                         fontSize: "18px",
                         marginBottom: "12px",
-                    }}>
+                    }}
+                >
                     Email notifications
                 </Typography>
                 <Typography>

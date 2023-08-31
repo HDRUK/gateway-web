@@ -1,3 +1,9 @@
+/* eslint-disable */
+
+/**
+ ** TODO: RESOLVE DISABLING OF LINTING ONCE AUTOCOMPLETE COMPONENT HAS BEEN IMPLEMENTED
+ */
+
 /** @jsxImportSource @emotion/react */
 
 import TextField from "@/components/TextField";

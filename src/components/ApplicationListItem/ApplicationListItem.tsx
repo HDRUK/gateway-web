@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /** @jsxImportSource @emotion/react */
 
 import Box from "@/components/Box";

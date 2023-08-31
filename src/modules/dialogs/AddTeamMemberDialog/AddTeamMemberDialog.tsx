@@ -1,4 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable */
+
+/**
+ ** TODO: RE-ENABLE LINTING WHEN WORKING ON FEATURE
+ */
+
 import * as React from "react";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslation } from "react-i18next";
@@ -120,7 +125,8 @@ const AddTeamMemberDialog = () => {
                         display: "flex",
                         justifyContent: "space-evenly",
                         verticalAlign: "middle",
-                    }}>
+                    }}
+                >
                     <TypeAheadDropDown
                         label="User"
                         name="user"
@@ -152,12 +158,14 @@ const AddTeamMemberDialog = () => {
                                 width: "300px",
                                 height: "37px",
                                 marginTop: "23px",
-                            }}>
+                            }}
+                        >
                             {roleOptions.map(role => (
                                 <MenuItem
                                     sx={{ paddingLeft: "6px" }}
                                     key={role.name}
-                                    value={role.name}>
+                                    value={role.name}
+                                >
                                     <Checkbox
                                         size="small"
                                         checked={
@@ -173,7 +181,8 @@ const AddTeamMemberDialog = () => {
                                             <Typography
                                                 sx={{
                                                     fontWeight: 700,
-                                                }}>
+                                                }}
+                                            >
                                                 {role.name}
                                             </Typography>
                                         }
@@ -181,7 +190,8 @@ const AddTeamMemberDialog = () => {
                                             <Typography
                                                 sx={{
                                                     fontSize: "11px",
-                                                }}>
+                                                }}
+                                            >
                                                 {role.description}
                                             </Typography>
                                         }
