@@ -3,18 +3,16 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import ProfileForm from "@/modules/profile/ProfileForm";
-import useAuth from "@/hooks/useAuth";
-import { CircularProgress, Typography } from "@mui/material";
+import ApplicationTabs from "@/modules/ApplicationTabs";
+import { Typography } from "@mui/material";
 import LeftNav from "@/modules/LeftNav";
 import Paper from "@/components/Paper";
+import BackButton from "@/components/BackButton";
 
-const Profile = () => {
-    const { isLoading } = useAuth();
-
+const EditApplication = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - Profile" />
+            <Head title="Health Data Research Innovation Gateway - My account - Applications" />
             <BoxContainer
                 sx={{
                     gridTemplateColumns: {
@@ -35,19 +33,16 @@ const Profile = () => {
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
+                    <BackButton label="Back to API selection" />
                     <Paper>
                         <Box>
-                            <Typography variant="h2">Your profile</Typography>
-                            <Typography sx={{ marginBottom: 4 }}>
-                                Your details are used when you make a data
-                                access request application.
+                            <Typography variant="h2">API Management</Typography>
+                            <Typography>
+                                Use this page to register your application with
+                                us.
                             </Typography>
-                            {isLoading ? (
-                                <CircularProgress color="secondary" />
-                            ) : (
-                                <ProfileForm />
-                            )}
                         </Box>
+                        <ApplicationTabs />
                     </Paper>
                 </Box>
             </BoxContainer>
@@ -63,4 +58,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default Profile;
+export default EditApplication;

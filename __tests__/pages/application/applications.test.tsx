@@ -1,14 +1,14 @@
 import React from "react";
-import EditApplication from "@/pages/application/edit";
+import EditApplication from "@/pages/account/team/[teamId]/integrations/api-management/list/[appId]";
 import { render, screen, waitFor } from "../../testUtils";
 
-jest.mock('next/router', () => ({
+jest.mock("next/router", () => ({
     useRouter() {
         return {
-            route: '/',
-            pathname: '',
-            query: '',
-            asPath: '',
+            route: "/",
+            pathname: "",
+            query: "",
+            asPath: "",
         };
     },
 }));
@@ -17,9 +17,7 @@ describe("Applications", () => {
     it("should render contents", async () => {
         render(<EditApplication />);
         await waitFor(() => {
-            expect(
-                screen.getByText("Application Management")
-            ).toBeInTheDocument();
+            expect(screen.getByText("API Management")).toBeInTheDocument();
             expect(
                 screen.queryByText("Placeholder for Auth Tab")
             ).not.toBeInTheDocument();

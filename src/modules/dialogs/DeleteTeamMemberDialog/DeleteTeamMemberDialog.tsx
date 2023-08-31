@@ -10,8 +10,17 @@ import { useRouter } from "next/router";
 import useDialog from "@/hooks/useDialog";
 import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
 import useDelete from "@/hooks/useDelete";
+import { Typography } from "@mui/material";
 
-const DeleteTeamMemberDialog = (user: User, callback: Function) => {
+interface DeleteTeamMemberDialogProps {
+    user: User;
+    callback: () => void;
+}
+
+const DeleteTeamMemberDialog = ({
+    user,
+    callback,
+}: DeleteTeamMemberDialogProps) => {
     const router = useRouter();
     const { teamId } = router.query;
     const { t } = useTranslation("modules");
@@ -19,15 +28,15 @@ const DeleteTeamMemberDialog = (user: User, callback: Function) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
     const deleteTeamMember = useDelete(
-        `${apis.teamsV1Url}/${teamId}/users/${user.user.id}`,
+        `${apis.teamsV1Url}/${teamId}/users/${user.id}`,
         {
             itemName: `User`,
-        },
-        true
+            overideUrl: true,
+        }
     );
 
     const handleDelete = () => {
-        deleteTeamMember(user.user.id);
+        deleteTeamMember(user.id);
         hideDialog();
 
         if (typeof callback === "function") {
@@ -40,27 +49,18 @@ const DeleteTeamMemberDialog = (user: User, callback: Function) => {
     };
 
     return (
-        <Dialog title="" showCloseButton={false}>
-            <MuiDialogContent
-                sx={{
-                    textAlign: "center",
-                    fontSize: "14pt",
-                    padding: 5,
-                    marginTop: 5,
-                }}>
-                {title.replace(
-                    "%%USER_NAME%%",
-                    // eslint-disable-next-line react/destructuring-assignment
-                    user.user.name
-                )}
+        <Dialog title="Delete a user" showCloseButton={false}>
+            <MuiDialogContent>
+                <Typography>
+                    {title.replace("%%USER_NAME%%", user.name)}
+                </Typography>
             </MuiDialogContent>
-            <MuiDialogActions
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: 5,
-                }}>
-                <Button autoFocus onClick={onCancel}>
+            <MuiDialogActions>
+                <Button
+                    variant="outlined"
+                    autoFocus
+                    color="secondary"
+                    onClick={onCancel}>
                     {t("dialogs.DeleteTeamMemberDialog.cancelButton") || ""}
                 </Button>
 

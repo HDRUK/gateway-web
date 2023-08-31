@@ -1,4 +1,9 @@
-import Box from "@/components/Box";
+/* eslint-disable */
+
+/**
+ ** TODO: RE-ENABLE LINTING WHEN WORKING ON FEATURE
+ */
+
 import Loading from "@/components/Loading";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
@@ -49,15 +54,15 @@ const TeamMembers = () => {
 
     const showAlertCallback = () => {
         setAlertVisible(true);
-    }
+    };
 
     const openPopover = Boolean(anchorEl);
 
     const { control } = useForm<TeamMemberRoles>({});
 
-    const { data: teamUserList = [], isLoading: isTeamListLoading } = useGet<
-        Team[]
-    >(`${apis.teamsV1Url}/${teamId}`);
+    const { data: team, isLoading: isTeamListLoading } = useGet<Team>(
+        `${apis.teamsV1Url}/${teamId}`
+    );
 
     if (isTeamListLoading) return <Loading />;
 
@@ -74,7 +79,8 @@ const TeamMembers = () => {
                             </TableCell>
                             <TableCell>
                                 <Typography
-                                    sx={{ fontWeight: 700, display: "flex" }}>
+                                    sx={{ fontWeight: 700, display: "flex" }}
+                                >
                                     Team{" "}
                                     <HelpIcon
                                         id="team-help"
@@ -87,7 +93,8 @@ const TeamMembers = () => {
                             </TableCell>
                             <TableCell>
                                 <Typography
-                                    sx={{ fontWeight: 700, display: "flex" }}>
+                                    sx={{ fontWeight: 700, display: "flex" }}
+                                >
                                     Data Access Requests{" "}
                                     <HelpIcon
                                         id="dar-help"
@@ -100,7 +107,8 @@ const TeamMembers = () => {
                             </TableCell>
                             <TableCell>
                                 <Typography
-                                    sx={{ fontWeight: 700, display: "flex" }}>
+                                    sx={{ fontWeight: 700, display: "flex" }}
+                                >
                                     Metadata{" "}
                                     <HelpIcon
                                         id="metadata-help"
@@ -119,7 +127,7 @@ const TeamMembers = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {teamUserList.users.map((user: User) => {
+                        {team?.users?.map((user: User) => {
                             // Intentionally always hide our internal super-user account
                             // from team lists
                             return user.id !== 1 ? (
@@ -168,13 +176,14 @@ const TeamMembers = () => {
                                     <TableCell>
                                         <DeleteIcon
                                             sx={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.primary
+                                                    .main,
                                             }}
                                             onClick={() =>
                                                 showDialog(
                                                     DeleteTeamMemberDialog,
                                                     {
-                                                        user: user,
+                                                        user,
                                                         callback:
                                                             showAlertCallback,
                                                     }
@@ -209,13 +218,15 @@ const TeamMembers = () => {
                         color: "white",
                         backgroundColor: "black",
                     },
-                }}>
+                }}
+            >
                 {/* Team blurb */}
                 {popoverNumber === 1 && (
                     <ul>
                         <li>
                             <Typography
-                                sx={{ fontWeight: 700, display: "inline" }}>
+                                sx={{ fontWeight: 700, display: "inline" }}
+                            >
                                 Admins
                             </Typography>{" "}
                             can; manage the existing members of your team, add
@@ -225,7 +236,8 @@ const TeamMembers = () => {
                         </li>
                         <li>
                             <Typography
-                                sx={{ fontWeight: 700, display: "inline" }}>
+                                sx={{ fontWeight: 700, display: "inline" }}
+                            >
                                 Developers
                             </Typography>{" "}
                             can; develop things, this is placeholder text, copy
@@ -239,7 +251,8 @@ const TeamMembers = () => {
                     <ul>
                         <li>
                             <Typography
-                                sx={{ fontWeight: 700, display: "inline" }}>
+                                sx={{ fontWeight: 700, display: "inline" }}
+                            >
                                 Managers
                             </Typography>{" "}
                             can; manage members, create and assign workflows and
@@ -248,7 +261,8 @@ const TeamMembers = () => {
                         </li>
                         <li>
                             <Typography
-                                sx={{ fontWeight: 700, display: "inline" }}>
+                                sx={{ fontWeight: 700, display: "inline" }}
+                            >
                                 Reviewers
                             </Typography>{" "}
                             can review applications that are assigned to them.
@@ -261,14 +275,16 @@ const TeamMembers = () => {
                     <ul>
                         <li>
                             <Typography
-                                sx={{ fontWeight: 700, display: "inline" }}>
+                                sx={{ fontWeight: 700, display: "inline" }}
+                            >
                                 Managers
                             </Typography>{" "}
                             can; manage members, add, edit and archive metadata.
                         </li>
                         <li>
                             <Typography
-                                sx={{ fontWeight: 700, display: "inline" }}>
+                                sx={{ fontWeight: 700, display: "inline" }}
+                            >
                                 Metadata editors
                             </Typography>{" "}
                             can add, edit and archive metadata.

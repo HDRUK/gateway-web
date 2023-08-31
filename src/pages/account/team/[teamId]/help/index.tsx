@@ -3,18 +3,14 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-
-import ActionBar from "@/components/ActionBar";
-import Link from "@/components/Link";
-import { useRouter } from "next/router";
-import ApplicationList from "@/modules/ApplicationList";
 import LeftNav from "@/modules/LeftNav";
+import { Typography } from "@mui/material";
+import Paper from "@/components/Paper";
 
-const ListAppPage = () => {
-    const router = useRouter();
+const TeamHelpPage = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
+            <Head title="Health Data Research Innovation Gateway - My account - Help" />
             <BoxContainer
                 sx={{
                     gridTemplateColumns: {
@@ -29,16 +25,19 @@ const ListAppPage = () => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
+                        bgcolor: "white",
                     }}>
-                    <LeftNav teamId={router.query.teamId} />
+                    <LeftNav />
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>API List</h2>
-                    <ApplicationList />
+                    <Paper>
+                        <Box>
+                            <Typography variant="h2">Help</Typography>
+                        </Box>
+                    </Paper>
                 </Box>
             </BoxContainer>
-            <ActionBar />
         </>
     );
 };
@@ -51,4 +50,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default ListAppPage;
+export default TeamHelpPage;

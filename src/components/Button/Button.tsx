@@ -3,7 +3,7 @@ import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 
 type ButtonBaseProps = Pick<
     MuiButtonProps,
-    "variant" | "size" | "color" | "sx" | "disableRipple"
+    "variant" | "size" | "color" | "sx" | "disableRipple" | "startIcon"
 >;
 export type ButtonProps = ButtonBaseProps & ComponentPropsWithoutRef<"button">;
 

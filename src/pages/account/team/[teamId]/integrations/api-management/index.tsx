@@ -4,14 +4,10 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
-import ActionBar from "@/components/ActionBar";
-import CreateApp from "@/modules/AppManagement/CreateApp";
-import Link from "@/components/Link";
-import { useRouter } from "next/router";
+import AppLanding from "@/modules/AppManagement/AppLanding";
 import LeftNav from "@/modules/LeftNav";
 
-const CreateAppPage = () => {
-    const router = useRouter();
+const AppLandingPage = () => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
@@ -29,24 +25,15 @@ const CreateAppPage = () => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
+                        bgcolor: "white",
                     }}>
-                    <LeftNav teamId={router.query.teamId} />
-                    {/* <Link
-                        href={`/account/team/${router.query.teamId}/app-management`}>
-                        App Management
-                    </Link> */}
+                    <LeftNav />
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <h2 style={{ marginBottom: "10px" }}>API Management</h2>
-                    <p>
-                        Manage and edit your &quot;how to request access&quot;
-                        information, your data access request workflows
-                    </p>
-                    <CreateApp />
+                    <AppLanding />
                 </Box>
             </BoxContainer>
-            <ActionBar />
         </>
     );
 };
@@ -59,4 +46,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default CreateAppPage;
+export default AppLandingPage;

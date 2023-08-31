@@ -32,8 +32,8 @@ export const Custom: Story = {
         const props = {
             title: "This is a modal",
             content: "This is modal content",
-            onSuccess: () => alert("You saved"),
-            onCancel: () => alert("You dismissed"),
+            onSuccess: () => console.log("You saved"),
+            onCancel: () => console.log("You dismissed"),
             confirmText: "Save",
             cancelText: "Dismiss",
         };

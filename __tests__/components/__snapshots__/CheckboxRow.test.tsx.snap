@@ -3,10 +3,10 @@
 exports[`CheckboxRow should render component 1`] = `
 <div>
   <div
-    class="MuiBox-root mui-style-dikix3"
+    class="MuiBox-root mui-style-106jpu6"
   >
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-suwqkk-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 mui-style-41om2h-MuiTypography-root"
     >
       Name
     </p>
@@ -38,7 +38,7 @@ exports[`CheckboxRow should render component 1`] = `
           </svg>
         </span>
         <span
-          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-qcxu8i-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-1g18ijf-MuiTypography-root"
         >
           checkbox label
         </span>

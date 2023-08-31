@@ -1,6 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+/* eslint-disable */
+
+/**
+ ** TODO: RESOLVE DISABLING OF LINTING ONCE AUTOCOMPLETE COMPONENT HAS BEEN IMPLEMENTED
+ */
 
 /** @jsxImportSource @emotion/react */
 
@@ -48,11 +50,9 @@ const TypeAheadDropDown = (props: TypeAheadDropDownProps) => {
         const { value } = event.target;
         setMemberSearchName(value);
 
-        // eslint-disable-next-line react/destructuring-assignment
         const usersList = props.items.users;
 
         if (value.length > 0) {
-            // eslint-disable-next-line security/detect-non-literal-regexp
             const regex = new RegExp(`${value}`, `i`);
             suggestionsList = usersList.filter(v => {
                 console.log(`testing ${value} vs ${v.name}`);
@@ -65,7 +65,7 @@ const TypeAheadDropDown = (props: TypeAheadDropDownProps) => {
 
     return (
         <div css={styles.typeAheadDropDown(theme, "primary")}>
-            <TextField 
+            <TextField
                 sx={{
                     width: "250px",
                     marginRight: "10px",

@@ -1,4 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable */
+
+/**
+ ** TODO: RE-ENABLE LINTING WHEN WORKING ON FEATURE
+ */
+
 import * as React from "react";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslation } from "react-i18next";
@@ -11,7 +16,13 @@ import { AddTeamMember } from "@/interfaces/AddTeamMember";
 import useDialog from "@/hooks/useDialog";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { Checkbox, ListItemText, MenuItem, Typography } from "@mui/material";
+import {
+    Checkbox,
+    FormControl,
+    ListItemText,
+    MenuItem,
+    Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Select from "@mui/material/Select";
@@ -56,7 +67,6 @@ const AddTeamMemberDialog = () => {
     const selectProps = {
         PaperProps: {
             style: {
-                padding: 5,
                 maxHeight: "250px",
                 width: "600px",
                 overflow: "wrap",
@@ -110,10 +120,13 @@ const AddTeamMemberDialog = () => {
                 </Typography>
                 <Box
                     sx={{
+                        paddingLeft: 0,
+                        paddingRight: 0,
                         display: "flex",
                         justifyContent: "space-evenly",
                         verticalAlign: "middle",
-                    }}>
+                    }}
+                >
                     <TypeAheadDropDown
                         label="User"
                         name="user"
@@ -121,52 +134,72 @@ const AddTeamMemberDialog = () => {
                         icon={SearchIcon}
                         items={teamUserList}
                     />
-                    <Select
-                        label="Member role(s)"
-                        name="roles"
-                        control={control}
-                        multiple
-                        renderValue={selected => selected.join(", ")}
-                        input={<OutlinedInput label="Tag" />}
-                        MenuProps={selectProps}
-                        value={selectedRoles}
-                        onChange={onRoleChange}
-                        sx={{
-                            width: "300px",
-                            height: "37px",
-                            marginTop: "23px",
-                        }}>
-                        {roleOptions.map((role) => (
-                            <MenuItem key={role.name} value={role.name}>
-                                <Checkbox
-                                    checked={
-                                        selectedRoles.indexOf(role.name) > -1
-                                    }
-                                />
-                                <ListItemText
-                                    sx={{
-                                        textWrap: "wrap",
-                                    }}
-                                    primary={
-                                        <Typography
-                                            sx={{
-                                                fontWeight: 700,
-                                            }}>
-                                            {role.name}
+                    <FormControl>
+                        <Select
+                            displayEmpty
+                            name="roles"
+                            control={control}
+                            multiple
+                            renderValue={selected => {
+                                if (selected.length === 0) {
+                                    return (
+                                        <Typography color="GrayText">
+                                            Member role(s)
                                         </Typography>
-                                    }
-                                    secondary={
-                                        <Typography
-                                            sx={{
-                                                fontSize: "11px",
-                                            }}>
-                                            {role.description}
-                                        </Typography>
-                                    }
-                                />
-                            </MenuItem>
-                        ))}
-                    </Select>
+                                    );
+                                }
+                                return selected.join(", ");
+                            }}
+                            input={<OutlinedInput />}
+                            MenuProps={selectProps}
+                            value={selectedRoles}
+                            onChange={onRoleChange}
+                            sx={{
+                                width: "300px",
+                                height: "37px",
+                                marginTop: "23px",
+                            }}
+                        >
+                            {roleOptions.map(role => (
+                                <MenuItem
+                                    sx={{ paddingLeft: "6px" }}
+                                    key={role.name}
+                                    value={role.name}
+                                >
+                                    <Checkbox
+                                        size="small"
+                                        checked={
+                                            selectedRoles.indexOf(role.name) >
+                                            -1
+                                        }
+                                    />
+                                    <ListItemText
+                                        sx={{
+                                            textWrap: "wrap",
+                                        }}
+                                        primary={
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: 700,
+                                                }}
+                                            >
+                                                {role.name}
+                                            </Typography>
+                                        }
+                                        secondary={
+                                            <Typography
+                                                sx={{
+                                                    fontSize: "11px",
+                                                }}
+                                            >
+                                                {role.description}
+                                            </Typography>
+                                        }
+                                    />
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     {memberAdded > 0 && (
                         <RemoveIcon
                             sx={{

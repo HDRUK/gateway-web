@@ -72,6 +72,7 @@ module.exports = {
                 aspects: ["invalidHref", "preferButton"],
             },
         ],
+        camelcase: "off",
         "no-nested-ternary": "off",
         "import/prefer-default-export": "off",
         "react/function-component-definition": [

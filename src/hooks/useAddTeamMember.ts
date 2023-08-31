@@ -1,3 +1,9 @@
+/* eslint-disable */
+
+/**
+ ** TODO: RE-ENABLE LINTING WHEN WORKING ON FEATURE
+ */
+
 import { AddTeamMember } from "@/interfaces/AddTeamMember";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";

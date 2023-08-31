@@ -5,7 +5,6 @@ const Box = (props: MuiBoxProps) => {
     return (
         <MuiBox
             sx={{
-                bgcolor: "white",
                 p: 2,
                 ...sx,
             }}
