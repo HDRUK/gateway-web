@@ -5,11 +5,11 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
 import ActionBar from "@/components/ActionBar";
-import CreateApp from "@/modules/AppManagement/CreateApp";
 import LeftNav from "@/modules/LeftNav";
 import { Typography } from "@mui/material";
 import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
+import CreateApplicationForm from "@/modules/application/CreateApplicationForm";
 
 const CreateAppPage = () => {
     return (
@@ -44,7 +44,7 @@ const CreateAppPage = () => {
                                 access&quot; information, your data access
                                 request workflows
                             </Typography>
-                            <CreateApp />
+                            <CreateApplicationForm />
                         </Box>
                     </Paper>
                 </Box>
