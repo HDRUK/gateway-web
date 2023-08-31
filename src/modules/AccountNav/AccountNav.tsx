@@ -45,7 +45,7 @@ const AccountNav = ({
             },
             ...generateLinks,
         ];
-    }, [user?.teams]);
+    }, [user]);
 
     return (
         <Menu
