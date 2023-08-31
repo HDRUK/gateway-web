@@ -3,18 +3,14 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import ProfileForm from "@/modules/profile/ProfileForm";
-import useAuth from "@/hooks/useAuth";
-import { CircularProgress, Typography } from "@mui/material";
 import LeftNav from "@/modules/LeftNav";
+import { Typography } from "@mui/material";
 import Paper from "@/components/Paper";
 
-const Profile = () => {
-    const { isLoading } = useAuth();
-
+const TeamDataUsesPage = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - Profile" />
+            <Head title="Health Data Research Innovation Gateway - My account - Datasets" />
             <BoxContainer
                 sx={{
                     gridTemplateColumns: {
@@ -37,16 +33,7 @@ const Profile = () => {
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
                     <Paper>
                         <Box>
-                            <Typography variant="h2">Your profile</Typography>
-                            <Typography sx={{ marginBottom: 4 }}>
-                                Your details are used when you make a data
-                                access request application.
-                            </Typography>
-                            {isLoading ? (
-                                <CircularProgress color="secondary" />
-                            ) : (
-                                <ProfileForm />
-                            )}
+                            <Typography variant="h2">Data uses</Typography>
                         </Box>
                     </Paper>
                 </Box>
@@ -63,4 +50,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default Profile;
+export default TeamDataUsesPage;

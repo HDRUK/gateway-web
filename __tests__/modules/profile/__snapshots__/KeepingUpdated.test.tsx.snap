@@ -3,13 +3,13 @@
 exports[`KeepingUpdated should render content 1`] = `
 <div>
   <div
-    class="MuiBox-root mui-style-188u8l8"
+    class="MuiBox-root mui-style-old1by"
   >
     <hr
       class="MuiDivider-root MuiDivider-fullWidth mui-style-9mgopn-MuiDivider-root"
     />
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-lia5jr-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 mui-style-89sq3i-MuiTypography-root"
     >
       Keeping you updated
     </p>
@@ -17,10 +17,10 @@ exports[`KeepingUpdated should render content 1`] = `
       class="MuiDivider-root MuiDivider-fullWidth mui-style-9mgopn-MuiDivider-root"
     />
     <div
-      class="MuiBox-root mui-style-dikix3"
+      class="MuiBox-root mui-style-106jpu6"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-suwqkk-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-41om2h-MuiTypography-root"
       >
         Feedback
       </p>
@@ -52,7 +52,7 @@ exports[`KeepingUpdated should render content 1`] = `
             </svg>
           </span>
           <span
-            class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-qcxu8i-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-1g18ijf-MuiTypography-root"
           >
             I am happy to be contacted to share and give feedback on my experience with the Gateway
           </span>
@@ -63,7 +63,7 @@ exports[`KeepingUpdated should render content 1`] = `
       class="MuiDivider-root MuiDivider-fullWidth mui-style-9mgopn-MuiDivider-root"
     />
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-uki9fd-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 mui-style-2aeo6n-MuiTypography-root"
     >
       As a user of the Gateway we take the privacy and security of your personal data seriously. Our privacy policy aims to give you information on how Health Data Research UK collects and processes your personal data through your use of this Gateway, including any data you may provide by emailing us.
     </p>

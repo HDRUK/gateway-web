@@ -30,7 +30,7 @@ exports[`Checkbox checkbox snapshot 1`] = `
         </svg>
       </span>
       <span
-        class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-qcxu8i-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-1g18ijf-MuiTypography-root"
       >
         checkbox label
       </span>

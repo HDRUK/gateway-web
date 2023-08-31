@@ -28,11 +28,13 @@ const Missions = ({ allMissionsAndPurposes }: MissionAndPurposesProps) => {
                                     fontWeight: "bolder",
                                     fontSize: "16pt",
                                 }}
+                                // eslint-disable-next-line react/no-danger
                                 dangerouslySetInnerHTML={{
                                     __html: mission.node.title,
                                 }}
                             />
                             <div
+                                // eslint-disable-next-line react/no-danger
                                 dangerouslySetInnerHTML={{
                                     __html: mission.node.content,
                                 }}

@@ -6,7 +6,7 @@ exports[`TextField should render icon 1`] = `
     class="MuiFormControl-root MuiFormControl-fullWidth mui-style-vd0s50-MuiFormControl-root"
   >
     <p
-      class="MuiTypography-root MuiTypography-body2 mui-style-gum3jj-MuiTypography-root-Label"
+      class="MuiTypography-root MuiTypography-body2 mui-style-8iyzwa-MuiTypography-root-Label"
       for="outlined-adornment-amount"
     >
       This is a label

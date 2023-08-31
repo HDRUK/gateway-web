@@ -1,4 +1,3 @@
-import BackButton from "@/components/BackButton";
 import ApplicationListItem from "@/components/ApplicationListItem";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
@@ -25,12 +24,6 @@ const ApplicationList = () => {
         <BoxContainer>
             <Box
                 sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 1" },
-                }}>
-                <BackButton label="Back" />
-            </Box>
-            <Box
-                sx={{
                     p: 0,
                     display: "flex",
                 }}
@@ -41,12 +34,8 @@ const ApplicationList = () => {
                 isApplicationListLoading ? <Loading /> :
                 applicationsList.map(application => (
                     <ApplicationListItem
-                        id={application.id}
-                        name={application.name}
-                        app_id={application.app_id}
-                        description={application.description}
-                        created_at={application.created_at}
-                        enabled={application.enabled}
+                        key={application.id}
+                        application={application}
                     />
                 ))
             }

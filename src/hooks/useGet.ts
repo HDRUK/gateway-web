@@ -14,26 +14,39 @@ interface Response<T> {
 interface Options {
     localeKey?: string;
     withPagination?: boolean;
+    shouldFetch?: boolean;
+    errorNotificationsOn?: boolean;
     itemName?: string;
     action?: ReactNode;
 }
 
 const useGet = <T>(url: string, options?: Options): Response<T> => {
+    const {
+        localeKey,
+        itemName,
+        action,
+        errorNotificationsOn,
+        shouldFetch = true,
+        withPagination = false,
+    } = options || {};
     const { t, i18n } = useTranslation("api");
-    const { localeKey, itemName, action } = options || {};
 
-    const { data, error, mutate, isLoading } = useSWR<T>(url, () => {
-        return apiService.getRequest(url, {
-            notificationOptions: {
-                localeKey,
-                itemName,
-                t,
-                i18n,
-                action,
-            },
-            withPagination: options?.withPagination,
-        });
-    });
+    const { data, error, mutate, isLoading } = useSWR<T>(
+        shouldFetch ? url : null,
+        () => {
+            return apiService.getRequest(url, {
+                notificationOptions: {
+                    localeKey,
+                    itemName,
+                    errorNotificationsOn,
+                    t,
+                    i18n,
+                    action,
+                },
+                withPagination,
+            });
+        }
+    );
 
     return {
         error,

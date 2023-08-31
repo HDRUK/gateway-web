@@ -22,6 +22,7 @@ interface RequestOptions {
 
 interface HttpOptions extends MutatorOptions {
     localeKey?: string;
+    overideUrl?: boolean;
     successNotificationsOn?: boolean;
     errorNotificationsOn?: boolean;
     itemName?: string;

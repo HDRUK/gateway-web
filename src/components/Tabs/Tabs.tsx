@@ -60,7 +60,10 @@ const Tabs = ({
                 </Box>
                 {introContent}
                 {tabs.map(tab => (
-                    <MuiTabPanel key={tab.value} value={tab.value}>
+                    <MuiTabPanel
+                        sx={{ padding: 0 }}
+                        key={tab.value}
+                        value={tab.value}>
                         {tab.content}
                     </MuiTabPanel>
                 ))}

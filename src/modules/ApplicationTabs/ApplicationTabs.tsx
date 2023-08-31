@@ -6,16 +6,15 @@ import { useRouter } from "next/router";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
-
 import AuthDetails from "../application/AuthDetails";
 import EditApplicationForm from "../application/EditApplicationForm";
 
 const ApplicationTabs = () => {
-    // const theme = useTheme();
     const router = useRouter();
-    const { id } = router.query;
-    const { data: application, isLoading: isApplicationLoading } =
-        useGet<Application>(`${apis.applicationsV1Url}/${id}`);
+    const { appId } = router.query;
+    const { data: application } = useGet<Application>(
+        `${apis.applicationsV1Url}/${appId}`
+    );
 
     const [selectedTab, setSelectedTab] = useState("App Info");
 
@@ -32,11 +31,7 @@ const ApplicationTabs = () => {
         {
             label: "Auth",
             value: "Auth",
-            content: (
-                <Typography component="span">
-                    <AuthDetails application={application} />
-                </Typography>
-            ),
+            content: <AuthDetails application={application} />,
         },
         {
             label: "Scopes/Permissions",

@@ -4,13 +4,14 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
-import AppLanding from "@/modules/AppManagement/AppLanding";
-import Link from "@/components/Link";
-import { useRouter } from "next/router";
+import ActionBar from "@/components/ActionBar";
+import CreateApp from "@/modules/AppManagement/CreateApp";
 import LeftNav from "@/modules/LeftNav";
+import { Typography } from "@mui/material";
+import Paper from "@/components/Paper";
+import BackButton from "@/components/BackButton";
 
-const AppLandingPage = () => {
-    const router = useRouter();
+const CreateAppPage = () => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
@@ -28,18 +29,27 @@ const AppLandingPage = () => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 1" },
+                        bgcolor: "white",
                     }}>
-                    <LeftNav teamId={router.query.teamId} />
-                    {/* <Link
-                        href={`/account/team/${router.query.teamId}/app-management`}>
-                        App Management
-                    </Link> */}
+                    <LeftNav />
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                    <AppLanding />
+                    <BackButton label="Back to API Management" />
+                    <Paper>
+                        <Box>
+                            <Typography variant="h2">Create API</Typography>
+                            <Typography>
+                                Manage and edit your &quot;how to request
+                                access&quot; information, your data access
+                                request workflows
+                            </Typography>
+                            <CreateApp />
+                        </Box>
+                    </Paper>
                 </Box>
             </BoxContainer>
+            <ActionBar />
         </>
     );
 };
@@ -52,4 +62,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default AppLandingPage;
+export default CreateAppPage;
