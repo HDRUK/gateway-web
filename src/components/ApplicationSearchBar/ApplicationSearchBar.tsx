@@ -16,10 +16,11 @@ interface ApplicationSearchBarProps {
 }
 
 interface SearchOptionType {
-    name: string,
-    label: string,
-    type: string,
-    create: boolean,
+    id?: number;
+    name: string;
+    label: string;
+    type: string;
+    create: boolean;
   }
 
 const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
@@ -46,12 +47,10 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
         setStatusFilter(status);
     };
 
-    const filterSearchOptions = (options,state) => {
+    const filterSearchOptions = (options,state):SearchOptionType[] => {
         const { inputValue } = state;
-        const results = createFilterOptions<SearchOptionType>()(options,state);
-        
-        //const filterOptions = createFilterOptions<SearchOptionType>(options,state);
-        //console.log(filterOptions);
+        const filtered = createFilterOptions<SearchOptionType>()(options,state);
+
         //wait for 0.5 seconds for the user to stop typing
         setTimeout(() => {
             //if the user has entered 3 or more characters..
@@ -59,11 +58,10 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
             setTextFilter(textSearch);
         }, 500);
 
-  
         // Suggest the creation of a new value
         const isExisting = options.some((option) => inputValue === option.name);
         if (inputValue !== "" && !isExisting) {
-          results.push(
+          filtered.push(
             {
                 name: inputValue,
                 label: `Add "${inputValue}"`,
@@ -71,14 +69,7 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
                 create: true,
             });
         }
-
-        //setSearchParams(newSearchParams);
-        return results;
-        /*return options.filter((item) =>
-                String(item.label)
-                .toLowerCase()
-                .includes(state.inputValue.toLowerCase())
-        );*/
+        return filtered;
     }
 
     return (
