@@ -4,6 +4,7 @@ import Link from "@/components/Link";
 import Button from "@/components/Button";
 import useAuth from "@/hooks/useAuth";
 import { colors } from "@/config/theme";
+import { useMemo } from "react";
 
 interface AccountNavProps {
     onCloseMenu: () => void;
@@ -17,12 +18,6 @@ const AccountNav = ({
     onLogout,
 }: AccountNavProps) => {
     const { user } = useAuth();
-    const links = [
-        {
-            label: `${user?.firstname} ${user?.lastname}`,
-            href: "/account/profile",
-        },
-    ];
 
     const handleCloseUserMenu = () => {
         if (typeof onCloseMenu === "function") {
@@ -36,17 +31,21 @@ const AccountNav = ({
         }
     };
 
-    user.teams.forEach(team => {
-        const t = {
+    const links = useMemo(() => {
+        const generateLinks = (user?.teams || []).map(team => ({
             id: team.id,
             label: team.name,
             href: `/account/team/${team.id}/team-management`,
-        };
+        }));
 
-        if (!links.includes(t)) {
-            links.push(t);
-        }
-    });
+        return [
+            {
+                label: `${user?.firstname} ${user?.lastname}`,
+                href: "/account/profile",
+            },
+            ...generateLinks,
+        ];
+    }, [user?.teams]);
 
     return (
         <Menu
@@ -56,7 +55,11 @@ const AccountNav = ({
             onClose={handleCloseUserMenu}
             open={Boolean(anchorElement)}>
             {links.map(link => (
-                <Link key={link.label} underline="hover" href={link.href}>
+                <Link
+                    key={link.label}
+                    underline="hover"
+                    href={link.href}
+                    passHref>
                     <MenuItem
                         sx={{
                             textWrap: "initial",
