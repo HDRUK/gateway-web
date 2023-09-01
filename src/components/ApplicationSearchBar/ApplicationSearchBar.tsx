@@ -75,7 +75,7 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
 
         //add the text terms to the URL search params
         textTerms.forEach(term => {
-            searchParams.append('text',term)
+            searchParams.append('text[]',term)
         });
         //add the enabled or not ({0,1}) to the URL search params
         searchParams.append('enabled',currentStatusFilter);
