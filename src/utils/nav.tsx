@@ -7,7 +7,7 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import { LeftNavItem } from "@/interfaces/Ui";
 
-const getNavItems = (isTeam: boolean, teamId: string) => {
+const getNavItems = (isTeam: boolean, teamId: string | undefined) => {
     const profileNav: LeftNavItem[] = [
         {
             icon: <FolderSharedOutlinedIcon />,
