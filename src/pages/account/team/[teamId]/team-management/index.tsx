@@ -19,7 +19,7 @@ const TeamManagementPage = () => {
 
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - Team Management" />
+            <Head title="Health Data Research Innovation Gateway - My Account - Team Management" />
             <AccountLayout>
                 <BoxContainer>
                     <Box sx={{ bgcolor: "white" }}>

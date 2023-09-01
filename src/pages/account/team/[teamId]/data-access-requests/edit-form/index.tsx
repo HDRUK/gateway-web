@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/components/AccountLayout";
 
-const TeamDatasetsPage = () => {
+const TeamDarEditFormPage = () => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My Account - Data Access Requests - Edit Form" />
@@ -29,4 +29,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default TeamDatasetsPage;
+export default TeamDarEditFormPage;

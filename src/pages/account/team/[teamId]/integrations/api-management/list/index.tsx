@@ -7,10 +7,10 @@ import ApplicationList from "@/modules/ApplicationList";
 import BackButton from "@/components/BackButton";
 import AccountLayout from "@/components/AccountLayout";
 
-const ListAppPage = () => {
+const TeamApplicationsPage = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
+            <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Applications List" />
             <AccountLayout>
                 <BackButton label="Back to API Management" />
                 <ApplicationList />
@@ -28,4 +28,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default ListAppPage;
+export default TeamApplicationsPage;

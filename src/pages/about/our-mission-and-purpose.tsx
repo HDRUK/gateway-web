@@ -11,7 +11,7 @@ interface MissionAndPurposesProps {
     allMissionsAndPurposes: MissionAndPurposesNode[];
 }
 
-const Missions = ({ allMissionsAndPurposes }: MissionAndPurposesProps) => {
+const MissionsPage = ({ allMissionsAndPurposes }: MissionAndPurposesProps) => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - About - Our mission and purpose" />
@@ -59,4 +59,4 @@ export const getStaticProps = async () => {
     };
 };
 
-export default Missions;
+export default MissionsPage;

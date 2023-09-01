@@ -13,7 +13,7 @@ import AccountLayout from "@/components/AccountLayout";
 const CreateAppPage = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
+            <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Create" />
             <AccountLayout>
                 <BackButton label="Back to API Management" />
                 <Paper>

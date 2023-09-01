@@ -8,10 +8,10 @@ import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import AccountLayout from "@/components/AccountLayout";
 
-const EditApplication = () => {
+const TeamApplicationPage = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - Applications" />
+            <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Application" />
             <AccountLayout>
                 <BackButton label="Back to API selection" />
                 <Paper>
@@ -36,4 +36,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default EditApplication;
+export default TeamApplicationPage;

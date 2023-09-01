@@ -5,10 +5,10 @@ import { GetServerSideProps } from "next";
 import AppLanding from "@/modules/AppManagement/AppLanding";
 import AccountLayout from "@/components/AccountLayout";
 
-const AppLandingPage = () => {
+const TeamIntegrationsPage = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - App Registration" />
+            <Head title="Health Data Research Innovation Gateway - My Account - Integrations - API Management" />
             <AccountLayout>
                 <AppLanding />
             </AccountLayout>
@@ -24,4 +24,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default AppLandingPage;
+export default TeamIntegrationsPage;

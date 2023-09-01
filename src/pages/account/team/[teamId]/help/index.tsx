@@ -9,7 +9,7 @@ import AccountLayout from "@/components/AccountLayout";
 const TeamHelpPage = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - Help" />
+            <Head title="Health Data Research Innovation Gateway - My Account - Help" />
             <AccountLayout>
                 <Paper>
                     <Box>

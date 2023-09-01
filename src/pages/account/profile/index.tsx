@@ -8,12 +8,12 @@ import { CircularProgress, Typography } from "@mui/material";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/components/AccountLayout";
 
-const Profile = () => {
+const ProfilePage = () => {
     const { isLoading } = useAuth();
 
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My account - Profile" />
+            <Head title="Health Data Research Innovation Gateway - My Account - Profile" />
             <AccountLayout>
                 <Paper>
                     <Box>
@@ -42,4 +42,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default Profile;
+export default ProfilePage;
