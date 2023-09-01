@@ -1,18 +1,16 @@
 import Box from "@/components/Box";
-import SearchIcon from "@mui/icons-material/Search";
-import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
-import Chip from '@mui/material/Chip';
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
+import BoxContainer from "@/components/BoxContainer";
+import Autocomplete from "@/components/Autocomplete";
+import {createFilterOptions} from '@mui/material/Autocomplete';
+import RadioListFilter from "@/components/RadioListFilter";
+import Paper from "@/components/Paper";
+import { Typography } from "@mui/material";
 import { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "react";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+
 
 interface ApplicationSearchBarProps {
-    setFilterQuery: Dispatch<SetStateAction<{}>>;
+    searchAsYouType?: boolean
+    setFilterQuery: Dispatch<SetStateAction<string>>;
 }
 
 interface SearchOptionType {
@@ -23,40 +21,61 @@ interface SearchOptionType {
     create: boolean;
   }
 
+
 const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
 
-    const [statusFilter, setStatusFilter] = useState('');
-    const [textFilter, setTextFilter] = useState('');
+    const statusFilters = [
+        {value:'',label:"Any"},
+        {value:'1',label:"Enabled"},
+        {value:'0',label:"Disabled"},
+    ]
+    const [currentStatusFilter,setCurrentStatusFilter] = useState(statusFilters[0].value);
 
-    useEffect(() => {
-        const searchParams = {
-            text: textFilter,
-            enabled:statusFilter,
-        }
-        const queryString = new URLSearchParams(searchParams).toString();
-        console.log(queryString);
-        props.setFilterQuery(queryString);
-    },[statusFilter,textFilter]);
-
-    //[{label:'test',type:'test2'}];
+    //leaving this commented out for now..
+    // .. could be used if you want to search as you type... 
+    //const [textFilter, setTextFilter] = useState('');
+    
     const [searchOptions,setSearchOptions] = useState<SearchOptionType[]>([]);
     const [selectedSearchOptions,setSelectedSearchOptions] = useState<SearchOptionType[]>([]);
 
-    const handleChangeStatusFilter = (event: ChangeEvent<HTMLInputElement>) => {
-        let status = (event.target as HTMLInputElement).value;  
-        setStatusFilter(status);
-    };
+    useEffect(() => {
+        const searchParams = new URLSearchParams();
 
-    const filterSearchOptions = (options,state):SearchOptionType[] => {
+        const onlyUnique = (value:string, index:Number, array:[]) => {
+            return array.indexOf(value) === index;
+        }
+
+        //const textTerms = [...selectedSearchOptions.map(value => value.name),
+        //                   textFilter].filter(onlyUnique);
+
+        const textTerms = selectedSearchOptions.map(value => value.name).filter(onlyUnique);
+
+        textTerms.forEach(term => {
+            searchParams.append('text',term)
+        });
+
+        searchParams.append('enabled',currentStatusFilter);
+
+        const queryString = searchParams.toString();
+        console.log(queryString);
+
+        props.setFilterQuery(queryString);
+    },[currentStatusFilter,selectedSearchOptions]);  //textFilter
+
+
+    const filterSearchOptions = (options, state):SearchOptionType[] => {
         const { inputValue } = state;
         const filtered = createFilterOptions<SearchOptionType>()(options,state);
 
+        // commented out for now... gives the ability to search as you type... 
         //wait for 0.5 seconds for the user to stop typing
-        setTimeout(() => {
+        /*setTimeout(() => {
             //if the user has entered 3 or more characters..
-            const textSearch = inputValue.length > 2 ? inputValue : '';
-            setTextFilter(textSearch);
+            if(inputValue.length > 2){
+                setTextFilter(inputValue);
+            } 
         }, 500);
+        */
 
         // Suggest the creation of a new value
         const isExisting = options.some((option) => inputValue === option.name);
@@ -72,83 +91,71 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
         return filtered;
     }
 
+    const onChangeSearch = (event, newValue, reason, details) => {
+        if (reason === 'removeOption') {
+            const removeLabel = details.option.label;
+            setSelectedSearchOptions(selectedSearchOptions.filter(option => option.label !== removeLabel));
+        }    
+        else if (details?.option.create && reason !== "removeOption") {
+            setSelectedSearchOptions([
+                ...selectedSearchOptions, 
+                {
+                    name: details.option.name,
+                    label: details.option.name,
+                    type: 'term',
+                    create: details.option.create,
+                }
+            ]);
+        } 
+        else {
+            setSelectedSearchOptions(newValue.map(value => {
+                if (typeof value === "string") {
+                    return {
+                        label: value,
+                        create: true,
+                      }
+                } else {
+                    return value
+                }
+            }
+         ))
+        }
+    };
+
     return (
         <>
-        <Box>
-            <Autocomplete
-                multiple
-                id="app-list-search"
-                options={searchOptions}
-                value={selectedSearchOptions}
-                getOptionLabel={(option) => option.label}
-                filterOptions={filterSearchOptions}
-                onChange={(event, newValue, reason, details) => {
-                    if (details?.option.create && reason !== "removeOption") {
-                        setSelectedSearchOptions([...selectedSearchOptions, {
-                            label: details.option.name,
-                            type: 'term',
-                            create: details.option.create,
-                        }]);
-                    } 
-                    else {
-                        setSelectedSearchOptions(newValue.map(value => {
-                            if (typeof value === "string") {
-                                return {
-                                    label: value,
-                                    create: true,
-                                  }
-                            } else {
-                                return value
-                            }
-                        }
-                     ))
-                    }
-                }}
-                renderInput={(params) => 
-                    <TextField 
-                        {...params} 
-                        label="Search Apps" 
-                        InputProps={{ 
-                            ...params.InputProps,
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                  <SearchIcon />
-                                  { params.InputProps.startAdornment }
-                                </InputAdornment>
-                            )
-                        }}
+        <Paper sx={{width:'100%'}}>
+        <BoxContainer>
+            <BoxContainer>
+                <Box >
+                    <Typography variant="h2">
+                        Application List
+                    </Typography>
+                </Box>
+                <Box sx={{width:'100%'}}>
+                    <Autocomplete
+                        options={searchOptions}
+                        value={selectedSearchOptions}
+                        getOptionLabel={(option) => option.label}
+                        filterOptions={filterSearchOptions}
+                        onChange={onChangeSearch}
+                        label={"Search Apps"}
+                        //groupBy={(option) => option.type}
                     />
-                }
-                groupBy={(option) => option.type}
-                style={{
-                        width: "800px",
-                        alignItems: "center",
-                }}
-                renderTags={(value, getTagProps) =>
-                    value.map((option, index) => (
-                      <Chip
-                        color={option.color}
-                        label={option.label}
-                      />
-                    ))}
-            />
-            <FormControl
-                sx={{
-                        marginTop: 1,
-                }}
-            >
-                <FormLabel id="app-list-status-filter">App Status: </FormLabel>
-                <RadioGroup
-                    row
-                    value={statusFilter}
-                    onChange={handleChangeStatusFilter}
-                >
-                    <FormControlLabel value={''} control={<Radio />} label="Any" />
-                    <FormControlLabel value={'1'} control={<Radio />} label="Enabled" />
-                    <FormControlLabel value={'0'} control={<Radio />} label="Disabled" />
-                </RadioGroup>
-            </FormControl>
-        </Box>
+                </Box>
+            </BoxContainer>
+            <BoxContainer sx={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+                <Box>
+                    <RadioListFilter
+                        title={'App Status:'}
+                        options={statusFilters}
+                        value={currentStatusFilter}
+                        handleChange={setCurrentStatusFilter}
+                    />
+                </Box>
+            </BoxContainer>
+        </BoxContainer>
+        </Paper>
         </>
     );
 };

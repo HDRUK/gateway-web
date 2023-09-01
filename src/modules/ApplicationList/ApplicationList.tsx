@@ -32,13 +32,19 @@ const ApplicationList = () => {
             </Box>
             {
                 isApplicationListLoading ? <Loading /> :
-                applicationsList.map(application => (
+                <>
+                <Box display="flex" justifyContent="flex-end">
+                    <p> Number of Apps: <b>  {applicationsList.length} </b> </p>
+                </Box>
+                {applicationsList.map(application => (
                     <ApplicationListItem
                         key={application.id}
                         application={application}
                     />
-                ))
+                ))}
+                </>
             }
+                        
         </BoxContainer>
     );
 };
