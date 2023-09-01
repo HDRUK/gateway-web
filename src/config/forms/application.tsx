@@ -6,6 +6,7 @@ const defaultValues = {
     image_link: "",
     tags: [],
     description: "",
+    enabled: false,
 };
 
 const validationSchema = yup
@@ -35,8 +36,8 @@ const formFields = [
         // Placeholder until component is built
         label: "App logo",
         name: "image_link",
+        required: true,
         component: "TextField",
-        required: false,
     },
     // {
     //     label: "Add tag",
