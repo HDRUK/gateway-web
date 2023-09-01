@@ -19,7 +19,7 @@ const ApplicationList = () => {
     const { 
         data: applicationsList, 
         isLoading: isApplicationListLoading,
-    } = useGet<Application[]>(`${apis.applicationsV1Url}?teamId=${teamId}&${filterQuery}`);
+    } = useGet<Application[]>(`${apis.applicationsV1Url}?team_id=${teamId}&${filterQuery}`);
    
 
     return (
