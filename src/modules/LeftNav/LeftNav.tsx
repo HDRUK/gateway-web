@@ -13,32 +13,20 @@ import {
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
-import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
-import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import Loading from "@/components/Loading";
 import { Team } from "@/interfaces/Team";
 import BoxContainer from "@/components/BoxContainer";
 
-import { Fragment, ReactNode, useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { colors } from "@/config/theme";
-
-interface ListItem {
-    icon: ReactNode;
-    label: string;
-    href?: string;
-    subItems?: { label: string; href: string }[];
-}
+import { getNavItems } from "@/utils/nav";
+import { LeftNavItem } from "@/interfaces/Ui";
 
 const isExpanded = (
-    item: ListItem,
+    item: LeftNavItem,
     expandedSection: string,
     asPath: string
 ) => {
@@ -49,7 +37,6 @@ const isExpanded = (
 
 const LeftNav = () => {
     const [expandedSection, setExpandedSection] = useState("");
-
     const { query, asPath } = useRouter();
     const { teamId } = query;
     const { data: team, isLoading: isTeamLoading } = useGet<Team>(
@@ -59,50 +46,11 @@ const LeftNav = () => {
 
     const isTeam = useMemo(() => !!teamId, [teamId]);
 
-    const profileNav: ListItem[] = [
-        {
-            icon: <FolderSharedOutlinedIcon />,
-            label: "Your Profile",
-            href: "/account/profile",
-        },
-    ];
+    const navItems = useMemo(() => {
+        return getNavItems(isTeam, teamId);
+    }, [isTeam, teamId]);
 
-    const teamNav: ListItem[] = [
-        {
-            icon: <SettingsOutlinedIcon />,
-            label: "Team Management",
-            href: `/account/team/${teamId}/team-management`,
-        },
-        {
-            icon: <StorageOutlinedIcon />,
-            label: "Datasets",
-            href: `/account/team/${teamId}/datasets`,
-        },
-        {
-            icon: <SchemaOutlinedIcon />,
-            label: "Data Uses",
-            href: `/account/team/${teamId}/data-uses/`,
-        },
-        {
-            icon: <DescriptionOutlinedIcon />,
-            label: "Integrations",
-            subItems: [
-                {
-                    label: "API management",
-                    href: `/account/team/${teamId}/integrations/api-management`,
-                },
-            ],
-        },
-        {
-            icon: <HelpOutlineOutlinedIcon />,
-            label: "Help",
-            href: `/account/team/${teamId}/help`,
-        },
-    ];
-
-    const navItems = isTeam ? teamNav : profileNav;
-
-    const toggleMenu = (item: ListItem) => {
+    const toggleMenu = (item: LeftNavItem) => {
         const isOpen = isExpanded(item, expandedSection, asPath);
         if (isOpen && expandedSection !== item.label) return;
         setExpandedSection(isOpen ? "" : item.label);
