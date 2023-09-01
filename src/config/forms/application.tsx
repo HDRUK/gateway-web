@@ -11,10 +11,10 @@ const defaultValues = {
 
 const validationSchema = yup
     .object({
-        name: yup.string().required().label("Name"),
-        image_link: yup.string().required().label("App Logo"),
-        tags: yup.array().label("Tags"),
-        description: yup.string().required().label("Description"),
+        name: yup.string().required().label("Public app name"),
+        image_link: yup.string().required().label("App logo"),
+        tags: yup.array(),
+        description: yup.string().required(),
     })
     .required();
 

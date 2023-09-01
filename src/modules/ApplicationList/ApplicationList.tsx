@@ -8,13 +8,12 @@ import ApplicationSearchBar from "@/components/ApplicationSearchBar";
 import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
 
-
 const ApplicationList = () => {
 
     const [filterQuery,setFilterQuery] = useState('');
 
     const { 
-        data: applicationsList = [], 
+        data: applicationsList, 
         isLoading: isApplicationListLoading ,
         mutate: mutate,
     } = useGet<Application[]>(`${apis.applicationsV1Url}?${filterQuery}`);
@@ -36,15 +35,14 @@ const ApplicationList = () => {
                 <Box display="flex" justifyContent="flex-end">
                     <p> Number of Apps: <b>  {applicationsList.length} </b> </p>
                 </Box>
-                {applicationsList.map(application => (
+                {applicationsList?.map(application => (
                     <ApplicationListItem
                         key={application.id}
                         application={application}
                     />
                 ))}
                 </>
-            }
-                        
+            }               
         </BoxContainer>
     );
 };
