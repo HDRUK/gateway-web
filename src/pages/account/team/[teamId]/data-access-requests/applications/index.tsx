@@ -6,14 +6,14 @@ import { Typography } from "@mui/material";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/components/AccountLayout";
 
-const TeamHelpPage = () => {
+const TeamDarApplicationsPage = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My Account - Help" />
+            <Head title="Health Data Research Innovation Gateway - My Account - Data Access Requests - Applications" />
             <AccountLayout>
                 <Paper>
                     <Box>
-                        <Typography variant="h2">Help</Typography>
+                        <Typography variant="h2">Applications</Typography>
                     </Box>
                 </Paper>
             </AccountLayout>
@@ -29,4 +29,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default TeamHelpPage;
+export default TeamDarApplicationsPage;

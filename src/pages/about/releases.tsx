@@ -11,7 +11,7 @@ interface ReleasesProps {
     allReleases: ReleaseNode[];
 }
 
-const Releases = ({ allReleases }: ReleasesProps) => {
+const ReleasesPage = ({ allReleases }: ReleasesProps) => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - About - Releases" />
@@ -35,4 +35,4 @@ export const getStaticProps = async () => {
     };
 };
 
-export default Releases;
+export default ReleasesPage;
