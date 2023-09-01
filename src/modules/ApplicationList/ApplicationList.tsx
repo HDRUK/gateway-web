@@ -8,7 +8,7 @@ import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
 
 const ApplicationList = () => {
-    const { data: applicationsList = [], isLoading: isApplicationListLoading } =
+    const { data: applicationsList, isLoading: isApplicationListLoading } =
         useGet<Application[]>(apis.applicationsV1Url);
 
     if (isApplicationListLoading) return <Loading />;
@@ -22,7 +22,7 @@ const ApplicationList = () => {
                 }}>
                 <ApplicationSearchBar />
             </Box>
-            {applicationsList.map(application => (
+            {applicationsList?.map(application => (
                 <ApplicationListItem
                     key={application.id}
                     application={application}

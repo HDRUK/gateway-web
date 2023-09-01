@@ -15,8 +15,12 @@ import apis from "@/config/apis";
 import { useRouter } from "next/router";
 import usePost from "@/hooks/usePost";
 import useAuth from "@/hooks/useAuth";
+import useGet from "@/hooks/useGet";
 
 const CreateApplicationForm = () => {
+    const { data: applicationsList } = useGet<Application[]>(
+        apis.applicationsV1Url
+    );
     const { user } = useAuth();
     const { query, push } = useRouter();
     const { control, handleSubmit, getValues } = useForm<Application>({
@@ -32,6 +36,7 @@ const CreateApplicationForm = () => {
         `${apis.applicationsV1Url}`,
         {
             itemName: "Application",
+            data: applicationsList,
         }
     );
 
@@ -41,27 +46,25 @@ const CreateApplicationForm = () => {
     };
 
     return (
-        <Box>
-            <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
-                {applicationFormFields.map(field => (
-                    <InputWrapper
-                        getValues={getValues}
-                        key={field.name}
-                        control={control}
-                        {...field}
-                    />
-                ))}
-                <Box
-                    sx={{
-                        p: 0,
-                        display: "flex",
-                        justifyContent: "end",
-                        marginBottom: "10px",
-                    }}>
-                    <Button type="submit">Create</Button>
-                </Box>
-            </Form>
-        </Box>
+        <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
+            {applicationFormFields.map(field => (
+                <InputWrapper
+                    getValues={getValues}
+                    key={field.name}
+                    control={control}
+                    {...field}
+                />
+            ))}
+            <Box
+                sx={{
+                    p: 0,
+                    display: "flex",
+                    justifyContent: "end",
+                    marginBottom: "10px",
+                }}>
+                <Button type="submit">Create</Button>
+            </Box>
+        </Form>
     );
 };
 
