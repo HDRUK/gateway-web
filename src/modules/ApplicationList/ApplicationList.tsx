@@ -3,7 +3,8 @@ import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import Loading from "@/components/Loading";
 import useGet from "@/hooks/useGet";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import ApplicationSearchBar from "@/components/ApplicationSearchBar";
 import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
@@ -12,11 +13,13 @@ const ApplicationList = () => {
 
     const [filterQuery,setFilterQuery] = useState('');
 
+    const router = useRouter();
+    const { teamId } = router.query;
+
     const { 
         data: applicationsList, 
-        isLoading: isApplicationListLoading ,
-        mutate: mutate,
-    } = useGet<Application[]>(`${apis.applicationsV1Url}?${filterQuery}`);
+        isLoading: isApplicationListLoading,
+    } = useGet<Application[]>(`${apis.applicationsV1Url}?teamId=${teamId}&${filterQuery}`);
    
 
     return (
