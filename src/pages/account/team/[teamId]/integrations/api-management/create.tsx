@@ -39,11 +39,6 @@ const CreateAppPage = () => {
                     <Paper>
                         <Box>
                             <Typography variant="h2">Create API</Typography>
-                            <Typography>
-                                Manage and edit your &quot;how to request
-                                access&quot; information, your data access
-                                request workflows
-                            </Typography>
                             <CreateApplicationForm />
                         </Box>
                     </Paper>
