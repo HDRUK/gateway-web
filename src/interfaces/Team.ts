@@ -1,4 +1,4 @@
-import { User } from "@/interfaces/User";
+import { Role } from "@/interfaces/Role";
 
 interface Team {
     id: number;
@@ -13,7 +13,7 @@ interface Team {
     contact_point: string;
     application_form_updated_by: string;
     application_form_updated_on: string;
-    users: User[];
+    roles: Role[];
 }
 
 export type { Team };

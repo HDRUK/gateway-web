@@ -1,3 +1,5 @@
+import { Team } from "@/interfaces/Team";
+
 interface User {
     id: number;
     firstname: string;
@@ -13,6 +15,7 @@ interface User {
     terms: boolean;
     contact_news: boolean;
     contact_feedback: boolean;
+    teams: Team[];
 }
 
 export type { User };
