@@ -11,6 +11,7 @@ import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { Team } from "@/interfaces/Team";
 import Loading from "../Loading";
+import ActionBar from "../ActionBar";
 
 interface AccountLayoutProps {
     children: ReactNode;
@@ -36,39 +37,43 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
         return <Loading />;
     }
     return (
-        <BoxContainer
-            sx={{
-                gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(5, 1fr)",
-                },
-                gap: {
-                    mobile: 0,
-                    tablet: 1,
-                },
-            }}>
-            <Box
+        <div>
+            <BoxContainer
                 sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 1" },
-                    bgcolor: "white",
+                    gridTemplateColumns: {
+                        mobile: "repeat(1, 1fr)",
+                        tablet: "repeat(5, 1fr)",
+                    },
+                    gap: {
+                        mobile: 0,
+                        tablet: 1,
+                    },
                 }}>
-                {isTeam && (
-                    <BoxContainer
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}>
-                        <Box>
-                            <Typography>{team?.name}</Typography>
-                        </Box>
-                    </BoxContainer>
-                )}
-                <LeftNav navItems={navItems} />
-            </Box>
-            <Box sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                {children}
-            </Box>
-        </BoxContainer>
+                <Box
+                    sx={{
+                        gridColumn: { tablet: "span 2", laptop: "span 1" },
+                        bgcolor: "white",
+                    }}>
+                    {isTeam && (
+                        <BoxContainer
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                            }}>
+                            <Box>
+                                <Typography>{team?.name}</Typography>
+                            </Box>
+                        </BoxContainer>
+                    )}
+                    <LeftNav navItems={navItems} />
+                </Box>
+                <Box
+                    sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
+                    {children}
+                </Box>
+            </BoxContainer>
+            <ActionBar />
+        </div>
     );
 };
 

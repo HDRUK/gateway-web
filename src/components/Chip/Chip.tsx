@@ -1,11 +1,11 @@
-import Chip, { ChipProps } from "@mui/material/Chip";
+import MuiChip, { ChipProps as MuiChipProps } from "@mui/material/Chip";
 
-interface ChipComponentProps extends ChipProps {
+interface ChipProps extends MuiChipProps {
     label: string;
 }
 
-const ChipComponent = ({ label, ...rest }: ChipComponentProps) => {
-    return <Chip label={label} {...rest} />;
+const Chip = ({ label, ...rest }: ChipProps) => {
+    return <MuiChip label={label} {...rest} />;
 };
 
-export default ChipComponent;
+export default Chip;

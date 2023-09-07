@@ -4,7 +4,6 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
-import Link from "@/components/Link";
 import { Typography } from "@mui/material";
 import TeamManagementTabs from "@/modules/TeamManagement/TeamManagementTabs";
 import AddTeamMemberDialog from "@/modules/dialogs/AddTeamMemberDialog";
@@ -26,12 +25,7 @@ const TeamManagementPage = () => {
                         <Typography variant="h2">Team management</Typography>
                         <Typography>
                             Organise and manage team members and the teams email
-                            notifications. If you need assistance managing the
-                            team, please{" "}
-                            <Link href="https://www.google.com/">
-                                raise a support ticket (!! NEEDS SUPPORT LINK
-                                HERE !!)
-                            </Link>
+                            notifications.
                         </Typography>
                         <Box
                             sx={{

@@ -1,6 +1,6 @@
-import { User } from "@/interfaces/User";
+import { Role } from "@/interfaces/Role";
 
-interface Team {
+interface AuthTeam {
     id: number;
     name: string;
     enabled: boolean;
@@ -13,7 +13,7 @@ interface Team {
     contact_point: string;
     application_form_updated_by: string;
     application_form_updated_on: string;
-    users: User[];
+    roles: Role[];
 }
 
-export type { Team };
+export type { AuthTeam };
