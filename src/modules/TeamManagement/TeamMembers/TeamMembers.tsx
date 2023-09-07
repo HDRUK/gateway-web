@@ -45,6 +45,41 @@ const TeamMembers = () => {
         return getColumns(currentUserRoles);
     }, [team?.users, user]);
 
+    const submitForm = async allRoles => {
+        const promises = allRoles.map(async payload => {
+            await limit(() =>
+                putRequest(
+                    `${apis.teamsV1Url}/${teamId}/users/${payload.userId}`,
+                    { roles: payload.roles },
+                    {
+                        notificationOptions: {
+                            errorNotificationsOn: false,
+                            successNotificationsOn: false,
+                        },
+                    }
+                )
+            );
+        });
+
+        const results = await Promise.allSettled(promises);
+        const success = results.filter(result => result.status === "fulfilled");
+        const error = results.filter(result => result.status === "rejected");
+
+        if (success.length > 0) {
+            notificationService.success(
+                `${success.length} member roles(s) have been successfully updated`
+            );
+        }
+        if (error.length > 0) {
+            notificationService.error(
+                `${error.length} member roles(s) were not updated`
+            );
+        }
+        mutate();
+        setInProgress(false);
+        hideBar();
+    };
+
     const handleUpdate = async (updatedData: User[]) => {
         setData(updatedData);
         const { changedRoles, allRoles } = getDifferences(updatedData, team!);
@@ -59,44 +94,7 @@ const TeamMembers = () => {
                 cancelText: "Discard",
                 confirmText: "Save",
                 changeCount,
-                onSuccess: async () => {
-                    const promises = allRoles.map(async payload => {
-                        await limit(() =>
-                            putRequest(
-                                `${apis.teamsV1Url}/${teamId}/users/${payload.userId}`,
-                                { roles: payload.roles },
-                                {
-                                    notificationOptions: {
-                                        errorNotificationsOn: false,
-                                        successNotificationsOn: false,
-                                    },
-                                }
-                            )
-                        );
-                    });
-
-                    const results = await Promise.allSettled(promises);
-                    const success = results.filter(
-                        result => result.status === "fulfilled"
-                    );
-                    const error = results.filter(
-                        result => result.status === "rejected"
-                    );
-
-                    if (success.length > 0) {
-                        notificationService.success(
-                            `${success.length} member roles(s) have been successfully updated`
-                        );
-                    }
-                    if (error.length > 0) {
-                        notificationService.error(
-                            `${error.length} member roles(s) were not updated`
-                        );
-                    }
-                    mutate();
-                    setInProgress(false);
-                    hideBar();
-                },
+                onSuccess: () => submitForm(allRoles),
                 onCancel: () => {
                     setData(team?.users);
                     hideBar();

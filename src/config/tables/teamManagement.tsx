@@ -8,6 +8,7 @@ import {
     ROLE_CUSTODIAN_METADATA_EDITOR,
     ROLE_CUSTODIAN_METADATA_MANAGER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
+    rolesMeta,
 } from "@/consts/roles";
 import { User } from "@/interfaces/User";
 
@@ -15,15 +16,6 @@ import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import { ColumnDef } from "@tanstack/react-table";
-
-const translations = {
-    [ROLE_CUSTODIAN_DEVELOPER]: "Developer",
-    [ROLE_CUSTODIAN_TEAM_ADMIN]: "Admin",
-    [ROLE_CUSTODIAN_METADATA_MANAGER]: "Manager",
-    [ROLE_CUSTODIAN_METADATA_EDITOR]: "Editor",
-    [ROLE_CUSTODIAN_DAR_MANAGER]: "Manager",
-    [ROLE_CUSTODIAN_DAR_REVIEWER]: "Reviewer",
-};
 
 const CheckboxesCell = ({
     row: { index, original },
@@ -54,7 +46,7 @@ const CheckboxesCell = ({
             {checkboxes.map(checkbox => (
                 <FormControlLabel
                     key={checkbox.name}
-                    label={translations[checkbox.name]}
+                    label={rolesMeta[checkbox.name].label}
                     control={
                         <Checkbox
                             sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
