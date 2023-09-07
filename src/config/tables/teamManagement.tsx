@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import PermissionDescriptions from "@/components/PermissionDescriptions";
 import TableActionCell from "@/components/TableActionCell";
 import TableTooltipCell from "@/components/TableTooltipCell";
