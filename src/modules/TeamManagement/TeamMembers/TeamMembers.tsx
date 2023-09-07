@@ -13,11 +13,14 @@ import { Team } from "@/interfaces/Team";
 import pLimit from "p-limit";
 import notificationService from "@/services/notification";
 import { putRequest } from "@/services/api/put";
+import { useLeavePageConfirm } from "@/hooks/useLeavePageConfirm";
 import TeamMembersActionBar from "./TeamMembers.actionBar";
 
 const limit = pLimit(1);
 
 const TeamMembers = () => {
+    const [inProgress, setInProgress] = useState(false);
+    useLeavePageConfirm(inProgress, "Do you want to save your changes?");
     const router = useRouter();
     const { user } = useAuth();
     const { teamId } = router.query;
@@ -46,6 +49,7 @@ const TeamMembers = () => {
         setData(updatedData);
         const { changedRoles, allRoles } = getDifferences(updatedData, team!);
         const changeCount = getChangeCount(changedRoles);
+        setInProgress(changeCount > 0);
 
         hideBar();
 
@@ -90,11 +94,13 @@ const TeamMembers = () => {
                         );
                     }
                     mutate();
+                    setInProgress(false);
                     hideBar();
                 },
                 onCancel: () => {
                     setData(team?.users);
                     hideBar();
+                    setInProgress(false);
                 },
             });
         }
