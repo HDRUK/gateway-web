@@ -1,7 +1,9 @@
 import { ModalButtonProps } from "@/components/ModalButtons/ModalButtons";
 import React, { createContext, useMemo, ReactNode } from "react";
 
-type ActionBarProps = { [key: string]: unknown } & ModalButtonProps & {
+type ActionBarProps = {
+    [key: string]: unknown | ReactNode;
+} & ModalButtonProps & {
         component?: React.ElementType | null;
     };
 

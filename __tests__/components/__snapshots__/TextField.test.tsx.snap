@@ -6,13 +6,13 @@ exports[`TextField should render icon 1`] = `
     class="MuiFormControl-root MuiFormControl-fullWidth mui-style-vd0s50-MuiFormControl-root"
   >
     <p
-      class="MuiTypography-root MuiTypography-body2 mui-style-8iyzwa-MuiTypography-root-Label"
+      class="MuiTypography-root MuiTypography-body2 mui-style-1djhbyd-MuiTypography-root-Label"
       for="outlined-adornment-amount"
     >
       This is a label
     </p>
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-13q07t1-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-1rdo0ad-MuiInputBase-root-MuiOutlinedInput-root"
     >
       <div
         class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-outlined MuiInputAdornment-sizeMedium mui-style-ittuaa-MuiInputAdornment-root"

@@ -43,6 +43,8 @@ module.exports = {
         "plugin:storybook/recommended",
     ],
     rules: {
+        "security/detect-object-injection": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
         "react/no-unknown-property": ["error", { ignore: ["css"] }],
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-explicit-any": "error",

@@ -20,7 +20,7 @@ interface Options {
     action?: ReactNode;
 }
 
-const useGet = <T>(url: string, options?: Options): Response<T> => {
+const useGet = <T>(url: string | null, options?: Options): Response<T> => {
     const {
         localeKey,
         itemName,

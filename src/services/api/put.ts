@@ -33,6 +33,7 @@ const putRequest = async <T>(
                     method: "put",
                 });
             }
+            throw error;
         });
 };
 

@@ -1,9 +1,9 @@
-import ChipComponent from "@/components/Chip";
+import Chip from "@/components/Chip";
 import { render, screen } from "../testUtils";
 
-describe("ChipComponent", () => {
+describe("Chip", () => {
     it("should render a chip", () => {
-        render(<ChipComponent label="Chippie!" />);
+        render(<Chip label="Chippie!" />);
         expect(screen.getByText("Chippie!")).toBeInTheDocument();
     });
 });
