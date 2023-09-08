@@ -16,22 +16,19 @@ const useDelete = (url: string, options?: HttpOptions) => {
         localeKey,
         itemName,
         action,
-        overideUrl = false,
+        shouldFetch = true,
         ...mutatorOptions
     } = options || {};
 
-    const { data } = useGet(options?.paginationKey || url, {
-        shouldFetch: !!overideUrl,
-    });
+    const { data } = useGet(shouldFetch ? options?.paginationKey || url : null);
 
     ThrowPaginationError(options);
 
     return (id: number) => {
-        const urlTemp = overideUrl ? url : `${url}/${id}`;
         mutate(
             options?.paginationKey || url,
             async () => {
-                await apiService.deleteRequest(urlTemp, {
+                await apiService.deleteRequest(`${url}/${id}`, {
                     notificationOptions: {
                         localeKey,
                         itemName,

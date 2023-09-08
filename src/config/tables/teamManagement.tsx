@@ -15,9 +15,9 @@ import {
 import { User } from "@/interfaces/User";
 
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { ReactNode } from "react";
 
 const CheckboxesCell = ({
     row: { index, original },
@@ -67,7 +67,10 @@ const CheckboxesCell = ({
     );
 };
 
-const getColumns = (userRoles: string[]): ColumnDef<User>[] => {
+const getColumns = (
+    userRoles: string[],
+    actions: { label: string; onClick: () => void; icon: ReactNode }[]
+): ColumnDef<User>[] => {
     return [
         {
             id: "name",
@@ -158,17 +161,11 @@ const getColumns = (userRoles: string[]): ColumnDef<User>[] => {
                       id: "furtherActions",
                       header: () => <Box textAlign="left">Actions</Box>,
                       size: 40,
-                      cell: () => {
+                      cell: ({ row: { original } }) => {
                           return (
                               <TableActionCell
-                                  actions={[
-                                      {
-                                          icon: (
-                                              <DeleteForeverIcon color="primary" />
-                                          ),
-                                          onClick: () => console.log("delete"),
-                                      },
-                                  ]}
+                                  user={original}
+                                  actions={actions}
                               />
                           );
                       },

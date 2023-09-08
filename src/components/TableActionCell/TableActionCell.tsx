@@ -1,15 +1,17 @@
+import { User } from "@/interfaces/User";
 import { Box, IconButton } from "@mui/material";
 import { ReactNode } from "react";
 
 interface TableActionCellProps {
+    user: User;
     actions: { label?: string; icon: ReactNode; onClick: () => void }[];
 }
 
-const TableActionCell = ({ actions }: TableActionCellProps) => {
+const TableActionCell = ({ actions, user }: TableActionCellProps) => {
     if (actions.length === 1) {
         return (
             <Box display="flex" alignItems="center" justifyContent="center">
-                <IconButton onClick={actions[0].onClick}>
+                <IconButton onClick={() => actions[0].onClick(user)}>
                     {actions[0].icon}
                 </IconButton>
             </Box>
