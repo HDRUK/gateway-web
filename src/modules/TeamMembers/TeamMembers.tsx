@@ -17,7 +17,7 @@ import { useLeavePageConfirm } from "@/hooks/useLeavePageConfirm";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import useDelete from "@/hooks/useDelete";
 import useModal from "@/hooks/useModal";
-import TeamMembersActionBar from "./TeamMembers.actionBar";
+import TeamMembersActionBar from "@/modules/TeamMembersActionBar";
 
 const limit = pLimit(1);
 
@@ -76,7 +76,7 @@ const TeamMembers = () => {
                 .filter(roles => roles.enabled)
                 .map(roles => roles.name) || [];
         return getColumns(currentUserRoles, actions);
-    }, [team?.users, user]);
+    }, [actions, team?.users, user?.id]);
 
     const submitForm = async allRoles => {
         const promises = allRoles.map(async payload => {

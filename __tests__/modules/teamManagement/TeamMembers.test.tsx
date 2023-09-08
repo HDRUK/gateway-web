@@ -1,5 +1,5 @@
 import React from "react";
-import TeamMembers from "@/modules/TeamManagement/TeamMembers";
+import TeamMembers from "@/modules/TeamMembers";
 import { render, screen, waitFor } from "../../testUtils";
 
 jest.mock("next/router", () => ({

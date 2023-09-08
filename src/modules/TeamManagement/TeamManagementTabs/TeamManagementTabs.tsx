@@ -2,7 +2,7 @@ import Tabs from "@/components/Tabs";
 import { Typography } from "@mui/material";
 import { useState } from "react";
 import Notifications from "@/modules/TeamManagement/Notifications";
-import TeamMembers from "@/modules/TeamManagement/TeamMembers";
+import TeamMembers from "@/modules/TeamMembers";
 
 const tabsList = [
     {
