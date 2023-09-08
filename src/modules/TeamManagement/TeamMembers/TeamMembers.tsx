@@ -65,7 +65,7 @@ const TeamMembers = () => {
     );
 
     if (isTeamListLoading) return <Loading />;
-
+    console.log("test");
     return (
         <>
             <TableContainer component={Paper}>
