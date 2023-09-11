@@ -2,15 +2,15 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Autocomplete from "@/components/Autocomplete";
 import {createFilterOptions} from '@mui/material/Autocomplete';
-import RadioListFilter from "@/components/RadioListFilter";
+import CheckboxFilter from "@/components/CheckboxFilter";
 import Paper from "@/components/Paper";
 import { Typography } from "@mui/material";
-import { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
 
 interface ApplicationSearchBarProps {
     searchAsYouType?: boolean
-    setFilterQuery: Dispatch<SetStateAction<string>>;
+    setFilterQuery: Dispatch<SetStateAction<string|null>>;
 }
 
 interface SearchOptionType {
@@ -21,7 +21,7 @@ interface SearchOptionType {
     create: boolean;
   }
 
-const onlyUnique = (value:string, index:Number, array:[]) => {
+const onlyUnique = (value:string, index:Number, array:string[]) => {
     return array.indexOf(value) === index;
 }
 
@@ -30,10 +30,6 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
 
     //radio buttons for filtering 
     const statusFilters = [
-        {
-            value:'',
-            label:"Any"
-        },
         {
             value:'1',
             label:"Enabled"
@@ -45,7 +41,7 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
     ]
 
     //state for handling which radio button is selected
-    const [currentStatusFilter,setCurrentStatusFilter] = useState(statusFilters[0].value);
+    const [currentStatusFilter,setCurrentStatusFilter] = useState<string|null>(null);
 
     //leaving this commented out for now..
     // .. could be used if you want to search as you type... 
@@ -78,7 +74,9 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
             searchParams.append('text[]',term)
         });
         //add the enabled or not ({0,1}) to the URL search params
-        searchParams.append('enabled',currentStatusFilter);
+        if(currentStatusFilter){
+            searchParams.append('enabled',currentStatusFilter);
+        }
 
         //update the filter query for the ApplicationList.tsx
         const queryString = searchParams.toString();
@@ -86,7 +84,7 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
     },[currentStatusFilter,selectedSearchOptions]);  //textFilter
 
 
-    const filterSearchOptions = (options, state):SearchOptionType[] => {
+    const filterSearchOptions = (options, state): SearchOptionType[] => {
         const { inputValue } = state;
         const filtered = createFilterOptions<SearchOptionType>()(options,state);
 
@@ -106,7 +104,7 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
           filtered.push(
             {
                 name: inputValue,
-                label: `Add "${inputValue}"`,
+                label: `Add search for "${inputValue}"`,
                 type: 'text',
                 create: true,
             });
@@ -169,8 +167,8 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
             </BoxContainer>
             <BoxContainer sx={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
                 <Box>
-                    <RadioListFilter
-                        title={'App Status:'}
+                    <CheckboxFilter
+                        title={'App status:'}
                         options={statusFilters}
                         value={currentStatusFilter}
                         handleChange={setCurrentStatusFilter}
