@@ -148,12 +148,12 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
         <Paper sx={{width:'100%'}}>
         <BoxContainer>
             <BoxContainer>
-                <Box >
+                <Box sx={{paddingBottom:0}}>
                     <Typography variant="h2">
                         Application List
                     </Typography>
                 </Box>
-                <Box sx={{width:'100%'}}>
+                <Box sx={{width:'100%',paddingTop:0, paddingBottom:0}}>
                     <Autocomplete
                         options={searchOptions}
                         value={selectedSearchOptions}
@@ -166,7 +166,7 @@ const ApplicationSearchBar = (props: ApplicationSearchBarProps) => {
                 </Box>
             </BoxContainer>
             <BoxContainer sx={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-                <Box>
+                <Box sx={{paddingTop:0, paddingBottom:0}}>
                     <CheckboxFilter
                         title={'App status:'}
                         options={statusFilters}
