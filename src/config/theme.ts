@@ -72,6 +72,7 @@ const palette = {
 
 const theme = createTheme({
     typography: {
+        fontFamily: ["Arial"].join(","),
         body1: {
             fontSize: 14,
         },
@@ -228,7 +229,6 @@ const theme = createTheme({
                     "&.MuiCheckbox-colorError": {
                         color: palette.error.main,
                     },
-                    "& .MuiSvgIcon-root": { fontSize: 32 },
                 },
             },
         },

@@ -6,7 +6,7 @@ exports[`SocialProviders should render content 1`] = `
     class="MuiBox-root mui-style-v1crop"
   >
     <p
-      class="MuiTypography-root MuiTypography-body2 mui-style-1cyqjq3-MuiTypography-root-Label"
+      class="MuiTypography-root MuiTypography-body2 mui-style-xk4uvy-MuiTypography-root-Label"
     >
       Your preferred sign in method
     </p>

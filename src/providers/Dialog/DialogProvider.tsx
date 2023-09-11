@@ -41,7 +41,6 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
     const renderComponent = () => {
         if (!store.dialogComponent) return null;
 
-        // eslint-disable-next-line security/detect-object-injection
         const DialogComponent = store.dialogComponent;
 
         if (!DialogComponent) {

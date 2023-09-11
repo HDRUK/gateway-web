@@ -7,6 +7,7 @@ const nextConfig = {
     swcMinify: true,
     env: {
         API_V1_URL: process.env.API_V1_URL,
+        API_V1_IP_URL: process.env.API_V1_IP_URL,
     },
     webpack: (config, context) => {
         if (process.env.NEXT_WEBPACK_USEPOLLING) {

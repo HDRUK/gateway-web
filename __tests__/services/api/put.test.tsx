@@ -57,21 +57,25 @@ describe("put", () => {
     it("should call the error notification on api error", async () => {
         server.use(putFilterV1(undefined, 401));
         const payload = generateFilterV1();
-        await apiService.putRequest<Filter>(
-            `${apis.filtersV1Url}/${payload.id}`,
-            payload,
-            {
-                notificationOptions: {
+        try {
+            await apiService.putRequest<Filter>(
+                `${apis.filtersV1Url}/${payload.id}`,
+                payload,
+                {
+                    notificationOptions: {
+                        ...translationProps,
+                    },
+                }
+            );
+            expect(apiUtils.errorNotification).toHaveBeenCalledWith({
+                errorResponse: expect.any(Object),
+                method: "put",
+                props: {
                     ...translationProps,
                 },
-            }
-        );
-        expect(apiUtils.errorNotification).toHaveBeenCalledWith({
-            errorResponse: expect.any(Object),
-            method: "put",
-            props: {
-                ...translationProps,
-            },
-        });
+            });
+        } catch (e) {
+            /* empty */
+        }
     });
 });

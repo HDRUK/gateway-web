@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import Box from "@/components/Box";
-import ChipComponent from "@/components/Chip";
+import Chip from "@/components/Chip";
 import { Application } from "@/interfaces/Application";
 import { Typography } from "@mui/material";
 import Link from "next/link";
@@ -64,13 +64,13 @@ const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
                             justifyContent: "end",
                         }}>
                         {application.enabled ? (
-                            <ChipComponent label="Enabled" color="success" />
+                            <Chip label="Enabled" color="success" />
                         ) : (
-                            <ChipComponent label="Disabled" color="error" />
+                            <Chip label="Disabled" color="error" />
                         )}
 
                         {/* Place holder for which scopes/permissions have been selected for the app */}
-                        <ChipComponent
+                        <Chip
                             label="{{api.scope.permission}}"
                             color="info"
                             sx={{
