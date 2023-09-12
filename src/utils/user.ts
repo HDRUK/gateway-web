@@ -1,11 +1,11 @@
-import { Team } from "@/interfaces/Team";
+import { AuthTeam } from "@/interfaces/AuthTeam";
 
-const getTeamById = (teams: Team[], teamId: number | string) => {
+const getTeamById = (teams: AuthTeam[], teamId: number | string) => {
     if (!Array.isArray(teams) || !teamId) return null;
     return teams?.find(team => team.id === parseInt(teamId as string, 10));
 };
 
-const getRoleNamesByTeam = (team: Team | undefined | null) => {
+const getRoleNamesByTeam = (team: AuthTeam | undefined | null) => {
     if (!team?.roles) return [];
 
     const { roles } = team;

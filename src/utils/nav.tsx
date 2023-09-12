@@ -18,34 +18,18 @@ const getProfileNav = (): LeftNavItem[] => {
 };
 
 const getTeamNav = (
-    roles: {
-        isCustodianDeveloper: boolean;
-        isCustodianTeamAdmin: boolean;
-        isCustodianMetadataManager: boolean;
-        isCustodianMetadataEditor: boolean;
-        isCustodianDarManager: boolean;
-        isCustodianDarReviewer: boolean;
+    permissions: {
+        [key: string]: boolean;
     },
     teamId: string | undefined
 ): LeftNavItem[] => {
-    const {
-        isCustodianDeveloper,
-        isCustodianTeamAdmin,
-        isCustodianMetadataManager,
-        isCustodianMetadataEditor,
-        isCustodianDarManager,
-        isCustodianDarReviewer,
-    } = roles;
-
     return [
         {
             icon: <SettingsOutlinedIcon />,
             label: "Team Management",
             href: `/account/team/${teamId}/team-management`,
         },
-        ...([isCustodianMetadataEditor, isCustodianMetadataManager].some(
-            isTrue => isTrue
-        )
+        ...(permissions["account.nav.datasets.read"]
             ? [
                   {
                       icon: <StorageOutlinedIcon />,
@@ -54,24 +38,34 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...([isCustodianDarManager, isCustodianDarReviewer].some(
-            isTrue => isTrue
-        )
+        ...([
+            permissions["account.nav.dar.applications.read"],
+            permissions["account.nav.dar.workflows.read"],
+            permissions["account.nav.dar.editForm.read"],
+        ].some(isTrue => isTrue)
             ? [
                   {
                       icon: <GroupsOutlinedIcon />,
                       label: "Data Access Requests",
                       subItems: [
-                          {
-                              label: "Applications",
-                              href: `/account/team/${teamId}/data-access-requests/applications`,
-                          },
-                          ...([isCustodianDarManager].some(isTrue => isTrue)
+                          ...(permissions["account.nav.dar.applications.read"]
+                              ? [
+                                    {
+                                        label: "Applications",
+                                        href: `/account/team/${teamId}/data-access-requests/applications`,
+                                    },
+                                ]
+                              : []),
+                          ...(permissions["account.nav.dar.workflows.read"]
                               ? [
                                     {
                                         label: "Workflows",
                                         href: `/account/team/${teamId}/data-access-requests/workflows`,
                                     },
+                                ]
+                              : []),
+                          ...(permissions["account.nav.dar.editForm.read"]
+                              ? [
                                     {
                                         label: "Edit Form",
                                         href: `/account/team/${teamId}/data-access-requests/edit-form`,
@@ -82,7 +76,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...([isCustodianDarManager].some(isTrue => isTrue)
+        ...(permissions["account.nav.dur.read"]
             ? [
                   {
                       icon: <SchemaOutlinedIcon />,
@@ -91,7 +85,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...([isCustodianTeamAdmin, isCustodianDeveloper].some(isTrue => isTrue)
+        ...(permissions["account.nav.integrations.read"]
             ? [
                   {
                       icon: <DescriptionOutlinedIcon />,
