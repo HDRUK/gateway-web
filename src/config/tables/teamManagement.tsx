@@ -19,16 +19,12 @@ import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import { ReactNode } from "react";
 
-const CheckboxesCell = ({
-    row: { index, original },
-    table,
-    requiredRoles,
-    userRoles,
-}) => {
+const CheckboxesCell = ({ row: { index, original }, table, checkboxes }) => {
     const { roles } = original;
-    const checkboxes = requiredRoles.map(requiredRole => ({
-        name: requiredRole,
-        value: !!roles.find(role => role.name === requiredRole)?.enabled,
+    const checkboxesHydrated = checkboxes.map(checkbox => ({
+        name: checkbox.name,
+        disabled: checkbox.disabled,
+        value: !!roles.find(role => role.name === checkbox.name)?.enabled,
     }));
 
     const handleUpdate = (name, value) => {
@@ -45,12 +41,18 @@ const CheckboxesCell = ({
 
     return (
         <FormGroup>
-            {checkboxes.map(checkbox => (
+            {checkboxesHydrated.map(checkbox => (
                 <FormControlLabel
                     key={checkbox.name}
                     label={rolesMeta[checkbox.name].label}
+                    title={
+                        checkbox.disabled
+                            ? "You do not have permission to edit this"
+                            : ""
+                    }
                     control={
                         <Checkbox
+                            disabled={checkbox.disabled}
                             sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
                             disableRipple
                             name={checkbox.name}
@@ -68,8 +70,12 @@ const CheckboxesCell = ({
 };
 
 const getColumns = (
-    userRoles: string[],
-    actions: { label: string; onClick: () => void; icon: ReactNode }[]
+    permissions: { [key: string]: boolean },
+    actions: {
+        label?: string;
+        onClick: (rowUser: User) => void;
+        icon: ReactNode;
+    }[]
 ): ColumnDef<User>[] => {
     return [
         {
@@ -95,10 +101,21 @@ const getColumns = (
             cell: props => (
                 <CheckboxesCell
                     {...props}
-                    userRoles={userRoles}
-                    requiredRoles={[
-                        ROLE_CUSTODIAN_TEAM_ADMIN,
-                        ROLE_CUSTODIAN_DEVELOPER,
+                    checkboxes={[
+                        {
+                            name: ROLE_CUSTODIAN_TEAM_ADMIN,
+                            disabled:
+                                !permissions[
+                                    "account.team_management.permission.update.custodian_team_admin"
+                                ],
+                        },
+                        {
+                            name: ROLE_CUSTODIAN_DEVELOPER,
+                            disabled:
+                                !permissions[
+                                    "account.team_management.permission.update.developer"
+                                ],
+                        },
                     ]}
                 />
             ),
@@ -121,10 +138,21 @@ const getColumns = (
             cell: props => (
                 <CheckboxesCell
                     {...props}
-                    userRoles={userRoles}
-                    requiredRoles={[
-                        ROLE_CUSTODIAN_DAR_MANAGER,
-                        ROLE_CUSTODIAN_DAR_REVIEWER,
+                    checkboxes={[
+                        {
+                            name: ROLE_CUSTODIAN_DAR_MANAGER,
+                            disabled:
+                                !permissions[
+                                    "account.team_management.permission.update.custodian_dar_manager"
+                                ],
+                        },
+                        {
+                            name: ROLE_CUSTODIAN_DAR_REVIEWER,
+                            disabled:
+                                !permissions[
+                                    "account.team_management.permission.update.reviewer"
+                                ],
+                        },
                     ]}
                 />
             ),
@@ -147,15 +175,26 @@ const getColumns = (
             cell: props => (
                 <CheckboxesCell
                     {...props}
-                    userRoles={userRoles}
-                    requiredRoles={[
-                        ROLE_CUSTODIAN_METADATA_MANAGER,
-                        ROLE_CUSTODIAN_METADATA_EDITOR,
+                    checkboxes={[
+                        {
+                            name: ROLE_CUSTODIAN_METADATA_MANAGER,
+                            disabled:
+                                !permissions[
+                                    "account.team_management.permission.update.custodian_metadata_manager"
+                                ],
+                        },
+                        {
+                            name: ROLE_CUSTODIAN_METADATA_EDITOR,
+                            disabled:
+                                !permissions[
+                                    "account.team_management.permission.update.metadata_editor"
+                                ],
+                        },
                     ]}
                 />
             ),
         },
-        ...(!userRoles.includes(ROLE_CUSTODIAN_TEAM_ADMIN)
+        ...(permissions["account.team_management.member.delete"]
             ? [
                   {
                       id: "furtherActions",

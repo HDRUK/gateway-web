@@ -1,9 +1,9 @@
 import apis from "@/config/apis";
-import { User } from "@/interfaces/User";
-import useGet from "./useGet";
+import { AuthUser } from "@/interfaces/AuthUser";
+import useGet from "@/hooks/useGet";
 
 interface AuthResponse {
-    user: User | undefined;
+    user: AuthUser | undefined;
     isLoading: boolean;
     isLoggedIn: boolean;
 }
@@ -11,7 +11,7 @@ interface AuthResponse {
 const useAuth = (): AuthResponse => {
     const { isLoading, data } = useGet<{
         isLoggedIn: boolean;
-        user?: User;
+        user?: AuthUser;
     }>(apis.authInternalUrl);
 
     return {

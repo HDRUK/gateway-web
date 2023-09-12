@@ -6,10 +6,10 @@ import { ReactNode, useMemo } from "react";
 import { Typography } from "@mui/material";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useRouter } from "next/router";
-import useCustodianRoles from "@/hooks/useCustodianRoles";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { Team } from "@/interfaces/Team";
+import { useHasPermissions } from "@/hooks/useHasPermission";
 import Loading from "../Loading";
 import ActionBar from "../ActionBar";
 
@@ -21,7 +21,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
     const { query } = useRouter();
 
     const { teamId } = query as AccountTeamUrlQuery;
-    const roles = useCustodianRoles(teamId);
+    const permissions = useHasPermissions();
     const { data: team, isLoading: isTeamLoading } = useGet<Team>(
         `${apis.teamsV1Url}/${teamId}`,
         { shouldFetch: !!teamId }
@@ -30,8 +30,8 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
 
     const navItems = useMemo(() => {
         if (!teamId) return getProfileNav();
-        return getTeamNav(roles, teamId);
-    }, [teamId, roles]);
+        return getTeamNav(permissions, teamId);
+    }, [teamId, permissions]);
 
     if (isTeamLoading) {
         return <Loading />;

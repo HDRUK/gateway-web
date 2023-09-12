@@ -18,17 +18,20 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import useDelete from "@/hooks/useDelete";
 import useModal from "@/hooks/useModal";
 import TeamMembersActionBar from "@/modules/TeamMembersActionBar";
+import { useHasPermissions } from "@/hooks/useHasPermission";
+import { useSWRConfig } from "swr";
 
 const limit = pLimit(1);
 
 const TeamMembers = () => {
     const { showModal } = useModal();
+    const { mutate: mututeUser } = useSWRConfig();
 
     const [inProgress, setInProgress] = useState(false);
     const [data, setData] = useState([]);
 
     useLeavePageConfirm(inProgress, "Do you want to save your changes?");
-
+    const permissions = useHasPermissions();
     const { user } = useAuth();
 
     const router = useRouter();
@@ -51,34 +54,33 @@ const TeamMembers = () => {
 
     const { showBar, hideBar } = useActionBar();
 
-    const actions = [
-        {
-            icon: <DeleteForeverIcon color="primary" />,
-            onClick: (rowUser: User) =>
-                showModal({
-                    confirmText: "Remove",
-                    title: "Delete a user",
-                    content: `Are you sure you want to remove ${rowUser.firstname}  ${rowUser.lastname}?`,
-                    onSuccess: async () => {
-                        await deleteTeamMember(`users/${rowUser.id}`);
-                        mutate();
-                    },
-                }),
-        },
-    ];
+    const actions = useMemo(
+        () => [
+            {
+                icon: <DeleteForeverIcon color="primary" />,
+                onClick: (rowUser: User) =>
+                    showModal({
+                        confirmText: "Remove",
+                        title: "Delete a user",
+                        content: `Are you sure you want to remove ${rowUser.firstname}  ${rowUser.lastname}?`,
+                        onSuccess: async () => {
+                            await deleteTeamMember(`users/${rowUser.id}`);
+                            mutate();
+                        },
+                    }),
+            },
+        ],
+        [deleteTeamMember, mutate, showModal]
+    );
 
     const columns = useMemo(() => {
-        const currentTeamUser = team?.users?.find(
-            teamUser => teamUser.id === user?.id
-        );
-        const currentUserRoles =
-            currentTeamUser?.roles
-                .filter(roles => roles.enabled)
-                .map(roles => roles.name) || [];
-        return getColumns(currentUserRoles, actions);
-    }, [actions, team?.users, user?.id]);
+        return getColumns(permissions, actions);
+    }, [actions, permissions]);
 
     const submitForm = async allRoles => {
+        const updatingOwnPermissions = !!allRoles.find(
+            role => role.userId === user?.id
+        );
         const promises = allRoles.map(async payload => {
             await limit(() =>
                 putRequest(
@@ -108,9 +110,15 @@ const TeamMembers = () => {
                 `${error.length} member roles(s) were not updated`
             );
         }
+        console.log("updatingOwnPermissions: ", updatingOwnPermissions);
+
         mutate();
         setInProgress(false);
         hideBar();
+
+        if (updatingOwnPermissions) {
+            mututeUser(apis.authInternalUrl);
+        }
     };
 
     const handleUpdate = async (updatedData: User[]) => {
