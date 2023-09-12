@@ -45,6 +45,11 @@ const CheckboxesCell = ({ row: { index, original }, table, checkboxes }) => {
                 <FormControlLabel
                     key={checkbox.name}
                     label={rolesMeta[checkbox.name].label}
+                    title={
+                        checkbox.disabled
+                            ? "You do not have permission to edit this"
+                            : ""
+                    }
                     control={
                         <Checkbox
                             disabled={checkbox.disabled}
