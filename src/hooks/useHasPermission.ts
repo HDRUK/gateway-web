@@ -1,6 +1,6 @@
 import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
-import { getPermissions } from "@/hooks/useHasPermission.utils";
+import { getPermissions } from "@/utils/permissions";
 import useCustodianRoles from "./useCustodianRoles";
 import useAuth from "./useAuth";
 
