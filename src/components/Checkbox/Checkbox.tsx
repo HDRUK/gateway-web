@@ -47,6 +47,7 @@ const Checkbox = (props: CheckboxProps) => {
                     <MuiCheckbox
                         color={error !== undefined ? "error" : "secondary"}
                         disableRipple
+                        checked={fieldProps.value}
                         size="medium"
                         icon={<CheckBoxOutlineBlankSharpIcon />}
                         checkedIcon={<CheckBoxSharpIcon />}

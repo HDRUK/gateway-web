@@ -15,7 +15,9 @@ const ApplicationList = () => {
     const { teamId } = router.query;
 
     const { data: applicationsList } = useGet<Application[]>(
-        `${apis.applicationsV1Url}?team_id=${teamId}&${filterQuery}`,
+        filterQuery
+            ? `${apis.applicationsV1Url}?team_id=${teamId}&${filterQuery}`
+            : null,
         {
             keepPreviousData: true,
         }

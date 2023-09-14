@@ -1,3 +1,4 @@
+import SearchIcon from "@mui/icons-material/Search";
 import { inputComponents } from ".";
 
 const defaultValues = {
@@ -11,13 +12,14 @@ const defaultValues = {
 const formFields = [
     {
         name: "description",
-        label: "Search Apps",
+        placeholder: "Search app name or description",
         createLabel: "Add search for ",
         selectOnFocus: true,
         clearOnBlur: true,
         handleHomeEndKeys: true,
         freeSolo: true,
         multiple: true,
+        startAdornmentIcon: <SearchIcon color="primary" />,
         canCreate: true,
         options: [],
         getOptionLabel: (

@@ -44,7 +44,7 @@ const ApplicationSearchBar = ({
                 <Box sx={{ paddingBottom: 0 }}>
                     <Typography variant="h2">Application List</Typography>
                 </Box>
-                <Box>
+                <Box sx={{ paddingTop: 0 }}>
                     {searchApiFormFields.map(field => (
                         <InputWrapper
                             setValue={setValue}

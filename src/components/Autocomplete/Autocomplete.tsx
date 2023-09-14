@@ -3,6 +3,8 @@ import {
     FormHelperText,
     FormLabel,
     FilterOptionsState,
+    InputAdornment,
+    Chip,
 } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
@@ -11,6 +13,7 @@ import MuiAutocomplete, {
 import TextField from "@mui/material/TextField";
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
+import { ReactNode } from "react";
 
 type ValueType = string | number;
 type OptionsType = { id: ValueType; label: string; icon?: IconType }[];
@@ -20,12 +23,14 @@ export interface SelectProps {
     info?: string;
     getOptionLabel?: () => string;
     disabled?: boolean;
+    startAdornmentIcon?: ReactNode;
     createLabel?: string;
     options: OptionsType;
     canCreate?: boolean;
     multiple?: boolean;
     setValue?: (name: string, value: unknown) => void;
     freeSolo?: boolean;
+    placeholder?: string;
     icon?: IconType;
     name: string;
     control: Control;
@@ -44,6 +49,8 @@ const Autocomplete = (props: SelectProps) => {
         createLabel,
         control,
         name,
+        placeholder,
+        startAdornmentIcon,
         canCreate,
         setValue,
         ...restProps
@@ -91,6 +98,15 @@ const Autocomplete = (props: SelectProps) => {
             <MuiAutocomplete
                 {...fieldProps}
                 {...restProps}
+                renderTags={(tagValue, getTagProps) =>
+                    tagValue.map((option, index) => (
+                        <Chip
+                            label={option?.label || `${option}`}
+                            size="small"
+                            {...getTagProps({ index })}
+                        />
+                    ))
+                }
                 onChange={(e, v) => {
                     if (typeof setValue === "function" && Array.isArray(v)) {
                         const values = v.map(value => {
@@ -103,7 +119,29 @@ const Autocomplete = (props: SelectProps) => {
                 {...(canCreate && {
                     filterOptions,
                 })}
-                renderInput={params => <TextField {...params} size="small" />}
+                renderInput={params => (
+                    <TextField
+                        {...params}
+                        sx={{ padding: 0 }}
+                        placeholder={placeholder}
+                        InputProps={{
+                            ...params.InputProps,
+                            ...(startAdornmentIcon && {
+                                startAdornment: (
+                                    <>
+                                        <InputAdornment
+                                            sx={{ my: "16px", pl: "5px" }}
+                                            position="start">
+                                            {startAdornmentIcon}
+                                        </InputAdornment>
+                                        {params.InputProps.startAdornment}
+                                    </>
+                                ),
+                            }),
+                        }}
+                        size="small"
+                    />
+                )}
             />
             {error && (
                 <FormHelperText sx={{ fontSize: 14 }} error>
@@ -117,12 +155,14 @@ const Autocomplete = (props: SelectProps) => {
 Autocomplete.defaultProps = {
     getOptionLabel: (option: unknown) => option,
     setValue: () => null,
+    placeholder: "",
     info: "",
     createLabel: "Add",
     icon: undefined,
     required: false,
     canCreate: false,
     multiple: false,
+    startAdornmentIcon: null,
     freeSolo: false,
     disabled: false,
 };
