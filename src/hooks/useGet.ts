@@ -15,6 +15,7 @@ interface Options {
     localeKey?: string;
     withPagination?: boolean;
     shouldFetch?: boolean;
+    keepPreviousData?: boolean;
     errorNotificationsOn?: boolean;
     itemName?: string;
     action?: ReactNode;
@@ -25,6 +26,7 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
         localeKey,
         itemName,
         action,
+        keepPreviousData = false,
         errorNotificationsOn,
         shouldFetch = true,
         withPagination = false,
@@ -45,7 +47,8 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
                 },
                 withPagination,
             });
-        }
+        },
+        { keepPreviousData }
     );
 
     return {

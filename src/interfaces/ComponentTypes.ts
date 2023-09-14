@@ -1,4 +1,6 @@
 type ComponentTypes =
+    | "Autocomplete"
+    | "CheckboxGroup"
     | "CheckboxRow"
     | "Checkbox"
     | "TextField"

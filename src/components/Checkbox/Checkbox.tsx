@@ -12,13 +12,22 @@ import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateChe
 export interface CheckboxProps extends MuiCheckboxProps {
     label: string;
     name: string;
+    fullWidth: boolean;
     control: Control;
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
 }
 
 const Checkbox = (props: CheckboxProps) => {
-    const { label, control, name, checkboxSx, formControlSx, ...rest } = props;
+    const {
+        fullWidth = true,
+        label,
+        control,
+        name,
+        checkboxSx,
+        formControlSx,
+        ...rest
+    } = props;
 
     const {
         field: { ref, ...fieldProps },
@@ -30,7 +39,7 @@ const Checkbox = (props: CheckboxProps) => {
 
     return (
         <FormControl
-            fullWidth
+            fullWidth={fullWidth}
             sx={{ m: 0, mb: 2, ...formControlSx }}
             error={!!error}>
             <FormControlLabel

@@ -1,51 +1,41 @@
 import ApplicationListItem from "@/components/ApplicationListItem";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
-import Loading from "@/components/Loading";
 import useGet from "@/hooks/useGet";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import ApplicationSearchBar from "@/components/ApplicationSearchBar";
 import BoxContainer from "@/components/BoxContainer";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const ApplicationList = () => {
-
-    const [filterQuery,setFilterQuery] = useState('');
+    const [filterQuery, setFilterQuery] = useState("");
 
     const router = useRouter();
     const { teamId } = router.query;
 
-    const { 
-        data: applicationsList, 
-        isLoading: isApplicationListLoading,
-    } = useGet<Application[]>(`${apis.applicationsV1Url}?team_id=${teamId}&${filterQuery}`);
-   
+    const { data: applicationsList } = useGet<Application[]>(
+        `${apis.applicationsV1Url}?team_id=${teamId}&${filterQuery}`,
+        {
+            keepPreviousData: true,
+        }
+    );
 
     return (
         <BoxContainer>
-            <Box
-                sx={{
-                    p: 0,
-                    display: "flex",
-                }}
-            >
-                <ApplicationSearchBar setFilterQuery={setFilterQuery} />
+            <ApplicationSearchBar setFilterQuery={setFilterQuery} />
+
+            <Box display="flex" justifyContent="flex-end">
+                <Typography>
+                    Number of Apps: <strong>{applicationsList?.length}</strong>
+                </Typography>
             </Box>
-            {
-                isApplicationListLoading ? <Loading /> :
-                <>
-                <Box display="flex" justifyContent="flex-end">
-                    <p> Number of Apps: <b>  {applicationsList.length} </b> </p>
-                </Box>
-                {applicationsList?.map(application => (
-                    <ApplicationListItem
-                        key={application.id}
-                        application={application}
-                    />
-                ))}
-                </>
-            }               
+            {applicationsList?.map(application => (
+                <ApplicationListItem
+                    key={application.id}
+                    application={application}
+                />
+            ))}
         </BoxContainer>
     );
 };
