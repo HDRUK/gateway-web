@@ -38,7 +38,11 @@ const permissions = {
     "account.nav.dar.workflows.read": [ROLE_CUSTODIAN_DAR_MANAGER],
     "account.nav.dar.editForm.read": [ROLE_CUSTODIAN_DAR_MANAGER],
     "account.nav.dur.read": [ROLE_CUSTODIAN_DAR_MANAGER],
-    "account.nav.integrations.read": [
+    "account.nav.integrations.api-management.read": [
+        ROLE_CUSTODIAN_TEAM_ADMIN,
+        ROLE_CUSTODIAN_DEVELOPER,
+    ],
+    "account.nav.integrations.integration.read": [
         ROLE_CUSTODIAN_TEAM_ADMIN,
         ROLE_CUSTODIAN_DEVELOPER,
     ],

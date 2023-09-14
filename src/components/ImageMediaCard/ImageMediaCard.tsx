@@ -6,33 +6,41 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import Typography from "@mui/material/Typography";
 
-interface ImgMediaCardProps {
+interface ImageMediaCardProps {
     img: string;
     href: string;
-    description: string;
+    description?: string;
     buttonText: string;
 }
 
-const ImgMediaCard = ({
+const ImageMediaCard = ({
     description,
     img,
     buttonText,
     href,
-}: ImgMediaCardProps) => {
+}: ImageMediaCardProps) => {
     return (
         <Card
             sx={{
-                maxWidth: 380,
+                width: 300,
+                paddingTop: 1,
                 flex: 1,
                 display: "flex",
                 flexDirection: "column",
             }}>
-            <CardMedia component="img" height={200} image={img} />
-            <CardContent sx={{ flex: 1, textAlign: "center" }}>
-                <Typography variant="body2" color="text.secondary">
-                    {description}
-                </Typography>
-            </CardContent>
+            <CardMedia
+                sx={{ objectFit: "contain", marginBottom: 4 }}
+                component="img"
+                height={200}
+                image={img}
+            />
+            {description && (
+                <CardContent sx={{ flex: 1, textAlign: "center" }}>
+                    <Typography variant="body2" color="text.secondary">
+                        {description}
+                    </Typography>
+                </CardContent>
+            )}
             <CardActions sx={{ display: "flex", justifyContent: "center" }}>
                 <Link
                     sx={{ width: "100%" }}
@@ -46,4 +54,8 @@ const ImgMediaCard = ({
     );
 };
 
-export default ImgMediaCard;
+ImageMediaCard.defaultProps = {
+    description: "",
+};
+
+export default ImageMediaCard;

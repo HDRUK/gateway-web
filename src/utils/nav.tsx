@@ -85,16 +85,35 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...(permissions["account.nav.integrations.read"]
+        ...([
+            permissions["account.nav.integrations.api-management.read"],
+            permissions["account.nav.integrations.integration.read"],
+        ].some(isTrue => isTrue)
             ? [
                   {
                       icon: <DescriptionOutlinedIcon />,
                       label: "Integrations",
                       subItems: [
-                          {
-                              label: "API management",
-                              href: `/account/team/${teamId}/integrations/api-management`,
-                          },
+                          ...(permissions[
+                              "account.nav.integrations.api-management.read"
+                          ]
+                              ? [
+                                    {
+                                        label: "API management",
+                                        href: `/account/team/${teamId}/integrations/api-management`,
+                                    },
+                                ]
+                              : []),
+                          ...(permissions[
+                              "account.nav.integrations.integration.read"
+                          ]
+                              ? [
+                                    {
+                                        label: "Integration",
+                                        href: `/account/team/${teamId}/integrations/integration`,
+                                    },
+                                ]
+                              : []),
                       ],
                   },
               ]
