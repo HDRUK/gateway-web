@@ -10,7 +10,9 @@ import TextField from "../TextField";
 import { TextFieldBaseProps } from "../TextFieldBase/TextFieldBase";
 import Checkbox from "../Checkbox";
 import { CheckboxProps } from "../Checkbox/Checkbox";
+import CheckboxGroup from "../CheckboxGroup";
 import CheckboxRow from "../CheckboxRow";
+import Autocomplete from "../Autocomplete";
 import { CheckboxRowProps } from "../CheckboxRow/CheckboxRow";
 
 type InputType =
@@ -24,19 +26,23 @@ interface InputWrapperProps<T extends FieldValues> {
     customComponent?: ElementType;
     component: ComponentTypes;
     getValues?: UseFormGetValues<T>;
+    setValue?: unknown;
+    watch?: (name: string) => void;
 }
 
 function InputWrapper<T extends FieldValues>({
     component,
     ...props
 }: InputWrapperProps<T> & InputType) {
-    const { customComponent, getValues, ...rest } = props;
+    const { customComponent, getValues, setValue, watch, ...rest } = props;
     if (customComponent) {
         const CustomComponent = customComponent;
         return <CustomComponent getValues={getValues} {...rest} />;
     }
 
     const inputs = {
+        Autocomplete,
+        CheckboxGroup,
         CheckboxRow,
         Checkbox,
         TextField,
@@ -52,6 +58,11 @@ function InputWrapper<T extends FieldValues>({
     const textProps = {
         ...((component === inputComponents.TextArea ||
             component === inputComponents.TextField) && { getValues }),
+        ...((component === inputComponents.Autocomplete ||
+            component === inputComponents.Autocomplete) && {
+            setValue,
+            watch,
+        }),
     };
 
     return <Component {...textProps} {...rest} />;
@@ -60,6 +71,8 @@ function InputWrapper<T extends FieldValues>({
 InputWrapper.defaultProps = {
     customComponent: null,
     getValues: undefined,
+    setValue: undefined,
+    watch: undefined,
 };
 
 export default InputWrapper;

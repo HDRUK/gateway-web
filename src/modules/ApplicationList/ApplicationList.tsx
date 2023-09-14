@@ -1,26 +1,36 @@
 import ApplicationListItem from "@/components/ApplicationListItem";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
-import Loading from "@/components/Loading";
 import useGet from "@/hooks/useGet";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import ApplicationSearchBar from "@/components/ApplicationSearchBar";
 import BoxContainer from "@/components/BoxContainer";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const ApplicationList = () => {
-    const { data: applicationsList, isLoading: isApplicationListLoading } =
-        useGet<Application[]>(apis.applicationsV1Url);
+    const [filterQuery, setFilterQuery] = useState("");
 
-    if (isApplicationListLoading) return <Loading />;
+    const router = useRouter();
+    const { teamId } = router.query;
+
+    const { data: applicationsList } = useGet<Application[]>(
+        filterQuery
+            ? `${apis.applicationsV1Url}?team_id=${teamId}&${filterQuery}`
+            : null,
+        {
+            keepPreviousData: true,
+        }
+    );
 
     return (
         <BoxContainer>
-            <Box
-                sx={{
-                    p: 0,
-                    display: "flex",
-                }}>
-                <ApplicationSearchBar />
+            <ApplicationSearchBar setFilterQuery={setFilterQuery} />
+
+            <Box display="flex" justifyContent="flex-end">
+                <Typography>
+                    Number of Apps: <strong>{applicationsList?.length}</strong>
+                </Typography>
             </Box>
             {applicationsList?.map(application => (
                 <ApplicationListItem

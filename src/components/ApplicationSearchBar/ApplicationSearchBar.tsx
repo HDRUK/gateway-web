@@ -1,32 +1,61 @@
 import Box from "@/components/Box";
-
-import Button from "@/components/Button";
-import TextField from "@/components/TextField";
+import BoxContainer from "@/components/BoxContainer";
+import Paper from "@/components/Paper";
+import { Typography } from "@mui/material";
+import { useEffect, Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
-import { Application } from "@/interfaces/Application";
-import SearchIcon from "@mui/icons-material/Search";
+import {
+    searchApiDefaultValues,
+    searchApiFormFields,
+} from "@/config/forms/searchApis";
+import InputWrapper from "../InputWrapper";
 
-const ApplicationSearchBar = () => {
-    const { control } = useForm<Application>();
+interface ApplicationSearchBarProps {
+    setFilterQuery: Dispatch<SetStateAction<string>>;
+}
+
+const ApplicationSearchBar = ({
+    setFilterQuery,
+}: ApplicationSearchBarProps) => {
+    const { control, watch, setValue } = useForm({
+        defaultValues: { ...searchApiDefaultValues },
+    });
+
+    const watched = watch(["status.disabled", "status.enabled", "description"]);
+
+    useEffect(() => {
+        const [disabled, enabled, description] = watched;
+
+        const params = new URLSearchParams({
+            disabled: `${disabled}`,
+            enabled: `${enabled}`,
+        });
+
+        description.forEach(item => {
+            params.append("text", item);
+        });
+
+        setFilterQuery(params.toString());
+    }, [setFilterQuery, watched]);
+
     return (
-        <>
-            <Box>
-                <TextField
-                    placeholder="Search app names or tags"
-                    control={control}
-                    icon={SearchIcon}
-                    label=""
-                    name="search-apps"
-                    style={{
-                        width: "800px",
-                        alignItems: "center",
-                    }}
-                />
-            </Box>
-            <Box>
-                <Button type="submit">Search</Button>
-            </Box>
-        </>
+        <Paper>
+            <BoxContainer>
+                <Box sx={{ paddingBottom: 0 }}>
+                    <Typography variant="h2">Application List</Typography>
+                </Box>
+                <Box sx={{ paddingTop: 0 }}>
+                    {searchApiFormFields.map(field => (
+                        <InputWrapper
+                            setValue={setValue}
+                            key={field.name}
+                            control={control}
+                            {...field}
+                        />
+                    ))}
+                </Box>
+            </BoxContainer>
+        </Paper>
     );
 };
 
