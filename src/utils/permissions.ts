@@ -37,7 +37,7 @@ const getPermissions = (
 
     // gets all team user permissions
     const teamUserPermissions = teamUserRoles
-        .map(enabledUserRole => enabledUserRole.permissions)
+        .map(enabledUserRole => enabledUserRole.permissions || [])
         .flat()
         .map(permission => permission.name);
 

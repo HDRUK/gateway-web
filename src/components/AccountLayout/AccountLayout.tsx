@@ -21,6 +21,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
     const { query } = useRouter();
 
     const { teamId } = query as AccountTeamUrlQuery;
+
     const permissions = useHasPermissions();
     const { data: team, isLoading: isTeamLoading } = useGet<Team>(
         `${apis.teamsV1Url}/${teamId}`,
