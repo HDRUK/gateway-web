@@ -1,6 +1,9 @@
 import { AuthTeam } from "@/interfaces/AuthTeam";
 
-const getTeamById = (teams: AuthTeam[], teamId: number | string) => {
+const getTeamById = (
+    teams: AuthTeam[] | undefined,
+    teamId: number | string
+) => {
     if (!Array.isArray(teams) || !teamId) return null;
     return teams?.find(team => team.id === parseInt(teamId as string, 10));
 };

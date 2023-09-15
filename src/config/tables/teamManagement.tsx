@@ -106,14 +106,14 @@ const getColumns = (
                             name: ROLE_CUSTODIAN_TEAM_ADMIN,
                             disabled:
                                 !permissions[
-                                    "account.team_management.permission.update.custodian_team_admin"
+                                    "fe.account.team_management.permission.update.custodian_team_admin"
                                 ],
                         },
                         {
                             name: ROLE_CUSTODIAN_DEVELOPER,
                             disabled:
                                 !permissions[
-                                    "account.team_management.permission.update.developer"
+                                    "fe.account.team_management.permission.update.developer"
                                 ],
                         },
                     ]}
@@ -143,14 +143,14 @@ const getColumns = (
                             name: ROLE_CUSTODIAN_DAR_MANAGER,
                             disabled:
                                 !permissions[
-                                    "account.team_management.permission.update.custodian_dar_manager"
+                                    "fe.account.team_management.permission.update.custodian_dar_manager"
                                 ],
                         },
                         {
                             name: ROLE_CUSTODIAN_DAR_REVIEWER,
                             disabled:
                                 !permissions[
-                                    "account.team_management.permission.update.reviewer"
+                                    "fe.account.team_management.permission.update.reviewer"
                                 ],
                         },
                     ]}
@@ -180,21 +180,21 @@ const getColumns = (
                             name: ROLE_CUSTODIAN_METADATA_MANAGER,
                             disabled:
                                 !permissions[
-                                    "account.team_management.permission.update.custodian_metadata_manager"
+                                    "fe.account.team_management.permission.update.custodian_metadata_manager"
                                 ],
                         },
                         {
                             name: ROLE_CUSTODIAN_METADATA_EDITOR,
                             disabled:
                                 !permissions[
-                                    "account.team_management.permission.update.metadata_editor"
+                                    "fe.account.team_management.permission.update.metadata_editor"
                                 ],
                         },
                     ]}
                 />
             ),
         },
-        ...(permissions["account.team_management.member.delete"]
+        ...(permissions["fe.account.team_management.member.delete"]
             ? [
                   {
                       id: "furtherActions",

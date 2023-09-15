@@ -7,6 +7,7 @@ import {
 } from "./filters";
 import { getLogoutV1, getLogoutInternal } from "./logout";
 import { getAuthInternal } from "./auth";
+import { getTeamV1 } from "./teams";
 
 export const handlers = [
     getUserV1(),
@@ -17,4 +18,5 @@ export const handlers = [
     getLogoutV1(),
     getLogoutInternal(),
     getAuthInternal(),
+    getTeamV1(),
 ];

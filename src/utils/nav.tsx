@@ -29,7 +29,7 @@ const getTeamNav = (
             label: "Team Management",
             href: `/account/team/${teamId}/team-management`,
         },
-        ...(permissions["account.nav.datasets.read"]
+        ...(permissions["fe.account.nav.datasets"]
             ? [
                   {
                       icon: <StorageOutlinedIcon />,
@@ -39,16 +39,16 @@ const getTeamNav = (
               ]
             : []),
         ...([
-            permissions["account.nav.dar.applications.read"],
-            permissions["account.nav.dar.workflows.read"],
-            permissions["account.nav.dar.editForm.read"],
+            permissions["fe.account.nav.dar.applications"],
+            permissions["fe.account.nav.dar.workflows"],
+            permissions["fe.account.nav.dar.editForm"],
         ].some(isTrue => isTrue)
             ? [
                   {
                       icon: <GroupsOutlinedIcon />,
                       label: "Data Access Requests",
                       subItems: [
-                          ...(permissions["account.nav.dar.applications.read"]
+                          ...(permissions["fe.account.nav.dar.applications"]
                               ? [
                                     {
                                         label: "Applications",
@@ -56,7 +56,7 @@ const getTeamNav = (
                                     },
                                 ]
                               : []),
-                          ...(permissions["account.nav.dar.workflows.read"]
+                          ...(permissions["fe.account.nav.dar.workflows"]
                               ? [
                                     {
                                         label: "Workflows",
@@ -64,7 +64,7 @@ const getTeamNav = (
                                     },
                                 ]
                               : []),
-                          ...(permissions["account.nav.dar.editForm.read"]
+                          ...(permissions["fe.account.nav.dar.editForm"]
                               ? [
                                     {
                                         label: "Edit Form",
@@ -76,7 +76,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...(permissions["account.nav.dur.read"]
+        ...(permissions["fe.account.nav.dur"]
             ? [
                   {
                       icon: <SchemaOutlinedIcon />,
@@ -85,16 +85,35 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...(permissions["account.nav.integrations.read"]
+        ...([
+            permissions["fe.account.nav.integrations.api-management"],
+            permissions["fe.account.nav.integrations.integration"],
+        ].some(isTrue => isTrue)
             ? [
                   {
                       icon: <DescriptionOutlinedIcon />,
                       label: "Integrations",
                       subItems: [
-                          {
-                              label: "API management",
-                              href: `/account/team/${teamId}/integrations/api-management`,
-                          },
+                          ...(permissions[
+                              "fe.account.nav.integrations.api-management"
+                          ]
+                              ? [
+                                    {
+                                        label: "API management",
+                                        href: `/account/team/${teamId}/integrations/api-management`,
+                                    },
+                                ]
+                              : []),
+                          ...(permissions[
+                              "fe.account.nav.integrations.integration"
+                          ]
+                              ? [
+                                    {
+                                        label: "Integration",
+                                        href: `/account/team/${teamId}/integrations/integration`,
+                                    },
+                                ]
+                              : []),
                       ],
                   },
               ]

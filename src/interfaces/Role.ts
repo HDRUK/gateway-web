@@ -1,3 +1,5 @@
+import { Permission } from "@/interfaces/Permission";
+
 interface Role {
     created_at: string;
     enabled: boolean;
@@ -7,6 +9,7 @@ interface Role {
     role_id: number;
     team_has_user_id: boolean;
     updated_at: string;
+    permissions: Permission[];
 }
 
 export type { Role };
