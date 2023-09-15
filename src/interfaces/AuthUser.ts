@@ -1,4 +1,5 @@
 import { AuthTeam } from "@/interfaces/AuthTeam";
+import { Role } from "@/interfaces/Role";
 
 interface AuthUser {
     id: number;
@@ -16,6 +17,7 @@ interface AuthUser {
     contact_news: boolean;
     contact_feedback: boolean;
     teams: AuthTeam[];
+    roles: Role[];
 }
 
 export type { AuthUser };

@@ -38,12 +38,12 @@ describe("useHasPermissions", () => {
 
         expect(
             (result.current as { [key: string]: boolean })[
-                "account.team_management.member.delete"
+                "fe.account.team_management.member.delete"
             ]
         ).toBeTruthy();
         expect(
             (result.current as { [key: string]: boolean })[
-                "account.nav.dar.applications.read"
+                "fe.account.nav.dar.applications.read"
             ]
         ).toBeFalsy();
     });

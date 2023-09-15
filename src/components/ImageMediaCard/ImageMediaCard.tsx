@@ -23,7 +23,7 @@ const ImageMediaCard = ({
         <Card
             sx={{
                 width: 300,
-                paddingTop: 1,
+                padding: 1,
                 flex: 1,
                 display: "flex",
                 flexDirection: "column",

@@ -1,7 +1,7 @@
 import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 import { getPermissions } from "@/utils/permissions";
-import useCustodianRoles from "./useCustodianRoles";
+import { getTeamById } from "@/utils/user";
 import useAuth from "./useAuth";
 
 interface AccountTeamUrlQuery extends ParsedUrlQuery {
@@ -11,9 +11,9 @@ interface AccountTeamUrlQuery extends ParsedUrlQuery {
 export const useHasPermissions = () => {
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
-    const roles = useCustodianRoles(teamId);
     const { user } = useAuth();
 
-    // todo: Return additional roles on user object (ie, hdruk.admin)
-    return getPermissions(user?.roles || [], roles.list);
+    const team = getTeamById(user?.teams, teamId);
+
+    return getPermissions(user?.roles, team?.roles);
 };
