@@ -16,10 +16,8 @@ export interface GlobalDialogContextProps {
 }
 
 const initalState: GlobalDialogContextProps = {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    showDialog: () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    hideDialog: () => {},
+    showDialog: () => null,
+    hideDialog: () => null,
     store: {
         dialogComponent: null,
         dialogProps: {},

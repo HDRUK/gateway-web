@@ -2,6 +2,7 @@ import {
     ROLE_CUSTODIAN_DAR_MANAGER,
     ROLE_CUSTODIAN_DAR_REVIEWER,
     ROLE_CUSTODIAN_DEVELOPER,
+    ROLE_CUSTODIAN_METADATA_EDITOR,
     ROLE_CUSTODIAN_METADATA_MANAGER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
 } from "./roles";
@@ -30,7 +31,10 @@ const fePermissions = {
         ROLE_CUSTODIAN_TEAM_ADMIN,
         ROLE_CUSTODIAN_DAR_MANAGER,
     ],
-    "fe.account.nav.datasets": [],
+    "fe.account.nav.datasets": [
+        ROLE_CUSTODIAN_METADATA_MANAGER,
+        ROLE_CUSTODIAN_METADATA_EDITOR,
+    ],
     "fe.account.nav.dar.applications": [
         ROLE_CUSTODIAN_DAR_MANAGER,
         ROLE_CUSTODIAN_DAR_REVIEWER,

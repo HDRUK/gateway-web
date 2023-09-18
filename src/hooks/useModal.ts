@@ -9,8 +9,9 @@ const useModal = () => {
     const { showDialog, hideDialog, ...rest } = useContext(GlobalDialogContext);
 
     return {
-        showModal: (props: dialogPropsType | undefined) =>
-            showDialog(Modal, props),
+        showModal: (props: dialogPropsType | undefined): void => {
+            showDialog(Modal, props);
+        },
         hideModal: hideDialog,
         ...rest,
     };

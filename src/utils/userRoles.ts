@@ -2,9 +2,9 @@ import { Role } from "@/interfaces/Role";
 import { Team } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 
-type RoleType = { [key: string]: boolean };
+export type RoleType = { [key: string]: boolean };
 
-interface Payload {
+export interface RolesPayload {
     userId: number;
     roles: RoleType;
 }
@@ -58,8 +58,8 @@ const getDifferences = (updatedData: User[], team: Team) => {
         roles: filterEnabledRoles(user.roles, user.id, team),
     }));
 
-    const changedRoles: Payload[] = [];
-    const allRoles: Payload[] = [];
+    const changedRoles: RolesPayload[] = [];
+    const allRoles: RolesPayload[] = [];
 
     initialUsers.forEach((initialUser, index) => {
         const changedUserRoles = getChangedRoles(
@@ -82,7 +82,7 @@ const getDifferences = (updatedData: User[], team: Team) => {
     return { changedRoles, allRoles };
 };
 
-const getChangeCount = (payloads: Payload[]): number => {
+const getChangeCount = (payloads: RolesPayload[]): number => {
     return payloads
         .map(payload => Object.keys(payload.roles).length)
         .reduce((accumulator, currentValue) => {

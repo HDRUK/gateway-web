@@ -10,7 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ModalButtons from "../ModalButtons";
 
 export interface ModalProps {
-    content: ReactNode;
+    content?: ReactNode;
     onSuccess?: () => void;
     onCancel?: () => void;
     confirmText?: string;
