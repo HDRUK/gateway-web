@@ -30,7 +30,7 @@ const fePermissions = {
         ROLE_CUSTODIAN_TEAM_ADMIN,
         ROLE_CUSTODIAN_DAR_MANAGER,
     ],
-    "fe.account.nav.datasets": [ROLE_CUSTODIAN_TEAM_ADMIN],
+    "fe.account.nav.datasets": [],
     "fe.account.nav.dar.applications": [
         ROLE_CUSTODIAN_DAR_MANAGER,
         ROLE_CUSTODIAN_DAR_REVIEWER,
