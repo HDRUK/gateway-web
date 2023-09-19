@@ -1,7 +1,7 @@
 import { colors } from "@/config/theme";
-import { css } from "@emotion/react";
+import { Theme, css } from "@emotion/react";
 
-export const squareButton = (theme, color) =>
+export const squareButton = (theme: Theme, color: string) =>
     css({
         height: "300px",
         width: "300px",

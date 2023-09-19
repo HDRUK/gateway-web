@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import React from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Button from "../Button/Button";
+import Button from "@/components/Button";
 
 const meta: Meta<typeof Form> = {
     component: Form,

@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import SearchIcon from "@mui/icons-material/SearchRounded";
+import { SearchRoundedIcon } from "@/consts/icons";
 import { inputComponents } from ".";
 
 const defaultValues = {
@@ -17,7 +17,7 @@ const formFields = [
         label: "User",
         name: "name",
         component: inputComponents.TextField,
-        icon: SearchIcon,
+        icon: SearchRoundedIcon,
         required: true,
     },
     {

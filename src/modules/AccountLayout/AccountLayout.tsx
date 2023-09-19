@@ -10,8 +10,8 @@ import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { Team } from "@/interfaces/Team";
 import { useHasPermissions } from "@/hooks/useHasPermission";
-import Loading from "../Loading";
-import ActionBar from "../ActionBar";
+import Loading from "@/components/Loading";
+import ActionBar from "@/components/ActionBar";
 
 interface AccountLayoutProps {
     children: ReactNode;

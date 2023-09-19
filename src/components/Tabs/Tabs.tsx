@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
 import MuiTabPanel from "@mui/lab/TabPanel";
-import Box from "../Box";
+import Box from "@/components/Box";
 
 interface Tab {
     label: string;

@@ -14,8 +14,8 @@ const meta: Meta<typeof Box> = {
 
 export default meta;
 
-export const Playground = (args: BoxProps) => <Box {...args} />;
+export const Default = (args: BoxProps) => <Box {...args} />;
 
-Playground.args = {
+Default.args = {
     children: "This is a box",
 };

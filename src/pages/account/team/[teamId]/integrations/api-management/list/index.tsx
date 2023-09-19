@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import ActionBar from "@/components/ActionBar";
 import ApplicationList from "@/modules/ApplicationList";
 import BackButton from "@/components/BackButton";
-import AccountLayout from "@/components/AccountLayout";
+import AccountLayout from "@/modules/AccountLayout";
 
 const TeamApplicationsPage = () => {
     return (

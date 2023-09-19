@@ -6,7 +6,7 @@ import { Stack } from "@mui/material";
 import Form from "@/components/Form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Button from "../Button/Button";
+import Button from "@/components/Button";
 
 const meta: Meta<typeof Form> = {
     component: Form,

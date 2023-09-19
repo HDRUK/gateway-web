@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import useActionBar from "@/hooks/useActionBar";
-import ActionBarComponent from "./ActionBar";
-import Button from "../Button";
+import Button from "@/components/Button";
+import ActionBar from "./ActionBar";
 
-const meta: Meta<typeof ActionBarComponent> = {
-    component: ActionBarComponent,
+const meta: Meta<typeof ActionBar> = {
+    component: ActionBar,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof ActionBarComponent>;
+type Story = StoryObj<typeof ActionBar>;
 
 const Content = () => {
     return <p>Content here</p>;
 };
 
-const DummyComponent = () => {
+const WrapperComponent = () => {
     const { showBar, hideBar } = useActionBar();
 
     return (
@@ -32,11 +32,11 @@ const DummyComponent = () => {
                 }>
                 show action bar
             </Button>
-            <ActionBarComponent />
+            <ActionBar />
         </div>
     );
 };
 
-export const ActionBar: Story = {
-    render: () => <DummyComponent />,
+export const Default: Story = {
+    render: () => <WrapperComponent />,
 };

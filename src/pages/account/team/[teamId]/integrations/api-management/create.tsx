@@ -8,7 +8,7 @@ import { Typography } from "@mui/material";
 import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import CreateApplicationForm from "@/modules/application/CreateApplicationForm";
-import AccountLayout from "@/components/AccountLayout";
+import AccountLayout from "@/modules/AccountLayout";
 
 const CreateAppPage = () => {
     return (

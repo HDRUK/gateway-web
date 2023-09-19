@@ -9,9 +9,9 @@ const meta: Meta<typeof Banner> = {
 
 export default meta;
 
-export const Playground = (args: BannerProps) => <Banner {...args} />;
+export const Default = (args: BannerProps) => <Banner {...args} />;
 
-Playground.args = {
+Default.args = {
     title: "Gateway Releases",
     subTitle:
         "The Gateway requires a significant volume of design and development work to deliver our vision and ambition. To achieve this our teams are continually working on the Gateway and deliver major software releases approximately every 4 weeks.",

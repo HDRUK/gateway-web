@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/router";
 import Button from "@/components/Button";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { ArrowBackIosNewIcon } from "@/consts/icons";
 
 interface BackButtonProps {
     label: string;

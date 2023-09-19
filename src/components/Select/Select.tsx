@@ -11,8 +11,8 @@ import {
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import { colors } from "@/config/theme";
-import Label from "../Label";
-import MenuItemContent from "../SelectMenuItem/SelectMenuItem";
+import MenuItemContent from "@/components/SelectMenuItem";
+import Label from "@/components/Label";
 
 type ValueType = string | number;
 type OptionsType = { value: ValueType; label: string; icon?: IconType }[];

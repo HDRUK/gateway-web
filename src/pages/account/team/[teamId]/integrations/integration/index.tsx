@@ -3,7 +3,7 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
-import AccountLayout from "@/components/AccountLayout";
+import AccountLayout from "@/modules/AccountLayout";
 import { useRouter } from "next/router";
 
 const TeamIntegrationsPage = () => {

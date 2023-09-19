@@ -11,8 +11,8 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Playground = (args: ButtonProps) => <Button {...args} />;
-Playground.args = {
+export const Default = (args: ButtonProps) => <Button {...args} />;
+Default.args = {
     children: "I'm a button",
 };
 

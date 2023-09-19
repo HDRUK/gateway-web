@@ -11,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof ChipComponet>;
 
-export const Playground = () => <ChipComponet label="I'm a chip!" />;
+export const Default = () => <ChipComponet label="I'm a chip!" />;
 
 export const Color: Story = {
     render: () => (

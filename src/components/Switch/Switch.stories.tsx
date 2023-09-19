@@ -4,8 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
+import Button from "@/components/Button";
 import Switch from "./Switch";
-import Button from "../Button/Button";
 
 const meta: Meta<typeof Form> = {
     component: Form,

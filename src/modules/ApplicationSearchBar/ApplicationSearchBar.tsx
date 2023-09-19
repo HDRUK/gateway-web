@@ -8,7 +8,7 @@ import {
     searchApiDefaultValues,
     searchApiFormFields,
 } from "@/config/forms/searchApis";
-import InputWrapper from "../InputWrapper";
+import InputWrapper from "@/components/InputWrapper";
 
 interface ApplicationSearchBarProps {
     setFilterQuery: Dispatch<SetStateAction<string>>;

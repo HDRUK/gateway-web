@@ -3,15 +3,14 @@
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 
-import Container from "../Container";
+import Link from "@/components/Link";
+import Container from "@/components/Container";
 
 import hdrukLogo from "../../../public/images/logos/hdruk-white.png";
 import linkedInLogo from "../../../public/images/logos/linkedIn-white.png";
 import twitterInLogo from "../../../public/images/logos/twitter-white.png";
 
 import * as styles from "./Footer.styles";
-
-import Link from "../Link";
 
 const Footer = () => {
     const { t } = useTranslation("components");

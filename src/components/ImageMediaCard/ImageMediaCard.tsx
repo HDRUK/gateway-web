@@ -2,9 +2,9 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
-import Typography from "@mui/material/Typography";
 
 interface ImageMediaCardProps {
     img: string;

@@ -6,7 +6,7 @@ import ProfileForm from "@/modules/profile/ProfileForm";
 import useAuth from "@/hooks/useAuth";
 import { CircularProgress, Typography } from "@mui/material";
 import Paper from "@/components/Paper";
-import AccountLayout from "@/components/AccountLayout";
+import AccountLayout from "@/modules/AccountLayout";
 
 const ProfilePage = () => {
     const { isLoading } = useAuth();

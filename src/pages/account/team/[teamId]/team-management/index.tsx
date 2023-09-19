@@ -9,9 +9,9 @@ import TeamManagementTabs from "@/modules/TeamManagement/TeamManagementTabs";
 import AddTeamMemberDialog from "@/modules/dialogs/AddTeamMemberDialog";
 import Button from "@/components/Button";
 
-import AddIcon from "@mui/icons-material/Add";
 import useDialog from "@/hooks/useDialog";
-import AccountLayout from "@/components/AccountLayout";
+import AccountLayout from "@/modules/AccountLayout";
+import { AddIcon } from "@/consts/icons";
 
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();

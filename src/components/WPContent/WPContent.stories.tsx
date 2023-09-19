@@ -8,9 +8,9 @@ const meta: Meta<typeof WPContent> = {
 
 export default meta;
 
-export const Playground = (args: WPContentProps) => <WPContent {...args} />;
+export const Default = (args: WPContentProps) => <WPContent {...args} />;
 
-Playground.args = {
+Default.args = {
     content:
         "\n<p>This month we are pleased to share improvements to the usability of the search results page. Plus, we release our data use register widget.</p>\n",
 };

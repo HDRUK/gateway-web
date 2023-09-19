@@ -1,7 +1,6 @@
 import Box from "@/components/Box";
-import Checkbox from "@/components/Checkbox";
+import Checkbox, { CheckboxProps } from "@/components/Checkbox/Checkbox";
 import { Typography } from "@mui/material";
-import { CheckboxProps } from "../Checkbox/Checkbox";
 
 export interface CheckboxRowProps extends CheckboxProps {
     title: string;

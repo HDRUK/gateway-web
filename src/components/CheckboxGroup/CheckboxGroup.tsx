@@ -3,7 +3,7 @@
 import { CheckboxProps as MuiCheckboxProps } from "@mui/material/Checkbox";
 import { FormLabel, Stack, SxProps } from "@mui/material";
 import { Control } from "react-hook-form";
-import Checkbox from "../Checkbox/Checkbox";
+import Checkbox from "@/components/Checkbox";
 
 export interface CheckboxGroupProps extends MuiCheckboxProps {
     label: string;

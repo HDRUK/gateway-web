@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import TextFieldComponent from "@/components/TextField";
 import { useForm } from "react-hook-form";
 import React from "react";
-import AddAPhoto from "@mui/icons-material/AddAPhoto";
 import { Stack } from "@mui/material";
 import Form from "@/components/Form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Button from "../Button/Button";
+import { AddAPhotoIcon } from "@/consts/icons";
+import Button from "@/components/Button";
 
 const meta: Meta<typeof Form> = {
     component: Form,
@@ -78,7 +78,7 @@ const DummyComponent = () => {
                 />
                 <TextFieldComponent
                     label="with icon"
-                    icon={AddAPhoto}
+                    icon={AddAPhotoIcon}
                     control={control}
                     name="fifth"
                 />

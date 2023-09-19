@@ -1,5 +1,5 @@
 import useDialog from "@/hooks/useDialog";
-import Button from "../Button";
+import Button from "@/components/Button";
 
 export interface ModalButtonProps {
     onSuccess?: (props: unknown) => void;

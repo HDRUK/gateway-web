@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
+import Button from "@/components/Button";
 import Upload from "./Upload";
-import Button from "../Button/Button";
 
 const meta: Meta<typeof Form> = {
     component: Form,

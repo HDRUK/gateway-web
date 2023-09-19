@@ -7,21 +7,13 @@ import { Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Card from "@/components/Card";
+import { formatDate } from "@/utils/date";
 
 interface ApplicationListItemProps {
     application: Application;
 }
 
 const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
-    const formattedDate = new Date(application.created_at).toLocaleDateString(
-        "en",
-        {
-            year: "numeric",
-            day: "2-digit",
-            month: "long",
-        }
-    );
-
     const router = useRouter();
     const { teamId } = router.query;
 
@@ -54,7 +46,8 @@ const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
                                 verticalAlign: "top",
                                 color: "#868E96",
                             }}>
-                            Created - {formattedDate}
+                            Created -{" "}
+                            {formatDate(new Date(application.created_at))}
                         </Typography>
                     </Box>
                     <Box
@@ -68,15 +61,6 @@ const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
                         ) : (
                             <Chip label="Disabled" color="error" />
                         )}
-
-                        {/* Place holder for which scopes/permissions have been selected for the app */}
-                        <Chip
-                            label="{{api.scope.permission}}"
-                            color="info"
-                            sx={{
-                                marginLeft: 1,
-                            }}
-                        />
                     </Box>
                     <Box
                         sx={{

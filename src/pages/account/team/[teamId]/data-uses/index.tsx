@@ -4,7 +4,7 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import { Typography } from "@mui/material";
 import Paper from "@/components/Paper";
-import AccountLayout from "@/components/AccountLayout";
+import AccountLayout from "@/modules/AccountLayout";
 
 const TeamDataUsesPage = () => {
     return (

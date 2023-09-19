@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import Popover from "@mui/material/Popover";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { HelpOutlineIcon } from "@/consts/icons";
 
 interface TableTooltipCellProps {
     header: string;
