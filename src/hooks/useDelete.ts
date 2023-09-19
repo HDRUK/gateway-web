@@ -24,7 +24,7 @@ const useDelete = (url: string, options?: HttpOptions) => {
 
     ThrowPaginationError(options);
 
-    return (id: number) => {
+    return (id: number | string) => {
         mutate(
             options?.paginationKey || url,
             async () => {

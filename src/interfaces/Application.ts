@@ -1,7 +1,7 @@
 import { Tag } from "./Tag";
 
 interface Application {
-    id?: number;
+    id: number;
     name?: string;
     app_id?: string;
     client_id?: string;

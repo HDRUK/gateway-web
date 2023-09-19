@@ -53,7 +53,9 @@ const ProfileForm = () => {
     });
 
     const submitForm = (formData: User) => {
-        updateProfile({ ...user, ...formData });
+        if (!user) return;
+        const payload = { ...user, ...formData };
+        updateProfile(payload.id, payload);
     };
 
     useEffect(() => {

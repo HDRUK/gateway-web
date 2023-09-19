@@ -24,7 +24,7 @@ describe("usePut", () => {
         const { result } = renderHook(() => usePut<User>(apis.usersV1Url));
         const { current: createFunction } = result;
 
-        await createFunction(userV1);
+        await createFunction(userV1.id, userV1);
 
         await waitFor(() =>
             expect(mockMutate).toHaveBeenCalledWith(
@@ -37,7 +37,7 @@ describe("usePut", () => {
     it("should call mutate with correct arguments for updating an item in an array", async () => {
         const { result } = renderHook(() => usePut<Filter>(apis.filtersV1Url));
         act(() => {
-            result.current(filterV1);
+            result.current(userV1.id, filterV1);
         });
 
         await waitFor(() => expect(mockMutate).toHaveBeenCalled());

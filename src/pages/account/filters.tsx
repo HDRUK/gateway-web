@@ -74,7 +74,7 @@ function Account() {
 
     const update = (id: number) => {
         const filter = generateFilterV1({ enabled: true, id, type: "course" });
-        updateFilter(filter);
+        updateFilter(filter.id, filter);
     };
 
     const deleteHandler = (id: number) => {

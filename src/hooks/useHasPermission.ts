@@ -18,7 +18,7 @@ export const useHasPermissions = () => {
     );
 
     const { user } = useAuth();
-    const foundUser = team?.users.find(teamUser => teamUser.id === user?.id);
+    const foundUser = team?.users?.find(teamUser => teamUser.id === user?.id);
 
     return getPermissions(user?.roles, foundUser?.roles);
 };
