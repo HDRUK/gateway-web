@@ -16,7 +16,6 @@ import { User } from "@/interfaces/User";
 import { Team } from "@/interfaces/Team";
 import pLimit from "p-limit";
 import notificationService from "@/services/notification";
-import { putRequest } from "@/services/api/put";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import useDelete from "@/hooks/useDelete";
@@ -25,6 +24,7 @@ import TeamMembersActionBar from "@/modules/TeamMembersActionBar";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import { useSWRConfig } from "swr";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import usePut from "@/hooks/usePut";
 
 const limit = pLimit(1);
 
@@ -50,6 +50,15 @@ const TeamMembers = () => {
         mutate,
     } = useGet<Team>(`${apis.teamsV1Url}/${teamId}`);
 
+    const updateMembers = usePut<{ id?: number | undefined }>(
+        `${apis.teamsV1Url}/${teamId}/users`,
+        {
+            shouldFetch: false,
+            errorNotificationsOn: false,
+            successNotificationsOn: false,
+        }
+    );
+
     const { showBar, hideBar } = useActionBar();
 
     const submitForm = useCallback(async () => {
@@ -59,16 +68,7 @@ const TeamMembers = () => {
         );
         const promises = rolesToUpdate.map(async payload => {
             await limit(() =>
-                putRequest(
-                    `${apis.teamsV1Url}/${teamId}/users/${payload.userId}`,
-                    { roles: payload.roles },
-                    {
-                        notificationOptions: {
-                            errorNotificationsOn: false,
-                            successNotificationsOn: false,
-                        },
-                    }
-                )
+                updateMembers(payload.userId, { roles: payload.roles })
             );
         });
 

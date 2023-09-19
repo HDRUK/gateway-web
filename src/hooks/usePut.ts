@@ -13,25 +13,26 @@ const usePut = <T extends { id?: number }>(
     url: string,
     options?: HttpOptions
 ) => {
-    const { mutate } = useSWRConfig();
-    const { data } = useGet(options?.paginationKey || url);
-    const { t, i18n } = useTranslation("api");
     const {
         localeKey,
         itemName,
         action,
+        shouldFetch = true,
         successNotificationsOn,
         errorNotificationsOn,
         ...mutatorOptions
     } = options || {};
+    const { mutate } = useSWRConfig();
+    const { data } = useGet(shouldFetch ? options?.paginationKey || url : null);
+    const { t, i18n } = useTranslation("api");
 
     ThrowPaginationError(options);
 
-    return (payload: T) => {
+    return (id: string | number, payload: T) => {
         mutate(
             options?.paginationKey || url,
             async () => {
-                await apiService.putRequest(`${url}/${payload.id}`, payload, {
+                await apiService.putRequest(`${url}/${id}`, payload, {
                     notificationOptions: {
                         localeKey,
                         itemName,

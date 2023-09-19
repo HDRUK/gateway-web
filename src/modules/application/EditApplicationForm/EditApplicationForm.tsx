@@ -40,7 +40,8 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
     });
 
     const submitForm = (formData: Application) => {
-        updateApplication({ ...applicationDefaultValues, ...formData });
+        const payload = { ...applicationDefaultValues, ...formData };
+        updateApplication(payload.id, payload);
     };
 
     if (!application) return <Loading />;
