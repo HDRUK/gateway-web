@@ -3,7 +3,7 @@ import ImageMediaCard from "@/components/ImageMediaCard";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
 
-const LandingPage = () => {
+const ApiManagement = () => {
     const router = useRouter();
 
     return (
@@ -36,4 +36,4 @@ const LandingPage = () => {
     );
 };
 
-export default LandingPage;
+export default ApiManagement;
