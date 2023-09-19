@@ -31,7 +31,6 @@ const limit = pLimit(1);
 const TeamMembers = () => {
     const permissions = useHasPermissions();
     const { user } = useAuth();
-
     const { showModal } = useModal();
     const { mutate: mututeUser } = useSWRConfig();
 
@@ -94,11 +93,18 @@ const TeamMembers = () => {
         if (updatingOwnPermissions) {
             mututeUser(apis.authInternalUrl);
         }
-    }, [hideBar, mutate, mututeUser, rolesToUpdate, teamId, user?.id]);
+    }, [hideBar, mutate, mututeUser, rolesToUpdate, updateMembers, user?.id]);
+
+    const discardChanges = () => {
+        setData(team?.users || []);
+        hideBar();
+        setRolesToUpdate(null);
+    };
 
     useUnsavedChanges({
         shouldConfirmLeave: !!rolesToUpdate,
         onSuccess: submitForm,
+        onCancel: discardChanges,
         modalProps: {
             cancelText: "No",
             confirmText: "Yes",
@@ -124,7 +130,7 @@ const TeamMembers = () => {
                         title: "Delete a user",
                         content: `Are you sure you want to remove ${rowUser.firstname}  ${rowUser.lastname}?`,
                         onSuccess: async () => {
-                            await deleteTeamMember(`users/${rowUser.id}`);
+                            deleteTeamMember(`users/${rowUser.id}`);
                             mutate();
                         },
                     }),
@@ -174,9 +180,7 @@ const TeamMembers = () => {
                     setShouldSubmit(true);
                 },
                 onCancel: () => {
-                    setData(team?.users);
-                    hideBar();
-                    setRolesToUpdate(null);
+                    discardChanges();
                 },
             });
         }

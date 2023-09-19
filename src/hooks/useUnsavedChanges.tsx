@@ -5,54 +5,57 @@ import useModal from "./useModal";
 
 export interface UnsavedChangesDialogProps {
     shouldConfirmLeave: boolean;
-    onSuccess: () => void;
+    onCancel?: () => void;
+    onSuccess?: () => void;
     modalProps: ModalProps;
 }
 
-export const useUnsavedChanges = ({
-    shouldConfirmLeave,
-    onSuccess,
-    modalProps,
-}: UnsavedChangesDialogProps): void => {
+export const useUnsavedChanges = (props: UnsavedChangesDialogProps): void => {
     const { showModal } = useModal();
-    const [nextRouterPath, setNextRouterPath] = useState<string>("");
-
     const Router = useRouter();
+    const [nextRouterPath, setNextRouterPath] = useState<string>("");
 
     const onRouteChangeStart = useCallback(
         (nextPath: string) => {
-            if (!shouldConfirmLeave) {
+            if (!props.shouldConfirmLeave) {
                 return;
             }
 
-            showModal({
-                onCancel: () => {
-                    Router.events.off("routeChangeStart", onRouteChangeStart);
-
-                    // todo: why is nextRouterPath empty
-                    console.log("nextRouterPath: ", nextRouterPath);
-                    if (nextRouterPath) {
-                        Router.push(nextRouterPath);
-                    }
-                },
-                onSuccess: () => {
-                    setNextRouterPath("");
-                    if (typeof onSuccess === "function") {
-                        onSuccess();
-                    }
-                },
-                ...modalProps,
-            });
             setNextRouterPath(nextPath);
 
             throw Error("cancelRouteChange");
         },
-        [shouldConfirmLeave]
+        [props.shouldConfirmLeave]
     );
+
+    useEffect(() => {
+        if (!nextRouterPath) return;
+        showModal({
+            onCancel: () => {
+                Router.events.off("routeChangeStart", onRouteChangeStart);
+
+                setNextRouterPath("");
+                if (typeof props.onCancel === "function") {
+                    props.onCancel();
+                }
+
+                if (nextRouterPath) {
+                    Router.push(nextRouterPath);
+                }
+            },
+            onSuccess: () => {
+                setNextRouterPath("");
+                if (typeof props.onSuccess === "function") {
+                    props.onSuccess();
+                }
+            },
+            ...props.modalProps,
+        });
+    }, [Router, nextRouterPath, onRouteChangeStart, props, showModal]);
 
     useEffect(() => {
         Router.events.on("routeChangeStart", onRouteChangeStart);
 
         return () => Router.events.off("routeChangeStart", onRouteChangeStart);
-    }, [onRouteChangeStart]);
+    }, [Router, onRouteChangeStart]);
 };
