@@ -3,15 +3,20 @@ import ChipComponet from "@/components/Chip";
 import React from "react";
 import Stack from "@mui/material/Stack";
 
+/** Mui documentation: https://mui.com/material-ui/react-chip/ */
+
 const meta: Meta<typeof ChipComponet> = {
     component: ChipComponet,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ChipComponet>;
 
-export const Playground = () => <ChipComponet label="I'm a chip!" />;
+export const Default: Story = {
+    args: { label: "I'm a chip!" },
+};
 
 export const Color: Story = {
     render: () => (

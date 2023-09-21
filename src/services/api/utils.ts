@@ -1,7 +1,7 @@
 import { NotificationOptions } from "@/interfaces/Api";
 import { AxiosResponse } from "axios";
 import { Error } from "@/interfaces/Error";
-import notificationService from "../notification";
+import notificationService from "@/services/notification";
 
 interface ErrorNotificationProps {
     props: NotificationOptions;
@@ -17,7 +17,7 @@ const errorNotification = ({
     const { t, i18n, ...notificationProps } = props;
     const { data, status } = errorResponse || {};
 
-    const fallbackTitle = i18n.exists(`api:common.error.status.${status}`)
+    const fallbackTitle = i18n?.exists(`api:common.error.status.${status}`)
         ? t(`api:common.error.status.${status}`)
         : "There has been an error";
 
@@ -44,7 +44,7 @@ interface SuccessNotificationProps {
 const successNotification = ({ props, method }: SuccessNotificationProps) => {
     const { t, i18n, ...notificationProps } = props;
     const customMessage = `api:${props.localeKey}.success.${method}.message`;
-    const shouldOverideMessage = i18n.exists(customMessage);
+    const shouldOverideMessage = i18n?.exists(customMessage);
 
     const message = shouldOverideMessage
         ? t(customMessage)

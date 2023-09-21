@@ -1,12 +1,13 @@
-import ApplicationListItem from "@/components/ApplicationListItem";
+import ApplicationListItem from "@/modules/ApplicationListItem";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import ApplicationSearchBar from "@/components/ApplicationSearchBar";
 import BoxContainer from "@/components/BoxContainer";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import Typography from "@/components/Typography";
+import ApplicationSearchBar from "@/modules/ApplicationSearchBar";
 
 const ApplicationList = () => {
     const [filterQuery, setFilterQuery] = useState("");

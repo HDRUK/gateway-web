@@ -2,9 +2,9 @@
 
 import Link from "@/components/Link";
 import { Box } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Button from "@/components/Button";
 import { useState } from "react";
+import { ExpandMoreIcon } from "@/consts/icons";
 import * as styles from "./HeaderNav.styles";
 import Dropdown from "../HeaderNavDropdown";
 

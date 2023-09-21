@@ -1,6 +1,6 @@
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 import { useRouter } from "next/router";
 
 const ApiManagement = () => {

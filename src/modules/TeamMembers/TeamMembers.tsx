@@ -17,7 +17,6 @@ import { Team } from "@/interfaces/Team";
 import pLimit from "p-limit";
 import notificationService from "@/services/notification";
 
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import useDelete from "@/hooks/useDelete";
 import useModal from "@/hooks/useModal";
 import TeamMembersActionBar from "@/modules/TeamMembersActionBar";
@@ -25,6 +24,7 @@ import { useHasPermissions } from "@/hooks/useHasPermission";
 import { useSWRConfig } from "swr";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import usePut from "@/hooks/usePut";
+import { DeleteForeverIcon } from "@/consts/icons";
 
 const limit = pLimit(1);
 
@@ -77,12 +77,12 @@ const TeamMembers = () => {
 
         if (success.length > 0) {
             notificationService.success(
-                `${success.length} member roles(s) have been successfully updated`
+                `${success.length} member(s) have been successfully updated`
             );
         }
         if (error.length > 0) {
             notificationService.error(
-                `${error.length} member roles(s) were not updated`
+                `${error.length} member(s) were not updated`
             );
         }
 

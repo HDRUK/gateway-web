@@ -61,7 +61,7 @@ exports[`SelectedMenuItem should render component with right position icon 1`] =
   >
     <svg
       aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeXsmall mui-style-1gpex9r-MuiSvgIcon-root"
+      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-fdrruv-MuiSvgIcon-root"
       data-testid="AccountCircleIcon"
       focusable="false"
       viewBox="0 0 24 24"

@@ -3,8 +3,8 @@ import MuiAccordion, {
 } from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { ReactNode } from "react";
+import { ArrowDropDownIcon } from "@/consts/icons";
 
 export interface AccordionProps extends Omit<MuiAccordionProps, "children"> {
     heading: string | ReactNode;

@@ -1,5 +1,5 @@
 import TextFieldBase from "@/components/TextFieldBase";
-import { TextFieldBaseProps } from "../TextFieldBase/TextFieldBase";
+import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
 
 export interface TextAreaProps extends TextFieldBaseProps {
     rows?: number;

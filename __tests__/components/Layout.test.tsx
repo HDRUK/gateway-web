@@ -1,14 +1,14 @@
 import React from "react";
-import Layout from "@/components/Layout";
+import PageLayout from "@/components/PageLayout";
 import { userV1 } from "@/mocks/data";
 import { render, waitFor, screen } from "../testUtils";
 
-describe("Layout", () => {
+describe("PageLayout", () => {
     it("should render component", async () => {
         render(
-            <Layout>
+            <PageLayout>
                 <div>content</div>
-            </Layout>
+            </PageLayout>
         );
 
         await waitFor(() => {

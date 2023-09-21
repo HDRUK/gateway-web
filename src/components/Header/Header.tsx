@@ -2,11 +2,11 @@
 
 import Link from "@/components/Link";
 import Image from "next/image";
-import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, IconButton, Toolbar } from "@mui/material";
 import HeaderNav from "@/modules/HeaderNav";
 import AccountNavWrapper from "@/modules/AccountNavWrapper";
 import { useState } from "react";
+import { MenuIcon } from "@/consts/icons";
 import * as styles from "./Header.styles";
 
 function Header() {
@@ -29,7 +29,7 @@ function Header() {
                             onClick={menuClickHandler}>
                             <MenuIcon color="primary" />
                         </IconButton>
-                        <Link href="/" css={styles.homeLogo}>
+                        <Link href="/" css={styles.homeLogo} passHref={false}>
                             <Image
                                 src="/images/logos/gateway-main.svg"
                                 priority

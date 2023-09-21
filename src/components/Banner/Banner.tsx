@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 import Image, { StaticImageData } from "next/image";
 import * as styles from "./Banner.styles";
 

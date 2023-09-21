@@ -15,7 +15,7 @@ describe("ActionBar", () => {
         return <p>Content here: {otherProp}</p>;
     };
 
-    const DummyComponent = () => {
+    const WrapperComponent = () => {
         const { showBar, hideBar } = useActionBar();
 
         return (
@@ -38,7 +38,7 @@ describe("ActionBar", () => {
         );
     };
     it("should render action bar content", async () => {
-        render(<DummyComponent />);
+        render(<WrapperComponent />);
 
         fireEvent.click(screen.getByText("show action bar"));
 
@@ -47,7 +47,7 @@ describe("ActionBar", () => {
         ).toBeInTheDocument();
     });
     it("should close action bar", async () => {
-        render(<DummyComponent />);
+        render(<WrapperComponent />);
 
         fireEvent.click(screen.getByText("show action bar"));
         await waitFor(() => {
@@ -63,7 +63,7 @@ describe("ActionBar", () => {
         });
     });
     it("should call onSuccess", async () => {
-        render(<DummyComponent />);
+        render(<WrapperComponent />);
 
         fireEvent.click(screen.getByText("show action bar"));
         await waitFor(() => {

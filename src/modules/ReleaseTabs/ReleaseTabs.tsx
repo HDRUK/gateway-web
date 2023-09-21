@@ -1,12 +1,12 @@
 import Tabs from "@/components/Tabs";
 import { useMemo, useState } from "react";
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 import Accordion from "@/components/Accordion";
 import { ReleaseNode } from "@/interfaces/Releases";
 
 import { getReleaseByYear } from "@/utils/release-notes";
-import WPContent from "@/components/WPContent";
 import Box from "@/components/Box";
+import HTMLContent from "@/components/HTMLContent";
 
 interface ReleaseTabProps {
     allReleases: ReleaseNode[];
@@ -73,7 +73,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                                     handleChange(isExpanded, release.id)
                                 }
                                 contents={
-                                    <WPContent content={release.content} />
+                                    <HTMLContent content={release.content} />
                                 }
                             />
                         ))}

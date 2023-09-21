@@ -7,15 +7,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Stack } from "@mui/material";
 import Form from "@/components/Form";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import BackupIcon from "@mui/icons-material/Backup";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import Button from "../Button/Button";
+import {
+    AccountCircleIcon,
+    AdminPanelSettingsIcon,
+    BackupIcon,
+    SupervisorAccountIcon,
+} from "@/consts/icons";
+import Button from "@/components/Button";
 
 const meta: Meta<typeof Form> = {
     component: Form,
     title: "Forms/Select",
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -39,7 +42,7 @@ const validationSchema = yup
     })
     .required();
 
-const DummyComponent = () => {
+const WrapperComponent = () => {
     const { handleSubmit, setValue, control } = useForm<FormData>({
         defaultValues: {
             first: "",
@@ -139,5 +142,5 @@ const DummyComponent = () => {
 };
 
 export const Select: Story = {
-    render: () => <DummyComponent />,
+    render: () => <WrapperComponent />,
 };

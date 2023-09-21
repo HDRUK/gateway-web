@@ -9,13 +9,12 @@ import {
     ListItemIcon,
     ListItemText,
 } from "@mui/material";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 
 import { Fragment, useState } from "react";
 import { useRouter } from "next/router";
 import { colors } from "@/config/theme";
 import { LeftNavItem } from "@/interfaces/Ui";
+import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
 
 const isExpanded = (
     item: LeftNavItem,
@@ -73,9 +72,9 @@ const LeftNav = ({ navItems }: LeftNavProps) => {
                                 <ListItemText primary={item.label} />
                                 {item.subItems &&
                                 isExpanded(item, expandedSection, asPath) ? (
-                                    <ExpandLess />
+                                    <ExpandLessIcon />
                                 ) : (
-                                    <ExpandMore />
+                                    <ExpandMoreIcon />
                                 )}
                             </ListItemButton>
                             <Collapse

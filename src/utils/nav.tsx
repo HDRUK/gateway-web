@@ -1,10 +1,12 @@
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
-import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
-import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import {
+    DescriptionOutlinedIcon,
+    FolderSharedOutlinedIcon,
+    GroupsOutlinedIcon,
+    HelpOutlineOutlinedIcon,
+    SchemaOutlinedIcon,
+    SettingsOutlinedIcon,
+    StorageOutlinedIcon,
+} from "@/consts/icons";
 import { LeftNavItem } from "@/interfaces/Ui";
 
 const getProfileNav = (): LeftNavItem[] => {

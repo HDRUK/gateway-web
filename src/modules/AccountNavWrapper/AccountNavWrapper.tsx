@@ -7,11 +7,11 @@ import ProvidersDialog from "@/modules/dialogs/ProvidersDialog";
 import { Box, CircularProgress } from "@mui/material";
 import AccountNav from "@/modules/AccountNav";
 import { useState } from "react";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import InitialsBadge from "@/components/InitialsBadge";
 import useAuth from "@/hooks/useAuth";
 import useLogout from "@/hooks/useLogout";
 import { colors } from "@/config/theme";
+import { ArrowDropDownIcon } from "@/consts/icons";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();

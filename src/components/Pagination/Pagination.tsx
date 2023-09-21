@@ -1,8 +1,7 @@
+import { ArrowLeftIcon, ArrowRightIcon } from "@/consts/icons";
 import MuiPagination, {
     PaginationProps as MuiPaginationProps,
 } from "@mui/material/Pagination";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import PaginationItem from "@mui/material/PaginationItem";
 
 interface PaginationProps extends MuiPaginationProps {

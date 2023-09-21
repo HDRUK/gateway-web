@@ -2,18 +2,18 @@ import React, { ElementType } from "react";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { inputComponents } from "@/config/forms";
 import { FieldValues, UseFormGetValues } from "react-hook-form";
-import Select from "../Select";
-import { SelectProps } from "../Select/Select";
-import TextArea from "../TextArea";
-import { TextAreaProps } from "../TextArea/TextArea";
-import TextField from "../TextField";
-import { TextFieldBaseProps } from "../TextFieldBase/TextFieldBase";
-import Checkbox from "../Checkbox";
-import { CheckboxProps } from "../Checkbox/Checkbox";
-import CheckboxGroup from "../CheckboxGroup";
-import CheckboxRow from "../CheckboxRow";
-import Autocomplete from "../Autocomplete";
-import { CheckboxRowProps } from "../CheckboxRow/CheckboxRow";
+import { CheckboxRowProps } from "@/components/CheckboxRow/CheckboxRow";
+import Select from "@/components/Select";
+import { SelectProps } from "@/components/Select/Select";
+import TextArea from "@/components/TextArea";
+import { TextAreaProps } from "@/components/TextArea/TextArea";
+import TextField from "@/components/TextField";
+import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
+import Checkbox from "@/components/Checkbox";
+import { CheckboxProps } from "@/components/Checkbox/Checkbox";
+import CheckboxGroup from "@/components/CheckboxGroup";
+import CheckboxRow from "@/components/CheckboxRow";
+import Autocomplete from "@/components/Autocomplete";
 
 type InputType =
     | TextFieldBaseProps

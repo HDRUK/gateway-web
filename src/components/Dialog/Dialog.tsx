@@ -4,7 +4,7 @@ import React, { ReactNode } from "react";
 import useDialog from "@/hooks/useDialog";
 import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
 import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { CloseIcon } from "@/consts/icons";
 
 export interface DialogProps {
     children: ReactNode;

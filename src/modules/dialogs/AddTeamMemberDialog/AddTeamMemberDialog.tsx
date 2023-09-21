@@ -14,8 +14,6 @@ import ModalButtons from "@/components/ModalButtons";
 import Box from "@/components/Box";
 import { AddTeamMember } from "@/interfaces/AddTeamMember";
 import useDialog from "@/hooks/useDialog";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 import {
     Checkbox,
     FormControl,
@@ -26,13 +24,13 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Select from "@mui/material/Select";
-import SearchIcon from "@mui/icons-material/SearchRounded";
 import apis from "@/config/apis";
 import { Team } from "@/interfaces/Team";
 import Loading from "@/components/Loading";
 import useGet from "@/hooks/useGet";
 import TypeAheadDropDown from "@/components/TypeAheadDropDown";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 
 const AddTeamMemberDialog = () => {
     const { showDialog } = useDialog();
@@ -131,7 +129,7 @@ const AddTeamMemberDialog = () => {
                         label="User"
                         name="user"
                         control={control}
-                        icon={SearchIcon}
+                        icon={SearchRoundedIcon}
                         items={teamUserList}
                     />
                     <FormControl>

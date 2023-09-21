@@ -1,3 +1,3 @@
-import Dropdown from "./Dropdown";
+import HeaderNavDropdown from "./HeaderNavDropdown";
 
-export default Dropdown;
+export default HeaderNavDropdown;

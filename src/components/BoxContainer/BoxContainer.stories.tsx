@@ -1,10 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Box from "../Box";
+import Box from "@/components/Box";
 import BoxContainer from "./BoxContainer";
+
+/**
+ * Mui documentation:
+ * https://mui.com/material-ui/react-box/
+ */
 
 const meta: Meta<typeof BoxContainer> = {
     component: BoxContainer,
     title: "Layout/BoxContainer",
+    tags: ["autodocs"],
 };
 
 export default meta;

@@ -8,14 +8,14 @@ import {
     IconButton,
     SvgIconTypeMap,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Cancel";
 
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Control, useController } from "react-hook-form";
 import { useMemo } from "react";
 import { colors } from "@/config/theme";
-import Label from "../Label";
-import CharacterLimit from "../CharacterLimit";
+import { CancelIcon } from "@/consts/icons";
+import Label from "@/components/Label";
+import CharacterLimit from "@/components/CharacterLimit";
 
 export interface TextFieldBaseProps {
     label: string;
@@ -135,7 +135,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
                                     }
                                 }}
                                 edge="end">
-                                <CloseIcon color="disabled" fontSize="small" />
+                                <CancelIcon color="disabled" fontSize="small" />
                             </IconButton>
                         </InputAdornment>
                     ),

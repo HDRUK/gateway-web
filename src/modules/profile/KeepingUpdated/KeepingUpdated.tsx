@@ -1,7 +1,8 @@
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { Divider, Typography } from "@mui/material";
+import { Divider } from "@mui/material";
+import Typography from "@/components/Typography";
 import { Fragment } from "react";
 import { Control, FieldValues } from "react-hook-form";
 
