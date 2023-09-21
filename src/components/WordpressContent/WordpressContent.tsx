@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { useTheme } from "@emotion/react";
-import * as styles from "./WPContent.styles";
+import * as styles from "./WordpressContent.styles";
 
-export interface WPContentProps {
+export interface WordpressContentProps {
     content: string;
 }
 
-const WPContent = ({ content }: WPContentProps) => {
+const WordpressContent = ({ content }: WordpressContentProps) => {
     const theme = useTheme();
     return (
         <div
@@ -19,4 +19,4 @@ const WPContent = ({ content }: WPContentProps) => {
     );
 };
 
-export default WPContent;
+export default WordpressContent;

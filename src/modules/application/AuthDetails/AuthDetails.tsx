@@ -2,7 +2,7 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { Application } from "@/interfaces/Application";
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 
 interface AuthDetailsProps {
     application?: Application;

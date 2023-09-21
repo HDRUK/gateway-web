@@ -3,16 +3,15 @@ import BackButton from "./BackButton";
 
 const meta: Meta<typeof BackButton> = {
     component: BackButton,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof BackButton>;
 
-const WrapperComponent = () => {
-    return null;
-};
-
 export const Default: Story = {
-    render: () => <WrapperComponent />,
+    args: {
+        label: "Back",
+    },
 };

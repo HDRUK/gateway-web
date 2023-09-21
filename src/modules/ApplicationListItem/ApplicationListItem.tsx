@@ -3,7 +3,7 @@
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import { Application } from "@/interfaces/Application";
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Card from "@/components/Card";

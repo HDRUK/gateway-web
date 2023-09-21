@@ -18,6 +18,7 @@ import Button from "@/components/Button";
 const meta: Meta<typeof Form> = {
     component: Form,
     title: "Forms/Select",
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -41,7 +42,7 @@ const validationSchema = yup
     })
     .required();
 
-const DummyComponent = () => {
+const WrapperComponent = () => {
     const { handleSubmit, setValue, control } = useForm<FormData>({
         defaultValues: {
             first: "",
@@ -141,5 +142,5 @@ const DummyComponent = () => {
 };
 
 export const Select: Story = {
-    render: () => <DummyComponent />,
+    render: () => <WrapperComponent />,
 };

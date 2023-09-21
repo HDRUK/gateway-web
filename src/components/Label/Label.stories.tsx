@@ -1,18 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Label from "./Label";
 
+/** Mui documentation: https://mui.com/material-ui/react-label */
+
 const meta: Meta<typeof Label> = {
     component: Label,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Label>;
 
-const WrapperComponent = () => {
-    return null;
-};
-
 export const Default: Story = {
-    render: () => <WrapperComponent />,
+    args: {
+        label: "Label",
+        required: true,
+    },
 };

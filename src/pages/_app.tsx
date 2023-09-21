@@ -9,7 +9,7 @@ import { appWithTranslation } from "next-i18next";
 import { SnackbarProvider } from "notistack";
 import { ErrorBoundary } from "react-error-boundary";
 import theme from "@/config/theme";
-import Layout from "@/components/Layout";
+import PageLayout from "@/components/PageLayout";
 import "@/styles/global.css";
 import { ApiError } from "@/components/CustomNotifications/ApiError";
 import { ApiSuccess } from "@/components/CustomNotifications/ApiSuccess";
@@ -48,7 +48,7 @@ const App = ({
                     <CssBaseline />
                     <DialogProvider>
                         <ActionBarProvider>
-                            <Layout>
+                            <PageLayout>
                                 <ErrorBoundary
                                     fallback={<div>Something went wrong</div>}
                                     onError={logError}>
@@ -67,7 +67,7 @@ const App = ({
 
                                     }}
                                 /> */}
-                            </Layout>
+                            </PageLayout>
                         </ActionBarProvider>
                     </DialogProvider>
                 </ThemeProvider>

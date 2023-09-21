@@ -6,7 +6,7 @@
 
 import Box from "@/components/Box";
 import Button from "@/components/Button";
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 import { Control } from "react-hook-form";
 
 interface DeleteApplicationProps {

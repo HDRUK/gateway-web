@@ -5,6 +5,7 @@ import ActionBar from "./ActionBar";
 
 const meta: Meta<typeof ActionBar> = {
     component: ActionBar,
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -30,7 +31,7 @@ const WrapperComponent = () => {
                         onCancel: () => hideBar(),
                     })
                 }>
-                show action bar
+                Show action bar
             </Button>
             <ActionBar />
         </div>

@@ -1,18 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Link from "./Link";
 
+/** Mui documentation: https://mui.com/material-ui/react-link */
+/** NextJs documentation: https://nextjs.org/docs/pages/api-reference/components/link */
+
 const meta: Meta<typeof Link> = {
     component: Link,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Link>;
 
-const WrapperComponent = () => {
-    return null;
-};
-
 export const Default: Story = {
-    render: () => <WrapperComponent />,
+    args: {
+        href: "/",
+        children: "Link",
+    },
 };

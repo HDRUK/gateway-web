@@ -3,16 +3,15 @@ import Header from "./Header";
 
 const meta: Meta<typeof Header> = {
     component: Header,
+    title: "Layout/Header",
+    parameters: {
+        layout: "fullscreen",
+    },
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Header>;
 
-const WrapperComponent = () => {
-    return null;
-};
-
-export const Default: Story = {
-    render: () => <WrapperComponent />,
-};
+export const Default: Story = {};

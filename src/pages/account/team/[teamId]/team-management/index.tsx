@@ -4,7 +4,6 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
-import { Typography } from "@mui/material";
 import TeamManagementTabs from "@/modules/TeamManagement/TeamManagementTabs";
 import AddTeamMemberDialog from "@/modules/dialogs/AddTeamMemberDialog";
 import Button from "@/components/Button";
@@ -12,6 +11,7 @@ import Button from "@/components/Button";
 import useDialog from "@/hooks/useDialog";
 import AccountLayout from "@/modules/AccountLayout";
 import { AddIcon } from "@/consts/icons";
+import Typography from "@/components/Typography";
 
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();

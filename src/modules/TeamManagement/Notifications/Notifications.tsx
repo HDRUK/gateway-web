@@ -6,7 +6,7 @@
 
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 
 const Notifications = () => {
     const notificationList = [

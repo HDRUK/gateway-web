@@ -4,6 +4,7 @@ import Accordion from "./Accordion";
 
 const meta: Meta<typeof Accordion> = {
     component: Accordion,
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -21,6 +22,8 @@ const WrapperComponent = () => {
         <div>
             {Array.from({ length: 3 }).map((e, index: number) => (
                 <Accordion
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
                     expanded={expanded === index}
                     heading={`Heading ${index}`}
                     contents={`Content ${index}`}
@@ -33,11 +36,11 @@ const WrapperComponent = () => {
     );
 };
 
-const Heading = () => <div>This is a Heading</div>;
-const Content = () => <div>This is some Content</div>;
-
 export const Single: Story = {
-    render: () => <Accordion heading={<Heading />} contents={<Content />} />,
+    args: {
+        heading: <div>This is a Heading</div>,
+        contents: <div>This is contents</div>,
+    },
 };
 
 export const Group: Story = {

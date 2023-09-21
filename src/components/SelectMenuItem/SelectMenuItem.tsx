@@ -2,19 +2,19 @@
 import { IconType } from "@/interfaces/Ui";
 import { ListItemIcon, ListItemText } from "@mui/material";
 
-interface MenuItemContentProps {
+interface SelectMenuItemProps {
     iconRight?: boolean;
     icon?: IconType;
     invertListItem?: boolean;
     label: string;
 }
 
-const MenuItemContent = ({
+const SelectMenuItem = ({
     iconRight,
     icon,
     label,
     invertListItem,
-}: MenuItemContentProps) => {
+}: SelectMenuItemProps) => {
     const Icon = icon;
 
     if (!Icon) return <ListItemText>{label}</ListItemText>;
@@ -47,7 +47,7 @@ const MenuItemContent = ({
                         minWidth: 0,
                         ...(invertListItem && { color: "white" }),
                     }}
-                    fontSize="xsmall"
+                    fontSize="small"
                     color="primary"
                 />
             </ListItemIcon>
@@ -55,10 +55,10 @@ const MenuItemContent = ({
     );
 };
 
-MenuItemContent.defaultProps = {
+SelectMenuItem.defaultProps = {
     icon: undefined,
     iconRight: false,
     invertListItem: false,
 };
 
-export default MenuItemContent;
+export default SelectMenuItem;

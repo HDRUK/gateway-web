@@ -4,7 +4,8 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import ProfileForm from "@/modules/profile/ProfileForm";
 import useAuth from "@/hooks/useAuth";
-import { CircularProgress, Typography } from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/modules/AccountLayout";
 

@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WPContent should render component 1`] = `
+exports[`WordpressContent should render component 1`] = `
 <div>
   <div
-    class="mui-style-1qaot9c-WPContent"
+    class="mui-style-1qaot9c-WordpressContent"
   >
     
 

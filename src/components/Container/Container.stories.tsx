@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Box from "@/components/Box";
 import Container from "./Container";
 
 /**
- * Documents:
+ * Mui documentation:
  * https://mui.com/system/react-container/
  */
 
 const meta: Meta<typeof Container> = {
     component: Container,
     title: "Layout/Container",
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -17,9 +17,7 @@ export default meta;
 type Story = StoryObj<typeof Container>;
 
 export const MaxWidth: Story = {
-    render: () => (
-        <Container>
-            <Box>Max width container</Box>
-        </Container>
-    ),
+    args: {
+        children: <div>Max width container</div>,
+    },
 };

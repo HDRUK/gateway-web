@@ -5,7 +5,8 @@ import useGet from "@/hooks/useGet";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import BoxContainer from "@/components/BoxContainer";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import Typography from "@/components/Typography";
 import ApplicationSearchBar from "@/modules/ApplicationSearchBar";
 
 const ApplicationList = () => {

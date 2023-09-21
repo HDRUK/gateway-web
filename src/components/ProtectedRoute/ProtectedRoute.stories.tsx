@@ -3,16 +3,11 @@ import ProtectedRoute from "./ProtectedRoute";
 
 const meta: Meta<typeof ProtectedRoute> = {
     component: ProtectedRoute,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ProtectedRoute>;
 
-const WrapperComponent = () => {
-    return null;
-};
-
-export const Default: Story = {
-    render: () => <WrapperComponent />,
-};
+export const Default: Story = {};

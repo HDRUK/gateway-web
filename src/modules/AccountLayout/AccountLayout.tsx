@@ -3,7 +3,6 @@ import BoxContainer from "@/components/BoxContainer";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import LeftNav from "@/modules/LeftNav";
 import { ReactNode, useMemo } from "react";
-import { Typography } from "@mui/material";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useRouter } from "next/router";
 import apis from "@/config/apis";
@@ -12,6 +11,7 @@ import { Team } from "@/interfaces/Team";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import Loading from "@/components/Loading";
 import ActionBar from "@/components/ActionBar";
+import Typography from "@/components/Typography";
 
 interface AccountLayoutProps {
     children: ReactNode;

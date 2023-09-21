@@ -8,9 +8,13 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "@/components/Button";
 
+/** Mui documentation: https://mui.com/material-ui/react-checkbox/ */
+/** React Hook Form documentation: https://react-hook-form.com/ */
+
 const meta: Meta<typeof Form> = {
     component: Form,
     title: "Forms/Checkbox",
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -30,7 +34,7 @@ const validationSchema = yup
     })
     .required();
 
-const DummyComponent = () => {
+const WrapperComponent = () => {
     const { handleSubmit, control } = useForm<FormData>({
         defaultValues: {
             first: "",
@@ -76,5 +80,5 @@ const DummyComponent = () => {
 };
 
 export const Checkbox: Story = {
-    render: () => <DummyComponent />,
+    render: () => <WrapperComponent />,
 };

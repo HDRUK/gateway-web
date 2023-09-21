@@ -3,16 +3,12 @@ import Footer from "./Footer";
 
 const meta: Meta<typeof Footer> = {
     component: Footer,
+    title: "Layout/Footer",
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Footer>;
 
-const WrapperComponent = () => {
-    return null;
-};
-
-export const Default: Story = {
-    render: () => <WrapperComponent />,
-};
+export const Default: Story = {};

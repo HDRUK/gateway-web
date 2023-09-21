@@ -5,20 +5,21 @@ import { Stack } from "@mui/material";
 import Button from "@/components/Button";
 import Upload from "./Upload";
 
-const meta: Meta<typeof Form> = {
-    component: Form,
+const meta: Meta<typeof Upload> = {
+    component: Upload,
     title: "Forms/Upload",
+    tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Form>;
+type Story = StoryObj<typeof Upload>;
 
 export type FormData = {
     upload: string;
 };
 
-const DummyComp = () => {
+const WrapperComponent = () => {
     const { handleSubmit, control, register } = useForm<FormData>({
         defaultValues: {
             upload: "",
@@ -27,7 +28,7 @@ const DummyComp = () => {
     const onSubmit = (data: unknown) => console.log(data);
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={2} sx={{ marginBottom: 20, maxWidth: 240 }}>
+            <Stack spacing={2} sx={{ padding: 2, maxWidth: 240 }}>
                 <Upload
                     {...register("upload")}
                     control={control}
@@ -41,6 +42,6 @@ const DummyComp = () => {
     );
 };
 
-export const UploadComponent: Story = {
-    render: () => <DummyComp />,
+export const Default: Story = {
+    render: () => <WrapperComponent />,
 };

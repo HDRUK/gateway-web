@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import useDialog from "@/hooks/useDialog";
 import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
 import useDelete from "@/hooks/useDelete";
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 
 interface DeleteTeamMemberDialogProps {
     user: User;

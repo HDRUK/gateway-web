@@ -2,9 +2,9 @@ import Box from "@/components/Box";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import { Typography } from "@mui/material";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/modules/AccountLayout";
+import Typography from "@/components/Typography";
 
 const TeamDataUsesPage = () => {
     return (

@@ -3,16 +3,11 @@ import Loading from "./Loading";
 
 const meta: Meta<typeof Loading> = {
     component: Loading,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Loading>;
 
-const WrapperComponent = () => {
-    return null;
-};
-
-export const Default: Story = {
-    render: () => <WrapperComponent />,
-};
+export const Default: Story = {};

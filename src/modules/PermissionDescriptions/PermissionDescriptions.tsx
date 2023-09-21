@@ -3,8 +3,10 @@
 import { useMemo } from "react";
 import { rolesMeta } from "@/consts/roles";
 
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 import * as styles from "./PermissionDescriptions.styles";
+
+// todo: Remove permission logic and make this a generic component
 
 interface PermissionDescriptionsProps {
     roles: string[];

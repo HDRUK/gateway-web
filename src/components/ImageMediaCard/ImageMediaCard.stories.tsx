@@ -3,16 +3,18 @@ import ImageMediaCard from "./ImageMediaCard";
 
 const meta: Meta<typeof ImageMediaCard> = {
     component: ImageMediaCard,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ImageMediaCard>;
 
-const WrapperComponent = () => {
-    return null;
-};
-
 export const Default: Story = {
-    render: () => <WrapperComponent />,
+    args: {
+        description: "Description here",
+        img: "https://place-hold.it/300x250",
+        buttonText: "Button label",
+        href: "/",
+    },
 };

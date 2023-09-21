@@ -1,6 +1,6 @@
 import Tabs from "@/components/Tabs";
 import { useState } from "react";
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 
 import { useRouter } from "next/router";
 import apis from "@/config/apis";

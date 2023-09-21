@@ -1,21 +1,21 @@
-import type { Meta } from "@storybook/react";
-import { BoxProps } from "@mui/material/Box";
+import type { Meta, StoryObj } from "@storybook/react";
 import Box from "./Box";
 
 /**
- * Documents:
+ * Mui documentation:
  * https://mui.com/material-ui/react-box/
  */
 
 const meta: Meta<typeof Box> = {
     component: Box,
     title: "Layout/Box",
+    tags: ["autodocs"],
 };
 
 export default meta;
 
-export const Default = (args: BoxProps) => <Box {...args} />;
+type Story = StoryObj<typeof Box>;
 
-Default.args = {
-    children: "This is a box",
+export const Default: Story = {
+    args: { children: "This is a box" },
 };

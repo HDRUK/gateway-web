@@ -1,7 +1,7 @@
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Paper from "@/components/Paper";
-import { Typography } from "@mui/material";
+import Typography from "@/components/Typography";
 import { useEffect, Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import {

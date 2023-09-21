@@ -4,10 +4,10 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
 import ActionBar from "@/components/ActionBar";
-import { Typography } from "@mui/material";
 import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import AccountLayout from "@/modules/AccountLayout";
+import Typography from "@/components/Typography";
 
 const CreateAppPage = () => {
     return (

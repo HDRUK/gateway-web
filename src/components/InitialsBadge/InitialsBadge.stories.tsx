@@ -1,23 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import InitialsBadgeComponent from "@/components/InitialsBadge";
-import Form from "@/components/Form";
-import React from "react";
-import { Stack } from "@mui/material";
+import InitialsBadge from "@/components/InitialsBadge";
 import { generateFullName } from "../../../mocks/data/generic";
 
-const meta: Meta<typeof InitialsBadgeComponent> = {
-    component: InitialsBadgeComponent,
+const meta: Meta<typeof InitialsBadge> = {
+    component: InitialsBadge,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Form>;
+type Story = StoryObj<typeof InitialsBadge>;
 
-export const InitialsBadge: Story = {
-    render: () => (
-        <Stack direction="row" gap={2}>
-            <InitialsBadgeComponent fullName={generateFullName()} />
-            <InitialsBadgeComponent initials="LB" />
-        </Stack>
-    ),
+export const FullName: Story = {
+    args: { fullName: generateFullName() },
+};
+
+export const Initials: Story = {
+    args: { initials: "LB" },
 };

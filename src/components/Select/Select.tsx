@@ -11,7 +11,7 @@ import {
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import { colors } from "@/config/theme";
-import MenuItemContent from "@/components/SelectMenuItem";
+import SelectMenuItem from "@/components/SelectMenuItem";
 import Label from "@/components/Label";
 
 type ValueType = string | number;
@@ -114,7 +114,7 @@ const Select = (props: SelectProps) => {
                         }}
                         key={option.value}
                         value={option.value}>
-                        <MenuItemContent
+                        <SelectMenuItem
                             iconRight={iconRight}
                             icon={icon || option.icon}
                             label={option.label}

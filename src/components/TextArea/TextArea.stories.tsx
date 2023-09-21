@@ -11,6 +11,7 @@ import Button from "@/components/Button";
 const meta: Meta<typeof Form> = {
     component: Form,
     title: "Forms/TextArea",
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -31,7 +32,7 @@ const validationSchema = yup
     })
     .required();
 
-const DummyComponent = () => {
+const WrapperComponent = () => {
     const { handleSubmit, getValues, control } = useForm<FormData>({
         defaultValues: {
             first: "",
@@ -86,5 +87,5 @@ const DummyComponent = () => {
 };
 
 export const TextArea: Story = {
-    render: () => <DummyComponent />,
+    render: () => <WrapperComponent />,
 };

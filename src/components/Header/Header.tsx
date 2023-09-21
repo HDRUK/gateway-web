@@ -29,7 +29,7 @@ function Header() {
                             onClick={menuClickHandler}>
                             <MenuIcon color="primary" />
                         </IconButton>
-                        <Link href="/" css={styles.homeLogo}>
+                        <Link href="/" css={styles.homeLogo} passHref={false}>
                             <Image
                                 src="/images/logos/gateway-main.svg"
                                 priority

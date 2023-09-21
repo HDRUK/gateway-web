@@ -1,8 +1,17 @@
+import type { Preview } from "@storybook/react";
+
+import i18n from "./i18next";
 import { withMuiTheme } from "./withMuiTheme.decorator";
 import { withDialog } from "./withDialog.decorator";
 import { withActionBar } from "./withActionBar.decorator";
 
-const preview = {
+const preview: Preview = {
+    globals: {
+        locale: "en",
+        locales: {
+            en: "English",
+        },
+    },
     parameters: {
         actions: { argTypesRegex: "^on[A-Z].*" },
         controls: {
@@ -16,6 +25,9 @@ const preview = {
                 method: "alphabetical",
                 order: ["*", "Playground", "*"],
             },
+        },
+        parameters: {
+            i18n,
         },
     },
 };

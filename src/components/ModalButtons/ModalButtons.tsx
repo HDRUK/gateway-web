@@ -1,12 +1,13 @@
 import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
 
+type ConfirmType = "button" | "submit" | undefined;
 export interface ModalButtonProps {
     onSuccess?: (props: unknown) => void;
     onCancel?: (props: unknown) => void;
     confirmText?: string;
     cancelText?: string;
-    confirmType?: "button" | "submit";
+    confirmType?: ConfirmType;
 }
 
 const ModalButtons = ({
@@ -60,7 +61,7 @@ const ModalButtons = ({
 ModalButtons.defaultProps = {
     cancelText: "Cancel",
     confirmText: "Confirm",
-    confirmType: "button",
+    confirmType: "button" as ConfirmType,
     onSuccess: () => null,
     onCancel: () => null,
 };
