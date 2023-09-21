@@ -1,13 +1,13 @@
 import React from "react";
-import WordpressContent from "@/components/WordpressContent";
+import HTMLContent from "@/components/HTMLContent";
 import { render } from "../testUtils";
 
-describe("WordpressContent", () => {
+describe("HTMLContent", () => {
     it("should render component", async () => {
         const html =
             "\n<p>This month we are pleased to share improvements to the usability of the search results page. Plus, we release our data use register widget.</p>\n";
 
-        const wrapper = render(<WordpressContent content={html} />);
+        const wrapper = render(<HTMLContent content={html} />);
 
         expect(wrapper.container).toMatchSnapshot();
     });

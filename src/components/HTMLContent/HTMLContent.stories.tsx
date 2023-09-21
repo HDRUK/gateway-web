@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import WordpressContent from "@/components/WordpressContent";
+import HTMLContent from "@/components/HTMLContent";
 
-const meta: Meta<typeof WordpressContent> = {
-    component: WordpressContent,
+const meta: Meta<typeof HTMLContent> = {
+    component: HTMLContent,
     tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof WordpressContent>;
+type Story = StoryObj<typeof HTMLContent>;
 
 export const Default: Story = {
     args: {

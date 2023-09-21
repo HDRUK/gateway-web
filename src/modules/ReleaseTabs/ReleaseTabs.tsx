@@ -6,7 +6,7 @@ import { ReleaseNode } from "@/interfaces/Releases";
 
 import { getReleaseByYear } from "@/utils/release-notes";
 import Box from "@/components/Box";
-import WordpressContent from "@/components/WordpressContent";
+import HTMLContent from "@/components/HTMLContent";
 
 interface ReleaseTabProps {
     allReleases: ReleaseNode[];
@@ -73,9 +73,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                                     handleChange(isExpanded, release.id)
                                 }
                                 contents={
-                                    <WordpressContent
-                                        content={release.content}
-                                    />
+                                    <HTMLContent content={release.content} />
                                 }
                             />
                         ))}

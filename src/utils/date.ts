@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 
-const formatDate = (dateStr: Date, formatStr = "dd MMMM yyyy") => {
-    return format(dateStr, formatStr);
+const formatDate = (date: Date, formatStr = "dd MMMM yyyy") => {
+    return format(date, formatStr);
 };
 
 export { formatDate };
