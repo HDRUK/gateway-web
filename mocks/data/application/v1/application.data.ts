@@ -24,5 +24,8 @@ const generateApplicationV1 = (data = {}): Application => {
 };
 
 const applicationV1 = generateApplicationV1();
+const applicationsV1 = Array.from({ length: 3 }).map(() =>
+    generateApplicationV1()
+);
 
-export { applicationV1, generateApplicationV1 };
+export { applicationV1, applicationsV1, generateApplicationV1 };

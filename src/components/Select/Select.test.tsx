@@ -3,13 +3,16 @@ import Select from "@/components/Select";
 import * as yup from "yup";
 
 import { useForm } from "react-hook-form";
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import UserEvent from "@testing-library/user-event";
 import Form from "@/components/Form";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import Button from "@/components/Button";
 import { SelectProps } from "@/components/Select/Select";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { render, screen, waitFor, fireEvent } from "@/utils/testUtils";
+import { render, screen, waitFor } from "@/utils/testUtils";
 
 const submitFn = jest.fn();
 
@@ -70,7 +73,7 @@ describe("Select", () => {
 
         expect(screen.getByText("Select label")).toBeInTheDocument();
 
-        fireEvent.click(screen.getAllByRole("button")[0]);
+        UserEvent.click(screen.getAllByRole("button")[0]);
 
         await waitFor(() => {
             expect(screen.getByText(options[0].label)).toBeInTheDocument();
@@ -79,7 +82,7 @@ describe("Select", () => {
             expect(screen.getByText(options[3].label)).toBeInTheDocument();
         });
 
-        fireEvent.click(screen.getByText(options[2].label));
+        UserEvent.click(screen.getByText(options[2].label));
 
         await waitFor(() => {
             expect(screen.getByText("Blue")).toBeInTheDocument();
@@ -99,7 +102,7 @@ describe("Select", () => {
 
         expect(screen.getByText("Select label")).toBeInTheDocument();
 
-        fireEvent.click(screen.getAllByRole("button")[0]);
+        UserEvent.click(screen.getAllByRole("button")[0]);
 
         await waitFor(() => {
             expect(screen.getByText(options[0].label)).toBeInTheDocument();
@@ -108,14 +111,14 @@ describe("Select", () => {
             expect(screen.getByText(options[3].label)).toBeInTheDocument();
         });
 
-        fireEvent.click(screen.getByText(options[1].label));
-        fireEvent.click(screen.getByText(options[2].label));
+        UserEvent.click(screen.getByText(options[1].label));
+        UserEvent.click(screen.getByText(options[2].label));
 
         await waitFor(() => {
             expect(screen.getByText("Green, Blue")).toBeInTheDocument();
         });
 
-        fireEvent.click(screen.getByText("Submit"));
+        UserEvent.click(screen.getByText("Submit"));
 
         await waitFor(() => {
             expect(submitFn).toBeCalledWith({ colour: [2, 3] });
@@ -135,7 +138,7 @@ describe("Select", () => {
 
         expect(screen.getByText("Select label")).toBeInTheDocument();
 
-        fireEvent.click(screen.getByText("Submit"));
+        UserEvent.click(screen.getByText("Submit"));
 
         await waitFor(() => {
             expect(
@@ -143,11 +146,11 @@ describe("Select", () => {
             ).toBeInTheDocument();
         });
 
-        fireEvent.click(screen.getAllByRole("button")[0]);
+        UserEvent.click(screen.getAllByRole("button")[0]);
         await waitFor(() => {
-            fireEvent.click(screen.getByText(options[1].label));
+            UserEvent.click(screen.getByText(options[1].label));
         });
-        fireEvent.click(screen.getByText("Submit"));
+        UserEvent.click(screen.getByText("Submit"));
 
         await waitFor(() => {
             expect(
@@ -208,7 +211,7 @@ describe("Select", () => {
             />
         );
 
-        fireEvent.click(screen.getAllByRole("button")[0]);
+        UserEvent.click(screen.getAllByRole("button")[0]);
 
         await waitFor(() => {
             expect(screen.getAllByTestId("SupervisorAccountIcon")).toHaveLength(
