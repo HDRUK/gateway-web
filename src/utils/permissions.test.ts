@@ -1,21 +1,39 @@
 import { getPermissions } from "@/utils/permissions";
 import { Role } from "@/interfaces/Role";
-import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
+import {
+    ROLE_CUSTODIAN_TEAM_ADMIN,
+    ROLE_HDRUK_SUPERADMIN,
+} from "@/consts/roles";
+import { generateRoleV1 } from "@/mocks/data";
 
-// todo: Replace with mocked Permission
-const userRoles: Role[] = [];
-
-// todo: Replace with mocked Permission
-const teamRoles: Role[] = [
-    { name: ROLE_CUSTODIAN_TEAM_ADMIN, permissions: [], enabled: true },
+const userRoles: Role[] = [
+    generateRoleV1({
+        name: ROLE_HDRUK_SUPERADMIN,
+        permissions: [],
+        enabled: true,
+    }),
 ];
 
-describe("permissions", () => {
-    it("should return a permissions object with correct values", () => {
-        const result = getPermissions(userRoles, teamRoles);
+const teamRoles: Role[] = [
+    generateRoleV1({
+        name: ROLE_CUSTODIAN_TEAM_ADMIN,
+        permissions: [],
+        enabled: true,
+    }),
+];
+
+describe("Permissions utils", () => {
+    it("should return a permissions object for team admin", () => {
+        const result = getPermissions([], teamRoles);
 
         expect(result["fe.account.team_management.member.delete"]).toBeTruthy();
         expect(result["fe.account.nav.dur"]).toBeFalsy();
+    });
+    it("should return a permissions object for team admin and superadmin", () => {
+        const result = getPermissions(userRoles, teamRoles);
+
+        expect(result["fe.account.team_management.member.delete"]).toBeTruthy();
+        expect(result["fe.account.nav.dur"]).toBeTruthy();
     });
 
     it("should handle empty userRoles and teamRoles", () => {

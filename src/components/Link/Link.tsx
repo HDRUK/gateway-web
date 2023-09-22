@@ -4,12 +4,23 @@ import { LinkProps as MuiLinkProps } from "@mui/material";
 
 interface LinkProps extends MuiLinkProps {
     href: string;
-    passHref: boolean;
+    passHref?: boolean;
 }
 
-const Link = ({ href, children, variant, ...props }: LinkProps) => {
+const Link = ({
+    href,
+    passHref = false,
+    children,
+    variant,
+    ...props
+}: LinkProps) => {
     return (
-        <MuiLink href={href} component={NextLink} variant={variant} {...props}>
+        <MuiLink
+            href={href}
+            passHref={passHref}
+            component={NextLink}
+            variant={variant}
+            {...props}>
             {children}
         </MuiLink>
     );

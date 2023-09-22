@@ -8,7 +8,7 @@ import {
     postOptimisticData,
 } from "@/utils/api";
 
-describe("api", () => {
+describe("Api utils", () => {
     const singleItem = { id: 1 };
     const listWithoutPagination = [{ id: 1 }, { id: 2 }, { id: 3 }];
     const listWithPagination = {

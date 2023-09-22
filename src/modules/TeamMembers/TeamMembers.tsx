@@ -162,9 +162,12 @@ const TeamMembers = () => {
         return getColumns(permissions, actions);
     }, [actions, permissions]);
 
-    const handleUpdate = async (updatedData: User[]) => {
-        setData(updatedData);
-        const { changedRoles, allRoles } = getDifferences(updatedData, team!);
+    const handleUpdate = async (updatedUsers: User[]) => {
+        setData(updatedUsers);
+        const { changedRoles, allRoles } = getDifferences(
+            updatedUsers,
+            team.users
+        );
         const changeCount = getChangeCount(changedRoles);
         setRolesToUpdate(allRoles);
 

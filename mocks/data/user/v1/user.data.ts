@@ -58,4 +58,11 @@ const userV1 = generateUserV1();
 const permissionV1 = generatePermissionV1();
 const roleV1 = generateRoleV1();
 
-export { generateUserV1, generatePermissionV1, userV1, permissionV1, roleV1 };
+export {
+    generateUserV1,
+    generatePermissionV1,
+    generateRoleV1,
+    userV1,
+    permissionV1,
+    roleV1,
+};

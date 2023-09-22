@@ -6,7 +6,7 @@ const generatedUser = generateUserV1();
 
 jest.mock("jwt-decode", () => () => ({ user: generatedUser }));
 
-describe("cookies", () => {
+describe("Cookies utils", () => {
     describe("getUserFromToken", () => {
         it("should return null if no token present", () => {
             const user = getUserFromToken(undefined);

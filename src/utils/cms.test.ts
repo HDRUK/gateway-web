@@ -11,7 +11,7 @@ jest.mock("@/services/api/post", () => {
     };
 });
 
-describe("cms utils", () => {
+describe("CMS utils", () => {
     afterEach(() => {
         jest.clearAllMocks();
     });

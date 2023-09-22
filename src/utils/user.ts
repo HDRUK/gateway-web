@@ -4,7 +4,7 @@ const getTeamById = (
     teams: AuthTeam[] | undefined,
     teamId: number | string
 ) => {
-    if (!Array.isArray(teams) || !teamId) return null;
+    if (!Array.isArray(teams) || !teamId) return undefined;
     return teams?.find(team => team.id === parseInt(teamId as string, 10));
 };
 

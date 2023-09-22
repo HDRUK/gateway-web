@@ -75,6 +75,7 @@ module.exports = {
             },
         ],
         camelcase: "off",
+        "react/require-default-props": "off",
         "no-nested-ternary": "off",
         "import/prefer-default-export": "off",
         "react/function-component-definition": [
