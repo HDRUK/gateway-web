@@ -4,7 +4,7 @@ import Typography from "@/components/Typography";
 import Accordion from "@/components/Accordion";
 import { ReleaseNode } from "@/interfaces/Releases";
 
-import { getReleaseByYear } from "@/utils/release-notes";
+import { getReleaseByYear } from "@/utils/releaseNotes";
 import Box from "@/components/Box";
 import HTMLContent from "@/components/HTMLContent";
 

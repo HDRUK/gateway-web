@@ -1,0 +1,157 @@
+import { getTeamNav } from "./nav";
+
+describe("Nav utils", () => {
+    describe("getTeamNav", () => {
+        const teamId = "123";
+
+        it("should include Team Management item with href", () => {
+            const navItems = getTeamNav({}, teamId);
+            const teamManagementItem = navItems.find(
+                item => item.label === "Team Management"
+            );
+
+            expect(teamManagementItem).toBeDefined();
+            expect(teamManagementItem?.href).toBe(
+                "/account/team/123/team-management"
+            );
+        });
+
+        it("should include Datasets item", () => {
+            const navItems = getTeamNav(
+                { "fe.account.nav.datasets": true },
+                teamId
+            );
+            const datasetsItem = navItems.find(
+                item => item.label === "Datasets"
+            );
+
+            expect(datasetsItem).toBeDefined();
+            expect(datasetsItem?.href).toBe("/account/team/123/datasets");
+        });
+
+        it("should include Data Access Requests Applications item", () => {
+            const navItems = getTeamNav(
+                { "fe.account.nav.dar.applications": true },
+                teamId
+            );
+            const darItem = navItems.find(
+                item => item.label === "Data Access Requests"
+            );
+
+            expect(darItem).toBeDefined();
+            expect(darItem?.subItems).toBeDefined();
+
+            const applicationsItem = darItem?.subItems?.find(
+                item => item.label === "Applications"
+            );
+            expect(applicationsItem).toBeDefined();
+            expect(applicationsItem?.href).toBe(
+                "/account/team/123/data-access-requests/applications"
+            );
+        });
+        it("should include Data Access Requests Workflows item", () => {
+            const navItems = getTeamNav(
+                { "fe.account.nav.dar.workflows": true },
+                teamId
+            );
+            const darItem = navItems.find(
+                item => item.label === "Data Access Requests"
+            );
+
+            expect(darItem).toBeDefined();
+            expect(darItem?.subItems).toBeDefined();
+
+            const workflowsItem = darItem?.subItems?.find(
+                item => item.label === "Workflows"
+            );
+
+            expect(workflowsItem).toBeDefined();
+            expect(workflowsItem?.href).toBe(
+                "/account/team/123/data-access-requests/workflows"
+            );
+        });
+        it("should include Data Access Requests Edit form", () => {
+            const navItems = getTeamNav(
+                { "fe.account.nav.dar.editForm": true },
+                teamId
+            );
+            const darItem = navItems.find(
+                item => item.label === "Data Access Requests"
+            );
+
+            expect(darItem).toBeDefined();
+            expect(darItem?.subItems).toBeDefined();
+
+            const editFormItem = darItem?.subItems?.find(
+                item => item.label === "Edit Form"
+            );
+
+            expect(editFormItem).toBeDefined();
+            expect(editFormItem?.href).toBe(
+                "/account/team/123/data-access-requests/edit-form"
+            );
+        });
+
+        it("should include Data Uses item", () => {
+            const navItems = getTeamNav({ "fe.account.nav.dur": true }, teamId);
+            const dataUsesItem = navItems.find(
+                item => item.label === "Data Uses"
+            );
+
+            expect(dataUsesItem).toBeDefined();
+            expect(dataUsesItem?.href).toBe("/account/team/123/data-uses/");
+        });
+
+        it("should include API management", () => {
+            const navItems = getTeamNav(
+                { "fe.account.nav.integrations.api-management": true },
+                teamId
+            );
+            const integrationsItem = navItems.find(
+                item => item.label === "Integrations"
+            );
+
+            expect(integrationsItem).toBeDefined();
+            expect(integrationsItem?.subItems).toBeDefined();
+
+            const apiManagementItem = integrationsItem?.subItems?.find(
+                item => item.label === "API management"
+            );
+
+            expect(apiManagementItem).toBeDefined();
+            expect(apiManagementItem?.href).toBe(
+                "/account/team/123/integrations/api-management"
+            );
+        });
+
+        it("should include Integrations", () => {
+            const navItems = getTeamNav(
+                { "fe.account.nav.integrations.integration": true },
+                teamId
+            );
+            const integrationsItem = navItems.find(
+                item => item.label === "Integrations"
+            );
+
+            expect(integrationsItem).toBeDefined();
+            expect(integrationsItem?.subItems).toBeDefined();
+
+            const integrationItem = integrationsItem?.subItems?.find(
+                item => item.label === "Integration"
+            );
+
+            expect(integrationItem).toBeDefined();
+            expect(integrationItem?.href).toBe(
+                "/account/team/123/integrations/integration"
+            );
+        });
+
+        it("should include Help item", () => {
+            const navItems = getTeamNav({}, teamId);
+            const helpItem = navItems.find(item => item.label === "Help");
+
+            expect(helpItem).toBeDefined();
+            expect(helpItem?.href).toBe("/account/team/123/help");
+        });
+    });
+});

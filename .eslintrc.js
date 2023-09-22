@@ -75,6 +75,7 @@ module.exports = {
             },
         ],
         camelcase: "off",
+        "react/require-default-props": "off",
         "no-nested-ternary": "off",
         "import/prefer-default-export": "off",
         "react/function-component-definition": [
@@ -96,5 +97,17 @@ module.exports = {
             },
         ],
         "no-undef": "off",
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                devDependencies: [
+                    "**/*{.,_}{test}.{ts,tsx}",
+                    "**/jest.config.ts",
+                    "**/jest.setup.ts",
+                    "**/src/utils/testUtils.tsx",
+                ],
+                optionalDependencies: false,
+            },
+        ],
     },
 };

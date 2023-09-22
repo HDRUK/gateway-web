@@ -25,10 +25,10 @@ const customJestConfig = {
         "<rootDir>/node_modules/",
         "<rootDir>/coverage",
         "<rootDir>/dist",
-        "<rootDir>/__tests__/testUtils.tsx",
+        "<rootDir>/src/utils/testUtils.tsx",
     ],
     coveragePathIgnorePatterns: [
-        "<rootDir>/__tests__/testUtils.tsx",
+        "<rootDir>/src/utils/testUtils.tsx",
         "<rootDir>/node_modules",
         "<rootDir>/mocks",
         "<rootDir>/src/config",

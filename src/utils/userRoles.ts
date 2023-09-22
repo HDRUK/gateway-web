@@ -1,5 +1,4 @@
 import { Role } from "@/interfaces/Role";
-import { Team } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 
 export type RoleType = { [key: string]: boolean };
@@ -9,19 +8,19 @@ export interface RolesPayload {
     roles: RoleType;
 }
 
-const findUserById = (team: Team, userId: number) => {
-    return team?.users.find(user => user.id === userId);
+const findUserById = (users: User[], userId: number) => {
+    return users.find(user => user.id === userId);
 };
 
 const filterEnabledRoles = (
     roles: Role[],
     userId: number,
-    team: Team
+    users: User[]
 ): RoleType => {
     return roles.reduce((result, role) => {
         if (
             role.enabled ||
-            findUserById(team, userId)?.roles.some(r => r.name === role.name)
+            findUserById(users, userId)?.roles.some(r => r.name === role.name)
         ) {
             return {
                 ...result,
@@ -47,15 +46,15 @@ const getChangedRoles = (
     return changedRoles;
 };
 
-const getDifferences = (updatedData: User[], team: Team) => {
-    const initialUsers = team.users.map(user => ({
+const getDifferences = (updatedData: User[] = [], users: User[] = []) => {
+    const initialUsers = users.map(user => ({
         userId: user.id,
-        roles: filterEnabledRoles(user.roles, user.id, team),
+        roles: filterEnabledRoles(user.roles, user.id, users),
     }));
 
     const updatedUsers = updatedData.map(user => ({
         userId: user.id,
-        roles: filterEnabledRoles(user.roles, user.id, team),
+        roles: filterEnabledRoles(user.roles, user.id, users),
     }));
 
     const changedRoles: RolesPayload[] = [];
@@ -90,4 +89,10 @@ const getChangeCount = (payloads: RolesPayload[]): number => {
         }, 0);
 };
 
-export { getDifferences, getChangeCount };
+export {
+    getDifferences,
+    getChangeCount,
+    findUserById,
+    filterEnabledRoles,
+    getChangedRoles,
+};

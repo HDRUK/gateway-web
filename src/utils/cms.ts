@@ -3,6 +3,7 @@ import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
 import { ReleaseNotesResponse } from "@/interfaces/Releases";
 import { postRequest } from "@/services/api/post";
+import { MissionAndPurposesResponse } from "@/interfaces/MissionAndPurposes";
 
 const fetchFromCMS = async <T>(
     query = "",
