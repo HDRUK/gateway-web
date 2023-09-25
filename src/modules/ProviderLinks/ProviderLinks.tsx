@@ -48,14 +48,14 @@ const ProviderLinks = () => {
             {providerLinks.map(link => (
                 <Link
                     href={link.href}
+                    key={link.image}
                     underline="none"
                     sx={{ color: colors.grey700 }}>
                     <Box
-                        key={link.href}
                         sx={{
                             border: `solid 1px ${colors.grey400}`,
                             borderRadius: "4px",
-                            padding: "8px",
+                            padding: "7px",
                             display: "flex",
                             gap: 2,
                         }}>
