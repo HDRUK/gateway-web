@@ -1,5 +1,6 @@
 import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
 import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
@@ -32,6 +33,7 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 export {
+    CheckCircleIcon,
     ArrowBackIosNewIcon,
     ArrowRightIcon,
     ArrowLeftIcon,

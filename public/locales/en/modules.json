@@ -1,7 +1,7 @@
 {
     "dialogs": {
         "ProvidersDialog": {
-            "title": "Sign in or create a new account",
+            "title": "Sign in or create an account",
             "signIn": "Sign in with username",
             "socialProviders": {
                 "azure": "Azure",

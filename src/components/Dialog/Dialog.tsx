@@ -3,13 +3,14 @@ import MuiDialogTitle from "@mui/material/DialogTitle";
 import React, { ReactNode } from "react";
 import useDialog from "@/hooks/useDialog";
 import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
-import { IconButton } from "@mui/material";
+import { IconButton, SxProps } from "@mui/material";
 import { CloseIcon } from "@/consts/icons";
 
 export interface DialogProps {
     children: ReactNode;
     onClose?: (props: unknown) => void;
     title: string;
+    titleSx?: SxProps;
     showCloseButton?: boolean;
     styleProps?: MuiDialogProps;
 }
@@ -18,6 +19,7 @@ const Dialog = ({
     title,
     styleProps,
     children,
+    titleSx,
     showCloseButton,
     onClose,
 }: DialogProps) => {
@@ -53,7 +55,7 @@ const Dialog = ({
                     <CloseIcon />
                 </IconButton>
             )}
-            <MuiDialogTitle>{title}</MuiDialogTitle>
+            <MuiDialogTitle sx={{ ...titleSx }}>{title}</MuiDialogTitle>
             {children}
         </MuiDialog>
     );
@@ -62,6 +64,7 @@ const Dialog = ({
 Dialog.defaultProps = {
     showCloseButton: true,
     styleProps: {},
+    titleSx: {},
     onClose: () => null,
 };
 

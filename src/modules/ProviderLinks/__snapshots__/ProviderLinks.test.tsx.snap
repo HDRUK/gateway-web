@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProviderLinks should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-6bfkjt"
+  >
+    <div
+      class="MuiBox-root mui-style-1t6hs1a"
+    >
+      <img
+        alt="dialogs.ProvidersDialog.socialProviders.azure"
+        data-nimg="1"
+        decoding="async"
+        height="20"
+        loading="lazy"
+        src="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75"
+        srcset="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75 2x"
+        style="color: transparent;"
+        width="20"
+      />
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1qmnj94-MuiTypography-root-MuiLink-root"
+        href="http://localhost:8000/api/v1/auth/azure"
+      >
+        dialogs.ProvidersDialog.socialProviders.azure
+      </a>
+    </div>
+    <div
+      class="MuiBox-root mui-style-1t6hs1a"
+    >
+      <img
+        alt="dialogs.ProvidersDialog.socialProviders.linkedIn"
+        data-nimg="1"
+        decoding="async"
+        height="20"
+        loading="lazy"
+        src="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75"
+        srcset="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75 2x"
+        style="color: transparent;"
+        width="20"
+      />
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1qmnj94-MuiTypography-root-MuiLink-root"
+        href="http://localhost:8000/api/v1/auth/linkedin"
+      >
+        dialogs.ProvidersDialog.socialProviders.linkedIn
+      </a>
+    </div>
+    <div
+      class="MuiBox-root mui-style-1t6hs1a"
+    >
+      <img
+        alt="dialogs.ProvidersDialog.socialProviders.google"
+        data-nimg="1"
+        decoding="async"
+        height="20"
+        loading="lazy"
+        src="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75"
+        srcset="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75 2x"
+        style="color: transparent;"
+        width="20"
+      />
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1qmnj94-MuiTypography-root-MuiLink-root"
+        href="http://localhost:8000/api/v1/auth/google"
+      >
+        dialogs.ProvidersDialog.socialProviders.google
+      </a>
+    </div>
+  </div>
+</div>
+`;
