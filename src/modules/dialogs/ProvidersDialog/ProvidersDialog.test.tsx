@@ -16,25 +16,38 @@ describe("ProvidersDialog", () => {
     it("should render azure link", async () => {
         render(<ProvidersDialog />);
         const azureButton = screen.getByText(
-            "dialogs.ProvidersDialog.socialProviders.azure"
+            "dialogs.ProvidersDialog.socialProviders.azure",
+            { exact: false }
         );
         expect(azureButton).toBeInTheDocument();
-        expect(azureButton).toHaveAttribute("href", apis.authAzureV1Url);
+
+        expect(azureButton.closest("a")).toHaveAttribute(
+            "href",
+            apis.authAzureV1Url
+        );
     });
     it("should render google link", async () => {
         render(<ProvidersDialog />);
         const googleButton = screen.getByText(
-            "dialogs.ProvidersDialog.socialProviders.google"
+            "dialogs.ProvidersDialog.socialProviders.google",
+            { exact: false }
         );
         expect(googleButton).toBeInTheDocument();
-        expect(googleButton).toHaveAttribute("href", apis.authGoogleV1Url);
+        expect(googleButton.closest("a")).toHaveAttribute(
+            "href",
+            apis.authGoogleV1Url
+        );
     });
     it("should render linkedIn link", async () => {
         render(<ProvidersDialog />);
         const linkedInButton = screen.getByText(
-            "dialogs.ProvidersDialog.socialProviders.linkedIn"
+            "dialogs.ProvidersDialog.socialProviders.linkedIn",
+            { exact: false }
         );
         expect(linkedInButton).toBeInTheDocument();
-        expect(linkedInButton).toHaveAttribute("href", apis.authLinkedinV1Url);
+        expect(linkedInButton.closest("a")).toHaveAttribute(
+            "href",
+            apis.authLinkedinV1Url
+        );
     });
 });
