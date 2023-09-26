@@ -1,5 +1,5 @@
-import SocialProviders from "@/modules/profile/SocialProviders";
 import * as yup from "yup";
+import { REGEX_ALPHA_ONLY } from "@/consts/regex";
 import { inputComponents } from ".";
 
 const defaultValues = {
@@ -20,8 +20,22 @@ const defaultValues = {
 
 const validationSchema = yup
     .object({
-        firstname: yup.string().required().label("First name"),
-        lastname: yup.string().required().label("Last name"),
+        firstname: yup
+            .string()
+            .matches(
+                REGEX_ALPHA_ONLY,
+                "Please fill this field with alphabetic character(s) only"
+            )
+            .required()
+            .label("First name"),
+        lastname: yup
+            .string()
+            .matches(
+                REGEX_ALPHA_ONLY,
+                "Please fill this field with alphabetic character(s) only"
+            )
+            .required()
+            .label("Last name"),
         email: yup.string().email().required().label("Primary email"),
         sector_id: yup
             .number()
@@ -49,16 +63,24 @@ const formFields = [
         required: true,
     },
     {
-        label: "Primary email",
-        info: "Please enter your primary email address as this will be used for all contact from Health Data Research no matter how you choose to sign in",
+        label: "SSO",
+        info: "Please enter your primary email address as this will be used for all contact form Health Data Research no mater how you choose to sign in",
         name: "email",
         component: inputComponents.TextField,
         required: true,
+        readonly: true,
     },
     {
-        label: "Your preferred sign in method",
-        customComponent: SocialProviders,
-        name: "provider",
+        label: "Secondary emali",
+        info: "Enter a secondary email address if you want contact from Health Data Research to an alternative address",
+        name: "secondary_email",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Notification setting",
+        info: "Select your preferred notification email address",
+        name: "preferred_email",
+        component: inputComponents.TextField,
     },
     {
         label: "Sector",

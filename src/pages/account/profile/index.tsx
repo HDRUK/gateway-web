@@ -20,8 +20,8 @@ const ProfilePage = () => {
                     <Box>
                         <Typography variant="h2">Your profile</Typography>
                         <Typography sx={{ marginBottom: 4 }}>
-                            Your details are used when you make a data access
-                            request application.
+                            Use this form to register an account and update your
+                            account on the Gateway
                         </Typography>
                         {isLoading ? (
                             <CircularProgress color="secondary" />
