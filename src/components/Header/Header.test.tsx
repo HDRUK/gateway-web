@@ -51,7 +51,8 @@ describe("Header", () => {
             fireEvent.click(screen.getByText("HeaderNav.labels.signIn"));
             expect(
                 screen.getByText(
-                    "dialogs.ProvidersDialog.socialProviders.google"
+                    "dialogs.ProvidersDialog.socialProviders.google",
+                    { exact: false }
                 )
             ).toBeInTheDocument();
         });

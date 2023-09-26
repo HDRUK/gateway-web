@@ -1,6 +1,17 @@
 import { createTheme } from "@mui/material/styles";
 import { buttonLinkStyle } from "./overrides";
 
+export type colourType =
+    | "inherit"
+    | "action"
+    | "disabled"
+    | "primary"
+    | "secondary"
+    | "error"
+    | "info"
+    | "success"
+    | "warning";
+
 declare module "@mui/material/Button" {
     interface ButtonPropsVariantOverrides {
         link: true;
