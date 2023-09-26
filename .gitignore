@@ -39,3 +39,6 @@ next-env.d.ts
 tiltconf.json
 
 .vscode/
+
+# logs
+build-storybook.log
