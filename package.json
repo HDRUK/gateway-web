@@ -66,6 +66,7 @@
         "@testing-library/user-event": "^14.4.3",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "axios-mock-adapter": "^1.22.0",
+        "chromatic": "^7.2.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-jsx-a11y": "^6.7.1",
