@@ -3,7 +3,12 @@
 import MuiCheckbox, {
     CheckboxProps as MuiCheckboxProps,
 } from "@mui/material/Checkbox";
-import { FormControl, FormControlLabel, SxProps } from "@mui/material";
+import {
+    FormControl,
+    FormControlLabel,
+    FormHelperText,
+    SxProps,
+} from "@mui/material";
 import { Control, useController } from "react-hook-form";
 import {
     CheckBoxOutlineBlankSharpIcon,
@@ -62,6 +67,11 @@ const Checkbox = (props: CheckboxProps) => {
                 }
                 label={label}
             />
+            {error && (
+                <FormHelperText sx={{ fontSize: 14 }} error>
+                    {error.message}
+                </FormHelperText>
+            )}
         </FormControl>
     );
 };

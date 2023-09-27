@@ -20,11 +20,12 @@ import KeepingUpdated from "@/modules/profile/KeepingUpdated";
 import Loading from "@/components/Loading";
 import apis from "@/config/apis";
 import useAuth from "@/hooks/useAuth";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
 const ProfileForm = () => {
     const { user } = useAuth();
     const updateProfile = usePut<User>(apis.usersV1Url, {
-        itemName: "Profile",
+        itemName: "Account",
     });
     const { data: sectors = [], isLoading: isSectorLoading } = useGet<Sector[]>(
         apis.sectorsV1Url
@@ -47,9 +48,24 @@ const ProfileForm = () => {
         [sectors]
     );
 
-    const { control, handleSubmit, getValues, reset } = useForm<User>({
-        resolver: yupResolver(profileValidationSchema),
-        defaultValues: { ...profileDefaultValues, ...user },
+    const { control, handleSubmit, getValues, reset, formState } =
+        useForm<User>({
+            resolver: yupResolver(profileValidationSchema),
+            defaultValues: {
+                ...profileDefaultValues,
+                ...user,
+            },
+        });
+
+    useUnsavedChanges({
+        shouldConfirmLeave: formState.isDirty,
+        modalProps: {
+            confirmText: "Stay on page",
+            cancelText: "Exit without saving",
+            title: "Are your sure you want to exit?",
+            content:
+                "Changes to your profile account are not automatically saved.",
+        },
     });
 
     const submitForm = (formData: User) => {
@@ -62,7 +78,7 @@ const ProfileForm = () => {
         if (!user) {
             return;
         }
-        reset(user);
+        reset({ ...profileDefaultValues, ...user });
     }, [reset, user]);
 
     if (isSectorLoading) return <Loading />;

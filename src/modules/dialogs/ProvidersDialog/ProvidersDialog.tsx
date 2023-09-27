@@ -4,7 +4,7 @@ import MuiDialogContent from "@mui/material/DialogContent";
 import Link from "@/components/Link";
 import Dialog from "@/components/Dialog";
 import BulletList from "@/components/BulletList";
-import { CUSTOMER_PORTAL_SUPPORT } from "@/config/hrefs";
+import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ProviderLinks from "@/modules/ProviderLinks";
 import { useTranslation } from "react-i18next";
 
@@ -41,7 +41,7 @@ const ProvidersDialog = () => {
                     organisation and follow the on-screen instructions:
                 </p>
                 <ProviderLinks />
-                <Link href={CUSTOMER_PORTAL_SUPPORT}>
+                <Link href={CUSTOMER_PORTAL_SUPPORT_URL}>
                     Suggest another identity provider
                 </Link>
             </MuiDialogContent>
