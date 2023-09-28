@@ -31,6 +31,25 @@ const ProfileForm = () => {
         apis.sectorsV1Url
     );
 
+    const {
+        setValue,
+        control,
+        handleSubmit,
+        getValues,
+        reset,
+        formState,
+        watch,
+    } = useForm<User>({
+        mode: "onTouched",
+        resolver: yupResolver(profileValidationSchema),
+        defaultValues: {
+            ...profileDefaultValues,
+            ...user,
+        },
+    });
+
+    const secondaryEmail = watch("secondary_email");
+
     const hydratedFormFields = useMemo(
         () =>
             profileFormFields.map(field => {
@@ -43,19 +62,22 @@ const ProfileForm = () => {
                         })),
                     };
                 }
+                if (field.name === "preferred_email") {
+                    return {
+                        ...field,
+                        disabled: !secondaryEmail,
+                    };
+                }
                 return field;
             }),
-        [sectors]
+        [sectors, secondaryEmail]
     );
 
-    const { control, handleSubmit, getValues, reset, formState } =
-        useForm<User>({
-            resolver: yupResolver(profileValidationSchema),
-            defaultValues: {
-                ...profileDefaultValues,
-                ...user,
-            },
-        });
+    useEffect(() => {
+        if (!secondaryEmail) {
+            setValue("preferred_email", "primary");
+        }
+    }, [secondaryEmail, setValue]);
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,

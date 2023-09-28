@@ -78,7 +78,6 @@ const formFields = [
     },
     {
         label: "SSO email",
-        info: "Please enter your primary email address as this will be used for all contact from Health Data Research no matter how you choose to sign in",
         name: "email",
         component: inputComponents.TextField,
         required: true,

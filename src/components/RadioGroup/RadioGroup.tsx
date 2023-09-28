@@ -14,6 +14,7 @@ export interface RadioGroupProps {
     name: string;
     info?: string;
     required?: boolean;
+    disabled?: boolean;
     isRow: boolean;
     radios: { value: string; label: string }[];
     control: Control;
@@ -28,6 +29,7 @@ const RadioGroup = ({
     radios,
     control,
     name,
+    disabled = false,
     info,
     required = false,
     isRow = false,
@@ -60,11 +62,7 @@ const RadioGroup = ({
                                 <FormControlLabel
                                     key={value}
                                     sx={radioSx}
-                                    control={
-                                        <Radio
-                                        // checked={fieldProps.value === radio.value}
-                                        />
-                                    }
+                                    control={<Radio disabled={disabled} />}
                                     value={value}
                                     label={radioLabel}
                                 />
