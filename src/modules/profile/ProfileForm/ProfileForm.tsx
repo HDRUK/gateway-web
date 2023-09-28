@@ -84,7 +84,7 @@ const ProfileForm = () => {
         modalProps: {
             confirmText: "Stay on page",
             cancelText: "Exit without saving",
-            title: "Are your sure you want to exit?",
+            title: "Are you sure you want to exit?",
             content:
                 "Changes to your profile account are not automatically saved.",
         },

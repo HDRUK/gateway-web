@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { REGEX_ALPHA_ONLY, REGEX_NUMERIC_ONLY } from "@/consts/regex";
+import { GATEWAY_TERMS_URL } from "@/config/hrefs";
 import { inputComponents } from ".";
-import { GATEWAY_TERMS_URL } from "../hrefs";
 
 const defaultValues = {
     firstname: "",
