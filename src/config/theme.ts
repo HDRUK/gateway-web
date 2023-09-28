@@ -230,6 +230,18 @@ const theme = createTheme({
                         {
                             borderColor: colors.grey400,
                         },
+                    "&.MuiOutlinedInput-root.Mui-readOnly": {
+                        color: colors.grey600,
+                        backgroundColor: colors.grey200,
+                    },
+                    "&.MuiOutlinedInput-root.Mui-readOnly .MuiOutlinedInput-notchedOutline":
+                        {
+                            borderColor: colors.grey400,
+                        },
+                    "&.MuiOutlinedInput-root.Mui-readOnly:hover .MuiOutlinedInput-notchedOutline":
+                        {
+                            borderColor: colors.grey400,
+                        },
                 },
             },
         },

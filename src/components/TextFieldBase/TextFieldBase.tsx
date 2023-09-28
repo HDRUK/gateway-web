@@ -90,7 +90,6 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
         <FormControl fullWidth sx={{ m: 0, mb: 2 }}>
             <Label
                 required={required}
-                htmlFor="outlined-adornment-amount"
                 label={label}
                 sx={{
                     ...(disabled && {

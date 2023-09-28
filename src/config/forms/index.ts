@@ -7,5 +7,6 @@ export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
     Checkbox: "Checkbox",
     TextField: "TextField",
     Select: "Select",
+    RadioGroup: "RadioGroup",
     TextArea: "TextArea",
 };

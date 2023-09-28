@@ -13,6 +13,7 @@ import Checkbox from "@/components/Checkbox";
 import { CheckboxProps } from "@/components/Checkbox/Checkbox";
 import CheckboxGroup from "@/components/CheckboxGroup";
 import CheckboxRow from "@/components/CheckboxRow";
+import RadioGroup from "@/components/RadioGroup";
 import Autocomplete from "@/components/Autocomplete";
 
 type InputType =
@@ -47,6 +48,7 @@ function InputWrapper<T extends FieldValues>({
         Checkbox,
         TextField,
         Select,
+        RadioGroup,
         TextArea,
     };
 

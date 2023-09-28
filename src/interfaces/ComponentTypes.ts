@@ -4,6 +4,7 @@ type ComponentTypes =
     | "CheckboxRow"
     | "Checkbox"
     | "TextField"
+    | "RadioGroup"
     | "Select"
     | "TextArea";
 
