@@ -14,6 +14,7 @@ import TextField from "@mui/material/TextField";
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import { ReactNode } from "react";
+import FormError from "@/components/FormError";
 
 type ValueType = string | number;
 type OptionsType = { id: ValueType; label: string; icon?: IconType }[];
@@ -28,6 +29,7 @@ export interface SelectProps {
     options: OptionsType;
     canCreate?: boolean;
     multiple?: boolean;
+    trigger?: (name: string) => void;
     setValue?: (name: string, value: unknown) => void;
     freeSolo?: boolean;
     placeholder?: string;
@@ -48,6 +50,7 @@ const Autocomplete = (props: SelectProps) => {
         info,
         createLabel,
         control,
+        trigger,
         name,
         placeholder,
         startAdornmentIcon,
@@ -84,7 +87,7 @@ const Autocomplete = (props: SelectProps) => {
     };
 
     return (
-        <FormControl fullWidth>
+        <FormControl fullWidth sx={{ mb: 2 }}>
             <FormLabel>{label}</FormLabel>
 
             {info && (
@@ -113,7 +116,12 @@ const Autocomplete = (props: SelectProps) => {
                             if (typeof value === "string") return value;
                             return value?.value;
                         });
-                        setValue(name, values);
+                        if (typeof setValue === "function") {
+                            setValue(name, values);
+                        }
+                        if (typeof trigger === "function") {
+                            trigger(name);
+                        }
                     }
                 }}
                 {...(canCreate && {
@@ -143,11 +151,7 @@ const Autocomplete = (props: SelectProps) => {
                     />
                 )}
             />
-            {error && (
-                <FormHelperText sx={{ fontSize: 14 }} error>
-                    {error.message}
-                </FormHelperText>
-            )}
+            {error && <FormError error={error} />}
         </FormControl>
     );
 };

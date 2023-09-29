@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { Control, Controller, useController } from "react-hook-form";
 import Label from "@/components/Label";
+import FormError from "@/components/FormError";
 
 export interface RadioGroupProps {
     label: string;
@@ -71,11 +72,7 @@ const RadioGroup = ({
                     </MuiRadioGroup>
                 )}
             />
-            {error && (
-                <FormHelperText sx={{ fontSize: 14 }} error>
-                    {error.message}
-                </FormHelperText>
-            )}
+            {error && <FormError error={error} />}
         </FormControl>
     );
 };

@@ -23,7 +23,15 @@ interface EditApplicationFormProps {
 }
 
 const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
-    const { control, handleSubmit, getValues, reset } = useForm<Application>({
+    const {
+        control,
+        handleSubmit,
+        getValues,
+        reset,
+        setValue,
+        trigger,
+        formState: { errors },
+    } = useForm<Application>({
         resolver: yupResolver(applicationValidationSchema),
         defaultValues: {
             ...applicationDefaultValues,
@@ -35,12 +43,18 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
         reset(application);
     }, [application, reset]);
 
+    useEffect(() => {
+        console.log("errors: ", errors);
+    }, [errors]);
+
     const updateApplication = usePut<Application>(`${apis.applicationsV1Url}`, {
         itemName: "Application",
     });
 
     const submitForm = (formData: Application) => {
+        console.log("boo");
         const payload = { ...applicationDefaultValues, ...formData };
+        console.log("payload: ", payload);
         updateApplication(payload.id, payload);
     };
 
@@ -55,6 +69,8 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
                     {applicationFormFields.map(field => (
                         <InputWrapper
                             getValues={getValues}
+                            setValue={setValue}
+                            trigger={trigger}
                             key={field.name}
                             control={control}
                             {...field}

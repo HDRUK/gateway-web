@@ -16,12 +16,16 @@ const CreateAppPage = () => {
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Create" />
             <AccountLayout>
                 <BackButton label="Back to API Management" />
-                <Paper>
+                <Paper sx={{ marginBottom: 1 }}>
                     <Box>
-                        <Typography variant="h2">Create API</Typography>
-                        <CreateApplicationForm />
+                        <Typography variant="h2">API management</Typography>
+                        <Typography sx={{ marginBottom: 2 }}>
+                            Use this form to create, update and manage your api
+                            on the Gateway
+                        </Typography>
                     </Box>
                 </Paper>
+                <CreateApplicationForm />
                 <ActionBar />
             </AccountLayout>
         </>

@@ -1,5 +1,6 @@
+import { REGEX_ALPHA_NUMERIC_ONLY, REGEX_NUMERIC_ONLY } from "@/consts/regex";
 import * as yup from "yup";
-import ToggleButton from "@/components/Switch";
+import { inputComponents } from ".";
 
 const defaultValues = {
     name: "",
@@ -11,44 +12,61 @@ const defaultValues = {
 
 const validationSchema = yup
     .object({
-        name: yup.string().required().label("Public app name"),
-        image_link: yup.string().required().label("App logo"),
-        tags: yup.array(),
-        description: yup.string().required(),
+        name: yup
+            .string()
+            .matches(
+                REGEX_ALPHA_NUMERIC_ONLY,
+                "Public API should have alphanumeric characters only"
+            )
+            .required()
+            .label("Public API name"),
+        tags: yup
+            .array()
+            .of(
+                yup
+                    .string()
+                    .matches(
+                        REGEX_NUMERIC_ONLY,
+                        "Tag(s) should have numeric characters only"
+                    )
+                    .required()
+            )
+            .strict()
+            .required(),
+        description: yup.string().required().label("Description"),
     })
     .required();
 
 const formFields = [
     {
-        unCheckedLabel: "Disabled",
-        checkedLabel: "Enabled",
-        name: "enabled",
-        customComponent: ToggleButton,
-        required: true,
-    },
-    {
-        label: "Public app name",
+        label: "Public API name",
         name: "name",
-        component: "TextField",
+        component: inputComponents.TextField,
         required: true,
     },
     {
-        // Placeholder until component is built
-        label: "App logo",
-        name: "image_link",
-        required: true,
-        component: "TextField",
+        label: "Tag(s)",
+        name: "tags",
+        createLabel: "Add tag",
+        selectOnFocus: true,
+        clearOnBlur: true,
+        handleHomeEndKeys: true,
+        freeSolo: true,
+        multiple: true,
+        canCreate: true,
+        options: [],
+        getOptionLabel: (
+            option: string | { label: string; value: unknown }
+        ) => {
+            if (typeof option === "string") return option;
+            return option?.label;
+        },
+        component: inputComponents.Autocomplete,
     },
-    // {
-    //     label: "Add tag",
-    //     name: "tags",
-    //     component: "TextField",
-    //     required: false,
-    // },
     {
         label: "Description",
         name: "description",
-        component: "TextArea",
+        component: inputComponents.TextArea,
         limit: 300,
         required: true,
     },

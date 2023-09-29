@@ -28,6 +28,7 @@ interface InputWrapperProps<T extends FieldValues> {
     component: ComponentTypes;
     getValues?: UseFormGetValues<T>;
     setValue?: unknown;
+    trigger?: unknown;
     watch?: (name: string) => void;
 }
 
@@ -35,7 +36,8 @@ function InputWrapper<T extends FieldValues>({
     component,
     ...props
 }: InputWrapperProps<T> & InputType) {
-    const { customComponent, getValues, setValue, watch, ...rest } = props;
+    const { customComponent, getValues, setValue, watch, trigger, ...rest } =
+        props;
     if (customComponent) {
         const CustomComponent = customComponent;
         return <CustomComponent getValues={getValues} {...rest} />;
@@ -64,6 +66,7 @@ function InputWrapper<T extends FieldValues>({
             component === inputComponents.Autocomplete) && {
             setValue,
             watch,
+            trigger,
         }),
     };
 

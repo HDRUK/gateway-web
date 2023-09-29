@@ -1,15 +1,9 @@
-import { useSWRConfig } from "swr";
 import apiService from "@/services/api";
 import { useTranslation } from "next-i18next";
 import { HttpOptions } from "@/interfaces/Api";
-import {
-    ThrowPaginationError,
-    postMutateData,
-    postOptimisticData,
-} from "@/utils/api";
+import { ThrowPaginationError } from "@/utils/api";
 
 const usePost = <T>(url: string, options?: HttpOptions) => {
-    const { mutate } = useSWRConfig();
     const { t, i18n } = useTranslation("api");
     const {
         localeKey,
@@ -17,40 +11,22 @@ const usePost = <T>(url: string, options?: HttpOptions) => {
         action,
         successNotificationsOn,
         errorNotificationsOn,
-        data = {},
-        ...mutatorOptions
     } = options || {};
 
     ThrowPaginationError(options);
 
-    return (payload: Omit<T, "id">) => {
-        mutate(
-            options?.paginationKey || url,
-            async () => {
-                const id: string | number = await apiService.postRequest(
-                    url,
-                    payload,
-                    {
-                        notificationOptions: {
-                            localeKey,
-                            itemName,
-                            successNotificationsOn,
-                            errorNotificationsOn,
-                            t,
-                            i18n,
-                            action,
-                        },
-                    }
-                );
-                return postMutateData({ options, data, payload, id });
+    return async (payload: Omit<T, "id">) => {
+        return await apiService.postRequest<T>(url, payload, {
+            notificationOptions: {
+                localeKey,
+                itemName,
+                successNotificationsOn,
+                errorNotificationsOn,
+                t,
+                i18n,
+                action,
             },
-            {
-                // data to immediately update the client cache
-                optimisticData: postOptimisticData({ options, data, payload }),
-                rollbackOnError: true,
-                ...mutatorOptions,
-            }
-        );
+        });
     };
 };
 
