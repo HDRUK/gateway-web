@@ -9,8 +9,8 @@ const usePost = <T>(url: string, options?: HttpOptions) => {
         localeKey,
         itemName,
         action,
-        successNotificationsOn,
-        errorNotificationsOn,
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
     } = options || {};
 
     ThrowPaginationError(options);

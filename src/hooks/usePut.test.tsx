@@ -1,16 +1,14 @@
-import { filterV1, userV1 } from "@/mocks/data";
+import { userV1 } from "@/mocks/data";
 import usePut from "@/hooks/usePut";
-import { Filter } from "@/interfaces/Filter";
+import * as apiService from "@/services/api/put";
 import { User } from "@/interfaces/User";
 import apis from "@/config/apis";
-import { act, renderHook, waitFor } from "@/utils/testUtils";
+import { renderHook, waitFor } from "@/utils/testUtils";
 
-const mockMutate = jest.fn();
-
-jest.mock("swr", () => {
+jest.mock("@/services/api/put", () => {
     return {
-        ...jest.requireActual("swr"),
-        useSWRConfig: () => ({ mutate: mockMutate }),
+        ...jest.requireActual("@/services/api/put"),
+        putRequest: jest.fn(),
         __esModule: true,
     };
 });
@@ -20,26 +18,32 @@ describe("usePut", () => {
         jest.clearAllMocks();
     });
 
-    it("should call mutate with correct arguments for updating a single item", async () => {
-        const { result } = renderHook(() => usePut<User>(apis.usersV1Url));
-        const { current: createFunction } = result;
+    it("should call putRequest with correct arguments", async () => {
+        const { result } = renderHook(() =>
+            usePut<User>(apis.usersV1Url, {
+                localeKey: "mockLocaleKey",
+                itemName: "mockItemName",
+            })
+        );
 
-        await createFunction(userV1.id, userV1);
+        await result.current(userV1.id, userV1);
 
         await waitFor(() =>
-            expect(mockMutate).toHaveBeenCalledWith(
-                apis.usersV1Url,
-                expect.any(Function),
-                { optimisticData: userV1, rollbackOnError: true }
+            expect(apiService.putRequest).toHaveBeenCalledWith(
+                `${apis.usersV1Url}/${userV1.id}`,
+                userV1,
+                {
+                    notificationOptions: {
+                        action: undefined,
+                        errorNotificationsOn: true,
+                        i18n: { changeLanguage: expect.any(Function) },
+                        itemName: "mockItemName",
+                        localeKey: "mockLocaleKey",
+                        successNotificationsOn: true,
+                        t: expect.any(Function),
+                    },
+                }
             )
         );
-    });
-    it("should call mutate with correct arguments for updating an item in an array", async () => {
-        const { result } = renderHook(() => usePut<Filter>(apis.filtersV1Url));
-        act(() => {
-            result.current(userV1.id, filterV1);
-        });
-
-        await waitFor(() => expect(mockMutate).toHaveBeenCalled());
     });
 });

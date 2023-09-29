@@ -4,7 +4,7 @@ import { inputComponents } from ".";
 
 const defaultValues = {
     name: "",
-    image_link: "",
+    image_link: "http://www.bbc.co.uk",
     tags: [],
     description: "",
     enabled: false,

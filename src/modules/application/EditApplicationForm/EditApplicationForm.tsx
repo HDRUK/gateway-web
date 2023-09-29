@@ -23,38 +23,25 @@ interface EditApplicationFormProps {
 }
 
 const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
-    const {
-        control,
-        handleSubmit,
-        getValues,
-        reset,
-        setValue,
-        trigger,
-        formState: { errors },
-    } = useForm<Application>({
-        resolver: yupResolver(applicationValidationSchema),
-        defaultValues: {
-            ...applicationDefaultValues,
-            ...application,
-        },
-    });
+    const { control, handleSubmit, getValues, reset, setValue, trigger } =
+        useForm<Application>({
+            resolver: yupResolver(applicationValidationSchema),
+            defaultValues: {
+                ...applicationDefaultValues,
+                ...application,
+            },
+        });
 
     useEffect(() => {
         reset(application);
     }, [application, reset]);
-
-    useEffect(() => {
-        console.log("errors: ", errors);
-    }, [errors]);
 
     const updateApplication = usePut<Application>(`${apis.applicationsV1Url}`, {
         itemName: "Application",
     });
 
     const submitForm = (formData: Application) => {
-        console.log("boo");
         const payload = { ...applicationDefaultValues, ...formData };
-        console.log("payload: ", payload);
         updateApplication(payload.id, payload);
     };
 

@@ -11,8 +11,8 @@ const usePut = <T extends { id?: number }>(
         localeKey,
         itemName,
         action,
-        successNotificationsOn,
-        errorNotificationsOn,
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
     } = options || {};
     const { t, i18n } = useTranslation("api");
 

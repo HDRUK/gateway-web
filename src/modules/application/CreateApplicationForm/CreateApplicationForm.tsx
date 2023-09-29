@@ -16,19 +16,25 @@ import { useRouter } from "next/router";
 import usePost from "@/hooks/usePost";
 import useAuth from "@/hooks/useAuth";
 import Paper from "@/components/Paper";
+import { useMemo } from "react";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
     const { query, push } = useRouter();
-    const { control, handleSubmit, getValues, setValue, trigger } =
+
+    const defaultValues = useMemo(() => {
+        return {
+            user_id: user?.id,
+            team_id: parseInt(query.teamId as string, 10),
+            ...applicationDefaultValues,
+        };
+    }, [query.teamId, user?.id]);
+
+    const { control, handleSubmit, getValues, setValue, trigger, reset } =
         useForm<Application>({
             mode: "onTouched",
             resolver: yupResolver(applicationValidationSchema),
-            defaultValues: {
-                user_id: user?.id,
-                team_id: parseInt(query.teamId as string, 10),
-                ...applicationDefaultValues,
-            },
+            defaultValues,
         });
 
     const updateApplication = usePost<Application>(
@@ -43,9 +49,8 @@ const CreateApplicationForm = () => {
             ...applicationDefaultValues,
             ...formData,
         });
-        console.log("response: ", response);
         push(
-            `/account/team/${query.teamId}/integrations/api-management/list/${response.id}`
+            `/account/team/${query.teamId}/integrations/api-management/create/${response.id}/permissions`
         );
     };
 
@@ -72,7 +77,10 @@ const CreateApplicationForm = () => {
                         justifyContent: "space-between",
                         marginBottom: "10px",
                     }}>
-                    <Button type="submit" color="secondary" variant="outlined">
+                    <Button
+                        onClick={() => reset(defaultValues)}
+                        color="secondary"
+                        variant="outlined">
                         Discard API
                     </Button>
                     <Button type="submit">Save &amp; Continue</Button>
