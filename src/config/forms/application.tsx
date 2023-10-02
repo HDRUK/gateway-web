@@ -4,7 +4,7 @@ import { inputComponents } from ".";
 
 const defaultValues = {
     name: "",
-    image_link: "http://www.bbc.co.uk",
+    image_link: "",
     tags: [],
     description: "",
     enabled: false,
@@ -44,25 +44,26 @@ const formFields = [
         component: inputComponents.TextField,
         required: true,
     },
-    {
-        label: "Tag(s)",
-        name: "tags",
-        createLabel: "Add tag",
-        selectOnFocus: true,
-        clearOnBlur: true,
-        handleHomeEndKeys: true,
-        freeSolo: true,
-        multiple: true,
-        canCreate: true,
-        options: [],
-        getOptionLabel: (
-            option: string | { label: string; value: unknown }
-        ) => {
-            if (typeof option === "string") return option;
-            return option?.label;
-        },
-        component: inputComponents.Autocomplete,
-    },
+    // todo: Implement once Tags have been discussed
+    // {
+    //     label: "Tag(s)",
+    //     name: "tags",
+    //     createLabel: "Add tag",
+    //     selectOnFocus: true,
+    //     clearOnBlur: true,
+    //     handleHomeEndKeys: true,
+    //     freeSolo: true,
+    //     multiple: true,
+    //     canCreate: true,
+    //     options: [],
+    //     getOptionLabel: (
+    //         option: string | { label: string; value: unknown }
+    //     ) => {
+    //         if (typeof option === "string") return option;
+    //         return option?.label;
+    //     },
+    //     component: inputComponents.Autocomplete,
+    // },
     {
         label: "Description",
         name: "description",
