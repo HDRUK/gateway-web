@@ -33,6 +33,7 @@ const formFields = [
     {
         label: "Description",
         name: "description",
+        info: "Please provide a short description of the app you want to create",
         component: inputComponents.TextArea,
         limit: 300,
         required: true,
