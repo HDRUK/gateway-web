@@ -18,7 +18,6 @@ const generateApplicationV1 = (data = {}): Application => {
         updated_at: faker.date
             .between("2020-04-01T00:00:00.000Z", "2030-06-01T00:00:00.000Z")
             .toISOString(),
-        tags: [],
         ...data,
     };
 };

@@ -1,54 +1,40 @@
+import { REGEX_ALPHA_NUMERIC_ONLY } from "@/consts/regex";
 import * as yup from "yup";
-import ToggleButton from "@/components/Switch";
+import { inputComponents } from ".";
 
 const defaultValues = {
     name: "",
     image_link: "",
-    tags: [],
     description: "",
     enabled: false,
 };
 
 const validationSchema = yup
     .object({
-        name: yup.string().required().label("Public app name"),
-        image_link: yup.string().required().label("App logo"),
-        tags: yup.array(),
-        description: yup.string().required(),
+        name: yup
+            .string()
+            .matches(
+                REGEX_ALPHA_NUMERIC_ONLY,
+                "Public API should have alphanumeric characters only"
+            )
+            .required()
+            .label("Public API name"),
+        description: yup.string().required().label("Description"),
     })
     .required();
 
 const formFields = [
     {
-        unCheckedLabel: "Disabled",
-        checkedLabel: "Enabled",
-        name: "enabled",
-        customComponent: ToggleButton,
-        required: true,
-    },
-    {
-        label: "Public app name",
+        label: "Public API name",
         name: "name",
-        component: "TextField",
+        component: inputComponents.TextField,
         required: true,
     },
-    {
-        // Placeholder until component is built
-        label: "App logo",
-        name: "image_link",
-        required: true,
-        component: "TextField",
-    },
-    // {
-    //     label: "Add tag",
-    //     name: "tags",
-    //     component: "TextField",
-    //     required: false,
-    // },
     {
         label: "Description",
         name: "description",
-        component: "TextArea",
+        info: "Please provide a short description of the app you want to create",
+        component: inputComponents.TextArea,
         limit: 300,
         required: true,
     },

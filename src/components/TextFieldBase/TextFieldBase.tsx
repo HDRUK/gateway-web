@@ -16,6 +16,7 @@ import { colors } from "@/config/theme";
 import { CancelIcon } from "@/consts/icons";
 import Label from "@/components/Label";
 import CharacterLimit from "@/components/CharacterLimit";
+import FormError from "@/components/FormError";
 
 export interface TextFieldBaseProps {
     label: string;
@@ -146,11 +147,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
                 {...inputProps}
             />
 
-            {error && (
-                <FormHelperText sx={{ fontSize: 14 }} error>
-                    {error.message}
-                </FormHelperText>
-            )}
+            {error && <FormError error={error} />}
         </FormControl>
     );
 };

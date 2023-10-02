@@ -13,6 +13,7 @@ import { IconType } from "@/interfaces/Ui";
 import { colors } from "@/config/theme";
 import SelectMenuItem from "@/components/SelectMenuItem";
 import Label from "@/components/Label";
+import FormError from "@/components/FormError";
 
 type ValueType = string | number;
 type OptionsType = { value: ValueType; label: string; icon?: IconType }[];
@@ -123,11 +124,7 @@ const Select = (props: SelectProps) => {
                     </MenuItem>
                 ))}
             </MuiSelect>
-            {error && (
-                <FormHelperText sx={{ fontSize: 14 }} error>
-                    {error.message}
-                </FormHelperText>
-            )}
+            {error && <FormError error={error} />}
         </FormControl>
     );
 };

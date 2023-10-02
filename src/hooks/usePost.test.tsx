@@ -1,16 +1,14 @@
-import { filterV1, userV1 } from "@/mocks/data";
+import { userV1 } from "@/mocks/data";
 import usePost from "@/hooks/usePost";
-import { Filter } from "@/interfaces/Filter";
+import * as apiService from "@/services/api/post";
 import { User } from "@/interfaces/User";
 import apis from "@/config/apis";
-import { act, renderHook, waitFor } from "@/utils/testUtils";
+import { renderHook, waitFor } from "@/utils/testUtils";
 
-const mockMutate = jest.fn();
-
-jest.mock("swr", () => {
+jest.mock("@/services/api/post", () => {
     return {
-        ...jest.requireActual("swr"),
-        useSWRConfig: () => ({ mutate: mockMutate }),
+        ...jest.requireActual("@/services/api/post"),
+        postRequest: jest.fn(),
         __esModule: true,
     };
 });
@@ -20,26 +18,33 @@ describe("usePost", () => {
         jest.clearAllMocks();
     });
 
-    it("should call mutate with correct arguments for updating a single item", async () => {
-        const { result } = renderHook(() => usePost<User>(apis.usersV1Url));
+    it("should call postRequest with correct arguments", async () => {
+        const { result } = renderHook(() =>
+            usePost<User>(apis.usersV1Url, {
+                localeKey: "mockLocaleKey",
+                itemName: "mockItemName",
+            })
+        );
         const { current: createFunction } = result;
 
         await createFunction(userV1);
 
         await waitFor(() =>
-            expect(mockMutate).toHaveBeenCalledWith(
+            expect(apiService.postRequest).toHaveBeenCalledWith(
                 apis.usersV1Url,
-                expect.any(Function),
-                { optimisticData: userV1, rollbackOnError: true }
+                userV1,
+                {
+                    notificationOptions: {
+                        action: undefined,
+                        errorNotificationsOn: true,
+                        i18n: { changeLanguage: expect.any(Function) },
+                        itemName: "mockItemName",
+                        localeKey: "mockLocaleKey",
+                        successNotificationsOn: true,
+                        t: expect.any(Function),
+                    },
+                }
             )
         );
-    });
-    it("should call mutate with correct arguments for updating an item in an array", async () => {
-        const { result } = renderHook(() => usePost<Filter>(apis.filtersV1Url));
-        act(() => {
-            result.current(filterV1);
-        });
-
-        await waitFor(() => expect(mockMutate).toHaveBeenCalled());
     });
 });

@@ -15,55 +15,77 @@ import apis from "@/config/apis";
 import { useRouter } from "next/router";
 import usePost from "@/hooks/usePost";
 import useAuth from "@/hooks/useAuth";
-import useGet from "@/hooks/useGet";
+import Paper from "@/components/Paper";
+import { useMemo } from "react";
 
 const CreateApplicationForm = () => {
-    const { data: applicationsList } = useGet<Application[]>(
-        apis.applicationsV1Url
-    );
     const { user } = useAuth();
     const { query, push } = useRouter();
-    const { control, handleSubmit, getValues } = useForm<Application>({
-        resolver: yupResolver(applicationValidationSchema),
-        defaultValues: {
+
+    const defaultValues = useMemo(() => {
+        return {
             user_id: user?.id,
             team_id: parseInt(query.teamId as string, 10),
             ...applicationDefaultValues,
-        },
-    });
+        };
+    }, [query.teamId, user?.id]);
+
+    const { control, handleSubmit, getValues, setValue, trigger, reset } =
+        useForm<Application>({
+            mode: "onTouched",
+            resolver: yupResolver(applicationValidationSchema),
+            defaultValues,
+        });
 
     const updateApplication = usePost<Application>(
         `${apis.applicationsV1Url}`,
         {
             itemName: "Application",
-            data: applicationsList,
         }
     );
 
     const submitForm = async (formData: Application) => {
-        await updateApplication({ ...applicationDefaultValues, ...formData });
-        push(`/account/team/${query.teamId}/integrations/api-management`);
+        const response = await updateApplication({
+            ...applicationDefaultValues,
+            ...formData,
+        });
+        push(
+            `/account/team/${query.teamId}/integrations/api-management/create/${response.id}/permissions`
+        );
     };
 
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
-            {applicationFormFields.map(field => (
-                <InputWrapper
-                    getValues={getValues}
-                    key={field.name}
-                    control={control}
-                    {...field}
-                />
-            ))}
-            <Box
-                sx={{
-                    p: 0,
-                    display: "flex",
-                    justifyContent: "end",
-                    marginBottom: "10px",
-                }}>
-                <Button type="submit">Create</Button>
-            </Box>
+            <Paper sx={{ marginBottom: 1 }}>
+                <Box>
+                    {applicationFormFields.map(field => (
+                        <InputWrapper
+                            getValues={getValues}
+                            setValue={setValue}
+                            trigger={trigger}
+                            key={field.name}
+                            control={control}
+                            {...field}
+                        />
+                    ))}
+                </Box>
+            </Paper>
+            <Paper>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginBottom: "10px",
+                    }}>
+                    <Button
+                        onClick={() => reset(defaultValues)}
+                        color="secondary"
+                        variant="outlined">
+                        Discard API
+                    </Button>
+                    <Button type="submit">Save &amp; Continue</Button>
+                </Box>
+            </Paper>
         </Form>
     );
 };
