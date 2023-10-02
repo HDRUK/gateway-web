@@ -10,7 +10,6 @@ interface Application {
     enabled: boolean;
     created_at: string;
     updated_at: string;
-    tags: number[];
 }
 
 export type { Application };
