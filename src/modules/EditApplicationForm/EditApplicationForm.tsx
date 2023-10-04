@@ -6,12 +6,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "@/components/Button";
 import {
     applicationDefaultValues,
-    applicationFormFields,
+    applicationEditFormFields,
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
 import { Application } from "@/interfaces/Application";
-import DeleteApplication from "@/modules/application/DeleteApplication";
+import DeleteApplication from "@/modules/DeleteApplication";
 import apis from "@/config/apis";
 import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
@@ -53,7 +53,7 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
                 <Form
                     sx={{ maxWidth: 1000 }}
                     onSubmit={handleSubmit(submitForm)}>
-                    {applicationFormFields.map(field => (
+                    {applicationEditFormFields.map(field => (
                         <InputWrapper
                             getValues={getValues}
                             setValue={setValue}

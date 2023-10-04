@@ -9,6 +9,9 @@
             },
             "delete": {
                 "message": "{{item}} successfully deleted"
+            },
+            "patch": {
+                "message": "{{item}} successfully updated"
             }
         },
         "error": {
@@ -20,6 +23,9 @@
                 "500": "There has been a server error"
             },
             "put": {
+                "message": "There has been a problem updating {{item}}"
+            },
+            "patch": {
                 "message": "There has been a problem updating {{item}}"
             },
             "post": {

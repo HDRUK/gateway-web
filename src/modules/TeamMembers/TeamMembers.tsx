@@ -40,7 +40,7 @@ const TeamMembers = () => {
     const [rolesToUpdate, setRolesToUpdate] = useState<RolesPayload[] | null>(
         null
     );
-    const [data, setData] = useState<User[]>([]);
+    const [tableRows, setTableRows] = useState<User[]>([]);
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
 
     const {
@@ -96,7 +96,7 @@ const TeamMembers = () => {
     }, [hideBar, mutate, mututeUser, rolesToUpdate, updateMembers, user?.id]);
 
     const discardChanges = () => {
-        setData(team?.users || []);
+        setTableRows(team?.users || []);
         hideBar();
         setRolesToUpdate(null);
     };
@@ -117,7 +117,7 @@ const TeamMembers = () => {
     });
 
     useEffect(() => {
-        if (team?.users) setData(team.users);
+        if (team?.users) setTableRows(team.users);
     }, [team?.users]);
 
     const actions = useMemo(
@@ -163,7 +163,7 @@ const TeamMembers = () => {
     }, [actions, permissions]);
 
     const handleUpdate = async (updatedUsers: User[]) => {
-        setData(updatedUsers);
+        setTableRows(updatedUsers);
         const { changedRoles, allRoles } = getDifferences(
             updatedUsers,
             team.users
@@ -192,7 +192,11 @@ const TeamMembers = () => {
     return isTeamListLoading ? (
         <Loading />
     ) : (
-        <Table<User> columns={columns} onUpdate={handleUpdate} data={data} />
+        <Table<User>
+            columns={columns}
+            onUpdate={handleUpdate}
+            rows={tableRows}
+        />
     );
 };
 

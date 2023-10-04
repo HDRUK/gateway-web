@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import Box from "@/components/Box";
 import CharacterLimit from "./CharacterLimit";
-import Box from "../Box";
 
 const meta: Meta<typeof CharacterLimit> = {
     component: CharacterLimit,

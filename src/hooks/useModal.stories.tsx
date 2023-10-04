@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import useModal from "@/hooks/useModal";
 import { dialogPropsType } from "@/providers/Dialog/DialogProvider";
-import Modal from "../components/Modal/Modal";
-import Button from "../components/Button";
+import Modal from "@/components/Modal/Modal";
+import Button from "@/components/Button";
 
 const meta: Meta<typeof Modal> = {
     component: Modal,

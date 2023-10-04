@@ -13,9 +13,10 @@ import {
 import FormError from "@/components/FormError";
 
 export interface CheckboxProps extends MuiCheckboxProps {
-    label: string;
+    label?: string;
     name: string;
-    fullWidth: boolean;
+    size?: "small" | "medium" | "large";
+    fullWidth?: boolean;
     control: Control;
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
@@ -24,9 +25,10 @@ export interface CheckboxProps extends MuiCheckboxProps {
 const Checkbox = (props: CheckboxProps) => {
     const {
         fullWidth = true,
-        label,
+        label = "",
         control,
         name,
+        size = "medium",
         checkboxSx,
         formControlSx,
         ...rest
@@ -51,7 +53,7 @@ const Checkbox = (props: CheckboxProps) => {
                         color={error !== undefined ? "error" : "secondary"}
                         disableRipple
                         checked={fieldProps.value}
-                        size="medium"
+                        size={size}
                         icon={<CheckBoxOutlineBlankSharpIcon />}
                         checkedIcon={<CheckBoxSharpIcon />}
                         indeterminateIcon={<IndeterminateCheckBoxSharpIcon />}

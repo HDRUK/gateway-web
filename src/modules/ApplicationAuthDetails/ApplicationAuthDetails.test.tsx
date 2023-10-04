@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@/utils/testUtils";
 import { generateApplicationV1 } from "@/mocks/data/application";
-import AuthDetails from "./AuthDetails";
+import ApplicationAuthDetails from "./ApplicationAuthDetails";
 
-describe("AuthDetails", () => {
+describe("ApplicationAuthDetails", () => {
     beforeAll(() => {
         Object.defineProperty(navigator, "clipboard", {
             writable: true,
@@ -15,7 +15,7 @@ describe("AuthDetails", () => {
     const mockApplication = generateApplicationV1();
 
     it("renders the App ID and Client Id", () => {
-        render(<AuthDetails application={mockApplication} />);
+        render(<ApplicationAuthDetails application={mockApplication} />);
 
         expect(screen.getByText("App ID")).toBeInTheDocument();
         expect(screen.getByText("Client ID")).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe("AuthDetails", () => {
     });
 
     it("triggers clipboard copy when the Copy button is clicked", () => {
-        render(<AuthDetails application={mockApplication} />);
+        render(<ApplicationAuthDetails application={mockApplication} />);
 
         const copyButton = screen.getAllByText("Copy")[0];
 

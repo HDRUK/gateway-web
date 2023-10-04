@@ -5,8 +5,8 @@ import { Box } from "@mui/material";
 import Button from "@/components/Button";
 import { useState } from "react";
 import { ExpandMoreIcon } from "@/consts/icons";
+import Dropdown from "@/modules/HeaderNavDropdown";
 import * as styles from "./HeaderNav.styles";
-import Dropdown from "../HeaderNavDropdown";
 
 interface HeaderNavProps {
     showNavList: boolean;

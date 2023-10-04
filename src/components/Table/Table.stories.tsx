@@ -8,10 +8,10 @@ import {
 } from "@/consts/roles";
 import { DeleteForeverIcon } from "@/consts/icons";
 import { faker } from "@faker-js/faker";
+import TableActionCell from "@/components/TableActionCell";
+import TableTooltipCell from "@/components/TableTooltipCell";
+import Box from "@/components/Box";
 import Table from "./Table";
-import TableTooltipCell from "../TableTooltipCell";
-import Box from "../Box";
-import TableActionCell from "../TableActionCell";
 
 /** Tanstack documentation: https://tanstack.com/table/v8 */
 

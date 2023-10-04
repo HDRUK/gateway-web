@@ -17,9 +17,9 @@ interface OnUpdateProps {
 
 interface TableProps<T> {
     columns: ColumnDef<T, unknown>[];
-    data: T[];
+    rows: T[];
     onUpdate?: (
-        data: T[],
+        rows: T[],
         { rowIndex, columnId, value }: OnUpdateProps
     ) => void;
 }
@@ -40,10 +40,10 @@ function useSkipper() {
     return [shouldSkip, skip] as const;
 }
 
-const Table = <T,>({ columns, data, onUpdate }: TableProps<T>) => {
+const Table = <T,>({ columns, rows, onUpdate }: TableProps<T>) => {
     const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
     const table = useReactTable({
-        data,
+        data: rows,
         columns,
         autoResetPageIndex,
         getCoreRowModel: getCoreRowModel(),
@@ -58,10 +58,10 @@ const Table = <T,>({ columns, data, onUpdate }: TableProps<T>) => {
                 // Skip page index reset until after next rerender
                 skipAutoResetPageIndex();
 
-                const newData = data.map((row, index) => {
+                const newData = rows.map((row, index) => {
                     if (index === rowIndex) {
                         return {
-                            ...data[rowIndex],
+                            ...rows[rowIndex],
                             [columnId]: value,
                         };
                     }

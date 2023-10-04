@@ -3,7 +3,7 @@
 import { useTranslation } from "next-i18next";
 import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
-import ProvidersDialog from "@/modules/dialogs/ProvidersDialog";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 import { Box, CircularProgress } from "@mui/material";
 import AccountNav from "@/modules/AccountNav";
 import { useState } from "react";

@@ -6,7 +6,7 @@ import notificationService from "@/services/notification";
 interface ErrorNotificationProps {
     props: NotificationOptions;
     errorResponse: AxiosResponse<Error>;
-    method: "delete" | "post" | "put" | "get";
+    method: "delete" | "post" | "put" | "get" | "patch";
 }
 
 const errorNotification = ({
@@ -38,7 +38,7 @@ const errorNotification = ({
 
 interface SuccessNotificationProps {
     props: NotificationOptions;
-    method: "delete" | "post" | "put";
+    method: "delete" | "post" | "put" | "patch";
 }
 
 const successNotification = ({ props, method }: SuccessNotificationProps) => {

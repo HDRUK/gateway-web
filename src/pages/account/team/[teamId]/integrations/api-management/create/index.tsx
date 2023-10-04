@@ -6,7 +6,7 @@ import { GetServerSideProps } from "next";
 import ActionBar from "@/components/ActionBar";
 import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
-import CreateApplicationForm from "@/modules/application/CreateApplicationForm";
+import CreateApplicationForm from "@/modules/CreateApplicationForm";
 import AccountLayout from "@/modules/AccountLayout";
 import Typography from "@/components/Typography";
 

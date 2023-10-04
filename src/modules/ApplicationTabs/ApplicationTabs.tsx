@@ -6,8 +6,8 @@ import { useRouter } from "next/router";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
-import AuthDetails from "../application/AuthDetails";
-import EditApplicationForm from "../application/EditApplicationForm";
+import ApplicationAuthDetails from "@/modules/ApplicationAuthDetails";
+import EditApplicationForm from "@/modules/EditApplicationForm";
 
 const ApplicationTabs = () => {
     const router = useRouter();
@@ -31,7 +31,7 @@ const ApplicationTabs = () => {
         {
             label: "Auth",
             value: "Auth",
-            content: <AuthDetails application={application} />,
+            content: <ApplicationAuthDetails application={application} />,
         },
         {
             label: "Scopes/Permissions",

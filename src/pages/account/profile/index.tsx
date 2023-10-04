@@ -2,7 +2,7 @@ import Box from "@/components/Box";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import ProfileForm from "@/modules/profile/ProfileForm";
+import ProfileForm from "@/modules/ProfileForm";
 import useAuth from "@/hooks/useAuth";
 import { CircularProgress } from "@mui/material";
 import Typography from "@/components/Typography";

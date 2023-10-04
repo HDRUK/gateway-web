@@ -24,6 +24,12 @@ declare module "@mui/material/SvgIcon" {
     }
 }
 
+declare module "@mui/material/Checkbox" {
+    interface CheckboxPropsSizeOverrides {
+        large: true;
+    }
+}
+
 declare module "@mui/material/styles" {
     interface BreakpointOverrides {
         xs: false;
@@ -246,6 +252,16 @@ const theme = createTheme({
             },
         },
         MuiCheckbox: {
+            variants: [
+                {
+                    props: { size: "large" },
+                    style: {
+                        "&.MuiSvgIcon-root": {
+                            fontSize: 24,
+                        },
+                    },
+                },
+            ],
             styleOverrides: {
                 root: {
                     color: colors.grey400,

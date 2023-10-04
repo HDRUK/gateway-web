@@ -1,5 +1,5 @@
 import React from "react";
-import ProvidersDialog from "@/modules/dialogs/ProvidersDialog";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 import apis from "@/config/apis";
 import { render, screen, waitFor } from "@/utils/testUtils";
 
