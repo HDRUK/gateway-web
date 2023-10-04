@@ -14,19 +14,19 @@ import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
-import usePatch from "@/hooks/usePatch";
 import Link from "next/link";
 import {
     AppPermissionDefaultValues,
     appPermissionsDefaultValues,
 } from "@/config/forms/applicationPermissions";
+import usePut from "@/hooks/usePut";
 import {
     getEnabledPermissions,
     getPayloadPermissions,
 } from "./ApplicationPermissions.utils";
 
 const ApplicationPermissions = () => {
-    const { query } = useRouter();
+    const { query, push } = useRouter();
     const { apiId, teamId } = query;
     const { data: application } = useGet<Application>(
         `${apis.applicationsV1Url}/${apiId}`
@@ -55,10 +55,11 @@ const ApplicationPermissions = () => {
         reset(existingPermissions);
     }, [application, reset]);
 
-    const updateApplication = usePatch<Partial<ApplicationPayload>>(
+    const updateApplication = usePut<Partial<ApplicationPayload>>(
         `${apis.applicationsV1Url}`,
         {
             itemName: "Application",
+            localeKey: "applicationPermission",
         }
     );
 
@@ -72,10 +73,12 @@ const ApplicationPermissions = () => {
             permissions!
         );
 
-        updateApplication(`${application?.id}`, {
+        await updateApplication(`${application?.id}`, {
+            ...application,
             permissions: permissionIds,
             enabled: true,
         });
+        push(`/account/team/${query.teamId}/integrations/api-management/list`);
     };
 
     return (

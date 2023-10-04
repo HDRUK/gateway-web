@@ -45,5 +45,12 @@
                 "message": "This is a custom DELETE success message for 'filter'"
             }
         }
+    },
+    "applicationPermission": {
+        "success": {
+            "put": {
+                "message": "API created and enabled"
+            }
+        }
     }
 }
