@@ -5,7 +5,7 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
 import TeamManagementTabs from "@/modules/TeamManagement/TeamManagementTabs";
-import AddTeamMemberDialog from "@/modules/dialogs/AddTeamMemberDialog";
+import AddTeamMemberDialog from "@/modules/AddTeamMemberDialog";
 import Button from "@/components/Button";
 
 import useDialog from "@/hooks/useDialog";
