@@ -38,7 +38,14 @@ const validationSchema = yup
                 "Last name should have alphabetic characters only"
             )
             .label("Last name"),
-        secondary_email: yup.string().email().label("Secondary email"),
+        secondary_email: yup
+            .string()
+            .email()
+            .transform(value => {
+                return value === "" ? null : value;
+            })
+            .label("Secondary email")
+            .nullable(),
         sector_id: yup
             .number()
             .moreThan(1, "You must select a sector")
