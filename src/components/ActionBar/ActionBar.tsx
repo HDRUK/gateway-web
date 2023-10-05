@@ -2,8 +2,8 @@
 /** @jsxImportSource @emotion/react */
 
 import useActionBar from "@/hooks/useActionBar";
+import ModalButtons from "@/components/ModalButtons";
 import * as styles from "./ActionBar.styles";
-import ModalButtons from "../ModalButtons";
 
 const ActionBar = () => {
     const { store } = useActionBar();

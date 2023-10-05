@@ -1,5 +1,6 @@
 import { REGEX_ALPHA_NUMERIC_ONLY } from "@/consts/regex";
 import * as yup from "yup";
+import ToggleButton from "@/components/Switch";
 import { inputComponents } from ".";
 
 const defaultValues = {
@@ -40,8 +41,21 @@ const formFields = [
     },
 ];
 
+const editFormFields = [
+    {
+        unCheckedLabel: "Disabled",
+        checkedLabel: "Enabled",
+        name: "enabled",
+        customComponent: ToggleButton,
+        formControlSx: { alignItems: "center" },
+        required: true,
+    },
+    ...formFields,
+];
+
 export {
     defaultValues as applicationDefaultValues,
     validationSchema as applicationValidationSchema,
+    editFormFields as applicationEditFormFields,
     formFields as applicationFormFields,
 };

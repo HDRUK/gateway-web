@@ -4,11 +4,13 @@ import Card from "@/components/Card";
 import { Application } from "@/interfaces/Application";
 import Typography from "@/components/Typography";
 
-interface AuthDetailsProps {
+interface ApplicationAuthDetailsProps {
     application?: Application;
 }
 
-const AuthDetails = ({ application }: AuthDetailsProps) => {
+const ApplicationAuthDetails = ({
+    application,
+}: ApplicationAuthDetailsProps) => {
     return (
         <Box sx={{ gap: 1, display: "grid", padding: 0 }}>
             <Card
@@ -87,6 +89,8 @@ const AuthDetails = ({ application }: AuthDetailsProps) => {
     );
 };
 
-AuthDetails.defaultProps = { application: { app_id: "", client_id: "" } };
+ApplicationAuthDetails.defaultProps = {
+    application: { app_id: "", client_id: "" },
+};
 
-export default AuthDetails;
+export default ApplicationAuthDetails;

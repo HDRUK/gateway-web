@@ -16,7 +16,7 @@ import { useEffect, useMemo } from "react";
 import { Sector } from "@/interfaces/Sector";
 import usePut from "@/hooks/usePut";
 import { User } from "@/interfaces/User";
-import KeepingUpdated from "@/modules/profile/KeepingUpdated";
+import KeepingUpdated from "@/modules/KeepingUpdated";
 import Loading from "@/components/Loading";
 import apis from "@/config/apis";
 import useAuth from "@/hooks/useAuth";
@@ -82,9 +82,6 @@ const ProfileForm = () => {
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
         modalProps: {
-            confirmText: "Stay on page",
-            cancelText: "Exit without saving",
-            title: "Are you sure you want to exit?",
             content:
                 "Changes to your profile account are not automatically saved.",
         },

@@ -15,7 +15,7 @@ export interface ModalProps {
     onCancel?: () => void;
     confirmText?: string;
     cancelText?: string;
-    title: string;
+    title?: string;
     styleProps?: DialogProps;
 }
 

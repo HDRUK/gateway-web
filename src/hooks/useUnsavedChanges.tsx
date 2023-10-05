@@ -7,17 +7,29 @@ export interface UnsavedChangesDialogProps {
     shouldConfirmLeave: boolean;
     onCancel?: () => void;
     onSuccess?: () => void;
-    modalProps: ModalProps;
+    modalProps?: ModalProps;
 }
 
-export const useUnsavedChanges = (props: UnsavedChangesDialogProps): void => {
+export const useUnsavedChanges = ({
+    onCancel,
+    onSuccess,
+    shouldConfirmLeave,
+    modalProps,
+}: UnsavedChangesDialogProps): void => {
+    const {
+        confirmText = "Stay on page",
+        cancelText = "Exit without saving",
+        title = "Are you sure you want to exit?",
+        content = "Changes are not automatically saved.",
+    } = modalProps || {};
+
     const { showModal } = useModal();
     const Router = useRouter();
     const [nextRouterPath, setNextRouterPath] = useState<string>("");
 
     const onRouteChangeStart = useCallback(
         (nextPath: string) => {
-            if (!props.shouldConfirmLeave) {
+            if (!shouldConfirmLeave) {
                 return;
             }
 
@@ -25,7 +37,7 @@ export const useUnsavedChanges = (props: UnsavedChangesDialogProps): void => {
 
             throw Error("cancelRouteChange");
         },
-        [props.shouldConfirmLeave]
+        [shouldConfirmLeave]
     );
 
     useEffect(() => {
@@ -35,8 +47,8 @@ export const useUnsavedChanges = (props: UnsavedChangesDialogProps): void => {
                 Router.events.off("routeChangeStart", onRouteChangeStart);
 
                 setNextRouterPath("");
-                if (typeof props.onCancel === "function") {
-                    props.onCancel();
+                if (typeof onCancel === "function") {
+                    onCancel();
                 }
 
                 if (nextRouterPath) {
@@ -45,13 +57,27 @@ export const useUnsavedChanges = (props: UnsavedChangesDialogProps): void => {
             },
             onSuccess: () => {
                 setNextRouterPath("");
-                if (typeof props.onSuccess === "function") {
-                    props.onSuccess();
+                if (typeof onSuccess === "function") {
+                    onSuccess();
                 }
             },
-            ...props.modalProps,
+            confirmText,
+            cancelText,
+            title,
+            content,
         });
-    }, [Router, nextRouterPath, onRouteChangeStart, props, showModal]);
+    }, [
+        Router,
+        cancelText,
+        confirmText,
+        content,
+        nextRouterPath,
+        onCancel,
+        onRouteChangeStart,
+        onSuccess,
+        showModal,
+        title,
+    ]);
 
     useEffect(() => {
         Router.events.on("routeChangeStart", onRouteChangeStart);

@@ -1,4 +1,4 @@
-import SocialProviders from "@/modules/profile/SocialProviders";
+import SocialProviders from "@/modules/SocialProviders";
 import { useForm } from "react-hook-form";
 import { render } from "@/utils/testUtils";
 
