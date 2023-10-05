@@ -20,6 +20,7 @@ import {
     appPermissionsDefaultValues,
 } from "@/config/forms/applicationPermissions";
 import usePut from "@/hooks/usePut";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import {
     getEnabledPermissions,
     getPayloadPermissions,
@@ -33,8 +34,16 @@ const ApplicationPermissions = () => {
     );
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
 
-    const { control, handleSubmit, reset } = useForm({
+    const { control, handleSubmit, reset, formState } = useForm({
         defaultValues: appPermissionsDefaultValues,
+    });
+
+    useUnsavedChanges({
+        shouldConfirmLeave: formState.isDirty,
+        modalProps: {
+            content:
+                "Changes to your API information are not automatically saved.",
+        },
     });
 
     const tableRows = [

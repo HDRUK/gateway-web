@@ -5,6 +5,7 @@ import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
 import MuiTabPanel from "@mui/lab/TabPanel";
 import Box from "@/components/Box";
+import Paper from "@/components/Paper";
 
 interface Tab {
     label: string;
@@ -40,10 +41,9 @@ const Tabs = ({
     return (
         <Box sx={{ width: "100%", typography: "body1", ...rootBoxSx }}>
             <MuiTabContext value={value}>
-                <Box
+                <Paper
                     sx={{
                         paddingBottom: 0,
-                        boxShadow: "0px 3px 5px -3px rgba(0,0,0,.09)",
                         ...tabBoxSx,
                     }}>
                     <MuiTabList centered={centered} onChange={handleChange}>
@@ -57,7 +57,7 @@ const Tabs = ({
                             />
                         ))}
                     </MuiTabList>
-                </Box>
+                </Paper>
                 {introContent}
                 {tabs.map(tab => (
                     <MuiTabPanel

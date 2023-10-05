@@ -1,4 +1,3 @@
-import Box from "@/components/Box";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,13 +15,20 @@ import apis from "@/config/apis";
 import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
 import { useEffect } from "react";
-import { Divider } from "@mui/material";
+import Paper from "@/components/Paper";
+import { useRouter } from "next/router";
 
 interface EditApplicationFormProps {
     application?: Application;
+    isTabView?: boolean;
 }
 
-const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
+const EditApplicationForm = ({
+    application,
+    isTabView = true,
+}: EditApplicationFormProps) => {
+    const { query, push } = useRouter();
+
     const { control, handleSubmit, getValues, reset, setValue, trigger } =
         useForm<Application>({
             resolver: yupResolver(applicationValidationSchema),
@@ -36,24 +42,35 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
         reset(application);
     }, [application, reset]);
 
+    const fields = isTabView
+        ? applicationEditFormFields
+        : applicationEditFormFields.filter(field => field.name !== "enabled");
+
     const updateApplication = usePut<Application>(`${apis.applicationsV1Url}`, {
         itemName: "Application",
     });
 
-    const submitForm = (formData: Application) => {
+    const submitForm = async (formData: Application) => {
         const payload = { ...applicationDefaultValues, ...formData };
-        updateApplication(payload.id, payload);
+        await updateApplication(payload.id, payload);
+        if (!isTabView) {
+            push(
+                `/account/team/${query.teamId}/integrations/api-management/create/${payload.id}/permissions`
+            );
+        }
     };
 
     if (!application) return <Loading />;
 
     return (
         <>
-            <Box>
-                <Form
-                    sx={{ maxWidth: 1000 }}
-                    onSubmit={handleSubmit(submitForm)}>
-                    {applicationEditFormFields.map(field => (
+            <Form onSubmit={handleSubmit(submitForm)}>
+                <Paper
+                    sx={{
+                        marginBottom: "10px",
+                        padding: 2,
+                    }}>
+                    {fields.map(field => (
                         <InputWrapper
                             getValues={getValues}
                             setValue={setValue}
@@ -63,21 +80,25 @@ const EditApplicationForm = ({ application }: EditApplicationFormProps) => {
                             {...field}
                         />
                     ))}
-                    <Box
-                        sx={{
-                            p: 0,
-                            display: "flex",
-                            justifyContent: "end",
-                            marginBottom: "10px",
-                        }}>
-                        <Button type="submit">Save changes</Button>
-                    </Box>
-                </Form>
-            </Box>
-            <Box>
-                <Divider />
+                </Paper>
+                <Paper
+                    sx={{
+                        display: "flex",
+                        justifyContent: "end",
+                        marginBottom: "10px",
+                        padding: 2,
+                    }}>
+                    <Button type="submit">
+                        {isTabView ? "Save changes" : "Save & Continue"}
+                    </Button>
+                </Paper>
+            </Form>
+            <Paper
+                sx={{
+                    padding: 2,
+                }}>
                 <DeleteApplication control={control} />
-            </Box>
+            </Paper>
         </>
     );
 };
