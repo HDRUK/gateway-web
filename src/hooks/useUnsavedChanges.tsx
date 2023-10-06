@@ -66,8 +66,8 @@ export const useUnsavedChanges = ({
             title,
             content,
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
-        Router,
         cancelText,
         confirmText,
         content,
@@ -75,7 +75,6 @@ export const useUnsavedChanges = ({
         onCancel,
         onRouteChangeStart,
         onSuccess,
-        showModal,
         title,
     ]);
 

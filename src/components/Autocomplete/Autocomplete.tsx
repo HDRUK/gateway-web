@@ -19,19 +19,22 @@ import FormError from "@/components/FormError";
 type ValueType = string | number;
 type OptionsType = { id: ValueType; label: string; icon?: IconType }[];
 
-export interface SelectProps {
+export interface AutocompleteProps {
     label: string;
     info?: string;
     getOptionLabel?: () => string;
     disabled?: boolean;
     startAdornmentIcon?: ReactNode;
     createLabel?: string;
-    options: OptionsType;
+    options?: OptionsType;
     canCreate?: boolean;
+    clearOnBlur?: boolean;
+    handleHomeEndKeys?: boolean;
     multiple?: boolean;
     trigger?: (name: string) => void;
     setValue?: (name: string, value: unknown) => void;
     freeSolo?: boolean;
+    selectOnFocus?: boolean;
     placeholder?: string;
     icon?: IconType;
     name: string;
@@ -44,7 +47,7 @@ interface SearchOptions {
     label: string;
 }
 
-const Autocomplete = (props: SelectProps) => {
+const Autocomplete = (props: AutocompleteProps) => {
     const {
         label,
         info,
@@ -157,12 +160,16 @@ const Autocomplete = (props: SelectProps) => {
 };
 
 Autocomplete.defaultProps = {
-    getOptionLabel: (option: unknown) => option,
+    getOptionLabel: (option: string | { label: string; value: unknown }) => {
+        if (typeof option === "string") return option;
+        return option?.label;
+    },
     setValue: () => null,
     placeholder: "",
     info: "",
     createLabel: "Add",
     icon: undefined,
+    options: [],
     required: false,
     canCreate: false,
     multiple: false,

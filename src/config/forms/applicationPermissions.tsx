@@ -1,3 +1,5 @@
+import * as yup from "yup";
+
 export interface FormPermissions {
     name: string;
     id: number;
@@ -17,6 +19,55 @@ export interface AppPermissionDefaultValues {
     tools: AppPermissionCrud;
     collections: AppPermissionCrud;
 }
+
+const validationSchema = yup
+    .object({
+        datasets: yup.object({
+            read: yup.boolean().required(),
+            create: yup.boolean().required(),
+            update: yup.boolean().required(),
+            delete: yup.boolean().required(),
+        }),
+        dur: yup.object({
+            read: yup.boolean().required(),
+            create: yup.boolean().required(),
+            update: yup.boolean().required(),
+            delete: yup.boolean().required(),
+        }),
+        tools: yup.object({
+            read: yup.boolean().required(),
+            create: yup.boolean().required(),
+            update: yup.boolean().required(),
+            delete: yup.boolean().required(),
+        }),
+        collections: yup.object({
+            read: yup.boolean().required(),
+            create: yup.boolean().required(),
+            update: yup.boolean().required(),
+            delete: yup.boolean().required(),
+        }),
+    })
+    .test(
+        "custom",
+        "One checkbox must be true",
+        (value: AppPermissionDefaultValues) => {
+            let isValid = false;
+            Object.keys(value).forEach(permKey => {
+                Object.keys(
+                    value[permKey as keyof AppPermissionDefaultValues]
+                ).forEach(crudKey => {
+                    if (
+                        value[permKey as keyof AppPermissionDefaultValues][
+                            crudKey as keyof AppPermissionCrud
+                        ]
+                    ) {
+                        isValid = true;
+                    }
+                });
+            });
+            return isValid;
+        }
+    );
 
 const defaultValues: AppPermissionDefaultValues = {
     datasets: {
@@ -45,4 +96,7 @@ const defaultValues: AppPermissionDefaultValues = {
     },
 };
 
-export { defaultValues as appPermissionsDefaultValues };
+export {
+    validationSchema as appPermissionsValidationSchema,
+    defaultValues as appPermissionsDefaultValues,
+};
