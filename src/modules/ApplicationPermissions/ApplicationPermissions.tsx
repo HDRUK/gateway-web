@@ -81,9 +81,6 @@ const ApplicationPermissions = () => {
         return getColumns<AppPermissionDefaultValues>(control);
     }, [control]);
 
-    useEffect(() => {
-        console.log("formState: ", formState);
-    }, [formState]);
     const onSubmit = async (updatedPermissions: AppPermissionDefaultValues) => {
         const permissionIds = getPayloadPermissions(
             updatedPermissions,
