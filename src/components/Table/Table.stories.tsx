@@ -67,7 +67,7 @@ const columns: ColumnDef<{ firstname: string; lastname: string }>[] = [
 export const Default: Story = {
     args: {
         columns,
-        data: [
+        rows: [
             { id: 1, firstname: userV1.firstname, lastname: userV1.lastname },
             {
                 id: 2,

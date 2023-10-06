@@ -21,7 +21,6 @@ const formFields = [
         multiple: true,
         startAdornmentIcon: <SearchIcon color="primary" />,
         canCreate: true,
-        options: [],
         getOptionLabel: (
             option: string | { label: string; value: unknown }
         ) => {

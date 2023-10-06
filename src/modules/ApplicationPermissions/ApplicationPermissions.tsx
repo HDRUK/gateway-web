@@ -18,9 +18,12 @@ import Link from "next/link";
 import {
     AppPermissionDefaultValues,
     appPermissionsDefaultValues,
+    appPermissionsValidationSchema,
 } from "@/config/forms/applicationPermissions";
 import usePut from "@/hooks/usePut";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import FormError from "@/components/FormError";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
     getEnabledPermissions,
     getPayloadPermissions,
@@ -32,14 +35,16 @@ const ApplicationPermissions = () => {
     const { data: application } = useGet<Application>(
         `${apis.applicationsV1Url}/${apiId}`
     );
+
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
 
     const { control, handleSubmit, reset, formState } = useForm({
         defaultValues: appPermissionsDefaultValues,
+        resolver: yupResolver(appPermissionsValidationSchema),
     });
 
     useUnsavedChanges({
-        shouldConfirmLeave: formState.isDirty,
+        shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
         modalProps: {
             content:
                 "Changes to your API information are not automatically saved.",
@@ -76,6 +81,9 @@ const ApplicationPermissions = () => {
         return getColumns<AppPermissionDefaultValues>(control);
     }, [control]);
 
+    useEffect(() => {
+        console.log("formState: ", formState);
+    }, [formState]);
     const onSubmit = async (updatedPermissions: AppPermissionDefaultValues) => {
         const permissionIds = getPayloadPermissions(
             updatedPermissions,
@@ -87,7 +95,11 @@ const ApplicationPermissions = () => {
             permissions: permissionIds,
             enabled: true,
         });
-        push(`/account/team/${query.teamId}/integrations/api-management/list`);
+        setTimeout(() => {
+            push(
+                `/account/team/${query.teamId}/integrations/api-management/list`
+            );
+        }, 500);
     };
 
     return (
@@ -111,6 +123,17 @@ const ApplicationPermissions = () => {
                     columns={columns}
                     rows={tableRows}
                 />
+                {!formState.isValid && formState.isSubmitted && (
+                    <Box>
+                        <FormError
+                            error={{
+                                type: "custom",
+                                message:
+                                    "You must assign a scope and permission before saving",
+                            }}
+                        />
+                    </Box>
+                )}
             </Paper>
             <Paper>
                 <Box
