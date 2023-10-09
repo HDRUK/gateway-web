@@ -18,9 +18,10 @@ const CreateAppPage = () => {
                 <BackButton label="Back to API Management" />
                 <Paper sx={{ marginBottom: 1 }}>
                     <Box>
-                        <Typography variant="h2">Create an API</Typography>
+                        <Typography variant="h2">API management</Typography>
                         <Typography sx={{ marginBottom: 2 }}>
-                            Use this form to create your Gateway API 
+                            Use this form to create, update and manage your api
+                            on the Gateway
                         </Typography>
                     </Box>
                 </Paper>

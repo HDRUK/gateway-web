@@ -1,6 +1,7 @@
 import Tabs from "@/components/Tabs";
 import { useState } from "react";
 import Typography from "@/components/Typography";
+import Paper from "@/components/Paper";
 
 import { useRouter } from "next/router";
 import apis from "@/config/apis";
@@ -21,6 +22,17 @@ const ApplicationTabs = () => {
     const handleTabChange = (tab: string) => {
         setSelectedTab(tab);
     };
+
+    <Paper sx={{ 
+        marginTop: "10px",
+        marginBottom: "10px",
+        padding: 2,
+        }}>
+        <Typography variant="h2">API Management</Typography>
+        <Typography>
+            Use this page to register your application with us.
+        </Typography>
+    </Paper>
 
     const applicationTabs = [
         {

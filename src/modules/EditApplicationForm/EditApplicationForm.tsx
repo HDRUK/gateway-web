@@ -1,6 +1,5 @@
 import Form from "@/components/Form";
 import Typography from "@/components/Typography";
-import Box from "@/components/Box";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
