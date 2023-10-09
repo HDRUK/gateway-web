@@ -1,4 +1,5 @@
 import Form from "@/components/Form";
+import Typography from "@/components/Typography";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -64,9 +65,20 @@ const EditApplicationForm = ({
 
     return (
         <>
+            <Paper sx={{ 
+                marginTop: "10px",
+                marginBottom: "10px",
+                padding: 2,
+                }}>
+                <Typography variant="h2">API Management</Typography>
+                <Typography>
+                    Use this page to register your application with us.
+                </Typography>
+            </Paper>
             <Form onSubmit={handleSubmit(submitForm)}>
                 <Paper
                     sx={{
+                        marginTop: "10px",
                         marginBottom: "10px",
                         padding: 2,
                     }}>

@@ -38,8 +38,8 @@ const ApplicationTabs = () => {
             ),
         },
         {
-            label: "Auth",
-            value: "Auth",
+            label: "Authentication",
+            value: "Authentication",
             content: <ApplicationAuthDetails application={application} />,
         },
     ];
