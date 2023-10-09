@@ -29,11 +29,6 @@ const ApplicationTabs = () => {
             content: <EditApplicationForm application={application} />,
         },
         {
-            label: "Auth",
-            value: "Auth",
-            content: <ApplicationAuthDetails application={application} />,
-        },
-        {
             label: "Scopes/Permissions",
             value: "Scopes/Permissions",
             content: (
@@ -41,6 +36,11 @@ const ApplicationTabs = () => {
                     Placeholder for Scopes/Permissions Tab
                 </Typography>
             ),
+        },
+        {
+            label: "Auth",
+            value: "Auth",
+            content: <ApplicationAuthDetails application={application} />,
         },
     ];
 
