@@ -13,7 +13,7 @@ const TeamApplicationPage = () => {
         <>
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Application" />
             <AccountLayout>
-                <BackButton label="Back to Team API list" />
+                <BackButton label="Back to API selection" />
                 <ApplicationTabs />
             </AccountLayout>
         </>
