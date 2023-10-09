@@ -1,4 +1,5 @@
 type ComponentTypes =
+    | "Switch"
     | "Autocomplete"
     | "CheckboxGroup"
     | "CheckboxRow"

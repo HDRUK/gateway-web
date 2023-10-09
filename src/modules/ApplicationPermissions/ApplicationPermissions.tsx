@@ -33,7 +33,7 @@ const ApplicationPermissions = () => {
     const { query, push } = useRouter();
     const { apiId, teamId } = query;
     const { data: application } = useGet<Application>(
-        `${apis.applicationsV1Url}/${apiId}`
+        apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );
 
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);

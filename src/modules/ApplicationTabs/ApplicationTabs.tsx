@@ -1,7 +1,4 @@
 import Tabs from "@/components/Tabs";
-import { useState } from "react";
-import Typography from "@/components/Typography";
-import Paper from "@/components/Paper";
 
 import { useRouter } from "next/router";
 import apis from "@/config/apis";
@@ -9,6 +6,7 @@ import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
 import ApplicationAuthDetails from "@/modules/ApplicationAuthDetails";
 import EditApplicationForm from "@/modules/EditApplicationForm";
+import ApplicationPermissions from "../ApplicationPermissions";
 
 const ApplicationTabs = () => {
     const router = useRouter();
@@ -17,26 +15,16 @@ const ApplicationTabs = () => {
         `${apis.applicationsV1Url}/${appId}`
     );
 
-    const [selectedTab, setSelectedTab] = useState("App Info");
-
-    const handleTabChange = (tab: string) => {
-        setSelectedTab(tab);
-    };
-
     const applicationTabs = [
         {
             label: "App Info",
-            value: "App Info",
+            value: "app-info",
             content: <EditApplicationForm application={application} />,
         },
         {
             label: "Scopes/Permissions",
-            value: "Scopes/Permissions",
-            content: (
-                <Typography component="span">
-                    Placeholder for Scopes/Permissions Tab
-                </Typography>
-            ),
+            value: "permissions",
+            content: <ApplicationPermissions />,
         },
         {
             label: "Authentication",
@@ -48,8 +36,8 @@ const ApplicationTabs = () => {
     return (
         <Tabs
             centered
-            value={selectedTab}
-            onChange={handleTabChange}
+            // value={selectedTab}
+            // onChange={handleTabChange}
             tabs={applicationTabs}
             tabBoxSx={{ padding: 0 }}
             rootBoxSx={{ padding: 0 }}

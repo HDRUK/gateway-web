@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import Switch from "@/components/Switch/Switch";
+import Switch from "@/components/Switch";
 import { render, screen } from "@/utils/testUtils";
 
 describe("Switch", () => {
