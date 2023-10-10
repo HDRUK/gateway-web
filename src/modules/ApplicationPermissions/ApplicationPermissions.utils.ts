@@ -43,7 +43,12 @@ const getEnabledPermissions = (
     permissions: Permission[],
     defaultValues: AppPermissionDefaultValues
 ) => {
-    const existingPermissions = { ...defaultValues };
+    const existingPermissions = {
+        collections: { ...defaultValues.collections },
+        tools: { ...defaultValues.tools },
+        dur: { ...defaultValues.dur },
+        datasets: { ...defaultValues.datasets },
+    };
 
     permissions.forEach(permission => {
         const [permKey, crudKey] = permission.name.split(".");
