@@ -23,17 +23,6 @@ const ApplicationTabs = () => {
         setSelectedTab(tab);
     };
 
-    <Paper sx={{ 
-        marginTop: "10px",
-        marginBottom: "10px",
-        padding: 2,
-        }}>
-        <Typography variant="h2">API Management</Typography>
-        <Typography>
-            Use this page to register your application with us.
-        </Typography>
-    </Paper>
-
     const applicationTabs = [
         {
             label: "App Info",
