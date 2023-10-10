@@ -2,11 +2,9 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { Application } from "@/interfaces/Application";
-//import { copyToClipboard } from "@/utils/general";
+import { copyToClipboard } from "@/utils/general";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
-
-import notificationService from "@/services/notification";
 
 interface ApplicationAuthDetailsProps {
     application?: Application;
@@ -15,16 +13,6 @@ interface ApplicationAuthDetailsProps {
 const ApplicationAuthDetails = ({
     application,
 }: ApplicationAuthDetailsProps) => {
-
-
-    const copyToClipboard = (str: string) => {
-        navigator.clipboard.writeText(
-            str || ""
-        );
-        notificationService.success(
-            "Link copied"
-        );
-    }
 
     return (
         <>

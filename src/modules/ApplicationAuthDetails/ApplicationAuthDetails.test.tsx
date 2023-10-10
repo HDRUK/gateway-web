@@ -1,6 +1,28 @@
 import { fireEvent, render, screen } from "@/utils/testUtils";
 import { generateApplicationV1 } from "@/mocks/data/application";
 import ApplicationAuthDetails from "./ApplicationAuthDetails";
+import * as notificationService from "@/services/notification/notification";
+
+jest.mock("notistack", () => {
+    return {
+        ...jest.requireActual("notistack"),
+        enqueueSnackbar: jest.fn(),
+        __esModule: true,
+    };
+});
+
+jest.mock("@/services/notification/notification", () => {
+    return {
+        ...jest.requireActual("@/services/notification/notification"),
+        apiError: jest.fn(),
+        error: jest.fn(),
+        apiSuccess: jest.fn(),
+        success: jest.fn(),
+        warning: jest.fn(),
+        info: jest.fn(),
+        __esModule: true,
+    };
+});
 
 describe("ApplicationAuthDetails", () => {
     beforeAll(() => {
@@ -29,11 +51,15 @@ describe("ApplicationAuthDetails", () => {
 
         const copyButton = screen.getAllByText("Copy")[0];
 
-        fireEvent.click(copyButton); 
-        
+        fireEvent.click(copyButton);
+
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
             mockApplication.app_id
         );
-        
+    
+        expect(notificationService.success).toBeCalledWith(
+            "Link copied"
+        );
+
     });
 });
