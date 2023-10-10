@@ -2,7 +2,7 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { Application } from "@/interfaces/Application";
-import notificationService from "@/services/notification";
+import { copyToClipboard } from "@/utils/general";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
 
@@ -13,15 +13,6 @@ interface ApplicationAuthDetailsProps {
 const ApplicationAuthDetails = ({
     application,
 }: ApplicationAuthDetailsProps) => {
-
-    const onClickCopy = (str: string) => {
-        navigator.clipboard.writeText(
-            str || ""
-        );
-        notificationService.success(
-            "Link copied"
-        );
-    }
 
     return (
         <>
@@ -64,7 +55,7 @@ const ApplicationAuthDetails = ({
                 </Box>
                 <Box>
                     <Button
-                        onClick={onClickCopy(application?.app_id)}>
+                        onClick={() => copyToClipboard(application?.app_id)}>
                         Copy
                     </Button>
                 </Box>
@@ -96,7 +87,7 @@ const ApplicationAuthDetails = ({
                 </Box>
                 <Box>
                     <Button
-                        onClick={onClickCopy(application?.client_id)}>
+                        onClick={() => copyToClipboard(application?.client_id)}>
                         Copy
                     </Button>
                 </Box>
