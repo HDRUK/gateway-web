@@ -14,7 +14,6 @@ const ApplicationAuthDetails = ({
     application,
 }: ApplicationAuthDetailsProps) => {
 
-
     const onClickCopy = () => {
         navigator.clipboard.writeText(
             application?.app_id || ""
@@ -23,7 +22,6 @@ const ApplicationAuthDetails = ({
             "Link copied"
         );
     }
-
 
     return (
         <>
@@ -34,7 +32,7 @@ const ApplicationAuthDetails = ({
             }}>
             <Typography variant="h2">Authentication credentials</Typography>
             <Typography>
-            These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions. 
+            These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.
             </Typography>
         </Paper>
 
