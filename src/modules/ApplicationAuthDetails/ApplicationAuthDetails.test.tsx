@@ -29,10 +29,11 @@ describe("ApplicationAuthDetails", () => {
 
         const copyButton = screen.getAllByText("Copy")[0];
 
-        fireEvent.click(copyButton);
-
+        fireEvent.click(copyButton); 
+        
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
             mockApplication.app_id
         );
+        
     });
 });
