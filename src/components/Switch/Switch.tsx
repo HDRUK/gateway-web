@@ -31,6 +31,7 @@ const Switch = (props: SwitchProps) => {
         name,
         control,
     });
+
     return (
         <FormControl
             fullWidth
@@ -42,6 +43,7 @@ const Switch = (props: SwitchProps) => {
                     disableRipple
                     {...rest}
                     {...fieldProps}
+                    checked={fieldProps.value}
                     inputRef={ref}
                     sx={{ ...switchSx }}
                 />
