@@ -20,7 +20,7 @@ const ApplicationAuthDetails = ({
             application?.app_id || ""
         );
         notificationService.success(
-            "Copied to clipboard"
+            "Link copied"
         );
     }
 
