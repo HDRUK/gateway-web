@@ -3,7 +3,6 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
-import ActionBar from "@/components/ActionBar";
 import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import AccountLayout from "@/modules/AccountLayout";
@@ -20,7 +19,6 @@ const CreateAppPage = () => {
                         <Typography variant="h2">Create Integration</Typography>
                     </Box>
                 </Paper>
-                <ActionBar />
             </AccountLayout>
         </>
     );

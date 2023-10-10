@@ -149,6 +149,9 @@ const ApplicationPermissions = ({
     }, [formState, updateStoreProps]);
 
     useEffect(() => {
+        /* ActionBar only required on tab view */
+        if (!isTabView) return;
+
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
         if (formState.isDirty && !store.isVisible) {
             showBar("PermissionChanges", {
@@ -172,6 +175,7 @@ const ApplicationPermissions = ({
         formState,
         handleSubmit,
         hideBar,
+        isTabView,
         onSubmit,
         originalFormValues,
         reset,

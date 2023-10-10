@@ -10,9 +10,9 @@ import ApplicationPermissions from "@/modules/ApplicationPermissions";
 
 const ApplicationTabs = () => {
     const router = useRouter();
-    const { appId } = router.query;
+    const { apiId } = router.query;
     const { data: application } = useGet<Application>(
-        `${apis.applicationsV1Url}/${appId}`
+        apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );
 
     const applicationTabs = [

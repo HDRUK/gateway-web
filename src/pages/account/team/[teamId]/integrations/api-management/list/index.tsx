@@ -2,7 +2,6 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
-import ActionBar from "@/components/ActionBar";
 import ApplicationList from "@/modules/ApplicationList";
 import BackButton from "@/components/BackButton";
 import AccountLayout from "@/modules/AccountLayout";
@@ -14,7 +13,6 @@ const TeamApplicationsPage = () => {
             <AccountLayout>
                 <BackButton label="Back to API Management" />
                 <ApplicationList />
-                <ActionBar />
             </AccountLayout>
         </>
     );

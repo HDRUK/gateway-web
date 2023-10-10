@@ -1,5 +1,5 @@
 import React from "react";
-import EditApplication from "@/pages/account/team/[teamId]/integrations/api-management/list/[appId]";
+import EditApplication from "@/pages/account/team/[teamId]/integrations/api-management/list/[apiId]";
 import { render, screen, waitFor } from "@/utils/testUtils";
 
 jest.mock("next/router", () => ({
