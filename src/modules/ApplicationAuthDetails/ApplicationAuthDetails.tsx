@@ -2,6 +2,7 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { Application } from "@/interfaces/Application";
+import notificationService from "@/services/notification";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
 
@@ -12,6 +13,18 @@ interface ApplicationAuthDetailsProps {
 const ApplicationAuthDetails = ({
     application,
 }: ApplicationAuthDetailsProps) => {
+
+
+    const onClickCopy = () => {
+        navigator.clipboard.writeText(
+            application?.app_id || ""
+        );
+        notificationService.success(
+            "Copied to clipboard"
+        );
+    }
+
+
     return (
         <>
         <Paper sx={{ 
@@ -21,7 +34,7 @@ const ApplicationAuthDetails = ({
             }}>
             <Typography variant="h2">Authentication credentials</Typography>
             <Typography>
-            These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.
+            These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions. 
             </Typography>
         </Paper>
 
@@ -53,11 +66,7 @@ const ApplicationAuthDetails = ({
                 </Box>
                 <Box>
                     <Button
-                        onClick={() => {
-                            navigator.clipboard.writeText(
-                                application?.app_id || ""
-                            );
-                        }}>
+                        onClick={onClickCopy}>
                         Copy
                     </Button>
                 </Box>
