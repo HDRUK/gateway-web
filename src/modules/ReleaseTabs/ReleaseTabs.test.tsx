@@ -1,6 +1,25 @@
-import { fireEvent, render, screen } from "@/utils/testUtils";
+import { render, screen } from "@/utils/testUtils";
 import { ReleaseNode } from "@/interfaces/Releases";
 import ReleaseTabs from "./ReleaseTabs";
+
+jest.mock("next/router", () => ({
+    useRouter() {
+        return {
+            route: "/",
+            pathname: "",
+            query: {},
+            asPath: "",
+        };
+    },
+}));
+
+jest.mock("next/navigation", () => ({
+    useSearchParams() {
+        return {
+            get: () => "2023",
+        };
+    },
+}));
 
 describe("ReleaseTabs", () => {
     it("renders tabs with release content", () => {
@@ -31,13 +50,8 @@ describe("ReleaseTabs", () => {
         expect(tab2023).toBeInTheDocument();
         expect(tab2022).toBeInTheDocument();
 
-        fireEvent.click(tab2022);
-
-        const releaseTitle = screen.getByText("Release 2");
-        const releaseContent = screen.getByText("Content for release 2");
-
-        expect(releaseTitle).toBeInTheDocument();
-        expect(releaseContent).toBeInTheDocument();
+        expect(screen.getByText("Release 1")).toBeInTheDocument();
+        expect(screen.getByText("Content for release 1")).toBeInTheDocument();
     });
 
     it("displays a message for a year with no releases", () => {

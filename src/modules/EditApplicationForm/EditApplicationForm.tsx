@@ -65,15 +65,16 @@ const EditApplicationForm = ({
 
     return (
         <>
-            <Paper sx={{ 
-                padding: 2,
-                marginBottom: "10px",
-                marginTop: "10px"
+            <Paper
+                sx={{
+                    padding: 2,
+                    marginBottom: "10px",
+                    marginTop: "10px",
                 }}>
                 <Typography variant="h2">API Management</Typography>
                 <Typography>
-                    Use this form to create, update and manage your api
-                    on the Gateway
+                    Use this form to create, update and manage your api on the
+                    Gateway
                 </Typography>
             </Paper>
             <Form onSubmit={handleSubmit(submitForm)}>
