@@ -17,7 +17,7 @@ describe("Applications", () => {
     it("should render contents", async () => {
         render(<EditApplication />);
         await waitFor(() => {
-            expect(screen.getByText("API Management")).toBeInTheDocument();
+            expect(screen.queryByText("API Management")).toBeInTheDocument();
             expect(
                 screen.queryByText("Placeholder for Auth Tab")
             ).not.toBeInTheDocument();

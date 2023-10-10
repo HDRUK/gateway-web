@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { Application } from "@/interfaces/Application";
 import Typography from "@/components/Typography";
+import Paper from "@/components/Paper";
 
 interface ApplicationAuthDetailsProps {
     application?: Application;
@@ -12,6 +13,18 @@ const ApplicationAuthDetails = ({
     application,
 }: ApplicationAuthDetailsProps) => {
     return (
+        <>
+        <Paper sx={{ 
+            marginTop: "10px",
+            marginBottom: "10px",
+            padding: 2,
+            }}>
+            <Typography variant="h2">Authentication credentials</Typography>
+            <Typography>
+            These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.
+            </Typography>
+        </Paper>
+
         <Box sx={{ gap: 1, display: "grid", padding: 0 }}>
             <Card
                 sx={{
@@ -86,6 +99,7 @@ const ApplicationAuthDetails = ({
                 </Box>
             </Card>
         </Box>
+        </>
     );
 };
 

@@ -1,6 +1,7 @@
 import Tabs from "@/components/Tabs";
 import { useState } from "react";
 import Typography from "@/components/Typography";
+import Paper from "@/components/Paper";
 
 import { useRouter } from "next/router";
 import apis from "@/config/apis";
@@ -29,11 +30,6 @@ const ApplicationTabs = () => {
             content: <EditApplicationForm application={application} />,
         },
         {
-            label: "Auth",
-            value: "Auth",
-            content: <ApplicationAuthDetails application={application} />,
-        },
-        {
             label: "Scopes/Permissions",
             value: "Scopes/Permissions",
             content: (
@@ -41,6 +37,11 @@ const ApplicationTabs = () => {
                     Placeholder for Scopes/Permissions Tab
                 </Typography>
             ),
+        },
+        {
+            label: "Authentication",
+            value: "Authentication",
+            content: <ApplicationAuthDetails application={application} />,
         },
     ];
 

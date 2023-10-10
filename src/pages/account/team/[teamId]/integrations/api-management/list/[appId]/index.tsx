@@ -14,14 +14,6 @@ const TeamApplicationPage = () => {
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Application" />
             <AccountLayout>
                 <BackButton label="Back to API selection" />
-                <Paper sx={{ marginBottom: 1 }}>
-                    <Box>
-                        <Typography variant="h2">API Management</Typography>
-                        <Typography>
-                            Use this page to register your application with us.
-                        </Typography>
-                    </Box>
-                </Paper>
                 <ApplicationTabs />
             </AccountLayout>
         </>
