@@ -2,6 +2,25 @@ import React from "react";
 import ReleasePage from "@/pages/about/releases";
 import { render, screen, waitFor } from "@/utils/testUtils";
 
+jest.mock("next/router", () => ({
+    useRouter() {
+        return {
+            route: "/",
+            pathname: "",
+            query: {},
+            asPath: "",
+        };
+    },
+}));
+
+jest.mock("next/navigation", () => ({
+    useSearchParams() {
+        return {
+            get: () => "2023",
+        };
+    },
+}));
+
 describe("Releases", () => {
     it("should render contents", async () => {
         render(

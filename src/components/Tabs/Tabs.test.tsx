@@ -1,6 +1,25 @@
 import React from "react";
 import Tabs from "@/components/Tabs";
-import { fireEvent, render, screen } from "@/utils/testUtils";
+import { render, screen } from "@/utils/testUtils";
+
+jest.mock("next/router", () => ({
+    useRouter() {
+        return {
+            route: "/",
+            pathname: "",
+            query: {},
+            asPath: "",
+        };
+    },
+}));
+
+jest.mock("next/navigation", () => ({
+    useSearchParams() {
+        return {
+            get: () => "1",
+        };
+    },
+}));
 
 describe("Tabs", () => {
     const tabs = [
@@ -16,20 +35,11 @@ describe("Tabs", () => {
         },
     ];
     it("should render tab labels and content", async () => {
-        render(<Tabs value="1" onChange={() => null} tabs={tabs} />);
+        render(<Tabs tabs={tabs} />);
 
         expect(screen.getByText("This is a label 1")).toBeInTheDocument();
         expect(screen.getByText("This is content 1")).toBeInTheDocument();
         expect(screen.getByText("This is a label 2")).toBeInTheDocument();
         expect(screen.queryByText("This is content 2")).not.toBeInTheDocument();
-    });
-    it("should call onChange with selected tab value", async () => {
-        const onChange = jest.fn();
-
-        render(<Tabs value="1" onChange={onChange} tabs={tabs} />);
-
-        fireEvent.click(screen.getByText("This is a label 2"));
-
-        expect(onChange).toBeCalledWith("2");
     });
 });

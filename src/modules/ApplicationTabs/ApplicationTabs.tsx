@@ -1,7 +1,4 @@
 import Tabs from "@/components/Tabs";
-import { useState } from "react";
-import Typography from "@/components/Typography";
-import Paper from "@/components/Paper";
 
 import { useRouter } from "next/router";
 import apis from "@/config/apis";
@@ -9,33 +6,28 @@ import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
 import ApplicationAuthDetails from "@/modules/ApplicationAuthDetails";
 import EditApplicationForm from "@/modules/EditApplicationForm";
+import ApplicationPermissions from "@/modules/ApplicationPermissions";
 
 const ApplicationTabs = () => {
     const router = useRouter();
-    const { appId } = router.query;
+    const { apiId } = router.query;
     const { data: application } = useGet<Application>(
-        `${apis.applicationsV1Url}/${appId}`
+        apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );
-
-    const [selectedTab, setSelectedTab] = useState("App Info");
-
-    const handleTabChange = (tab: string) => {
-        setSelectedTab(tab);
-    };
 
     const applicationTabs = [
         {
             label: "App Info",
-            value: "App Info",
-            content: <EditApplicationForm application={application} />,
+            value: "app-info",
+            content: (
+                <EditApplicationForm isTabView application={application} />
+            ),
         },
         {
             label: "Scopes/Permissions",
-            value: "Scopes/Permissions",
+            value: "permissions",
             content: (
-                <Typography component="span">
-                    Placeholder for Scopes/Permissions Tab
-                </Typography>
+                <ApplicationPermissions isTabView application={application} />
             ),
         },
         {
@@ -48,8 +40,6 @@ const ApplicationTabs = () => {
     return (
         <Tabs
             centered
-            value={selectedTab}
-            onChange={handleTabChange}
             tabs={applicationTabs}
             tabBoxSx={{ padding: 0 }}
             rootBoxSx={{ padding: 0 }}

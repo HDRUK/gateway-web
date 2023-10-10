@@ -19,12 +19,12 @@ import notificationService from "@/services/notification";
 
 import useDelete from "@/hooks/useDelete";
 import useModal from "@/hooks/useModal";
-import TeamMembersActionBar from "@/modules/TeamMembersActionBar";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import { useSWRConfig } from "swr";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import usePut from "@/hooks/usePut";
 import { DeleteForeverIcon } from "@/consts/icons";
+import ChangesActionBar from "@/modules/ChangesActionBar";
 
 const limit = pLimit(1);
 
@@ -175,7 +175,7 @@ const TeamMembers = () => {
 
         if (changedRoles.length > 0) {
             showBar("TeamMembers", {
-                component: TeamMembersActionBar,
+                component: ChangesActionBar,
                 cancelText: "Discard",
                 confirmText: "Save",
                 changeCount,

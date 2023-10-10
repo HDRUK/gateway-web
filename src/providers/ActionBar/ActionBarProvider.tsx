@@ -1,4 +1,5 @@
 import { ModalButtonProps } from "@/components/ModalButtons/ModalButtons";
+import { isEqual } from "lodash";
 import React, { createContext, useMemo, ReactNode } from "react";
 
 type ActionBarProps = {
@@ -9,20 +10,25 @@ type ActionBarProps = {
 
 export interface GlobalActionBarContextProps {
     showBar: (name: string, props: ActionBarProps) => void;
+    updateStoreProps: (props: { [key: string]: ReactNode }) => void;
     hideBar: () => void;
     store: {
         name: string;
+        isVisible: boolean;
         props: ActionBarProps;
     };
 }
 
 const initalState: GlobalActionBarContextProps = {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
+    updateStoreProps: () => {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     showBar: () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     hideBar: () => {},
     store: {
         name: "",
+        isVisible: false,
         props: {},
     },
 };
@@ -36,21 +42,32 @@ interface ActionBarProviderProps {
 const ActionBarProvider: React.FC<ActionBarProviderProps> = ({ children }) => {
     const [store, setStore] = React.useState<{
         name: string;
+        isVisible: boolean;
         props: ActionBarProps;
-    }>({ name: "", props: {} });
+    }>({ name: "", isVisible: false, props: {} });
 
     const value = useMemo(
         () => ({
             store,
+            updateStoreProps: (updatedProps: { [key: string]: ReactNode }) => {
+                const updatedStore = {
+                    ...store,
+                    props: { ...store.props, ...updatedProps },
+                };
+                if (isEqual(store, updatedStore)) return;
+                setStore(updatedStore);
+            },
             showBar: (name: string, props: ActionBarProps) => {
                 setStore({
                     name,
+                    isVisible: true,
                     props,
                 });
             },
             hideBar: () => {
                 setStore({
                     name: "",
+                    isVisible: false,
                     props: {},
                 });
             },

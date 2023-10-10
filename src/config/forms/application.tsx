@@ -1,6 +1,5 @@
 import { REGEX_ALPHA_NUMERIC_ONLY } from "@/consts/regex";
 import * as yup from "yup";
-import ToggleButton from "@/components/Switch";
 import { inputComponents } from ".";
 
 const defaultValues = {
@@ -46,7 +45,7 @@ const editFormFields = [
         unCheckedLabel: "Disabled",
         checkedLabel: "Enabled",
         name: "enabled",
-        customComponent: ToggleButton,
+        customComponent: inputComponents.Switch,
         formControlSx: { alignItems: "center" },
         required: true,
     },

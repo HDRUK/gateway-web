@@ -2,7 +2,7 @@ import Chip from "@/components/Chip";
 import useActionBar from "@/hooks/useActionBar";
 import { ReactNode } from "react";
 
-const TeamMembersActionBar = () => {
+const ChangesActionBar = () => {
     const { store } = useActionBar();
     const { props } = store;
     // eslint-disable-next-line react/prop-types
@@ -16,4 +16,4 @@ const TeamMembersActionBar = () => {
     );
 };
 
-export default TeamMembersActionBar;
+export default ChangesActionBar;
