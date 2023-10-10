@@ -4,6 +4,16 @@ import {
 } from "@/config/forms/applicationPermissions";
 import { Permission } from "@/interfaces/Permission";
 
+const getChangeCount = (changedFields: {
+    [key: string]: { [key: string]: boolean };
+}) => {
+    return Object.keys(changedFields)
+        .map(key => Object.keys(changedFields[key]).length)
+        .reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+        }, 0);
+};
+
 const getPayloadPermissions = (
     updatedPermissions: AppPermissionDefaultValues,
     permissions: Permission[]
@@ -45,4 +55,4 @@ const getEnabledPermissions = (
     return existingPermissions;
 };
 
-export { getPayloadPermissions, getEnabledPermissions };
+export { getChangeCount, getPayloadPermissions, getEnabledPermissions };

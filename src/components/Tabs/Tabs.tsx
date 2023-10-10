@@ -1,5 +1,5 @@
 import { Tab as MuiTab, SxProps } from "@mui/material";
-import { ReactNode, forwardRef } from "react";
+import { ElementType, ReactNode, forwardRef } from "react";
 
 import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
@@ -62,9 +62,9 @@ const Tabs = ({
                         paddingBottom: 0,
                         ...tabBoxSx,
                     }}>
-                    <MuiTabList centered={centered}>
+                    <MuiTabList sx={{ mb: 1 }} centered={centered}>
                         {tabs.map(tab => (
-                            <MuiTab
+                            <MuiTab<ElementType>
                                 component={CustomLink}
                                 disableRipple
                                 color="secondary"

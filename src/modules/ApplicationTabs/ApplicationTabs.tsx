@@ -6,7 +6,7 @@ import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
 import ApplicationAuthDetails from "@/modules/ApplicationAuthDetails";
 import EditApplicationForm from "@/modules/EditApplicationForm";
-import ApplicationPermissions from "../ApplicationPermissions";
+import ApplicationPermissions from "@/modules/ApplicationPermissions";
 
 const ApplicationTabs = () => {
     const router = useRouter();
@@ -19,12 +19,16 @@ const ApplicationTabs = () => {
         {
             label: "App Info",
             value: "app-info",
-            content: <EditApplicationForm application={application} />,
+            content: (
+                <EditApplicationForm isTabView application={application} />
+            ),
         },
         {
             label: "Scopes/Permissions",
             value: "permissions",
-            content: <ApplicationPermissions />,
+            content: (
+                <ApplicationPermissions isTabView application={application} />
+            ),
         },
         {
             label: "Authentication",
@@ -36,8 +40,6 @@ const ApplicationTabs = () => {
     return (
         <Tabs
             centered
-            // value={selectedTab}
-            // onChange={handleTabChange}
             tabs={applicationTabs}
             tabBoxSx={{ padding: 0 }}
             rootBoxSx={{ padding: 0 }}

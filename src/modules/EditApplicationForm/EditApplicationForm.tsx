@@ -26,7 +26,7 @@ interface EditApplicationFormProps {
 
 const EditApplicationForm = ({
     application,
-    isTabView = true,
+    isTabView = false,
 }: EditApplicationFormProps) => {
     const { query, push } = useRouter();
 
