@@ -14,9 +14,9 @@ const ApplicationAuthDetails = ({
     application,
 }: ApplicationAuthDetailsProps) => {
 
-    const onClickCopy = () => {
+    const onClickCopy = (str: string) => {
         navigator.clipboard.writeText(
-            application?.app_id || ""
+            str || ""
         );
         notificationService.success(
             "Link copied"
@@ -64,7 +64,7 @@ const ApplicationAuthDetails = ({
                 </Box>
                 <Box>
                     <Button
-                        onClick={onClickCopy}>
+                        onClick={onClickCopy(application?.app_id)}>
                         Copy
                     </Button>
                 </Box>
@@ -96,11 +96,7 @@ const ApplicationAuthDetails = ({
                 </Box>
                 <Box>
                     <Button
-                        onClick={() => {
-                            navigator.clipboard.writeText(
-                                application?.client_id || ""
-                            );
-                        }}>
+                        onClick={onClickCopy(application?.client_id)}>
                         Copy
                     </Button>
                 </Box>
