@@ -3,6 +3,7 @@ import { generatePermissionV1 } from "@/mocks/data";
 import {
     getPayloadPermissions,
     getEnabledPermissions,
+    getChangeCount,
 } from "./ApplicationPermissions.utils";
 
 describe("ApplicationPermissions", () => {
@@ -58,6 +59,13 @@ describe("ApplicationPermissions", () => {
                     update: false,
                 },
             });
+        });
+    });
+    describe("getChangeCount", () => {
+        it("should return count of changes", () => {
+            expect(
+                getChangeCount({ one: { a: true, b: false }, two: { b: true } })
+            ).toEqual(3);
         });
     });
 });

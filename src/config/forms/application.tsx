@@ -1,13 +1,14 @@
 import { REGEX_ALPHA_NUMERIC_ONLY } from "@/consts/regex";
 import * as yup from "yup";
-import ToggleButton from "@/components/Switch";
+import { Application } from "@/interfaces/Application";
 import { inputComponents } from ".";
 
-const defaultValues = {
+const defaultValues: Partial<Application> = {
     name: "",
     image_link: "",
     description: "",
     enabled: false,
+    permissions: [],
 };
 
 const validationSchema = yup
@@ -46,7 +47,7 @@ const editFormFields = [
         unCheckedLabel: "Disabled",
         checkedLabel: "Enabled",
         name: "enabled",
-        customComponent: ToggleButton,
+        component: inputComponents.Switch,
         formControlSx: { alignItems: "center" },
         required: true,
     },

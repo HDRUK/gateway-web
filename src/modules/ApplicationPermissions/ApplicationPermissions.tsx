@@ -2,7 +2,7 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import Table from "@/components/Table";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Permission } from "@/interfaces/Permission";
 import { getColumns } from "@/config/tables/apiPermissions";
 import useGet from "@/hooks/useGet";
@@ -24,30 +24,47 @@ import usePut from "@/hooks/usePut";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import FormError from "@/components/FormError";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useActionBar from "@/hooks/useActionBar";
+import ChangesActionBar from "@/modules/ChangesActionBar";
+import { useSWRConfig } from "swr";
 import {
+    getChangeCount,
     getEnabledPermissions,
     getPayloadPermissions,
 } from "./ApplicationPermissions.utils";
 
-const ApplicationPermissions = () => {
+interface ApplicationPermissionsProps {
+    isTabView?: boolean;
+    application?: Application;
+}
+
+const ApplicationPermissions = ({
+    isTabView = false,
+    application,
+}: ApplicationPermissionsProps) => {
+    const [originalFormValues, setOriginalFormValues] = useState<
+        AppPermissionDefaultValues | undefined
+    >(undefined);
     const { query, push } = useRouter();
     const { apiId, teamId } = query;
-    const { data: application } = useGet<Application>(
-        `${apis.applicationsV1Url}/${apiId}`
-    );
-
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
 
+    const { mutate } = useSWRConfig();
+
+    /* Pass default values and validation to react-hook-form */
     const { control, handleSubmit, reset, formState } = useForm({
         defaultValues: appPermissionsDefaultValues,
         resolver: yupResolver(appPermissionsValidationSchema),
     });
 
+    /* Launch ActionBar if there are form changes  */
+    const { showBar, hideBar, store, updateStoreProps } = useActionBar();
+
+    /* Launch pop-up if unsaved changes on leaving the page */
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
         modalProps: {
-            content:
-                "Changes to your API information are not automatically saved.",
+            content: "Changes to permissions are not automatically saved.",
         },
     });
 
@@ -66,6 +83,10 @@ const ApplicationPermissions = () => {
             appPermissionsDefaultValues
         );
 
+        /* Store `originalFormValues` to allow resetting of form data when clicking 'discard' */
+        setOriginalFormValues(existingPermissions);
+
+        /* Initiate react-hook-form with initial form values using 'reset' fn */
         reset(existingPermissions);
     }, [application, reset]);
 
@@ -73,46 +94,109 @@ const ApplicationPermissions = () => {
         `${apis.applicationsV1Url}`,
         {
             itemName: "Application",
+            /* Custom api success message set within `api.json` */
             localeKey: "applicationPermission",
         }
     );
 
+    /* Memoise columns using 'getColumns' from form config  */
     const columns = useMemo(() => {
         return getColumns<AppPermissionDefaultValues>(control);
     }, [control]);
 
-    const onSubmit = async (updatedPermissions: AppPermissionDefaultValues) => {
-        const permissionIds = getPayloadPermissions(
-            updatedPermissions,
-            permissions!
-        );
-
-        await updateApplication(`${application?.id}`, {
-            ...application,
-            permissions: permissionIds,
-            enabled: true,
-        });
-        setTimeout(() => {
-            push(
-                `/account/team/${query.teamId}/integrations/api-management/list`
+    const onSubmit = useCallback(
+        async (updatedPermissions: AppPermissionDefaultValues) => {
+            const permissionIds = getPayloadPermissions(
+                updatedPermissions,
+                permissions!
             );
-        }, 500);
-    };
+            await updateApplication(`${application?.id}`, {
+                ...application,
+                permissions: permissionIds,
+                enabled: true,
+            });
+
+            /* When this component is part of tabs view reset the 'application' cache */
+            if (isTabView) {
+                mutate(`${apis.applicationsV1Url}/${application?.id}`);
+            }
+
+            /* Only redirect when this component is part of the "Create" journey */
+            if (!isTabView) {
+                setTimeout(() => {
+                    push(
+                        `/account/team/${query.teamId}/integrations/api-management/list`
+                    );
+                }, 500);
+            }
+        },
+        [
+            application,
+            isTabView,
+            mutate,
+            permissions,
+            push,
+            query.teamId,
+            updateApplication,
+        ]
+    );
+
+    /* Increment custom `changeCount` prop within 'ActionBarProvider' using 'updateStoreProps' */
+    useEffect(() => {
+        updateStoreProps({
+            changeCount: getChangeCount(formState.dirtyFields),
+        });
+    }, [formState, updateStoreProps]);
+
+    useEffect(() => {
+        /* ActionBar only required on tab view */
+        if (!isTabView) return;
+
+        /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
+        if (formState.isDirty && !store.isVisible) {
+            showBar("PermissionChanges", {
+                component: ChangesActionBar,
+                cancelText: "Discard",
+                confirmText: "Save",
+                changeCount: 1,
+                onSuccess: () => {
+                    handleSubmit(onSubmit)();
+                },
+                onCancel: () => {
+                    reset(originalFormValues);
+                },
+            });
+        }
+        if (!formState.isDirty && store.isVisible) {
+            hideBar();
+        }
+    }, [
+        application,
+        formState,
+        handleSubmit,
+        hideBar,
+        isTabView,
+        onSubmit,
+        originalFormValues,
+        reset,
+        showBar,
+        store.isVisible,
+    ]);
 
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(onSubmit)}>
-            <Paper sx={{ marginBottom: 1 }}>
-                <Box>
-                    <Typography variant="h2">Permissions</Typography>
-                    <Typography>
-                        Use this form to assign the right level of scope and
-                        permission for the application to manage integration and
-                        connect securely to the Gateway. Your application will
-                        only be able to synchronize data within its assigned
-                        scope and permission. Application permissions is the
-                        responsibility of your publisher team
-                    </Typography>
-                </Box>
+            <Paper sx={{ p: 2, mb: 1 }}>
+                <Typography variant="h2">Permissions</Typography>
+                <Typography>
+                    Use this form to assign the right level of scope and
+                    permission for the application to manage integration and
+                    connect securely to the Gateway. Your application will only
+                    be able to synchronize data within its assigned scope and
+                    permission. Application permissions is the responsibility of
+                    your publisher team
+                </Typography>
+            </Paper>
+            <Paper sx={{ mb: 1 }}>
                 <Table<{
                     name: string;
                     label: string;
@@ -132,23 +216,25 @@ const ApplicationPermissions = () => {
                     </Box>
                 )}
             </Paper>
-            <Paper>
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        marginBottom: "10px",
-                    }}>
-                    <Link
-                        href={`/account/team/${teamId}/integrations/api-management/create/${apiId}`}
-                        passHref>
-                        <Button color="secondary" variant="outlined">
-                            Back
-                        </Button>
-                    </Link>
-                    <Button type="submit">Save &amp; Continue</Button>
-                </Box>
-            </Paper>
+            {!isTabView && (
+                <Paper>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            marginBottom: "10px",
+                        }}>
+                        <Link
+                            href={`/account/team/${teamId}/integrations/api-management/create/${apiId}`}
+                            passHref>
+                            <Button color="secondary" variant="outlined">
+                                Back
+                            </Button>
+                        </Link>
+                        <Button type="submit">Save &amp; Continue</Button>
+                    </Box>
+                </Paper>
+            )}
         </Form>
     );
 };

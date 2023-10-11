@@ -15,6 +15,7 @@ import CheckboxGroup from "@/components/CheckboxGroup";
 import CheckboxRow from "@/components/CheckboxRow";
 import RadioGroup from "@/components/RadioGroup";
 import Autocomplete from "@/components/Autocomplete";
+import Switch from "@/components/Switch";
 
 type InputType =
     | TextFieldBaseProps
@@ -45,6 +46,7 @@ function InputWrapper<T extends FieldValues>({
 
     const inputs = {
         Autocomplete,
+        Switch,
         CheckboxGroup,
         CheckboxRow,
         Checkbox,

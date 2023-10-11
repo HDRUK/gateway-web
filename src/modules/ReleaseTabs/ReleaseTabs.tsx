@@ -40,14 +40,9 @@ const IntroContent = () => (
 
 const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
     const [expanded, setExpanded] = useState<string | null>(null);
-    const [selectedTab, setSelectedTab] = useState("2023");
 
     const handleChange = (isExpanded: boolean, panel: string) => {
         setExpanded(isExpanded ? panel : null);
-    };
-
-    const handleTabChange = (tab: string) => {
-        setSelectedTab(tab);
     };
 
     const generatedReleases = useMemo(() => {
@@ -88,8 +83,6 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
         <Tabs
             centered
             introContent={<IntroContent />}
-            value={selectedTab}
-            onChange={handleTabChange}
             tabs={generatedReleases}
             tabBoxSx={{ padding: 0 }}
             rootBoxSx={{ padding: 0 }}

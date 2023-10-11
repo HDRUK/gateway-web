@@ -1,12 +1,9 @@
-import Box from "@/components/Box";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import ApplicationTabs from "@/modules/ApplicationTabs";
-import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import AccountLayout from "@/modules/AccountLayout";
-import Typography from "@/components/Typography";
 
 const TeamApplicationPage = () => {
     return (

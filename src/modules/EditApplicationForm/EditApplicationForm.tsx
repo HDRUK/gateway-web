@@ -10,7 +10,7 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { Application } from "@/interfaces/Application";
+import { Application, ApplicationPayload } from "@/interfaces/Application";
 import DeleteApplication from "@/modules/DeleteApplication";
 import apis from "@/config/apis";
 import Loading from "@/components/Loading";
@@ -26,7 +26,7 @@ interface EditApplicationFormProps {
 
 const EditApplicationForm = ({
     application,
-    isTabView = true,
+    isTabView = false,
 }: EditApplicationFormProps) => {
     const { query, push } = useRouter();
 
@@ -47,12 +47,21 @@ const EditApplicationForm = ({
         ? applicationEditFormFields
         : applicationEditFormFields.filter(field => field.name !== "enabled");
 
-    const updateApplication = usePut<Application>(`${apis.applicationsV1Url}`, {
-        itemName: "Application",
-    });
+    const updateApplication = usePut<ApplicationPayload>(
+        `${apis.applicationsV1Url}`,
+        {
+            itemName: "Application",
+        }
+    );
 
     const submitForm = async (formData: Application) => {
-        const payload = { ...applicationDefaultValues, ...formData };
+        const { permissions, ...rest } = application || {};
+
+        const payload: ApplicationPayload = {
+            ...rest,
+            ...formData,
+            permissions: permissions?.map(perm => perm.id),
+        };
         await updateApplication(payload.id, payload);
         if (!isTabView) {
             push(
@@ -65,15 +74,16 @@ const EditApplicationForm = ({
 
     return (
         <>
-            <Paper sx={{ 
-                padding: 2,
-                marginBottom: "10px",
-                marginTop: "10px"
+            <Paper
+                sx={{
+                    padding: 2,
+                    marginBottom: "10px",
+                    marginTop: "10px",
                 }}>
                 <Typography variant="h2">API Management</Typography>
                 <Typography>
-                    Use this form to create, update and manage your api
-                    on the Gateway
+                    Use this form to create, update and manage your api on the
+                    Gateway
                 </Typography>
             </Paper>
             <Form onSubmit={handleSubmit(submitForm)}>
