@@ -25,6 +25,6 @@ export const handlers = [
     getAuthInternal(),
     getTeamV1(),
     getApplicationV1(),
-    getApplicationsV1(),
+    getApplicationsV1({}),
     patchApplicationV1(),
 ];

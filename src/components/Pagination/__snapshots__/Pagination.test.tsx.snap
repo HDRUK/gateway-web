@@ -13,6 +13,7 @@ exports[`Pagination renders without crashing 1`] = `
         <button
           aria-label="Go to previous page"
           class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded Mui-disabled MuiPaginationItem-previousNext mui-style-14h3e7v-MuiButtonBase-root-MuiPaginationItem-root"
+          data-testid="pagination-item"
           disabled=""
           tabindex="-1"
           type="button"
@@ -35,6 +36,7 @@ exports[`Pagination renders without crashing 1`] = `
           aria-current="true"
           aria-label="page 1"
           class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded Mui-selected MuiPaginationItem-page mui-style-14h3e7v-MuiButtonBase-root-MuiPaginationItem-root"
+          data-testid="pagination-item"
           tabindex="0"
           type="button"
         >
@@ -48,6 +50,7 @@ exports[`Pagination renders without crashing 1`] = `
         <button
           aria-label="Go to page 2"
           class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page mui-style-14h3e7v-MuiButtonBase-root-MuiPaginationItem-root"
+          data-testid="pagination-item"
           tabindex="0"
           type="button"
         >
@@ -61,6 +64,7 @@ exports[`Pagination renders without crashing 1`] = `
         <button
           aria-label="Go to page 3"
           class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page mui-style-14h3e7v-MuiButtonBase-root-MuiPaginationItem-root"
+          data-testid="pagination-item"
           tabindex="0"
           type="button"
         >
@@ -74,6 +78,7 @@ exports[`Pagination renders without crashing 1`] = `
         <button
           aria-label="Go to page 4"
           class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page mui-style-14h3e7v-MuiButtonBase-root-MuiPaginationItem-root"
+          data-testid="pagination-item"
           tabindex="0"
           type="button"
         >
@@ -87,6 +92,7 @@ exports[`Pagination renders without crashing 1`] = `
         <button
           aria-label="Go to page 5"
           class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page mui-style-14h3e7v-MuiButtonBase-root-MuiPaginationItem-root"
+          data-testid="pagination-item"
           tabindex="0"
           type="button"
         >
@@ -107,6 +113,7 @@ exports[`Pagination renders without crashing 1`] = `
         <button
           aria-label="Go to page 10"
           class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-page mui-style-14h3e7v-MuiButtonBase-root-MuiPaginationItem-root"
+          data-testid="pagination-item"
           tabindex="0"
           type="button"
         >
@@ -120,6 +127,7 @@ exports[`Pagination renders without crashing 1`] = `
         <button
           aria-label="Go to next page"
           class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-previousNext mui-style-14h3e7v-MuiButtonBase-root-MuiPaginationItem-root"
+          data-testid="pagination-item"
           tabindex="0"
           type="button"
         >
