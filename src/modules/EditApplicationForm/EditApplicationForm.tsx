@@ -10,7 +10,7 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { Application } from "@/interfaces/Application";
+import { Application, ApplicationPayload } from "@/interfaces/Application";
 import DeleteApplication from "@/modules/DeleteApplication";
 import apis from "@/config/apis";
 import Loading from "@/components/Loading";
@@ -47,12 +47,21 @@ const EditApplicationForm = ({
         ? applicationEditFormFields
         : applicationEditFormFields.filter(field => field.name !== "enabled");
 
-    const updateApplication = usePut<Application>(`${apis.applicationsV1Url}`, {
-        itemName: "Application",
-    });
+    const updateApplication = usePut<ApplicationPayload>(
+        `${apis.applicationsV1Url}`,
+        {
+            itemName: "Application",
+        }
+    );
 
     const submitForm = async (formData: Application) => {
-        const payload = { ...applicationDefaultValues, ...formData };
+        const { permissions, ...rest } = application || {};
+
+        const payload: ApplicationPayload = {
+            ...rest,
+            ...formData,
+            permissions: permissions?.map(perm => perm.id),
+        };
         await updateApplication(payload.id, payload);
         if (!isTabView) {
             push(

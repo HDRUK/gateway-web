@@ -1,12 +1,9 @@
-import Box from "@/components/Box";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
-import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import AccountLayout from "@/modules/AccountLayout";
-import Typography from "@/components/Typography";
 import EditApplicationForm from "@/modules/EditApplicationForm";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
@@ -25,15 +22,6 @@ const CreateAppPage = () => {
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Create" />
             <AccountLayout>
                 <BackButton label="Back to API Management" />
-                <Paper sx={{ marginBottom: 1 }}>
-                    <Box>
-                        <Typography variant="h2">API management</Typography>
-                        <Typography sx={{ marginBottom: 2 }}>
-                            Use this form to create, update and manage your api
-                            on the Gateway
-                        </Typography>
-                    </Box>
-                </Paper>
                 <EditApplicationForm
                     application={application}
                     isTabView={false}
