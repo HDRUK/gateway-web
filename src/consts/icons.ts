@@ -31,6 +31,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 export {
     CheckCircleIcon,
@@ -66,4 +67,5 @@ export {
     DescriptionOutlinedIcon,
     HelpOutlineOutlinedIcon,
     GroupsOutlinedIcon,
+    ContentCopyIcon,
 };
