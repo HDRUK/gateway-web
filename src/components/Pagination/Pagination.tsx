@@ -14,6 +14,7 @@ const Pagination = ({ isLoading, ...rest }: PaginationProps) => {
         <MuiPagination
             renderItem={item => (
                 <PaginationItem
+                    data-testid="pagination-item"
                     slots={{ previous: ArrowLeftIcon, next: ArrowRightIcon }}
                     {...item}
                 />
