@@ -3,7 +3,7 @@ import { Application } from "@/interfaces/Application";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
 
-import ApplicationAuthDetail from "@/modules/ApplicationAuthDetail";
+import CopyableCard from "@/modules/CopyableCard";
 
 
 interface ApplicationAuthDetailsProps {
@@ -29,7 +29,6 @@ const ApplicationAuthDetails = ({
         },
     ];
 
-
     return (
         <>
         <Paper sx={{ 
@@ -47,7 +46,7 @@ const ApplicationAuthDetails = ({
 
         <BoxContainer>
             {credentials.map(cred => (
-                <ApplicationAuthDetail 
+                <CopyableCard 
                    key={cred}
                    {...cred}
                 />

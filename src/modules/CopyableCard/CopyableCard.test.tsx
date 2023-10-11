@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from "@/utils/testUtils";
+import { render, screen } from "@/utils/testUtils";
 import { generateApplicationV1 } from "@/mocks/data/application";
-import ApplicationAuthDetail from "./ApplicationAuthDetail";
+import CopyableCard from "./CopyableCard";
 import * as notificationService from "@/services/notification/notification";
 
 jest.mock("notistack", () => {
@@ -37,7 +37,7 @@ describe("ApplicationAuthDetail", () => {
     const mockApplication = generateApplicationV1();
 
     it("triggers clipboard copy when the Copy button is clicked", () => {
-        render(<ApplicationAuthDetail value={"test text"} description={""} label={"test"}/>);
+        render(<CopyableCard value={"test text"} description={""} label={"test"}/>);
 
         expect(screen.getByText("test text")).toBeInTheDocument();
 

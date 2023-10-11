@@ -1,16 +1,16 @@
 import Box from "@/components/Box";
 import Card from "@/components/Card";
 import Typography from "@/components/Typography";
-import CopyTextBox from "@/components/CopyTextBox";
+import CopyableTextBox from "@/components/CopyableTextBox";
 
 
-interface ApplicationAuthDetailProps {
+interface CopyableCardProps {
     value: string | undefined,
     label: string,
     description: string,
 }
 
-const ApplicationAuthDetail = (props : ApplicationAuthDetailProps) => {
+const CopyableCard = (props : CopyableCardProps) => {
     return (
         <Card
         sx={{
@@ -29,10 +29,10 @@ const ApplicationAuthDetail = (props : ApplicationAuthDetailProps) => {
                 </Typography>
             </Box>
             <Box>
-                <CopyTextBox content={props.value}/>
+                <CopyableTextBox content={props.value}/>
             </Box>
         </Card>
     );
 }
 
-export default ApplicationAuthDetail;
+export default CopyableCard;
