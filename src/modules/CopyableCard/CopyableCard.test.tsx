@@ -1,4 +1,4 @@
-import { render, screen } from "@/utils/testUtils";
+import { fireEvent, render, screen } from "@/utils/testUtils";
 import { generateApplicationV1 } from "@/mocks/data/application";
 import CopyableCard from "./CopyableCard";
 import * as notificationService from "@/services/notification/notification";
@@ -37,11 +37,15 @@ describe("ApplicationAuthDetail", () => {
     const mockApplication = generateApplicationV1();
 
     it("triggers clipboard copy when the Copy button is clicked", () => {
-        render(<CopyableCard value={"test text"} description={""} label={"test"}/>);
+        render(<CopyableCard value={mockApplication.app_id} description={"test text"} label={"test"}/>);
 
         expect(screen.getByText("test text")).toBeInTheDocument();
+        expect(screen.getByText(mockApplication.app_id)).toBeInTheDocument();
 
-        /*const copyButton = screen.getAllByText("Copy")[0];
+        const copyButton = screen.getAllByRole("button",{
+            name: "copy text",
+        })[0];
+
         fireEvent.click(copyButton);
 
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
@@ -50,7 +54,7 @@ describe("ApplicationAuthDetail", () => {
     
         expect(notificationService.success).toBeCalledWith(
             "Link copied"
-        );*/
+        );
 
     });
 });
