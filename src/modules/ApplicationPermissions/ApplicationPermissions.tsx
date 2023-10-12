@@ -123,6 +123,7 @@ const ApplicationPermissions = ({
 
             /* Only redirect when this component is part of the "Create" journey */
             if (!isTabView) {
+                /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
                 setTimeout(() => {
                     push(
                         `/account/team/${query.teamId}/integrations/api-management/list`

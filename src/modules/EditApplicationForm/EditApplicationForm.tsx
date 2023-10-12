@@ -18,6 +18,7 @@ import usePut from "@/hooks/usePut";
 import { useEffect } from "react";
 import Paper from "@/components/Paper";
 import { useRouter } from "next/router";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
 interface EditApplicationFormProps {
     application?: Application;
@@ -30,14 +31,25 @@ const EditApplicationForm = ({
 }: EditApplicationFormProps) => {
     const { query, push } = useRouter();
 
-    const { control, handleSubmit, getValues, reset, setValue, trigger } =
-        useForm<Application>({
-            resolver: yupResolver(applicationValidationSchema),
-            defaultValues: {
-                ...applicationDefaultValues,
-                ...application,
-            },
-        });
+    const {
+        control,
+        handleSubmit,
+        getValues,
+        reset,
+        setValue,
+        trigger,
+        formState,
+    } = useForm<Application>({
+        resolver: yupResolver(applicationValidationSchema),
+        defaultValues: {
+            ...applicationDefaultValues,
+            ...application,
+        },
+    });
+
+    useUnsavedChanges({
+        shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
+    });
 
     useEffect(() => {
         reset(application);
@@ -64,9 +76,12 @@ const EditApplicationForm = ({
         };
         await updateApplication(payload.id, payload);
         if (!isTabView) {
-            push(
-                `/account/team/${query.teamId}/integrations/api-management/create/${payload.id}/permissions`
-            );
+            /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
+            setTimeout(() => {
+                push(
+                    `/account/team/${query.teamId}/integrations/api-management/create/${payload.id}/permissions`
+                );
+            });
         }
     };
 
