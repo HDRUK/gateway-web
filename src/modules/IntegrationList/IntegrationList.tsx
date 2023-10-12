@@ -11,65 +11,48 @@ import ApplicationSearchBar from "@/modules/ApplicationSearchBar";
 import Pagination from "@/components/Pagination";
 import { PaginationType } from "@/interfaces/Pagination";
 
+
+interface TeamWithIntegrations {
+    id: string;
+    federation: Integration[];
+}
+
 const IntegrationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [filterQuery, setFilterQuery] = useState("");
 
     const router = useRouter();
     const { teamId } = router.query;
 
-    /*const { data, isLoading } = useGet<PaginationType<Integration>>(
-        filterQuery
-            ? `${apis.teamsV1Url}/${teamId}/federations`//?${filterQuery}&page=${currentPage}`
-            : null,
-        {
-            keepPreviousData: true,
-            withPagination: true,
-        }
-    );*/
-    const { data, isLoading } = useGet<Integration[]>(`${apis.teamsV1Url}/${teamId}/federations`);
-
-    console.log(data);
-
+    const { data, isLoading } = useGet<TeamWithIntegrations[]>(
+        `${apis.teamsV1Url}/${teamId}/federations`
+    );
+    
     useMemo(() => {
         window.scrollTo({ top: 0 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
-
-    //turn back on for pagination
     //const { lastPage, list, total } = data || {};
-    let lastPage = 1;
-    let list = data;
-    let total = list?.length;
+    const lastPage = 1;
+    const total = 1;
+    const list = data?.[0].federation;
 
     return (
         <BoxContainer>
-            {/*<ApplicationSearchBar setFilterQuery={setFilterQuery} />*/}
-
             <Box
                 data-testid="number-of-integrations"
                 display="flex"
                 justifyContent="flex-end">
-                <Typography>
+                <Typography>  
                     Number of Integrations: <strong>{total}</strong>
                 </Typography>
             </Box>
-            {list?.map((integration,index) => (
+            {list?.map((integration, index) => (
                 <IntegrationListItem
-                    index={index+1}
+                    index={index + 1}
                     integration={integration}
                 />
-
             ))}
-            <Pagination
-                isLoading={isLoading}
-                page={currentPage}
-                count={lastPage}
-                onChange={(e: React.ChangeEvent<unknown>, page: number) =>
-                    setCurrentPage(page)
-                }
-            />
         </BoxContainer>
     );
 };

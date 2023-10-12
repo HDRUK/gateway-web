@@ -1,27 +1,18 @@
+// /interfaces/Integration.ts
 
-interface Integration {
-    access_requests_management: boolean;
-    allows_messaging: boolean;
-    application_form_updated_by: string;
-    application_form_updated_on: string;
-    contact_point: string;
-    created_at: string;
-    deleted_at: string | null;
+export type FederationType = "DATASETS" | "DUR" | "TOOLS";
+export type AuthType = "API_KEY" | "BEARER" | "NO_AUTH";
+
+interface Integration { 
+    federation_type: FederationType;
+    auth_type: AuthType;
+    auth_secret_key: string;
+    endpoint_baseurl: string;
+    endpoint_datasets: string;
+    endpoint_dataset: string;
+    run_time_hour: number;
     enabled: boolean;
-    federation: any[]; //not sure what this is
-    id: number;
-    is_admin: boolean;
-    mdm_folder_id: string | null;
-    member_of: number;
-    name: string;
-    updated_at: string;
-    uses_5_safes: boolean;
-    workflow_enabled: boolean;
-  }
-  
-//if we need to omit anything 
-/*interface IntegrationPayLoad extends Omit<Integration, "permissions"> {
-    permissions: number[] | undefined;
-}*/
+    notification: string[];
+}
 
-export type { Integration }; //IntegrationPayLoad
+export type { Integration };

@@ -17,7 +17,6 @@ const apis = {
     sectorsV1Url: `${apiV1Url}/sectors`,
     tagsV1Url: `${apiV1Url}/tags`,
     applicationsV1Url: `${apiV1Url}/applications`,
-    integrationsV1Url: `${apiV1Url}/dar-integrations`,
     permissionsV1Url: `${apiV1Url}/permissions`,
     teamsV1Url: `${apiV1Url}/teams`,
     wordPressApiUrl:

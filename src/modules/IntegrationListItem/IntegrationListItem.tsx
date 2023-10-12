@@ -38,7 +38,7 @@ const IntegrationListItem = ({ index, integration }: IntegrationListItemProps) =
                             padding: "10px",
                             fontSize: 14,
                         }}>
-                        Integration {index} - {'<TYPE>'}
+                        Integration {index} - {integration.federation_type}
                     </Typography>
                     <Box>
                         <Typography
@@ -62,16 +62,6 @@ const IntegrationListItem = ({ index, integration }: IntegrationListItemProps) =
                         ) : (
                             <Chip label="Disabled" color="error" />
                         )}
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "grid",
-                            gridTemplateRows: "repeat(2, 1fr)",
-                            gridColumn: "span 3",
-                        }}>
-                        <Typography component="span">
-                            {integration.name}
-                        </Typography>
                     </Box>
                 </Box>
             </Link>
