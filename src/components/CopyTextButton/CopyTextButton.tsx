@@ -1,14 +1,25 @@
-import { copyToClipboard } from "@/utils/general";
 import Typography from "@/components/Typography";
 import { ContentCopyIcon } from "@/consts/icons";
 import { IconButton } from "@mui/material";
 import theme from "@/config/theme";
+import notificationService from "@/services/notification";
 
-export interface CopyableTextBoxProps {
+export interface CopyTextButtonProps {
     content: string | undefined;
 }
 
-const CopyableTextBox = (props: CopyableTextBoxProps) => {
+const copyToClipboard = (str: string | undefined) => {
+    navigator.clipboard.writeText(
+        str || ""
+    );
+
+    //note: "Copied to clipboard" would better?
+    notificationService.success(
+        "Link copied" 
+    );
+}
+
+const CopyTextButton = (props: CopyTextButtonProps) => {
     const {
         content
     } = props;
@@ -25,20 +36,20 @@ const CopyableTextBox = (props: CopyableTextBoxProps) => {
             }}>
                 {content}
                 <IconButton
-                disableRipple
-                size="large"
-                edge="start"
-                aria-label="copy text"
-                onClick={() => copyToClipboard(content)}>
-                    <ContentCopyIcon />
+                    disableRipple
+                    size="large"
+                    edge="start"
+                    aria-label="copy text"
+                    onClick={() => copyToClipboard(content)}>
+                        <ContentCopyIcon />
                 </IconButton>
 
         </Typography>
     );
 };
 
-CopyableTextBox.defaultProps = {
+CopyTextButton.defaultProps = {
     content: ""
 };
 
-export default CopyableTextBox;
+export default CopyTextButton;

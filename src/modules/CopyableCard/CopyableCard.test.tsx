@@ -24,7 +24,7 @@ jest.mock("@/services/notification/notification", () => {
     };
 });
 
-describe("ApplicationAuthDetail", () => {
+describe("CopyableCard", () => {
     beforeAll(() => {
         Object.defineProperty(navigator, "clipboard", {
             writable: true,

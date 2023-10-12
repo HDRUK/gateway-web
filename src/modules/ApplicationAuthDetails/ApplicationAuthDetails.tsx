@@ -47,7 +47,7 @@ const ApplicationAuthDetails = ({
         <BoxContainer>
             {credentials.map(cred => (
                 <CopyableCard 
-                   key={cred}
+                   key={cred.label}
                    {...cred}
                 />
             ))}

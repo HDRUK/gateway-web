@@ -1,7 +1,7 @@
 import Box from "@/components/Box";
 import Card from "@/components/Card";
 import Typography from "@/components/Typography";
-import CopyableTextBox from "@/components/CopyableTextBox";
+import CopyTextButton from "@/components/CopyTextButton";
 
 
 interface CopyableCardProps {
@@ -29,7 +29,7 @@ const CopyableCard = (props : CopyableCardProps) => {
                 </Typography>
             </Box>
             <Box>
-                <CopyableTextBox content={props.value}/>
+                <CopyTextButton content={props.value}/>
             </Box>
         </Card>
     );
