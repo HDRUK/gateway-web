@@ -21,7 +21,7 @@ const validationSchema = yup
             )
             .required()
             .label("Public API name"),
-        description: yup.string().required().label("Description"),
+        description: yup.string().required().max(300).label("Description"),
     })
     .required();
 

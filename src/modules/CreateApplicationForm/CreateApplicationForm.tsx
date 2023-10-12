@@ -17,6 +17,7 @@ import usePost from "@/hooks/usePost";
 import useAuth from "@/hooks/useAuth";
 import Paper from "@/components/Paper";
 import { useMemo } from "react";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
@@ -30,12 +31,23 @@ const CreateApplicationForm = () => {
         };
     }, [query.teamId, user?.id]);
 
-    const { control, handleSubmit, getValues, setValue, trigger, reset } =
-        useForm<Application>({
-            mode: "onTouched",
-            resolver: yupResolver(applicationValidationSchema),
-            defaultValues,
-        });
+    const {
+        control,
+        handleSubmit,
+        getValues,
+        setValue,
+        trigger,
+        reset,
+        formState,
+    } = useForm<Application>({
+        mode: "onTouched",
+        resolver: yupResolver(applicationValidationSchema),
+        defaultValues,
+    });
+
+    useUnsavedChanges({
+        shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
+    });
 
     const updateApplication = usePost<Application>(
         `${apis.applicationsV1Url}`,
@@ -49,9 +61,13 @@ const CreateApplicationForm = () => {
             ...applicationDefaultValues,
             ...formData,
         });
-        push(
-            `/account/team/${query.teamId}/integrations/api-management/create/${response.id}/permissions`
-        );
+
+        /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
+        setTimeout(() => {
+            push(
+                `/account/team/${query.teamId}/integrations/api-management/create/${response.id}/permissions`
+            );
+        });
     };
 
     return (
