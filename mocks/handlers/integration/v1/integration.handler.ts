@@ -4,10 +4,6 @@ import { Integration } from "@/interfaces/Integration";
 import { PaginationType } from "@/interfaces/Pagination";
 import { generateIntegrationsV1 } from "@/mocks/data/integration";
 
-/*const { data, isLoading } = useGet<TeamWithIntegrations[]>(
-    `${apis.teamsV1Url}/${teamId}/federations`
-);*/
-
 interface getIntegrationsProps {
     data?: Integration[];
     teamId?: number;

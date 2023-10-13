@@ -18,7 +18,6 @@ jest.mock("next/router", () => ({
 describe("IntegrationList", () => {
     //generation 10 integrations
     const integrationsV1 = generateIntegrationsV1(10);
-    console.log(integrationsV1);
 
     beforeEach(() => {
         server.use(
@@ -37,33 +36,12 @@ describe("IntegrationList", () => {
         });
     });
 
-    /*
     it("should render list", async () => {
         await waitFor(() => {
-            expect(screen.getByText(data[0].name)).toBeInTheDocument();
-            expect(screen.getByText(data[1].name)).toBeInTheDocument();
-            expect(screen.getByText(data[2].name)).toBeInTheDocument();
-            expect(
-                screen.getByText(`APP ID: ${data[0].app_id}`)
-            ).toBeInTheDocument();
-            expect(
-                screen.getByText(`APP ID: ${data[1].app_id}`)
-            ).toBeInTheDocument();
-            expect(
-                screen.getByText(`APP ID: ${data[2].app_id}`)
-            ).toBeInTheDocument();
-        });
-    });
-    it("should render pagination", async () => {
-        await waitFor(() => {
-            const paginationItems = screen.getAllByTestId("pagination-item");
-            expect(paginationItems[1].textContent).toBe("1");
-            expect(paginationItems[2].textContent).toBe("2");
-            expect(paginationItems).toHaveLength(4);
+            expect(screen.getByText(`Integration 1 - ${integrationsV1[0].federation_type}`)).toBeInTheDocument();
+            expect(screen.getByText(`Integration 10 - ${integrationsV1[9].federation_type}`)).toBeInTheDocument();
 
-            expect(screen.getByTestId("ArrowLeftIcon")).toBeInTheDocument();
-            expect(screen.getByTestId("ArrowRightIcon")).toBeInTheDocument();
         });
     });
-    */
+
 });
