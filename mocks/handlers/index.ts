@@ -14,6 +14,8 @@ import {
     patchApplicationV1,
 } from "./application/v1";
 
+import { getIntegrationsV1 } from "./integration/v1";
+
 export const handlers = [
     getUserV1(),
     getFiltersV1(),
@@ -27,4 +29,5 @@ export const handlers = [
     getApplicationV1(),
     getApplicationsV1({}),
     patchApplicationV1(),
+    getIntegrationsV1({}),
 ];

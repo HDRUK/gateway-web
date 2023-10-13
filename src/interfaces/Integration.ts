@@ -5,6 +5,7 @@ export type AuthType = "API_KEY" | "BEARER" | "NO_AUTH";
 
 interface Integration { 
     federation_type: FederationType;
+    created_at: string;
     auth_type: AuthType;
     auth_secret_key: string;
     endpoint_baseurl: string;
