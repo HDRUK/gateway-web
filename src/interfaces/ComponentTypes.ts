@@ -7,6 +7,7 @@ type ComponentTypes =
     | "TextField"
     | "RadioGroup"
     | "Select"
+    | "TextTime"
     | "TextArea";
 
 export type { ComponentTypes };

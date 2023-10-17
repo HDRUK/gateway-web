@@ -31,15 +31,7 @@ const CreateApplicationForm = () => {
         };
     }, [query.teamId, user?.id]);
 
-    const {
-        control,
-        handleSubmit,
-        getValues,
-        setValue,
-        trigger,
-        reset,
-        formState,
-    } = useForm<Application>({
+    const { control, handleSubmit, reset, formState } = useForm<Application>({
         mode: "onTouched",
         resolver: yupResolver(applicationValidationSchema),
         defaultValues,
@@ -76,9 +68,6 @@ const CreateApplicationForm = () => {
                 <Box>
                     {applicationFormFields.map(field => (
                         <InputWrapper
-                            getValues={getValues}
-                            setValue={setValue}
-                            trigger={trigger}
                             key={field.name}
                             control={control}
                             {...field}

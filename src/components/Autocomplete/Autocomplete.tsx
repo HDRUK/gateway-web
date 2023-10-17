@@ -1,11 +1,4 @@
-import {
-    FormControl,
-    FormHelperText,
-    FormLabel,
-    FilterOptionsState,
-    InputAdornment,
-    Chip,
-} from "@mui/material";
+import { FilterOptionsState, InputAdornment, Chip } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
 } from "@mui/material/Autocomplete";
@@ -14,14 +7,19 @@ import TextField from "@mui/material/TextField";
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import { ReactNode } from "react";
-import FormError from "@/components/FormError";
+import FormInputWrapper from "@/components/FormInputWrapper";
 
-type ValueType = string | number;
-type OptionsType = { id: ValueType; label: string; icon?: IconType }[];
+export type ValueType = string | number;
+export type OptionsType = {
+    value: ValueType;
+    label: string;
+    icon?: IconType;
+}[];
 
 export interface AutocompleteProps {
     label: string;
     info?: string;
+    extraInfo?: string;
     getOptionLabel?: () => string;
     disabled?: boolean;
     startAdornmentIcon?: ReactNode;
@@ -31,14 +29,15 @@ export interface AutocompleteProps {
     clearOnBlur?: boolean;
     handleHomeEndKeys?: boolean;
     multiple?: boolean;
+    getChipLabel?: (options: OptionsType, value: ValueType) => void;
     trigger?: (name: string) => void;
-    setValue?: (name: string, value: unknown) => void;
     freeSolo?: boolean;
     selectOnFocus?: boolean;
     placeholder?: string;
     icon?: IconType;
     name: string;
     control: Control;
+    horizontalForm?: boolean;
     required?: boolean;
 }
 
@@ -51,6 +50,7 @@ const Autocomplete = (props: AutocompleteProps) => {
     const {
         label,
         info,
+        extraInfo,
         createLabel,
         control,
         trigger,
@@ -58,12 +58,16 @@ const Autocomplete = (props: AutocompleteProps) => {
         placeholder,
         startAdornmentIcon,
         canCreate,
-        setValue,
+        getChipLabel,
+        horizontalForm,
+        required,
+        options = [],
+        disabled,
         ...restProps
     } = props;
 
     const {
-        field: { ...fieldProps },
+        field,
         fieldState: { error },
     } = useController({
         name,
@@ -71,14 +75,19 @@ const Autocomplete = (props: AutocompleteProps) => {
     });
 
     const filterOptions = (
-        options: SearchOptions[],
+        searchOptions: SearchOptions[],
         params: FilterOptionsState<SearchOptions>
     ) => {
-        const filtered = createFilterOptions<SearchOptions>()(options, params);
+        const filtered = createFilterOptions<SearchOptions>()(
+            searchOptions,
+            params
+        );
 
         const { inputValue } = params;
 
-        const isExisting = options.some(option => inputValue === option.label);
+        const isExisting = searchOptions.some(
+            option => inputValue === option.label
+        );
         if (inputValue !== "" && !isExisting) {
             filtered.push({
                 value: inputValue,
@@ -90,38 +99,41 @@ const Autocomplete = (props: AutocompleteProps) => {
     };
 
     return (
-        <FormControl fullWidth sx={{ mb: 2 }}>
-            <FormLabel>{label}</FormLabel>
-
-            {info && (
-                <FormHelperText
-                    sx={{
-                        fontSize: 13,
-                    }}>
-                    {info}
-                </FormHelperText>
-            )}
+        <FormInputWrapper
+            label={label}
+            horizontalForm={horizontalForm}
+            info={info}
+            extraInfo={extraInfo}
+            error={error}
+            disabled={disabled}
+            required={required}>
             <MuiAutocomplete
-                {...fieldProps}
+                {...field}
                 {...restProps}
+                options={options}
+                disabled={disabled}
                 renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => (
-                        <Chip
-                            label={option?.label || `${option}`}
-                            size="small"
-                            {...getTagProps({ index })}
-                        />
-                    ))
+                    tagValue.map((option, index) => {
+                        const chipLabel =
+                            typeof getChipLabel === "function"
+                                ? getChipLabel(options, option)
+                                : option?.label || `${option}`;
+                        return (
+                            <Chip
+                                label={chipLabel || ""}
+                                size="small"
+                                {...getTagProps({ index })}
+                            />
+                        );
+                    })
                 }
                 onChange={(e, v) => {
-                    if (typeof setValue === "function" && Array.isArray(v)) {
+                    if (Array.isArray(v)) {
                         const values = v.map(value => {
                             if (typeof value === "string") return value;
                             return value?.value;
                         });
-                        if (typeof setValue === "function") {
-                            setValue(name, values);
-                        }
+                        field.onChange(values);
                         if (typeof trigger === "function") {
                             trigger(name);
                         }
@@ -154,8 +166,7 @@ const Autocomplete = (props: AutocompleteProps) => {
                     />
                 )}
             />
-            {error && <FormError error={error} />}
-        </FormControl>
+        </FormInputWrapper>
     );
 };
 
@@ -164,7 +175,6 @@ Autocomplete.defaultProps = {
         if (typeof option === "string") return option;
         return option?.label;
     },
-    setValue: () => null,
     placeholder: "",
     info: "",
     createLabel: "Add",

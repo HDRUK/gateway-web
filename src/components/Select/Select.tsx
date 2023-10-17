@@ -1,19 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import {
-    FormControl,
-    FormHelperText,
-    OutlinedInput,
-    Select as MuiSelect,
-    MenuItem,
-} from "@mui/material";
+import { OutlinedInput, Select as MuiSelect, MenuItem } from "@mui/material";
 
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
-import { colors } from "@/config/theme";
 import SelectMenuItem from "@/components/SelectMenuItem";
-import Label from "@/components/Label";
-import FormError from "@/components/FormError";
+import FormInputWrapper from "@/components/FormInputWrapper";
 
 type ValueType = string | number;
 type OptionsType = { value: ValueType; label: string; icon?: IconType }[];
@@ -21,11 +13,13 @@ type OptionsType = { value: ValueType; label: string; icon?: IconType }[];
 export interface SelectProps {
     label: string;
     info?: string;
+    extraInfo?: string;
     iconRight?: boolean;
     disabled?: boolean;
     invertListItem?: boolean;
     options: OptionsType;
     multiple?: boolean;
+    horizontalForm?: boolean;
     icon?: IconType;
     name: string;
     control: Control;
@@ -50,7 +44,9 @@ const Select = (props: SelectProps) => {
     const {
         label,
         info,
+        extraInfo,
         icon,
+        horizontalForm,
         iconRight,
         options,
         control,
@@ -70,28 +66,17 @@ const Select = (props: SelectProps) => {
     });
 
     return (
-        <FormControl fullWidth sx={{ m: 0, mb: 2 }}>
-            <Label
-                required={required}
-                htmlFor="outlined-adornment-amount"
-                label={label}
-                sx={{
-                    ...(disabled && {
-                        color: colors.grey600,
-                    }),
-                }}
-            />
-            {info && (
-                <FormHelperText
-                    sx={{
-                        fontSize: 13,
-                        color: colors.grey700,
-                    }}>
-                    {info}
-                </FormHelperText>
-            )}
-
+        <FormInputWrapper
+            fullWidth
+            label={label}
+            horizontalForm={horizontalForm}
+            info={info}
+            extraInfo={extraInfo}
+            error={error}
+            disabled={disabled}
+            required={required}>
             <MuiSelect
+                fullWidth
                 size="small"
                 multiple={multiple}
                 sx={{ fontSize: 14 }}
@@ -124,8 +109,7 @@ const Select = (props: SelectProps) => {
                     </MenuItem>
                 ))}
             </MuiSelect>
-            {error && <FormError error={error} />}
-        </FormControl>
+        </FormInputWrapper>
     );
 };
 

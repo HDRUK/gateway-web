@@ -1,21 +1,17 @@
 import Radio from "@mui/material/Radio";
 import MuiRadioGroup from "@mui/material/RadioGroup";
-import {
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    SxProps,
-} from "@mui/material";
+import { FormControlLabel, SxProps } from "@mui/material";
 import { Control, Controller, useController } from "react-hook-form";
-import Label from "@/components/Label";
-import FormError from "@/components/FormError";
+import FormInputWrapper from "@/components/FormInputWrapper";
 
 export interface RadioGroupProps {
     label: string;
     name: string;
     info?: string;
+    extraInfo?: string;
     required?: boolean;
     disabled?: boolean;
+    horizontalForm?: boolean;
     isRow: boolean;
     radios: { value: string; label: string }[];
     control: Control;
@@ -30,8 +26,10 @@ const RadioGroup = ({
     radios,
     control,
     name,
+    horizontalForm = false,
     disabled = false,
     info,
+    extraInfo,
     required = false,
     isRow = false,
 }: RadioGroupProps) => {
@@ -43,16 +41,15 @@ const RadioGroup = ({
     });
 
     return (
-        <FormControl sx={{ mb: 2, ...formControlSx }}>
-            <Label required={required} label={label} />
-            {info && (
-                <FormHelperText
-                    sx={{
-                        fontSize: 13,
-                    }}>
-                    {info}
-                </FormHelperText>
-            )}
+        <FormInputWrapper
+            label={label}
+            horizontalForm={horizontalForm}
+            info={info}
+            extraInfo={extraInfo}
+            error={error}
+            disabled={disabled}
+            required={required}
+            formControlSx={formControlSx}>
             <Controller
                 control={control}
                 name={name}
@@ -72,8 +69,7 @@ const RadioGroup = ({
                     </MuiRadioGroup>
                 )}
             />
-            {error && <FormError error={error} />}
-        </FormControl>
+        </FormInputWrapper>
     );
 };
 

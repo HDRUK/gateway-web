@@ -12,7 +12,7 @@ import Typography from "@/components/Typography";
 const CreateAppPage = () => {
     return (
         <>
-            <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Create" />
+            <Head title="Health Data Research Innovation Gateway - My Account - Integrations - API management" />
             <AccountLayout>
                 <BackButton label="Back to API Management" />
                 <Paper sx={{ marginBottom: 1 }}>

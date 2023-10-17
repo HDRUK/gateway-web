@@ -9,5 +9,6 @@ export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
     TextField: "TextField",
     Select: "Select",
     RadioGroup: "RadioGroup",
+    TextTime: "TextTime",
     TextArea: "TextArea",
 };

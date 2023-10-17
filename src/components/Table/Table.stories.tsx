@@ -9,7 +9,7 @@ import {
 import { DeleteForeverIcon } from "@/consts/icons";
 import { faker } from "@faker-js/faker";
 import TableActionCell from "@/components/TableActionCell";
-import TableTooltipCell from "@/components/TableTooltipCell";
+import TooltipIcon from "@/components/TooltipIcon";
 import Box from "@/components/Box";
 import Table from "./Table";
 
@@ -29,8 +29,8 @@ const columns: ColumnDef<{ firstname: string; lastname: string }>[] = [
     {
         id: "team",
         header: () => (
-            <TableTooltipCell
-                header="Team"
+            <TooltipIcon
+                label="Team"
                 content={
                     <PermissionDescriptions
                         roles={[

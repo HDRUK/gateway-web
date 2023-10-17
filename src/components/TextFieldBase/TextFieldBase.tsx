@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import {
-    FormControl,
-    FormHelperText,
     InputAdornment,
     OutlinedInput,
     IconButton,
@@ -11,28 +9,26 @@ import {
 
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Control, useController } from "react-hook-form";
-import { useMemo } from "react";
-import { colors } from "@/config/theme";
 import { CancelIcon } from "@/consts/icons";
-import Label from "@/components/Label";
-import CharacterLimit from "@/components/CharacterLimit";
-import FormError from "@/components/FormError";
+import FormInputWrapper from "@/components/FormInputWrapper";
 
 export interface TextFieldBaseProps {
-    label: string;
+    label?: string;
     placeholder?: string;
     info?: string;
+    extraInfo?: string;
     // eslint-disable-next-line @typescript-eslint/ban-types
     icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
         muiName: string;
     };
-    getValues?: (name: string) => unknown;
     setValue?: (name: string, value: string | number) => void;
     name: string;
     multiline?: boolean;
+    horizontalForm?: boolean;
     rows?: number;
     limit?: number;
     disabled?: boolean;
+    fullWidth?: boolean;
     showClearButton?: boolean;
     control: Control;
     required?: boolean;
@@ -40,10 +36,13 @@ export interface TextFieldBaseProps {
 
 const TextFieldBase = (props: TextFieldBaseProps) => {
     const {
+        horizontalForm = false,
         label,
+        fullWidth = true,
         disabled,
         placeholder,
         info,
+        extraInfo,
         icon,
         required,
         limit,
@@ -52,7 +51,6 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
         control,
         name,
         setValue,
-        getValues,
         showClearButton,
         ...inputProps
     } = props;
@@ -71,44 +69,20 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
             "You must pass `setValue` if you would like to show the clear button"
         );
     }
-    if (limit && getValues === undefined) {
-        throw Error(
-            "You must pass `getValues` if you would like to show the character count"
-        );
-    }
-
-    const characterCount = useMemo(() => {
-        if (typeof getValues !== "function") return 0;
-
-        const field = getValues(fieldProps.name);
-
-        if (!field || typeof field !== "string") return 0;
-
-        return field.length;
-    }, [fieldProps, getValues]);
 
     return (
-        <FormControl fullWidth sx={{ m: 0, mb: 2 }}>
-            <Label
-                required={required}
-                label={label}
-                sx={{
-                    ...(disabled && {
-                        color: colors.grey600,
-                    }),
-                }}
-            />
-            {info && (
-                <FormHelperText
-                    sx={{
-                        fontSize: 13,
-                        color: colors.grey700,
-                    }}>
-                    {info}
-                </FormHelperText>
-            )}
-            {limit && <CharacterLimit count={characterCount} limit={limit} />}
+        <FormInputWrapper
+            label={label}
+            horizontalForm={horizontalForm}
+            info={info}
+            extraInfo={extraInfo}
+            limit={limit}
+            error={error}
+            value={fieldProps.value}
+            disabled={disabled}
+            required={required}>
             <OutlinedInput
+                fullWidth={fullWidth}
                 size="small"
                 disabled={disabled}
                 multiline={multiline}
@@ -146,9 +120,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
                 value={fieldProps.value ?? ""}
                 {...inputProps}
             />
-
-            {error && <FormError error={error} />}
-        </FormControl>
+        </FormInputWrapper>
     );
 };
 
@@ -161,7 +133,6 @@ TextFieldBase.defaultProps = {
     rows: undefined,
     icon: undefined,
     setValue: undefined,
-    getValues: undefined,
     showClearButton: false,
     limit: undefined,
 };

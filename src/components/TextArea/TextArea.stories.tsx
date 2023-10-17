@@ -33,7 +33,7 @@ const validationSchema = yup
     .required();
 
 const WrapperComponent = () => {
-    const { handleSubmit, getValues, control } = useForm<FormData>({
+    const { handleSubmit, control } = useForm<FormData>({
         defaultValues: {
             first: "",
             second: "",
@@ -50,7 +50,6 @@ const WrapperComponent = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
                 <TextAreaComponent
-                    getValues={getValues}
                     limit={150}
                     label="with character limit"
                     control={control}

@@ -31,21 +31,14 @@ const EditApplicationForm = ({
 }: EditApplicationFormProps) => {
     const { query, push } = useRouter();
 
-    const {
-        control,
-        handleSubmit,
-        getValues,
-        reset,
-        setValue,
-        trigger,
-        formState,
-    } = useForm<Application>({
-        resolver: yupResolver(applicationValidationSchema),
-        defaultValues: {
-            ...applicationDefaultValues,
-            ...application,
-        },
-    });
+    const { control, handleSubmit, reset, trigger, formState } =
+        useForm<Application>({
+            resolver: yupResolver(applicationValidationSchema),
+            defaultValues: {
+                ...applicationDefaultValues,
+                ...application,
+            },
+        });
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -110,8 +103,6 @@ const EditApplicationForm = ({
                     }}>
                     {fields.map(field => (
                         <InputWrapper
-                            getValues={getValues}
-                            setValue={setValue}
                             trigger={trigger}
                             key={field.name}
                             control={control}
