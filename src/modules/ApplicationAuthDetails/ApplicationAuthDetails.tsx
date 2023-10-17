@@ -1,17 +1,34 @@
-import Box from "@/components/Box";
-import Button from "@/components/Button";
-import Card from "@/components/Card";
+import BoxContainer from "@/components/BoxContainer";
 import { Application } from "@/interfaces/Application";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
+
+import CopyableCard from "@/modules/CopyableCard";
+
 
 interface ApplicationAuthDetailsProps {
     application?: Application;
 }
 
+
 const ApplicationAuthDetails = ({
     application,
 }: ApplicationAuthDetailsProps) => {
+
+
+    const credentials = [
+        {
+            "label": "App ID",
+            "value": application?.app_id,
+            "description": "This is your App's unique ID. You will need it to make certain API calls."
+        },
+        {
+            "label": "Client ID",
+            "value": application?.client_id,
+            "description": "This is your App's unique client ID. You will need it to make certain API calls."
+        },
+    ];
+
     return (
         <>
         <Paper sx={{ 
@@ -19,86 +36,22 @@ const ApplicationAuthDetails = ({
             marginBottom: "10px",
             padding: 2,
             }}>
-            <Typography variant="h2">Authentication credentials</Typography>
-            <Typography>
-            These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.
-            </Typography>
+                <Typography variant="h2">
+                    Authentication credentials
+                </Typography>
+                <Typography>
+                    These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.
+                </Typography>
         </Paper>
 
-        <Box sx={{ gap: 1, display: "grid", padding: 0 }}>
-            <Card
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                }}>
-                <Box>
-                    <Typography
-                        sx={{
-                            fontWeight: 600,
-                        }}>
-                        App ID
-                    </Typography>
-                    <Typography>
-                        This is your Apps unique ID. You will need it to make
-                        certain API calls.
-                    </Typography>
-                </Box>
-                <Box>
-                    <Typography
-                        sx={{
-                            marginTop: "10px",
-                        }}>
-                        {application?.app_id}
-                    </Typography>
-                </Box>
-                <Box>
-                    <Button
-                        onClick={() => {
-                            navigator.clipboard.writeText(
-                                application?.app_id || ""
-                            );
-                        }}>
-                        Copy
-                    </Button>
-                </Box>
-            </Card>
-            <Card
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                }}>
-                <Box>
-                    <Typography
-                        sx={{
-                            fontWeight: 600,
-                        }}>
-                        Client ID
-                    </Typography>
-                    <Typography>
-                        This is your Apps unique ID. You will need it to make
-                        certain API calls.
-                    </Typography>
-                </Box>
-                <Box>
-                    <Typography
-                        sx={{
-                            marginTop: "10px",
-                        }}>
-                        {application?.client_id}
-                    </Typography>
-                </Box>
-                <Box>
-                    <Button
-                        onClick={() => {
-                            navigator.clipboard.writeText(
-                                application?.client_id || ""
-                            );
-                        }}>
-                        Copy
-                    </Button>
-                </Box>
-            </Card>
-        </Box>
+        <BoxContainer>
+            {credentials.map(cred => (
+                <CopyableCard 
+                   key={cred.label}
+                   {...cred}
+                />
+            ))}
+        </BoxContainer>
         </>
     );
 };
