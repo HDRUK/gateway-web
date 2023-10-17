@@ -3,12 +3,12 @@ import { Box, IconButton } from "@mui/material";
 import Popover from "@mui/material/Popover";
 import { HelpOutlineIcon } from "@/consts/icons";
 
-interface TableTooltipCellProps {
-    header: string;
+interface TooltipIconProps {
+    label: ReactNode;
     content: ReactNode;
 }
 
-const TableTooltipCell = ({ header, content }: TableTooltipCellProps) => {
+const TooltipIcon = ({ label, content }: TooltipIconProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,8 +21,8 @@ const TableTooltipCell = ({ header, content }: TableTooltipCellProps) => {
 
     const open = Boolean(anchorEl);
     return (
-        <Box display="flex" alignItems="center">
-            {header}
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+            {label}
             <IconButton
                 disableRipple
                 onMouseEnter={handlePopoverOpen}
@@ -30,7 +30,7 @@ const TableTooltipCell = ({ header, content }: TableTooltipCellProps) => {
                 <HelpOutlineIcon color="primary" fontSize="medium" />
             </IconButton>
             <Popover
-                id="table-tooltip-cell"
+                id="tooltip"
                 sx={{
                     pointerEvents: "none",
                 }}
@@ -52,4 +52,4 @@ const TableTooltipCell = ({ header, content }: TableTooltipCellProps) => {
     );
 };
 
-export default TableTooltipCell;
+export default TooltipIcon;

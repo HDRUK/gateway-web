@@ -18,7 +18,7 @@ import Button from "@/components/Button";
 const SignInDialog = () => {
     const signIn = useSignIn();
 
-    const { control, handleSubmit, getValues } = useForm<SignIn>({
+    const { control, handleSubmit } = useForm<SignIn>({
         resolver: yupResolver(signInValidationSchema),
         defaultValues: { ...signInDefaultValues },
     });
@@ -41,7 +41,6 @@ const SignInDialog = () => {
                 }}>
                 {signInFormFields.map(field => (
                     <InputWrapper<SignIn>
-                        getValues={getValues}
                         key={field.name}
                         control={control}
                         {...field}

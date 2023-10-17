@@ -5,10 +5,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import Button from "@/components/Button";
 import {
-    applicationDefaultValues,
-    applicationFormFields,
-    applicationValidationSchema,
-} from "@/config/forms/application";
+    integrationDefaultValues,
+    integrationFormFields,
+    integrationValidationSchema,
+} from "@/config/forms/integration";
 import InputWrapper from "@/components/InputWrapper";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
@@ -19,21 +19,21 @@ import Paper from "@/components/Paper";
 import { useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
-const CreateApplicationForm = () => {
+const CreateIntegrationForm = () => {
     const { user } = useAuth();
-    const { query, push } = useRouter();
+    const { query } = useRouter();
 
     const defaultValues = useMemo(() => {
         return {
             user_id: user?.id,
             team_id: parseInt(query.teamId as string, 10),
-            ...applicationDefaultValues,
+            ...integrationDefaultValues,
         };
     }, [query.teamId, user?.id]);
 
-    const { control, handleSubmit, reset, formState } = useForm<Application>({
+    const { control, handleSubmit, formState } = useForm<Application>({
         mode: "onTouched",
-        resolver: yupResolver(applicationValidationSchema),
+        resolver: yupResolver(integrationValidationSchema),
         defaultValues,
     });
 
@@ -41,34 +41,28 @@ const CreateApplicationForm = () => {
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
     });
 
-    const updateApplication = usePost<Application>(
+    const createIntegration = usePost<Application>(
         `${apis.applicationsV1Url}`,
         {
-            itemName: "Application",
+            itemName: "Integration",
         }
     );
 
     const submitForm = async (formData: Application) => {
-        const response = await updateApplication({
-            ...applicationDefaultValues,
+        await createIntegration({
+            ...integrationDefaultValues,
             ...formData,
-        });
-
-        /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
-        setTimeout(() => {
-            push(
-                `/account/team/${query.teamId}/integrations/api-management/create/${response.id}/permissions`
-            );
         });
     };
 
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
             <Paper sx={{ marginBottom: 1 }}>
-                <Box>
-                    {applicationFormFields.map(field => (
+                <Box padding={0}>
+                    {integrationFormFields.map(field => (
                         <InputWrapper
                             key={field.name}
+                            horizontalForm
                             control={control}
                             {...field}
                         />
@@ -77,22 +71,21 @@ const CreateApplicationForm = () => {
             </Paper>
             <Paper>
                 <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        marginBottom: "10px",
-                    }}>
-                    <Button
-                        onClick={() => reset(defaultValues)}
-                        color="secondary"
-                        variant="outlined">
-                        Discard API
-                    </Button>
-                    <Button type="submit">Save &amp; Continue</Button>
+                    padding={0}
+                    display="flex"
+                    justifyContent="space-between"
+                    marginBottom={10}
+                    // sx={{
+                    //     display: "flex",
+                    //     justifyContent: "space-between",
+                    //     marginBottom: "10px",
+                    // }}
+                >
+                    <Button type="submit">Save configuration</Button>
                 </Box>
             </Paper>
         </Form>
     );
 };
 
-export default CreateApplicationForm;
+export default CreateIntegrationForm;

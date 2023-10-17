@@ -7,18 +7,24 @@ import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import AccountLayout from "@/modules/AccountLayout";
 import Typography from "@/components/Typography";
+import CreateIntegrationForm from "@/modules/CreateIntegrationForm";
 
 const CreateAppPage = () => {
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Integration" />
             <AccountLayout>
-                <BackButton label="Back to Integration management" />
+                <BackButton label="Back to Integration Management" />
                 <Paper>
                     <Box>
-                        <Typography variant="h2">Create Integration</Typography>
+                        <Typography variant="h2">Integration</Typography>
+                        <Typography sx={{ marginBottom: 2 }}>
+                            Input and edit the authentication information for
+                            the Gateway system to use for the integration
+                        </Typography>
                     </Box>
                 </Paper>
+                <CreateIntegrationForm />
             </AccountLayout>
         </>
     );

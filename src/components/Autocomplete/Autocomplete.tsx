@@ -1,11 +1,4 @@
-import {
-    FormControl,
-    FormHelperText,
-    FormLabel,
-    FilterOptionsState,
-    InputAdornment,
-    Chip,
-} from "@mui/material";
+import { FilterOptionsState, InputAdornment, Chip } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
 } from "@mui/material/Autocomplete";
@@ -14,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import { ReactNode } from "react";
-import FormError from "@/components/FormError";
+import FormInputWrapper from "../FormInputWrapper";
 
 type ValueType = string | number;
 type OptionsType = { id: ValueType; label: string; icon?: IconType }[];
@@ -32,13 +25,13 @@ export interface AutocompleteProps {
     handleHomeEndKeys?: boolean;
     multiple?: boolean;
     trigger?: (name: string) => void;
-    setValue?: (name: string, value: unknown) => void;
     freeSolo?: boolean;
     selectOnFocus?: boolean;
     placeholder?: string;
     icon?: IconType;
     name: string;
     control: Control;
+    horizontalForm?: boolean;
     required?: boolean;
 }
 
@@ -58,12 +51,14 @@ const Autocomplete = (props: AutocompleteProps) => {
         placeholder,
         startAdornmentIcon,
         canCreate,
-        setValue,
+        horizontalForm,
+        required,
+        disabled,
         ...restProps
     } = props;
 
     const {
-        field: { ...fieldProps },
+        field,
         fieldState: { error },
     } = useController({
         name,
@@ -90,20 +85,17 @@ const Autocomplete = (props: AutocompleteProps) => {
     };
 
     return (
-        <FormControl fullWidth sx={{ mb: 2 }}>
-            <FormLabel>{label}</FormLabel>
-
-            {info && (
-                <FormHelperText
-                    sx={{
-                        fontSize: 13,
-                    }}>
-                    {info}
-                </FormHelperText>
-            )}
+        <FormInputWrapper
+            label={label}
+            horizontalForm={horizontalForm}
+            info={info}
+            error={error}
+            disabled={disabled}
+            required={required}>
             <MuiAutocomplete
-                {...fieldProps}
+                {...field}
                 {...restProps}
+                disabled={disabled}
                 renderTags={(tagValue, getTagProps) =>
                     tagValue.map((option, index) => (
                         <Chip
@@ -114,14 +106,12 @@ const Autocomplete = (props: AutocompleteProps) => {
                     ))
                 }
                 onChange={(e, v) => {
-                    if (typeof setValue === "function" && Array.isArray(v)) {
+                    if (Array.isArray(v)) {
                         const values = v.map(value => {
                             if (typeof value === "string") return value;
                             return value?.value;
                         });
-                        if (typeof setValue === "function") {
-                            setValue(name, values);
-                        }
+                        field.onChange(values);
                         if (typeof trigger === "function") {
                             trigger(name);
                         }
@@ -154,8 +144,7 @@ const Autocomplete = (props: AutocompleteProps) => {
                     />
                 )}
             />
-            {error && <FormError error={error} />}
-        </FormControl>
+        </FormInputWrapper>
     );
 };
 
@@ -164,7 +153,6 @@ Autocomplete.defaultProps = {
         if (typeof option === "string") return option;
         return option?.label;
     },
-    setValue: () => null,
     placeholder: "",
     info: "",
     createLabel: "Add",

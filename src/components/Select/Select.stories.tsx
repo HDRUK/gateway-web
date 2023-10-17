@@ -43,7 +43,7 @@ const validationSchema = yup
     .required();
 
 const WrapperComponent = () => {
-    const { handleSubmit, setValue, control } = useForm<FormData>({
+    const { handleSubmit, control } = useForm<FormData>({
         defaultValues: {
             first: "",
             second: "",
@@ -96,14 +96,12 @@ const WrapperComponent = () => {
                     icon={AccountCircleIcon}
                     options={options}
                     name="third"
-                    setValue={setValue}
                 />
                 <SelectComponent
                     label="with different icons"
                     control={control}
                     options={optionsWithIcons}
                     name="fourth"
-                    setValue={setValue}
                 />
                 <SelectComponent
                     label="with icon right"

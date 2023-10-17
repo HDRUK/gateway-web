@@ -17,7 +17,7 @@ interface ApplicationSearchBarProps {
 const ApplicationSearchBar = ({
     setFilterQuery,
 }: ApplicationSearchBarProps) => {
-    const { control, watch, setValue } = useForm({
+    const { control, watch } = useForm({
         defaultValues: { ...searchApiDefaultValues },
     });
 
@@ -47,7 +47,6 @@ const ApplicationSearchBar = ({
                 <Box sx={{ paddingTop: 0 }}>
                     {searchApiFormFields.map(field => (
                         <InputWrapper
-                            setValue={setValue}
                             key={field.name}
                             control={control}
                             {...field}

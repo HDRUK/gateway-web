@@ -31,22 +31,15 @@ const ProfileForm = () => {
         apis.sectorsV1Url
     );
 
-    const {
-        setValue,
-        control,
-        handleSubmit,
-        getValues,
-        reset,
-        formState,
-        watch,
-    } = useForm<User>({
-        mode: "onTouched",
-        resolver: yupResolver(profileValidationSchema),
-        defaultValues: {
-            ...profileDefaultValues,
-            ...user,
-        },
-    });
+    const { setValue, control, handleSubmit, reset, formState, watch } =
+        useForm<User>({
+            mode: "onTouched",
+            resolver: yupResolver(profileValidationSchema),
+            defaultValues: {
+                ...profileDefaultValues,
+                ...user,
+            },
+        });
 
     const secondaryEmail = watch("secondary_email");
 
@@ -105,9 +98,9 @@ const ProfileForm = () => {
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
             {hydratedFormFields.map(field => (
-                <InputWrapper<User>
-                    getValues={getValues}
+                <InputWrapper
                     key={field.name}
+                    horizontalForm
                     control={control}
                     {...field}
                 />

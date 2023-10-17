@@ -2,7 +2,7 @@
 
 import PermissionDescriptions from "@/modules/PermissionDescriptions";
 import TableActionCell from "@/components/TableActionCell";
-import TableTooltipCell from "@/components/TableTooltipCell";
+import TooltipIcon from "@/components/TooltipIcon";
 import {
     ROLE_CUSTODIAN_DAR_MANAGER,
     ROLE_CUSTODIAN_DAR_REVIEWER,
@@ -86,8 +86,8 @@ const getColumns = (
         {
             id: "team",
             header: () => (
-                <TableTooltipCell
-                    header="Team"
+                <TooltipIcon
+                    label="Team"
                     content={
                         <PermissionDescriptions
                             roles={[
@@ -123,8 +123,8 @@ const getColumns = (
         {
             id: "dataAccessRequest",
             header: () => (
-                <TableTooltipCell
-                    header="Data Access Requests"
+                <TooltipIcon
+                    label="Data Access Requests"
                     content={
                         <PermissionDescriptions
                             roles={[
@@ -160,8 +160,8 @@ const getColumns = (
         {
             id: "metaData",
             header: () => (
-                <TableTooltipCell
-                    header="MetaData"
+                <TooltipIcon
+                    label="MetaData"
                     content={
                         <PermissionDescriptions
                             roles={[

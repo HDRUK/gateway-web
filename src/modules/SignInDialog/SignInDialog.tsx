@@ -21,7 +21,7 @@ const SignInDialog = () => {
     const { t } = useTranslation("modules");
     const signIn = useSignIn();
 
-    const { control, handleSubmit, getValues } = useForm<SignIn>({
+    const { control, handleSubmit } = useForm<SignIn>({
         resolver: yupResolver(signInValidationSchema),
         defaultValues: { ...signInDefaultValues },
     });
@@ -46,7 +46,6 @@ const SignInDialog = () => {
                 <MuiDialogContent>
                     {signInFormFields.map(field => (
                         <InputWrapper<SignIn>
-                            getValues={getValues}
                             key={field.name}
                             control={control}
                             {...field}
