@@ -1,5 +1,3 @@
-// /interfaces/Integration.ts
-
 export type FederationType = "DATASETS" | "DUR" | "TOOLS";
 export type AuthType = "API_KEY" | "BEARER" | "NO_AUTH";
 

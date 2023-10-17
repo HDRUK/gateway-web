@@ -16,7 +16,6 @@ jest.mock("next/router", () => ({
 }));
 
 describe("IntegrationList", () => {
-    //generation 10 integrations
     const integrationsV1 = generateIntegrationsV1(10);
 
     beforeEach(() => {
