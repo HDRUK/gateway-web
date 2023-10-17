@@ -41,7 +41,7 @@ const Checkbox = (props: CheckboxProps) => {
         name,
         control,
     });
-    console.log(fieldProps);
+
     return (
         <FormControl
             fullWidth={fullWidth}
