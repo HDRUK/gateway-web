@@ -15,10 +15,10 @@ const CreateAppPage = () => {
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Integration" />
             <AccountLayout>
                 <BackButton label="Back to Integration Management" />
-                <Paper>
+                <Paper sx={{ marginBottom: 1 }}>
                     <Box>
                         <Typography variant="h2">Integration</Typography>
-                        <Typography sx={{ marginBottom: 2 }}>
+                        <Typography>
                             Input and edit the authentication information for
                             the Gateway system to use for the integration
                         </Typography>

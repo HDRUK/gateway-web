@@ -21,12 +21,6 @@ const formFields = [
         multiple: true,
         startAdornmentIcon: <SearchIcon color="primary" />,
         canCreate: true,
-        getOptionLabel: (
-            option: string | { label: string; value: unknown }
-        ) => {
-            if (typeof option === "string") return option;
-            return option?.label;
-        },
         component: inputComponents.Autocomplete,
     },
     {

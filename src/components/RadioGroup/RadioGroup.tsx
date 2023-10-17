@@ -8,6 +8,7 @@ export interface RadioGroupProps {
     label: string;
     name: string;
     info?: string;
+    extraInfo?: string;
     required?: boolean;
     disabled?: boolean;
     horizontalForm?: boolean;
@@ -28,6 +29,7 @@ const RadioGroup = ({
     horizontalForm = false,
     disabled = false,
     info,
+    extraInfo,
     required = false,
     isRow = false,
 }: RadioGroupProps) => {
@@ -43,6 +45,7 @@ const RadioGroup = ({
             label={label}
             horizontalForm={horizontalForm}
             info={info}
+            extraInfo={extraInfo}
             error={error}
             disabled={disabled}
             required={required}

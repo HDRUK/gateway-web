@@ -13,6 +13,7 @@ type OptionsType = { value: ValueType; label: string; icon?: IconType }[];
 export interface SelectProps {
     label: string;
     info?: string;
+    extraInfo?: string;
     iconRight?: boolean;
     disabled?: boolean;
     invertListItem?: boolean;
@@ -43,6 +44,7 @@ const Select = (props: SelectProps) => {
     const {
         label,
         info,
+        extraInfo,
         icon,
         horizontalForm,
         iconRight,
@@ -69,6 +71,7 @@ const Select = (props: SelectProps) => {
             label={label}
             horizontalForm={horizontalForm}
             info={info}
+            extraInfo={extraInfo}
             error={error}
             disabled={disabled}
             required={required}>

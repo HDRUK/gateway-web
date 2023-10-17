@@ -13,9 +13,10 @@ import { CancelIcon } from "@/consts/icons";
 import FormInputWrapper from "../FormInputWrapper";
 
 export interface TextFieldBaseProps {
-    label: string;
+    label?: string;
     placeholder?: string;
     info?: string;
+    extraInfo?: string;
     // eslint-disable-next-line @typescript-eslint/ban-types
     icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
         muiName: string;
@@ -41,6 +42,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
         disabled,
         placeholder,
         info,
+        extraInfo,
         icon,
         required,
         limit,
@@ -73,6 +75,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
             label={label}
             horizontalForm={horizontalForm}
             info={info}
+            extraInfo={extraInfo}
             limit={limit}
             error={error}
             value={fieldProps.value}

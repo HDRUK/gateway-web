@@ -9,12 +9,17 @@ import { IconType } from "@/interfaces/Ui";
 import { ReactNode } from "react";
 import FormInputWrapper from "../FormInputWrapper";
 
-type ValueType = string | number;
-type OptionsType = { id: ValueType; label: string; icon?: IconType }[];
+export type ValueType = string | number;
+export type OptionsType = {
+    value: ValueType;
+    label: string;
+    icon?: IconType;
+}[];
 
 export interface AutocompleteProps {
     label: string;
     info?: string;
+    extraInfo?: string;
     getOptionLabel?: () => string;
     disabled?: boolean;
     startAdornmentIcon?: ReactNode;
@@ -24,6 +29,7 @@ export interface AutocompleteProps {
     clearOnBlur?: boolean;
     handleHomeEndKeys?: boolean;
     multiple?: boolean;
+    getChipLabel?: (options: OptionsType, value: ValueType) => void;
     trigger?: (name: string) => void;
     freeSolo?: boolean;
     selectOnFocus?: boolean;
@@ -44,6 +50,7 @@ const Autocomplete = (props: AutocompleteProps) => {
     const {
         label,
         info,
+        extraInfo,
         createLabel,
         control,
         trigger,
@@ -51,8 +58,10 @@ const Autocomplete = (props: AutocompleteProps) => {
         placeholder,
         startAdornmentIcon,
         canCreate,
+        getChipLabel,
         horizontalForm,
         required,
+        options = [],
         disabled,
         ...restProps
     } = props;
@@ -66,14 +75,19 @@ const Autocomplete = (props: AutocompleteProps) => {
     });
 
     const filterOptions = (
-        options: SearchOptions[],
+        searchOptions: SearchOptions[],
         params: FilterOptionsState<SearchOptions>
     ) => {
-        const filtered = createFilterOptions<SearchOptions>()(options, params);
+        const filtered = createFilterOptions<SearchOptions>()(
+            searchOptions,
+            params
+        );
 
         const { inputValue } = params;
 
-        const isExisting = options.some(option => inputValue === option.label);
+        const isExisting = searchOptions.some(
+            option => inputValue === option.label
+        );
         if (inputValue !== "" && !isExisting) {
             filtered.push({
                 value: inputValue,
@@ -89,21 +103,29 @@ const Autocomplete = (props: AutocompleteProps) => {
             label={label}
             horizontalForm={horizontalForm}
             info={info}
+            extraInfo={extraInfo}
             error={error}
             disabled={disabled}
             required={required}>
             <MuiAutocomplete
                 {...field}
                 {...restProps}
+                options={options}
                 disabled={disabled}
                 renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => (
-                        <Chip
-                            label={option?.label || `${option}`}
-                            size="small"
-                            {...getTagProps({ index })}
-                        />
-                    ))
+                    tagValue.map((option, index) => {
+                        const chipLabel =
+                            typeof getChipLabel === "function"
+                                ? getChipLabel(options, option)
+                                : option?.label || `${option}`;
+                        return (
+                            <Chip
+                                label={chipLabel || ""}
+                                size="small"
+                                {...getTagProps({ index })}
+                            />
+                        );
+                    })
                 }
                 onChange={(e, v) => {
                     if (Array.isArray(v)) {

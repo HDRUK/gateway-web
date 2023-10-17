@@ -1,21 +1,23 @@
 /** @jsxImportSource @emotion/react */
 
-import { FormControl, SxProps } from "@mui/material";
+import { SxProps } from "@mui/material";
 import CharacterLimit from "@/components/CharacterLimit";
 import FormError from "@/components/FormError";
 import Box from "@/components/Box";
 import FormInfoLabel from "@/components/FormInfoLabel";
 import { ReactNode, useMemo } from "react";
 import { FieldError } from "react-hook-form";
+import Typography from "@/components/Typography";
+import { colors } from "@/config/theme";
 
 interface FormInputWrapperProps {
     horizontalForm?: boolean;
+    extraInfo?: string;
     info?: string;
     formControlSx?: SxProps;
     label: string;
     value?: string | number;
     disabled?: boolean;
-    fullWidth?: boolean;
     required?: boolean;
     limit?: number;
     children: ReactNode;
@@ -25,13 +27,13 @@ interface FormInputWrapperProps {
 const FormInputWrapper = ({
     horizontalForm = false,
     info,
+    extraInfo,
     label,
     disabled = false,
     required = false,
     formControlSx,
     limit,
     value,
-    fullWidth = true,
     children,
     error,
 }: FormInputWrapperProps) => {
@@ -42,15 +44,15 @@ const FormInputWrapper = ({
     }, [value]);
 
     return (
-        <FormControl
-            fullWidth={fullWidth}
+        <Box
             sx={{
+                p: 0,
                 m: 0,
                 mb: 2,
                 ...(horizontalForm && {
                     display: "flex",
                     flexDirection: "row",
-                    alignItems: "center",
+                    alignItems: "top",
                 }),
                 ...formControlSx,
             }}>
@@ -67,10 +69,15 @@ const FormInputWrapper = ({
                 {limit && (
                     <CharacterLimit count={characterCount} limit={limit} />
                 )}
+                {extraInfo && (
+                    <Typography fontSize={13} color={colors.grey600}>
+                        {extraInfo}
+                    </Typography>
+                )}
                 {children}
                 {error && <FormError error={error} />}
             </Box>
-        </FormControl>
+        </Box>
     );
 };
 
