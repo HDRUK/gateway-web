@@ -2,7 +2,7 @@ import Radio from "@mui/material/Radio";
 import MuiRadioGroup from "@mui/material/RadioGroup";
 import { FormControlLabel, SxProps } from "@mui/material";
 import { Control, Controller, useController } from "react-hook-form";
-import FormInputWrapper from "../FormInputWrapper";
+import FormInputWrapper from "@/components/FormInputWrapper";
 
 export interface RadioGroupProps {
     label: string;

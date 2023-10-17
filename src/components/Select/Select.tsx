@@ -5,7 +5,7 @@ import { OutlinedInput, Select as MuiSelect, MenuItem } from "@mui/material";
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import SelectMenuItem from "@/components/SelectMenuItem";
-import FormInputWrapper from "../FormInputWrapper";
+import FormInputWrapper from "@/components/FormInputWrapper";
 
 type ValueType = string | number;
 type OptionsType = { value: ValueType; label: string; icon?: IconType }[];

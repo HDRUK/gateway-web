@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import { ReactNode } from "react";
-import FormInputWrapper from "../FormInputWrapper";
+import FormInputWrapper from "@/components/FormInputWrapper";
 
 export type ValueType = string | number;
 export type OptionsType = {

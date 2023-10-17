@@ -10,7 +10,7 @@ import {
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Control, useController } from "react-hook-form";
 import { CancelIcon } from "@/consts/icons";
-import FormInputWrapper from "../FormInputWrapper";
+import FormInputWrapper from "@/components/FormInputWrapper";
 
 export interface TextFieldBaseProps {
     label?: string;
