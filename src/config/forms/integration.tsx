@@ -7,7 +7,7 @@ import { inputComponents } from ".";
 const defaultValues: Partial<Integration> = {
     federation_type: undefined,
     auth_type: undefined,
-    auth_secret_key: "",
+    auth_secret_key: undefined,
     endpoint_baseurl: "",
     endpoint_datasets: "",
     endpoint_dataset: "",
