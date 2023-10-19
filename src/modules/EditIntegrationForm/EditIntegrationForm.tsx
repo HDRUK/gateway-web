@@ -20,6 +20,9 @@ import { Team } from "@/interfaces/Team";
 import { Integration } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import usePut from "@/hooks/usePut";
+import RunFederationTest from "@/components/RunFederationTest";
+import Switch from "@/components/Switch";
+import Tooltip from "@/components/Tooltip";
 
 const EditIntegrationForm = () => {
     const { query } = useRouter();
@@ -27,6 +30,7 @@ const EditIntegrationForm = () => {
         `${apis.teamsV1Url}/${query.teamId}/federations/${query.intId}`,
         { shouldFetch: !!query.teamId || !!query.intId }
     );
+
     const { data: team } = useGet<Team>(`${apis.teamsV1Url}/${query.teamId}`, {
         shouldFetch: !!query.teamId,
     });
@@ -47,7 +51,7 @@ const EditIntegrationForm = () => {
     });
 
     const updateIntegration = usePut<Integration>(
-        `${apis.teamsV1Url}/${query.teamId}/federations/`,
+        `${apis.teamsV1Url}/${query.teamId}/federations`,
         {
             shouldFetch: !!query.teamId,
             itemName: "Integration",
@@ -58,6 +62,10 @@ const EditIntegrationForm = () => {
         await updateIntegration(payload.id, payload);
     };
 
+    const handleRun = (isSuccess: boolean) => {
+        console.log("isSuccess: ", isSuccess);
+    };
+
     const auth_type = watch("auth_type");
 
     useEffect(() => {
@@ -66,22 +74,6 @@ const EditIntegrationForm = () => {
         }
     }, [auth_type, unregister]);
 
-    const runTest = () => {
-        console.log("reached");
-        fetch("https://metadata-fed:9889/test", {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify(integration),
-        })
-            .then(res => {
-                // await res = res.json()
-                console.log("res:", res);
-            })
-            .catch(e => console.log("e: ", e));
-    };
     const hydratedFormFields = useMemo(
         () =>
             integrationFormFields
@@ -112,6 +104,7 @@ const EditIntegrationForm = () => {
             <Box
                 sx={{
                     p: 0,
+                    gap: 1,
                     display: "grid",
                     gridTemplateColumns: "repeat(3, 1fr)",
                 }}>
@@ -127,9 +120,48 @@ const EditIntegrationForm = () => {
                         ))}
                     </Box>
                 </Paper>
-                <Paper>
-                    <Button onClick={() => runTest()}>Run test</Button>
-                </Paper>
+                <Box
+                    sx={{
+                        p: 0,
+                        gap: 1,
+                        display: "flex",
+                        flexDirection: "column",
+                    }}>
+                    <Paper sx={{ p: 1 }}>
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            <Tooltip
+                                placement="bottom"
+                                title={
+                                    formState.isValid
+                                        ? ""
+                                        : "You must complete the required fields before running a test."
+                                }>
+                                <Switch
+                                    disabled={!formState.isValid}
+                                    control={control}
+                                    name="enabled"
+                                    formControlSx={{ mb: 0 }}
+                                />
+                            </Tooltip>
+                        </Box>
+                    </Paper>
+                    <Box sx={{ p: 0, flex: 1 }}>
+                        <RunFederationTest
+                            isEnabled={formState.isValid}
+                            integration={{
+                                auth_type: integration?.auth_type,
+                                auth_secret_key: integration?.auth_secret_key,
+                                endpoint_baseurl: integration?.endpoint_baseurl,
+                                endpoint_datasets:
+                                    integration?.endpoint_datasets,
+                                endpoint_dataset: integration?.endpoint_dataset,
+                                run_time_hour: integration?.run_time_hour,
+                                enabled: integration?.enabled,
+                            }}
+                            onRun={handleRun}
+                        />
+                    </Box>
+                </Box>
             </Box>
             <Paper>
                 <Box
