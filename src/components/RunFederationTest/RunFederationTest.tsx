@@ -19,8 +19,8 @@ interface RunFederationTestProps {
 }
 
 interface RunResponse {
-    statusCode: number;
-    status: boolean;
+    status: number;
+    success: boolean;
     message: string;
 }
 
@@ -60,7 +60,7 @@ const RunFederationTest = ({
             .then((res: RunResponse) => {
                 setIsRunning(false);
                 setRunResponse(res);
-                onRun(res.status);
+                onRun(res.success);
             })
             .catch(() => {
                 notificationService.apiError(
@@ -69,7 +69,7 @@ const RunFederationTest = ({
                 setIsRunning(false);
             });
     };
-    // (!isEnabled || !runResponse)
+
     if (isRunning) {
         return (
             <Container>
@@ -102,7 +102,7 @@ const RunFederationTest = ({
                                 alignItems: "center",
                             }}>
                             <Typography>API Connection link...</Typography>
-                            {runResponse.status ? (
+                            {runResponse.success ? (
                                 <CheckCircleIcon color="success" />
                             ) : (
                                 <CancelIcon color="error" />
@@ -119,19 +119,19 @@ const RunFederationTest = ({
                             justifyContent: "center",
                         }}>
                         <Typography>
-                            {runResponse.status ? "Complete" : "Failed"}
+                            {runResponse.success ? "Complete" : "Failed"}
                         </Typography>
                         <Typography>
-                            {runResponse.status ? (
+                            {runResponse.success ? (
                                 <>The test has come back with (0) errors</>
                             ) : (
                                 <>
                                     The test has come back with a (
-                                    {runResponse.statusCode}) error
+                                    {runResponse.status}) error
                                 </>
                             )}
                         </Typography>
-                        {!runResponse.status && (
+                        {!runResponse.success && (
                             <>
                                 <Typography color={colors.red600}>
                                     {runResponse.message}
