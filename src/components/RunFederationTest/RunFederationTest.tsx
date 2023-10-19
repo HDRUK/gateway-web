@@ -12,6 +12,8 @@ import Typography from "@/components/Typography";
 
 import * as styles from "./RunFederationTest.styles";
 
+import http from "@/utils/http";
+
 interface RunFederationTestProps {
     integration?: Partial<Integration>;
     onRun: (status: boolean) => void;
@@ -48,21 +50,17 @@ const RunFederationTest = ({
 
     const runTest = () => {
         setIsRunning(true);
-        fetch(apis.metaDataFedV1Url, {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify(integration),
-        })
-            .then(res => res.json())
+        http.post<unknown, RunResponse>(
+            apis.metaDataFedV1Url,
+            JSON.stringify(integration)
+        )
             .then((res: RunResponse) => {
                 setIsRunning(false);
                 setRunResponse(res);
                 onRun(res.success);
             })
-            .catch(() => {
+            .catch(e => {
+                console.log(e);
                 notificationService.apiError(
                     "There are been an error calling the Metadata Federation Service"
                 );
