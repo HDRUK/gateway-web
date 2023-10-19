@@ -22,7 +22,7 @@ import { Integration } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 
 const CreateIntegrationForm = () => {
-    const { query } = useRouter();
+    const { query, push } = useRouter();
 
     const { data: team } = useGet<Team>(`${apis.teamsV1Url}/${query.teamId}`, {
         shouldFetch: !!query.teamId,
@@ -51,6 +51,10 @@ const CreateIntegrationForm = () => {
         await createIntegration({
             ...integrationDefaultValues,
             ...formData,
+        });
+
+        setTimeout(() => {
+            push(`/account/team/${query.teamId}/integrations/integration/list`);
         });
     };
 

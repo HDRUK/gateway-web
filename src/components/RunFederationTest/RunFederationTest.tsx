@@ -44,11 +44,7 @@ const RunFederationTest = ({
     isEnabled = false,
 }: RunFederationTestProps) => {
     const [isRunning, setIsRunning] = useState(false);
-    const [runResponse, setRunResponse] = useState<RunResponse | null>({
-        status: true,
-        statusCode: 200,
-        message: "The auth key is invalid",
-    });
+    const [runResponse, setRunResponse] = useState<RunResponse | null>(null);
 
     const runTest = () => {
         setIsRunning(true);
