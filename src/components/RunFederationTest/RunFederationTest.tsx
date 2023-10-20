@@ -6,16 +6,17 @@ import { CancelIcon, CheckCircleIcon } from "@/consts/icons";
 import Button from "@/components/Button";
 import { ReactNode, useState } from "react";
 import { Integration } from "@/interfaces/Integration";
-import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import Typography from "@/components/Typography";
 
+import usePost from "@/hooks/usePost";
 import * as styles from "./RunFederationTest.styles";
 
 interface RunFederationTestProps {
     integration?: Partial<Integration>;
     onRun: (status: boolean) => void;
     isEnabled?: boolean;
+    teamId?: number;
 }
 
 interface RunResponse {
@@ -40,34 +41,29 @@ const Container = ({ children }: { children: ReactNode }) => {
 
 const RunFederationTest = ({
     integration,
+    teamId,
     onRun,
     isEnabled = false,
 }: RunFederationTestProps) => {
     const [isRunning, setIsRunning] = useState(false);
     const [runResponse, setRunResponse] = useState<RunResponse | null>(null);
 
-    const runTest = () => {
+    const runFederationTest = usePost<RunResponse>(
+        `${apis.teamsV1Url}/${teamId}/federations/test`,
+        {
+            itemName: "Integration test",
+        }
+    );
+
+    const runTest = async () => {
         setIsRunning(true);
-        fetch(apis.metaDataFedV1Url, {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify(integration),
-        })
-            .then(res => res.json())
-            .then((res: RunResponse) => {
-                setIsRunning(false);
-                setRunResponse(res);
-                onRun(res.success);
-            })
-            .catch(() => {
-                notificationService.apiError(
-                    "There are been an error calling the Metadata Federation Service"
-                );
-                setIsRunning(false);
-            });
+        const response = await runFederationTest(integration);
+
+        setIsRunning(false);
+        setRunResponse(response);
+        onRun(response.success);
+
+        setIsRunning(false);
     };
 
     if (isRunning) {

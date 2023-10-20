@@ -35,12 +35,19 @@ const EditIntegrationForm = () => {
         shouldFetch: !!query.teamId,
     });
 
-    const { control, handleSubmit, reset, formState, watch, unregister } =
-        useForm<Integration>({
-            mode: "onTouched",
-            resolver: yupResolver(integrationValidationSchema),
-            defaultValues: integrationDefaultValues,
-        });
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState,
+        watch,
+        unregister,
+        setValue,
+    } = useForm<Integration>({
+        mode: "onTouched",
+        resolver: yupResolver(integrationValidationSchema),
+        defaultValues: integrationDefaultValues,
+    });
 
     useEffect(() => {
         reset(integration);
@@ -62,10 +69,11 @@ const EditIntegrationForm = () => {
         await updateIntegration(payload.id, payload);
     };
 
-    const handleRun = (isSuccess: boolean) => {
-        console.log("isSuccess: ", isSuccess);
+    const handleRun = (testStatus: boolean) => {
+        setValue("tested", testStatus);
     };
 
+    const tested = watch("tested");
     const auth_type = watch("auth_type");
 
     useEffect(() => {
@@ -78,7 +86,7 @@ const EditIntegrationForm = () => {
         () =>
             integrationFormFields
                 .map(field => {
-                    if (field.name === "notification") {
+                    if (field.name === "notifications") {
                         return {
                             ...field,
                             options: team?.users.map(teamUser => ({
@@ -132,12 +140,12 @@ const EditIntegrationForm = () => {
                             <Tooltip
                                 placement="bottom"
                                 title={
-                                    formState.isValid
+                                    tested
                                         ? ""
-                                        : "You must complete the required fields before running a test."
+                                        : "You must run a successful test before you can Enable the integration."
                                 }>
                                 <Switch
-                                    disabled={!formState.isValid}
+                                    disabled={!tested}
                                     control={control}
                                     name="enabled"
                                     formControlSx={{ mb: 0 }}
@@ -147,6 +155,7 @@ const EditIntegrationForm = () => {
                     </Paper>
                     <Box sx={{ p: 0, flex: 1 }}>
                         <RunFederationTest
+                            teamId={query.teamId}
                             isEnabled={formState.isValid}
                             integration={{
                                 auth_type: integration?.auth_type,

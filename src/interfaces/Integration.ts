@@ -1,3 +1,5 @@
+import { Notification } from "@/interfaces/Notification";
+
 export type FederationType = "DATASETS" | "DUR" | "TOOLS";
 export type AuthType = "API_KEY" | "BEARER" | "NO_AUTH";
 
@@ -11,7 +13,12 @@ interface Integration {
     endpoint_dataset: string;
     run_time_hour: number;
     enabled: boolean;
-    notification: string[];
+    tested: boolean;
+    notifications: Notification[];
 }
 
-export type { Integration };
+interface IntegrationPayload extends Omit<Integration, "notifications"> {
+    notifications: string[];
+}
+
+export type { Integration, IntegrationPayload };

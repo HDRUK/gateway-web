@@ -70,7 +70,7 @@ const CreateIntegrationForm = () => {
         () =>
             integrationFormFields
                 .map(field => {
-                    if (field.name === "notification") {
+                    if (field.name === "notifications") {
                         return {
                             ...field,
                             options: team?.users.map(teamUser => ({

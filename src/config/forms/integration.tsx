@@ -13,7 +13,8 @@ const defaultValues: Partial<Integration> = {
     endpoint_dataset: "",
     run_time_hour: 1,
     enabled: false,
-    notification: [],
+    tested: false,
+    notifications: [],
 };
 
 const validationSchema = yup.object({
@@ -26,7 +27,7 @@ const validationSchema = yup.object({
         .matches(/\/{id}/, "Dataset endpoint must contain /{id}")
         .label("Dataset endpoint"),
     endpoint_datasets: yup.string().required().label("Datasets endpoint"),
-    notification: yup
+    notifications: yup
         .array()
         .min(1, "Notification contacts is a required field")
         .of(yup.string())
@@ -100,7 +101,7 @@ const formFields = [
     {
         label: "Notification Contacts",
         required: true,
-        name: "notification",
+        name: "notifications",
         selectOnFocus: true,
         clearOnBlur: true,
         handleHomeEndKeys: true,

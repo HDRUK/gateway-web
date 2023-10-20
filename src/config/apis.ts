@@ -19,7 +19,6 @@ const apis = {
     applicationsV1Url: `${apiV1Url}/applications`,
     permissionsV1Url: `${apiV1Url}/permissions`,
     teamsV1Url: `${apiV1Url}/teams`,
-    metaDataFedV1Url: "http://metadata-fed:9889/test",
     wordPressApiUrl:
         process.env.WORDPRESS_API_URL ||
         "https://wordpresspoc-pljgro4dzq-ew.a.run.app/graphql",
