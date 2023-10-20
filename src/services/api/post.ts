@@ -23,7 +23,7 @@ const postRequest = async <T>(
                     props,
                 });
             }
-            return res.data?.data || res;
+            return res.data?.data || res.data || res;
         })
         .catch(error => {
             if (errorNotificationsOn) {

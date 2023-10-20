@@ -407,6 +407,9 @@ const theme = createTheme({
                             width: "400%",
                             left: "-10%",
                         },
+                        "&.Mui-disabled+.MuiSwitch-track": {
+                            backgroundColor: colors.grey600,
+                        },
                     },
                     "& .MuiSwitch-thumb": {
                         boxSizing: "border-box",

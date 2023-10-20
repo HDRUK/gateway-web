@@ -15,7 +15,7 @@ const usePost = <T>(url: string, options?: HttpOptions) => {
 
     ThrowPaginationError(options);
 
-    return async (payload: Omit<T, "id">) => {
+    return async (payload: T) => {
         return await apiService.postRequest<T>(url, payload, {
             notificationOptions: {
                 localeKey,

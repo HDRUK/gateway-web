@@ -98,12 +98,7 @@ const ProfileForm = () => {
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
             {hydratedFormFields.map(field => (
-                <InputWrapper
-                    key={field.name}
-                    horizontalForm
-                    control={control}
-                    {...field}
-                />
+                <InputWrapper key={field.name} control={control} {...field} />
             ))}
 
             <KeepingUpdated

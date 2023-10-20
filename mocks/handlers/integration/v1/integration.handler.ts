@@ -2,20 +2,26 @@ import { rest } from "msw";
 import apis from "@/config/apis";
 import { Integration } from "@/interfaces/Integration";
 import { PaginationType } from "@/interfaces/Pagination";
-import { generateIntegrationsV1 } from "@/mocks/data/integration";
+import {
+    federationsResponseV1,
+    integrationV1,
+    integrationsV1,
+} from "@/mocks/data/integration";
+import { FederationRunResponse } from "@/interfaces/Federation";
 
 interface getIntegrationsProps {
     data?: Integration[];
     teamId?: number;
     status?: number;
+    pagination?: Omit<PaginationType<Integration>, "list">;
 }
 
 const getIntegrationsV1 = ({
-    data,
+    data = integrationsV1,
     teamId = 1,
     status = 200,
+    pagination,
 }: getIntegrationsProps) => {
-
     return rest.get(
         `${apis.teamsV1Url}/${teamId}/federations`,
         (req, res, ctx) => {
@@ -25,17 +31,67 @@ const getIntegrationsV1 = ({
                     ctx.json(`Request failed with status code ${status}`)
                 );
             }
+            if (pagination) {
+                return res(
+                    ctx.status(status),
+                    ctx.json<PaginationType<Integration>>({
+                        list: data,
+                        ...pagination,
+                    })
+                );
+            }
             return res(
                 ctx.status(status),
-                ctx.json<{ data: PaginationType<Integration> }>(
-                    { 
-                        list: data,
-                        lastPage: 1,
-                        total: data?.length 
-                    })
+                ctx.json<{ data: Integration[] }>({ data })
             );
         }
     );
 };
 
-export { getIntegrationsV1 };
+interface PostResponse {
+    data: Integration;
+}
+
+const postIntegrationV1 = ({
+    data = integrationV1,
+    teamId = 1,
+    status = 200,
+}) => {
+    return rest.post(
+        `${apis.teamsV1Url}/${teamId}/federations`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json(`Request failed with status code ${status}`)
+                );
+            }
+            return res(ctx.status(status), ctx.json<PostResponse>({ data }));
+        }
+    );
+};
+
+const postFederationsTestV1 = ({
+    data = federationsResponseV1,
+    teamId = 1,
+    status = 200,
+}) => {
+    return rest.post(
+        `${apis.teamsV1Url}/${teamId}/federations/test`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json(`Request failed with status code ${status}`)
+                );
+            }
+
+            return res(
+                ctx.status(status),
+                ctx.json<FederationRunResponse>(data)
+            );
+        }
+    );
+};
+
+export { getIntegrationsV1, postIntegrationV1, postFederationsTestV1 };

@@ -1,19 +1,20 @@
 import * as yup from "yup";
-import { AuthType, Integration } from "@/interfaces/Integration";
+import { AuthType, IntegrationPayload } from "@/interfaces/Integration";
 import { authTypes, federationTypes } from "@/consts/integrations";
 import { requiresSecretKey } from "@/utils/integrations";
 import { inputComponents } from ".";
 
-const defaultValues: Partial<Integration> = {
+const defaultValues: Partial<IntegrationPayload> = {
     federation_type: undefined,
     auth_type: undefined,
-    auth_secret_key: "",
+    auth_secret_key: undefined,
     endpoint_baseurl: "",
     endpoint_datasets: "",
     endpoint_dataset: "",
     run_time_hour: 1,
     enabled: false,
-    notification: [],
+    tested: false,
+    notifications: [],
 };
 
 const validationSchema = yup.object({
@@ -26,7 +27,7 @@ const validationSchema = yup.object({
         .matches(/\/{id}/, "Dataset endpoint must contain /{id}")
         .label("Dataset endpoint"),
     endpoint_datasets: yup.string().required().label("Datasets endpoint"),
-    notification: yup
+    notifications: yup
         .array()
         .min(1, "Notification contacts is a required field")
         .of(yup.string())
@@ -100,7 +101,7 @@ const formFields = [
     {
         label: "Notification Contacts",
         required: true,
-        name: "notification",
+        name: "notifications",
         selectOnFocus: true,
         clearOnBlur: true,
         handleHomeEndKeys: true,

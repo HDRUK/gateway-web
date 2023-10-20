@@ -22,7 +22,7 @@ import { Integration } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 
 const CreateIntegrationForm = () => {
-    const { query } = useRouter();
+    const { query, push } = useRouter();
 
     const { data: team } = useGet<Team>(`${apis.teamsV1Url}/${query.teamId}`, {
         shouldFetch: !!query.teamId,
@@ -52,6 +52,10 @@ const CreateIntegrationForm = () => {
             ...integrationDefaultValues,
             ...formData,
         });
+
+        setTimeout(() => {
+            push(`/account/team/${query.teamId}/integrations/integration/list`);
+        });
     };
 
     const auth_type = watch("auth_type");
@@ -66,7 +70,7 @@ const CreateIntegrationForm = () => {
         () =>
             integrationFormFields
                 .map(field => {
-                    if (field.name === "notification") {
+                    if (field.name === "notifications") {
                         return {
                             ...field,
                             options: team?.users.map(teamUser => ({

@@ -10,7 +10,7 @@ import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import { useRouter } from "next/router";
 
-const CreateAppPage = () => {
+const EditAppPage = () => {
     const { query } = useRouter();
     const { apiId } = query;
     const { data: application } = useGet<Application>(
@@ -39,4 +39,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     };
 };
 
-export default CreateAppPage;
+export default EditAppPage;

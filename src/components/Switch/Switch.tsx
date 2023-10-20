@@ -8,6 +8,7 @@ export interface SwitchProps extends MuiSwitchProps {
     checkedLabel: string;
     unCheckedLabel: string;
     name: string;
+    disabled?: boolean;
     control: Control;
     switchSx?: SxProps;
     formControlSx?: SxProps;
@@ -15,10 +16,11 @@ export interface SwitchProps extends MuiSwitchProps {
 
 const Switch = (props: SwitchProps) => {
     const {
-        unCheckedLabel,
-        checkedLabel,
+        unCheckedLabel = "Disabled",
+        checkedLabel = "Enabled",
         control,
         name,
+        disabled = false,
         formControlSx,
         switchSx,
         ...rest
@@ -43,6 +45,7 @@ const Switch = (props: SwitchProps) => {
                     disableRipple
                     {...rest}
                     {...fieldProps}
+                    disabled={disabled}
                     checked={fieldProps.value}
                     inputRef={ref}
                     sx={{ ...switchSx }}
