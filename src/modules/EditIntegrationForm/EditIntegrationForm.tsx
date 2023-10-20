@@ -17,7 +17,7 @@ import { useEffect, useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGet from "@/hooks/useGet";
 import { Team } from "@/interfaces/Team";
-import { Integration } from "@/interfaces/Integration";
+import { Integration, IntegrationPayload } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import usePut from "@/hooks/usePut";
 import RunFederationTest from "@/components/RunFederationTest";
@@ -43,14 +43,19 @@ const EditIntegrationForm = () => {
         watch,
         unregister,
         setValue,
-    } = useForm<Integration>({
+    } = useForm<IntegrationPayload>({
         mode: "onTouched",
         resolver: yupResolver(integrationValidationSchema),
         defaultValues: integrationDefaultValues,
     });
 
     useEffect(() => {
-        reset(integration);
+        reset({
+            ...integration,
+            notifications: integration?.notifications?.map(
+                (notification: { email: string }) => notification.email
+            ),
+        });
     }, [integration, reset]);
 
     useUnsavedChanges({

@@ -14,7 +14,7 @@ interface Integration {
     run_time_hour: number;
     enabled: boolean;
     tested: boolean;
-    notifications: Notification[];
+    notifications: Notification[] | undefined;
 }
 
 interface IntegrationPayload extends Omit<Integration, "notifications"> {
