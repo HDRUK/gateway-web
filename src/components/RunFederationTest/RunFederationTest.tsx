@@ -21,8 +21,8 @@ interface RunFederationTestProps {
 
 interface RunResponse {
     status: number;
-    success: boolean;
-    message: string;
+    message: boolean;
+    title: string;
 }
 
 const Container = ({ children }: { children: ReactNode }) => {
@@ -52,16 +52,16 @@ const RunFederationTest = ({
         `${apis.teamsV1Url}/${teamId}/federations/test`,
         {
             itemName: "Integration test",
+            successNotificationsOn: false,
         }
     );
 
     const runTest = async () => {
         setIsRunning(true);
         const response = await runFederationTest(integration);
-
         setIsRunning(false);
         setRunResponse(response);
-        onRun(response.success);
+        onRun(response.message);
 
         setIsRunning(false);
     };
@@ -98,7 +98,7 @@ const RunFederationTest = ({
                                 alignItems: "center",
                             }}>
                             <Typography>API Connection link...</Typography>
-                            {runResponse.success ? (
+                            {runResponse.message ? (
                                 <CheckCircleIcon color="success" />
                             ) : (
                                 <CancelIcon color="error" />
@@ -115,10 +115,10 @@ const RunFederationTest = ({
                             justifyContent: "center",
                         }}>
                         <Typography>
-                            {runResponse.success ? "Complete" : "Failed"}
+                            {runResponse.message ? "Complete" : "Failed"}
                         </Typography>
                         <Typography>
-                            {runResponse.success ? (
+                            {runResponse.message ? (
                                 <>The test has come back with (0) errors</>
                             ) : (
                                 <>
@@ -127,10 +127,10 @@ const RunFederationTest = ({
                                 </>
                             )}
                         </Typography>
-                        {!runResponse.success && (
+                        {!runResponse.message && (
                             <>
                                 <Typography color={colors.red600}>
-                                    {runResponse.message}
+                                    {runResponse.title}
                                 </Typography>
                                 <Typography>
                                     Change the form inputs to reset the test
