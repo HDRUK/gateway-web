@@ -11,7 +11,7 @@ const minuteOptions = Array.from({ length: 60 })
     .map((v, index) => index)
     .map(min => (min.toString().length === 1 ? `0${min}` : min));
 
-interface TextTimeProps {
+export interface TextTimeProps {
     timeZoneLabel?: string;
     customUpdate?: () => null;
     name: string;

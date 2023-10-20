@@ -5,24 +5,18 @@ import Box from "@/components/Box";
 import { CancelIcon, CheckCircleIcon } from "@/consts/icons";
 import Button from "@/components/Button";
 import { ReactNode, useState } from "react";
-import { Integration } from "@/interfaces/Integration";
 import apis from "@/config/apis";
 import Typography from "@/components/Typography";
 
 import usePost from "@/hooks/usePost";
+import { Federation, FederationRunResponse } from "@/interfaces/Federation";
 import * as styles from "./RunFederationTest.styles";
 
 interface RunFederationTestProps {
-    integration?: Partial<Integration>;
+    integration?: Federation;
     onRun: (status: boolean) => void;
     isEnabled?: boolean;
     teamId?: number;
-}
-
-interface RunResponse {
-    status: number;
-    message: boolean;
-    title: string;
 }
 
 const Container = ({ children }: { children: ReactNode }) => {
@@ -46,9 +40,10 @@ const RunFederationTest = ({
     isEnabled = false,
 }: RunFederationTestProps) => {
     const [isRunning, setIsRunning] = useState(false);
-    const [runResponse, setRunResponse] = useState<RunResponse | null>(null);
+    const [runResponse, setFederationRunResponse] =
+        useState<FederationRunResponse | null>(null);
 
-    const runFederationTest = usePost<RunResponse>(
+    const runFederationTest = usePost<Federation>(
         `${apis.teamsV1Url}/${teamId}/federations/test`,
         {
             itemName: "Integration test",
@@ -58,9 +53,11 @@ const RunFederationTest = ({
 
     const runTest = async () => {
         setIsRunning(true);
-        const response = await runFederationTest(integration);
+        const response = (await runFederationTest(
+            integration!
+        )) as unknown as FederationRunResponse;
         setIsRunning(false);
-        setRunResponse(response);
+        setFederationRunResponse(response);
         onRun(response.message);
 
         setIsRunning(false);

@@ -4,6 +4,7 @@ import {
     FederationType,
     AuthType,
 } from "@/interfaces/Integration";
+import { FederationRunResponse } from "@/interfaces/Federation";
 
 const generateIntegrationV1 = (data = {}): Integration => {
     return {
@@ -32,11 +33,22 @@ const generateIntegrationV1 = (data = {}): Integration => {
     };
 };
 
+const generateFederationResponseV1 = (data = {}): FederationRunResponse => {
+    const message = faker.datatype.boolean();
+    return {
+        message,
+        status: message ? 200 : 404,
+        title: message ? "" : "Test failed",
+        ...data,
+    };
+};
+
 const generateIntegrationsV1 = (n = 3): Integration[] => {
     return Array.from({ length: n }).map(() => generateIntegrationV1());
 };
 
 const integrationV1 = generateIntegrationV1();
+const federationsResponseV1 = generateFederationResponseV1();
 const integrationsV1 = generateIntegrationsV1();
 
 export {
@@ -44,4 +56,5 @@ export {
     generateIntegrationV1,
     integrationsV1,
     integrationV1,
+    federationsResponseV1,
 };
