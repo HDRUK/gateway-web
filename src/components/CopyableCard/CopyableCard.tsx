@@ -3,36 +3,33 @@ import Card from "@/components/Card";
 import Typography from "@/components/Typography";
 import CopyTextButton from "@/components/CopyTextButton";
 
-
 interface CopyableCardProps {
-    value: string | undefined,
-    label: string,
-    description: string,
+    value: string | undefined;
+    label: string;
+    description: string;
 }
 
-const CopyableCard = (props : CopyableCardProps) => {
+const CopyableCard = ({ label, description, value }: CopyableCardProps) => {
     return (
         <Card
-        sx={{
-            display: "grid",
-            gridTemplateColumns: "2fr 2fr",
-        }}>
+            sx={{
+                display: "grid",
+                gridTemplateColumns: "2fr 2fr",
+            }}>
             <Box>
                 <Typography
                     sx={{
                         fontWeight: 600,
                     }}>
-                    {props.label}
+                    {label}
                 </Typography>
-                <Typography>
-                    {props.description}
-                </Typography>
+                <Typography>{description}</Typography>
             </Box>
             <Box>
-                <CopyTextButton content={props.value}/>
+                <CopyTextButton content={value} />
             </Box>
         </Card>
     );
-}
+};
 
 export default CopyableCard;

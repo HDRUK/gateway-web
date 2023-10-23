@@ -8,7 +8,11 @@ exports[`SocialProviders should render content 1`] = `
     <p
       class="MuiTypography-root MuiTypography-body2 mui-style-xk4uvy-MuiTypography-root-Label"
     >
-      Your preferred sign in method
+      <label
+        for="provider"
+      >
+        Your preferred sign in method
+      </label>
     </p>
     <div
       class="MuiBox-root mui-style-sg1m7l"

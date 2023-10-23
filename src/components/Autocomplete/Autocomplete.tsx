@@ -100,6 +100,7 @@ const Autocomplete = (props: AutocompleteProps) => {
 
     return (
         <FormInputWrapper
+            name={name}
             label={label}
             horizontalForm={horizontalForm}
             info={info}

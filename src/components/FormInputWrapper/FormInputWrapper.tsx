@@ -13,6 +13,7 @@ import { colors } from "@/config/theme";
 interface FormInputWrapperProps {
     horizontalForm?: boolean;
     extraInfo?: string;
+    name: string;
     info?: string;
     formControlSx?: SxProps;
     label: string;
@@ -29,6 +30,7 @@ const FormInputWrapper = ({
     info,
     extraInfo,
     label,
+    name,
     disabled = false,
     required = false,
     formControlSx,
@@ -58,6 +60,7 @@ const FormInputWrapper = ({
             }}>
             <Box sx={{ p: 0, ...(horizontalForm && { width: 200 }) }}>
                 <FormInfoLabel
+                    name={name}
                     label={label}
                     horizontalForm={horizontalForm}
                     info={info}

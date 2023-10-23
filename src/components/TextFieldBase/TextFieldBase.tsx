@@ -13,7 +13,7 @@ import { CancelIcon } from "@/consts/icons";
 import FormInputWrapper from "@/components/FormInputWrapper";
 
 export interface TextFieldBaseProps {
-    label?: string;
+    label: string;
     placeholder?: string;
     info?: string;
     extraInfo?: string;
@@ -73,6 +73,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
     return (
         <FormInputWrapper
             label={label}
+            name={name}
             horizontalForm={horizontalForm}
             info={info}
             extraInfo={extraInfo}

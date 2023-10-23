@@ -11,7 +11,11 @@ exports[`TextField should render icon 1`] = `
       <p
         class="MuiTypography-root MuiTypography-body2 mui-style-1djhbyd-MuiTypography-root-Label"
       >
-        This is a label
+        <label
+          for="fieldName"
+        >
+          This is a label
+        </label>
       </p>
     </div>
     <div

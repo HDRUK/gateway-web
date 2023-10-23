@@ -67,7 +67,7 @@ const Select = (props: SelectProps) => {
 
     return (
         <FormInputWrapper
-            fullWidth
+            name={name}
             label={label}
             horizontalForm={horizontalForm}
             info={info}
