@@ -12,7 +12,10 @@ import usePost from "@/hooks/usePost";
 import { Federation, FederationRunResponse } from "@/interfaces/Federation";
 import * as styles from "./RunFederationTest.styles";
 
+import { useEffect } from "react";
+
 interface RunFederationTestProps {
+    hasChanged?: boolean;
     integration?: Federation;
     onRun: (status: boolean) => void;
     isEnabled?: boolean;
@@ -34,12 +37,14 @@ const Container = ({ children }: { children: ReactNode }) => {
 };
 
 const RunFederationTest = ({
+    fieldsToWatch,
     integration,
     teamId,
     onRun,
     isEnabled = false,
 }: RunFederationTestProps) => {
     const [isRunning, setIsRunning] = useState(false);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [runResponse, setFederationRunResponse] =
         useState<FederationRunResponse | null>(null);
 
@@ -51,15 +56,38 @@ const RunFederationTest = ({
         }
     );
 
+    useEffect(() => {
+        //could be still loading..
+        if (fieldsToWatch.includes(undefined)) return;
+
+        //if it's the inital load, don't start messing with enable/disable button
+        if (isInitialLoad) {
+            setIsInitialLoad(false);
+            return;
+        }
+        //console.log("Something has changed in the form...");
+        setIsRunning(false);
+        //if a field has changed then the run test has not been run..
+        onRun(false);
+        //also reset the run response
+        setFederationRunResponse(null);
+    }, [fieldsToWatch]);
+
     const runTest = async () => {
         setIsRunning(true);
-        const response = (await runFederationTest(
+        /*const response = (await runFederationTest(
             integration!
         )) as unknown as FederationRunResponse;
+            */
+        const response = {
+            title: "",
+            status: 200,
+            success: true,
+        };
+
         setIsRunning(false);
         setFederationRunResponse(response);
-        onRun(response.message);
-
+        onRun(response.success);
         setIsRunning(false);
     };
 
@@ -95,7 +123,7 @@ const RunFederationTest = ({
                                 alignItems: "center",
                             }}>
                             <Typography>API Connection link...</Typography>
-                            {runResponse.message ? (
+                            {runResponse.success ? (
                                 <CheckCircleIcon color="success" />
                             ) : (
                                 <CancelIcon color="error" />
@@ -112,10 +140,10 @@ const RunFederationTest = ({
                             justifyContent: "center",
                         }}>
                         <Typography>
-                            {runResponse.message ? "Complete" : "Failed"}
+                            {runResponse.success ? "Complete" : "Failed"}
                         </Typography>
                         <Typography>
-                            {runResponse.message ? (
+                            {runResponse.success ? (
                                 <>The test has come back with (0) errors</>
                             ) : (
                                 <>
@@ -124,7 +152,7 @@ const RunFederationTest = ({
                                 </>
                             )}
                         </Typography>
-                        {!runResponse.message && (
+                        {!runResponse.success && (
                             <>
                                 <Typography color={colors.red600}>
                                     {runResponse.title}

@@ -63,9 +63,15 @@ const formFields = [
         label: "Synchronisation Time",
         name: "run_time_hour",
         info: "Set the hour the synchronisations will take place daily, in 24-hr format",
+        /*component: inputComponents.TextField,
+        placeholder: "htasfasga/datasets/",
+        required: true,*/
         component: inputComponents.TextTime,
         minProps: { disabled: true },
-        customUpdate: ({ hours }: { hours: string }) => parseInt(hours, 10),
+        customUpdate: ({ hours }: { hours: string }) => {
+            console.log("update time");
+            parseInt(hours, 10);
+        },
     },
     {
         label: "Base URL",

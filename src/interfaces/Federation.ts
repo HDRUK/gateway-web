@@ -2,7 +2,7 @@ import { AuthType } from "./Integration";
 
 interface FederationRunResponse {
     status: number;
-    message: boolean;
+    success: boolean;
     title: string;
 }
 

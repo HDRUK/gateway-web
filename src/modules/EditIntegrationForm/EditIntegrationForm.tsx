@@ -1,6 +1,6 @@
 import Box from "@/components/Box";
 import Form from "@/components/Form";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import Button from "@/components/Button";
@@ -26,10 +26,11 @@ import Tooltip from "@/components/Tooltip";
 
 const EditIntegrationForm = () => {
     const { query } = useRouter();
-    const { data: integration } = useGet<Integration>(
-        `${apis.teamsV1Url}/${query.teamId}/federations/${query.intId}`,
-        { shouldFetch: !!query.teamId || !!query.intId }
-    );
+    const { data: integration, isLoading: isLoadingIntegration } =
+        useGet<Integration>(
+            `${apis.teamsV1Url}/${query.teamId}/federations/${query.intId}`,
+            { shouldFetch: !!query.teamId || !!query.intId }
+        );
 
     const { data: team } = useGet<Team>(`${apis.teamsV1Url}/${query.teamId}`, {
         shouldFetch: !!query.teamId,
@@ -43,6 +44,7 @@ const EditIntegrationForm = () => {
         watch,
         unregister,
         setValue,
+        getValues,
     } = useForm<IntegrationPayload>({
         mode: "onTouched",
         resolver: yupResolver(integrationValidationSchema),
@@ -76,10 +78,29 @@ const EditIntegrationForm = () => {
 
     const handleRun = (testStatus: boolean) => {
         setValue("tested", testStatus);
+        if (testStatus === false) {
+            //if the test has failed or been reset, auto-disable the integration
+            setValue("enabled", false);
+        }
     };
 
     const tested = watch("tested");
     const auth_type = watch("auth_type");
+
+    //note: this should have worked... but it doesn't.. gets stuck in a loop
+    //const fieldsToWatch = watch([..]);
+    // - watch('auth_secret_key') :: works
+    // - watch(['auth_secret_key']) :: does not work
+    // - despite what is said on: https://www.react-hook-form.com/api/useform/watch/
+
+    //instead use useWatch
+    // - limit watching to just the fields that are in the EditForm using name: [<field names>]
+    // - otherwise it gets stuck in a loop because 'tested' and 'enabled' are updated automatically
+    const fieldsToWatch = useWatch({
+        control,
+        name: integrationEditFormFields.map(f => f.name),
+        defaultValue: "yo",
+    });
 
     useEffect(() => {
         if (!requiresSecretKey(auth_type)) {
@@ -160,6 +181,7 @@ const EditIntegrationForm = () => {
                     </Paper>
                     <Box sx={{ p: 0, flex: 1 }}>
                         <RunFederationTest
+                            fieldsToWatch={fieldsToWatch}
                             teamId={query.teamId}
                             isEnabled={formState.isValid}
                             integration={{
