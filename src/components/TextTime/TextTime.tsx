@@ -66,6 +66,7 @@ const TextTime = (props: TextTimeProps) => {
             horizontalForm={horizontalForm}
             label={label}
             info={info}
+            name={name}
             error={error}
             extraInfo={extraInfo}
             disabled={disabled}

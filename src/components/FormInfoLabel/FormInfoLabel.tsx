@@ -9,11 +9,13 @@ interface FormInfoLabelProps {
     required?: boolean;
     info?: string;
     label: string;
+    name: string;
 }
 
 const FormInfoLabel = ({
     horizontalForm = false,
     info,
+    name,
     label,
     disabled = false,
     required = false,
@@ -22,6 +24,7 @@ const FormInfoLabel = ({
         <>
             {(!horizontalForm || (horizontalForm && !info)) && (
                 <Label
+                    name={name}
                     required={required}
                     label={label}
                     sx={{
@@ -44,6 +47,7 @@ const FormInfoLabel = ({
                 <TooltipIcon
                     label={
                         <Label
+                            name={name}
                             required={required}
                             label={label}
                             sx={{

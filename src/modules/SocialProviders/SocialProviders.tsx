@@ -22,7 +22,7 @@ const SocialProviders = ({ label, getValues, name }: SocialProvidersProps) => {
     ];
     return (
         <Box sx={{ padding: 0, marginBottom: 2 }}>
-            <Label label={label} sx={{ marginBottom: "4px" }} />
+            <Label name={name} label={label} sx={{ marginBottom: "4px" }} />
             <Box sx={{ padding: 0, display: "flex", gap: "10px" }}>
                 {socialProviders.map(provider => (
                     <Box

@@ -45,6 +45,7 @@ const RadioGroup = ({
             label={label}
             horizontalForm={horizontalForm}
             info={info}
+            name={name}
             extraInfo={extraInfo}
             error={error}
             disabled={disabled}

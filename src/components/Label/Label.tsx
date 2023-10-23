@@ -8,11 +8,12 @@ import * as styles from "./Label.styles";
 type ExtendedProps = TypographyProps & ComponentPropsWithoutRef<"label">;
 
 interface LabelProps extends ExtendedProps {
+    name: string;
     label: string;
     required?: boolean;
 }
 
-const Label = ({ label, required, ...rest }: LabelProps) => {
+const Label = ({ label, name, required, ...rest }: LabelProps) => {
     const theme = useTheme();
 
     return (
@@ -20,7 +21,7 @@ const Label = ({ label, required, ...rest }: LabelProps) => {
             variant="body2"
             css={styles.label({ theme, required })}
             {...rest}>
-            {label}
+            <label htmlFor={name}>{label}</label>
         </Typography>
     );
 };
