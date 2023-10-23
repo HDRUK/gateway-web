@@ -21,12 +21,12 @@ const TeamIntegrationsPage = () => {
                     }}>
                     <Box sx={{ display: "flex", gap: "40px" }}>
                         <ImageMediaCard
-                            img="/images/account/teams/integrations/integration-create.jpg"
+                            img="/images/account/teams/integrations/create.jpg"
                             href={`/account/team/${router.query.teamId}/integrations/integration/create`}
                             buttonText="Create new Integration"
                         />
                         <ImageMediaCard
-                            img="/images/account/teams/integrations/integration-manage.jpg"
+                            img="/images/account/teams/integrations/manage.jpg"
                             href={`/account/team/${router.query.teamId}/integrations/integration/list`}
                             buttonText="Manage Integrations"
                         />
