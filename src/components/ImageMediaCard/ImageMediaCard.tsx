@@ -29,7 +29,7 @@ const ImageMediaCard = ({
                 flexDirection: "column",
             }}>
             <CardMedia
-                sx={{ objectFit: "contain", marginBottom: 4 }}
+                sx={{ objectFit: "contain", marginBottom: description ? 0 : 2 }}
                 component="img"
                 height={200}
                 image={img}

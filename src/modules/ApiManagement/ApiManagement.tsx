@@ -16,13 +16,13 @@ const ApiManagement = () => {
             }}>
             <Box sx={{ display: "flex", gap: "40px" }}>
                 <ImageMediaCard
-                    img="https://place-hold.it/300"
+                    img="/images/account/teams/api-management/create.jpg"
                     href={`/account/team/${router.query.teamId}/integrations/api-management/create`}
                     description="Create API-keys and link to the Gateway"
                     buttonText="Create API-Key"
                 />
                 <ImageMediaCard
-                    img="https://place-hold.it/300"
+                    img="/images/account/teams/api-management/manage.jpg"
                     href={`/account/team/${router.query.teamId}/integrations/api-management/list`}
                     description="Manage your linked APIs"
                     buttonText="Manage API"
