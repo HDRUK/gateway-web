@@ -119,7 +119,12 @@ const formFields = [
     },
 ];
 
-const editFormFields = [...formFields];
+const editFormFields = [...formFields].map(field => {
+    if (field.name === "federation_type") {
+        return { ...field, disabled: true };
+    }
+    return field;
+});
 
 export {
     defaultValues as integrationDefaultValues,

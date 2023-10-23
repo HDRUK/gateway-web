@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "@/components/Button";
 import {
     integrationDefaultValues,
-    integrationFormFields,
+    integrationEditFormFields,
     integrationValidationSchema,
 } from "@/config/forms/integration";
 import InputWrapper from "@/components/InputWrapper";
@@ -89,7 +89,7 @@ const EditIntegrationForm = () => {
 
     const hydratedFormFields = useMemo(
         () =>
-            integrationFormFields
+            integrationEditFormFields
                 .map(field => {
                     if (field.name === "notifications") {
                         return {
