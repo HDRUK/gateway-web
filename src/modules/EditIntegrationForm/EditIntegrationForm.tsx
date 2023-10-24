@@ -96,11 +96,15 @@ const EditIntegrationForm = () => {
     //instead use useWatch
     // - limit watching to just the fields that are in the EditForm using name: [<field names>]
     // - otherwise it gets stuck in a loop because 'tested' and 'enabled' are updated automatically
-    const fieldsToWatch = useWatch({
+    //This is also loading the form asynchronously..
+    // - therefore we
+    /*const fieldsToWatch = useWatch({
         control,
         name: integrationEditFormFields.map(f => f.name),
-        defaultValue: "yo",
-    });
+        defaultValue: undefined,
+    });*/
+
+    const fieldsToWatch = [undefined];
 
     useEffect(() => {
         if (!requiresSecretKey(auth_type)) {

@@ -58,10 +58,9 @@ const TextTime = (props: TextTimeProps) => {
         field,
     } = useController({ control, name });
 
-    /*useEffect(() => {
+    useEffect(() => {
         field.onChange(customUpdate({ hours, mins }));
     }, [customUpdate, field, hours, mins]);
-    */
 
     return (
         <FormInputWrapper
