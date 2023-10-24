@@ -11,7 +11,7 @@ const defaultValues: Partial<IntegrationPayload> = {
     endpoint_baseurl: "",
     endpoint_datasets: "",
     endpoint_dataset: "",
-    run_time_hour: 1,
+    run_time_hour: undefined,
     enabled: false,
     tested: false,
     notifications: [],

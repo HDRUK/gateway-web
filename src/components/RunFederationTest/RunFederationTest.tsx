@@ -79,8 +79,6 @@ const RunFederationTest = ({
     const runTest = async () => {
         setIsRunning(true);
 
-        console.log(integration);
-
         /*const response = (await runFederationTest(
             integration!
         )) as unknown as FederationRunResponse;

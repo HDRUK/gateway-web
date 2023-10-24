@@ -76,8 +76,8 @@ const EditIntegrationForm = () => {
         //note:
         // - do we need to update the value of integration with what is returned by this update?
         // - integration is sent to RunFederationTest and will remain unchanged from the original get...
-        await updateIntegration(payload.id, payload);
-        //integration = await updateIntegration(payload.id, payload);
+        const response = await updateIntegration(payload.id, payload);
+        //do something with the response....
     };
 
     const handleRun = (testStatus: boolean) => {
