@@ -1,21 +1,14 @@
-import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 import { getPermissions } from "@/utils/permissions";
-import { Team } from "@/interfaces/Team";
-import apis from "@/config/apis";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useAuth from "./useAuth";
-import useGet from "./useGet";
-
-interface AccountTeamUrlQuery extends ParsedUrlQuery {
-    teamId: string;
-}
+import { useGetTeam } from "./useGetTeam";
 
 export const useHasPermissions = () => {
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
-    const { data: team } = useGet<Team>(
-        teamId ? `${apis.teamsV1Url}/${teamId}` : null
-    );
+
+    const { team } = useGetTeam(teamId);
 
     const { user } = useAuth();
     const foundUser = team?.users?.find(teamUser => teamUser.id === user?.id);

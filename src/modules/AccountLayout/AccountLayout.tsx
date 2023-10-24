@@ -5,13 +5,11 @@ import LeftNav from "@/modules/LeftNav";
 import { ReactNode, useMemo } from "react";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useRouter } from "next/router";
-import apis from "@/config/apis";
-import useGet from "@/hooks/useGet";
-import { Team } from "@/interfaces/Team";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import Loading from "@/components/Loading";
 import ActionBar from "@/components/ActionBar";
 import Typography from "@/components/Typography";
+import { useGetTeam } from "@/hooks/useGetTeam";
 
 interface AccountLayoutProps {
     children: ReactNode;
@@ -19,14 +17,10 @@ interface AccountLayoutProps {
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
     const { query } = useRouter();
-
     const { teamId } = query as AccountTeamUrlQuery;
 
     const permissions = useHasPermissions();
-    const { data: team, isLoading: isTeamLoading } = useGet<Team>(
-        `${apis.teamsV1Url}/${teamId}`,
-        { shouldFetch: !!teamId }
-    );
+    const { team, isTeamLoading } = useGetTeam(teamId);
     const isTeam = useMemo(() => !!teamId, [teamId]);
 
     const navItems = useMemo(() => {

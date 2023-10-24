@@ -4,7 +4,6 @@ import useAuth from "@/hooks/useAuth";
 import useActionBar from "@/hooks/useActionBar";
 import Loading from "@/components/Loading";
 import apis from "@/config/apis";
-import useGet from "@/hooks/useGet";
 import Table from "@/components/Table";
 import { getColumns } from "@/config/tables/teamManagement";
 import {
@@ -13,7 +12,6 @@ import {
     getDifferences,
 } from "@/utils/userRoles";
 import { User } from "@/interfaces/User";
-import { Team } from "@/interfaces/Team";
 import pLimit from "p-limit";
 import notificationService from "@/services/notification";
 
@@ -25,6 +23,8 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import usePut from "@/hooks/usePut";
 import { DeleteForeverIcon } from "@/consts/icons";
 import ChangesActionBar from "@/modules/ChangesActionBar";
+import { useGetTeam } from "@/hooks/useGetTeam";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const limit = pLimit(1);
 
@@ -34,8 +34,8 @@ const TeamMembers = () => {
     const { showModal } = useModal();
     const { mutate: mututeUser } = useSWRConfig();
 
-    const router = useRouter();
-    const { teamId } = router.query;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
 
     const [rolesToUpdate, setRolesToUpdate] = useState<RolesPayload[] | null>(
         null
@@ -43,11 +43,7 @@ const TeamMembers = () => {
     const [tableRows, setTableRows] = useState<User[]>([]);
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
 
-    const {
-        data: team,
-        isLoading: isTeamListLoading,
-        mutate,
-    } = useGet<Team>(`${apis.teamsV1Url}/${teamId}`);
+    const { team, isTeamLoading, mutateTeam } = useGetTeam(teamId);
 
     const updateMembers = usePut<{ id?: number | undefined }>(
         `${apis.teamsV1Url}/${teamId}/users`,
@@ -86,14 +82,21 @@ const TeamMembers = () => {
             );
         }
 
-        mutate();
+        mutateTeam();
         setRolesToUpdate(null);
         hideBar();
 
         if (updatingOwnPermissions) {
             mututeUser(apis.authInternalUrl);
         }
-    }, [hideBar, mutate, mututeUser, rolesToUpdate, updateMembers, user?.id]);
+    }, [
+        hideBar,
+        mutateTeam,
+        mututeUser,
+        rolesToUpdate,
+        updateMembers,
+        user?.id,
+    ]);
 
     const discardChanges = () => {
         setTableRows(team?.users || []);
@@ -131,12 +134,12 @@ const TeamMembers = () => {
                         content: `Are you sure you want to remove ${rowUser.firstname}  ${rowUser.lastname}?`,
                         onSuccess: async () => {
                             deleteTeamMember(`users/${rowUser.id}`);
-                            mutate();
+                            mutateTeam();
                         },
                     }),
             },
         ],
-        [deleteTeamMember, mutate, showModal]
+        [deleteTeamMember, mutateTeam, showModal]
     );
 
     useEffect(() => {
@@ -189,7 +192,7 @@ const TeamMembers = () => {
         }
     };
 
-    return isTeamListLoading ? (
+    return isTeamLoading ? (
         <Loading />
     ) : (
         <Table<User>

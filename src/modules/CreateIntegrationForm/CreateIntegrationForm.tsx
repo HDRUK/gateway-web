@@ -16,17 +16,15 @@ import usePost from "@/hooks/usePost";
 import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import useGet from "@/hooks/useGet";
-import { Team } from "@/interfaces/Team";
 import { Integration } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
+import { useGetTeam } from "@/hooks/useGetTeam";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const CreateIntegrationForm = () => {
     const { query, push } = useRouter();
-
-    const { data: team } = useGet<Team>(`${apis.teamsV1Url}/${query.teamId}`, {
-        shouldFetch: !!query.teamId,
-    });
+    const { teamId } = query as AccountTeamUrlQuery;
+    const { team } = useGetTeam(teamId);
 
     const { control, handleSubmit, formState, watch, unregister } =
         useForm<Integration>({
@@ -40,9 +38,9 @@ const CreateIntegrationForm = () => {
     });
 
     const createIntegration = usePost<Integration>(
-        `${apis.teamsV1Url}/${query.teamId}/federations`,
+        `${apis.teamsV1Url}/${teamId}/federations`,
         {
-            shouldFetch: !!query.teamId,
+            shouldFetch: !!teamId,
             itemName: "Integration",
         }
     );
@@ -54,7 +52,7 @@ const CreateIntegrationForm = () => {
         });
 
         setTimeout(() => {
-            push(`/account/team/${query.teamId}/integrations/integration/list`);
+            push(`/account/team/${teamId}/integrations/integration/list`);
         });
     };
 
@@ -73,7 +71,7 @@ const CreateIntegrationForm = () => {
                     if (field.name === "notifications") {
                         return {
                             ...field,
-                            options: team?.users.map(teamUser => ({
+                            options: team?.users?.map(teamUser => ({
                                 value: teamUser.email,
                                 label: `${teamUser.firstname} ${teamUser.lastname}`,
                             })),
@@ -117,13 +115,7 @@ const CreateIntegrationForm = () => {
                     padding={0}
                     display="flex"
                     justifyContent="end"
-                    marginBottom={10}
-                    // sx={{
-                    //     display: "flex",
-                    //     justifyContent: "space-between",
-                    //     marginBottom: "10px",
-                    // }}
-                >
+                    marginBottom={10}>
                     <Button type="submit">Save configuration</Button>
                 </Box>
             </Paper>
