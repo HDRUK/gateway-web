@@ -20,6 +20,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
     const { teamId } = query as AccountTeamUrlQuery;
 
     const permissions = useHasPermissions();
+
     const { team, isTeamLoading } = useGetTeam(teamId);
     const isTeam = useMemo(() => !!teamId, [teamId]);
 

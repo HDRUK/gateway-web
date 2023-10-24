@@ -32,8 +32,8 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 export {
     CheckCircleTwoToneIcon,
@@ -71,4 +71,5 @@ export {
     HelpOutlineOutlinedIcon,
     GroupsOutlinedIcon,
     ContentCopyIcon,
+    RemoveCircleIcon,
 };

@@ -35,6 +35,12 @@ const getRequest = async <T>(
                     method: "get",
                 });
             }
+
+            if (error.response.status === 401) {
+                throw error;
+                //router.push('/401');
+                //console.log("push to /401");
+            }
         });
 };
 
