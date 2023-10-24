@@ -9,7 +9,7 @@ import { useHasPermissions } from "@/hooks/useHasPermission";
 import Loading from "@/components/Loading";
 import ActionBar from "@/components/ActionBar";
 import Typography from "@/components/Typography";
-import { useGetTeam } from "@/hooks/useGetTeam";
+import useGetTeam from "@/hooks/useGetTeam";
 
 interface AccountLayoutProps {
     children: ReactNode;

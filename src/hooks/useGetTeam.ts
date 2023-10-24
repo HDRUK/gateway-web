@@ -3,13 +3,14 @@ import { Team } from "@/interfaces/Team";
 import { useMemo } from "react";
 import useGet from "./useGet";
 
-export const useGetTeam = (teamId: string) => {
+const useGetTeam = (teamId: string) => {
     const { data, isLoading, mutate, ...rest } = useGet<Team>(
         teamId ? `${apis.teamsV1Url}/${teamId}` : null
     );
 
-    const cachedTeam = useMemo(
-        () => ({
+    const cachedTeam = useMemo(() => {
+        if (!data) return undefined;
+        return {
             ...data,
             users: data?.users.map(user => ({
                 ...user,
@@ -18,14 +19,15 @@ export const useGetTeam = (teamId: string) => {
                     role => !role.name.startsWith("hdruk")
                 ),
             })),
-        }),
-        [data]
-    );
+        };
+    }, [data]);
 
     return {
-        team: cachedTeam || {},
+        team: cachedTeam,
         isTeamLoading: isLoading,
         mutateTeam: mutate,
         ...rest,
     };
 };
+
+export default useGetTeam;

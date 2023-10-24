@@ -23,7 +23,7 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import usePut from "@/hooks/usePut";
 import { DeleteForeverIcon } from "@/consts/icons";
 import ChangesActionBar from "@/modules/ChangesActionBar";
-import { useGetTeam } from "@/hooks/useGetTeam";
+import useGetTeam from "@/hooks/useGetTeam";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const limit = pLimit(1);

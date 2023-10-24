@@ -22,7 +22,7 @@ import usePut from "@/hooks/usePut";
 import RunFederationTest from "@/components/RunFederationTest";
 import Switch from "@/components/Switch";
 import Tooltip from "@/components/Tooltip";
-import { useGetTeam } from "@/hooks/useGetTeam";
+import useGetTeam from "@/hooks/useGetTeam";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const EditIntegrationForm = () => {

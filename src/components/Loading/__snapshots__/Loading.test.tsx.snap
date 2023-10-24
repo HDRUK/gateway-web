@@ -2,8 +2,10 @@
 
 exports[`Loading should render component 1`] = `
 <div>
-  <div>
-    Loading.text
+  <div
+    class="mui-style-1j5q8ll-Loading"
+  >
+    Loading
   </div>
 </div>
 `;
