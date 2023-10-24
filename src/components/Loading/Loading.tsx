@@ -1,9 +1,8 @@
-import { useTranslation } from "next-i18next";
+/** @jsxImportSource @emotion/react */
+import * as styles from "./Loading.styles";
 
 const Loading = () => {
-    const { t } = useTranslation("components");
-
-    return <div>{t("Loading.text")}</div>;
+    return <div css={styles.loading}>Loading</div>;
 };
 
 export default Loading;

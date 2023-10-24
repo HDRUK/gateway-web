@@ -16,24 +16,25 @@ import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGet from "@/hooks/useGet";
-import { Team } from "@/interfaces/Team";
 import { Integration, IntegrationPayload } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import usePut from "@/hooks/usePut";
 import RunFederationTest from "@/components/RunFederationTest";
 import Switch from "@/components/Switch";
 import Tooltip from "@/components/Tooltip";
+import useGetTeam from "@/hooks/useGetTeam";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const EditIntegrationForm = () => {
     const { query } = useRouter();
+    const { teamId, intId } = query as AccountTeamUrlQuery;
+
     const { data: integration } = useGet<Integration>(
-        `${apis.teamsV1Url}/${query.teamId}/federations/${query.intId}`,
-        { shouldFetch: !!query.teamId || !!query.intId }
+        `${apis.teamsV1Url}/${teamId}/federations/${intId}`,
+        { shouldFetch: !!teamId || !!intId }
     );
 
-    const { data: team } = useGet<Team>(`${apis.teamsV1Url}/${query.teamId}`, {
-        shouldFetch: !!query.teamId,
-    });
+    const { team } = useGetTeam(teamId);
 
     const {
         control,
@@ -63,9 +64,9 @@ const EditIntegrationForm = () => {
     });
 
     const updateIntegration = usePut<Integration>(
-        `${apis.teamsV1Url}/${query.teamId}/federations`,
+        `${apis.teamsV1Url}/${teamId}/federations`,
         {
-            shouldFetch: !!query.teamId,
+            shouldFetch: !!teamId,
             itemName: "Integration",
         }
     );
@@ -94,7 +95,7 @@ const EditIntegrationForm = () => {
                     if (field.name === "notifications") {
                         return {
                             ...field,
-                            options: team?.users.map(teamUser => ({
+                            options: team?.users?.map(teamUser => ({
                                 value: teamUser.email,
                                 label: `${teamUser.firstname} ${teamUser.lastname}`,
                             })),
@@ -159,21 +160,26 @@ const EditIntegrationForm = () => {
                         </Box>
                     </Paper>
                     <Box sx={{ p: 0, flex: 1 }}>
-                        <RunFederationTest
-                            teamId={query.teamId}
-                            isEnabled={formState.isValid}
-                            integration={{
-                                auth_type: integration?.auth_type,
-                                auth_secret_key: integration?.auth_secret_key,
-                                endpoint_baseurl: integration?.endpoint_baseurl,
-                                endpoint_datasets:
-                                    integration?.endpoint_datasets,
-                                endpoint_dataset: integration?.endpoint_dataset,
-                                run_time_hour: integration?.run_time_hour,
-                                enabled: integration?.enabled,
-                            }}
-                            onRun={handleRun}
-                        />
+                        {integration && (
+                            <RunFederationTest
+                                teamId={teamId}
+                                isEnabled={formState.isValid}
+                                federation={{
+                                    auth_type: integration.auth_type,
+                                    auth_secret_key:
+                                        integration.auth_secret_key,
+                                    endpoint_baseurl:
+                                        integration.endpoint_baseurl,
+                                    endpoint_datasets:
+                                        integration.endpoint_datasets,
+                                    endpoint_dataset:
+                                        integration.endpoint_dataset,
+                                    run_time_hour: integration.run_time_hour,
+                                    enabled: integration.enabled,
+                                }}
+                                onRun={handleRun}
+                            />
+                        )}
                     </Box>
                 </Box>
             </Box>

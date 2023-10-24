@@ -17,15 +17,44 @@ import { User } from "@/interfaces/User";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
 
-const CheckboxesCell = ({ row: { index, original }, table, checkboxes }) => {
+const CheckboxesCell = ({
+    row: { index, original },
+    table,
+    checkboxes,
+    permissions,
+}) => {
     const { roles } = original;
-    const checkboxesHydrated = checkboxes.map(checkbox => ({
-        name: checkbox.name,
-        disabled: checkbox.disabled,
-        value: !!roles.find(role => role.name === checkbox.name)?.enabled,
-    }));
+
+    const isLastRole = useMemo(
+        () => roles.filter(role => role.enabled).length === 1,
+        [roles]
+    );
+
+    const lastRoleMessage = permissions[
+        "fe.account.team_management.permission.update.custodian_team_admin"
+    ]
+        ? "All team members must have at least one role. If you would like to remove a team member, the 'remove team member' button can be found in the 'Actions' column."
+        : "All team members must have at least one role. Please contact your team admin to remove a team member.";
+
+    const checkboxesHydrated = useMemo(() => {
+        return checkboxes.map(checkbox => {
+            const value = !!roles.find(role => role.name === checkbox.name)
+                ?.enabled;
+            return {
+                name: checkbox.name,
+                disabled: value && isLastRole ? true : checkbox.disabled,
+                value,
+                title:
+                    value && isLastRole
+                        ? lastRoleMessage
+                        : checkbox.disabled
+                        ? "You do not have permission to edit this"
+                        : "",
+            };
+        });
+    }, [roles, checkboxes]);
 
     const handleUpdate = (name, value) => {
         const filteredRoles = roles.filter(role => role.name !== name);
@@ -45,11 +74,7 @@ const CheckboxesCell = ({ row: { index, original }, table, checkboxes }) => {
                 <FormControlLabel
                     key={checkbox.name}
                     label={rolesMeta[checkbox.name].label}
-                    title={
-                        checkbox.disabled
-                            ? "You do not have permission to edit this"
-                            : ""
-                    }
+                    title={checkbox.title}
                     control={
                         <Checkbox
                             disabled={checkbox.disabled}
@@ -101,6 +126,7 @@ const getColumns = (
             cell: props => (
                 <CheckboxesCell
                     {...props}
+                    permissions={permissions}
                     checkboxes={[
                         {
                             name: ROLE_CUSTODIAN_TEAM_ADMIN,
@@ -138,6 +164,7 @@ const getColumns = (
             cell: props => (
                 <CheckboxesCell
                     {...props}
+                    permissions={permissions}
                     checkboxes={[
                         {
                             name: ROLE_CUSTODIAN_DAR_MANAGER,
@@ -175,6 +202,7 @@ const getColumns = (
             cell: props => (
                 <CheckboxesCell
                     {...props}
+                    permissions={permissions}
                     checkboxes={[
                         {
                             name: ROLE_CUSTODIAN_METADATA_MANAGER,

@@ -13,10 +13,10 @@ import { Federation, FederationRunResponse } from "@/interfaces/Federation";
 import * as styles from "./RunFederationTest.styles";
 
 interface RunFederationTestProps {
-    integration?: Federation;
+    federation: Omit<Federation, "id">;
     onRun: (status: boolean) => void;
     isEnabled?: boolean;
-    teamId?: number;
+    teamId?: string;
 }
 
 const Container = ({ children }: { children: ReactNode }) => {
@@ -34,7 +34,7 @@ const Container = ({ children }: { children: ReactNode }) => {
 };
 
 const RunFederationTest = ({
-    integration,
+    federation,
     teamId,
     onRun,
     isEnabled = false,
@@ -43,7 +43,7 @@ const RunFederationTest = ({
     const [runResponse, setFederationRunResponse] =
         useState<FederationRunResponse | null>(null);
 
-    const runFederationTest = usePost<Federation>(
+    const runFederationTest = usePost<Omit<Federation, "id">>(
         `${apis.teamsV1Url}/${teamId}/federations/test`,
         {
             itemName: "Integration test",
@@ -54,7 +54,7 @@ const RunFederationTest = ({
     const runTest = async () => {
         setIsRunning(true);
         const response = (await runFederationTest(
-            integration!
+            federation
         )) as unknown as FederationRunResponse;
         setIsRunning(false);
         setFederationRunResponse(response);

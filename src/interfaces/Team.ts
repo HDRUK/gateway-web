@@ -1,7 +1,7 @@
 import { User } from "@/interfaces/User";
 
 interface Team {
-    id: number;
+    id: string;
     name: string;
     enabled: boolean;
     allows_messaging: boolean;
