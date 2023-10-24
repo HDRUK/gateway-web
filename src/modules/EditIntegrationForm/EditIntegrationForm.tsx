@@ -44,6 +44,7 @@ const EditIntegrationForm = () => {
         watch,
         unregister,
         setValue,
+        getValues,
     } = useForm<IntegrationPayload>({
         mode: "onTouched",
         resolver: yupResolver(integrationValidationSchema),
@@ -72,7 +73,11 @@ const EditIntegrationForm = () => {
     );
 
     const submitForm = async (payload: Integration) => {
+        //note:
+        // - do we need to update the value of integration with what is returned by this update?
+        // - integration is sent to RunFederationTest and will remain unchanged from the original get...
         await updateIntegration(payload.id, payload);
+        //integration = await updateIntegration(payload.id, payload);
     };
 
     const handleRun = (testStatus: boolean) => {
@@ -97,12 +102,10 @@ const EditIntegrationForm = () => {
     // - otherwise it gets stuck in a loop because 'tested' and 'enabled' are updated automatically
     //This is also loading the form asynchronously..
     // - therefore we
-
     const fieldsToWatch = useWatch({
         control,
-        name: integrationEditFormFields
-            .map(f => f.name)
-            .filter(f => f != "run_time_hour"),
+        name: integrationEditFormFields.map(f => f.name),
+        //.filter(f => f != "run_time_hour"),
         defaultValue: undefined,
     });
 
@@ -185,10 +188,15 @@ const EditIntegrationForm = () => {
                     </Paper>
                     <Box sx={{ p: 0, flex: 1 }}>
                         <RunFederationTest
-                            fieldsToWatch={fieldsToWatch}
+                            watch={fieldsToWatch}
                             teamId={query.teamId}
-                            isEnabled={formState.isValid}
+                            formIsValid={formState.isValid}
+                            isEnabled={getValues("enabled")}
                             integration={{
+                                //this is bugged if the form is changed and integration is not saved
+                                //if the user changes the form, doesnt click save, and runs the test
+                                //the test will still use the original data from GET
+                                //it wont use the form data..
                                 auth_type: integration?.auth_type,
                                 auth_secret_key: integration?.auth_secret_key,
                                 endpoint_baseurl: integration?.endpoint_baseurl,

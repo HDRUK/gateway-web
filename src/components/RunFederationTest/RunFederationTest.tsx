@@ -15,8 +15,10 @@ import * as styles from "./RunFederationTest.styles";
 import { useEffect } from "react";
 
 interface RunFederationTestProps {
+    //fieldsToWatch?:
     integration?: Federation;
     onRun: (status: boolean) => void;
+    formIsValid?: boolean;
     isEnabled?: boolean;
     teamId?: number;
 }
@@ -36,11 +38,12 @@ const Container = ({ children }: { children: ReactNode }) => {
 };
 
 const RunFederationTest = ({
-    fieldsToWatch,
+    watch,
     integration,
     teamId,
     onRun,
-    isEnabled = false,
+    isEnabled,
+    formIsValid = false,
 }: RunFederationTestProps) => {
     const [isRunning, setIsRunning] = useState(false);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -57,9 +60,10 @@ const RunFederationTest = ({
 
     useEffect(() => {
         //could be still loading..
-        if (fieldsToWatch.includes(undefined)) return;
+        if (watch.includes(undefined)) return;
 
-        //if it's the inital load, don't start messing with enable/disable button
+        //the form is loading asynchronously so will indicate that some fields have changed
+        //therefore the code shouldn't start messing with enable/disable button
         if (isInitialLoad) {
             setIsInitialLoad(false);
             return;
@@ -70,10 +74,12 @@ const RunFederationTest = ({
         onRun(false);
         //also reset the run response
         setFederationRunResponse(null);
-    }, [fieldsToWatch]);
+    }, [watch]);
 
     const runTest = async () => {
         setIsRunning(true);
+
+        console.log(integration);
 
         /*const response = (await runFederationTest(
             integration!
@@ -180,21 +186,23 @@ const RunFederationTest = ({
                     justifyContent: "center",
                 }}>
                 <Typography sx={{ mb: 2 }}>
-                    {isEnabled
-                        ? "A test must be carried out before you can enable this configuration"
-                        : "You must complete the required fields before running a test"}
+                    {!formIsValid
+                        ? "You must complete the required fields before running a test"
+                        : isEnabled
+                        ? "API already enabled, you can run a test again or make changes"
+                        : "A test must be carried out before you can (re)enable this configuration"}
                 </Typography>
 
                 <Button
                     style={{
-                        ...(!isEnabled && {
+                        ...(!formIsValid && {
                             background: colors.grey200,
                         }),
                     }}
-                    {...(!isEnabled && {
+                    {...(!formIsValid && {
                         color: "inherit",
                     })}
-                    disabled={!isEnabled}
+                    disabled={!formIsValid}
                     onClick={() => runTest()}>
                     Run test
                 </Button>
