@@ -44,7 +44,6 @@ const EditIntegrationForm = () => {
         watch,
         unregister,
         setValue,
-        getValues,
     } = useForm<IntegrationPayload>({
         mode: "onTouched",
         resolver: yupResolver(integrationValidationSchema),
@@ -98,13 +97,14 @@ const EditIntegrationForm = () => {
     // - otherwise it gets stuck in a loop because 'tested' and 'enabled' are updated automatically
     //This is also loading the form asynchronously..
     // - therefore we
-    /*const fieldsToWatch = useWatch({
-        control,
-        name: integrationEditFormFields.map(f => f.name),
-        defaultValue: undefined,
-    });*/
 
-    const fieldsToWatch = [undefined];
+    const fieldsToWatch = useWatch({
+        control,
+        name: integrationEditFormFields
+            .map(f => f.name)
+            .filter(f => f != "run_time_hour"),
+        defaultValue: undefined,
+    });
 
     useEffect(() => {
         if (!requiresSecretKey(auth_type)) {
