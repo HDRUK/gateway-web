@@ -2,7 +2,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import LeftNav from "@/modules/LeftNav";
-import { ReactNode, useMemo } from "react";
+import { ReactNode, useMemo, useEffect } from "react";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useRouter } from "next/router";
 import { useHasPermissions } from "@/hooks/useHasPermission";
@@ -16,7 +16,8 @@ interface AccountLayoutProps {
 }
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
-    const { query } = useRouter();
+    const router = useRouter();
+    const { query, asPath } = router;
     const { teamId } = query as AccountTeamUrlQuery;
 
     const permissions = useHasPermissions();
@@ -28,6 +29,16 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
         if (!teamId) return getProfileNav();
         return getTeamNav(permissions, teamId);
     }, [teamId, permissions]);
+
+    const isProtectedPage = !getTeamNav(permissions, teamId)
+        .map(item => item.href)
+        .includes(asPath);
+
+    useEffect(() => {
+        if (isProtectedPage) {
+            //router.push("/401");
+        }
+    }, []);
 
     if (isTeamLoading) {
         return <Loading />;
