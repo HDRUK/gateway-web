@@ -42,6 +42,15 @@ function InputWrapper({ component, ...props }: InputWrapperProps & InputType) {
         TextArea,
     };
 
+    if (component === "TextTime") {
+        const name = props.name as unknown as { minute: string; hour: string };
+        if (typeof name !== "object" || !name.minute || !name.hour) {
+            throw Error(
+                `TextTime component requires 'name' to be object: { minute: string; hour: string }`
+            );
+        }
+    }
+
     const Component = inputs[component as ComponentTypes] as ElementType;
 
     if (!Component) {

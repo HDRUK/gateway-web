@@ -8,7 +8,7 @@ import * as styles from "./Label.styles";
 type ExtendedProps = TypographyProps & ComponentPropsWithoutRef<"label">;
 
 interface LabelProps extends ExtendedProps {
-    name: string;
+    name?: string;
     label: string;
     required?: boolean;
 }

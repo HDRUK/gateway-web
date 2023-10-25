@@ -1,20 +1,12 @@
 import { MenuItem, Select, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Control, useController } from "react-hook-form";
 import FormInputWrapper from "@/components/FormInputWrapper";
-
-const hourOptions = Array.from({ length: 24 })
-    .map((v, index) => index)
-    .map(hour => (hour.toString().length === 1 ? `0${hour}` : hour));
-
-const minuteOptions = Array.from({ length: 60 })
-    .map((v, index) => index)
-    .map(min => (min.toString().length === 1 ? `0${min}` : min));
+import { useMemo } from "react";
+import { hourOptions, minuteOptions } from "./TextTime.utils";
 
 export interface TextTimeProps {
     timeZoneLabel?: string;
-    customUpdate?: () => null;
-    name: string;
+    name: { minute: string; hour: string };
     info?: string;
     extraInfo?: string;
     required?: boolean;
@@ -26,18 +18,7 @@ export interface TextTimeProps {
     control: Control;
 }
 
-const defaultCustomUpdate = ({
-    hours,
-    mins,
-}: {
-    hours: string;
-    mins: string;
-}) => `${hours}: ${mins}`;
-
 const TextTime = (props: TextTimeProps) => {
-    const [hours, setHours] = useState("01");
-    const [mins, setMins] = useState("00");
-
     const {
         timeZoneLabel = "UTC",
         control,
@@ -50,24 +31,30 @@ const TextTime = (props: TextTimeProps) => {
         label,
         name,
         horizontalForm,
-        customUpdate = defaultCustomUpdate,
     } = props;
-    const {
-        fieldState: { error },
-        field,
-    } = useController({ control, name });
 
-    useEffect(() => {
-        field.onChange(customUpdate({ hours, mins }));
-    }, [customUpdate, field, hours, mins]);
+    const {
+        fieldState: { error: hourError },
+        field: hourField,
+    } = useController({ control, name: name.hour });
+    const {
+        fieldState: { error: minutesError },
+        field: minuteField,
+    } = useController({ control, name: name.minute });
+
+    const combinedError = useMemo(() => {
+        return [
+            Array.isArray(hourError) ? { ...hourError } : hourError,
+            Array.isArray(minutesError) ? { ...minutesError } : minutesError,
+        ].filter(e => e !== undefined);
+    }, [hourError, minutesError]);
 
     return (
         <FormInputWrapper
             horizontalForm={horizontalForm}
             label={label}
             info={info}
-            name={name}
-            error={error}
+            error={combinedError}
             extraInfo={extraInfo}
             disabled={disabled}
             required={required}>
@@ -75,10 +62,9 @@ const TextTime = (props: TextTimeProps) => {
                 {timeZoneLabel}
                 <Select
                     {...hourProps}
-                    value={hours}
+                    {...hourField}
                     size="small"
-                    onChange={e => setHours(e.target.value)}
-                    name="hours"
+                    name={name.hour}
                     type="number">
                     {hourOptions.map(hour => (
                         <MenuItem key={hour} value={hour}>
@@ -89,10 +75,9 @@ const TextTime = (props: TextTimeProps) => {
                 :
                 <Select
                     {...minProps}
-                    value={mins}
+                    {...minuteField}
                     size="small"
-                    onChange={e => setMins(e.target.value)}
-                    name="mins"
+                    name={name.minute}
                     type="number">
                     {minuteOptions.map(minute => (
                         <MenuItem key={minute} value={minute}>

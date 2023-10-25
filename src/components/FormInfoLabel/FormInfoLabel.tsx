@@ -9,7 +9,7 @@ interface FormInfoLabelProps {
     required?: boolean;
     info?: string;
     label: string;
-    name: string;
+    name?: string;
 }
 
 const FormInfoLabel = ({

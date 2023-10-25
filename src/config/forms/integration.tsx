@@ -1,17 +1,18 @@
 import * as yup from "yup";
-import { AuthType, IntegrationPayload } from "@/interfaces/Integration";
+import { AuthType, Integration } from "@/interfaces/Integration";
 import { authTypes, federationTypes } from "@/consts/integrations";
 import { requiresSecretKey } from "@/utils/integrations";
 import { inputComponents } from ".";
 
-const defaultValues: Partial<IntegrationPayload> = {
+const defaultValues: Partial<Integration> = {
     federation_type: undefined,
     auth_type: undefined,
     auth_secret_key: undefined,
     endpoint_baseurl: "",
     endpoint_datasets: "",
     endpoint_dataset: "",
-    run_time_hour: 1,
+    run_time_hour: "01",
+    run_time_minute: "00",
     enabled: false,
     tested: false,
     notifications: [],
@@ -61,11 +62,10 @@ const formFields = [
     },
     {
         label: "Synchronisation Time",
-        name: "run_time_hour",
+        name: { minute: "run_time_minute", hour: "run_time_hour" },
         info: "Set the hour the synchronisations will take place daily, in 24-hr format",
         component: inputComponents.TextTime,
         minProps: { disabled: true },
-        customUpdate: ({ hours }: { hours: string }) => parseInt(hours, 10),
     },
     {
         label: "Base URL",

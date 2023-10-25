@@ -13,7 +13,7 @@ import { colors } from "@/config/theme";
 interface FormInputWrapperProps {
     horizontalForm?: boolean;
     extraInfo?: string;
-    name: string;
+    name?: string;
     info?: string;
     formControlSx?: SxProps;
     label: string;
@@ -22,7 +22,7 @@ interface FormInputWrapperProps {
     required?: boolean;
     limit?: number;
     children: ReactNode;
-    error?: FieldError | FieldError[];
+    error?: FieldError | (FieldError | undefined)[];
 }
 
 const FormInputWrapper = ({
