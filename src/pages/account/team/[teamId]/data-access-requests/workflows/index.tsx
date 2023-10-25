@@ -5,10 +5,11 @@ import { GetServerSideProps } from "next";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/modules/AccountLayout";
 import Typography from "@/components/Typography";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamDarWorkflowsPage = () => {
     return (
-        <>
+        <ProtectedRoute>
             <Head title="Health Data Research Innovation Gateway - My Account - Data Access Requests - Workflows" />
             <AccountLayout>
                 <Paper>
@@ -18,7 +19,7 @@ const TeamDarWorkflowsPage = () => {
                     </Box>
                 </Paper>
             </AccountLayout>
-        </>
+        </ProtectedRoute>
     );
 };
 

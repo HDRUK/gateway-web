@@ -30,19 +30,10 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
         return getTeamNav(permissions, teamId);
     }, [teamId, permissions]);
 
-    const isProtectedPage = !getTeamNav(permissions, teamId)
-        .map(item => item.href)
-        .includes(asPath);
-
-    useEffect(() => {
-        if (isProtectedPage) {
-            //router.push("/401");
-        }
-    }, []);
-
     if (isTeamLoading) {
         return <Loading />;
     }
+
     return (
         <div>
             <BoxContainer

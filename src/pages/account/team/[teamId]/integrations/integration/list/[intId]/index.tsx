@@ -9,9 +9,11 @@ import AccountLayout from "@/modules/AccountLayout";
 import Typography from "@/components/Typography";
 import EditIntegrationForm from "@/modules/EditIntegrationForm";
 
+import ProtectedRoute from "@/components/ProtectedRoute";
+
 const CreateAppPage = () => {
     return (
-        <>
+        <ProtectedRoute>
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Integration" />
             <AccountLayout>
                 <BackButton label="Back to Integration Management" />
@@ -26,7 +28,7 @@ const CreateAppPage = () => {
                 </Paper>
                 <EditIntegrationForm />
             </AccountLayout>
-        </>
+        </ProtectedRoute>
     );
 };
 

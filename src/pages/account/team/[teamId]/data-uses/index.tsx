@@ -5,10 +5,11 @@ import { GetServerSideProps } from "next";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/modules/AccountLayout";
 import Typography from "@/components/Typography";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamDataUsesPage = () => {
     return (
-        <>
+        <ProtectedRoute>
             <Head title="Health Data Research Innovation Gateway - My Account - Data Uses" />
             <AccountLayout>
                 <Paper>
@@ -17,7 +18,7 @@ const TeamDataUsesPage = () => {
                     </Box>
                 </Paper>
             </AccountLayout>
-        </>
+        </ProtectedRoute>
     );
 };
 
