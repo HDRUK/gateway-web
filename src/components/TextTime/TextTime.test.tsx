@@ -15,14 +15,15 @@ describe("TextTime", () => {
     const Component = (props: { [key: string]: unknown }) => {
         const { control, handleSubmit } = useForm({
             defaultValues: {
-                selectedTime: "",
+                selectedHour: "",
+                selectedMinute: "",
             },
         });
 
         return (
             <Form onSubmit={handleSubmit(data => submitFn(data))}>
                 <TextTime
-                    name="selectedTime"
+                    name={{ hour: "selectedHour", minute: "selectedMinute" }}
                     label={label}
                     control={control}
                     {...props}
@@ -67,23 +68,10 @@ describe("TextTime", () => {
         userEvent.click(submitButton);
 
         await waitFor(() => {
-            expect(submitFn).toHaveBeenCalledWith({ selectedTime: "23: 59" });
-        });
-    });
-    it("should use customUpdate to return custom response", async () => {
-        render(
-            <Component
-                customUpdate={({ hours }: { hours: string }) =>
-                    parseInt(hours, 10)
-                }
-            />
-        );
-
-        const submitButton = screen.getByText("Submit");
-        userEvent.click(submitButton);
-
-        await waitFor(() => {
-            expect(submitFn).toHaveBeenCalledWith({ selectedTime: 1 });
+            expect(submitFn).toHaveBeenCalledWith({
+                selectedHour: "23",
+                selectedMinute: "59",
+            });
         });
     });
     it("should pass props and disable specified input", async () => {

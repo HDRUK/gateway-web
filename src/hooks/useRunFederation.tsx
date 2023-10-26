@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { isEqual, pick } from "lodash";
 import { Federation, FederationRunResponse } from "@/interfaces/Federation";
 import usePost from "@/hooks/usePost";
-import { Integration, IntegrationPayload } from "@/interfaces/Integration";
+import { Integration, IntegrationForm } from "@/interfaces/Integration";
+import { Control, FieldValues, useWatch } from "react-hook-form";
 
 export const watchFederationKeys = [
     "auth_type",
@@ -15,26 +16,26 @@ export const watchFederationKeys = [
     "notifications",
 ];
 
-interface useRunFederationProps {
+interface useRunFederationProps<T extends FieldValues> {
     teamId: string;
     integration: Integration | undefined;
     reset: () => void;
-    watch: (name: string) => void;
+    control: Control<T>;
     setValue: (
-        key: keyof IntegrationPayload,
+        key: keyof IntegrationForm,
         value: string | number | boolean | string[] | undefined
     ) => void;
     getValues: () => void;
 }
 
-const useRunFederation = ({
+const useRunFederation = <T extends FieldValues>({
     teamId,
     integration,
     reset,
-    watch,
+    control,
     setValue,
     getValues,
-}: useRunFederationProps) => {
+}: useRunFederationProps<T>) => {
     const [runStatus, setRunStatus] = useState<
         "NOT_RUN" | "IS_RUNNING" | "RUN_COMPLETE" | "TESTED_IS_TRUE"
     >("NOT_RUN");
@@ -43,13 +44,11 @@ const useRunFederation = ({
 
     const [runResponse, setRunResponse] = useState<FederationRunResponse>();
 
-    const authType = watch("auth_type");
-    const authSecretKey = watch("auth_secret_key");
-    const endpointBaseurl = watch("endpoint_baseurl");
-    const endpointDatasets = watch("endpoint_datasets");
-    const endpointDataset = watch("endpoint_dataset");
-    const runTimeHour = watch("run_time_hour");
-    const notifications = watch("notifications");
+    const fieldsToWatch = useWatch({
+        control,
+        name: watchFederationKeys,
+        defaultValue: undefined,
+    });
 
     useEffect(() => {
         const updatedForm = pick(getValues(), watchFederationKeys);
@@ -60,16 +59,7 @@ const useRunFederation = ({
             setValue("enabled", false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        authType,
-        authSecretKey,
-        endpointBaseurl,
-        endpointDatasets,
-        endpointDataset,
-        runTimeHour,
-        runTimeHour,
-        notifications,
-    ]);
+    }, [fieldsToWatch]);
 
     useEffect(() => {
         if (!integration) return;

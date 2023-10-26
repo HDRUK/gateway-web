@@ -1,10 +1,10 @@
 import * as yup from "yup";
-import { AuthType, IntegrationPayload } from "@/interfaces/Integration";
+import { AuthType, IntegrationForm } from "@/interfaces/Integration";
 import { authTypes, federationTypes } from "@/consts/integrations";
 import { requiresSecretKey } from "@/utils/integrations";
 import { inputComponents } from ".";
 
-const defaultValues: Partial<IntegrationPayload> = {
+const defaultValues: Partial<IntegrationForm> = {
     federation_type: undefined,
     auth_type: undefined,
     auth_secret_key: undefined,

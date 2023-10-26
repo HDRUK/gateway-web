@@ -15,7 +15,11 @@ import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGet from "@/hooks/useGet";
-import { Integration, IntegrationPayload } from "@/interfaces/Integration";
+import {
+    Integration,
+    IntegrationForm,
+    IntegrationPayload,
+} from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import usePut from "@/hooks/usePut";
 import RunFederationTest from "@/components/RunFederationTest";
@@ -49,18 +53,18 @@ const EditIntegrationForm = () => {
         setValue,
         getValues,
         unregister,
-    } = useForm<IntegrationPayload>({
+    } = useForm<IntegrationForm>({
         mode: "onTouched",
         resolver: yupResolver(integrationValidationSchema),
         defaultValues: integrationDefaultValues,
     });
 
     const { runStatus, setTestedConfig, runResponse, handleRun } =
-        useRunFederation({
+        useRunFederation<IntegrationForm>({
             teamId,
             integration,
+            control,
             reset,
-            watch,
             getValues,
             setValue,
         });
@@ -69,7 +73,7 @@ const EditIntegrationForm = () => {
         if (!integration) return;
 
         /* Populate form with saved integration */
-        const formData: IntegrationPayload = {
+        const formData: IntegrationForm = {
             ...integration,
             run_time_hour: integration.run_time_hour
                 .toString()
@@ -101,8 +105,12 @@ const EditIntegrationForm = () => {
         }
     );
 
-    const submitForm = async (payload: IntegrationPayload) => {
-        await updateIntegration(payload.id, payload);
+    const submitForm = async (payload: IntegrationForm) => {
+        const updatedPayload = {
+            ...payload,
+            run_time_hour: parseInt(payload.run_time_hour, 10),
+        };
+        await updateIntegration(payload.id, updatedPayload);
     };
 
     const tested = watch("tested");

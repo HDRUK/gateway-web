@@ -1,9 +1,9 @@
-const hourOptions = Array.from({ length: 24 })
-    .map((v, index) => index)
-    .map(hour => (hour.toString().length === 1 ? `0${hour}` : `${hour}`));
+const createArrayOfLength = (length: number) =>
+    Array.from({ length })
+        .map((v, index) => index)
+        .map(value => value.toString().padStart(2, "0"));
 
-const minuteOptions = Array.from({ length: 60 })
-    .map((v, index) => index)
-    .map(min => (min.toString().length === 1 ? `0${min}` : `${min}`));
+const hourOptions = createArrayOfLength(24);
+const minuteOptions = createArrayOfLength(60);
 
 export { hourOptions, minuteOptions };
