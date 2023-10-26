@@ -2,7 +2,6 @@ import Box from "@/components/Box";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import Button from "@/components/Button";
 import {
     integrationDefaultValues,
@@ -24,6 +23,11 @@ import Switch from "@/components/Switch";
 import Tooltip from "@/components/Tooltip";
 import useGetTeam from "@/hooks/useGetTeam";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import useRunFederation, {
+    watchFederationKeys,
+} from "@/hooks/useRunFederation";
+import { pick } from "lodash";
+import { Federation } from "@/interfaces/Federation";
 
 const EditIntegrationForm = () => {
     const { query } = useRouter();
@@ -42,28 +46,54 @@ const EditIntegrationForm = () => {
         reset,
         formState,
         watch,
-        unregister,
         setValue,
+        getValues,
+        unregister,
     } = useForm<IntegrationPayload>({
         mode: "onTouched",
         resolver: yupResolver(integrationValidationSchema),
         defaultValues: integrationDefaultValues,
     });
 
+    const { runStatus, setTestedConfig, runResponse, handleRun } =
+        useRunFederation({
+            teamId,
+            integration,
+            reset,
+            watch,
+            getValues,
+            setValue,
+        });
+
     useEffect(() => {
-        reset({
+        if (!integration) return;
+
+        /* Populate form with saved integration */
+        const formData: IntegrationPayload = {
             ...integration,
+            run_time_hour: integration.run_time_hour
+                .toString()
+                .padStart(2, "0"),
             notifications: integration?.notifications?.map(
                 (notification: { email: string }) => notification.email
             ),
-        });
+        };
+
+        const federationFields = pick(
+            getValues(),
+            watchFederationKeys
+        ) as unknown as Federation;
+
+        setTestedConfig(federationFields);
+        reset(formData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [integration, reset]);
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
     });
 
-    const updateIntegration = usePut<Integration>(
+    const updateIntegration = usePut<IntegrationPayload>(
         `${apis.teamsV1Url}/${teamId}/federations`,
         {
             shouldFetch: !!teamId,
@@ -71,19 +101,16 @@ const EditIntegrationForm = () => {
         }
     );
 
-    const submitForm = async (payload: Integration) => {
+    const submitForm = async (payload: IntegrationPayload) => {
         await updateIntegration(payload.id, payload);
-    };
-
-    const handleRun = (testStatus: boolean) => {
-        setValue("tested", testStatus);
     };
 
     const tested = watch("tested");
     const auth_type = watch("auth_type");
 
+    /* unregister 'auth_secret_key' if 'auth_type' is set to "NO_AUTH" */
     useEffect(() => {
-        if (!requiresSecretKey(auth_type)) {
+        if (!requiresSecretKey(auth_type!)) {
             unregister("auth_secret_key");
         }
     }, [auth_type, unregister]);
@@ -92,6 +119,7 @@ const EditIntegrationForm = () => {
         () =>
             integrationEditFormFields
                 .map(field => {
+                    /* populate 'notifications' with team members */
                     if (field.name === "notifications") {
                         return {
                             ...field,
@@ -101,15 +129,16 @@ const EditIntegrationForm = () => {
                             })),
                         };
                     }
-                    if (
-                        field.name === "auth_secret_key" &&
-                        !requiresSecretKey(auth_type)
-                    ) {
-                        return null;
-                    }
+
                     return field;
                 })
-                .filter(field => !!field),
+                /* Remove 'auth_secret_key' field if 'auth_type' is set to "NO_AUTH"  */
+                .filter(
+                    field =>
+                        field.name !== "auth_secret_key" ||
+                        (field.name === "auth_secret_key" &&
+                            requiresSecretKey(auth_type!))
+                ),
         [team, auth_type]
     );
 
@@ -126,7 +155,7 @@ const EditIntegrationForm = () => {
                     <Box padding={0}>
                         {hydratedFormFields.map(field => (
                             <InputWrapper
-                                key={field.name}
+                                key={field.name.toString()}
                                 horizontalForm
                                 control={control}
                                 {...field}
@@ -162,21 +191,9 @@ const EditIntegrationForm = () => {
                     <Box sx={{ p: 0, flex: 1 }}>
                         {integration && (
                             <RunFederationTest
-                                teamId={teamId}
+                                status={runStatus}
+                                runResponse={runResponse}
                                 isEnabled={formState.isValid}
-                                federation={{
-                                    auth_type: integration.auth_type,
-                                    auth_secret_key:
-                                        integration.auth_secret_key,
-                                    endpoint_baseurl:
-                                        integration.endpoint_baseurl,
-                                    endpoint_datasets:
-                                        integration.endpoint_datasets,
-                                    endpoint_dataset:
-                                        integration.endpoint_dataset,
-                                    run_time_hour: integration.run_time_hour,
-                                    enabled: integration.enabled,
-                                }}
                                 onRun={handleRun}
                             />
                         )}

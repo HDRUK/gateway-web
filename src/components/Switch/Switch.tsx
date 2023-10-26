@@ -5,8 +5,8 @@ import MuiSwitch, { SwitchProps as MuiSwitchProps } from "@mui/material/Switch";
 import { Control, useController } from "react-hook-form";
 
 export interface SwitchProps extends MuiSwitchProps {
-    checkedLabel: string;
-    unCheckedLabel: string;
+    checkedLabel?: string;
+    unCheckedLabel?: string;
     name: string;
     disabled?: boolean;
     control: Control;

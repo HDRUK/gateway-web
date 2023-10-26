@@ -2,7 +2,7 @@ import { AuthType } from "./Integration";
 
 interface FederationRunResponse {
     status: number;
-    message: boolean;
+    success: boolean;
     title: string;
 }
 
@@ -14,7 +14,6 @@ interface Federation {
     endpoint_datasets: string;
     endpoint_dataset: string;
     run_time_hour: number;
-    enabled: boolean;
 }
 
 export type { FederationRunResponse, Federation };

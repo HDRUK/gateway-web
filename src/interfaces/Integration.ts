@@ -11,14 +11,15 @@ interface Integration {
     endpoint_baseurl: string;
     endpoint_datasets: string;
     endpoint_dataset: string;
-    run_time_hour: number;
+    run_time_hour: string;
+    run_time_minute: string;
     enabled: boolean;
     tested: boolean;
     notifications: Notification[] | undefined;
 }
 
 interface IntegrationPayload extends Omit<Integration, "notifications"> {
-    notifications: string[];
+    notifications: string[] | undefined;
 }
 
 export type { Integration, IntegrationPayload };

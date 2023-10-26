@@ -4,19 +4,16 @@ import { colors } from "@/config/theme";
 import Box from "@/components/Box";
 import { CancelIcon, CheckCircleIcon } from "@/consts/icons";
 import Button from "@/components/Button";
-import { ReactNode, useState } from "react";
-import apis from "@/config/apis";
+import { ReactNode } from "react";
 import Typography from "@/components/Typography";
-
-import usePost from "@/hooks/usePost";
-import { Federation, FederationRunResponse } from "@/interfaces/Federation";
+import { FederationRunResponse } from "@/interfaces/Federation";
 import * as styles from "./RunFederationTest.styles";
 
 interface RunFederationTestProps {
-    federation: Omit<Federation, "id">;
-    onRun: (status: boolean) => void;
+    onRun: () => void;
+    status: "NOT_RUN" | "IS_RUNNING" | "RUN_COMPLETE" | "TESTED_IS_TRUE";
     isEnabled?: boolean;
-    teamId?: string;
+    runResponse?: FederationRunResponse;
 }
 
 const Container = ({ children }: { children: ReactNode }) => {
@@ -34,36 +31,12 @@ const Container = ({ children }: { children: ReactNode }) => {
 };
 
 const RunFederationTest = ({
-    federation,
-    teamId,
+    status = "NOT_RUN",
+    runResponse,
     onRun,
     isEnabled = false,
 }: RunFederationTestProps) => {
-    const [isRunning, setIsRunning] = useState(false);
-    const [runResponse, setFederationRunResponse] =
-        useState<FederationRunResponse | null>(null);
-
-    const runFederationTest = usePost<Omit<Federation, "id">>(
-        `${apis.teamsV1Url}/${teamId}/federations/test`,
-        {
-            itemName: "Integration test",
-            successNotificationsOn: false,
-        }
-    );
-
-    const runTest = async () => {
-        setIsRunning(true);
-        const response = (await runFederationTest(
-            federation
-        )) as unknown as FederationRunResponse;
-        setIsRunning(false);
-        setFederationRunResponse(response);
-        onRun(response.message);
-
-        setIsRunning(false);
-    };
-
-    if (isRunning) {
+    if (status === "IS_RUNNING") {
         return (
             <Container>
                 <Typography css={styles.loading}>
@@ -73,7 +46,7 @@ const RunFederationTest = ({
         );
     }
 
-    if (runResponse) {
+    if (status === "RUN_COMPLETE" && runResponse) {
         return (
             <Container>
                 <Box
@@ -95,7 +68,7 @@ const RunFederationTest = ({
                                 alignItems: "center",
                             }}>
                             <Typography>API Connection link...</Typography>
-                            {runResponse.message ? (
+                            {runResponse.success ? (
                                 <CheckCircleIcon color="success" />
                             ) : (
                                 <CancelIcon color="error" />
@@ -112,10 +85,10 @@ const RunFederationTest = ({
                             justifyContent: "center",
                         }}>
                         <Typography>
-                            {runResponse.message ? "Complete" : "Failed"}
+                            {runResponse.success ? "Complete" : "Failed"}
                         </Typography>
                         <Typography>
-                            {runResponse.message ? (
+                            {runResponse.success ? (
                                 <>The test has come back with (0) errors</>
                             ) : (
                                 <>
@@ -124,7 +97,7 @@ const RunFederationTest = ({
                                 </>
                             )}
                         </Typography>
-                        {!runResponse.message && (
+                        {!runResponse.success && (
                             <>
                                 <Typography color={colors.red600}>
                                     {runResponse.title}
@@ -140,6 +113,13 @@ const RunFederationTest = ({
         );
     }
 
+    const message =
+        status === "TESTED_IS_TRUE"
+            ? "Integration tested successfully"
+            : isEnabled
+            ? "A test must be carried out before you can enable this configuration"
+            : "You must complete the required fields before running a test";
+
     return (
         <Container>
             <Box
@@ -151,11 +131,7 @@ const RunFederationTest = ({
                     flexDirection: "column",
                     justifyContent: "center",
                 }}>
-                <Typography sx={{ mb: 2 }}>
-                    {isEnabled
-                        ? "A test must be carried out before you can enable this configuration"
-                        : "You must complete the required fields before running a test"}
-                </Typography>
+                <Typography sx={{ mb: 2 }}>{message}</Typography>
 
                 <Button
                     style={{
@@ -167,7 +143,7 @@ const RunFederationTest = ({
                         color: "inherit",
                     })}
                     disabled={!isEnabled}
-                    onClick={() => runTest()}>
+                    onClick={() => onRun()}>
                     Run test
                 </Button>
             </Box>
