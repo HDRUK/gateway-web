@@ -8,6 +8,7 @@ import {
     integrationsV1,
 } from "@/mocks/data/integration";
 import { FederationRunResponse } from "@/interfaces/Federation";
+import { teamV1 } from "@/mocks/data/team";
 
 interface getIntegrationsProps {
     data?: Integration[];
@@ -48,6 +49,34 @@ const getIntegrationsV1 = ({
     );
 };
 
+interface getIntegrationProps {
+    data?: Integration;
+    teamId?: string;
+    status?: number;
+}
+
+const getIntegrationV1 = ({
+    data = integrationV1,
+    teamId = teamV1.id,
+    status = 200,
+}: getIntegrationProps) => {
+    return rest.get(
+        `${apis.teamsV1Url}/${teamId}/federations/${data.id}`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json(`Request failed with status code ${status}`)
+                );
+            }
+            return res(
+                ctx.status(status),
+                ctx.json<{ data: Integration }>({ data })
+            );
+        }
+    );
+};
+
 interface PostResponse {
     data: Integration;
 }
@@ -73,7 +102,7 @@ const postIntegrationV1 = ({
 
 const postFederationsTestV1 = ({
     data = federationsResponseV1,
-    teamId = 1,
+    teamId = teamV1.id,
     status = 200,
 }) => {
     return rest.post(
@@ -94,4 +123,9 @@ const postFederationsTestV1 = ({
     );
 };
 
-export { getIntegrationsV1, postIntegrationV1, postFederationsTestV1 };
+export {
+    getIntegrationV1,
+    getIntegrationsV1,
+    postIntegrationV1,
+    postFederationsTestV1,
+};

@@ -103,7 +103,6 @@ const useRunFederation = <T extends FieldValues>({
 
     return {
         runStatus,
-        setRunStatus,
         setTestedConfig,
         runResponse,
         handleRun,
