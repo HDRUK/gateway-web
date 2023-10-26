@@ -1,19 +1,35 @@
 import { render, screen, waitFor } from "@/utils/testUtils";
-import { integrationV1 } from "@/mocks/data/integration";
-import { server } from "@/mocks/server";
-import { postFederationsTestV1 } from "@/mocks/handlers/integration";
 import RunFederationTest from "./RunFederationTest";
 
 describe("RunFederationTest", () => {
     const onRun = jest.fn();
 
-    it("should render info message when component is not enabled", async () => {
+    it("should render `Integration tested successfully` message if component is not enabled", async () => {
         render(
             <RunFederationTest
-                integration={integrationV1}
                 onRun={onRun}
-                teamId={1}
+                status="TESTED_IS_TRUE"
+                isEnabled
+                runResponse={undefined}
+            />
+        );
+
+        const disabledMessage = screen.getByText(
+            "Integration tested successfully"
+        );
+        const runTestButton = screen.getByText("Run test");
+
+        expect(disabledMessage).toBeInTheDocument();
+        expect(runTestButton).not.toBeDisabled();
+    });
+
+    it("should render 'incomplete required fields' message and disable run button", async () => {
+        render(
+            <RunFederationTest
+                onRun={onRun}
+                status="NOT_RUN"
                 isEnabled={false}
+                runResponse={undefined}
             />
         );
 
@@ -26,19 +42,34 @@ describe("RunFederationTest", () => {
         expect(runTestButton).toBeDisabled();
     });
 
-    it("should render loading message when isRunning is true", async () => {
+    it("should render 'test must be carried out' message if not not run", async () => {
         render(
             <RunFederationTest
-                integration={integrationV1}
-                teamId={1}
                 onRun={onRun}
+                status="NOT_RUN"
                 isEnabled
+                runResponse={undefined}
             />
         );
 
+        const disabledMessage = screen.getByText(
+            "A test must be carried out before you can enable this configuration"
+        );
         const runTestButton = screen.getByText("Run test");
 
-        runTestButton.click();
+        expect(disabledMessage).toBeInTheDocument();
+        expect(runTestButton).not.toBeDisabled();
+    });
+
+    it("should render loading message when isRunning is true", async () => {
+        render(
+            <RunFederationTest
+                onRun={onRun}
+                status="IS_RUNNING"
+                isEnabled
+                runResponse={undefined}
+            />
+        );
 
         await waitFor(() => {
             const loadingText = screen.getByText("Testing API connection link");
@@ -48,23 +79,19 @@ describe("RunFederationTest", () => {
 
     it("should render error message when runResponse is not successful", async () => {
         const runResponse = {
-            message: false,
+            success: false,
             status: 404,
             title: "Test failed",
         };
 
-        server.use(postFederationsTestV1({ data: runResponse }));
         render(
             <RunFederationTest
-                integration={integrationV1}
-                teamId={1}
                 onRun={onRun}
+                status="RUN_COMPLETE"
                 isEnabled
+                runResponse={runResponse}
             />
         );
-
-        const runTestButton = screen.getByText("Run test");
-        runTestButton.click();
 
         await waitFor(() => {
             const completeText = screen.getAllByText("Complete");
@@ -82,20 +109,16 @@ describe("RunFederationTest", () => {
         const runResponse = {
             title: "",
             status: 200,
-            message: true,
+            success: true,
         };
-        server.use(postFederationsTestV1({ data: runResponse }));
         render(
             <RunFederationTest
-                integration={integrationV1}
-                teamId={1}
                 onRun={onRun}
+                status="RUN_COMPLETE"
                 isEnabled
+                runResponse={runResponse}
             />
         );
-
-        const runTestButton = screen.getByText("Run test");
-        runTestButton.click();
 
         await waitFor(() => {
             const completeText = screen.getAllByText("Complete");
