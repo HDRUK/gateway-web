@@ -16,12 +16,10 @@ interface AccountLayoutProps {
 }
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
-    const router = useRouter();
-    const { query } = router;
+    const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
 
     const permissions = useHasPermissions();
-
     const { team, isTeamLoading } = useGetTeam(teamId);
     const isTeam = useMemo(() => !!teamId, [teamId]);
 
@@ -33,7 +31,6 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
     if (isTeamLoading) {
         return <Loading />;
     }
-
     return (
         <div>
             <BoxContainer
