@@ -105,4 +105,29 @@ describe("useModal", () => {
             expect(props.onCancel).toHaveBeenCalled();
         });
     });
+    it("should call onSuccess prop when selecting `Close` icon and 'invertCloseIconBehaviour' is passed", async () => {
+        const { result } = renderHook(() => useModal());
+
+        const props = {
+            invertCloseIconBehaviour: true,
+            title: "This is a modal",
+            onCancel: jest.fn(),
+            onSuccess: jest.fn(),
+        };
+
+        act(() => {
+            result.current.showModal(props);
+        });
+
+        await waitFor(() => {
+            expect(screen.getByText(props.title)).toBeInTheDocument();
+        });
+
+        fireEvent.click(screen.getByTestId("modal-close-icon"));
+
+        await waitFor(() => {
+            expect(props.onCancel).not.toHaveBeenCalled();
+            expect(props.onSuccess).toHaveBeenCalled();
+        });
+    });
 });
