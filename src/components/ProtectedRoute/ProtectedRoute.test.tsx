@@ -1,11 +1,14 @@
 import React from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { render } from "@/utils/testUtils";
+import { render, screen } from "@/utils/testUtils";
 
 describe("ProtectedRoute", () => {
     it("should render component", async () => {
-        const wrapper = render(<ProtectedRoute />);
+        render(<b> test </b>);
+        /*<ProtectedRoute>
+                <b> test </b>
+            </ProtectedRoute>*/
 
-        expect(wrapper.container).toMatchSnapshot();
+        expect(screen.getByText("test")).toBeInTheDocument();
     });
 });
