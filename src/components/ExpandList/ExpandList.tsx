@@ -33,7 +33,7 @@ const ExpandList = ({
                     paddingLeft: "15px",
                     margin: 0,
                 }}>
-                {(expanded ? listItems : listItems.slice(0, 2)).map(
+                {(expanded ? listItems : listItems.slice(0, showCount)).map(
                     listItem => {
                         return <li key={listItem?.toString()}>{listItem}</li>;
                     }
