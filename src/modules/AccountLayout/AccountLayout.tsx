@@ -2,7 +2,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import LeftNav from "@/modules/LeftNav";
-import { ReactNode, useMemo, useEffect } from "react";
+import { ReactNode, useMemo } from "react";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useRouter } from "next/router";
 import { useHasPermissions } from "@/hooks/useHasPermission";
@@ -17,7 +17,7 @@ interface AccountLayoutProps {
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
     const router = useRouter();
-    const { query, asPath } = router;
+    const { query } = router;
     const { teamId } = query as AccountTeamUrlQuery;
 
     const permissions = useHasPermissions();

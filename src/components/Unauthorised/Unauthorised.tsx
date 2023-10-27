@@ -3,7 +3,7 @@ import Typography from "@/components/Typography";
 import { RemoveCircleIcon } from "@/consts/icons";
 import theme from "@/config/theme";
 
-const UnauthorisedPage = () => {
+const Unauthorised = () => {
     return (
         <Paper sx={{ padding: 3 }}>
             <Typography variant="h2" align="center">
@@ -22,4 +22,4 @@ const UnauthorisedPage = () => {
     );
 };
 
-export default UnauthorisedPage;
+export default Unauthorised;
