@@ -16,6 +16,7 @@ export interface ModalProps {
     confirmText?: string;
     cancelText?: string;
     title?: string;
+    invertCloseIconBehaviour?: boolean;
     styleProps?: DialogProps;
 }
 
@@ -31,13 +32,17 @@ const Modal = () => {
         onCancel,
         confirmText,
         cancelText,
+        invertCloseIconBehaviour,
         title,
         styleProps = {},
     } = dialogProps as unknown as ModalProps;
 
-    const handleCancel = () => {
-        if (typeof onCancel === "function") {
+    const handleClose = () => {
+        if (typeof onCancel === "function" && !invertCloseIconBehaviour) {
             onCancel();
+        }
+        if (typeof onSuccess === "function" && invertCloseIconBehaviour) {
+            onSuccess();
         }
         hideModal();
     };
@@ -50,11 +55,11 @@ const Modal = () => {
     };
 
     return (
-        <MuiDialog {...props} onClose={handleCancel}>
+        <MuiDialog {...props} onClose={handleClose}>
             <IconButton
                 data-testid="modal-close-icon"
                 aria-label="close"
-                onClick={handleCancel}
+                onClick={handleClose}
                 sx={{
                     position: "absolute",
                     right: 8,

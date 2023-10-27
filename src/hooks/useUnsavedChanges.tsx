@@ -43,6 +43,7 @@ export const useUnsavedChanges = ({
     useEffect(() => {
         if (!nextRouterPath) return;
         showModal({
+            invertCloseIconBehaviour: true,
             onCancel: () => {
                 Router.events.off("routeChangeStart", onRouteChangeStart);
 
