@@ -9,7 +9,8 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamIntegrationsPage = () => {
     return (
-        <ProtectedRoute>
+        <ProtectedRoute
+            permissions={["fe.account.nav.integrations.api-management"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - API Management" />
             <AccountLayout>
                 <ApiManagement />

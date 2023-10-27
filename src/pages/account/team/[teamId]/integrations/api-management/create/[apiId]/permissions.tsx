@@ -19,7 +19,8 @@ const AddPermissionsPage = () => {
     );
 
     return (
-        <ProtectedRoute>
+        <ProtectedRoute
+            permissions={["fe.account.nav.integrations.api-management"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - API Management - Permissions" />
             <AccountLayout>
                 <BackButton label="Back to API Creation" />

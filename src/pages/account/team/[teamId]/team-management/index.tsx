@@ -13,13 +13,11 @@ import AccountLayout from "@/modules/AccountLayout";
 import { AddIcon } from "@/consts/icons";
 import Typography from "@/components/Typography";
 
-import ProtectedRoute from "@/components/ProtectedRoute";
-
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();
 
     return (
-        <ProtectedRoute>
+        <>
             <Head title="Health Data Research Innovation Gateway - My Account - Team Management" />
             <AccountLayout>
                 <BoxContainer>
@@ -43,7 +41,7 @@ const TeamManagementPage = () => {
                     </Box>
                 </BoxContainer>
             </AccountLayout>
-        </ProtectedRoute>
+        </>
     );
 };
 

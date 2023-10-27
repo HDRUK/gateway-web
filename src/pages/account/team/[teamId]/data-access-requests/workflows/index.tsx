@@ -9,7 +9,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamDarWorkflowsPage = () => {
     return (
-        <ProtectedRoute>
+        <ProtectedRoute permissions={["fe.account.nav.dar.workflows"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Data Access Requests - Workflows" />
             <AccountLayout>
                 <Paper>

@@ -9,7 +9,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamDarApplicationsPage = () => {
     return (
-        <ProtectedRoute>
+        <ProtectedRoute permissions={["fe.account.nav.dar.applications"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Data Access Requests - Applications" />
             <AccountLayout>
                 <Paper>

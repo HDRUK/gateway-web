@@ -9,7 +9,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamDataUsesPage = () => {
     return (
-        <ProtectedRoute>
+        <ProtectedRoute permissions={["fe.account.nav.dur"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Data Uses" />
             <AccountLayout>
                 <Paper>

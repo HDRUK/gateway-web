@@ -19,7 +19,8 @@ const EditAppPage = () => {
     );
 
     return (
-        <ProtectedRoute>
+        <ProtectedRoute
+            permissions={["fe.account.nav.integrations.api-management"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Create" />
             <AccountLayout>
                 <BackButton label="Back to API Management" />

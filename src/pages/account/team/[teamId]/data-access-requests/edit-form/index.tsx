@@ -9,7 +9,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamDarEditFormPage = () => {
     return (
-        <ProtectedRoute>
+        <ProtectedRoute permissions={["fe.account.nav.dar.editForm"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Data Access Requests - Edit Form" />
             <AccountLayout>
                 <Paper>
