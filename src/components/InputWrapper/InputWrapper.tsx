@@ -23,12 +23,14 @@ type InputType =
     | CheckboxRowProps
     | CheckboxProps;
 
-interface InputWrapperProps {
+export interface InputWrapperProps {
     horizontalForm?: boolean;
     component: ComponentTypes;
 }
 
-function InputWrapper({ component, ...props }: InputWrapperProps & InputType) {
+export type InputWrapperCombinedProps = InputWrapperProps & InputType;
+
+function InputWrapper({ component, ...props }: InputWrapperCombinedProps) {
     const inputs = {
         Autocomplete,
         Switch,
