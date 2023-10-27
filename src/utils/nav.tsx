@@ -7,7 +7,6 @@ import {
     SettingsOutlinedIcon,
     StorageOutlinedIcon,
 } from "@/consts/icons";
-import protectedRoutes from "@/config/protectedRoutes";
 import { LeftNavItem } from "@/interfaces/Ui";
 
 const getProfileNav = (): LeftNavItem[] => {
