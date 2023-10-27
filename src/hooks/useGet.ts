@@ -3,7 +3,6 @@ import { Error } from "@/interfaces/Error";
 import apiService from "@/services/api";
 import { useTranslation } from "next-i18next";
 import { ReactNode } from "react";
-import { useRouter } from "next/router";
 
 interface Response<T> {
     data: T | undefined;
@@ -34,8 +33,6 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
     } = options || {};
     const { t, i18n } = useTranslation("api");
 
-    const router = useRouter();
-
     const { data, error, mutate, isLoading } = useSWR<T>(
         shouldFetch ? url : null,
         () => {
@@ -53,10 +50,6 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
         },
         { keepPreviousData }
     );
-
-    if (error?.response?.status === 401) {
-        router.push("/401");
-    }
 
     return {
         error,
