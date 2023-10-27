@@ -3,7 +3,7 @@ import { ReactNode, useState } from "react";
 import Box from "@/components/Box";
 import Typography from "../Typography";
 
-export interface ExpandSectionProps {
+export interface ExpandListProps {
     buttonTextHide?: string;
     buttonTextExpand?: string;
     heading: string | ReactNode;
@@ -19,7 +19,7 @@ const ExpandList = ({
     showLessButton = false,
     buttonTextExpand = "Show more",
     buttonTextHide = "Show less",
-}: ExpandSectionProps) => {
+}: ExpandListProps) => {
     const [expanded, setExpanded] = useState(false);
 
     return (

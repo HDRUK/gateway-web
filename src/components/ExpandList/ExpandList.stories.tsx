@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Typography from "@/components/Typography";
-import ExpandSection, { ExpandSectionProps } from "./ExpandSection";
+import ExpandList, { ExpandListProps } from "./ExpandList";
 
-const meta: Meta<typeof ExpandSection> = {
-    component: ExpandSection,
+const meta: Meta<typeof ExpandList> = {
+    component: ExpandList,
     tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof ExpandSection>;
+type Story = StoryObj<typeof ExpandList>;
 
 export const Default: Story = {
     args: {
@@ -28,7 +28,7 @@ export const Default: Story = {
             "Suspendisse porttitor tortor et lectus pulvinar",
         ],
     },
-    render: (props: ExpandSectionProps) => <ExpandSection {...props} />,
+    render: (props: ExpandListProps) => <ExpandList {...props} />,
 };
 
 export const ShowLess: Story = {
@@ -49,5 +49,5 @@ export const ShowLess: Story = {
             "Suspendisse porttitor tortor et lectus pulvinar",
         ],
     },
-    render: (props: ExpandSectionProps) => <ExpandSection {...props} />,
+    render: (props: ExpandListProps) => <ExpandList {...props} />,
 };

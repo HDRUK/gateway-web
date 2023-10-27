@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from "@/utils/testUtils";
 import Typography from "@/components/Typography";
-import ExpandSection from "./ExpandSection";
+import ExpandList from "./ExpandList";
 
-describe("ExpandSection", () => {
+describe("ExpandList", () => {
     const heading = (
         <>
             <Typography component="span" sx={{ fontWeight: "bold" }}>
@@ -19,7 +19,7 @@ describe("ExpandSection", () => {
         "Suspendisse porttitor tortor et lectus pulvinar",
     ];
     it("should render component and toggle content", async () => {
-        render(<ExpandSection heading={heading} listItems={listItems} />);
+        render(<ExpandList heading={heading} listItems={listItems} />);
 
         expect(screen.getAllByRole("listitem")).toHaveLength(2);
 
@@ -33,7 +33,7 @@ describe("ExpandSection", () => {
     });
     it("should render component with show less button and toggle content", async () => {
         render(
-            <ExpandSection
+            <ExpandList
                 showLessButton
                 heading={heading}
                 listItems={listItems}
