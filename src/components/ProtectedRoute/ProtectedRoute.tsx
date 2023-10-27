@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { useHasPermissions } from "@/hooks/useHasPermission";
-import Unauthorised from "@/components/Unauthorised";
+import ErrorPage from "@/components/ErrorPage";
 
 interface ProtectedRouteProps {
     permissions?: string[];
@@ -24,7 +24,7 @@ const ProtectedRoute = ({
     if (!userHasPermission) {
         return (
             <>
-                <Unauthorised />
+                <ErrorPage />
             </>
         );
     }
