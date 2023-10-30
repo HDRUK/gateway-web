@@ -1,7 +1,7 @@
-import ErrorPage from "@/components/ErrorPage";
+import ErrorDisplay from "@/components/ErrorDisplay";
 
 const Unauthorised = () => {
-    return <ErrorPage />;
+    return <ErrorDisplay variant={401} />;
 };
 
 export default Unauthorised;

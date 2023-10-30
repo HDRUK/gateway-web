@@ -2,21 +2,20 @@ import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import { RemoveCircleIcon } from "@/consts/icons";
 import theme from "@/config/theme";
-import { SvgIconComponent } from "@mui/icons-material";
+import { errors, AllowedErrors } from "@/config/errors";
 
-interface ErrorPageProps {
-    icon?: SvgIconComponent;
-    errorStatusCode?: number;
-    errorStatusMessage?: string;
-    errorMessage?: string;
+interface ErrorDisplayProps {
+    variant: AllowedErrors;
 }
 
-const ErrorPage = ({
-    icon,
-    errorStatusCode,
-    errorStatusMessage,
-    errorMessage,
-}: ErrorPageProps) => {
+const ErrorDisplay = ({ variant }: ErrorDisplayProps) => {
+    const errorStatusCode = variant;
+    const {
+        statusMessage: errorStatusMessage,
+        message: errorMessage,
+        icon,
+    } = errors[errorStatusCode];
+
     const Icon = icon || RemoveCircleIcon;
 
     return (
@@ -27,6 +26,7 @@ const ErrorPage = ({
                     fontSize="large"
                 />
             </Typography>
+
             <Typography variant="h2" align="center">
                 {errorStatusCode} {errorStatusMessage}
             </Typography>
@@ -35,11 +35,4 @@ const ErrorPage = ({
     );
 };
 
-ErrorPage.defaultProps = {
-    icon: undefined,
-    errorStatusCode: 401,
-    errorStatusMessage: "Unauthorised",
-    errorMessage: "You are not authorised to access this page.",
-};
-
-export default ErrorPage;
+export default ErrorDisplay;

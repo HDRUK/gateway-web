@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Box from "@/components/Box";
-import Unauthorised from "./ErrorPage";
+import ErrorDisplay from "./ErrorDisplay";
 
-const meta: Meta<typeof Unauthorised> = {
-    component: Unauthorised,
+const meta: Meta<typeof ErrorDisplay> = {
+    component: ErrorDisplay,
     tags: ["autodocs"],
     decorators: [
         Story => (
@@ -16,6 +16,6 @@ const meta: Meta<typeof Unauthorised> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Unauthorised>;
+type Story = StoryObj<typeof ErrorDisplay>;
 
 export const Default: Story = {};

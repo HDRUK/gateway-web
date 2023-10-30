@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { useHasPermissions } from "@/hooks/useHasPermission";
-import ErrorPage from "@/components/ErrorPage";
+import ErrorDisplay from "@/components/ErrorDisplay";
 
 interface ProtectedRouteProps {
     permissions?: string[];
@@ -16,20 +16,16 @@ const ProtectedRoute = ({
         p => permissions[p] === true
     );
 
-    //check if any of the users permissions are in any of the routes permissions
+    // check if any of the users permissions are in any of the routes permissions
     const userHasPermission = userPermissions.some(p =>
         routePermissions?.includes(p)
     );
 
     if (!userHasPermission) {
-        return (
-            <>
-                <ErrorPage />
-            </>
-        );
+        return <ErrorDisplay variant={401} />;
     }
 
-    return <>{children}</>;
+    return <> {children} </>;
 };
 
 export default ProtectedRoute;
