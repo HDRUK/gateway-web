@@ -6,10 +6,13 @@ import ImageMediaCard from "@/components/ImageMediaCard";
 import AccountLayout from "@/modules/AccountLayout";
 import { useRouter } from "next/router";
 
+import ProtectedRoute from "@/components/ProtectedRoute";
+
 const TeamIntegrationsPage = () => {
     const router = useRouter();
     return (
-        <>
+        <ProtectedRoute
+            permissions={["fe.account.nav.integrations.integration"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Integrations Management" />
             <AccountLayout>
                 <Box
@@ -33,7 +36,7 @@ const TeamIntegrationsPage = () => {
                     </Box>
                 </Box>
             </AccountLayout>
-        </>
+        </ProtectedRoute>
     );
 };
 

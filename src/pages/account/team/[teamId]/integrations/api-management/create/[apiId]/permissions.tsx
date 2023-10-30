@@ -9,6 +9,7 @@ import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
 import { useRouter } from "next/router";
 import apis from "@/config/apis";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const AddPermissionsPage = () => {
     const router = useRouter();
@@ -18,13 +19,14 @@ const AddPermissionsPage = () => {
     );
 
     return (
-        <>
+        <ProtectedRoute
+            permissions={["fe.account.nav.integrations.api-management"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - API Management - Permissions" />
             <AccountLayout>
                 <BackButton label="Back to API Creation" />
                 <ApplicationPermissions application={application} />
             </AccountLayout>
-        </>
+        </ProtectedRoute>
     );
 };
 

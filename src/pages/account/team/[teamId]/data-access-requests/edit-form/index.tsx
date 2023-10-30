@@ -5,10 +5,11 @@ import { GetServerSideProps } from "next";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/modules/AccountLayout";
 import Typography from "@/components/Typography";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamDarEditFormPage = () => {
     return (
-        <>
+        <ProtectedRoute permissions={["fe.account.nav.dar.editForm"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Data Access Requests - Edit Form" />
             <AccountLayout>
                 <Paper>
@@ -17,7 +18,7 @@ const TeamDarEditFormPage = () => {
                     </Box>
                 </Paper>
             </AccountLayout>
-        </>
+        </ProtectedRoute>
     );
 };
 

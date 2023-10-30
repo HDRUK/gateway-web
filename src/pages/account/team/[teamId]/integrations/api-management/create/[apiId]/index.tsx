@@ -9,6 +9,7 @@ import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import { useRouter } from "next/router";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const EditAppPage = () => {
     const { query } = useRouter();
@@ -18,7 +19,8 @@ const EditAppPage = () => {
     );
 
     return (
-        <>
+        <ProtectedRoute
+            permissions={["fe.account.nav.integrations.api-management"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Integrations - Create" />
             <AccountLayout>
                 <BackButton label="Back to API Management" />
@@ -27,7 +29,7 @@ const EditAppPage = () => {
                     isTabView={false}
                 />
             </AccountLayout>
-        </>
+        </ProtectedRoute>
     );
 };
 

@@ -5,10 +5,11 @@ import { GetServerSideProps } from "next";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/modules/AccountLayout";
 import Typography from "@/components/Typography";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamDatasetsPage = () => {
     return (
-        <>
+        <ProtectedRoute permissions={["fe.account.nav.datasets"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Datasets" />
             <AccountLayout>
                 <Paper>
@@ -17,7 +18,7 @@ const TeamDatasetsPage = () => {
                     </Box>
                 </Paper>
             </AccountLayout>
-        </>
+        </ProtectedRoute>
     );
 };
 

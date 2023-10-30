@@ -1,14 +1,31 @@
-import { useTranslation } from "next-i18next";
+import { ReactNode } from "react";
+import { useHasPermissions } from "@/hooks/useHasPermission";
+import ErrorDisplay from "@/components/ErrorDisplay";
 
-const ProtectedRoute = () => {
-    const { t } = useTranslation("components");
+interface ProtectedRouteProps {
+    permissions?: string[];
+    children: ReactNode;
+}
 
-    return (
-        <div style={{ border: "2px solid #ff3030", padding: "40px" }}>
-            <h1>{t("ProtectedRoute.title")}</h1>
-            <p>{t("ProtectedRoute.text")}</p>
-        </div>
+const ProtectedRoute = ({
+    permissions: routePermissions,
+    children,
+}: ProtectedRouteProps) => {
+    const permissions = useHasPermissions();
+    const userPermissions = Object.keys(permissions).filter(
+        p => permissions[p] === true
     );
+
+    // check if any of the users permissions are in any of the routes permissions
+    const userHasPermission = userPermissions.some(p =>
+        routePermissions?.includes(p)
+    );
+
+    if (!userHasPermission) {
+        return <ErrorDisplay variant={401} />;
+    }
+
+    return <> {children} </>;
 };
 
 export default ProtectedRoute;
