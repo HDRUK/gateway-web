@@ -34,11 +34,11 @@ const generateIntegrationV1 = (data = {}): Integration => {
 };
 
 const generateFederationResponseV1 = (data = {}): FederationRunResponse => {
-    const message = faker.datatype.boolean();
+    const success = faker.datatype.boolean();
     return {
-        message,
-        status: message ? 200 : 404,
-        title: message ? "" : "Test failed",
+        success,
+        status: success ? 200 : 404,
+        title: success ? "" : "Test failed",
         ...data,
     };
 };

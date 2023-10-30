@@ -9,7 +9,6 @@ import { Box } from "@mui/material";
 import Typography from "@/components/Typography";
 import Pagination from "@/components/Pagination";
 import { PaginationType } from "@/interfaces/Pagination";
-import { LensTwoTone } from "@mui/icons-material";
 
 const IntegrationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -30,9 +29,9 @@ const IntegrationList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
-    let { lastPage, list, total } = data || {};
+    const { lastPage, list, total } = data || {};
 
-    total = total === undefined ? list?.length : total;
+    const calculatedTotal = total === undefined ? list?.length : total;
 
     return (
         <BoxContainer>
@@ -41,11 +40,12 @@ const IntegrationList = () => {
                 display="flex"
                 justifyContent="flex-end">
                 <Typography>
-                    Number of Integrations: <strong>{total}</strong>
+                    Number of Integrations: <strong>{calculatedTotal}</strong>
                 </Typography>
             </Box>
             {list?.map((integration, index) => (
                 <IntegrationListItem
+                    key={integration.id}
                     index={index + 1}
                     integration={integration}
                 />
