@@ -96,6 +96,7 @@ const formFields = [
     {
         label: "Authorisation Token",
         name: "auth_secret_key",
+        required: true,
         info: "An alphanumeric string that allows access to your API",
         component: inputComponents.TextField,
     },
