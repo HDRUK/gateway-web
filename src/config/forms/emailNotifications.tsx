@@ -1,11 +1,18 @@
 import * as yup from "yup";
 import { inputComponents } from ".";
 
-const defaultValues = {
+export interface EmailNotification {
+    notifications_contact_email: boolean;
+    notifications_team_email: boolean;
+    profile_email: string;
+    contact_point: string;
+}
+
+const defaultValues: EmailNotification = {
     notifications_contact_email: true,
     notifications_team_email: false,
     profile_email: "",
-    contact_point: null,
+    contact_point: "",
 };
 
 const validationSchema = yup
@@ -60,7 +67,7 @@ const formSections = [
 ];
 
 export {
-    defaultValues as notificationDefaultValues,
-    validationSchema as notificationValidationSchema,
-    formSections as notificationFormSections,
+    defaultValues as emailNotificationDefaultValues,
+    validationSchema as emailNotificationValidationSchema,
+    formSections as emailNotificationFormSections,
 };

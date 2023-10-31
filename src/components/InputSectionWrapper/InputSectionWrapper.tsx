@@ -8,7 +8,7 @@ interface InputSectionWrapperProps {
     sections: {
         id: number;
         title?: string;
-        fields: InputWrapperCombinedProps[];
+        fields: Omit<InputWrapperCombinedProps, "control">[];
     }[];
     control: Control;
 }

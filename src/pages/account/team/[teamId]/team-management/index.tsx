@@ -4,7 +4,7 @@ import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 
-import TeamManagementTabs from "@/modules/TeamManagement/TeamManagementTabs";
+import TeamManagementTabs from "@/modules/TeamManagementTabs";
 import AddTeamMemberDialog from "@/modules/AddTeamMemberDialog";
 import Button from "@/components/Button";
 

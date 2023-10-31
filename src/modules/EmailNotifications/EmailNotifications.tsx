@@ -3,9 +3,11 @@ import BoxContainer from "@/components/BoxContainer";
 import InputSectionWrapper from "@/components/InputSectionWrapper";
 import Typography from "@/components/Typography";
 import {
-    notificationDefaultValues,
-    notificationFormSections,
-} from "@/config/forms/notifications";
+    emailNotificationValidationSchema,
+    emailNotificationDefaultValues,
+    emailNotificationFormSections,
+    EmailNotification,
+} from "@/config/forms/emailNotifications";
 import useActionBar from "@/hooks/useActionBar";
 import useAuth from "@/hooks/useAuth";
 import useGetTeam from "@/hooks/useGetTeam";
@@ -13,19 +15,51 @@ import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import { getProfileEmail } from "@/utils/user";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
-const Notifications = () => {
+const EmailNotifications = () => {
     const { user } = useAuth();
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
-    const { control, formState, reset } = useForm({
-        defaultValues: notificationDefaultValues,
+    const { control, formState, reset } = useForm<EmailNotification>({
+        defaultValues: emailNotificationDefaultValues,
+        resolver: yupResolver(emailNotificationValidationSchema),
     });
 
+    const { showBar, hideBar, store, updateStoreProps } = useActionBar();
+
+    useUnsavedChanges({
+        shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
+    });
+
+    const [originalFormValues, setOriginalFormValues] = useState({});
+
     const { team } = useGetTeam(teamId);
-    const { showBar, hideBar, store } = useActionBar();
+
+    useEffect(() => {
+        if (!team || !user) return;
+
+        const formValues = {
+            ...emailNotificationDefaultValues,
+            contact_point: team.contact_point,
+            profile_email: getProfileEmail(user),
+        };
+
+        setOriginalFormValues(formValues);
+
+        /* Set default values on form */
+        reset(formValues);
+    }, [reset, team, user]);
+
+    /* Increment custom `changeCount` prop within 'ActionBarProvider' using 'updateStoreProps' */
+    useEffect(() => {
+        updateStoreProps({
+            changeCount: Object.keys(formState.dirtyFields).length,
+        });
+    }, [formState, updateStoreProps]);
 
     useEffect(() => {
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
@@ -36,22 +70,27 @@ const Notifications = () => {
                 confirmText: "Save",
                 changeCount: 1,
                 onSuccess: () => {
-                    // handleSubmit(onSubmit)();
+                    /**
+                     * todo: Complete once BE is implemented
+                     * handleSubmit(onSubmit)();
+                     */
                 },
                 onCancel: () => {
-                    // reset(originalFormValues);
+                    reset(originalFormValues);
                 },
             });
         }
-    }, [formState.isDirty, store.isVisible]);
-
-    useEffect(() => {
-        if (!team || !user) return;
-        reset({
-            contact_point: team.contact_point,
-            profile_email: getProfileEmail(user),
-        });
-    }, [reset, team, user]);
+        if (!formState.isDirty && store.isVisible) {
+            hideBar();
+        }
+    }, [
+        formState.isDirty,
+        hideBar,
+        originalFormValues,
+        reset,
+        showBar,
+        store.isVisible,
+    ]);
 
     return (
         <BoxContainer>
@@ -74,7 +113,7 @@ const Notifications = () => {
                     email accounts.
                 </Typography>
                 <InputSectionWrapper
-                    sections={notificationFormSections}
+                    sections={emailNotificationFormSections}
                     control={control}
                 />
             </Box>
@@ -82,4 +121,4 @@ const Notifications = () => {
     );
 };
 
-export default Notifications;
+export default EmailNotifications;
