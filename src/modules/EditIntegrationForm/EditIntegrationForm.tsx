@@ -188,6 +188,8 @@ const EditIntegrationForm = () => {
                                         : "You must run a successful test before you can Enable the integration."
                                 }>
                                 <Switch
+                                    unCheckedLabel="Disabled"
+                                    checkedLabel="Enabled"
                                     disabled={!tested}
                                     control={control}
                                     name="enabled"

@@ -5,7 +5,11 @@ import Box from "@/components/Box";
 import { colors } from "@/config/theme";
 
 interface InputSectionWrapperProps {
-    sections: InputWrapperCombinedProps[][];
+    sections: {
+        id: number;
+        title?: string;
+        fields: InputWrapperCombinedProps[];
+    }[];
     control: Control;
 }
 
@@ -15,12 +19,17 @@ const InputSectionWrapper = ({
 }: InputSectionWrapperProps) => {
     return (
         <>
-            {sections.map(sectionFields => (
-                <Box sx={{ borderTop: `solid 1px ${colors.grey400}` }}>
-                    {sectionFields.map(sectionField => (
+            {sections.map(section => (
+                <Box
+                    key={section.id}
+                    sx={{
+                        borderTop: `solid 1px ${colors.grey400}`,
+                        p: "24px 18px",
+                    }}>
+                    {section.fields.map(field => (
                         <InputWrapper
-                            key={sectionField.name}
-                            {...sectionField}
+                            key={field.name}
+                            {...field}
                             control={control}
                         />
                     ))}

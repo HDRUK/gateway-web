@@ -17,6 +17,11 @@ declare module "@mui/material/Button" {
         link: true;
     }
 }
+declare module "@mui/material/Switch" {
+    interface SwitchPropsSizeOverrides {
+        large: true;
+    }
+}
 
 declare module "@mui/material/SvgIcon" {
     interface SvgIconPropsSizeOverrides {
@@ -377,35 +382,99 @@ const theme = createTheme({
             },
         },
         MuiSwitch: {
+            variants: [
+                {
+                    props: { size: "small" },
+                    style: {
+                        width: 36,
+                        height: 18,
+                        "& .MuiSwitch-switchBase": {
+                            transitionDuration: "300ms",
+
+                            "&.Mui-checked": {
+                                transform: "translateX(18px)",
+                            },
+                        },
+                        "& .MuiSwitch-thumb": {
+                            width: 14,
+                            height: 14,
+                        },
+                        "& .MuiSwitch-track": {
+                            borderRadius: 18 / 2,
+                        },
+                    },
+                },
+                {
+                    props: { size: "medium" },
+                    style: {
+                        width: 42,
+                        height: 22,
+                        "& .MuiSwitch-switchBase": {
+                            transitionDuration: "300ms",
+
+                            "&.Mui-checked": {
+                                transform: "translateX(20px)",
+                            },
+                        },
+                        "& .MuiSwitch-thumb": {
+                            width: 18,
+                            height: 18,
+                        },
+                        "& .MuiSwitch-track": {
+                            borderRadius: 22 / 2,
+                        },
+                    },
+                },
+                {
+                    props: { size: "large" },
+                    style: {
+                        width: 76,
+                        height: 26,
+                        padding: 0,
+
+                        "& .MuiSwitch-switchBase": {
+                            transitionDuration: "300ms",
+
+                            "&.Mui-checked": {
+                                transform: "translateX(50px)",
+                            },
+                        },
+                        "& .MuiSwitch-thumb": {
+                            width: 22,
+                            height: 22,
+                        },
+                        "& .MuiSwitch-track": {
+                            borderRadius: 26 / 2,
+                        },
+                    },
+                },
+            ],
             styleOverrides: {
                 root: {
-                    width: 80,
-                    height: 24,
                     padding: 0,
+
                     "& .MuiSwitch-switchBase": {
                         padding: 0,
                         margin: 2,
-                        transitionDuration: "300ms",
+                        transitionDuration: "400ms",
+
+                        "& .MuiSwitch-input": {
+                            left: "0%",
+                            width: "330%",
+                        },
                         "&.Mui-checked": {
-                            transform: "translateX(56px)",
+                            "& .MuiSwitch-input": {
+                                left: "-220%",
+                            },
                             color: colors.white,
                             "& + .MuiSwitch-track": {
                                 backgroundColor: palette.secondary.main,
                                 opacity: 1,
                                 border: 0,
                             },
-                            "& .MuiSwitch-input": {
-                                left: "-290%",
-                                width: "400%",
-                            },
                             "&.Mui-disabled + .MuiSwitch-track": {
                                 opacity: 0.5,
                             },
-                        },
-
-                        "& .MuiSwitch-input": {
-                            width: "400%",
-                            left: "-10%",
                         },
                         "&.Mui-disabled+.MuiSwitch-track": {
                             backgroundColor: colors.grey600,
@@ -413,11 +482,8 @@ const theme = createTheme({
                     },
                     "& .MuiSwitch-thumb": {
                         boxSizing: "border-box",
-                        width: 20,
-                        height: 20,
                     },
                     "& .MuiSwitch-track": {
-                        borderRadius: 26 / 2,
                         backgroundColor: palette.error.main,
                         opacity: 1,
                     },

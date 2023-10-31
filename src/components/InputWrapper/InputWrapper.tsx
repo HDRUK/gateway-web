@@ -14,6 +14,7 @@ import CheckboxRow from "@/components/CheckboxRow";
 import RadioGroup from "@/components/RadioGroup";
 import Autocomplete from "@/components/Autocomplete";
 import Switch from "@/components/Switch";
+import SwitchInline from "@/components/SwitchInline";
 import TextTime from "@/components/TextTime";
 
 type InputType =
@@ -42,6 +43,7 @@ function InputWrapper({ component, ...props }: InputWrapperCombinedProps) {
         Select,
         RadioGroup,
         TextArea,
+        SwitchInline,
     };
 
     if (component === "TextTime") {

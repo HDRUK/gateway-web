@@ -16,10 +16,11 @@ export interface SwitchProps extends MuiSwitchProps {
 
 const Switch = (props: SwitchProps) => {
     const {
-        unCheckedLabel = "Disabled",
-        checkedLabel = "Enabled",
+        unCheckedLabel,
+        checkedLabel,
         control,
         name,
+        size = "large",
         disabled = false,
         formControlSx,
         switchSx,
@@ -42,6 +43,7 @@ const Switch = (props: SwitchProps) => {
             <Stack direction="row" spacing={1} alignItems="center">
                 <Typography>{unCheckedLabel}</Typography>
                 <MuiSwitch
+                    size={size}
                     disableRipple
                     {...rest}
                     {...fieldProps}

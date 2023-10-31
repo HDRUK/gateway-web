@@ -2,45 +2,61 @@ import * as yup from "yup";
 import { inputComponents } from ".";
 
 const defaultValues = {
-    name: "",
+    notifications_contact_email: true,
+    notifications_team_email: false,
+    profile_email: "",
+    contact_point: null,
 };
 
 const validationSchema = yup
     .object({
-        name: yup.string().required().label("User"),
-        contact_email: yup.string().required().label("Contact email"),
+        contact_point: yup
+            .string()
+            .email()
+            .transform(value => {
+                return value === "" ? null : value;
+            })
+            .label("Team email")
+            .nullable(),
     })
     .required();
 
 const formSections = [
-    [
-        {
-            label: "Send email notifications to:",
-            name: "opt_in",
-            component: inputComponents.Switch,
-            required: true,
-        },
-        {
-            label: "My gateway email",
-            name: "contact_email",
-            component: inputComponents.TextField,
-            required: true,
-        },
-    ],
-    [
-        {
-            label: "Send email notifications to team email address:",
-            name: "opt_in",
-            component: inputComponents.Switch,
-            required: true,
-        },
-        {
-            label: "Team email address",
-            name: "notifications",
-            component: inputComponents.TextField,
-            required: true,
-        },
-    ],
+    {
+        id: 1,
+        fields: [
+            {
+                name: "notifications_contact_email",
+                label: "Send email notifications to:",
+                extraInfo:
+                    "You must have this togggle activated in order to receive team related notifications.",
+                component: inputComponents.SwitchInline,
+                required: true,
+            },
+            {
+                label: "My gateway email",
+                name: "profile_email",
+                component: inputComponents.TextField,
+                disabled: true,
+            },
+        ],
+    },
+    {
+        id: 2,
+        fields: [
+            {
+                name: "notifications_team_email",
+                label: "Send email notifications to team email address:",
+                component: inputComponents.SwitchInline,
+                required: true,
+            },
+            {
+                label: "Team email address",
+                name: "contact_point",
+                component: inputComponents.TextField,
+            },
+        ],
+    },
 ];
 
 export {

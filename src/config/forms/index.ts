@@ -2,6 +2,7 @@ import { ComponentTypes } from "@/interfaces/ComponentTypes";
 
 export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
     Autocomplete: "Autocomplete",
+    SwitchInline: "SwitchInline",
     Switch: "Switch",
     CheckboxRow: "CheckboxRow",
     CheckboxGroup: "CheckboxGroup",
