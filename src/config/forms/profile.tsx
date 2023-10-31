@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { REGEX_ALPHA_ONLY, REGEX_NUMERIC_ONLY } from "@/consts/regex";
+import { REGEX_ALPHA_ONLY, REGEX_ORCID } from "@/consts/regex";
 import { GATEWAY_TERMS_URL } from "@/config/hrefs";
 import { inputComponents } from ".";
 
@@ -54,12 +54,11 @@ const validationSchema = yup
         bio: yup.string().max(500).label("Bio"),
         orcid: yup
             .string()
-            .matches(REGEX_NUMERIC_ONLY, "ORCID iD must be a number")
-            .max(16)
-            .transform(value => {
-                return value === "" ? null : value;
-            })
-            .nullable()
+            .matches(
+                REGEX_ORCID,
+                "ORCID iD must be of format https://orcid.org/xxxx-xxxx-xxxx-xxxx"
+            )
+
             .label("ORCID iD"),
         terms: yup
             .boolean()

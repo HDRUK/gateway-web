@@ -16,7 +16,7 @@ import usePost from "@/hooks/usePost";
 import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import { Integration } from "@/interfaces/Integration";
+import { IntegrationForm, IntegrationPayload } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import useGetTeam from "@/hooks/useGetTeam";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
@@ -27,7 +27,7 @@ const CreateIntegrationForm = () => {
     const { team } = useGetTeam(teamId);
 
     const { control, handleSubmit, formState, watch, unregister } =
-        useForm<Integration>({
+        useForm<IntegrationForm>({
             mode: "onTouched",
             resolver: yupResolver(integrationValidationSchema),
             defaultValues: integrationDefaultValues,
@@ -37,7 +37,7 @@ const CreateIntegrationForm = () => {
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
     });
 
-    const createIntegration = usePost<Integration>(
+    const createIntegration = usePost<IntegrationPayload>(
         `${apis.teamsV1Url}/${teamId}/federations`,
         {
             shouldFetch: !!teamId,
@@ -45,10 +45,11 @@ const CreateIntegrationForm = () => {
         }
     );
 
-    const submitForm = async (formData: Integration) => {
+    const submitForm = async (formData: IntegrationForm) => {
         await createIntegration({
             ...integrationDefaultValues,
             ...formData,
+            run_time_hour: parseInt(formData.run_time_hour, 10),
         });
 
         setTimeout(() => {
@@ -77,15 +78,15 @@ const CreateIntegrationForm = () => {
                             })),
                         };
                     }
-                    if (
-                        field.name === "auth_secret_key" &&
-                        !requiresSecretKey(auth_type)
-                    ) {
-                        return null;
-                    }
                     return field;
                 })
-                .filter(field => !!field),
+                /* Remove 'auth_secret_key' field if 'auth_type' is set to "NO_AUTH"  */
+                .filter(
+                    field =>
+                        field.name !== "auth_secret_key" ||
+                        (field.name === "auth_secret_key" &&
+                            requiresSecretKey(auth_type!))
+                ),
         [team, auth_type]
     );
 
