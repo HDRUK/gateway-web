@@ -28,7 +28,7 @@ const SwitchInline = (props: SwitchInlineProps) => {
             <Box sx={{ p: 0 }} flex={1}>
                 {label && <Typography>{label}</Typography>}
                 {extraInfo && (
-                    <Typography sx={{ color: colors.grey400 }}>
+                    <Typography sx={{ color: colors.grey500 }}>
                         {extraInfo}
                     </Typography>
                 )}
