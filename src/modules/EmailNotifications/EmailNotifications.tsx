@@ -15,12 +15,14 @@ import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import { getProfileEmail } from "@/utils/user";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import { useHasPermissions } from "@/hooks/useHasPermission";
 
 const EmailNotifications = () => {
+    const permissions = useHasPermissions();
     const { user } = useAuth();
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
@@ -38,6 +40,27 @@ const EmailNotifications = () => {
     const [originalFormValues, setOriginalFormValues] = useState({});
 
     const { team } = useGetTeam(teamId);
+
+    const hydratedSections = useMemo(() => {
+        const [mySection, teamSection] = emailNotificationFormSections;
+        const isTeamAdmin =
+            permissions[
+                "fe.account.team_management.notifications.team_section"
+            ];
+        return [
+            mySection,
+            {
+                ...teamSection,
+                fields: teamSection.fields.map(field => ({
+                    ...field,
+                    title: !isTeamAdmin
+                        ? "You do not have permission to edit this field"
+                        : "",
+                    disabled: !isTeamAdmin,
+                })),
+            },
+        ];
+    }, [permissions]);
 
     useEffect(() => {
         if (!team || !user) return;
@@ -113,7 +136,7 @@ const EmailNotifications = () => {
                     email accounts.
                 </Typography>
                 <InputSectionWrapper
-                    sections={emailNotificationFormSections}
+                    sections={hydratedSections}
                     control={control}
                 />
             </Box>

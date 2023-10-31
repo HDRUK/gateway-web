@@ -45,6 +45,7 @@ const formSections = [
                 name: "profile_email",
                 component: inputComponents.TextField,
                 disabled: true,
+                title: "You do not have permission to edit this field",
             },
         ],
     },
