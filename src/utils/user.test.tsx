@@ -1,22 +1,24 @@
 import { AuthTeam } from "@/interfaces/AuthTeam";
 import { generateAuthTeamV1 } from "@/mocks/data/authTeam";
 import { generateAuthUserV1 } from "@/mocks/data";
-import { getProfileEmail, getRoleNamesByTeam, getTeamById } from "./user";
+import { getPreferredEmail, getRoleNamesByTeam, getTeamById } from "./user";
 
 const teams: AuthTeam[] = [generateAuthTeamV1({ id: 1 })];
 
 describe("User utils", () => {
-    describe("getProfileEmail", () => {
+    describe("getPreferredEmail", () => {
         it("should return primary email if 'preferred_email' is set to 'primary'", () => {
             const mockUser = generateAuthUserV1({ preferred_email: "primary" });
-            expect(getProfileEmail(mockUser)).toEqual(mockUser.email);
+            expect(getPreferredEmail(mockUser)).toEqual(mockUser.email);
         });
 
         it("should return secondary email if 'preferred_email' is set to 'secondary'", () => {
             const mockUser = generateAuthUserV1({
                 preferred_email: "secondary",
             });
-            expect(getProfileEmail(mockUser)).toEqual(mockUser.secondary_email);
+            expect(getPreferredEmail(mockUser)).toEqual(
+                mockUser.secondary_email
+            );
         });
     });
     describe("getTeamById", () => {

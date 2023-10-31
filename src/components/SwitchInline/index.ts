@@ -1,3 +1,3 @@
-import Switch from "./SwitchInline";
+import SwitchInline from "./SwitchInline";
 
-export default Switch;
+export default SwitchInline;

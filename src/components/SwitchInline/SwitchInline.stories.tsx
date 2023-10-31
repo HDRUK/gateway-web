@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useForm } from "react-hook-form";
-import { Stack } from "@mui/material";
 import SwitchInline from "./SwitchInline";
 
 /** Mui documentation: https://mui.com/material-ui/react-switch */
@@ -32,9 +31,10 @@ export const Default: Story = {
     render: args => <WrapperComponent {...args} />,
 };
 
-export const Sizes: Story = {
+export const Title: Story = {
     args: {
         label: "This is the label",
+        title: "This is the title",
         extraInfo: "This is additional information",
     },
     render: args => <WrapperComponent {...args} />,

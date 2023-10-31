@@ -13,7 +13,7 @@ import useAuth from "@/hooks/useAuth";
 import useGetTeam from "@/hooks/useGetTeam";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import ChangesActionBar from "@/modules/ChangesActionBar";
-import { getProfileEmail } from "@/utils/user";
+import { getPreferredEmail } from "@/utils/user";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -68,7 +68,7 @@ const EmailNotifications = () => {
         const formValues = {
             ...emailNotificationDefaultValues,
             contact_point: team.contact_point,
-            profile_email: getProfileEmail(user),
+            profile_email: getPreferredEmail(user),
         };
 
         setOriginalFormValues(formValues);
