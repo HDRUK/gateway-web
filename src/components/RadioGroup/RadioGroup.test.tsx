@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from "@/utils/testUtils";
 import { useForm } from "react-hook-form";
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import userEvent from "@testing-library/user-event";
 import Form from "@/components/Form";
 import Button from "@/components/Button";

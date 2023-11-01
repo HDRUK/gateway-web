@@ -4,7 +4,6 @@ import * as yup from "yup";
 
 import { useForm } from "react-hook-form";
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import UserEvent from "@testing-library/user-event";
 import Form from "@/components/Form";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";

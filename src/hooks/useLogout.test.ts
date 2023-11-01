@@ -1,17 +1,12 @@
 import * as apiService from "@/services/api/get";
 import useLogout from "@/hooks/useLogout";
 import apis from "@/config/apis";
+import mockRouter from "next-router-mock";
 
 import { act } from "react-dom/test-utils";
-import { useRouter } from "next/router";
 import { renderHook, waitFor } from "@/utils/testUtils";
 
-const pushMock = jest.fn();
-
-useRouter.mockReturnValue({
-    query: {},
-    push: pushMock,
-});
+mockRouter.push("/initial-path");
 
 jest.mock("@/services/api/get", () => {
     return {
@@ -38,7 +33,11 @@ describe("useLogout", () => {
                     },
                 }
             );
-            expect(pushMock).toBeCalledWith("/");
+            expect(mockRouter).toMatchObject({
+                asPath: "/",
+                pathname: "/",
+                query: {},
+            });
         });
     });
 });

@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import useAuth from "@/hooks/useAuth";
 import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
@@ -8,10 +7,7 @@ import { teamV1 } from "@/mocks/data/team";
 import { userV1 } from "@/mocks/data/user";
 import { Role } from "@/interfaces/Role";
 import { renderHook, waitFor } from "@/utils/testUtils";
-
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(),
-}));
+import mockRouter from "next-router-mock";
 
 jest.mock("@/hooks/useAuth", () => jest.fn());
 
@@ -39,9 +35,7 @@ describe("useHasPermissions", () => {
 
         const userRoles: Role[] = [];
 
-        (useRouter as jest.Mock).mockReturnValue({
-            query: { teamId: "1" },
-        });
+        mockRouter.query = { teamId: "1" };
 
         (useAuth as jest.Mock).mockReturnValue({
             user: {

@@ -2,20 +2,11 @@ import { render, screen, waitFor } from "@/utils/testUtils";
 import { server } from "@/mocks/server";
 import { applicationV1, generateApplicationV1 } from "@/mocks/data/application";
 import { getApplicationsV1 } from "@/mocks/handlers/application";
+import mockRouter from "next-router-mock";
 import ApplicationList from "./ApplicationList";
 
-jest.mock("next/router", () => ({
-    useRouter() {
-        return {
-            route: "/",
-            pathname: "",
-            query: { teamId: applicationV1.team_id },
-            asPath: "",
-        };
-    },
-}));
-
 describe("ApplicationList", () => {
+    mockRouter.query = { teamId: applicationV1.team_id.toString() };
     const data = Array.from({ length: 3 }).map(() => generateApplicationV1());
 
     beforeEach(() => {

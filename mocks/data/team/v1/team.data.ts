@@ -4,7 +4,7 @@ import { generateUserV1 } from "../../user";
 
 const generateTeamV1 = (data = {}): Team => {
     return {
-        id: faker.datatype.number().toString(),
+        id: faker.datatype.number(),
         name: faker.datatype.string(),
         enabled: faker.datatype.boolean(),
         allows_messaging: faker.datatype.boolean(),

@@ -1,11 +1,8 @@
 import "@testing-library/jest-dom/extend-expect";
-
 import { server } from "./mocks/server";
 
 // mock useRouter
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(),
-}));
+jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 
 jest.mock("react-i18next", () => ({
     // this mock makes sure any components using the translate hook can use it without a warning being shown
