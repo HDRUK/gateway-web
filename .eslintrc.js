@@ -99,7 +99,15 @@ module.exports = {
         "no-undef": "off",
         "import/no-extraneous-dependencies": [
             "error",
-            { devDependencies: ["**/*.test.ts", "**/*.test.tsx"] },
+            {
+                devDependencies: [
+                    "**/*.test.ts",
+                    "**/*.test.tsx",
+                    "jest.config.js",
+                    "jest.setup.js",
+                    "**/testUtils.tsx",
+                ],
+            },
         ],
     },
 };
