@@ -1,5 +1,5 @@
 interface AddTeamMember {
-    name: string;
+    userAndRoles: { userId: number | null; roles: string[] }[];
 }
 
 export type { AddTeamMember };

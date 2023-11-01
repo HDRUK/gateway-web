@@ -11,6 +11,33 @@ const fePermissions = {
     "fe.account.team_management.notifications.team_section": [
         ROLE_CUSTODIAN_TEAM_ADMIN,
     ],
+    "fe.account.team_management.member.add": [
+        ROLE_CUSTODIAN_TEAM_ADMIN,
+        ROLE_CUSTODIAN_DAR_MANAGER,
+        ROLE_CUSTODIAN_METADATA_MANAGER,
+    ],
+    "fe.account.team_management.member.add.developer": [
+        ROLE_CUSTODIAN_TEAM_ADMIN,
+    ],
+    "fe.account.team_management.member.add.custodian_team_admin": [
+        ROLE_CUSTODIAN_TEAM_ADMIN,
+    ],
+    "fe.account.team_management.member.add.custodian_metadata_manager": [
+        ROLE_CUSTODIAN_TEAM_ADMIN,
+        ROLE_CUSTODIAN_METADATA_MANAGER,
+    ],
+    "fe.account.team_management.member.add.metadata_editor": [
+        ROLE_CUSTODIAN_TEAM_ADMIN,
+        ROLE_CUSTODIAN_METADATA_MANAGER,
+    ],
+    "fe.account.team_management.member.add.custodian_dar_manager": [
+        ROLE_CUSTODIAN_TEAM_ADMIN,
+        ROLE_CUSTODIAN_DAR_MANAGER,
+    ],
+    "fe.account.team_management.member.add.reviewer": [
+        ROLE_CUSTODIAN_TEAM_ADMIN,
+        ROLE_CUSTODIAN_DAR_MANAGER,
+    ],
     "fe.account.team_management.member.delete": [ROLE_CUSTODIAN_TEAM_ADMIN],
     "fe.account.team_management.permission.update.developer": [
         ROLE_CUSTODIAN_TEAM_ADMIN,

@@ -33,6 +33,7 @@ const postRequest = async <T>(
                     method: "post",
                 });
             }
+            throw error;
         });
 };
 

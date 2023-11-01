@@ -12,10 +12,12 @@ import useDialog from "@/hooks/useDialog";
 import AccountLayout from "@/modules/AccountLayout";
 import { AddIcon } from "@/consts/icons";
 import Typography from "@/components/Typography";
+import { useHasPermissions } from "@/hooks/useHasPermission";
 
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();
-
+    const permissions = useHasPermissions();
+    console.log("permissions: ", permissions);
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My Account - Team Management" />
@@ -32,10 +34,16 @@ const TeamManagementPage = () => {
                                 display: "flex",
                                 justifyContent: "center",
                             }}>
-                            <Button
-                                onClick={() => showDialog(AddTeamMemberDialog)}>
-                                <AddIcon /> Add a new member
-                            </Button>
+                            {permissions[
+                                "fe.account.team_management.member.add"
+                            ] && (
+                                <Button
+                                    onClick={() =>
+                                        showDialog(AddTeamMemberDialog)
+                                    }>
+                                    <AddIcon /> Add a new member
+                                </Button>
+                            )}
                         </Box>
                         <TeamManagementTabs />
                     </Box>
