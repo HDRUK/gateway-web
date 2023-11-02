@@ -3,18 +3,7 @@ import EditApplication from "@/pages/account/team/[teamId]/integrations/api-mana
 import { render, screen, waitFor } from "@/utils/testUtils";
 import { applicationV1 } from "@/mocks/data/application";
 import { useHasPermissions } from "@/hooks/useHasPermission";
-
-jest.mock("next/router", () => ({
-    useRouter() {
-        return {
-            route: "/",
-            pathname: "",
-            query: { apiId: applicationV1.id },
-            asPath: "",
-            events: { on: jest.fn(), off: jest.fn() },
-        };
-    },
-}));
+import mockRouter from "next-router-mock";
 
 jest.mock("next/navigation", () => ({
     useSearchParams() {
@@ -29,6 +18,7 @@ jest.mock("@/hooks/useHasPermission", () => ({
 }));
 
 describe("Applications", () => {
+    mockRouter.query = { apiId: applicationV1.id.toString() };
     it("should render contents", async () => {
         const permissions = {
             "fe.account.nav.integrations.api-management": true,

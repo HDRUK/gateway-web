@@ -2,17 +2,6 @@ import React from "react";
 import Tabs from "@/components/Tabs";
 import { render, screen } from "@/utils/testUtils";
 
-jest.mock("next/router", () => ({
-    useRouter() {
-        return {
-            route: "/",
-            pathname: "",
-            query: {},
-            asPath: "",
-        };
-    },
-}));
-
 jest.mock("next/navigation", () => ({
     useSearchParams() {
         return {

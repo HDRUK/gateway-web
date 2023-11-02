@@ -101,12 +101,12 @@ module.exports = {
             "error",
             {
                 devDependencies: [
-                    "**/*{.,_}{test}.{ts,tsx}",
-                    "**/jest.config.ts",
-                    "**/jest.setup.ts",
-                    "**/src/utils/testUtils.tsx",
+                    "**/*.test.ts",
+                    "**/*.test.tsx",
+                    "jest.config.js",
+                    "jest.setup.js",
+                    "**/testUtils.tsx",
                 ],
-                optionalDependencies: false,
             },
         ],
     },

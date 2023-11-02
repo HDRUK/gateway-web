@@ -1,6 +1,6 @@
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
-import Notifications from "@/modules/TeamManagement/Notifications";
+import Notifications from "@/modules/EmailNotifications";
 import TeamMembers from "@/modules/TeamMembers";
 
 const tabsList = [

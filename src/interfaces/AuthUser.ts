@@ -7,10 +7,14 @@ interface AuthUser {
     lastname: string;
     name: string;
     email: string;
+    secondary_email?: string;
+    preferred_email: "secondary" | "primary";
     sector_id: string;
     organisation: string;
     bio: string;
     domain: string;
+    provider: string;
+    providerId: number;
     link: string;
     orcid: string;
     terms: boolean;

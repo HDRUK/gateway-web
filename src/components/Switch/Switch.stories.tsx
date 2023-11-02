@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useForm } from "react-hook-form";
+import { Stack } from "@mui/material";
 import Switch from "./Switch";
 
 /** Mui documentation: https://mui.com/material-ui/react-switch */
@@ -23,10 +24,24 @@ const WrapperComponent = (args: { [key: string]: unknown }) => {
     return <Switch {...args} control={control} name="first" />;
 };
 
-export const SwitchComponent: Story = {
+export const Default: Story = {
     args: {
         checkedLabel: "On",
         unCheckedLabel: "Off",
     },
     render: args => <WrapperComponent {...args} />,
+};
+
+export const Size: Story = {
+    args: {
+        checkedLabel: "On",
+        unCheckedLabel: "Off",
+    },
+    render: args => (
+        <Stack maxWidth={300}>
+            <WrapperComponent {...args} size="small" />
+            <WrapperComponent {...args} size="medium" />
+            <WrapperComponent {...args} size="large" />
+        </Stack>
+    ),
 };

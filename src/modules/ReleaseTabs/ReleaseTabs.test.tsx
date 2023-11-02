@@ -2,17 +2,6 @@ import { render, screen } from "@/utils/testUtils";
 import { ReleaseNode } from "@/interfaces/Releases";
 import ReleaseTabs from "./ReleaseTabs";
 
-jest.mock("next/router", () => ({
-    useRouter() {
-        return {
-            route: "/",
-            pathname: "",
-            query: {},
-            asPath: "",
-        };
-    },
-}));
-
 jest.mock("next/navigation", () => ({
     useSearchParams() {
         return {

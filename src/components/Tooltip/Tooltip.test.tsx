@@ -1,7 +1,6 @@
 import React from "react";
 import Tooltip from "@/components/Tooltip";
 import { render, screen, waitFor } from "@/utils/testUtils";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import userEvent from "@testing-library/user-event";
 
 describe("Tooltip", () => {

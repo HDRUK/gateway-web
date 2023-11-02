@@ -1,10 +1,6 @@
 import { render } from "@/utils/testUtils";
-import { useRouter } from "next/router";
+import mockRouter from "next-router-mock";
 import LeftNav from "./LeftNav";
-
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(),
-}));
 
 describe("LeftNav", () => {
     const mockNavItems = [
@@ -30,9 +26,7 @@ describe("LeftNav", () => {
     ];
 
     it("renders the navigation items", () => {
-        useRouter.mockImplementation(() => ({
-            asPath: "/",
-        }));
+        mockRouter.push("/initial-path");
         const { getByText, queryByText } = render(
             <LeftNav navItems={mockNavItems} />
         );
@@ -44,9 +38,8 @@ describe("LeftNav", () => {
     });
 
     it("renders expanded items", () => {
-        useRouter.mockImplementation(() => ({
-            asPath: "/subitem1",
-        }));
+        mockRouter.push("/subitem1");
+
         const { getByText } = render(<LeftNav navItems={mockNavItems} />);
 
         expect(getByText("SubItem 1")).toBeInTheDocument();

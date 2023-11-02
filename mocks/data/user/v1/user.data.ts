@@ -44,11 +44,13 @@ const generateUserV1 = (data = {}): User => {
     return {
         id: faker.datatype.number(),
         email: faker.internet.email(),
+        secondary_email: faker.internet.email(),
         firstname: faker.name.firstName(),
         lastname: faker.name.lastName(),
         name: faker.datatype.string(),
         provider: faker.datatype.string(),
         providerId: faker.datatype.number(),
+        preferred_email: faker.helpers.arrayElement(["primary", "secondary"]),
         roles: Array.from({ length: 3 }).map(() => generateRoleV1()),
         ...data,
     };
