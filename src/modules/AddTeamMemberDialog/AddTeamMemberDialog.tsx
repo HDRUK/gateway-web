@@ -6,25 +6,24 @@ import MuiDialogActions from "@mui/material/DialogActions";
 import ModalButtons from "@/components/ModalButtons";
 import Box from "@/components/Box";
 import pLimit from "p-limit";
-import { AddTeamMember } from "@/interfaces/AddTeamMember";
-import { IconButton, Typography } from "@mui/material";
+import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
+import { Typography } from "@mui/material";
 import apis from "@/config/apis";
-import Loading from "@/components/Loading";
 import useGet from "@/hooks/useGet";
-import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 import { User } from "@/interfaces/User";
 import {
-    addTeamMemberFormFields,
     addTeamMemberDefaultValues,
     addTeamMemberValidationSchema,
 } from "@/config/forms/addTeamMember";
-import InputWrapper from "@/components/InputWrapper";
 import { yupResolver } from "@hookform/resolvers/yup";
 import usePost from "@/hooks/usePost";
 import { useRouter } from "next/router";
-import { ROLE_CUSTODIAN_DAR_REVIEWER } from "@/consts/roles";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import notificationService from "@/services/notification";
+import useGetTeam from "@/hooks/useGetTeam";
+import { useMemo } from "react";
+import AddTeamMemberRows from "@/modules/AddTeamMemberRows";
+import { getAvailableUsers } from "./AddTeamMemberDialog.utils";
 
 const limit = pLimit(1);
 
@@ -33,7 +32,7 @@ const AddTeamMemberDialog = () => {
     const { teamId } = query as AccountTeamUrlQuery;
     const { t } = useTranslation("modules");
     const { control, handleSubmit } = useForm<AddTeamMember>({
-        // resolver: yupResolver(addTeamMemberValidationSchema),
+        resolver: yupResolver(addTeamMemberValidationSchema),
         defaultValues: { ...addTeamMemberDefaultValues },
     });
 
@@ -42,25 +41,23 @@ const AddTeamMemberDialog = () => {
         name: "userAndRoles",
     });
 
-    const addTeamMember = usePost<AddTeamMember>(
+    const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
+
+    const { team } = useGetTeam(teamId);
+
+    const userOptions = useMemo(() => {
+        if (!team) return [];
+        return getAvailableUsers(team.users, users);
+    }, [team, users]);
+
+    const addTeamMember = usePost<UserAndRoles>(
         `${apis.teamsV1Url}/${teamId}/users`,
         { successNotificationsOn: false }
     );
 
-    const { data: users = [], isLoading: isTeamListLoading } = useGet<User[]>(
-        apis.usersV1Url
-    );
-
-    if (isTeamListLoading) return <Loading />;
-
-    const [userField, memberField] = addTeamMemberFormFields;
-
-    const onFormSubmit = async (usersToAdd: AddTeamMember[]) => {
-        const fakePayload = [
-            { userId: 18, roles: [ROLE_CUSTODIAN_DAR_REVIEWER] },
-            { userId: 2340, roles: [ROLE_CUSTODIAN_DAR_REVIEWER] },
-        ];
-        const promises = fakePayload.map(async payload => {
+    const onFormSubmit = async (formData: AddTeamMember) => {
+        const { userAndRoles } = formData;
+        const promises = userAndRoles.map(async payload => {
             await limit(() => addTeamMember(payload));
         });
 
@@ -73,72 +70,26 @@ const AddTeamMemberDialog = () => {
                 `${success.length} new member(s) successfully added to the team`
             );
         }
-
-        console.log("results: ", results);
     };
 
     return (
         <Dialog title={t("dialogs.AddTeamMemberDialog.title")}>
-            <Box onSubmit={handleSubmit(onFormSubmit)} component="form">
+            <Box
+                sx={{ p: 0 }}
+                onSubmit={handleSubmit(onFormSubmit)}
+                component="form">
                 <MuiDialogContent>
-                    <Typography>
+                    <Typography sx={{ mb: 2 }}>
                         Users that you want to add to your team must already
                         have an account on the Gateway
                     </Typography>
-                    <Box
-                        sx={{
-                            p: 0,
-                            display: "flex",
-                        }}>
-                        {fields.map((field, index) => {
-                            console.log("field: ", field);
-                            return (
-                                <div key={field.id}>
-                                    <InputWrapper
-                                        {...userField}
-                                        name={`userAndRoles.${index}.userId`}
-                                        value={field.userId}
-                                        control={control}
-                                        icon={SearchRoundedIcon}
-                                        options={[users].map(user => ({
-                                            value: user.id,
-                                            label: user.name,
-                                        }))}
-                                    />
-                                    <InputWrapper
-                                        {...memberField}
-                                        value={field.roles}
-                                        name={`userAndRoles.${index}.roles`}
-                                        control={control}
-                                    />
-
-                                    {fields.length > 1 && (
-                                        <IconButton
-                                            disableRipple
-                                            size="large"
-                                            edge="start"
-                                            aria-label="Remove row"
-                                            onClick={() => remove(field.id)}>
-                                            <RemoveIcon />
-                                        </IconButton>
-                                    )}
-                                    <IconButton
-                                        disableRipple
-                                        size="large"
-                                        edge="start"
-                                        aria-label="Remove row"
-                                        onClick={() =>
-                                            append({
-                                                userId: null,
-                                                roles: [],
-                                            })
-                                        }>
-                                        <AddIcon />
-                                    </IconButton>
-                                </div>
-                            );
-                        })}
-                    </Box>
+                    <AddTeamMemberRows
+                        fields={fields}
+                        append={append}
+                        remove={remove}
+                        control={control}
+                        userOptions={userOptions}
+                    />
                 </MuiDialogContent>
                 <MuiDialogActions>
                     <ModalButtons

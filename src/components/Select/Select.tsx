@@ -6,9 +6,15 @@ import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import SelectMenuItem from "@/components/SelectMenuItem";
 import FormInputWrapper from "@/components/FormInputWrapper";
+import { ReactNode } from "react";
 
 type ValueType = string | number;
-type OptionsType = { value: ValueType; label: string; icon?: IconType }[];
+export interface SelectOptionsType {
+    value: ValueType;
+    label: string;
+    labelComponent?: ReactNode;
+    icon?: IconType;
+}
 
 export interface SelectProps {
     label: string;
@@ -17,18 +23,19 @@ export interface SelectProps {
     iconRight?: boolean;
     disabled?: boolean;
     invertListItem?: boolean;
-    options: OptionsType;
+    options: SelectOptionsType[];
     multiple?: boolean;
     horizontalForm?: boolean;
     icon?: IconType;
     name: string;
     control: Control;
     required?: boolean;
+    hasCheckbox?: boolean;
 }
 
 const renderValue = (
     selected: ValueType | ValueType[],
-    options: OptionsType,
+    options: SelectOptionsType[],
     multiple: boolean
 ) => {
     if (multiple && Array.isArray(selected)) {
@@ -51,6 +58,7 @@ const Select = (props: SelectProps) => {
         options,
         control,
         name,
+        hasCheckbox,
         required,
         multiple,
         disabled,
@@ -101,9 +109,14 @@ const Select = (props: SelectProps) => {
                         key={option.value}
                         value={option.value}>
                         <SelectMenuItem
+                            multiple={multiple}
+                            itemValue={option.value}
+                            value={fieldProps.value}
+                            hasCheckbox={hasCheckbox}
                             iconRight={iconRight}
                             icon={icon || option.icon}
                             label={option.label}
+                            labelComponent={option.labelComponent}
                             invertListItem={invertListItem}
                         />
                     </MenuItem>

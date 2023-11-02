@@ -14,7 +14,7 @@ export type OptionsType = {
     value: ValueType;
     label: string;
     icon?: IconType;
-}[];
+};
 
 export interface AutocompleteProps {
     label: string;
@@ -24,12 +24,12 @@ export interface AutocompleteProps {
     disabled?: boolean;
     startAdornmentIcon?: ReactNode;
     createLabel?: string;
-    options?: OptionsType;
+    options?: OptionsType[];
     canCreate?: boolean;
     clearOnBlur?: boolean;
     handleHomeEndKeys?: boolean;
     multiple?: boolean;
-    getChipLabel?: (options: OptionsType, value: ValueType) => void;
+    getChipLabel?: (options: OptionsType[], value: ValueType) => void;
     trigger?: (name: string) => void;
     freeSolo?: boolean;
     selectOnFocus?: boolean;
@@ -53,7 +53,6 @@ const Autocomplete = (props: AutocompleteProps) => {
         extraInfo,
         createLabel,
         control,
-        trigger,
         name,
         placeholder,
         startAdornmentIcon,
@@ -63,6 +62,7 @@ const Autocomplete = (props: AutocompleteProps) => {
         required,
         options = [],
         disabled,
+        multiple,
         ...restProps
     } = props;
 
@@ -111,6 +111,20 @@ const Autocomplete = (props: AutocompleteProps) => {
             <MuiAutocomplete
                 {...field}
                 {...restProps}
+                multiple={multiple}
+                getOptionLabel={(
+                    option: string | { label: string; value: unknown }
+                ) => {
+                    if (typeof option === "string") return option;
+                    return option?.label;
+                }}
+                {...(!multiple && {
+                    value: field.value
+                        ? options.find(option => {
+                              return field.value === option.value;
+                          }) ?? null
+                        : null,
+                })}
                 options={options}
                 disabled={disabled}
                 renderTags={(tagValue, getTagProps) =>
@@ -135,9 +149,10 @@ const Autocomplete = (props: AutocompleteProps) => {
                             return value?.value;
                         });
                         field.onChange(values);
-                        if (typeof trigger === "function") {
-                            trigger(name);
-                        }
+                    }
+
+                    if ((v as OptionsType)?.value) {
+                        field.onChange((v as OptionsType).value);
                     }
                 }}
                 {...(canCreate && {
@@ -172,10 +187,6 @@ const Autocomplete = (props: AutocompleteProps) => {
 };
 
 Autocomplete.defaultProps = {
-    getOptionLabel: (option: string | { label: string; value: unknown }) => {
-        if (typeof option === "string") return option;
-        return option?.label;
-    },
     placeholder: "",
     info: "",
     createLabel: "Add",
