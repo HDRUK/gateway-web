@@ -29,7 +29,7 @@ import { getAvailableUsers } from "./AddTeamMemberDialog.utils";
 const limit = pLimit(1);
 
 const AddTeamMemberDialog = () => {
-    const { hideDialog } = useDialog();
+    const { hideDialog, store } = useDialog();
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
     const { t } = useTranslation("modules");
@@ -73,6 +73,12 @@ const AddTeamMemberDialog = () => {
         if (success.length > 0) {
             notificationService.success(
                 `${success.length} new member(s) successfully added to the team`
+            );
+        }
+        if (typeof store.dialogProps?.onSuccess === "function") {
+            /* send userIds back to parent component to be able to list new Team Members at the top */
+            store.dialogProps.onSuccess(
+                userAndRoles.map(userAndRole => userAndRole.userId)
             );
         }
     };

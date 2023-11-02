@@ -3,21 +3,49 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-
-import TeamManagementTabs from "@/modules/TeamManagementTabs";
+import Tabs from "@/components/Tabs";
+import Typography from "@/components/Typography";
+import Notifications from "@/modules/TeamNotifications";
+import TeamMembers from "@/modules/TeamMembers";
 import AddTeamMemberDialog from "@/modules/AddTeamMemberDialog";
 import Button from "@/components/Button";
-
 import useDialog from "@/hooks/useDialog";
 import AccountLayout from "@/modules/AccountLayout";
 import { AddIcon } from "@/consts/icons";
-import Typography from "@/components/Typography";
 import { useHasPermissions } from "@/hooks/useHasPermission";
+import { useState } from "react";
 
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();
     const permissions = useHasPermissions();
-    console.log("permissions: ", permissions);
+    const [newMemberIds, setNewMemberIds] = useState<string[]>([]);
+
+    const filterTeam = (memberIds: string[]) => {
+        setNewMemberIds(memberIds);
+        console.log("saved data: ", memberIds);
+    };
+
+    const tabsList = [
+        {
+            label: "Members",
+            value: "Members",
+            content: (
+                <Typography component="span">
+                    <TeamMembers newMemberIds={newMemberIds} />
+                </Typography>
+            ),
+        },
+        {
+            label: "Notifications",
+            value: "Notifications",
+            content: (
+                <Typography component="span">
+                    <Notifications />
+                </Typography>
+            ),
+        },
+    ];
+
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My Account - Team Management" />
@@ -39,13 +67,20 @@ const TeamManagementPage = () => {
                             ] && (
                                 <Button
                                     onClick={() =>
-                                        showDialog(AddTeamMemberDialog)
+                                        showDialog(AddTeamMemberDialog, {
+                                            onSuccess: filterTeam,
+                                        })
                                     }>
                                     <AddIcon /> Add a new member
                                 </Button>
                             )}
                         </Box>
-                        <TeamManagementTabs />
+                        <Tabs
+                            centered
+                            tabs={tabsList}
+                            tabBoxSx={{ padding: 0 }}
+                            rootBoxSx={{ padding: 0 }}
+                        />
                     </Box>
                 </BoxContainer>
             </AccountLayout>

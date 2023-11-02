@@ -49,6 +49,7 @@ const AddTeamMemberRows = ({
                         <Box sx={{ p: 0, gridColumn: "span 3" }}>
                             <InputWrapper
                                 {...userField}
+                                {...(index > 0 && { label: "" })}
                                 name={`userAndRoles.${index}.userId`}
                                 control={control}
                                 icon={SearchRoundedIcon}
@@ -58,6 +59,7 @@ const AddTeamMemberRows = ({
                         <Box sx={{ p: 0, gridColumn: "span 3" }}>
                             <InputWrapper
                                 {...memberField}
+                                {...(index > 0 && { label: "" })}
                                 name={`userAndRoles.${index}.roles`}
                                 control={control}
                                 options={roleOptionsFiltered}

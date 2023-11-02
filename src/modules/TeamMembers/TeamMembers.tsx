@@ -120,7 +120,7 @@ const TeamMembers = () => {
     });
 
     useEffect(() => {
-        if (team?.users) setTableRows(team.users);
+        if (team?.users) setTableRows(team?.users);
     }, [team?.users]);
 
     const actions = useMemo(
@@ -169,7 +169,7 @@ const TeamMembers = () => {
         setTableRows(updatedUsers);
         const { changedRoles, allRoles } = getDifferences(
             updatedUsers,
-            team.users
+            team?.users
         );
         const changeCount = getChangeCount(changedRoles);
         setRolesToUpdate(allRoles);
