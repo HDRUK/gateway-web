@@ -28,7 +28,7 @@ const CheckboxesCell = ({
     const { roles } = original;
 
     const isLastRole = useMemo(
-        () => roles.filter(role => role.enabled).length === 1,
+        () => roles?.filter(role => role.enabled).length === 1,
         [roles]
     );
 
@@ -40,7 +40,7 @@ const CheckboxesCell = ({
 
     const checkboxesHydrated = useMemo(() => {
         return checkboxes.map(checkbox => {
-            const value = !!roles.find(role => role.name === checkbox.name)
+            const value = !!roles?.find(role => role.name === checkbox.name)
                 ?.enabled;
             return {
                 name: checkbox.name,

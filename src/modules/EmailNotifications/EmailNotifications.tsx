@@ -26,6 +26,8 @@ const EmailNotifications = () => {
     const { user } = useAuth();
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
+
+    const { team } = useGetTeam(teamId);
     const { control, formState, reset } = useForm<EmailNotification>({
         defaultValues: emailNotificationDefaultValues,
         resolver: yupResolver(emailNotificationValidationSchema),
@@ -38,8 +40,6 @@ const EmailNotifications = () => {
     });
 
     const [originalFormValues, setOriginalFormValues] = useState({});
-
-    const { team } = useGetTeam(teamId);
 
     const hydratedSections = useMemo(() => {
         const [mySection, teamSection] = emailNotificationFormSections;

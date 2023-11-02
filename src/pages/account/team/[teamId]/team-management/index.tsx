@@ -5,7 +5,6 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
-import Notifications from "@/modules/TeamNotifications";
 import TeamMembers from "@/modules/TeamMembers";
 import AddTeamMemberDialog from "@/modules/AddTeamMemberDialog";
 import Button from "@/components/Button";
@@ -13,17 +12,13 @@ import useDialog from "@/hooks/useDialog";
 import AccountLayout from "@/modules/AccountLayout";
 import { AddIcon } from "@/consts/icons";
 import { useHasPermissions } from "@/hooks/useHasPermission";
-import { useState } from "react";
+import EmailNotifications from "@/modules/EmailNotifications";
+import { useNewMembers } from "@/hooks/useNewMembers";
 
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();
     const permissions = useHasPermissions();
-    const [newMemberIds, setNewMemberIds] = useState<string[]>([]);
-
-    const filterTeam = (memberIds: string[]) => {
-        setNewMemberIds(memberIds);
-        console.log("saved data: ", memberIds);
-    };
+    const { teamMembers, onAddNewMember } = useNewMembers();
 
     const tabsList = [
         {
@@ -31,7 +26,7 @@ const TeamManagementPage = () => {
             value: "Members",
             content: (
                 <Typography component="span">
-                    <TeamMembers newMemberIds={newMemberIds} />
+                    <TeamMembers teamMembers={teamMembers} />
                 </Typography>
             ),
         },
@@ -40,7 +35,7 @@ const TeamManagementPage = () => {
             value: "Notifications",
             content: (
                 <Typography component="span">
-                    <Notifications />
+                    <EmailNotifications />
                 </Typography>
             ),
         },
@@ -68,7 +63,7 @@ const TeamManagementPage = () => {
                                 <Button
                                     onClick={() =>
                                         showDialog(AddTeamMemberDialog, {
-                                            onSuccess: filterTeam,
+                                            onSuccess: onAddNewMember,
                                         })
                                     }>
                                     <AddIcon /> Add a new member
