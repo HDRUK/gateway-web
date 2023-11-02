@@ -23,11 +23,13 @@ import notificationService from "@/services/notification";
 import useGetTeam from "@/hooks/useGetTeam";
 import { useMemo } from "react";
 import AddTeamMemberRows from "@/modules/AddTeamMemberRows";
+import useDialog from "@/hooks/useDialog";
 import { getAvailableUsers } from "./AddTeamMemberDialog.utils";
 
 const limit = pLimit(1);
 
 const AddTeamMemberDialog = () => {
+    const { hideDialog } = useDialog();
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
     const { t } = useTranslation("modules");
@@ -57,6 +59,9 @@ const AddTeamMemberDialog = () => {
 
     const onFormSubmit = async (formData: AddTeamMember) => {
         const { userAndRoles } = formData;
+
+        hideDialog();
+
         const promises = userAndRoles.map(async payload => {
             await limit(() => addTeamMember(payload));
         });

@@ -42,68 +42,100 @@ const Label = ({
         />
     );
 };
-const roleOptions = [
-    {
-        label: "Team Admin",
-        labelComponent: (
-            <Label
-                name="Team Admin"
-                description="Can add or remove team members, and edit their roles."
-            />
-        ),
-        value: ROLE_CUSTODIAN_TEAM_ADMIN,
-    },
-    {
-        label: "Team Developer",
-        labelComponent: (
-            <Label
-                name="Team Developer"
-                description="Can develop, sample copy to be updated."
-            />
-        ),
-        value: ROLE_CUSTODIAN_DEVELOPER,
-    },
-    {
-        label: "Metadata Manager",
-        labelComponent: (
-            <Label
-                name="Metadata Manager"
-                description="Can create and edit dataset metadata, and edit team roles related to dataset metadata."
-            />
-        ),
-        value: ROLE_CUSTODIAN_METADATA_MANAGER,
-    },
-    {
-        label: "Metadata Editor",
-        labelComponent: (
-            <Label
-                name="Metadata Editor"
-                description="Can create and edit dataset metadata."
-            />
-        ),
-        value: ROLE_CUSTODIAN_METADATA_EDITOR,
-    },
-    {
-        label: "Data Access Request Manager",
-        labelComponent: (
-            <Label
-                name="Data Access Request Manager"
-                description="Can review data access request applications, assign workflows to other team members, and edit team roles related to data access requests."
-            />
-        ),
-        value: ROLE_CUSTODIAN_DAR_MANAGER,
-    },
-    {
-        label: "Data Access Request Reviewer",
-        labelComponent: (
-            <Label
-                name="Data Access Request Reviewer"
-                description="Can review sections of data access request applications that have been assigned to them through workflows."
-            />
-        ),
-        value: ROLE_CUSTODIAN_DAR_REVIEWER,
-    },
-];
+const getRoleOptions = (permissions: { [key: string]: boolean }) => {
+    return [
+        ...(permissions[
+            "fe.account.team_management.member.add.custodian_team_admin"
+        ]
+            ? [
+                  {
+                      label: "Team Admin",
+                      labelComponent: (
+                          <Label
+                              name="Team Admin"
+                              description="Can add or remove team members, and edit their roles."
+                          />
+                      ),
+                      value: ROLE_CUSTODIAN_TEAM_ADMIN,
+                  },
+              ]
+            : []),
+        ...(permissions["fe.account.team_management.member.add.developer"]
+            ? [
+                  {
+                      label: "Team Developer",
+                      labelComponent: (
+                          <Label
+                              name="Team Developer"
+                              description="Can develop, sample copy to be updated."
+                          />
+                      ),
+                      value: ROLE_CUSTODIAN_DEVELOPER,
+                  },
+              ]
+            : []),
+        ...(permissions[
+            "fe.account.team_management.member.add.custodian_metadata_manager"
+        ]
+            ? [
+                  {
+                      label: "Metadata Manager",
+                      labelComponent: (
+                          <Label
+                              name="Metadata Manager"
+                              description="Can create and edit dataset metadata, and edit team roles related to dataset metadata."
+                          />
+                      ),
+                      value: ROLE_CUSTODIAN_METADATA_MANAGER,
+                  },
+              ]
+            : []),
+        ...(permissions["fe.account.team_management.member.add.metadata_editor"]
+            ? [
+                  {
+                      label: "Metadata Editor",
+                      labelComponent: (
+                          <Label
+                              name="Metadata Editor"
+                              description="Can create and edit dataset metadata."
+                          />
+                      ),
+                      value: ROLE_CUSTODIAN_METADATA_EDITOR,
+                  },
+              ]
+            : []),
+        ...(permissions[
+            "fe.account.team_management.member.add.custodian_dar_manager"
+        ]
+            ? [
+                  {
+                      label: "Data Access Request Manager",
+                      labelComponent: (
+                          <Label
+                              name="Data Access Request Manager"
+                              description="Can review data access request applications, assign workflows to other team members, and edit team roles related to data access requests."
+                          />
+                      ),
+                      value: ROLE_CUSTODIAN_DAR_MANAGER,
+                  },
+              ]
+            : []),
+        ...(permissions["fe.account.team_management.member.add.reviewer"]
+            ? [
+                  {
+                      label: "Data Access Request Reviewer",
+                      labelComponent: (
+                          <Label
+                              name="Data Access Request Reviewer"
+                              description="Can review sections of data access request applications that have been assigned to them through workflows."
+                          />
+                      ),
+                      value: ROLE_CUSTODIAN_DAR_REVIEWER,
+                  },
+              ]
+            : []),
+    ];
+};
 
 const defaultValues = {
     userAndRoles: [{ userId: undefined, roles: [] }],
@@ -126,7 +158,7 @@ const validationSchema = yup
 const formFields = [
     {
         label: "User",
-        // name: "userId", replaced in component due to useFieldArray
+        // name: "userId", replaced in component due to use of useFieldArray
         component: inputComponents.Autocomplete,
         icon: SearchRoundedIcon,
         noOptionsText: "No users found",
@@ -134,9 +166,8 @@ const formFields = [
     },
     {
         label: "Member role(s)",
-        // name: "roles", replaced in component due to useFieldArray
+        // name: "roles", replaced in component due to use of useFieldArray
         component: inputComponents.Select,
-        options: roleOptions,
         required: true,
         hasCheckbox: true,
         multiple: true,
@@ -144,7 +175,7 @@ const formFields = [
 ];
 
 export {
-    roleOptions,
+    getRoleOptions,
     defaultValues as addTeamMemberDefaultValues,
     validationSchema as addTeamMemberValidationSchema,
     formFields as addTeamMemberFormFields,

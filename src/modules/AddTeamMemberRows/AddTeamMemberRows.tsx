@@ -1,11 +1,16 @@
 import { IconButton } from "@mui/material";
 import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 import InputWrapper from "@/components/InputWrapper";
-import { addTeamMemberFormFields } from "@/config/forms/addTeamMember";
+import {
+    addTeamMemberFormFields,
+    getRoleOptions,
+} from "@/config/forms/addTeamMember";
 import Box from "@/components/Box";
 import { Control, FieldArrayWithId } from "react-hook-form";
 import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
 import { SelectOptionsType } from "@/components/Select/Select";
+import { useHasPermissions } from "@/hooks/useHasPermission";
+import { useMemo } from "react";
 
 interface AddTeamMemberRowsProps {
     fields: FieldArrayWithId<AddTeamMember, "userAndRoles", "id">[];
@@ -22,6 +27,12 @@ const AddTeamMemberRows = ({
     remove,
     append,
 }: AddTeamMemberRowsProps) => {
+    const permissions = useHasPermissions();
+
+    const roleOptionsFiltered = useMemo(() => {
+        return getRoleOptions(permissions);
+    }, [permissions]);
+
     const [userField, memberField] = addTeamMemberFormFields;
     return (
         <Box sx={{ p: 0, width: "100%" }}>
@@ -49,6 +60,7 @@ const AddTeamMemberRows = ({
                                 {...memberField}
                                 name={`userAndRoles.${index}.roles`}
                                 control={control}
+                                options={roleOptionsFiltered}
                             />
                         </Box>
 
