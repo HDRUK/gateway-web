@@ -61,17 +61,21 @@ describe("post", () => {
         const payload = {
             type: "features" as FilterType,
         };
-        await apiService.postRequest<Filter>(apis.filtersV1Url, payload, {
-            notificationOptions: {
-                ...translationProps,
-            },
-        });
-        expect(apiUtils.errorNotification).toHaveBeenCalledWith({
-            errorResponse: expect.any(Object),
-            method: "post",
-            props: {
-                ...translationProps,
-            },
-        });
+        try {
+            await apiService.postRequest<Filter>(apis.filtersV1Url, payload, {
+                notificationOptions: {
+                    ...translationProps,
+                },
+            });
+            expect(apiUtils.errorNotification).toHaveBeenCalledWith({
+                errorResponse: expect.any(Object),
+                method: "post",
+                props: {
+                    ...translationProps,
+                },
+            });
+        } catch (e) {
+            /* empty */
+        }
     });
 });

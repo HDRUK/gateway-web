@@ -8,40 +8,9 @@ import {
     ROLE_CUSTODIAN_METADATA_MANAGER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
 } from "@/consts/roles";
-import { ListItemText, Typography } from "@mui/material";
+import LabelAndDescription from "@/components/LabelAndDescription";
 import { inputComponents } from ".";
 
-const Label = ({
-    name,
-    description,
-}: {
-    name: string;
-    description: string;
-}) => {
-    return (
-        <ListItemText
-            sx={{
-                textWrap: "wrap",
-            }}
-            primary={
-                <Typography
-                    sx={{
-                        fontWeight: 700,
-                    }}>
-                    {name}
-                </Typography>
-            }
-            secondary={
-                <Typography
-                    sx={{
-                        fontSize: "11px",
-                    }}>
-                    {description}
-                </Typography>
-            }
-        />
-    );
-};
 const getRoleOptions = (permissions: { [key: string]: boolean }) => {
     return [
         ...(permissions[
@@ -51,8 +20,8 @@ const getRoleOptions = (permissions: { [key: string]: boolean }) => {
                   {
                       label: "Team Admin",
                       labelComponent: (
-                          <Label
-                              name="Team Admin"
+                          <LabelAndDescription
+                              label="Team Admin"
                               description="Can add or remove team members, and edit their roles."
                           />
                       ),
@@ -65,8 +34,8 @@ const getRoleOptions = (permissions: { [key: string]: boolean }) => {
                   {
                       label: "Team Developer",
                       labelComponent: (
-                          <Label
-                              name="Team Developer"
+                          <LabelAndDescription
+                              label="Team Developer"
                               description="Can develop, sample copy to be updated."
                           />
                       ),
@@ -81,8 +50,8 @@ const getRoleOptions = (permissions: { [key: string]: boolean }) => {
                   {
                       label: "Metadata Manager",
                       labelComponent: (
-                          <Label
-                              name="Metadata Manager"
+                          <LabelAndDescription
+                              label="Metadata Manager"
                               description="Can create and edit dataset metadata, and edit team roles related to dataset metadata."
                           />
                       ),
@@ -95,8 +64,8 @@ const getRoleOptions = (permissions: { [key: string]: boolean }) => {
                   {
                       label: "Metadata Editor",
                       labelComponent: (
-                          <Label
-                              name="Metadata Editor"
+                          <LabelAndDescription
+                              label="Metadata Editor"
                               description="Can create and edit dataset metadata."
                           />
                       ),
@@ -111,8 +80,8 @@ const getRoleOptions = (permissions: { [key: string]: boolean }) => {
                   {
                       label: "Data Access Request Manager",
                       labelComponent: (
-                          <Label
-                              name="Data Access Request Manager"
+                          <LabelAndDescription
+                              label="Data Access Request Manager"
                               description="Can review data access request applications, assign workflows to other team members, and edit team roles related to data access requests."
                           />
                       ),
@@ -125,8 +94,8 @@ const getRoleOptions = (permissions: { [key: string]: boolean }) => {
                   {
                       label: "Data Access Request Reviewer",
                       labelComponent: (
-                          <Label
-                              name="Data Access Request Reviewer"
+                          <LabelAndDescription
+                              label="Data Access Request Reviewer"
                               description="Can review sections of data access request applications that have been assigned to them through workflows."
                           />
                       ),

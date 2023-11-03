@@ -4,8 +4,8 @@ import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useGetTeam from "@/hooks/useGetTeam";
 import { User } from "@/interfaces/User";
 
-export const useNewMembers = () => {
-    const [newMemberIds, setNewMemberIds] = useState<string[]>([]);
+export const useNewMembersOnTop = () => {
+    const [newMemberIds, setNewMemberIds] = useState<number[]>([]);
     const [teamMembers, setTeamUsers] = useState<User[]>([]);
 
     const { query } = useRouter();
@@ -13,7 +13,7 @@ export const useNewMembers = () => {
 
     const { team, mutateTeam } = useGetTeam(teamId);
 
-    const onAddNewMember = (memberIds: string[]) => {
+    const onAddNewMembers = (memberIds: number[]) => {
         setNewMemberIds([...memberIds, ...newMemberIds]);
         mutateTeam();
     };
@@ -24,15 +24,15 @@ export const useNewMembers = () => {
             setTeamUsers(team?.users);
         } else {
             const newMembers = newMemberIds
-                .map(id => team?.users.find(user => user.id.toString() === id))
+                .map(id => team?.users.find(user => user.id === id))
                 .filter(user => user !== undefined);
 
             const existingMembers = team?.users.filter(
-                teamUser => !newMemberIds.includes(teamUser.id.toString())
+                teamUser => !newMemberIds.includes(teamUser.id)
             );
             setTeamUsers([...newMembers, ...existingMembers] as User[]);
         }
     }, [team?.users, newMemberIds]);
 
-    return { onAddNewMember, teamMembers };
+    return { onAddNewMembers, teamMembers };
 };

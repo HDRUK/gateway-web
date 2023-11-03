@@ -13,12 +13,12 @@ import AccountLayout from "@/modules/AccountLayout";
 import { AddIcon } from "@/consts/icons";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import EmailNotifications from "@/modules/EmailNotifications";
-import { useNewMembers } from "@/hooks/useNewMembers";
+import { useNewMembersOnTop } from "@/hooks/useNewMembersOnTop";
 
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();
     const permissions = useHasPermissions();
-    const { teamMembers, onAddNewMember } = useNewMembers();
+    const { teamMembers, onAddNewMembers } = useNewMembersOnTop();
 
     const tabsList = [
         {
@@ -63,7 +63,7 @@ const TeamManagementPage = () => {
                                 <Button
                                     onClick={() =>
                                         showDialog(AddTeamMemberDialog, {
-                                            onSuccess: onAddNewMember,
+                                            onSuccess: onAddNewMembers,
                                         })
                                     }>
                                     <AddIcon /> Add a new member
