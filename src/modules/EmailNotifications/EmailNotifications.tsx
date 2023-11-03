@@ -20,20 +20,26 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { useHasPermissions } from "@/hooks/useHasPermission";
+import useModal from "@/hooks/useModal";
+import { colors } from "@/config/theme";
 
 const EmailNotifications = () => {
     const permissions = useHasPermissions();
+    const { showModal } = useModal();
+    const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
     const { user } = useAuth();
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
 
     const { team } = useGetTeam(teamId);
-    const { control, formState, reset } = useForm<EmailNotification>({
+    const { control, formState, reset, watch } = useForm<EmailNotification>({
         defaultValues: emailNotificationDefaultValues,
         resolver: yupResolver(emailNotificationValidationSchema),
     });
 
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
+
+    const contact_point = watch("contact_point");
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -85,6 +91,43 @@ const EmailNotifications = () => {
     }, [formState, updateStoreProps]);
 
     useEffect(() => {
+        if (!shouldSubmit) return;
+        showModal({
+            confirmText: "Save update",
+            cancelText: "No, nevermind",
+            title: "Email notifications",
+            content: (
+                <Box>
+                    <Typography sx={{ mb: 3 }}>
+                        Are you sure you want to save your update to email
+                        notifications? Please make sure any team email addresses
+                        you have entered are correct.
+                    </Typography>
+                    {contact_point && (
+                        <Box sx={{ display: "flex", p: 0, gap: 2 }}>
+                            <Typography color={colors.grey600}>
+                                Team Email:
+                            </Typography>
+                            <Typography>{contact_point}</Typography>
+                        </Box>
+                    )}
+                </Box>
+            ),
+            onSuccess: () => {
+                /**
+                 * todo: Complete once BE is implemented
+                 * handleSubmit(onSubmit)();
+                 */
+                setShouldSubmit(false);
+            },
+            onCancel: () => {
+                setShouldSubmit(false);
+            },
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [shouldSubmit, contact_point]);
+
+    useEffect(() => {
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
         if (formState.isDirty && !store.isVisible) {
             showBar("Notification", {
@@ -93,10 +136,7 @@ const EmailNotifications = () => {
                 confirmText: "Save",
                 changeCount: 1,
                 onSuccess: () => {
-                    /**
-                     * todo: Complete once BE is implemented
-                     * handleSubmit(onSubmit)();
-                     */
+                    setShouldSubmit(true);
                 },
                 onCancel: () => {
                     reset(originalFormValues);
