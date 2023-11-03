@@ -58,16 +58,18 @@ const FormInputWrapper = ({
                 }),
                 ...formControlSx,
             }}>
-            <Box sx={{ p: 0, ...(horizontalForm && { width: 200 }) }}>
-                <FormInfoLabel
-                    name={name}
-                    label={label}
-                    horizontalForm={horizontalForm}
-                    info={info}
-                    disabled={disabled}
-                    required={required}
-                />
-            </Box>
+            {label && (
+                <Box sx={{ p: 0, ...(horizontalForm && { width: 200 }) }}>
+                    <FormInfoLabel
+                        name={name}
+                        label={label}
+                        horizontalForm={horizontalForm}
+                        info={info}
+                        disabled={disabled}
+                        required={required}
+                    />
+                </Box>
+            )}
             <Box sx={{ p: 0, flex: "1" }}>
                 {limit && (
                     <CharacterLimit count={characterCount} limit={limit} />

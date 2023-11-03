@@ -1,5 +1,10 @@
-interface AddTeamMember {
-    name: string;
+interface UserAndRoles {
+    userId: number | undefined;
+    roles: string[];
 }
 
-export type { AddTeamMember };
+interface AddTeamMember {
+    userAndRoles: UserAndRoles[];
+}
+
+export type { AddTeamMember, UserAndRoles };

@@ -14,6 +14,7 @@ import {
     SupervisorAccountIcon,
 } from "@/consts/icons";
 import Button from "@/components/Button";
+import LabelAndDescription from "@/components/LabelAndDescription";
 
 const meta: Meta<typeof Form> = {
     component: Form,
@@ -34,6 +35,8 @@ export type FormData = {
     sixth: string;
     seventh: string;
     eighth: string[];
+    ninth: string[];
+    tenth: string;
 };
 
 const validationSchema = yup
@@ -53,6 +56,8 @@ const WrapperComponent = () => {
             sixth: "",
             seventh: "",
             eighth: [],
+            ninth: [],
+            tenth: "",
         },
         resolver: yupResolver(validationSchema),
     });
@@ -71,6 +76,48 @@ const WrapperComponent = () => {
         { label: "Green", value: 2, icon: SupervisorAccountIcon },
         { label: "Blue", value: 3, icon: AdminPanelSettingsIcon },
         { label: "Yellow", value: 4, icon: AdminPanelSettingsIcon },
+    ];
+    const optionsWithLabelComponent = [
+        {
+            labelComponent: (
+                <LabelAndDescription
+                    label="Red"
+                    description="Strawberries are red"
+                />
+            ),
+            label: "Red",
+            value: 1,
+        },
+        {
+            labelComponent: (
+                <LabelAndDescription
+                    label="Green"
+                    description="Apples are green"
+                />
+            ),
+            label: "Green",
+            value: 2,
+        },
+        {
+            labelComponent: (
+                <LabelAndDescription
+                    label="Blue"
+                    description="Whales are blue"
+                />
+            ),
+            label: "Blue",
+            value: 3,
+        },
+        {
+            labelComponent: (
+                <LabelAndDescription
+                    label="Yellow"
+                    description="Bananas are yellow"
+                />
+            ),
+            label: "Yellow",
+            value: 4,
+        },
     ];
 
     return (
@@ -133,12 +180,26 @@ const WrapperComponent = () => {
                     control={control}
                     name="eighth"
                 />
+                <SelectComponent
+                    label="multiple with checkbox"
+                    multiple
+                    hasCheckbox
+                    options={options}
+                    control={control}
+                    name="ninth"
+                />
+                <SelectComponent
+                    label="with label/description component"
+                    options={optionsWithLabelComponent}
+                    control={control}
+                    name="tenth"
+                />
                 <Button type="submit">Submit</Button>
             </Stack>
         </Form>
     );
 };
 
-export const Select: Story = {
+export const Default: Story = {
     render: () => <WrapperComponent />,
 };

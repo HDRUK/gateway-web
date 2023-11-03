@@ -3,18 +3,43 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-
-import TeamManagementTabs from "@/modules/TeamManagementTabs";
+import Tabs from "@/components/Tabs";
+import Typography from "@/components/Typography";
+import TeamMembers from "@/modules/TeamMembers";
 import AddTeamMemberDialog from "@/modules/AddTeamMemberDialog";
 import Button from "@/components/Button";
-
 import useDialog from "@/hooks/useDialog";
 import AccountLayout from "@/modules/AccountLayout";
 import { AddIcon } from "@/consts/icons";
-import Typography from "@/components/Typography";
+import { useHasPermissions } from "@/hooks/useHasPermission";
+import EmailNotifications from "@/modules/EmailNotifications";
+import { useNewMembersOnTop } from "@/hooks/useNewMembersOnTop";
 
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();
+    const permissions = useHasPermissions();
+    const { teamMembers, onAddNewMembers } = useNewMembersOnTop();
+
+    const tabsList = [
+        {
+            label: "Members",
+            value: "Members",
+            content: (
+                <Typography component="span">
+                    <TeamMembers teamMembers={teamMembers} />
+                </Typography>
+            ),
+        },
+        {
+            label: "Notifications",
+            value: "Notifications",
+            content: (
+                <Typography component="span">
+                    <EmailNotifications />
+                </Typography>
+            ),
+        },
+    ];
 
     return (
         <>
@@ -32,12 +57,25 @@ const TeamManagementPage = () => {
                                 display: "flex",
                                 justifyContent: "center",
                             }}>
-                            <Button
-                                onClick={() => showDialog(AddTeamMemberDialog)}>
-                                <AddIcon /> Add a new member
-                            </Button>
+                            {permissions[
+                                "fe.account.team_management.member.add"
+                            ] && (
+                                <Button
+                                    onClick={() =>
+                                        showDialog(AddTeamMemberDialog, {
+                                            onSuccess: onAddNewMembers,
+                                        })
+                                    }>
+                                    <AddIcon /> Add a new member
+                                </Button>
+                            )}
                         </Box>
-                        <TeamManagementTabs />
+                        <Tabs
+                            centered
+                            tabs={tabsList}
+                            tabBoxSx={{ padding: 0 }}
+                            rootBoxSx={{ padding: 0 }}
+                        />
                     </Box>
                 </BoxContainer>
             </AccountLayout>

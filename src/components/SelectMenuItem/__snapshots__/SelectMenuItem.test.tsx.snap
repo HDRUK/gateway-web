@@ -8,6 +8,7 @@ exports[`SelectedMenuItem should render basic component 1`] = `
     <span
       class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-9vv8vz-MuiTypography-root"
     >
+       
       Menu label
     </span>
   </div>
@@ -82,6 +83,7 @@ exports[`SelectedMenuItem should render invertListItem component  1`] = `
     <span
       class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-9vv8vz-MuiTypography-root"
     >
+       
       Menu label
     </span>
   </div>

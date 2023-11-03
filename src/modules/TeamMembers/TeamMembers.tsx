@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import useAuth from "@/hooks/useAuth";
 import useActionBar from "@/hooks/useActionBar";
-import Loading from "@/components/Loading";
 import apis from "@/config/apis";
 import Table from "@/components/Table";
 import { getColumns } from "@/config/tables/teamManagement";
@@ -28,7 +27,11 @@ import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const limit = pLimit(1);
 
-const TeamMembers = () => {
+interface TeamMembersProps {
+    teamMembers: User[];
+}
+
+const TeamMembers = ({ teamMembers }: TeamMembersProps) => {
     const permissions = useHasPermissions();
     const { user } = useAuth();
     const { showModal } = useModal();
@@ -37,13 +40,12 @@ const TeamMembers = () => {
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
 
+    const { mutateTeam } = useGetTeam(teamId);
     const [rolesToUpdate, setRolesToUpdate] = useState<RolesPayload[] | null>(
         null
     );
     const [tableRows, setTableRows] = useState<User[]>([]);
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
-
-    const { team, isTeamLoading, mutateTeam } = useGetTeam(teamId);
 
     const updateMembers = usePut<{ id?: number | undefined }>(
         `${apis.teamsV1Url}/${teamId}/users`,
@@ -99,7 +101,7 @@ const TeamMembers = () => {
     ]);
 
     const discardChanges = () => {
-        setTableRows(team?.users || []);
+        setTableRows(teamMembers || []);
         hideBar();
         setRolesToUpdate(null);
     };
@@ -120,8 +122,8 @@ const TeamMembers = () => {
     });
 
     useEffect(() => {
-        if (team?.users) setTableRows(team.users);
-    }, [team?.users]);
+        if (teamMembers) setTableRows(teamMembers);
+    }, [teamMembers]);
 
     const actions = useMemo(
         () => [
@@ -169,7 +171,7 @@ const TeamMembers = () => {
         setTableRows(updatedUsers);
         const { changedRoles, allRoles } = getDifferences(
             updatedUsers,
-            team.users
+            teamMembers
         );
         const changeCount = getChangeCount(changedRoles);
         setRolesToUpdate(allRoles);
@@ -192,9 +194,7 @@ const TeamMembers = () => {
         }
     };
 
-    return isTeamLoading ? (
-        <Loading />
-    ) : (
+    return (
         <Table<User>
             columns={columns}
             onUpdate={handleUpdate}
