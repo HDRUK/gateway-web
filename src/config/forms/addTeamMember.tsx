@@ -114,7 +114,7 @@ const validationSchema = yup
     .object({
         userAndRoles: yup.array().of(
             yup.object().shape({
-                userId: yup.string().required().label("User"),
+                userId: yup.number().required().label("User"),
                 roles: yup
                     .array()
                     .min(1, "Select at least one role")
