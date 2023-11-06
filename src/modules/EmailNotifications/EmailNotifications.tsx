@@ -22,6 +22,7 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import useModal from "@/hooks/useModal";
 import { colors } from "@/config/theme";
+import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
 
 const EmailNotifications = () => {
     const permissions = useHasPermissions();
@@ -170,11 +171,13 @@ const EmailNotifications = () => {
                     sx={{
                         marginBottom: 3,
                     }}>
-                    Team related email notifications will automatically be sent
-                    to each team members gateway log in email. Data custodian
-                    managers can choose to send notifications to additional
-                    email accounts.
+                    Team related email notification will automatically be send
+                    to each team members preferred Gateway contact email. Team
+                    Admins can assign an alternative team email account to send
+                    notification. Impacted team members will be automatically
+                    notified when a role is assigned is removed
                 </Typography>
+                <EmailNotificationDescriptions />
                 <InputSectionWrapper
                     sections={hydratedSections}
                     control={control}

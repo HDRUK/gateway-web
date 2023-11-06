@@ -26,6 +26,7 @@ const ExpandList = ({
         <Box
             sx={{
                 p: 0,
+                mb: 2,
             }}>
             <Typography sx={{ mb: 1 }}>{heading}</Typography>
             <ul
