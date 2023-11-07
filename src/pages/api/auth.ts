@@ -5,6 +5,7 @@ import http from "@/utils/http";
 import config from "@/config/config";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
+    console.log("req.cookies: ", req.cookies);
     try {
         const authUser = getUserFromToken(req.cookies[config.JWT_COOKIE]);
 
