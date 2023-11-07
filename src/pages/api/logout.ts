@@ -23,6 +23,7 @@ export default async function handler(
         res.setHeader("Set-Cookie", cookie);
         res.status(200).json({ message: "success" });
     } catch (e: unknown) {
+        console.log(e);
         const message = e instanceof Error ? e.message : String(e);
         res.status(404).send({
             title: "We have not been able to log you out",

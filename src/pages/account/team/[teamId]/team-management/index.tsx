@@ -24,21 +24,13 @@ const TeamManagementPage = () => {
     const tabsList = [
         {
             label: "Members",
-            value: "Members",
-            content: (
-                <Typography component="span">
-                    <TeamMembers teamMembers={teamMembers} />
-                </Typography>
-            ),
+            value: "members",
+            content: <TeamMembers teamMembers={teamMembers} />,
         },
         {
             label: "Notifications",
-            value: "Notifications",
-            content: (
-                <Typography component="span">
-                    <EmailNotifications />
-                </Typography>
-            ),
+            value: "notifications",
+            content: <EmailNotifications />,
         },
     ];
 
