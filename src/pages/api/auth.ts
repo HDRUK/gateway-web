@@ -28,6 +28,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             data: { isLoggedIn: true, user: user.data },
         });
     } catch (e: unknown) {
+        console.log("auth error: ", e);
         const message = e instanceof Error ? e.message : String(e);
         res.status(404).send({
             title: "We have not been able to fetch your profile",
