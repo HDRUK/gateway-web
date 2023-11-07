@@ -130,7 +130,7 @@ exports[`EmailNotificationDescriptions should render component 1`] = `
         style="padding-left: 15px; margin: 0px;"
       >
         <li>
-          DAR workflow (As required)
+          Date set live and archive (manual onboarding only)
         </li>
       </ul>
     </div>

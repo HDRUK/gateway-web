@@ -33,7 +33,7 @@ const EmailNotificationDescriptions = () => {
         },
         {
             role: "Metadata editors",
-            listItems: ["DAR workflow (As required)"],
+            listItems: ["Date set live and archive (manual onboarding only)"],
         },
         {
             role: "Developers",
