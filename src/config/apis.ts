@@ -1,6 +1,5 @@
-const apiV1Url = process.env.API_V1_URL || "http://localhost:8000/api/v1";
-const apiV1IPUrl =
-    process.env.API_V1_IP_URL || "http://gateway-api:8000/api/v1";
+const apiV1Url = process.env.NEXT_PUBLIC_API_V1_URL;
+const apiV1IPUrl = process.env.NEXT_PUBLIC_API_V1_IP_URL;
 
 const apis = {
     logoutInternalUrl: "/api/logout",
@@ -19,9 +18,7 @@ const apis = {
     applicationsV1Url: `${apiV1Url}/applications`,
     permissionsV1Url: `${apiV1Url}/permissions`,
     teamsV1Url: `${apiV1Url}/teams`,
-    wordPressApiUrl:
-        process.env.WORDPRESS_API_URL ||
-        "https://wordpresspoc-pljgro4dzq-ew.a.run.app/graphql",
+    wordPressApiUrl: process.env.NEXT_PUBLIC_WORDPRESS_API_URL,
 };
 
 export default apis;
