@@ -15,6 +15,7 @@ import { useHasPermissions } from "@/hooks/useHasPermission";
 import EmailNotifications from "@/modules/EmailNotifications";
 import { useNewMembersOnTop } from "@/hooks/useNewMembersOnTop";
 import { CUSTOMER_PORTAL_RAISE_SUPPORT_URL } from "@/config/hrefs";
+import Paper from "@/components/Paper";
 
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();
@@ -38,45 +39,49 @@ const TeamManagementPage = () => {
         <>
             <Head title="Health Data Research Innovation Gateway - My Account - Team Management" />
             <AccountLayout>
-                <BoxContainer>
-                    <Box sx={{ bgcolor: "white" }}>
-                        <Typography variant="h2">Team management</Typography>
-                        <Typography>
-                            Organise and manage team members and email
-                            notifications. If you need assistance, please{" "}
-                            <a
-                                target="_blank"
-                                href={CUSTOMER_PORTAL_RAISE_SUPPORT_URL}
-                                rel="noreferrer">
-                                raise a support ticket
-                            </a>
-                            .
-                        </Typography>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                justifyContent: "center",
-                            }}>
-                            {permissions[
-                                "fe.account.team_management.member.add"
-                            ] && (
-                                <Button
-                                    onClick={() =>
-                                        showDialog(AddTeamMemberDialog, {
-                                            onSuccess: onAddNewMembers,
-                                        })
-                                    }>
-                                    <AddIcon /> Add a new member
-                                </Button>
-                            )}
+                <BoxContainer sx={{ gap: 0 }}>
+                    <Paper>
+                        <Box sx={{ bgcolor: "white", mb: 0 }}>
+                            <Typography variant="h2">
+                                Team management
+                            </Typography>
+                            <Typography>
+                                Organise and manage team members and email
+                                notifications. If you need assistance, please{" "}
+                                <a
+                                    target="_blank"
+                                    href={CUSTOMER_PORTAL_RAISE_SUPPORT_URL}
+                                    rel="noreferrer">
+                                    raise a support ticket
+                                </a>
+                                .
+                            </Typography>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                }}>
+                                {permissions[
+                                    "fe.account.team_management.member.add"
+                                ] && (
+                                    <Button
+                                        onClick={() =>
+                                            showDialog(AddTeamMemberDialog, {
+                                                onSuccess: onAddNewMembers,
+                                            })
+                                        }>
+                                        <AddIcon /> Add a new member
+                                    </Button>
+                                )}
+                            </Box>
                         </Box>
-                        <Tabs
-                            centered
-                            tabs={tabsList}
-                            tabBoxSx={{ padding: 0 }}
-                            rootBoxSx={{ padding: 0 }}
-                        />
-                    </Box>
+                    </Paper>
+                    <Tabs
+                        centered
+                        tabs={tabsList}
+                        tabBoxSx={{ padding: 0 }}
+                        rootBoxSx={{ padding: 0 }}
+                    />
                 </BoxContainer>
             </AccountLayout>
         </>

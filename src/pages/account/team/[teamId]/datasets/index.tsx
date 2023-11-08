@@ -4,52 +4,27 @@ import BoxContainer from "@/components/BoxContainer";
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
-import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import AccountLayout from "@/modules/AccountLayout";
+import TeamDatasets from "@/modules/TeamDatasets";
+import Paper from "@/components/Paper";
 
 const TeamDatasetsPage = () => {
-    const tabsList = [
-        {
-            label: "Active (0)",
-            value: "active",
-            content: <Box />,
-        },
-        {
-            label: "Draft (0)",
-            value: "draft",
-            content: <Box />,
-        },
-        {
-            label: "Archived (0)",
-            value: "archived",
-            content: <Box />,
-        },
-    ];
     return (
         <ProtectedRoute permissions={["fe.account.nav.datasets"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Datasets" />
             <AccountLayout>
-                <BoxContainer>
-                    <Box sx={{ bgcolor: "white" }}>
-                        <Typography variant="h2">Datasets</Typography>
-                        <Typography>
-                            View, add, edit, archive and check the status of
-                            your datasets.
-                        </Typography>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                justifyContent: "center",
-                            }}
-                        />
-                        <Tabs
-                            centered
-                            tabs={tabsList}
-                            tabBoxSx={{ padding: 0 }}
-                            rootBoxSx={{ padding: 0 }}
-                        />
-                    </Box>
+                <BoxContainer sx={{ gap: 0 }}>
+                    <Paper>
+                        <Box sx={{ bgcolor: "white", mb: 0 }}>
+                            <Typography variant="h2">Datasets</Typography>
+                            <Typography>
+                                View, add, edit, archive and check the status of
+                                your datasets.
+                            </Typography>
+                        </Box>
+                    </Paper>
+                    <TeamDatasets />
                 </BoxContainer>
             </AccountLayout>
         </ProtectedRoute>

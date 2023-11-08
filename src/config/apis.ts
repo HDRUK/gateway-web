@@ -17,6 +17,7 @@ const apis = {
     tagsV1Url: `${apiV1Url}/tags`,
     applicationsV1Url: `${apiV1Url}/applications`,
     permissionsV1Url: `${apiV1Url}/permissions`,
+    datasetsV1Url: `${apiV1Url}/datasets`,
     teamsV1Url: `${apiV1Url}/teams`,
     wordPressApiUrl: process.env.NEXT_PUBLIC_WORDPRESS_API_URL,
 };
