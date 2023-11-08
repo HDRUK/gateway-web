@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getUserFromToken } from "@/utils/cookies";
 import http from "@/utils/http";
 import config from "@/config/config";
+import { AxiosError } from "axios";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     console.log("req.cookies: ", req.cookies);
@@ -27,12 +28,19 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         res.status(200).json({
             data: { isLoggedIn: true, user: user.data },
         });
-    } catch (e: unknown) {
-        console.log("auth error: ", e);
-        const message = e instanceof Error ? e.message : String(e);
-        res.status(404).send({
-            title: "We have not been able to fetch your profile",
-            message,
-        });
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        if (err?.response) {
+            res.status(err.response.status).send({
+                title: "We have not been able to fetch your profile",
+                message: err.response.data?.message,
+            });
+        } else {
+            res.status(500).send({
+                title: "We have not been able to fetch your profile",
+                message: err.message,
+                stack: err.stack,
+            });
+        }
     }
 }
