@@ -24,6 +24,7 @@ import { DeleteForeverIcon } from "@/consts/icons";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import useGetTeam from "@/hooks/useGetTeam";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import Paper from "@/components/Paper";
 
 const limit = pLimit(1);
 
@@ -195,11 +196,13 @@ const TeamMembers = ({ teamMembers }: TeamMembersProps) => {
     };
 
     return (
-        <Table<User>
-            columns={columns}
-            onUpdate={handleUpdate}
-            rows={tableRows}
-        />
+        <Paper>
+            <Table<User>
+                columns={columns}
+                onUpdate={handleUpdate}
+                rows={tableRows}
+            />
+        </Paper>
     );
 };
 

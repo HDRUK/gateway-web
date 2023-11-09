@@ -1,5 +1,5 @@
 import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
+import Paper from "@/components/Paper";
 import InputSectionWrapper from "@/components/InputSectionWrapper";
 import Typography from "@/components/Typography";
 import {
@@ -157,7 +157,7 @@ const EmailNotifications = () => {
     ]);
 
     return (
-        <BoxContainer>
+        <Paper>
             <Box>
                 <Typography
                     sx={{
@@ -183,7 +183,7 @@ const EmailNotifications = () => {
                     control={control}
                 />
             </Box>
-        </BoxContainer>
+        </Paper>
     );
 };
 
