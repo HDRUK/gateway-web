@@ -14,6 +14,7 @@ import { AddIcon } from "@/consts/icons";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import EmailNotifications from "@/modules/EmailNotifications";
 import { useNewMembersOnTop } from "@/hooks/useNewMembersOnTop";
+import { CUSTOMER_PORTAL_RAISE_SUPPORT_URL } from "@/config/hrefs";
 
 const TeamManagementPage = () => {
     const { showDialog } = useDialog();
@@ -49,8 +50,15 @@ const TeamManagementPage = () => {
                     <Box sx={{ bgcolor: "white" }}>
                         <Typography variant="h2">Team management</Typography>
                         <Typography>
-                            Organise and manage team members and the teams email
-                            notifications.
+                            Organise and manage team members and email
+                            notifications. If you need assistance, please{" "}
+                            <a
+                                target="_blank"
+                                href={CUSTOMER_PORTAL_RAISE_SUPPORT_URL}
+                                rel="noreferrer">
+                                raise a support ticket
+                            </a>
+                            .
                         </Typography>
                         <Box
                             sx={{
