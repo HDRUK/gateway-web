@@ -1,7 +1,5 @@
-const apiV1Url =
-    process.env.NEXT_PUBLIC_API_V1_URL || "http://localhost:8000/api/v1";
-const apiV1IPUrl =
-    process.env.NEXT_PUBLIC_API_V1_IP_URL || "http://gateway-api:8000/api/v1";
+const apiV1Url = process.env.NEXT_PUBLIC_API_V1_URL;
+const apiV1IPUrl = process.env.NEXT_PUBLIC_API_V1_IP_URL;
 
 const apis = {
     logoutInternalUrl: "/api/logout",
