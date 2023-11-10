@@ -22,7 +22,24 @@ const FormInfoLabel = ({
 }: FormInfoLabelProps) => {
     return (
         <>
-            {(!horizontalForm || (horizontalForm && !info)) && (
+            {info ? (
+                <TooltipIcon
+                    align={horizontalForm}
+                    label={
+                        <Label
+                            name={name}
+                            required={required}
+                            label={label}
+                            sx={{
+                                ...(disabled && {
+                                    color: colors.grey600,
+                                }),
+                            }}
+                        />
+                    }
+                    content={<div>{info}</div>}
+                />
+            ) : (
                 <Label
                     name={name}
                     required={required}
@@ -42,24 +59,6 @@ const FormInfoLabel = ({
                     }}>
                     {info}
                 </FormHelperText>
-            )}
-            {info && (
-                <TooltipIcon
-                    align={horizontalForm}
-                    label={
-                        <Label
-                            name={name}
-                            required={required}
-                            label={label}
-                            sx={{
-                                ...(disabled && {
-                                    color: colors.grey600,
-                                }),
-                            }}
-                        />
-                    }
-                    content={<div>{info}</div>}
-                />
             )}
         </>
     );
