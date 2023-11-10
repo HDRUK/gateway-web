@@ -1,7 +1,6 @@
 import { FormHelperText } from "@mui/material";
 import { colors } from "@/config/theme";
 import Label from "@/components/Label";
-import { Box } from "@mui/material";
 import TooltipIcon from "@/components/TooltipIcon";
 
 interface FormInfoLabelProps {
