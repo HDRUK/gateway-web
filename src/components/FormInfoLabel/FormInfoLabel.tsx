@@ -34,35 +34,9 @@ const FormInfoLabel = ({
                     }}
                 />
             )}
-            {!horizontalForm && info && (
-                <>
-                    <TooltipIcon
-                        align={false}
-                        label={
-                            <Label
-                                name={name}
-                                required={required}
-                                label={label}
-                                sx={{
-                                    ...(disabled && {
-                                        color: colors.grey600,
-                                    }),
-                                }}
-                            />
-                        }
-                        content={<div>{info}</div>}
-                    />
-                    <FormHelperText
-                        sx={{
-                            fontSize: 13,
-                            color: colors.grey700,
-                        }}>
-                        {info}
-                    </FormHelperText>
-                </>
-            )}
-            {info && horizontalForm && (
+            {info && (
                 <TooltipIcon
+                    align={horizontalForm}
                     label={
                         <Label
                             name={name}
@@ -77,6 +51,15 @@ const FormInfoLabel = ({
                     }
                     content={<div>{info}</div>}
                 />
+            )}
+            {!horizontalForm && info && (
+                <FormHelperText
+                    sx={{
+                        fontSize: 13,
+                        color: colors.grey700,
+                    }}>
+                    {info}
+                </FormHelperText>
             )}
         </>
     );
