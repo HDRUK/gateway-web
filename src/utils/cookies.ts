@@ -8,6 +8,7 @@ interface AuthToken {
 const getUserFromToken = (token: string | undefined): null | User => {
     if (!token) return null;
     const response = jwtDecode<AuthToken>(token);
+    console.log(response);
     return response?.user;
 };
 

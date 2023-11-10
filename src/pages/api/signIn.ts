@@ -17,6 +17,8 @@ export default async function signIn(
 ) {
     const { body } = req;
 
+    console.log(apis.signInV1UrlIP);
+
     try {
         const { data } = await http.post<unknown, PostResponse>(
             apis.signInV1UrlIP,

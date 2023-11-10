@@ -7,9 +7,10 @@ import { colors } from "@/config/theme";
 interface TooltipIconProps {
     label: ReactNode;
     content: ReactNode;
+    align?: Boolean;
 }
 
-const TooltipIcon = ({ label, content }: TooltipIconProps) => {
+const TooltipIcon = ({ label, content, align = true }: TooltipIconProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,7 +23,10 @@ const TooltipIcon = ({ label, content }: TooltipIconProps) => {
 
     const open = Boolean(anchorEl);
     return (
-        <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box
+            display="flex"
+            alignItems="center"
+            justifyContent={align && "space-between"}>
             {label}
             <IconButton
                 disableRipple

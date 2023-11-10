@@ -1,6 +1,7 @@
 import { FormHelperText } from "@mui/material";
 import { colors } from "@/config/theme";
 import Label from "@/components/Label";
+import { Box } from "@mui/material";
 import TooltipIcon from "@/components/TooltipIcon";
 
 interface FormInfoLabelProps {
@@ -22,7 +23,7 @@ const FormInfoLabel = ({
 }: FormInfoLabelProps) => {
     return (
         <>
-            {(!horizontalForm || (horizontalForm && !info)) && (
+            {horizontalForm && !info && (
                 <Label
                     name={name}
                     required={required}
@@ -35,13 +36,31 @@ const FormInfoLabel = ({
                 />
             )}
             {!horizontalForm && info && (
-                <FormHelperText
-                    sx={{
-                        fontSize: 13,
-                        color: colors.grey700,
-                    }}>
-                    {info}
-                </FormHelperText>
+                <>
+                    <TooltipIcon
+                        align={false}
+                        label={
+                            <Label
+                                name={name}
+                                required={required}
+                                label={label}
+                                sx={{
+                                    ...(disabled && {
+                                        color: colors.grey600,
+                                    }),
+                                }}
+                            />
+                        }
+                        content={<div>{info}</div>}
+                    />
+                    <FormHelperText
+                        sx={{
+                            fontSize: 13,
+                            color: colors.grey700,
+                        }}>
+                        {info}
+                    </FormHelperText>
+                </>
             )}
             {info && horizontalForm && (
                 <TooltipIcon
