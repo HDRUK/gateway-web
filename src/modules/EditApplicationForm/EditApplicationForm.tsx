@@ -15,10 +15,12 @@ import DeleteApplication from "@/modules/DeleteApplication";
 import apis from "@/config/apis";
 import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import Paper from "@/components/Paper";
 import { useRouter } from "next/router";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import useGetTeam from "@/hooks/useGetTeam";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 interface EditApplicationFormProps {
     application?: Application;
@@ -30,6 +32,9 @@ const EditApplicationForm = ({
     isTabView = false,
 }: EditApplicationFormProps) => {
     const { query, push } = useRouter();
+
+    const { teamId } = query as AccountTeamUrlQuery;
+    const { team } = useGetTeam(teamId);
 
     const { control, handleSubmit, reset, trigger, formState } =
         useForm<Application>({
@@ -80,6 +85,25 @@ const EditApplicationForm = ({
 
     if (!application) return <Loading />;
 
+    const hydratedFormFields = useMemo(
+        () =>
+            fields.map(field => {
+                /* populate 'notifications' with team members */
+                if (field.name === "notifications") {
+                    return {
+                        ...field,
+                        options: team?.users?.map(teamUser => ({
+                            value: teamUser.email,
+                            label: `${teamUser.firstname} ${teamUser.lastname}`,
+                        })),
+                    };
+                }
+
+                return field;
+            }),
+        [team]
+    );
+
     return (
         <>
             <Paper
@@ -101,10 +125,10 @@ const EditApplicationForm = ({
                         marginBottom: "10px",
                         padding: 2,
                     }}>
-                    {fields.map(field => (
+                    {hydratedFormFields.map(field => (
                         <InputWrapper
                             trigger={trigger}
-                            key={field.name}
+                            key={field.name.toString()}
                             control={control}
                             {...field}
                         />

@@ -19,4 +19,8 @@ interface ApplicationPayload extends Omit<Application, "permissions"> {
     permissions: number[] | undefined;
 }
 
-export type { Application, ApplicationPayload };
+interface ApplicationForm extends Omit<Application, "notifications"> {
+    notifications: string[] | undefined;
+}
+
+export type { Application, ApplicationPayload, ApplicationForm };
