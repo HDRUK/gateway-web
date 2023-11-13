@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
 import config from "@/config/config";
 import http from "@/utils/http";
+import { AxiosError } from "axios";
 
 interface PostResponse {
     data: {
@@ -31,11 +32,19 @@ export default async function signIn(
         res.setHeader("Set-Cookie", cookie);
 
         res.status(200).json({ message: "success" });
-    } catch (e: unknown) {
-        const message = e instanceof Error ? e.message : String(e);
-        res.status(404).send({
-            title: "We have not been able to log you in",
-            message,
-        });
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        if (err?.response) {
+            res.status(err.response.status).send({
+                title: "We have not been able to log you in",
+                message: err.response.data?.message,
+            });
+        } else {
+            res.status(500).send({
+                title: "We have not been able to log you in",
+                message: err.message,
+                stack: err.stack,
+            });
+        }
     }
 }

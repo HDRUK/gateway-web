@@ -7,7 +7,6 @@ export function cookieMiddleware(
 ) {
     return async (req: NextApiRequest, res: NextApiResponse) => {
         // Get the cookie from the request headers
-        console.log("eq.headers.cookie: ", req.headers.cookie);
         const cookies = cookie.parse(req.headers.cookie || "");
 
         // Attach the cookie to the request object
