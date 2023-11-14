@@ -6,7 +6,7 @@ interface Response {
 }
 
 const getLogoutV1 = (status = 200) => {
-    return rest.get(apis.logoutV1Url, (req, res, ctx) => {
+    return rest.get(apis.logoutV1UrlIP, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),

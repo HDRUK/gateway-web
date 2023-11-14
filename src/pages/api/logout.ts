@@ -1,7 +1,7 @@
 import apis from "@/config/apis";
 import config from "@/config/config";
-import { postRequest } from "@/services/api/post";
 import { AxiosError } from "axios";
+import http from "@/utils/http";
 import { serialize } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -10,11 +10,11 @@ export default async function handler(
     res: NextApiResponse
 ) {
     try {
-        await postRequest(apis.logoutV1Url, null, {
-            notificationOptions: {
-                errorNotificationsOn: false,
-                successNotificationsOn: false,
+        await http.post(apis.logoutV1UrlIP, null, {
+            headers: {
+                Authorization: `Bearer ${req.cookies[config.JWT_COOKIE]}`,
             },
+            withCredentials: false,
         });
 
         const cookie = serialize(config.JWT_COOKIE, "", {

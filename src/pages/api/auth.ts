@@ -6,7 +6,6 @@ import config from "@/config/config";
 import { AxiosError } from "axios";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
-    console.log("req.cookies: ", req.cookies);
     try {
         const authUser = getUserFromToken(req.cookies[config.JWT_COOKIE]);
 
