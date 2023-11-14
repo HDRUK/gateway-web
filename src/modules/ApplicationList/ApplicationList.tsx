@@ -2,7 +2,7 @@ import ApplicationListItem from "@/modules/ApplicationListItem";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
@@ -28,7 +28,7 @@ const ApplicationList = () => {
         }
     );
 
-    useMemo(() => {
+    useEffect(() => {
         window.scrollTo({ top: 0 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
