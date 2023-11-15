@@ -3,6 +3,7 @@ import { render, screen, waitFor, within } from "@/utils/testUtils";
 import { server } from "@/mocks/server";
 import { getDatasetsV1 } from "@/mocks/handlers/datasets";
 import { generateDatasetV1 } from "@/mocks/data/dataset";
+import { DatasetSchema } from "@/interfaces/Dataset";
 
 jest.mock("next/navigation", () => ({
     useSearchParams() {
@@ -25,15 +26,23 @@ describe("TeamDatasets", () => {
         server.use(getDatasetsV1(mockDatasets));
         render(<TeamDatasets />);
 
+        const mockDatasetSchema1 = JSON.parse(
+            mockDatasets[0].dataset
+        ) as DatasetSchema;
+
         await waitFor(() => {
             const datasetCards = screen.getAllByTestId("dataset-card");
             expect(datasetCards).toHaveLength(3);
 
             expect(
-                within(datasetCards[0]).getByText(`${mockDatasets[0].label}`)
+                within(datasetCards[0]).getByText(
+                    `${mockDatasetSchema1.metadata.summary.title}`
+                )
             ).toBeInTheDocument();
             expect(
-                within(datasetCards[0]).getByText(`${mockDatasets[0].pid}`)
+                within(datasetCards[0]).getByText(
+                    `${mockDatasetSchema1.metadata.summary.publisher.publisherName.toUpperCase()}`
+                )
             ).toBeInTheDocument();
             expect(
                 within(datasetCards[0]).getByText(`${mockDatasets[0].version}`)

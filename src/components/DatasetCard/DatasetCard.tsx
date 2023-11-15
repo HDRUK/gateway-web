@@ -1,5 +1,5 @@
 import Paper from "@/components/Paper";
-import { Dataset } from "@/interfaces/Dataset";
+import { Dataset, DatasetSchema } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import { colors } from "@/config/theme";
 import { formatDate } from "@/utils/date";
@@ -11,6 +11,8 @@ interface DatasetCardProps {
 }
 
 const DatasetCard = ({ dataset }: DatasetCardProps) => {
+    const { dataset: datasetString } = dataset;
+    const datasetSchema = JSON.parse(datasetString) as DatasetSchema;
     const originMapping = {
         MANUAL: "Manually",
         API: "API",
@@ -37,11 +39,14 @@ const DatasetCard = ({ dataset }: DatasetCardProps) => {
                     }}>
                     <Box sx={{ p: 0, fontSize: 13 }}>
                         <Typography variant="h3" sx={{ mb: 2, fontSize: 16 }}>
-                            {dataset.label}
+                            {datasetSchema.metadata.summary.title}
                         </Typography>
                         <KeyValueList
                             rows={[
-                                { key: "Publisher", value: dataset.pid }, // todo: Replace with publisher name
+                                {
+                                    key: "Publisher",
+                                    value: datasetSchema.metadata.summary.publisher.publisherName.toUpperCase(),
+                                },
                                 { key: "Version", value: dataset.version },
                                 {
                                     key: "Last activity",
