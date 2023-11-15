@@ -22,7 +22,7 @@ const generateDatasetV1 = (data = {}): Dataset => {
         create_origin: faker.helpers.arrayElement(["FMA", "API", "MANUAL"]),
         version: faker.helpers.arrayElement(["1.0.0", "2.0.0"]),
         pid: faker.datatype.uuid(),
-        dataset: JSON.stringify(generateDatasetSchemaV1()),
+        dataset: generateDatasetSchemaV1(),
         label: faker.datatype.string(),
         updated: faker.date.past().toString(),
         ...data,

@@ -34,8 +34,10 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 export {
+    EditOutlinedIcon,
     CheckCircleTwoToneIcon,
     CheckCircleIcon,
     ArrowBackIosNewIcon,

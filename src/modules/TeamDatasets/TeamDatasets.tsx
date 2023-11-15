@@ -7,6 +7,7 @@ import { PaginationType } from "@/interfaces/Pagination";
 import DatasetTab from "@/modules/DatasetTab";
 import { useRouter } from "next/router";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { faker } from "@faker-js/faker";
 import { getTabLength } from "./TeamDatasets.utils";
 
 const TeamDatasets = () => {
@@ -14,7 +15,7 @@ const TeamDatasets = () => {
     const { teamId } = query as AccountTeamUrlQuery;
     const [currentPage, setCurrentPage] = useState(1);
     const { data, isLoading } = useGet<PaginationType<Dataset>>(
-        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&page=${currentPage}`,
+        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&decode_metadata=true&page=${currentPage}`,
         {
             keepPreviousData: true,
             withPagination: true,
@@ -32,11 +33,11 @@ const TeamDatasets = () => {
             data?.list?.map(dataset => ({
                 ...dataset,
                 // todo: Uncomment this to test until status has been implemented in BE
-                // status: faker.helpers.arrayElement([
-                //     "Archived",
-                //     "Draft",
-                //     "Active",
-                // ]),
+                status: faker.helpers.arrayElement([
+                    "Archived",
+                    "Draft",
+                    "Active",
+                ]),
             })) as Dataset[],
         [data?.list]
     );
