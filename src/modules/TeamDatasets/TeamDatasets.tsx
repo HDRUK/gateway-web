@@ -7,7 +7,6 @@ import { PaginationType } from "@/interfaces/Pagination";
 import DatasetTab from "@/modules/DatasetTab";
 import { useRouter } from "next/router";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
-import { faker } from "@faker-js/faker";
 import { getTabLength } from "./TeamDatasets.utils";
 
 const TeamDatasets = () => {
@@ -33,11 +32,11 @@ const TeamDatasets = () => {
             data?.list?.map(dataset => ({
                 ...dataset,
                 // todo: Uncomment this to test until status has been implemented in BE
-                status: faker.helpers.arrayElement([
-                    "Archived",
-                    "Draft",
-                    "Active",
-                ]),
+                // status: faker.helpers.arrayElement([
+                //     "Archived",
+                //     "Draft",
+                //     "Active",
+                // ]),
             })) as Dataset[],
         [data?.list]
     );
