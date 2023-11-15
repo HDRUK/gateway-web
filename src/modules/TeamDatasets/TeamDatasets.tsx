@@ -14,7 +14,7 @@ const TeamDatasets = () => {
     const { teamId } = query as AccountTeamUrlQuery;
     const [currentPage, setCurrentPage] = useState(1);
     const { data, isLoading } = useGet<PaginationType<Dataset>>(
-        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&page=${currentPage}`,
+        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&decode_metadata=true&page=${currentPage}`,
         {
             keepPreviousData: true,
             withPagination: true,

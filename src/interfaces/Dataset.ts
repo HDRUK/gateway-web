@@ -15,7 +15,7 @@ interface Dataset {
     status: DatasetStatus;
     label: string | null;
     pid: string | null;
-    dataset: string;
+    dataset: DatasetSchema;
     updated: string;
     version: string | null;
     create_origin: "FMA" | "MANUAL" | "API";

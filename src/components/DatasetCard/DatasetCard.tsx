@@ -1,18 +1,26 @@
 import Paper from "@/components/Paper";
-import { Dataset, DatasetSchema } from "@/interfaces/Dataset";
+import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import { colors } from "@/config/theme";
 import { formatDate } from "@/utils/date";
-import Typography from "../Typography";
-import KeyValueList from "../KeyValueList";
+import { IconButton } from "@mui/material";
+import { EditOutlinedIcon } from "@/consts/icons";
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import Typography from "@/components/Typography";
+import KeyValueList from "@/components/KeyValueList";
+import Link from "@/components/Link";
+import Tooltip from "@/components/Tooltip";
 
 interface DatasetCardProps {
     dataset: Dataset;
 }
 
 const DatasetCard = ({ dataset }: DatasetCardProps) => {
-    const { dataset: datasetString } = dataset;
-    const datasetSchema = JSON.parse(datasetString) as DatasetSchema;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
+
+    const { dataset: datasetSchema } = dataset;
     const originMapping = {
         MANUAL: "Manually",
         API: "API",
@@ -72,7 +80,17 @@ const DatasetCard = ({ dataset }: DatasetCardProps) => {
                     </Box>
                 </Box>
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
-                    {/* todo: Add action  buttons here */}
+                    <Tooltip placement="left" title="Edit dataset metadata">
+                        <Link
+                            href={`/account/team/${teamId}/datasets/${dataset.id}`}>
+                            <IconButton
+                                disableRipple
+                                size="large"
+                                aria-label="Edit dataset metadata">
+                                <EditOutlinedIcon color="primary" />
+                            </IconButton>
+                        </Link>
+                    </Tooltip>
                 </Box>
             </Box>
         </Paper>
