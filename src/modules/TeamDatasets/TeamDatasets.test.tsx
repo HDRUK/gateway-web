@@ -7,7 +7,7 @@ import { generateDatasetV1 } from "@/mocks/data/dataset";
 jest.mock("next/navigation", () => ({
     useSearchParams() {
         return {
-            get: () => "active",
+            get: () => "ACTIVE",
         };
     },
 }));
