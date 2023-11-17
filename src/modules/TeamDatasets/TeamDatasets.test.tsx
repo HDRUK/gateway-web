@@ -7,7 +7,7 @@ import { generateDatasetV1 } from "@/mocks/data/dataset";
 jest.mock("next/navigation", () => ({
     useSearchParams() {
         return {
-            get: () => "active",
+            get: () => "ACTIVE",
         };
     },
 }));
@@ -15,12 +15,12 @@ jest.mock("next/navigation", () => ({
 describe("TeamDatasets", () => {
     it("should render active datasets", async () => {
         const mockDatasets = [
-            generateDatasetV1({ create_origin: "FMA", status: "Active" }),
-            generateDatasetV1({ create_origin: "MANUAL", status: "Archived" }),
-            generateDatasetV1({ create_origin: "API", status: "Active" }),
-            generateDatasetV1({ create_origin: "MANUAL", status: "Active" }),
-            generateDatasetV1({ create_origin: "MANUAL", status: "Draft" }),
-            generateDatasetV1({ create_origin: "FMA", status: "Draft" }),
+            generateDatasetV1({ create_origin: "FMA", status: "ACTIVE" }),
+            generateDatasetV1({ create_origin: "MANUAL", status: "ARCHIVED" }),
+            generateDatasetV1({ create_origin: "API", status: "ACTIVE" }),
+            generateDatasetV1({ create_origin: "MANUAL", status: "ACTIVE" }),
+            generateDatasetV1({ create_origin: "MANUAL", status: "DRAFT" }),
+            generateDatasetV1({ create_origin: "FMA", status: "DRAFT" }),
         ];
         server.use(getDatasetsV1(mockDatasets));
         render(<TeamDatasets />);
@@ -56,8 +56,8 @@ describe("TeamDatasets", () => {
     });
     it("should render message if no active datasets", async () => {
         const mockDatasets = [
-            generateDatasetV1({ create_origin: "MANUAL", status: "Archived" }),
-            generateDatasetV1({ create_origin: "FMA", status: "Draft" }),
+            generateDatasetV1({ create_origin: "MANUAL", status: "ARCHIVED" }),
+            generateDatasetV1({ create_origin: "FMA", status: "DRAFT" }),
         ];
         server.use(getDatasetsV1(mockDatasets));
         render(<TeamDatasets />);

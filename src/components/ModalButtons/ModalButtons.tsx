@@ -1,5 +1,6 @@
 import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
+import Box from "../Box";
 
 type ConfirmType = "button" | "submit" | undefined;
 export interface ModalButtonProps {
@@ -8,6 +9,7 @@ export interface ModalButtonProps {
     confirmText?: string;
     cancelText?: string;
     confirmType?: ConfirmType;
+    tertiaryButton?: { onAction: (props: unknown) => void; buttonText: string };
 }
 
 const ModalButtons = ({
@@ -16,6 +18,7 @@ const ModalButtons = ({
     cancelText,
     confirmText,
     confirmType,
+    tertiaryButton,
 }: ModalButtonProps) => {
     const { hideDialog: hideModal } = useDialog();
 
@@ -33,6 +36,13 @@ const ModalButtons = ({
         hideModal();
     };
 
+    const handleTertiary = (props: unknown) => {
+        if (typeof tertiaryButton?.onAction === "function") {
+            tertiaryButton.onAction(props);
+        }
+        hideModal();
+    };
+
     return (
         <>
             <Button
@@ -42,18 +52,25 @@ const ModalButtons = ({
                 onClick={handleCancel}>
                 {cancelText}
             </Button>
-            {confirmType === "submit" ? (
-                <Button key="confirm" type="submit">
-                    {confirmText}
-                </Button>
-            ) : (
-                <Button
-                    key="confirm"
-                    type={confirmType}
-                    onClick={handleSuccess}>
-                    {confirmText}
-                </Button>
-            )}
+            <Box sx={{ p: 0, gap: 2, display: "flex" }}>
+                {tertiaryButton && (
+                    <Button color="inherit" onClick={handleTertiary}>
+                        {tertiaryButton.buttonText}
+                    </Button>
+                )}
+                {confirmType === "submit" ? (
+                    <Button key="confirm" type="submit">
+                        {confirmText}
+                    </Button>
+                ) : (
+                    <Button
+                        key="confirm"
+                        type={confirmType}
+                        onClick={handleSuccess}>
+                        {confirmText}
+                    </Button>
+                )}
+            </Box>
         </>
     );
 };

@@ -34,10 +34,14 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import EditIcon from "@mui/icons-material/Edit";
+import ArchiveIcon from "@mui/icons-material/Archive";
+import UnarchiveIcon from "@mui/icons-material/Unarchive";
 
 export {
-    EditOutlinedIcon,
+    UnarchiveIcon,
+    ArchiveIcon,
+    EditIcon,
     CheckCircleTwoToneIcon,
     CheckCircleIcon,
     ArrowBackIosNewIcon,

@@ -1,26 +1,18 @@
 /** @jsxImportSource @emotion/react */
 
-import {
-    InputAdornment,
-    OutlinedInput,
-    IconButton,
-    SvgIconTypeMap,
-} from "@mui/material";
+import { InputAdornment, OutlinedInput, IconButton } from "@mui/material";
 
-import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Control, useController } from "react-hook-form";
 import { CancelIcon } from "@/consts/icons";
 import FormInputWrapper from "@/components/FormInputWrapper";
+import { IconType } from "@/interfaces/Ui";
 
 export interface TextFieldBaseProps {
     label: string;
     placeholder?: string;
     info?: string;
     extraInfo?: string;
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-        muiName: string;
-    };
+    icon?: IconType;
     setValue?: (name: string, value: string | number) => void;
     name: string;
     multiline?: boolean;

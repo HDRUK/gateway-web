@@ -11,6 +11,7 @@ const usePatch = <T extends { id?: number }>(
         localeKey,
         itemName,
         action,
+        query,
         successNotificationsOn = true,
         errorNotificationsOn = true,
     } = options || {};
@@ -19,17 +20,22 @@ const usePatch = <T extends { id?: number }>(
     ThrowPaginationError(options);
 
     return async (id: string | number, payload: T) => {
-        return await apiService.patchRequest(`${url}/${id}`, payload, {
-            notificationOptions: {
-                localeKey,
-                itemName,
-                successNotificationsOn,
-                errorNotificationsOn,
-                t,
-                i18n,
-                action,
-            },
-        });
+        const queryString = query ? `?${query}` : "";
+        return await apiService.patchRequest(
+            `${url}/${id}${queryString}`,
+            payload,
+            {
+                notificationOptions: {
+                    localeKey,
+                    itemName,
+                    successNotificationsOn,
+                    errorNotificationsOn,
+                    t,
+                    i18n,
+                    action,
+                },
+            }
+        );
     };
 };
 

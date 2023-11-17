@@ -27,6 +27,7 @@ interface HttpOptions extends MutatorOptions {
     successNotificationsOn?: boolean;
     errorNotificationsOn?: boolean;
     itemName?: string;
+    query?: string;
     data?: unknown;
     paginationKey?: string;
     withPagination?: boolean;

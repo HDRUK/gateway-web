@@ -18,6 +18,7 @@ export interface ModalProps {
     title?: string;
     invertCloseIconBehaviour?: boolean;
     styleProps?: DialogProps;
+    tertiaryButton?: { onAction: (props: unknown) => void; buttonText: string };
 }
 
 const Modal = () => {
@@ -32,6 +33,7 @@ const Modal = () => {
         onCancel,
         confirmText,
         cancelText,
+        tertiaryButton,
         invertCloseIconBehaviour,
         title,
         styleProps = {},
@@ -70,8 +72,9 @@ const Modal = () => {
             </IconButton>
             <MuiDialogTitle>{title}</MuiDialogTitle>
             <MuiDialogContent>{content}</MuiDialogContent>
-            <MuiDialogActions>
+            <MuiDialogActions sx={{ justifyContent: "space-between", p: 2 }}>
                 <ModalButtons
+                    tertiaryButton={tertiaryButton}
                     onSuccess={onSuccess}
                     onCancel={onCancel}
                     cancelText={cancelText}

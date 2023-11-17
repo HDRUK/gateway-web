@@ -18,7 +18,7 @@ const generateDatasetSchemaV1 = (data = {}): DatasetSchema => {
 const generateDatasetV1 = (data = {}): Dataset => {
     return {
         id: faker.datatype.number(),
-        status: faker.helpers.arrayElement(["Archived", "Active", "Draft"]),
+        status: faker.helpers.arrayElement(["ARCHIVED", "ACTIVE", "DRAFT"]),
         create_origin: faker.helpers.arrayElement(["FMA", "API", "MANUAL"]),
         version: faker.helpers.arrayElement(["1.0.0", "2.0.0"]),
         pid: faker.datatype.uuid(),
