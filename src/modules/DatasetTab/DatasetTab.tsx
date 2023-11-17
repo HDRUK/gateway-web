@@ -5,9 +5,16 @@ import Pagination from "@/components/Pagination";
 import ShowingXofX from "@/components/ShowingXofX";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
+import { IconType } from "@/interfaces/Ui";
 
 interface DatasetTabProps {
     list?: Dataset[];
+    actions: {
+        icon: IconType;
+        href?: string;
+        action?: (id: number) => void;
+        label: string;
+    }[];
     lastPage?: number;
     from?: number;
     to?: number;
@@ -19,6 +26,7 @@ interface DatasetTabProps {
 }
 
 const DatasetTab = ({
+    actions,
     list,
     label,
     lastPage,
@@ -36,11 +44,16 @@ const DatasetTab = ({
                 <ShowingXofX from={from} to={to} total={total} />
             </Box>
             {(list || [])?.map(dataset => (
-                <DatasetCard key={dataset.id} dataset={dataset} />
+                <DatasetCard
+                    actions={actions}
+                    key={dataset.id}
+                    dataset={dataset}
+                />
             ))}
             {list?.length === 0 && (
                 <Paper sx={{ p: 2, mb: 2 }}>
-                    No {label} datasets found on the Gateway for your team.
+                    No {label.toLowerCase()} datasets found on the Gateway for
+                    your team.
                 </Paper>
             )}
             <Pagination

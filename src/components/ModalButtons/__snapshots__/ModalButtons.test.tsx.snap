@@ -12,15 +12,19 @@ exports[`ModalButtons should render basic modal buttons 1`] = `
       class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
     />
   </button>
-  <button
-    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-t1dlda-MuiButtonBase-root-MuiButton-root"
-    tabindex="0"
-    type="button"
+  <div
+    class="MuiBox-root mui-style-f2lpgk"
   >
-    Confirm
-    <span
-      class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
-    />
-  </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-t1dlda-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
+    >
+      Confirm
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+  </div>
 </div>
 `;

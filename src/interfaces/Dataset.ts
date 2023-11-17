@@ -1,4 +1,4 @@
-type DatasetStatus = "Archived" | "Active" | "Draft";
+type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 
 interface DatasetSchema {
     metadata: {

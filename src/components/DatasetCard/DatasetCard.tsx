@@ -3,23 +3,22 @@ import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import { colors } from "@/config/theme";
 import { formatDate } from "@/utils/date";
-import { IconButton } from "@mui/material";
-import { EditOutlinedIcon } from "@/consts/icons";
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import Typography from "@/components/Typography";
 import KeyValueList from "@/components/KeyValueList";
-import Link from "@/components/Link";
-import Tooltip from "@/components/Tooltip";
+import { IconType } from "@/interfaces/Ui";
+import CardActions from "../CardActions";
 
 interface DatasetCardProps {
     dataset: Dataset;
+    actions: {
+        icon: IconType;
+        href?: string;
+        action?: (id: number) => void;
+        label: string;
+    }[];
 }
 
-const DatasetCard = ({ dataset }: DatasetCardProps) => {
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
-
+const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
     const { dataset: datasetSchema } = dataset;
     const originMapping = {
         MANUAL: "Manually",
@@ -80,17 +79,7 @@ const DatasetCard = ({ dataset }: DatasetCardProps) => {
                     </Box>
                 </Box>
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
-                    <Tooltip placement="left" title="Edit dataset metadata">
-                        <Link
-                            href={`/account/team/${teamId}/datasets/${dataset.id}`}>
-                            <IconButton
-                                disableRipple
-                                size="large"
-                                aria-label="Edit dataset metadata">
-                                <EditOutlinedIcon color="primary" />
-                            </IconButton>
-                        </Link>
-                    </Tooltip>
+                    <CardActions actions={actions} id={dataset.id} />
                 </Box>
             </Box>
         </Paper>
