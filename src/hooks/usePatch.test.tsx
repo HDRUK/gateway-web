@@ -23,6 +23,7 @@ describe("usePatch", () => {
             usePatch<User>(apis.usersV1Url, {
                 localeKey: "mockLocaleKey",
                 itemName: "mockItemName",
+                query: "queryKey=queryValue",
             })
         );
 
@@ -30,7 +31,7 @@ describe("usePatch", () => {
 
         await waitFor(() =>
             expect(apiService.patchRequest).toHaveBeenCalledWith(
-                `${apis.usersV1Url}/${userV1.id}`,
+                `${apis.usersV1Url}/${userV1.id}?queryKey=queryValue`,
                 userV1,
                 {
                     notificationOptions: {

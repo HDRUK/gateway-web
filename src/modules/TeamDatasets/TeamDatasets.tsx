@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import { EditIcon, UnarchiveIcon } from "@/consts/icons";
 import useModal from "@/hooks/useModal";
+import usePatch from "@/hooks/usePatch";
 import { getTabLength } from "./TeamDatasets.utils";
 
 const TeamDatasets = () => {
@@ -24,8 +25,9 @@ const TeamDatasets = () => {
         }
     );
 
-    // todo: Call api once implemented in BE
-    // const unArchiveDataset = usePatch<Partial<Dataset>>(apis.datasetsV1Url);
+    const unArchiveDataset = usePatch<Partial<Dataset>>(apis.datasetsV1Url, {
+        query: "unarchive",
+    });
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
@@ -61,15 +63,15 @@ const TeamDatasets = () => {
                               tertiaryButton: {
                                   onAction: () => {
                                       console.log(`Make ${id} Active`);
-                                      // todo: Call api once implemented in BE
-                                      // unArchiveDataset(id, { status: "ACTIVE" });
+                                      unArchiveDataset(id, {
+                                          status: "ACTIVE",
+                                      });
                                   },
                                   buttonText: "Make Active",
                               },
                               onSuccess: () => {
                                   console.log(`Make ${id} Draft`);
-                                  // todo: Call api once implemented in BE
-                                  // unArchiveDataset(id, { status: "DRAFT" });
+                                  unArchiveDataset(id, { status: "DRAFT" });
                               },
                               confirmText: "Make Draft",
                               title: "Unarchive this dataset",
