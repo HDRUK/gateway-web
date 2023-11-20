@@ -46,6 +46,13 @@
             }
         }
     },
+    "archiveDataset": {
+        "success": {
+            "delete": {
+                "message": "You have archived 1 dataset and can now find the dataset metadata in the Archived tab. The dataset will no longer show up in search results"
+            }
+        }
+    },
     "applicationPermission": {
         "success": {
             "put": {

@@ -1,14 +1,13 @@
-import { filtersV1, userV1 } from "@/mocks/data";
+import { userV1 } from "@/mocks/data";
 import useDelete from "@/hooks/useDelete";
+import * as apiService from "@/services/api/delete";
 import apis from "@/config/apis";
-import { act, renderHook, waitFor } from "@/utils/testUtils";
+import { renderHook, waitFor } from "@/utils/testUtils";
 
-const mockMutate = jest.fn();
-
-jest.mock("swr", () => {
+jest.mock("@/services/api/delete", () => {
     return {
-        ...jest.requireActual("swr"),
-        useSWRConfig: () => ({ mutate: mockMutate }),
+        ...jest.requireActual("@/services/api/delete"),
+        deleteRequest: jest.fn(),
         __esModule: true,
     };
 });
@@ -18,28 +17,30 @@ describe("useDelete", () => {
         jest.clearAllMocks();
     });
 
-    it("should call mutate with correct arguments for deleting the item", async () => {
-        const { result } = renderHook(() => useDelete(apis.usersV1Url));
+    it("should call deleteRequest with correct arguments for deleting the item", async () => {
+        const { result } = renderHook(() =>
+            useDelete(apis.usersV1Url, {
+                localeKey: "mockLocaleKey",
+                itemName: "mockItemName",
+            })
+        );
         const { current: deleteFunction } = result;
 
         await deleteFunction(userV1.id);
 
         await waitFor(() =>
-            expect(mockMutate).toHaveBeenCalledWith(
-                apis.usersV1Url,
-                expect.any(Function),
-                { optimisticData: {}, rollbackOnError: true }
+            expect(apiService.deleteRequest).toHaveBeenCalledWith(
+                `${apis.usersV1Url}/${userV1.id}`,
+                {
+                    notificationOptions: {
+                        localeKey: "mockLocaleKey",
+                        itemName: "mockItemName",
+                        t: expect.any(Function),
+                        i18n: { changeLanguage: expect.any(Function) },
+                        action: undefined,
+                    },
+                }
             )
         );
-    });
-    it("should call mutate with correct arguments for deleting an item in an array", async () => {
-        const { result } = renderHook(() => useDelete(apis.filtersV1Url));
-        const { current: deleteFunction } = result;
-
-        act(() => {
-            deleteFunction(filtersV1[0].id);
-        });
-
-        await waitFor(() => expect(mockMutate).toHaveBeenCalled());
     });
 });
