@@ -1,4 +1,5 @@
 import { Permission } from "@/interfaces/Permission";
+import { Notification } from "@/interfaces/Notification";
 
 interface Application {
     id: number;
@@ -13,6 +14,7 @@ interface Application {
     created_at: string;
     updated_at: string;
     permissions: Permission[];
+    notifications: Notification[] | undefined;
 }
 
 interface ApplicationPayload extends Omit<Application, "permissions"> {
