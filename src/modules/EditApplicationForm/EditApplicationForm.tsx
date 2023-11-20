@@ -10,7 +10,11 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { Application, ApplicationPayload } from "@/interfaces/Application";
+import {
+    Application,
+    ApplicationForm,
+    ApplicationPayload,
+} from "@/interfaces/Application";
 import DeleteApplication from "@/modules/DeleteApplication";
 import apis from "@/config/apis";
 import Loading from "@/components/Loading";
@@ -37,7 +41,7 @@ const EditApplicationForm = ({
     const { team } = useGetTeam(teamId);
 
     const { control, handleSubmit, reset, trigger, formState } =
-        useForm<Application>({
+        useForm<ApplicationForm>({
             resolver: yupResolver(applicationValidationSchema),
             defaultValues: {
                 ...applicationDefaultValues,
@@ -50,7 +54,14 @@ const EditApplicationForm = ({
     });
 
     useEffect(() => {
-        reset(application);
+        const formData: ApplicationForm = {
+            ...application,
+            notifications: application?.notifications?.map(
+                (notification: { email: string }) => notification.email
+            ),
+        };
+
+        reset(formData);
     }, [application, reset]);
 
     const fields = isTabView
@@ -83,8 +94,6 @@ const EditApplicationForm = ({
         }
     };
 
-    if (!application) return <Loading />;
-
     const hydratedFormFields = useMemo(
         () =>
             fields.map(field => {
@@ -98,11 +107,12 @@ const EditApplicationForm = ({
                         })),
                     };
                 }
-
                 return field;
             }),
         [team]
     );
+
+    if (!application) return <Loading />;
 
     return (
         <>

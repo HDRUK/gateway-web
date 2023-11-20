@@ -19,6 +19,16 @@ const generateApplicationV1 = (data = {}): Application => {
             .between("2020-04-01T00:00:00.000Z", "2030-06-01T00:00:00.000Z")
             .toISOString(),
         permissions: [],
+        notifications: [
+            {
+                id: faker.datatype.number(),
+                opt_in: faker.datatype.number(),
+                email: faker.internet.email(),
+                enabled: faker.datatype.boolean(),
+                message: faker.datatype.string(),
+                notification_type: faker.datatype.string(),
+            },
+        ],
         ...data,
     };
 };
