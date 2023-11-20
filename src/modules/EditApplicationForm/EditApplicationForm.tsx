@@ -109,7 +109,7 @@ const EditApplicationForm = ({
                 }
                 return field;
             }),
-        [fields, team]
+        [team]
     );
 
     return (
