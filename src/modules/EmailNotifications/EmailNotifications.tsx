@@ -7,6 +7,7 @@ import {
     emailNotificationDefaultValues,
     emailNotificationFormSections,
     EmailNotification,
+    TeamNotifications,
 } from "@/config/forms/emailNotifications";
 import useActionBar from "@/hooks/useActionBar";
 import useAuth from "@/hooks/useAuth";
@@ -23,6 +24,9 @@ import { useHasPermissions } from "@/hooks/useHasPermission";
 import useModal from "@/hooks/useModal";
 import { colors } from "@/config/theme";
 import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
+import usePost from "@/hooks/usePost";
+import apis from "@/config/apis";
+import { M } from "msw/lib/glossary-de6278a9";
 
 const EmailNotifications = () => {
     const permissions = useHasPermissions();
@@ -33,14 +37,16 @@ const EmailNotifications = () => {
     const { teamId } = query as AccountTeamUrlQuery;
 
     const { team } = useGetTeam(teamId);
-    const { control, formState, reset, watch } = useForm<EmailNotification>({
-        defaultValues: emailNotificationDefaultValues,
-        resolver: yupResolver(emailNotificationValidationSchema),
-    });
+
+    const { control, formState, handleSubmit, reset, watch } =
+        useForm<EmailNotification>({
+            defaultValues: emailNotificationDefaultValues,
+            resolver: yupResolver(emailNotificationValidationSchema),
+        });
 
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
 
-    const contact_point = watch("contact_point");
+    const team_emails = watch("team_emails");
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -54,27 +60,63 @@ const EmailNotifications = () => {
             permissions[
                 "fe.account.team_management.notifications.team_section"
             ];
+
         return [
             mySection,
             {
                 ...teamSection,
-                fields: teamSection.fields.map(field => ({
-                    ...field,
-                    title: !isTeamAdmin
-                        ? "You do not have permission to edit this field"
-                        : "",
-                    disabled: !isTeamAdmin,
-                })),
+                fields: teamSection.fields
+                    .map(field => {
+                        if (field.name === "team_emails") {
+                            return {
+                                ...field,
+                                options: team?.notifications
+                                    .filter(n => n.enabled)
+                                    .map(n => ({
+                                        value: n.email,
+                                        label: n.email,
+                                    })),
+                            };
+                        }
+                        return field;
+                    })
+                    .map(field => ({
+                        ...field,
+                        title: !isTeamAdmin
+                            ? "You do not have permission to edit this field"
+                            : "",
+                        disabled: !isTeamAdmin,
+                    })),
             },
         ];
     }, [permissions]);
+
+    const updateNotificationEmails = usePost<TeamNotifications>(
+        `${apis.teamsV1Url}/${teamId}/notifications`,
+        {
+            itemName: "Team Notification",
+        }
+    );
+
+    const updateEmailNotifications = (e: EmailNotification) => {
+        const payload = {
+            user_notification_status: true,
+            team_notification_status: true,
+            team_emails: e.team_emails,
+        };
+        console.log(payload);
+        console.log(e);
+        //updateNotificationEmails(payload);
+    };
 
     useEffect(() => {
         if (!team || !user) return;
 
         const formValues = {
             ...emailNotificationDefaultValues,
-            contact_point: team.contact_point,
+            team_emails: team.notifications
+                .filter(n => n.enabled)
+                .map(n => n.email),
             profile_email: getPreferredEmail(user),
         };
 
@@ -102,23 +144,24 @@ const EmailNotifications = () => {
                     <Typography sx={{ mb: 3 }}>
                         Are you sure you want to save your update to email
                         notifications? Please make sure any team email addresses
-                        you have entered are correct.
+                        you have added are correct.
                     </Typography>
-                    {contact_point && (
-                        <Box sx={{ display: "flex", p: 0, gap: 2 }}>
+                    {team_emails && (
+                        <Box sx={{ p: 0 }}>
                             <Typography color={colors.grey600}>
-                                Team Email:
+                                Team Emails:
                             </Typography>
-                            <Typography>{contact_point}</Typography>
+                            <ul>
+                                {team_emails.map(e => (
+                                    <li> {e} </li>
+                                ))}
+                            </ul>
                         </Box>
                     )}
                 </Box>
             ),
             onSuccess: () => {
-                /**
-                 * todo: Complete once BE is implemented
-                 * handleSubmit(onSubmit)();
-                 */
+                handleSubmit(updateEmailNotifications)();
                 setShouldSubmit(false);
             },
             onCancel: () => {
@@ -126,7 +169,7 @@ const EmailNotifications = () => {
             },
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shouldSubmit, contact_point]);
+    }, [shouldSubmit, team_emails]);
 
     useEffect(() => {
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */

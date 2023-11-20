@@ -1,4 +1,5 @@
 import { User } from "@/interfaces/User";
+import { Notification } from "@/interfaces/Notification";
 
 interface Team {
     id: number;
@@ -14,6 +15,7 @@ interface Team {
     application_form_updated_by: string;
     application_form_updated_on: string;
     users: User[];
+    notifications: Notification[];
 }
 
 export type { Team };
