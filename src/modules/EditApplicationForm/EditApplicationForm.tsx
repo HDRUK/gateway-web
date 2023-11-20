@@ -112,6 +112,8 @@ const EditApplicationForm = ({
         [team]
     );
 
+    if (!application) return <Loading />;
+
     return (
         <>
             <Paper
