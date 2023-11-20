@@ -41,7 +41,7 @@ const formSections = [
                 required: true,
             },
             {
-                label: "My gateway email",
+                label: "My preferred notification email address",
                 name: "profile_email",
                 component: inputComponents.TextField,
                 disabled: true,
