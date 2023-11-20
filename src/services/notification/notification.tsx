@@ -42,7 +42,6 @@ const apiSuccess = (
     options?: OptionsWithExtraProps<VariantType>
 ) => {
     return notification(message, "apiSuccess", {
-        persist: "true",
         action: (snackbarId: SnackbarKey) => {
             <DismissButton snackbarId={snackbarId} />;
         },

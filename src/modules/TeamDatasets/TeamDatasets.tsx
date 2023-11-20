@@ -1,15 +1,16 @@
 import Tabs from "@/components/Tabs";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
 import DatasetTab from "@/modules/DatasetTab";
 import { useRouter } from "next/router";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
-import { EditIcon, UnarchiveIcon } from "@/consts/icons";
+import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
+import useDelete from "@/hooks/useDelete";
 import { getTabLength } from "./TeamDatasets.utils";
 
 const TeamDatasets = () => {
@@ -17,7 +18,7 @@ const TeamDatasets = () => {
     const { query } = useRouter();
     const { teamId, tab } = query as AccountTeamUrlQuery;
     const [currentPage, setCurrentPage] = useState(1);
-    const { data, isLoading } = useGet<PaginationType<Dataset>>(
+    const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
         `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&decode_metadata=true&page=${currentPage}`,
         {
             keepPreviousData: true,
@@ -29,25 +30,14 @@ const TeamDatasets = () => {
         query: "unarchive",
     });
 
+    const archiveDataset = useDelete(apis.datasetsV1Url, {
+        localeKey: "archiveDataset",
+    });
+
     useEffect(() => {
         window.scrollTo({ top: 0 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
-
-    // todo: Remove "dataWithStatus" once status has been implemented in BE
-    const dataWithStatus = useMemo(
-        () =>
-            data?.list?.map(dataset => ({
-                ...dataset,
-                // todo: Uncomment this to test until status has been implemented in BE
-                // status: faker.helpers.arrayElement([
-                //     "ARCHIVED",
-                //     "DRAFT",
-                //     "ACTIVE",
-                // ]),
-            })) as Dataset[],
-        [data?.list]
-    );
 
     const actions = [
         {
@@ -84,11 +74,24 @@ const TeamDatasets = () => {
                   },
               ]
             : []),
+        ...(tab !== "ARCHIVED"
+            ? [
+                  {
+                      action: async (id: number) => {
+                          await archiveDataset(id);
+
+                          mutate();
+                      },
+                      icon: ArchiveIcon,
+                      label: "Archive dataset metadata so it is no longer live on the Gateway",
+                  },
+              ]
+            : []),
     ];
 
-    const archivedTabs = getTabLength(dataWithStatus, "ARCHIVED");
-    const draftTabs = getTabLength(dataWithStatus, "DRAFT");
-    const activeTabs = getTabLength(dataWithStatus, "ACTIVE");
+    const archivedTabs = getTabLength(data?.list, "ARCHIVED");
+    const draftTabs = getTabLength(data?.list, "DRAFT");
+    const activeTabs = getTabLength(data?.list, "ACTIVE");
 
     const tabsList = [
         { label: "Active", value: "ACTIVE", dsCount: activeTabs },
@@ -102,7 +105,7 @@ const TeamDatasets = () => {
                 {...data}
                 key={tabItem.value}
                 label={tabItem.label}
-                list={(dataWithStatus || []).filter(
+                list={(data?.list || []).filter(
                     ds => ds.status === tabItem.value
                 )}
                 currentPage={currentPage}
