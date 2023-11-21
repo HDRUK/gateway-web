@@ -7,6 +7,7 @@ import Typography from "@/components/Typography";
 import KeyValueList from "@/components/KeyValueList";
 import { IconType } from "@/interfaces/Ui";
 import CardActions from "../CardActions";
+import { nonManualActions } from "@/consts/actions";
 
 interface DatasetCardProps {
     dataset: Dataset;
@@ -79,7 +80,14 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                     </Box>
                 </Box>
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
-                    <CardActions actions={actions} id={dataset.id} />
+                    {dataset.create_origin == "MANUAL" ? (
+                        <CardActions actions={actions} id={dataset.id} />
+                    ) : (
+                        <CardActions
+                            actions={nonManualActions}
+                            id={dataset.id}
+                        />
+                    )}
                 </Box>
             </Box>
         </Paper>
