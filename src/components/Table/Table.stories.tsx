@@ -6,11 +6,11 @@ import {
     ROLE_CUSTODIAN_DEVELOPER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
 } from "@/consts/roles";
-import { DeleteForeverIcon } from "@/consts/icons";
 import { faker } from "@faker-js/faker";
 import TableActionCell from "@/components/TableActionCell";
 import TooltipIcon from "@/components/TooltipIcon";
 import Box from "@/components/Box";
+import { DeleteForeverIcon } from "@/consts/icons";
 import Table from "./Table";
 
 /** Tanstack documentation: https://tanstack.com/table/v8 */

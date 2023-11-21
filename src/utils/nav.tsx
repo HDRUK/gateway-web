@@ -1,3 +1,4 @@
+import { LeftNavItem } from "@/interfaces/Ui";
 import {
     DescriptionOutlinedIcon,
     FolderSharedOutlinedIcon,
@@ -7,7 +8,6 @@ import {
     SettingsOutlinedIcon,
     StorageOutlinedIcon,
 } from "@/consts/icons";
-import { LeftNavItem } from "@/interfaces/Ui";
 
 const getProfileNav = (): LeftNavItem[] => {
     return [

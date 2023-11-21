@@ -20,11 +20,11 @@ import { useHasPermissions } from "@/hooks/useHasPermission";
 import { useSWRConfig } from "swr";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import usePut from "@/hooks/usePut";
-import { DeleteForeverIcon } from "@/consts/icons";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import useGetTeam from "@/hooks/useGetTeam";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import Paper from "@/components/Paper";
+import { DeleteForeverIcon } from "@/consts/icons";
 
 const limit = pLimit(1);
 

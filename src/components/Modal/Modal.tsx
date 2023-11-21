@@ -6,8 +6,8 @@ import React, { ReactNode } from "react";
 import useDialog from "@/hooks/useDialog";
 import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
 import { IconButton } from "@mui/material";
-import { CloseIcon } from "@/consts/icons";
 import ModalButtons from "@/components/ModalButtons";
+import { CloseIcon } from "@/consts/icons";
 
 export interface ModalProps {
     content?: ReactNode;

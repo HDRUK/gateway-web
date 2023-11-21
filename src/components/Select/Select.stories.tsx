@@ -7,14 +7,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Stack } from "@mui/material";
 import Form from "@/components/Form";
+import Button from "@/components/Button";
+import LabelAndDescription from "@/components/LabelAndDescription";
 import {
     AccountCircleIcon,
     AdminPanelSettingsIcon,
     BackupIcon,
     SupervisorAccountIcon,
 } from "@/consts/icons";
-import Button from "@/components/Button";
-import LabelAndDescription from "@/components/LabelAndDescription";
 
 const meta: Meta<typeof Form> = {
     component: Form,
