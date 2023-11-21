@@ -80,14 +80,14 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                     </Box>
                 </Box>
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
-                    {dataset.create_origin == "MANUAL" ? (
-                        <CardActions actions={actions} id={dataset.id} />
-                    ) : (
-                        <CardActions
-                            actions={nonManualDatasetCardActions}
-                            id={dataset.id}
-                        />
-                    )}
+                    <CardActions
+                        actions={
+                            dataset.create_origin == "MANUAL"
+                                ? actions
+                                : nonManualDatasetCardActions
+                        }
+                        id={dataset.id}
+                    />
                 </Box>
             </Box>
         </Paper>
