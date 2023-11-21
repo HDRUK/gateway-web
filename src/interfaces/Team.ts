@@ -15,6 +15,7 @@ interface Team {
     application_form_updated_by: string;
     application_form_updated_on: string;
     users: User[];
+    notification_status: boolean;
     notifications: Notification[];
 }
 

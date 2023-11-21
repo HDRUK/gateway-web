@@ -95,9 +95,15 @@ const EmailNotifications = () => {
     useEffect(() => {
         if (!team || !user) return;
 
+        const team_notification_emails = team.notifications.map(n => n.email);
+
         const formValues = {
             ...emailNotificationDefaultValues,
-            team_email: team.notifications.map(n => n.email),
+            notifications_team_email: team.notification_status,
+            team_email:
+                team_notification_emails.length > 0
+                    ? team_notification_emails[0]
+                    : null,
             profile_email: getPreferredEmail(user),
         };
 
@@ -140,7 +146,7 @@ const EmailNotifications = () => {
                     <Typography sx={{ mb: 3 }}>
                         Are you sure you want to save your update to email
                         notifications? Please make sure any team email addresses
-                        you have added are correct.
+                        you have entered are correct.
                     </Typography>
                     {team_email && (
                         <Box sx={{ display: "flex", p: 0, gap: 2 }}>

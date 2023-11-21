@@ -27,10 +27,7 @@ const validationSchema = yup
             .string()
             .email()
             .transform(value => {
-                if (!value || value.length === 0) {
-                    return null;
-                }
-                return value.filter(email => email !== "");
+                return value === "" ? null : value;
             })
             .label("Team email")
             .nullable(),
