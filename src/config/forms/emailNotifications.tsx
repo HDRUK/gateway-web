@@ -5,19 +5,19 @@ export interface EmailNotification {
     notifications_contact_email: boolean;
     notifications_team_email: boolean;
     profile_email: string;
-    contact_point: string;
+    team_email: string;
 }
 
 const defaultValues: EmailNotification = {
     notifications_contact_email: true,
     notifications_team_email: false,
     profile_email: "",
-    contact_point: "",
+    team_email: "",
 };
 
 const validationSchema = yup
     .object({
-        contact_point: yup
+        team_email: yup
             .string()
             .email()
             .transform(value => {
@@ -60,7 +60,7 @@ const formSections = [
             },
             {
                 label: "Team email address",
-                name: "contact_point",
+                name: "team_email",
                 component: inputComponents.TextField,
             },
         ],

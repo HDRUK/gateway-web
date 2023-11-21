@@ -22,6 +22,8 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import useModal from "@/hooks/useModal";
 import { colors } from "@/config/theme";
+import usePost from "@/hooks/usePost";
+import apis from "@/config/apis";
 import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
 
 const EmailNotifications = () => {
@@ -33,14 +35,17 @@ const EmailNotifications = () => {
     const { teamId } = query as AccountTeamUrlQuery;
 
     const { team } = useGetTeam(teamId);
-    const { control, formState, reset, watch } = useForm<EmailNotification>({
-        defaultValues: emailNotificationDefaultValues,
-        resolver: yupResolver(emailNotificationValidationSchema),
-    });
+    const { control, formState, reset, watch, handleSubmit } =
+        useForm<EmailNotification>({
+            defaultValues: emailNotificationDefaultValues,
+            resolver: yupResolver(emailNotificationValidationSchema),
+        });
 
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
 
-    const contact_point = watch("contact_point");
+    const team_email = watch("team_email");
+    const notifications_team_email = watch("notifications_team_email");
+    const notifications_contact_email = watch("notifications_contact_email");
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -74,12 +79,11 @@ const EmailNotifications = () => {
 
         const formValues = {
             ...emailNotificationDefaultValues,
-            contact_point: team.contact_point,
+            team_email: team.notifications.map(n => n.email),
             profile_email: getPreferredEmail(user),
         };
 
         setOriginalFormValues(formValues);
-
         /* Set default values on form */
         reset(formValues);
     }, [reset, team, user]);
@@ -90,6 +94,24 @@ const EmailNotifications = () => {
             changeCount: Object.keys(formState.dirtyFields).length,
         });
     }, [formState, updateStoreProps]);
+
+    //TeamNotifications
+    const updateNotificationEmails = usePost(
+        `${apis.teamsV1Url}/${teamId}/notifications`,
+        {
+            itemName: "Team Notification",
+        }
+    );
+
+    const onSaveTeamEmail = () => {
+        const payload = {
+            user_notification_status: notifications_contact_email,
+            team_notification_status: notifications_team_email,
+            team_emails: [team_email],
+        };
+
+        console.log(notifications_team_email);
+    };
 
     useEffect(() => {
         if (!shouldSubmit) return;
@@ -104,21 +126,18 @@ const EmailNotifications = () => {
                         notifications? Please make sure any team email addresses
                         you have entered are correct.
                     </Typography>
-                    {contact_point && (
+                    {team_email && (
                         <Box sx={{ display: "flex", p: 0, gap: 2 }}>
                             <Typography color={colors.grey600}>
                                 Team Email:
                             </Typography>
-                            <Typography>{contact_point}</Typography>
+                            <Typography>{team_email}</Typography>
                         </Box>
                     )}
                 </Box>
             ),
             onSuccess: () => {
-                /**
-                 * todo: Complete once BE is implemented
-                 * handleSubmit(onSubmit)();
-                 */
+                handleSubmit(onSaveTeamEmail)();
                 setShouldSubmit(false);
             },
             onCancel: () => {
@@ -126,7 +145,7 @@ const EmailNotifications = () => {
             },
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shouldSubmit, contact_point]);
+    }, [shouldSubmit, team_email, notifications_team_email]);
 
     useEffect(() => {
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
