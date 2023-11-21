@@ -19,7 +19,14 @@ interface DatasetCardProps {
 }
 
 const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
-    const { dataset: datasetSchema } = dataset;
+    const { mauro } = dataset;
+    const titleItem = mauro.find(
+        item => item.key === "properties/summary/title"
+    );
+    const publisherNameItem = mauro.find(
+        item => item.key === "properties/summary/publisher/publisherName"
+    );
+
     const originMapping = {
         MANUAL: "Manually",
         API: "API",
@@ -46,13 +53,13 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                     }}>
                     <Box sx={{ p: 0, fontSize: 13 }}>
                         <Typography variant="h3" sx={{ mb: 2, fontSize: 16 }}>
-                            {datasetSchema.metadata.summary.title}
+                            {titleItem?.value}
                         </Typography>
                         <KeyValueList
                             rows={[
                                 {
                                     key: "Publisher",
-                                    value: datasetSchema.metadata.summary.publisher.publisherName.toUpperCase(),
+                                    value: publisherNameItem?.value,
                                 },
                                 { key: "Version", value: dataset.version },
                                 {
