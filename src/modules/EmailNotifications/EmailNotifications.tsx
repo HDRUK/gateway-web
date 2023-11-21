@@ -45,8 +45,8 @@ const EmailNotifications = () => {
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
 
     const team_email = watch("team_email");
-    const notifications_team_email = watch("notifications_team_email");
-    const notifications_contact_email = watch("notifications_contact_email");
+    const user_notification_status = watch("user_notification_status");
+    const team_notification_status = watch("team_notification_status");
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -81,9 +81,11 @@ const EmailNotifications = () => {
 
         const team_notification_emails = team.notifications.map(n => n.email);
 
+        console.log(team);
+
         const formValues = {
             ...emailNotificationDefaultValues,
-            notifications_team_email: team.notification_status,
+            team_notification_status: team.notification_status,
             team_email:
                 team_notification_emails.length > 0
                     ? team_notification_emails[0]
@@ -112,8 +114,8 @@ const EmailNotifications = () => {
 
     const onSaveTeamEmail = () => {
         const payload = {
-            user_notification_status: notifications_contact_email,
-            team_notification_status: notifications_team_email,
+            user_notification_status: user_notification_status,
+            team_notification_status: team_notification_status,
             team_emails: [team_email],
         };
         updateNotificationEmails(payload);
@@ -151,7 +153,12 @@ const EmailNotifications = () => {
             },
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shouldSubmit, team_email, notifications_team_email]);
+    }, [
+        shouldSubmit,
+        team_email,
+        team_notification_status,
+        user_notification_status,
+    ]);
 
     useEffect(() => {
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
