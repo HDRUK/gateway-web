@@ -3,9 +3,9 @@
 import { InputAdornment, OutlinedInput, IconButton } from "@mui/material";
 
 import { Control, useController } from "react-hook-form";
-import { CancelIcon } from "@/consts/icons";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import { IconType } from "@/interfaces/Ui";
+import { CancelIcon } from "@/consts/icons";
 
 export interface TextFieldBaseProps {
     label: string;

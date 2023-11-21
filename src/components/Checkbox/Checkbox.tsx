@@ -5,12 +5,12 @@ import MuiCheckbox, {
 } from "@mui/material/Checkbox";
 import { FormControl, FormControlLabel, SxProps } from "@mui/material";
 import { Control, useController } from "react-hook-form";
+import FormError from "@/components/FormError";
 import {
     CheckBoxOutlineBlankSharpIcon,
     CheckBoxSharpIcon,
     IndeterminateCheckBoxSharpIcon,
 } from "@/consts/icons";
-import FormError from "@/components/FormError";
 
 export interface CheckboxProps extends MuiCheckboxProps {
     label?: string;
