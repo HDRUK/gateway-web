@@ -2,11 +2,11 @@
 
 import { colors } from "@/config/theme";
 import Box from "@/components/Box";
-import { CancelIcon, CheckCircleIcon } from "@/consts/icons";
 import Button from "@/components/Button";
 import { ReactNode } from "react";
 import Typography from "@/components/Typography";
 import { FederationRunResponse } from "@/interfaces/Federation";
+import { CancelIcon, CheckCircleIcon } from "@/consts/icons";
 import * as styles from "./RunFederationTest.styles";
 
 interface RunFederationTestProps {

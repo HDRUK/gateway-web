@@ -1,5 +1,4 @@
 import { IconButton } from "@mui/material";
-import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 import InputWrapper from "@/components/InputWrapper";
 import {
     addTeamMemberFormFields,
@@ -11,6 +10,7 @@ import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
 import { SelectOptionsType } from "@/components/Select/Select";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import { useMemo } from "react";
+import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 
 interface AddTeamMemberRowsProps {
     fields: FieldArrayWithId<AddTeamMember, "userAndRoles", "id">[];

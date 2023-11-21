@@ -7,10 +7,10 @@ import { PaginationType } from "@/interfaces/Pagination";
 import DatasetTab from "@/modules/DatasetTab";
 import { useRouter } from "next/router";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
-import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import useDelete from "@/hooks/useDelete";
+import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { getTabLength } from "./TeamDatasets.utils";
 
 const TeamDatasets = () => {

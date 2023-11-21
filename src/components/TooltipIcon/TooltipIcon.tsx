@@ -1,8 +1,8 @@
 import { ReactNode, useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import Popover from "@mui/material/Popover";
-import { HelpOutlineIcon } from "@/consts/icons";
 import { colors } from "@/config/theme";
+import { HelpOutlineIcon } from "@/consts/icons";
 
 interface TooltipIconProps {
     label: ReactNode;

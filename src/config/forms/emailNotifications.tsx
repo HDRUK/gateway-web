@@ -11,23 +11,21 @@ export interface EmailNotification {
     notifications_contact_email: boolean;
     notifications_team_email: boolean;
     profile_email: string;
-    contact_point: string;
-    team_emails: string[];
+    team_email: string;
 }
 
 const defaultValues: EmailNotification = {
     notifications_contact_email: true,
     notifications_team_email: false,
     profile_email: "",
-    contact_point: "",
-    team_emails: [],
+    team_email: "",
 };
 
 const validationSchema = yup
     .object({
-        team_emails: yup
-            .array()
-            .of(yup.string().email().nullable())
+        team_email: yup
+            .string()
+            .email()
             .transform(value => {
                 if (!value || value.length === 0) {
                     return null;
@@ -70,27 +68,9 @@ const formSections = [
                 required: true,
             },
             {
-                label: "Team email addresses",
-                name: "team_emails",
-                canCreate: true,
-                selectOnFocus: true,
-                clearOnBlur: true,
-                handleHomeEndKeys: true,
-                multiple: true,
-                isOptionEqualToValue: (
-                    option: { value: string | number; label: string },
-                    value: string | number
-                ) => option.value === value,
-                /*getChipLabel: (
-                    options: { value: string | number; label: string }[],
-                    value: string
-                ) => {
-                    console.log(value);
-                    return options.find(option => option.value === value)
-                        ?.label;
-                },*/
-                component: inputComponents.Autocomplete,
-                info: "Additional team email addresses to receive notifications",
+                label: "Team email address",
+                name: "team_email",
+                component: inputComponents.TextField,
             },
         ],
     },

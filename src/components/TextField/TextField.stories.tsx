@@ -6,8 +6,8 @@ import { Stack } from "@mui/material";
 import Form from "@/components/Form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AddAPhotoIcon } from "@/consts/icons";
 import Button from "@/components/Button";
+import { AddAPhotoIcon } from "@/consts/icons";
 
 const meta: Meta<typeof Form> = {
     component: Form,
