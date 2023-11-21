@@ -7,6 +7,7 @@ import {
     emailNotificationDefaultValues,
     emailNotificationFormSections,
     EmailNotification,
+    TeamNotifications,
 } from "@/config/forms/emailNotifications";
 import useActionBar from "@/hooks/useActionBar";
 import useAuth from "@/hooks/useAuth";
@@ -22,6 +23,8 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import useModal from "@/hooks/useModal";
 import { colors } from "@/config/theme";
+import usePost from "@/hooks/usePost";
+import apis from "@/config/apis";
 import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
 
 const EmailNotifications = () => {
@@ -33,14 +36,17 @@ const EmailNotifications = () => {
     const { teamId } = query as AccountTeamUrlQuery;
 
     const { team } = useGetTeam(teamId);
-    const { control, formState, reset, watch } = useForm<EmailNotification>({
-        defaultValues: emailNotificationDefaultValues,
-        resolver: yupResolver(emailNotificationValidationSchema),
-    });
+    const { control, formState, handleSubmit, reset, watch } =
+        useForm<EmailNotification>({
+            defaultValues: emailNotificationDefaultValues,
+            resolver: yupResolver(emailNotificationValidationSchema),
+        });
 
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
 
-    const contact_point = watch("contact_point");
+    const team_email = watch("team_email");
+    const user_notification_status = watch("user_notification_status");
+    const team_notification_status = watch("team_notification_status");
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -54,6 +60,7 @@ const EmailNotifications = () => {
             permissions[
                 "fe.account.team_management.notifications.team_section"
             ];
+
         return [
             mySection,
             {
@@ -72,14 +79,21 @@ const EmailNotifications = () => {
     useEffect(() => {
         if (!team || !user) return;
 
+        const team_notification_emails = team.notifications.map(n => n.email);
+
+        console.log(team);
+
         const formValues = {
             ...emailNotificationDefaultValues,
-            contact_point: team.contact_point,
+            team_notification_status: team.notification_status,
+            team_email:
+                team_notification_emails.length > 0
+                    ? team_notification_emails[0]
+                    : null,
             profile_email: getPreferredEmail(user),
         };
 
         setOriginalFormValues(formValues);
-
         /* Set default values on form */
         reset(formValues);
     }, [reset, team, user]);
@@ -90,6 +104,22 @@ const EmailNotifications = () => {
             changeCount: Object.keys(formState.dirtyFields).length,
         });
     }, [formState, updateStoreProps]);
+
+    const updateNotificationEmails = usePost<TeamNotifications>(
+        `${apis.teamsV1Url}/${teamId}/notifications`,
+        {
+            itemName: "Team Notification",
+        }
+    );
+
+    const onSaveTeamEmail = () => {
+        const payload = {
+            user_notification_status: user_notification_status,
+            team_notification_status: team_notification_status,
+            team_emails: [team_email],
+        };
+        updateNotificationEmails(payload);
+    };
 
     useEffect(() => {
         if (!shouldSubmit) return;
@@ -104,21 +134,18 @@ const EmailNotifications = () => {
                         notifications? Please make sure any team email addresses
                         you have entered are correct.
                     </Typography>
-                    {contact_point && (
+                    {team_email && (
                         <Box sx={{ display: "flex", p: 0, gap: 2 }}>
                             <Typography color={colors.grey600}>
-                                Team Email:
+                                Team Emails:
                             </Typography>
-                            <Typography>{contact_point}</Typography>
+                            <Typography>{team_email}</Typography>
                         </Box>
                     )}
                 </Box>
             ),
             onSuccess: () => {
-                /**
-                 * todo: Complete once BE is implemented
-                 * handleSubmit(onSubmit)();
-                 */
+                handleSubmit(onSaveTeamEmail)();
                 setShouldSubmit(false);
             },
             onCancel: () => {
@@ -126,7 +153,12 @@ const EmailNotifications = () => {
             },
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shouldSubmit, contact_point]);
+    }, [
+        shouldSubmit,
+        team_email,
+        team_notification_status,
+        user_notification_status,
+    ]);
 
     useEffect(() => {
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */

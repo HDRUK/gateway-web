@@ -1,23 +1,29 @@
 import * as yup from "yup";
 import { inputComponents } from ".";
 
+export interface TeamNotifications {
+    user_notification_status: boolean;
+    team_notification_status: boolean;
+    team_emails: string[];
+}
+
 export interface EmailNotification {
-    notifications_contact_email: boolean;
-    notifications_team_email: boolean;
+    user_notification_status: boolean;
+    team_notification_status: boolean;
     profile_email: string;
-    contact_point: string;
+    team_email: string;
 }
 
 const defaultValues: EmailNotification = {
-    notifications_contact_email: true,
-    notifications_team_email: false,
+    user_notification_status: true,
+    team_notification_status: false,
     profile_email: "",
-    contact_point: "",
+    team_email: "",
 };
 
 const validationSchema = yup
     .object({
-        contact_point: yup
+        team_email: yup
             .string()
             .email()
             .transform(value => {
@@ -33,7 +39,7 @@ const formSections = [
         id: 1,
         fields: [
             {
-                name: "notifications_contact_email",
+                name: "user_notification_status",
                 label: "Send email notifications to:",
                 extraInfo:
                     "You must have this togggle activated in order to receive team related notifications.",
@@ -53,14 +59,14 @@ const formSections = [
         id: 2,
         fields: [
             {
-                name: "notifications_team_email",
+                name: "team_notification_status",
                 label: "Send email notifications to team email address:",
                 component: inputComponents.SwitchInline,
                 required: true,
             },
             {
                 label: "Team email address",
-                name: "contact_point",
+                name: "team_email",
                 component: inputComponents.TextField,
             },
         ],
