@@ -26,7 +26,6 @@ import { colors } from "@/config/theme";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
-import { M } from "msw/lib/glossary-de6278a9";
 
 const EmailNotifications = () => {
     const permissions = useHasPermissions();
