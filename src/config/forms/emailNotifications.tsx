@@ -2,8 +2,8 @@ import * as yup from "yup";
 import { inputComponents } from ".";
 
 export interface TeamNotifications {
-    user_notification_status: boolean; //this should define if thie notification is enabled or not
-    team_notification_status: boolean; //this should be true if the notification is for a team
+    user_notification_status: boolean;
+    team_notification_status: boolean;
     team_emails: string[];
 }
 
