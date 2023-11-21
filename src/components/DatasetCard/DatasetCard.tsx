@@ -6,6 +6,7 @@ import { formatDate } from "@/utils/date";
 import Typography from "@/components/Typography";
 import KeyValueList from "@/components/KeyValueList";
 import { IconType } from "@/interfaces/Ui";
+import { getMauroValue } from "@/utils/mauro";
 import CardActions from "../CardActions";
 
 interface DatasetCardProps {
@@ -19,7 +20,13 @@ interface DatasetCardProps {
 }
 
 const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
-    const { dataset: datasetSchema } = dataset;
+    const { mauro } = dataset;
+    const title = getMauroValue("properties/summary/title", mauro);
+    const publisherName = getMauroValue(
+        "properties/summary/publisher/publisherName",
+        mauro
+    );
+
     const originMapping = {
         MANUAL: "Manually",
         API: "API",
@@ -46,13 +53,13 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                     }}>
                     <Box sx={{ p: 0, fontSize: 13 }}>
                         <Typography variant="h3" sx={{ mb: 2, fontSize: 16 }}>
-                            {datasetSchema.metadata.summary.title}
+                            {title}
                         </Typography>
                         <KeyValueList
                             rows={[
                                 {
                                     key: "Publisher",
-                                    value: datasetSchema.metadata.summary.publisher.publisherName.toUpperCase(),
+                                    value: publisherName,
                                 },
                                 { key: "Version", value: dataset.version },
                                 {

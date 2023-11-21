@@ -1,24 +1,22 @@
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 
-interface DatasetSchema {
-    metadata: {
-        summary: {
-            title: string;
-            publisher: {
-                publisherName: string;
-            };
-        };
-    };
+interface MauroItem {
+    id: string;
+    key: string;
+    lastUpdated: string;
+    namespace: string;
+    value: string;
 }
+
 interface Dataset {
     id: number;
     status: DatasetStatus;
     label: string | null;
     pid: string | null;
-    dataset: DatasetSchema;
+    mauro: MauroItem[];
     updated: string;
     version: string | null;
     create_origin: "FMA" | "MANUAL" | "API";
 }
 
-export type { Dataset, DatasetStatus, DatasetSchema };
+export type { Dataset, DatasetStatus, MauroItem };
