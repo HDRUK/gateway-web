@@ -66,28 +66,13 @@ const EmailNotifications = () => {
             mySection,
             {
                 ...teamSection,
-                fields: teamSection.fields
-                    .map(field => {
-                        if (field.name === "team_emails") {
-                            return {
-                                ...field,
-                                options: team?.users
-                                    .map(user => getPreferredEmail(user))
-                                    .map(email => ({
-                                        value: email,
-                                        label: email,
-                                    })),
-                            };
-                        }
-                        return field;
-                    })
-                    .map(field => ({
-                        ...field,
-                        title: !isTeamAdmin
-                            ? "You do not have permission to edit this field"
-                            : "",
-                        disabled: !isTeamAdmin,
-                    })),
+                fields: teamSection.fields.map(field => ({
+                    ...field,
+                    title: !isTeamAdmin
+                        ? "You do not have permission to edit this field"
+                        : "",
+                    disabled: !isTeamAdmin,
+                })),
             },
         ];
     }, [permissions]);
