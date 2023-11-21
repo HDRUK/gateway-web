@@ -7,7 +7,7 @@ import Typography from "@/components/Typography";
 import KeyValueList from "@/components/KeyValueList";
 import { IconType } from "@/interfaces/Ui";
 import CardActions from "../CardActions";
-import { nonManualActions } from "@/consts/actions";
+import { nonManualDatasetCardActions } from "@/consts/actions";
 
 interface DatasetCardProps {
     dataset: Dataset;
@@ -84,7 +84,7 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                         <CardActions actions={actions} id={dataset.id} />
                     ) : (
                         <CardActions
-                            actions={nonManualActions}
+                            actions={nonManualDatasetCardActions}
                             id={dataset.id}
                         />
                     )}
