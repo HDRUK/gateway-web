@@ -47,6 +47,7 @@ const EmailNotifications = () => {
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
 
     const team_emails = watch("team_emails");
+    const notifications_team_email = watch("notifications_team_email");
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -70,11 +71,11 @@ const EmailNotifications = () => {
                         if (field.name === "team_emails") {
                             return {
                                 ...field,
-                                options: team?.notifications
-                                    .filter(n => n.enabled)
-                                    .map(n => ({
-                                        value: n.email,
-                                        label: n.email,
+                                options: team?.users
+                                    .map(user => getPreferredEmail(user))
+                                    .map(email => ({
+                                        value: email,
+                                        label: email,
                                     })),
                             };
                         }
@@ -100,13 +101,12 @@ const EmailNotifications = () => {
 
     const updateEmailNotifications = (e: EmailNotification) => {
         const payload = {
-            user_notification_status: true,
-            team_notification_status: true,
-            team_emails: e.team_emails,
+            user_notification_status: notifications_team_email, //controlled by enabled switch
+            team_notification_status: true, //always true as defines the notification type
+            team_emails: e.team_emails ? e.team_emails : [], // list of the selected emails
         };
         console.log(payload);
-        console.log(e);
-        //updateNotificationEmails(payload);
+        updateNotificationEmails(payload);
     };
 
     useEffect(() => {
@@ -114,9 +114,8 @@ const EmailNotifications = () => {
 
         const formValues = {
             ...emailNotificationDefaultValues,
-            team_emails: team.notifications
-                .filter(n => n.enabled)
-                .map(n => n.email),
+            //team_emails: team.notifications.map(n => n.email),
+            team_emails: [], //team.users.map(u => getPreferredEmail(u)),
             profile_email: getPreferredEmail(user),
         };
 
