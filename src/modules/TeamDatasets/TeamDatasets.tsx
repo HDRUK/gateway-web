@@ -18,8 +18,20 @@ const TeamDatasets = () => {
     const { query } = useRouter();
     const { teamId, tab } = query as AccountTeamUrlQuery;
     const [currentPage, setCurrentPage] = useState(1);
-    const [sortField, setSortField] = useState("properties/summary/title");
-    const [sortDirection, setSortDirection] = useState("desc");
+
+    const sortByOptions = [
+        {
+            label: "Sort By Title",
+            value: "properties/summary/title",
+            defaultDirection: "asc",
+        },
+    ];
+
+    const [sortField, setSortField] = useState(sortByOptions[0].value);
+    const [sortDirection, setSortDirection] = useState(
+        sortByOptions[0].defaultDirection
+    );
+
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
         `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&page=${currentPage}&sort=${sortField}:${sortDirection}`,
         {
@@ -112,6 +124,11 @@ const TeamDatasets = () => {
                 )}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
+                sortByOptions={sortByOptions}
+                sortField={sortField}
+                setSortField={setSortField}
+                sortDirection={sortDirection}
+                setSortDirection={setSortDirection}
                 isLoading={isLoading}
                 actions={actions}
             />

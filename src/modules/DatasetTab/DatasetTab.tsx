@@ -5,7 +5,16 @@ import Pagination from "@/components/Pagination";
 import ShowingXofX from "@/components/ShowingXofX";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
+import Select from "@/components/Select";
 import { IconType } from "@/interfaces/Ui";
+import BoxContainer from "@/components/BoxContainer";
+import { useForm } from "react-hook-form";
+
+interface SortByOption {
+    label: string;
+    value: string;
+    defaultDirection: string;
+}
 
 interface DatasetTabProps {
     list?: Dataset[];
@@ -22,6 +31,11 @@ interface DatasetTabProps {
     label: string;
     currentPage: number;
     setCurrentPage: (page: number) => void;
+    sortByOptions: SortByOption[];
+    sortField: string;
+    setSortField: (field: string) => void;
+    sortDirection: string;
+    setSortDirection: (direction: string) => void;
     isLoading: boolean;
 }
 
@@ -35,14 +49,42 @@ const DatasetTab = ({
     total,
     currentPage,
     setCurrentPage,
+    sortByOptions,
+    sortField,
+    setSortField,
+    sortDirection,
+    setSortDirection,
     isLoading,
 }: DatasetTabProps) => {
+    const { handleSubmit, control } = useForm({
+        //...(props.required && { resolver: yupResolver(validationSchema) }),
+        //defaultValues,
+    });
+
     if (isLoading) return <Loading />;
     return (
         <Box sx={{ p: 0 }}>
+            <BoxContainer
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                }}>
+                <Box> search here....</Box>
+                <Box sx={{ width: "100px" }}>
+                    <Select
+                        control={control}
+                        options={sortByOptions}
+                        label=""
+                        name="sortField"
+                    />
+                </Box>
+            </BoxContainer>
+
             <Box sx={{ p: 0 }}>
                 <ShowingXofX from={from} to={to} total={total} />
             </Box>
+
             {(list || [])?.map(dataset => (
                 <DatasetCard
                     actions={actions}
