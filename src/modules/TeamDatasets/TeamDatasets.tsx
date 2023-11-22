@@ -25,6 +25,11 @@ const TeamDatasets = () => {
             value: "properties/summary/title",
             defaultDirection: "asc",
         },
+        {
+            label: "Sort By Publisher Name",
+            value: "properties/summary/publisher/publisherName",
+            defaultDirection: "asc",
+        },
     ];
 
     const [sortField, setSortField] = useState(sortByOptions[0].value);

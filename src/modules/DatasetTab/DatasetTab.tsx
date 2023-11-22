@@ -9,6 +9,7 @@ import Select from "@/components/Select";
 import { IconType } from "@/interfaces/Ui";
 import BoxContainer from "@/components/BoxContainer";
 import { useForm } from "react-hook-form";
+import { SortIcon, NorthIcon } from "@/consts/icons";
 
 interface SortByOption {
     label: string;
@@ -58,8 +59,14 @@ const DatasetTab = ({
 }: DatasetTabProps) => {
     const { handleSubmit, control } = useForm({
         //...(props.required && { resolver: yupResolver(validationSchema) }),
-        //defaultValues,
+        defaultValues: { sortField: sortField },
+        reValidateMode: "onChange",
+        mode: "all",
     });
+
+    const onChangeSortField = (e: unknown) => {
+        setSortField(e.target.value);
+    };
 
     if (isLoading) return <Loading />;
     return (
@@ -71,13 +78,17 @@ const DatasetTab = ({
                     justifyContent: "space-between",
                 }}>
                 <Box> search here....</Box>
-                <Box sx={{ width: "100px" }}>
+                <Box sx={{ minWidth: "250px", display: "flex", gap: 1 }}>
                     <Select
+                        onChange={onChangeSortField}
                         control={control}
                         options={sortByOptions}
                         label=""
+                        value={sortField}
                         name="sortField"
                     />
+                    <NorthIcon />
+                    <SortIcon />
                 </Box>
             </BoxContainer>
 

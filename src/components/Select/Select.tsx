@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { OutlinedInput, Select as MuiSelect, MenuItem } from "@mui/material";
+import { ChangeEvent } from "react";
 
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
@@ -31,6 +32,8 @@ export interface SelectProps {
     control: Control;
     required?: boolean;
     hasCheckbox?: boolean;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    value?: string;
 }
 
 const renderValue = (
@@ -63,6 +66,8 @@ const Select = (props: SelectProps) => {
         multiple,
         disabled,
         invertListItem,
+        onChange,
+        value,
     } = props;
 
     const {
@@ -96,7 +101,8 @@ const Select = (props: SelectProps) => {
                     renderValue(selected, options, !!multiple)
                 }
                 {...fieldProps}
-                value={fieldProps.value ?? ""}>
+                onChange={onChange ? onChange : fieldProps.onChange}
+                value={value ?? fieldProps.value ?? ""}>
                 {options.map(option => (
                     <MenuItem
                         color="secondary"

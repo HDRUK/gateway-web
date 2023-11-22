@@ -38,6 +38,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import { createSvgIcon } from "@mui/material";
+import SortIcon from "@mui/icons-material/Sort";
+import NorthIcon from "@mui/icons-material/North";
+import SouthIcon from "@mui/icons-material/South";
 
 const RemoveFilterIcon = createSvgIcon(
     <svg
@@ -97,4 +100,7 @@ export {
     GroupsOutlinedIcon,
     ContentCopyIcon,
     RemoveCircleIcon,
+    SortIcon,
+    NorthIcon,
+    SouthIcon,
 };
