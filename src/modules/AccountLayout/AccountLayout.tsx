@@ -24,7 +24,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
     const isTeam = useMemo(() => !!teamId, [teamId]);
 
     const navItems = useMemo(() => {
-        if (!teamId) return getProfileNav();
+        if (!teamId) return getProfileNav(permissions);
         return getTeamNav(permissions, teamId);
     }, [teamId, permissions]);
 

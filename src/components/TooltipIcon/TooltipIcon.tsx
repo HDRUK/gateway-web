@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import Popover from "@mui/material/Popover";
 import { colors } from "@/config/theme";
-import { HelpOutlineIcon } from "@/consts/icons";
+import { InfoIcon } from "@/consts/icons";
 
 interface TooltipIconProps {
     label: ReactNode;
@@ -28,7 +28,7 @@ const TooltipIcon = ({ label, content }: TooltipIconProps) => {
                 disableRipple
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}>
-                <HelpOutlineIcon color="primary" fontSize="medium" />
+                <InfoIcon color="primary" fontSize="medium" />
             </IconButton>
             <Popover
                 id="tooltip"

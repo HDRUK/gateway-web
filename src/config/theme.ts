@@ -22,6 +22,11 @@ declare module "@mui/material/Switch" {
         large: true;
     }
 }
+declare module "@mui/material/Chip" {
+    interface ChipPropsColorOverrides {
+        warningAmber: true;
+    }
+}
 
 declare module "@mui/material/SvgIcon" {
     interface SvgIconPropsSizeOverrides {
@@ -51,8 +56,10 @@ declare module "@mui/material/styles" {
 
 export const colors = {
     white: "#fff",
+    black: "#000",
     orange: "#FE9A2D",
     green400: "#3DB28C",
+    amber500: "#ffc107",
     grey: "#F6F7F8",
     grey100: "#F6F7F8",
     grey200: "#EEE",
@@ -90,6 +97,9 @@ const palette = {
         main: colors.red700,
     },
     background: { default: "#f6f7f8" },
+    warningAmber: {
+        contrastText: "#000",
+    },
 };
 
 const theme = createTheme({
@@ -489,6 +499,16 @@ const theme = createTheme({
                     },
                 },
             },
+        },
+        MuiChip: {
+            variants: [
+                {
+                    props: { color: "warningAmber" },
+                    style: {
+                        background: colors.amber500,
+                    },
+                },
+            ],
         },
     },
 });

@@ -9,13 +9,25 @@ import {
     StorageOutlinedIcon,
 } from "@/consts/icons";
 
-const getProfileNav = (): LeftNavItem[] => {
+const getProfileNav = (permissions: {
+    [key: string]: boolean;
+}): LeftNavItem[] => {
+    console.log(permissions);
     return [
         {
             icon: <FolderSharedOutlinedIcon />,
             label: "Your Profile",
             href: "/account/profile",
         },
+        ...(permissions["cohort.read"]
+            ? [
+                  {
+                      icon: <DescriptionOutlinedIcon />,
+                      label: "Cohort Discovery Admin",
+                      href: `/account/cohort-discovery-admin`,
+                  },
+              ]
+            : []),
     ];
 };
 
