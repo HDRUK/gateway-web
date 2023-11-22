@@ -18,8 +18,10 @@ const TeamDatasets = () => {
     const { query } = useRouter();
     const { teamId, tab } = query as AccountTeamUrlQuery;
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortField, setSortField] = useState("properties/summary/title");
+    const [sortDirection, setSortDirection] = useState("desc");
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
-        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&decode_metadata=true&page=${currentPage}`,
+        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&page=${currentPage}&sort=${sortField}:${sortDirection}`,
         {
             keepPreviousData: true,
             withPagination: true,
