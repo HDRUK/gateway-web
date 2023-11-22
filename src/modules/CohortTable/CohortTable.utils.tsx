@@ -4,6 +4,7 @@ import Link from "@/components/Link";
 import TooltipIcon from "@/components/TooltipIcon";
 import {
     ArrowDropDownIcon,
+    ArrowDropUpIcon,
     RemoveFilterIcon,
     SortByAlphaIcon,
 } from "@/consts/icons";
@@ -24,6 +25,7 @@ const statusMapping = {
 };
 
 interface getColumnsProps {
+    sort: { key: string; direction: string };
     setSort: (sort: { key: string; direction: string }) => void;
     setRequestStatus: (status: CohortRequestStatus) => void;
 }
@@ -78,6 +80,7 @@ const StatusPopover = () => {
 };
 const getColumns = ({
     setSort,
+    sort,
     setRequestStatus,
 }: getColumnsProps): ColumnDef<CohortRequest>[] => {
     return [
@@ -193,7 +196,12 @@ const getColumns = ({
                         edge="start"
                         aria-label="Date requested"
                         onClick={() => setSort(updateSort("created_at"))}>
-                        <ArrowDropDownIcon />
+                        {sort.key === "created_at" &&
+                        sort.direction !== "asc" ? (
+                            <ArrowDropUpIcon />
+                        ) : (
+                            <ArrowDropDownIcon />
+                        )}
                     </IconButton>
                 </Box>
             ),
@@ -227,7 +235,12 @@ const getColumns = ({
                         edge="start"
                         aria-label="Date Actioned"
                         onClick={() => setSort(updateSort("updated_at"))}>
-                        <ArrowDropDownIcon />
+                        {sort.key === "updated_at" &&
+                        sort.direction !== "asc" ? (
+                            <ArrowDropUpIcon />
+                        ) : (
+                            <ArrowDropDownIcon />
+                        )}
                     </IconButton>
                 </Box>
             ),

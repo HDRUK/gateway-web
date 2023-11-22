@@ -28,6 +28,7 @@ const CohortTable = () => {
     const { lastPage, list } = data || {};
     const columns = getColumns({
         setSort,
+        sort,
         setRequestStatus,
     });
 
