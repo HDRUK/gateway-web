@@ -6,15 +6,15 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Select from "@/components/Select";
+import Button from "@/components/Button";
 import { IconType } from "@/interfaces/Ui";
 import BoxContainer from "@/components/BoxContainer";
 import { useForm } from "react-hook-form";
-import { SortIcon, NorthIcon } from "@/consts/icons";
+import { SortAscIcon, SortDescIcon } from "@/consts/icons";
 
 interface SortByOption {
     label: string;
     value: string;
-    defaultDirection: string;
 }
 
 interface DatasetTabProps {
@@ -58,14 +58,17 @@ const DatasetTab = ({
     isLoading,
 }: DatasetTabProps) => {
     const { handleSubmit, control } = useForm({
-        //...(props.required && { resolver: yupResolver(validationSchema) }),
         defaultValues: { sortField: sortField },
-        reValidateMode: "onChange",
-        mode: "all",
+        //reValidateMode: "onChange",
+        //mode: "all", - couldnt get these working
     });
 
-    const onChangeSortField = (e: unknown) => {
+    const onChangeSortField = (e: React.ChangeEvent<unknown>) => {
         setSortField(e.target.value);
+    };
+
+    const onChangeSortDirection = (e: React.ChangeEvent<unknown>) => {
+        setSortDirection(sortDirection == "desc" ? "asc" : "desc");
     };
 
     if (isLoading) return <Loading />;
@@ -78,17 +81,32 @@ const DatasetTab = ({
                     justifyContent: "space-between",
                 }}>
                 <Box> search here....</Box>
-                <Box sx={{ minWidth: "250px", display: "flex", gap: 1 }}>
-                    <Select
-                        onChange={onChangeSortField}
-                        control={control}
-                        options={sortByOptions}
-                        label=""
-                        value={sortField}
-                        name="sortField"
-                    />
-                    <NorthIcon />
-                    <SortIcon />
+                <Box sx={{ minWidth: "300px", display: "flex" }}>
+                    <Box sx={{ p: 0, minWidth: "250px" }}>
+                        <Select
+                            onChange={onChangeSortField}
+                            control={control}
+                            options={sortByOptions}
+                            label=""
+                            value={sortField}
+                            name="sortField"
+                        />
+                    </Box>
+                    <Box sx={{ p: 0 }}>
+                        <Button
+                            sx={{ marginBottom: 2 }}
+                            variant="link"
+                            onClick={onChangeSortDirection}>
+                            {sortDirection == "asc" ? (
+                                <SortAscIcon color="primary" fontSize="large" />
+                            ) : (
+                                <SortDescIcon
+                                    color="primary"
+                                    fontSize="large"
+                                />
+                            )}
+                        </Button>
+                    </Box>
                 </Box>
             </BoxContainer>
 

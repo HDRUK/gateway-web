@@ -21,21 +21,25 @@ const TeamDatasets = () => {
 
     const sortByOptions = [
         {
+            label: "Sort By Date of Last Update",
+            value: "updated",
+        },
+        {
+            label: "Sort By Date of Creation",
+            value: "created",
+        },
+        {
             label: "Sort By Title",
             value: "properties/summary/title",
-            defaultDirection: "asc",
         },
         {
             label: "Sort By Publisher Name",
             value: "properties/summary/publisher/publisherName",
-            defaultDirection: "asc",
         },
     ];
 
     const [sortField, setSortField] = useState(sortByOptions[0].value);
-    const [sortDirection, setSortDirection] = useState(
-        sortByOptions[0].defaultDirection
-    );
+    const [sortDirection, setSortDirection] = useState("asc");
 
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
         `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&page=${currentPage}&sort=${sortField}:${sortDirection}`,
