@@ -12,7 +12,6 @@ import {
 const getProfileNav = (permissions: {
     [key: string]: boolean;
 }): LeftNavItem[] => {
-    console.log(permissions);
     return [
         {
             icon: <FolderSharedOutlinedIcon />,

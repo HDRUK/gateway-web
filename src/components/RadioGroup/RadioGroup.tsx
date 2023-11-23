@@ -32,6 +32,7 @@ const RadioGroup = ({
     extraInfo,
     required = false,
     isRow = false,
+    ...rest
 }: RadioGroupProps) => {
     const {
         fieldState: { error },
@@ -55,7 +56,7 @@ const RadioGroup = ({
                 control={control}
                 name={name}
                 render={({ field }) => (
-                    <MuiRadioGroup row={isRow} {...field}>
+                    <MuiRadioGroup row={isRow} {...field} {...rest}>
                         {radios.map(({ value, label: radioLabel }) => {
                             return (
                                 <FormControlLabel

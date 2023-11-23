@@ -38,10 +38,6 @@ const TooltipIcon = ({ label, content }: TooltipIconProps) => {
                 open={open}
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "center",
-                }}
-                transformOrigin={{
                     vertical: "bottom",
                     horizontal: "center",
                 }}

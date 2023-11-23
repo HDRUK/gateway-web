@@ -5,15 +5,14 @@ import TooltipIcon from "@/components/TooltipIcon";
 import {
     ArrowDropDownIcon,
     ArrowDropUpIcon,
-    RemoveFilterIcon,
     SortByAlphaIcon,
 } from "@/consts/icons";
 import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import { formatDate } from "@/utils/date";
 import { capitalise } from "@/utils/general";
-import { IconButton, Popover, Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
-import { useState } from "react";
+import { CohortStatusPopover } from "./CohortStatusPopover";
 
 const statusMapping = {
     APPROVED: "secondary",
@@ -28,6 +27,7 @@ interface getColumnsProps {
     sort: { key: string; direction: string };
     setSort: (sort: { key: string; direction: string }) => void;
     setRequestStatus: (status: CohortRequestStatus) => void;
+    requestStatus?: CohortRequestStatus;
 }
 
 const updateSort =
@@ -42,46 +42,11 @@ const updateSort =
                 : "asc",
     });
 
-const StatusPopover = () => {
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-
-    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handlePopoverClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? "status-popover" : undefined;
-
-    return (
-        <>
-            <IconButton sx={{ p: 0 }} disableRipple onClick={handlePopoverOpen}>
-                <RemoveFilterIcon fontSize="small" />
-            </IconButton>
-            <Popover
-                id={id}
-                sx={{
-                    pointerEvents: "none",
-                }}
-                open={open}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                }}
-                onClose={handlePopoverClose}>
-                <div>checkboxes</div>
-            </Popover>
-        </>
-    );
-};
 const getColumns = ({
     setSort,
     sort,
     setRequestStatus,
+    requestStatus,
 }: getColumnsProps): ColumnDef<CohortRequest>[] => {
     return [
         {
@@ -164,7 +129,10 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     Status
-                    <StatusPopover />
+                    <CohortStatusPopover
+                        setRequestStatus={setRequestStatus}
+                        requestStatus={requestStatus}
+                    />
                 </Box>
             ),
             cell: ({ row: { original } }) => (

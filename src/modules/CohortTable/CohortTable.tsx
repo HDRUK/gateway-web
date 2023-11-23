@@ -1,7 +1,7 @@
 import Table from "@/components/Table";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { CohortRequest } from "@/interfaces/CohortRequest";
+import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import Loading from "@/components/Loading";
 import { useState } from "react";
 import Pagination from "@/components/Pagination";
@@ -11,7 +11,7 @@ import { getColumns } from "./CohortTable.utils";
 const CohortTable = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [sort, setSort] = useState({ key: "created_at", direction: "asc" });
-    const [requestStatus, setRequestStatus] = useState("");
+    const [requestStatus, setRequestStatus] = useState<CohortRequestStatus>();
 
     const queryParams = new URLSearchParams();
     queryParams.append("sort", `${sort.key}:${sort.direction}`);
@@ -30,6 +30,7 @@ const CohortTable = () => {
         setSort,
         sort,
         setRequestStatus,
+        requestStatus,
     });
 
     if (!list) return <Loading />;
