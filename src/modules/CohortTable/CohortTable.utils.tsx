@@ -66,7 +66,7 @@ const getColumns = ({
                         disableRipple
                         size="large"
                         edge="start"
-                        aria-label="copy text"
+                        aria-label="Sort by name"
                         onClick={() => {
                             setSort(updateSort("name"));
                         }}>
@@ -105,7 +105,7 @@ const getColumns = ({
                         disableRipple
                         size="large"
                         edge="start"
-                        aria-label="copy text"
+                        aria-label="Sort by organisation"
                         onClick={() => setSort(updateSort("organisation"))}>
                         <SortByAlphaIcon />
                     </IconButton>

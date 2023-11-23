@@ -48,6 +48,7 @@ const generateUserV1 = (data = {}): User => {
         firstname: faker.name.firstName(),
         lastname: faker.name.lastName(),
         name: faker.datatype.string(),
+        organisation: faker.datatype.string(),
         provider: faker.datatype.string(),
         providerId: faker.datatype.number(),
         preferred_email: faker.helpers.arrayElement(["primary", "secondary"]),
