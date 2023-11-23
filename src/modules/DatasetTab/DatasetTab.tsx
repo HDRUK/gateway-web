@@ -15,6 +15,7 @@ import { SortAscIcon, SortDescIcon } from "@/consts/icons";
 interface SortByOption {
     label: string;
     value: string;
+    defaultDirection: string;
 }
 
 interface DatasetTabProps {
@@ -60,11 +61,14 @@ const DatasetTab = ({
     const { handleSubmit, control } = useForm({
         defaultValues: { sortField: sortField },
         //reValidateMode: "onChange",
-        //mode: "all", - couldnt get these working
+        //mode: "onChange",
     });
 
     const onChangeSortField = (e: React.ChangeEvent<unknown>) => {
-        setSortField(e.target.value);
+        const value = e.target.value;
+        const [option] = sortByOptions.filter(o => o.value === value);
+        setSortDirection(option.defaultDirection);
+        setSortField(option.value);
     };
 
     const onChangeSortDirection = (e: React.ChangeEvent<unknown>) => {
