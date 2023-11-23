@@ -48,8 +48,8 @@ export const Size: Story = {
 export const Variant: Story = {
     render: () => (
         <Stack direction="row" gap={2}>
-            <ChipComponet label="I'm an error Chip" variant="outlined" />
-            <ChipComponet label="I'm an error Chip" variant="filled" />
+            <ChipComponet label="I'm an outlined Chip" variant="outlined" />
+            <ChipComponet label="I'm a filled Chip" variant="filled" />
         </Stack>
     ),
 };

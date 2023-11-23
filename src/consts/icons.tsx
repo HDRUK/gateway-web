@@ -40,6 +40,8 @@ import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import InfoIcon from "@mui/icons-material/Info";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 
 import { createSvgIcon } from "@mui/material";
 
@@ -61,6 +63,8 @@ const RemoveFilterIcon = createSvgIcon(
 );
 
 export {
+    FilterAltOffIcon,
+    FilterAltIcon,
     InfoIcon,
     ArrowDropUpIcon,
     SortByAlphaIcon,

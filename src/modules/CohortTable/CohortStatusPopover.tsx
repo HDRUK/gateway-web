@@ -1,6 +1,6 @@
 import Box from "@/components/Box";
 import RadioGroup from "@/components/RadioGroup";
-import { RemoveFilterIcon } from "@/consts/icons";
+import { FilterAltIcon, FilterAltOffIcon } from "@/consts/icons";
 import { CohortRequestStatus } from "@/interfaces/CohortRequest";
 import { IconButton, Popover } from "@mui/material";
 import { useState } from "react";
@@ -72,10 +72,12 @@ const CohortStatusPopover = ({
     const open = Boolean(anchorEl);
     const id = open ? "status-popover" : undefined;
 
+    const FilterIcon = requestStatus ? FilterAltIcon : FilterAltOffIcon;
+
     return (
         <>
             <IconButton sx={{ p: 0 }} disableRipple onClick={handlePopoverOpen}>
-                <RemoveFilterIcon fontSize="small" />
+                <FilterIcon fontSize="small" />
             </IconButton>
             <Popover
                 id={id}

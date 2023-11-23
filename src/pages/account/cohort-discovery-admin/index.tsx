@@ -8,12 +8,13 @@ import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/modules/AccountLayout";
 import CohortTable from "@/modules/CohortTable";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const CohortDiscoveryAdmin = () => {
     const { isLoading } = useAuth();
 
     return (
-        <>
+        <ProtectedRoute permissions={["cohort.read"]}>
             <Head title="Health Data Research Innovation Gateway - My Account - Cohort Discovery Admin" />
             <AccountLayout>
                 <Paper>
@@ -22,8 +23,9 @@ const CohortDiscoveryAdmin = () => {
                             Cohort Discovery Admin
                         </Typography>
                         <Typography sx={{ marginBottom: 4 }}>
-                            Use this form to register an account and update your
-                            account on the Gateway
+                            Find and manage status of all Cohort Discovery
+                            users, Click individual account users name to access
+                            decision page to review and edit status
                         </Typography>
                         {isLoading ? (
                             <CircularProgress color="secondary" />
@@ -33,7 +35,7 @@ const CohortDiscoveryAdmin = () => {
                     </Box>
                 </Paper>
             </AccountLayout>
-        </>
+        </ProtectedRoute>
     );
 };
 
