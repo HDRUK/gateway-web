@@ -37,7 +37,9 @@ const CohortTable = () => {
 
     return (
         <>
-            <Table<CohortRequest> columns={columns} rows={list} />
+            <div style={{ marginBlock: 10 }}>
+                <Table<CohortRequest> columns={columns} rows={list} />
+            </div>
             <Pagination
                 isLoading={isLoading}
                 page={currentPage}
