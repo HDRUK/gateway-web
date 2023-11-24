@@ -11,6 +11,7 @@ interface User {
     provider: string;
     providerId: number;
     roles: Role[];
+    organisation: string;
 }
 
 export type { User };

@@ -10,6 +10,7 @@ const apis = {
     authGoogleV1Url: `${apiV1Url}/auth/google`,
     authLinkedinV1Url: `${apiV1Url}/auth/linkedin`,
     authAzureV1Url: `${apiV1Url}/auth/azure`,
+    cohortRequestsV1Url: `${apiV1Url}/cohort_requests`,
     logoutV1UrlIP: `${apiV1IPUrl}/logout`,
     usersV1Url: `${apiV1Url}/users`,
     filtersV1Url: `${apiV1Url}/filters`,

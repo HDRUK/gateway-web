@@ -1,6 +1,6 @@
-import { render, screen, within } from "@/utils/testUtils";
-import EditApplicationForm from "./EditApplicationForm";
+import { render, screen } from "@/utils/testUtils";
 import { generateApplicationV1 } from "@/mocks/data/application";
+import EditApplicationForm from "./EditApplicationForm";
 
 describe("EditApplicationForm", () => {
     const mockApplication = generateApplicationV1();
