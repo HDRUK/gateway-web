@@ -48,7 +48,7 @@ const TeamDatasets = () => {
         sortByOptions[0].defaultDirection
     );
 
-    const [filterTitle, setFilterTitle] = useState("XYZ");
+    const [filterTitle, setFilterTitle] = useState("");
     const filterTitleDebounced = useDebounce(filterTitle, 500);
 
     const queryParams = new URLSearchParams();
