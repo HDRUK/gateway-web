@@ -16,7 +16,7 @@ export const th = css({
 });
 
 export const td = css({
-    paddingLeft: "10px",
+    padding: "5px 10px",
     borderBottom: `1px solid ${colors.grey300}`,
     borderRight: `1px solid ${colors.grey300}`,
     ":last-child": {

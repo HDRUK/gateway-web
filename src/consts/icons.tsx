@@ -37,6 +37,12 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
+import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import InfoIcon from "@mui/icons-material/Info";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+
 import { createSvgIcon } from "@mui/material";
 
 const RemoveFilterIcon = createSvgIcon(
@@ -105,6 +111,12 @@ const SortDescIcon = createSvgIcon(
 );
 
 export {
+    FilterAltOffIcon,
+    FilterAltIcon,
+    InfoIcon,
+    ArrowDropUpIcon,
+    SortByAlphaIcon,
+    DescriptionOutlinedIcon,
     RemoveFilterIcon,
     UnarchiveIcon,
     ArchiveIcon,
@@ -140,7 +152,6 @@ export {
     FolderSharedOutlinedIcon,
     StorageOutlinedIcon,
     SchemaOutlinedIcon,
-    DescriptionOutlinedIcon,
     HelpOutlineOutlinedIcon,
     GroupsOutlinedIcon,
     ContentCopyIcon,

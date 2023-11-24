@@ -14,7 +14,7 @@ describe("TooltipIcon", () => {
         const label = screen.getByText("tooltip label");
         expect(label).toBeInTheDocument();
 
-        const anchor = screen.getByTestId("HelpOutlineIcon");
+        const anchor = screen.getByTestId("InfoIcon");
         userEvent.hover(anchor);
 
         await waitFor(() => {

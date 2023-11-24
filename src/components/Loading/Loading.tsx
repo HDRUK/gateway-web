@@ -1,8 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import * as styles from "./Loading.styles";
+import { CircularProgress } from "@mui/material";
+import Box from "../Box";
 
 const Loading = () => {
-    return <div css={styles.loading}>Loading</div>;
+    return (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress color="secondary" />
+        </Box>
+    );
 };
 
 export default Loading;

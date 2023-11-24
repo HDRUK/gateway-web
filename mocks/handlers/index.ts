@@ -19,6 +19,7 @@ import {
     postIntegrationV1,
     postFederationsTestV1,
 } from "./integration/v1";
+import { getCohortRequestsV1 } from "./cohortRequest";
 
 export const handlers = [
     getUserV1(),
@@ -36,4 +37,5 @@ export const handlers = [
     getIntegrationsV1({}),
     postIntegrationV1({}),
     postFederationsTestV1({}),
+    getCohortRequestsV1(),
 ];

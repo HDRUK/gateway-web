@@ -21,11 +21,17 @@ export const Default: Story = {
 export const Color: Story = {
     render: () => (
         <Stack direction="row" gap={2}>
-            <ChipComponet label="I'm a Chip too!" color="primary" />
-            <ChipComponet label="I'm a Chip too!" color="success" />
-            <ChipComponet label="I'm a Chip too!" color="info" />
-            <ChipComponet label="I'm a Chip too!" color="warning" />
-            <ChipComponet label="I'm a Chip too!" color="error" />
+            <ChipComponet label="I'm a default Chip" color="default" />
+            <ChipComponet label="I'm a primary Chip" color="primary" />
+            <ChipComponet label="I'm a secondary Chip" color="secondary" />
+            <ChipComponet label="I'm a success Chip" color="success" />
+            <ChipComponet label="I'm an info Chip" color="info" />
+            <ChipComponet label="I'm a warning Chip" color="warning" />
+            <ChipComponet
+                label="I'm a warning (amber) Chip"
+                color="warningAmber"
+            />
+            <ChipComponet label="I'm an error Chip" color="error" />
         </Stack>
     ),
 };
@@ -33,8 +39,8 @@ export const Color: Story = {
 export const Size: Story = {
     render: () => (
         <Stack direction="row" gap={2}>
-            <ChipComponet label="I'm a Chip too!" size="small" />
-            <ChipComponet label="I'm a Chip!" size="medium" />
+            <ChipComponet label="I'm a small Chip" size="small" />
+            <ChipComponet label="I'm a medium Chip" size="medium" />
         </Stack>
     ),
 };
@@ -42,8 +48,8 @@ export const Size: Story = {
 export const Variant: Story = {
     render: () => (
         <Stack direction="row" gap={2}>
-            <ChipComponet label="I'm a Chip too!" variant="outlined" />
-            <ChipComponet label="I'm a Chip too!" variant="filled" />
+            <ChipComponet label="I'm an outlined Chip" variant="outlined" />
+            <ChipComponet label="I'm a filled Chip" variant="filled" />
         </Stack>
     ),
 };
