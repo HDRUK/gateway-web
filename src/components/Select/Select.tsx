@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import { OutlinedInput, Select as MuiSelect, MenuItem } from "@mui/material";
-import { ChangeEvent } from "react";
-
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import SelectMenuItem from "@/components/SelectMenuItem";
