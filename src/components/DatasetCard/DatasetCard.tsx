@@ -8,6 +8,7 @@ import KeyValueList from "@/components/KeyValueList";
 import { IconType } from "@/interfaces/Ui";
 import { getMauroValue } from "@/utils/mauro";
 import CardActions from "../CardActions";
+import { nonManualDatasetCardActions } from "@/consts/actions";
 
 interface DatasetCardProps {
     dataset: Dataset;
@@ -86,7 +87,14 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                     </Box>
                 </Box>
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
-                    <CardActions actions={actions} id={dataset.id} />
+                    <CardActions
+                        actions={
+                            dataset.create_origin == "MANUAL"
+                                ? actions
+                                : nonManualDatasetCardActions
+                        }
+                        id={dataset.id}
+                    />
                 </Box>
             </Box>
         </Paper>
