@@ -11,7 +11,7 @@ import { IconType } from "@/interfaces/Ui";
 import BoxContainer from "@/components/BoxContainer";
 import { useForm } from "react-hook-form";
 import { SortAscIcon, SortDescIcon } from "@/consts/icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface SortByOption {
     label: string;
@@ -81,18 +81,9 @@ const DatasetTab = ({
         setSortDirection(sortDirection == "desc" ? "asc" : "desc");
     };
 
-    //The following is used for the TextField type ahead search
-    // - would be better as a seperate reusable component
-    const [query, setQuery] = useState(filterTitle); //handle the user typed query in the search box
-    useEffect(() => {
-        //when the query is changed by the user, change the filter after waiting half a second
-        if (query.length < 3 && query.length > 0) return;
-        const timeOutId = setTimeout(() => setFilterTitle(query), 500);
-        return () => clearTimeout(timeOutId);
-    }, [query]);
     //handle a change to the TextField box initially and change the current query
     const handleSearchChange = (e: React.ChangeEvent<unknown>) => {
-        setQuery(e.target.value);
+        setFilterTitle(e.target.value);
     };
 
     return (
@@ -117,7 +108,7 @@ const DatasetTab = ({
                             name="searchTitle"
                             id="searchTitle"
                             placeholder="search titles"
-                            value={query}
+                            value={filterTitle}
                             onChange={handleSearchChange}
                         />
                     </Box>

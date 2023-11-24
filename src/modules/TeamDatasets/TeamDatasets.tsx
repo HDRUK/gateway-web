@@ -10,6 +10,7 @@ import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import useDelete from "@/hooks/useDelete";
+import useDebounce from "@/hooks/useDebounce";
 import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { getTabLength } from "./TeamDatasets.utils";
 
@@ -47,10 +48,20 @@ const TeamDatasets = () => {
         sortByOptions[0].defaultDirection
     );
 
-    const [filterTitle, setFilterTitle] = useState("");
+    const [filterTitle, setFilterTitle] = useState("XYZ");
+    const filterTitleDebounced = useDebounce(filterTitle, 500);
+
+    const queryParams = new URLSearchParams();
+    queryParams.append("team_id", teamId);
+    queryParams.append("withTrashed", "true");
+    queryParams.append("page", `${currentPage}`);
+    queryParams.append("sort", `${sortField}:${sortDirection}`);
+    if (filterTitleDebounced) {
+        queryParams.append("filter_title", filterTitleDebounced);
+    }
 
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
-        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&page=${currentPage}&sort=${sortField}:${sortDirection}&filter_title=${filterTitle}`,
+        `${apis.datasetsV1Url}?${queryParams}`,
         {
             keepPreviousData: true,
             withPagination: true,
