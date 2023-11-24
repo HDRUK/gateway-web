@@ -3,14 +3,15 @@ import { Dataset } from "@/interfaces/Dataset";
 import DatasetCard from "@/components/DatasetCard";
 import Pagination from "@/components/Pagination";
 import ShowingXofX from "@/components/ShowingXofX";
-import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Select from "@/components/Select";
 import Button from "@/components/Button";
+import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import BoxContainer from "@/components/BoxContainer";
 import { useForm } from "react-hook-form";
 import { SortAscIcon, SortDescIcon } from "@/consts/icons";
+import { useEffect, useState } from "react";
 
 interface SortByOption {
     label: string;
@@ -38,6 +39,8 @@ interface DatasetTabProps {
     setSortField: (field: string) => void;
     sortDirection: string;
     setSortDirection: (direction: string) => void;
+    filterTitle: string;
+    setFilterTitle: (title: string) => void;
     isLoading: boolean;
 }
 
@@ -56,8 +59,11 @@ const DatasetTab = ({
     setSortField,
     sortDirection,
     setSortDirection,
+    filterTitle,
+    setFilterTitle,
     isLoading,
 }: DatasetTabProps) => {
+    //handle for the select filter box
     const { handleSubmit, control } = useForm({
         defaultValues: { sortField: sortField },
         //reValidateMode: "onChange",
@@ -75,7 +81,20 @@ const DatasetTab = ({
         setSortDirection(sortDirection == "desc" ? "asc" : "desc");
     };
 
-    if (isLoading) return <Loading />;
+    //The following is used for the TextField type ahead search
+    // - would be better as a seperate reusable component
+    const [query, setQuery] = useState(filterTitle); //handle the user typed query in the search box
+    useEffect(() => {
+        //when the query is changed by the user, change the filter after waiting half a second
+        if (query.length < 3 && query.length > 0) return;
+        const timeOutId = setTimeout(() => setFilterTitle(query), 500);
+        return () => clearTimeout(timeOutId);
+    }, [query]);
+    //handle a change to the TextField box initially and change the current query
+    const handleSearchChange = (e: React.ChangeEvent<unknown>) => {
+        setQuery(e.target.value);
+    };
+
     return (
         <Box sx={{ p: 0 }}>
             <BoxContainer
@@ -84,8 +103,26 @@ const DatasetTab = ({
                     alignItems: "center",
                     justifyContent: "space-between",
                 }}>
-                <Box> search here....</Box>
-                <Box sx={{ minWidth: "300px", display: "flex" }}>
+                <Box sx={{ minWidth: "70%" }}>
+                    <Box sx={{ p: 0 }}>
+                        <TextField
+                            sx={{
+                                width: "100%",
+                                padding: 0,
+                                "& .MuiInputBase-root": {
+                                    padding: 0, // Adjust the padding as needed
+                                },
+                            }}
+                            variant="outlined"
+                            name="searchTitle"
+                            id="searchTitle"
+                            placeholder="search titles"
+                            value={query}
+                            onChange={handleSearchChange}
+                        />
+                    </Box>
+                </Box>
+                <Box sx={{ display: "flex" }}>
                     <Box sx={{ p: 0, minWidth: "250px" }}>
                         <Select
                             onChange={onChangeSortField}

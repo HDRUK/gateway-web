@@ -47,8 +47,10 @@ const TeamDatasets = () => {
         sortByOptions[0].defaultDirection
     );
 
+    const [filterTitle, setFilterTitle] = useState("");
+
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
-        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&page=${currentPage}&sort=${sortField}:${sortDirection}`,
+        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&page=${currentPage}&sort=${sortField}:${sortDirection}&filter_title=${filterTitle}`,
         {
             keepPreviousData: true,
             withPagination: true,
@@ -144,6 +146,8 @@ const TeamDatasets = () => {
                 setSortField={setSortField}
                 sortDirection={sortDirection}
                 setSortDirection={setSortDirection}
+                filterTitle={filterTitle}
+                setFilterTitle={setFilterTitle}
                 isLoading={isLoading}
                 actions={actions}
             />

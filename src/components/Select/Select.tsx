@@ -32,8 +32,6 @@ export interface SelectProps {
     control: Control;
     required?: boolean;
     hasCheckbox?: boolean;
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-    value?: string;
 }
 
 const renderValue = (
@@ -66,8 +64,7 @@ const Select = (props: SelectProps) => {
         multiple,
         disabled,
         invertListItem,
-        onChange,
-        value,
+        ...rest
     } = props;
 
     const {
@@ -101,8 +98,7 @@ const Select = (props: SelectProps) => {
                     renderValue(selected, options, !!multiple)
                 }
                 {...fieldProps}
-                onChange={onChange ? onChange : fieldProps.onChange}
-                value={value ?? fieldProps.value ?? ""}>
+                {...rest}>
                 {options.map(option => (
                     <MenuItem
                         color="secondary"
