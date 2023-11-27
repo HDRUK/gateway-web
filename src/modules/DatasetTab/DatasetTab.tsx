@@ -11,12 +11,11 @@ import { IconType } from "@/interfaces/Ui";
 import BoxContainer from "@/components/BoxContainer";
 import { useForm } from "react-hook-form";
 import { SortAscIcon, SortDescIcon } from "@/consts/icons";
-import { useState } from "react";
 
 interface SortByOption {
     label: string;
     value: string;
-    defaultDirection: string;
+    direction: string;
 }
 
 interface DatasetTabProps {
@@ -35,10 +34,8 @@ interface DatasetTabProps {
     currentPage: number;
     setCurrentPage: (page: number) => void;
     sortByOptions: SortByOption[];
-    sortField: string;
-    setSortField: (field: string) => void;
-    sortDirection: string;
-    setSortDirection: (direction: string) => void;
+    sort: SortByOption;
+    setSort: (field: SortByOption) => void;
     filterTitle: string;
     setFilterTitle: (title: string) => void;
     isLoading: boolean;
@@ -55,30 +52,29 @@ const DatasetTab = ({
     currentPage,
     setCurrentPage,
     sortByOptions,
-    sortField,
-    setSortField,
-    sortDirection,
-    setSortDirection,
+    sort,
+    setSort,
     filterTitle,
     setFilterTitle,
     isLoading,
 }: DatasetTabProps) => {
     //handle for the select filter box
-    const { handleSubmit, control } = useForm({
-        defaultValues: { sortField: sortField },
-        //reValidateMode: "onChange",
-        //mode: "onChange",
+    const { control } = useForm({
+        defaultValues: { sortField: sort.value },
     });
 
     const onChangeSortField = (e: React.ChangeEvent<unknown>) => {
         const value = e.target.value;
         const [option] = sortByOptions.filter(o => o.value === value);
-        setSortDirection(option.defaultDirection);
-        setSortField(option.value);
+        setSort(option);
     };
 
     const onChangeSortDirection = (e: React.ChangeEvent<unknown>) => {
-        setSortDirection(sortDirection == "desc" ? "asc" : "desc");
+        const updatedSort = {
+            ...sort,
+            direction: sort.direction === "desc" ? "asc" : "desc",
+        };
+        setSort(updatedSort);
     };
 
     //handle a change to the TextField box initially and change the current query
@@ -90,37 +86,41 @@ const DatasetTab = ({
         <Box sx={{ p: 0 }}>
             <BoxContainer
                 sx={{
+                    my: 2,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                 }}>
-                <Box sx={{ minWidth: "70%" }}>
-                    <Box sx={{ p: 0 }}>
-                        <TextField
-                            sx={{
-                                width: "100%",
-                                padding: 0,
-                                "& .MuiInputBase-root": {
-                                    padding: 0, // Adjust the padding as needed
-                                },
-                            }}
-                            variant="outlined"
-                            name="searchTitle"
-                            id="searchTitle"
-                            placeholder="search titles"
-                            value={filterTitle}
-                            onChange={handleSearchChange}
-                        />
-                    </Box>
+                <Box sx={{ p: 0, width: "50%" }}>
+                    <TextField
+                        sx={{
+                            width: "100%",
+                            mb: "16px",
+                        }}
+                        size="small"
+                        variant="outlined"
+                        name="searchTitle"
+                        id="searchTitle"
+                        placeholder="Search titles"
+                        value={filterTitle}
+                        onChange={handleSearchChange}
+                    />
                 </Box>
-                <Box sx={{ display: "flex" }}>
-                    <Box sx={{ p: 0, minWidth: "250px" }}>
+                <BoxContainer
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                    }}>
+                    <Box sx={{ p: 0 }}>
                         <Select
+                            sx={{
+                                minWidth: "200px",
+                            }}
                             onChange={onChangeSortField}
                             control={control}
                             options={sortByOptions}
                             label=""
-                            value={sortField}
+                            value={sort.value}
                             name="sortField"
                         />
                     </Box>
@@ -129,7 +129,7 @@ const DatasetTab = ({
                             sx={{ marginBottom: 2 }}
                             variant="link"
                             onClick={onChangeSortDirection}>
-                            {sortDirection == "asc" ? (
+                            {sort.direction == "asc" ? (
                                 <SortAscIcon color="primary" fontSize="large" />
                             ) : (
                                 <SortDescIcon
@@ -139,7 +139,7 @@ const DatasetTab = ({
                             )}
                         </Button>
                     </Box>
-                </Box>
+                </BoxContainer>
             </BoxContainer>
 
             <Box sx={{ p: 0 }}>

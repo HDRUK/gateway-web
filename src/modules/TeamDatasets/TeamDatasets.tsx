@@ -24,29 +24,26 @@ const TeamDatasets = () => {
         {
             label: "Sort By Date of Last Update",
             value: "updated",
-            defaultDirection: "desc",
+            direction: "desc",
         },
         {
             label: "Sort By Date of Creation",
             value: "created",
-            defaultDirection: "desc",
+            direction: "desc",
         },
         {
             label: "Sort By Title",
             value: "properties/summary/title",
-            defaultDirection: "asc",
+            direction: "asc",
         },
         {
             label: "Sort By Publisher Name",
             value: "properties/summary/publisher/publisherName",
-            defaultDirection: "asc",
+            direction: "asc",
         },
     ];
 
-    const [sortField, setSortField] = useState(sortByOptions[0].value);
-    const [sortDirection, setSortDirection] = useState(
-        sortByOptions[0].defaultDirection
-    );
+    const [sort, setSort] = useState(sortByOptions[0]);
 
     const [filterTitle, setFilterTitle] = useState("");
     const filterTitleDebounced = useDebounce(filterTitle, 500);
@@ -55,7 +52,8 @@ const TeamDatasets = () => {
     queryParams.append("team_id", teamId);
     queryParams.append("withTrashed", "true");
     queryParams.append("page", `${currentPage}`);
-    queryParams.append("sort", `${sortField}:${sortDirection}`);
+    queryParams.append("sort", `${sort.value}:${sort.direction}`);
+
     if (filterTitleDebounced) {
         queryParams.append("filter_title", filterTitleDebounced);
     }
@@ -153,10 +151,8 @@ const TeamDatasets = () => {
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 sortByOptions={sortByOptions}
-                sortField={sortField}
-                setSortField={setSortField}
-                sortDirection={sortDirection}
-                setSortDirection={setSortDirection}
+                sort={sort}
+                setSort={setSort}
                 filterTitle={filterTitle}
                 setFilterTitle={setFilterTitle}
                 isLoading={isLoading}
