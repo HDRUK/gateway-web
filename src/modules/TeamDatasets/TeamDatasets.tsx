@@ -50,10 +50,10 @@ const TeamDatasets = () => {
     const queryParams = new URLSearchParams({
         team_id: teamId.toString(),
         withTrashed: "true",
-        request_status: (tab as string) || "ACTIVE",
+        status: (tab as string) || "ACTIVE",
         page: currentPage.toString(),
         sort,
-        filter_title: filterTitleDebounced,
+        title: filterTitleDebounced,
     });
 
     const { data: allDatasets } = useGet<Dataset[]>(
