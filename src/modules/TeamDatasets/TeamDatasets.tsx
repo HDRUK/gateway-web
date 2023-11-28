@@ -50,10 +50,15 @@ const TeamDatasets = () => {
     const queryParams = new URLSearchParams({
         team_id: teamId.toString(),
         withTrashed: "true",
+        status: (tab as string) || "ACTIVE",
         page: currentPage.toString(),
         sort,
-        filter_title: filterTitleDebounced,
+        title: filterTitleDebounced,
     });
+
+    const { data: allDatasets } = useGet<Dataset[]>(
+        `${apis.datasetsV1Url}?team_id=${teamId}`
+    );
 
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
         `${apis.datasetsV1Url}?${queryParams}`,
@@ -126,9 +131,9 @@ const TeamDatasets = () => {
             : []),
     ];
 
-    const archivedTabs = getTabLength(data?.list, "ARCHIVED");
-    const draftTabs = getTabLength(data?.list, "DRAFT");
-    const activeTabs = getTabLength(data?.list, "ACTIVE");
+    const archivedTabs = getTabLength(allDatasets, "ARCHIVED");
+    const draftTabs = getTabLength(allDatasets, "DRAFT");
+    const activeTabs = getTabLength(allDatasets, "ACTIVE");
 
     const tabsList = [
         { label: "Active", value: "ACTIVE", dsCount: activeTabs },
@@ -143,9 +148,7 @@ const TeamDatasets = () => {
                 control={control}
                 key={tabItem.value}
                 label={tabItem.label}
-                list={(data?.list || []).filter(
-                    ds => ds.status === tabItem.value
-                )}
+                list={data?.list}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 isLoading={isLoading}

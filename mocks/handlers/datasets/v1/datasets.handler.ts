@@ -13,7 +13,6 @@ const getDatasetsV1 = (data: Dataset[] = datasetsV1, status = 200) => {
                 ctx.json(`Request failed with status code ${status}`)
             );
         }
-
         if (url.searchParams.get("page")) {
             return res(
                 ctx.status(status),
