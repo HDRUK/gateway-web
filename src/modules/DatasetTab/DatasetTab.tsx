@@ -3,9 +3,16 @@ import { Dataset } from "@/interfaces/Dataset";
 import DatasetCard from "@/components/DatasetCard";
 import Pagination from "@/components/Pagination";
 import ShowingXofX from "@/components/ShowingXofX";
-import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import { IconType } from "@/interfaces/Ui";
+import BoxContainer from "@/components/BoxContainer";
+import {
+    searchFilter,
+    sortField,
+    toggleDirection,
+} from "@/config/forms/datasetAccountSearch";
+import InputWrapper from "@/components/InputWrapper";
+import { Control } from "react-hook-form";
 
 interface DatasetTabProps {
     list?: Dataset[];
@@ -18,6 +25,7 @@ interface DatasetTabProps {
     lastPage?: number;
     from?: number;
     to?: number;
+    control: Control;
     total?: number;
     label: string;
     currentPage: number;
@@ -35,14 +43,39 @@ const DatasetTab = ({
     total,
     currentPage,
     setCurrentPage,
+    control,
     isLoading,
 }: DatasetTabProps) => {
-    if (isLoading) return <Loading />;
     return (
         <Box sx={{ p: 0 }}>
+            <BoxContainer
+                sx={{
+                    my: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                }}>
+                <Box sx={{ p: 0, width: "50%" }}>
+                    <InputWrapper control={control} {...searchFilter} />
+                </Box>
+                <BoxContainer
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                    }}>
+                    <Box sx={{ p: 0 }}>
+                        <InputWrapper control={control} {...sortField} />
+                    </Box>
+                    <Box sx={{ p: 0 }}>
+                        <InputWrapper control={control} {...toggleDirection} />
+                    </Box>
+                </BoxContainer>
+            </BoxContainer>
+
             <Box sx={{ p: 0 }}>
                 <ShowingXofX from={from} to={to} total={total} />
             </Box>
+
             {(list || [])?.map(dataset => (
                 <DatasetCard
                     actions={actions}

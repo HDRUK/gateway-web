@@ -7,8 +7,8 @@ import MuiTabPanel from "@mui/lab/TabPanel";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import { useRouter } from "next/router";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { AccountDatasetUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 interface Tab {
     label: string;
@@ -51,8 +51,9 @@ const Tabs = ({
     tabBoxSx,
     rootBoxSx,
 }: TabProps) => {
-    const searchParams = useSearchParams();
-    const selectedTab = searchParams.get("tab") || tabs[0].value;
+    const { query } = useRouter();
+    const { tab: currentTab } = query as AccountDatasetUrlQuery;
+    const selectedTab = currentTab || tabs[0].value;
 
     return (
         <Box sx={{ width: "100%", typography: "body1", ...rootBoxSx }}>

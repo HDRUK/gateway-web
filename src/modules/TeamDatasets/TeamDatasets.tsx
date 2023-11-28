@@ -10,7 +10,13 @@ import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import useDelete from "@/hooks/useDelete";
+import useDebounce from "@/hooks/useDebounce";
 import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import {
+    datasetSearchDefaultValues,
+    sortByOptions,
+} from "@/config/forms/datasetAccountSearch";
+import { useForm } from "react-hook-form";
 import { getTabLength } from "./TeamDatasets.utils";
 
 const TeamDatasets = () => {
@@ -18,8 +24,39 @@ const TeamDatasets = () => {
     const { query } = useRouter();
     const { teamId, tab } = query as AccountTeamUrlQuery;
     const [currentPage, setCurrentPage] = useState(1);
+    const [sort, setSort] = useState(
+        `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`
+    );
+    const { control, watch } = useForm({
+        defaultValues: datasetSearchDefaultValues,
+    });
+    const watchAll = watch();
+
+    useEffect(() => {
+        const [option] = sortByOptions.filter(
+            o => o.value === watchAll.sortField
+        );
+        setSort(`${watchAll.sortField}:${option.direction}`);
+    }, [watchAll.sortField]);
+
+    useEffect(() => {
+        setSort(
+            previous => `${previous.split(":")[0]}:${watchAll.sortDirection}`
+        );
+    }, [watchAll.sortDirection]);
+
+    const filterTitleDebounced = useDebounce(watchAll.searchTitle, 500);
+
+    const queryParams = new URLSearchParams({
+        team_id: teamId.toString(),
+        withTrashed: "true",
+        page: currentPage.toString(),
+        sort,
+        filter_title: filterTitleDebounced,
+    });
+
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
-        `${apis.datasetsV1Url}?team_id=${teamId}&withTrashed=true&decode_metadata=true&page=${currentPage}`,
+        `${apis.datasetsV1Url}?${queryParams}`,
         {
             keepPreviousData: true,
             withPagination: true,
@@ -103,6 +140,7 @@ const TeamDatasets = () => {
         content: (
             <DatasetTab
                 {...data}
+                control={control}
                 key={tabItem.value}
                 label={tabItem.label}
                 list={(data?.list || []).filter(

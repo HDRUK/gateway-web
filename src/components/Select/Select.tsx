@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import { OutlinedInput, Select as MuiSelect, MenuItem } from "@mui/material";
-
 import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
 import SelectMenuItem from "@/components/SelectMenuItem";
@@ -63,6 +62,7 @@ const Select = (props: SelectProps) => {
         multiple,
         disabled,
         invertListItem,
+        ...rest
     } = props;
 
     const {
@@ -96,7 +96,8 @@ const Select = (props: SelectProps) => {
                     renderValue(selected, options, !!multiple)
                 }
                 {...fieldProps}
-                value={fieldProps.value ?? ""}>
+                value={fieldProps.value ?? ""}
+                {...rest}>
                 {options.map(option => (
                     <MenuItem
                         color="secondary"
