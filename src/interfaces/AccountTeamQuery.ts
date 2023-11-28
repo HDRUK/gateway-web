@@ -4,4 +4,9 @@ interface AccountTeamUrlQuery extends ParsedUrlQuery {
     teamId: string;
 }
 
-export type { AccountTeamUrlQuery };
+interface AccountDatasetUrlQuery extends ParsedUrlQuery {
+    teamId: string;
+    tab: string;
+}
+
+export type { AccountTeamUrlQuery, AccountDatasetUrlQuery };

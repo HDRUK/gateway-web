@@ -4,19 +4,15 @@ import DatasetCard from "@/components/DatasetCard";
 import Pagination from "@/components/Pagination";
 import ShowingXofX from "@/components/ShowingXofX";
 import Paper from "@/components/Paper";
-import Select from "@/components/Select";
-import Button from "@/components/Button";
-import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import BoxContainer from "@/components/BoxContainer";
-import { useForm } from "react-hook-form";
-import { SortAscIcon, SortDescIcon } from "@/consts/icons";
-
-interface SortByOption {
-    label: string;
-    value: string;
-    direction: string;
-}
+import {
+    searchFilter,
+    sortField,
+    toggleDirection,
+} from "@/config/forms/datasetAccountSearch";
+import InputWrapper from "@/components/InputWrapper";
+import { Control } from "react-hook-form";
 
 interface DatasetTabProps {
     list?: Dataset[];
@@ -29,15 +25,11 @@ interface DatasetTabProps {
     lastPage?: number;
     from?: number;
     to?: number;
+    control: Control;
     total?: number;
     label: string;
     currentPage: number;
     setCurrentPage: (page: number) => void;
-    sortByOptions: SortByOption[];
-    sort: SortByOption;
-    setSort: (field: SortByOption) => void;
-    filterTitle: string;
-    setFilterTitle: (title: string) => void;
     isLoading: boolean;
 }
 
@@ -51,37 +43,9 @@ const DatasetTab = ({
     total,
     currentPage,
     setCurrentPage,
-    sortByOptions,
-    sort,
-    setSort,
-    filterTitle,
-    setFilterTitle,
+    control,
     isLoading,
 }: DatasetTabProps) => {
-    //handle for the select filter box
-    const { control } = useForm({
-        defaultValues: { sortField: sort.value },
-    });
-
-    const onChangeSortField = (e: React.ChangeEvent<unknown>) => {
-        const value = e.target.value;
-        const [option] = sortByOptions.filter(o => o.value === value);
-        setSort(option);
-    };
-
-    const onChangeSortDirection = (e: React.ChangeEvent<unknown>) => {
-        const updatedSort = {
-            ...sort,
-            direction: sort.direction === "desc" ? "asc" : "desc",
-        };
-        setSort(updatedSort);
-    };
-
-    //handle a change to the TextField box initially and change the current query
-    const handleSearchChange = (e: React.ChangeEvent<unknown>) => {
-        setFilterTitle(e.target.value);
-    };
-
     return (
         <Box sx={{ p: 0 }}>
             <BoxContainer
@@ -92,19 +56,7 @@ const DatasetTab = ({
                     justifyContent: "space-between",
                 }}>
                 <Box sx={{ p: 0, width: "50%" }}>
-                    <TextField
-                        sx={{
-                            width: "100%",
-                            mb: "16px",
-                        }}
-                        size="small"
-                        variant="outlined"
-                        name="searchTitle"
-                        id="searchTitle"
-                        placeholder="Search titles"
-                        value={filterTitle}
-                        onChange={handleSearchChange}
-                    />
+                    <InputWrapper control={control} {...searchFilter} />
                 </Box>
                 <BoxContainer
                     sx={{
@@ -112,32 +64,10 @@ const DatasetTab = ({
                         alignItems: "center",
                     }}>
                     <Box sx={{ p: 0 }}>
-                        <Select
-                            sx={{
-                                minWidth: "200px",
-                            }}
-                            onChange={onChangeSortField}
-                            control={control}
-                            options={sortByOptions}
-                            label=""
-                            value={sort.value}
-                            name="sortField"
-                        />
+                        <InputWrapper control={control} {...sortField} />
                     </Box>
                     <Box sx={{ p: 0 }}>
-                        <Button
-                            sx={{ marginBottom: 2 }}
-                            variant="link"
-                            onClick={onChangeSortDirection}>
-                            {sort.direction == "asc" ? (
-                                <SortAscIcon color="primary" fontSize="large" />
-                            ) : (
-                                <SortDescIcon
-                                    color="primary"
-                                    fontSize="large"
-                                />
-                            )}
-                        </Button>
+                        <InputWrapper control={control} {...toggleDirection} />
                     </Box>
                 </BoxContainer>
             </BoxContainer>

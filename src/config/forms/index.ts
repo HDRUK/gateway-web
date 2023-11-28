@@ -12,4 +12,5 @@ export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
     RadioGroup: "RadioGroup",
     TextTime: "TextTime",
     TextArea: "TextArea",
+    ToggleDirection: "ToggleDirection",
 };

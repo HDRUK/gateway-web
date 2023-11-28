@@ -3,14 +3,9 @@ import { render, screen, waitFor, within } from "@/utils/testUtils";
 import { server } from "@/mocks/server";
 import { getDatasetsV1 } from "@/mocks/handlers/datasets";
 import { generateDatasetV1, generateMauroItemV1 } from "@/mocks/data/dataset";
+import mockRouter from "next-router-mock";
 
-jest.mock("next/navigation", () => ({
-    useSearchParams() {
-        return {
-            get: () => "ACTIVE",
-        };
-    },
-}));
+mockRouter.query = { teamId: "1", tab: "ACTIVE" };
 
 describe("TeamDatasets", () => {
     it("should render active datasets", async () => {

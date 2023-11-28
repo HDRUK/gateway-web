@@ -1,4 +1,5 @@
 type ComponentTypes =
+    | "ToggleDirection"
     | "Switch"
     | "SwitchInline"
     | "Autocomplete"

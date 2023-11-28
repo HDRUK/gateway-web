@@ -16,6 +16,7 @@ import Autocomplete from "@/components/Autocomplete";
 import Switch from "@/components/Switch";
 import SwitchInline from "@/components/SwitchInline";
 import TextTime from "@/components/TextTime";
+import ToggleDirection from "@/components/ToggleDirection";
 
 type InputType =
     | TextFieldBaseProps
@@ -40,6 +41,7 @@ function InputWrapper({ component, ...props }: InputWrapperCombinedProps) {
         Checkbox,
         TextField,
         TextTime,
+        ToggleDirection,
         Select,
         RadioGroup,
         TextArea,
