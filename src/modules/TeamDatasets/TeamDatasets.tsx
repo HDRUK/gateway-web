@@ -12,6 +12,11 @@ import usePatch from "@/hooks/usePatch";
 import useDelete from "@/hooks/useDelete";
 import useDebounce from "@/hooks/useDebounce";
 import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import {
+    datasetSearchDefaultValues,
+    sortByOptions,
+} from "@/config/forms/datasetAccountSearch";
+import { useForm } from "react-hook-form";
 import { getTabLength } from "./TeamDatasets.utils";
 
 const TeamDatasets = () => {
@@ -19,44 +24,36 @@ const TeamDatasets = () => {
     const { query } = useRouter();
     const { teamId, tab } = query as AccountTeamUrlQuery;
     const [currentPage, setCurrentPage] = useState(1);
+    const [sort, setSort] = useState(
+        `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`
+    );
+    const { control, watch } = useForm({
+        defaultValues: datasetSearchDefaultValues,
+    });
+    const watchAll = watch();
 
-    const sortByOptions = [
-        {
-            label: "Sort By Date of Last Update",
-            value: "updated",
-            direction: "desc",
-        },
-        {
-            label: "Sort By Date of Creation",
-            value: "created",
-            direction: "desc",
-        },
-        {
-            label: "Sort By Title",
-            value: "properties/summary/title",
-            direction: "asc",
-        },
-        {
-            label: "Sort By Publisher Name",
-            value: "properties/summary/publisher/publisherName",
-            direction: "asc",
-        },
-    ];
+    useEffect(() => {
+        const [option] = sortByOptions.filter(
+            o => o.value === watchAll.sortField
+        );
+        setSort(`${watchAll.sortField}:${option.direction}`);
+    }, [watchAll.sortField]);
 
-    const [sort, setSort] = useState(sortByOptions[0]);
+    useEffect(() => {
+        setSort(
+            previous => `${previous.split(":")[0]}:${watchAll.sortDirection}`
+        );
+    }, [watchAll.sortDirection]);
 
-    const [filterTitle, setFilterTitle] = useState("");
-    const filterTitleDebounced = useDebounce(filterTitle, 500);
+    const filterTitleDebounced = useDebounce(watchAll.searchTitle, 500);
 
-    const queryParams = new URLSearchParams();
-    queryParams.append("team_id", teamId);
-    queryParams.append("withTrashed", "true");
-    queryParams.append("page", `${currentPage}`);
-    queryParams.append("sort", `${sort.value}:${sort.direction}`);
-
-    if (filterTitleDebounced) {
-        queryParams.append("filter_title", filterTitleDebounced);
-    }
+    const queryParams = new URLSearchParams({
+        team_id: teamId.toString(),
+        withTrashed: "true",
+        page: currentPage.toString(),
+        sort,
+        filter_title: filterTitleDebounced,
+    });
 
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
         `${apis.datasetsV1Url}?${queryParams}`,
@@ -143,6 +140,7 @@ const TeamDatasets = () => {
         content: (
             <DatasetTab
                 {...data}
+                control={control}
                 key={tabItem.value}
                 label={tabItem.label}
                 list={(data?.list || []).filter(
@@ -150,11 +148,6 @@ const TeamDatasets = () => {
                 )}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-                sortByOptions={sortByOptions}
-                sort={sort}
-                setSort={setSort}
-                filterTitle={filterTitle}
-                setFilterTitle={setFilterTitle}
                 isLoading={isLoading}
                 actions={actions}
             />
