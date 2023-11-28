@@ -17,7 +17,12 @@ import {
     sortByOptions,
 } from "@/config/forms/datasetAccountSearch";
 import { useForm } from "react-hook-form";
-import { getTabLength } from "./TeamDatasets.utils";
+
+interface CountStatus {
+    ACTIVE?: number;
+    DRAFT?: number;
+    ARCHIVED?: number;
+}
 
 const TeamDatasets = () => {
     const { showModal } = useModal();
@@ -50,15 +55,20 @@ const TeamDatasets = () => {
     const queryParams = new URLSearchParams({
         team_id: teamId.toString(),
         withTrashed: "true",
-        request_status: (tab as string) || "ACTIVE",
         page: currentPage.toString(),
         sort,
-        filter_title: filterTitleDebounced,
+        title: filterTitleDebounced,
+        status: (tab as string) || "ACTIVE",
     });
 
-    const { data: allDatasets } = useGet<Dataset[]>(
-        `${apis.datasetsV1Url}?team_id=${teamId}`
+    const { data: counts } = useGet<CountStatus>(
+        `${apis.datasetsV1Url}/count/?team_id=${teamId}&field=status`
     );
+    const {
+        ACTIVE: countActive,
+        DRAFT: countDraft,
+        ARCHIVED: countArchived,
+    } = counts ?? {};
 
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
         `${apis.datasetsV1Url}?${queryParams}`,
@@ -131,14 +141,10 @@ const TeamDatasets = () => {
             : []),
     ];
 
-    const archivedTabs = getTabLength(allDatasets, "ARCHIVED");
-    const draftTabs = getTabLength(allDatasets, "DRAFT");
-    const activeTabs = getTabLength(allDatasets, "ACTIVE");
-
     const tabsList = [
-        { label: "Active", value: "ACTIVE", dsCount: activeTabs },
-        { label: "Draft", value: "DRAFT", dsCount: draftTabs },
-        { label: "Archived", value: "ARCHIVED", dsCount: archivedTabs },
+        { label: "Active", value: "ACTIVE", dsCount: countActive ?? 0 },
+        { label: "Draft", value: "DRAFT", dsCount: countDraft ?? 0 },
+        { label: "Archived", value: "ARCHIVED", dsCount: countArchived ?? 0 },
     ].map(tabItem => ({
         label: `${tabItem.label} (${tabItem.dsCount})`,
         value: tabItem.value,
