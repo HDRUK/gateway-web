@@ -8,7 +8,7 @@ import mockRouter from "next-router-mock";
 mockRouter.query = { teamId: "1", tab: "ACTIVE" };
 
 describe("TeamDatasets", () => {
-    it("should render active datasets", async () => {
+    it("should render all datasets (filtered on BE)", async () => {
         const mauroItems = [
             generateMauroItemV1({
                 value: "title",
@@ -22,14 +22,11 @@ describe("TeamDatasets", () => {
 
         const mockDatasets = [
             generateDatasetV1({
-                create_origin: "FMA",
-                status: "ACTIVE",
+                create_origin: "MANUAL",
+                status: "ARCHIVED",
                 mauro: mauroItems,
             }),
-            generateDatasetV1({ create_origin: "MANUAL", status: "ARCHIVED" }),
             generateDatasetV1({ create_origin: "API", status: "ACTIVE" }),
-            generateDatasetV1({ create_origin: "MANUAL", status: "ACTIVE" }),
-            generateDatasetV1({ create_origin: "MANUAL", status: "DRAFT" }),
             generateDatasetV1({ create_origin: "FMA", status: "DRAFT" }),
         ];
         server.use(getDatasetsV1(mockDatasets));
@@ -50,22 +47,18 @@ describe("TeamDatasets", () => {
             ).toBeInTheDocument();
 
             expect(
-                within(datasetCards[0]).getByText(`FMA created dataset`)
+                within(datasetCards[0]).getByText(`Manually created dataset`)
             ).toBeInTheDocument();
             expect(
                 within(datasetCards[1]).getByText(`API created dataset`)
             ).toBeInTheDocument();
             expect(
-                within(datasetCards[2]).getByText(`Manually created dataset`)
+                within(datasetCards[2]).getByText(`FMA created dataset`)
             ).toBeInTheDocument();
         });
     });
     it("should render message if no active datasets", async () => {
-        const mockDatasets = [
-            generateDatasetV1({ create_origin: "MANUAL", status: "ARCHIVED" }),
-            generateDatasetV1({ create_origin: "FMA", status: "DRAFT" }),
-        ];
-        server.use(getDatasetsV1(mockDatasets));
+        server.use(getDatasetsV1([]));
         render(<TeamDatasets />);
 
         await waitFor(() => {
