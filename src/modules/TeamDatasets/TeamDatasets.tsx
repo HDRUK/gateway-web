@@ -62,7 +62,7 @@ const TeamDatasets = () => {
     });
 
     const { data: counts } = useGet<CountStatus>(
-        `${apis.datasetsV1Url}/count/?team_id=${teamId}&field=status`
+        `${apis.datasetsV1Url}/count/status?team_id=${teamId}`
     );
     const {
         ACTIVE: countActive,
