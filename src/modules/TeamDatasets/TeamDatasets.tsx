@@ -55,10 +55,10 @@ const TeamDatasets = () => {
     const queryParams = new URLSearchParams({
         team_id: teamId.toString(),
         withTrashed: "true",
+        status: (tab as string) || "ACTIVE",
         page: currentPage.toString(),
         sort,
         title: filterTitleDebounced,
-        status: (tab as string) || "ACTIVE",
     });
 
     const { data: counts } = useGet<CountStatus>(
