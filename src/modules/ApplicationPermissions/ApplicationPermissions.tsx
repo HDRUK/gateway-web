@@ -110,6 +110,14 @@ const ApplicationPermissions = ({
                 updatedPermissions,
                 permissions!
             );
+            const payload = {
+                ...application,
+                permissions: permissionIds,
+                enabled: true,
+            };
+
+            console.log(payload);
+
             await updateApplication(`${application?.id}`, {
                 ...application,
                 permissions: permissionIds,

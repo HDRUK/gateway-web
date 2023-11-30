@@ -10,7 +10,7 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { Application } from "@/interfaces/Application";
+import { Application, ApplicationForm } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import { useRouter } from "next/router";
 import usePost from "@/hooks/usePost";
@@ -71,11 +71,16 @@ const CreateApplicationForm = () => {
         [team]
     );
 
-    const submitForm = async (formData: Application) => {
-        const response = await updateApplication({
-            ...applicationDefaultValues,
+    const submitForm = async (formData: ApplicationForm) => {
+        const curatedFormData = {
             ...formData,
-        });
+            notifications: formData.notifications?.map(n => ({ email: n })),
+        };
+
+        const payload = { ...applicationDefaultValues, ...curatedFormData };
+
+        console.log(payload);
+        const response = await updateApplication(payload);
 
         /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
         setTimeout(() => {
