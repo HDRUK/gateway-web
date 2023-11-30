@@ -1,6 +1,8 @@
 import "@testing-library/jest-dom/extend-expect";
 import { server } from "./mocks/server";
 
+require("jest-fetch-mock").enableMocks();
+
 // mock useRouter
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 

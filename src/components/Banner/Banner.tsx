@@ -1,8 +1,5 @@
-/** @jsxImportSource @emotion/react */
-
 import Typography from "@/components/Typography";
 import Image, { StaticImageData } from "next/image";
-import * as styles from "./Banner.styles";
 
 export interface BannerProps {
     title: string;
@@ -12,8 +9,27 @@ export interface BannerProps {
 
 const Banner = ({ title, subTitle, src }: BannerProps) => {
     return (
-        <div css={styles.banner}>
-            <div css={styles.content}>
+        <div
+            style={{
+                position: "relative",
+                width: "100vw",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "200px",
+            }}>
+            <div
+                style={{
+                    zIndex: 1,
+                    position: "absolute",
+                    display: "flex",
+                    textAlign: "center",
+                    flexDirection: "column",
+                    gap: "10px",
+                    color: "white",
+                    maxWidth: "550px",
+                    padding: "0 20px",
+                }}>
                 <Typography style={{ fontSize: 40 }}>{title}</Typography>
                 {subTitle && <Typography>{subTitle}</Typography>}
             </div>

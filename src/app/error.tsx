@@ -18,7 +18,9 @@ export default function Error({
     return (
         <div>
             <h2>Something went wrong: {error.message}</h2>
-            <Button onClick={() => reset()}>Try again</Button>
+            {typeof reset === "function" && (
+                <Button onClick={() => reset()}>Try again</Button>
+            )}
         </div>
     );
 }

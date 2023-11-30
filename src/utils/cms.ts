@@ -1,39 +1,54 @@
-import apis from "@/config/apis";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
-import { ReleaseNotesResponse } from "@/interfaces/Releases";
-import { postRequest } from "@/services/api/post";
-import { MissionAndPurposesResponse } from "@/interfaces/MissionAndPurposes";
+import { ReleaseNode } from "@/interfaces/Releases";
+import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
+import apis from "@/config/apis";
+import { CMSResponse } from "@/interfaces/Cms";
 
-const fetchFromCMS = async <T>(
+async function fetchCMS(
     query = "",
-    { variables }: Record<string, unknown> = {}
-): Promise<T> => {
-    return await postRequest<T>(
-        apis.wordPressApiUrl || "",
-        {
+    options: {
+        variables?: Record<string, unknown>;
+        next?: Record<string, unknown>;
+    } = {}
+) {
+    const headers = { "Content-Type": "application/json" };
+
+    const res = await fetch(apis.wordPressApiUrl!, {
+        headers,
+        method: "POST",
+        body: JSON.stringify({
             query,
-            variables,
-        },
-        {
-            notificationOptions: {
-                successNotificationsOn: false,
-                errorNotificationsOn: false,
-            },
-        }
-    );
-};
+            ...options,
+        }),
+    });
+
+    const json = await res.json();
+    if (json.errors) {
+        console.error(json.errors);
+        throw new Error("Failed to fetch API");
+    }
+    return json.data;
+}
 
 const getReleaseNotes = async () => {
-    const data = await fetchFromCMS<ReleaseNotesResponse>(GetReleaseNotesQuery);
-    return data?.posts?.edges || null;
+    const data: CMSResponse<ReleaseNode> = await fetchCMS(
+        GetReleaseNotesQuery,
+        {
+            next: { revalidate: 10 },
+        }
+    );
+    return data.posts.edges || null;
 };
 
 const getMissionAndPurposes = async () => {
-    const data = await fetchFromCMS<MissionAndPurposesResponse>(
-        GetMissionAndPurposesQuery
+    const data: CMSResponse<MissionAndPurposesNode> = await fetchCMS(
+        GetMissionAndPurposesQuery,
+        {
+            next: { revalidate: 10 },
+        }
     );
     return data?.posts?.edges || null;
 };
 
-export { fetchFromCMS, getReleaseNotes, getMissionAndPurposes };
+export { getReleaseNotes, getMissionAndPurposes };

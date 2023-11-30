@@ -20,6 +20,7 @@ import {
     postFederationsTestV1,
 } from "./integration/v1";
 import { getCohortRequestsV1 } from "./cohortRequest";
+import { getCMSReleaseV1 } from "./cms";
 
 export const handlers = [
     getUserV1(),
@@ -38,4 +39,5 @@ export const handlers = [
     postIntegrationV1({}),
     postFederationsTestV1({}),
     getCohortRequestsV1(),
+    getCMSReleaseV1(),
 ];
