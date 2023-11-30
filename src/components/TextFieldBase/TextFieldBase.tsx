@@ -31,19 +31,19 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
         horizontalForm = false,
         label,
         fullWidth = true,
-        disabled,
+        disabled = false,
         placeholder,
         info,
         extraInfo,
         icon,
-        required,
+        required = false,
         limit,
         rows,
-        multiline,
+        multiline = false,
         control,
         name,
         setValue,
-        showClearButton,
+        showClearButton = false,
         ...inputProps
     } = props;
 
@@ -115,19 +115,6 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
             />
         </FormInputWrapper>
     );
-};
-
-TextFieldBase.defaultProps = {
-    placeholder: "",
-    info: "",
-    disabled: false,
-    required: false,
-    multiline: false,
-    rows: undefined,
-    icon: undefined,
-    setValue: undefined,
-    showClearButton: false,
-    limit: undefined,
 };
 
 export default TextFieldBase;

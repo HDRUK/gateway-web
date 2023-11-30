@@ -15,9 +15,9 @@ export interface ModalButtonProps {
 const ModalButtons = ({
     onSuccess,
     onCancel,
-    cancelText,
-    confirmText,
-    confirmType,
+    cancelText = "Cancel",
+    confirmText = "Confirm",
+    confirmType = "button" as ConfirmType,
     tertiaryButton,
 }: ModalButtonProps) => {
     const { hideDialog: hideModal } = useDialog();
@@ -73,14 +73,6 @@ const ModalButtons = ({
             </Box>
         </>
     );
-};
-
-ModalButtons.defaultProps = {
-    cancelText: "Cancel",
-    confirmText: "Confirm",
-    confirmType: "button" as ConfirmType,
-    onSuccess: () => null,
-    onCancel: () => null,
 };
 
 export default ModalButtons;

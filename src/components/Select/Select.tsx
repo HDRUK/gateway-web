@@ -53,15 +53,15 @@ const Select = (props: SelectProps) => {
         extraInfo,
         icon,
         horizontalForm,
-        iconRight,
         options,
         control,
         name,
         hasCheckbox,
-        required,
-        multiple,
-        disabled,
-        invertListItem,
+        required = false,
+        multiple = false,
+        iconRight = false,
+        disabled = false,
+        invertListItem = false,
         ...rest
     } = props;
 
@@ -125,17 +125,6 @@ const Select = (props: SelectProps) => {
             </MuiSelect>
         </FormInputWrapper>
     );
-};
-
-Select.defaultProps = {
-    info: "",
-    icon: undefined,
-
-    required: false,
-    multiple: false,
-    iconRight: false,
-    disabled: false,
-    invertListItem: false,
 };
 
 export default Select;

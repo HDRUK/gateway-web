@@ -53,9 +53,4 @@ const Upload = (props: UploadProps) => {
     );
 };
 
-Upload.defaultProps = {
-    uploadSx: {},
-    formControlSx: {},
-};
-
 export default Upload;

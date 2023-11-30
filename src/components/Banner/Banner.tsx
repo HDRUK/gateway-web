@@ -22,8 +22,4 @@ const Banner = ({ title, subTitle, src }: BannerProps) => {
     );
 };
 
-Banner.defaultProps = {
-    subTitle: "",
-};
-
 export default Banner;

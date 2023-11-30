@@ -1,5 +1,12 @@
 import { createTheme } from "@mui/material/styles";
-import { buttonLinkStyle } from "./overrides";
+
+const buttonLinkStyle = {
+    padding: 0,
+    "&:hover": {
+        textDecoration: "underline",
+        backgroundColor: "transparent",
+    },
+};
 
 export type colourType =
     | "inherit"

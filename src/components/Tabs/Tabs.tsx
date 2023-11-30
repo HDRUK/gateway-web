@@ -49,7 +49,7 @@ const CustomLink = forwardRef<
 
 const Tabs = ({
     tabs,
-    centered,
+    centered = false,
     introContent,
     tabBoxSx,
     rootBoxSx,
@@ -93,13 +93,6 @@ const Tabs = ({
             </MuiTabContext>
         </Box>
     );
-};
-
-Tabs.defaultProps = {
-    centered: false,
-    introContent: "",
-    tabBoxSx: {},
-    rootBoxSx: {},
 };
 
 export default Tabs;

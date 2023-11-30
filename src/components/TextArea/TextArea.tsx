@@ -6,13 +6,8 @@ export interface TextAreaProps extends TextFieldBaseProps {
     limit?: number;
 }
 
-const TextArea = ({ rows, limit, ...props }: TextAreaProps) => {
+const TextArea = ({ rows = 4, limit, ...props }: TextAreaProps) => {
     return <TextFieldBase {...props} limit={limit} multiline rows={rows} />;
-};
-
-TextArea.defaultProps = {
-    rows: 4,
-    limit: undefined,
 };
 
 export default TextArea;

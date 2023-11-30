@@ -20,7 +20,7 @@ const Dialog = ({
     styleProps,
     children,
     titleSx,
-    showCloseButton,
+    showCloseButton = true,
     onClose,
 }: DialogProps) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
@@ -59,13 +59,6 @@ const Dialog = ({
             {children}
         </MuiDialog>
     );
-};
-
-Dialog.defaultProps = {
-    showCloseButton: true,
-    styleProps: {},
-    titleSx: {},
-    onClose: () => null,
 };
 
 export default Dialog;

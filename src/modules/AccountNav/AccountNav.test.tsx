@@ -29,11 +29,6 @@ const DemoComponent = (props: {
     );
 };
 
-DemoComponent.defaultProps = {
-    onLogout: () => null,
-    onCloseMenu: () => null,
-};
-
 describe("AccountNav", () => {
     it("should render component", async () => {
         const wrapper = render(<DemoComponent />);

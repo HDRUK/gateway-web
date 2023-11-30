@@ -167,8 +167,4 @@ const EditApplicationForm = ({
     );
 };
 
-EditApplicationForm.defaultProps = {
-    application: {},
-};
-
 export default EditApplicationForm;

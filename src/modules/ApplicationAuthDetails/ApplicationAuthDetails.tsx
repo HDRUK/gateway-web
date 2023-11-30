@@ -51,8 +51,4 @@ const ApplicationAuthDetails = ({
     );
 };
 
-ApplicationAuthDetails.defaultProps = {
-    application: { app_id: "", client_id: "" },
-};
-
 export default ApplicationAuthDetails;
