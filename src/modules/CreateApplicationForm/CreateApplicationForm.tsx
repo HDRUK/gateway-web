@@ -53,11 +53,9 @@ const CreateApplicationForm = () => {
         }
     );
 
-    const fields = applicationFormFields;
-
     const hydratedFormFields = useMemo(
         () =>
-            fields.map(field => {
+            applicationFormFields.map(field => {
                 /* populate 'notifications' with team members */
                 if (field.name === "notifications") {
                     return {
