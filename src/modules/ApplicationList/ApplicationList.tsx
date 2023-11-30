@@ -20,7 +20,7 @@ const ApplicationList = () => {
 
     const { data, isLoading } = useGet<PaginationType<Application>>(
         filterQuery
-            ? `${apis.applicationsV1Url}?team_id=${teamId}&${filterQuery}&page=${currentPage}`
+            ? `${apis.applicationsV1Url}?per_page=10&team_id=${teamId}&${filterQuery}&page=${currentPage}`
             : null,
         {
             keepPreviousData: true,
@@ -35,6 +35,8 @@ const ApplicationList = () => {
 
     const { lastPage, list, total } = data || {};
 
+    const calculatedTotal = total || list?.length;
+
     return (
         <BoxContainer>
             <ApplicationSearchBar setFilterQuery={setFilterQuery} />
@@ -44,7 +46,7 @@ const ApplicationList = () => {
                 display="flex"
                 justifyContent="flex-end">
                 <Typography>
-                    Number of Apps: <strong>{total}</strong>
+                    Number of Apps: <strong>{calculatedTotal}</strong>
                 </Typography>
             </Box>
             {list?.map(application => (

@@ -17,7 +17,7 @@ const IntegrationList = () => {
     const { teamId } = router.query;
 
     const { data, isLoading } = useGet<PaginationType<Integration>>(
-        `${apis.teamsV1Url}/${teamId}/federations`,
+        `${apis.teamsV1Url}/${teamId}/federations?per_page=10&page=${currentPage}`,
         {
             keepPreviousData: true,
             withPagination: true,
@@ -29,9 +29,10 @@ const IntegrationList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
-    const { lastPage, list, total } = data || {};
+    const { lastPage, list, total, from } = data || {};
 
-    const calculatedTotal = total === undefined ? list?.length : total;
+    const calculatedTotal = total || list?.length;
+    const startIndex = from || 1;
 
     return (
         <BoxContainer>
@@ -46,7 +47,7 @@ const IntegrationList = () => {
             {list?.map((integration, index) => (
                 <IntegrationListItem
                     key={integration.id}
-                    index={index + 1}
+                    index={index + startIndex}
                     integration={integration}
                 />
             ))}
