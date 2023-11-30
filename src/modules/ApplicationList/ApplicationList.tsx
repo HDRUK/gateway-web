@@ -35,7 +35,7 @@ const ApplicationList = () => {
 
     const { lastPage, list, total } = data || {};
 
-    const calculatedTotal = total === undefined ? list?.length : total;
+    const calculatedTotal = total || list?.length;
 
     return (
         <BoxContainer>

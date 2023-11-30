@@ -31,7 +31,8 @@ const IntegrationList = () => {
 
     const { lastPage, list, total, from } = data || {};
 
-    const calculatedTotal = total === undefined ? list?.length : total;
+    const calculatedTotal = total || list?.length;
+    const startIndex = from || 1;
 
     return (
         <BoxContainer>
@@ -46,7 +47,7 @@ const IntegrationList = () => {
             {list?.map((integration, index) => (
                 <IntegrationListItem
                     key={integration.id}
-                    index={index + from}
+                    index={index + startIndex}
                     integration={integration}
                 />
             ))}
