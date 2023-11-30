@@ -1,4 +1,4 @@
-import { GlobalActionBarContext } from "@/providers/ActionBar/ActionBarProvider";
+import { GlobalActionBarContext } from "@/providers/ActionBarProvider";
 import { useContext } from "react";
 
 const useActionBar = () => {

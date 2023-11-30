@@ -1,5 +1,9 @@
 import * as React from "react";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
+import SWRProvider from "@/providers/SWRProvider";
+import DialogProvider from "@/providers/DialogProvider";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway",
@@ -15,7 +19,17 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <ThemeRegistry>{children}</ThemeRegistry>
+                <SWRProvider>
+                    <DialogProvider>
+                        <ThemeRegistry>
+                            <div style={{ width: "100%", fontFamily: "arial" }}>
+                                <Header />
+                                <main>{children}</main>
+                                <Footer />
+                            </div>
+                        </ThemeRegistry>
+                    </DialogProvider>
+                </SWRProvider>
             </body>
         </html>
     );

@@ -15,8 +15,8 @@ import { ApiError } from "@/components/CustomNotifications/ApiError";
 import { ApiSuccess } from "@/components/CustomNotifications/ApiSuccess";
 import { ApiWarning } from "@/components/CustomNotifications/ApiWarning";
 import { ApiInfo } from "@/components/CustomNotifications/ApiInfo";
-import DialogProvider from "@/providers/Dialog";
-import ActionBarProvider from "@/providers/ActionBar";
+import DialogProvider from "@/providers/DialogProvider";
+import ActionBarProvider from "@/providers/ActionBarProvider";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

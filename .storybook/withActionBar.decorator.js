@@ -1,4 +1,4 @@
-import ActionBarProvider from "../src/providers/ActionBar";
+import ActionBarProvider from "../src/providers/ActionBarProvider";
 
 export const withActionBar = Story => {
     return (

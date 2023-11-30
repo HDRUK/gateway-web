@@ -2,7 +2,7 @@ import MuiDialog, { DialogProps as MuiDialogProps } from "@mui/material/Dialog";
 import MuiDialogTitle from "@mui/material/DialogTitle";
 import React, { ReactNode } from "react";
 import useDialog from "@/hooks/useDialog";
-import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
+import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 import { IconButton, SxProps } from "@mui/material";
 import { CloseIcon } from "@/consts/icons";
 

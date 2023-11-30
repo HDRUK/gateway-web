@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import { User } from "@/interfaces/User";
 import { useRouter } from "next/router";
 import useDialog from "@/hooks/useDialog";
-import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
+import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 import useDelete from "@/hooks/useDelete";
 import Typography from "@/components/Typography";
 

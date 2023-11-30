@@ -1,3 +1,5 @@
+"use client";
+
 import { ModalButtonProps } from "@/components/ModalButtons/ModalButtons";
 import { isEqual } from "lodash";
 import { useRouter } from "next/router";
