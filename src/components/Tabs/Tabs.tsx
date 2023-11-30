@@ -1,3 +1,5 @@
+"use client";
+
 import { Tab as MuiTab, SxProps } from "@mui/material";
 import { ElementType, ReactNode, forwardRef } from "react";
 
@@ -6,9 +8,8 @@ import MuiTabList from "@mui/lab/TabList";
 import MuiTabPanel from "@mui/lab/TabPanel";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
-import { useRouter } from "next/router";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { AccountDatasetUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 interface Tab {
     label: string;
@@ -28,16 +29,18 @@ const CustomLink = forwardRef<
     HTMLAnchorElement,
     { href: string; children: ReactNode }
 >((props, ref) => {
-    const router = useRouter();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
 
+    console.log("searchParams.entries(): ", searchParams.entries());
     return (
         <Link
             ref={ref}
             passHref
             {...props}
             href={{
-                pathname: router.pathname,
-                query: { ...router.query, tab: props.href },
+                pathname,
+                query: { ...searchParams.entries(), tab: props.href },
             }}>
             {props.children}
         </Link>
@@ -51,8 +54,9 @@ const Tabs = ({
     tabBoxSx,
     rootBoxSx,
 }: TabProps) => {
-    const { query } = useRouter();
-    const { tab: currentTab } = query as AccountDatasetUrlQuery;
+    const searchParams = useSearchParams();
+    const currentTab = searchParams.get("tab");
+
     const selectedTab = currentTab || tabs[0].value;
 
     return (

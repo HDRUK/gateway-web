@@ -1,3 +1,5 @@
+"use client";
+
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslation } from "react-i18next";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -17,8 +19,7 @@ import {
 } from "@/config/forms/addTeamMember";
 import { yupResolver } from "@hookform/resolvers/yup";
 import usePost from "@/hooks/usePost";
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useSearchParams } from "next/navigation";
 import notificationService from "@/services/notification";
 import useGetTeam from "@/hooks/useGetTeam";
 import { useMemo } from "react";
@@ -30,8 +31,9 @@ const limit = pLimit(1);
 
 const AddTeamMemberDialog = () => {
     const { hideDialog, store } = useDialog();
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
+
     const { t } = useTranslation("modules");
     const { control, handleSubmit } = useForm<AddTeamMember>({
         resolver: yupResolver(addTeamMemberValidationSchema),

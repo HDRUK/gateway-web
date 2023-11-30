@@ -1,9 +1,11 @@
+"use client";
+
 import IntegrationListItem from "@/modules/IntegrationListItem";
 import { Integration } from "@/interfaces/Integration";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { useMemo, useState } from "react";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
 import Typography from "@/components/Typography";
@@ -13,8 +15,8 @@ import { PaginationType } from "@/interfaces/Pagination";
 const IntegrationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
-    const router = useRouter();
-    const { teamId } = router.query;
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
 
     const { data, isLoading } = useGet<PaginationType<Integration>>(
         `${apis.teamsV1Url}/${teamId}/federations?per_page=10&page=${currentPage}`,

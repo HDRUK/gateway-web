@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@/components/Box";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
@@ -10,7 +12,7 @@ import {
 } from "@/config/forms/integration";
 import InputWrapper from "@/components/InputWrapper";
 import apis from "@/config/apis";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
@@ -26,7 +28,6 @@ import RunFederationTest from "@/components/RunFederationTest";
 import Switch from "@/components/Switch";
 import Tooltip from "@/components/Tooltip";
 import useGetTeam from "@/hooks/useGetTeam";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useRunFederation, {
     watchFederationKeys,
 } from "@/hooks/useRunFederation";
@@ -34,8 +35,9 @@ import { pick } from "lodash";
 import { Federation } from "@/interfaces/Federation";
 
 const EditIntegrationForm = () => {
-    const { query } = useRouter();
-    const { teamId, intId } = query as AccountTeamUrlQuery;
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
+    const intId = searchParams.get("intId") as string;
 
     const { data: integration } = useGet<Integration>(
         `${apis.teamsV1Url}/${teamId}/federations/${intId}`,

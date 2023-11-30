@@ -1,15 +1,18 @@
+"use client";
+
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import AccountLayout from "@/modules/AccountLayout";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamIntegrationsPage = () => {
-    const router = useRouter();
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
     return (
         <ProtectedRoute
             permissions={["fe.account.nav.integrations.integration"]}>
@@ -25,12 +28,12 @@ const TeamIntegrationsPage = () => {
                     <Box sx={{ display: "flex", gap: "40px" }}>
                         <ImageMediaCard
                             img="/images/account/teams/integrations/create.jpg"
-                            href={`/account/team/${router.query.teamId}/integrations/integration/create`}
+                            href={`/account/team/${teamId}/integrations/integration/create`}
                             buttonText="Create new Integration"
                         />
                         <ImageMediaCard
                             img="/images/account/teams/integrations/manage.jpg"
-                            href={`/account/team/${router.query.teamId}/integrations/integration/list`}
+                            href={`/account/team/${teamId}/integrations/integration/list`}
                             buttonText="Manage Integrations"
                         />
                     </Box>

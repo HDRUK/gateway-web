@@ -1,3 +1,5 @@
+"use client";
+
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
@@ -7,13 +9,13 @@ import AccountLayout from "@/modules/AccountLayout";
 import ApplicationPermissions from "@/modules/ApplicationPermissions";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import apis from "@/config/apis";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 const AddPermissionsPage = () => {
-    const router = useRouter();
-    const { apiId } = router.query;
+    const searchParams = useSearchParams();
+    const apiId = searchParams.get("apiId") as string;
     const { data: application } = useGet<Application>(
         apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );

@@ -1,3 +1,5 @@
+"use client";
+
 import Form from "@/components/Form";
 import Typography from "@/components/Typography";
 import { useForm } from "react-hook-form";
@@ -21,10 +23,9 @@ import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
 import { useEffect, useMemo } from "react";
 import Paper from "@/components/Paper";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 interface EditApplicationFormProps {
     application?: Application;
@@ -35,9 +36,9 @@ const EditApplicationForm = ({
     application,
     isTabView = false,
 }: EditApplicationFormProps) => {
-    const { query, push } = useRouter();
-
-    const { teamId } = query as AccountTeamUrlQuery;
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
     const { team } = useGetTeam(teamId);
 
     const { control, handleSubmit, reset, trigger, formState } =
@@ -87,8 +88,8 @@ const EditApplicationForm = ({
         if (!isTabView) {
             /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
             setTimeout(() => {
-                push(
-                    `/account/team/${query.teamId}/integrations/api-management/create/${payload.id}/permissions`
+                router.push(
+                    `/account/team/${teamId}/integrations/api-management/create/${payload.id}/permissions`
                 );
             });
         }
@@ -109,7 +110,7 @@ const EditApplicationForm = ({
                 }
                 return field;
             }),
-        [team]
+        [team, fields]
     );
 
     if (!application) return <Loading />;

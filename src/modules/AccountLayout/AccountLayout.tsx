@@ -1,10 +1,11 @@
+"use client";
+
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import LeftNav from "@/modules/LeftNav";
 import { ReactNode, useMemo } from "react";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import Loading from "@/components/Loading";
 import ActionBar from "@/components/ActionBar";
@@ -16,8 +17,8 @@ interface AccountLayoutProps {
 }
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
 
     const permissions = useHasPermissions();
     const { team, isTeamLoading } = useGetTeam(teamId);

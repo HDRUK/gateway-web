@@ -1,16 +1,16 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useGetTeam from "@/hooks/useGetTeam";
 import { User } from "@/interfaces/User";
+import { useSearchParams } from "next/navigation";
 
 export const useNewMembersOnTop = () => {
     const [newMemberIds, setNewMemberIds] = useState<number[]>([]);
     const [teamMembers, setTeamUsers] = useState<User[]>([]);
 
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
-
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
     const { team, mutateTeam } = useGetTeam(teamId);
 
     const onAddNewMembers = (memberIds: number[]) => {

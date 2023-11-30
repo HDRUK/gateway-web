@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@/components/Box";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
@@ -11,7 +13,7 @@ import {
 } from "@/config/forms/integration";
 import InputWrapper from "@/components/InputWrapper";
 import apis from "@/config/apis";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import usePost from "@/hooks/usePost";
 import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
@@ -19,11 +21,11 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { IntegrationForm, IntegrationPayload } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import useGetTeam from "@/hooks/useGetTeam";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const CreateIntegrationForm = () => {
-    const { query, push } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
     const { team } = useGetTeam(teamId);
 
     const { control, handleSubmit, formState, watch, unregister } =
@@ -53,7 +55,9 @@ const CreateIntegrationForm = () => {
         });
 
         setTimeout(() => {
-            push(`/account/team/${teamId}/integrations/integration/list`);
+            router.push(
+                `/account/team/${teamId}/integrations/integration/list`
+            );
         });
     };
 

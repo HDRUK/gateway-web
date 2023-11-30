@@ -2,6 +2,7 @@ import * as React from "react";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import SWRProvider from "@/providers/SWRProvider";
 import DialogProvider from "@/providers/DialogProvider";
+import SnackbarProvider from "@/providers/SnackbarProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -22,7 +23,12 @@ export default function RootLayout({
                 <SWRProvider>
                     <DialogProvider>
                         <ThemeRegistry>
-                            <div style={{ width: "100%", fontFamily: "arial" }}>
+                            <SnackbarProvider />
+                            <div
+                                style={{
+                                    width: "100%",
+                                    fontFamily: "arial",
+                                }}>
                                 <Header />
                                 <main>{children}</main>
                                 <Footer />

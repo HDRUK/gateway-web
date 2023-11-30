@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import InputSectionWrapper from "@/components/InputSectionWrapper";
@@ -12,10 +14,9 @@ import {
 import useActionBar from "@/hooks/useActionBar";
 import useAuth from "@/hooks/useAuth";
 import useGetTeam from "@/hooks/useGetTeam";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import { getPreferredEmail } from "@/utils/user";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -32,8 +33,9 @@ const EmailNotifications = () => {
     const { showModal } = useModal();
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
     const { user } = useAuth();
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
 
     const { team } = useGetTeam(teamId);
     const { control, formState, handleSubmit, reset, watch } =
@@ -114,8 +116,8 @@ const EmailNotifications = () => {
 
     const onSaveTeamEmail = () => {
         const payload = {
-            user_notification_status: user_notification_status,
-            team_notification_status: team_notification_status,
+            user_notification_status,
+            team_notification_status,
             team_emails: [team_email],
         };
         updateNotificationEmails(payload);

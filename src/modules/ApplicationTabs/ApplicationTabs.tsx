@@ -1,6 +1,8 @@
+"use client";
+
 import Tabs from "@/components/Tabs";
 
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
@@ -9,8 +11,8 @@ import EditApplicationForm from "@/modules/EditApplicationForm";
 import ApplicationPermissions from "@/modules/ApplicationPermissions";
 
 const ApplicationTabs = () => {
-    const router = useRouter();
-    const { apiId } = router.query;
+    const searchParams = useSearchParams();
+    const apiId = searchParams.get("apiId") as string;
     const { data: application } = useGet<Application>(
         apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );

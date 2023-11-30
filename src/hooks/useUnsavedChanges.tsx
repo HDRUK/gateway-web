@@ -1,4 +1,6 @@
-import { useRouter } from "next/router";
+"use client";
+
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { ModalProps } from "@/components/Modal/Modal";
 import useModal from "./useModal";

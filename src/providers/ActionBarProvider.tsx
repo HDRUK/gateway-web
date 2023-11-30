@@ -2,7 +2,7 @@
 
 import { ModalButtonProps } from "@/components/ModalButtons/ModalButtons";
 import { isEqual } from "lodash";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, { createContext, useMemo, ReactNode, useEffect } from "react";
 
 type ActionBarProps = {

@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
+"use client";
+
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import { Application } from "@/interfaces/Application";
 import Typography from "@/components/Typography";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import Card from "@/components/Card";
 import { formatDate } from "@/utils/date";
 
@@ -14,8 +16,8 @@ interface ApplicationListItemProps {
 }
 
 const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
-    const router = useRouter();
-    const { teamId } = router.query;
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
 
     return (
         <Card>

@@ -1,10 +1,13 @@
+"use client";
+
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import Typography from "@/components/Typography";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 const ApiManagement = () => {
-    const router = useRouter();
+    const searchParams = useSearchParams();
+    const teamId = searchParams.get("teamId") as string;
 
     return (
         <Box
@@ -17,13 +20,13 @@ const ApiManagement = () => {
             <Box sx={{ display: "flex", gap: "40px" }}>
                 <ImageMediaCard
                     img="/images/account/teams/api-management/create.jpg"
-                    href={`/account/team/${router.query.teamId}/integrations/api-management/create`}
+                    href={`/account/team/${teamId}/integrations/api-management/create`}
                     description="Create API-keys and link to the Gateway"
                     buttonText="Create API-Key"
                 />
                 <ImageMediaCard
                     img="/images/account/teams/api-management/manage.jpg"
-                    href={`/account/team/${router.query.teamId}/integrations/api-management/list`}
+                    href={`/account/team/${teamId}/integrations/api-management/list`}
                     description="Manage your linked APIs"
                     buttonText="Manage API"
                 />
