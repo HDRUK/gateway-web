@@ -7,7 +7,7 @@ import { Permission } from "@/interfaces/Permission";
 import { getColumns } from "@/config/tables/apiPermissions";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { Application, ApplicationPayload } from "@/interfaces/Application";
+import { Application, ApplicationForm } from "@/interfaces/Application";
 import { useRouter } from "next/router";
 
 import Form from "@/components/Form";
@@ -90,7 +90,7 @@ const ApplicationPermissions = ({
         reset(existingPermissions);
     }, [application, reset]);
 
-    const updateApplication = usePut<Partial<ApplicationPayload>>(
+    const updateApplication = usePut<Partial<ApplicationForm>>(
         `${apis.applicationsV1Url}`,
         {
             itemName: "Application",
@@ -110,11 +110,14 @@ const ApplicationPermissions = ({
                 updatedPermissions,
                 permissions!
             );
-            await updateApplication(`${application?.id}`, {
+            const payload = {
                 ...application,
+                notifications: application?.notifications?.map(n => n.email),
                 permissions: permissionIds,
                 enabled: true,
-            });
+            };
+
+            await updateApplication(`${application?.id}`, payload);
 
             /* When this component is part of tabs view reset the 'application' cache */
             if (isTabView) {

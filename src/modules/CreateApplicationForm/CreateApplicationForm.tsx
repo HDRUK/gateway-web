@@ -10,7 +10,7 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { Application } from "@/interfaces/Application";
+import { Application, ApplicationForm } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import { useRouter } from "next/router";
 import usePost from "@/hooks/usePost";
@@ -18,10 +18,15 @@ import useAuth from "@/hooks/useAuth";
 import Paper from "@/components/Paper";
 import { useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import useGetTeam from "@/hooks/useGetTeam";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
     const { query, push } = useRouter();
+
+    const { teamId } = query as AccountTeamUrlQuery;
+    const { team } = useGetTeam(teamId);
 
     const defaultValues = useMemo(() => {
         return {
@@ -29,30 +34,47 @@ const CreateApplicationForm = () => {
             team_id: parseInt(query.teamId as string, 10),
             ...applicationDefaultValues,
         };
-    }, [query.teamId, user?.id]);
+    }, [teamId, user?.id]);
 
-    const { control, handleSubmit, reset, formState } = useForm<Application>({
-        mode: "onTouched",
-        resolver: yupResolver(applicationValidationSchema),
-        defaultValues,
-    });
+    const { control, handleSubmit, reset, formState } =
+        useForm<ApplicationForm>({
+            mode: "onTouched",
+            resolver: yupResolver(applicationValidationSchema),
+            defaultValues,
+        });
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
     });
 
-    const updateApplication = usePost<Application>(
+    const updateApplication = usePost<ApplicationForm>(
         `${apis.applicationsV1Url}`,
         {
             itemName: "Application",
         }
     );
 
-    const submitForm = async (formData: Application) => {
-        const response = await updateApplication({
-            ...applicationDefaultValues,
-            ...formData,
-        });
+    const hydratedFormFields = useMemo(
+        () =>
+            applicationFormFields.map(field => {
+                /* populate 'notifications' with team members */
+                if (field.name === "notifications") {
+                    return {
+                        ...field,
+                        options: team?.users?.map(teamUser => ({
+                            value: teamUser.email,
+                            label: `${teamUser.firstname} ${teamUser.lastname}`,
+                        })),
+                    };
+                }
+                return field;
+            }),
+        [team]
+    );
+
+    const submitForm = async (formData: ApplicationForm) => {
+        const payload = { ...applicationDefaultValues, ...formData };
+        const response = await updateApplication(payload);
 
         /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
         setTimeout(() => {
@@ -66,7 +88,7 @@ const CreateApplicationForm = () => {
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>
-                    {applicationFormFields.map(field => (
+                    {hydratedFormFields.map(field => (
                         <InputWrapper
                             key={field.name}
                             control={control}
