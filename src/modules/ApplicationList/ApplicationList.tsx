@@ -20,7 +20,7 @@ const ApplicationList = () => {
 
     const { data, isLoading } = useGet<PaginationType<Application>>(
         filterQuery
-            ? `${apis.applicationsV1Url}?perPage=10&team_id=${teamId}&${filterQuery}&page=${currentPage}`
+            ? `${apis.applicationsV1Url}?per_page=10&team_id=${teamId}&${filterQuery}&page=${currentPage}`
             : null,
         {
             keepPreviousData: true,

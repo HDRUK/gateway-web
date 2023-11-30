@@ -17,7 +17,7 @@ const IntegrationList = () => {
     const { teamId } = router.query;
 
     const { data, isLoading } = useGet<PaginationType<Integration>>(
-        `${apis.teamsV1Url}/${teamId}/federations?perPage=10&page=${currentPage}`,
+        `${apis.teamsV1Url}/${teamId}/federations?per_page=10&page=${currentPage}`,
         {
             keepPreviousData: true,
             withPagination: true,
