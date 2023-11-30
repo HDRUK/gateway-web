@@ -18,10 +18,15 @@ import useAuth from "@/hooks/useAuth";
 import Paper from "@/components/Paper";
 import { useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import useGetTeam from "@/hooks/useGetTeam";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
     const { query, push } = useRouter();
+
+    const { teamId } = query as AccountTeamUrlQuery;
+    const { team } = useGetTeam(teamId);
 
     const defaultValues = useMemo(() => {
         return {
@@ -29,7 +34,7 @@ const CreateApplicationForm = () => {
             team_id: parseInt(query.teamId as string, 10),
             ...applicationDefaultValues,
         };
-    }, [query.teamId, user?.id]);
+    }, [teamId, user?.id]);
 
     const { control, handleSubmit, reset, formState } = useForm<Application>({
         mode: "onTouched",
@@ -46,6 +51,26 @@ const CreateApplicationForm = () => {
         {
             itemName: "Application",
         }
+    );
+
+    const fields = applicationFormFields;
+
+    const hydratedFormFields = useMemo(
+        () =>
+            fields.map(field => {
+                /* populate 'notifications' with team members */
+                if (field.name === "notifications") {
+                    return {
+                        ...field,
+                        options: team?.users?.map(teamUser => ({
+                            value: teamUser.email,
+                            label: `${teamUser.firstname} ${teamUser.lastname}`,
+                        })),
+                    };
+                }
+                return field;
+            }),
+        [team]
     );
 
     const submitForm = async (formData: Application) => {
@@ -66,7 +91,7 @@ const CreateApplicationForm = () => {
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>
-                    {applicationFormFields.map(field => (
+                    {hydratedFormFields.map(field => (
                         <InputWrapper
                             key={field.name}
                             control={control}
