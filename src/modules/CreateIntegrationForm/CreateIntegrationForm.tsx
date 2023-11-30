@@ -46,8 +46,6 @@ const CreateIntegrationForm = () => {
     );
 
     const submitForm = async (formData: IntegrationForm) => {
-        console.log({ ...integrationDefaultValues, ...formData });
-        return;
         await createIntegration({
             ...integrationDefaultValues,
             ...formData,
