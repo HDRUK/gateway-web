@@ -12,7 +12,7 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { Application, ApplicationForm } from "@/interfaces/Application";
+import { ApplicationForm } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import { useRouter, useSearchParams } from "next/navigation";
 import usePost from "@/hooks/usePost";
@@ -21,7 +21,6 @@ import Paper from "@/components/Paper";
 import { useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
@@ -30,7 +29,6 @@ const CreateApplicationForm = () => {
     const searchParams = useSearchParams();
     const teamId = searchParams.get("teamId") as string;
 
-    const { teamId } = query as AccountTeamUrlQuery;
     const { team } = useGetTeam(teamId);
 
     const defaultValues = useMemo(() => {
