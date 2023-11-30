@@ -17,7 +17,6 @@ const AddPermissionsPage = () => {
     const { data: application } = useGet<Application>(
         apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );
-    console.log(application);
 
     return (
         <ProtectedRoute

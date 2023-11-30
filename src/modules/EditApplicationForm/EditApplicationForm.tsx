@@ -75,17 +75,12 @@ const EditApplicationForm = ({
         }
     );
 
-    const submitForm = async (formData: ApplicationForm) => {
+    const submitForm = async (formData: Application) => {
         const { permissions, ...rest } = application || {};
-
-        const curatedFormData = {
-            ...formData,
-            notifications: formData.notifications?.map(n => ({ email: n })),
-        };
 
         const payload: ApplicationPayload = {
             ...rest,
-            ...curatedFormData,
+            ...formData,
             permissions: permissions?.map(perm => perm.id),
         };
         await updateApplication(payload.id, payload);

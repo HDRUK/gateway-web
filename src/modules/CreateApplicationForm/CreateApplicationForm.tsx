@@ -36,17 +36,18 @@ const CreateApplicationForm = () => {
         };
     }, [teamId, user?.id]);
 
-    const { control, handleSubmit, reset, formState } = useForm<Application>({
-        mode: "onTouched",
-        resolver: yupResolver(applicationValidationSchema),
-        defaultValues,
-    });
+    const { control, handleSubmit, reset, formState } =
+        useForm<ApplicationForm>({
+            mode: "onTouched",
+            resolver: yupResolver(applicationValidationSchema),
+            defaultValues,
+        });
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
     });
 
-    const updateApplication = usePost<Application>(
+    const updateApplication = usePost<ApplicationForm>(
         `${apis.applicationsV1Url}`,
         {
             itemName: "Application",
@@ -72,14 +73,7 @@ const CreateApplicationForm = () => {
     );
 
     const submitForm = async (formData: ApplicationForm) => {
-        const curatedFormData = {
-            ...formData,
-            notifications: formData.notifications?.map(n => ({ email: n })),
-        };
-
-        const payload = { ...applicationDefaultValues, ...curatedFormData };
-
-        console.log(payload);
+        const payload = { ...applicationDefaultValues, ...formData };
         const response = await updateApplication(payload);
 
         /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
