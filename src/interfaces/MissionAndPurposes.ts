@@ -9,12 +9,4 @@ interface MissionAndPurposesNode {
     node: MissionAndPurposes;
 }
 
-interface MissionAndPurposesResponse {
-    posts: { edges: MissionAndPurposesNode[] };
-}
-
-export type {
-    MissionAndPurposesNode,
-    MissionAndPurposes,
-    MissionAndPurposesResponse,
-};
+export type { MissionAndPurposesNode, MissionAndPurposes };

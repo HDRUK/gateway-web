@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@/components/Box";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";

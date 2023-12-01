@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
@@ -8,7 +10,9 @@ import { getColumns } from "@/config/tables/apiPermissions";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { Application, ApplicationForm } from "@/interfaces/Application";
+
 import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
@@ -45,8 +49,10 @@ const ApplicationPermissions = ({
     const [originalFormValues, setOriginalFormValues] = useState<
         AppPermissionDefaultValues | undefined
     >(undefined);
+
     const { query, push } = useRouter();
-    const { apiId, teamId } = query;
+    const { apiId, teamId } = query as AccountTeamUrlQuery;
+
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
 
     const { mutate } = useSWRConfig();
@@ -129,7 +135,7 @@ const ApplicationPermissions = ({
                 /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
                 setTimeout(() => {
                     push(
-                        `/account/team/${query.teamId}/integrations/api-management/list`
+                        `/account/team/${teamId}/integrations/api-management/list`
                     );
                 }, 500);
             }
@@ -140,7 +146,7 @@ const ApplicationPermissions = ({
             mutate,
             permissions,
             push,
-            query.teamId,
+            teamId,
             updateApplication,
         ]
     );

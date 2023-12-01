@@ -129,8 +129,4 @@ const Table = <T,>({ columns, rows, onUpdate }: TableProps<T>) => {
     );
 };
 
-Table.defaultProps = {
-    onUpdate: () => null,
-};
-
 export default Table;

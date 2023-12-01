@@ -1,3 +1,5 @@
+"use client";
+
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslation } from "react-i18next";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -17,6 +19,7 @@ import {
 } from "@/config/forms/addTeamMember";
 import { yupResolver } from "@hookform/resolvers/yup";
 import usePost from "@/hooks/usePost";
+
 import { useRouter } from "next/router";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import notificationService from "@/services/notification";
@@ -32,6 +35,7 @@ const AddTeamMemberDialog = () => {
     const { hideDialog, store } = useDialog();
     const { query } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
+
     const { t } = useTranslation("modules");
     const { control, handleSubmit } = useForm<AddTeamMember>({
         resolver: yupResolver(addTeamMemberValidationSchema),

@@ -11,8 +11,8 @@ interface FilterPaginationProps {
 
 function FilterPagination({
     pageUrl,
-    onUpdate,
-    onDelete,
+    onUpdate = () => null,
+    onDelete = () => null,
 }: FilterPaginationProps) {
     const { data, isLoading } = useGet<{
         lastPage: number;
@@ -62,10 +62,5 @@ function FilterPagination({
         </ul>
     );
 }
-
-FilterPagination.defaultProps = {
-    onUpdate: () => null,
-    onDelete: () => null,
-};
 
 export default FilterPagination;

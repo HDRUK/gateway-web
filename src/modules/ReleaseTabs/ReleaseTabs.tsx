@@ -1,3 +1,5 @@
+"use client";
+
 import Tabs from "@/components/Tabs";
 import { useMemo, useState } from "react";
 import Typography from "@/components/Typography";

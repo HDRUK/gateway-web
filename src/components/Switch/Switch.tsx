@@ -62,9 +62,5 @@ const Switch = (props: SwitchProps) => {
         </FormControl>
     );
 };
-Switch.defaultProps = {
-    switchSx: {},
-    formControlSx: {},
-};
 
 export default Switch;

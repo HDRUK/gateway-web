@@ -1,3 +1,5 @@
+"use client";
+
 import Head from "@/components/Head";
 import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
@@ -8,12 +10,13 @@ import EditApplicationForm from "@/modules/EditApplicationForm";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
-import { useRouter } from "next/router";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useRouter } from "next/router";
 
 const EditAppPage = () => {
     const { query } = useRouter();
     const { apiId } = query;
+
     const { data: application } = useGet<Application>(
         apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );

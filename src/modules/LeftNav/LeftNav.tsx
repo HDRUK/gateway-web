@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
+"use client";
+
 import Link from "@/components/Link";
 import {
     Box,
@@ -11,7 +13,7 @@ import {
 } from "@mui/material";
 
 import { Fragment, useState } from "react";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import { colors } from "@/config/theme";
 import { LeftNavItem } from "@/interfaces/Ui";
 import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
@@ -31,11 +33,11 @@ interface LeftNavProps {
 }
 
 const LeftNav = ({ navItems }: LeftNavProps) => {
-    const { asPath } = useRouter();
+    const pathname = usePathname();
     const [expandedSection, setExpandedSection] = useState("");
 
     const toggleMenu = (item: LeftNavItem) => {
-        const isOpen = isExpanded(item, expandedSection, asPath);
+        const isOpen = isExpanded(item, expandedSection, pathname);
         if (isOpen && expandedSection !== item.label) return;
         setExpandedSection(isOpen ? "" : item.label);
     };
@@ -52,7 +54,7 @@ const LeftNav = ({ navItems }: LeftNavProps) => {
                             underline="none"
                             sx={{ color: colors.grey700 }}>
                             <ListItemButton
-                                selected={item.href?.includes(asPath)}
+                                selected={item.href?.includes(pathname)}
                                 sx={{ paddingLeft: 1 }}>
                                 <ListItemIcon sx={{ minWidth: "40px" }}>
                                     {item.icon}
@@ -71,14 +73,14 @@ const LeftNav = ({ navItems }: LeftNavProps) => {
                                 </ListItemIcon>
                                 <ListItemText primary={item.label} />
                                 {item.subItems &&
-                                isExpanded(item, expandedSection, asPath) ? (
+                                isExpanded(item, expandedSection, pathname) ? (
                                     <ExpandLessIcon />
                                 ) : (
                                     <ExpandMoreIcon />
                                 )}
                             </ListItemButton>
                             <Collapse
-                                in={isExpanded(item, expandedSection, asPath)}
+                                in={isExpanded(item, expandedSection, pathname)}
                                 timeout="auto"
                                 unmountOnExit>
                                 <List component="div" disablePadding>
@@ -92,7 +94,7 @@ const LeftNav = ({ navItems }: LeftNavProps) => {
                                                 passHref>
                                                 <ListItemButton
                                                     selected={subItem.href?.includes(
-                                                        asPath
+                                                        pathname
                                                     )}
                                                     sx={{ pl: 4 }}>
                                                     <ListItemText

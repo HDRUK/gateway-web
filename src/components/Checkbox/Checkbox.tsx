@@ -70,9 +70,4 @@ const Checkbox = (props: CheckboxProps) => {
     );
 };
 
-Checkbox.defaultProps = {
-    checkboxSx: {},
-    formControlSx: {},
-};
-
 export default Checkbox;

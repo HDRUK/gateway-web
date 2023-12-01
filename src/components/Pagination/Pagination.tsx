@@ -8,7 +8,7 @@ interface PaginationProps extends MuiPaginationProps {
     isLoading?: boolean;
 }
 
-const Pagination = ({ isLoading, ...rest }: PaginationProps) => {
+const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
     if (isLoading) return null;
     return (
         <MuiPagination
@@ -22,10 +22,6 @@ const Pagination = ({ isLoading, ...rest }: PaginationProps) => {
             {...rest}
         />
     );
-};
-
-Pagination.defaultProps = {
-    isLoading: false,
 };
 
 export default Pagination;

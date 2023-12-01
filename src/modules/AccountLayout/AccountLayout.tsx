@@ -1,10 +1,12 @@
+"use client";
+
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import LeftNav from "@/modules/LeftNav";
 import { ReactNode, useMemo } from "react";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import Loading from "@/components/Loading";
 import ActionBar from "@/components/ActionBar";

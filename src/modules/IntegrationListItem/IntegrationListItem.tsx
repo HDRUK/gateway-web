@@ -1,11 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
+"use client";
+
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import { Integration } from "@/interfaces/Integration";
 import Typography from "@/components/Typography";
 import Link from "next/link";
+
 import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import Card from "@/components/Card";
 import { formatDate } from "@/utils/date";
 
@@ -18,8 +22,8 @@ const IntegrationListItem = ({
     index,
     integration,
 }: IntegrationListItemProps) => {
-    const router = useRouter();
-    const { teamId } = router.query;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
 
     return (
         <Card>

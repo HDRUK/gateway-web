@@ -9,4 +9,4 @@ interface AccountDatasetUrlQuery extends ParsedUrlQuery {
     tab: string;
 }
 
-export type { AccountTeamUrlQuery, AccountDatasetUrlQuery };
+export type { AccountDatasetUrlQuery, AccountTeamUrlQuery };

@@ -51,18 +51,19 @@ const Autocomplete = (props: AutocompleteProps) => {
         label,
         info,
         extraInfo,
-        createLabel,
+        createLabel = "Add",
         control,
         name,
         placeholder,
-        startAdornmentIcon,
-        canCreate,
+        startAdornmentIcon = null,
+        canCreate = false,
         getChipLabel,
         horizontalForm,
-        required,
+        required = false,
         options = [],
-        disabled,
-        multiple,
+        disabled = false,
+        freeSolo = false,
+        multiple = false,
         ...restProps
     } = props;
 
@@ -111,6 +112,7 @@ const Autocomplete = (props: AutocompleteProps) => {
             <MuiAutocomplete
                 {...field}
                 {...restProps}
+                freeSolo={freeSolo}
                 multiple={multiple}
                 getOptionLabel={(
                     option: string | { label: string; value: unknown }
@@ -184,20 +186,6 @@ const Autocomplete = (props: AutocompleteProps) => {
             />
         </FormInputWrapper>
     );
-};
-
-Autocomplete.defaultProps = {
-    placeholder: "",
-    info: "",
-    createLabel: "Add",
-    icon: undefined,
-    options: [],
-    required: false,
-    canCreate: false,
-    multiple: false,
-    startAdornmentIcon: null,
-    freeSolo: false,
-    disabled: false,
 };
 
 export default Autocomplete;

@@ -9,8 +9,8 @@ import {
 } from "@testing-library/react";
 import { SWRConfig } from "swr";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
-import ActionBarProvider from "@/providers/ActionBar";
-import DialogProvider from "@/providers/Dialog";
+import ActionBarProvider from "@/providers/ActionBarProvider";
+import DialogProvider from "@/providers/DialogProvider";
 import theme from "@/config/theme";
 import createEmotionCache from "@/config/createEmotionCache";
 

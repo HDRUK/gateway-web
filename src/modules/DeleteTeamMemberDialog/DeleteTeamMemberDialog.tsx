@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import Dialog from "@/components/Dialog";
@@ -6,11 +8,13 @@ import MuiDialogContent from "@mui/material/DialogContent";
 import apis from "@/config/apis";
 import Button from "@/components/Button";
 import { User } from "@/interfaces/User";
-import { useRouter } from "next/router";
 import useDialog from "@/hooks/useDialog";
-import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
+import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 import useDelete from "@/hooks/useDelete";
 import Typography from "@/components/Typography";
+
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 interface DeleteTeamMemberDialogProps {
     user: User;
@@ -21,8 +25,8 @@ const DeleteTeamMemberDialog = ({
     user,
     callback,
 }: DeleteTeamMemberDialogProps) => {
-    const router = useRouter();
-    const { teamId } = router.query;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
     const { t } = useTranslation("modules");
     const title = t("dialogs.DeleteTeamMemberDialog.title");
     const { hideDialog } = useDialog() as GlobalDialogContextProps;

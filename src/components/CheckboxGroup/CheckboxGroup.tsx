@@ -38,9 +38,4 @@ const CheckboxGroup = ({
     );
 };
 
-CheckboxGroup.defaultProps = {
-    checkboxSx: {},
-    formControlSx: {},
-};
-
 export default CheckboxGroup;

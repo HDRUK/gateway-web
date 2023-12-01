@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@/components/Box";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
@@ -10,7 +12,6 @@ import {
 } from "@/config/forms/integration";
 import InputWrapper from "@/components/InputWrapper";
 import apis from "@/config/apis";
-import { useRouter } from "next/router";
 import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
@@ -26,12 +27,13 @@ import RunFederationTest from "@/components/RunFederationTest";
 import Switch from "@/components/Switch";
 import Tooltip from "@/components/Tooltip";
 import useGetTeam from "@/hooks/useGetTeam";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useRunFederation, {
     watchFederationKeys,
 } from "@/hooks/useRunFederation";
 import { pick } from "lodash";
 import { Federation } from "@/interfaces/Federation";
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const EditIntegrationForm = () => {
     const { query } = useRouter();

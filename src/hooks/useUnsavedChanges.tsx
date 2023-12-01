@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { ModalProps } from "@/components/Modal/Modal";
@@ -24,7 +26,7 @@ export const useUnsavedChanges = ({
     } = modalProps || {};
 
     const { showModal } = useModal();
-    const Router = useRouter();
+    const router = useRouter();
     const [nextRouterPath, setNextRouterPath] = useState<string>("");
 
     const onRouteChangeStart = useCallback(
@@ -45,7 +47,7 @@ export const useUnsavedChanges = ({
         showModal({
             invertCloseIconBehaviour: true,
             onCancel: () => {
-                Router.events.off("routeChangeStart", onRouteChangeStart);
+                router.events.off("routeChangeStart", onRouteChangeStart);
 
                 setNextRouterPath("");
                 if (typeof onCancel === "function") {
@@ -53,7 +55,7 @@ export const useUnsavedChanges = ({
                 }
 
                 if (nextRouterPath) {
-                    Router.push(nextRouterPath);
+                    router.push(nextRouterPath);
                 }
             },
             onSuccess: () => {
@@ -80,8 +82,8 @@ export const useUnsavedChanges = ({
     ]);
 
     useEffect(() => {
-        Router.events.on("routeChangeStart", onRouteChangeStart);
+        router.events.on("routeChangeStart", onRouteChangeStart);
 
-        return () => Router.events.off("routeChangeStart", onRouteChangeStart);
-    }, [Router, onRouteChangeStart]);
+        return () => router.events.off("routeChangeStart", onRouteChangeStart);
+    }, [router, onRouteChangeStart]);
 };

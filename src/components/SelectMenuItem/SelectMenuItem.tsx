@@ -28,7 +28,7 @@ const getIsChecked = (
 };
 
 const SelectMenuItem = ({
-    iconRight,
+    iconRight = false,
     icon,
     value,
     multiple = false,
@@ -36,7 +36,7 @@ const SelectMenuItem = ({
     label,
     labelComponent,
     hasCheckbox = false,
-    invertListItem,
+    invertListItem = false,
 }: SelectMenuItemProps) => {
     const Icon = icon as SvgIconComponent;
 
@@ -84,12 +84,6 @@ const SelectMenuItem = ({
             )}
         </>
     );
-};
-
-SelectMenuItem.defaultProps = {
-    icon: undefined,
-    iconRight: false,
-    invertListItem: false,
 };
 
 export default SelectMenuItem;

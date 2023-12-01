@@ -13,7 +13,7 @@ interface LabelProps extends ExtendedProps {
     required?: boolean;
 }
 
-const Label = ({ label, name, required, ...rest }: LabelProps) => {
+const Label = ({ label, name, required = false, ...rest }: LabelProps) => {
     const theme = useTheme();
 
     return (
@@ -24,10 +24,6 @@ const Label = ({ label, name, required, ...rest }: LabelProps) => {
             <label htmlFor={name}>{label}</label>
         </Typography>
     );
-};
-
-Label.defaultProps = {
-    required: false,
 };
 
 export default Label;

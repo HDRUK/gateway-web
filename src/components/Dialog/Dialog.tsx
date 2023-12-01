@@ -2,7 +2,7 @@ import MuiDialog, { DialogProps as MuiDialogProps } from "@mui/material/Dialog";
 import MuiDialogTitle from "@mui/material/DialogTitle";
 import React, { ReactNode } from "react";
 import useDialog from "@/hooks/useDialog";
-import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
+import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 import { IconButton, SxProps } from "@mui/material";
 import { CloseIcon } from "@/consts/icons";
 
@@ -20,7 +20,7 @@ const Dialog = ({
     styleProps,
     children,
     titleSx,
-    showCloseButton,
+    showCloseButton = true,
     onClose,
 }: DialogProps) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
@@ -59,13 +59,6 @@ const Dialog = ({
             {children}
         </MuiDialog>
     );
-};
-
-Dialog.defaultProps = {
-    showCloseButton: true,
-    styleProps: {},
-    titleSx: {},
-    onClose: () => null,
 };
 
 export default Dialog;

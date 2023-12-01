@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import AccountNav from "@/modules/AccountNav";
 import { userV1 } from "@/mocks/data";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import useLogout from "@/hooks/useLogout";
 
-const DemoComponent = (props: {
-    onCloseMenu?: () => void;
-    onLogout?: () => void;
-}) => {
+jest.mock("@/hooks/useLogout", () => jest.fn());
+
+const DemoComponent = (props: { onCloseMenu?: () => void }) => {
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
-    const handleLogout = () => null;
 
     return (
         <>
@@ -22,16 +21,10 @@ const DemoComponent = (props: {
             <AccountNav
                 anchorElement={anchorElement}
                 onCloseMenu={() => setAnchorElement(null)}
-                onLogout={handleLogout}
                 {...props}
             />
         </>
     );
-};
-
-DemoComponent.defaultProps = {
-    onLogout: () => null,
-    onCloseMenu: () => null,
 };
 
 describe("AccountNav", () => {
@@ -42,9 +35,10 @@ describe("AccountNav", () => {
     });
 
     it("should call logout", async () => {
-        const onLogout = jest.fn();
+        const mockLogout = jest.fn();
 
-        render(<DemoComponent onLogout={onLogout} />);
+        (useLogout as jest.Mock).mockReturnValue(mockLogout);
+        render(<DemoComponent />);
 
         fireEvent.click(screen.getByText("open nav"));
 
@@ -54,7 +48,7 @@ describe("AccountNav", () => {
 
         fireEvent.click(screen.getByText("Logout"));
 
-        expect(onLogout).toHaveBeenCalled();
+        expect(mockLogout).toHaveBeenCalled();
     });
 
     it("should call onCloseMenu", async () => {

@@ -1,5 +1,9 @@
+"use client";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
+
 import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useAuth from "@/hooks/useAuth";
 import useActionBar from "@/hooks/useActionBar";
 import apis from "@/config/apis";
@@ -22,7 +26,6 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import usePut from "@/hooks/usePut";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import useGetTeam from "@/hooks/useGetTeam";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import Paper from "@/components/Paper";
 import { DeleteForeverIcon } from "@/consts/icons";
 

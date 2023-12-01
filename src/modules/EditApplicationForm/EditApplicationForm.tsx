@@ -1,3 +1,5 @@
+"use client";
+
 import Form from "@/components/Form";
 import Typography from "@/components/Typography";
 import { useForm } from "react-hook-form";
@@ -21,9 +23,9 @@ import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
 import { useEffect, useMemo } from "react";
 import Paper from "@/components/Paper";
-import { useRouter } from "next/router";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
+import { useRouter } from "next/router";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 interface EditApplicationFormProps {
@@ -36,7 +38,6 @@ const EditApplicationForm = ({
     isTabView = false,
 }: EditApplicationFormProps) => {
     const { query, push } = useRouter();
-
     const { teamId } = query as AccountTeamUrlQuery;
     const { team } = useGetTeam(teamId);
 
@@ -88,7 +89,7 @@ const EditApplicationForm = ({
             /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
             setTimeout(() => {
                 push(
-                    `/account/team/${query.teamId}/integrations/api-management/create/${payload.id}/permissions`
+                    `/account/team/${teamId}/integrations/api-management/create/${payload.id}/permissions`
                 );
             });
         }
@@ -109,7 +110,7 @@ const EditApplicationForm = ({
                 }
                 return field;
             }),
-        [team]
+        [team, fields]
     );
 
     if (!application) return <Loading />;
@@ -164,10 +165,6 @@ const EditApplicationForm = ({
             </Paper>
         </>
     );
-};
-
-EditApplicationForm.defaultProps = {
-    application: {},
 };
 
 export default EditApplicationForm;

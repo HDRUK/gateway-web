@@ -1,8 +1,10 @@
-import { useRouter } from "next/router";
+"use client";
+
 import { getPermissions } from "@/utils/permissions";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useGetTeam from "@/hooks/useGetTeam";
 import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 export const useHasPermissions = () => {
     const { query } = useRouter();

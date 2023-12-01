@@ -1,3 +1,5 @@
+"use client";
+
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@/components/Link";
@@ -5,19 +7,17 @@ import Button from "@/components/Button";
 import useAuth from "@/hooks/useAuth";
 import { colors } from "@/config/theme";
 import { useMemo } from "react";
+import useLogout from "@/hooks/useLogout";
 
 interface AccountNavProps {
     onCloseMenu: () => void;
-    onLogout: () => void;
     anchorElement: null | HTMLElement;
 }
 
-const AccountNav = ({
-    anchorElement,
-    onCloseMenu,
-    onLogout,
-}: AccountNavProps) => {
+const AccountNav = ({ anchorElement, onCloseMenu }: AccountNavProps) => {
     const { user } = useAuth();
+
+    const logout = useLogout();
 
     const handleCloseUserMenu = () => {
         if (typeof onCloseMenu === "function") {
@@ -26,9 +26,7 @@ const AccountNav = ({
     };
 
     const handleLogout = () => {
-        if (typeof onLogout === "function") {
-            onLogout();
-        }
+        logout();
     };
 
     const links = useMemo(() => {

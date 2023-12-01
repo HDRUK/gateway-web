@@ -19,7 +19,10 @@ const getInitials = (fullName: string) => {
     return `${firstLetter.toUpperCase()}${lastLetter.toUpperCase()}`;
 };
 
-const InitialsBadge = ({ fullName, initials }: InitialsBadgeProps) => {
+const InitialsBadge = ({
+    fullName = "",
+    initials = "",
+}: InitialsBadgeProps) => {
     const theme = useTheme();
 
     const generatedInitials = useMemo(() => {
@@ -32,11 +35,6 @@ const InitialsBadge = ({ fullName, initials }: InitialsBadgeProps) => {
             <div css={styles.initials}>{initials || generatedInitials}</div>
         </div>
     );
-};
-
-InitialsBadge.defaultProps = {
-    fullName: "",
-    initials: "",
 };
 
 export default InitialsBadge;

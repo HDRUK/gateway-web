@@ -5,14 +5,6 @@ import { applicationV1 } from "@/mocks/data/application";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import mockRouter from "next-router-mock";
 
-jest.mock("next/navigation", () => ({
-    useSearchParams() {
-        return {
-            get: () => "app-info",
-        };
-    },
-}));
-
 jest.mock("@/hooks/useHasPermission", () => ({
     useHasPermissions: jest.fn(),
 }));

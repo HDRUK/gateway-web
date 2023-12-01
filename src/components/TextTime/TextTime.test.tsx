@@ -45,7 +45,7 @@ describe("TextTime", () => {
     it("should submit updated value", async () => {
         render(<Component />);
 
-        const selectOptions = screen.getAllByRole("button");
+        const selectOptions = screen.getAllByRole("combobox");
 
         userEvent.click(selectOptions[0]);
 
@@ -76,7 +76,7 @@ describe("TextTime", () => {
     it("should pass props and disable specified input", async () => {
         render(<Component minProps={{ disabled: true }} />);
 
-        const [hourDropdown, minuteDropdown] = screen.getAllByRole("button");
+        const [hourDropdown, minuteDropdown] = screen.getAllByRole("combobox");
 
         expect(hourDropdown).not.toHaveClass("Mui-disabled");
         expect(minuteDropdown).toHaveClass("Mui-disabled");

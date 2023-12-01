@@ -1,4 +1,4 @@
-import DialogProvider from "../src/providers/Dialog";
+import DialogProvider from "../src/providers/DialogProvider";
 
 export const withDialog = Story => {
     return (

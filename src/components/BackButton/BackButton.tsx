@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
-import { useRouter } from "next/router";
+"use client";
+
+import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 

@@ -2,7 +2,7 @@ import Modal from "@/components/Modal";
 import {
     GlobalDialogContext,
     dialogPropsType,
-} from "@/providers/Dialog/DialogProvider";
+} from "@/providers/DialogProvider";
 import { useContext } from "react";
 
 const useModal = () => {

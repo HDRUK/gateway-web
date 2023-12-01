@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
+"use client";
+
 import Link from "@/components/Link";
 import Image from "next/image";
 import { AppBar, IconButton, Toolbar } from "@mui/material";

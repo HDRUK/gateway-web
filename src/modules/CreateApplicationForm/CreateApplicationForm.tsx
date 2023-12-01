@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@/components/Box";
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
@@ -10,28 +12,30 @@ import {
     applicationValidationSchema,
 } from "@/config/forms/application";
 import InputWrapper from "@/components/InputWrapper";
-import { Application, ApplicationForm } from "@/interfaces/Application";
+import { ApplicationForm } from "@/interfaces/Application";
 import apis from "@/config/apis";
-import { useRouter } from "next/router";
 import usePost from "@/hooks/usePost";
 import useAuth from "@/hooks/useAuth";
 import Paper from "@/components/Paper";
 import { useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
+
+import { useRouter } from "next/router";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
-    const { query, push } = useRouter();
 
+    const { query, push } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
+
     const { team } = useGetTeam(teamId);
 
     const defaultValues = useMemo(() => {
         return {
             user_id: user?.id,
-            team_id: parseInt(query.teamId as string, 10),
+            team_id: parseInt(teamId, 10),
             ...applicationDefaultValues,
         };
     }, [teamId, user?.id]);
@@ -79,7 +83,7 @@ const CreateApplicationForm = () => {
         /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
         setTimeout(() => {
             push(
-                `/account/team/${query.teamId}/integrations/api-management/create/${response.id}/permissions`
+                `/account/team/${teamId}/integrations/api-management/create/${response.id}/permissions`
             );
         });
     };

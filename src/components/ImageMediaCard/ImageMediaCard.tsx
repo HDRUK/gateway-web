@@ -54,8 +54,4 @@ const ImageMediaCard = ({
     );
 };
 
-ImageMediaCard.defaultProps = {
-    description: "",
-};
-
 export default ImageMediaCard;
