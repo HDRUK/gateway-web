@@ -3,9 +3,11 @@ import { ReleaseNode } from "@/interfaces/Releases";
 import ReleaseTabs from "./ReleaseTabs";
 
 jest.mock("next/navigation", () => ({
+    ...jest.requireActual("next/navigation"),
     useSearchParams() {
         return {
             get: () => "2023",
+            entries: () => "",
         };
     },
 }));

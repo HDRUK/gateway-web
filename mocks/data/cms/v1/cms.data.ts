@@ -15,7 +15,7 @@ const generateReleaseV1 = (data = {}): CMSResponse<ReleaseNode> => {
                                 "2023-03-01T00:00:00.000Z"
                             )
                             .toISOString(),
-                        title: faker.lorem.lines(),
+                        title: faker.lorem.words(5),
                         content: faker.lorem.lines(),
                         id: faker.datatype.string(),
                     },
@@ -28,7 +28,7 @@ const generateReleaseV1 = (data = {}): CMSResponse<ReleaseNode> => {
                                 "2022-03-01T00:00:00.000Z"
                             )
                             .toISOString(),
-                        title: faker.lorem.lines(),
+                        title: faker.lorem.words(5),
                         content: faker.lorem.lines(),
                         id: faker.datatype.string(),
                     },
@@ -41,7 +41,7 @@ const generateReleaseV1 = (data = {}): CMSResponse<ReleaseNode> => {
                                 "2023-03-01T00:00:00.000Z"
                             )
                             .toISOString(),
-                        title: faker.lorem.lines(),
+                        title: faker.lorem.words(5),
                         content: faker.lorem.lines(),
                         id: faker.datatype.string(),
                     },

@@ -11,6 +11,7 @@ export const metadata = {
 
 const ReleasesPage = async () => {
     const allReleases = await getReleaseNotes();
+
     return (
         <>
             <Banner title="Gateway Releases" src={BannerImage} />

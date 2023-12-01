@@ -7,7 +7,7 @@ describe("EditIntegrationForm", () => {
     mockRouter.query = { teamId: teamV1.id.toString(), intId: "2" };
     it("should disable federation dropdown", () => {
         render(<EditIntegrationForm />);
-        const allButtons = screen.getAllByRole("button");
-        expect(allButtons[1]).toHaveClass("Mui-disabled");
+        const allSelects = screen.getAllByRole("combobox");
+        expect(allSelects[0]).toHaveClass("Mui-disabled");
     });
 });

@@ -24,7 +24,7 @@ exports[`Footer should render component 1`] = `
       >
         <li>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-u6d3dw-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-cvsvsh-MuiTypography-root-MuiLink-root"
             href="https://www.hdruk.ac.uk/"
           >
             HDR UK
@@ -32,7 +32,7 @@ exports[`Footer should render component 1`] = `
         </li>
         <li>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-u6d3dw-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-cvsvsh-MuiTypography-root-MuiLink-root"
             href="/about-us"
           >
             About
@@ -40,7 +40,7 @@ exports[`Footer should render component 1`] = `
         </li>
         <li>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-u6d3dw-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-cvsvsh-MuiTypography-root-MuiLink-root"
             href="/contact-us"
           >
             Contact us
@@ -48,7 +48,7 @@ exports[`Footer should render component 1`] = `
         </li>
         <li>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-u6d3dw-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-cvsvsh-MuiTypography-root-MuiLink-root"
             href="https://twitter.com/HDR_UK"
           >
             <span
@@ -73,7 +73,7 @@ exports[`Footer should render component 1`] = `
         </li>
         <li>
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-u6d3dw-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-cvsvsh-MuiTypography-root-MuiLink-root"
             href="https://www.linkedin.com/company/healthdataresearchuk/"
           >
             <span

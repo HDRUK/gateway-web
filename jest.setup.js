@@ -5,7 +5,6 @@ const nextRouterMock = require("next-router-mock");
 
 require("jest-fetch-mock").enableMocks();
 
-// mock useRouter
 jest.mock("next/router", () => nextRouterMock);
 
 jest.mock("next/navigation", () => {

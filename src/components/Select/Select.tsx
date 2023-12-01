@@ -46,25 +46,23 @@ const renderValue = (
     return options.find(option => option.value === selected)?.label;
 };
 
-const Select = (props: SelectProps) => {
-    const {
-        label,
-        info,
-        extraInfo,
-        icon,
-        horizontalForm,
-        options,
-        control,
-        name,
-        hasCheckbox,
-        required = false,
-        multiple = false,
-        iconRight = false,
-        disabled = false,
-        invertListItem = false,
-        ...rest
-    } = props;
-
+const Select = ({
+    label,
+    info = "",
+    extraInfo,
+    icon,
+    horizontalForm,
+    options,
+    control,
+    name,
+    hasCheckbox,
+    required = false,
+    multiple = false,
+    iconRight = false,
+    disabled = false,
+    invertListItem = false,
+    ...rest
+}: SelectProps) => {
     const {
         field: { ref, ...fieldProps },
         fieldState: { error },

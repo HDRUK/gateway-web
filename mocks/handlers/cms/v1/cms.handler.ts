@@ -21,6 +21,4 @@ const getCMSReleaseV1 = (data = releaseV1, status = 200) => {
     });
 };
 
-const CMSReleaseV1 = getCMSReleaseV1();
-
-export { getCMSReleaseV1, CMSReleaseV1 };
+export { getCMSReleaseV1 };

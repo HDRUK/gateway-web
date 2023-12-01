@@ -72,7 +72,7 @@ describe("Select", () => {
 
         expect(screen.getByText("Select label")).toBeInTheDocument();
 
-        UserEvent.click(screen.getAllByRole("button")[0]);
+        UserEvent.click(screen.getAllByRole("combobox")[0]);
 
         await waitFor(() => {
             expect(screen.getByText(options[0].label)).toBeInTheDocument();
@@ -101,7 +101,7 @@ describe("Select", () => {
 
         expect(screen.getByText("Select label")).toBeInTheDocument();
 
-        UserEvent.click(screen.getAllByRole("button")[0]);
+        UserEvent.click(screen.getAllByRole("combobox")[0]);
 
         await waitFor(() => {
             expect(screen.getByText(options[0].label)).toBeInTheDocument();
@@ -145,7 +145,7 @@ describe("Select", () => {
             ).toBeInTheDocument();
         });
 
-        UserEvent.click(screen.getAllByRole("button")[0]);
+        UserEvent.click(screen.getAllByRole("combobox")[0]);
         await waitFor(() => {
             UserEvent.click(screen.getByText(options[1].label));
         });
@@ -210,7 +210,7 @@ describe("Select", () => {
             />
         );
 
-        UserEvent.click(screen.getAllByRole("button")[0]);
+        UserEvent.click(screen.getAllByRole("combobox")[0]);
 
         await waitFor(() => {
             expect(screen.getAllByTestId("SupervisorAccountIcon")).toHaveLength(

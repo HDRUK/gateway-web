@@ -21,10 +21,10 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { IntegrationForm, IntegrationPayload } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import useGetTeam from "@/hooks/useGetTeam";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const CreateIntegrationForm = () => {
-    const router = useRouter();
-    const { query } = useRouter();
+    const { query, push } = useRouter();
     const { teamId } = query as AccountTeamUrlQuery;
     const { team } = useGetTeam(teamId);
 
@@ -55,9 +55,7 @@ const CreateIntegrationForm = () => {
         });
 
         setTimeout(() => {
-            router.push(
-                `/account/team/${teamId}/integrations/integration/list`
-            );
+            push(`/account/team/${teamId}/integrations/integration/list`);
         });
     };
 
