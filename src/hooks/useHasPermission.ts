@@ -1,13 +1,14 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { getPermissions } from "@/utils/permissions";
 import useGetTeam from "@/hooks/useGetTeam";
 import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 export const useHasPermissions = () => {
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
 
     const { team } = useGetTeam(teamId);
 

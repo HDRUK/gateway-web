@@ -14,7 +14,6 @@ import {
 import InputWrapper from "@/components/InputWrapper";
 import { ApplicationForm } from "@/interfaces/Application";
 import apis from "@/config/apis";
-import { useRouter, useSearchParams } from "next/navigation";
 import usePost from "@/hooks/usePost";
 import useAuth from "@/hooks/useAuth";
 import Paper from "@/components/Paper";
@@ -22,12 +21,14 @@ import { useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
 
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+
 const CreateApplicationForm = () => {
     const { user } = useAuth();
-    const router = useRouter();
 
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query, push } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
 
     const { team } = useGetTeam(teamId);
 
@@ -81,7 +82,7 @@ const CreateApplicationForm = () => {
 
         /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
         setTimeout(() => {
-            router.push(
+            push(
                 `/account/team/${teamId}/integrations/api-management/create/${response.id}/permissions`
             );
         });

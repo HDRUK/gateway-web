@@ -10,7 +10,9 @@ import { getColumns } from "@/config/tables/apiPermissions";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { Application, ApplicationForm } from "@/interfaces/Application";
-import { useRouter, useSearchParams } from "next/navigation";
+
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
@@ -48,10 +50,8 @@ const ApplicationPermissions = ({
         AppPermissionDefaultValues | undefined
     >(undefined);
 
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
-    const apiId = searchParams.get("apiId") as string;
-    const router = useRouter();
+    const { query, push } = useRouter();
+    const { apiId, teamId } = query as AccountTeamUrlQuery;
 
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
 
@@ -134,7 +134,7 @@ const ApplicationPermissions = ({
             if (!isTabView) {
                 /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
                 setTimeout(() => {
-                    router.push(
+                    push(
                         `/account/team/${teamId}/integrations/api-management/list`
                     );
                 }, 500);
@@ -145,7 +145,7 @@ const ApplicationPermissions = ({
             isTabView,
             mutate,
             permissions,
-            router,
+            push,
             teamId,
             updateApplication,
         ]

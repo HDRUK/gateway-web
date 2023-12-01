@@ -6,7 +6,11 @@ jest.mock("next/navigation", () => ({
     useSearchParams() {
         return {
             get: () => "1",
+            entries: () => "",
         };
+    },
+    usePathname() {
+        return "/path/name";
     },
 }));
 

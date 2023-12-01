@@ -23,9 +23,10 @@ import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";
 import { useEffect, useMemo } from "react";
 import Paper from "@/components/Paper";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 interface EditApplicationFormProps {
     application?: Application;
@@ -36,9 +37,8 @@ const EditApplicationForm = ({
     application,
     isTabView = false,
 }: EditApplicationFormProps) => {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query, push } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
     const { team } = useGetTeam(teamId);
 
     const { control, handleSubmit, reset, trigger, formState } =
@@ -88,7 +88,7 @@ const EditApplicationForm = ({
         if (!isTabView) {
             /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
             setTimeout(() => {
-                router.push(
+                push(
                     `/account/team/${teamId}/integrations/api-management/create/${payload.id}/permissions`
                 );
             });

@@ -10,12 +10,13 @@ import EditApplicationForm from "@/modules/EditApplicationForm";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
-import { useSearchParams } from "next/navigation";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useRouter } from "next/router";
 
 const EditAppPage = () => {
-    const searchParams = useSearchParams();
-    const apiId = searchParams.get("apiId") as string;
+    const { query } = useRouter();
+    const { apiId } = query;
+
     const { data: application } = useGet<Application>(
         apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );

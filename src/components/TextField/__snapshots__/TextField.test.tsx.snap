@@ -48,7 +48,6 @@ exports[`TextField should render icon 1`] = `
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart mui-style-1deaec7-MuiInputBase-input-MuiOutlinedInput-input"
           name="fieldName"
-          placeholder=""
           type="text"
           value=""
         />

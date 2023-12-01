@@ -8,19 +8,18 @@ import { CMSResponse } from "@/interfaces/Cms";
 async function fetchCMS(
     query = "",
     options: {
-        variables?: Record<string, unknown>;
         next?: Record<string, unknown>;
     } = {}
 ) {
     const headers = { "Content-Type": "application/json" };
 
-    const res = await fetch(apis.wordPressApiUrl!, {
+    const res = await fetch(apis.wordPressApiUrl, {
         headers,
         method: "POST",
         body: JSON.stringify({
             query,
-            ...options,
         }),
+        ...options,
     });
 
     const json = await res.json();

@@ -7,7 +7,9 @@ import Chip from "@/components/Chip";
 import { Integration } from "@/interfaces/Integration";
 import Typography from "@/components/Typography";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import Card from "@/components/Card";
 import { formatDate } from "@/utils/date";
 
@@ -20,8 +22,8 @@ const IntegrationListItem = ({
     index,
     integration,
 }: IntegrationListItemProps) => {
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
 
     return (
         <Card>

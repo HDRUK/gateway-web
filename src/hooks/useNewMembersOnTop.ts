@@ -3,14 +3,15 @@
 import { useEffect, useState } from "react";
 import useGetTeam from "@/hooks/useGetTeam";
 import { User } from "@/interfaces/User";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 export const useNewMembersOnTop = () => {
     const [newMemberIds, setNewMemberIds] = useState<number[]>([]);
     const [teamMembers, setTeamUsers] = useState<User[]>([]);
 
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
     const { team, mutateTeam } = useGetTeam(teamId);
 
     const onAddNewMembers = (memberIds: number[]) => {

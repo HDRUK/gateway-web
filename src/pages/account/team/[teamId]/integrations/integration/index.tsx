@@ -6,13 +6,15 @@ import { GetServerSideProps } from "next";
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import AccountLayout from "@/modules/AccountLayout";
-import { useSearchParams } from "next/navigation";
+
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamIntegrationsPage = () => {
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
     return (
         <ProtectedRoute
             permissions={["fe.account.nav.integrations.integration"]}>

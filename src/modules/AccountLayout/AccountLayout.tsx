@@ -5,7 +5,8 @@ import BoxContainer from "@/components/BoxContainer";
 import LeftNav from "@/modules/LeftNav";
 import { ReactNode, useMemo } from "react";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import Loading from "@/components/Loading";
 import ActionBar from "@/components/ActionBar";
@@ -17,8 +18,8 @@ interface AccountLayoutProps {
 }
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
 
     const permissions = useHasPermissions();
     const { team, isTeamLoading } = useGetTeam(teamId);

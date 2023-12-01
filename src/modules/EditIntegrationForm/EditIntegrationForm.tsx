@@ -12,7 +12,6 @@ import {
 } from "@/config/forms/integration";
 import InputWrapper from "@/components/InputWrapper";
 import apis from "@/config/apis";
-import { useSearchParams } from "next/navigation";
 import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
@@ -33,11 +32,12 @@ import useRunFederation, {
 } from "@/hooks/useRunFederation";
 import { pick } from "lodash";
 import { Federation } from "@/interfaces/Federation";
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const EditIntegrationForm = () => {
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
-    const intId = searchParams.get("intId") as string;
+    const { query } = useRouter();
+    const { teamId, intId } = query as AccountTeamUrlQuery;
 
     const { data: integration } = useGet<Integration>(
         `${apis.teamsV1Url}/${teamId}/federations/${intId}`,

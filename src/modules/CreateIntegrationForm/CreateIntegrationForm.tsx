@@ -13,7 +13,7 @@ import {
 } from "@/config/forms/integration";
 import InputWrapper from "@/components/InputWrapper";
 import apis from "@/config/apis";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import usePost from "@/hooks/usePost";
 import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
@@ -24,8 +24,8 @@ import useGetTeam from "@/hooks/useGetTeam";
 
 const CreateIntegrationForm = () => {
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
     const { team } = useGetTeam(teamId);
 
     const { control, handleSubmit, formState, watch, unregister } =

@@ -32,7 +32,6 @@ const CustomLink = forwardRef<
     const searchParams = useSearchParams();
     const pathname = usePathname();
 
-    console.log("searchParams.entries(): ", searchParams.entries());
     return (
         <Link
             ref={ref}
@@ -40,7 +39,10 @@ const CustomLink = forwardRef<
             {...props}
             href={{
                 pathname,
-                query: { ...searchParams.entries(), tab: props.href },
+                query: {
+                    ...Object.fromEntries(searchParams.entries()),
+                    tab: props.href,
+                },
             }}>
             {props.children}
         </Link>

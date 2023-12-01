@@ -3,11 +3,13 @@
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import Typography from "@/components/Typography";
-import { useSearchParams } from "next/navigation";
+
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 const ApiManagement = () => {
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
 
     return (
         <Box

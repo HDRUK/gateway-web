@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
 import DatasetTab from "@/modules/DatasetTab";
-import { useSearchParams } from "next/navigation";
+
+import { useRouter } from "next/router";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import useDelete from "@/hooks/useDelete";
@@ -18,6 +19,7 @@ import {
     sortByOptions,
 } from "@/config/forms/datasetAccountSearch";
 import { useForm } from "react-hook-form";
+import { AccountDatasetUrlQuery } from "@/interfaces/AccountTeamQuery";
 
 interface CountStatus {
     ACTIVE?: number;
@@ -27,9 +29,8 @@ interface CountStatus {
 
 const TeamDatasets = () => {
     const { showModal } = useModal();
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
-    const tab = searchParams.get("tab") as string;
+    const { query } = useRouter();
+    const { teamId, tab } = query as AccountDatasetUrlQuery;
     const [currentPage, setCurrentPage] = useState(1);
     const [sort, setSort] = useState(
         `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`

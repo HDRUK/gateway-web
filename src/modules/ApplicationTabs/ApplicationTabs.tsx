@@ -2,17 +2,18 @@
 
 import Tabs from "@/components/Tabs";
 
-import { useSearchParams } from "next/navigation";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
 import ApplicationAuthDetails from "@/modules/ApplicationAuthDetails";
 import EditApplicationForm from "@/modules/EditApplicationForm";
 import ApplicationPermissions from "@/modules/ApplicationPermissions";
+import { useRouter } from "next/router";
 
 const ApplicationTabs = () => {
-    const searchParams = useSearchParams();
-    const apiId = searchParams.get("apiId") as string;
+    const { query } = useRouter();
+    const { apiId } = query;
+
     const { data: application } = useGet<Application>(
         apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );

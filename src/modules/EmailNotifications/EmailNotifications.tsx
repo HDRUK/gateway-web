@@ -16,7 +16,8 @@ import useAuth from "@/hooks/useAuth";
 import useGetTeam from "@/hooks/useGetTeam";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import { getPreferredEmail } from "@/utils/user";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -34,8 +35,8 @@ const EmailNotifications = () => {
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
     const { user } = useAuth();
 
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
 
     const { team } = useGetTeam(teamId);
     const { control, formState, handleSubmit, reset, watch } =

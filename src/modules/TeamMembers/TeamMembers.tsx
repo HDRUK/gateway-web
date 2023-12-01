@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+
+import { useRouter } from "next/router";
+import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useAuth from "@/hooks/useAuth";
 import useActionBar from "@/hooks/useActionBar";
 import apis from "@/config/apis";
@@ -39,8 +41,8 @@ const TeamMembers = ({ teamMembers }: TeamMembersProps) => {
     const { showModal } = useModal();
     const { mutate: mututeUser } = useSWRConfig();
 
-    const searchParams = useSearchParams();
-    const teamId = searchParams.get("teamId") as string;
+    const { query } = useRouter();
+    const { teamId } = query as AccountTeamUrlQuery;
 
     const { mutateTeam } = useGetTeam(teamId);
     const [rolesToUpdate, setRolesToUpdate] = useState<RolesPayload[] | null>(

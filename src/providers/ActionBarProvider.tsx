@@ -2,7 +2,7 @@
 
 import { ModalButtonProps } from "@/components/ModalButtons/ModalButtons";
 import { isEqual } from "lodash";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { createContext, useMemo, ReactNode, useEffect } from "react";
 
 type ActionBarProps = {
@@ -43,7 +43,7 @@ interface ActionBarProviderProps {
 }
 
 const ActionBarProvider: React.FC<ActionBarProviderProps> = ({ children }) => {
-    const Router = useRouter();
+    const router = useRouter();
     const [store, setStore] = React.useState<{
         name: string;
         isVisible: boolean;
@@ -60,12 +60,12 @@ const ActionBarProvider: React.FC<ActionBarProviderProps> = ({ children }) => {
 
     useEffect(() => {
         /* Clear action bar if user moves away from a page */
-        Router.events.on("routeChangeComplete", clearActionBar);
+        router.events.on("routeChangeComplete", clearActionBar);
 
         return () => {
-            Router.events.off("routeChangeComplete", clearActionBar);
+            router.events.off("routeChangeComplete", clearActionBar);
         };
-    }, [Router]);
+    }, [router]);
 
     const value = useMemo(
         () => ({

@@ -9,13 +9,14 @@ import AccountLayout from "@/modules/AccountLayout";
 import ApplicationPermissions from "@/modules/ApplicationPermissions";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
-import { useSearchParams } from "next/navigation";
 import apis from "@/config/apis";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useRouter } from "next/router";
 
 const AddPermissionsPage = () => {
-    const searchParams = useSearchParams();
-    const apiId = searchParams.get("apiId") as string;
+    const { query } = useRouter();
+    const { apiId } = query;
+
     const { data: application } = useGet<Application>(
         apiId ? `${apis.applicationsV1Url}/${apiId}` : null
     );
