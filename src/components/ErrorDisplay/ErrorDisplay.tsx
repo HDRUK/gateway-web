@@ -1,7 +1,6 @@
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import { RemoveCircleIcon } from "@/consts/icons";
-import theme from "@/config/theme";
 import { errors, AllowedErrors } from "@/config/errors";
 
 interface ErrorDisplayProps {
@@ -21,10 +20,7 @@ const ErrorDisplay = ({ variant }: ErrorDisplayProps) => {
     return (
         <Paper sx={{ padding: 3 }}>
             <Typography variant="h2" align="center">
-                <Icon
-                    sx={{ color: theme.palette.error.main }}
-                    fontSize="large"
-                />
+                <Icon color="error" fontSize="large" />
             </Typography>
 
             <Typography variant="h2" align="center">

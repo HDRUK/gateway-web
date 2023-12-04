@@ -1,9 +1,15 @@
 import { Role } from "@/interfaces/Role";
 import { fePermissions } from "@/consts/permissions";
 import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
+import apis from "@/config/apis";
+import config from "@/config/config";
+import { getUserFromToken } from "@/utils/cookies";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { AuthUser } from "@/interfaces/AuthUser";
+import { Team } from "@/interfaces/Team";
 
 const getPermissions = (
-    userRoles: Role[] | undefined = [],
+    userRoles: Role[],
     teamUserRoles: Role[] | undefined = []
 ) => {
     const enabledUserRoles = userRoles.filter(userRole => userRole.enabled);
@@ -59,4 +65,42 @@ const getPermissions = (
     return permissionObj;
 };
 
-export { getPermissions };
+async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
+    const jwt = cookieStore.get(config.JWT_COOKIE);
+
+    const authUser = getUserFromToken(jwt?.value);
+    const res = await fetch(`${apis.usersV1UrlIP}/${authUser?.id}`, {
+        headers: { Authorization: `Bearer ${jwt?.value}` },
+    });
+
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error("Failed to fetch data");
+    }
+
+    const { data: user } = await res.json();
+
+    return user;
+}
+
+async function getTeam(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string
+): Promise<Team> {
+    const jwt = cookieStore.get(config.JWT_COOKIE);
+
+    const res = await fetch(`${apis.teamsV1UrlIP}/${teamId}`, {
+        headers: { Authorization: `Bearer ${jwt?.value}` },
+    });
+
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error("Failed to fetch data");
+    }
+
+    const { data: team } = await res.json();
+
+    return team;
+}
+
+export { getPermissions, getUser, getTeam };

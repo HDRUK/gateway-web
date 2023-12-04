@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import { Typography, TypographyProps } from "@mui/material";
-import { useTheme } from "@emotion/react";
 import { ComponentPropsWithoutRef } from "react";
 import * as styles from "./Label.styles";
 
@@ -14,12 +13,11 @@ interface LabelProps extends ExtendedProps {
 }
 
 const Label = ({ label, name, required = false, ...rest }: LabelProps) => {
-    const theme = useTheme();
-
     return (
         <Typography
             variant="body2"
-            css={styles.label({ theme, required })}
+            css={styles.label({ required })}
+            color={required ? "error" : "default"}
             {...rest}>
             <label htmlFor={name}>{label}</label>
         </Typography>

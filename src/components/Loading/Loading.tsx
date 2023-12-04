@@ -2,10 +2,14 @@
 import { CircularProgress } from "@mui/material";
 import Box from "../Box";
 
-const Loading = () => {
+interface LoadingProps {
+    size?: number;
+}
+
+const Loading = ({ size = 48 }: LoadingProps) => {
     return (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <CircularProgress color="secondary" />
+            <CircularProgress size={size} color="secondary" />
         </Box>
     );
 };

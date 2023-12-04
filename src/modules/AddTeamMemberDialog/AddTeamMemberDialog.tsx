@@ -20,8 +20,6 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import usePost from "@/hooks/usePost";
 
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import notificationService from "@/services/notification";
 import useGetTeam from "@/hooks/useGetTeam";
 import { useMemo } from "react";
@@ -33,8 +31,7 @@ const limit = pLimit(1);
 
 const AddTeamMemberDialog = () => {
     const { hideDialog, store } = useDialog();
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const { dialogProps } = store;
 
     const { t } = useTranslation("modules");
     const { control, handleSubmit } = useForm<AddTeamMember>({
@@ -49,7 +46,7 @@ const AddTeamMemberDialog = () => {
 
     const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
 
-    const { team } = useGetTeam(teamId);
+    const { team } = useGetTeam(dialogProps.teamId);
 
     const userOptions = useMemo(() => {
         if (!team) return [];
@@ -57,7 +54,7 @@ const AddTeamMemberDialog = () => {
     }, [team, users]);
 
     const addTeamMember = usePost<UserAndRoles>(
-        `${apis.teamsV1Url}/${teamId}/users`,
+        `${apis.teamsV1Url}/${dialogProps.teamId}/users`,
         { successNotificationsOn: false }
     );
 
@@ -79,9 +76,9 @@ const AddTeamMemberDialog = () => {
                 `${success.length} new member(s) successfully added to the team`
             );
         }
-        if (typeof store.dialogProps?.onSuccess === "function") {
+        if (typeof dialogProps?.onSuccess === "function") {
             /* send userIds back to parent component to be able to list new Team Members at the top */
-            store.dialogProps.onSuccess(
+            dialogProps.onSuccess(
                 userAndRoles.map(userAndRole => userAndRole.userId)
             );
         }

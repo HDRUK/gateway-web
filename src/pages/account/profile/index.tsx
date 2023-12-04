@@ -4,10 +4,10 @@ import { loadServerSideLocales } from "@/utils/locale";
 import { GetServerSideProps } from "next";
 import ProfileForm from "@/modules/ProfileForm";
 import useAuth from "@/hooks/useAuth";
-import { CircularProgress } from "@mui/material";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
 import AccountLayout from "@/modules/AccountLayout";
+import Loading from "@/components/Loading";
 
 const ProfilePage = () => {
     const { isLoading } = useAuth();
@@ -23,11 +23,7 @@ const ProfilePage = () => {
                             Use this form to register an account and update your
                             account on the Gateway
                         </Typography>
-                        {isLoading ? (
-                            <CircularProgress color="secondary" />
-                        ) : (
-                            <ProfileForm />
-                        )}
+                        {isLoading ? <Loading /> : <ProfileForm />}
                     </Box>
                 </Paper>
             </AccountLayout>

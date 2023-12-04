@@ -8,6 +8,11 @@ type Error = {
 };
 
 export const errors: { [char: number]: Error } = {
+    400: {
+        statusMessage: "Page not found",
+        message: "This page does not exist.",
+        icon: RemoveCircleIcon,
+    },
     401: {
         statusMessage: "Unauthorised",
         message: "You are not authorised to access this page.",

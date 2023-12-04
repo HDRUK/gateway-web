@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import useAuth from "@/hooks/useAuth";
 import useActionBar from "@/hooks/useActionBar";
 import apis from "@/config/apis";
@@ -20,7 +18,6 @@ import notificationService from "@/services/notification";
 
 import useDelete from "@/hooks/useDelete";
 import useModal from "@/hooks/useModal";
-import { useHasPermissions } from "@/hooks/useHasPermission";
 import { useSWRConfig } from "swr";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import usePut from "@/hooks/usePut";
@@ -33,16 +30,18 @@ const limit = pLimit(1);
 
 interface TeamMembersProps {
     teamMembers: User[];
+    teamId: string;
+    permissions: { [key: string]: boolean };
 }
 
-const TeamMembers = ({ teamMembers }: TeamMembersProps) => {
-    const permissions = useHasPermissions();
+const TeamMembers = ({
+    teamMembers,
+    permissions,
+    teamId,
+}: TeamMembersProps) => {
     const { user } = useAuth();
     const { showModal } = useModal();
     const { mutate: mututeUser } = useSWRConfig();
-
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
 
     const { mutateTeam } = useGetTeam(teamId);
     const [rolesToUpdate, setRolesToUpdate] = useState<RolesPayload[] | null>(
