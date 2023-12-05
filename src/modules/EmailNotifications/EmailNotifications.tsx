@@ -162,8 +162,6 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
     ]);
 
     useEffect(() => {
-        console.log("formState.isDirty: ", formState.isDirty);
-        console.log("store.isVisible: ", store.isVisible);
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
         if (formState.isDirty && !store.isVisible) {
             showBar("Notification", {
