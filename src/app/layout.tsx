@@ -21,8 +21,8 @@ export default function RootLayout({
         <html lang="en">
             <body>
                 <SWRProvider>
-                    <DialogProvider>
-                        <ThemeRegistry>
+                    <ThemeRegistry>
+                        <DialogProvider>
                             <SnackbarProvider />
                             <div
                                 style={{
@@ -33,8 +33,8 @@ export default function RootLayout({
                                 <main>{children}</main>
                                 <Footer />
                             </div>
-                        </ThemeRegistry>
-                    </DialogProvider>
+                        </DialogProvider>
+                    </ThemeRegistry>
                 </SWRProvider>
             </body>
         </html>
