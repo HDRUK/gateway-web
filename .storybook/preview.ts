@@ -1,6 +1,5 @@
 import type { Preview } from "@storybook/react";
 
-import i18n from "./i18next";
 import { withMuiTheme } from "./withMuiTheme.decorator";
 import { withDialog } from "./withDialog.decorator";
 import { withActionBar } from "./withActionBar.decorator";
@@ -26,9 +25,7 @@ const preview: Preview = {
                 order: ["*", "Playground", "*"],
             },
         },
-        parameters: {
-            i18n,
-        },
+        parameters: {},
     },
 };
 
