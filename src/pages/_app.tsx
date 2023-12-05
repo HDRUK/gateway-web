@@ -17,6 +17,7 @@ import { ApiWarning } from "@/components/CustomNotifications/ApiWarning";
 import { ApiInfo } from "@/components/CustomNotifications/ApiInfo";
 import DialogProvider from "@/providers/DialogProvider";
 import ActionBarProvider from "@/providers/ActionBarProvider";
+import NavigationEvents from "@/components/NavigationEvents";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -62,11 +63,7 @@ const App = ({
                                     />
                                     <Component {...pageProps} />
                                 </ErrorBoundary>
-                                {/* <SnackbarProvider
-                                    Components={{
-
-                                    }}
-                                /> */}
+                                <NavigationEvents />
                             </PageLayout>
                         </ActionBarProvider>
                     </DialogProvider>

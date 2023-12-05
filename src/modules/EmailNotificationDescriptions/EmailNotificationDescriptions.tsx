@@ -47,6 +47,7 @@ const EmailNotificationDescriptions = () => {
         <Box sx={{ p: 0, mb: 5 }}>
             {notificationDescriptions.map(description => (
                 <ExpandList
+                    key={description.role}
                     showLessButton
                     {...description}
                     heading={

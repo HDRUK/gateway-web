@@ -14,16 +14,17 @@ import { CUSTOMER_PORTAL_RAISE_SUPPORT_URL } from "@/config/hrefs";
 import Paper from "@/components/Paper";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useDialog from "@/hooks/useDialog";
+import { Team } from "@/interfaces/Team";
 
 export default function TeamManagement({
     permissions,
-    teamId,
+    team,
 }: {
     permissions: { [key: string]: boolean };
-    teamId: string;
+    team: Team;
 }) {
     const { showDialog } = useDialog();
-    const { teamMembers, onAddNewMembers } = useNewMembersOnTop(teamId);
+    const { teamMembers, onAddNewMembers } = useNewMembersOnTop(team);
     useUnsavedChanges({ shouldConfirmLeave: true });
     const tabsList = [
         {
@@ -31,7 +32,7 @@ export default function TeamManagement({
             value: "members",
             content: (
                 <TeamMembers
-                    teamId={teamId}
+                    teamId={team.id}
                     permissions={permissions}
                     teamMembers={teamMembers}
                 />
@@ -40,7 +41,9 @@ export default function TeamManagement({
         {
             label: "Notifications",
             value: "notifications",
-            content: <EmailNotifications />,
+            content: (
+                <EmailNotifications team={team} permissions={permissions} />
+            ),
         },
     ];
 
@@ -72,7 +75,7 @@ export default function TeamManagement({
                                 onClick={() =>
                                     showDialog(AddTeamMemberDialog, {
                                         onSuccess: onAddNewMembers,
-                                        teamId,
+                                        teamId: team.id,
                                     })
                                 }>
                                 <AddIcon /> Add a new member

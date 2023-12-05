@@ -9,7 +9,7 @@ import { AuthUser } from "@/interfaces/AuthUser";
 import { Team } from "@/interfaces/Team";
 
 const getPermissions = (
-    userRoles: Role[],
+    userRoles: Role[] = [],
     teamUserRoles: Role[] | undefined = []
 ) => {
     const enabledUserRoles = userRoles.filter(userRole => userRole.enabled);
@@ -90,6 +90,7 @@ async function getTeam(
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
     const res = await fetch(`${apis.teamsV1UrlIP}/${teamId}`, {
+        cache: "no-store",
         headers: { Authorization: `Bearer ${jwt?.value}` },
     });
 
@@ -98,9 +99,18 @@ async function getTeam(
         throw new Error("Failed to fetch data");
     }
 
-    const { data: team } = await res.json();
+    const { data }: { data: Team } = await res.json();
 
-    return team;
+    return {
+        ...data,
+        users: data?.users.map(user => ({
+            ...user,
+            roles: user.roles.filter(
+                // Remove global "hdruk" roles from team users
+                role => !role.name.startsWith("hdruk")
+            ),
+        })),
+    };
 }
 
 export { getPermissions, getUser, getTeam };

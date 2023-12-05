@@ -1,10 +1,11 @@
 "use client";
 
+// todo: To be removed as part of migration to AppRouter
+
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import LeftNav from "@/modules/LeftNav";
 import { ReactNode, useMemo } from "react";
-import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useRouter } from "next/router";
 import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import { useHasPermissions } from "@/hooks/useHasPermission";
@@ -24,11 +25,6 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
     const permissions = useHasPermissions();
     const { team, isTeamLoading } = useGetTeam(teamId);
     const isTeam = useMemo(() => !!teamId, [teamId]);
-
-    const navItems = useMemo(() => {
-        if (!teamId) return getProfileNav(permissions);
-        return getTeamNav(permissions, teamId);
-    }, [teamId, permissions]);
 
     if (isTeamLoading) {
         return <Loading />;
@@ -62,7 +58,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
                             </Box>
                         </BoxContainer>
                     )}
-                    <LeftNav navItems={navItems} />
+                    <LeftNav permissions={permissions} teamId={teamId} />
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>

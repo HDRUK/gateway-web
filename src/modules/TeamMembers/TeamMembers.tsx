@@ -22,15 +22,16 @@ import { useSWRConfig } from "swr";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import usePut from "@/hooks/usePut";
 import ChangesActionBar from "@/modules/ChangesActionBar";
-import useGetTeam from "@/hooks/useGetTeam";
 import Paper from "@/components/Paper";
 import { DeleteForeverIcon } from "@/consts/icons";
+import Loading from "@/components/Loading";
+import { useRouter } from "next/navigation";
 
 const limit = pLimit(1);
 
 interface TeamMembersProps {
     teamMembers: User[];
-    teamId: string;
+    teamId: number;
     permissions: { [key: string]: boolean };
 }
 
@@ -40,10 +41,10 @@ const TeamMembers = ({
     teamId,
 }: TeamMembersProps) => {
     const { user } = useAuth();
+    const router = useRouter();
     const { showModal } = useModal();
     const { mutate: mututeUser } = useSWRConfig();
 
-    const { mutateTeam } = useGetTeam(teamId);
     const [rolesToUpdate, setRolesToUpdate] = useState<RolesPayload[] | null>(
         null
     );
@@ -53,7 +54,6 @@ const TeamMembers = ({
     const updateMembers = usePut<{ id?: number | undefined }>(
         `${apis.teamsV1Url}/${teamId}/users`,
         {
-            shouldFetch: false,
             errorNotificationsOn: false,
             successNotificationsOn: false,
         }
@@ -87,21 +87,15 @@ const TeamMembers = ({
             );
         }
 
-        mutateTeam();
+        router.refresh();
         setRolesToUpdate(null);
         hideBar();
 
         if (updatingOwnPermissions) {
             mututeUser(apis.authInternalUrl);
         }
-    }, [
-        hideBar,
-        mutateTeam,
-        mututeUser,
-        rolesToUpdate,
-        updateMembers,
-        user?.id,
-    ]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [rolesToUpdate, updateMembers, user?.id]);
 
     const discardChanges = () => {
         setTableRows(teamMembers || []);
@@ -139,12 +133,13 @@ const TeamMembers = ({
                         content: `Are you sure you want to remove ${rowUser.firstname}  ${rowUser.lastname}?`,
                         onSuccess: async () => {
                             deleteTeamMember(`users/${rowUser.id}`);
-                            mutateTeam();
+                            router.refresh();
                         },
                     }),
             },
         ],
-        [deleteTeamMember, mutateTeam, showModal]
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [deleteTeamMember, showModal]
     );
 
     useEffect(() => {
@@ -196,6 +191,13 @@ const TeamMembers = ({
             });
         }
     };
+
+    if (tableRows.length === 0)
+        return (
+            <Paper>
+                <Loading />
+            </Paper>
+        );
 
     return (
         <Paper>

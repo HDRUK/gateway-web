@@ -5,6 +5,8 @@ import DialogProvider from "@/providers/DialogProvider";
 import SnackbarProvider from "@/providers/SnackbarProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ActionBarProvider from "@/providers/ActionBarProvider";
+import NavigationEvents from "@/components/NavigationEvents";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway",
@@ -23,16 +25,21 @@ export default function RootLayout({
                 <SWRProvider>
                     <ThemeRegistry>
                         <DialogProvider>
-                            <SnackbarProvider />
-                            <div
-                                style={{
-                                    width: "100%",
-                                    fontFamily: "arial",
-                                }}>
-                                <Header />
-                                <main>{children}</main>
-                                <Footer />
-                            </div>
+                            <ActionBarProvider>
+                                <SnackbarProvider />
+                                <div
+                                    style={{
+                                        width: "100%",
+                                        fontFamily: "arial",
+                                    }}>
+                                    <Header />
+                                    <main>{children}</main>
+                                    <React.Suspense fallback={null}>
+                                        <NavigationEvents />
+                                    </React.Suspense>
+                                    <Footer />
+                                </div>
+                            </ActionBarProvider>
                         </DialogProvider>
                     </ThemeRegistry>
                 </SWRProvider>

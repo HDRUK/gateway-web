@@ -15,5 +15,5 @@ export default async function TeamManagementPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    return <TeamManagement permissions={permissions} teamId={teamId} />;
+    return <TeamManagement permissions={permissions} team={team} />;
 }
