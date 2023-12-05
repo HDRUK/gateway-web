@@ -1,7 +1,7 @@
 "use client";
 
 import MuiDialogContent from "@mui/material/DialogContent";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useFieldArray, useForm } from "react-hook-form";
 import Dialog from "@/components/Dialog";
 import MuiDialogActions from "@mui/material/DialogActions";
@@ -33,7 +33,7 @@ const AddTeamMemberDialog = () => {
     const { hideDialog, store } = useDialog();
     const { dialogProps } = store;
 
-    const { t } = useTranslation("modules");
+    const t = useTranslations("modules");
     const { control, handleSubmit } = useForm<AddTeamMember>({
         resolver: yupResolver(addTeamMemberValidationSchema),
         defaultValues: { ...addTeamMemberDefaultValues },

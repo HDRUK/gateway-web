@@ -6,10 +6,10 @@ interface ShowingXofXProps {
     total?: number;
 }
 
-const ShowingXofX = ({ from = 0, to = 0, total = 0 }: ShowingXofXProps) => {
+const ShowingXofX = ({ from, to, total }: ShowingXofXProps) => {
     return (
         <Box sx={{ p: 0, mb: 1 }}>
-            Showing {from}-{to} of {total}
+            Showing {from || 0}-{to || 0} of {total || 0}
         </Box>
     );
 };

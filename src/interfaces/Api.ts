@@ -1,6 +1,5 @@
 import { OptionsWithExtraProps, VariantType } from "notistack";
 import { AxiosRequestConfig } from "axios";
-import { I18n, TFunction } from "next-i18next";
 import { ReactNode } from "react";
 import { MutatorOptions } from "swr";
 
@@ -9,8 +8,7 @@ interface NotificationOptions extends OptionsWithExtraProps<VariantType> {
     errorNotificationsOn?: boolean;
     localeKey?: string;
     itemName?: string;
-    t?: TFunction;
-    i18n?: I18n;
+    t: (key: string, options?: { [key: string]: string }) => string;
     action?: ReactNode;
 }
 

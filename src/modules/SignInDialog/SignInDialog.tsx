@@ -1,7 +1,7 @@
 import * as React from "react";
 import MuiDialogContent from "@mui/material/DialogContent";
 
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import Dialog from "@/components/Dialog";
 import MuiDialogActions from "@mui/material/DialogActions";
@@ -18,7 +18,7 @@ import { SignIn } from "@/interfaces/SignIn";
 import useSignIn from "@/hooks/useSignIn";
 
 const SignInDialog = () => {
-    const { t } = useTranslation("modules");
+    const t = useTranslations("modules");
     const signIn = useSignIn();
 
     const { control, handleSubmit } = useForm<SignIn>({

@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 import Link from "@/components/Link";
@@ -15,7 +15,7 @@ import twitterInLogo from "../../../public/images/logos/twitter-white.png";
 import * as styles from "./Footer.styles";
 
 const Footer = () => {
-    const { t } = useTranslation("components");
+    const t = useTranslations("components");
     const copyright = String.fromCodePoint(0x00a9);
     const currentYear = new Date().getFullYear();
 

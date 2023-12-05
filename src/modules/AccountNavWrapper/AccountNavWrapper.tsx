@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
 import ProvidersDialog from "@/modules/ProvidersDialog";
@@ -16,7 +16,7 @@ import { ArrowDropDownIcon } from "@/consts/icons";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();
-    const { t } = useTranslation("components");
+    const t = useTranslations("components");
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );

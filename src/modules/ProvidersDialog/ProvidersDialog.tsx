@@ -6,10 +6,10 @@ import Dialog from "@/components/Dialog";
 import BulletList from "@/components/BulletList";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ProviderLinks from "@/modules/ProviderLinks";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 const ProvidersDialog = () => {
-    const { t } = useTranslation("modules");
+    const t = useTranslations("modules");
 
     return (
         <Dialog
