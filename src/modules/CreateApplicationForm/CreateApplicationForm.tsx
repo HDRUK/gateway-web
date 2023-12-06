@@ -21,8 +21,7 @@ import { useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
 
-import { useRouter } from "next/router";
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();

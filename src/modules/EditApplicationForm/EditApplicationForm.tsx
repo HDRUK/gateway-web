@@ -25,8 +25,7 @@ import { useEffect, useMemo } from "react";
 import Paper from "@/components/Paper";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
-import { useRouter } from "next/router";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 interface EditApplicationFormProps {
     application?: Application;

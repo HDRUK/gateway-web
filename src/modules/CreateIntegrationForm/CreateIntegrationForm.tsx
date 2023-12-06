@@ -13,7 +13,6 @@ import {
 } from "@/config/forms/integration";
 import InputWrapper from "@/components/InputWrapper";
 import apis from "@/config/apis";
-import { useRouter } from "next/router";
 import usePost from "@/hooks/usePost";
 import Paper from "@/components/Paper";
 import { useEffect, useMemo } from "react";
@@ -21,7 +20,7 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { IntegrationForm, IntegrationPayload } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import useGetTeam from "@/hooks/useGetTeam";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const CreateIntegrationForm = () => {
     const { push } = useRouter();

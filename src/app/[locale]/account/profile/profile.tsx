@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@/components/Box";
 import Head from "@/components/Head";
 import messages from "@/config/messages/en.json";

@@ -1,14 +1,15 @@
 import { getPermissions, getTeam, getUser } from "@/utils/permissions";
 import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
-import TeamManagement from "./TeamManagement";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import ApiManagement from "@/modules/ApiManagement";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Team Management",
+    title: "Health Data Research Innovation Gateway - My Account - API Management",
     description: "",
 };
 
-export default async function TeamManagementPage({
+export default async function TeamApiManagementPage({
     params,
 }: {
     params: { teamId: string };
@@ -20,5 +21,11 @@ export default async function TeamManagementPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    return <TeamManagement permissions={permissions} team={team} />;
+    return (
+        <ProtectedAccountRoute
+            permissions={permissions}
+            pagePermissions={["fe.account.nav.integrations.api-management"]}>
+            <ApiManagement />
+        </ProtectedAccountRoute>
+    );
 }
