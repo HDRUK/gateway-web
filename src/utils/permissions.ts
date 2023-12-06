@@ -7,6 +7,7 @@ import { getUserFromToken } from "@/utils/cookies";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { Team } from "@/interfaces/Team";
+import { Application } from "@/interfaces/Application";
 
 const getPermissions = (
     userRoles: Role[] = [],
@@ -65,11 +66,33 @@ const getPermissions = (
     return permissionObj;
 };
 
+// todo: Move into reusable function
 async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
     const authUser = getUserFromToken(jwt?.value);
     const res = await fetch(`${apis.usersV1UrlIP}/${authUser?.id}`, {
+        headers: { Authorization: `Bearer ${jwt?.value}` },
+    });
+
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error("Failed to fetch data");
+    }
+
+    const { data: user } = await res.json();
+
+    return user;
+}
+
+// todo: Move into reusable function
+async function getApplication(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string
+): Promise<Application> {
+    const jwt = cookieStore.get(config.JWT_COOKIE);
+
+    const res = await fetch(`${apis.applicationsV1Url}/${applicationId}`, {
         headers: { Authorization: `Bearer ${jwt?.value}` },
     });
 
@@ -113,4 +136,4 @@ async function getTeam(
     };
 }
 
-export { getPermissions, getUser, getTeam };
+export { getPermissions, getUser, getTeam, getApplication };
