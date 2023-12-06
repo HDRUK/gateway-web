@@ -18,7 +18,7 @@ import {
     sortByOptions,
 } from "@/config/forms/datasetAccountSearch";
 import { useForm } from "react-hook-form";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 interface CountStatus {
     ACTIVE?: number;
@@ -28,7 +28,9 @@ interface CountStatus {
 
 const TeamDatasets = () => {
     const { showModal } = useModal();
-    const { teamId, tab } = useParams();
+    const searchParams = useSearchParams();
+    const tab = searchParams.get("tab");
+    const { teamId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const [sort, setSort] = useState(
         `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`
@@ -61,7 +63,8 @@ const TeamDatasets = () => {
         sort,
         title: filterTitleDebounced,
     });
-
+    console.log("queryParams: ", queryParams);
+    console.log("tab: ", tab);
     const { data: counts } = useGet<CountStatus>(
         `${apis.datasetsV1Url}/count/status?team_id=${teamId}`
     );
