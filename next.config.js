@@ -18,7 +18,6 @@ const nextConfig = withNextIntl({
         }
         return config;
     },
-    // i18n,
 });
 
 module.exports = nextConfig;

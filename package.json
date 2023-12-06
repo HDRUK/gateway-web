@@ -56,12 +56,12 @@
         "yup": "^1.2.0"
     },
     "devDependencies": {
-        "@storybook/addon-essentials": "^7.6.1",
-        "@storybook/addon-interactions": "^7.6.1",
-        "@storybook/addon-links": "^7.6.1",
-        "@storybook/blocks": "^7.6.1",
-        "@storybook/nextjs": "^7.6.1",
-        "@storybook/react": "^7.6.1",
+        "@storybook/addon-essentials": "^7.6.3",
+        "@storybook/addon-interactions": "^7.6.3",
+        "@storybook/addon-links": "^7.6.3",
+        "@storybook/blocks": "^7.6.3",
+        "@storybook/nextjs": "^7.6.3",
+        "@storybook/react": "^7.6.3",
         "@storybook/testing-library": "^0.2.2",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^14.0.0",
@@ -86,7 +86,7 @@
         "lint-staged": "^13.2.0",
         "next-router-mock": "^0.9.10",
         "prettier": "^2.8.7",
-        "storybook": "^7.6.1",
+        "storybook": "^7.6.3",
         "storybook-react-i18next": "^2.0.9"
     }
 }
