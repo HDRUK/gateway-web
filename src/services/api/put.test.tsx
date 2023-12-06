@@ -17,7 +17,6 @@ jest.mock("@/services/api/utils", () => {
 
 const translationProps = {
     t: expect.any(Function),
-    i18n: expect.any(Object),
 };
 
 describe("put", () => {

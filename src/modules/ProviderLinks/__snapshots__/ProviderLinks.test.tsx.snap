@@ -13,7 +13,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
         class="MuiBox-root mui-style-1azorbj"
       >
         <img
-          alt="dialogs.ProvidersDialog.socialProviders.google"
+          alt="Google"
           data-nimg="1"
           decoding="async"
           height="20"
@@ -24,7 +24,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
           width="20"
         />
         Sign in with 
-        dialogs.ProvidersDialog.socialProviders.google
+        Google
       </div>
     </a>
     <a
@@ -35,7 +35,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
         class="MuiBox-root mui-style-1azorbj"
       >
         <img
-          alt="dialogs.ProvidersDialog.socialProviders.linkedIn"
+          alt="LinkedIn"
           data-nimg="1"
           decoding="async"
           height="20"
@@ -46,7 +46,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
           width="20"
         />
         Sign in with 
-        dialogs.ProvidersDialog.socialProviders.linkedIn
+        LinkedIn
       </div>
     </a>
     <a
@@ -57,7 +57,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
         class="MuiBox-root mui-style-1azorbj"
       >
         <img
-          alt="dialogs.ProvidersDialog.socialProviders.azure"
+          alt="Azure"
           data-nimg="1"
           decoding="async"
           height="20"
@@ -68,7 +68,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
           width="20"
         />
         Sign in with 
-        dialogs.ProvidersDialog.socialProviders.azure
+        Azure
       </div>
     </a>
   </div>

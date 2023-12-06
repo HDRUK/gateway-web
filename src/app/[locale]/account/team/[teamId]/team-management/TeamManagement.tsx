@@ -12,7 +12,6 @@ import EmailNotifications from "@/modules/EmailNotifications";
 import { useNewMembersOnTop } from "@/hooks/useNewMembersOnTop";
 import { CUSTOMER_PORTAL_RAISE_SUPPORT_URL } from "@/config/hrefs";
 import Paper from "@/components/Paper";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useDialog from "@/hooks/useDialog";
 import { Team } from "@/interfaces/Team";
 
@@ -25,7 +24,7 @@ export default function TeamManagement({
 }) {
     const { showDialog } = useDialog();
     const { teamMembers, onAddNewMembers } = useNewMembersOnTop(team);
-    useUnsavedChanges({ shouldConfirmLeave: true });
+
     const tabsList = [
         {
             label: "Members",

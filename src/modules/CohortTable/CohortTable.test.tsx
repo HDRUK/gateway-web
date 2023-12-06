@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@/utils/testUtils";
+import { render, screen, waitFor, within } from "@/utils/testUtils";
 import { server } from "@/mocks/server";
 import { getCohortRequestsV1 } from "@/mocks/handlers/cohortRequest";
 import { generateCohortRequestV1 } from "@/mocks/data/cohortRequest";
@@ -30,33 +30,50 @@ describe("Cohort Table", () => {
     });
     it("should render row content", async () => {
         server.use(getCohortRequestsV1(requests));
-        render(<CohortTable />);
+        const { container } = render(<CohortTable />);
 
         await waitFor(() => {
-            expect(screen.getByText(requests[0].user.name)).toBeInTheDocument();
+            const tableRows = container.querySelectorAll("tr");
             expect(
-                screen.getByText(requests[0].user.email)
+                within(tableRows[1]).getByText(requests[0].user.name, {
+                    exact: false,
+                })
             ).toBeInTheDocument();
             expect(
-                screen.getByText(requests[0].user.organisation)
+                within(tableRows[1]).getByText(requests[0].user.email)
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[1]).getByText(requests[0].user.organisation)
             ).toBeInTheDocument();
 
-            expect(screen.getByText("Approved")).toBeInTheDocument();
-            expect(screen.getByText("Rejected")).toBeInTheDocument();
-            expect(screen.getByText("Pending")).toBeInTheDocument();
-            expect(screen.getByText("Banned")).toBeInTheDocument();
-            expect(screen.getByText("Suspended")).toBeInTheDocument();
-            expect(screen.getByText("Expired")).toBeInTheDocument();
-
             expect(
-                screen.getByText(
+                within(tableRows[1]).getByText(
                     formatDate(new Date(requests[0].created_at), "dd/MM/yyyy")
                 )
             ).toBeInTheDocument();
             expect(
-                screen.getByText(
+                within(tableRows[1]).getByText(
                     formatDate(new Date(requests[0].updated_at), "dd/MM/yyyy")
                 )
+            ).toBeInTheDocument();
+
+            expect(
+                within(tableRows[1]).getByText("Approved")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[2]).getByText("Rejected")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[3]).getByText("Pending")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[4]).getByText("Banned")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[5]).getByText("Suspended")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[6]).getByText("Expired")
             ).toBeInTheDocument();
         });
     });

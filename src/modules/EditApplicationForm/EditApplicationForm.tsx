@@ -26,7 +26,7 @@ import Paper from "@/components/Paper";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
 import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useParams } from "next/navigation";
 
 interface EditApplicationFormProps {
     application?: Application;
@@ -37,9 +37,9 @@ const EditApplicationForm = ({
     application,
     isTabView = false,
 }: EditApplicationFormProps) => {
-    const { query, push } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
-    const { team } = useGetTeam(teamId);
+    const { push } = useRouter();
+    const { teamId } = useParams();
+    const { team } = useGetTeam(teamId as string);
 
     const { control, handleSubmit, reset, trigger, formState } =
         useForm<ApplicationForm>({

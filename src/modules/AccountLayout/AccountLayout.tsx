@@ -6,8 +6,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import LeftNav from "@/modules/LeftNav";
 import { ReactNode, useMemo } from "react";
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useParams } from "next/navigation";
 import { useHasPermissions } from "@/hooks/useHasPermission";
 import Loading from "@/components/Loading";
 import ActionBar from "@/components/ActionBar";
@@ -19,8 +18,7 @@ interface AccountLayoutProps {
 }
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const { teamId } = useParams();
 
     const permissions = useHasPermissions();
     const { team, isTeamLoading } = useGetTeam(teamId);

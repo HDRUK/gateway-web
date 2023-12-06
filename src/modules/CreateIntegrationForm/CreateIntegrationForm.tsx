@@ -21,12 +21,12 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { IntegrationForm, IntegrationPayload } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import useGetTeam from "@/hooks/useGetTeam";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useParams } from "next/navigation";
 
 const CreateIntegrationForm = () => {
-    const { query, push } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
-    const { team } = useGetTeam(teamId);
+    const { push } = useRouter();
+    const { teamId } = useParams();
+    const { team } = useGetTeam(teamId as string);
 
     const { control, handleSubmit, formState, watch, unregister } =
         useForm<IntegrationForm>({

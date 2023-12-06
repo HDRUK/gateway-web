@@ -3,18 +3,17 @@
 import { useEffect, useState } from "react";
 import { User } from "@/interfaces/User";
 import { Team } from "@/interfaces/Team";
-import { useSWRConfig } from "swr";
-import apis from "@/config/apis";
+import { useRouter } from "next/navigation";
 
 export const useNewMembersOnTop = (team: Team) => {
+    const router = useRouter();
     const [newMemberIds, setNewMemberIds] = useState<number[]>([]);
     const [teamMembers, setTeamMembers] = useState<User[]>([]);
-    const { mutate: mutateTeam } = useSWRConfig();
 
     const onAddNewMembers = (memberIds: number[]) => {
         setNewMemberIds([...memberIds, ...newMemberIds]);
 
-        mutateTeam(`${apis.teamsV1Url}/${team.id}`);
+        router.refresh();
     };
 
     useEffect(() => {

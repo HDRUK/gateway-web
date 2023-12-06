@@ -32,19 +32,17 @@ import useRunFederation, {
 } from "@/hooks/useRunFederation";
 import { pick } from "lodash";
 import { Federation } from "@/interfaces/Federation";
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useParams } from "next/navigation";
 
 const EditIntegrationForm = () => {
-    const { query } = useRouter();
-    const { teamId, intId } = query as AccountTeamUrlQuery;
+    const { teamId, intId } = useParams();
 
     const { data: integration } = useGet<Integration>(
         `${apis.teamsV1Url}/${teamId}/federations/${intId}`,
         { shouldFetch: !!teamId || !!intId }
     );
 
-    const { team } = useGetTeam(teamId);
+    const { team } = useGetTeam(teamId as string);
 
     const {
         control,

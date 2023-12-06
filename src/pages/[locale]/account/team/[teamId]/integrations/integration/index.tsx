@@ -7,14 +7,12 @@ import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import AccountLayout from "@/modules/AccountLayout";
 
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useParams } from "next/navigation";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 const TeamIntegrationsPage = () => {
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const { teamId } = useParams();
     return (
         <ProtectedRoute
             permissions={["fe.account.nav.integrations.integration"]}>

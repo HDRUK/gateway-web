@@ -36,7 +36,6 @@ describe("useDelete", () => {
                         localeKey: "mockLocaleKey",
                         itemName: "mockItemName",
                         t: expect.any(Function),
-                        i18n: { changeLanguage: expect.any(Function) },
                         action: undefined,
                     },
                 }

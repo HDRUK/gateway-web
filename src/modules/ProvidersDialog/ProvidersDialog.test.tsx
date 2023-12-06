@@ -9,16 +9,15 @@ describe("ProvidersDialog", () => {
 
         await waitFor(() => {
             expect(
-                screen.getByText("dialogs.ProvidersDialog.title")
+                screen.getByText("Sign in or create an account")
             ).toBeInTheDocument();
         });
     });
     it("should render azure link", async () => {
         render(<ProvidersDialog />);
-        const azureButton = screen.getByText(
-            "dialogs.ProvidersDialog.socialProviders.azure",
-            { exact: false }
-        );
+        const azureButton = screen.getByText("Sign in with Azure", {
+            exact: false,
+        });
         expect(azureButton).toBeInTheDocument();
 
         expect(azureButton.closest("a")).toHaveAttribute(
@@ -28,10 +27,9 @@ describe("ProvidersDialog", () => {
     });
     it("should render google link", async () => {
         render(<ProvidersDialog />);
-        const googleButton = screen.getByText(
-            "dialogs.ProvidersDialog.socialProviders.google",
-            { exact: false }
-        );
+        const googleButton = screen.getByText("Sign in with Google", {
+            exact: false,
+        });
         expect(googleButton).toBeInTheDocument();
         expect(googleButton.closest("a")).toHaveAttribute(
             "href",
@@ -40,10 +38,9 @@ describe("ProvidersDialog", () => {
     });
     it("should render linkedIn link", async () => {
         render(<ProvidersDialog />);
-        const linkedInButton = screen.getByText(
-            "dialogs.ProvidersDialog.socialProviders.linkedIn",
-            { exact: false }
-        );
+        const linkedInButton = screen.getByText("Sign in with LinkedIn", {
+            exact: false,
+        });
         expect(linkedInButton).toBeInTheDocument();
         expect(linkedInButton.closest("a")).toHaveAttribute(
             "href",

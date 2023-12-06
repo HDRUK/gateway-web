@@ -8,11 +8,10 @@ import { Application } from "@/interfaces/Application";
 import ApplicationAuthDetails from "@/modules/ApplicationAuthDetails";
 import EditApplicationForm from "@/modules/EditApplicationForm";
 import ApplicationPermissions from "@/modules/ApplicationPermissions";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 
 const ApplicationTabs = () => {
-    const { query } = useRouter();
-    const { apiId } = query;
+    const { apiId } = useParams();
 
     const { data: application } = useGet<Application>(
         apiId ? `${apis.applicationsV1Url}/${apiId}` : null

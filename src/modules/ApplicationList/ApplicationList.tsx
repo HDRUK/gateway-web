@@ -6,8 +6,7 @@ import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { useEffect, useState } from "react";
 
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useParams } from "next/navigation";
 import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
 import Typography from "@/components/Typography";
@@ -19,8 +18,7 @@ const ApplicationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filterQuery, setFilterQuery] = useState("");
 
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const { teamId } = useParams();
 
     const { data, isLoading } = useGet<PaginationType<Application>>(
         filterQuery

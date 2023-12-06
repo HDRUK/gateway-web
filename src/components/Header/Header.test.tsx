@@ -17,9 +17,7 @@ describe("Header", () => {
         render(<Header />);
 
         await waitFor(() => {
-            expect(
-                screen.getByText("HeaderNav.labels.signIn")
-            ).toBeInTheDocument();
+            expect(screen.getByText("Sign in")).toBeInTheDocument();
         });
     });
     it("should render logged in component", async () => {
@@ -48,12 +46,9 @@ describe("Header", () => {
         render(<Header />);
 
         await waitFor(() => {
-            fireEvent.click(screen.getByText("HeaderNav.labels.signIn"));
+            fireEvent.click(screen.getByText("Sign in"));
             expect(
-                screen.getByText(
-                    "dialogs.ProvidersDialog.socialProviders.google",
-                    { exact: false }
-                )
+                screen.getByText("Google", { exact: false })
             ).toBeInTheDocument();
         });
     });

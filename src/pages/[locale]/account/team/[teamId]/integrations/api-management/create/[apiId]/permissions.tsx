@@ -11,11 +11,10 @@ import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 
 const AddPermissionsPage = () => {
-    const { query } = useRouter();
-    const { apiId } = query;
+    const { apiId } = useParams();
 
     const { data: application } = useGet<Application>(
         apiId ? `${apis.applicationsV1Url}/${apiId}` : null
