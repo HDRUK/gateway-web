@@ -21,6 +21,7 @@ export default async function TeamApiPermissionsPage({
     params: { teamId: string; apiId: string };
 }) {
     const { teamId, apiId } = params;
+    console.log("apiId: ", apiId);
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const team = await getTeam(cookieStore, teamId);

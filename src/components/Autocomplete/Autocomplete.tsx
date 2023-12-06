@@ -30,7 +30,6 @@ export interface AutocompleteProps {
     handleHomeEndKeys?: boolean;
     multiple?: boolean;
     getChipLabel?: (options: OptionsType[], value: ValueType) => void;
-    trigger?: (name: string) => void;
     freeSolo?: boolean;
     selectOnFocus?: boolean;
     placeholder?: string;

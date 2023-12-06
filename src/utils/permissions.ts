@@ -92,7 +92,7 @@ async function getApplication(
 ): Promise<Application> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
-    const res = await fetch(`${apis.applicationsV1Url}/${applicationId}`, {
+    const res = await fetch(`${apis.applicationsV1UrlIP}/${applicationId}`, {
         headers: { Authorization: `Bearer ${jwt?.value}` },
     });
 

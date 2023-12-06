@@ -40,7 +40,7 @@ const EditApplicationForm = ({
     const { teamId } = useParams();
     const { team } = useGetTeam(teamId as string);
 
-    const { control, handleSubmit, reset, trigger, formState } =
+    const { control, handleSubmit, reset, formState } =
         useForm<ApplicationForm>({
             resolver: yupResolver(applicationValidationSchema),
             defaultValues: {
@@ -54,13 +54,14 @@ const EditApplicationForm = ({
     });
 
     useEffect(() => {
+        if (!application) return;
+
         const formData: ApplicationForm = {
             ...application,
             notifications: application?.notifications?.map(
                 (notification: { email: string }) => notification.email
             ),
         };
-
         reset(formData);
     }, [application, reset]);
 
@@ -137,7 +138,6 @@ const EditApplicationForm = ({
                     }}>
                     {hydratedFormFields.map(field => (
                         <InputWrapper
-                            trigger={trigger}
                             key={field.name.toString()}
                             control={control}
                             {...field}

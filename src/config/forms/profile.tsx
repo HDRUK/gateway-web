@@ -146,12 +146,12 @@ const formFields = [
     },
     {
         label: (
-            <div>
+            <span>
                 I agree to the HDRUK{" "}
                 <a target="_blank" href={GATEWAY_TERMS_URL} rel="noreferrer">
                     Terms and Conditions
                 </a>
-            </div>
+            </span>
         ),
         name: "terms",
         component: inputComponents.Checkbox,
