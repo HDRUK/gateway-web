@@ -63,8 +63,7 @@ const TeamDatasets = () => {
         sort,
         title: filterTitleDebounced,
     });
-    console.log("queryParams: ", queryParams);
-    console.log("tab: ", tab);
+
     const { data: counts } = useGet<CountStatus>(
         `${apis.datasetsV1Url}/count/status?team_id=${teamId}`
     );
