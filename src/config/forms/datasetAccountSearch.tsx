@@ -34,6 +34,7 @@ const searchFilter = {
     variant: "outlined",
     name: "searchTitle",
     placeholder: "Search titles",
+    label: "",
 };
 
 const sortField = {
