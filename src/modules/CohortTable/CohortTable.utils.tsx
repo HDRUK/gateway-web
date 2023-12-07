@@ -223,7 +223,9 @@ const getColumns = ({
                     differenceMs / (1000 * 60 * 60 * 24)
                 );
 
-                const showWarning = differenceDays > 166;
+                const showWarning =
+                    row.original.request_status == "APPROVED" &&
+                    differenceDays > 166;
                 const hasExpired = row.original.request_status == "EXPIRED";
 
                 const toolTipMessage = hasExpired
