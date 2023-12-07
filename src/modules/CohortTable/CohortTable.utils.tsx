@@ -15,7 +15,10 @@ import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import { CohortStatusPopover } from "./CohortStatusPopover";
 
-import { statusMapping,  } from "@/consts/cohortDiscovery";
+import {
+    statusMapping,
+    COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
+} from "@/consts/cohortDiscovery";
 
 interface getColumnsProps {
     sort: { key: string; direction: string };
@@ -218,7 +221,7 @@ const getColumns = ({
 
                 const showWarning =
                     row.original.request_status == "APPROVED" &&
-                    differenceDays > ;
+                    differenceDays > COHORT_DISCOVERY_EXPIRY_WARNING_DAYS;
                 const hasExpired = row.original.request_status == "EXPIRED";
 
                 const toolTipMessage = hasExpired
