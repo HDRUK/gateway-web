@@ -1,48 +1,56 @@
-import { render } from "@/utils/testUtils";
+import { render, within } from "@/utils/testUtils";
 import mockRouter from "next-router-mock";
 import LeftNav from "./LeftNav";
 
 describe("LeftNav", () => {
-    const mockNavItems = [
-        {
-            label: "Item 1",
-            href: "/item1",
-            icon: <svg />,
-        },
-        {
-            label: "Item 2",
-            icon: <svg />,
-            subItems: [
-                {
-                    label: "SubItem 1",
-                    href: "/subitem1",
-                },
-                {
-                    label: "SubItem 2",
-                    href: "/subitem2",
-                },
-            ],
-        },
-    ];
-
-    it("renders the navigation items", () => {
-        mockRouter.push("/initial-path");
-        const { getByText, queryByText } = render(
-            <LeftNav navItems={mockNavItems} />
+    it("renders the profile navigation item", () => {
+        const { getByText, getAllByRole } = render(
+            <LeftNav permissions={{ "cohort.read": false }} />
         );
 
-        expect(getByText("Item 1")).toBeInTheDocument();
-        expect(getByText("Item 2")).toBeInTheDocument();
-        expect(queryByText("SubItem 1")).not.toBeInTheDocument();
-        expect(queryByText("SubItem 2")).not.toBeInTheDocument();
+        expect(getAllByRole("button")).toHaveLength(1);
+
+        expect(getByText("Your Profile")).toBeInTheDocument();
+    });
+    it("renders the profile navigation with Cohort Admin", () => {
+        mockRouter.push("/initial-path");
+
+        const { getByText, getAllByRole } = render(
+            <LeftNav permissions={{ "cohort.read": true }} />
+        );
+
+        expect(getAllByRole("button")).toHaveLength(2);
+
+        expect(getByText("Your Profile")).toBeInTheDocument();
+        expect(getByText("Cohort Discovery Admin")).toBeInTheDocument();
     });
 
     it("renders expanded items", () => {
-        mockRouter.push("/subitem1");
+        mockRouter.push("/account/team/1/integrations/api-management");
 
-        const { getByText } = render(<LeftNav navItems={mockNavItems} />);
+        const { getAllByRole } = render(
+            <LeftNav
+                teamId="1"
+                permissions={{
+                    "fe.account.nav.integrations.api-management": true,
+                    "fe.account.nav.integrations.integration": true,
+                }}
+            />
+        );
 
-        expect(getByText("SubItem 1")).toBeInTheDocument();
-        expect(getByText("SubItem 2")).toBeInTheDocument();
+        const buttons = getAllByRole("button");
+        expect(getAllByRole("button")).toHaveLength(5);
+
+        expect(
+            within(buttons[0]).getByText("Team Management")
+        ).toBeInTheDocument();
+        expect(
+            within(buttons[1]).getByText("Integrations")
+        ).toBeInTheDocument();
+        expect(
+            within(buttons[2]).getByText("API management")
+        ).toBeInTheDocument();
+        expect(within(buttons[3]).getByText("Integration")).toBeInTheDocument();
+        expect(within(buttons[4]).getByText("Help")).toBeInTheDocument();
     });
 });

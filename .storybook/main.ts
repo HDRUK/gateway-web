@@ -7,8 +7,14 @@ const config: StorybookConfig = {
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         "@storybook/addon-interactions",
-        "storybook-react-i18next",
     ],
+    babel: async () => {
+        return {
+            presets: [
+                ["next/babel", { "preset-react": { runtime: "automatic" } }],
+            ],
+        };
+    },
     framework: {
         name: "@storybook/nextjs",
         options: {},

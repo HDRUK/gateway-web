@@ -1,5 +1,5 @@
 import apiService from "@/services/api";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { HttpOptions } from "@/interfaces/Api";
 import { ThrowPaginationError } from "@/utils/api";
 
@@ -15,7 +15,7 @@ const usePatch = <T extends { id?: number }>(
         successNotificationsOn = true,
         errorNotificationsOn = true,
     } = options || {};
-    const { t, i18n } = useTranslation("api");
+    const t = useTranslations("api");
 
     ThrowPaginationError(options);
 
@@ -31,7 +31,6 @@ const usePatch = <T extends { id?: number }>(
                     successNotificationsOn,
                     errorNotificationsOn,
                     t,
-                    i18n,
                     action,
                 },
             }

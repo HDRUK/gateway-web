@@ -13,23 +13,27 @@ import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import theme from "@/config/theme";
 import createEmotionCache from "@/config/createEmotionCache";
+import messages from "@/config/messages/en.json";
+import { NextIntlClientProvider } from "next-intl";
 
 const clientSideEmotionCache = createEmotionCache();
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
     return (
-        <SWRConfig
-            value={{
-                provider: () => new Map(),
-            }}>
-            <CacheProvider value={clientSideEmotionCache}>
-                <ThemeProvider theme={theme}>
-                    <ActionBarProvider>
-                        <DialogProvider>{children}</DialogProvider>
-                    </ActionBarProvider>
-                </ThemeProvider>
-            </CacheProvider>
-        </SWRConfig>
+        <NextIntlClientProvider locale="en" messages={messages}>
+            <SWRConfig
+                value={{
+                    provider: () => new Map(),
+                }}>
+                <CacheProvider value={clientSideEmotionCache}>
+                    <ThemeProvider theme={theme}>
+                        <ActionBarProvider>
+                            <DialogProvider>{children}</DialogProvider>
+                        </ActionBarProvider>
+                    </ThemeProvider>
+                </CacheProvider>
+            </SWRConfig>
+        </NextIntlClientProvider>
     );
 };
 

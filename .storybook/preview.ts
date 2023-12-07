@@ -1,9 +1,9 @@
 import type { Preview } from "@storybook/react";
 
-import i18n from "./i18next";
 import { withMuiTheme } from "./withMuiTheme.decorator";
 import { withDialog } from "./withDialog.decorator";
 import { withActionBar } from "./withActionBar.decorator";
+import { withIntl } from "./withIntl.decorator";
 
 const preview: Preview = {
     globals: {
@@ -26,12 +26,10 @@ const preview: Preview = {
                 order: ["*", "Playground", "*"],
             },
         },
-        parameters: {
-            i18n,
-        },
+        parameters: {},
     },
 };
 
 export default preview;
 
-export const decorators = [withMuiTheme, withDialog, withActionBar];
+export const decorators = [withIntl, withMuiTheme, withDialog, withActionBar];

@@ -1,7 +1,7 @@
 import useSWR, { KeyedMutator } from "swr";
 import { Error } from "@/interfaces/Error";
 import apiService from "@/services/api";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 
 interface Response<T> {
@@ -31,7 +31,7 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
         shouldFetch = true,
         withPagination = false,
     } = options || {};
-    const { t, i18n } = useTranslation("api");
+    const t = useTranslations("api");
 
     const { data, error, mutate, isLoading } = useSWR<T>(
         shouldFetch ? url : null,
@@ -42,7 +42,6 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
                     itemName,
                     errorNotificationsOn,
                     t,
-                    i18n,
                     action,
                 },
                 withPagination,

@@ -21,16 +21,15 @@ import { useMemo } from "react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
 
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useRouter, useParams } from "next/navigation";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
 
-    const { query, push } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const { push } = useRouter();
+    const { teamId } = useParams();
 
-    const { team } = useGetTeam(teamId);
+    const { team } = useGetTeam(teamId as string);
 
     const defaultValues = useMemo(() => {
         return {

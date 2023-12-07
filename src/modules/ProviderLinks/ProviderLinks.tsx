@@ -1,5 +1,5 @@
 import apis from "@/config/apis";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Image from "next/image";
 import Link from "@/components/Link";
@@ -12,7 +12,7 @@ interface LinkItem {
 }
 
 const ProviderLinks = () => {
-    const { t } = useTranslation("modules");
+    const t = useTranslations("modules");
 
     const providerLinks: LinkItem[] = [
         {

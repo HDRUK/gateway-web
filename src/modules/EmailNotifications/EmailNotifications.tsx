@@ -13,32 +13,31 @@ import {
 } from "@/config/forms/emailNotifications";
 import useActionBar from "@/hooks/useActionBar";
 import useAuth from "@/hooks/useAuth";
-import useGetTeam from "@/hooks/useGetTeam";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import { getPreferredEmail } from "@/utils/user";
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import { useHasPermissions } from "@/hooks/useHasPermission";
 import useModal from "@/hooks/useModal";
 import { colors } from "@/config/theme";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { Team } from "@/interfaces/Team";
+import { useRouter } from "next/navigation";
 import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
 
-const EmailNotifications = () => {
-    const permissions = useHasPermissions();
+interface EmailNotificationsProps {
+    team: Team;
+    permissions: { [key: string]: boolean };
+}
+
+const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
     const { showModal } = useModal();
+    const router = useRouter();
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
     const { user } = useAuth();
 
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
-
-    const { team } = useGetTeam(teamId);
     const { control, formState, handleSubmit, reset, watch } =
         useForm<EmailNotification>({
             defaultValues: emailNotificationDefaultValues,
@@ -84,8 +83,6 @@ const EmailNotifications = () => {
 
         const team_notification_emails = team.notifications.map(n => n.email);
 
-        console.log(team);
-
         const formValues = {
             ...emailNotificationDefaultValues,
             team_notification_status: team.notification_status,
@@ -109,19 +106,20 @@ const EmailNotifications = () => {
     }, [formState, updateStoreProps]);
 
     const updateNotificationEmails = usePost<TeamNotifications>(
-        `${apis.teamsV1Url}/${teamId}/notifications`,
+        `${apis.teamsV1Url}/${team.id}/notifications`,
         {
             itemName: "Team Notification",
         }
     );
 
-    const onSaveTeamEmail = () => {
+    const onSaveTeamEmail = async () => {
         const payload = {
             user_notification_status,
             team_notification_status,
             team_emails: [team_email],
         };
-        updateNotificationEmails(payload);
+        await updateNotificationEmails(payload);
+        router.refresh();
     };
 
     useEffect(() => {

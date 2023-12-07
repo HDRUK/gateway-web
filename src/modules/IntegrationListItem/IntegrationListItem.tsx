@@ -8,8 +8,7 @@ import { Integration } from "@/interfaces/Integration";
 import Typography from "@/components/Typography";
 import Link from "next/link";
 
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useParams } from "next/navigation";
 import Card from "@/components/Card";
 import { formatDate } from "@/utils/date";
 
@@ -22,8 +21,7 @@ const IntegrationListItem = ({
     index,
     integration,
 }: IntegrationListItemProps) => {
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const { teamId } = useParams();
 
     return (
         <Card>

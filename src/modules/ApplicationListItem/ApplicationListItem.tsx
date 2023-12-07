@@ -8,18 +8,16 @@ import { Application } from "@/interfaces/Application";
 import Typography from "@/components/Typography";
 import Link from "next/link";
 
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
 import Card from "@/components/Card";
 import { formatDate } from "@/utils/date";
+import { useParams } from "next/navigation";
 
 interface ApplicationListItemProps {
     application: Application;
 }
 
 const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const { teamId } = useParams();
 
     return (
         <Card>

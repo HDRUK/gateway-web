@@ -101,7 +101,7 @@ exports[`Footer should render component 1`] = `
         class="mui-style-106tbuj-Footer"
       >
         ©
-        Footer.text
+        HDR UK 2023. All rights reserved.
       </div>
     </div>
   </div>

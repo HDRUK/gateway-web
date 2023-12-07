@@ -24,7 +24,6 @@ describe("get", () => {
                     successNotificationsOn: false,
                     errorNotificationsOn: false,
                     t: jest.fn(),
-                    i18n: expect.any(Function),
                 },
             }
         );
@@ -38,7 +37,6 @@ describe("get", () => {
                 successNotificationsOn: false,
                 errorNotificationsOn: true,
                 t: jest.fn(),
-                i18n: expect.any(Function),
             },
         });
 

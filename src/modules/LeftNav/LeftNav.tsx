@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import { colors } from "@/config/theme";
 import { LeftNavItem } from "@/interfaces/Ui";
 import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
+import { getProfileNav, getTeamNav } from "@/utils/nav";
 
 const isExpanded = (
     item: LeftNavItem,
@@ -29,10 +30,14 @@ const isExpanded = (
 };
 
 interface LeftNavProps {
-    navItems: LeftNavItem[];
+    teamId?: string;
+    permissions: { [key: string]: boolean };
 }
 
-const LeftNav = ({ navItems }: LeftNavProps) => {
+const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
+    const navItems = teamId
+        ? getTeamNav(permissions, teamId)
+        : getProfileNav(permissions);
     const pathname = usePathname();
     const [expandedSection, setExpandedSection] = useState("");
 

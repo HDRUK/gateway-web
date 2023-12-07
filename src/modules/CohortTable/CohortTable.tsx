@@ -1,3 +1,5 @@
+"use client";
+
 import Table from "@/components/Table";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";

@@ -12,18 +12,8 @@ describe("ProviderLinks", () => {
     it("should render component", async () => {
         render(<ProviderLinks />);
 
-        expect(
-            screen.getByAltText("dialogs.ProvidersDialog.socialProviders.azure")
-        ).toBeInTheDocument();
-        expect(
-            screen.getByAltText(
-                "dialogs.ProvidersDialog.socialProviders.linkedIn"
-            )
-        ).toBeInTheDocument();
-        expect(
-            screen.getByAltText(
-                "dialogs.ProvidersDialog.socialProviders.google"
-            )
-        ).toBeInTheDocument();
+        expect(screen.getByAltText("Azure")).toBeInTheDocument();
+        expect(screen.getByAltText("LinkedIn")).toBeInTheDocument();
+        expect(screen.getByAltText("Google")).toBeInTheDocument();
     });
 });

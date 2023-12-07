@@ -1,0 +1,114 @@
+{
+    "api": {
+        "common": {
+            "success": {
+                "put": {
+                    "message": "{item} successfully updated"
+                },
+                "post": {
+                    "message": "{item} successfully created"
+                },
+                "delete": {
+                    "message": "{item} successfully deleted"
+                },
+                "patch": {
+                    "message": "{item} successfully updated"
+                }
+            },
+            "error": {
+                "status": {
+                    "400": "Invalid argument",
+                    "401": "Invalid authentication credentials",
+                    "403": "Permission denied",
+                    "404": "Resource not found",
+                    "500": "There has been a server error"
+                },
+                "put": {
+                    "message": "There has been a problem updating {item}"
+                },
+                "patch": {
+                    "message": "There has been a problem updating {item}"
+                },
+                "post": {
+                    "message": "There has been a problem creating {item}"
+                },
+                "delete": {
+                    "message": "There has been a problem deleting {item}"
+                },
+                "get": {
+                    "message": "There has been a problem fetching {item}"
+                }
+            }
+        },
+        "filter": {
+            "success": {
+                "delete": {
+                    "message": "This is a custom DELETE success message for 'filter'"
+                }
+            }
+        },
+        "archiveDataset": {
+            "success": {
+                "delete": {
+                    "message": "You have archived 1 dataset and can now find the dataset metadata in the Archived tab. The dataset will no longer show up in search results"
+                }
+            }
+        },
+        "applicationPermission": {
+            "success": {
+                "put": {
+                    "message": "API created and enabled"
+                }
+            }
+        }
+    },
+    "common": {
+        "companyNameShort": "HDR UK",
+        "companyNameLong": "Health Data Research UK"
+    },
+    "components": {
+        "Footer": {
+            "text": "HDR UK {year}. All rights reserved."
+        },
+        "HeaderNav": {
+            "labels": {
+                "myAccount": "My Account",
+                "signIn": "Sign in"
+            }
+        },
+        "Loading": {
+            "text": "Loading"
+        },
+        "ProtectedRoute": {
+            "title": "Protected route",
+            "text": "You must be logged in to view this content"
+        }
+    },
+    "modules": {
+        "dialogs": {
+            "ProvidersDialog": {
+                "title": "Sign in or create an account",
+                "signIn": "Sign in with username",
+                "socialProviders": {
+                    "azure": "Azure",
+                    "linkedIn": "LinkedIn",
+                    "google": "Google"
+                }
+            },
+            "SignInDialog": {
+                "title": "Sign in",
+                "button": "Sign in"
+            },
+            "AddTeamMemberDialog": {
+                "title": "Add members to your team",
+                "confirmButton": "Add member(s)",
+                "cancelButton": "Cancel"
+            },
+            "DeleteTeamMemberDialog": {
+                "title": "Are you sure you want to remove %%USER_NAME%%?",
+                "confirmButton": "Remove",
+                "cancelButton": "Cancel"
+            }
+        }
+    }
+}

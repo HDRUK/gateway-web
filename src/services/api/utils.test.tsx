@@ -23,9 +23,6 @@ jest.mock("@/services/notification/notification", () => {
 });
 
 describe("Api Service - Utils", () => {
-    const mockMissingLocalKey = false;
-    const mockExistingLocalKey = true;
-
     it("errorNotification - with default title", () => {
         errorNotification({
             errorResponse: {
@@ -37,18 +34,14 @@ describe("Api Service - Utils", () => {
             props: {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 t: (str: any) => str,
-                i18n: {
-                    exists: () => mockExistingLocalKey,
-                    ...expect.any(Object),
-                },
             },
         });
         expect(notificationService.apiError).toBeCalledWith(
-            "api:common.error.put.message",
+            "common.error.put.message",
             {
                 errors: undefined,
-                message: "api:common.error.put.message",
-                title: "api:common.error.status.404",
+                message: "common.error.put.message",
+                title: "common.error.status.404",
             }
         );
     });
@@ -64,10 +57,6 @@ describe("Api Service - Utils", () => {
             props: {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 t: (str: any) => str,
-                i18n: {
-                    exists: () => mockExistingLocalKey,
-                    ...expect.any(Object),
-                },
             },
         });
         expect(notificationService.apiError).toBeCalledWith(error.message, {
@@ -89,10 +78,6 @@ describe("Api Service - Utils", () => {
             props: {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 t: (str: any) => str,
-                i18n: {
-                    exists: () => mockMissingLocalKey,
-                    ...expect.any(Object),
-                },
             },
         });
         expect(notificationService.apiError).toBeCalledWith(error.message, {
@@ -108,14 +93,10 @@ describe("Api Service - Utils", () => {
             props: {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 t: (str: any) => str,
-                i18n: {
-                    exists: () => mockMissingLocalKey,
-                    ...expect.any(Object),
-                },
             },
         });
         expect(notificationService.apiSuccess).toBeCalledWith(
-            "api:common.success.put.message",
+            "common.success.put.message",
             {}
         );
     });
@@ -126,13 +107,9 @@ describe("Api Service - Utils", () => {
             method: "put",
             props: {
                 t: tMock,
-                i18n: {
-                    exists: () => mockMissingLocalKey,
-                    ...expect.any(Object),
-                },
             },
         });
-        expect(tMock).toBeCalledWith("api:common.success.put.message", {
+        expect(tMock).toBeCalledWith("common.success.put.message", {
             item: "Item",
         });
     });
@@ -143,33 +120,25 @@ describe("Api Service - Utils", () => {
             method: "put",
             props: {
                 t: tMock,
-                i18n: {
-                    exists: () => mockMissingLocalKey,
-                    ...expect.any(Object),
-                },
                 itemName: "anItemName",
             },
         });
-        expect(tMock).toBeCalledWith("api:common.success.put.message", {
+        expect(tMock).toBeCalledWith("common.success.put.message", {
             item: "anItemName",
         });
     });
-    it("successNotification: with cutom message from locale file", () => {
+    it("successNotification: with custom message from locale file", () => {
         successNotification({
             method: "put",
             props: {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 t: (str: any) => str,
-                localeKey: "aLocaleKey",
-                i18n: {
-                    exists: () => mockExistingLocalKey,
-                    ...expect.any(Object),
-                },
+                localeKey: "applicationPermission",
             },
         });
         expect(notificationService.apiSuccess).toBeCalledWith(
-            "api:aLocaleKey.success.put.message",
-            { localeKey: "aLocaleKey" }
+            "applicationPermission.success.put.message",
+            { localeKey: "applicationPermission" }
         );
     });
 });

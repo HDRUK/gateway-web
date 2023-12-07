@@ -25,8 +25,7 @@ import { useEffect, useMemo } from "react";
 import Paper from "@/components/Paper";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useParams, useRouter } from "next/navigation";
 
 interface EditApplicationFormProps {
     application?: Application;
@@ -37,11 +36,11 @@ const EditApplicationForm = ({
     application,
     isTabView = false,
 }: EditApplicationFormProps) => {
-    const { query, push } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
-    const { team } = useGetTeam(teamId);
+    const { push } = useRouter();
+    const { teamId } = useParams();
+    const { team } = useGetTeam(teamId as string);
 
-    const { control, handleSubmit, reset, trigger, formState } =
+    const { control, handleSubmit, reset, formState } =
         useForm<ApplicationForm>({
             resolver: yupResolver(applicationValidationSchema),
             defaultValues: {
@@ -55,13 +54,14 @@ const EditApplicationForm = ({
     });
 
     useEffect(() => {
+        if (!application) return;
+
         const formData: ApplicationForm = {
             ...application,
             notifications: application?.notifications?.map(
                 (notification: { email: string }) => notification.email
             ),
         };
-
         reset(formData);
     }, [application, reset]);
 
@@ -138,7 +138,6 @@ const EditApplicationForm = ({
                     }}>
                     {hydratedFormFields.map(field => (
                         <InputWrapper
-                            trigger={trigger}
                             key={field.name.toString()}
                             control={control}
                             {...field}

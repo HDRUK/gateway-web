@@ -1,10 +1,10 @@
 import apiService from "@/services/api";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { ThrowPaginationError } from "@/utils/api";
 import { HttpOptions } from "@/interfaces/Api";
 
 const useDelete = (url: string, options?: HttpOptions) => {
-    const { t, i18n } = useTranslation("api");
+    const t = useTranslations("api");
     const { localeKey, itemName, action } = options || {};
 
     ThrowPaginationError(options);
@@ -15,7 +15,6 @@ const useDelete = (url: string, options?: HttpOptions) => {
                 localeKey,
                 itemName,
                 t,
-                i18n,
                 action,
             },
         });

@@ -11,9 +11,6 @@ import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { Application, ApplicationForm } from "@/interfaces/Application";
 
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
-
 import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
 
@@ -31,6 +28,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useActionBar from "@/hooks/useActionBar";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import { useSWRConfig } from "swr";
+import { useParams, useRouter } from "next/navigation";
 import {
     getChangeCount,
     getEnabledPermissions,
@@ -50,8 +48,8 @@ const ApplicationPermissions = ({
         AppPermissionDefaultValues | undefined
     >(undefined);
 
-    const { query, push } = useRouter();
-    const { apiId, teamId } = query as AccountTeamUrlQuery;
+    const { push } = useRouter();
+    const { apiId, teamId } = useParams();
 
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
 

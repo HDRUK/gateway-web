@@ -4,12 +4,10 @@ import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import Typography from "@/components/Typography";
 
-import { useRouter } from "next/router";
-import { AccountTeamUrlQuery } from "@/interfaces/AccountTeamQuery";
+import { useParams } from "next/navigation";
 
 const ApiManagement = () => {
-    const { query } = useRouter();
-    const { teamId } = query as AccountTeamUrlQuery;
+    const { teamId } = useParams();
 
     return (
         <Box

@@ -37,7 +37,6 @@ describe("usePost", () => {
                     notificationOptions: {
                         action: undefined,
                         errorNotificationsOn: true,
-                        i18n: { changeLanguage: expect.any(Function) },
                         itemName: "mockItemName",
                         localeKey: "mockLocaleKey",
                         successNotificationsOn: true,

@@ -2,11 +2,11 @@
 
 "use client";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
 import ProvidersDialog from "@/modules/ProvidersDialog";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import AccountNav from "@/modules/AccountNav";
 import { useState } from "react";
 import InitialsBadge from "@/components/InitialsBadge";
@@ -16,7 +16,7 @@ import { ArrowDropDownIcon } from "@/consts/icons";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();
-    const { t } = useTranslation("components");
+    const t = useTranslations("components");
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
@@ -27,7 +27,12 @@ const AccountNavWrapper = () => {
     };
 
     if (isLoading) {
-        return <CircularProgress color="secondary" />;
+        return (
+            <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                <Skeleton variant="circular" width={36} height={36} />
+                <Skeleton variant="rectangular" width={80} height={20} />
+            </Box>
+        );
     }
 
     if (isLoggedIn) {
