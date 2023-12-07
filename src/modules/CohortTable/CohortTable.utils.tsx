@@ -15,14 +15,7 @@ import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import { CohortStatusPopover } from "./CohortStatusPopover";
 
-const statusMapping = {
-    APPROVED: "secondary",
-    REJECTED: "warning",
-    PENDING: "primary",
-    BANNED: "error",
-    SUSPENDED: "warningAmber",
-    EXPIRED: "default",
-};
+import { statusMapping,  } from "@/consts/cohortDiscovery";
 
 interface getColumnsProps {
     sort: { key: string; direction: string };
@@ -225,7 +218,7 @@ const getColumns = ({
 
                 const showWarning =
                     row.original.request_status == "APPROVED" &&
-                    differenceDays > 166;
+                    differenceDays > ;
                 const hasExpired = row.original.request_status == "EXPIRED";
 
                 const toolTipMessage = hasExpired
