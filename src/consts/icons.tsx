@@ -42,6 +42,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import InfoIcon from "@mui/icons-material/Info";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import DownloadIcon from "@mui/icons-material/Download";
 
 export * from "./customIcons";
 
@@ -90,4 +91,5 @@ export {
     GroupsOutlinedIcon,
     ContentCopyIcon,
     RemoveCircleIcon,
+    DownloadIcon,
 };
