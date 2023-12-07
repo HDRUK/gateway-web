@@ -1,7 +1,5 @@
-import { ReactNode, SxProps, useState } from "react";
-import { Box, IconButton } from "@mui/material";
-import { IconType } from "@/interfaces/Ui";
-import { SvgIconComponent } from "@mui/icons-material";
+import { ReactNode, useState } from "react";
+import { Box, IconButton, SxProps } from "@mui/material";
 import Popover from "@mui/material/Popover";
 import { colors } from "@/config/theme";
 import { InfoIcon } from "@/consts/icons";

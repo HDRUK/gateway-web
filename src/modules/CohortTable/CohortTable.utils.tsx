@@ -217,7 +217,8 @@ const getColumns = ({
                 const actionedDate = new Date(row.original.updated_at);
                 const currentDate = new Date();
 
-                const differenceMs = currentDate - actionedDate;
+                const differenceMs =
+                    currentDate.getTime() - actionedDate.getTime();
                 const differenceDays = Math.round(
                     differenceMs / (1000 * 60 * 60 * 24)
                 );
