@@ -6,6 +6,7 @@ import {
     ArrowDropDownIcon,
     ArrowDropUpIcon,
     SortByAlphaIcon,
+    WarningIcon,
 } from "@/consts/icons";
 import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import { formatDate } from "@/utils/date";
@@ -212,8 +213,50 @@ const getColumns = ({
                     </IconButton>
                 </Box>
             ),
-            accessorFn: (row: CohortRequest) =>
-                `${formatDate(new Date(row.updated_at), "dd/MM/yyyy")}`,
+            cell: ({ row }) => {
+                const actionedDate = new Date(row.original.updated_at);
+                const currentDate = new Date();
+
+                const differenceMs = currentDate - actionedDate;
+                const differenceDays = Math.round(
+                    differenceMs / (1000 * 60 * 60 * 24)
+                );
+
+                const showWarning = differenceDays > 166;
+                const hasExpired = row.original.request_status == "EXPIRED";
+
+                const toolTipMessage = hasExpired
+                    ? "This user’s access is expired"
+                    : showWarning &&
+                      "This user access is close to expiration date";
+
+                return (
+                    <Box display="flex" alignItems="center" sx={{ p: 0 }}>
+                        {formatDate(actionedDate, "dd/MM/yyyy")}
+                        {(showWarning || hasExpired) && (
+                            <TooltipIcon
+                                label=""
+                                boxSx={{
+                                    justifyContent: "start",
+                                    p: 0,
+                                }}
+                                content={<div>{toolTipMessage}</div>}
+                                icon={
+                                    <IconButton
+                                        sx={{ p: 0 }}
+                                        size="large"
+                                        aria-label="warning"
+                                        color={
+                                            hasExpired ? "error" : "warning"
+                                        }>
+                                        <WarningIcon />
+                                    </IconButton>
+                                }
+                            />
+                        )}
+                    </Box>
+                );
+            },
         },
     ];
 };
