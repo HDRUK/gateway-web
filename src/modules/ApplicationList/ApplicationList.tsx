@@ -14,6 +14,8 @@ import ApplicationSearchBar from "@/modules/ApplicationSearchBar";
 import Pagination from "@/components/Pagination";
 import { PaginationType } from "@/interfaces/Pagination";
 
+import { differenceInDays } from "@/utils/date";
+
 const ApplicationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filterQuery, setFilterQuery] = useState("");

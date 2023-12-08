@@ -14,8 +14,7 @@ import { capitalise } from "@/utils/general";
 import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import { CohortStatusPopover } from "./CohortStatusPopover";
-
-import differenceInDays from "date-fns/differenceInDays";
+import { differenceInDays } from "@/utils/date";
 
 import {
     statusMapping,
@@ -40,6 +39,30 @@ const updateSort =
                     : "asc"
                 : "asc",
     });
+
+const showWarning = (date: string, status: string) => {
+    const actionedDate = new Date(date);
+    const currentDate = new Date();
+
+    const showWarning =
+        status == "APPROVED" &&
+        differenceInDays(currentDate, actionedDate) >
+            COHORT_DISCOVERY_EXPIRY_WARNING_DAYS;
+
+    const hasExpired = status == "EXPIRED";
+
+    const toolTipMessage = hasExpired
+        ? "This user’s access is expired"
+        : showWarning
+        ? "This user access is close to expiration date"
+        : "";
+
+    const iconColor = hasExpired ? "error" : "warning";
+
+    const showToolTip = hasExpired || showWarning;
+
+    return { showToolTip, toolTipMessage, iconColor };
+};
 
 const getColumns = ({
     setSort,
@@ -212,26 +235,15 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row }) => {
-                const actionedDate = new Date(row.original.updated_at);
-                const currentDate = new Date();
-
-                const showWarning =
-                    row.original.request_status == "APPROVED" &&
-                    differenceInDays(currentDate, actionedDate) >
-                        COHORT_DISCOVERY_EXPIRY_WARNING_DAYS;
-
-                const hasExpired = row.original.request_status == "EXPIRED";
-
-                const toolTipMessage = hasExpired
-                    ? "This user’s access is expired"
-                    : showWarning
-                    ? "This user access is close to expiration date"
-                    : "";
+                const { showToolTip, toolTipMessage, iconColor } = showWarning(
+                    row.original.updated_at,
+                    row.original.request_status
+                );
 
                 return (
                     <Box display="flex" alignItems="center" sx={{ p: 0 }}>
                         {formatDate(actionedDate, "dd/MM/yyyy")}
-                        {(showWarning || hasExpired) && (
+                        {showToolTip && (
                             <TooltipIcon
                                 label=""
                                 boxSx={{
@@ -244,9 +256,7 @@ const getColumns = ({
                                         sx={{ p: 0 }}
                                         size="large"
                                         aria-label="warning"
-                                        color={
-                                            hasExpired ? "error" : "warning"
-                                        }>
+                                        color={iconColor}>
                                         <WarningIcon />
                                     </IconButton>
                                 }
