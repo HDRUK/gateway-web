@@ -74,6 +74,7 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
     /* Increment custom `changeCount` prop within 'ActionBarProvider' using 'updateStoreProps' */
     useEffect(() => {
         updateStoreProps({
+            formId: "action-bar-form",
             confirmType: "submit",
             changeCount: Object.keys(formState.dirtyFields).length,
         });
