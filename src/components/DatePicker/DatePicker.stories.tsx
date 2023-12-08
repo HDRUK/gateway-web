@@ -3,22 +3,22 @@ import { useForm } from "react-hook-form";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
 import { Stack } from "@mui/material";
-import RadioGroup, { RadioGroupProps } from "./DatePicker";
+import DatePicker, { DatePickerProps } from "./DatePicker";
 
-const meta: Meta<typeof RadioGroup> = {
-    component: RadioGroup,
-    title: "Forms/RadioGroup",
+const meta: Meta<typeof DatePicker> = {
+    component: DatePicker,
+    title: "Forms/DatePicker",
     tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof RadioGroup>;
+type Story = StoryObj<typeof DatePicker>;
 
-const WrapperComponent = (props: RadioGroupProps) => {
+const WrapperComponent = (props: DatePickerProps) => {
     const { control, handleSubmit } = useForm({
         defaultValues: {
-            colour: "red",
+            colour: "2020-01-01",
         },
     });
 
@@ -29,7 +29,7 @@ const WrapperComponent = (props: RadioGroupProps) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack alignItems="start">
-                <RadioGroup control={control} {...props} />
+                <DatePicker control={control} {...props} />
                 <Button type="submit">Submit</Button>
             </Stack>
         </Form>
@@ -38,13 +38,8 @@ const WrapperComponent = (props: RadioGroupProps) => {
 
 export const Default: Story = {
     args: {
-        name: "colour",
-        label: "Radio Options",
-        radios: [
-            { value: "red", label: "Red" },
-            { value: "blue", label: "Blue" },
-            { value: "yellow", label: "Yellow" },
-        ],
+        name: "Date",
+        label: "Dates",
     },
     render: props => <WrapperComponent {...props} />,
 };
