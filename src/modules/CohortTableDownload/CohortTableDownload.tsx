@@ -14,7 +14,6 @@ import {
 
 import InputWrapper from "@/components/InputWrapper";
 import { useEffect, useState } from "react";
-import { resetClipboardStubOnView } from "@testing-library/user-event/dist/types/utils";
 
 interface CsvExport {
     content: string;
@@ -76,6 +75,7 @@ const CohortTableDownload = () => {
                                 <>
                                     {field.label + ":"}
                                     <Box
+                                        key={field.name}
                                         sx={{
                                             display: "flex",
                                             alignItems: "center",

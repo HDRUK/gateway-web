@@ -27,6 +27,7 @@ const defaultValues = {
 const formFields = [
     {
         label: "Date range",
+        name: "dateRange",
         fields: [
             {
                 label: "From:",
