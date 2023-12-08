@@ -242,7 +242,10 @@ const getColumns = ({
 
                 return (
                     <Box display="flex" alignItems="center" sx={{ p: 0 }}>
-                        {formatDate(actionedDate, "dd/MM/yyyy")}
+                        {formatDate(
+                            new Date(row.original.updated_at),
+                            "dd/MM/yyyy"
+                        )}
                         {showToolTip && (
                             <TooltipIcon
                                 label=""
