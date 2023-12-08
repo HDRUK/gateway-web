@@ -22,9 +22,12 @@ const ModalButtons = ({
 }: ModalButtonProps) => {
     const { hideDialog: hideModal } = useDialog();
 
-    const handleSuccess = (props: unknown) => {
+    const handleSuccess = async (props: unknown) => {
         if (typeof onSuccess === "function") {
-            onSuccess(props);
+            const success = await onSuccess(props);
+            //dont hide the model if the handle of the successful click
+            //custom returned false
+            if (success != undefined && success) return;
         }
         hideModal();
     };
