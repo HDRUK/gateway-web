@@ -152,6 +152,7 @@ const ApplicationPermissions = ({
     /* Increment custom `changeCount` prop within 'ActionBarProvider' using 'updateStoreProps' */
     useEffect(() => {
         updateStoreProps({
+            confirmType: "submit",
             changeCount: getChangeCount(formState.dirtyFields),
         });
     }, [formState, updateStoreProps]);

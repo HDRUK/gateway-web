@@ -12,8 +12,14 @@ interface CohortRequest {
     id: number;
     updated_at: string;
     created_at: string;
+    details: string;
     request_status: CohortRequestStatus;
     user: User;
 }
 
-export type { CohortRequest, CohortRequestStatus };
+interface CohortRequestForm {
+    details: string;
+    request_status: CohortRequestStatus;
+}
+
+export type { CohortRequest, CohortRequestStatus, CohortRequestForm };

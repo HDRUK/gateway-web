@@ -59,7 +59,7 @@ const ModalButtons = ({
                     </Button>
                 )}
                 {confirmType === "submit" ? (
-                    <Button key="confirm" type="submit">
+                    <Button form="action-bar-form" key="confirm" type="submit">
                         {confirmText}
                     </Button>
                 ) : (
