@@ -13,4 +13,5 @@ export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
     TextTime: "TextTime",
     TextArea: "TextArea",
     ToggleDirection: "ToggleDirection",
+    DatePicker: "DatePicker",
 };
