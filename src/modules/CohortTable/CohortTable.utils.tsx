@@ -15,6 +15,8 @@ import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import { CohortStatusPopover } from "./CohortStatusPopover";
 
+import differenceInDays from "date-fns/differenceInDays";
+
 import {
     statusMapping,
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
@@ -213,21 +215,18 @@ const getColumns = ({
                 const actionedDate = new Date(row.original.updated_at);
                 const currentDate = new Date();
 
-                const differenceMs =
-                    currentDate.getTime() - actionedDate.getTime();
-                const differenceDays = Math.round(
-                    differenceMs / (1000 * 60 * 60 * 24)
-                );
-
                 const showWarning =
                     row.original.request_status == "APPROVED" &&
-                    differenceDays > COHORT_DISCOVERY_EXPIRY_WARNING_DAYS;
+                    differenceInDays(currentDate, actionedDate) >
+                        COHORT_DISCOVERY_EXPIRY_WARNING_DAYS;
+
                 const hasExpired = row.original.request_status == "EXPIRED";
 
                 const toolTipMessage = hasExpired
                     ? "This user’s access is expired"
-                    : showWarning &&
-                      "This user access is close to expiration date";
+                    : showWarning
+                    ? "This user access is close to expiration date"
+                    : "";
 
                 return (
                     <Box display="flex" alignItems="center" sx={{ p: 0 }}>
