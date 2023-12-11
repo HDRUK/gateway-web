@@ -3,10 +3,7 @@ import { useTranslations } from "next-intl";
 import { HttpOptions } from "@/interfaces/Api";
 import { ThrowPaginationError } from "@/utils/api";
 
-const usePut = <T extends { id?: number }>(
-    url: string,
-    options?: HttpOptions
-) => {
+const usePut = <T>(url: string, options?: HttpOptions) => {
     const {
         localeKey,
         itemName,

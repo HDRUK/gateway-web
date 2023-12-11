@@ -8,6 +8,7 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 import { AuthUser } from "@/interfaces/AuthUser";
 import { Team } from "@/interfaces/Team";
 import { Application } from "@/interfaces/Application";
+import { CohortRequest } from "@/interfaces/CohortRequest";
 
 const getPermissions = (
     userRoles: Role[] = [],
@@ -66,12 +67,13 @@ const getPermissions = (
     return permissionObj;
 };
 
-// todo: Move into reusable function
-async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
+async function get<T>(
+    cookieStore: ReadonlyRequestCookies,
+    url: string
+): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
-    const authUser = getUserFromToken(jwt?.value);
-    const res = await fetch(`${apis.usersV1UrlIP}/${authUser?.id}`, {
+    const res = await fetch(`${url}`, {
         headers: { Authorization: `Bearer ${jwt?.value}` },
     });
 
@@ -80,53 +82,46 @@ async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
         throw new Error("Failed to fetch data");
     }
 
-    const { data: user } = await res.json();
+    const { data } = await res.json();
 
-    return user;
+    return data;
 }
 
-// todo: Move into reusable function
+async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
+    const jwt = cookieStore.get(config.JWT_COOKIE);
+    const authUser = getUserFromToken(jwt?.value);
+    return get<AuthUser>(cookieStore, `${apis.usersV1UrlIP}/${authUser?.id}`);
+}
+
 async function getApplication(
     cookieStore: ReadonlyRequestCookies,
     applicationId: string
 ): Promise<Application> {
-    const jwt = cookieStore.get(config.JWT_COOKIE);
+    return get<Application>(
+        cookieStore,
+        `${apis.applicationsV1UrlIP}/${applicationId}`
+    );
+}
 
-    const res = await fetch(`${apis.applicationsV1UrlIP}/${applicationId}`, {
-        headers: { Authorization: `Bearer ${jwt?.value}` },
-    });
-
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error("Failed to fetch data");
-    }
-
-    const { data: user } = await res.json();
-
-    return user;
+async function getCohort(
+    cookieStore: ReadonlyRequestCookies,
+    cohortId: string
+): Promise<CohortRequest> {
+    return get<CohortRequest>(
+        cookieStore,
+        `${apis.cohortRequestsV1UrlIP}/${cohortId}`
+    );
 }
 
 async function getTeam(
     cookieStore: ReadonlyRequestCookies,
     teamId: string
 ): Promise<Team> {
-    const jwt = cookieStore.get(config.JWT_COOKIE);
-
-    const res = await fetch(`${apis.teamsV1UrlIP}/${teamId}`, {
-        cache: "no-store",
-        headers: { Authorization: `Bearer ${jwt?.value}` },
-    });
-
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error("Failed to fetch data");
-    }
-
-    const { data }: { data: Team } = await res.json();
+    const team = await get<Team>(cookieStore, `${apis.teamsV1UrlIP}/${teamId}`);
 
     return {
-        ...data,
-        users: data?.users.map(user => ({
+        ...team,
+        users: team?.users.map(user => ({
             ...user,
             roles: user.roles.filter(
                 // Remove global "hdruk" roles from team users
@@ -136,4 +131,4 @@ async function getTeam(
     };
 }
 
-export { getPermissions, getUser, getTeam, getApplication };
+export { getPermissions, getUser, getTeam, getApplication, getCohort };
