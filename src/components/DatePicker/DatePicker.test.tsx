@@ -4,36 +4,23 @@ import { useForm } from "react-hook-form";
 import userEvent from "@testing-library/user-event";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
-import RadioGroup from "./DatePicker";
+import DatePicker from "./DatePicker";
+import dayjs from "dayjs";
 
 const submitFn = jest.fn();
 
-describe("RadioGroup", () => {
-    const label = "Radio Options";
-    const radios = [
-        { value: "red", label: "Red" },
-        { value: "blue", label: "Blue" },
-        { value: "yellow", label: "Yellow" },
-    ];
-
+describe("DatePicker", () => {
     const Component = (props: { [key: string]: unknown }) => {
-        const { control, handleSubmit } = useForm({
-            defaultValues: {
-                color: "red",
-            },
+        const { control } = useForm({
+            defaultValues: props?.defaultValues || {},
         });
-
         return (
-            <Form onSubmit={handleSubmit(data => submitFn(data))}>
-                <RadioGroup
-                    name="color"
-                    label={label}
-                    radios={radios}
-                    control={control}
-                    {...props}
-                />
-                <Button type="submit">Submit</Button>
-            </Form>
+            <DatePicker
+                label={"Pick a date"}
+                control={control}
+                name={props.name}
+                {...props}
+            />
         );
     };
 
@@ -41,29 +28,15 @@ describe("RadioGroup", () => {
         jest.clearAllMocks();
     });
 
-    it("renders radios with a label", () => {
-        render(<Component />);
-
-        const labelElement = screen.getByText(label);
-        expect(labelElement).toBeInTheDocument();
-
-        radios.forEach(radio => {
-            const radioElement = screen.getByText(radio.label);
-            expect(radioElement).toBeInTheDocument();
-        });
+    it("renders DatePicker with a label", () => {
+        render(<Component name={"dataFrom"} />);
+        expect(screen.getByText("Pick a date")).toBeInTheDocument();
     });
-    it("should submit updated value", async () => {
-        render(<Component />);
 
-        const radioOptions = screen.getAllByRole("radio");
-
-        userEvent.click(radioOptions[1]);
-
-        const submitButton = screen.getByText("Submit");
-        userEvent.click(submitButton);
-
-        await waitFor(() => {
-            expect(submitFn).toHaveBeenCalledWith({ color: "blue" });
-        });
+    it("renders DatePicker with a label", () => {
+        const defaultValues = { dateTo: dayjs(new Date("2020-01-01")) };
+        render(<Component name={"dateTo"} defaultValues={defaultValues} />);
+        const inputElement = screen.getByPlaceholderText("DD/MM/YYYY");
+        expect(inputElement.value).toBe("01/01/2020");
     });
 });

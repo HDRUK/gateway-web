@@ -4,7 +4,6 @@ import FormInputWrapper from "@/components/FormInputWrapper";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
-import locale from "dayjs/locale/en-gb";
 
 export interface DatePickerProps {
     label: string;
@@ -56,7 +55,7 @@ const DatePicker = ({
                 render={({ field }) => (
                     <LocalizationProvider
                         dateAdapter={AdapterDayjs}
-                        adapterLocale={locale}>
+                        adapterLocale={"en-gb"}>
                         <MuiDatePicker
                             format="DD/MM/YYYY"
                             {...field}

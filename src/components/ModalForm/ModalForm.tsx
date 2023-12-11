@@ -1,7 +1,6 @@
 "use client";
-import { DownloadIcon } from "@/consts/icons";
-import { IconButton, Typography } from "@mui/material";
-import React from "react";
+import { IconButton } from "@mui/material";
+import React, { ReactNode } from "react";
 import useModal from "@/hooks/useModal";
 import MultiInputWrapper from "@/components/MultiInputWrapper";
 import { Control } from "react-hook-form";
@@ -10,15 +9,13 @@ import { dialogPropsType } from "@/providers/DialogProvider";
 export interface ModalFormProps extends dialogPropsType {
     formFields: any;
     control: Control;
-    label: string;
-    ariaLabel: string;
+    content?: ReactNode;
 }
 
 const ModalForm = ({
     formFields,
     control,
-    label,
-    ariaLabel,
+    content,
     ...rest
 }: ModalFormProps) => {
     const { showModal } = useModal();
@@ -34,14 +31,7 @@ const ModalForm = ({
         });
     };
 
-    return (
-        <IconButton onClick={handleClick} aria-label={ariaLabel}>
-            <Typography color="primary">
-                <DownloadIcon color="primary" />
-                {label}
-            </Typography>
-        </IconButton>
-    );
+    return <IconButton onClick={handleClick}>{content}</IconButton>;
 };
 
 export default ModalForm;

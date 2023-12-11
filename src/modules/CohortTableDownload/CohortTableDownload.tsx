@@ -2,6 +2,8 @@
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { useForm } from "react-hook-form";
+import { DownloadIcon } from "@/consts/icons";
+import { IconButton, Typography, Box } from "@mui/material";
 
 import {
     cohortExportDefaultValues,
@@ -19,9 +21,7 @@ interface CsvExport {
 
 const CohortTableDownload = () => {
     const [filter, setFilter] = useState<string | null>(null);
-    //we dont really want to retrieve the data the first time
-    // - shouldFetch: false?
-    //when mutate we want to use shouldFetch:true
+
     const { mutate } = useGet<CsvExport>(
         filter && `${apis.cohortRequestsV1Url}/export?${filter}`
     );
@@ -57,7 +57,7 @@ const CohortTableDownload = () => {
         filters.append("to", dateRangeTo);
         filters.append("from", dateRangeFrom);
 
-        //note: this might be better to be not so card coded?
+        //note: this might be better to be not so hard-coded?
         //      use cohortRequestStatusValues ?
         const watchedStatusValues = [
             { key: "APPROVED", value: watch("status_APPROVED") },
@@ -96,8 +96,21 @@ const CohortTableDownload = () => {
                 formFields={cohortExportFormFields}
                 onSuccess={onSuccess}
                 onCancel={onCancel}
-                label={"Download dashboard report"}
-                ariaLabel={"download-cohort-table"}
+                confirmText={"Export xs file"}
+                cancelText={"Cancel"}
+                title={"Export Filters"}
+                content={
+                    <Box
+                        sx={{ p: 0 }}
+                        display="flex"
+                        alignItems="center"
+                        aria-label="download-cohort-table">
+                        <DownloadIcon color="primary" />
+                        <Typography color="primary">
+                            {"Download dashboard report"}
+                        </Typography>
+                    </Box>
+                }
             />
         </>
     );

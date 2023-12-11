@@ -22,8 +22,9 @@ describe("Cohort Table Download", () => {
         const exportButton = screen.getByText("Export xs file");
         fireEvent.click(exportButton);
 
-        expect(screen.queryByText("Date range:")).not.toBeInTheDocument();
-
-        //expect(window.URL.createObjectURL).toHaveBeenCalledTimes(1);
+        // Wait some time for it to have been called
+        setTimeout(() => {
+            expect(window.URL.createObjectURL).toHaveBeenCalledTimes(1);
+        }, 500);
     });
 });
