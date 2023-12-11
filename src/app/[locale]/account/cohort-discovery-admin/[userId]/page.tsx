@@ -5,6 +5,7 @@ import { getCohort, getPermissions, getUser } from "@/utils/permissions";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import StatusForm from "./StatusForm";
 import ReadOnly from "./ReadOnly";
+import DecisionHistory from "./DecisionHistory";
 import Header from "./Header";
 
 export const metadata = {
@@ -22,6 +23,7 @@ export default async function CohortDiscoveryManage({
     const user = await getUser(cookieStore);
     const permissions = await getPermissions(user.roles);
     const cohortRequest = await getCohort(cookieStore, userId);
+
     return (
         <ProtectedAccountRoute
             permissions={permissions}
@@ -31,6 +33,7 @@ export default async function CohortDiscoveryManage({
                     <Header cohortRequest={cohortRequest} />
                     <StatusForm cohortRequest={cohortRequest} />
                     <ReadOnly cohortRequest={cohortRequest} />
+                    <DecisionHistory cohortRequest={cohortRequest} />
                 </Box>
             </Paper>
         </ProtectedAccountRoute>
