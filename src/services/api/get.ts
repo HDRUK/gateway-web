@@ -14,8 +14,6 @@ const getRequest = async <T>(
         .then(res => {
             const contentType = res.headers["content-type"];
             if (contentType && contentType.includes("text/csv")) {
-                //const blob = new Blob([res.data], { type: "text/csv" });
-
                 const contentDisposition = res.headers["content-disposition"];
                 let filename = "Cohort_Discovery_Admin.csv"; // Default filename if not found
                 if (contentDisposition) {
@@ -24,12 +22,6 @@ const getRequest = async <T>(
                         filename = match[1];
                     }
                 }
-
-                // Create a temporary anchor element
-                //const link = document.createElement("a");
-                //link.href = window.URL.createObjectURL(blob);
-                //link.download = filename;
-
                 return {
                     content: res.data,
                     type: "text/csv",

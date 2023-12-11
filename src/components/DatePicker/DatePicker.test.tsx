@@ -33,7 +33,7 @@ describe("DatePicker", () => {
         expect(screen.getByText("Pick a date")).toBeInTheDocument();
     });
 
-    it("renders DatePicker with a label", () => {
+    it("renders DatePicker with a default value", () => {
         const defaultValues = { dateTo: dayjs(new Date("2020-01-01")) };
         render(<Component name={"dateTo"} defaultValues={defaultValues} />);
         const inputElement = screen.getByPlaceholderText("DD/MM/YYYY");
