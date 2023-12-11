@@ -1,8 +1,8 @@
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
-import CohortTable from "@/modules/CohortTable";
-import CohortTableDownload from "@/modules/CohortTableDownload";
+import CohortTable from "./CohortTable";
+import CohortTableDownload from "./CohortTableDownload";
 import { cookies } from "next/headers";
 
 import { getPermissions, getUser } from "@/utils/permissions";
@@ -31,7 +31,6 @@ export default async function CohortDiscoveryAdmin() {
                             users, Click individual account users name to access
                             decision page to review and edit status
                         </Typography>
-
                         <CohortTableDownload />
                     </Box>
                     <CohortTable />
