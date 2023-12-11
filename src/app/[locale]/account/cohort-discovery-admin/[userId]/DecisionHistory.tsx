@@ -1,24 +1,4 @@
-"use client";
-
-import Form from "@/components/Form";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import InputWrapper from "@/components/InputWrapper";
-import apis from "@/config/apis";
-import usePut from "@/hooks/usePut";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import ChangesActionBar from "@/modules/ChangesActionBar";
-import { CohortRequest, CohortRequestForm } from "@/interfaces/CohortRequest";
-import useActionBar from "@/hooks/useActionBar";
-import { useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
-import {
-    defaultValues,
-    requestStatusField,
-    detailsField,
-    validationSchema,
-} from "./config";
-
+import { CohortRequest } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import { formatDate } from "@/utils/date";
