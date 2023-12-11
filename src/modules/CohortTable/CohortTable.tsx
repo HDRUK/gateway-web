@@ -8,6 +8,14 @@ import Loading from "@/components/Loading";
 import { useState } from "react";
 import Pagination from "@/components/Pagination";
 import { PaginationType } from "@/interfaces/Pagination";
+import InputWrapper from "@/components/InputWrapper";
+import Box from "@/components/Box";
+import {
+    cohortSearchDefaultValues,
+    cohortSearchFilter,
+} from "@/config/forms/cohortAccountSearch";
+import { useForm } from "react-hook-form";
+import useDebounce from "@/hooks/useDebounce";
 import { getColumns } from "./CohortTable.utils";
 
 const CohortTable = () => {
@@ -15,11 +23,22 @@ const CohortTable = () => {
     const [sort, setSort] = useState({ key: "created_at", direction: "asc" });
     const [requestStatus, setRequestStatus] = useState<CohortRequestStatus>();
 
+    const { control, watch, setValue } = useForm({
+        defaultValues: cohortSearchDefaultValues,
+    });
+
+    const watchAll = watch();
+
+    const searchDebounced = useDebounce(watchAll.search, 500);
+
     const queryParams = new URLSearchParams();
     queryParams.append("sort", `${sort.key}:${sort.direction}`);
     queryParams.append("page", currentPage.toString());
     if (requestStatus) {
         queryParams.append("request_status", requestStatus);
+    }
+    if (searchDebounced) {
+        queryParams.append("text", searchDebounced);
     }
 
     const { data, isLoading } = useGet<PaginationType<CohortRequest>>(
@@ -39,6 +58,13 @@ const CohortTable = () => {
 
     return (
         <>
+            <Box sx={{ p: 0, width: "50%" }}>
+                <InputWrapper
+                    setValue={setValue}
+                    control={control}
+                    {...cohortSearchFilter}
+                />
+            </Box>
             <div style={{ marginBlock: 10 }}>
                 <Table<CohortRequest> columns={columns} rows={list} />
             </div>

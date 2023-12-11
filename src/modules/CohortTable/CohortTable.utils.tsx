@@ -12,16 +12,8 @@ import { formatDate } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
+import { statusMapping } from "@/consts/cohortDiscovery";
 import { CohortStatusPopover } from "./CohortStatusPopover";
-
-const statusMapping = {
-    APPROVED: "secondary",
-    REJECTED: "warning",
-    PENDING: "primary",
-    BANNED: "error",
-    SUSPENDED: "warningAmber",
-    EXPIRED: "default",
-};
 
 interface getColumnsProps {
     sort: { key: string; direction: string };
