@@ -6,14 +6,20 @@ import {
     ArrowDropDownIcon,
     ArrowDropUpIcon,
     SortByAlphaIcon,
+    WarningIcon,
 } from "@/consts/icons";
 import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import { formatDate } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
-import { statusMapping } from "@/consts/cohortDiscovery";
 import { CohortStatusPopover } from "./CohortStatusPopover";
+import { differenceInDays } from "@/utils/date";
+
+import {
+    statusMapping,
+    COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
+} from "@/consts/cohortDiscovery";
 
 interface getColumnsProps {
     sort: { key: string; direction: string };
@@ -33,6 +39,30 @@ const updateSort =
                     : "asc"
                 : "asc",
     });
+
+const showWarning = (date: string, status: string) => {
+    const actionedDate = new Date(date);
+    const currentDate = new Date();
+
+    const showWarning =
+        status == "APPROVED" &&
+        differenceInDays(currentDate, actionedDate) >
+            COHORT_DISCOVERY_EXPIRY_WARNING_DAYS;
+
+    const hasExpired = status == "EXPIRED";
+
+    const toolTipMessage = hasExpired
+        ? "This user’s access is expired"
+        : showWarning
+        ? "This user access is close to expiration date"
+        : "";
+
+    const iconColor = hasExpired ? "error" : "warning";
+
+    const showToolTip = hasExpired || showWarning;
+
+    return { showToolTip, toolTipMessage, iconColor };
+};
 
 const getColumns = ({
     setSort,
@@ -204,8 +234,40 @@ const getColumns = ({
                     </IconButton>
                 </Box>
             ),
-            accessorFn: (row: CohortRequest) =>
-                `${formatDate(new Date(row.updated_at), "dd/MM/yyyy")}`,
+            cell: ({ row }) => {
+                const { showToolTip, toolTipMessage, iconColor } = showWarning(
+                    row.original.updated_at,
+                    row.original.request_status
+                );
+
+                return (
+                    <Box display="flex" alignItems="center" sx={{ p: 0 }}>
+                        {formatDate(
+                            new Date(row.original.updated_at),
+                            "dd/MM/yyyy"
+                        )}
+                        {showToolTip && (
+                            <TooltipIcon
+                                label=""
+                                boxSx={{
+                                    justifyContent: "start",
+                                    p: 0,
+                                }}
+                                content={<div>{toolTipMessage}</div>}
+                                icon={
+                                    <IconButton
+                                        sx={{ p: 0 }}
+                                        size="large"
+                                        aria-label="warning"
+                                        color={iconColor}>
+                                        <WarningIcon />
+                                    </IconButton>
+                                }
+                            />
+                        )}
+                    </Box>
+                );
+            },
         },
     ];
 };

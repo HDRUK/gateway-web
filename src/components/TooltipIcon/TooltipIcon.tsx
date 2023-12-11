@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, SxProps } from "@mui/material";
 import Popover from "@mui/material/Popover";
 import { colors } from "@/config/theme";
 import { InfoIcon } from "@/consts/icons";
@@ -7,9 +7,11 @@ import { InfoIcon } from "@/consts/icons";
 interface TooltipIconProps {
     label: ReactNode;
     content: ReactNode;
+    icon?: ReactNode;
+    boxSx?: SxProps;
 }
 
-const TooltipIcon = ({ label, content }: TooltipIconProps) => {
+const TooltipIcon = ({ label, content, icon, boxSx }: TooltipIconProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,13 +24,17 @@ const TooltipIcon = ({ label, content }: TooltipIconProps) => {
 
     const open = Boolean(anchorEl);
     return (
-        <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={boxSx}>
             {label}
             <IconButton
                 disableRipple
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}>
-                <InfoIcon color="primary" fontSize="medium" />
+                {icon || <InfoIcon color="primary" fontSize="medium" />}
             </IconButton>
             <Popover
                 id="tooltip"
