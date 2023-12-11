@@ -1,3 +1,3 @@
-import InputWrapper from "./MultiInputWrapper";
+import MultiInputWrapper from "./MultiInputWrapper";
 
-export default InputWrapper;
+export default MultiInputWrapper;

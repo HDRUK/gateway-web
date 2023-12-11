@@ -11,15 +11,21 @@ export interface MultiInputWrapperProps {
 
 const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
     return (
-        <Box component="form" sx={{ p: 0 }}>
+        <Box sx={{ p: 0 }}>
             {fields.map(field => {
                 if (field.component) {
                     return (
-                        <InputWrapper
-                            key={field.name}
-                            control={control}
-                            {...field}
-                        />
+                        <Box
+                            sx={{
+                                py: 1,
+                                my: 1,
+                            }}>
+                            <InputWrapper
+                                key={field.name}
+                                control={control}
+                                {...field}
+                            />
+                        </Box>
                     );
                 } else if (field.fields) {
                     return (
