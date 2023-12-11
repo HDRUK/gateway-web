@@ -15,7 +15,7 @@ const getRequest = async <T>(
             const contentType = res.headers["content-type"];
             if (contentType && contentType.includes("text/csv")) {
                 const contentDisposition = res.headers["content-disposition"];
-                let filename = "Cohort_Discovery_Admin.csv"; // Default filename if not found
+                let filename = "download.csv";
                 if (contentDisposition) {
                     const match = contentDisposition.match(/filename="(.*?)"/);
                     if (match && match[1]) {
