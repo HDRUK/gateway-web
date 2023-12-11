@@ -85,6 +85,7 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
             details: formData.details,
             request_status: formData.request_status,
         });
+        push("/account/cohort-discovery-admin");
     };
 
     useEffect(() => {
