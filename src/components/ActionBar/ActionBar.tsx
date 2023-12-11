@@ -17,6 +17,7 @@ const ActionBar = () => {
         cancelText,
         onCancel,
         onSuccess,
+        formId,
         ...rest
     } = props;
 
@@ -29,6 +30,7 @@ const ActionBar = () => {
             {component && <Component {...rest} />}
             <div css={styles.ButtonWrapper}>
                 <ModalButtons
+                    formId={formId}
                     onSuccess={onSuccess}
                     onCancel={onCancel}
                     confirmText={confirmText}
