@@ -48,7 +48,8 @@ const formFields = [
     {
         label: "Status",
         name: "status",
-        spacing: 2,
+        nColumns: 3,
+        formControlSx: { m: 0, p: 0, mb: 0 },
         component: inputComponents.CheckboxGroup,
         checkboxes: cohortRequestStatusValues.map(status => ({
             name: `status.${status}`,

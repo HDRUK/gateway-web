@@ -10,15 +10,9 @@ import {
     cohortExportFormFields,
 } from "@/config/forms/cohortAdminExport";
 
-import { CohortExportForm } from "@/interfaces/CohortExport";
+import { CohortExportForm, CsvExport } from "@/interfaces/CohortExport";
 import ModalForm from "@/components/ModalForm";
 import { useEffect, useState } from "react";
-
-interface CsvExport {
-    content: string;
-    type: string;
-    filename: string;
-}
 
 const CohortTableDownload = () => {
     const [filter, setFilter] = useState<string | null>(null);

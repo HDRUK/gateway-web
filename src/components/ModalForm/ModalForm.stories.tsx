@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import ModalForm from "./ModalForm";
 import { useForm } from "react-hook-form";
 import Box from "@/components/Box";
 import { EditIcon } from "@/consts/icons";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import ModalForm from "./ModalForm";
 
 const meta: Meta<typeof ModalForm> = {
     component: ModalForm,
@@ -35,13 +35,32 @@ const WrapperComponent = () => {
         resolver: yupResolver(validationSchema),
     });
 
+    const checkboxes = [
+        {
+            label: "Test 1",
+            value: "test1",
+        },
+        {
+            label: "Test 2",
+            value: "test2",
+        },
+    ];
+
     const formFields = [
         { name: "first", label: "First in Form", component: "TextField" },
         { name: "second", label: "Second in Form", component: "TextField" },
+        {
+            name: "third",
+            label: "Third in Form",
+            component: "CheckboxGroup",
+            checkboxes,
+        },
     ];
 
     const onSubmit = (data: unknown) => console.log(data);
-    const onCancel = () => {};
+    const onCancel = () => {
+        console.log("canceled");
+    };
 
     return (
         <ModalForm
@@ -49,10 +68,10 @@ const WrapperComponent = () => {
             formFields={formFields}
             onSuccess={onSubmit}
             onCancel={onCancel}
-            confirmText={"Submit Form"}
-            cancelText={"Cancel"}
-            title={"Email Modal Form"}
-            content={
+            confirmText="Submit Form"
+            cancelText="Cancel"
+            title="Email Modal Form"
+            buttonContent={
                 <Box
                     sx={{ p: 0 }}
                     display="flex"

@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within, fireEvent } from "@/utils/testUtils";
+import { render, screen, fireEvent } from "@/utils/testUtils";
 import CohortTableDownload from "./CohortTableDownload";
 
 describe("Cohort Table Download", () => {
@@ -11,13 +11,13 @@ describe("Cohort Table Download", () => {
             screen.getByText("Download dashboard report")
         ).toBeInTheDocument();
 
-        expect(screen.queryByText("Date range:")).not.toBeInTheDocument();
+        expect(screen.queryByText("Date range")).not.toBeInTheDocument();
 
         const button = screen.getByLabelText("download-cohort-table");
         fireEvent.click(button);
 
         expect(screen.getByText("Export Filters")).toBeInTheDocument();
-        expect(screen.getByText("Date range:")).toBeInTheDocument();
+        expect(screen.getByText("Date range")).toBeInTheDocument();
 
         const exportButton = screen.getByText("Export xs file");
         fireEvent.click(exportButton);

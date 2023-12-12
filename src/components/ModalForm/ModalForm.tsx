@@ -4,11 +4,11 @@ import { IconButton } from "@mui/material";
 import React, { ReactNode } from "react";
 import useModal from "@/hooks/useModal";
 import MultiInputWrapper from "@/components/MultiInputWrapper";
-import { CohortExportForm } from "@/interfaces/CohortExport";
+import { FormField } from "@/interfaces/FormField";
 import { Control } from "react-hook-form";
 
 export interface ModalFormProps {
-    formFields: CohortExportForm;
+    formFields: FormField;
     control: Control;
     buttonContent?: ReactNode;
 }
