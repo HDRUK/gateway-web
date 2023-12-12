@@ -1,15 +1,16 @@
 "use client";
+
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { useForm } from "react-hook-form";
 import { DownloadIcon } from "@/consts/icons";
 import { Typography, Box } from "@mui/material";
-
 import {
     cohortExportDefaultValues,
     cohortExportFormFields,
 } from "@/config/forms/cohortAdminExport";
 
+import { CohortExportForm } from "@/interfaces/CohortExport";
 import ModalForm from "@/components/ModalForm";
 import { useEffect, useState } from "react";
 
@@ -26,18 +27,18 @@ const CohortTableDownload = () => {
         filter && `${apis.cohortRequestsV1Url}/export?${filter}`
     );
 
-    const { control, watch, reset } = useForm({
+    const { control, reset, handleSubmit } = useForm({
         defaultValues: cohortExportDefaultValues,
     });
 
     useEffect(() => {
-        //dont try and retrieve data and download there is no filter set
+        // dont try and retrieve data and download there is no filter set
         if (!filter) return;
 
         mutate().then(csvData => {
             if (!csvData) return;
             const { content, type, filename } = csvData;
-            const blob = new Blob([content], { type: type });
+            const blob = new Blob([content], { type });
 
             const link = document.createElement("a");
             link.href = window.URL.createObjectURL(blob);
@@ -48,30 +49,19 @@ const CohortTableDownload = () => {
         });
     }, [filter]);
 
-    const onSuccess = () => {
-        const organisations = watch("organisations");
-        const dateRangeFrom = watch("dateRangeFrom").format("YYYY-MM-DD");
-        const dateRangeTo = watch("dateRangeTo").format("YYYY-MM-DD");
+    const onSuccess = (formData: CohortExportForm) => {
+        const { organisations } = formData;
+        const dateRangeFrom = formData.dateRangeFrom.format("YYYY-MM-DD");
+        const dateRangeTo = formData.dateRangeTo.format("YYYY-MM-DD");
 
         const filters = new URLSearchParams();
         filters.append("to", dateRangeTo);
         filters.append("from", dateRangeFrom);
 
-        //note: this might be better to be not so hard-coded?
-        //      use cohortRequestStatusValues and a loop?
-        //
-        const watchedStatusValues = [
-            { key: "APPROVED", value: watch("status_APPROVED") },
-            { key: "REJECTED", value: watch("status_REJECTED") },
-            { key: "PENDING", value: watch("status_PENDING") },
-            { key: "BANNED", value: watch("status_BANNED") },
-            { key: "SUSPENDED", value: watch("status_SUSPENDED") },
-            { key: "EXPIRED", value: watch("status_EXPIRED") },
-        ];
+        const watchedStatusValues = formData.status;
 
-        const request_status = watchedStatusValues
-            .filter(w => w.value === true)
-            .map(w => w.key)
+        const request_status = Object.keys(watchedStatusValues)
+            .filter(key => watchedStatusValues[key] === true)
             .join(",");
 
         if (request_status) {
@@ -91,29 +81,27 @@ const CohortTableDownload = () => {
     };
 
     return (
-        <>
-            <ModalForm
-                control={control}
-                formFields={cohortExportFormFields}
-                onSuccess={onSuccess}
-                onCancel={onCancel}
-                confirmText={"Export xs file"}
-                cancelText={"Cancel"}
-                title={"Export Filters"}
-                content={
-                    <Box
-                        sx={{ p: 0 }}
-                        display="flex"
-                        alignItems="center"
-                        aria-label="download-cohort-table">
-                        <DownloadIcon color="primary" />
-                        <Typography color="primary">
-                            {"Download dashboard report"}
-                        </Typography>
-                    </Box>
-                }
-            />
-        </>
+        <ModalForm
+            control={control}
+            formFields={cohortExportFormFields}
+            onSuccess={handleSubmit(onSuccess)}
+            onCancel={onCancel}
+            confirmText="Export xs file"
+            cancelText="Cancel"
+            title="Export Filters"
+            content={
+                <Box
+                    sx={{ p: 0 }}
+                    display="flex"
+                    alignItems="center"
+                    aria-label="download-cohort-table">
+                    <DownloadIcon color="primary" />
+                    <Typography color="primary">
+                        Download dashboard report
+                    </Typography>
+                </Box>
+            }
+        />
     );
 };
 

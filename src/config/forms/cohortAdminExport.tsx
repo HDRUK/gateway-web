@@ -1,7 +1,7 @@
-import { inputComponents } from ".";
 import { capitalise } from "@/utils/general";
 import { CohortRequestStatus } from "@/interfaces/CohortRequest";
 import dayjs from "dayjs";
+import { inputComponents } from ".";
 
 const cohortRequestStatusValues: CohortRequestStatus[] = [
     "APPROVED",
@@ -16,12 +16,14 @@ const defaultValues = {
     dateRangeFrom: dayjs(new Date("2020-01-01")),
     dateRangeTo: dayjs(new Date()),
     organisations: [],
-    status_APPROVED: false,
-    status_REJECTED: false,
-    status_PENDING: false,
-    status_BANNED: false,
-    status_SUSPENDED: false,
-    status_EXPIRED: false,
+    status: {
+        APPROVED: false,
+        REJECTED: false,
+        PENDING: false,
+        BANNED: false,
+        SUSPENDED: false,
+        EXPIRED: false,
+    },
 };
 
 const formFields = [
@@ -48,7 +50,7 @@ const formFields = [
         name: "status",
         component: inputComponents.CheckboxGroup,
         checkboxes: cohortRequestStatusValues.map(status => ({
-            name: `status_${status}`,
+            name: `status.${status}`,
             label: capitalise(status),
         })),
     },
@@ -56,6 +58,7 @@ const formFields = [
         label: "Organisations(s)",
         name: "organisations",
         component: inputComponents.Autocomplete,
+        freeSolo: true, // note: may want this to be false and hydrate the fields with organisation names at a later point?
         required: false,
         selectOnFocus: true,
         clearOnBlur: true,
