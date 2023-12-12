@@ -49,7 +49,7 @@ const CohortTableDownload = () => {
         });
     }, [filter]);
 
-    const onSuccess = (formData: CohortExportForm) => {
+    const handleExport = (formData: CohortExportForm) => {
         const { organisations } = formData;
         const dateRangeFrom = formData.dateRangeFrom.format("YYYY-MM-DD");
         const dateRangeTo = formData.dateRangeTo.format("YYYY-MM-DD");
@@ -84,7 +84,7 @@ const CohortTableDownload = () => {
         <ModalForm
             control={control}
             formFields={cohortExportFormFields}
-            onSuccess={handleSubmit(onSuccess)}
+            onSuccess={handleSubmit(handleExport)}
             onCancel={onCancel}
             confirmText="Export xs file"
             cancelText="Cancel"

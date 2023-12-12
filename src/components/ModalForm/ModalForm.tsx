@@ -11,14 +11,13 @@ export interface ModalFormProps {
     formFields: CohortExportForm;
     control: Control;
     buttonContent?: ReactNode;
-    modalContent?: ReactNode;
 }
 
 const ModalForm = ({
     formFields,
     control,
     buttonContent,
-    modalContent,
+    ...rest
 }: ModalFormProps) => {
     const { showModal } = useModal();
 
@@ -27,7 +26,7 @@ const ModalForm = ({
             content: (
                 <MultiInputWrapper fields={formFields} control={control} />
             ),
-            modalContent,
+            ...rest,
         });
     };
 
