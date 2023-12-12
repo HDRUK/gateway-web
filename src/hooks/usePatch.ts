@@ -20,8 +20,10 @@ const usePatch = <T extends { id?: number }>(
     ThrowPaginationError(options);
 
     return async (id: string | number | null, payload: T) => {
+        // this really could be improved..
+        // .. didnt want to mess up other usePatch() that pass ID though
         const queryString = query ? `?${query}` : "";
-        const urlString = id ? `${url}/${id}${queryString}` : url;
+        const urlString = `${url}${id ? `/${id}` : ""}${queryString}`;
         return await apiService.patchRequest(urlString, payload, {
             notificationOptions: {
                 localeKey,
