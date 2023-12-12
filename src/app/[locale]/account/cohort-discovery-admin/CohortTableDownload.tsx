@@ -89,7 +89,7 @@ const CohortTableDownload = () => {
             confirmText="Export xs file"
             cancelText="Cancel"
             title="Export Filters"
-            content={
+            buttonContent={
                 <Box
                     sx={{ p: 0 }}
                     display="flex"
