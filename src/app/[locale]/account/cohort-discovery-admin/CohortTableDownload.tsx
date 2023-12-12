@@ -47,7 +47,7 @@ const CohortTableDownload = () => {
             link.click();
             link.remove();
         });
-    }, [filter]);
+    }, [filter, mutate]);
 
     const handleExport = (formData: CohortExportForm) => {
         const { organisations } = formData;
@@ -60,8 +60,9 @@ const CohortTableDownload = () => {
 
         const watchedStatusValues = formData.status;
 
-        const request_status = Object.keys(watchedStatusValues)
-            .filter(key => watchedStatusValues[key] === true)
+        const request_status = Object.entries(watchedStatusValues)
+            .filter(([, value]) => value === true)
+            .map(([key]) => key)
             .join(",");
 
         if (request_status) {
