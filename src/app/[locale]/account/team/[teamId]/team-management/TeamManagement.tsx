@@ -4,7 +4,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
-import TeamMembers from "@/modules/TeamMembers";
+import TeamMembers from "./TeamMembers";
 import AddTeamMemberDialog from "@/modules/AddTeamMemberDialog";
 import Button from "@/components/Button";
 import { AddIcon } from "@/consts/icons";

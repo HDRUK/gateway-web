@@ -5,7 +5,7 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
-import TeamDatasets from "@/modules/TeamDatasets";
+import TeamDatasets from "./TeamDatasets";
 import Paper from "@/components/Paper";
 
 export const metadata = {

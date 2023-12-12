@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 
-import IntegrationList from "@/modules/IntegrationList";
+import IntegrationList from "./IntegrationList";
 import BackButton from "@/components/BackButton";
 
 export const metadata = {

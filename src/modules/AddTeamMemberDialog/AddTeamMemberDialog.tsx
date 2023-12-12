@@ -23,7 +23,7 @@ import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import useGetTeam from "@/hooks/useGetTeam";
 import { useMemo } from "react";
-import AddTeamMemberRows from "@/modules/AddTeamMemberRows";
+import AddTeamMemberRows from "./AddTeamMemberRows";
 import useDialog from "@/hooks/useDialog";
 import { getAvailableUsers } from "./AddTeamMemberDialog.utils";
 

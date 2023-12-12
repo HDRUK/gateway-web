@@ -1,4 +1,4 @@
-import KeepingUpdated from "@/modules/KeepingUpdated";
+import KeepingUpdated from "./KeepingUpdated";
 import { useForm } from "react-hook-form";
 import { render } from "@/utils/testUtils";
 

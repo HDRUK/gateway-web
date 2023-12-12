@@ -25,7 +25,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { Team } from "@/interfaces/Team";
 import { useRouter } from "next/navigation";
-import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
+import EmailNotificationDescriptions from "./EmailNotificationDescriptions";
 
 interface EmailNotificationsProps {
     team: Team;

@@ -5,7 +5,7 @@ import Link from "@/components/Link";
 import Dialog from "@/components/Dialog";
 import BulletList from "@/components/BulletList";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
-import ProviderLinks from "@/modules/ProviderLinks";
+import ProviderLinks from "./ProviderLinks";
 import { useTranslations } from "next-intl";
 
 const ProvidersDialog = () => {

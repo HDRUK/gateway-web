@@ -1,5 +1,5 @@
 import React from "react";
-import ProviderLinks from "@/modules/ProviderLinks";
+import ProviderLinks from "@/modules/ProvidersDialog/ProviderLinks";
 import { render, screen } from "@/utils/testUtils";
 
 describe("ProviderLinks", () => {

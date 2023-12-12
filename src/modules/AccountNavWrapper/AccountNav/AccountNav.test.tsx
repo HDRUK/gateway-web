@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AccountNav from "@/modules/AccountNav";
+import AccountNav from "@/modules/AccountNavWrapper/AccountNav";
 import { userV1 } from "@/mocks/data";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import useLogout from "@/hooks/useLogout";

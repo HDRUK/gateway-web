@@ -1,6 +1,6 @@
 "use client";
 
-import ApplicationListItem from "@/modules/ApplicationListItem";
+import ApplicationListItem from "./ApplicationListItem";
 import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
@@ -10,7 +10,7 @@ import { useParams } from "next/navigation";
 import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
 import Typography from "@/components/Typography";
-import ApplicationSearchBar from "@/modules/ApplicationSearchBar";
+import ApplicationSearchBar from "./ApplicationSearchBar";
 import Pagination from "@/components/Pagination";
 import { PaginationType } from "@/interfaces/Pagination";
 
