@@ -55,7 +55,6 @@ const TeamMembers = ({
 
     const submitForm = useCallback(async () => {
         if (!rolesToUpdate) return;
-
         const updatingOwnPermissions = !!rolesToUpdate.find(
             role => role.userId === user?.id
         );
