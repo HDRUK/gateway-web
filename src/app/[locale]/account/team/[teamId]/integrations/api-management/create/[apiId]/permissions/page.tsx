@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import BackButton from "@/components/BackButton";
-import ApplicationPermissions from "@/modules/ApplicationPermissions";
+import ApplicationPermissions from "../../../components/ApplicationPermissions";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - API Management - Permissions",

@@ -4,7 +4,7 @@ import Box from "@/components/Box";
 import Head from "@/components/Head";
 import messages from "@/config/messages/en.json";
 import { GetServerSideProps } from "next";
-import ProfileForm from "@/modules/ProfileForm";
+import ProfileForm from "./components/ProfileForm";
 import useAuth from "@/hooks/useAuth";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";

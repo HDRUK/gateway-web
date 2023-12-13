@@ -6,7 +6,7 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import Typography from "@/components/Typography";
-import CreateIntegrationForm from "@/modules/CreateIntegrationForm";
+import CreateIntegrationForm from "./components/CreateIntegrationForm";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Integrations - Integration",

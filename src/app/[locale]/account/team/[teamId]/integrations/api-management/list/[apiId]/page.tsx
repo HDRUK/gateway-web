@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import BackButton from "@/components/BackButton";
-import ApplicationTabs from "@/modules/ApplicationTabs";
+import ApplicationTabs from "../../components/ApplicationTabs";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Integrations - Application",

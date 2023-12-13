@@ -17,7 +17,7 @@ import {
     ApplicationForm,
     ApplicationPayload,
 } from "@/interfaces/Application";
-import DeleteApplication from "@/modules/DeleteApplication";
+import DeleteApplication from "../DeleteApplication";
 import apis from "@/config/apis";
 import Loading from "@/components/Loading";
 import usePut from "@/hooks/usePut";

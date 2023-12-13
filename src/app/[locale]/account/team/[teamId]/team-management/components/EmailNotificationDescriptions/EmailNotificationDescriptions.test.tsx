@@ -1,5 +1,5 @@
 import React from "react";
-import EmailNotificationDescriptions from "@/modules/EmailNotificationDescriptions";
+import EmailNotificationDescriptions from "./EmailNotificationDescriptions";
 import { render } from "@/utils/testUtils";
 
 describe("EmailNotificationDescriptions", () => {

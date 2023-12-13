@@ -1,4 +1,4 @@
-import TeamDatasets from "@/modules/TeamDatasets";
+import TeamDatasets from "./TeamDatasets";
 import { render, screen, waitFor, within } from "@/utils/testUtils";
 import { server } from "@/mocks/server";
 import { getDatasetsV1 } from "@/mocks/handlers/datasets";

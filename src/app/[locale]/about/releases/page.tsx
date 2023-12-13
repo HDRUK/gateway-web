@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
 import { getReleaseNotes } from "@/utils/cms";
-import ReleaseTabs from "@/modules/ReleaseTabs";
+import ReleaseTabs from "./components/ReleaseTabs";
 import Banner from "@/components/Banner";
 import BannerImage from "../../../../../public/images/banners/release-notes.png";
 

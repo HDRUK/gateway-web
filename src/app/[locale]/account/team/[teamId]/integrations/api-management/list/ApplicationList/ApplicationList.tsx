@@ -1,55 +1,60 @@
 "use client";
 
-import IntegrationListItem from "@/modules/IntegrationListItem";
-import { Integration } from "@/interfaces/Integration";
+import ApplicationListItem from "./ApplicationListItem";
+import { Application } from "@/interfaces/Application";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+
 import { useParams } from "next/navigation";
 import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
 import Typography from "@/components/Typography";
+import ApplicationSearchBar from "./ApplicationSearchBar";
 import Pagination from "@/components/Pagination";
 import { PaginationType } from "@/interfaces/Pagination";
 
-const IntegrationList = () => {
+const ApplicationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
+    const [filterQuery, setFilterQuery] = useState("");
 
     const { teamId } = useParams();
 
-    const { data, isLoading } = useGet<PaginationType<Integration>>(
-        `${apis.teamsV1Url}/${teamId}/federations?per_page=10&page=${currentPage}`,
+    const { data, isLoading } = useGet<PaginationType<Application>>(
+        filterQuery
+            ? `${apis.applicationsV1Url}?per_page=10&team_id=${teamId}&${filterQuery}&page=${currentPage}`
+            : null,
         {
             keepPreviousData: true,
             withPagination: true,
         }
     );
 
-    useMemo(() => {
+    useEffect(() => {
         window.scrollTo({ top: 0 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
-    const { lastPage, list, total, from } = data || {};
+    const { lastPage, list, total } = data || {};
 
     const calculatedTotal = total || list?.length;
-    const startIndex = from || 1;
 
     return (
         <BoxContainer>
+            <ApplicationSearchBar setFilterQuery={setFilterQuery} />
+
             <Box
-                data-testid="number-of-integrations"
+                data-testid="number-of-apps"
                 display="flex"
                 justifyContent="flex-end">
                 <Typography>
-                    Number of Integrations: <strong>{calculatedTotal}</strong>
+                    Number of Apps: <strong>{calculatedTotal}</strong>
                 </Typography>
             </Box>
-            {list?.map((integration, index) => (
-                <IntegrationListItem
-                    key={integration.id}
-                    index={index + startIndex}
-                    integration={integration}
+            {list?.map(application => (
+                <ApplicationListItem
+                    key={application.id}
+                    application={application}
                 />
             ))}
             <Pagination
@@ -64,4 +69,4 @@ const IntegrationList = () => {
     );
 };
 
-export default IntegrationList;
+export default ApplicationList;

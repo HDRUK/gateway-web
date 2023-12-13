@@ -6,7 +6,7 @@ import apis from "@/config/apis";
 import { useEffect, useState } from "react";
 import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
-import DatasetTab from "@/modules/DatasetTab";
+import DatasetTab from "../DatasetTab";
 
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";

@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import Button from "@/components/Button";
 import { useState } from "react";
 import { ExpandMoreIcon } from "@/consts/icons";
-import Dropdown from "@/modules/HeaderNavDropdown";
+import Dropdown from "../HeaderNavDropdown";
 import * as styles from "./HeaderNav.styles";
 
 interface HeaderNavProps {

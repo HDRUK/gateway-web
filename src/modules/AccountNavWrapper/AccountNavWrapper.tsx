@@ -7,7 +7,7 @@ import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { Box, Skeleton } from "@mui/material";
-import AccountNav from "@/modules/AccountNav";
+import AccountNav from "../AccountNav";
 import { useState } from "react";
 import InitialsBadge from "@/components/InitialsBadge";
 import useAuth from "@/hooks/useAuth";
