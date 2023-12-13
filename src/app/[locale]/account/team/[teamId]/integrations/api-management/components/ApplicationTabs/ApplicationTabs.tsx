@@ -5,9 +5,9 @@ import Tabs from "@/components/Tabs";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";
 import { Application } from "@/interfaces/Application";
-import ApplicationAuthDetails from "@/modules/ApplicationAuthDetails";
-import EditApplicationForm from "@/modules/EditApplicationForm";
-import ApplicationPermissions from "@/modules/ApplicationPermissions";
+import ApplicationAuthDetails from "../ApplicationAuthDetails";
+import EditApplicationForm from "../EditApplicationForm";
+import ApplicationPermissions from "..//ApplicationPermissions";
 import { useParams } from "next/navigation";
 
 const ApplicationTabs = () => {
