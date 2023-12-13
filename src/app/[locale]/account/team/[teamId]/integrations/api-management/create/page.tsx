@@ -4,7 +4,7 @@ import { getTeamUser } from "@/utils/user";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
-import CreateApplicationForm from "./CreateApplicationForm";
+import CreateApplicationForm from "./components/CreateApplicationForm";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 

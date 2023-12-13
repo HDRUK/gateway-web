@@ -1,7 +1,7 @@
 import { getPermissions, getTeam, getUser } from "@/utils/permissions";
 import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
-import TeamManagement from "./TeamManagement";
+import TeamManagement from "./components/TeamManagement";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Team Management",

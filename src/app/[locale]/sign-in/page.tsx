@@ -1,4 +1,4 @@
-import SignInDialog from "./signIn";
+import SignInDialog from "./components/signIn";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Sign in",

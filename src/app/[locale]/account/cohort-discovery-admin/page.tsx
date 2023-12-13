@@ -1,7 +1,7 @@
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
-import CohortTable from "./CohortTable";
+import CohortTable from "./components/CohortTable";
 import { cookies } from "next/headers";
 
 import { getPermissions, getUser } from "@/utils/permissions";
