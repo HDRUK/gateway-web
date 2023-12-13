@@ -1,6 +1,6 @@
 "use client";
 
-import IntegrationListItem from "./IntegrationListItem";
+import IntegrationListItem from "../IntegrationListItem";
 import { Integration } from "@/interfaces/Integration";
 import apis from "@/config/apis";
 import useGet from "@/hooks/useGet";

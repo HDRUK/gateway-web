@@ -1,3 +1,3 @@
-import IntegrationList from "./IntegrationList";
+import IntegrationList from "../IntegrationList";
 
 export default IntegrationList;
