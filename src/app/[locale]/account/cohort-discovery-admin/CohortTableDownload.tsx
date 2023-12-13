@@ -10,7 +10,8 @@ import {
     cohortExportFormFields,
 } from "@/config/forms/cohortAdminExport";
 
-import { CohortExportForm, CsvExport } from "@/interfaces/CohortExport";
+import { CohortExportForm } from "@/interfaces/CohortExport";
+import { CsvExport } from "@/interfaces/CsvExport";
 import { User } from "@/interfaces/User";
 import ModalForm from "@/components/ModalForm";
 import { useEffect, useState, useMemo } from "react";
