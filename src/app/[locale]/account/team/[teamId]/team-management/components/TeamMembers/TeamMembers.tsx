@@ -13,21 +13,17 @@ import {
     getDifferences,
 } from "@/utils/userRoles";
 import { User } from "@/interfaces/User";
-import pLimit from "p-limit";
-import notificationService from "@/services/notification";
 
 import useDelete from "@/hooks/useDelete";
 import useModal from "@/hooks/useModal";
 import { useSWRConfig } from "swr";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import usePut from "@/hooks/usePut";
+import usePatch from "@/hooks/usePatch";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import Paper from "@/components/Paper";
 import { DeleteForeverIcon } from "@/consts/icons";
 import Loading from "@/components/Loading";
 import { useRouter } from "next/navigation";
-
-const limit = pLimit(1);
 
 interface TeamMembersProps {
     teamMembers: User[];
@@ -51,12 +47,8 @@ const TeamMembers = ({
     const [tableRows, setTableRows] = useState<User[]>([]);
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
 
-    const updateMembers = usePut<{ id?: number | undefined }>(
-        `${apis.teamsV1Url}/${teamId}/users`,
-        {
-            errorNotificationsOn: false,
-            successNotificationsOn: false,
-        }
+    const updateTeamRoles = usePatch<RolesPayload[]>(
+        `${apis.teamsV1Url}/${teamId}`
     );
 
     const { showBar, hideBar } = useActionBar();
@@ -66,26 +58,8 @@ const TeamMembers = ({
         const updatingOwnPermissions = !!rolesToUpdate.find(
             role => role.userId === user?.id
         );
-        const promises = rolesToUpdate.map(async payload => {
-            await limit(() =>
-                updateMembers(payload.userId, { roles: payload.roles })
-            );
-        });
 
-        const results = await Promise.allSettled(promises);
-        const success = results.filter(result => result.status === "fulfilled");
-        const error = results.filter(result => result.status === "rejected");
-
-        if (success.length > 0) {
-            notificationService.success(
-                `${success.length} member(s) have been successfully updated`
-            );
-        }
-        if (error.length > 0) {
-            notificationService.error(
-                `${error.length} member(s) were not updated`
-            );
-        }
+        await updateTeamRoles("roles", rolesToUpdate);
 
         router.refresh();
         setRolesToUpdate(null);
@@ -95,7 +69,7 @@ const TeamMembers = ({
             mututeUser(apis.authInternalUrl);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rolesToUpdate, updateMembers, user?.id]);
+    }, [rolesToUpdate, updateTeamRoles, user?.id]);
 
     const discardChanges = () => {
         setTableRows(teamMembers || []);
