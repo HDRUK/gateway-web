@@ -29,11 +29,8 @@ const CohortTableDownload = () => {
     });
 
     //----------------
-    // note: calum 13/12/23
-    //   - this wont work when the uses is non-super admin...
-    //   - we need something to retreive all users so we can get all organisations
-    //   - this needs to be fixed in the backend
-    //   - we need a route that will return all unique organisation names
+    // to-do: calum 13/12/23
+    //   - see: GAT-3329
     const { data: allUsers } = useGet<User[]>(apis.usersV1Url);
     const uniqueOrganisations = Array.from(
         new Set(
