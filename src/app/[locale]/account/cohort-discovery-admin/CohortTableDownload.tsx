@@ -34,6 +34,15 @@ const CohortTableDownload = () => {
     //   - this needs to be fixed in the backend
     //   - we need a route that will return all unique organisation names
     const { data: allUsers } = useGet<User[]>(apis.usersV1Url);
+    const uniqueOrganisations = Array.from(
+        new Set(
+            allUsers
+                ? Array.isArray(allUsers)
+                    ? allUsers.map(u => u.organisation)
+                    : [allUsers.organisation] // nasty fix - in the tests apis.usersV1Url is returning one user
+                : []
+        )
+    );
 
     useEffect(() => {
         // dont try and retrieve data and download there is no filter set
@@ -73,10 +82,6 @@ const CohortTableDownload = () => {
     const onCancel = () => {
         reset();
     };
-
-    const uniqueOrganisations = Array.from(
-        new Set(allUsers?.map(u => u.organisation))
-    );
 
     const hydratedFormFields = useMemo(() => {
         return cohortExportFormFields.map(field => {
