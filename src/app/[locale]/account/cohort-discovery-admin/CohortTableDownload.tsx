@@ -11,8 +11,10 @@ import {
 } from "@/config/forms/cohortAdminExport";
 
 import { CohortExportForm, CsvExport } from "@/interfaces/CohortExport";
+import { User } from "@/interfaces/User";
 import ModalForm from "@/components/ModalForm";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { downloadCSV } from "@/utils/download";
 
 const CohortTableDownload = () => {
     const [filter, setFilter] = useState<string | null>(null);
@@ -25,22 +27,19 @@ const CohortTableDownload = () => {
         defaultValues: cohortExportDefaultValues,
     });
 
+    //----------------
+    // note: calum 13/12/23
+    //   - this wont work when the uses is non-super admin...
+    //   - we need something to retreive all users so we can get all organisations
+    //   - this needs to be fixed in the backend
+    //   - we need a route that will return all unique organisation names
+    const { data: allUsers } = useGet<User[]>(apis.usersV1Url);
+
     useEffect(() => {
         // dont try and retrieve data and download there is no filter set
         if (!filter) return;
 
-        mutate().then(csvData => {
-            if (!csvData) return;
-            const { content, type, filename } = csvData;
-            const blob = new Blob([content], { type });
-
-            const link = document.createElement("a");
-            link.href = window.URL.createObjectURL(blob);
-            link.download = filename;
-
-            link.click();
-            link.remove();
-        });
+        mutate().then(data => downloadCSV(data));
     }, [filter, mutate]);
 
     const handleExport = (formData: CohortExportForm) => {
@@ -75,10 +74,30 @@ const CohortTableDownload = () => {
         reset();
     };
 
+    const uniqueOrganisations = Array.from(
+        new Set(allUsers?.map(u => u.organisation))
+    );
+
+    const hydratedFormFields = useMemo(() => {
+        return cohortExportFormFields.map(field => {
+            /* populate 'organisations' with unique organisations */
+            if (field.name === "organisations") {
+                return {
+                    ...field,
+                    options: uniqueOrganisations.map(org => ({
+                        value: org,
+                        label: org,
+                    })),
+                };
+            }
+            return field;
+        });
+    }, [cohortExportFormFields, uniqueOrganisations]);
+
     return (
         <ModalForm
             control={control}
-            formFields={cohortExportFormFields}
+            formFields={hydratedFormFields}
             onSuccess={handleSubmit(handleExport)}
             onCancel={onCancel}
             confirmText="Export xs file"

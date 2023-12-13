@@ -60,13 +60,12 @@ const formFields = [
         label: "Organisations(s)",
         name: "organisations",
         component: inputComponents.Autocomplete,
-        freeSolo: true, // note: may want this to be false and hydrate the fields with organisation names at a later point?
         required: false,
         selectOnFocus: true,
         clearOnBlur: true,
         handleHomeEndKeys: true,
         multiple: true,
-        canCreate: true,
+        canCreate: false,
     },
 ];
 
