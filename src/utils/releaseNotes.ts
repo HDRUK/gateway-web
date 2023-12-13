@@ -1,5 +1,5 @@
 import { Release, ReleaseNode } from "@/interfaces/Releases";
-import { getYear } from "date-fns";
+import { getYear } from "@/utils/date";
 
 const getReleaseByYear = (
     releases: ReleaseNode[],
@@ -9,7 +9,7 @@ const getReleaseByYear = (
     return releases
         .map(release => release.node)
         .filter(release => {
-            const releaseYear = getYear(new Date(release.date)).toString();
+            const releaseYear = getYear(release.date).toString();
             return releaseYear === year;
         });
 };

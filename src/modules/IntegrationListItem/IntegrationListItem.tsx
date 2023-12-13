@@ -52,8 +52,7 @@ const IntegrationListItem = ({
                                 verticalAlign: "top",
                                 color: "#868E96",
                             }}>
-                            Created -{" "}
-                            {formatDate(new Date(integration.created_at))}
+                            Created - {formatDate(integration.created_at)}
                         </Typography>
                     </Box>
                     <Box

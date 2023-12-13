@@ -48,12 +48,12 @@ describe("Cohort Table", () => {
 
             expect(
                 within(tableRows[1]).getByText(
-                    formatDate(new Date(requests[0].created_at), "dd/MM/yyyy")
+                    formatDate(requests[0].created_at, "DD/MM/YYYY")
                 )
             ).toBeInTheDocument();
             expect(
                 within(tableRows[1]).getByText(
-                    formatDate(new Date(requests[0].updated_at), "dd/MM/yyyy")
+                    formatDate(requests[0].updated_at, "DD/MM/YYYY")
                 )
             ).toBeInTheDocument();
 
