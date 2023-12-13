@@ -48,7 +48,7 @@ const TeamMembers = ({
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
 
     const updateTeamRoles = usePatch<RolesPayload[]>(
-        `${apis.teamsV1Url}/${teamId}/roles`
+        `${apis.teamsV1Url}/${teamId}`
     );
 
     const { showBar, hideBar } = useActionBar();
@@ -59,7 +59,7 @@ const TeamMembers = ({
             role => role.userId === user?.id
         );
 
-        await updateTeamRoles(null, rolesToUpdate);
+        await updateTeamRoles("roles", rolesToUpdate);
 
         router.refresh();
         setRolesToUpdate(null);
