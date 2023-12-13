@@ -48,8 +48,7 @@ const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
                                 verticalAlign: "top",
                                 color: "#868E96",
                             }}>
-                            Created -{" "}
-                            {formatDate(new Date(application.created_at))}
+                            Created - {formatDate(application.created_at)}
                         </Typography>
                     </Box>
                     <Box

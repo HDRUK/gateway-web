@@ -7,8 +7,8 @@ import Typography from "@/components/Typography";
 import KeyValueList from "@/components/KeyValueList";
 import { IconType } from "@/interfaces/Ui";
 import { getMauroValue } from "@/utils/mauro";
-import CardActions from "../CardActions";
 import { nonManualDatasetCardActions } from "@/consts/actions";
+import CardActions from "../CardActions";
 
 interface DatasetCardProps {
     dataset: Dataset;
@@ -66,8 +66,8 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                                 {
                                     key: "Last activity",
                                     value: formatDate(
-                                        new Date(dataset.updated),
-                                        "dd MMMM yyyy HH:mm"
+                                        dataset.updated,
+                                        "DD MMMM YYYY HH:mm"
                                     ),
                                 },
                             ]}
@@ -89,7 +89,7 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
                     <CardActions
                         actions={
-                            dataset.create_origin == "MANUAL"
+                            dataset.create_origin === "MANUAL"
                                 ? actions
                                 : nonManualDatasetCardActions
                         }

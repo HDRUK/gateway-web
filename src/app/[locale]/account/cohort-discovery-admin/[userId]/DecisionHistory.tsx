@@ -13,44 +13,33 @@ export default function DecisionHistory({
     cohortRequest,
 }: DecisionHistoryProps) {
     return (
-        <>
-            <Accordion
-                heading={<Typography>{"Show decision history"}</Typography>}
-                contents={
-                    <Scrollbar height="400px">
-                        {cohortRequest.logs.map(log => (
-                            <Box
-                                key={log.id}
-                                sx={{
-                                    p: 0,
-                                    m: 0,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    mb: 2,
-                                }}>
-                                <Typography
-                                    sx={{ width: "25%" }}
-                                    color="GrayText">
-                                    {log.request_status}
-                                </Typography>
-                                <Typography
-                                    sx={{ width: "25%" }}
-                                    color="GrayText">
-                                    {formatDate(
-                                        new Date(log.updated_at),
-                                        "dd/MM/yyyy"
-                                    )}
-                                </Typography>
-                                <Typography
-                                    sx={{ width: "50%" }}
-                                    color="GrayText">
-                                    {log.details}
-                                </Typography>
-                            </Box>
-                        ))}
-                    </Scrollbar>
-                }
-            />
-        </>
+        <Accordion
+            heading={<Typography>Show decision history</Typography>}
+            contents={
+                <Scrollbar height="400px">
+                    {cohortRequest.logs.map(log => (
+                        <Box
+                            key={log.id}
+                            sx={{
+                                p: 0,
+                                m: 0,
+                                display: "flex",
+                                justifyContent: "space-between",
+                                mb: 2,
+                            }}>
+                            <Typography sx={{ width: "25%" }} color="GrayText">
+                                {log.request_status}
+                            </Typography>
+                            <Typography sx={{ width: "25%" }} color="GrayText">
+                                {formatDate(log.updated_at, "DD/MM/YYYY")}
+                            </Typography>
+                            <Typography sx={{ width: "50%" }} color="GrayText">
+                                {log.details}
+                            </Typography>
+                        </Box>
+                    ))}
+                </Scrollbar>
+            }
+        />
     );
 }
