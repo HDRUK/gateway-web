@@ -10,6 +10,7 @@ type ComponentTypes =
     | "RadioGroup"
     | "Select"
     | "TextTime"
-    | "TextArea";
+    | "TextArea"
+    | "DatePicker";
 
 export type { ComponentTypes };

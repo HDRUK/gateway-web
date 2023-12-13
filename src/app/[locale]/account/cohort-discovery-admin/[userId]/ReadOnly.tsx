@@ -13,10 +13,7 @@ export default function ReadOnly({
             {[
                 {
                     label: "Date received",
-                    value: formatDate(
-                        new Date(cohortRequest.created_at),
-                        "dd/MM/yyyy"
-                    ),
+                    value: formatDate(cohortRequest.created_at, "DD/MM/YYYY"),
                 },
                 {
                     label: "Date of latest action",
@@ -25,8 +22,8 @@ export default function ReadOnly({
                         cohortRequest.request_status === "PENDING"
                             ? ""
                             : formatDate(
-                                  new Date(cohortRequest.updated_at),
-                                  "dd/MM/yyyy"
+                                  cohortRequest.updated_at,
+                                  "DD/MM/YYYY"
                               ),
                 },
             ].map(row => (

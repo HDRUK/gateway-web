@@ -9,17 +9,15 @@ import {
     WarningIcon,
 } from "@/consts/icons";
 import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
-import { formatDate } from "@/utils/date";
+import { formatDate, differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
-import { CohortStatusPopover } from "./CohortStatusPopover";
-import { differenceInDays } from "@/utils/date";
-
 import {
     statusMapping,
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
 } from "@/consts/cohortDiscovery";
+import { CohortStatusPopover } from "./CohortStatusPopover";
 
 interface getColumnsProps {
     sort: { key: string; direction: string };
@@ -40,16 +38,16 @@ const updateSort =
                 : "asc",
     });
 
-const showWarning = (date: string, status: string) => {
+const showAlert = (date: string, status: string) => {
     const actionedDate = new Date(date);
     const currentDate = new Date();
 
     const showWarning =
-        status == "APPROVED" &&
+        status === "APPROVED" &&
         differenceInDays(currentDate, actionedDate) >
             COHORT_DISCOVERY_EXPIRY_WARNING_DAYS;
 
-    const hasExpired = status == "EXPIRED";
+    const hasExpired = status === "EXPIRED";
 
     const toolTipMessage = hasExpired
         ? "This user’s access is expired"
@@ -196,7 +194,7 @@ const getColumns = ({
                 </Box>
             ),
             accessorFn: (row: CohortRequest) =>
-                `${formatDate(new Date(row.created_at), "dd/MM/yyyy")}`,
+                `${formatDate(row.created_at, "DD/MM/YYYY")}`,
         },
         {
             id: "dateAction",
@@ -235,17 +233,14 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row }) => {
-                const { showToolTip, toolTipMessage, iconColor } = showWarning(
+                const { showToolTip, toolTipMessage, iconColor } = showAlert(
                     row.original.updated_at,
                     row.original.request_status
                 );
 
                 return (
                     <Box display="flex" alignItems="center" sx={{ p: 0 }}>
-                        {formatDate(
-                            new Date(row.original.updated_at),
-                            "dd/MM/yyyy"
-                        )}
+                        {formatDate(row.original.updated_at, "DD/MM/YYYY")}
                         {showToolTip && (
                             <TooltipIcon
                                 label=""

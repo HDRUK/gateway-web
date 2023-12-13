@@ -1,4 +1,5 @@
 import { User } from "./User";
+import { Log } from "./Log";
 
 type CohortRequestStatus =
     | "APPROVED"
@@ -15,6 +16,7 @@ interface CohortRequest {
     details: string;
     request_status: CohortRequestStatus;
     user: User;
+    logs: Log[];
 }
 
 interface CohortRequestForm {

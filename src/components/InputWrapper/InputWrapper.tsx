@@ -17,6 +17,7 @@ import Switch from "@/components/Switch";
 import SwitchInline from "@/components/SwitchInline";
 import TextTime from "@/components/TextTime";
 import ToggleDirection from "@/components/ToggleDirection";
+import DatePicker from "@/components/DatePicker";
 
 type InputType =
     | TextFieldBaseProps
@@ -46,6 +47,7 @@ function InputWrapper({ component, ...props }: InputWrapperCombinedProps) {
         RadioGroup,
         TextArea,
         SwitchInline,
+        DatePicker,
     };
 
     if (component === "TextTime") {

@@ -2,19 +2,28 @@ import { formatDate, differenceInDays } from "./date";
 
 describe("Date utils", () => {
     it("should return default formatted date", async () => {
-        expect(formatDate(new Date("2023-09-15T09:33:01.000000Z"))).toBe(
+        expect(formatDate("2023-09-15T09:33:01.000000Z")).toBe(
             "15 September 2023"
         );
     });
     it("should return custom formatted date", async () => {
+        expect(formatDate("2023-09-15T09:33:01.000000Z", "DD/MM/YY")).toBe(
+            "15/09/23"
+        );
+    });
+    it("should return custom formatted date, year first", async () => {
+        expect(formatDate("2023-09-15T09:33:01.000000Z", "YYYY-MM-DD")).toBe(
+            "2023-09-15"
+        );
+    });
+
+    it("should return custom formatted date, including hours and mins", async () => {
         expect(
-            formatDate(new Date("2023-09-15T09:33:01.000000Z"), "dd/MM/yy")
-        ).toBe("15/09/23");
+            formatDate("2023-09-15T09:33:01.000000Z", "DD MMMM YYYY HH:mm")
+        ).toBe("15 September 2023 09:33");
     });
 
     it("should calculate the difference in days between two dates", async () => {
-        expect(
-            differenceInDays(new Date("2022-01-10"), new Date("2022-01-01"))
-        ).toBe(9);
+        expect(differenceInDays("2022-01-10", "2022-01-01")).toBe(9);
     });
 });
