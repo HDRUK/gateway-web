@@ -1,92 +1,76 @@
-import { HttpOptions, PaginationResponse } from "@/interfaces/Api";
+import apis from "@/config/apis";
+import config from "@/config/config";
+import { getUserFromToken } from "@/utils/cookies";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { AuthUser } from "@/interfaces/AuthUser";
+import { Team } from "@/interfaces/Team";
+import { Application } from "@/interfaces/Application";
+import { CohortRequest } from "@/interfaces/CohortRequest";
+import { HttpOptions } from "@/interfaces/Api";
 
-interface FnProps {
-    options: HttpOptions | undefined;
-    data: unknown;
-    id: string | number;
-    payload: {
-        [key: string]: unknown;
-    };
+async function get<T>(
+    cookieStore: ReadonlyRequestCookies,
+    url: string
+): Promise<T> {
+    const jwt = cookieStore.get(config.JWT_COOKIE);
+
+    const res = await fetch(`${url}`, {
+        headers: { Authorization: `Bearer ${jwt?.value}` },
+    });
+
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error("Failed to fetch data");
+    }
+
+    const { data } = await res.json();
+
+    return data;
 }
 
-const deleteOptimisticData = ({
-    options = {},
-    data,
-    id,
-}: Pick<FnProps, "options" | "data" | "id">) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list.filter(
-                item => item.id !== id
+async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
+    const jwt = cookieStore.get(config.JWT_COOKIE);
+    const authUser = getUserFromToken(jwt?.value);
+    return get<AuthUser>(cookieStore, `${apis.usersV1UrlIP}/${authUser?.id}`);
+}
+
+async function getApplication(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string
+): Promise<Application> {
+    return get<Application>(
+        cookieStore,
+        `${apis.applicationsV1UrlIP}/${applicationId}`
+    );
+}
+
+async function getCohort(
+    cookieStore: ReadonlyRequestCookies,
+    cohortId: string
+): Promise<CohortRequest> {
+    return get<CohortRequest>(
+        cookieStore,
+        `${apis.cohortRequestsV1UrlIP}/${cohortId}`
+    );
+}
+
+async function getTeam(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string
+): Promise<Team> {
+    const team = await get<Team>(cookieStore, `${apis.teamsV1UrlIP}/${teamId}`);
+
+    return {
+        ...team,
+        users: team?.users.map(user => ({
+            ...user,
+            roles: user.roles.filter(
+                // Remove global "hdruk" roles from team users
+                role => !role.name.startsWith("hdruk")
             ),
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
-
-    return Array.isArray(data) ? data.filter(item => item.id !== id) : {};
-};
-
-const deleteMutateData = ({
-    options = {},
-    data,
-    id,
-}: Pick<FnProps, "options" | "data" | "id">) => {
-    return deleteOptimisticData({ options, data, id });
-};
-
-const postOptimisticData = ({
-    options = {},
-    data,
-    payload,
-}: Pick<FnProps, "options" | "data" | "payload">) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list || [],
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
-    return Array.isArray(data) ? [...data, { ...payload }] : { ...payload };
-};
-
-const postMutateData = ({ options = {}, data, payload, id }: FnProps) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list || [],
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
-
-    return Array.isArray(data)
-        ? [...data, { ...payload, id }]
-        : { ...payload, id };
-};
-
-const putOptimisticData = ({
-    options = {},
-    data,
-    payload,
-}: Pick<FnProps, "options" | "data" | "payload">) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list.map(item =>
-                item.id === payload.id ? payload : item
-            ),
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
-
-    return Array.isArray(data)
-        ? data.map(item => (item.id === payload.id ? payload : item))
-        : payload;
-};
-
-const putMutateData = ({
-    options = {},
-    data,
-    payload,
-}: Pick<FnProps, "options" | "data" | "payload">) => {
-    return putOptimisticData({ options, data, payload });
-};
+        })),
+    };
+}
 
 const ThrowPaginationError = (options: HttpOptions | undefined) => {
     if (
@@ -99,12 +83,4 @@ const ThrowPaginationError = (options: HttpOptions | undefined) => {
     }
 };
 
-export {
-    deleteOptimisticData,
-    deleteMutateData,
-    ThrowPaginationError,
-    postOptimisticData,
-    postMutateData,
-    putOptimisticData,
-    putMutateData,
-};
+export { getUser, getTeam, getApplication, getCohort, ThrowPaginationError };

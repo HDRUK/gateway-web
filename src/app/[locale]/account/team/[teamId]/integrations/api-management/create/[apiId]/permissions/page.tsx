@@ -1,9 +1,4 @@
-import {
-    getApplication,
-    getPermissions,
-    getTeam,
-    getUser,
-} from "@/utils/permissions";
+import { getApplication, getPermissions, getTeam, getUser } from "@/utils/api";
 import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
