@@ -1,6 +1,6 @@
 import { rest } from "msw";
 import apis from "@/config/apis";
-import { CMSResponse } from "@/interfaces/Cms";
+import { CMSPostResponse } from "@/interfaces/Cms";
 import { ReleaseNode } from "@/interfaces/Releases";
 import { releaseV1 } from "@/mocks/data/cms";
 
@@ -14,7 +14,7 @@ const getCMSReleaseV1 = (data = releaseV1, status = 200) => {
         }
         return res(
             ctx.status(status),
-            ctx.json<{ data: CMSResponse<ReleaseNode> }>({
+            ctx.json<{ data: CMSPostResponse<ReleaseNode> }>({
                 data,
             })
         );

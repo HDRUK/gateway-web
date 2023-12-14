@@ -1,0 +1,15 @@
+.wpStyles .aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wpStyles .alignleft {
+    float: left;
+    margin: 0.5em 1em 0.5em 0;
+}
+
+.wpStyles .alignright {
+    float: right;
+    margin: 0.5em 0 0.5em 1em;
+}
