@@ -16,13 +16,13 @@ export const metadata = {
 export default async function CohortDiscoveryManage({
     params,
 }: {
-    params: { userId: string };
+    params: { cohortId: string };
 }) {
-    const { userId } = params;
+    const { cohortId } = params;
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const permissions = await getPermissions(user.roles);
-    const cohortRequest = await getCohort(cookieStore, userId);
+    const cohortRequest = await getCohort(cookieStore, cohortId);
 
     return (
         <ProtectedAccountRoute
