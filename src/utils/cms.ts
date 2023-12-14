@@ -3,7 +3,12 @@ import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes"
 import { ReleaseNode } from "@/interfaces/Releases";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import apis from "@/config/apis";
-import { CMSResponse } from "@/interfaces/Cms";
+import {
+    CMSPageResponse,
+    CMSPostResponse,
+    PageTemplate1,
+} from "@/interfaces/Cms";
+import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
 
 async function fetchCMS(
     query = "",
@@ -31,7 +36,7 @@ async function fetchCMS(
 }
 
 const getReleaseNotes = async () => {
-    const data: CMSResponse<ReleaseNode> = await fetchCMS(
+    const data: CMSPostResponse<ReleaseNode> = await fetchCMS(
         GetReleaseNotesQuery,
         {
             next: { revalidate: 10 },
@@ -41,7 +46,7 @@ const getReleaseNotes = async () => {
 };
 
 const getMissionAndPurposes = async () => {
-    const data: CMSResponse<MissionAndPurposesNode> = await fetchCMS(
+    const data: CMSPostResponse<MissionAndPurposesNode> = await fetchCMS(
         GetMissionAndPurposesQuery,
         {
             next: { revalidate: 10 },
@@ -50,4 +55,15 @@ const getMissionAndPurposes = async () => {
     return data?.posts?.edges || null;
 };
 
-export { getReleaseNotes, getMissionAndPurposes };
+const getCohortDiscovery = async () => {
+    const data: CMSPageResponse<PageTemplate1> = await fetchCMS(
+        GetCohortDiscoveryQuery,
+        {
+            next: { revalidate: 10 },
+        }
+    );
+    console.log(data?.pages?.nodes[0]);
+    return data?.pages?.nodes[0] || null;
+};
+
+export { getReleaseNotes, getMissionAndPurposes, getCohortDiscovery };

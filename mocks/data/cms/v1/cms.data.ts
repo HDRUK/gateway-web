@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
-import { CMSResponse } from "@/interfaces/Cms";
+import { CMSPostResponse } from "@/interfaces/Cms";
 import { ReleaseNode } from "@/interfaces/Releases";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 
-const generateReleaseV1 = (data = {}): CMSResponse<ReleaseNode> => {
+const generateReleaseV1 = (data = {}): CMSPostResponse<ReleaseNode> => {
     return {
         posts: {
             edges: [
@@ -54,7 +54,9 @@ const generateReleaseV1 = (data = {}): CMSResponse<ReleaseNode> => {
 
 const releaseV1 = generateReleaseV1();
 
-const generateMissionV1 = (data = {}): CMSResponse<MissionAndPurposesNode> => {
+const generateMissionV1 = (
+    data = {}
+): CMSPostResponse<MissionAndPurposesNode> => {
     return {
         posts: {
             edges: [
