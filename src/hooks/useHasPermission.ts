@@ -1,6 +1,6 @@
 "use client";
 
-import { getPermissions } from "@/utils/permissions";
+import { getPermissions } from "@/utils/api";
 import useGetTeam from "@/hooks/useGetTeam";
 import useAuth from "@/hooks/useAuth";
 import { useParams } from "next/navigation";

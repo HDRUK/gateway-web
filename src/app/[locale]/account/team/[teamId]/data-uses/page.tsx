@@ -3,7 +3,7 @@ import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
 import { cookies } from "next/headers";
 
-import { getPermissions, getUser } from "@/utils/permissions";
+import { getPermissions, getUser } from "@/utils/api";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 
 export const metadata = {

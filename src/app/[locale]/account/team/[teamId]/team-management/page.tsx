@@ -1,4 +1,4 @@
-import { getPermissions, getTeam, getUser } from "@/utils/permissions";
+import { getPermissions, getTeam, getUser } from "@/utils/api";
 import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
 import TeamManagement from "./components/TeamManagement";

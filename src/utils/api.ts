@@ -9,6 +9,7 @@ import { AuthUser } from "@/interfaces/AuthUser";
 import { Team } from "@/interfaces/Team";
 import { Application } from "@/interfaces/Application";
 import { CohortRequest } from "@/interfaces/CohortRequest";
+import { HttpOptions } from "@/interfaces/Api";
 
 const getPermissions = (
     userRoles: Role[] = [],
@@ -131,4 +132,22 @@ async function getTeam(
     };
 }
 
-export { getPermissions, getUser, getTeam, getApplication, getCohort };
+const ThrowPaginationError = (options: HttpOptions | undefined) => {
+    if (
+        (options?.withPagination && !options?.paginationKey) ||
+        (options?.paginationKey && !options?.withPagination)
+    ) {
+        throw Error(
+            "You must provide both paginationKey and withPagination=true"
+        );
+    }
+};
+
+export {
+    getPermissions,
+    getUser,
+    getTeam,
+    getApplication,
+    getCohort,
+    ThrowPaginationError,
+};
