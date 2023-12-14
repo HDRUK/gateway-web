@@ -1,4 +1,4 @@
-import { getPermissions } from "@/utils/api";
+import { getPermissions } from "./permissions";
 import { Role } from "@/interfaces/Role";
 import {
     ROLE_CUSTODIAN_TEAM_ADMIN,
