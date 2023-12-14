@@ -62,7 +62,7 @@ const getCohortDiscovery = async () => {
             next: { revalidate: 10 },
         }
     );
-    console.log(data?.pages?.nodes[0]);
+
     return data?.pages?.nodes[0] || null;
 };
 

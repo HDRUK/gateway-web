@@ -30,7 +30,11 @@ const CMSPageTemplate1 = ({ content }: { content: PageTemplate1 }) => {
                         )}
                     </Box>
                     <Box sx={{ flex: 1 }}>
-                        <HTMLContent content={template1Fields.topRightPanel} />
+                        {template1Fields.topRightPanel && (
+                            <HTMLContent
+                                content={template1Fields.topRightPanel}
+                            />
+                        )}
                     </Box>
                 </Box>
             </Box>

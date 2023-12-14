@@ -11,12 +11,12 @@ interface PageTemplate1 {
     template: {
         template1Fields: {
             bannerTitle: string;
-            ctaLink: {
+            ctaLink?: {
                 target: string;
                 url: string;
                 title: string;
             };
-            topRightPanel: string;
+            topRightPanel?: string;
             topLeftPanel: string;
             middlePanel: string;
         };
