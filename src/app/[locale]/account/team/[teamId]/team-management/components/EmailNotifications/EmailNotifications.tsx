@@ -39,7 +39,7 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
     const router = useRouter();
     const { user } = useAuth();
 
-    const { control, formState, handleSubmit, reset, watch } =
+    const { control, formState, handleSubmit, reset } =
         useForm<EmailNotification>({
             mode: "onChange",
             defaultValues: emailNotificationDefaultValues,
@@ -47,8 +47,6 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
         });
 
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
-
-    const teamEmail = watch("team_email");
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -131,12 +129,12 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
                         notifications? Please make sure any team email addresses
                         you have entered are correct.
                     </Typography>
-                    {teamEmail && (
+                    {team_email && (
                         <Box sx={{ display: "flex", p: 0, gap: 2 }}>
                             <Typography color={colors.grey600}>
                                 Team Emails:
                             </Typography>
-                            <Typography>{teamEmail}</Typography>
+                            <Typography>{team_email}</Typography>
                         </Box>
                     )}
                 </Box>
