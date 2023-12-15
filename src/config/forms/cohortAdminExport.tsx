@@ -57,7 +57,7 @@ const formFields = [
         })),
     },
     {
-        label: "Organisations(s)",
+        label: "Organisation(s)",
         name: "organisations",
         component: inputComponents.Autocomplete,
         required: false,
