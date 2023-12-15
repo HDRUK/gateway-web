@@ -1,12 +1,13 @@
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
-import CohortTable from "./components/CohortTable";
-import CohortTableDownload from "./components/CohortTableDownload";
 import { cookies } from "next/headers";
 
-import { getPermissions, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
+import { getUser } from "@/utils/api";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import CohortTableDownload from "./components/CohortTableDownload";
+import CohortTable from "./components/CohortTable";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Cohort Discovery Admin",

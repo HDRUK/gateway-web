@@ -1,5 +1,6 @@
 import ActionBar from "@/components/ActionBar";
-import { getPermissions, getTeam, getUser } from "@/utils/api";
+import { getTeam, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
 import TwoColumn from "@/components/TwoColumn";
 import Box from "@/components/Box";

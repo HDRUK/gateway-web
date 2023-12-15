@@ -1,7 +1,8 @@
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import { cookies } from "next/headers";
-import { getCohort, getPermissions, getUser } from "@/utils/api";
+import { getCohort, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import StatusForm from "./StatusForm";
 import ReadOnly from "./ReadOnly";

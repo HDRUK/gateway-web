@@ -1,12 +1,13 @@
-import { getPermissions, getTeam, getUser } from "@/utils/api";
+import { getTeam, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
-import CreateApplicationForm from "./components/CreateApplicationForm";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
+import CreateApplicationForm from "./components/CreateApplicationForm";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - API Management",

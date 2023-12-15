@@ -1,10 +1,11 @@
-import { getPermissions, getTeam, getUser } from "@/utils/api";
+import { getTeam, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 
-import IntegrationList from "./components/IntegrationList";
 import BackButton from "@/components/BackButton";
+import IntegrationList from "./components/IntegrationList";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Integrations",
