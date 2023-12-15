@@ -1,6 +1,7 @@
 import LeftNav from "@/modules/LeftNav";
 import ActionBar from "@/components/ActionBar";
-import { getPermissions, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
+import { getUser } from "@/utils/api";
 import { cookies } from "next/headers";
 import TwoColumn from "@/components/TwoColumn";
 

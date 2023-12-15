@@ -1,12 +1,13 @@
-import { getPermissions, getTeam, getUser } from "@/utils/api";
+import { getTeam, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
-import TeamDatasets from "./components/TeamDatasets";
 import Paper from "@/components/Paper";
+import TeamDatasets from "./components/TeamDatasets";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Datasets",
