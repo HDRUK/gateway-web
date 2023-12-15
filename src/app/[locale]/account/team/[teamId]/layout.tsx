@@ -7,6 +7,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
 import LeftNav from "@/modules/LeftNav";
+import { getTeamUser } from "@/utils/user";
 
 export default async function AccountTeamLayout({
     children,
@@ -19,7 +20,8 @@ export default async function AccountTeamLayout({
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const team = await getTeam(cookieStore, teamId);
-    const permissions = await getPermissions(user.roles);
+    const foundUser = getTeamUser(team?.users, user?.id);
+    const permissions = await getPermissions(user.roles, foundUser?.roles);
 
     return (
         <div>
