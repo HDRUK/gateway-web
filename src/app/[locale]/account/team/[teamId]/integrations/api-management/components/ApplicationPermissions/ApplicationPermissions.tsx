@@ -34,6 +34,7 @@ import {
     getEnabledPermissions,
     getPayloadPermissions,
 } from "./ApplicationPermissions.utils";
+import { RouteName } from "@/consts/routeName";
 
 interface ApplicationPermissionsProps {
     isTabView?: boolean;
@@ -133,7 +134,7 @@ const ApplicationPermissions = ({
                 /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
                 setTimeout(() => {
                     push(
-                        `/account/team/${teamId}/integrations/api-management/list`
+                        `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
                     );
                 }, 500);
             }
@@ -233,7 +234,7 @@ const ApplicationPermissions = ({
                             marginBottom: "10px",
                         }}>
                         <Link
-                            href={`/account/team/${teamId}/integrations/api-management/create/${apiId}`}
+                            href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${apiId}`}
                             passHref>
                             <Button color="secondary" variant="outlined">
                                 Back

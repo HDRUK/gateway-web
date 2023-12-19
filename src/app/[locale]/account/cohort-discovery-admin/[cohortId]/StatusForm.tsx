@@ -18,6 +18,7 @@ import {
     detailsField,
     validationSchema,
 } from "./config";
+import { RouteName } from "@/consts/routeName";
 
 interface EditCohortRequestProps {
     cohortRequest: CohortRequest;
@@ -85,7 +86,7 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
             details: formData.details,
             request_status: formData.request_status,
         });
-        push("/account/cohort-discovery-admin");
+        push(`/${RouteName.ACCOUNT}/${RouteName.COHORT_DISCOVERY_ADMIN}`);
     };
 
     useEffect(() => {
@@ -97,7 +98,9 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
                 confirmText: "Save",
                 changeCount: 1,
                 onCancel: () => {
-                    push("/account/cohort-discovery-admin");
+                    push(
+                        `/${RouteName.ACCOUNT}/${RouteName.COHORT_DISCOVERY_ADMIN}`
+                    );
                 },
             });
         }

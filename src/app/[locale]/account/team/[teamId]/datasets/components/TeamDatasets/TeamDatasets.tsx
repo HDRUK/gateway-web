@@ -19,6 +19,7 @@ import {
 } from "@/config/forms/datasetAccountSearch";
 import { useForm } from "react-hook-form";
 import { useParams, useSearchParams } from "next/navigation";
+import { RouteName } from "@/consts/routeName";
 
 interface CountStatus {
     ACTIVE?: number;
@@ -96,7 +97,7 @@ const TeamDatasets = () => {
 
     const actions = [
         {
-            href: `/account/team/${teamId}/datasets`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
             icon: EditIcon,
             label: "Edit dataset metadata",
         },

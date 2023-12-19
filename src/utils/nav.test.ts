@@ -1,3 +1,4 @@
+import { RouteName } from "@/consts/routeName";
 import { getTeamNav } from "./nav";
 
 describe("Nav utils", () => {
@@ -12,7 +13,7 @@ describe("Nav utils", () => {
 
             expect(teamManagementItem).toBeDefined();
             expect(teamManagementItem?.href).toBe(
-                "/account/team/123/team-management"
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.TEAM_MANAGEMENT}`
             );
         });
 
@@ -26,7 +27,9 @@ describe("Nav utils", () => {
             );
 
             expect(datasetsItem).toBeDefined();
-            expect(datasetsItem?.href).toBe("/account/team/123/datasets");
+            expect(datasetsItem?.href).toBe(
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATASETS}`
+            );
         });
 
         it("should include Data Access Requests Applications item", () => {
@@ -46,7 +49,7 @@ describe("Nav utils", () => {
             );
             expect(applicationsItem).toBeDefined();
             expect(applicationsItem?.href).toBe(
-                "/account/team/123/data-access-requests/applications"
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
             );
         });
         it("should include Data Access Requests Workflows item", () => {
@@ -67,7 +70,7 @@ describe("Nav utils", () => {
 
             expect(workflowsItem).toBeDefined();
             expect(workflowsItem?.href).toBe(
-                "/account/team/123/data-access-requests/workflows"
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.WORKFLOWS}`
             );
         });
         it("should include Data Access Requests Edit form", () => {
@@ -88,7 +91,7 @@ describe("Nav utils", () => {
 
             expect(editFormItem).toBeDefined();
             expect(editFormItem?.href).toBe(
-                "/account/team/123/data-access-requests/edit-form"
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.EDIT_FORM}`
             );
         });
 
@@ -99,7 +102,9 @@ describe("Nav utils", () => {
             );
 
             expect(dataUsesItem).toBeDefined();
-            expect(dataUsesItem?.href).toBe("/account/team/123/data-uses/");
+            expect(dataUsesItem?.href).toBe(
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_USES}/`
+            );
         });
 
         it("should include API management", () => {
@@ -120,7 +125,7 @@ describe("Nav utils", () => {
 
             expect(apiManagementItem).toBeDefined();
             expect(apiManagementItem?.href).toBe(
-                "/account/team/123/integrations/api-management"
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`
             );
         });
 
@@ -142,7 +147,7 @@ describe("Nav utils", () => {
 
             expect(integrationItem).toBeDefined();
             expect(integrationItem?.href).toBe(
-                "/account/team/123/integrations/integration"
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`
             );
         });
 
@@ -151,7 +156,9 @@ describe("Nav utils", () => {
             const helpItem = navItems.find(item => item.label === "Help");
 
             expect(helpItem).toBeDefined();
-            expect(helpItem?.href).toBe("/account/team/123/help");
+            expect(helpItem?.href).toBe(
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.HELP}`
+            );
         });
     });
 });

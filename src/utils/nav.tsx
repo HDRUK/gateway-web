@@ -8,6 +8,7 @@ import {
     SettingsOutlinedIcon,
     StorageOutlinedIcon,
 } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
 
 const getProfileNav = (permissions: {
     [key: string]: boolean;
@@ -16,14 +17,14 @@ const getProfileNav = (permissions: {
         {
             icon: <FolderSharedOutlinedIcon />,
             label: "Your Profile",
-            href: "/account/profile",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },
         ...(permissions["cohort.read"]
             ? [
                   {
                       icon: <DescriptionOutlinedIcon />,
                       label: "Cohort Discovery Admin",
-                      href: `/account/cohort-discovery-admin`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
                   },
               ]
             : []),
@@ -40,14 +41,14 @@ const getTeamNav = (
         {
             icon: <SettingsOutlinedIcon />,
             label: "Team Management",
-            href: `/account/team/${teamId}/team-management`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
         },
         ...(permissions["fe.account.nav.datasets"]
             ? [
                   {
                       icon: <StorageOutlinedIcon />,
                       label: "Datasets",
-                      href: `/account/team/${teamId}/datasets`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
                   },
               ]
             : []),
@@ -65,7 +66,7 @@ const getTeamNav = (
                               ? [
                                     {
                                         label: "Applications",
-                                        href: `/account/team/${teamId}/data-access-requests/applications`,
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`,
                                     },
                                 ]
                               : []),
@@ -73,7 +74,7 @@ const getTeamNav = (
                               ? [
                                     {
                                         label: "Workflows",
-                                        href: `/account/team/${teamId}/data-access-requests/workflows`,
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.WORKFLOWS}`,
                                     },
                                 ]
                               : []),
@@ -81,7 +82,7 @@ const getTeamNav = (
                               ? [
                                     {
                                         label: "Edit Form",
-                                        href: `/account/team/${teamId}/data-access-requests/edit-form`,
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.EDIT_FORM}`,
                                     },
                                 ]
                               : []),
@@ -94,7 +95,7 @@ const getTeamNav = (
                   {
                       icon: <SchemaOutlinedIcon />,
                       label: "Data Uses",
-                      href: `/account/team/${teamId}/data-uses/`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}/`,
                   },
               ]
             : []),
@@ -113,7 +114,7 @@ const getTeamNav = (
                               ? [
                                     {
                                         label: "API management",
-                                        href: `/account/team/${teamId}/integrations/api-management`,
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
                                     },
                                 ]
                               : []),
@@ -123,7 +124,7 @@ const getTeamNav = (
                               ? [
                                     {
                                         label: "Integration",
-                                        href: `/account/team/${teamId}/integrations/integration`,
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
                                     },
                                 ]
                               : []),
@@ -134,7 +135,7 @@ const getTeamNav = (
         {
             icon: <HelpOutlineOutlinedIcon />,
             label: "Help",
-            href: `/account/team/${teamId}/help`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.HELP}`,
         },
     ];
 };

@@ -21,6 +21,7 @@ import { IntegrationForm, IntegrationPayload } from "@/interfaces/Integration";
 import { requiresSecretKey } from "@/utils/integrations";
 import useGetTeam from "@/hooks/useGetTeam";
 import { useParams, useRouter } from "next/navigation";
+import { RouteName } from "@/consts/routeName";
 
 const CreateIntegrationForm = () => {
     const { push } = useRouter();
@@ -54,7 +55,9 @@ const CreateIntegrationForm = () => {
         });
 
         setTimeout(() => {
-            push(`/account/team/${teamId}/integrations/integration/list`);
+            push(
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`
+            );
         });
     };
 
