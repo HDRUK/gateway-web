@@ -4,17 +4,14 @@ import Banner from "@/components/Banner";
 import { getTranslations } from "next-intl/server";
 
 import BannerImage from "../../../../../public/images/banners/our-mission-and-purpose.png";
-import {
-    ABOUT,
-    NO_DATA,
-    OUR_MISSION_AND_PURPOSE,
-    PAGES,
-} from "@/consts/translation";
+import { ABOUT, OUR_MISSION_AND_PURPOSE, PAGES } from "@/consts/translation";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - About - Our mission and purpose",
     description: "",
 };
+
+const TRANSLATION_NO_DATA = "noData";
 
 export default async function MissionsPage() {
     const t = await getTranslations(
@@ -27,7 +24,9 @@ export default async function MissionsPage() {
             <Banner title="Our Mission and purpose" src={BannerImage} />
             <Container sx={{ background: "white", padding: 10 }}>
                 <div>
-                    {!allMissionsAndPurposes.length && <p>{t(NO_DATA)}</p>}
+                    {!allMissionsAndPurposes.length && (
+                        <p>{t(TRANSLATION_NO_DATA)}</p>
+                    )}
                     {allMissionsAndPurposes.map(mission => (
                         <div>
                             <div

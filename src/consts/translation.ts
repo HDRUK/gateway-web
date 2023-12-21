@@ -21,4 +21,3 @@ export const CREATE = "create";
 // String
 export const TEXT = "text";
 export const TITLE = "title";
-export const NO_DATA = "noData";
