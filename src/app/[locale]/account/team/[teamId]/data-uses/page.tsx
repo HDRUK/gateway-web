@@ -1,7 +1,9 @@
+import { getTranslations } from "next-intl/server";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
 import { cookies } from "next/headers";
+import { ACCOUNT, DATA_USES, PAGES, TEAM, TITLE } from "@/consts/translation";
 
 import { getPermissions } from "@/utils/permissions";
 import { getTeam, getUser } from "@/utils/api";
@@ -25,13 +27,15 @@ export default async function TeamDataUsesPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
+    const t = await getTranslations(`${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}`);
+
     return (
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["fe.account.nav.dur"]}>
             <Paper>
                 <Box>
-                    <Typography variant="h2">Data Uses</Typography>
+                    <Typography variant="h2">{t(TITLE)}</Typography>
                 </Box>
             </Paper>
         </ProtectedAccountRoute>
