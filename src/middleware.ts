@@ -3,12 +3,18 @@ import { NextResponse } from "next/server";
 import conf from "@/config/config";
 import type { NextRequest } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
+import { RouteName } from "./consts/routeName";
 
 export function middleware(request: NextRequest) {
     const token = request.cookies.get(conf.JWT_COOKIE)?.value;
     const authUser = getUserFromToken(token);
 
-    if (request.nextUrl.pathname.startsWith("/en/account/") && !authUser) {
+    if (
+        request.nextUrl.pathname.startsWith(
+            `/${RouteName.EN}/${RouteName.ACCOUNT}/`
+        ) &&
+        !authUser
+    ) {
         return NextResponse.redirect(new URL("/", request.url));
     }
     const handleI18nRouting = createIntlMiddleware({

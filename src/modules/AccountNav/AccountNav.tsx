@@ -8,6 +8,7 @@ import useAuth from "@/hooks/useAuth";
 import { colors } from "@/config/theme";
 import { useMemo } from "react";
 import useLogout from "@/hooks/useLogout";
+import { RouteName } from "@/consts/routeName";
 
 interface AccountNavProps {
     onCloseMenu: () => void;
@@ -33,13 +34,13 @@ const AccountNav = ({ anchorElement, onCloseMenu }: AccountNavProps) => {
         const generateLinks = (user?.teams || []).map(team => ({
             id: team.id,
             label: team.name,
-            href: `/account/team/${team.id}/team-management`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${team.id}/${RouteName.TEAM_MANAGEMENT}`,
         }));
 
         return [
             {
                 label: `${user?.firstname} ${user?.lastname}`,
-                href: "/account/profile",
+                href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
             },
             ...generateLinks,
         ];

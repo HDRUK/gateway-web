@@ -1,6 +1,7 @@
 import { render, within } from "@/utils/testUtils";
 import mockRouter from "next-router-mock";
 import LeftNav from "./LeftNav";
+import { RouteName } from "@/consts/routeName";
 
 describe("LeftNav", () => {
     it("renders the profile navigation item", () => {
@@ -26,7 +27,9 @@ describe("LeftNav", () => {
     });
 
     it("renders expanded items", () => {
-        mockRouter.push("/account/team/1/integrations/api-management");
+        mockRouter.push(
+            `/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`
+        );
 
         const { getAllByRole } = render(
             <LeftNav
