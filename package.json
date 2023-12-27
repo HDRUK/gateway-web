@@ -12,7 +12,7 @@
         "@snyk/protect": "^1.1061.0",
         "@storybook/addon-controls": "^6.3.12",
         "@storybook/addon-docs": "^6.3.12",
-        "axios": "^0.21.3",
+        "axios": "^1.6.3",
         "babel-plugin-react-docgen": "^4.2.1",
         "bootstrap": "^4.4.1",
         "core-js": "^3.6.5",
