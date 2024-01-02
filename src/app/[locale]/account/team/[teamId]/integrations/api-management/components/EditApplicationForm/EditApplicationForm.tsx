@@ -26,6 +26,7 @@ import Paper from "@/components/Paper";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
 import { useParams, useRouter } from "next/navigation";
+import { RouteName } from "@/consts/routeName";
 
 interface EditApplicationFormProps {
     application?: Application;
@@ -89,7 +90,7 @@ const EditApplicationForm = ({
             /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
             setTimeout(() => {
                 push(
-                    `/account/team/${teamId}/integrations/api-management/create/${payload.id}/permissions`
+                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${payload.id}/${RouteName.PERMISSIONS}`
                 );
             });
         }

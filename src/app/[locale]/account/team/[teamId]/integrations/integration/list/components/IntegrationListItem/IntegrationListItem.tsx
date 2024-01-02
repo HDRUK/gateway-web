@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import Card from "@/components/Card";
 import { formatDate } from "@/utils/date";
+import { RouteName } from "@/consts/routeName";
 
 interface IntegrationListItemProps {
     index: number;
@@ -26,7 +27,7 @@ const IntegrationListItem = ({
     return (
         <Card>
             <Link
-                href={`/account/team/${teamId}/integrations/integration/list/${integration.id}`}
+                href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}/${integration.id}`}
                 style={{
                     textDecoration: "none",
                     color: "#000",

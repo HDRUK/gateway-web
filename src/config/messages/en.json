@@ -66,6 +66,55 @@
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK"
     },
+    "pages": {
+        "about": {
+            "ourMissionAndPurpose": {
+                "noData": "Nothing to see here"
+            }
+        },
+        "account": {
+            "cohortDiscoveryAdmin": {
+                "title": "Cohort Discovery Admin",
+                "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+            },
+            "team": {
+                "dataAccessRequests": {
+                    "applications": { "title": "Applications" },
+                    "editForm": { "title": "Edit Form" },
+                    "workflows": { "title": "Workflows" }
+                },
+                "dataUses": {
+                    "title": "Data Uses"
+                },
+                "datasets": {
+                    "title": "Datasets",
+                    "text": "View, add, edit, archive and check the status of your datasets."
+                },
+                "help": {
+                    "title": "Help"
+                },
+                "integration": {
+                    "create": {
+                        "title": "Integration",
+                        "text": "Input and edit the authentication information for the Gateway system to use for the integration"
+                    }
+                },
+                "integrations": {
+                    "apiManagement": {
+                        "create": {
+                            "title": "API management",
+                            "text": "Use this form to create, update and manage your api on the Gateway"
+                        }
+                    }
+                }
+            },
+            "title": "My account"
+        },
+        "home": {
+            "title": "Gateway to health data and tools for research",
+            "text": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery."
+        }
+    },
     "components": {
         "Footer": {
             "text": "HDR UK {year}. All rights reserved."

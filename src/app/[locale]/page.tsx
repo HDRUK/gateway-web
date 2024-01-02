@@ -1,21 +1,20 @@
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import Container from "@/components/Container";
 import Box from "@/components/Box";
+import { HOME, PAGES, TEXT, TITLE } from "@/consts/translation";
 
 export default function HomePage() {
+    const t = useTranslations(`${PAGES}.${HOME}`);
+
     return (
         <Container
             sx={{
                 gridTemplateColumns: "repeat(5, 1fr)",
             }}>
             <Box sx={{ p: 5 }}>
-                <h1>Gateway to health data and tools for research</h1>
-                <p>
-                    Search, discover and request access to hundreds of datasets,
-                    tools and resources for your research. Join the thousands of
-                    researchers and scientists worldwide who are already using
-                    the Gateway for research and scientific discovery.
-                </p>
+                <h1>{t(TITLE)}</h1>
+                <p>{t(TEXT)}</p>
             </Box>
         </Container>
     );

@@ -1,6 +1,15 @@
+import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import {
+    ACCOUNT,
+    APPLICATIONS,
+    DATA_ACCESS_REQUESTS,
+    PAGES,
+    TEAM,
+    TITLE,
+} from "@/consts/translation";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Applications",
@@ -8,10 +17,14 @@ export const metadata = {
 };
 
 const TeamHelpPage = () => {
+    const t = useTranslations(
+        `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_ACCESS_REQUESTS}.${APPLICATIONS}`
+    );
+
     return (
         <Paper>
             <Box>
-                <Typography variant="h2">Applications</Typography>
+                <Typography variant="h2">{t(TITLE)}</Typography>
             </Box>
         </Paper>
     );

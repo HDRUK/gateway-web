@@ -11,6 +11,7 @@ import Link from "next/link";
 import Card from "@/components/Card";
 import { formatDate } from "@/utils/date";
 import { useParams } from "next/navigation";
+import { RouteName } from "@/consts/routeName";
 
 interface ApplicationListItemProps {
     application: Application;
@@ -22,7 +23,7 @@ const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
     return (
         <Card>
             <Link
-                href={`/account/team/${teamId}/integrations/api-management/list/${application.id}`}
+                href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}/${application.id}`}
                 style={{
                     textDecoration: "none",
                     color: "#000",
