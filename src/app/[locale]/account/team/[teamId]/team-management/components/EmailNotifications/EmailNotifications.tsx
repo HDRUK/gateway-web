@@ -10,6 +10,7 @@ import {
     emailNotificationFormSections,
     EmailNotification,
     TeamNotifications,
+    TeamNotificationsForm,
 } from "@/config/forms/emailNotifications";
 import useActionBar from "@/hooks/useActionBar";
 import useAuth from "@/hooks/useAuth";
@@ -25,6 +26,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { Team } from "@/interfaces/Team";
 import { useRouter } from "next/navigation";
+import Form from "@/components/Form";
 import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
 
 interface EmailNotificationsProps {
@@ -35,20 +37,16 @@ interface EmailNotificationsProps {
 const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
     const { showModal } = useModal();
     const router = useRouter();
-    const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
     const { user } = useAuth();
 
-    const { control, formState, handleSubmit, reset, watch } =
+    const { control, formState, handleSubmit, reset } =
         useForm<EmailNotification>({
+            mode: "onChange",
             defaultValues: emailNotificationDefaultValues,
             resolver: yupResolver(emailNotificationValidationSchema),
         });
 
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
-
-    const team_email = watch("team_email");
-    const user_notification_status = watch("user_notification_status");
-    const team_notification_status = watch("team_notification_status");
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -101,6 +99,8 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
     /* Increment custom `changeCount` prop within 'ActionBarProvider' using 'updateStoreProps' */
     useEffect(() => {
         updateStoreProps({
+            formId: "action-bar-form",
+            confirmType: "submit",
             changeCount: Object.keys(formState.dirtyFields).length,
         });
     }, [formState, updateStoreProps]);
@@ -112,18 +112,12 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
         }
     );
 
-    const onSaveTeamEmail = async () => {
+    const submitForm = async (formData: TeamNotificationsForm) => {
+        const { team_email, ...rest } = formData;
         const payload = {
-            user_notification_status,
-            team_notification_status,
-            team_emails: [team_email],
+            ...rest,
+            team_emails: team_email ? [team_email] : [],
         };
-        await updateNotificationEmails(payload);
-        router.refresh();
-    };
-
-    useEffect(() => {
-        if (!shouldSubmit) return;
         showModal({
             confirmText: "Save update",
             cancelText: "No, nevermind",
@@ -145,21 +139,12 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
                     )}
                 </Box>
             ),
-            onSuccess: () => {
-                handleSubmit(onSaveTeamEmail)();
-                setShouldSubmit(false);
-            },
-            onCancel: () => {
-                setShouldSubmit(false);
+            onSuccess: async () => {
+                await updateNotificationEmails(payload);
+                router.refresh();
             },
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        shouldSubmit,
-        team_email,
-        team_notification_status,
-        user_notification_status,
-    ]);
+    };
 
     useEffect(() => {
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
@@ -169,9 +154,6 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
                 cancelText: "Discard",
                 confirmText: "Save",
                 changeCount: 1,
-                onSuccess: () => {
-                    setShouldSubmit(true);
-                },
                 onCancel: () => {
                     reset(originalFormValues);
                 },
@@ -190,33 +172,36 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
     ]);
 
     return (
-        <Paper>
-            <Box>
-                <Typography
-                    sx={{
-                        fontWeight: 500,
-                        fontSize: "18px",
-                        marginBottom: "12px",
-                    }}>
-                    Email notifications
-                </Typography>
-                <Typography
-                    sx={{
-                        marginBottom: 3,
-                    }}>
-                    Team related email notification will automatically be send
-                    to each team members preferred Gateway contact email. Team
-                    Admins can assign an alternative team email account to send
-                    notification. Impacted team members will be automatically
-                    notified when a role is assigned is removed
-                </Typography>
-                <EmailNotificationDescriptions />
-                <InputSectionWrapper
-                    sections={hydratedSections}
-                    control={control}
-                />
-            </Box>
-        </Paper>
+        <Form id="action-bar-form" onSubmit={handleSubmit(submitForm)}>
+            <Paper>
+                <Box>
+                    <Typography
+                        sx={{
+                            fontWeight: 500,
+                            fontSize: "18px",
+                            marginBottom: "12px",
+                        }}>
+                        Email notifications
+                    </Typography>
+                    <Typography
+                        sx={{
+                            marginBottom: 3,
+                        }}>
+                        Team related email notification will automatically be
+                        send to each team members preferred Gateway contact
+                        email. Team Admins can assign an alternative team email
+                        account to send notification. Impacted team members will
+                        be automatically notified when a role is assigned is
+                        removed
+                    </Typography>
+                    <EmailNotificationDescriptions />
+                    <InputSectionWrapper
+                        sections={hydratedSections}
+                        control={control}
+                    />
+                </Box>
+            </Paper>
+        </Form>
     );
 };
 

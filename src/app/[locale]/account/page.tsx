@@ -1,5 +1,7 @@
+import { useTranslations } from "next-intl";
 import BoxContainer from "@/components/BoxContainer";
 import Box from "@/components/Box";
+import { ACCOUNT, PAGES, TITLE } from "@/consts/translation";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account",
@@ -7,6 +9,8 @@ export const metadata = {
 };
 
 function AccountHome() {
+    const t = useTranslations(`${PAGES}.${ACCOUNT}`);
+
     return (
         <BoxContainer
             sx={{
@@ -28,7 +32,7 @@ function AccountHome() {
                 sx={{
                     gridColumn: { tablet: "span 3", laptop: "span 4" },
                 }}>
-                <h2>My account</h2>
+                <h2>{t(TITLE)}</h2>
             </Box>
         </BoxContainer>
     );

@@ -22,6 +22,7 @@ import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import useGetTeam from "@/hooks/useGetTeam";
 
 import { useRouter, useParams } from "next/navigation";
+import { RouteName } from "@/consts/routeName";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
@@ -82,7 +83,7 @@ const CreateApplicationForm = () => {
         /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
         setTimeout(() => {
             push(
-                `/account/team/${teamId}/integrations/api-management/create/${response.id}/permissions`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${response.id}/${RouteName.PERMISSIONS}`
             );
         });
     };

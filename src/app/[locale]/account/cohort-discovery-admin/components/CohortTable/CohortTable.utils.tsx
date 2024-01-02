@@ -18,6 +18,7 @@ import {
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
 } from "@/consts/cohortDiscovery";
 import { CohortStatusPopover } from "./CohortStatusPopover";
+import { RouteName } from "@/consts/routeName";
 
 interface getColumnsProps {
     sort: { key: string; direction: string };
@@ -98,7 +99,7 @@ const getColumns = ({
                 <>
                     <Link
                         sx={{ textDecoration: "none", fontWeight: "bold" }}
-                        href={`/account/cohort-discovery-admin/${original.id}`}>
+                        href={`/${RouteName.ACCOUNT}/${RouteName.COHORT_DISCOVERY_ADMIN}/${original.id}`}>
                         {original.user.name}
                     </Link>
 

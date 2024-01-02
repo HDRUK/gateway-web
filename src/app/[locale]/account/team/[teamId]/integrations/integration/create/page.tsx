@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
@@ -8,6 +9,15 @@ import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import Typography from "@/components/Typography";
 import CreateIntegrationForm from "./components/CreateIntegrationForm";
+import {
+    ACCOUNT,
+    CREATE,
+    INTEGRATION,
+    PAGES,
+    TEAM,
+    TEXT,
+    TITLE,
+} from "@/consts/translation";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Integrations - Integration",
@@ -26,6 +36,10 @@ export default async function TeamCreateIntegrationPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
+    const t = await getTranslations(
+        `${PAGES}.${ACCOUNT}.${TEAM}.${INTEGRATION}.${CREATE}`
+    );
+
     return (
         <ProtectedAccountRoute
             permissions={permissions}
@@ -33,11 +47,8 @@ export default async function TeamCreateIntegrationPage({
             <BackButton label="Back to Integration Management" />
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>
-                    <Typography variant="h2">Integration</Typography>
-                    <Typography>
-                        Input and edit the authentication information for the
-                        Gateway system to use for the integration
-                    </Typography>
+                    <Typography variant="h2">{t(TITLE)}</Typography>
+                    <Typography>{t(TEXT)}</Typography>
                 </Box>
             </Paper>
             <CreateIntegrationForm />

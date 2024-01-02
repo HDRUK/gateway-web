@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
@@ -8,6 +9,16 @@ import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import CreateApplicationForm from "./components/CreateApplicationForm";
+import {
+    ACCOUNT,
+    API_MANAGEMENT,
+    CREATE,
+    INTEGRATIONS,
+    PAGES,
+    TEAM,
+    TEXT,
+    TITLE,
+} from "@/consts/translation";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - API Management",
@@ -26,6 +37,10 @@ export default async function TeamCreatePage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
+    const t = await getTranslations(
+        `${PAGES}.${ACCOUNT}.${TEAM}.${INTEGRATIONS}.${API_MANAGEMENT}.${CREATE}`
+    );
+
     return (
         <ProtectedAccountRoute
             permissions={permissions}
@@ -33,11 +48,8 @@ export default async function TeamCreatePage({
             <BackButton label="Back to API Management" />
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>
-                    <Typography variant="h2">API management</Typography>
-                    <Typography sx={{ marginBottom: 2 }}>
-                        Use this form to create, update and manage your api on
-                        the Gateway
-                    </Typography>
+                    <Typography variant="h2">{t(TITLE)}</Typography>
+                    <Typography sx={{ marginBottom: 2 }}>{t(TEXT)}</Typography>
                 </Box>
             </Paper>
             <CreateApplicationForm />

@@ -5,6 +5,7 @@ import { getTeamUser } from "@/utils/user";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import Box from "@/components/Box";
+import { RouteName } from "@/consts/routeName";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - API Management",
@@ -37,12 +38,12 @@ export default async function TeamIntegrationsPage({
                 <Box sx={{ display: "flex", gap: "40px" }}>
                     <ImageMediaCard
                         img="/images/account/teams/integrations/create.jpg"
-                        href={`/account/team/${teamId}/integrations/integration/create`}
+                        href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.CREATE}`}
                         buttonText="Create new Integration"
                     />
                     <ImageMediaCard
                         img="/images/account/teams/integrations/manage.jpg"
-                        href={`/account/team/${teamId}/integrations/integration/list`}
+                        href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`}
                         buttonText="Manage Integrations"
                     />
                 </Box>

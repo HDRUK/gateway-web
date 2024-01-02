@@ -1,6 +1,12 @@
 import * as yup from "yup";
 import { inputComponents } from ".";
 
+export interface TeamNotificationsForm {
+    user_notification_status: boolean;
+    team_notification_status: boolean;
+    team_email: string;
+}
+
 export interface TeamNotifications {
     user_notification_status: boolean;
     team_notification_status: boolean;
@@ -29,8 +35,14 @@ const validationSchema = yup
             .transform(value => {
                 return value === "" ? null : value;
             })
-            .label("Team email")
-            .nullable(),
+            .nullable()
+            .label("Team email address")
+            .when("team_notification_status", {
+                is: (team_notification_status: boolean) =>
+                    team_notification_status === true,
+                then: () =>
+                    yup.string().email().required().label("Team email address"),
+            }),
     })
     .required();
 
