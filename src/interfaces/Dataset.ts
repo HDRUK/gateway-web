@@ -1,16 +1,16 @@
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 
 interface Metadata {
-    [key: string]: { [key: string]: unknown }
+    [key: string]: { [key: string]: unknown };
 }
 interface VersionItem {
-    id: number,
-    created_at: string,
-    updated_at: string,
-    deleted_at: string | null,
-    dataset_id: number,
-    metadata: { metadata: Metadata },
-    version: number,
+    id: number;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+    dataset_id: number;
+    metadata: { metadata: Metadata };
+    version: number;
 }
 
 interface Dataset {
