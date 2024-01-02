@@ -18,6 +18,15 @@ const nextConfig = withNextIntl({
         }
         return config;
     },
+    async redirects() {
+        return [
+            {
+                source: "/en/about/terms-and-conditions",
+                destination: "/en/terms-and-conditions",
+                permanent: true,
+            },
+        ];
+    },
 });
 
 module.exports = nextConfig;

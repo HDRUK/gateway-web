@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
-
-import Link from "@/components/Link";
-import { Box } from "@mui/material";
-import Button from "@/components/Button";
-import { useState } from "react";
-import { ExpandMoreIcon } from "@/consts/icons";
 import Dropdown from "../HeaderNavDropdown";
 import * as styles from "./HeaderNav.styles";
+import Button from "@/components/Button";
+import Link from "@/components/Link";
+import { ExpandMoreIcon } from "@/consts/icons";
+import { Box } from "@mui/material";
+import { useState } from "react";
 
 interface HeaderNavProps {
     showNavList: boolean;
@@ -80,6 +79,10 @@ function HeaderNav({ showNavList }: HeaderNavProps) {
                 {
                     label: "Our mission and purpose",
                     href: "/about/our-mission-and-purpose",
+                },
+                {
+                    label: "Terms and conditions",
+                    href: "/terms-and-conditions",
                 },
             ],
         },
