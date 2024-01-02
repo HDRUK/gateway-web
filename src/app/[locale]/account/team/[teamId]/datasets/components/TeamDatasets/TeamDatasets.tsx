@@ -6,13 +6,17 @@ import apis from "@/config/apis";
 import { useEffect, useState } from "react";
 import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
-import DatasetTab from "../DatasetTab";
 
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import useDelete from "@/hooks/useDelete";
 import useDebounce from "@/hooks/useDebounce";
-import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import {
+    ArchiveIcon,
+    ContentCopyIcon,
+    EditIcon,
+    UnarchiveIcon,
+} from "@/consts/icons";
 import {
     datasetSearchDefaultValues,
     sortByOptions,
@@ -20,6 +24,7 @@ import {
 import { useForm } from "react-hook-form";
 import { useParams, useSearchParams } from "next/navigation";
 import { RouteName } from "@/consts/routeName";
+import DatasetTab from "../DatasetTab";
 
 interface CountStatus {
     ACTIVE?: number;
@@ -100,6 +105,11 @@ const TeamDatasets = () => {
             href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
             icon: EditIcon,
             label: "Edit dataset metadata",
+        },
+        {
+            href: `/account/team/${teamId}/datasets/duplicate`,
+            icon: ContentCopyIcon,
+            label: "Duplicate dataset metadata",
         },
         ...(tab === "ARCHIVED"
             ? [
