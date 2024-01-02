@@ -6,7 +6,7 @@ import { formatDate } from "@/utils/date";
 import Typography from "@/components/Typography";
 import KeyValueList from "@/components/KeyValueList";
 import { IconType } from "@/interfaces/Ui";
-import { getMauroValue } from "@/utils/mauro";
+import { getMetadataValue } from "@/utils/metadata";
 import { nonManualDatasetCardActions } from "@/consts/actions";
 import CardActions from "../CardActions";
 
@@ -21,11 +21,13 @@ interface DatasetCardProps {
 }
 
 const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
-    const { mauro } = dataset;
-    const title = getMauroValue("properties/summary/title", mauro);
-    const publisherName = getMauroValue(
-        "properties/summary/publisher/publisherName",
-        mauro
+    const { versions } = dataset;
+    const metadata = dataset.versions[0].metadata.metadata;
+    
+    const title = getMetadataValue("properties.summary.title", metadata) as unknown as string;
+    const publisherName = getMetadataValue(
+        "properties.summary.publisher.publisherName",
+        metadata
     );
 
     const originMapping = {
@@ -62,7 +64,7 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                                     key: "Publisher",
                                     value: publisherName,
                                 },
-                                { key: "Version", value: dataset.version },
+                                { key: "Version", value: dataset.versions[0].version },
                                 {
                                     key: "Last activity",
                                     value: formatDate(
