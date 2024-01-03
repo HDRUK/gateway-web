@@ -1,11 +1,16 @@
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 
-interface MauroItem {
-    id: string;
-    key: string;
-    lastUpdated: string;
-    namespace: string;
-    value: string;
+interface Metadata {
+    [key: string]: { [key: string]: unknown };
+}
+interface VersionItem {
+    id: number;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+    dataset_id: number;
+    metadata: { metadata: Metadata };
+    version: number;
 }
 
 interface Dataset {
@@ -13,10 +18,9 @@ interface Dataset {
     status: DatasetStatus;
     label: string | null;
     pid: string | null;
-    mauro: MauroItem[];
+    versions: VersionItem[];
     updated: string;
-    version: string | null;
     create_origin: "FMA" | "MANUAL" | "API";
 }
 
-export type { Dataset, DatasetStatus, MauroItem };
+export type { Dataset, DatasetStatus, VersionItem, Metadata };
