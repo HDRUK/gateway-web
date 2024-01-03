@@ -1,14 +1,16 @@
-import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
-import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
-import { ReleaseNode } from "@/interfaces/Releases";
-import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
-import apis from "@/config/apis";
 import {
     CMSPageResponse,
     CMSPostResponse,
+    PageTemplateDefault,
     PageTemplate1,
 } from "@/interfaces/Cms";
+import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
+import { ReleaseNode } from "@/interfaces/Releases";
+import apis from "@/config/apis";
 import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
+import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
+import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
+import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
 
 async function fetchCMS(
     query = "",
@@ -66,4 +68,20 @@ const getCohortDiscovery = async () => {
     return data?.pages?.nodes[0] || null;
 };
 
-export { getReleaseNotes, getMissionAndPurposes, getCohortDiscovery };
+const getTermsAndConditions = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetTermsAndConditionsQuery,
+        {
+            next: { revalidate: 10 },
+        }
+    );
+
+    return data?.pages?.nodes[0] || null;
+};
+
+export {
+    getReleaseNotes,
+    getMissionAndPurposes,
+    getCohortDiscovery,
+    getTermsAndConditions,
+};

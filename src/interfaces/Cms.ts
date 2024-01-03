@@ -5,6 +5,12 @@ interface CMSPageResponse<T> {
     pages: { nodes: T[] };
 }
 
+interface PageTemplateDefault {
+    id: string;
+    title: string;
+    content: string;
+}
+
 interface PageTemplate1 {
     id: string;
     title: string;
@@ -23,4 +29,9 @@ interface PageTemplate1 {
     };
 }
 
-export type { CMSPostResponse, PageTemplate1, CMSPageResponse };
+export type {
+    CMSPostResponse,
+    PageTemplateDefault,
+    PageTemplate1,
+    CMSPageResponse,
+};
