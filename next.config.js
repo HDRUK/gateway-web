@@ -21,8 +21,8 @@ const nextConfig = withNextIntl({
     async redirects() {
         return [
             {
-                source: "/en/about/terms-and-conditions",
-                destination: "/en/terms-and-conditions",
+                source: "/about/terms-and-conditions",
+                destination: "/terms-and-conditions",
                 permanent: true,
             },
         ];
