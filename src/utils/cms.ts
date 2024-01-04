@@ -1,5 +1,6 @@
 import {
     CMSPageResponse,
+    CMSPagesResponse,
     CMSPostResponse,
     PageTemplateDefault,
     PageTemplate1,
@@ -58,7 +59,7 @@ const getMissionAndPurposes = async () => {
 };
 
 const getCohortDiscovery = async () => {
-    const data: CMSPageResponse<PageTemplate1> = await fetchCMS(
+    const data: CMSPagesResponse<PageTemplate1> = await fetchCMS(
         GetCohortDiscoveryQuery,
         {
             next: { revalidate: 10 },
@@ -76,7 +77,7 @@ const getTermsAndConditions = async () => {
         }
     );
 
-    return data?.pages?.nodes[0] || null;
+    return data?.page || null;
 };
 
 export {

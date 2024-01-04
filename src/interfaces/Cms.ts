@@ -1,8 +1,11 @@
 interface CMSPostResponse<T> {
     posts: { edges: T[] };
 }
-interface CMSPageResponse<T> {
+interface CMSPagesResponse<T> {
     pages: { nodes: T[] };
+}
+interface CMSPageResponse<T> {
+    page: T;
 }
 
 interface PageTemplateDefault {
@@ -34,4 +37,5 @@ export type {
     PageTemplateDefault,
     PageTemplate1,
     CMSPageResponse,
+    CMSPagesResponse,
 };

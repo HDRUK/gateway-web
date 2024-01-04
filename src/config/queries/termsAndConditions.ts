@@ -1,11 +1,9 @@
 const GetTermsAndConditionsQuery = `
 query GetTermsAndConditionsQuery {
-  pages(where: { id: 171 }) {
-    nodes {
-      id
-      title
-      content      
-    }
+  page(id: "terms-and-conditions", idType: URI) {
+    id
+    title
+    content
   }
 }
 `;
