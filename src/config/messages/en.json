@@ -64,12 +64,19 @@
     },
     "common": {
         "companyNameShort": "HDR UK",
-        "companyNameLong": "Health Data Research UK"
+        "companyNameLong": "Health Data Research UK",
+        "submit": "Submit",
+        "cancel": "Cancel"
     },
     "pages": {
         "about": {
             "ourMissionAndPurpose": {
                 "noData": "Nothing to see here"
+            },
+            "cohortDiscoveryRequest": {
+                "title": "Cohort Discovery Registration",
+                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address and role description.",
+                "terms": "You can review your terms and conditions <terms>here</terms>"
             }
         },
         "account": {
@@ -157,6 +164,11 @@
                 "title": "Are you sure you want to remove %%USER_NAME%%?",
                 "confirmButton": "Remove",
                 "cancelButton": "Cancel"
+            },
+            "CohortRequestSentDialog": {
+                "title": "Request Sent!",
+                "text": "We have sent confirmation to your registered e-mail address. We will then notify you with the decision via your registered e-mail address within 5 business days.",
+                "confirmButton": "Back to homepage"
             }
         }
     }

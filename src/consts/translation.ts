@@ -3,6 +3,8 @@ export const ABOUT = "about";
 export const ACCOUNT = "account";
 export const PAGES = "pages";
 export const COHORT_DISCOVERY_ADMIN = "cohortDiscoveryAdmin";
+export const COHORT_DISCOVERY_REQUEST = "cohortDiscoveryRequest";
+export const COHORT_DISCOVERY_REQUEST_SENT_DIALOG = "CohortRequestSentDialog";
 export const OUR_MISSION_AND_PURPOSE = "ourMissionAndPurpose";
 export const HOME = "home";
 export const TEAM = "team";
@@ -17,7 +19,11 @@ export const INTEGRATION = "integration";
 export const INTEGRATIONS = "integrations";
 export const API_MANAGEMENT = "apiManagement";
 export const CREATE = "create";
+export const COMMON = "common";
+export const MODULES = "modules";
+export const DIALOGS = "dialogs";
 
 // String
 export const TEXT = "text";
 export const TITLE = "title";
+export const CONFIRM_BUTTON = "confirmButton";
