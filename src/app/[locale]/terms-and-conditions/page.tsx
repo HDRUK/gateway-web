@@ -2,6 +2,7 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { getTermsAndConditions } from "@/utils/cms";
 import BannerImage from "../../../../public/images/banners/release-notes.png";
+import CmsPageContent from "./components/CmsPageContent";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Terms and Conditions",
@@ -9,18 +10,13 @@ export const metadata = {
 };
 
 const TermsAndConditionsPage = async () => {
-    const termsAndConditionsContent = await getTermsAndConditions();
+    const cmsPage = await getTermsAndConditions();
 
     return (
         <>
-            <Banner title={termsAndConditionsContent.title} src={BannerImage} />
+            <Banner title={cmsPage.title} src={BannerImage} />
             <Container sx={{ padding: 10 }}>
-                <div
-                    // eslint-disable-next-line react/no-danger
-                    dangerouslySetInnerHTML={{
-                        __html: termsAndConditionsContent.content,
-                    }}
-                />
+                <CmsPageContent cmsPage={cmsPage} />
             </Container>
         </>
     );
