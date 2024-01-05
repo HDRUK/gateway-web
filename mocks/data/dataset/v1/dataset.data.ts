@@ -1,39 +1,55 @@
 import { faker } from "@faker-js/faker";
-import { Dataset, MauroItem } from "@/interfaces/Dataset";
+import { Dataset, Metadata, VersionItem } from "@/interfaces/Dataset";
 
-const generateMauroItemV1 = (data = {}): MauroItem => {
+const generateDatasetMetadataV1 = (): { metadata: Metadata } => {
     return {
-        id: faker.datatype.uuid(),
-        value: faker.datatype.string(),
-        namespace: faker.datatype.string(),
-        key: faker.datatype.string(),
-        lastUpdated: faker.date.past().toString(),
-        ...data,
+        metadata: {
+            summary: {
+                title: faker.datatype.string(),
+                publisher: {
+                    publisherName: faker.datatype.string(),
+                },
+            },
+        },
+    };
+};
+
+const generateDatasetVersionV1 = (): VersionItem => {
+    return {
+        id: faker.datatype.number(),
+        created_at: faker.date.past().toString(),
+        updated_at: faker.date.past().toString(),
+        deleted_at: null,
+        dataset_id: faker.datatype.number(),
+        metadata: generateDatasetMetadataV1(),
+        version: faker.datatype.number(),
     };
 };
 
 const generateDatasetV1 = (data = {}): Dataset => {
     return {
         id: faker.datatype.number(),
+        team_id: faker.datatype.number(),
+        user_id: faker.datatype.number(),
         status: faker.helpers.arrayElement(["ARCHIVED", "ACTIVE", "DRAFT"]),
         create_origin: faker.helpers.arrayElement(["FMA", "API", "MANUAL"]),
-        version: faker.helpers.arrayElement(["1.0.0", "2.0.0"]),
         pid: faker.datatype.uuid(),
-        mauro: Array.from({ length: 3 }).map(() => generateMauroItemV1()),
-        label: faker.datatype.string(),
+        versions: Array.from({ length: 3 }).map(() =>
+            generateDatasetVersionV1()
+        ),
         updated: faker.date.past().toString(),
         ...data,
     };
 };
 
-const mauroV1 = generateMauroItemV1();
+const datasetVersionV1 = generateDatasetVersionV1();
 const datasetV1 = generateDatasetV1();
 const datasetsV1 = Array.from({ length: 3 }).map(() => generateDatasetV1());
 
 export {
     generateDatasetV1,
+    generateDatasetVersionV1,
     datasetsV1,
     datasetV1,
-    generateMauroItemV1,
-    mauroV1,
+    datasetVersionV1,
 };

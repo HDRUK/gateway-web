@@ -6,8 +6,8 @@ import { formatDate } from "@/utils/date";
 import Typography from "@/components/Typography";
 import KeyValueList from "@/components/KeyValueList";
 import { IconType } from "@/interfaces/Ui";
-import { getMauroValue } from "@/utils/mauro";
 import { nonManualDatasetCardActions } from "@/consts/actions";
+import { get } from "lodash";
 import CardActions from "../CardActions";
 
 interface DatasetCardProps {
@@ -21,12 +21,21 @@ interface DatasetCardProps {
 }
 
 const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
-    const { mauro } = dataset;
-    const title = getMauroValue("properties/summary/title", mauro);
-    const publisherName = getMauroValue(
-        "properties/summary/publisher/publisherName",
-        mauro
-    );
+    const latestMetadata = get(dataset, "versions[0]");
+
+    if (!latestMetadata) return null;
+
+    const {
+        version,
+        updated_at,
+        metadata: { metadata },
+    } = latestMetadata;
+
+    const title = get(metadata, "summary.title") as unknown as string;
+    const publisherName = get(
+        metadata,
+        "summary.publisher.publisherName"
+    ) as unknown as string;
 
     const originMapping = {
         MANUAL: "Manually",
@@ -62,11 +71,14 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                                     key: "Publisher",
                                     value: publisherName,
                                 },
-                                { key: "Version", value: dataset.version },
+                                {
+                                    key: "Version",
+                                    value: version,
+                                },
                                 {
                                     key: "Last activity",
                                     value: formatDate(
-                                        dataset.updated,
+                                        updated_at,
                                         "DD MMMM YYYY HH:mm"
                                     ),
                                 },

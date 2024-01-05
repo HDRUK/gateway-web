@@ -1,30 +1,18 @@
-import TeamDatasets from "./TeamDatasets";
 import { render, screen, waitFor, within } from "@/utils/testUtils";
 import { server } from "@/mocks/server";
 import { getDatasetsV1 } from "@/mocks/handlers/datasets";
-import { generateDatasetV1, generateMauroItemV1 } from "@/mocks/data/dataset";
+import { generateDatasetV1 } from "@/mocks/data/dataset";
 import mockRouter from "next-router-mock";
+import TeamDatasets from "./TeamDatasets";
 
 mockRouter.query = { teamId: "1", tab: "ACTIVE" };
 
 describe("TeamDatasets", () => {
     it("should render all datasets (filtered on BE)", async () => {
-        const mauroItems = [
-            generateMauroItemV1({
-                value: "title",
-                key: "properties/summary/title",
-            }),
-            generateMauroItemV1({
-                value: "publisherName",
-                key: "properties/summary/publisher/publisherName",
-            }),
-        ];
-
         const mockDatasets = [
             generateDatasetV1({
                 create_origin: "MANUAL",
                 status: "ARCHIVED",
-                mauro: mauroItems,
             }),
             generateDatasetV1({ create_origin: "API", status: "ACTIVE" }),
             generateDatasetV1({ create_origin: "FMA", status: "DRAFT" }),
@@ -37,13 +25,19 @@ describe("TeamDatasets", () => {
             expect(datasetCards).toHaveLength(3);
 
             expect(
-                within(datasetCards[0]).getByText(`${mauroItems[0].value}`)
+                within(datasetCards[0]).getByText(
+                    `${mockDatasets[0].versions[0].metadata.metadata.summary.title}`
+                )
             ).toBeInTheDocument();
             expect(
-                within(datasetCards[0]).getByText(`${mauroItems[1].value}`)
+                within(datasetCards[0]).getByText(
+                    `${mockDatasets[0].versions[0].metadata.metadata.summary.publisher.publisherName}`
+                )
             ).toBeInTheDocument();
             expect(
-                within(datasetCards[0]).getByText(`${mockDatasets[0].version}`)
+                within(datasetCards[0]).getByText(
+                    `${mockDatasets[0].versions[0].version}`
+                )
             ).toBeInTheDocument();
 
             expect(

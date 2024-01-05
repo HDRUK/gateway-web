@@ -13,6 +13,7 @@ const Banner = ({ title, subTitle, src }: BannerProps) => {
             style={{
                 position: "relative",
                 width: "100vw",
+                maxWidth: "100%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",

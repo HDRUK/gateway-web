@@ -76,13 +76,15 @@ const DatasetTab = ({
                 <ShowingXofX from={from} to={to} total={total} />
             </Box>
 
-            {(list || [])?.map(dataset => (
-                <DatasetCard
-                    actions={actions}
-                    key={dataset.id}
-                    dataset={dataset}
-                />
-            ))}
+            {(list || [])
+                .map(dataset => (
+                    <DatasetCard
+                        actions={actions}
+                        key={dataset.id}
+                        dataset={dataset}
+                    />
+                ))
+                .filter(dataset => !!dataset)}
             {list?.length === 0 && (
                 <Paper sx={{ p: 2, mb: 2 }}>
                     No {label.toLowerCase()} datasets found on the Gateway for
