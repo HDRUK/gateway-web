@@ -24,6 +24,14 @@ import {
 import { useForm } from "react-hook-form";
 import { useParams, useSearchParams } from "next/navigation";
 import { RouteName } from "@/consts/routeName";
+import { useTranslations } from "next-intl";
+import {
+    ACCOUNT,
+    DATASETS,
+    PAGES,
+    TEAM,
+    COMPONENTS,
+} from "@/consts/translation";
 import DatasetTab from "../DatasetTab";
 
 interface CountStatus {
@@ -33,6 +41,9 @@ interface CountStatus {
 }
 
 const TeamDatasets = () => {
+    const t = useTranslations(
+        `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.TeamDatasets`
+    );
     const { showModal } = useModal();
     const searchParams = useSearchParams();
     const tab = searchParams.get("tab");
@@ -104,12 +115,12 @@ const TeamDatasets = () => {
         {
             href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
             icon: EditIcon,
-            label: "Edit dataset metadata",
+            label: t("actions.edit.label"),
         },
         {
             href: `/account/team/${teamId}/datasets/duplicate`,
             icon: ContentCopyIcon,
-            label: "Duplicate dataset metadata",
+            label: t("actions.duplicate.label"),
         },
         ...(tab === "ARCHIVED"
             ? [
@@ -118,25 +129,22 @@ const TeamDatasets = () => {
                           showModal({
                               tertiaryButton: {
                                   onAction: () => {
-                                      console.log(`Make ${id} Active`);
                                       unArchiveDataset(id, {
                                           status: "ACTIVE",
                                       });
                                   },
-                                  buttonText: "Make Active",
+                                  buttonText: t("actions.unarchive.buttonText"),
                               },
                               onSuccess: () => {
-                                  console.log(`Make ${id} Draft`);
                                   unArchiveDataset(id, { status: "DRAFT" });
                               },
-                              confirmText: "Make Draft",
-                              title: "Unarchive this dataset",
-                              content:
-                                  "Select whether you would like to move this dataset to Active (this will make your dataset available within search results) or Draft (where you can edit the dataset metadata before making it available within search results).",
+                              confirmText: t("actions.unarchive.confirmText"),
+                              title: t("actions.unarchive.title"),
+                              content: t("actions.unarchive.label"),
                           });
                       },
                       icon: UnarchiveIcon,
-                      label: "Unarchive dataset",
+                      label: t("actions.unarchive."),
                   },
               ]
             : []),
@@ -149,7 +157,7 @@ const TeamDatasets = () => {
                           mutate();
                       },
                       icon: ArchiveIcon,
-                      label: "Archive dataset metadata so it is no longer live on the Gateway",
+                      label: t("actions.archive.label"),
                   },
               ]
             : []),

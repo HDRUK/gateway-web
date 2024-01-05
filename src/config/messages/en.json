@@ -104,6 +104,26 @@
                         "EditDataset": {
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
+                        },
+                        "TeamDatasets": {
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive this dataset",
+                                    "content": "Select whether you would like to move this dataset to Active (this will make your dataset available within search results) or Draft (where you can edit the dataset metadata before making it available within search results).",
+                                    "label": "Unarchive dataset"
+                                },
+                                "edit": {
+                                    "label": "Edit dataset metadata"
+                                },
+                                "duplicate": {
+                                    "label": "Duplicate dataset metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive dataset metadata so it is no longer live on the Gateway"
+                                }
+                            }
                         }
                     }
                 },

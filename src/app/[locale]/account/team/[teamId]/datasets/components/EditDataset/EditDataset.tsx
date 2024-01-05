@@ -20,14 +20,22 @@ import { RouteName } from "@/consts/routeName";
 import { useEffect } from "react";
 import DynamicInputWrapper from "@/components/DynamicInputWrapper";
 import { useTranslations } from "next-intl";
-import { ACCOUNT, DATASETS, PAGES, TEAM } from "@/consts/translation";
+import {
+    ACCOUNT,
+    COMPONENTS,
+    DATASETS,
+    PAGES,
+    TEAM,
+} from "@/consts/translation";
 
 interface EditDatasetProps {
     isDuplicate?: boolean;
 }
 
 const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
-    const t = useTranslations(`${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}`);
+    const t = useTranslations(
+        `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.EditDataset`
+    );
 
     const { teamId, datasetId } = useParams();
     const { push } = useRouter();
@@ -109,9 +117,7 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
                     padding: 2,
                 }}>
                 <Button type="submit">
-                    {isDuplicate
-                        ? t("components.EditDataset.duplicateButton")
-                        : t("components.EditDataset.editButton")}
+                    {isDuplicate ? t("duplicateButton") : t("editButton")}
                 </Button>
             </Paper>
         </Form>

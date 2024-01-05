@@ -1,5 +1,7 @@
 const nextJest = require("next/jest");
 
+process.env.TZ = "UTC";
+
 const createJestConfig = nextJest({
     dir: "./",
 });

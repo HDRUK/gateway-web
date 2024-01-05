@@ -12,6 +12,7 @@ export const EDIT_FORM = "editForm";
 export const WORKFLOWS = "workflows";
 export const DATA_USES = "dataUses";
 export const DATASETS = "datasets";
+export const COMPONENTS = "components";
 export const DUPLICATE = "duplicate";
 export const HELP = "help";
 export const INTEGRATION = "integration";
