@@ -18,7 +18,6 @@ interface Dataset {
     team_id: number;
     user_id: number;
     status: DatasetStatus;
-    label: string | null;
     pid: string | null;
     versions: VersionItem[];
     updated: string;
