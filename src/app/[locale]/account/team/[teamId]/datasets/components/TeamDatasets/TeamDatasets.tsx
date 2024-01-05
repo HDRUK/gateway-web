@@ -140,11 +140,11 @@ const TeamDatasets = () => {
                               },
                               confirmText: t("actions.unarchive.confirmText"),
                               title: t("actions.unarchive.title"),
-                              content: t("actions.unarchive.label"),
+                              content: t("actions.unarchive.content"),
                           });
                       },
                       icon: UnarchiveIcon,
-                      label: t("actions.unarchive."),
+                      label: t("actions.unarchive.label"),
                   },
               ]
             : []),
