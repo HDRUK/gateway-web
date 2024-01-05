@@ -1,7 +1,7 @@
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 
 interface Metadata {
-    [key: string]: { [key: string]: unknown };
+    [key: string]: { [key: string]: string | number | Metadata };
 }
 interface VersionItem {
     id: number;
@@ -15,12 +15,17 @@ interface VersionItem {
 
 interface Dataset {
     id: number;
+    team_id: number;
+    user_id: number;
     status: DatasetStatus;
-    label: string | null;
     pid: string | null;
     versions: VersionItem[];
     updated: string;
     create_origin: "FMA" | "MANUAL" | "API";
 }
 
-export type { Dataset, DatasetStatus, VersionItem, Metadata };
+interface NewDataset extends Omit<Dataset, "versions" | "id"> {
+    metadata: { metadata: Metadata };
+}
+
+export type { NewDataset, Dataset, DatasetStatus, VersionItem, Metadata };

@@ -29,13 +29,14 @@ const generateDatasetVersionV1 = (): VersionItem => {
 const generateDatasetV1 = (data = {}): Dataset => {
     return {
         id: faker.datatype.number(),
+        team_id: faker.datatype.number(),
+        user_id: faker.datatype.number(),
         status: faker.helpers.arrayElement(["ARCHIVED", "ACTIVE", "DRAFT"]),
         create_origin: faker.helpers.arrayElement(["FMA", "API", "MANUAL"]),
         pid: faker.datatype.uuid(),
         versions: Array.from({ length: 3 }).map(() =>
             generateDatasetVersionV1()
         ),
-        label: faker.datatype.string(),
         updated: faker.date.past().toString(),
         ...data,
     };

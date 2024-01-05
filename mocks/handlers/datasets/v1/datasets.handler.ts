@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import apis from "@/config/apis";
 import { Dataset } from "@/interfaces/Dataset";
-import { datasetsV1 } from "@/mocks/data/dataset";
+import { datasetV1, datasetsV1 } from "@/mocks/data/dataset";
 import { PaginationType } from "@/interfaces/Pagination";
 
 const getDatasetsV1 = (data: Dataset[] = datasetsV1, status = 200) => {
@@ -30,4 +30,16 @@ const getDatasetsV1 = (data: Dataset[] = datasetsV1, status = 200) => {
     });
 };
 
-export { getDatasetsV1 };
+const getDatasetV1 = (data: Dataset = datasetV1, status = 200) => {
+    return rest.get(`${apis.datasetsV1Url}/${data.id}`, (req, res, ctx) => {
+        if (status !== 200) {
+            return res(
+                ctx.status(status),
+                ctx.json(`Request failed with status code ${status}`)
+            );
+        }
+        return res(ctx.status(status), ctx.json<{ data: Dataset }>({ data }));
+    });
+};
+
+export { getDatasetsV1, getDatasetV1 };
