@@ -9,22 +9,14 @@ import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
 import ModalButtons from "@/components/ModalButtons";
 import useDialog from "@/hooks/useDialog";
-import {
-    COHORT_DISCOVERY_REQUEST_SENT_DIALOG,
-    CONFIRM_BUTTON,
-    DIALOGS,
-    MODULES,
-    TEXT,
-    TITLE,
-} from "@/consts/translation";
+
+const TRANSLATION_PATH = "modules.dialogs.CohortRequestSentDialog";
 
 const CohortRequestSentDialog = () => {
     const { push } = useRouter();
     const { hideDialog } = useDialog();
 
-    const t = useTranslations(
-        `${MODULES}.${DIALOGS}.${COHORT_DISCOVERY_REQUEST_SENT_DIALOG}`
-    );
+    const t = useTranslations(TRANSLATION_PATH);
 
     const handleSuccess = () => {
         hideDialog();
@@ -32,14 +24,14 @@ const CohortRequestSentDialog = () => {
     };
 
     return (
-        <Dialog title={t(TITLE)}>
+        <Dialog title={t("title")}>
             <Box sx={{ p: 0 }} component="form">
                 <MuiDialogContent>
-                    <Typography sx={{ mb: 2 }}>{t(TEXT)}</Typography>
+                    <Typography sx={{ mb: 2 }}>{t("text")}</Typography>
                 </MuiDialogContent>
                 <MuiDialogActions>
                     <ModalButtons
-                        confirmText={t(CONFIRM_BUTTON)}
+                        confirmText={t("confirmButton")}
                         onSuccess={handleSuccess}
                     />
                 </MuiDialogActions>

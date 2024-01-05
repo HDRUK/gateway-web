@@ -8,20 +8,9 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import useDialog from "@/hooks/useDialog";
 import { RouteName } from "@/consts/routeName";
-import {
-    ABOUT,
-    COHORT_DISCOVERY_REQUEST,
-    COMMON,
-    PAGES,
-    TEXT,
-    TITLE,
-} from "@/consts/translation";
 import CohortRequestSentDialog from "../CohortRequestSentDialog";
 
-const TERMS_CONDITIONS = "terms";
-const SUBMIT = "submit";
-const CANCEL = "cancel";
-const COHORT_TEXT = `${PAGES}.${ABOUT}.${COHORT_DISCOVERY_REQUEST}`;
+const COHORT_TRANSLATION_PATH = "pages.about.cohortDiscoveryRequest";
 
 const CohortDisoveryRequestForm = () => {
     const { push } = useRouter();
@@ -44,10 +33,10 @@ const CohortDisoveryRequestForm = () => {
             <Paper sx={{ mb: 2 }}>
                 <Box sx={{ p: 4 }}>
                     <Typography variant="h2">
-                        {t(`${COHORT_TEXT}.${TITLE}`)}
+                        {t(`${COHORT_TRANSLATION_PATH}.title`)}
                     </Typography>
                     <Typography sx={{ marginBottom: 2 }}>
-                        {t.rich(`${COHORT_TEXT}.${TEXT}`, {
+                        {t.rich(`${COHORT_TRANSLATION_PATH}.text`, {
                             userprofile: chunks => (
                                 <Link
                                     href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`}>
@@ -57,7 +46,7 @@ const CohortDisoveryRequestForm = () => {
                         })}
                     </Typography>
                     <Typography>
-                        {t.rich(`${COHORT_TEXT}.${TERMS_CONDITIONS}`, {
+                        {t.rich(`${COHORT_TRANSLATION_PATH}.terms`, {
                             terms: chunks => (
                                 <Link href={`/${RouteName.TERMS}`}>
                                     {chunks}
@@ -73,11 +62,9 @@ const CohortDisoveryRequestForm = () => {
                     display: "flex",
                     gap: 2,
                 }}>
-                <Button onClick={handleSubmit}>
-                    {t(`${COMMON}.${SUBMIT}`)}
-                </Button>
+                <Button onClick={handleSubmit}>{t("common.submit")}</Button>
                 <Button variant="text" onClick={handleCancel}>
-                    {t(`${COMMON}.${CANCEL}`)}
+                    {t("common.cancel")}
                 </Button>
             </Box>
         </BoxContainer>
