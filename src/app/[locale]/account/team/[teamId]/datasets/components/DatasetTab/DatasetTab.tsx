@@ -13,6 +13,7 @@ import {
 } from "@/config/forms/datasetAccountSearch";
 import InputWrapper from "@/components/InputWrapper";
 import { Control } from "react-hook-form";
+import DownloadCSV from "../DownloadCSV";
 
 interface DatasetTabProps {
     list?: Dataset[];
@@ -72,8 +73,15 @@ const DatasetTab = ({
                 </BoxContainer>
             </BoxContainer>
 
-            <Box sx={{ p: 0 }}>
+            <Box
+                sx={{
+                    p: 0,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                }}>
                 <ShowingXofX from={from} to={to} total={total} />
+                <DownloadCSV />
             </Box>
 
             {(list || [])

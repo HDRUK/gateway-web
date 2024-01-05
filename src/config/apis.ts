@@ -21,6 +21,7 @@ const apis = {
     applicationsV1UrlIP: `${apiV1IPUrl}/applications`,
     permissionsV1Url: `${apiV1Url}/permissions`,
     datasetsV1Url: `${apiV1Url}/datasets`,
+    datasetsExportV1Url: `${apiV1Url}/datasets/export`,
     teamsV1Url: `${apiV1Url}/teams`,
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
