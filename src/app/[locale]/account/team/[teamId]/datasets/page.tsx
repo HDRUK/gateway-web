@@ -8,7 +8,6 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
-import TeamDatasets from "./components/TeamDatasets";
 import {
     ACCOUNT,
     DATASETS,
@@ -17,6 +16,7 @@ import {
     TEXT,
     TITLE,
 } from "@/consts/translation";
+import TeamDatasets from "./components/TeamDatasets";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Datasets",

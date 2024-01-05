@@ -1,0 +1,66 @@
+import InputWrapper from "@/components/InputWrapper";
+import Box from "@/components/Box";
+import { colors } from "@/config/theme";
+import { isPlainObject } from "lodash";
+import { inputComponents } from "@/config/forms";
+import { capitalise, splitCamelcase } from "@/utils/general";
+import { Control } from "react-hook-form";
+import { Metadata } from "@/interfaces/Dataset";
+import Typography from "../Typography";
+
+interface InputSectionWrapperProps {
+    name?: string;
+    control: Control;
+    level: string | { [key: string]: unknown };
+}
+
+/* todo: Interim component to render dynamic fields */
+const DynamicInputWrapper = ({
+    level,
+    name,
+    ...rest
+}: InputSectionWrapperProps) => {
+    if (isPlainObject(level)) {
+        return (
+            <>
+                {Object.keys(level).map(key => {
+                    if (typeof (level as Metadata)[key] === "string") {
+                        return (
+                            <InputWrapper
+                                label={capitalise(splitCamelcase(key))}
+                                name={name ? `${name}.${key}` : key}
+                                key={name ? `${name}.${key}` : key}
+                                {...rest}
+                                component={inputComponents.TextField}
+                                required
+                            />
+                        );
+                    }
+                    if (isPlainObject((level as Metadata)[key])) {
+                        return (
+                            <Box
+                                key={name ? `${name}.${key}` : key}
+                                sx={{
+                                    borderBottom: `1px solid ${colors.grey300}`,
+                                    mb: 2,
+                                }}>
+                                <Typography fontWeight="bold" sx={{ mb: 2 }}>
+                                    {capitalise(splitCamelcase(key))}
+                                </Typography>
+                                <DynamicInputWrapper
+                                    name={name ? `${name}.${key}` : key}
+                                    level={(level as Metadata)[key]}
+                                    {...rest}
+                                />
+                            </Box>
+                        );
+                    }
+                    return null;
+                })}
+            </>
+        );
+    }
+    return null;
+};
+
+export default DynamicInputWrapper;

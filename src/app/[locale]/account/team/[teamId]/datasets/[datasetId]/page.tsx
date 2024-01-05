@@ -7,6 +7,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
+import EditDataset from "../components/EditDataset";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Dataset",
@@ -35,6 +36,7 @@ export default async function TeamDatasetPage({
                         <Typography variant="h2">Dataset</Typography>
                     </Box>
                 </Paper>
+                <EditDataset />
             </BoxContainer>
         </ProtectedAccountRoute>
     );

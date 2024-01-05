@@ -60,6 +60,13 @@
                     "message": "API created and enabled"
                 }
             }
+        },
+        "duplicateDataset": {
+            "success": {
+                "post": {
+                    "message": "Dataset successfully duplicated"
+                }
+            }
         }
     },
     "common": {
@@ -88,7 +95,17 @@
                 },
                 "datasets": {
                     "title": "Datasets",
-                    "text": "View, add, edit, archive and check the status of your datasets."
+                    "text": "View, add, edit, archive and check the status of your datasets.",
+                    "duplicate": {
+                        "title": "Duplicate dataset",
+                        "text": "Update and duplicate this dataset."
+                    },
+                    "components": {
+                        "EditDataset": {
+                            "editButton": "Update",
+                            "duplicateButton": "Duplicate"
+                        }
+                    }
                 },
                 "help": {
                     "title": "Help"

@@ -11,12 +11,13 @@ import Paper from "@/components/Paper";
 import {
     ACCOUNT,
     DATASETS,
+    DUPLICATE,
     PAGES,
     TEAM,
     TEXT,
     TITLE,
 } from "@/consts/translation";
-import TeamDatasets from "../../components/TeamDatasets";
+import EditDataset from "../../components/EditDataset";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Datasets",
@@ -35,7 +36,9 @@ export default async function TeamDatasetsPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    const t = await getTranslations(`${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}`);
+    const t = await getTranslations(
+        `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${DUPLICATE}`
+    );
 
     return (
         <ProtectedAccountRoute
@@ -48,7 +51,7 @@ export default async function TeamDatasetsPage({
                         <Typography>{t(TEXT)}</Typography>
                     </Box>
                 </Paper>
-                <TeamDatasets />
+                <EditDataset isDuplicate />
             </BoxContainer>
         </ProtectedAccountRoute>
     );
