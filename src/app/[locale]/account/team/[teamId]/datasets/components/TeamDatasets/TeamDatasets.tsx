@@ -6,7 +6,6 @@ import apis from "@/config/apis";
 import { useEffect, useState } from "react";
 import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
-
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import useDelete from "@/hooks/useDelete";
@@ -118,7 +117,7 @@ const TeamDatasets = () => {
             label: t("actions.edit.label"),
         },
         {
-            href: `/account/team/${teamId}/datasets/duplicate`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}.${RouteName.DUPLICATE}`,
             icon: ContentCopyIcon,
             label: t("actions.duplicate.label"),
         },
