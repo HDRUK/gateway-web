@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 import { downloadCSV } from "@/utils/download";
 import useGet from "@/hooks/useGet";
 import { useEffect, useState } from "react";
-import { CsvExport } from "@/interfaces/CohortExport";
+import { CsvExport } from "@/interfaces/CsvExport";
 
 interface DownloadCSVProps {
     apiPath: string;
