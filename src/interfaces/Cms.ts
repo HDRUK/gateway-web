@@ -32,7 +32,7 @@ interface PageTemplate1 {
             middlePanel: string;
         };
     };
-    ctaOverrideComponent: React.ReactElement;
+    ctaOverrideComponent?: React.ReactElement;
 }
 
 export type {
