@@ -1,0 +1,74 @@
+"use client";
+
+import { Box, Paper, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import BoxContainer from "@/components/BoxContainer";
+import Button from "@/components/Button";
+import Link from "@/components/Link";
+import useDialog from "@/hooks/useDialog";
+import { RouteName } from "@/consts/routeName";
+import CohortRequestSentDialog from "../CohortRequestSentDialog";
+
+const COHORT_TRANSLATION_PATH = "pages.about.cohortDiscoveryRequest";
+
+const CohortDisoveryRequestForm = () => {
+    const { push } = useRouter();
+    const { showDialog } = useDialog();
+    const t = useTranslations();
+
+    const handleSubmit = () => {
+        showDialog(CohortRequestSentDialog);
+    };
+
+    const handleCancel = () => {
+        push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
+    };
+
+    return (
+        <BoxContainer
+            sx={{
+                p: 4,
+            }}>
+            <Paper sx={{ mb: 2 }}>
+                <Box sx={{ p: 4 }}>
+                    <Typography variant="h2">
+                        {t(`${COHORT_TRANSLATION_PATH}.title`)}
+                    </Typography>
+                    <Typography sx={{ marginBottom: 2 }}>
+                        {t.rich(`${COHORT_TRANSLATION_PATH}.text`, {
+                            userprofile: chunks => (
+                                <Link
+                                    href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`}>
+                                    {chunks}
+                                </Link>
+                            ),
+                        })}
+                    </Typography>
+                    <Typography>
+                        {t.rich(`${COHORT_TRANSLATION_PATH}.terms`, {
+                            terms: chunks => (
+                                <Link href={`/${RouteName.TERMS}`}>
+                                    {chunks}
+                                </Link>
+                            ),
+                        })}
+                    </Typography>
+                </Box>
+            </Paper>
+
+            <Box
+                sx={{
+                    display: "flex",
+                    gap: 2,
+                }}>
+                <Button onClick={handleSubmit}>{t("common.submit")}</Button>
+                <Button variant="text" onClick={handleCancel}>
+                    {t("common.cancel")}
+                </Button>
+            </Box>
+        </BoxContainer>
+    );
+};
+
+export default CohortDisoveryRequestForm;

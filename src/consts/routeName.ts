@@ -1,7 +1,9 @@
 export enum RouteName {
+    ABOUT = "about",
     ACCOUNT = "account",
     APPLICATIONS = "applications",
     API_MANAGEMENT = "api-management",
+    COHORT_DISCOVERY = "cohort-discovery",
     COHORT_DISCOVERY_ADMIN = "cohort-discovery-admin",
     CREATE = "create",
     DATA_ACCESS_REQUESTS = "data-access-requests",
@@ -19,4 +21,5 @@ export enum RouteName {
     TEAM = "team",
     TEAM_MANAGEMENT = "team-management",
     WORKFLOWS = "workflows",
+    TERMS = "terms-and-conditions",
 }
