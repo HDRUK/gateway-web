@@ -112,6 +112,9 @@
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
                         },
+                        "DatasetTab": {
+                            "downloadButton": "Download dataset information as .csv"
+                        },
                         "TeamDatasets": {
                             "actions": {
                                 "unarchive": {

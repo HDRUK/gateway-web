@@ -16,10 +16,4 @@ interface CohortExportForm {
     status: Status;
 }
 
-interface CsvExport {
-    content: string;
-    type: string;
-    filename: string;
-}
-
-export type { CohortExportForm, CsvExport };
+export type { CohortExportForm };

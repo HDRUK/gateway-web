@@ -1,4 +1,4 @@
-import { CsvExport } from "@/interfaces/CohortExport";
+import { CsvExport } from "@/interfaces/CsvExport";
 
 const downloadCSV = (csvData: CsvExport | undefined) => {
     if (!csvData) return;

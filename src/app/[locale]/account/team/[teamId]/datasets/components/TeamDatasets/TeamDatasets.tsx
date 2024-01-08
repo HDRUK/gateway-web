@@ -117,7 +117,7 @@ const TeamDatasets = () => {
             label: t("actions.edit.label"),
         },
         {
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}.${RouteName.DUPLICATE}`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}/${RouteName.DUPLICATE}`,
             icon: ContentCopyIcon,
             label: t("actions.duplicate.label"),
         },

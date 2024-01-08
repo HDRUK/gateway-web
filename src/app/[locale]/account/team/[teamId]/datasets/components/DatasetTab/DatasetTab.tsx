@@ -13,6 +13,17 @@ import {
 } from "@/config/forms/datasetAccountSearch";
 import InputWrapper from "@/components/InputWrapper";
 import { Control } from "react-hook-form";
+import apis from "@/config/apis";
+import DownloadCSV from "@/components/DownloadCSV";
+import { useParams } from "next/navigation";
+import {
+    PAGES,
+    ACCOUNT,
+    TEAM,
+    DATASETS,
+    COMPONENTS,
+} from "@/consts/translation";
+import { useTranslations } from "next-intl";
 
 interface DatasetTabProps {
     list?: Dataset[];
@@ -46,6 +57,12 @@ const DatasetTab = ({
     control,
     isLoading,
 }: DatasetTabProps) => {
+    const { teamId } = useParams();
+
+    const t = useTranslations(
+        `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.DatasetTab`
+    );
+
     return (
         <Box sx={{ p: 0 }}>
             <BoxContainer
@@ -72,8 +89,18 @@ const DatasetTab = ({
                 </BoxContainer>
             </BoxContainer>
 
-            <Box sx={{ p: 0 }}>
+            <Box
+                sx={{
+                    p: 0,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                }}>
                 <ShowingXofX from={from} to={to} total={total} />
+                <DownloadCSV
+                    buttonText={t("downloadButton")}
+                    apiPath={`${apis.datasetsExportV1Url}?team_id=${teamId}`}
+                />
             </Box>
 
             {(list || [])
