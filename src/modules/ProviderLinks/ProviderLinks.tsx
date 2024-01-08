@@ -1,9 +1,11 @@
-import apis from "@/config/apis";
 import { useTranslations } from "next-intl";
-import Box from "@/components/Box";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import Box from "@/components/Box";
 import Link from "@/components/Link";
+import apis from "@/config/apis";
 import { colors } from "@/config/theme";
+import { RouteName } from "@/consts/routeName";
 
 interface LinkItem {
     label: string;
@@ -13,21 +15,30 @@ interface LinkItem {
 
 const ProviderLinks = () => {
     const t = useTranslations("modules");
+    const pathname = usePathname();
+
+    let redirectPath = "";
+
+    if (
+        pathname?.includes(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`)
+    ) {
+        redirectPath = `?redirect=/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY_REQUEST}`;
+    }
 
     const providerLinks: LinkItem[] = [
         {
             label: t("dialogs.ProvidersDialog.socialProviders.google"),
-            href: apis.authGoogleV1Url,
+            href: `${apis.authGoogleV1Url}${redirectPath}`,
             image: "google-logo.png",
         },
         {
             label: t("dialogs.ProvidersDialog.socialProviders.linkedIn"),
-            href: apis.authLinkedinV1Url,
+            href: `${apis.authLinkedinV1Url}${redirectPath}`,
             image: "linkedIn-logo.png",
         },
         {
             label: t("dialogs.ProvidersDialog.socialProviders.azure"),
-            href: apis.authAzureV1Url,
+            href: `${apis.authAzureV1Url}${redirectPath}`,
             image: "microsoft-logo.png",
         },
     ];
