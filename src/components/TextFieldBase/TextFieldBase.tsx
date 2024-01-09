@@ -1,6 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { InputAdornment, OutlinedInput, IconButton } from "@mui/material";
+import {
+    InputAdornment,
+    OutlinedInput,
+    IconButton,
+    SxProps,
+} from "@mui/material";
 
 import { Control, useController } from "react-hook-form";
 import FormInputWrapper from "@/components/FormInputWrapper";
@@ -24,6 +29,7 @@ export interface TextFieldBaseProps {
     showClearButton?: boolean;
     control: Control;
     required?: boolean;
+    formControlSx?: SxProps;
 }
 
 const TextFieldBase = (props: TextFieldBaseProps) => {

@@ -5,14 +5,22 @@
 import ActiveList from "@/components/ActiveList";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
+import Form from "@/components/Form";
 import HTMLContent from "@/components/HTMLContent";
 import InputWrapper from "@/components/InputWrapper";
 import ModalButtons from "@/components/ModalButtons";
 import ScrollContent from "@/components/ScrollContent";
-import { inputComponents } from "@/config/forms";
+import apis from "@/config/apis";
+import {
+    cohortAcceptTermsValidationSchema,
+    cohortAcceptTermsDefaultValues,
+    cohortAcceptTermsField,
+} from "@/config/forms/cohortTermsAccept";
 import { colors } from "@/config/theme";
 import useDialog from "@/hooks/useDialog";
 import useModal from "@/hooks/useModal";
+import usePost from "@/hooks/usePost";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
@@ -25,19 +33,27 @@ const TRANSLATION_PATH_DIALOG = "dialogs.CohortRequestTerms";
 
 const CohortRequestSentDialog = () => {
     const { push } = useRouter();
-    const { control } = useForm();
+    const { control, handleSubmit } = useForm({
+        defaultValues: cohortAcceptTermsDefaultValues,
+        resolver: yupResolver(cohortAcceptTermsValidationSchema),
+    });
 
     const { hideDialog } = useDialog();
     const { showModal } = useModal();
 
     const t = useTranslations("modules");
 
+    const submitRequest = usePost(apis.cohortRequestsV1Url);
+
     const handleSuccess = () => {
         hideDialog();
         showModal({
             title: t(`${TRANSLATION_PATH_MODAL}.title`),
-            text: t(`${TRANSLATION_PATH_MODAL}.text`),
-            confirmButton: t(`${TRANSLATION_PATH_MODAL}.confirmButton`),
+            content: t(`${TRANSLATION_PATH_MODAL}.text`),
+            confirmText: t(`${TRANSLATION_PATH_MODAL}.confirmButton`),
+            onSuccess: () => {
+                push("/");
+            },
         });
     };
 
@@ -84,9 +100,17 @@ const CohortRequestSentDialog = () => {
         },
     ];
 
+    const onFormSubmit = async () => {
+        await submitRequest({ details: "mock text " });
+        handleSuccess();
+    };
+
     return (
         <Dialog title="" maxWidth="laptop">
-            <Box sx={{ p: 0 }} component="form">
+            <Form
+                sx={{ p: 0 }}
+                component="form"
+                onSubmit={handleSubmit(onFormSubmit)}>
                 <MuiDialogContent>
                     <Box sx={{ display: "flex", p: 0 }}>
                         <Box
@@ -126,13 +150,15 @@ const CohortRequestSentDialog = () => {
                     </Box>
                 </MuiDialogContent>
                 <MuiDialogActions
-                    sx={{ borderTop: `1px solid ${colors.grey300}` }}>
+                    sx={{
+                        justifyContent: "space-between",
+                        p: 2,
+                        borderTop: `1px solid ${colors.grey300}`,
+                    }}>
                     <InputWrapper
-                        label={t(`${TRANSLATION_PATH_DIALOG}.acceptTerms`)}
-                        name="hasAccepted"
-                        component={inputComponents.Checkbox}
-                        required
                         control={control}
+                        label={t(`${TRANSLATION_PATH_DIALOG}.acceptTerms`)}
+                        {...cohortAcceptTermsField}
                     />
                     <ModalButtons
                         confirmText={t(
@@ -141,10 +167,11 @@ const CohortRequestSentDialog = () => {
                         cancelText={t(
                             `${TRANSLATION_PATH_DIALOG}.discardButton`
                         )}
+                        confirmType="submit"
                         onSuccess={handleSuccess}
                     />
                 </MuiDialogActions>
-            </Box>
+            </Form>
         </Dialog>
     );
 };

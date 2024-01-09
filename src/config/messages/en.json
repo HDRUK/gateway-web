@@ -213,7 +213,7 @@
                 "cancelButton": "Cancel"
             },
             "CohortRequestTerms": {
-                "title": "Terms and Conditions",
+                "title": "Cohort Discovery additional Terms & Conditions",
                 "text": "Please note that you will not be allowed access to Cohort Discovery unless you have agreed to our Terms and Conditions.",
                 "confirmButton": "Accept Terms & Conditions",
                 "discardButton": "Discard",

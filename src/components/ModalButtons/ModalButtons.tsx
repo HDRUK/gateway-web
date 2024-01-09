@@ -54,23 +54,17 @@ const ModalButtons = ({
                 onClick={handleCancel}>
                 {cancelText}
             </Button>
-            <Box
-                sx={
-                    {
-                        // p: 0,
-                        // gap: 2,
-                        // display: "flex",
-                        // alignItems: "center",
-                        // justifyContent: "center",
-                    }
-                }>
+            <Box sx={{ p: 0, gap: 2, display: "flex" }}>
                 {tertiaryButton && (
                     <Button color="inherit" onClick={handleTertiary}>
                         {tertiaryButton.buttonText}
                     </Button>
                 )}
                 {confirmType === "submit" ? (
-                    <Button form={formId} key="confirm" type="submit">
+                    <Button
+                        {...(formId && { form: formId })}
+                        key="confirm"
+                        type="submit">
                         {confirmText}
                     </Button>
                 ) : (
