@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import useDialog from "@/hooks/useDialog";
 import { RouteName } from "@/consts/routeName";
-import CohortRequestSentDialog from "../CohortRequestSentDialog";
+import CohortRequestTermsDialog from "../CohortRequestTermsDialog";
 
 const COHORT_TRANSLATION_PATH = "pages.about.cohortDiscoveryRequest";
 
@@ -18,7 +18,7 @@ const CohortDisoveryRequestForm = () => {
     const t = useTranslations();
 
     const handleSubmit = () => {
-        showDialog(CohortRequestSentDialog);
+        showDialog(CohortRequestTermsDialog);
     };
 
     const handleCancel = () => {

@@ -54,7 +54,16 @@ const ModalButtons = ({
                 onClick={handleCancel}>
                 {cancelText}
             </Button>
-            <Box sx={{ p: 0, gap: 2, display: "flex" }}>
+            <Box
+                sx={
+                    {
+                        // p: 0,
+                        // gap: 2,
+                        // display: "flex",
+                        // alignItems: "center",
+                        // justifyContent: "center",
+                    }
+                }>
                 {tertiaryButton && (
                     <Button color="inherit" onClick={handleTertiary}>
                         {tertiaryButton.buttonText}

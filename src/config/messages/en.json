@@ -181,6 +181,13 @@
         }
     },
     "modules": {
+        "modals": {
+            "CohortRequestSent": {
+                "title": "Request Sent!",
+                "text": "We have sent confirmation to your registered e-mail address. We will then notify you with the decision via your registered e-mail address within 5 business days.",
+                "confirmButton": "Back to homepage"
+            }
+        },
         "dialogs": {
             "ProvidersDialog": {
                 "title": "Sign in or create an account",
@@ -205,10 +212,12 @@
                 "confirmButton": "Remove",
                 "cancelButton": "Cancel"
             },
-            "CohortRequestSentDialog": {
-                "title": "Request Sent!",
-                "text": "We have sent confirmation to your registered e-mail address. We will then notify you with the decision via your registered e-mail address within 5 business days.",
-                "confirmButton": "Back to homepage"
+            "CohortRequestTerms": {
+                "title": "Terms and Conditions",
+                "text": "Please note that you will not be allowed access to Cohort Discovery unless you have agreed to our Terms and Conditions.",
+                "confirmButton": "Accept Terms & Conditions",
+                "discardButton": "Discard",
+                "acceptTerms": "I have read the Terms and Conditions"
             }
         }
     }
