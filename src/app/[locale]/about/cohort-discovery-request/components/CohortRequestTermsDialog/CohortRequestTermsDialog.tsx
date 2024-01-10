@@ -44,7 +44,7 @@ const CohortRequestTermsDialog = () => {
     const { dialogProps } = store as unknown as {
         dialogProps: { cmsContent: templateRepeatFields };
     };
-    console.log("dialogProps: ", dialogProps?.cmsContent);
+
     const { showModal } = useModal();
 
     const t = useTranslations("modules");
