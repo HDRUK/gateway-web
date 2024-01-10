@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import BulletList from "./ActiveList";
+import ActiveList from "./ActiveList";
 
-const meta: Meta<typeof BulletList> = {
-    component: BulletList,
+const meta: Meta<typeof ActiveList> = {
+    component: ActiveList,
     tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof BulletList>;
+type Story = StoryObj<typeof ActiveList>;
 
 export const Default: Story = {
     args: {
@@ -17,5 +17,7 @@ export const Default: Story = {
             { label: "Item two" },
             { label: "Item three" },
         ],
+        activeItem: 1,
+        handleClick: id => console.log("id: ", id),
     },
 };
