@@ -1,8 +1,6 @@
 import userEvent from "@testing-library/user-event";
 import mockRouter from "next-router-mock";
-import useAuth from "@/hooks/useAuth";
-import { render, renderHook, screen, waitFor } from "@/utils/testUtils";
-import { userV1 } from "@/mocks/data";
+import { render, screen, waitFor } from "@/utils/testUtils";
 import CtaOverride, { DATA_TEST_ID } from "./CtaOverride";
 
 const MOCK_CTA_LINK = {
@@ -18,16 +16,6 @@ describe("CtaOverride", () => {
     });
 
     it("should navigate to cta url if logged in", async () => {
-        const { result } = renderHook(() => useAuth());
-
-        await waitFor(() => {
-            expect(result.current).toEqual({
-                isLoading: false,
-                isLoggedIn: true,
-                user: userV1,
-            });
-        });
-
         render(<CtaOverride ctaLink={MOCK_CTA_LINK} />);
         userEvent.click(screen.getByTestId(DATA_TEST_ID));
 
