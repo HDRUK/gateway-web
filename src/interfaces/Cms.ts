@@ -14,22 +14,25 @@ interface PageTemplateDefault {
     content: string;
 }
 
+interface CtaLink {
+    target: string;
+    url: string;
+    title: string;
+}
+
 interface PageTemplate1 {
     id: string;
     title: string;
     template: {
         template1Fields: {
             bannerTitle: string;
-            ctaLink?: {
-                target: string;
-                url: string;
-                title: string;
-            };
+            ctaLink?: CtaLink;
             topRightPanel?: string;
             topLeftPanel: string;
             middlePanel: string;
         };
     };
+    ctaOverrideComponent?: React.ReactElement;
 }
 
 export type {
@@ -38,4 +41,5 @@ export type {
     PageTemplate1,
     CMSPageResponse,
     CMSPagesResponse,
+    CtaLink,
 };
