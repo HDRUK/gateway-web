@@ -16,7 +16,7 @@ export default async function CohortDiscoryPage() {
             <CMSPageTemplate1
                 content={cohortDiscovery}
                 ctaOverrideComponent={
-                    cohortDiscovery.template.template1Fields.ctaLink && (
+                    cohortDiscovery.template.template1Fields?.ctaLink && (
                         <CtaOverride
                             ctaLink={
                                 cohortDiscovery.template.template1Fields.ctaLink
