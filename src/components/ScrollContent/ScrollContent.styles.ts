@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 
 export const root = css`
     padding: 10px;
-    overflow: scroll;
+    overflow-y: scroll;
 
     /* Set the width and height of the scrollbar */
     ::-webkit-scrollbar {

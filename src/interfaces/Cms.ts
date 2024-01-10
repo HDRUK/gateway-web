@@ -35,7 +35,24 @@ interface PageTemplate1 {
     ctaOverrideComponent?: React.ReactElement;
 }
 
+interface templateRepeatFields {
+    title: string;
+    subTitle: string;
+    description: string;
+    contents: { title: string; content: string }[];
+}
+
+interface PageTemplateRepeat {
+    id: string;
+    title: string;
+    template: {
+        repeatFields: templateRepeatFields;
+    };
+}
+
 export type {
+    templateRepeatFields,
+    PageTemplateRepeat,
     CMSPostResponse,
     PageTemplateDefault,
     PageTemplate1,

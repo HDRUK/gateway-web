@@ -1,18 +1,21 @@
 import { SvgIconComponent } from "@mui/icons-material";
-import { CircleIcon } from "@/consts/icons";
-import { colourType } from "@/config/theme";
 import { Typography } from "@mui/material";
+import Button from "@/components/Button";
+import { colourType } from "@/config/theme";
+import { CircleIcon } from "@/consts/icons";
 
 interface ActiveListProps {
     items: { label: string }[];
     icon?: SvgIconComponent;
     iconColour?: colourType;
     activeItem: number;
+    handleClick: (id: number) => void;
 }
 
 const ActiveList = ({
     items,
     icon,
+    handleClick,
     activeItem = 1,
     iconColour = "primary",
 }: ActiveListProps) => {
@@ -35,11 +38,24 @@ const ActiveList = ({
                             alignItems: "center",
                             gap: 5,
                         }}>
-                        <Icon
-                            color={iconColour}
-                            sx={{ opacity: activeItem === index ? 1 : 0.3 }}
-                        />
-                        <Typography fontSize="14">{item.label}</Typography>
+                        <Button
+                            onClick={() => handleClick(index + 1)}
+                            variant="link"
+                            sx={{
+                                whiteSpace: "inherit",
+                                textAlign: "left",
+                            }}
+                            startIcon={
+                                <Icon
+                                    color={iconColour}
+                                    sx={{
+                                        opacity:
+                                            activeItem === index + 1 ? 1 : 0.3,
+                                    }}
+                                />
+                            }>
+                            <Typography fontSize="14">{item.label}</Typography>
+                        </Button>
                     </li>
                 );
             })}

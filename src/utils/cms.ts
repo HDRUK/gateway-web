@@ -4,11 +4,13 @@ import {
     CMSPostResponse,
     PageTemplateDefault,
     PageTemplate1,
+    PageTemplateRepeat,
 } from "@/interfaces/Cms";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import { ReleaseNode } from "@/interfaces/Releases";
 import apis from "@/config/apis";
 import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
+import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
@@ -80,7 +82,19 @@ const getTermsAndConditions = async () => {
     return data?.page || null;
 };
 
+const getCohortTermsAndConditions = async () => {
+    const data: CMSPageResponse<PageTemplateRepeat> = await fetchCMS(
+        GetCohortTermsAndConditionsQuery,
+        {
+            next: { revalidate: 10 },
+        }
+    );
+
+    return data?.page || null;
+};
+
 export {
+    getCohortTermsAndConditions,
     getReleaseNotes,
     getMissionAndPurposes,
     getCohortDiscovery,

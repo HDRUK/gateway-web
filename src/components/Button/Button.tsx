@@ -18,8 +18,8 @@ const Button: React.FC<ButtonProps> = ({
             color={color}
             variant={variant}
             sx={{
-                ...rest.sx,
                 whiteSpace: "nowrap",
+                ...rest.sx,
             }}
             {...rest}>
             {children}

@@ -1,4 +1,5 @@
 import Container from "@/components/Container";
+import { getCohortTermsAndConditions } from "@/utils/cms";
 import CohortDisoveryRequestForm from "./components/CohortDisoveryRequestForm";
 
 export const metadata = {
@@ -7,9 +8,13 @@ export const metadata = {
 };
 
 export default async function CohortDiscoryRequestPage() {
+    const content = await getCohortTermsAndConditions();
+    const {
+        template: { repeatFields },
+    } = content;
     return (
         <Container>
-            <CohortDisoveryRequestForm />
+            <CohortDisoveryRequestForm cmsContent={repeatFields} />
         </Container>
     );
 }
