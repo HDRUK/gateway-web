@@ -1,37 +1,38 @@
 "use client";
 
+import { useMemo } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Typography } from "@mui/material";
+import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
-import { useFieldArray, useForm } from "react-hook-form";
-import Dialog from "@/components/Dialog";
-import MuiDialogActions from "@mui/material/DialogActions";
-import ModalButtons from "@/components/ModalButtons";
-import Box from "@/components/Box";
 import pLimit from "p-limit";
 import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
-import { Typography } from "@mui/material";
-import apis from "@/config/apis";
-import useGet from "@/hooks/useGet";
 import { User } from "@/interfaces/User";
+import Box from "@/components/Box";
+import Dialog from "@/components/Dialog";
+import ModalButtons from "@/components/ModalButtons";
+import useDialog from "@/hooks/useDialog";
+import useGet from "@/hooks/useGet";
+import useGetTeam from "@/hooks/useGetTeam";
+import usePost from "@/hooks/usePost";
+import notificationService from "@/services/notification";
+import apis from "@/config/apis";
 import {
     addTeamMemberDefaultValues,
     addTeamMemberValidationSchema,
 } from "@/config/forms/addTeamMember";
-import { yupResolver } from "@hookform/resolvers/yup";
-import usePost from "@/hooks/usePost";
-
-import notificationService from "@/services/notification";
-import useGetTeam from "@/hooks/useGetTeam";
-import { useMemo } from "react";
 import AddTeamMemberRows from "../AddTeamMemberRows";
-import useDialog from "@/hooks/useDialog";
 import { getAvailableUsers } from "./AddTeamMemberDialog.utils";
 
 const limit = pLimit(1);
 
 const AddTeamMemberDialog = () => {
     const { hideDialog, store } = useDialog();
-    const { dialogProps } = store;
+    const { dialogProps } = store as unknown as {
+        dialogProps: { teamId: string };
+    };
 
     const t = useTranslations("modules");
     const { control, handleSubmit } = useForm<AddTeamMember>({

@@ -14,7 +14,14 @@ const Button: React.FC<ButtonProps> = ({
     ...rest
 }) => {
     return (
-        <MuiButton color={color} variant={variant} {...rest}>
+        <MuiButton
+            color={color}
+            variant={variant}
+            sx={{
+                whiteSpace: "nowrap",
+                ...rest.sx,
+            }}
+            {...rest}>
             {children}
         </MuiButton>
     );

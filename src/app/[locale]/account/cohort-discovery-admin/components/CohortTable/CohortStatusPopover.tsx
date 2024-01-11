@@ -36,21 +36,23 @@ const StatusCheckboxes = ({
             sx={{
                 zIndex: 9999,
             }}>
-            <RadioGroup
-                radios={[
-                    { label: "All", value: "" },
-                    { label: "Approved", value: "APPROVED" },
-                    { label: "Pending", value: "PENDING" },
-                    { label: "Rejected", value: "REJECTED" },
-                    { label: "Banned", value: "BANNED" },
-                    { label: "Suspended", value: "SUSPENDED" },
-                    { label: "Expired", value: "EXPIRED" },
-                ]}
-                onChange={handleChange}
-                label=""
-                name="request_status"
-                control={control}
-            />
+            <form>
+                <RadioGroup
+                    radios={[
+                        { label: "All", value: "" },
+                        { label: "Approved", value: "APPROVED" },
+                        { label: "Pending", value: "PENDING" },
+                        { label: "Rejected", value: "REJECTED" },
+                        { label: "Banned", value: "BANNED" },
+                        { label: "Suspended", value: "SUSPENDED" },
+                        { label: "Expired", value: "EXPIRED" },
+                    ]}
+                    onChange={handleChange}
+                    label=""
+                    name="request_status"
+                    control={control}
+                />
+            </form>
         </Box>
     );
 };

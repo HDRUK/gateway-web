@@ -17,8 +17,8 @@ import {
     statusMapping,
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
 } from "@/consts/cohortDiscovery";
-import { CohortStatusPopover } from "./CohortStatusPopover";
 import { RouteName } from "@/consts/routeName";
+import { CohortStatusPopover } from "./CohortStatusPopover";
 
 interface getColumnsProps {
     sort: { key: string; direction: string };

@@ -44,6 +44,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import DownloadIcon from "@mui/icons-material/Download";
 import WarningIcon from "@mui/icons-material/Warning";
+import CircleIcon from "@mui/icons-material/Circle";
 
 export * from "./customIcons";
 
@@ -94,4 +95,5 @@ export {
     RemoveCircleIcon,
     DownloadIcon,
     WarningIcon,
+    CircleIcon,
 };

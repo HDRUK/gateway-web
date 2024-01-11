@@ -10,6 +10,7 @@ export interface DialogProps {
     children: ReactNode;
     onClose?: (props: unknown) => void;
     title: string;
+    maxWidth?: string;
     titleSx?: SxProps;
     showCloseButton?: boolean;
     styleProps?: MuiDialogProps;
@@ -22,6 +23,7 @@ const Dialog = ({
     titleSx,
     showCloseButton = true,
     onClose,
+    maxWidth = "tablet",
 }: DialogProps) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
@@ -33,7 +35,7 @@ const Dialog = ({
     };
 
     const props: MuiDialogProps = {
-        maxWidth: "tablet",
+        maxWidth,
         fullWidth: true,
         open: true,
         ...styleProps,
@@ -55,7 +57,9 @@ const Dialog = ({
                     <CloseIcon />
                 </IconButton>
             )}
-            <MuiDialogTitle sx={{ ...titleSx }}>{title}</MuiDialogTitle>
+            {title && (
+                <MuiDialogTitle sx={{ ...titleSx }}>{title}</MuiDialogTitle>
+            )}
             {children}
         </MuiDialog>
     );
