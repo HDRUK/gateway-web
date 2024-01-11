@@ -63,50 +63,6 @@ const CohortRequestTermsDialog = () => {
         });
     };
 
-    /* todo: remove mocked data once ACF Pro plugin is installed */
-    const mockTerms = [
-        {
-            label: "Application of these terms",
-            content:
-                '\n<p>This Gateway Portal, including all functionality on the Gateway Portal such as Cohort Discovery (the “<strong>site</strong>“) is operated by Health Data Research UK (“HDR UK”). HDR UK is a limited company registered in England and Wales under company number 10887014 and a charity registered with the Charity Commission under charity number 1194431 with its registered office is at 215 Euston Road, London, England, NW1 2BE.</p>\n\n\n\n<p>To contact us, please use the contact details on our <a href="https://www.healthdatagateway.org/about/contact-us">support page</a>.</p>\n\n\n\n<p></p>\n\n\n\n<p>Access to and use of this site is provided by HDR UK subject to the following:</p>\n\n\n\n<ul>\n<li>By using this site you confirm that you accept these Terms and Conditions (including any Additional Terms that may apply as below) (together, the &#8220;<strong>Terms and Conditions</strong>&#8220;) and that you agree to comply with them. The Terms and Conditions take effect on the date of your first use of the site.</li>\n\n\n\n<li>If you do not agree to the Terms and Conditions, you must not use our site.</li>\n</ul>\n\n\n\n<p></p>\n',
-        },
-        {
-            label: "Agreeing to the terms of use",
-            content:
-                '\n<p>This Gateway Portal, including all functionality on the Gateway Portal such as Cohort Discovery (the “<strong>site</strong>“) is operated by Health Data Research UK (“HDR UK”). HDR UK is a limited company registered in England and Wales under company number 10887014 and a charity registered with the Charity Commission under charity number 1194431 with its registered office is at 215 Euston Road, London, England, NW1 2BE.</p>\n\n\n\n<p>To contact us, please use the contact details on our <a href="https://www.healthdatagateway.org/about/contact-us">support page</a>.</p>\n\n\n\n<p></p>\n\n\n\n<h2 class="wp-block-heading has-large-font-size">Acceptance of Terms and Conditions</h2>\n\n\n\n<p>Access to and use of this site is provided by HDR UK subject to the following:</p>\n\n\n\n<ul>\n<li>By using this site you confirm that you accept these Terms and Conditions (including any Additional Terms that may apply as below) (together, the &#8220;<strong>Terms and Conditions</strong>&#8220;) and that you agree to comply with them. The Terms and Conditions take effect on the date of your first use of the site.</li>\n\n\n\n<li>If you do not agree to the Terms and Conditions, you must not use our site.</li>\n</ul>\n\n\n\n<p></p>\n',
-        },
-        {
-            label: "Changes to these additional terms",
-            content:
-                '\n<h2 class="wp-block-heading has-large-font-size">Who we are and how to contact us</h2>\n\n\n\n<p>This Gateway Portal, including all functionality on the Gateway Portal such as Cohort Discovery (the “<strong>site</strong>“) is operated by Health Data Research UK (“HDR UK”). HDR UK is a limited company registered in England and Wales under company number 10887014 and a charity registered with the Charity Commission under charity number 1194431 with its registered office is at 215 Euston Road, London, England, NW1 2BE.</p>\n\n\n\n<p>To contact us, please use the contact details on our <a href="https://www.healthdatagateway.org/about/contact-us">support page</a>.</p>\n\n\n\n<p></p>\n\n\n\n<h2 class="wp-block-heading has-large-font-size">Acceptance of Terms and Conditions</h2>\n\n\n\n<p>Access to and use of this site is provided by HDR UK subject to the following:</p>\n\n\n\n<ul>\n<li>By using this site you confirm that you accept these Terms and Conditions (including any Additional Terms that may apply as below) (together, the &#8220;<strong>Terms and Conditions</strong>&#8220;) and that you agree to comply with them. The Terms and Conditions take effect on the date of your first use of the site.</li>\n\n\n\n<li>If you do not agree to the Terms and Conditions, you must not use our site.</li>\n</ul>\n\n\n\n<p></p>\n',
-        },
-        {
-            label: "Scope of us",
-            content:
-                '\n<h2 class="wp-block-heading has-large-font-size">Who we are and how to contact us</h2>\n\n\n\n<p>This Gateway Portal, including all functionality on the Gateway Portal such as Cohort Discovery (the “<strong>site</strong>“) is operated by Health Data Research UK (“HDR UK”). HDR UK is a limited company registered in England and Wales under company number 10887014 and a charity registered with the Charity Commission under charity number 1194431 with its registered office is at 215 Euston Road, London, England, NW1 2BE.</p>\n\n\n\n<p>To contact us, please use the contact details on our <a href="https://www.healthdatagateway.org/about/contact-us">support page</a>.</p>\n\n\n\n<p></p>\n\n\n\n<h2 class="wp-block-heading has-large-font-size">Acceptance of Terms and Conditions</h2>\n\n\n\n<p>Access to and use of this site is provided by HDR UK subject to the following:</p>\n\n\n\n<ul>\n<li>By using this site you confirm that you accept these Terms and Conditions (including any Additional Terms that may apply as below) (together, the &#8220;<strong>Terms and Conditions</strong>&#8220;) and that you agree to comply with them. The Terms and Conditions take effect on the date of your first use of the site.</li>\n\n\n\n<li>If you do not agree to the Terms and Conditions, you must not use our site.</li>\n</ul>\n\n\n\n<p></p>\n',
-        },
-        {
-            label: "Application of these terms other",
-            content:
-                '\n<h2 class="wp-block-heading has-large-font-size">Who we are and how to contact us</h2>\n\n\n\n<p>This Gateway Portal, including all functionality on the Gateway Portal such as Cohort Discovery (the “<strong>site</strong>“) is operated by Health Data Research UK (“HDR UK”). HDR UK is a limited company registered in England and Wales under company number 10887014 and a charity registered with the Charity Commission under charity number 1194431 with its registered office is at 215 Euston Road, London, England, NW1 2BE.</p>\n\n\n\n<p>To contact us, please use the contact details on our <a href="https://www.healthdatagateway.org/about/contact-us">support page</a>.</p>\n\n\n\n<p></p>\n\n\n\n<h2 class="wp-block-heading has-large-font-size">Acceptance of Terms and Conditions</h2>\n\n\n\n<p>Access to and use of this site is provided by HDR UK subject to the following:</p>\n\n\n\n<ul>\n<li>By using this site you confirm that you accept these Terms and Conditions (including any Additional Terms that may apply as below) (together, the &#8220;<strong>Terms and Conditions</strong>&#8220;) and that you agree to comply with them. The Terms and Conditions take effect on the date of your first use of the site.</li>\n\n\n\n<li>If you do not agree to the Terms and Conditions, you must not use our site.</li>\n</ul>\n\n\n\n<p></p>\n',
-        },
-        {
-            label: "Agreeing to the terms of use other",
-            content:
-                '\n<h2 class="wp-block-heading has-large-font-size">Who we are and how to contact us</h2>\n\n\n\n<p>This Gateway Portal, including all functionality on the Gateway Portal such as Cohort Discovery (the “<strong>site</strong>“) is operated by Health Data Research UK (“HDR UK”). HDR UK is a limited company registered in England and Wales under company number 10887014 and a charity registered with the Charity Commission under charity number 1194431 with its registered office is at 215 Euston Road, London, England, NW1 2BE.</p>\n\n\n\n<p>To contact us, please use the contact details on our <a href="https://www.healthdatagateway.org/about/contact-us">support page</a>.</p>\n\n\n\n<p></p>\n\n\n\n<h2 class="wp-block-heading has-large-font-size">Acceptance of Terms and Conditions</h2>\n\n\n\n<p>Access to and use of this site is provided by HDR UK subject to the following:</p>\n\n\n\n<ul>\n<li>By using this site you confirm that you accept these Terms and Conditions (including any Additional Terms that may apply as below) (together, the &#8220;<strong>Terms and Conditions</strong>&#8220;) and that you agree to comply with them. The Terms and Conditions take effect on the date of your first use of the site.</li>\n\n\n\n<li>If you do not agree to the Terms and Conditions, you must not use our site.</li>\n</ul>\n\n\n\n<p></p>\n',
-        },
-        {
-            label: "Changes to these additional terms other",
-            content:
-                '\n<h2 class="wp-block-heading has-large-font-size">Who we are and how to contact us</h2>\n\n\n\n<p>This Gateway Portal, including all functionality on the Gateway Portal such as Cohort Discovery (the “<strong>site</strong>“) is operated by Health Data Research UK (“HDR UK”). HDR UK is a limited company registered in England and Wales under company number 10887014 and a charity registered with the Charity Commission under charity number 1194431 with its registered office is at 215 Euston Road, London, England, NW1 2BE.</p>\n\n\n\n<p>To contact us, please use the contact details on our <a href="https://www.healthdatagateway.org/about/contact-us">support page</a>.</p>\n\n\n\n<p></p>\n\n\n\n<h2 class="wp-block-heading has-large-font-size">Acceptance of Terms and Conditions</h2>\n\n\n\n<p>Access to and use of this site is provided by HDR UK subject to the following:</p>\n\n\n\n<ul>\n<li>By using this site you confirm that you accept these Terms and Conditions (including any Additional Terms that may apply as below) (together, the &#8220;<strong>Terms and Conditions</strong>&#8220;) and that you agree to comply with them. The Terms and Conditions take effect on the date of your first use of the site.</li>\n\n\n\n<li>If you do not agree to the Terms and Conditions, you must not use our site.</li>\n</ul>\n\n\n\n<p></p>\n',
-        },
-        {
-            label: "Scope of us other",
-            content:
-                '\n<h2 class="wp-block-heading has-large-font-size">Who we are and how to contact us</h2>\n\n\n\n<p>This Gateway Portal, including all functionality on the Gateway Portal such as Cohort Discovery (the “<strong>site</strong>“) is operated by Health Data Research UK (“HDR UK”). HDR UK is a limited company registered in England and Wales under company number 10887014 and a charity registered with the Charity Commission under charity number 1194431 with its registered office is at 215 Euston Road, London, England, NW1 2BE.</p>\n\n\n\n<p>To contact us, please use the contact details on our <a href="https://www.healthdatagateway.org/about/contact-us">support page</a>.</p>\n\n\n\n<p></p>\n\n\n\n<h2 class="wp-block-heading has-large-font-size">Acceptance of Terms and Conditions</h2>\n\n\n\n<p>Access to and use of this site is provided by HDR UK subject to the following:</p>\n\n\n\n<ul>\n<li>By using this site you confirm that you accept these Terms and Conditions (including any Additional Terms that may apply as below) (together, the &#8220;<strong>Terms and Conditions</strong>&#8220;) and that you agree to comply with them. The Terms and Conditions take effect on the date of your first use of the site.</li>\n\n\n\n<li>If you do not agree to the Terms and Conditions, you must not use our site.</li>\n</ul>\n\n\n\n<p></p>\n',
-        },
-    ];
-
     const onFormSubmit = async () => {
         await submitRequest({ details: "" });
         handleSuccess();
@@ -136,7 +92,7 @@ const CohortRequestTermsDialog = () => {
                             <ActiveList
                                 handleClick={handleScroll}
                                 activeItem={activeItem}
-                                items={mockTerms}
+                                items={dialogProps?.cmsContent.contents}
                             />
                         </Box>
 
@@ -164,25 +120,31 @@ const CohortRequestTermsDialog = () => {
                                         }
                                     />
                                 </div>
-                                {mockTerms.map((term, index) => (
-                                    <InView
-                                        key={term.label}
-                                        id={`anchor${index + 1}`}
-                                        as="div"
-                                        onChange={inView => {
-                                            if (inView) {
-                                                setActiveItem(index + 1);
-                                            }
-                                        }}>
-                                        <Typography
-                                            variant="h3"
-                                            fontSize={16}
-                                            sx={{ textTransform: "uppercase" }}>
-                                            {index + 1}. {term.label}
-                                        </Typography>
-                                        <HTMLContent content={term.content} />
-                                    </InView>
-                                ))}
+                                {dialogProps?.cmsContent.contents.map(
+                                    (term, index) => (
+                                        <InView
+                                            key={term.label}
+                                            id={`anchor${index + 1}`}
+                                            as="div"
+                                            onChange={inView => {
+                                                if (inView) {
+                                                    setActiveItem(index + 1);
+                                                }
+                                            }}>
+                                            <Typography
+                                                variant="h3"
+                                                fontSize={16}
+                                                sx={{
+                                                    textTransform: "uppercase",
+                                                }}>
+                                                {index + 1}. {term.label}
+                                            </Typography>
+                                            <HTMLContent
+                                                content={term.content}
+                                            />
+                                        </InView>
+                                    )
+                                )}
                             </ScrollContent>
                         </Box>
                     </Box>

@@ -16,7 +16,7 @@ const TermsAndConditionsPage = async () => {
         <>
             <Banner title={cmsPage.title} src={BannerImage} />
             <Container sx={{ padding: 10 }}>
-                <HTMLContent content={cmsPage.content} />
+                <HTMLContent content={cmsPage?.content} />
             </Container>
         </>
     );

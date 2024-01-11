@@ -39,7 +39,7 @@ interface templateRepeatFields {
     title: string;
     subTitle: string;
     description: string;
-    contents: { title: string; content: string }[];
+    contents: { label: string; content: string }[];
 }
 
 interface PageTemplateRepeat {

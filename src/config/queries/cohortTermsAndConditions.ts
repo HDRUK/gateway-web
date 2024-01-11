@@ -10,6 +10,10 @@ query GetCohortTermsAndConditionsQuery {
           title
           subTitle
           description
+          contents {
+            label
+            content
+          }
         }
       }
     }
