@@ -1,3 +1,5 @@
+"use client";
+
 /** @jsxImportSource @emotion/react */
 import { useTheme } from "@emotion/react";
 import * as styles from "./HTMLContent.styles";
