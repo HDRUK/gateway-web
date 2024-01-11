@@ -108,7 +108,7 @@ const CohortRequestTermsDialog = () => {
     ];
 
     const onFormSubmit = async () => {
-        await submitRequest({ details: "mock text " });
+        await submitRequest({ details: "" });
         handleSuccess();
     };
 
