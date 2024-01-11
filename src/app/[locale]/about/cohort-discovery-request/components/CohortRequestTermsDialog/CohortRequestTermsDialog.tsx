@@ -63,6 +63,7 @@ const CohortRequestTermsDialog = () => {
         });
     };
 
+    /* todo: remove mocked data once ACF Pro plugin is installed */
     const mockTerms = [
         {
             label: "Application of these terms",
