@@ -1,10 +1,10 @@
-import useRunFederation from "@/hooks/useRunFederation";
-import { server } from "@/mocks/server";
-import { renderHook, waitFor } from "@/utils/testUtils";
-import { teamV1 } from "@/mocks/data/team";
-import { integrationV1 } from "@/mocks/data/integration";
 import { useForm } from "react-hook-form";
+import useRunFederation from "@/hooks/useRunFederation";
+import { renderHook, waitFor } from "@/utils/testUtils";
+import { integrationV1 } from "@/mocks/data/integration";
+import { teamV1 } from "@/mocks/data/team";
 import { postFederationsTestV1 } from "@/mocks/handlers/integration";
+import { server } from "@/mocks/server";
 
 describe("useRunFederation", () => {
     const teamId = teamV1.id;

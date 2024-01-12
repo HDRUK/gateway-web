@@ -1,15 +1,14 @@
 "use client";
 
-import { Tab as MuiTab, SxProps } from "@mui/material";
 import { ElementType, ReactNode, forwardRef } from "react";
-
 import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
 import MuiTabPanel from "@mui/lab/TabPanel";
+import { Tab as MuiTab, SxProps } from "@mui/material";
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
-import { usePathname, useSearchParams } from "next/navigation";
-import Link from "next/link";
 
 interface Tab {
     label: string;

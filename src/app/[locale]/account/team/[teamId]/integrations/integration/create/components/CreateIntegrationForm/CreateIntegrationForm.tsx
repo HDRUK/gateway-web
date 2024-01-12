@@ -1,32 +1,31 @@
 "use client";
 
-import Box from "@/components/Box";
-import Form from "@/components/Form";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import { useParams, useRouter } from "next/navigation";
+import { IntegrationForm, IntegrationPayload } from "@/interfaces/Integration";
+import Box from "@/components/Box";
 import Button from "@/components/Button";
+import Form from "@/components/Form";
+import InputWrapper from "@/components/InputWrapper";
+import Paper from "@/components/Paper";
+import useGetTeam from "@/hooks/useGetTeam";
+import usePost from "@/hooks/usePost";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import apis from "@/config/apis";
 import {
     integrationDefaultValues,
     integrationFormFields,
     integrationValidationSchema,
 } from "@/config/forms/integration";
-import InputWrapper from "@/components/InputWrapper";
-import apis from "@/config/apis";
-import usePost from "@/hooks/usePost";
-import Paper from "@/components/Paper";
-import { useEffect, useMemo } from "react";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import { IntegrationForm, IntegrationPayload } from "@/interfaces/Integration";
-import { requiresSecretKey } from "@/utils/integrations";
-import useGetTeam from "@/hooks/useGetTeam";
-import { useParams, useRouter } from "next/navigation";
 import { RouteName } from "@/consts/routeName";
+import { requiresSecretKey } from "@/utils/integrations";
 
 const CreateIntegrationForm = () => {
     const { push } = useRouter();
-    const { teamId } = useParams();
-    const { team } = useGetTeam(teamId as string);
+    const params = useParams<{ teamId: string }>();
+    const { team } = useGetTeam(params?.teamId as string);
 
     const { control, handleSubmit, formState, watch, unregister } =
         useForm<IntegrationForm>({
@@ -40,9 +39,9 @@ const CreateIntegrationForm = () => {
     });
 
     const createIntegration = usePost<IntegrationPayload>(
-        `${apis.teamsV1Url}/${teamId}/federations`,
+        `${apis.teamsV1Url}/${params?.teamId}/federations`,
         {
-            shouldFetch: !!teamId,
+            shouldFetch: !!params?.teamId,
             itemName: "Integration",
         }
     );
@@ -56,7 +55,7 @@ const CreateIntegrationForm = () => {
 
         setTimeout(() => {
             push(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`
             );
         });
     };

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import Box from "@/components/Box";
-import { SxProps } from "@mui/material";
 import { ReactNode } from "react";
+import { SxProps } from "@mui/material";
+import Box from "@/components/Box";
 import * as styles from "./ScrollContent.styles";
 
 export interface ScrollContentProps {

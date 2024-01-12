@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { colors } from "@/config/theme";
-import Typography from "../Typography";
 import Box from "../Box";
+import Typography from "../Typography";
 
 interface KeyValueListProps {
     rows: { key: string; value: ReactNode }[];

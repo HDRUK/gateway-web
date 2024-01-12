@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import TextAreaComponent from "@/components/TextArea";
-import { useForm } from "react-hook-form";
 import React from "react";
-import { Stack } from "@mui/material";
-import Form from "@/components/Form";
-import * as yup from "yup";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Stack } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as yup from "yup";
 import Button from "@/components/Button";
+import Form from "@/components/Form";
+import TextAreaComponent from "@/components/TextArea";
 
 const meta: Meta<typeof Form> = {
     component: Form,

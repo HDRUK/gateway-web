@@ -1,15 +1,15 @@
+import { useMemo } from "react";
+import { Control, FieldArrayWithId } from "react-hook-form";
 import { IconButton } from "@mui/material";
+import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
+import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
+import { SelectOptionsType } from "@/components/Select/Select";
+import { useHasPermissions } from "@/hooks/useHasPermission";
 import {
     addTeamMemberFormFields,
     getRoleOptions,
 } from "@/config/forms/addTeamMember";
-import Box from "@/components/Box";
-import { Control, FieldArrayWithId } from "react-hook-form";
-import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
-import { SelectOptionsType } from "@/components/Select/Select";
-import { useHasPermissions } from "@/hooks/useHasPermission";
-import { useMemo } from "react";
 import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 
 interface AddTeamMemberRowsProps {

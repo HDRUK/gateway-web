@@ -1,14 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import SelectComponent from "@/components/Select";
-import { useForm } from "react-hook-form";
 import React from "react";
-import * as yup from "yup";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { Stack } from "@mui/material";
-import Form from "@/components/Form";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as yup from "yup";
 import Button from "@/components/Button";
+import Form from "@/components/Form";
 import LabelAndDescription from "@/components/LabelAndDescription";
+import SelectComponent from "@/components/Select";
 import {
     AccountCircleIcon,
     AdminPanelSettingsIcon,

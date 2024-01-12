@@ -1,7 +1,7 @@
 import Box from "@/components/Box";
 import Card from "@/components/Card";
-import Typography from "@/components/Typography";
 import CopyTextButton from "@/components/CopyTextButton";
+import Typography from "@/components/Typography";
 
 interface CopyableCardProps {
     value: string | undefined;

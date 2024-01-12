@@ -1,12 +1,10 @@
-/** @jsxImportSource @emotion/react */
-
-import { SxProps } from "@mui/material";
-import CharacterLimit from "@/components/CharacterLimit";
-import FormError from "@/components/FormError";
-import Box from "@/components/Box";
-import FormInfoLabel from "@/components/FormInfoLabel";
 import { ReactNode, useMemo } from "react";
 import { FieldError } from "react-hook-form";
+import { SxProps } from "@mui/material";
+import Box from "@/components/Box";
+import CharacterLimit from "@/components/CharacterLimit";
+import FormError from "@/components/FormError";
+import FormInfoLabel from "@/components/FormInfoLabel";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 

@@ -1,12 +1,12 @@
-import { getTeam, getUser } from "@/utils/api";
-import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
-import { getTeamUser } from "@/utils/user";
-import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
-import BackButton from "@/components/BackButton";
+import { getTeam, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
+import { getTeamUser } from "@/utils/user";
 import EditIntegrationForm from "./components/EditIntegrationForm";
 
 export const metadata = {

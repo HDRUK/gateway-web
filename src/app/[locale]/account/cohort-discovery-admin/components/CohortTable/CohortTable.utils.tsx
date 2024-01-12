@@ -1,23 +1,23 @@
+import { IconButton, Typography } from "@mui/material";
+import { ColumnDef } from "@tanstack/react-table";
+import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import Link from "@/components/Link";
 import TooltipIcon from "@/components/TooltipIcon";
+import {
+    statusMapping,
+    COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
+} from "@/consts/cohortDiscovery";
 import {
     ArrowDropDownIcon,
     ArrowDropUpIcon,
     SortByAlphaIcon,
     WarningIcon,
 } from "@/consts/icons";
-import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
+import { RouteName } from "@/consts/routeName";
 import { formatDate, differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
-import { IconButton, Typography } from "@mui/material";
-import { ColumnDef } from "@tanstack/react-table";
-import {
-    statusMapping,
-    COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
-} from "@/consts/cohortDiscovery";
-import { RouteName } from "@/consts/routeName";
 import { CohortStatusPopover } from "./CohortStatusPopover";
 
 interface getColumnsProps {

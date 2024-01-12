@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
-
-import { useTheme } from "@emotion/react";
 import { useMemo } from "react";
-
+import { useTheme } from "@emotion/react";
 import * as styles from "./InitialsBadge.styles";
 
 interface InitialsBadgeProps {

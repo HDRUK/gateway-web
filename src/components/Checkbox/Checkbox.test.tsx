@@ -1,6 +1,6 @@
 import React from "react";
-import Checkbox from "@/components/Checkbox";
 import { useForm } from "react-hook-form";
+import Checkbox from "@/components/Checkbox";
 import { render, screen } from "@/utils/testUtils";
 
 describe("Checkbox", () => {

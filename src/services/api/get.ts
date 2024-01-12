@@ -1,5 +1,5 @@
-import http from "@/utils/http";
 import { RequestOptions } from "@/interfaces/Api";
+import http from "@/utils/http";
 import { errorNotification } from "./utils";
 
 const getRequest = async <T>(
@@ -25,7 +25,7 @@ const getRequest = async <T>(
                 return {
                     content: res.data,
                     type: "text/csv",
-                    filename: filename,
+                    filename,
                 };
             }
 

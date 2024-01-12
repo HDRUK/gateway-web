@@ -1,29 +1,27 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-
-import useAuth from "@/hooks/useAuth";
-import useActionBar from "@/hooks/useActionBar";
-import apis from "@/config/apis";
+import { useRouter } from "next/navigation";
+import { useSWRConfig } from "swr";
+import { User } from "@/interfaces/User";
+import Loading from "@/components/Loading";
+import Paper from "@/components/Paper";
 import Table from "@/components/Table";
+import ChangesActionBar from "@/modules/ChangesActionBar";
+import useActionBar from "@/hooks/useActionBar";
+import useAuth from "@/hooks/useAuth";
+import useDelete from "@/hooks/useDelete";
+import useModal from "@/hooks/useModal";
+import usePatch from "@/hooks/usePatch";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import apis from "@/config/apis";
 import { getColumns } from "@/config/tables/teamManagement";
+import { DeleteForeverIcon } from "@/consts/icons";
 import {
     RolesPayload,
     getChangeCount,
     getDifferences,
 } from "@/utils/userRoles";
-import { User } from "@/interfaces/User";
-
-import useDelete from "@/hooks/useDelete";
-import useModal from "@/hooks/useModal";
-import { useSWRConfig } from "swr";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import usePatch from "@/hooks/usePatch";
-import ChangesActionBar from "@/modules/ChangesActionBar";
-import Paper from "@/components/Paper";
-import { DeleteForeverIcon } from "@/consts/icons";
-import Loading from "@/components/Loading";
-import { useRouter } from "next/navigation";
 
 interface TeamMembersProps {
     teamMembers: User[];

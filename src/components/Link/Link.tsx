@@ -1,6 +1,6 @@
-import NextLink from "next/link";
-import MuiLink from "@mui/material/Link";
 import { LinkProps as MuiLinkProps } from "@mui/material";
+import MuiLink from "@mui/material/Link";
+import NextLink from "next/link";
 
 interface LinkProps extends MuiLinkProps {
     href: string;

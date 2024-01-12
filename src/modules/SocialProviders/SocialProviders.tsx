@@ -1,10 +1,7 @@
 /** @jsxImportSource @emotion/react */
-
+import Image from "next/image";
 import Box from "@/components/Box";
 import Label from "@/components/Label";
-
-import Image from "next/image";
-
 import { colors } from "@/config/theme";
 import * as styles from "./SocialProviders.styles";
 

@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
-
-import { colors } from "@/config/theme";
+import { ReactNode } from "react";
+import { FederationRunResponse } from "@/interfaces/Federation";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
-import { ReactNode } from "react";
 import Typography from "@/components/Typography";
-import { FederationRunResponse } from "@/interfaces/Federation";
+import { colors } from "@/config/theme";
 import { CancelIcon, CheckCircleIcon } from "@/consts/icons";
 import * as styles from "./RunFederationTest.styles";
 

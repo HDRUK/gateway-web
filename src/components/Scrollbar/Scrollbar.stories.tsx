@@ -1,8 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useForm } from "react-hook-form";
-import Form from "@/components/Form";
 import Box from "@/components/Box";
-import { Stack } from "@mui/material";
 import Scrollbar from "./Scrollbar";
 
 const meta: Meta<typeof Scrollbar> = {

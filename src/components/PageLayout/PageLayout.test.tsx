@@ -1,7 +1,7 @@
 import React from "react";
 import PageLayout from "@/components/PageLayout";
-import { userV1 } from "@/mocks/data";
 import { render, waitFor, screen } from "@/utils/testUtils";
+import { userV1 } from "@/mocks/data";
 
 describe("PageLayout", () => {
     it("should render component", async () => {

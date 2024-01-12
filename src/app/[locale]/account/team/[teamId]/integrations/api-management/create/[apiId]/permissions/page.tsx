@@ -1,9 +1,9 @@
-import { getPermissions } from "@/utils/permissions";
-import { getApplication, getTeam, getUser } from "@/utils/api";
 import { cookies } from "next/headers";
-import { getTeamUser } from "@/utils/user";
-import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import BackButton from "@/components/BackButton";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import { getApplication, getTeam, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
+import { getTeamUser } from "@/utils/user";
 import ApplicationPermissions from "../../../components/ApplicationPermissions";
 
 export const metadata = {

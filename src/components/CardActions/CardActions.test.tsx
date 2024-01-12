@@ -1,7 +1,7 @@
 import React from "react";
 import CardActions from "@/components/CardActions";
-import { render, screen } from "@/utils/testUtils";
 import { ArchiveIcon, EditIcon } from "@/consts/icons";
+import { render, screen } from "@/utils/testUtils";
 
 describe("CardActions", () => {
     const mockAction = jest.fn();

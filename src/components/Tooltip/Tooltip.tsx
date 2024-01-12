@@ -1,8 +1,8 @@
-import { colors } from "@/config/theme";
 import {
     Tooltip as MuiTooltip,
     TooltipProps as MuiTooltipProps,
 } from "@mui/material";
+import { colors } from "@/config/theme";
 
 interface TooltipProps extends MuiTooltipProps {
     variant?: string;

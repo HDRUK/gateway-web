@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import Container from "@/components/Container";
 import Box from "@/components/Box";
+import Container from "@/components/Container";
 import { HOME, PAGES, TEXT, TITLE } from "@/consts/translation";
 
 export default function HomePage() {

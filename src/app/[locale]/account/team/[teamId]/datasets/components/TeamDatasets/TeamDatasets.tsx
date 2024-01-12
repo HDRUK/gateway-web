@@ -1,29 +1,29 @@
 "use client";
 
-import Tabs from "@/components/Tabs";
-import useGet from "@/hooks/useGet";
-import apis from "@/config/apis";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
+import { useParams, useSearchParams } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
+import Tabs from "@/components/Tabs";
+import useDebounce from "@/hooks/useDebounce";
+import useDelete from "@/hooks/useDelete";
+import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
-import useDelete from "@/hooks/useDelete";
-import useDebounce from "@/hooks/useDebounce";
+import apis from "@/config/apis";
+import {
+    datasetSearchDefaultValues,
+    sortByOptions,
+} from "@/config/forms/datasetAccountSearch";
 import {
     ArchiveIcon,
     ContentCopyIcon,
     EditIcon,
     UnarchiveIcon,
 } from "@/consts/icons";
-import {
-    datasetSearchDefaultValues,
-    sortByOptions,
-} from "@/config/forms/datasetAccountSearch";
-import { useForm } from "react-hook-form";
-import { useParams, useSearchParams } from "next/navigation";
 import { RouteName } from "@/consts/routeName";
-import { useTranslations } from "next-intl";
 import {
     ACCOUNT,
     DATASETS,
@@ -45,8 +45,8 @@ const TeamDatasets = () => {
     );
     const { showModal } = useModal();
     const searchParams = useSearchParams();
-    const tab = searchParams.get("tab");
-    const { teamId } = useParams();
+    const tab = searchParams?.get("tab");
+    const params = useParams<{ teamId: string }>();
     const [currentPage, setCurrentPage] = useState(1);
     const [sort, setSort] = useState(
         `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`
@@ -72,7 +72,7 @@ const TeamDatasets = () => {
     const filterTitleDebounced = useDebounce(watchAll.searchTitle, 500);
 
     const queryParams = new URLSearchParams({
-        team_id: teamId.toString(),
+        team_id: `${params?.teamId.toString()}`,
         withTrashed: "true",
         status: (tab as string) || "ACTIVE",
         page: currentPage.toString(),
@@ -81,7 +81,7 @@ const TeamDatasets = () => {
     });
 
     const { data: counts } = useGet<CountStatus>(
-        `${apis.datasetsV1Url}/count/status?team_id=${teamId}`
+        `${apis.datasetsV1Url}/count/status?team_id=${params?.teamId}`
     );
     const {
         ACTIVE: countActive,
@@ -112,12 +112,12 @@ const TeamDatasets = () => {
 
     const actions = [
         {
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}`,
             icon: EditIcon,
             label: t("actions.edit.label"),
         },
         {
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}/${RouteName.DUPLICATE}`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}/${RouteName.DUPLICATE}`,
             icon: ContentCopyIcon,
             label: t("actions.duplicate.label"),
         },

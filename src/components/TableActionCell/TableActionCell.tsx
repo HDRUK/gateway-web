@@ -1,6 +1,6 @@
-import { User } from "@/interfaces/User";
-import { Box, IconButton } from "@mui/material";
 import { ReactNode } from "react";
+import { Box, IconButton } from "@mui/material";
+import { User } from "@/interfaces/User";
 
 interface TableActionCellProps {
     user: User;

@@ -1,29 +1,26 @@
-/** @jsxImportSource @emotion/react */
-
 "use client";
 
-import Box from "@/components/Box";
-import Chip from "@/components/Chip";
-import { Application } from "@/interfaces/Application";
-import Typography from "@/components/Typography";
 import Link from "next/link";
-
-import Card from "@/components/Card";
-import { formatDate } from "@/utils/date";
 import { useParams } from "next/navigation";
+import { Application } from "@/interfaces/Application";
+import Box from "@/components/Box";
+import Card from "@/components/Card";
+import Chip from "@/components/Chip";
+import Typography from "@/components/Typography";
 import { RouteName } from "@/consts/routeName";
+import { formatDate } from "@/utils/date";
 
 interface ApplicationListItemProps {
     application: Application;
 }
 
 const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
-    const { teamId } = useParams();
+    const params = useParams<{ teamId: string }>();
 
     return (
         <Card>
             <Link
-                href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}/${application.id}`}
+                href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}/${application.id}`}
                 style={{
                     textDecoration: "none",
                     color: "#000",

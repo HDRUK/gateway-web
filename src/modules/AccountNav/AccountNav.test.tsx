@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import AccountNav from "@/modules/AccountNav";
-import { userV1 } from "@/mocks/data";
-import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import useLogout from "@/hooks/useLogout";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { userV1 } from "@/mocks/data";
 
 jest.mock("@/hooks/useLogout", () => jest.fn());
 

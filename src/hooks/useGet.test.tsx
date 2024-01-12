@@ -1,9 +1,9 @@
-import { filtersV1, userV1 } from "@/mocks/data";
-import useGet from "@/hooks/useGet";
-import { User } from "@/interfaces/User";
 import { Filter } from "@/interfaces/Filter";
+import { User } from "@/interfaces/User";
+import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { renderHook, waitFor } from "@/utils/testUtils";
+import { filtersV1, userV1 } from "@/mocks/data";
 
 describe("useGet", () => {
     it("should eventually return the single item", async () => {

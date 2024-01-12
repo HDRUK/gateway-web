@@ -1,6 +1,6 @@
-import theme from "@/config/theme";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
+import theme from "@/config/theme";
 
 interface GradientBannerProps {
     title: string;

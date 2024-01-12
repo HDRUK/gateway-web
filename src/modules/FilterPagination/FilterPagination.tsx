@@ -1,7 +1,7 @@
 import { Filter } from "@/interfaces/Filter";
-import useGet from "@/hooks/useGet";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import useGet from "@/hooks/useGet";
 
 interface FilterPaginationProps {
     pageUrl: string;

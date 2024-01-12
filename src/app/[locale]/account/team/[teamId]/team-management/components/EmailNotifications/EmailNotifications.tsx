@@ -1,9 +1,22 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/navigation";
+import { Team } from "@/interfaces/Team";
 import Box from "@/components/Box";
-import Paper from "@/components/Paper";
+import Form from "@/components/Form";
 import InputSectionWrapper from "@/components/InputSectionWrapper";
+import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import ChangesActionBar from "@/modules/ChangesActionBar";
+import useActionBar from "@/hooks/useActionBar";
+import useAuth from "@/hooks/useAuth";
+import useModal from "@/hooks/useModal";
+import usePost from "@/hooks/usePost";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import apis from "@/config/apis";
 import {
     emailNotificationValidationSchema,
     emailNotificationDefaultValues,
@@ -12,21 +25,8 @@ import {
     TeamNotifications,
     TeamNotificationsForm,
 } from "@/config/forms/emailNotifications";
-import useActionBar from "@/hooks/useActionBar";
-import useAuth from "@/hooks/useAuth";
-import ChangesActionBar from "@/modules/ChangesActionBar";
-import { getPreferredEmail } from "@/utils/user";
-import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import useModal from "@/hooks/useModal";
 import { colors } from "@/config/theme";
-import usePost from "@/hooks/usePost";
-import apis from "@/config/apis";
-import { Team } from "@/interfaces/Team";
-import { useRouter } from "next/navigation";
-import Form from "@/components/Form";
+import { getPreferredEmail } from "@/utils/user";
 import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
 
 interface EmailNotificationsProps {

@@ -1,20 +1,19 @@
 "use client";
 
-import Tabs from "@/components/Tabs";
-
-import apis from "@/config/apis";
-import useGet from "@/hooks/useGet";
-import { Application } from "@/interfaces/Application";
-import ApplicationAuthDetails from "../ApplicationAuthDetails";
-import EditApplicationForm from "../EditApplicationForm";
-import ApplicationPermissions from "..//ApplicationPermissions";
 import { useParams } from "next/navigation";
+import { Application } from "@/interfaces/Application";
+import Tabs from "@/components/Tabs";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
+import ApplicationAuthDetails from "../ApplicationAuthDetails";
+import ApplicationPermissions from "../ApplicationPermissions";
+import EditApplicationForm from "../EditApplicationForm";
 
 const ApplicationTabs = () => {
-    const { apiId } = useParams();
+    const params = useParams<{ apiId: string }>();
 
     const { data: application } = useGet<Application>(
-        apiId ? `${apis.applicationsV1Url}/${apiId}` : null
+        params?.apiId ? `${apis.applicationsV1Url}/${params?.apiId}` : null
     );
 
     const applicationTabs = [

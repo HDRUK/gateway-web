@@ -1,6 +1,6 @@
+import { renderHook, waitFor } from "@/utils/testUtils";
 import { teamV1 } from "@/mocks/data/team";
 import { generateUserV1 } from "@/mocks/data/user";
-import { renderHook, waitFor } from "@/utils/testUtils";
 import { useNewMembersOnTop } from "./useNewMembersOnTop";
 
 describe.skip("useNewMembersOnTop", () => {

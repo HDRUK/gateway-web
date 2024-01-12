@@ -1,7 +1,7 @@
+import * as notificationService from "@/services/notification/notification";
 import { fireEvent, render, screen } from "@/utils/testUtils";
 import { generateApplicationV1 } from "@/mocks/data/application";
 import ApplicationAuthDetails from "./ApplicationAuthDetails";
-import * as notificationService from "@/services/notification/notification";
 
 jest.mock("notistack", () => {
     return {
@@ -49,7 +49,7 @@ describe("ApplicationAuthDetails", () => {
     it("triggers clipboard copy when the Copy button is clicked", () => {
         render(<ApplicationAuthDetails application={mockApplication} />);
 
-        const copyButton = screen.getAllByRole("button",{
+        const copyButton = screen.getAllByRole("button", {
             name: "copy text",
         })[0];
 
@@ -58,10 +58,7 @@ describe("ApplicationAuthDetails", () => {
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
             mockApplication.app_id
         );
-    
-        expect(notificationService.success).toBeCalledWith(
-            "Link copied"
-        );
 
+        expect(notificationService.success).toBeCalledWith("Link copied");
     });
 });

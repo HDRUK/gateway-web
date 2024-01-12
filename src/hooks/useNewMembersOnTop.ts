@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { User } from "@/interfaces/User";
-import { Team } from "@/interfaces/Team";
 import { useRouter } from "next/navigation";
+import { Team } from "@/interfaces/Team";
+import { User } from "@/interfaces/User";
 
 export const useNewMembersOnTop = (team: Team) => {
     const router = useRouter();

@@ -1,6 +1,6 @@
-import { errorResponseV1 } from "@/mocks/data/api/v1";
 import { errorNotification, successNotification } from "@/services/api/utils";
 import * as notificationService from "@/services/notification/notification";
+import { errorResponseV1 } from "@/mocks/data/api/v1";
 
 jest.mock("notistack", () => {
     return {

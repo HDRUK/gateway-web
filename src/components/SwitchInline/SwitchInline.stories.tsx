@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { useForm } from "react-hook-form";
+import type { Meta, StoryObj } from "@storybook/react";
 import SwitchInline from "./SwitchInline";
 
 /** Mui documentation: https://mui.com/material-ui/react-switch */

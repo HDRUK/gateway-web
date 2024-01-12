@@ -1,10 +1,9 @@
+import { cookies } from "next/headers";
+import BackButton from "@/components/BackButton";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
-import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-
-import BackButton from "@/components/BackButton";
 import IntegrationList from "./components/IntegrationList";
 
 export const metadata = {

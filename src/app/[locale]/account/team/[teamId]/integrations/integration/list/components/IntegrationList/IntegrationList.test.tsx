@@ -1,8 +1,8 @@
+import mockRouter from "next-router-mock";
 import { render, screen, waitFor } from "@/utils/testUtils";
-import { server } from "@/mocks/server";
 import { generateIntegrationsV1 } from "@/mocks/data/integration";
 import { getIntegrationsV1 } from "@/mocks/handlers/integration";
-import mockRouter from "next-router-mock";
+import { server } from "@/mocks/server";
 import IntegrationList from "./IntegrationList";
 
 describe("IntegrationList", () => {

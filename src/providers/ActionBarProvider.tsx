@@ -1,8 +1,8 @@
 "use client";
 
-import { ModalButtonProps } from "@/components/ModalButtons/ModalButtons";
-import { isEqual } from "lodash";
 import React, { createContext, useMemo, ReactNode } from "react";
+import { isEqual } from "lodash";
+import { ModalButtonProps } from "@/components/ModalButtons/ModalButtons";
 
 type ActionBarProps = {
     [key: string]: unknown | ReactNode;

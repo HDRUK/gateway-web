@@ -1,8 +1,8 @@
-import { userV1 } from "@/mocks/data";
 import useAuth from "@/hooks/useAuth";
-import { server } from "@/mocks/server";
-import { getAuthInternal } from "@/mocks/handlers/auth";
 import { renderHook, waitFor } from "@/utils/testUtils";
+import { userV1 } from "@/mocks/data";
+import { getAuthInternal } from "@/mocks/handlers/auth";
+import { server } from "@/mocks/server";
 
 describe("useAuth", () => {
     it("should return the logged in user", async () => {

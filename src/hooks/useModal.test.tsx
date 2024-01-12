@@ -1,5 +1,5 @@
-import useModal from "@/hooks/useModal";
 import { act } from "react-dom/test-utils";
+import useModal from "@/hooks/useModal";
 import { fireEvent, renderHook, screen, waitFor } from "@/utils/testUtils";
 
 describe("useModal", () => {

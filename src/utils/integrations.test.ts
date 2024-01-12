@@ -1,5 +1,5 @@
-import { authTypes } from "@/consts/integrations";
 import { AuthType } from "@/interfaces/Integration";
+import { authTypes } from "@/consts/integrations";
 import { requiresSecretKey } from "./integrations";
 
 describe("Integrations utils", () => {

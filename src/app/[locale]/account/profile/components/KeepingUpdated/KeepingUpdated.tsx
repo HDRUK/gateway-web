@@ -1,10 +1,10 @@
-import Box from "@/components/Box";
-import InputWrapper from "@/components/InputWrapper";
-import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { Divider } from "@mui/material";
-import Typography from "@/components/Typography";
 import { Fragment } from "react";
 import { Control, FieldValues } from "react-hook-form";
+import { Divider } from "@mui/material";
+import { ComponentTypes } from "@/interfaces/ComponentTypes";
+import Box from "@/components/Box";
+import InputWrapper from "@/components/InputWrapper";
+import Typography from "@/components/Typography";
 
 interface KeepingUpdatedProps<T extends FieldValues> {
     control: Control<T>;

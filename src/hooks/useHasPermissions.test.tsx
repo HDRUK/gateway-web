@@ -1,13 +1,13 @@
-import { useHasPermissions } from "@/hooks/useHasPermission";
+import mockRouter from "next-router-mock";
+import { Role } from "@/interfaces/Role";
 import useAuth from "@/hooks/useAuth";
+import { useHasPermissions } from "@/hooks/useHasPermission";
 import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
-import { server } from "@/mocks/server";
-import { getTeamV1 } from "@/mocks/handlers/teams";
+import { renderHook, waitFor } from "@/utils/testUtils";
 import { teamV1 } from "@/mocks/data/team";
 import { userV1 } from "@/mocks/data/user";
-import { Role } from "@/interfaces/Role";
-import { renderHook, waitFor } from "@/utils/testUtils";
-import mockRouter from "next-router-mock";
+import { getTeamV1 } from "@/mocks/handlers/teams";
+import { server } from "@/mocks/server";
 
 jest.mock("@/hooks/useAuth", () => jest.fn());
 

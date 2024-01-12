@@ -1,20 +1,19 @@
 "use client";
 
-import apis from "@/config/apis";
-import useGet from "@/hooks/useGet";
+import { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { DownloadIcon } from "@/consts/icons";
 import { Typography, Box } from "@mui/material";
-import {
-    cohortExportDefaultValues,
-    cohortExportFormFields,
-} from "@/config/forms/cohortAdminExport";
-
 import { CohortExportForm } from "@/interfaces/CohortExport";
 import { CsvExport } from "@/interfaces/CsvExport";
 import { User } from "@/interfaces/User";
 import ModalForm from "@/components/ModalForm";
-import { useEffect, useState, useMemo } from "react";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
+import {
+    cohortExportDefaultValues,
+    cohortExportFormFields,
+} from "@/config/forms/cohortAdminExport";
+import { DownloadIcon } from "@/consts/icons";
 import { downloadCSV } from "@/utils/download";
 
 const CohortTableDownload = () => {
@@ -95,7 +94,7 @@ const CohortTableDownload = () => {
             }
             return field;
         });
-    }, [cohortExportFormFields, uniqueOrganisations]);
+    }, [uniqueOrganisations]);
 
     return (
         <ModalForm

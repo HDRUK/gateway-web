@@ -1,14 +1,13 @@
 "use client";
 
-import Tabs from "@/components/Tabs";
 import { useMemo, useState } from "react";
-import Typography from "@/components/Typography";
-import Accordion from "@/components/Accordion";
 import { ReleaseNode } from "@/interfaces/Releases";
-
-import { getReleaseByYear } from "@/utils/releaseNotes";
+import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import HTMLContent from "@/components/HTMLContent";
+import Tabs from "@/components/Tabs";
+import Typography from "@/components/Typography";
+import { getReleaseByYear } from "@/utils/releaseNotes";
 
 interface ReleaseTabProps {
     allReleases: ReleaseNode[];

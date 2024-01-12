@@ -1,5 +1,5 @@
-import useDialog from "@/hooks/useDialog";
 import Button from "@/components/Button";
+import useDialog from "@/hooks/useDialog";
 import Box from "../Box";
 
 type ConfirmType = "button" | "submit" | undefined;

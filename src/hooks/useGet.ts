@@ -1,8 +1,8 @@
+import { ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import useSWR, { KeyedMutator } from "swr";
 import { Error } from "@/interfaces/Error";
 import apiService from "@/services/api";
-import { useTranslations } from "next-intl";
-import { ReactNode } from "react";
 
 interface Response<T> {
     data: T | undefined;

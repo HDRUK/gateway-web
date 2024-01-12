@@ -1,6 +1,6 @@
+import { ReactNode } from "react";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import { ReactNode } from "react";
 
 interface TwoColumnProps {
     leftContent: ReactNode;

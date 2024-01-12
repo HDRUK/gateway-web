@@ -1,5 +1,5 @@
-import { User } from "@/interfaces/User";
 import { Notification } from "@/interfaces/Notification";
+import { User } from "@/interfaces/User";
 
 interface Team {
     id: number;

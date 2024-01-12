@@ -1,14 +1,10 @@
 import { getTranslations } from "next-intl/server";
-import { getTeam, getUser } from "@/utils/api";
-import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
-import { getTeamUser } from "@/utils/user";
-import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import Paper from "@/components/Paper";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
+import Paper from "@/components/Paper";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
-import CreateApplicationForm from "./components/CreateApplicationForm";
 import {
     ACCOUNT,
     API_MANAGEMENT,
@@ -19,6 +15,7 @@ import {
     TEXT,
     TITLE,
 } from "@/consts/translation";
+import CreateApplicationForm from "./components/CreateApplicationForm";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - API Management",

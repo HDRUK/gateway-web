@@ -1,5 +1,5 @@
-import { Permission } from "@/interfaces/Permission";
 import { Notification } from "@/interfaces/Notification";
+import { Permission } from "@/interfaces/Permission";
 
 interface Application {
     id: number;

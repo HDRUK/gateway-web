@@ -20,15 +20,13 @@ const CMSPageTemplate1 = ({
         template: { template1Fields },
     } = content;
 
-    const CtaContent = ctaOverrideComponent
-        ? ctaOverrideComponent
-        : template1Fields.ctaLink && (
-              <Link passHref href={template1Fields.ctaLink.url}>
-                  <Button sx={{ mt: 3 }}>
-                      {template1Fields.ctaLink.title}
-                  </Button>
-              </Link>
-          );
+    const CtaContent =
+        ctaOverrideComponent ||
+        (template1Fields.ctaLink && (
+            <Link passHref href={template1Fields.ctaLink.url}>
+                <Button sx={{ mt: 3 }}>{template1Fields.ctaLink.title}</Button>
+            </Link>
+        ));
 
     return (
         <div className="wpStyles">

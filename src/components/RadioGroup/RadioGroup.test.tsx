@@ -1,9 +1,8 @@
-import { render, screen, waitFor } from "@/utils/testUtils";
 import { useForm } from "react-hook-form";
-
 import userEvent from "@testing-library/user-event";
-import Form from "@/components/Form";
 import Button from "@/components/Button";
+import Form from "@/components/Form";
+import { render, screen, waitFor } from "@/utils/testUtils";
 import RadioGroup from "./RadioGroup";
 
 const submitFn = jest.fn();

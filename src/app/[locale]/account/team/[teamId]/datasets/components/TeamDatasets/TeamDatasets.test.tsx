@@ -1,8 +1,8 @@
-import { render, screen, waitFor, within } from "@/utils/testUtils";
-import { server } from "@/mocks/server";
-import { getDatasetsV1 } from "@/mocks/handlers/datasets";
-import { generateDatasetV1 } from "@/mocks/data/dataset";
 import mockRouter from "next-router-mock";
+import { render, screen, waitFor, within } from "@/utils/testUtils";
+import { generateDatasetV1 } from "@/mocks/data/dataset";
+import { getDatasetsV1 } from "@/mocks/handlers/datasets";
+import { server } from "@/mocks/server";
 import TeamDatasets from "./TeamDatasets";
 
 mockRouter.query = { teamId: "1", tab: "ACTIVE" };

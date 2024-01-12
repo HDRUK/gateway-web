@@ -1,6 +1,6 @@
 import React from "react";
-import CheckboxRow from "@/components/CheckboxRow";
 import { useForm } from "react-hook-form";
+import CheckboxRow from "@/components/CheckboxRow";
 import { render, screen } from "@/utils/testUtils";
 
 describe("CheckboxRow", () => {

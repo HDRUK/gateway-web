@@ -1,44 +1,42 @@
 "use client";
 
-import Box from "@/components/Box";
-import Form from "@/components/Form";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import { useRouter, useParams } from "next/navigation";
+import { ApplicationForm } from "@/interfaces/Application";
+import Box from "@/components/Box";
 import Button from "@/components/Button";
+import Form from "@/components/Form";
+import InputWrapper from "@/components/InputWrapper";
+import Paper from "@/components/Paper";
+import useAuth from "@/hooks/useAuth";
+import useGetTeam from "@/hooks/useGetTeam";
+import usePost from "@/hooks/usePost";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import apis from "@/config/apis";
 import {
     applicationDefaultValues,
     applicationFormFields,
     applicationValidationSchema,
 } from "@/config/forms/application";
-import InputWrapper from "@/components/InputWrapper";
-import { ApplicationForm } from "@/interfaces/Application";
-import apis from "@/config/apis";
-import usePost from "@/hooks/usePost";
-import useAuth from "@/hooks/useAuth";
-import Paper from "@/components/Paper";
-import { useMemo } from "react";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import useGetTeam from "@/hooks/useGetTeam";
-
-import { useRouter, useParams } from "next/navigation";
 import { RouteName } from "@/consts/routeName";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
 
     const { push } = useRouter();
-    const { teamId } = useParams();
+    const params = useParams<{ teamId: string }>();
 
-    const { team } = useGetTeam(teamId as string);
+    const { team } = useGetTeam(params?.teamId as string);
 
     const defaultValues = useMemo(() => {
         return {
             user_id: user?.id,
-            team_id: parseInt(teamId, 10),
+            team_id: parseInt(`${params?.teamId}`, 10),
             ...applicationDefaultValues,
         };
-    }, [teamId, user?.id]);
+    }, [params?.teamId, user?.id]);
 
     const { control, handleSubmit, reset, formState } =
         useForm<ApplicationForm>({
@@ -83,7 +81,7 @@ const CreateApplicationForm = () => {
         /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
         setTimeout(() => {
             push(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${response.id}/${RouteName.PERMISSIONS}`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${response.id}/${RouteName.PERMISSIONS}`
             );
         });
     };

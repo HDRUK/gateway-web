@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import MultiInputWrapper from "./MultiInputWrapper";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as yup from "yup";
+import MultiInputWrapper from "./MultiInputWrapper";
 
 const meta: Meta<typeof MultiInputWrapper> = {
     component: MultiInputWrapper,
@@ -45,14 +45,7 @@ const WrapperComponent = () => {
         { name: "forth", label: "Forth in Form", component: "CheckboxRow" },
     ];
 
-    const onSubmit = (data: unknown) => console.log(data);
-    const onCancel = () => {};
-
-    return (
-        <>
-            <MultiInputWrapper control={control} fields={formFields} />
-        </>
-    );
+    return <MultiInputWrapper control={control} fields={formFields} />;
 };
 
 export const Default: Story = {

@@ -1,7 +1,8 @@
 "use client";
+
+import { ReactNode } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import { ReactNode } from "react";
 
 export type ScrollbarProps = {
     children: ReactNode;
@@ -10,7 +11,7 @@ export type ScrollbarProps = {
 
 const Scrollbar = ({ children, height = "200px" }: ScrollbarProps) => {
     return (
-        <div style={{ height: height }}>
+        <div style={{ height }}>
             <PerfectScrollbar>
                 <div className="content"> {children} </div>
             </PerfectScrollbar>

@@ -1,12 +1,12 @@
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { HttpOptions } from "@/interfaces/Api";
+import { Application } from "@/interfaces/Application";
+import { AuthUser } from "@/interfaces/AuthUser";
+import { CohortRequest } from "@/interfaces/CohortRequest";
+import { Team } from "@/interfaces/Team";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { getUserFromToken } from "@/utils/cookies";
-import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
-import { AuthUser } from "@/interfaces/AuthUser";
-import { Team } from "@/interfaces/Team";
-import { Application } from "@/interfaces/Application";
-import { CohortRequest } from "@/interfaces/CohortRequest";
-import { HttpOptions } from "@/interfaces/Api";
 
 async function get<T>(
     cookieStore: ReadonlyRequestCookies,

@@ -1,7 +1,7 @@
-import Typography from "@/components/Typography";
 import { IconButton } from "@mui/material";
-import theme from "@/config/theme";
+import Typography from "@/components/Typography";
 import notificationService from "@/services/notification";
+import theme from "@/config/theme";
 import { ContentCopyIcon } from "@/consts/icons";
 
 export interface CopyTextButtonProps {

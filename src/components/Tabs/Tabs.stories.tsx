@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import Tabs from "@/components/Tabs";
 import React, { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
 import Box from "@/components/Box";
+import Tabs from "@/components/Tabs";
 
 /** Mui documentation: https://mui.com/material-ui/react-tabs */
 

@@ -1,21 +1,21 @@
 "use client";
 
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
+import { PaginationType } from "@/interfaces/Pagination";
+import Box from "@/components/Box";
+import InputWrapper from "@/components/InputWrapper";
+import Loading from "@/components/Loading";
+import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
+import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
-import Loading from "@/components/Loading";
-import { useState } from "react";
-import Pagination from "@/components/Pagination";
-import { PaginationType } from "@/interfaces/Pagination";
-import InputWrapper from "@/components/InputWrapper";
-import Box from "@/components/Box";
 import {
     cohortSearchDefaultValues,
     cohortSearchFilter,
 } from "@/config/forms/cohortAccountSearch";
-import { useForm } from "react-hook-form";
-import useDebounce from "@/hooks/useDebounce";
 import { getColumns } from "./CohortTable.utils";
 
 const CohortTable = () => {
