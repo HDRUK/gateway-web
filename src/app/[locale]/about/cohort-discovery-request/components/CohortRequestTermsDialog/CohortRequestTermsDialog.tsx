@@ -49,7 +49,9 @@ const CohortRequestTermsDialog = () => {
 
     const t = useTranslations("modules");
 
-    const submitRequest = usePost(apis.cohortRequestsV1Url);
+    const submitRequest = usePost(apis.cohortRequestsV1Url, {
+        successNotificationsOn: false,
+    });
 
     const handleSuccess = () => {
         hideDialog();
@@ -64,7 +66,7 @@ const CohortRequestTermsDialog = () => {
     };
 
     const onFormSubmit = async () => {
-        await submitRequest({ details: "" });
+        await submitRequest({ details: "required" });
         handleSuccess();
     };
 
