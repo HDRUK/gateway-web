@@ -62,6 +62,7 @@ const CohortRequestTermsDialog = () => {
             onSuccess: () => {
                 push("/");
             },
+            showCancel: false,
         });
     };
 
@@ -97,7 +98,6 @@ const CohortRequestTermsDialog = () => {
                                 items={dialogProps?.cmsContent.contents}
                             />
                         </Box>
-
                         <Box sx={{ flex: 1 }}>
                             <Box
                                 sx={{
