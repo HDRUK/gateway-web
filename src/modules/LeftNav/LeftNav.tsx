@@ -1,8 +1,6 @@
-/** @jsxImportSource @emotion/react */
-
 "use client";
 
-import Link from "@/components/Link";
+import { Fragment, useState } from "react";
 import {
     Box,
     Collapse,
@@ -11,11 +9,10 @@ import {
     ListItemIcon,
     ListItemText,
 } from "@mui/material";
-
-import { Fragment, useState } from "react";
 import { usePathname } from "next/navigation";
-import { colors } from "@/config/theme";
 import { LeftNavItem } from "@/interfaces/Ui";
+import Link from "@/components/Link";
+import { colors } from "@/config/theme";
 import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 

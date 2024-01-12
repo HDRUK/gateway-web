@@ -1,28 +1,27 @@
 "use client";
 
-import ApplicationListItem from "./ApplicationListItem";
-import { Application } from "@/interfaces/Application";
-import apis from "@/config/apis";
-import useGet from "@/hooks/useGet";
 import { useEffect, useState } from "react";
-
-import { useParams } from "next/navigation";
-import BoxContainer from "@/components/BoxContainer";
 import { Box } from "@mui/material";
-import Typography from "@/components/Typography";
-import ApplicationSearchBar from "./ApplicationSearchBar";
-import Pagination from "@/components/Pagination";
+import { useParams } from "next/navigation";
+import { Application } from "@/interfaces/Application";
 import { PaginationType } from "@/interfaces/Pagination";
+import BoxContainer from "@/components/BoxContainer";
+import Pagination from "@/components/Pagination";
+import Typography from "@/components/Typography";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
+import ApplicationListItem from "./ApplicationListItem";
+import ApplicationSearchBar from "./ApplicationSearchBar";
 
 const ApplicationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filterQuery, setFilterQuery] = useState("");
 
-    const { teamId } = useParams();
+    const params = useParams<{ teamId: string }>();
 
     const { data, isLoading } = useGet<PaginationType<Application>>(
         filterQuery
-            ? `${apis.applicationsV1Url}?per_page=10&team_id=${teamId}&${filterQuery}&page=${currentPage}`
+            ? `${apis.applicationsV1Url}?per_page=10&team_id=${params?.teamId}&${filterQuery}&page=${currentPage}`
             : null,
         {
             keepPreviousData: true,

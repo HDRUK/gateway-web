@@ -1,11 +1,9 @@
-/** @jsxImportSource @emotion/react */
-
-import { OutlinedInput, Select as MuiSelect, MenuItem } from "@mui/material";
-import { Control, useController } from "react-hook-form";
-import { IconType } from "@/interfaces/Ui";
-import SelectMenuItem from "@/components/SelectMenuItem";
-import FormInputWrapper from "@/components/FormInputWrapper";
 import { ReactNode } from "react";
+import { Control, useController } from "react-hook-form";
+import { OutlinedInput, Select as MuiSelect, MenuItem } from "@mui/material";
+import { IconType } from "@/interfaces/Ui";
+import FormInputWrapper from "@/components/FormInputWrapper";
+import SelectMenuItem from "@/components/SelectMenuItem";
 
 type ValueType = string | number;
 export interface SelectOptionsType {

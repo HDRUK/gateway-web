@@ -1,32 +1,31 @@
 "use client";
 
-import Form from "@/components/Form";
-import Typography from "@/components/Typography";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import Button from "@/components/Button";
-import {
-    applicationDefaultValues,
-    applicationEditFormFields,
-    applicationValidationSchema,
-} from "@/config/forms/application";
-import InputWrapper from "@/components/InputWrapper";
+import { useParams, useRouter } from "next/navigation";
 import {
     Application,
     ApplicationForm,
     ApplicationPayload,
 } from "@/interfaces/Application";
-import DeleteApplication from "../DeleteApplication";
-import apis from "@/config/apis";
+import Button from "@/components/Button";
+import Form from "@/components/Form";
+import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
-import usePut from "@/hooks/usePut";
-import { useEffect, useMemo } from "react";
 import Paper from "@/components/Paper";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import Typography from "@/components/Typography";
 import useGetTeam from "@/hooks/useGetTeam";
-import { useParams, useRouter } from "next/navigation";
+import usePut from "@/hooks/usePut";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import apis from "@/config/apis";
+import {
+    applicationEditFormFields,
+    applicationValidationSchema,
+    applicationDefaultValues,
+} from "@/config/forms/application";
 import { RouteName } from "@/consts/routeName";
+import DeleteApplication from "../DeleteApplication";
 
 interface EditApplicationFormProps {
     application?: Application;
@@ -38,8 +37,8 @@ const EditApplicationForm = ({
     isTabView = false,
 }: EditApplicationFormProps) => {
     const { push } = useRouter();
-    const { teamId } = useParams();
-    const { team } = useGetTeam(teamId as string);
+    const params = useParams<{ teamId: string }>();
+    const { team } = useGetTeam(params?.teamId as string);
 
     const { control, handleSubmit, reset, formState } =
         useForm<ApplicationForm>({
@@ -90,7 +89,7 @@ const EditApplicationForm = ({
             /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
             setTimeout(() => {
                 push(
-                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${payload.id}/${RouteName.PERMISSIONS}`
+                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${payload.id}/${RouteName.PERMISSIONS}`
                 );
             });
         }

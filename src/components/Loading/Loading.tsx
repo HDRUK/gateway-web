@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
 import { CircularProgress } from "@mui/material";
-import Box from "../Box";
+import Box from "@/components/Box";
 
 interface LoadingProps {
     size?: number;

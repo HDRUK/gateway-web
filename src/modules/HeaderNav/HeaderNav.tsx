@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import Dropdown from "../HeaderNavDropdown";
-import * as styles from "./HeaderNav.styles";
+import { useState } from "react";
+import { Box } from "@mui/material";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import { ExpandMoreIcon } from "@/consts/icons";
-import { Box } from "@mui/material";
-import { useState } from "react";
+import Dropdown from "../HeaderNavDropdown";
+import * as styles from "./HeaderNav.styles";
 
 interface HeaderNavProps {
     showNavList: boolean;

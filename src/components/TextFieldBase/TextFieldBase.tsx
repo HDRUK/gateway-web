@@ -1,15 +1,12 @@
-/** @jsxImportSource @emotion/react */
-
+import { Control, useController } from "react-hook-form";
 import {
     InputAdornment,
     OutlinedInput,
     IconButton,
     SxProps,
 } from "@mui/material";
-
-import { Control, useController } from "react-hook-form";
-import FormInputWrapper from "@/components/FormInputWrapper";
 import { IconType } from "@/interfaces/Ui";
+import FormInputWrapper from "@/components/FormInputWrapper";
 import { CancelIcon } from "@/consts/icons";
 
 export interface TextFieldBaseProps {

@@ -1,18 +1,16 @@
-/** @jsxImportSource @emotion/react */
-
 "use client";
 
-import { useTranslations } from "next-intl";
-import useDialog from "@/hooks/useDialog";
-import Button from "@/components/Button";
-import ProvidersDialog from "@/modules/ProvidersDialog";
-import { Box, Skeleton } from "@mui/material";
-import AccountNav from "../AccountNav";
 import { useState } from "react";
+import { Box, Skeleton } from "@mui/material";
+import { useTranslations } from "next-intl";
+import Button from "@/components/Button";
 import InitialsBadge from "@/components/InitialsBadge";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
+import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
 import { ArrowDropDownIcon } from "@/consts/icons";
+import AccountNav from "../AccountNav";
 
 const AccountNavWrapper = () => {
     const { showDialog } = useDialog();

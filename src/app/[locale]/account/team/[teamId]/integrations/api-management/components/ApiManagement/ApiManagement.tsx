@@ -1,14 +1,13 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import Typography from "@/components/Typography";
 import { RouteName } from "@/consts/routeName";
 
-import { useParams } from "next/navigation";
-
 const ApiManagement = () => {
-    const { teamId } = useParams();
+    const params = useParams<{ teamId: string }>();
 
     return (
         <Box
@@ -21,13 +20,13 @@ const ApiManagement = () => {
             <Box sx={{ display: "flex", gap: "40px" }}>
                 <ImageMediaCard
                     img="/images/account/teams/api-management/create.jpg"
-                    href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}`}
+                    href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}`}
                     description="Create API-keys and link to the Gateway"
                     buttonText="Create API-Key"
                 />
                 <ImageMediaCard
                     img="/images/account/teams/api-management/manage.jpg"
-                    href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`}
+                    href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`}
                     description="Manage your linked APIs"
                     buttonText="Manage API"
                 />
