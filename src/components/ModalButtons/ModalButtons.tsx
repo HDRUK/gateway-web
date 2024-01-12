@@ -7,6 +7,7 @@ export interface ModalButtonProps {
     onSuccess?: (props: unknown) => void;
     onCancel?: (props: unknown) => void;
     confirmText?: string;
+    showCancel?: boolean;
     formId?: string;
     cancelText?: string;
     confirmType?: ConfirmType;
@@ -16,6 +17,7 @@ export interface ModalButtonProps {
 const ModalButtons = ({
     onSuccess,
     onCancel,
+    showCancel = true,
     cancelText = "Cancel",
     formId,
     confirmText = "Confirm",
@@ -47,14 +49,21 @@ const ModalButtons = ({
 
     return (
         <>
-            <Button
-                key="cancel"
-                variant="outlined"
-                color="secondary"
-                onClick={handleCancel}>
-                {cancelText}
-            </Button>
-            <Box sx={{ p: 0, gap: 2, display: "flex" }}>
+            {showCancel && (
+                <Button
+                    key="cancel"
+                    variant="outlined"
+                    color="secondary"
+                    onClick={handleCancel}>
+                    {cancelText}
+                </Button>
+            )}
+            <Box
+                sx={{
+                    p: 0,
+                    gap: 2,
+                    display: "flex",
+                }}>
                 {tertiaryButton && (
                     <Button color="inherit" onClick={handleTertiary}>
                         {tertiaryButton.buttonText}

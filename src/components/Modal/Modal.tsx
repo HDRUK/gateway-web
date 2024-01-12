@@ -15,6 +15,7 @@ export interface ModalProps {
     onCancel?: () => void;
     confirmText?: string;
     cancelText?: string;
+    showCancel?: boolean;
     title?: string;
     invertCloseIconBehaviour?: boolean;
     styleProps?: DialogProps;
@@ -33,6 +34,7 @@ const Modal = () => {
         onCancel,
         confirmText,
         cancelText,
+        showCancel = true,
         tertiaryButton,
         invertCloseIconBehaviour,
         title,
@@ -72,8 +74,13 @@ const Modal = () => {
             </IconButton>
             <MuiDialogTitle>{title}</MuiDialogTitle>
             <MuiDialogContent>{content}</MuiDialogContent>
-            <MuiDialogActions sx={{ justifyContent: "space-between", p: 2 }}>
+            <MuiDialogActions
+                sx={{
+                    justifyContent: showCancel ? "space-between" : "center",
+                    p: 2,
+                }}>
                 <ModalButtons
+                    showCancel={showCancel}
                     tertiaryButton={tertiaryButton}
                     onSuccess={onSuccess}
                     onCancel={onCancel}
