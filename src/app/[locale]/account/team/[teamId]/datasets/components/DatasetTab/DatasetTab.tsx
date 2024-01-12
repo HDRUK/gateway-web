@@ -1,21 +1,22 @@
-import Box from "@/components/Box";
+import { Control } from "react-hook-form";
+import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
-import DatasetCard from "@/components/DatasetCard";
-import Pagination from "@/components/Pagination";
-import ShowingXofX from "@/components/ShowingXofX";
-import Paper from "@/components/Paper";
 import { IconType } from "@/interfaces/Ui";
+import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import DatasetCard from "@/components/DatasetCard";
+import DownloadCSV from "@/components/DownloadCSV";
+import InputWrapper from "@/components/InputWrapper";
+import Pagination from "@/components/Pagination";
+import Paper from "@/components/Paper";
+import ShowingXofX from "@/components/ShowingXofX";
+import apis from "@/config/apis";
 import {
     searchFilter,
     sortField,
     toggleDirection,
 } from "@/config/forms/datasetAccountSearch";
-import InputWrapper from "@/components/InputWrapper";
-import { Control } from "react-hook-form";
-import apis from "@/config/apis";
-import DownloadCSV from "@/components/DownloadCSV";
-import { useParams } from "next/navigation";
 import {
     PAGES,
     ACCOUNT,
@@ -23,7 +24,6 @@ import {
     DATASETS,
     COMPONENTS,
 } from "@/consts/translation";
-import { useTranslations } from "next-intl";
 
 interface DatasetTabProps {
     list?: Dataset[];
@@ -40,6 +40,7 @@ interface DatasetTabProps {
     total?: number;
     label: string;
     currentPage: number;
+    setValue: (name: string, value: unknown) => void;
     setCurrentPage: (page: number) => void;
     isLoading: boolean;
 }
@@ -55,9 +56,10 @@ const DatasetTab = ({
     currentPage,
     setCurrentPage,
     control,
+    setValue,
     isLoading,
 }: DatasetTabProps) => {
-    const { teamId } = useParams();
+    const params = useParams<{ teamId: string }>();
 
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.DatasetTab`
@@ -73,7 +75,11 @@ const DatasetTab = ({
                     justifyContent: "space-between",
                 }}>
                 <Box sx={{ p: 0, width: "50%" }}>
-                    <InputWrapper control={control} {...searchFilter} />
+                    <InputWrapper
+                        setValue={setValue}
+                        control={control}
+                        {...searchFilter}
+                    />
                 </Box>
                 <BoxContainer
                     sx={{
@@ -99,7 +105,7 @@ const DatasetTab = ({
                 <ShowingXofX from={from} to={to} total={total} />
                 <DownloadCSV
                     buttonText={t("downloadButton")}
-                    apiPath={`${apis.datasetsExportV1Url}?team_id=${teamId}`}
+                    apiPath={`${apis.datasetsExportV1Url}?team_id=${params?.teamId}`}
                 />
             </Box>
 

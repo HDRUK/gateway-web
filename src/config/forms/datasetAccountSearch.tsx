@@ -31,6 +31,7 @@ const sortByOptions = [
 
 const searchFilter = {
     component: inputComponents.TextField,
+    showClearButton: true,
     variant: "outlined",
     name: "searchTitle",
     placeholder: "Search titles",

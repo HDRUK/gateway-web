@@ -1,29 +1,29 @@
 "use client";
 
-import Tabs from "@/components/Tabs";
-import useGet from "@/hooks/useGet";
-import apis from "@/config/apis";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
+import { useParams, useSearchParams } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
+import Tabs from "@/components/Tabs";
+import useDebounce from "@/hooks/useDebounce";
+import useDelete from "@/hooks/useDelete";
+import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
-import useDelete from "@/hooks/useDelete";
-import useDebounce from "@/hooks/useDebounce";
+import apis from "@/config/apis";
+import {
+    datasetSearchDefaultValues,
+    sortByOptions,
+} from "@/config/forms/datasetAccountSearch";
 import {
     ArchiveIcon,
     ContentCopyIcon,
     EditIcon,
     UnarchiveIcon,
 } from "@/consts/icons";
-import {
-    datasetSearchDefaultValues,
-    sortByOptions,
-} from "@/config/forms/datasetAccountSearch";
-import { useForm } from "react-hook-form";
-import { useParams, useSearchParams } from "next/navigation";
 import { RouteName } from "@/consts/routeName";
-import { useTranslations } from "next-intl";
 import {
     ACCOUNT,
     DATASETS,
@@ -45,13 +45,19 @@ const TeamDatasets = () => {
     );
     const { showModal } = useModal();
     const searchParams = useSearchParams();
-    const tab = searchParams.get("tab");
-    const { teamId } = useParams();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [sort, setSort] = useState(
-        `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`
-    );
-    const { control, watch } = useForm({
+    const params = useParams<{ teamId: string }>();
+    const tab = searchParams?.get("tab");
+
+    const [queryParams, setQueryParams] = useState({
+        team_id: `${params?.teamId}`,
+        withTrashed: "true",
+        status: "ACTIVE",
+        page: "1",
+        sort: `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`,
+        title: "",
+    });
+
+    const { control, watch, setValue } = useForm({
         defaultValues: datasetSearchDefaultValues,
     });
     const watchAll = watch();
@@ -60,31 +66,39 @@ const TeamDatasets = () => {
         const [option] = sortByOptions.filter(
             o => o.value === watchAll.sortField
         );
-        setSort(`${watchAll.sortField}:${option.direction}`);
+        setQueryParams(previous => ({
+            ...previous,
+            sort: `${watchAll.sortField}:${option.direction}`,
+        }));
     }, [watchAll.sortField]);
 
     useEffect(() => {
-        setSort(
-            previous => `${previous.split(":")[0]}:${watchAll.sortDirection}`
-        );
+        setQueryParams(previous => ({
+            ...previous,
+            sort: `${previous.sort.split(":")[0]}:${watchAll.sortDirection}`,
+        }));
     }, [watchAll.sortDirection]);
 
     const filterTitleDebounced = useDebounce(watchAll.searchTitle, 500);
+
     useEffect(() => {
-        setCurrentPage(1);
+        setQueryParams(previous => ({
+            ...previous,
+            title: filterTitleDebounced,
+            page: "1",
+        }));
     }, [filterTitleDebounced]);
 
-    const queryParams = new URLSearchParams({
-        team_id: teamId.toString(),
-        withTrashed: "true",
-        status: (tab as string) || "ACTIVE",
-        page: currentPage.toString(),
-        sort,
-        title: filterTitleDebounced,
-    });
+    useEffect(() => {
+        setQueryParams(previous => ({
+            ...previous,
+            status: searchParams?.get("tab") || "ACTIVE",
+        }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams?.get("tab")]);
 
     const { data: counts } = useGet<CountStatus>(
-        `${apis.datasetsV1Url}/count/status?team_id=${teamId}`
+        `${apis.datasetsV1Url}/count/status?team_id=${params?.teamId}`
     );
     const {
         ACTIVE: countActive,
@@ -93,7 +107,7 @@ const TeamDatasets = () => {
     } = counts ?? {};
 
     const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
-        `${apis.datasetsV1Url}?${queryParams}`,
+        `${apis.datasetsV1Url}?${new URLSearchParams(queryParams)}`,
         {
             keepPreviousData: true,
             withPagination: true,
@@ -111,16 +125,16 @@ const TeamDatasets = () => {
     useEffect(() => {
         window.scrollTo({ top: 0 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage]);
+    }, [queryParams.page]);
 
     const actions = [
         {
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}`,
             icon: EditIcon,
             label: t("actions.edit.label"),
         },
         {
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}/${RouteName.DUPLICATE}`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}/${RouteName.DUPLICATE}`,
             icon: ContentCopyIcon,
             label: t("actions.duplicate.label"),
         },
@@ -176,11 +190,14 @@ const TeamDatasets = () => {
             <DatasetTab
                 {...data}
                 control={control}
+                setValue={setValue}
                 key={tabItem.value}
                 label={tabItem.label}
                 list={data?.list}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                currentPage={parseInt(queryParams.page, 10)}
+                setCurrentPage={page =>
+                    setQueryParams({ ...queryParams, page: page.toString() })
+                }
                 isLoading={isLoading}
                 actions={actions}
             />
