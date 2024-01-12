@@ -1,9 +1,9 @@
-import LeftNav from "@/modules/LeftNav";
-import ActionBar from "@/components/ActionBar";
-import { getPermissions } from "@/utils/permissions";
-import { getUser } from "@/utils/api";
 import { cookies } from "next/headers";
+import ActionBar from "@/components/ActionBar";
 import TwoColumn from "@/components/TwoColumn";
+import LeftNav from "@/modules/LeftNav";
+import { getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
 
 export default async function AccountLayout({
     children,

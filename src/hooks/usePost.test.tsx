@@ -1,9 +1,9 @@
-import { userV1 } from "@/mocks/data";
+import { User } from "@/interfaces/User";
 import usePost from "@/hooks/usePost";
 import * as apiService from "@/services/api/post";
-import { User } from "@/interfaces/User";
 import apis from "@/config/apis";
 import { renderHook, waitFor } from "@/utils/testUtils";
+import { userV1 } from "@/mocks/data";
 
 jest.mock("@/services/api/post", () => {
     return {

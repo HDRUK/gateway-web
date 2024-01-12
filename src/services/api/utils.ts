@@ -1,9 +1,9 @@
-import { NotificationOptions } from "@/interfaces/Api";
 import { AxiosResponse } from "axios";
+import { get } from "lodash";
+import { NotificationOptions } from "@/interfaces/Api";
 import { Error } from "@/interfaces/Error";
 import notificationService from "@/services/notification";
 import messages from "@/config/messages/en.json";
-import { get } from "lodash";
 
 interface ErrorNotificationProps {
     props: NotificationOptions;

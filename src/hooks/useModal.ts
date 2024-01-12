@@ -1,9 +1,9 @@
+import { useContext } from "react";
 import Modal from "@/components/Modal";
 import {
     GlobalDialogContext,
     dialogPropsType,
 } from "@/providers/DialogProvider";
-import { useContext } from "react";
 
 const useModal = () => {
     const { showDialog, hideDialog, ...rest } = useContext(GlobalDialogContext);

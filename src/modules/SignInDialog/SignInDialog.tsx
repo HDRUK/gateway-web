@@ -1,21 +1,20 @@
 import * as React from "react";
-import MuiDialogContent from "@mui/material/DialogContent";
-
-import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import Dialog from "@/components/Dialog";
+import { yupResolver } from "@hookform/resolvers/yup";
 import MuiDialogActions from "@mui/material/DialogActions";
-import ModalButtons from "@/components/ModalButtons";
+import MuiDialogContent from "@mui/material/DialogContent";
+import { useTranslations } from "next-intl";
+import { SignIn } from "@/interfaces/SignIn";
 import Box from "@/components/Box";
+import Dialog from "@/components/Dialog";
 import InputWrapper from "@/components/InputWrapper";
+import ModalButtons from "@/components/ModalButtons";
+import useSignIn from "@/hooks/useSignIn";
 import {
     signInDefaultValues,
     signInFormFields,
     signInValidationSchema,
 } from "@/config/forms/signIn";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { SignIn } from "@/interfaces/SignIn";
-import useSignIn from "@/hooks/useSignIn";
 
 const SignInDialog = () => {
     const t = useTranslations("modules");
@@ -45,7 +44,7 @@ const SignInDialog = () => {
                 }}>
                 <MuiDialogContent>
                     {signInFormFields.map(field => (
-                        <InputWrapper<SignIn>
+                        <InputWrapper
                             key={field.name}
                             control={control}
                             {...field}

@@ -1,5 +1,5 @@
-import { colourType } from "@/config/theme";
 import { SvgIconComponent } from "@mui/icons-material";
+import { colourType } from "@/config/theme";
 import { CheckCircleIcon } from "@/consts/icons";
 
 interface BulletListProps {

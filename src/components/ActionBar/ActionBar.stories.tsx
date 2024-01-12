@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import useActionBar from "@/hooks/useActionBar";
 import Button from "@/components/Button";
+import useActionBar from "@/hooks/useActionBar";
 import ActionBar from "./ActionBar";
 
 const meta: Meta<typeof ActionBar> = {

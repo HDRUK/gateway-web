@@ -1,9 +1,9 @@
-import useDialog from "@/hooks/useDialog";
 import { act } from "react-dom/test-utils";
-import Dialog from "@/components/Dialog";
-import MuiDialogContent from "@mui/material/DialogContent";
 import MuiDialogActions from "@mui/material/DialogActions";
+import MuiDialogContent from "@mui/material/DialogContent";
+import Dialog from "@/components/Dialog";
 import ModalButtons from "@/components/ModalButtons";
+import useDialog from "@/hooks/useDialog";
 import { fireEvent, renderHook, screen, waitFor } from "@/utils/testUtils";
 
 describe("useDialog", () => {

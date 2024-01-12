@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import { generateUserV1 } from "@/mocks/data";
 import { getUserFromToken } from "@/utils/cookies";
+import { generateUserV1 } from "@/mocks/data";
 
 const generatedUser = generateUserV1();
 

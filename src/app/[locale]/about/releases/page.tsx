@@ -1,8 +1,8 @@
+import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { getReleaseNotes } from "@/utils/cms";
-import ReleaseTabs from "./components/ReleaseTabs";
-import Banner from "@/components/Banner";
 import BannerImage from "../../../../../public/images/banners/release-notes.png";
+import ReleaseTabs from "./components/ReleaseTabs";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - About - Releases",

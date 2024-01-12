@@ -1,6 +1,6 @@
-import Button from "@/components/Button";
 import { ReactNode, useState } from "react";
 import Box from "@/components/Box";
+import Button from "@/components/Button";
 import Typography from "../Typography";
 
 export interface ExpandListProps {

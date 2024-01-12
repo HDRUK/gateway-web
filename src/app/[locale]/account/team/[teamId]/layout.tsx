@@ -1,12 +1,12 @@
-import ActionBar from "@/components/ActionBar";
-import { getTeam, getUser } from "@/utils/api";
-import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
-import TwoColumn from "@/components/TwoColumn";
+import ActionBar from "@/components/ActionBar";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import TwoColumn from "@/components/TwoColumn";
 import Typography from "@/components/Typography";
 import LeftNav from "@/modules/LeftNav";
+import { getTeam, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 
 export default async function AccountTeamLayout({

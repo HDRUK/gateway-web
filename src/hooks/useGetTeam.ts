@@ -1,6 +1,6 @@
-import apis from "@/config/apis";
-import { Team } from "@/interfaces/Team";
 import { useMemo } from "react";
+import { Team } from "@/interfaces/Team";
+import apis from "@/config/apis";
 import useGet from "./useGet";
 
 const useGetTeam = (teamId: string) => {

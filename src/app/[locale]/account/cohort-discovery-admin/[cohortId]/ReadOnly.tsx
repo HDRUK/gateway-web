@@ -1,6 +1,6 @@
+import { CohortRequest } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
-import { CohortRequest } from "@/interfaces/CohortRequest";
 import { formatDate } from "@/utils/date";
 
 export default function ReadOnly({

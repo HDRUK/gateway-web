@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as yup from "yup";
 import Box from "@/components/Box";
 import { EditIcon } from "@/consts/icons";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import ModalForm from "./ModalForm";
 
 const meta: Meta<typeof ModalForm> = {

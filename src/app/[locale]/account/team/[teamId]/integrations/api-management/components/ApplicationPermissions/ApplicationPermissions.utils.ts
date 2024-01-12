@@ -1,8 +1,8 @@
+import { Permission } from "@/interfaces/Permission";
 import {
     AppPermissionCrud,
     AppPermissionDefaultValues,
 } from "@/config/forms/applicationPermissions";
-import { Permission } from "@/interfaces/Permission";
 
 const getChangeCount = (changedFields: {
     [key: string]: { [key: string]: boolean };

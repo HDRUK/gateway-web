@@ -1,19 +1,19 @@
 "use client";
 
+import { Team } from "@/interfaces/Team";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import Button from "@/components/Button";
+import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
-import TeamMembers from "./TeamMembers";
-import AddTeamMemberDialog from "./AddTeamMemberDialog";
-import Button from "@/components/Button";
-import { AddIcon } from "@/consts/icons";
-import EmailNotifications from "./EmailNotifications";
+import useDialog from "@/hooks/useDialog";
 import { useNewMembersOnTop } from "@/hooks/useNewMembersOnTop";
 import { CUSTOMER_PORTAL_RAISE_SUPPORT_URL } from "@/config/hrefs";
-import Paper from "@/components/Paper";
-import useDialog from "@/hooks/useDialog";
-import { Team } from "@/interfaces/Team";
+import { AddIcon } from "@/consts/icons";
+import AddTeamMemberDialog from "./AddTeamMemberDialog";
+import EmailNotifications from "./EmailNotifications";
+import TeamMembers from "./TeamMembers";
 
 export default function TeamManagement({
     permissions,

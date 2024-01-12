@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import InputWrapper from "@/components/InputWrapper";
-import { FormField } from "@/interfaces/FormField";
-import { Box } from "@mui/material";
 import { Control } from "react-hook-form";
+import { Box } from "@mui/material";
+import { FormField } from "@/interfaces/FormField";
+import InputWrapper from "@/components/InputWrapper";
 
 export interface MultiInputWrapperProps {
     fields: FormField;

@@ -1,14 +1,14 @@
 import * as React from "react";
-import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import SWRProvider from "@/providers/SWRProvider";
-import DialogProvider from "@/providers/DialogProvider";
-import SnackbarProvider from "@/providers/SnackbarProvider";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import ActionBarProvider from "@/providers/ActionBarProvider";
-import NavigationEvents from "@/components/NavigationEvents";
-import { notFound } from "next/navigation";
 import { NextIntlClientProvider, useMessages } from "next-intl";
+import { notFound } from "next/navigation";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import NavigationEvents from "@/components/NavigationEvents";
+import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
+import ActionBarProvider from "@/providers/ActionBarProvider";
+import DialogProvider from "@/providers/DialogProvider";
+import SWRProvider from "@/providers/SWRProvider";
+import SnackbarProvider from "@/providers/SnackbarProvider";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway",

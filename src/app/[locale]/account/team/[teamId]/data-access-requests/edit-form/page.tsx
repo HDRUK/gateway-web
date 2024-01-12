@@ -4,7 +4,6 @@ import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import {
     ACCOUNT,
-    APPLICATIONS,
     DATA_ACCESS_REQUESTS,
     EDIT_FORM,
     PAGES,

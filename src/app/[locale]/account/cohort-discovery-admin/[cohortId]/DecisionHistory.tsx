@@ -1,9 +1,9 @@
 import { CohortRequest } from "@/interfaces/CohortRequest";
+import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
+import Scrollbar from "@/components/Scrollbar";
 import Typography from "@/components/Typography";
 import { formatDate } from "@/utils/date";
-import Scrollbar from "@/components/Scrollbar";
-import Accordion from "@/components/Accordion";
 
 interface DecisionHistoryProps {
     cohortRequest: CohortRequest;

@@ -1,5 +1,5 @@
-import { render, screen } from "@/utils/testUtils";
 import { useForm } from "react-hook-form";
+import { render, screen } from "@/utils/testUtils";
 import CheckboxGroup from "./CheckboxGroup";
 
 describe("CheckboxGroup", () => {

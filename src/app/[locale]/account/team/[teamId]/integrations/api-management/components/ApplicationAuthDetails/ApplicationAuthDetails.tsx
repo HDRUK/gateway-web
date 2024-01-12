@@ -1,9 +1,8 @@
-import BoxContainer from "@/components/BoxContainer";
 import { Application } from "@/interfaces/Application";
-import Typography from "@/components/Typography";
-import Paper from "@/components/Paper";
-
+import BoxContainer from "@/components/BoxContainer";
 import CopyableCard from "@/components/CopyableCard";
+import Paper from "@/components/Paper";
+import Typography from "@/components/Typography";
 
 interface ApplicationAuthDetailsProps {
     application?: Application;

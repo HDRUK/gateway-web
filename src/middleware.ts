@@ -1,8 +1,8 @@
-import { getUserFromToken } from "@/utils/cookies";
-import { NextResponse } from "next/server";
-import conf from "@/config/config";
-import type { NextRequest } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import conf from "@/config/config";
+import { getUserFromToken } from "@/utils/cookies";
 import { RouteName } from "./consts/routeName";
 
 export function middleware(request: NextRequest) {

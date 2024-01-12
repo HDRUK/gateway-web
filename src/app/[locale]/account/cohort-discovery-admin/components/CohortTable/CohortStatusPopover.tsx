@@ -1,10 +1,10 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { IconButton, Popover } from "@mui/material";
+import { CohortRequestStatus } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import RadioGroup from "@/components/RadioGroup";
 import { FilterAltIcon, FilterAltOffIcon } from "@/consts/icons";
-import { CohortRequestStatus } from "@/interfaces/CohortRequest";
-import { IconButton, Popover } from "@mui/material";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 
 interface CohortStatusPopoverProps {
     setRequestStatus: (status: CohortRequestStatus) => void;

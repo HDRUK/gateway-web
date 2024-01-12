@@ -1,6 +1,6 @@
 import React from "react";
-import TextArea from "@/components/TextArea";
 import { useForm } from "react-hook-form";
+import TextArea from "@/components/TextArea";
 import { render, screen } from "@/utils/testUtils";
 
 describe("TextArea", () => {

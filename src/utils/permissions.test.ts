@@ -1,10 +1,10 @@
-import { getPermissions } from "./permissions";
 import { Role } from "@/interfaces/Role";
 import {
     ROLE_CUSTODIAN_TEAM_ADMIN,
     ROLE_HDRUK_SUPERADMIN,
 } from "@/consts/roles";
 import { generateRoleV1 } from "@/mocks/data";
+import { getPermissions } from "./permissions";
 
 const userRoles: Role[] = [
     generateRoleV1({

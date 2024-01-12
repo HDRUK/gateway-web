@@ -1,12 +1,12 @@
-import { getTeam, getUser } from "@/utils/api";
-import { getPermissions } from "@/utils/permissions";
 import { cookies } from "next/headers";
-import { getTeamUser } from "@/utils/user";
-import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Typography from "@/components/Typography";
 import Paper from "@/components/Paper";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import Typography from "@/components/Typography";
+import { getTeam, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
+import { getTeamUser } from "@/utils/user";
 import EditDataset from "../components/EditDataset";
 
 export const metadata = {

@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useSWRConfig } from "swr";
 import { getRequest } from "@/services/api/get";
 import apis from "@/config/apis";
-import { useSWRConfig } from "swr";
 
 const useLogout = () => {
     const router = useRouter();

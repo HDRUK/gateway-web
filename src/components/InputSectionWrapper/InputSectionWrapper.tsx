@@ -1,7 +1,7 @@
-import { InputWrapperCombinedProps } from "@/components/InputWrapper/InputWrapper";
-import InputWrapper from "@/components/InputWrapper";
 import { Control } from "react-hook-form";
 import Box from "@/components/Box";
+import InputWrapper from "@/components/InputWrapper";
+import { InputWrapperCombinedProps } from "@/components/InputWrapper/InputWrapper";
 import { colors } from "@/config/theme";
 
 interface InputSectionWrapperProps {

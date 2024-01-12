@@ -1,8 +1,8 @@
-import { render, screen, waitFor, within } from "@/utils/testUtils";
-import { server } from "@/mocks/server";
-import { getCohortRequestsV1 } from "@/mocks/handlers/cohortRequest";
-import { generateCohortRequestV1 } from "@/mocks/data/cohortRequest";
 import { formatDate } from "@/utils/date";
+import { render, screen, waitFor, within } from "@/utils/testUtils";
+import { generateCohortRequestV1 } from "@/mocks/data/cohortRequest";
+import { getCohortRequestsV1 } from "@/mocks/handlers/cohortRequest";
+import { server } from "@/mocks/server";
 import CohortTable from "./CohortTable";
 
 const requests = [

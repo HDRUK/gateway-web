@@ -1,12 +1,11 @@
 import * as React from "react";
 import MuiDialogContent from "@mui/material/DialogContent";
-
-import Link from "@/components/Link";
-import Dialog from "@/components/Dialog";
+import { useTranslations } from "next-intl";
 import BulletList from "@/components/BulletList";
+import Dialog from "@/components/Dialog";
+import Link from "@/components/Link";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ProviderLinks from "../ProviderLinks";
-import { useTranslations } from "next-intl";
 
 const ProvidersDialog = () => {
     const t = useTranslations("modules");

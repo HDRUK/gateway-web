@@ -1,6 +1,6 @@
+import { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import Link from "@/components//Link";
-import { ReactNode } from "react";
 import ConditionalWrapper from "./ConditionalWrapper";
 
 const meta: Meta<typeof ConditionalWrapper> = {

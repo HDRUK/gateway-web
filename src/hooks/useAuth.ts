@@ -1,6 +1,6 @@
-import apis from "@/config/apis";
 import { AuthUser } from "@/interfaces/AuthUser";
 import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
 
 interface AuthResponse {
     user: AuthUser | undefined;

@@ -1,5 +1,5 @@
-import Typography from "@/components/Typography";
 import Image, { StaticImageData } from "next/image";
+import Typography from "@/components/Typography";
 
 export interface BannerProps {
     title: string;

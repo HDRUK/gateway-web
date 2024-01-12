@@ -1,6 +1,6 @@
-import { capitalise } from "@/utils/general";
-import { CohortRequestStatus } from "@/interfaces/CohortRequest";
 import dayjs from "dayjs";
+import { CohortRequestStatus } from "@/interfaces/CohortRequest";
+import { capitalise } from "@/utils/general";
 import { inputComponents } from ".";
 
 const cohortRequestStatusValues: CohortRequestStatus[] = [

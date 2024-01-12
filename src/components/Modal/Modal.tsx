@@ -1,13 +1,13 @@
+import React, { ReactNode } from "react";
+import { IconButton } from "@mui/material";
 import MuiDialog, { DialogProps } from "@mui/material/Dialog";
-import MuiDialogTitle from "@mui/material/DialogTitle";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
-import React, { ReactNode } from "react";
-import useDialog from "@/hooks/useDialog";
-import { GlobalDialogContextProps } from "@/providers/DialogProvider";
-import { IconButton } from "@mui/material";
+import MuiDialogTitle from "@mui/material/DialogTitle";
 import ModalButtons from "@/components/ModalButtons";
+import useDialog from "@/hooks/useDialog";
 import { CloseIcon } from "@/consts/icons";
+import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 
 export interface ModalProps {
     content?: ReactNode;

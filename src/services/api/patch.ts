@@ -1,5 +1,5 @@
-import http from "@/utils/http";
 import { RequestOptions } from "@/interfaces/Api";
+import http from "@/utils/http";
 import { errorNotification, successNotification } from "./utils";
 
 const patchRequest = async <T>(

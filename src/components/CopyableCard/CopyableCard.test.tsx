@@ -1,6 +1,6 @@
+import * as notificationService from "@/services/notification/notification";
 import { fireEvent, render, screen } from "@/utils/testUtils";
 import { generateApplicationV1 } from "@/mocks/data/application";
-import * as notificationService from "@/services/notification/notification";
 import CopyableCard from "./CopyableCard";
 
 jest.mock("notistack", () => {

@@ -1,8 +1,8 @@
-import { userV1 } from "@/mocks/data";
 import useDelete from "@/hooks/useDelete";
 import * as apiService from "@/services/api/delete";
 import apis from "@/config/apis";
 import { renderHook, waitFor } from "@/utils/testUtils";
+import { userV1 } from "@/mocks/data";
 
 jest.mock("@/services/api/delete", () => {
     return {

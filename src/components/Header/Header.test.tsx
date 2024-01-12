@@ -1,9 +1,9 @@
 import React from "react";
 import Header from "@/components/Header";
-import { userV1 } from "@/mocks/data";
-import { server } from "@/mocks/server";
-import { getAuthInternal } from "@/mocks/handlers/auth";
 import { render, screen, fireEvent, waitFor } from "@/utils/testUtils";
+import { userV1 } from "@/mocks/data";
+import { getAuthInternal } from "@/mocks/handlers/auth";
+import { server } from "@/mocks/server";
 
 describe("Header", () => {
     it("renders the header component", () => {

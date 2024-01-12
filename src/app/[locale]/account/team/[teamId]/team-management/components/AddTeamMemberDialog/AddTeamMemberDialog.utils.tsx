@@ -1,5 +1,5 @@
-import { ValueType } from "@/components/Autocomplete/Autocomplete";
 import { User } from "@/interfaces/User";
+import { ValueType } from "@/components/Autocomplete/Autocomplete";
 
 const getAvailableUsers = (teamUsers: User[], allUsers: User[]) => {
     const teamUserIds = teamUsers.map(user => user.id);

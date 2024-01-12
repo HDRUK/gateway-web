@@ -1,23 +1,23 @@
 import React, { ElementType } from "react";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { CheckboxRowProps } from "@/components/CheckboxRow/CheckboxRow";
-import Select from "@/components/Select";
-import { SelectProps } from "@/components/Select/Select";
-import TextArea from "@/components/TextArea";
-import { TextAreaProps } from "@/components/TextArea/TextArea";
-import TextField from "@/components/TextField";
-import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
+import Autocomplete from "@/components/Autocomplete";
 import Checkbox from "@/components/Checkbox";
 import { CheckboxProps } from "@/components/Checkbox/Checkbox";
 import CheckboxGroup from "@/components/CheckboxGroup";
 import CheckboxRow from "@/components/CheckboxRow";
+import { CheckboxRowProps } from "@/components/CheckboxRow/CheckboxRow";
+import DatePicker from "@/components/DatePicker";
 import RadioGroup from "@/components/RadioGroup";
-import Autocomplete from "@/components/Autocomplete";
+import Select from "@/components/Select";
+import { SelectProps } from "@/components/Select/Select";
 import Switch from "@/components/Switch";
 import SwitchInline from "@/components/SwitchInline";
+import TextArea from "@/components/TextArea";
+import { TextAreaProps } from "@/components/TextArea/TextArea";
+import TextField from "@/components/TextField";
+import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
 import TextTime from "@/components/TextTime";
 import ToggleDirection from "@/components/ToggleDirection";
-import DatePicker from "@/components/DatePicker";
 
 type InputType =
     | TextFieldBaseProps

@@ -1,7 +1,7 @@
 import React from "react";
+import userEvent from "@testing-library/user-event";
 import TooltipIcon from "@/components/TooltipIcon";
 import { render, screen, waitFor } from "@/utils/testUtils";
-import userEvent from "@testing-library/user-event";
 
 describe("TooltipIcon", () => {
     it("should render anchor and content", async () => {

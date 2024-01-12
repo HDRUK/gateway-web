@@ -1,6 +1,6 @@
+import mockRouter from "next-router-mock";
 import { screen, render } from "@/utils/testUtils";
 import { teamV1 } from "@/mocks/data/team";
-import mockRouter from "next-router-mock";
 import EditIntegrationForm from "./EditIntegrationForm";
 
 describe("EditIntegrationForm", () => {

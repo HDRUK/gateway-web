@@ -1,6 +1,6 @@
+import { cookies } from "next/headers";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
 import TeamManagement from "./components/TeamManagement";
 

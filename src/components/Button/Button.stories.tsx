@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import Stack from "@mui/material/Stack";
 import React from "react";
+import Stack from "@mui/material/Stack";
+import type { Meta, StoryObj } from "@storybook/react";
 import Button from "./Button";
 
 /**
