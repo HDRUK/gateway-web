@@ -70,6 +70,9 @@ const TeamDatasets = () => {
     }, [watchAll.sortDirection]);
 
     const filterTitleDebounced = useDebounce(watchAll.searchTitle, 500);
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [filterTitleDebounced]);
 
     const queryParams = new URLSearchParams({
         team_id: teamId.toString(),
