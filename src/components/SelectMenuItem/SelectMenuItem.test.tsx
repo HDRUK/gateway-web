@@ -1,6 +1,6 @@
 import React from "react";
-import SelectMenuItem from "@/components/SelectMenuItem";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SelectMenuItem from "@/components/SelectMenuItem";
 import { render, screen } from "@/utils/testUtils";
 
 describe("SelectedMenuItem", () => {

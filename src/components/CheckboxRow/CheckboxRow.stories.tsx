@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import CheckboxRow from "@/components/CheckboxRow";
-import { Stack } from "@mui/material";
-import Form from "@/components/Form";
-import { useForm } from "react-hook-form";
 import React from "react";
-import * as yup from "yup";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Stack } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as yup from "yup";
 import Button from "@/components/Button";
+import CheckboxRow from "@/components/CheckboxRow";
+import Form from "@/components/Form";
 
 /** Mui documentation: https://mui.com/material-ui/react-checkbox */
 

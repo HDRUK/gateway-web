@@ -1,13 +1,13 @@
+import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
-import { cookies } from "next/headers";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getCohort, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import StatusForm from "./StatusForm";
-import ReadOnly from "./ReadOnly";
 import DecisionHistory from "./DecisionHistory";
 import Header from "./Header";
+import ReadOnly from "./ReadOnly";
+import StatusForm from "./StatusForm";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Cohort Discovery Manage",

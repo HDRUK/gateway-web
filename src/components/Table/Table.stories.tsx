@@ -1,16 +1,16 @@
+import { faker } from "@faker-js/faker";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { userV1 } from "@/mocks/data";
+import Box from "@/components/Box";
+import TableActionCell from "@/components/TableActionCell";
+import TooltipIcon from "@/components/TooltipIcon";
 import PermissionDescriptions from "@/modules/PermissionDescriptions";
+import { DeleteForeverIcon } from "@/consts/icons";
 import {
     ROLE_CUSTODIAN_DEVELOPER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
 } from "@/consts/roles";
-import { faker } from "@faker-js/faker";
-import TableActionCell from "@/components/TableActionCell";
-import TooltipIcon from "@/components/TooltipIcon";
-import Box from "@/components/Box";
-import { DeleteForeverIcon } from "@/consts/icons";
+import { userV1 } from "@/mocks/data";
 import Table from "./Table";
 
 /** Tanstack documentation: https://tanstack.com/table/v8 */

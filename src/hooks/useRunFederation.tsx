@@ -1,10 +1,10 @@
-import apis from "@/config/apis";
 import { useEffect, useState } from "react";
+import { Control, FieldValues, useWatch } from "react-hook-form";
 import { isEqual, pick } from "lodash";
 import { Federation, FederationRunResponse } from "@/interfaces/Federation";
-import usePost from "@/hooks/usePost";
 import { Integration, IntegrationForm } from "@/interfaces/Integration";
-import { Control, FieldValues, useWatch } from "react-hook-form";
+import usePost from "@/hooks/usePost";
+import apis from "@/config/apis";
 
 export const watchFederationKeys = [
     "auth_type",

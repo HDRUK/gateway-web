@@ -1,5 +1,5 @@
-import { render, screen } from "@/utils/testUtils";
 import { ReleaseNode } from "@/interfaces/Releases";
+import { render, screen } from "@/utils/testUtils";
 import ReleaseTabs from "./ReleaseTabs";
 
 jest.mock("next/navigation", () => ({

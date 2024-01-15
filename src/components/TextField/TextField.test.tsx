@@ -1,7 +1,7 @@
 import React from "react";
-import TextField from "@/components/TextField";
-import AddAPhoto from "@mui/icons-material/AddAPhoto";
 import { useForm } from "react-hook-form";
+import AddAPhoto from "@mui/icons-material/AddAPhoto";
+import TextField from "@/components/TextField";
 import { render, screen } from "@/utils/testUtils";
 
 describe("TextField", () => {

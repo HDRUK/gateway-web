@@ -1,6 +1,6 @@
 import Box from "@/components/Box";
-import Typography from "@/components/Typography";
 import ExpandList from "@/components/ExpandList/ExpandList";
+import Typography from "@/components/Typography";
 
 const EmailNotificationDescriptions = () => {
     const notificationDescriptions = [

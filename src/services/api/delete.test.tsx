@@ -1,7 +1,7 @@
-import apis from "@/config/apis";
-import { generateNumber } from "@/mocks/data/generic";
 import apiService from "@/services/api";
 import * as apiUtils from "@/services/api/utils";
+import apis from "@/config/apis";
+import { generateNumber } from "@/mocks/data/generic";
 import { deleteFilterV1 } from "@/mocks/handlers/filters";
 import { server } from "@/mocks/server";
 

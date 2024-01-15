@@ -1,5 +1,5 @@
-import SocialProviders from "@/modules/SocialProviders";
 import { useForm } from "react-hook-form";
+import SocialProviders from "@/modules/SocialProviders";
 import { render } from "@/utils/testUtils";
 
 describe("SocialProviders", () => {

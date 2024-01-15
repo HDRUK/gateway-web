@@ -1,6 +1,6 @@
 import * as yup from "yup";
-import { REGEX_ALPHA_ONLY, REGEX_ORCID } from "@/consts/regex";
 import { GATEWAY_TERMS_URL } from "@/config/hrefs";
+import { REGEX_ALPHA_ONLY, REGEX_ORCID } from "@/consts/regex";
 import { inputComponents } from ".";
 
 const defaultValues = {

@@ -1,10 +1,9 @@
 /** @jsxImportSource @emotion/react */
-
-import { CheckboxProps as MuiCheckboxProps } from "@mui/material/Checkbox";
-import { SxProps } from "@mui/material";
-import BoxContainer from "@/components/BoxContainer";
-import Box from "@/components/Box";
 import { Control, useController } from "react-hook-form";
+import { SxProps } from "@mui/material";
+import { CheckboxProps as MuiCheckboxProps } from "@mui/material/Checkbox";
+import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
 import Checkbox from "@/components/Checkbox";
 import FormInputWrapper from "@/components/FormInputWrapper";
 

@@ -1,40 +1,38 @@
 "use client";
 
-import Box from "@/components/Box";
-import Paper from "@/components/Paper";
-import Typography from "@/components/Typography";
-import Table from "@/components/Table";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Permission } from "@/interfaces/Permission";
-import { getColumns } from "@/config/tables/apiPermissions";
-import useGet from "@/hooks/useGet";
-import apis from "@/config/apis";
-import { Application, ApplicationForm } from "@/interfaces/Application";
-
-import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
-
-import Button from "@/components/Button";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { useSWRConfig } from "swr";
+import { Application, ApplicationForm } from "@/interfaces/Application";
+import { Permission } from "@/interfaces/Permission";
+import Box from "@/components/Box";
+import Button from "@/components/Button";
+import Form from "@/components/Form";
+import FormError from "@/components/FormError";
+import Paper from "@/components/Paper";
+import Table from "@/components/Table";
+import Typography from "@/components/Typography";
+import ChangesActionBar from "@/modules/ChangesActionBar";
+import useActionBar from "@/hooks/useActionBar";
+import useGet from "@/hooks/useGet";
+import usePut from "@/hooks/usePut";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import apis from "@/config/apis";
 import {
     AppPermissionDefaultValues,
     appPermissionsDefaultValues,
     appPermissionsValidationSchema,
 } from "@/config/forms/applicationPermissions";
-import usePut from "@/hooks/usePut";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import FormError from "@/components/FormError";
-import { yupResolver } from "@hookform/resolvers/yup";
-import useActionBar from "@/hooks/useActionBar";
-import ChangesActionBar from "@/modules/ChangesActionBar";
-import { useSWRConfig } from "swr";
-import { useParams, useRouter } from "next/navigation";
+import { getColumns } from "@/config/tables/apiPermissions";
+import { RouteName } from "@/consts/routeName";
 import {
     getChangeCount,
     getEnabledPermissions,
     getPayloadPermissions,
 } from "./ApplicationPermissions.utils";
-import { RouteName } from "@/consts/routeName";
 
 interface ApplicationPermissionsProps {
     isTabView?: boolean;

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
 import Switch from "./Switch";
 
 /** Mui documentation: https://mui.com/material-ui/react-switch */

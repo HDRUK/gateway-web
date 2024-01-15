@@ -1,7 +1,7 @@
-import apiService from "@/services/api";
 import { useTranslations } from "next-intl";
-import { ThrowPaginationError } from "@/utils/api";
 import { HttpOptions } from "@/interfaces/Api";
+import apiService from "@/services/api";
+import { ThrowPaginationError } from "@/utils/api";
 
 const useDelete = (url: string, options?: HttpOptions) => {
     const t = useTranslations("api");

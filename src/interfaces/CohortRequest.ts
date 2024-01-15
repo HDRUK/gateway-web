@@ -1,5 +1,4 @@
 import { User } from "./User";
-import { Log } from "./Log";
 
 type CohortRequestStatus =
     | "APPROVED"
@@ -8,6 +7,16 @@ type CohortRequestStatus =
     | "BANNED"
     | "SUSPENDED"
     | "EXPIRED";
+
+interface Log {
+    id: number;
+    user_id: number;
+    details: string;
+    request_status: CohortRequestStatus;
+    created_at: string;
+    updated_at: string;
+    user: User;
+}
 
 interface CohortRequest {
     id: number;
@@ -24,4 +33,4 @@ interface CohortRequestForm {
     request_status: CohortRequestStatus;
 }
 
-export type { CohortRequest, CohortRequestStatus, CohortRequestForm };
+export type { CohortRequest, Log, CohortRequestStatus, CohortRequestForm };

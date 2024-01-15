@@ -1,9 +1,9 @@
+import { ReactNode } from "react";
 import MuiAccordion, {
     AccordionProps as MuiAccordionProps,
 } from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import { ReactNode } from "react";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import { ArrowDropDownIcon } from "@/consts/icons";
 
 export interface AccordionProps extends Omit<MuiAccordionProps, "children"> {

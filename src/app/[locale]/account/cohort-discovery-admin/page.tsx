@@ -1,14 +1,9 @@
-import Box from "@/components/Box";
-import Typography from "@/components/Typography";
-import Paper from "@/components/Paper";
-import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
-
-import { getPermissions } from "@/utils/permissions";
-import { getUser } from "@/utils/api";
+import { cookies } from "next/headers";
+import Box from "@/components/Box";
+import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import CohortTableDownload from "./components/CohortTableDownload";
-import CohortTable from "./components/CohortTable";
+import Typography from "@/components/Typography";
 import {
     ACCOUNT,
     COHORT_DISCOVERY_ADMIN,
@@ -16,6 +11,10 @@ import {
     TEXT,
     TITLE,
 } from "@/consts/translation";
+import { getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
+import CohortTable from "./components/CohortTable";
+import CohortTableDownload from "./components/CohortTableDownload";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Cohort Discovery Admin",

@@ -1,5 +1,5 @@
-import notificationService from "@/services/notification";
 import * as notistack from "notistack";
+import notificationService from "@/services/notification";
 
 jest.mock("notistack", () => ({
     ...jest.requireActual("notistack"),

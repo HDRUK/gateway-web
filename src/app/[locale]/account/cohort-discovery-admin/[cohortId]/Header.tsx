@@ -1,8 +1,8 @@
+import { CohortRequest } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import Typography from "@/components/Typography";
 import { statusMapping } from "@/consts/cohortDiscovery";
-import { CohortRequest } from "@/interfaces/CohortRequest";
 import { capitalise } from "@/utils/general";
 
 export default function Header({

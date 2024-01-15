@@ -1,15 +1,14 @@
 "use client";
 
+import { GetServerSideProps } from "next";
 import Box from "@/components/Box";
 import Head from "@/components/Head";
-import messages from "@/config/messages/en.json";
-import { GetServerSideProps } from "next";
-import ProfileForm from "./components/ProfileForm";
-import useAuth from "@/hooks/useAuth";
-import Typography from "@/components/Typography";
-import Paper from "@/components/Paper";
-import AccountLayout from "@/modules/AccountLayout";
 import Loading from "@/components/Loading";
+import Paper from "@/components/Paper";
+import Typography from "@/components/Typography";
+import AccountLayout from "@/modules/AccountLayout";
+import useAuth from "@/hooks/useAuth";
+import ProfileForm from "./components/ProfileForm";
 
 const ProfilePage = () => {
     const { isLoading } = useAuth();

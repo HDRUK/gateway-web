@@ -1,5 +1,5 @@
-import { render, fireEvent } from "@/utils/testUtils";
 import Pagination from "@/components/Pagination";
+import { render, fireEvent } from "@/utils/testUtils";
 
 describe("Pagination", () => {
     it("renders without crashing", () => {

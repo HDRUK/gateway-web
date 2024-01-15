@@ -1,14 +1,14 @@
-import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
-import Paper from "@/components/Paper";
-import Typography from "@/components/Typography";
 import { useEffect, Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
+import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
+import InputWrapper from "@/components/InputWrapper";
+import Paper from "@/components/Paper";
+import Typography from "@/components/Typography";
 import {
     searchApiDefaultValues,
     searchApiFormFields,
 } from "@/config/forms/searchApis";
-import InputWrapper from "@/components/InputWrapper";
 
 interface ApplicationSearchBarProps {
     setFilterQuery: Dispatch<SetStateAction<string>>;

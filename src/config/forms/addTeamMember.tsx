@@ -1,4 +1,6 @@
 import * as yup from "yup";
+import LabelAndDescription from "@/components/LabelAndDescription";
+import { SearchRoundedIcon } from "@/consts/icons";
 import {
     ROLE_CUSTODIAN_DAR_MANAGER,
     ROLE_CUSTODIAN_DAR_REVIEWER,
@@ -7,8 +9,6 @@ import {
     ROLE_CUSTODIAN_METADATA_MANAGER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
 } from "@/consts/roles";
-import LabelAndDescription from "@/components/LabelAndDescription";
-import { SearchRoundedIcon } from "@/consts/icons";
 import { inputComponents } from ".";
 
 const getRoleOptions = (permissions: { [key: string]: boolean }) => {

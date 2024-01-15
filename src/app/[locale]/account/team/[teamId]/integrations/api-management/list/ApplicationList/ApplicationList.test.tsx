@@ -1,8 +1,8 @@
+import mockRouter from "next-router-mock";
 import { render, screen, waitFor } from "@/utils/testUtils";
-import { server } from "@/mocks/server";
 import { applicationV1, generateApplicationV1 } from "@/mocks/data/application";
 import { getApplicationsV1 } from "@/mocks/handlers/application";
-import mockRouter from "next-router-mock";
+import { server } from "@/mocks/server";
 import ApplicationList from "./ApplicationList";
 
 describe("ApplicationList", () => {

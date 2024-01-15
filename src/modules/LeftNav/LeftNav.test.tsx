@@ -1,7 +1,7 @@
-import { render, within } from "@/utils/testUtils";
 import mockRouter from "next-router-mock";
-import LeftNav from "./LeftNav";
 import { RouteName } from "@/consts/routeName";
+import { render, within } from "@/utils/testUtils";
+import LeftNav from "./LeftNav";
 
 describe("LeftNav", () => {
     it("renders the profile navigation item", () => {

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
 import Accordion from "./Accordion";
 
 const meta: Meta<typeof Accordion> = {

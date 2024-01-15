@@ -1,8 +1,8 @@
-import { ColumnDef } from "@tanstack/react-table";
-import Checkbox from "@/components/Checkbox";
 import { Control, FieldValues } from "react-hook-form";
-import { capitalise } from "@/utils/general";
+import { ColumnDef } from "@tanstack/react-table";
 import Box from "@/components/Box";
+import Checkbox from "@/components/Checkbox";
+import { capitalise } from "@/utils/general";
 
 const getColumns = <T extends FieldValues>(
     control: Control<T>

@@ -1,10 +1,10 @@
-import apis from "@/config/apis";
 import { Filter, FilterType } from "@/interfaces/Filter";
+import apiService from "@/services/api";
+import * as apiUtils from "@/services/api/utils";
+import apis from "@/config/apis";
 import { filterV1 } from "@/mocks/data";
 import { postFilterV1 } from "@/mocks/handlers/filters";
 import { server } from "@/mocks/server";
-import apiService from "@/services/api";
-import * as apiUtils from "@/services/api/utils";
 
 jest.mock("@/services/api/utils", () => {
     return {

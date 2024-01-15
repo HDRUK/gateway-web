@@ -1,7 +1,7 @@
 import { FormHelperText } from "@mui/material";
-import { colors } from "@/config/theme";
 import Label from "@/components/Label";
 import TooltipIcon from "@/components/TooltipIcon";
+import { colors } from "@/config/theme";
 
 interface FormInfoLabelProps {
     horizontalForm?: boolean;

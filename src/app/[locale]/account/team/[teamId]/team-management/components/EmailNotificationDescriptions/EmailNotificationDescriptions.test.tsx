@@ -1,6 +1,6 @@
 import React from "react";
-import EmailNotificationDescriptions from "./EmailNotificationDescriptions";
 import { render } from "@/utils/testUtils";
+import EmailNotificationDescriptions from "./EmailNotificationDescriptions";
 
 describe("EmailNotificationDescriptions", () => {
     it("should render component", async () => {

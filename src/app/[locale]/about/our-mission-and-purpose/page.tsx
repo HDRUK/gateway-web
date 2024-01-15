@@ -1,10 +1,9 @@
-import Container from "@/components/Container";
-import { getMissionAndPurposes } from "@/utils/cms";
-import Banner from "@/components/Banner";
 import { getTranslations } from "next-intl/server";
-
-import BannerImage from "../../../../../public/images/banners/our-mission-and-purpose.png";
+import Banner from "@/components/Banner";
+import Container from "@/components/Container";
 import { ABOUT, OUR_MISSION_AND_PURPOSE, PAGES } from "@/consts/translation";
+import { getMissionAndPurposes } from "@/utils/cms";
+import BannerImage from "../../../../../public/images/banners/our-mission-and-purpose.png";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - About - Our mission and purpose",

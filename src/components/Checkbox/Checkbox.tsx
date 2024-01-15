@@ -1,10 +1,8 @@
-/** @jsxImportSource @emotion/react */
-
+import { Control, useController } from "react-hook-form";
+import { FormControl, FormControlLabel, SxProps } from "@mui/material";
 import MuiCheckbox, {
     CheckboxProps as MuiCheckboxProps,
 } from "@mui/material/Checkbox";
-import { FormControl, FormControlLabel, SxProps } from "@mui/material";
-import { Control, useController } from "react-hook-form";
 import FormError from "@/components/FormError";
 import {
     CheckBoxOutlineBlankSharpIcon,

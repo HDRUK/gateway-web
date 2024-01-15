@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { useForm } from "react-hook-form";
+import type { Meta, StoryObj } from "@storybook/react";
 import CheckboxGroup from "./CheckboxGroup";
 
 const meta: Meta<typeof CheckboxGroup> = {

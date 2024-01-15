@@ -1,6 +1,6 @@
-import { colors } from "@/config/theme";
-import { Typography, Box } from "@mui/material";
 import { useMemo } from "react";
+import { Typography, Box } from "@mui/material";
+import { colors } from "@/config/theme";
 
 interface CharacterLimitProps {
     limit: number;

@@ -1,8 +1,6 @@
-/** @jsxImportSource @emotion/react */
-
-import { SwitchProps } from "@/components/Switch/Switch";
-import Switch from "@/components/Switch";
 import Box from "@/components/Box";
+import Switch from "@/components/Switch";
+import { SwitchProps } from "@/components/Switch/Switch";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 

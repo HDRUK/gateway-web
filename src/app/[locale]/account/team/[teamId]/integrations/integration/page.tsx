@@ -1,11 +1,11 @@
+import { cookies } from "next/headers";
+import Box from "@/components/Box";
+import ImageMediaCard from "@/components/ImageMediaCard";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import { RouteName } from "@/consts/routeName";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
-import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import ImageMediaCard from "@/components/ImageMediaCard";
-import Box from "@/components/Box";
-import { RouteName } from "@/consts/routeName";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - API Management",

@@ -1,10 +1,10 @@
-import apis from "@/config/apis";
 import { Application } from "@/interfaces/Application";
 import apiService from "@/services/api";
 import * as apiUtils from "@/services/api/utils";
+import apis from "@/config/apis";
+import { applicationV1, generateApplicationV1 } from "@/mocks/data/application";
 import { patchApplicationV1 } from "@/mocks/handlers/application";
 import { server } from "@/mocks/server";
-import { applicationV1, generateApplicationV1 } from "@/mocks/data/application";
 
 jest.mock("@/services/api/utils", () => {
     return {

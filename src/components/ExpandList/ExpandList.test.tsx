@@ -1,5 +1,5 @@
-import { render, screen, waitFor } from "@/utils/testUtils";
 import Typography from "@/components/Typography";
+import { render, screen, waitFor } from "@/utils/testUtils";
 import ExpandList from "./ExpandList";
 
 describe("ExpandList", () => {

@@ -1,6 +1,6 @@
 import { AuthTeam } from "@/interfaces/AuthTeam";
-import { generateAuthTeamV1 } from "@/mocks/data/authTeam";
 import { generateAuthUserV1 } from "@/mocks/data";
+import { generateAuthTeamV1 } from "@/mocks/data/authTeam";
 import { getPreferredEmail, getRoleNamesByTeam, getTeamById } from "./user";
 
 const teams: AuthTeam[] = [generateAuthTeamV1({ id: 1 })];

@@ -1,6 +1,6 @@
+import Stack from "@mui/material/Stack";
 import type { Meta, StoryObj } from "@storybook/react";
 import Box from "@/components/Box";
-import Stack from "@mui/material/Stack";
 import ErrorDisplay from "./ErrorDisplay";
 
 const meta: Meta<typeof ErrorDisplay> = {

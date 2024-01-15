@@ -1,6 +1,6 @@
-import { OptionsWithExtraProps, VariantType } from "notistack";
-import { AxiosRequestConfig } from "axios";
 import { ReactNode } from "react";
+import { AxiosRequestConfig } from "axios";
+import { OptionsWithExtraProps, VariantType } from "notistack";
 import { MutatorOptions } from "swr";
 
 interface NotificationOptions extends OptionsWithExtraProps<VariantType> {

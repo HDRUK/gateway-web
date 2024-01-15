@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { ReactNode } from "react";
 import ActionBar from "@/components/ActionBar";
-import useActionBar from "@/hooks/useActionBar";
 import Button from "@/components/Button";
+import useActionBar from "@/hooks/useActionBar";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 
 const onSuccess = jest.fn();

@@ -1,11 +1,11 @@
 "use client";
 
-import { IconButton } from "@mui/material";
 import React, { ReactNode } from "react";
-import useModal from "@/hooks/useModal";
-import MultiInputWrapper from "@/components/MultiInputWrapper";
-import { FormField } from "@/interfaces/FormField";
 import { Control } from "react-hook-form";
+import { IconButton } from "@mui/material";
+import { FormField } from "@/interfaces/FormField";
+import MultiInputWrapper from "@/components/MultiInputWrapper";
+import useModal from "@/hooks/useModal";
 
 export interface ModalFormProps {
     formFields: FormField;

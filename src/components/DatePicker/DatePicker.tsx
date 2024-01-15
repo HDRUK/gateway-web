@@ -1,9 +1,9 @@
-import { SxProps } from "@mui/material";
 import { Control, Controller, useController } from "react-hook-form";
-import FormInputWrapper from "@/components/FormInputWrapper";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { SxProps } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import FormInputWrapper from "@/components/FormInputWrapper";
 
 export interface DatePickerProps {
     label: string;
@@ -28,7 +28,6 @@ const DatePicker = ({
     info,
     extraInfo,
     required = false,
-    isRow = false,
     ...rest
 }: DatePickerProps) => {
     const {
@@ -55,7 +54,7 @@ const DatePicker = ({
                 render={({ field }) => (
                     <LocalizationProvider
                         dateAdapter={AdapterDayjs}
-                        adapterLocale={"en-gb"}>
+                        adapterLocale="en-gb">
                         <MuiDatePicker
                             format="DD/MM/YYYY"
                             {...field}

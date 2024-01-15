@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
+import Link from "@/components//Link";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
 import { render, screen } from "@/utils/testUtils";
-import Link from "@/components//Link";
 
 describe("ConditionalWrapper", () => {
     const wrapperFn = (href: string) => (children: ReactNode) => {

@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
-
-import { Typography, TypographyProps } from "@mui/material";
-import { useTheme } from "@emotion/react";
 import { ComponentPropsWithoutRef } from "react";
+import { useTheme } from "@emotion/react";
+import { Typography, TypographyProps } from "@mui/material";
 import * as styles from "./Label.styles";
 
 type ExtendedProps = TypographyProps & ComponentPropsWithoutRef<"label">;

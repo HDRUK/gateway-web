@@ -1,11 +1,11 @@
-import InputWrapper from "@/components/InputWrapper";
-import Box from "@/components/Box";
-import { colors } from "@/config/theme";
-import { isPlainObject } from "lodash";
-import { inputComponents } from "@/config/forms";
-import { capitalise, splitCamelcase } from "@/utils/general";
 import { Control } from "react-hook-form";
+import { isPlainObject } from "lodash";
 import { Metadata } from "@/interfaces/Dataset";
+import Box from "@/components/Box";
+import InputWrapper from "@/components/InputWrapper";
+import { inputComponents } from "@/config/forms";
+import { colors } from "@/config/theme";
+import { capitalise, splitCamelcase } from "@/utils/general";
 import Typography from "../Typography";
 
 interface InputSectionWrapperProps {

@@ -1,7 +1,7 @@
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { RemoveCircleIcon } from "@/consts/icons";
 import { errors, AllowedErrors } from "@/config/errors";
+import { RemoveCircleIcon } from "@/consts/icons";
 
 interface ErrorDisplayProps {
     variant: AllowedErrors;

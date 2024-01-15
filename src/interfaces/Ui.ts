@@ -1,6 +1,6 @@
+import { ReactNode } from "react";
 import { SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { ReactNode } from "react";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type IconType = OverridableComponent<SvgIconTypeMap<{}, "svg">> & {

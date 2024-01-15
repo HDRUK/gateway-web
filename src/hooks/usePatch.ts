@@ -1,6 +1,6 @@
-import apiService from "@/services/api";
 import { useTranslations } from "next-intl";
 import { HttpOptions } from "@/interfaces/Api";
+import apiService from "@/services/api";
 import { ThrowPaginationError } from "@/utils/api";
 
 const usePatch = <T extends { id?: number }>(

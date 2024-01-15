@@ -1,6 +1,6 @@
-import { REGEX_ALPHA_NUMERIC_ONLY } from "@/consts/regex";
 import * as yup from "yup";
 import { ApplicationForm } from "@/interfaces/Application";
+import { REGEX_ALPHA_NUMERIC_ONLY } from "@/consts/regex";
 import { inputComponents } from ".";
 
 const defaultValues: Partial<ApplicationForm> = {

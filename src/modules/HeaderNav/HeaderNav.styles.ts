@@ -1,5 +1,5 @@
-import { colors } from "@/config/theme";
 import { css } from "@emotion/react";
+import { colors } from "@/config/theme";
 
 export const navBox = css({
     flexGrow: 1,

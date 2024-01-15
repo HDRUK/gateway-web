@@ -1,28 +1,27 @@
 "use client";
 
 // todo: To be removed as part of migration to AppRouter
-
-import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
-import LeftNav from "@/modules/LeftNav";
 import { ReactNode, useMemo } from "react";
 import { useParams } from "next/navigation";
-import { useHasPermissions } from "@/hooks/useHasPermission";
-import Loading from "@/components/Loading";
 import ActionBar from "@/components/ActionBar";
+import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
+import Loading from "@/components/Loading";
 import Typography from "@/components/Typography";
+import LeftNav from "@/modules/LeftNav";
 import useGetTeam from "@/hooks/useGetTeam";
+import { useHasPermissions } from "@/hooks/useHasPermission";
 
 interface AccountLayoutProps {
     children: ReactNode;
 }
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
-    const { teamId } = useParams();
+    const params = useParams<{ teamId: string }>();
 
     const permissions = useHasPermissions();
-    const { team, isTeamLoading } = useGetTeam(teamId);
-    const isTeam = useMemo(() => !!teamId, [teamId]);
+    const { team, isTeamLoading } = useGetTeam(`${params?.teamId}`);
+    const isTeam = useMemo(() => !!params?.teamId, [params?.teamId]);
 
     if (isTeamLoading) {
         return <Loading />;
@@ -56,7 +55,10 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
                             </Box>
                         </BoxContainer>
                     )}
-                    <LeftNav permissions={permissions} teamId={teamId} />
+                    <LeftNav
+                        permissions={permissions}
+                        teamId={params?.teamId}
+                    />
                 </Box>
                 <Box
                     sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>

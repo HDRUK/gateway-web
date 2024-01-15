@@ -1,11 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useSWRConfig } from "swr";
 import { SignIn } from "@/interfaces/SignIn";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
-import { useRouter } from "next/navigation";
-import { useSWRConfig } from "swr";
 
 const useSignIn = () => {
     const { hideDialog } = useDialog();

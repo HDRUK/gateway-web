@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
-
+import { useCallback, useEffect, useRef } from "react";
 import {
     flexRender,
     getCoreRowModel,
     useReactTable,
     ColumnDef,
 } from "@tanstack/react-table";
-import { useCallback, useEffect, useRef } from "react";
 import * as styles from "./Table.styles";
 
 interface OnUpdateProps {

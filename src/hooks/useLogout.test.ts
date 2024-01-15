@@ -1,9 +1,8 @@
-import * as apiService from "@/services/api/get";
-import useLogout from "@/hooks/useLogout";
-import apis from "@/config/apis";
-import mockRouter from "next-router-mock";
-
 import { act } from "react-dom/test-utils";
+import mockRouter from "next-router-mock";
+import useLogout from "@/hooks/useLogout";
+import * as apiService from "@/services/api/get";
+import apis from "@/config/apis";
 import { renderHook, waitFor } from "@/utils/testUtils";
 
 mockRouter.push("/initial-path");

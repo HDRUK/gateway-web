@@ -1,6 +1,6 @@
-import Typography from "@/components/Typography";
-import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import Typography from "@/components/Typography";
 import Pagination from "./Pagination";
 
 /** Mui documentation: https://mui.com/material-ui/react-pagination / */

@@ -1,16 +1,14 @@
 import React from "react";
-import Select from "@/components/Select";
-import * as yup from "yup";
-
 import { useForm } from "react-hook-form";
-
-import UserEvent from "@testing-library/user-event";
-import Form from "@/components/Form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import UserEvent from "@testing-library/user-event";
+import * as yup from "yup";
 import Button from "@/components/Button";
+import Form from "@/components/Form";
+import Select from "@/components/Select";
 import { SelectProps } from "@/components/Select/Select";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { render, screen, waitFor } from "@/utils/testUtils";
 
 const submitFn = jest.fn();

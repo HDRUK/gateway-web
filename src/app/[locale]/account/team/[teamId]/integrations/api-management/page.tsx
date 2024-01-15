@@ -1,8 +1,8 @@
+import { cookies } from "next/headers";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-import { cookies } from "next/headers";
 import { getTeamUser } from "@/utils/user";
-import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import ApiManagement from "./components/ApiManagement";
 
 export const metadata = {

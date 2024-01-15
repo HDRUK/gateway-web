@@ -1,6 +1,6 @@
 // cookieMiddleware.ts
-import { NextApiRequest, NextApiResponse } from "next";
 import cookie from "cookie";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export function cookieMiddleware(
     handler: (req: NextApiRequest, res: NextApiResponse) => Promise<void>

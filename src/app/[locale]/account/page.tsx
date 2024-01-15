@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
-import BoxContainer from "@/components/BoxContainer";
 import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
 import { ACCOUNT, PAGES, TITLE } from "@/consts/translation";
 
 export const metadata = {

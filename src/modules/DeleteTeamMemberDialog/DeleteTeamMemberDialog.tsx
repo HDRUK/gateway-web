@@ -1,18 +1,18 @@
 "use client";
 
 import * as React from "react";
-import { useTranslations } from "next-intl";
-import Dialog from "@/components/Dialog";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
-import apis from "@/config/apis";
-import Button from "@/components/Button";
-import { User } from "@/interfaces/User";
-import useDialog from "@/hooks/useDialog";
-import { GlobalDialogContextProps } from "@/providers/DialogProvider";
-import useDelete from "@/hooks/useDelete";
-import Typography from "@/components/Typography";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
+import { User } from "@/interfaces/User";
+import Button from "@/components/Button";
+import Dialog from "@/components/Dialog";
+import Typography from "@/components/Typography";
+import useDelete from "@/hooks/useDelete";
+import useDialog from "@/hooks/useDialog";
+import apis from "@/config/apis";
+import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 
 interface DeleteTeamMemberDialogProps {
     user: User;
@@ -23,13 +23,13 @@ const DeleteTeamMemberDialog = ({
     user,
     callback,
 }: DeleteTeamMemberDialogProps) => {
-    const { teamId } = useParams();
+    const params = useParams<{ teamId: string }>();
     const t = useTranslations("modules");
     const title = t("dialogs.DeleteTeamMemberDialog.title");
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
     const deleteTeamMember = useDelete(
-        `${apis.teamsV1Url}/${teamId}/users/${user.id}`,
+        `${apis.teamsV1Url}/${params?.teamId}/users/${user.id}`,
         {
             itemName: `User`,
             overideUrl: true,

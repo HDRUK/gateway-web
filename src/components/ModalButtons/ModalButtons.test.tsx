@@ -23,6 +23,11 @@ describe("ModalButtons", () => {
             expect(cancelFn).toHaveBeenCalled();
         });
     });
+    it("should hide cancel button", async () => {
+        render(<ModalButtons showCancel={false} />);
+
+        expect(screen.queryByText("Cancel")).not.toBeInTheDocument();
+    });
     it("should submit form if confirmType set to 'submit'", async () => {
         const submitFn = jest.fn(e => e.preventDefault());
 

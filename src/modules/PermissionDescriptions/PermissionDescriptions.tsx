@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
-
 import { useMemo } from "react";
-import { rolesMeta } from "@/consts/roles";
-
 import Typography from "@/components/Typography";
+import { rolesMeta } from "@/consts/roles";
 import * as styles from "./PermissionDescriptions.styles";
 
 // todo: Remove permission logic and make this a generic component
