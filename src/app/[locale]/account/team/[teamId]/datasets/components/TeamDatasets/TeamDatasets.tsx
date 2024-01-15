@@ -80,7 +80,7 @@ const TeamDatasets = () => {
         title: filterTitleDebounced,
     });
 
-    const { data: counts } = useGet<CountStatus>(
+    const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
         `${apis.datasetsV1Url}/count/status?team_id=${params?.teamId}`
     );
     const {
@@ -89,7 +89,11 @@ const TeamDatasets = () => {
         ARCHIVED: countArchived,
     } = counts ?? {};
 
-    const { data, isLoading, mutate } = useGet<PaginationType<Dataset>>(
+    const {
+        data,
+        isLoading,
+        mutate: mutateDatasets,
+    } = useGet<PaginationType<Dataset>>(
         `${apis.datasetsV1Url}?${queryParams}`,
         {
             keepPreviousData: true,
@@ -127,15 +131,21 @@ const TeamDatasets = () => {
                       action: (id: number) => {
                           showModal({
                               tertiaryButton: {
-                                  onAction: () => {
-                                      unArchiveDataset(id, {
+                                  onAction: async () => {
+                                      await unArchiveDataset(id, {
                                           status: "ACTIVE",
                                       });
+                                      mutateDatasets();
+                                      mutateCount();
                                   },
                                   buttonText: t("actions.unarchive.buttonText"),
                               },
-                              onSuccess: () => {
-                                  unArchiveDataset(id, { status: "DRAFT" });
+                              onSuccess: async () => {
+                                  await unArchiveDataset(id, {
+                                      status: "DRAFT",
+                                  });
+                                  mutateDatasets();
+                                  mutateCount();
                               },
                               confirmText: t("actions.unarchive.confirmText"),
                               title: t("actions.unarchive.title"),
@@ -152,8 +162,8 @@ const TeamDatasets = () => {
                   {
                       action: async (id: number) => {
                           await archiveDataset(id);
-
-                          mutate();
+                          mutateDatasets();
+                          mutateCount();
                       },
                       icon: ArchiveIcon,
                       label: t("actions.archive.label"),
