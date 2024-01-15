@@ -40,6 +40,7 @@ interface DatasetTabProps {
     total?: number;
     label: string;
     currentPage: number;
+    setValue: (name: string, value: unknown) => void;
     setCurrentPage: (page: number) => void;
     isLoading: boolean;
 }
@@ -55,6 +56,7 @@ const DatasetTab = ({
     currentPage,
     setCurrentPage,
     control,
+    setValue,
     isLoading,
 }: DatasetTabProps) => {
     const params = useParams<{ teamId: string }>();
@@ -73,7 +75,11 @@ const DatasetTab = ({
                     justifyContent: "space-between",
                 }}>
                 <Box sx={{ p: 0, width: "50%" }}>
-                    <InputWrapper control={control} {...searchFilter} />
+                    <InputWrapper
+                        setValue={setValue}
+                        control={control}
+                        {...searchFilter}
+                    />
                 </Box>
                 <BoxContainer
                     sx={{

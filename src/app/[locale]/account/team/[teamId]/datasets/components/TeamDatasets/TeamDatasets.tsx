@@ -45,13 +45,19 @@ const TeamDatasets = () => {
     );
     const { showModal } = useModal();
     const searchParams = useSearchParams();
-    const tab = searchParams?.get("tab");
     const params = useParams<{ teamId: string }>();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [sort, setSort] = useState(
-        `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`
-    );
-    const { control, watch } = useForm({
+    const tab = searchParams?.get("tab");
+
+    const [queryParams, setQueryParams] = useState({
+        team_id: `${params?.teamId}`,
+        withTrashed: "true",
+        status: "ACTIVE",
+        page: "1",
+        sort: `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`,
+        title: "",
+    });
+
+    const { control, watch, setValue } = useForm({
         defaultValues: datasetSearchDefaultValues,
     });
     const watchAll = watch();
@@ -60,28 +66,36 @@ const TeamDatasets = () => {
         const [option] = sortByOptions.filter(
             o => o.value === watchAll.sortField
         );
-        setSort(`${watchAll.sortField}:${option.direction}`);
+        setQueryParams(previous => ({
+            ...previous,
+            sort: `${watchAll.sortField}:${option.direction}`,
+        }));
     }, [watchAll.sortField]);
 
     useEffect(() => {
-        setSort(
-            previous => `${previous.split(":")[0]}:${watchAll.sortDirection}`
-        );
+        setQueryParams(previous => ({
+            ...previous,
+            sort: `${previous.sort.split(":")[0]}:${watchAll.sortDirection}`,
+        }));
     }, [watchAll.sortDirection]);
 
     const filterTitleDebounced = useDebounce(watchAll.searchTitle, 500);
+
     useEffect(() => {
-        setCurrentPage(1);
+        setQueryParams(previous => ({
+            ...previous,
+            title: filterTitleDebounced,
+            page: "1",
+        }));
     }, [filterTitleDebounced]);
 
-    const queryParams = new URLSearchParams({
-        team_id: `${params?.teamId.toString()}`,
-        withTrashed: "true",
-        status: (tab as string) || "ACTIVE",
-        page: currentPage.toString(),
-        sort,
-        title: filterTitleDebounced,
-    });
+    useEffect(() => {
+        setQueryParams(previous => ({
+            ...previous,
+            status: searchParams?.get("tab") || "ACTIVE",
+        }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams?.get("tab")]);
 
     const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
         `${apis.datasetsV1Url}/count/status?team_id=${params?.teamId}`
@@ -97,7 +111,7 @@ const TeamDatasets = () => {
         isLoading,
         mutate: mutateDatasets,
     } = useGet<PaginationType<Dataset>>(
-        `${apis.datasetsV1Url}?${queryParams}`,
+        `${apis.datasetsV1Url}?${new URLSearchParams(queryParams)}`,
         {
             keepPreviousData: true,
             withPagination: true,
@@ -115,7 +129,7 @@ const TeamDatasets = () => {
     useEffect(() => {
         window.scrollTo({ top: 0 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage]);
+    }, [queryParams.page]);
 
     const actions = [
         {
@@ -186,11 +200,14 @@ const TeamDatasets = () => {
             <DatasetTab
                 {...data}
                 control={control}
+                setValue={setValue}
                 key={tabItem.value}
                 label={tabItem.label}
                 list={data?.list}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                currentPage={parseInt(queryParams.page, 10)}
+                setCurrentPage={page =>
+                    setQueryParams({ ...queryParams, page: page.toString() })
+                }
                 isLoading={isLoading}
                 actions={actions}
             />
