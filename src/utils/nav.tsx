@@ -2,6 +2,7 @@ import { LeftNavItem } from "@/interfaces/Ui";
 import {
     DescriptionOutlinedIcon,
     FolderSharedOutlinedIcon,
+    GroupsIcon,
     GroupsOutlinedIcon,
     HelpOutlineOutlinedIcon,
     SchemaOutlinedIcon,
@@ -19,12 +20,21 @@ const getProfileNav = (permissions: {
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },
+        ...(permissions["custodians.read"]
+            ? [
+                  {
+                      icon: <GroupsIcon />,
+                      label: "Teams",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAMS}`,
+                  },
+              ]
+            : []),
         ...(permissions["cohort.read"]
             ? [
                   {
                       icon: <DescriptionOutlinedIcon />,
                       label: "Cohort Discovery Admin",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
                   },
               ]
             : []),

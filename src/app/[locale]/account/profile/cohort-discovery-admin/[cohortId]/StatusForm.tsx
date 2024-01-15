@@ -86,7 +86,9 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
             details: formData.details,
             request_status: formData.request_status,
         });
-        push(`/${RouteName.ACCOUNT}/${RouteName.COHORT_DISCOVERY_ADMIN}`);
+        push(
+            `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`
+        );
     };
 
     useEffect(() => {
@@ -99,7 +101,7 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
                 changeCount: 1,
                 onCancel: () => {
                     push(
-                        `/${RouteName.ACCOUNT}/${RouteName.COHORT_DISCOVERY_ADMIN}`
+                        `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`
                     );
                 },
             });

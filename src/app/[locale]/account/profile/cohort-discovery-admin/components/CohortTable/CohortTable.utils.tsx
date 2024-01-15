@@ -99,7 +99,7 @@ const getColumns = ({
                 <>
                     <Link
                         sx={{ textDecoration: "none", fontWeight: "bold" }}
-                        href={`/${RouteName.ACCOUNT}/${RouteName.COHORT_DISCOVERY_ADMIN}/${original.id}`}>
+                        href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}/${original.id}`}>
                         {original.user.name}
                     </Link>
 

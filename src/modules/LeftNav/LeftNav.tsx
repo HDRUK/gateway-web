@@ -35,7 +35,7 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
     const navItems = teamId
         ? getTeamNav(permissions, teamId)
         : getProfileNav(permissions);
-    const pathname = usePathname();
+    const pathname = usePathname() || "";
     const [expandedSection, setExpandedSection] = useState("");
 
     const toggleMenu = (item: LeftNavItem) => {
