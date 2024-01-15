@@ -1,15 +1,18 @@
 /** @jsxImportSource @emotion/react */
-
 "use client";
 
-import Link from "@/components/Link";
-import Image from "next/image";
-import { AppBar, IconButton, Toolbar } from "@mui/material";
-import HeaderNav from "@/modules/HeaderNav";
-import AccountNavWrapper from "@/modules/AccountNavWrapper";
 import { useState } from "react";
+import { hotjar } from "react-hotjar";
+import { AppBar, IconButton, Toolbar } from "@mui/material";
+import Image from "next/image";
+import Link from "@/components/Link";
+import AccountNavWrapper from "@/modules/AccountNavWrapper";
+import HeaderNav from "@/modules/HeaderNav";
 import { MenuIcon } from "@/consts/icons";
 import * as styles from "./Header.styles";
+
+const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
+const HOTJAR_VERSION = 6;
 
 function Header() {
     const [showNavList, setShowNavList] = useState(false);
@@ -17,6 +20,11 @@ function Header() {
     const menuClickHandler = () => {
         setShowNavList(prev => !prev);
     };
+
+    if (HOTJAR_ID) {
+        hotjar.initialize(parseInt(HOTJAR_ID), HOTJAR_VERSION);
+    }
+
     return (
         <AppBar position="static" css={styles.appbar}>
             <Toolbar css={styles.toolbar}>
