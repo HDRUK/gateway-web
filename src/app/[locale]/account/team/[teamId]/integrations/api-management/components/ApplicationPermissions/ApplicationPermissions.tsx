@@ -219,7 +219,7 @@ const ApplicationPermissions = ({
                     </Box>
                 )}
             </Paper>
-            <Typography>{t("helper")}</Typography>
+            <Typography sx={{ fontWeight: "bold" }}>{t("helper")}</Typography>
             {!isTabView && (
                 <Paper>
                     <Box
