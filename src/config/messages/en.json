@@ -151,6 +151,13 @@
                         "create": {
                             "title": "API management",
                             "text": "Use this form to create, update and manage your api on the Gateway"
+                        },
+                        "manage": {
+                            "permissions": {
+                                "title": "Permissions",
+                                "intro": "Use this form to assign the right level of scope and permission for the application to manage integration and connect securely to the Gateway. Your application will only be able to synchronize data within its assigned scope and permission. Application permissions is the responsibility of your publisher team",
+                                "helper": "Entities created via an API integration can only be managed (updated or deleted/archived) via the API integration. Entities created via another method (manual, federated integration) cannot be managed via the API integration."
+                            }
                         }
                     }
                 }
