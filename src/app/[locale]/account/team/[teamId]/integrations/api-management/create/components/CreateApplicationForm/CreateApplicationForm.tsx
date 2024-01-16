@@ -24,32 +24,22 @@ import { RouteName } from "@/consts/routeName";
 
 const CreateApplicationForm = () => {
     const { user } = useAuth();
-
     const { push } = useRouter();
     const params = useParams<{ teamId: string }>();
-
     const { team } = useGetTeam(params?.teamId as string);
-
-    const defaultValues = useMemo(() => {
-        return {
-            user_id: user?.id,
-            team_id: parseInt(`${params?.teamId}`, 10),
-            ...applicationDefaultValues,
-        };
-    }, [params?.teamId, user?.id]);
 
     const { control, handleSubmit, reset, formState } =
         useForm<ApplicationForm>({
             mode: "onTouched",
             resolver: yupResolver(applicationValidationSchema),
-            defaultValues,
+            defaultValues: applicationDefaultValues,
         });
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
     });
 
-    const updateApplication = usePost<ApplicationForm>(
+    const createApplication = usePost<ApplicationForm>(
         `${apis.applicationsV1Url}`,
         {
             itemName: "Application",
@@ -75,13 +65,17 @@ const CreateApplicationForm = () => {
     );
 
     const submitForm = async (formData: ApplicationForm) => {
-        const payload = { ...applicationDefaultValues, ...formData };
-        const response = await updateApplication(payload);
+        const payload = {
+            user_id: user?.id,
+            team_id: parseInt(`${params?.teamId}`, 10),
+            ...formData,
+        };
+        const response = await createApplication(payload);
 
         /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
         setTimeout(() => {
             push(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${response.id}/${RouteName.PERMISSIONS}`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${response.id}/${RouteName.PERMISSIONS}`
             );
         });
     };
@@ -107,7 +101,7 @@ const CreateApplicationForm = () => {
                         marginBottom: "10px",
                     }}>
                     <Button
-                        onClick={() => reset(defaultValues)}
+                        onClick={() => reset(applicationDefaultValues)}
                         color="secondary"
                         variant="outlined">
                         Discard API
