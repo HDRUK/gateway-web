@@ -15,7 +15,7 @@ import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
-import { getColumns } from "@/config/tables/teamManagement";
+import { getColumns } from "@/config/tables/teamMemberManagement";
 import { DeleteForeverIcon } from "@/consts/icons";
 import {
     RolesPayload,

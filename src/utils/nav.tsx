@@ -25,7 +25,7 @@ const getProfileNav = (permissions: {
                   {
                       icon: <GroupsIcon />,
                       label: "Teams",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAMS}`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TEAMS}`,
                   },
               ]
             : []),
