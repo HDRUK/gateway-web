@@ -63,9 +63,7 @@ const formFields = [
             value: unknown
         ) => options.find(option => option.value === value)?.label,
         component: inputComponents.Autocomplete,
-        info: "Use ‘tab’ or ‘enter’ to add another email address if adding more than one",
-        extraInfo:
-            "Email address for people who should receive notifications related to integration.",
+        info: "Email address for people who should receive notifications related to integration. Use ‘tab’ or ‘enter’ to add another email address if adding more than one",
     },
 ];
 
