@@ -1,64 +1,96 @@
-import { Control, FieldValues } from "react-hook-form";
 import { ColumnDef } from "@tanstack/react-table";
 import { Team } from "@/interfaces/Team";
+import ActionMenu from "@/components/ActionMenu";
 import Box from "@/components/Box";
-import Checkbox from "@/components/Checkbox";
+import TeamAdmin from "@/components/TeamAdmins/TeamAdmins";
+import TickCrossIcon from "@/components/TickCrossIcon/TickCrossIcon";
+import { CloseIcon, EditIcon } from "@/consts/icons";
+import { formatDate } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 
 const getColumns = (
     permissions: { [key: string]: boolean },
     actions: {
-        label?: string;
-        onClick: (rowUser: User) => void;
-        icon: ReactNode;
-    }[]
+        handleEdit: (id: number) => void;
+        handleDelete: (id: number) => void;
+    }
 ): ColumnDef<Team>[] => {
     return [
         {
-            id: "label",
+            id: "application_form_updated_on",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
-                    Updated
+                    Last updated
                 </Box>
             ),
-            accessorFn: row => `${row.label}`,
+            accessorFn: row => `${formatDate(row.application_form_updated_on)}`,
         },
         {
-            id: "label",
+            id: "name",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
-                    Data custodian
+                    Data provider
                 </Box>
             ),
-            accessorFn: row => `${row.label}`,
+            accessorFn: row => `${capitalise(row.member_of)} > ${row.name}`,
         },
         {
-            id: "label",
+            id: "teamManagers",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
-                    Team manager(s)
+                    Team admin(s)
                 </Box>
             ),
-            accessorFn: row => `${row.label}`,
+            cell: ({ row: { original } }) => {
+                if (!original.users) return null;
+                return <TeamAdmin users={original.users} />;
+            },
         },
         {
-            id: "label",
+            id: "questionBank",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
-                    Question Bank Enabled?
+                    Question Bank
                 </Box>
             ),
-            accessorFn: row => `${row.label}`,
-        },
-        {
-            id: "label",
-            header: () => (
-                <Box sx={{ p: 0 }} textAlign="left">
-                    Actions
-                </Box>
+            cell: ({ row: { original } }) => (
+                <div style={{ textAlign: "center" }}>
+                    <TickCrossIcon isTrue={original.is_question_bank} />
+                </div>
             ),
-            accessorFn: row => `${row.label}`,
         },
+        ...(permissions["custodians.update"]
+            ? [
+                  {
+                      id: "actions",
+                      header: () => (
+                          <Box sx={{ p: 0 }} textAlign="left">
+                              Action
+                          </Box>
+                      ),
+                      cell: ({ row: { original } }) => (
+                          <div style={{ textAlign: "center" }}>
+                              <ActionMenu
+                                  actions={[
+                                      {
+                                          label: "Edit",
+                                          icon: EditIcon,
+                                          action: () =>
+                                              actions.handleEdit(original.id),
+                                      },
+                                      {
+                                          label: "Delete",
+                                          icon: CloseIcon,
+                                          action: () =>
+                                              actions.handleDelete(original.id),
+                                      },
+                                  ]}
+                              />
+                          </div>
+                      ),
+                  },
+              ]
+            : []),
     ];
 };
 

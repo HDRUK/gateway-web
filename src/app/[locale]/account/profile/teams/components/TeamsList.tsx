@@ -1,10 +1,9 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Team } from "@/interfaces/Team";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
 import useGet from "@/hooks/useGet";
-import useGetTeam from "@/hooks/useGetTeam";
 import apis from "@/config/apis";
 import { getColumns } from "@/config/tables/teamManagement";
 
@@ -13,47 +12,30 @@ const TeamsList = ({
 }: {
     permissions: { [key: string]: boolean };
 }) => {
-    const [tableRows, setTableRows] = useState<Team[]>([]);
-    const { data: teams } = useGet(apis.teamsV1Url);
-
-    const actions = useMemo(
-        () => [
-            // {
-            //     icon: <DeleteForeverIcon color="primary" />,
-            //     onClick: (rowUser: User) =>
-            //         showModal({
-            //             confirmText: "Remove",
-            //             title: "Delete a user",
-            //             content: `Are you sure you want to remove ${rowUser.firstname}  ${rowUser.lastname}?`,
-            //             onSuccess: async () => {
-            //                 deleteTeamMember(`users/${rowUser.id}`);
-            //                 router.refresh();
-            //             },
-            //         }),
-            // },
-        ],
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        []
-    );
+    const { data: teams, isLoading } = useGet<Team[]>(apis.teamsV1Url);
 
     const columns = useMemo(() => {
-        return getColumns(permissions, actions);
-    }, [actions, permissions]);
+        return getColumns(permissions, {
+            handleDelete: id => console.log(`delete: ${id}`),
+            handleEdit: id => console.log(`edit: ${id}`),
+        });
+    }, [permissions]);
 
-    if (tableRows.length === 0)
+    if (isLoading)
         return (
             <Paper>
                 <Loading />
             </Paper>
         );
 
-    const handleUpdate = () => {};
+    const handleUpdate = () => console.log("update");
+
     return (
         <Paper>
             <Table<Team>
                 columns={columns}
                 onUpdate={handleUpdate}
-                rows={tableRows}
+                rows={teams || []}
             />
         </Paper>
     );

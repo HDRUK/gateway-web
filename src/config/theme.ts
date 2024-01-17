@@ -21,9 +21,24 @@ export type colourType =
     | "success"
     | "warning";
 
+export type buttonColourType =
+    | "inherit"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "error"
+    | "info"
+    | "warning"
+    | "grey";
+
 declare module "@mui/material/Button" {
     interface ButtonPropsVariantOverrides {
         link: true;
+    }
+}
+declare module "@mui/material/Button" {
+    interface ButtonPropsColorOverrides {
+        grey: true;
     }
 }
 declare module "@mui/material/Switch" {
@@ -105,6 +120,10 @@ const palette = {
     errorBorder: {
         main: colors.red700,
     },
+    grey: {
+        main: colors.grey400,
+        contrastText: colors.grey800,
+    },
     background: { default: "#f6f7f8" },
     warningAmber: {
         contrastText: "#000",
@@ -177,6 +196,19 @@ const theme = createTheme({
         },
         MuiButton: {
             variants: [
+                {
+                    props: { color: "grey" },
+                    style: {
+                        color: colors.grey800,
+                        borderColor: palette.grey.main,
+                        "&:active": {
+                            background: palette.grey.main,
+                        },
+                        "&:hover": {
+                            background: palette.grey.main,
+                        },
+                    },
+                },
                 {
                     props: { variant: "link" },
                     style: {

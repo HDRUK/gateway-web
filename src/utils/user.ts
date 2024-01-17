@@ -1,6 +1,7 @@
 import { AuthTeam } from "@/interfaces/AuthTeam";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { User } from "@/interfaces/User";
+import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 
 const getTeamById = (
     teams: AuthTeam[] | undefined,
@@ -24,4 +25,20 @@ const getPreferredEmail = (user: AuthUser) => {
     const { preferred_email, secondary_email, email } = user;
     return preferred_email === "secondary" ? secondary_email : email;
 };
-export { getTeamUser, getTeamById, getRoleNamesByTeam, getPreferredEmail };
+
+const getTeamAdmins = (users: User[]) => {
+    const usersWithAdmins = users
+        .filter(user =>
+            user.roles.filter(role => role.name === ROLE_CUSTODIAN_TEAM_ADMIN)
+        )
+        .map(user => user.name);
+    return usersWithAdmins;
+};
+
+export {
+    getTeamUser,
+    getTeamById,
+    getRoleNamesByTeam,
+    getPreferredEmail,
+    getTeamAdmins,
+};
