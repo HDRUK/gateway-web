@@ -1,7 +1,20 @@
 import { AuthTeam } from "@/interfaces/AuthTeam";
-import { generateAuthUserV1 } from "@/mocks/data";
+import {
+    ROLE_CUSTODIAN_DAR_MANAGER,
+    ROLE_CUSTODIAN_TEAM_ADMIN,
+} from "@/consts/roles";
+import {
+    generateAuthUserV1,
+    generateRoleV1,
+    generateUserV1,
+} from "@/mocks/data";
 import { generateAuthTeamV1 } from "@/mocks/data/authTeam";
-import { getPreferredEmail, getRoleNamesByTeam, getTeamById } from "./user";
+import {
+    getPreferredEmail,
+    getRoleNamesByTeam,
+    getTeamAdmins,
+    getTeamById,
+} from "./user";
 
 const teams: AuthTeam[] = [generateAuthTeamV1({ id: 1 })];
 
@@ -82,6 +95,30 @@ describe("User utils", () => {
 
             expect(result1).toEqual([]);
             expect(result2).toEqual([]);
+        });
+    });
+    describe("getTeamAdmins", () => {
+        it("should return all users with ROLE_CUSTODIAN_TEAM_ADMIN role", () => {
+            const mockUsers = [
+                generateUserV1({
+                    roles: [
+                        generateRoleV1({ name: ROLE_CUSTODIAN_TEAM_ADMIN }),
+                    ],
+                }),
+                generateUserV1({
+                    roles: [],
+                }),
+                generateUserV1({
+                    roles: [
+                        generateRoleV1({ name: ROLE_CUSTODIAN_DAR_MANAGER }),
+                    ],
+                }),
+            ];
+
+            const result = getTeamAdmins(mockUsers);
+
+            expect(result).toHaveLength(1);
+            expect(mockUsers[0].name).toEqual(result[0]);
         });
     });
 });

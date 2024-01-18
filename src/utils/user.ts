@@ -28,8 +28,11 @@ const getPreferredEmail = (user: AuthUser) => {
 
 const getTeamAdmins = (users: User[]) => {
     const usersWithAdmins = users
-        .filter(user =>
-            user.roles.filter(role => role.name === ROLE_CUSTODIAN_TEAM_ADMIN)
+        .filter(
+            user =>
+                user.roles.filter(
+                    role => role.name === ROLE_CUSTODIAN_TEAM_ADMIN
+                ).length > 0
         )
         .map(user => user.name);
     return usersWithAdmins;
