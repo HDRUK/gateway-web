@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Head from "@/components/Head";
@@ -9,6 +10,7 @@ import Typography from "@/components/Typography";
 import AccountLayout from "@/modules/AccountLayout";
 import useAuth from "@/hooks/useAuth";
 import { AddIcon } from "@/consts/icons";
+import { TEXT, TITLE } from "@/consts/translation";
 import TeamsList from "./components/TeamsList";
 
 export default function Teams({
@@ -17,7 +19,7 @@ export default function Teams({
     permissions: { [key: string]: boolean };
 }) {
     const { isLoading } = useAuth();
-
+    const t = useTranslations(`pages.account.profile.teams`);
     return (
         <>
             <Head title="Health Data Research Innovation Gateway - My Account - Teams" />
@@ -31,15 +33,14 @@ export default function Teams({
                                 alignItems: "start",
                             }}>
                             <div>
-                                <Typography variant="h2">Teams</Typography>
+                                <Typography variant="h2">{t(TITLE)}</Typography>
                                 <Typography sx={{ marginBottom: 4 }}>
-                                    Onboard and manage data provider teams on
-                                    the Gateway
+                                    {t(TEXT)}
                                 </Typography>
                             </div>
                             {permissions["custodians.create"] && (
                                 <Button startIcon={<AddIcon />}>
-                                    Add a new team
+                                    {t("addTeamButton")}
                                 </Button>
                             )}
                         </Box>

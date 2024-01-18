@@ -9,19 +9,23 @@ import { formatDate } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import { getTeamAdmins } from "@/utils/user";
 
-const getColumns = (
-    permissions: { [key: string]: boolean },
-    actions: {
-        handleEdit: (id: number) => void;
-        handleDelete: (id: number) => void;
-    }
-): ColumnDef<Team>[] => {
+const getColumns = ({
+    translations,
+    permissions,
+    handleEdit,
+    handleDelete,
+}: {
+    translations: { [key: string]: string };
+    permissions: { [key: string]: boolean };
+    handleEdit: (id: number) => void;
+    handleDelete: (id: number) => void;
+}): ColumnDef<Team>[] => {
     return [
         {
             id: "application_form_updated_on",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
-                    Last updated
+                    {translations.lastUpdated}
                 </Box>
             ),
             accessorFn: row => `${formatDate(row.application_form_updated_on)}`,
@@ -30,7 +34,7 @@ const getColumns = (
             id: "name",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
-                    Data provider
+                    {translations.dataProvider}
                 </Box>
             ),
             accessorFn: row => `${capitalise(row.member_of)} > ${row.name}`,
@@ -39,7 +43,7 @@ const getColumns = (
             id: "teamManagers",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
-                    Team admin(s)
+                    {translations.teamAdmins}
                 </Box>
             ),
             cell: ({ row: { original } }) => {
@@ -52,7 +56,7 @@ const getColumns = (
             id: "questionBank",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
-                    Question Bank
+                    {translations.questionBank}
                 </Box>
             ),
             cell: ({ row: { original } }) => (
@@ -67,7 +71,7 @@ const getColumns = (
                       id: "actions",
                       header: () => (
                           <Box sx={{ p: 0 }} textAlign="left">
-                              Action
+                              {translations.action}
                           </Box>
                       ),
                       cell: ({ row: { original } }) => (
@@ -77,14 +81,13 @@ const getColumns = (
                                       {
                                           label: "Edit",
                                           icon: EditIcon,
-                                          action: () =>
-                                              actions.handleEdit(original.id),
+                                          action: () => handleEdit(original.id),
                                       },
                                       {
                                           label: "Delete",
                                           icon: CloseIcon,
                                           action: () =>
-                                              actions.handleDelete(original.id),
+                                              handleDelete(original.id),
                                       },
                                   ]}
                               />

@@ -87,9 +87,25 @@
             }
         },
         "account": {
-            "cohortDiscoveryAdmin": {
-                "title": "Cohort Discovery Admin",
-                "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+            "profile": {
+                "cohortDiscoveryAdmin": {
+                    "title": "Cohort Discovery Admin",
+                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+                },
+                "teams": {
+                    "title": "Teams",
+                    "text": "Onboard and manage data provider teams on the Gateway",
+                    "addTeamButton": "Add a new team",
+                    "components": {
+                        "TeamsList": {
+                            "lastUpdated": "Last Updated",
+                            "dataProvider": "Data Provider",
+                            "teamAdmins": "Team admin(s)",
+                            "questionBank": "Question Bank",
+                            "action": "Action"
+                        }
+                    }
+                }
             },
             "team": {
                 "dataAccessRequests": {

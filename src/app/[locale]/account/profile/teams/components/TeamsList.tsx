@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Team } from "@/interfaces/Team";
 import Box from "@/components/Box";
@@ -15,6 +16,10 @@ const TeamsList = ({
 }: {
     permissions: { [key: string]: boolean };
 }) => {
+    const t = useTranslations(
+        "pages.account.profile.teams.components.TeamsList"
+    );
+
     const [currentPage, setCurrentPage] = useState(1);
     const { data, isLoading } = useGet<PaginationType<Team>>(
         `${apis.teamsV1Url}?page=${currentPage}`,
@@ -25,11 +30,19 @@ const TeamsList = ({
     );
 
     const columns = useMemo(() => {
-        return getColumns(permissions, {
+        return getColumns({
+            translations: {
+                lastUpdated: t("lastUpdated"),
+                dataProvider: t("dataProvider"),
+                teamAdmins: t("teamAdmins"),
+                questionBank: t("questionBank"),
+                action: t("action"),
+            },
+            permissions,
             handleDelete: id => console.log(`delete: ${id}`),
             handleEdit: id => console.log(`edit: ${id}`),
         });
-    }, [permissions]);
+    }, [permissions, t]);
 
     if (isLoading)
         return (

@@ -4,13 +4,7 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
-import {
-    ACCOUNT,
-    COHORT_DISCOVERY_ADMIN,
-    PAGES,
-    TEXT,
-    TITLE,
-} from "@/consts/translation";
+import { COHORT_DISCOVERY_ADMIN, TEXT, TITLE } from "@/consts/translation";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import CohortTable from "./components/CohortTable";
@@ -26,7 +20,7 @@ export default async function CohortDiscoveryAdmin() {
     const user = await getUser(cookieStore);
     const permissions = await getPermissions(user.roles);
     const t = await getTranslations(
-        `${PAGES}.${ACCOUNT}.${COHORT_DISCOVERY_ADMIN}`
+        `pages.account.profile.${COHORT_DISCOVERY_ADMIN}`
     );
 
     return (
