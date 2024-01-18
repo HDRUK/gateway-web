@@ -2,11 +2,12 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Team } from "@/interfaces/Team";
 import ActionMenu from "@/components/ActionMenu";
 import Box from "@/components/Box";
-import TeamAdmin from "@/components/TeamAdmins/TeamAdmins";
-import TickCrossIcon from "@/components/TickCrossIcon/TickCrossIcon";
+import ShowMoreTooltip from "@/components/ShowMoreTooltip";
+import TickCrossIcon from "@/components/TickCrossIcon";
 import { CloseIcon, EditIcon } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
 import { capitalise } from "@/utils/general";
+import { getTeamAdmins } from "@/utils/user";
 
 const getColumns = (
     permissions: { [key: string]: boolean },
@@ -43,7 +44,8 @@ const getColumns = (
             ),
             cell: ({ row: { original } }) => {
                 if (!original.users) return null;
-                return <TeamAdmin users={original.users} />;
+                const admins = getTeamAdmins(original.users);
+                return <ShowMoreTooltip items={admins} />;
             },
         },
         {
