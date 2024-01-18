@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
 import { User } from "@/interfaces/User";
@@ -34,6 +35,9 @@ const TeamMembers = ({
     permissions,
     teamId,
 }: TeamMembersProps) => {
+    const t = useTranslations(
+        "pages.account.team.teamManagement.components.TeamMembers"
+    );
     const { user } = useAuth();
     const router = useRouter();
     const { showModal } = useModal();
@@ -134,8 +138,21 @@ const TeamMembers = ({
     }, [shouldSubmit]);
 
     const columns = useMemo(() => {
-        return getColumns(permissions, actions);
-    }, [actions, permissions]);
+        return getColumns({
+            permissions,
+            actions,
+            translations: {
+                lastRoleAdminMessage: t("lastRoleAdminMessage"),
+                lastRoleMessage: t("lastRoleMessage"),
+                noPermission: t("noPermission"),
+                nameHeader: t("columns.name"),
+                actionsHeader: t("columns.actions"),
+                teamHeader: t("columns.team"),
+                darHeader: t("columns.dar"),
+                metaDataHeader: t("columns.metadata"),
+            },
+        });
+    }, [actions, permissions, t]);
 
     const handleUpdate = async (updatedUsers: User[]) => {
         setTableRows(updatedUsers);

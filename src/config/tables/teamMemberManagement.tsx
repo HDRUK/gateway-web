@@ -1,8 +1,11 @@
 /* eslint-disable */
-
-import PermissionDescriptions from "@/modules/PermissionDescriptions";
+import { ReactNode, useMemo } from "react";
+import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import { ColumnDef } from "@tanstack/react-table";
+import { User } from "@/interfaces/User";
 import TableActionCell from "@/components/TableActionCell";
 import TooltipIcon from "@/components/TooltipIcon";
+import PermissionDescriptions from "@/modules/PermissionDescriptions";
 import {
     ROLE_CUSTODIAN_DAR_MANAGER,
     ROLE_CUSTODIAN_DAR_REVIEWER,
@@ -12,18 +15,13 @@ import {
     ROLE_CUSTODIAN_TEAM_ADMIN,
     rolesMeta,
 } from "@/consts/roles";
-import { User } from "@/interfaces/User";
-
-import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-
-import { ColumnDef } from "@tanstack/react-table";
-import { ReactNode, useMemo } from "react";
 
 const CheckboxesCell = ({
     row: { index, original },
     table,
     checkboxes,
     permissions,
+    translations,
 }) => {
     const { roles } = original;
 
@@ -35,8 +33,8 @@ const CheckboxesCell = ({
     const lastRoleMessage = permissions[
         "fe.account.team_management.permission.update.custodian_team_admin"
     ]
-        ? "All team members must have at least one role. If you would like to remove a team member, the 'remove team member' button can be found in the 'Actions' column."
-        : "All team members must have at least one role. Please contact your team admin to remove a team member.";
+        ? translations.lastRoleAdminMessage
+        : translations.lastRoleMessage;
 
     const checkboxesHydrated = useMemo(() => {
         return checkboxes.map(checkbox => {
@@ -50,7 +48,7 @@ const CheckboxesCell = ({
                     value && isLastRole
                         ? lastRoleMessage
                         : checkbox.disabled
-                        ? "You do not have permission to edit this"
+                        ? translations.noPermission
                         : "",
             };
         });
@@ -94,25 +92,30 @@ const CheckboxesCell = ({
     );
 };
 
-const getColumns = (
-    permissions: { [key: string]: boolean },
+const getColumns = ({
+    translations,
+    permissions,
+    actions,
+}: {
+    translations: { [key: string]: string };
+    permissions: { [key: string]: boolean };
     actions: {
         label?: string;
         onClick: (rowUser: User) => void;
         icon: ReactNode;
-    }[]
-): ColumnDef<User>[] => {
+    }[];
+}): ColumnDef<User>[] => {
     return [
         {
             id: "name",
-            header: () => <Box textAlign="left">Name</Box>,
+            header: () => <Box textAlign="left">{translations.nameHeader}</Box>,
             accessorFn: row => `${row.firstname} ${row.lastname}`,
         },
         {
             id: "team",
             header: () => (
                 <TooltipIcon
-                    label="Team"
+                    label={translations.teamHeader}
                     content={
                         <PermissionDescriptions
                             roles={[
@@ -126,6 +129,7 @@ const getColumns = (
             cell: props => (
                 <CheckboxesCell
                     {...props}
+                    translations={translations}
                     permissions={permissions}
                     checkboxes={[
                         {
@@ -150,7 +154,7 @@ const getColumns = (
             id: "dataAccessRequest",
             header: () => (
                 <TooltipIcon
-                    label="Data Access Requests"
+                    label={translations.darHeader}
                     content={
                         <PermissionDescriptions
                             roles={[
@@ -164,6 +168,7 @@ const getColumns = (
             cell: props => (
                 <CheckboxesCell
                     {...props}
+                    translations={translations}
                     permissions={permissions}
                     checkboxes={[
                         {
@@ -188,7 +193,7 @@ const getColumns = (
             id: "metaData",
             header: () => (
                 <TooltipIcon
-                    label="MetaData"
+                    label={translations.metaDataHeader}
                     content={
                         <PermissionDescriptions
                             roles={[
@@ -202,6 +207,7 @@ const getColumns = (
             cell: props => (
                 <CheckboxesCell
                     {...props}
+                    translations={translations}
                     permissions={permissions}
                     checkboxes={[
                         {
@@ -226,7 +232,11 @@ const getColumns = (
             ? [
                   {
                       id: "furtherActions",
-                      header: () => <Box textAlign="left">Actions</Box>,
+                      header: () => (
+                          <Box textAlign="left">
+                              {translations.actionsHeader}
+                          </Box>
+                      ),
                       size: 40,
                       cell: ({ row: { original } }) => {
                           return (

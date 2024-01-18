@@ -10,9 +10,9 @@ interface ShowMoreTooltipProps {
     showLimit?: number;
 }
 
-const linkWrapper = (allAdmins: string) => (children: ReactNode) => {
+const linkWrapper = (title: string) => (children: ReactNode) => {
     return (
-        <Tooltip key="allAdmins" title={allAdmins}>
+        <Tooltip title={title}>
             <span>{children}</span>
         </Tooltip>
     );
@@ -23,13 +23,13 @@ const ShowMoreTooltip = ({
     showLimit = 3,
     label = "...more",
 }: ShowMoreTooltipProps) => {
-    const allAdmins = items.join(", ");
+    const allItems = items.join(", ");
     const topThree = items.slice(0, showLimit).join(", ");
 
     return (
         <ConditionalWrapper
             requiresWrapper={items.length > 2}
-            wrapper={linkWrapper(allAdmins)}>
+            wrapper={linkWrapper(allItems)}>
             <>
                 {topThree}
                 <Typography component="span" sx={{ color: colors.grey500 }}>
