@@ -5,7 +5,6 @@ import { Team } from "@/interfaces/Team";
 import Box from "@/components/Box";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
-import Paper from "@/components/Paper";
 import Table from "@/components/Table";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
@@ -44,19 +43,14 @@ const TeamsList = ({
         });
     }, [permissions, t]);
 
-    if (isLoading)
-        return (
-            <Paper>
-                <Loading />
-            </Paper>
-        );
+    if (isLoading) return <Loading />;
 
     const { lastPage, list } = data || {};
 
     const handleUpdate = () => console.log("update");
 
     return (
-        <Paper>
+        <>
             <Box sx={{ p: 0, mb: 2 }}>
                 <Table<Team>
                     columns={columns}
@@ -72,7 +66,7 @@ const TeamsList = ({
                     setCurrentPage(page)
                 }
             />
-        </Paper>
+        </>
     );
 };
 
