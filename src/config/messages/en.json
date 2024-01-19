@@ -73,7 +73,11 @@
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK",
         "submit": "Submit",
-        "cancel": "Cancel"
+        "publish": "Publish",
+        "cancel": "Cancel",
+        "questionBank": "Question Bank",
+        "disabled": "Disabled",
+        "enabled": "Enabled"
     },
     "pages": {
         "about": {
@@ -88,6 +92,8 @@
         },
         "account": {
             "profile": {
+                "title": "Your profile",
+                "text": "Use this form to register an account and update your account on the Gateway",
                 "cohortDiscoveryAdmin": {
                     "title": "Cohort Discovery Admin",
                     "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
@@ -104,6 +110,11 @@
                             "questionBank": "Question Bank",
                             "action": "Action"
                         }
+                    },
+                    "create": {
+                        "backButton": "Back to Teams list",
+                        "title": "Add Team’s details",
+                        "text": "Add details of the data publisher team you want to create on the Gateway"
                     }
                 }
             },

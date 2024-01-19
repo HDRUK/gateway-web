@@ -20,4 +20,20 @@ interface Team {
     notifications: Notification[];
 }
 
-export type { Team };
+interface TeamForm
+    extends Pick<
+        Team,
+        | "enabled"
+        | "allows_messaging"
+        | "workflow_enabled"
+        | "access_requests_management"
+        | "uses_5_safes"
+        | "name"
+        | "member_of"
+        | "contact_point"
+        | "is_question_bank"
+    > {
+    notifications: string[];
+}
+
+export type { Team, TeamForm };

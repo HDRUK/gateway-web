@@ -4,7 +4,7 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
-import { COHORT_DISCOVERY_ADMIN, TEXT, TITLE } from "@/consts/translation";
+import { COHORT_DISCOVERY_ADMIN } from "@/consts/translation";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import CohortTable from "./components/CohortTable";
@@ -29,10 +29,10 @@ export default async function CohortDiscoveryAdmin() {
             pagePermissions={["cohort.read"]}>
             <Paper>
                 <Box>
-                    <Typography variant="h2">{t(TITLE)}</Typography>
+                    <Typography variant="h2">{t("title")}</Typography>
                     <Box sx={{ p: 0, display: "flex" }}>
                         <Typography sx={{ marginBottom: 4, mx: 1 }}>
-                            {t(TEXT)}
+                            {t("text")}
                         </Typography>
                         <CohortTableDownload />
                     </Box>
