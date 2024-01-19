@@ -38,7 +38,7 @@ const validationSchema = yup.object({
     notifications: yup
         .array()
         .min(1, "Team admin(s) is a required field")
-        .of(yup.string())
+        .of(yup.number())
         .label("Team admin(s)"),
 });
 

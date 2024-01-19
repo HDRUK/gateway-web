@@ -73,7 +73,7 @@ const CreateIntegrationForm = () => {
                     return {
                         ...field,
                         options: users?.map(user => ({
-                            value: user.email,
+                            value: user.id,
                             label: `${user.firstname} ${user.lastname}`,
                         })),
                     };
