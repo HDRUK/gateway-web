@@ -5,15 +5,6 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
-import {
-    ACCOUNT,
-    CREATE,
-    INTEGRATION,
-    PAGES,
-    TEAM,
-    TEXT,
-    TITLE,
-} from "@/consts/translation";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
@@ -23,6 +14,8 @@ export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Integrations - Integration",
     description: "",
 };
+
+const TRANSLATION_PATH = `pages.account.team.integration.create`;
 
 export default async function TeamCreateIntegrationPage({
     params,
@@ -36,9 +29,7 @@ export default async function TeamCreateIntegrationPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    const t = await getTranslations(
-        `${PAGES}.${ACCOUNT}.${TEAM}.${INTEGRATION}.${CREATE}`
-    );
+    const t = await getTranslations(TRANSLATION_PATH);
 
     return (
         <ProtectedAccountRoute
@@ -47,8 +38,9 @@ export default async function TeamCreateIntegrationPage({
             <BackButton label="Back to Integration Management" />
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>
-                    <Typography variant="h2">{t(TITLE)}</Typography>
-                    <Typography>{t(TEXT)}</Typography>
+                    <Typography variant="h2">{t("title")}</Typography>
+                    <Typography>{t("text")}</Typography>
+                    <Typography>{t("helper")}</Typography>
                 </Box>
             </Paper>
             <CreateIntegrationForm />

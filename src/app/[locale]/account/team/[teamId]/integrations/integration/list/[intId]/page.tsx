@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
@@ -14,6 +15,8 @@ export const metadata = {
     description: "",
 };
 
+const TRANSLATION_PATH = `pages.account.team.integration.create`;
+
 export default async function TeamEditIntegrationPage({
     params,
 }: {
@@ -26,6 +29,8 @@ export default async function TeamEditIntegrationPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
+    const t = await getTranslations(TRANSLATION_PATH);
+
     return (
         <ProtectedAccountRoute
             permissions={permissions}
@@ -33,11 +38,9 @@ export default async function TeamEditIntegrationPage({
             <BackButton label="Back to Integration Management" />
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>
-                    <Typography variant="h2">Integration</Typography>
-                    <Typography>
-                        Input and edit the authentication information for the
-                        Gateway system to use for the integration
-                    </Typography>
+                    <Typography variant="h2">{t("title")}</Typography>
+                    <Typography>{t("text")}</Typography>
+                    <Typography>{t("helper")}</Typography>
                 </Box>
             </Paper>
             <EditIntegrationForm />

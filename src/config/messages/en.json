@@ -143,7 +143,8 @@
                 "integration": {
                     "create": {
                         "title": "Integration",
-                        "text": "Input and edit the authentication information for the Gateway system to use for the integration"
+                        "text": "Input and edit the authentication information for the Gateway system to use for the integration.",
+                        "helper": "Entities created via an FMA integration can only be managed (updated or deleted/archived) via the FMA integration. Entities created via another method (manual, API integration) cannot be managed via the FMA integration."
                     }
                 },
                 "integrations": {
