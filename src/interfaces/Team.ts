@@ -20,4 +20,8 @@ interface Team {
     notifications: Notification[];
 }
 
-export type { Team };
+interface TeamForm extends Pick<Team, "name" | "member_of" | "contact_point"> {
+    notifications: string[];
+}
+
+export type { Team, TeamForm };

@@ -5,7 +5,7 @@ import LeftNav from "@/modules/LeftNav";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 
-export default async function AccountLayout({
+export default async function AccountProfileLayout({
     children,
 }: {
     children: React.ReactNode;
@@ -13,6 +13,7 @@ export default async function AccountLayout({
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const permissions = await getPermissions(user.roles);
+
     return (
         <div>
             <TwoColumn

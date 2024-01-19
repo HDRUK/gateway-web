@@ -73,6 +73,7 @@
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK",
         "submit": "Submit",
+        "publish": "Publish",
         "cancel": "Cancel"
     },
     "pages": {
@@ -104,6 +105,10 @@
                             "questionBank": "Question Bank",
                             "action": "Action"
                         }
+                    },
+                    "create": {
+                        "title": "Add Team’s details",
+                        "text": "Add details of the data publisher team you want to create on the Gateway"
                     }
                 }
             },
