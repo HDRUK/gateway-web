@@ -69,7 +69,7 @@ const CreateIntegrationForm = () => {
     const hydratedFormFields = useMemo(
         () =>
             teamFormFields.map(field => {
-                if (field.name === "notifications") {
+                if (field.name === "users") {
                     return {
                         ...field,
                         options: users?.map(user => ({

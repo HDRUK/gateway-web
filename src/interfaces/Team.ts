@@ -13,6 +13,7 @@ interface Team {
     is_question_bank: boolean;
     member_of: string;
     contact_point: string;
+    updated_at: string;
     application_form_updated_by: string;
     application_form_updated_on: string;
     users: User[];
@@ -23,6 +24,7 @@ interface Team {
 interface TeamForm
     extends Pick<
         Team,
+        | "notifications"
         | "enabled"
         | "allows_messaging"
         | "workflow_enabled"
@@ -33,7 +35,7 @@ interface TeamForm
         | "contact_point"
         | "is_question_bank"
     > {
-    notifications: string[];
+    users: number[];
 }
 
 export type { Team, TeamForm };

@@ -8,6 +8,7 @@ const defaultValues: Partial<TeamForm> = {
     name: "",
     member_of: "",
     contact_point: "",
+    users: [],
     notifications: [],
     enabled: true,
     allows_messaging: true,
@@ -35,7 +36,7 @@ const validationSchema = yup.object({
         })
         .label("Contact point")
         .nullable(),
-    notifications: yup
+    users: yup
         .array()
         .min(1, "Team admin(s) is a required field")
         .of(yup.number())
@@ -65,7 +66,7 @@ const formFields = [
     {
         label: "Team admin",
         required: true,
-        name: "notifications",
+        name: "users",
         selectOnFocus: true,
         clearOnBlur: true,
         handleHomeEndKeys: true,

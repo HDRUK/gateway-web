@@ -22,13 +22,13 @@ const getColumns = ({
 }): ColumnDef<Team>[] => {
     return [
         {
-            id: "application_form_updated_on",
+            id: "updated_at",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
                     {translations.lastUpdated}
                 </Box>
             ),
-            accessorFn: row => `${formatDate(row.application_form_updated_on)}`,
+            accessorFn: row => `${formatDate(row.updated_at)}`,
         },
         {
             id: "name",

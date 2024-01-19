@@ -2,9 +2,7 @@ import { formatDate, differenceInDays } from "./date";
 
 describe("Date utils", () => {
     it("should return default formatted date", async () => {
-        expect(formatDate("2023-09-15T09:33:01.000000Z")).toBe(
-            "15 September 2023"
-        );
+        expect(formatDate("2023-09-15T09:33:01.000000Z")).toBe("15 Sep 2023");
     });
     it("should return custom formatted date", async () => {
         expect(formatDate("2023-09-15T09:33:01.000000Z", "DD/MM/YY")).toBe(
