@@ -26,7 +26,7 @@ export default async function CreateTeamPage() {
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["custodians.create"]}>
-            <BackButton label="Back to Teams list" />
+            <BackButton label={t("backButton")} />
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>
                     <Typography variant="h2">{t(TITLE)}</Typography>
