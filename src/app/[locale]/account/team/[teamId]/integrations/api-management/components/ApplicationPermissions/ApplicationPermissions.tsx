@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
@@ -38,6 +39,7 @@ interface ApplicationPermissionsProps {
     isTabView?: boolean;
     application?: Application;
 }
+const TRANSLATION_PATH = `pages.account.team.integrations.apiManagement.manage.permissions`;
 
 const ApplicationPermissions = ({
     isTabView = false,
@@ -49,6 +51,7 @@ const ApplicationPermissions = ({
 
     const { push } = useRouter();
     const { apiId, teamId } = useParams();
+    const t = useTranslations(TRANSLATION_PATH);
 
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
 
@@ -193,15 +196,8 @@ const ApplicationPermissions = ({
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(onSubmit)}>
             <Paper sx={{ p: 2, mb: 1 }}>
-                <Typography variant="h2">Permissions</Typography>
-                <Typography>
-                    Use this form to assign the right level of scope and
-                    permission for the application to manage integration and
-                    connect securely to the Gateway. Your application will only
-                    be able to synchronize data within its assigned scope and
-                    permission. Application permissions is the responsibility of
-                    your publisher team
-                </Typography>
+                <Typography variant="h2">{t("title")}</Typography>
+                <Typography>{t("intro")}</Typography>
             </Paper>
             <Paper sx={{ mb: 1 }}>
                 <Table<{
@@ -223,6 +219,7 @@ const ApplicationPermissions = ({
                     </Box>
                 )}
             </Paper>
+            <Typography sx={{ fontWeight: "bold" }}>{t("helper")}</Typography>
             {!isTabView && (
                 <Paper>
                     <Box
