@@ -9,8 +9,7 @@ import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";
 import { AddIcon } from "@/consts/icons";
-import Routes from "@/consts/routes";
-import { TEXT, TITLE } from "@/consts/translation";
+import { Routes } from "@/consts/routes";
 import TeamsList from "./components/TeamsList";
 
 export default function Teams({
@@ -31,9 +30,9 @@ export default function Teams({
                         alignItems: "start",
                     }}>
                     <div>
-                        <Typography variant="h2">{t(TITLE)}</Typography>
+                        <Typography variant="h2">{t("title")}</Typography>
                         <Typography sx={{ marginBottom: 4 }}>
-                            {t(TEXT)}
+                            {t("text")}
                         </Typography>
                     </div>
                     {permissions["custodians.create"] && (

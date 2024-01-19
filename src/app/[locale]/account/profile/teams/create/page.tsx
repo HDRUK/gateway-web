@@ -1,11 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
-import Box from "@/components/Box";
-import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import Typography from "@/components/Typography";
-import { TEXT, TITLE } from "@/consts/translation";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import CreateTeamForm from "./components/CreateTeamForm";
@@ -27,12 +23,6 @@ export default async function CreateTeamPage() {
             permissions={permissions}
             pagePermissions={["custodians.create"]}>
             <BackButton label={t("backButton")} />
-            <Paper sx={{ marginBottom: 1 }}>
-                <Box>
-                    <Typography variant="h2">{t(TITLE)}</Typography>
-                    <Typography>{t(TEXT)}</Typography>
-                </Box>
-            </Paper>
             <CreateTeamForm />
         </ProtectedAccountRoute>
     );

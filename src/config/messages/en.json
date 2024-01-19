@@ -74,7 +74,10 @@
         "companyNameLong": "Health Data Research UK",
         "submit": "Submit",
         "publish": "Publish",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "questionBank": "Question Bank",
+        "disabled": "Disabled",
+        "enabled": "Enabled"
     },
     "pages": {
         "about": {

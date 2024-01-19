@@ -31,6 +31,7 @@ interface TeamForm
         | "name"
         | "member_of"
         | "contact_point"
+        | "is_question_bank"
     > {
     notifications: string[];
 }

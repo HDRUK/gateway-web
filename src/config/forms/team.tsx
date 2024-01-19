@@ -14,6 +14,7 @@ const defaultValues: Partial<TeamForm> = {
     workflow_enabled: true,
     access_requests_management: true,
     uses_5_safes: true,
+    is_question_bank: false,
 };
 
 const validationSchema = yup.object({
@@ -40,6 +41,11 @@ const validationSchema = yup.object({
         .of(yup.string())
         .label("Team admin(s)"),
 });
+
+const questionBankField = {
+    name: "is_question_bank",
+    component: inputComponents.Switch,
+};
 
 const formFields = [
     {
@@ -84,6 +90,7 @@ const formFields = [
 ];
 
 export {
+    questionBankField,
     defaultValues as teamDefaultValues,
     validationSchema as teamValidationSchema,
     formFields as teamFormFields,
