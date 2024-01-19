@@ -3,9 +3,9 @@ import { ReactNode } from "react";
 import { FederationRunResponse } from "@/interfaces/Federation";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
+import TickCrossIcon from "@/components/TickCrossIcon";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
-import { CancelIcon, CheckCircleIcon } from "@/consts/icons";
 import * as styles from "./RunFederationTest.styles";
 
 interface RunFederationTestProps {
@@ -67,11 +67,7 @@ const RunFederationTest = ({
                                 alignItems: "center",
                             }}>
                             <Typography>API Connection link...</Typography>
-                            {runResponse.success ? (
-                                <CheckCircleIcon color="success" />
-                            ) : (
-                                <CancelIcon color="error" />
-                            )}
+                            <TickCrossIcon isTrue={runResponse.success} />
                         </Box>
                     </div>
                     <Box

@@ -3,7 +3,7 @@ import { Team } from "@/interfaces/Team";
 import apis from "@/config/apis";
 import useGet from "./useGet";
 
-const useGetTeam = (teamId: string) => {
+const useGetTeam = (teamId?: string) => {
     const { data, isLoading, mutate, ...rest } = useGet<Team>(
         teamId ? `${apis.teamsV1Url}/${teamId}` : null
     );

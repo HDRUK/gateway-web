@@ -20,7 +20,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
     const params = useParams<{ teamId: string }>();
 
     const permissions = useHasPermissions();
-    const { team, isTeamLoading } = useGetTeam(`${params?.teamId}`);
+    const { team, isTeamLoading } = useGetTeam(params?.teamId);
     const isTeam = useMemo(() => !!params?.teamId, [params?.teamId]);
 
     if (isTeamLoading) {

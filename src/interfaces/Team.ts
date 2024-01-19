@@ -10,7 +10,8 @@ interface Team {
     access_requests_management: boolean;
     uses_5_safes: boolean;
     is_admin: boolean;
-    member_of: number;
+    is_question_bank: boolean;
+    member_of: string;
     contact_point: string;
     application_form_updated_by: string;
     application_form_updated_on: string;

@@ -26,6 +26,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
+import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
@@ -74,6 +75,7 @@ export {
     CloseIcon,
     UploadFileIcon,
     ArrowDropDownIcon,
+    GroupsIcon,
     SearchRoundedIcon,
     SearchIcon,
     RemoveIcon,

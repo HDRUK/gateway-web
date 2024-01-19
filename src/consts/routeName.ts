@@ -20,6 +20,7 @@ export enum RouteName {
     PERMISSIONS = "permissions",
     PROFILE = "profile",
     TEAM = "team",
+    TEAMS = "teams",
     TEAM_MANAGEMENT = "team-management",
     WORKFLOWS = "workflows",
     TERMS = "terms-and-conditions",

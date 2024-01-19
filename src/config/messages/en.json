@@ -87,9 +87,25 @@
             }
         },
         "account": {
-            "cohortDiscoveryAdmin": {
-                "title": "Cohort Discovery Admin",
-                "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+            "profile": {
+                "cohortDiscoveryAdmin": {
+                    "title": "Cohort Discovery Admin",
+                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+                },
+                "teams": {
+                    "title": "Teams",
+                    "text": "Onboard and manage data provider teams on the Gateway",
+                    "addTeamButton": "Add a new team",
+                    "components": {
+                        "TeamsList": {
+                            "lastUpdated": "Last Updated",
+                            "dataProvider": "Data Provider",
+                            "teamAdmins": "Team admin(s)",
+                            "questionBank": "Question Bank",
+                            "action": "Action"
+                        }
+                    }
+                }
             },
             "team": {
                 "dataAccessRequests": {
@@ -139,6 +155,22 @@
                 },
                 "help": {
                     "title": "Help"
+                },
+                "teamManagement": {
+                    "components": {
+                        "TeamMembers": {
+                            "lastRoleAdminMessage": "All team members must have at least one role. If you would like to remove a team member, the 'remove team member' button can be found in the 'Actions' column.",
+                            "lastRoleMessage": "All team members must have at least one role. Please contact your team admin to remove a team member.",
+                            "noPermission": "You do not have permission to edit this",
+                            "columns": {
+                                "name": "Name",
+                                "actions": "Actions",
+                                "team": "Team",
+                                "dar": "Data Access Requests",
+                                "metadata": "Metadata"
+                            }
+                        }
+                    }
                 },
                 "integration": {
                     "create": {
