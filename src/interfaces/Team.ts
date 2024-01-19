@@ -20,7 +20,18 @@ interface Team {
     notifications: Notification[];
 }
 
-interface TeamForm extends Pick<Team, "name" | "member_of" | "contact_point"> {
+interface TeamForm
+    extends Pick<
+        Team,
+        | "enabled"
+        | "allows_messaging"
+        | "workflow_enabled"
+        | "access_requests_management"
+        | "uses_5_safes"
+        | "name"
+        | "member_of"
+        | "contact_point"
+    > {
     notifications: string[];
 }
 

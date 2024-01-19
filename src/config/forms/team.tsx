@@ -9,6 +9,11 @@ const defaultValues: Partial<TeamForm> = {
     member_of: "",
     contact_point: "",
     notifications: [],
+    enabled: true,
+    allows_messaging: true,
+    workflow_enabled: true,
+    access_requests_management: true,
+    uses_5_safes: true,
 };
 
 const validationSchema = yup.object({
