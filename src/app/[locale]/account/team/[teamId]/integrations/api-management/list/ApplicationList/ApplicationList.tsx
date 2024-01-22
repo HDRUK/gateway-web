@@ -65,7 +65,6 @@ const ApplicationList = () => {
                 page={parseInt(queryParams.page, 10)}
                 count={lastPage}
                 onChange={(e: React.ChangeEvent<unknown>, page: number) =>
-                    // setCurrentPage(page)
                     setQueryParams({ ...queryParams, page: page.toString() })
                 }
             />
