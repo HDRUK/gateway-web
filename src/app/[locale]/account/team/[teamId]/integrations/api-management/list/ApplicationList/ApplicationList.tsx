@@ -14,15 +14,19 @@ import ApplicationListItem from "./ApplicationListItem";
 import ApplicationSearchBar from "./ApplicationSearchBar";
 
 const ApplicationList = () => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [filterQuery, setFilterQuery] = useState("");
+    const params = useParams<{
+        teamId: string;
+    }>();
 
-    const params = useParams<{ teamId: string }>();
+    const [queryParams, setQueryParams] = useState({
+        team_id: `${params?.teamId}`,
+        enabled: "", // `${params?.enabled}`,
+        text: "", // `${params?.text}`,
+        page: "1",
+    });
 
     const { data, isLoading } = useGet<PaginationType<Application>>(
-        filterQuery
-            ? `${apis.applicationsV1Url}?per_page=10&team_id=${params?.teamId}&${filterQuery}&page=${currentPage}`
-            : null,
+        `${apis.applicationsV1Url}?${new URLSearchParams(queryParams)}`,
         {
             keepPreviousData: true,
             withPagination: true,
@@ -32,7 +36,7 @@ const ApplicationList = () => {
     useEffect(() => {
         window.scrollTo({ top: 0 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage]);
+    }, [queryParams.page]);
 
     const { lastPage, list, total } = data || {};
 
@@ -40,7 +44,7 @@ const ApplicationList = () => {
 
     return (
         <BoxContainer>
-            <ApplicationSearchBar setFilterQuery={setFilterQuery} />
+            <ApplicationSearchBar setQueryParams={setQueryParams} />
 
             <Box
                 data-testid="number-of-apps"
@@ -58,10 +62,11 @@ const ApplicationList = () => {
             ))}
             <Pagination
                 isLoading={isLoading}
-                page={currentPage}
+                page={parseInt(queryParams.page, 10)}
                 count={lastPage}
                 onChange={(e: React.ChangeEvent<unknown>, page: number) =>
-                    setCurrentPage(page)
+                    // setCurrentPage(page)
+                    setQueryParams({ ...queryParams, page: page.toString() })
                 }
             />
         </BoxContainer>

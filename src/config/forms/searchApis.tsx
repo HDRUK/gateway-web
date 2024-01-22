@@ -1,27 +1,21 @@
-import { SearchIcon } from "@/consts/icons";
 import { inputComponents } from ".";
 
 const defaultValues = {
-    description: [],
+    searchTitleDescription: "",
     status: {
-        enabled: true,
-        disabled: true,
+        enabled: false,
+        disabled: false,
     },
 };
 
 const formFields = [
     {
-        name: "description",
-        placeholder: "Search app name or description",
-        createLabel: "Add search for ",
-        selectOnFocus: true,
-        clearOnBlur: true,
-        handleHomeEndKeys: true,
-        freeSolo: true,
-        multiple: true,
-        startAdornmentIcon: <SearchIcon color="primary" />,
-        canCreate: true,
-        component: inputComponents.Autocomplete,
+        component: inputComponents.TextField,
+        showClearButton: true,
+        variant: "outlined",
+        name: "searchTitleDescription",
+        placeholder: "Search titles and descriptions",
+        label: "",
     },
     {
         label: "App status:",
