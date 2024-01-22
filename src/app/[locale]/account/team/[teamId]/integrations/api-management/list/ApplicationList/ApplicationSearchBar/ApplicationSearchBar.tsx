@@ -31,17 +31,17 @@ const ApplicationSearchBar = ({
 
     const watchAll = watch();
 
-    const filterTitleDebounced = useDebounce(
+    const filterTextDebounced = useDebounce(
         watchAll.searchTitleDescription,
         500
     );
     useEffect(() => {
         setQueryParams(previous => ({
             ...previous,
-            text: filterTitleDebounced,
+            text: filterTextDebounced,
             page: "1",
         }));
-    }, [filterTitleDebounced]);
+    }, [filterTextDebounced]);
 
     useEffect(() => {
         setQueryParams(previous => ({
