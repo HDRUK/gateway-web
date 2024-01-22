@@ -4,7 +4,7 @@ const getDayjs = (date: string | Date) => {
     return typeof date === "string" ? dayjs(new Date(date)) : dayjs(date);
 };
 
-const formatDate = (date: string | Date, formatStr = "DD MMMM YYYY") => {
+const formatDate = (date: string | Date, formatStr = "DD MMM YYYY") => {
     const convertedDate1 = getDayjs(date);
     return convertedDate1.format(formatStr);
 };
