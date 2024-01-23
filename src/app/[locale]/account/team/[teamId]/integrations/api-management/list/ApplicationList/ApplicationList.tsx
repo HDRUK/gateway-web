@@ -20,7 +20,7 @@ const ApplicationList = () => {
 
     const [queryParams, setQueryParams] = useState({
         team_id: `${params?.teamId}`,
-        enabled: "",
+        status: "",
         text: "",
         page: "1",
     });
