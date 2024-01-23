@@ -1,26 +1,33 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Team } from "@/interfaces/Team";
 import Box from "@/components/Box";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
+import DeleteTeamDialog from "@/modules/DeleteTeamDialog";
+import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { getColumns } from "@/config/tables/teamManagement";
+import { Routes } from "@/consts/routes";
 
 const TeamsList = ({
     permissions,
 }: {
     permissions: { [key: string]: boolean };
 }) => {
+    const router = useRouter();
+    const { showDialog } = useDialog();
+
     const t = useTranslations(
         "pages.account.profile.teams.components.TeamsList"
     );
 
     const [currentPage, setCurrentPage] = useState(1);
-    const { data, isLoading } = useGet<PaginationType<Team>>(
+    const { data, isLoading, mutate } = useGet<PaginationType<Team>>(
         `${apis.teamsV1Url}?page=${currentPage}`,
         {
             keepPreviousData: true,
@@ -38,8 +45,14 @@ const TeamsList = ({
                 action: t("action"),
             },
             permissions,
-            handleDelete: id => console.log(`delete: ${id}`),
-            handleEdit: id => console.log(`edit: ${id}`),
+            handleDelete: (teamId, teamName) =>
+                showDialog(DeleteTeamDialog, {
+                    teamId,
+                    teamName,
+                    callback: () => mutate(undefined, true),
+                }),
+            handleEdit: teamId =>
+                router.push(`${Routes.ACCOUNT_TEAMS}/${teamId}`),
         });
     }, [permissions, t]);
 

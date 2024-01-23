@@ -11,7 +11,7 @@ export const metadata = {
     description: "",
 };
 
-export default async function CreateTeamPage() {
+export default async function EditTeamPage() {
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const permissions = getPermissions(user.roles);

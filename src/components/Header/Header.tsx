@@ -21,7 +21,7 @@ function Header() {
         setShowNavList(prev => !prev);
     };
 
-    if (HOTJAR_ID) {
+    if (HOTJAR_ID && typeof window !== "undefined") {
         hotjar.initialize(parseInt(HOTJAR_ID), HOTJAR_VERSION);
     }
 

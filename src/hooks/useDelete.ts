@@ -9,8 +9,8 @@ const useDelete = (url: string, options?: HttpOptions) => {
 
     ThrowPaginationError(options);
 
-    return (id: number | string) => {
-        return apiService.deleteRequest(`${url}/${id}`, {
+    return async (id: number | string) => {
+        return await apiService.deleteRequest(`${url}/${id}`, {
             notificationOptions: {
                 localeKey,
                 itemName,

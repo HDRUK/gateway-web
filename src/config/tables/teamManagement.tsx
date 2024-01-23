@@ -18,7 +18,7 @@ const getColumns = ({
     translations: { [key: string]: string };
     permissions: { [key: string]: boolean };
     handleEdit: (id: number) => void;
-    handleDelete: (id: number) => void;
+    handleDelete: (id: number, teamName: string) => void;
 }): ColumnDef<Team>[] => {
     return [
         {
@@ -87,7 +87,10 @@ const getColumns = ({
                                           label: "Delete",
                                           icon: CloseIcon,
                                           action: () =>
-                                              handleDelete(original.id),
+                                              handleDelete(
+                                                  original.id,
+                                                  original.name
+                                              ),
                                       },
                                   ]}
                               />

@@ -115,6 +115,10 @@
                         "backButton": "Back to Teams list",
                         "title": "Add Team’s details",
                         "text": "Add details of the data publisher team you want to create on the Gateway"
+                    },
+                    "edit": {
+                        "title": "Edit Team details",
+                        "text": "Edit the details of this data provider team on the Gateway"
                     }
                 }
             },
@@ -261,6 +265,12 @@
             "DeleteTeamMemberDialog": {
                 "title": "Are you sure you want to remove %%USER_NAME%%?",
                 "confirmButton": "Remove",
+                "cancelButton": "Cancel"
+            },
+            "DeleteTeamDialog": {
+                "title": "Delete a Team",
+                "message": "Are you sure you want to delete {TEAM_NAME}?",
+                "confirmButton": "Delete",
                 "cancelButton": "Cancel"
             },
             "CohortRequestTerms": {
