@@ -3,22 +3,18 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
+import FilterPopover from "@/components/FilterPopover";
 import Link from "@/components/Link";
+import SortIcon from "@/components/SortIcon";
 import TooltipIcon from "@/components/TooltipIcon";
 import {
     statusMapping,
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
 } from "@/consts/cohortDiscovery";
-import {
-    ArrowDropDownIcon,
-    ArrowDropUpIcon,
-    SortByAlphaIcon,
-    WarningIcon,
-} from "@/consts/icons";
+import { SortByAlphaIcon, WarningIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDate, differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
-import { CohortStatusPopover } from "./CohortStatusPopover";
 
 interface getColumnsProps {
     sort: { key: string; direction: string };
@@ -38,6 +34,16 @@ const updateSort =
                     : "asc"
                 : "asc",
     });
+
+const statusRadios = [
+    { label: "All", value: "" },
+    { label: "Approved", value: "APPROVED" },
+    { label: "Pending", value: "PENDING" },
+    { label: "Rejected", value: "REJECTED" },
+    { label: "Banned", value: "BANNED" },
+    { label: "Suspended", value: "SUSPENDED" },
+    { label: "Expired", value: "EXPIRED" },
+];
 
 const showAlert = (date: string, status: string) => {
     const actionedDate = new Date(date);
@@ -150,9 +156,11 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     Status
-                    <CohortStatusPopover
-                        setRequestStatus={setRequestStatus}
-                        requestStatus={requestStatus}
+                    <FilterPopover<CohortRequestStatus>
+                        name="request_status"
+                        radios={statusRadios}
+                        setFilter={setRequestStatus}
+                        filter={requestStatus}
                     />
                 </Box>
             ),
@@ -178,20 +186,12 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     Date requested
-                    <IconButton
-                        sx={{ p: 0 }}
-                        disableRipple
-                        size="large"
-                        edge="start"
-                        aria-label="Date requested"
-                        onClick={() => setSort(updateSort("created_at"))}>
-                        {sort.key === "created_at" &&
-                        sort.direction !== "asc" ? (
-                            <ArrowDropUpIcon />
-                        ) : (
-                            <ArrowDropDownIcon />
-                        )}
-                    </IconButton>
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="created_at"
+                        ariaLabel="Date requested"
+                    />
                 </Box>
             ),
             accessorFn: (row: CohortRequest) =>
@@ -217,20 +217,12 @@ const getColumns = ({
                             </div>
                         }
                     />{" "}
-                    <IconButton
-                        sx={{ p: 0 }}
-                        disableRipple
-                        size="large"
-                        edge="start"
-                        aria-label="Date Actioned"
-                        onClick={() => setSort(updateSort("updated_at"))}>
-                        {sort.key === "updated_at" &&
-                        sort.direction !== "asc" ? (
-                            <ArrowDropUpIcon />
-                        ) : (
-                            <ArrowDropDownIcon />
-                        )}
-                    </IconButton>
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="updated_at"
+                        ariaLabel="Date Actioned"
+                    />
                 </Box>
             ),
             cell: ({ row }) => {

@@ -12,7 +12,9 @@ export interface RadioGroupProps {
     required?: boolean;
     disabled?: boolean;
     horizontalForm?: boolean;
-    isRow: boolean;
+    isRow?: boolean;
+    value?: unknown;
+    onChange?: (event: React.MouseEvent<HTMLElement>, value: never) => void;
     radios: { value: string; label: string }[];
     control: Control;
     radioSx?: SxProps;
