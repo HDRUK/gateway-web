@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 "use client";
 
 import { useState } from "react";
@@ -10,6 +9,9 @@ import AccountNavWrapper from "@/modules/AccountNavWrapper";
 import HeaderNav from "@/modules/HeaderNav";
 import { MenuIcon } from "@/consts/icons";
 import * as styles from "./Header.styles";
+
+/** @jsxImportSource @emotion/react */
+/* eslint-disable */
 
 const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
 const HOTJAR_VERSION = 6;

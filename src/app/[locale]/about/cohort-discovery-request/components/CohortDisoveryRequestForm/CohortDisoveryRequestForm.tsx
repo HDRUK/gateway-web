@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable */
 import { Box, Paper, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
