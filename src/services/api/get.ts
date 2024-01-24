@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { RequestOptions } from "@/interfaces/Api";
 import http from "@/utils/http";
 import { errorNotification } from "./utils";
@@ -15,14 +14,7 @@ const getRequest = async <T>(
         .then(res => {
             const contentType = res.headers["content-type"];
             if (contentType && contentType.includes("text/csv")) {
-                const contentDisposition = res.headers["content-disposition"];
-                let filename = "download.csv";
-                if (contentDisposition) {
-                    const match = contentDisposition.match(/filename="(.*?)"/);
-                    if (match && match[1]) {
-                        filename = match[1];
-                    }
-                }
+                const filename = "download.csv";
                 return {
                     content: res.data,
                     type: "text/csv",
