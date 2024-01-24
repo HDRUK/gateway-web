@@ -15,6 +15,9 @@ import * as styles from "./Header.styles";
 const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
 const HOTJAR_VERSION = 6;
 
+console.log(
+    `DEBUG ENV TEST - HOTJAR_ID=${process.env.NEXT_PUBLIC_HOTJAR_ID} - NEXT_PUBLIC_API_V1_URL=${process.env.NEXT_PUBLIC_API_V1_URL}`
+);
 function Header() {
     const [showNavList, setShowNavList] = useState(false);
 
