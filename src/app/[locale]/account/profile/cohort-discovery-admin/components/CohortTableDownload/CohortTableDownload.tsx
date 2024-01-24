@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { Typography, Box } from "@mui/material";
 import { CohortExportForm } from "@/interfaces/CohortExport";
 import { CsvExport } from "@/interfaces/CsvExport";
-import { User } from "@/interfaces/User";
 import ModalForm from "@/components/ModalForm";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
@@ -27,18 +26,8 @@ const CohortTableDownload = () => {
         defaultValues: cohortExportDefaultValues,
     });
 
-    //----------------
-    // to-do: calum 13/12/23
-    //   - see: GAT-3329
-    const { data: allUsers } = useGet<User[]>(apis.usersV1Url);
-    const uniqueOrganisations = Array.from(
-        new Set(
-            allUsers
-                ? Array.isArray(allUsers)
-                    ? allUsers.map(u => u.organisation)
-                    : [allUsers.organisation] // nasty fix - in the tests apis.usersV1Url is returning one user
-                : []
-        )
+    const { data: uniqueOrganisations } = useGet<string[]>(
+        `${apis.usersV1Url}/organisations`
     );
 
     useEffect(() => {
@@ -86,7 +75,7 @@ const CohortTableDownload = () => {
             if (field.name === "organisations") {
                 return {
                     ...field,
-                    options: uniqueOrganisations.map(org => ({
+                    options: uniqueOrganisations?.map(org => ({
                         value: org,
                         label: org,
                     })),
