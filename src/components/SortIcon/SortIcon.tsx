@@ -2,17 +2,11 @@ import { IconButton } from "@mui/material";
 import { IconType } from "@/interfaces/Ui";
 import { ArrowDropUpIcon } from "@/consts/icons";
 
-const updateSort =
-    (key: string) => (prev: { key: string; direction: string }) => ({
-        ...prev,
-        key,
-        direction:
-            prev.key === key
-                ? prev.direction === "asc"
-                    ? "desc"
-                    : "asc"
-                : "asc",
-    });
+const updateSort = (key: string, sort: { key: string; direction: string }) => ({
+    key,
+    direction:
+        sort.key === key ? (sort.direction === "asc" ? "desc" : "asc") : "asc",
+});
 
 interface SortIconProps {
     sortKey: string;
@@ -37,7 +31,7 @@ const SortIcon = ({
             size="large"
             edge="start"
             aria-label={ariaLabel}
-            onClick={() => setSort(updateSort(sortKey))}>
+            onClick={() => setSort(updateSort(sortKey, sort))}>
             <Icon
                 sx={{
                     transform: `rotate(${
