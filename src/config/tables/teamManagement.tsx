@@ -70,7 +70,7 @@ const getColumns = ({
                     <SortIcon
                         setSort={setSort}
                         sort={sort}
-                        sortKey="name"
+                        sortKey="data_provider"
                         ariaLabel={translations.dataProvider}
                     />
                 </Box>

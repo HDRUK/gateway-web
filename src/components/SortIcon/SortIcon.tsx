@@ -19,7 +19,7 @@ interface SortIconProps {
     sort: { key: string; direction: string };
     setSort: (sort: { key: string; direction: string }) => void;
     ariaLabel: string;
-    icon: IconType;
+    icon?: IconType;
 }
 
 const SortIcon = ({
