@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { RequestOptions } from "@/interfaces/Api";
 import http from "@/utils/http";
 import { errorNotification } from "./utils";

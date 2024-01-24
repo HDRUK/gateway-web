@@ -1,10 +1,10 @@
 "use client";
 
 /* eslint-disable react/prop-types */
-/** @jsxImportSource @emotion/react */
 
-import useActionBar from "@/hooks/useActionBar";
+/** @jsxImportSource @emotion/react */
 import ModalButtons from "@/components/ModalButtons";
+import useActionBar from "@/hooks/useActionBar";
 import * as styles from "./ActionBar.styles";
 
 const ActionBar = () => {

@@ -1,18 +1,15 @@
-/** @jsxImportSource @emotion/react */
-
 "use client";
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-
-import Link from "@/components/Link";
 import Container from "@/components/Container";
-
+import Link from "@/components/Link";
 import hdrukLogo from "../../../public/images/logos/hdruk-white.png";
 import linkedInLogo from "../../../public/images/logos/linkedIn-white.png";
 import twitterInLogo from "../../../public/images/logos/twitter-white.png";
-
 import * as styles from "./Footer.styles";
+
+/** @jsxImportSource @emotion/react */
 
 const Footer = () => {
     const t = useTranslations("components");
