@@ -25,7 +25,7 @@ describe("FilterPopover", () => {
         expect(screen.getByText("All")).toBeInTheDocument();
         expect(screen.getByText("Other")).toBeInTheDocument();
     });
-    it("should open popover and render radio buttons", async () => {
+    it("should call setFilter with new filter value", async () => {
         render(
             <FilterPopover
                 name="filter_status"
