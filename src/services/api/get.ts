@@ -14,7 +14,14 @@ const getRequest = async <T>(
         .then(res => {
             const contentType = res.headers["content-type"];
             if (contentType && contentType.includes("text/csv")) {
-                const filename = "download.csv";
+                const contentDisposition = res.headers["content-disposition"];
+                let filename = "download.csv";
+                if (contentDisposition) {
+                    const match = contentDisposition.match(/filename="(.*?)"/);
+                    if (match && match[1]) {
+                        [, filename] = match;
+                    }
+                }
                 return {
                     content: res.data,
                     type: "text/csv",
