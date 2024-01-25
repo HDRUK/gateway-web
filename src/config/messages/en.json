@@ -77,7 +77,8 @@
         "cancel": "Cancel",
         "questionBank": "Question Bank",
         "disabled": "Disabled",
-        "enabled": "Enabled"
+        "enabled": "Enabled",
+        "all": "All"
     },
     "pages": {
         "about": {
@@ -107,7 +108,6 @@
                             "lastUpdated": "Last Updated",
                             "dataProvider": "Data Provider",
                             "teamAdmins": "Team admin(s)",
-                            "questionBank": "Question Bank",
                             "action": "Action"
                         }
                     },

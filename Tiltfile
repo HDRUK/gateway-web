@@ -10,8 +10,9 @@ docker_build(
     context='.',
     live_update=[
         sync('.', '/usr/src'),
-        run('npm install', trigger='./package-lock.json'),
-    ]
+        run('npm install', trigger='./package-lock.json')
+    ],
+    dockerfile='./Dockerfile.dev'
 )
 
 k8s_yaml('chart/' + cfg.get('name') + '/' + cfg.get('name') + '.yaml')

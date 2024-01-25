@@ -5,38 +5,59 @@ import BoxContainer from "@/components/BoxContainer";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import useDebounce from "@/hooks/useDebounce";
 import {
     searchApiDefaultValues,
     searchApiFormFields,
 } from "@/config/forms/searchApis";
 
+interface ApplicationSearchBarQueryParams {
+    team_id: string;
+    enabled: string;
+    text: string;
+    page: string;
+    per_page: string;
+}
+
 interface ApplicationSearchBarProps {
-    setFilterQuery: Dispatch<SetStateAction<string>>;
+    setQueryParams: Dispatch<SetStateAction<ApplicationSearchBarQueryParams>>;
 }
 
 const ApplicationSearchBar = ({
-    setFilterQuery,
+    setQueryParams,
 }: ApplicationSearchBarProps) => {
-    const { control, watch } = useForm({
+    const { control, watch, setValue } = useForm({
         defaultValues: { ...searchApiDefaultValues },
     });
 
-    const watched = watch(["status.disabled", "status.enabled", "description"]);
+    const watchAll = watch();
+
+    const filterTextDebounced = useDebounce(
+        watchAll.searchTitleDescription,
+        500
+    );
+    useEffect(() => {
+        setQueryParams(previous => ({
+            ...previous,
+            text: filterTextDebounced,
+            page: "1",
+        }));
+    }, [filterTextDebounced]);
 
     useEffect(() => {
-        const [disabled, enabled, description] = watched;
-
-        const params = new URLSearchParams({
-            disabled: `${disabled}`,
-            enabled: `${enabled}`,
-        });
-
-        description.forEach(item => {
-            params.append("text", item);
-        });
-
-        setFilterQuery(params.toString());
-    }, [setFilterQuery, watched]);
+        setQueryParams(previous => ({
+            ...previous,
+            status:
+                watchAll.status.enabled && watchAll.status.disabled
+                    ? ""
+                    : watchAll.status.enabled
+                    ? "1"
+                    : watchAll.status.disabled
+                    ? "0"
+                    : "",
+            page: "1",
+        }));
+    }, [watchAll.status.enabled, watchAll.status.disabled]);
 
     return (
         <Paper>
@@ -48,6 +69,7 @@ const ApplicationSearchBar = ({
                     {searchApiFormFields.map(field => (
                         <InputWrapper
                             key={field.name}
+                            setValue={setValue}
                             control={control}
                             {...field}
                         />
