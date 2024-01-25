@@ -25,7 +25,7 @@ const TeamsList = ({
         "true" | "false"
     >();
 
-    const [sort, setSort] = useState({ key: "created_at", direction: "asc" });
+    const [sort, setSort] = useState({ key: "created_at", direction: "desc" });
     const [currentPage, setCurrentPage] = useState(1);
 
     const queryParams = new URLSearchParams();

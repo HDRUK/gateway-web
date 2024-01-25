@@ -115,8 +115,8 @@ const Autocomplete = (props: AutocompleteProps) => {
                 getOptionLabel={(
                     option: string | { label: string; value: unknown }
                 ) => {
-                    if (typeof option === "string") return option;
-                    return option?.label;
+                    if (typeof option === "object") return option?.label;
+                    return option.toString();
                 }}
                 {...(!multiple && {
                     value: field.value
@@ -145,8 +145,8 @@ const Autocomplete = (props: AutocompleteProps) => {
                 onChange={(e, v) => {
                     if (Array.isArray(v)) {
                         const values = v.map(value => {
-                            if (typeof value === "string") return value;
-                            return value?.value;
+                            if (typeof value === "object") return value?.value;
+                            return value;
                         });
                         field.onChange(values);
                     }
