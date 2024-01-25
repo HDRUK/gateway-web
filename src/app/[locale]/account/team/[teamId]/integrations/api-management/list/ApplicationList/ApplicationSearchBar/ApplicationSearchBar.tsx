@@ -16,6 +16,7 @@ interface ApplicationSearchBarQueryParams {
     enabled: string;
     text: string;
     page: string;
+    per_page: string;
 }
 
 interface ApplicationSearchBarProps {
