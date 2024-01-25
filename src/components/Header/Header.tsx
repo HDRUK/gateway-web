@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { hotjar } from "react-hotjar";
 import { AppBar, IconButton, Toolbar } from "@mui/material";
-import { unstable_noStore as noStore } from "next/cache";
 import Image from "next/image";
 import Link from "@/components/Link";
 import AccountNavWrapper from "@/modules/AccountNavWrapper";
@@ -14,8 +13,6 @@ import * as styles from "./Header.styles";
 /** @jsxImportSource @emotion/react */
 
 function Header() {
-    noStore();
-
     const HOTJAR_ENV = "NEXT_PUBLIC_HOTJAR_ID";
     const PUBLIC_ENV = "NEXT_PUBLIC_API_V1_URL";
     const HOTJAR_ID = process.env[HOTJAR_ENV];
