@@ -25,6 +25,8 @@ function Header() {
         `DEBUG ENV TEST - HOTJAR_ID=${HOTJAR_ID} - NEXT_PUBLIC_API_V1_URL=${process.env[PUBLIC_ENV]}`
     );
 
+    console.log(process.env.NEXT_PUBLIC_API_V1_URL);
+
     const [showNavList, setShowNavList] = useState(false);
 
     const menuClickHandler = () => {
