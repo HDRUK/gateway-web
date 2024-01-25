@@ -6,7 +6,7 @@ query GetCohortTermsAndConditionsQuery {
     template {
       __typename
       ... on RepeatTemplate {
-        repeatFields { 
+        repeatfields { 
           title
           subTitle
           description

@@ -1,7 +1,7 @@
 import { rest } from "msw";
-import apis from "@/config/apis";
 import { CMSPostResponse } from "@/interfaces/Cms";
 import { ReleaseNode } from "@/interfaces/Releases";
+import apis from "@/config/apis";
 import { releaseV1 } from "@/mocks/data/cms";
 
 const getCMSReleaseV1 = (data = releaseV1, status = 200) => {

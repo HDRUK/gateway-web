@@ -1,13 +1,12 @@
 const GetCohortDiscoveryQuery = `
 query GetCohortDiscoveryQuery {
-  pages(where: { title: "Cohort Discovery Landing" }) {
-    nodes {
+  page(id: "cohort-discovery-landing", idType: URI) {
       id
       title
       template {
         __typename
-        ... on PageTemplate1 {
-          template1Fields { 
+        ... on PromoTemplate {
+          promofields { 
             bannerTitle
             ctaLink {
               target
@@ -19,7 +18,6 @@ query GetCohortDiscoveryQuery {
             middlePanel
           }
         }
-      }
     }
   }
 }

@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import CMSPageTemplate1 from "./CMSPageTemplate1";
+import CMSPromoTemplate from "./CMSPromoTemplate";
 
-const meta: Meta<typeof CMSPageTemplate1> = {
-    component: CMSPageTemplate1,
-    title: "CMS/CMSPageTemplate1",
+const meta: Meta<typeof CMSPromoTemplate> = {
+    component: CMSPromoTemplate,
+    title: "CMS/CMSPromoTemplate",
     tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof CMSPageTemplate1>;
+type Story = StoryObj<typeof CMSPromoTemplate>;
 
 export const Default: Story = {
     args: {
@@ -17,7 +17,7 @@ export const Default: Story = {
             id: "1",
             title: "Cohort Discovery Page",
             template: {
-                template1Fields: {
+                promofields: {
                     bannerTitle: "Cohort Discovery",
                     ctaLink: {
                         title: "Button title",

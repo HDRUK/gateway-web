@@ -1,12 +1,12 @@
 import { render } from "@/utils/testUtils";
-import CMSPageTemplate1 from "./CMSPageTemplate1";
+import CMSPromoTemplate from "./CMSPromoTemplate";
 
-describe("CMSPageTemplate1", () => {
+describe("CMSPromoTemplate", () => {
     const mockData = {
         id: "1",
         title: "Cohort Discovery Page",
         template: {
-            template1Fields: {
+            promofields: {
                 bannerTitle: "Cohort Discovery",
                 ctaLink: {
                     title: "Button title",
@@ -25,7 +25,7 @@ describe("CMSPageTemplate1", () => {
         },
     };
     it("should render content", () => {
-        const wrapper = render(<CMSPageTemplate1 content={mockData} />);
+        const wrapper = render(<CMSPromoTemplate content={mockData} />);
         expect(wrapper.container).toMatchSnapshot();
     });
 });

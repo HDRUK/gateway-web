@@ -1,9 +1,8 @@
 import {
     CMSPageResponse,
-    CMSPagesResponse,
     CMSPostResponse,
     PageTemplateDefault,
-    PageTemplate1,
+    PageTemplatePromo,
     PageTemplateRepeat,
 } from "@/interfaces/Cms";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
@@ -61,14 +60,14 @@ const getMissionAndPurposes = async () => {
 };
 
 const getCohortDiscovery = async () => {
-    const data: CMSPagesResponse<PageTemplate1> = await fetchCMS(
+    const data: CMSPageResponse<PageTemplatePromo> = await fetchCMS(
         GetCohortDiscoveryQuery,
         {
             next: { revalidate: 10 },
         }
     );
 
-    return data?.pages?.nodes[0] || null;
+    return data?.page || null;
 };
 
 const getTermsAndConditions = async () => {

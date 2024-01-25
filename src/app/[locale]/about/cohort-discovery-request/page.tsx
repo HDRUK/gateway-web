@@ -10,11 +10,11 @@ export const metadata = {
 export default async function CohortDiscoryRequestPage() {
     const content = await getCohortTermsAndConditions();
     const {
-        template: { repeatFields },
+        template: { repeatfields },
     } = content;
     return (
         <Container>
-            <CohortDisoveryRequestForm cmsContent={repeatFields} />
+            <CohortDisoveryRequestForm cmsContent={repeatfields} />
         </Container>
     );
 }
