@@ -7,7 +7,7 @@ import { getPermissions } from "@/utils/permissions";
 import CreateTeamForm from "../components/CreateTeamForm";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Create Team",
+    title: "Health Data Research Innovation Gateway - My Account - Edit Team",
     description: "",
 };
 
@@ -21,7 +21,7 @@ export default async function EditTeamPage() {
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["custodians.create"]}>
+            pagePermissions={["custodians.update"]}>
             <BackButton label={t("backButton")} />
             <CreateTeamForm />
         </ProtectedAccountRoute>
