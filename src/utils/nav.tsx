@@ -105,7 +105,7 @@ const getTeamNav = (
                   {
                       icon: <SchemaOutlinedIcon />,
                       label: "Data Uses",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}/`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
                   },
               ]
             : []),

@@ -35,6 +35,7 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
     const navItems = teamId
         ? getTeamNav(permissions, teamId)
         : getProfileNav(permissions);
+
     const pathname = usePathname() || "";
     const [expandedSection, setExpandedSection] = useState("");
 
@@ -56,7 +57,7 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                             underline="none"
                             sx={{ color: colors.grey700 }}>
                             <ListItemButton
-                                selected={item.href?.includes(pathname)}
+                                selected={pathname.includes(item.href || "")}
                                 sx={{ paddingLeft: 1 }}>
                                 <ListItemIcon sx={{ minWidth: "40px" }}>
                                     {item.icon}
@@ -95,8 +96,8 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                                                 href={subItem.href}
                                                 passHref>
                                                 <ListItemButton
-                                                    selected={subItem.href?.includes(
-                                                        pathname
+                                                    selected={pathname.includes(
+                                                        subItem.href || ""
                                                     )}
                                                     sx={{ pl: 4 }}>
                                                     <ListItemText
