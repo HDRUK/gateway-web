@@ -1,21 +1,19 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
-import { Team, TeamForm } from "@/interfaces/Team";
+import { useRouter } from "next/navigation";
+import { TeamForm } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
-import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
-import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
@@ -28,24 +26,12 @@ import {
 import { Routes } from "@/consts/routes";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
-const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
 const TRANSLATION_PATH_COMMON = "common";
 
 const CreateIntegrationForm = () => {
     const t = useTranslations();
 
     const { push } = useRouter();
-
-    const params = useParams<{
-        teamId: string;
-    }>();
-
-    const { data: existingTeamData, isLoading } = useGet<TeamForm>(
-        `${apis.teamsV1Url}/${params?.teamId}`,
-        {
-            shouldFetch: !!params?.teamId,
-        }
-    );
 
     const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
 
@@ -56,12 +42,6 @@ const CreateIntegrationForm = () => {
             defaultValues: teamDefaultValues,
         });
 
-    useEffect(() => {
-        if (existingTeamData) {
-            reset(existingTeamData);
-        }
-    }, [reset, existingTeamData]);
-
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
     });
@@ -70,17 +50,11 @@ const CreateIntegrationForm = () => {
         itemName: "Team",
     });
 
-    const editTeam = usePatch<TeamForm & { id?: number }>(apis.teamsV1Url);
-
     const submitForm = async (formData: TeamForm) => {
-        if (!params?.teamId) {
-            await createTeam({
-                ...teamDefaultValues,
-                ...formData,
-            });
-        } else {
-            await editTeam(params?.teamId, formData);
-        }
+        await createTeam({
+            ...teamDefaultValues,
+            ...formData,
+        });
 
         setTimeout(() => {
             push(Routes.ACCOUNT_TEAMS);
@@ -109,10 +83,6 @@ const CreateIntegrationForm = () => {
         [users]
     );
 
-    if (isLoading) {
-        return <Loading />;
-    }
-
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
             <Paper sx={{ marginBottom: 1 }}>
@@ -124,14 +94,10 @@ const CreateIntegrationForm = () => {
                     }}>
                     <div>
                         <Typography variant="h2">
-                            {params?.teamId
-                                ? t(`${TRANSLATION_PATH_EDIT}.title`)
-                                : t(`${TRANSLATION_PATH_CREATE}.title`)}
+                            {t(`${TRANSLATION_PATH_CREATE}.title`)}
                         </Typography>
                         <Typography>
-                            {params?.teamId
-                                ? t(`${TRANSLATION_PATH_EDIT}.text`)
-                                : t(`${TRANSLATION_PATH_CREATE}.text`)}
+                            {t(`${TRANSLATION_PATH_CREATE}.text`)}
                         </Typography>
                     </div>
                     <Box>
