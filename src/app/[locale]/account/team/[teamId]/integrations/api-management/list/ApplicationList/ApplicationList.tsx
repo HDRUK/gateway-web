@@ -23,6 +23,7 @@ const ApplicationList = () => {
         status: "",
         text: "",
         page: "1",
+        per_page: "10",
     });
 
     const { data, isLoading } = useGet<PaginationType<Application>>(
