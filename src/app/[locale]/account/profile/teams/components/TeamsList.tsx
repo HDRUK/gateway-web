@@ -84,7 +84,7 @@ const TeamsList = ({
 
     const { lastPage, list } = data || {};
 
-    if (list?.length === 0) return <Loading />;
+    if (isLoading) return <Loading />;
 
     const handleUpdate = () => console.log("update");
 
