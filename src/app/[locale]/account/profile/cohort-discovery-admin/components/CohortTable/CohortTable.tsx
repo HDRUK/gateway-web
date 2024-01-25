@@ -20,7 +20,7 @@ import { getColumns } from "./CohortTable.utils";
 
 const CohortTable = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [sort, setSort] = useState({ key: "created_at", direction: "asc" });
+    const [sort, setSort] = useState({ key: "updated_at", direction: "asc" });
     const [requestStatus, setRequestStatus] = useState<CohortRequestStatus>();
 
     const { control, watch, setValue } = useForm({

@@ -10,18 +10,38 @@ import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { getColumns } from "@/config/tables/teamManagement";
 
+const TRANSLATION_PATH_TEAMS =
+    "pages.account.profile.teams.components.TeamsList";
+const TRANSLATION_PATH_COMMON = "common";
+
 const TeamsList = ({
     permissions,
 }: {
     permissions: { [key: string]: boolean };
 }) => {
-    const t = useTranslations(
-        "pages.account.profile.teams.components.TeamsList"
-    );
+    const t = useTranslations();
 
+    const [questionBankStatus, setQuestionBankStatus] = useState<
+        "true" | "false"
+    >();
+
+    const [sort, setSort] = useState({ key: "created_at", direction: "desc" });
     const [currentPage, setCurrentPage] = useState(1);
+
+    const queryParams = new URLSearchParams();
+
+    queryParams.append("sort", `${sort.key}:${sort.direction}`);
+    queryParams.append("page", currentPage.toString());
+
+    if (questionBankStatus) {
+        queryParams.append("is_question_bank", questionBankStatus);
+    }
+
+    queryParams.sort();
+    const qs = queryParams.toString();
+
     const { data, isLoading } = useGet<PaginationType<Team>>(
-        `${apis.teamsV1Url}?page=${currentPage}`,
+        `${apis.teamsV1Url}?${qs}`,
         {
             keepPreviousData: true,
             withPagination: true,
@@ -30,22 +50,29 @@ const TeamsList = ({
 
     const columns = useMemo(() => {
         return getColumns({
+            setSort,
+            sort,
             translations: {
-                lastUpdated: t("lastUpdated"),
-                dataProvider: t("dataProvider"),
-                teamAdmins: t("teamAdmins"),
-                questionBank: t("questionBank"),
-                action: t("action"),
+                lastUpdated: t(`${TRANSLATION_PATH_TEAMS}.lastUpdated`),
+                dataProvider: t(`${TRANSLATION_PATH_TEAMS}.dataProvider`),
+                teamAdmins: t(`${TRANSLATION_PATH_TEAMS}.teamAdmins`),
+                questionBank: t(`${TRANSLATION_PATH_COMMON}.questionBank`),
+                disabled: t(`${TRANSLATION_PATH_COMMON}.disabled`),
+                enabled: t(`${TRANSLATION_PATH_COMMON}.enabled`),
+                all: t(`${TRANSLATION_PATH_COMMON}.all`),
+                action: t(`${TRANSLATION_PATH_TEAMS}.action`),
             },
+            setQuestionBankStatus,
+            questionBankStatus,
             permissions,
             handleDelete: id => console.log(`delete: ${id}`),
             handleEdit: id => console.log(`edit: ${id}`),
         });
-    }, [permissions, t]);
-
-    if (isLoading) return <Loading />;
+    }, [permissions, questionBankStatus, sort, t]);
 
     const { lastPage, list } = data || {};
+
+    if (list?.length === 0) return <Loading />;
 
     const handleUpdate = () => console.log("update");
 

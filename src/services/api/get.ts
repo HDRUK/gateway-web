@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { RequestOptions } from "@/interfaces/Api";
 import http from "@/utils/http";
 import { errorNotification } from "./utils";
@@ -20,7 +19,7 @@ const getRequest = async <T>(
                 if (contentDisposition) {
                     const match = contentDisposition.match(/filename="(.*?)"/);
                     if (match && match[1]) {
-                        filename = match[1];
+                        [, filename] = match;
                     }
                 }
                 return {

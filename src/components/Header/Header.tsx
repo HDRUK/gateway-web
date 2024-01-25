@@ -11,7 +11,6 @@ import { MenuIcon } from "@/consts/icons";
 import * as styles from "./Header.styles";
 
 /** @jsxImportSource @emotion/react */
-/* eslint-disable */
 
 const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
 const HOTJAR_VERSION = 6;
@@ -23,7 +22,8 @@ function Header() {
         setShowNavList(prev => !prev);
     };
 
-    if (HOTJAR_ID) {
+    if (HOTJAR_ID && typeof window !== "undefined") {
+        // eslint-disable-next-line radix
         hotjar.initialize(parseInt(HOTJAR_ID), HOTJAR_VERSION);
     }
 

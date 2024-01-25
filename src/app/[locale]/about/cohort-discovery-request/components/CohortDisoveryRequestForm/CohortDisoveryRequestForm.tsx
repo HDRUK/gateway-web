@@ -1,6 +1,5 @@
 "use client";
 
-/* eslint-disable */
 import { Box, Paper, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -45,6 +44,7 @@ const CohortDisoveryRequestForm = ({
                     </Typography>
                     <Typography sx={{ marginBottom: 2 }}>
                         {t.rich(`${COHORT_TRANSLATION_PATH}.text`, {
+                            // eslint-disable-next-line react/no-unstable-nested-components
                             userprofile: chunks => (
                                 <Link
                                     href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`}>
@@ -55,6 +55,7 @@ const CohortDisoveryRequestForm = ({
                     </Typography>
                     <Typography>
                         {t.rich(`${COHORT_TRANSLATION_PATH}.terms`, {
+                            // eslint-disable-next-line react/no-unstable-nested-components
                             terms: chunks => (
                                 <Link href={`/${RouteName.TERMS}`}>
                                     {chunks}

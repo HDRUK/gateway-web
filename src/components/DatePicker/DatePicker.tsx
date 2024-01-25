@@ -13,7 +13,7 @@ export interface DatePickerProps {
     required?: boolean;
     disabled?: boolean;
     horizontalForm?: boolean;
-    isRow: boolean;
+    isRow?: boolean;
     control: Control;
     formControlSx?: SxProps;
 }
