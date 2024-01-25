@@ -14,6 +14,10 @@ import apis from "@/config/apis";
 import { getColumns } from "@/config/tables/teamManagement";
 import { Routes } from "@/consts/routes";
 
+const TRANSLATION_PATH_TEAMS =
+    "pages.account.profile.teams.components.TeamsList";
+const TRANSLATION_PATH_COMMON = "common";
+
 const TeamsList = ({
     permissions,
 }: {
@@ -21,14 +25,29 @@ const TeamsList = ({
 }) => {
     const router = useRouter();
     const { showDialog } = useDialog();
+    const t = useTranslations();
 
-    const t = useTranslations(
-        "pages.account.profile.teams.components.TeamsList"
-    );
+    const [questionBankStatus, setQuestionBankStatus] = useState<
+        "true" | "false"
+    >();
 
+    const [sort, setSort] = useState({ key: "created_at", direction: "desc" });
     const [currentPage, setCurrentPage] = useState(1);
+
+    const queryParams = new URLSearchParams();
+
+    queryParams.append("sort", `${sort.key}:${sort.direction}`);
+    queryParams.append("page", currentPage.toString());
+
+    if (questionBankStatus) {
+        queryParams.append("is_question_bank", questionBankStatus);
+    }
+
+    queryParams.sort();
+    const qs = queryParams.toString();
+
     const { data, isLoading, mutate } = useGet<PaginationType<Team>>(
-        `${apis.teamsV1Url}?page=${currentPage}`,
+        `${apis.teamsV1Url}?${qs}`,
         {
             keepPreviousData: true,
             withPagination: true,
@@ -37,13 +56,20 @@ const TeamsList = ({
 
     const columns = useMemo(() => {
         return getColumns({
+            setSort,
+            sort,
             translations: {
-                lastUpdated: t("lastUpdated"),
-                dataProvider: t("dataProvider"),
-                teamAdmins: t("teamAdmins"),
-                questionBank: t("questionBank"),
-                action: t("action"),
+                lastUpdated: t(`${TRANSLATION_PATH_TEAMS}.lastUpdated`),
+                dataProvider: t(`${TRANSLATION_PATH_TEAMS}.dataProvider`),
+                teamAdmins: t(`${TRANSLATION_PATH_TEAMS}.teamAdmins`),
+                questionBank: t(`${TRANSLATION_PATH_COMMON}.questionBank`),
+                disabled: t(`${TRANSLATION_PATH_COMMON}.disabled`),
+                enabled: t(`${TRANSLATION_PATH_COMMON}.enabled`),
+                all: t(`${TRANSLATION_PATH_COMMON}.all`),
+                action: t(`${TRANSLATION_PATH_TEAMS}.action`),
             },
+            setQuestionBankStatus,
+            questionBankStatus,
             permissions,
             handleDelete: (teamId, teamName) =>
                 showDialog(DeleteTeamDialog, {
@@ -54,11 +80,11 @@ const TeamsList = ({
             handleEdit: teamId =>
                 router.push(`${Routes.ACCOUNT_TEAMS}/${teamId}`),
         });
-    }, [permissions, t]);
-
-    if (isLoading) return <Loading />;
+    }, [permissions, questionBankStatus, sort, t]);
 
     const { lastPage, list } = data || {};
+
+    if (isLoading) return <Loading />;
 
     const handleUpdate = () => console.log("update");
 

@@ -40,7 +40,7 @@ const CreateIntegrationForm = () => {
         teamId: string;
     }>();
 
-    const { data: existingTeamData, isLoading } = useGet<TeamForm>(
+    const { data: existingTeamData, isLoading } = useGet<Team>(
         `${apis.teamsV1Url}/${params?.teamId}`,
         {
             shouldFetch: !!params?.teamId,
@@ -57,9 +57,15 @@ const CreateIntegrationForm = () => {
         });
 
     useEffect(() => {
-        if (existingTeamData) {
-            reset(existingTeamData);
+        if (!existingTeamData) {
+            return;
         }
+
+        const teamData = {
+            ...existingTeamData,
+            users: existingTeamData?.users?.map(user => user.id),
+        };
+        reset(teamData);
     }, [reset, existingTeamData]);
 
     useUnsavedChanges({

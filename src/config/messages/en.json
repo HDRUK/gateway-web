@@ -108,6 +108,7 @@
                             "lastUpdated": "Last Updated",
                             "dataProvider": "Data Provider",
                             "teamAdmins": "Team admin(s)",
+                            "questionBank": "Question Bank",
                             "action": "Action"
                         }
                     },
