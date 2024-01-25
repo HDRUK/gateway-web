@@ -33,6 +33,7 @@ const TRANSLATION_PATH_MODAL = "modals.CohortRequestSent";
 const TRANSLATION_PATH_DIALOG = "dialogs.CohortRequestTerms";
 
 const CohortRequestTermsDialog = () => {
+    const [navClicked, setNavClicked] = useState<number | null>(null);
     const [activeItem, setActiveItem] = useState(1);
     const { push } = useRouter();
     const { control, handleSubmit } = useForm({
@@ -72,9 +73,11 @@ const CohortRequestTermsDialog = () => {
     };
 
     const handleScroll = (id: number) => {
+        setNavClicked(id);
         const section = document.querySelector(`#anchor${id}`);
         if (section) {
             section.scrollIntoView({ behavior: "smooth", block: "start" });
+            setActiveItem(id);
         }
     };
 
@@ -129,8 +132,15 @@ const CohortRequestTermsDialog = () => {
                                             id={`anchor${index + 1}`}
                                             as="div"
                                             onChange={inView => {
-                                                if (inView) {
+                                                if (
+                                                    inView &&
+                                                    (navClicked === null ||
+                                                        navClicked ===
+                                                            index + 1)
+                                                ) {
                                                     setActiveItem(index + 1);
+                                                } else {
+                                                    setNavClicked(null);
                                                 }
                                             }}>
                                             <Typography
