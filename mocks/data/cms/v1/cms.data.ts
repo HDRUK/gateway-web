@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { CMSPostResponse } from "@/interfaces/Cms";
-import { ReleaseNode } from "@/interfaces/Releases";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
+import { ReleaseNode } from "@/interfaces/Releases";
 
 const generateReleaseV1 = (data = {}): CMSPostResponse<ReleaseNode> => {
     return {
@@ -11,21 +11,8 @@ const generateReleaseV1 = (data = {}): CMSPostResponse<ReleaseNode> => {
                     node: {
                         date: faker.date
                             .between(
-                                "2023-01-01T00:00:00.000Z",
-                                "2023-03-01T00:00:00.000Z"
-                            )
-                            .toISOString(),
-                        title: faker.lorem.words(5),
-                        content: faker.lorem.lines(),
-                        id: faker.datatype.string(),
-                    },
-                },
-                {
-                    node: {
-                        date: faker.date
-                            .between(
-                                "2022-01-01T00:00:00.000Z",
-                                "2022-03-01T00:00:00.000Z"
+                                "2024-01-01T00:00:00.000Z",
+                                "2024-03-01T00:00:00.000Z"
                             )
                             .toISOString(),
                         title: faker.lorem.words(5),
@@ -39,6 +26,19 @@ const generateReleaseV1 = (data = {}): CMSPostResponse<ReleaseNode> => {
                             .between(
                                 "2023-01-01T00:00:00.000Z",
                                 "2023-03-01T00:00:00.000Z"
+                            )
+                            .toISOString(),
+                        title: faker.lorem.words(5),
+                        content: faker.lorem.lines(),
+                        id: faker.datatype.string(),
+                    },
+                },
+                {
+                    node: {
+                        date: faker.date
+                            .between(
+                                "2024-01-01T00:00:00.000Z",
+                                "2024-03-01T00:00:00.000Z"
                             )
                             .toISOString(),
                         title: faker.lorem.words(5),

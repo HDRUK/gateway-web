@@ -47,7 +47,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
     };
 
     const generatedReleases = useMemo(() => {
-        return ["2023", "2022", "2021", "2020"].map(year => {
+        return ["2024", "2023", "2022", "2021"].map(year => {
             const releases = getReleaseByYear(allReleases, year);
 
             const hydratedReleases = {

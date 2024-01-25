@@ -1,6 +1,6 @@
 const GetMissionAndPurposesQuery = `
   query GetMissionAndPurposes {
-    posts(where:{categoryName: "mission-and-purpose", orderby: {field: DATE, order: ASC}}) {
+    posts(where:{categoryName: "missionAndPurpose", orderby: {field: DATE, order: ASC}}) {
       edges {
         node {
           title

@@ -1,4 +1,4 @@
-import CMSPageTemplate1 from "@/components/CMSPageTemplate1";
+import CMSPromoTemplate from "@/components/CMSPromoTemplate";
 import Container from "@/components/Container";
 import { getCohortDiscovery } from "@/utils/cms";
 import CtaOverride from "./components/CtaOverride";
@@ -13,13 +13,13 @@ export default async function CohortDiscoryPage() {
 
     return (
         <Container>
-            <CMSPageTemplate1
+            <CMSPromoTemplate
                 content={cohortDiscovery}
                 ctaOverrideComponent={
-                    cohortDiscovery.template.template1Fields?.ctaLink && (
+                    cohortDiscovery.template.promofields?.ctaLink && (
                         <CtaOverride
                             ctaLink={
-                                cohortDiscovery.template.template1Fields.ctaLink
+                                cohortDiscovery.template.promofields.ctaLink
                             }
                         />
                     )

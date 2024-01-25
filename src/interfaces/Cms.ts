@@ -20,11 +20,11 @@ interface CtaLink {
     title: string;
 }
 
-interface PageTemplate1 {
+interface PageTemplatePromo {
     id: string;
     title: string;
     template: {
-        template1Fields: {
+        promofields: {
             bannerTitle: string;
             ctaLink?: CtaLink;
             topRightPanel?: string;
@@ -46,16 +46,16 @@ interface PageTemplateRepeat {
     id: string;
     title: string;
     template: {
-        repeatFields: templateRepeatFields;
+        repeatfields: templateRepeatFields;
     };
 }
 
 export type {
-    templateRepeatFields,
     PageTemplateRepeat,
-    CMSPostResponse,
     PageTemplateDefault,
-    PageTemplate1,
+    PageTemplatePromo,
+    templateRepeatFields,
+    CMSPostResponse,
     CMSPageResponse,
     CMSPagesResponse,
     CtaLink,
