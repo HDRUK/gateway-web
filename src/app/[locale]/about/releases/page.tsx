@@ -14,8 +14,9 @@ const ReleasesPage = async () => {
 
     return (
         <>
-            <Banner title="Gateway Releases" src={BannerImage} />
+            <Banner title="Gateway Releases test" src={BannerImage} />
             <Container sx={{ background: "white", padding: 0 }}>
+                <h1>DEBUG TITLE</h1>
                 <ReleaseTabs allReleases={allReleases} />
             </Container>
         </>
