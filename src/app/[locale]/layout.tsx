@@ -25,15 +25,6 @@ export default function RootLayout({
     params: { locale: string };
     children: React.ReactNode;
 }) {
-    const HOTJAR_ENV = "NEXT_PUBLIC_HOTJAR_ID";
-    const PUBLIC_ENV = "NEXT_PUBLIC_API_V1_URL";
-    const HOTJAR_ID = process.env[HOTJAR_ENV];
-    // const HOTJAR_VERSION = 6;
-
-    console.log(
-        `LAYOUT - DEBUG ENV TEST - HOTJAR_ID=${HOTJAR_ID} - NEXT_PUBLIC_API_V1_URL=${process.env[PUBLIC_ENV]}`
-    );
-
     if (!locales.includes(locale)) notFound();
 
     const messages = useMessages();
