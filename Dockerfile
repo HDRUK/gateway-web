@@ -6,6 +6,8 @@ WORKDIR /usr/src
 COPY package*.json ./
 
 ENV NODE_ENV production 
+ARG NEXT_PUBLIC_API_V1_URL
+ARG NEXT_PUBLIC_HOTJAR_ID
 
 RUN npm install
 
