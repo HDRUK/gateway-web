@@ -80,11 +80,11 @@ const TeamsList = ({
             handleEdit: teamId =>
                 router.push(`${Routes.ACCOUNT_TEAMS}/${teamId}`),
         });
-    }, [permissions, questionBankStatus, sort, t]);
+    }, [mutate, permissions, questionBankStatus, router, showDialog, sort, t]);
 
     const { lastPage, list } = data || {};
 
-    if (isLoading) return <Loading />;
+    if (list?.length === 0) return <Loading />;
 
     const handleUpdate = () => console.log("update");
 

@@ -41,7 +41,7 @@ const StyledMenu = styled((props: MenuProps) => (
                 marginRight: theme.spacing(1.5),
             },
             "&:active": {
-                backgroundColor: "red",
+                backgroundColor: theme.palette.grey[300],
             },
         },
     },
