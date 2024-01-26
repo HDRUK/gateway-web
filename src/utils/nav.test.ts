@@ -103,7 +103,7 @@ describe("Nav utils", () => {
 
             expect(dataUsesItem).toBeDefined();
             expect(dataUsesItem?.href).toBe(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_USES}/`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_USES}`
             );
         });
 
