@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Team } from "@/interfaces/Team";
 import Box from "@/components/Box";
-import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import DeleteTeamDialog from "@/modules/DeleteTeamDialog";
@@ -83,8 +82,6 @@ const TeamsList = ({
     }, [mutate, permissions, questionBankStatus, router, showDialog, sort, t]);
 
     const { lastPage, list } = data || {};
-
-    if (list?.length === 0) return <Loading />;
 
     const handleUpdate = () => console.log("update");
 
