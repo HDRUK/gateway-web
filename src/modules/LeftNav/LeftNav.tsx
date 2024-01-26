@@ -9,19 +9,20 @@ import {
     ListItemIcon,
     ListItemText,
 } from "@mui/material";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 import { LeftNavItem } from "@/interfaces/Ui";
 import Link from "@/components/Link";
 import { colors } from "@/config/theme";
 import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
+import { getTrimmedpathname } from "@/utils/general";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 
 const isExpanded = (
     item: LeftNavItem,
     expandedSection: string,
-    asPath: string
+    trimmedPathname: string
 ) => {
-    if (item.subItems?.some(subItem => asPath.includes(subItem.href)))
+    if (item.subItems?.some(subItem => trimmedPathname.includes(subItem.href)))
         return true;
     return expandedSection === item.label;
 };
@@ -36,11 +37,13 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
         ? getTeamNav(permissions, teamId)
         : getProfileNav(permissions);
 
+    const params = useParams<{ locale: string }>();
     const pathname = usePathname() || "";
+    const trimmedPathname = getTrimmedpathname(params?.locale || "", pathname);
     const [expandedSection, setExpandedSection] = useState("");
 
     const toggleMenu = (item: LeftNavItem) => {
-        const isOpen = isExpanded(item, expandedSection, pathname);
+        const isOpen = isExpanded(item, expandedSection, trimmedPathname);
         if (isOpen && expandedSection !== item.label) return;
         setExpandedSection(isOpen ? "" : item.label);
     };
@@ -57,7 +60,7 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                             underline="none"
                             sx={{ color: colors.grey700 }}>
                             <ListItemButton
-                                selected={pathname.includes(item.href || "")}
+                                selected={item.href === trimmedPathname}
                                 sx={{ paddingLeft: 1 }}>
                                 <ListItemIcon sx={{ minWidth: "40px" }}>
                                     {item.icon}
@@ -76,14 +79,22 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                                 </ListItemIcon>
                                 <ListItemText primary={item.label} />
                                 {item.subItems &&
-                                isExpanded(item, expandedSection, pathname) ? (
+                                isExpanded(
+                                    item,
+                                    expandedSection,
+                                    trimmedPathname
+                                ) ? (
                                     <ExpandLessIcon />
                                 ) : (
                                     <ExpandMoreIcon />
                                 )}
                             </ListItemButton>
                             <Collapse
-                                in={isExpanded(item, expandedSection, pathname)}
+                                in={isExpanded(
+                                    item,
+                                    expandedSection,
+                                    trimmedPathname
+                                )}
                                 timeout="auto"
                                 unmountOnExit>
                                 <List component="div" disablePadding>
@@ -96,8 +107,8 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                                                 href={subItem.href}
                                                 passHref>
                                                 <ListItemButton
-                                                    selected={pathname.includes(
-                                                        subItem.href || ""
+                                                    selected={trimmedPathname.includes(
+                                                        subItem.href
                                                     )}
                                                     sx={{ pl: 4 }}>
                                                     <ListItemText

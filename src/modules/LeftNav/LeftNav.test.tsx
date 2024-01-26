@@ -28,7 +28,7 @@ describe("LeftNav", () => {
 
     it("renders expanded items", () => {
         mockRouter.push(
-            `/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`
+            `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`
         );
 
         const { getAllByRole } = render(

@@ -28,14 +28,7 @@ const validationSchema = yup.object({
         )
         .label("Organisation name"),
     member_of: yup.string().required().label("Member of"),
-    contact_point: yup
-        .string()
-        .email()
-        .transform(value => {
-            return value === "" ? null : value;
-        })
-        .label("Contact point")
-        .nullable(),
+    contact_point: yup.string().email().label("Contact point"),
     users: yup
         .array()
         .min(1, "Team admin(s) is a required field")

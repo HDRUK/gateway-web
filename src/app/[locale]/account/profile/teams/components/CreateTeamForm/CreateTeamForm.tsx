@@ -185,7 +185,11 @@ const CreateIntegrationForm = () => {
                         {t(`${TRANSLATION_PATH_COMMON}.cancel`)}
                     </Button>
                     <Button type="submit">
-                        {t(`${TRANSLATION_PATH_COMMON}.publish`)}
+                        {t(
+                            `${TRANSLATION_PATH_COMMON}.${
+                                params?.teamId ? "update" : "publish"
+                            }`
+                        )}
                     </Button>
                 </Box>
             </Paper>

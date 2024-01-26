@@ -6,4 +6,8 @@ const splitCamelcase = (str: string) => {
     return str.replace(/([a-z])([A-Z])/g, "$1 $2");
 };
 
-export { capitalise, splitCamelcase };
+const getTrimmedpathname = (locale: string, pathname: string) => {
+    return pathname.replace(`/${locale}`, "");
+};
+
+export { capitalise, splitCamelcase, getTrimmedpathname };
