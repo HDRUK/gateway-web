@@ -5,6 +5,7 @@ import NextLink from "next/link";
 interface LinkProps extends MuiLinkProps {
     href: string;
     passHref?: boolean;
+    prefetch?: boolean;
 }
 
 const Link = ({

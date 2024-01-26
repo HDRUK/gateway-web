@@ -11,7 +11,11 @@ import ProfileForm from "./components/ProfileForm";
 const ProfilePage = () => {
     const t = useTranslations("pages.account.profile");
     const { isLoading } = useAuth();
-
+    console.log(
+        "CLIENT NEXT_PUBLIC_API_V1_URL: ",
+        process.env.NEXT_PUBLIC_API_V1_URL
+    );
+    console.log("CLIENT API_V1_URL: ", process.env.API_V1_URL);
     return (
         <Paper>
             <Box>
