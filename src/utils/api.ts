@@ -3,6 +3,7 @@ import { HttpOptions } from "@/interfaces/Api";
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
+import { Filter } from "@/interfaces/Filter";
 import { Team } from "@/interfaces/Team";
 import apis from "@/config/apis";
 import config from "@/config/config";
@@ -26,6 +27,12 @@ async function get<T>(
     const { data } = await res.json();
 
     return data;
+}
+
+async function getFilters(
+    cookieStore: ReadonlyRequestCookies
+): Promise<Filter[]> {
+    return get<Filter[]>(cookieStore, apis.filtersV1UrlIP);
 }
 
 async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
@@ -83,4 +90,11 @@ const ThrowPaginationError = (options: HttpOptions | undefined) => {
     }
 };
 
-export { getUser, getTeam, getApplication, getCohort, ThrowPaginationError };
+export {
+    getFilters,
+    getUser,
+    getTeam,
+    getApplication,
+    getCohort,
+    ThrowPaginationError,
+};
