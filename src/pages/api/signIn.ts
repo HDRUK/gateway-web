@@ -32,7 +32,7 @@ export default async function signIn(
 
         res.setHeader("Set-Cookie", cookie);
 
-        res.status(200).json({ message: "success" });
+        res.status(200).json({ message: "success", data, cookie, res, req });
     } catch (error) {
         const err = error as AxiosError<{ message: string }>;
         if (err?.response) {
