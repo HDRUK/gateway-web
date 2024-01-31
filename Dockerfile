@@ -20,15 +20,6 @@ COPY . .
 
 RUN npm run build
 
-# RUN addgroup --system --gid 1001 nodejs
-# RUN adduser --system --uid 1001 nextjs
-
-# Set the correct permission for prerender cache
-# RUN mkdir -p .next
-# RUN chown nextjs:nodejs .next
-
-# USER nextjs 
-
 EXPOSE 3000
 
 CMD npm run start
