@@ -6,7 +6,7 @@ import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { colors } from "@/config/theme";
 import { CloseIcon, SearchIcon } from "@/consts/icons";
 import TextField from "../TextField";
-import * as styles from "./SearchBar.styles";
+import { searchBarStyle } from "./SearchBar.styles";
 
 interface SearchBarProps {
     control: Control;
@@ -35,11 +35,11 @@ const SearchBar = ({
     const theme = useTheme();
 
     return (
-        <Box css={styles.formWrapper} data-testid={TEST_ID_WRAPPER}>
+        <Box css={searchBarStyle.formWrapper} data-testid={TEST_ID_WRAPPER}>
             <Box
                 onSubmit={submitAction}
                 component="form"
-                css={styles.form(theme)}>
+                css={searchBarStyle.form(theme)}>
                 <SearchIcon
                     color="primary"
                     sx={{
@@ -47,13 +47,13 @@ const SearchBar = ({
                         width: SEARCH_ICON_SIZE,
                     }}
                 />
-                <Box css={styles.inputWrapper}>
+                <Box css={searchBarStyle.inputWrapper}>
                     <TextField
                         name={queryName}
                         control={control}
                         placeholder={queryPlaceholder}
                         label=""
-                        css={styles.input}
+                        css={searchBarStyle.input}
                     />
                 </Box>
                 <IconButton
@@ -69,10 +69,7 @@ const SearchBar = ({
 
             {explainerText && (
                 <Typography
-                    sx={{
-                        fontSize: "1rem",
-                        marginLeft: "97px",
-                    }}
+                    css={searchBarStyle.explainerText}
                     color={colors.grey600}>
                     {explainerText}
                 </Typography>
