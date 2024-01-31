@@ -7,11 +7,12 @@ import * as styles from "./ScrollContent.styles";
 export interface ScrollContentProps {
     children: ReactNode;
     sx?: SxProps;
+    height?: number;
 }
 
-const ScrollContent = ({ children, ...rest }: ScrollContentProps) => {
+const ScrollContent = ({ children, sx, ...rest }: ScrollContentProps) => {
     return (
-        <Box sx={{ height: 300, p: 0 }} css={styles.root} {...rest}>
+        <Box sx={{ height: 300, p: 1, ...sx }} css={styles.root} {...rest}>
             {children}
         </Box>
     );

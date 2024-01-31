@@ -10,13 +10,13 @@ import FormInputWrapper from "@/components/FormInputWrapper";
 export interface CheckboxGroupProps extends MuiCheckboxProps {
     label: string;
     name: string;
-    direction: "row" | "column";
-    nColumns: number;
-    horizontalForm: boolean;
+    direction?: "row" | "column";
+    nColumns?: number;
+    horizontalForm?: boolean;
     info?: string;
     extraInfo?: string;
     limit?: number;
-    spacing: number;
+    spacing?: number;
     checkboxes: { value: string; label: string }[];
     control: Control;
     checkboxSx?: SxProps;
@@ -71,7 +71,7 @@ const CheckboxGroup = ({
                             : null,
                 }}>
                 {checkboxes.map(checkbox => (
-                    <Box sx={{ p: 0, m: 0 }}>
+                    <Box key={checkbox.value} sx={{ p: 0, m: 0 }}>
                         <Checkbox
                             name={checkbox.value}
                             control={control}

@@ -220,6 +220,10 @@
         }
     },
     "components": {
+        "FilterSection": {
+            "placeholder": "I'm looking for...",
+            "noFilters": "No filters available"
+        },
         "Footer": {
             "text": "HDR UK {year}. All rights reserved."
         },

@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 export const root = css`
-    padding: 10px;
+    paddingleft: 10px;
     overflow-y: scroll;
 
     /* Set the width and height of the scrollbar */

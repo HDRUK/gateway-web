@@ -1,6 +1,72 @@
 "use client";
 
 import { createSvgIcon } from "@mui/material";
+import { styled, Theme } from "@mui/material/styles";
+
+type checkboxSizes = "small" | "medium" | "large";
+
+const sizeMappings = {
+    small: 24,
+    medium: 24,
+    large: 24,
+};
+
+interface IconType
+    extends Omit<React.HTMLAttributes<HTMLSpanElement>, "theme"> {
+    size: checkboxSizes;
+}
+const CheckboxIcon = styled("span")(
+    ({ theme, size }: IconType & { theme: Theme }) => {
+        return {
+            marginRight: 5,
+            border: `2px solid ${theme.palette.grey[400]}`,
+            width: sizeMappings[size],
+            height: sizeMappings[size],
+            backgroundColor: "white",
+            "input:hover ~ &": {
+                backgroundColor: theme.palette.grey[100],
+            },
+            "input:disabled ~ &": {
+                background: theme.palette.grey[300],
+                borderColor: theme.palette.grey[300],
+            },
+        };
+    }
+);
+
+const CheckboxCheckedIcon = styled(CheckboxIcon)(({ theme, size }) => ({
+    backgroundColor: theme.palette.secondary.main,
+    borderWidth: 0,
+    "&::before": {
+        display: "block",
+        width: sizeMappings[size],
+        height: sizeMappings[size],
+        backgroundImage:
+            "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath" +
+            " fill-rule='evenodd' clip-rule='evenodd' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z' fill='%23fff'/%3E%3C/svg%3E\")",
+        content: '""',
+    },
+    "input:hover ~ &": {
+        backgroundColor: theme.palette.secondary.dark,
+    },
+}));
+
+const CheckboxIndeterminateIcon = styled(CheckboxIcon)(({ theme, size }) => ({
+    backgroundColor: theme.palette.secondary.main,
+    borderWidth: 0,
+    "&::before": {
+        display: "block",
+        width: sizeMappings[size],
+        height: sizeMappings[size],
+        backgroundImage:
+            "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath" +
+            " fill-rule='evenodd' clip-rule='evenodd' d='M21 3H3v18h18V3zm-4 10H7v-2h10v2z' fill='%23fff'/%3E%3C/svg%3E\")",
+        content: '""',
+    },
+    "input:hover ~ &": {
+        backgroundColor: theme.palette.secondary.dark,
+    },
+}));
 
 const RemoveFilterIcon = createSvgIcon(
     <svg
@@ -30,6 +96,19 @@ const SortAscIcon = createSvgIcon(
         <path d="M16 11.25H12C11.59 11.25 11.25 10.91 11.25 10.5C11.25 10.09 11.59 9.75 12 9.75H16C16.41 9.75 16.75 10.09 16.75 10.5C16.75 10.91 16.41 11.25 16 11.25Z" />
         <path d="M14 8.25H12C11.59 8.25 11.25 7.91 11.25 7.5C11.25 7.09 11.59 6.75 12 6.75H14C14.41 6.75 14.75 7.09 14.75 7.5C14.75 7.91 14.41 8.25 14 8.25Z" />
         <path d="M18 14.25H12C11.59 14.25 11.25 13.91 11.25 13.5C11.25 13.09 11.59 12.75 12 12.75H18C18.41 12.75 18.75 13.09 18.75 13.5C18.75 13.91 18.41 14.25 18 14.25Z" />
+    </svg>,
+    "SortAscIcon"
+);
+
+const ChevronThinIcon = createSvgIcon(
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="chevron">
+            <path
+                id="Path"
+                d="M12 16.205C11.768 16.205 11.537 16.125 11.349 15.964L3.59003 9.31404L4.89203 7.79504L12 13.888L19.108 7.79504L20.41 9.31404L12.651 15.964C12.463 16.125 12.232 16.205 12 16.205Z"
+                fill="currentColor"
+            />
+        </g>
     </svg>,
     "SortAscIcon"
 );
@@ -67,4 +146,12 @@ const SortDescIcon = createSvgIcon(
     "SortDescIcon"
 );
 
-export { RemoveFilterIcon, SortAscIcon, SortDescIcon };
+export {
+    RemoveFilterIcon,
+    SortAscIcon,
+    SortDescIcon,
+    CheckboxCheckedIcon,
+    CheckboxIndeterminateIcon,
+    CheckboxIcon,
+    ChevronThinIcon,
+};

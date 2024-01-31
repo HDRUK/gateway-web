@@ -17,17 +17,10 @@ exports[`Checkbox checkbox snapshot 1`] = `
           name="fieldName"
           type="checkbox"
         />
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-i4bv87-MuiSvgIcon-root"
-          data-testid="CheckBoxOutlineBlankSharpIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M19 5v14H5V5h14m2-2H3v18h18V3z"
-          />
-        </svg>
+        <span
+          class="mui-style-f6vn6k"
+          font-size="medium"
+        />
       </span>
       <span
         class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-14rzwpn-MuiTypography-root"

@@ -15,6 +15,7 @@ const apis = {
     logoutV1UrlIP: `${apiV1IPUrl}/logout`,
     usersV1Url: `${apiV1Url}/users`,
     filtersV1Url: `${apiV1Url}/filters`,
+    filtersV1UrlIP: `${apiV1IPUrl}/filters`,
     sectorsV1Url: `${apiV1Url}/sectors`,
     tagsV1Url: `${apiV1Url}/tags`,
     applicationsV1Url: `${apiV1Url}/applications`,

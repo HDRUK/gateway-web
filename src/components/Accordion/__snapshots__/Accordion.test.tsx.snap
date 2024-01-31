@@ -3,7 +3,7 @@
 exports[`Accordion should render component 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-1vuthes-MuiPaper-root-MuiAccordion-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-1dk74va-MuiPaper-root-MuiAccordion-root"
   >
     <div
       aria-expanded="false"
@@ -21,14 +21,22 @@ exports[`Accordion should render component 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-5xmdy0-MuiSvgIcon-root"
-          data-testid="ArrowDropDownIcon"
+          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-9nxk4h-MuiSvgIcon-root"
+          data-testid="SortAscIconIcon"
+          fill="none"
           focusable="false"
           viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="m7 10 5 5 5-5z"
-          />
+          <g
+            id="chevron"
+          >
+            <path
+              d="M12 16.205C11.768 16.205 11.537 16.125 11.349 15.964L3.59003 9.31404L4.89203 7.79504L12 13.888L19.108 7.79504L20.41 9.31404L12.651 15.964C12.463 16.125 12.232 16.205 12 16.205Z"
+              fill="currentColor"
+              id="Path"
+            />
+          </g>
         </svg>
       </div>
     </div>

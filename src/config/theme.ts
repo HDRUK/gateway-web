@@ -362,6 +362,9 @@ const theme = createTheme({
                 root: {
                     "&.Mui-expanded": {
                         margin: 0,
+                        ":before": {
+                            opacity: 1,
+                        },
                     },
                 },
             },

@@ -5,9 +5,9 @@ import MuiCheckbox, {
 } from "@mui/material/Checkbox";
 import FormError from "@/components/FormError";
 import {
-    CheckBoxOutlineBlankSharpIcon,
-    CheckBoxSharpIcon,
-    IndeterminateCheckBoxSharpIcon,
+    CheckboxCheckedIcon,
+    CheckboxIcon,
+    CheckboxIndeterminateIcon,
 } from "@/consts/icons";
 
 export interface CheckboxProps extends MuiCheckboxProps {
@@ -52,9 +52,11 @@ const Checkbox = (props: CheckboxProps) => {
                         disableRipple
                         checked={fieldProps.value}
                         size={size}
-                        icon={<CheckBoxOutlineBlankSharpIcon />}
-                        checkedIcon={<CheckBoxSharpIcon />}
-                        indeterminateIcon={<IndeterminateCheckBoxSharpIcon />}
+                        icon={<CheckboxIcon size={size} />}
+                        checkedIcon={<CheckboxCheckedIcon size={size} />}
+                        indeterminateIcon={
+                            <CheckboxIndeterminateIcon size={size} />
+                        }
                         inputRef={ref}
                         sx={{ ...checkboxSx }}
                         {...rest}
