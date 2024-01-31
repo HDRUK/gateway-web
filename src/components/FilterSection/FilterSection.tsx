@@ -13,17 +13,22 @@ interface FilterSectionProps {
     filterItems: { label: string; value: string }[];
     control: Control;
     filterSection: FilterType;
+    noFilterLabel?: string;
+    placeholder?: string;
     setValue: (name: FilterType, value: string | number) => void;
 }
 const FilterSection = ({
     filterItems,
     filterSection,
     control,
+    noFilterLabel,
+    placeholder,
     setValue,
 }: FilterSectionProps) => {
     const { field } = useController({ control, name: filterSection });
     const t = useTranslations("components.FilterSection");
-    if (!filterItems) return <Typography>{t("noFilters")}</Typography>;
+    if (!filterItems)
+        return <Typography>{noFilterLabel || t("noFilters")}</Typography>;
 
     return (
         <>
@@ -31,7 +36,7 @@ const FilterSection = ({
                 control={control}
                 name={filterSection}
                 label=""
-                placeholder={t("placeholder")}
+                placeholder={placeholder || t("placeholder")}
                 icon={SearchIcon}
                 showClearButton
                 setValue={setValue}
