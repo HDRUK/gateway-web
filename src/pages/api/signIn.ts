@@ -27,6 +27,7 @@ export default async function signIn(
         const cookie = serialize(config.JWT_COOKIE, data?.access_token, {
             httpOnly: true,
             path: "/",
+            domain: ".dev.hdruk.cloud",
         });
 
         res.setHeader("Set-Cookie", cookie);

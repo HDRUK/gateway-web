@@ -13,16 +13,8 @@ import * as styles from "./Header.styles";
 /** @jsxImportSource @emotion/react */
 
 function Header() {
-    const HOTJAR_ENV = "NEXT_PUBLIC_HOTJAR_ID";
-    const PUBLIC_ENV = "NEXT_PUBLIC_API_V1_URL";
-    const HOTJAR_ID = process.env[HOTJAR_ENV];
+    const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
     const HOTJAR_VERSION = 6;
-
-    console.log(
-        `DEBUG ENV TEST - HOTJAR_ID=${HOTJAR_ID} - NEXT_PUBLIC_API_V1_URL=${process.env[PUBLIC_ENV]}`
-    );
-
-    console.log(process.env.NEXT_PUBLIC_API_V1_URL);
 
     const [showNavList, setShowNavList] = useState(false);
 

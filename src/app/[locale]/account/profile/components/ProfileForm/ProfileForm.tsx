@@ -21,12 +21,6 @@ import {
 } from "@/config/forms/profile";
 import KeepingUpdated from "../KeepingUpdated";
 
-console.log(
-    "without CLIENT NEXT_PUBLIC_API_V1_URL: ",
-    process.env.NEXT_PUBLIC_API_V1_URL
-);
-console.log("without CLIENT API_V1_URL: ", process.env.API_V1_URL);
-
 const ProfileForm = () => {
     const { user } = useAuth();
     const updateProfile = usePut<User>(apis.usersV1Url, {

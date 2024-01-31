@@ -2,6 +2,8 @@ const apiV1Url = process.env.NEXT_PUBLIC_API_V1_URL;
 const apiV1IPUrl = process.env.NEXT_PUBLIC_API_V1_IP_URL;
 
 const apis = {
+    apiV1Url,
+    apiV1IPUrl,
     logoutInternalUrl: "/api/logout",
     signInInternalUrl: "/api/signIn",
     authInternalUrl: "/api/auth",

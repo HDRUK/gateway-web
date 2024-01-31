@@ -20,6 +20,7 @@ export default async function handler(
         const cookie = serialize(config.JWT_COOKIE, "", {
             expires: new Date(0),
             path: "/",
+            domain: ".dev.hdruk.cloud",
         });
         res.setHeader("Set-Cookie", cookie);
         res.status(200).json({ message: "success" });

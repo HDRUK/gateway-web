@@ -16,7 +16,7 @@ const IntegrationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const params = useParams<{ teamId: string }>();
-
+    console.log("apis.teamsV1Url with use client: ", apis.teamsV1Url);
     const { data, isLoading } = useGet<PaginationType<Integration>>(
         `${apis.teamsV1Url}/${params?.teamId}/federations?per_page=10&page=${currentPage}`,
         {
