@@ -22,7 +22,7 @@ export default async function handler(
             expires: new Date(0),
             path: "/",
             ...(process.env.NODE_ENV !== "development" && {
-                domain: extractSubdomain(apis.apiV1IPUrl),
+                domain: extractSubdomain(apis.apiV1IPUrl) || "",
             }),
         });
         res.setHeader("Set-Cookie", cookie);

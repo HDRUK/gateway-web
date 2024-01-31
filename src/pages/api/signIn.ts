@@ -29,7 +29,7 @@ export default async function signIn(
             httpOnly: true,
             path: "/",
             ...(process.env.NODE_ENV !== "development" && {
-                domain: extractSubdomain(apis.apiV1IPUrl),
+                domain: extractSubdomain(apis.apiV1IPUrl) || "",
             }),
         });
 
