@@ -10,12 +10,15 @@ mockRouter.query = { teamId: "1", tab: "ACTIVE" };
 describe("TeamDatasets", () => {
     it("should render all datasets (filtered on BE)", async () => {
         const mockDatasets = [
-            generateDatasetV1({
+            generateDatasetV1("1.0", {
                 create_origin: "MANUAL",
                 status: "ARCHIVED",
             }),
-            generateDatasetV1({ create_origin: "API", status: "ACTIVE" }),
-            generateDatasetV1({ create_origin: "FMA", status: "DRAFT" }),
+            generateDatasetV1("1.0", {
+                create_origin: "API",
+                status: "ACTIVE",
+            }),
+            generateDatasetV1("1.0", { create_origin: "FMA", status: "DRAFT" }),
         ];
         server.use(getDatasetsV1(mockDatasets));
         render(<TeamDatasets />);
@@ -59,6 +62,50 @@ describe("TeamDatasets", () => {
             expect(
                 screen.getByText(
                     "No active datasets found on the Gateway for your team."
+                )
+            ).toBeInTheDocument();
+        });
+    });
+});
+
+describe("TeamDatasets", () => {
+    it("should render all datasets (filtered on BE)", async () => {
+        const mockDatasets = [
+            generateDatasetV1("1.0", {
+                create_origin: "API",
+                status: "ACTIVE",
+            }),
+            generateDatasetV1("1.0", {
+                create_origin: "API",
+                status: "ACTIVE",
+            }),
+            generateDatasetV1("1.1", {
+                create_origin: "API",
+                status: "ACTIVE",
+            }),
+        ];
+        server.use(getDatasetsV1(mockDatasets));
+        render(<TeamDatasets />);
+
+        await waitFor(() => {
+            const datasetCards = screen.getAllByTestId("dataset-card");
+            expect(datasetCards).toHaveLength(3);
+
+            expect(
+                within(datasetCards[0]).getByText(
+                    `${mockDatasets[0].versions[0].metadata.metadata.summary.publisher.publisherName}`
+                )
+            ).toBeInTheDocument();
+
+            expect(
+                within(datasetCards[1]).getByText(
+                    `${mockDatasets[1].versions[1].metadata.metadata.summary.publisher.publisherName}`
+                )
+            ).toBeInTheDocument();
+
+            expect(
+                within(datasetCards[2]).getByText(
+                    `${mockDatasets[2].versions[2].metadata.metadata.summary.publisher.name}`
                 )
             ).toBeInTheDocument();
         });
