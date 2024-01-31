@@ -1,4 +1,5 @@
 import { Control, useController } from "react-hook-form";
+import { SerializedStyles } from "@emotion/react";
 import {
     InputAdornment,
     OutlinedInput,
@@ -27,6 +28,7 @@ export interface TextFieldBaseProps {
     control: Control;
     required?: boolean;
     formControlSx?: SxProps;
+    css?: SerializedStyles;
 }
 
 const TextFieldBase = (props: TextFieldBaseProps) => {
