@@ -49,7 +49,6 @@ describe("SearchBar", () => {
         await userEvent.type(input, "{Enter}");
 
         await waitFor(() => {
-            console.log(onSubmit);
             expect(onSubmit).toHaveBeenCalled();
         });
     });
