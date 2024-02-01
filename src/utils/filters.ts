@@ -17,13 +17,18 @@ const convertFilterTypesToObj = <T>(
 
 const groupByType = (
     data: Filter[]
-): { [key in FilterType]: { label: string; value: string }[] } => {
+): {
+    [key in FilterType]: { label: string; value: string; count?: number }[];
+} => {
     return data.reduce((acc, item) => {
         const { type, ...rest } = item;
         acc[type] = acc[type] || [];
-        acc[type].push({ value: rest.id.toString(), label: rest.value });
+        acc[type].push({
+            value: rest.id.toString(),
+            label: rest.value,
+        });
         return acc;
-    }, {} as { [key in FilterType]: { label: string; value: string }[] });
+    }, {} as { [key in FilterType]: { label: string; value: string; count?: number }[] });
 };
 
 export { groupByType, convertFilterTypesToObj };
