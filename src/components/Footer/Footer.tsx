@@ -22,11 +22,11 @@ const Footer = () => {
             label: "HDR UK",
         },
         {
-            href: "/about-us",
+            href: "",
             label: "About",
         },
         {
-            href: "/contact-us",
+            href: "",
             label: "Contact us",
         },
         {

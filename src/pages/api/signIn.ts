@@ -3,6 +3,7 @@ import { serialize } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import apis from "@/config/apis";
 import config from "@/config/config";
+import { extractSubdomain } from "@/utils/general";
 import http from "@/utils/http";
 
 interface PostResponse {
@@ -27,6 +28,9 @@ export default async function signIn(
         const cookie = serialize(config.JWT_COOKIE, data?.access_token, {
             httpOnly: true,
             path: "/",
+            ...(process.env.NODE_ENV !== "development" && {
+                domain: extractSubdomain(apis.apiV1IPUrl) || "",
+            }),
         });
 
         res.setHeader("Set-Cookie", cookie);

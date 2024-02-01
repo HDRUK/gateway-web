@@ -12,10 +12,10 @@ import * as styles from "./Header.styles";
 
 /** @jsxImportSource @emotion/react */
 
-const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
-const HOTJAR_VERSION = 6;
-
 function Header() {
+    const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
+    const HOTJAR_VERSION = 6;
+
     const [showNavList, setShowNavList] = useState(false);
 
     const menuClickHandler = () => {

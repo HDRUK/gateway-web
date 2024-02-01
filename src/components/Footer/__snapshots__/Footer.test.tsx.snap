@@ -33,7 +33,7 @@ exports[`Footer should render component 1`] = `
         <li>
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-cvsvsh-MuiTypography-root-MuiLink-root"
-            href="/about-us"
+            href=""
           >
             About
           </a>
@@ -41,7 +41,7 @@ exports[`Footer should render component 1`] = `
         <li>
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-cvsvsh-MuiTypography-root-MuiLink-root"
-            href="/contact-us"
+            href=""
           >
             Contact us
           </a>

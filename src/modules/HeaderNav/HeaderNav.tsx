@@ -89,8 +89,8 @@ function HeaderNav({ showNavList }: HeaderNavProps) {
     ];
     const navLinks = [
         { label: "Releases", href: "/about/releases" },
-        { label: "News", href: "/news" },
-        { label: "Community", href: "/community" },
+        { label: "News", href: "" },
+        { label: "Community", href: "" },
     ];
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
