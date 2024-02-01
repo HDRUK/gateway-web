@@ -16,8 +16,8 @@ describe("General utils", () => {
         expect(getTrimmedpathname("en", "/en/the/route")).toEqual("/the/route");
     });
     it("should return url without subdomain", async () => {
-        expect(
-            extractSubdomain("https://api.dev.hdruk.cloud.uk/api/va")
-        ).toEqual(".dev.hdruk.cloud.uk");
+        expect(extractSubdomain("https://api.foo.bar.baz.uk/api/v1")).toEqual(
+            ".foo.bar.baz.uk"
+        );
     });
 });
