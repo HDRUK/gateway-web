@@ -28,7 +28,7 @@ export default async function TeamApiEditCreatePage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.integrations.api-management"]}>
+            pagePermissions={["applications.update"]}>
             <BackButton label="Back to API Management" />
             <EditApplicationForm application={application} isTabView={false} />
         </ProtectedAccountRoute>

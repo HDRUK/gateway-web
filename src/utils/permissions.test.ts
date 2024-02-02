@@ -9,7 +9,7 @@ import { getPermissions } from "./permissions";
 const userRoles: Role[] = [
     generateRoleV1({
         name: ROLE_HDRUK_SUPERADMIN,
-        permissions: [],
+        permissions: [{ name: "dur.read" }],
         enabled: true,
     }),
 ];
@@ -17,7 +17,7 @@ const userRoles: Role[] = [
 const teamRoles: Role[] = [
     generateRoleV1({
         name: ROLE_CUSTODIAN_TEAM_ADMIN,
-        permissions: [],
+        permissions: [{ name: "custodians.delete" }],
         enabled: true,
     }),
 ];
@@ -25,21 +25,20 @@ const teamRoles: Role[] = [
 describe("Permissions utils", () => {
     it("should return a permissions object for team admin", () => {
         const result = getPermissions([], teamRoles);
-
-        expect(result["fe.account.team_management.member.delete"]).toBeTruthy();
-        expect(result["fe.account.nav.dur"]).toBeFalsy();
+        expect(result["custodians.delete"]).toBeTruthy();
+        expect(result["dur.read"]).toBeFalsy();
     });
     it("should return a permissions object for team admin and superadmin", () => {
         const result = getPermissions(userRoles, teamRoles);
 
-        expect(result["fe.account.team_management.member.delete"]).toBeTruthy();
-        expect(result["fe.account.nav.dur"]).toBeTruthy();
+        expect(result["custodians.delete"]).toBeTruthy();
+        expect(result["dur.read"]).toBeTruthy();
     });
 
     it("should handle empty userRoles and teamRoles", () => {
         const result = getPermissions([], []);
 
-        expect(result["fe.account.team_management.member.delete"]).toBeFalsy();
-        expect(result["fe.account.nav.dur"]).toBeFalsy();
+        expect(result["custodians.delete"]).toBeFalsy();
+        expect(result["dur.read"]).toBeFalsy();
     });
 });

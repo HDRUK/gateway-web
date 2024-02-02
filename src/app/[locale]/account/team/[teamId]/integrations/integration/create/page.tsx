@@ -34,7 +34,7 @@ export default async function TeamCreateIntegrationPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.integrations.integration"]}>
+            pagePermissions={["integrations.metadata", "integrations.dar"]}>
             <BackButton label="Back to Integration Management" />
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>

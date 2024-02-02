@@ -25,7 +25,7 @@ export default async function TeamApiManagementPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.integrations.api-management"]}>
+            pagePermissions={["applications.read"]}>
             <ApiManagement />
         </ProtectedAccountRoute>
     );

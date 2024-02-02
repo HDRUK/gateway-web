@@ -39,7 +39,11 @@ interface CountStatus {
     ARCHIVED?: number;
 }
 
-const TeamDatasets = () => {
+interface TeamDatasetsProps {
+    permissions: { [key: string]: boolean };
+}
+
+const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.TeamDatasets`
     );
@@ -131,18 +135,31 @@ const TeamDatasets = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryParams.page]);
 
+    const showArchiveButton =
+        tab !== "ARCHIVED" && permissions["datasets.delete"];
+    const showUnarchiveButton =
+        tab === "ARCHIVED" && permissions["datasets.update"];
+
     const actions = [
-        {
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}`,
-            icon: EditIcon,
-            label: t("actions.edit.label"),
-        },
-        {
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}/${RouteName.DUPLICATE}`,
-            icon: ContentCopyIcon,
-            label: t("actions.duplicate.label"),
-        },
-        ...(tab === "ARCHIVED"
+        ...(permissions["datasets.update"]
+            ? [
+                  {
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}`,
+                      icon: EditIcon,
+                      label: t("actions.edit.label"),
+                  },
+              ]
+            : []),
+        ...(permissions["datasets.create"]
+            ? [
+                  {
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}/${RouteName.DUPLICATE}`,
+                      icon: ContentCopyIcon,
+                      label: t("actions.duplicate.label"),
+                  },
+              ]
+            : []),
+        ...(showUnarchiveButton
             ? [
                   {
                       action: (id: number) => {
@@ -174,7 +191,7 @@ const TeamDatasets = () => {
                   },
               ]
             : []),
-        ...(tab !== "ARCHIVED"
+        ...(showArchiveButton
             ? [
                   {
                       action: async (id: number) => {

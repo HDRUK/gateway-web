@@ -31,7 +31,7 @@ export default async function TeamDataUsesPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.dur"]}>
+            pagePermissions={["dur.read"]}>
             <Paper>
                 <Box>
                     <Typography variant="h2">{t(TITLE)}</Typography>
