@@ -34,7 +34,7 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
     const title = get(metadata, "summary.title") as unknown as string;
     const publisherName = get(
         metadata,
-        gwdmVersion === "1.0"
+        gwdmVersion === undefined || gwdmVersion === "1.0"
             ? "summary.publisher.publisherName"
             : "summary.publisher.name"
     ) as unknown as string;
