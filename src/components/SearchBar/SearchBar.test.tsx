@@ -19,7 +19,7 @@ describe("SearchBar", () => {
 
         return (
             <SearchBar
-                control={control as any}
+                control={control}
                 explainerText={EXPLAINER_TEXT}
                 resetAction={onReset}
                 resetDisabled={false}
