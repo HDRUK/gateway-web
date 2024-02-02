@@ -8,7 +8,7 @@ import TeamDatasets from "./TeamDatasets";
 mockRouter.query = { teamId: "1", tab: "ACTIVE" };
 
 describe("TeamDatasets", () => {
-    /* it("should render all datasets (filtered on BE)", async () => {
+    it("should render all datasets (filtered on BE)", async () => {
         const mockDatasets = [
             generateDatasetV1("1.0", {
                 create_origin: "MANUAL",
@@ -65,7 +65,7 @@ describe("TeamDatasets", () => {
                 )
             ).toBeInTheDocument();
         });
-    }); */
+    });
 
     it("should render all datasets (with different GWDM versions)", async () => {
         const mockDatasets = [
