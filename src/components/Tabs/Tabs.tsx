@@ -1,7 +1,7 @@
 "use client";
 
 /** @jsxImportSource @emotion/react */
-import { ReactNode, forwardRef } from "react";
+import { ElementType, ReactNode, forwardRef } from "react";
 import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
 import MuiTabPanel from "@mui/lab/TabPanel";
