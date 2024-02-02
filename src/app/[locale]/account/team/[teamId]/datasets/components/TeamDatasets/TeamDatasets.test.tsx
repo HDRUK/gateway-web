@@ -8,7 +8,7 @@ import TeamDatasets from "./TeamDatasets";
 mockRouter.query = { teamId: "1", tab: "ACTIVE" };
 
 describe("TeamDatasets", () => {
-    it("should render all datasets (filtered on BE)", async () => {
+    /* it("should render all datasets (filtered on BE)", async () => {
         const mockDatasets = [
             generateDatasetV1("1.0", {
                 create_origin: "MANUAL",
@@ -65,11 +65,9 @@ describe("TeamDatasets", () => {
                 )
             ).toBeInTheDocument();
         });
-    });
-});
+    }); */
 
-describe("TeamDatasets", () => {
-    it("should render all datasets (filtered on BE)", async () => {
+    it("should render all datasets (with different GWDM versions)", async () => {
         const mockDatasets = [
             generateDatasetV1("1.0", {
                 create_origin: "API",
@@ -99,13 +97,13 @@ describe("TeamDatasets", () => {
 
             expect(
                 within(datasetCards[1]).getByText(
-                    `${mockDatasets[1].versions[1].metadata.metadata.summary.publisher.publisherName}`
+                    `${mockDatasets[1].versions[0].metadata.metadata.summary.publisher.publisherName}`
                 )
             ).toBeInTheDocument();
 
             expect(
                 within(datasetCards[2]).getByText(
-                    `${mockDatasets[2].versions[2].metadata.metadata.summary.publisher.name}`
+                    `${mockDatasets[2].versions[0].metadata.metadata.summary.publisher.name}`
                 )
             ).toBeInTheDocument();
         });

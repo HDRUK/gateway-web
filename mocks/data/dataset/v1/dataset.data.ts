@@ -11,6 +11,7 @@ const generateDatasetMetadataV1 = (): { metadata: Metadata } => {
                 },
             },
         },
+        gwdmVersion: "1.0",
     };
 };
 
@@ -24,6 +25,7 @@ const generateDatasetMetadataV1p1 = (): { metadata: Metadata } => {
                 },
             },
         },
+        gwdmVersion: "1.1",
     };
 };
 
