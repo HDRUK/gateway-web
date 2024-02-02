@@ -1,12 +1,11 @@
 "use client";
 
 /** @jsxImportSource @emotion/react */
-import { ElementType, ReactNode, forwardRef } from "react";
+import { ReactNode, forwardRef } from "react";
 import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
 import MuiTabPanel from "@mui/lab/TabPanel";
-import { Tab as MuiTab, SxProps, TabsProps } from "@mui/material";
-import { IconButton, Typography, useTheme } from "@mui/material";
+import { Tab as MuiTab, SxProps } from "@mui/material";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import Box from "@/components/Box";
@@ -70,8 +69,7 @@ const Tabs = ({
     renderTabContent = true,
 }: TabProps) => {
     const searchParams = useSearchParams();
-    const currentTab = searchParams?.get("tab");
-    const theme = useTheme();
+    const currentTab = searchParams?.get(paramName);
 
     const selectedTab = currentTab || tabs[0].value;
 
