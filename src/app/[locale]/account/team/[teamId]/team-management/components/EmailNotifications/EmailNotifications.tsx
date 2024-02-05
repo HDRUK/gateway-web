@@ -56,10 +56,7 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
 
     const hydratedSections = useMemo(() => {
         const [mySection, teamSection] = emailNotificationFormSections;
-        const isTeamAdmin =
-            permissions[
-                "fe.account.team_management.notifications.team_section"
-            ];
+        const isTeamAdmin = permissions["notifications.update"];
 
         return [
             mySection,

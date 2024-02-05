@@ -26,7 +26,7 @@ export default async function TeamIntegrationsListPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.integrations.integration"]}>
+            pagePermissions={["integrations.metadata", "integrations.dar"]}>
             <BackButton label="Back to Integration management" />
             <IntegrationList />
         </ProtectedAccountRoute>

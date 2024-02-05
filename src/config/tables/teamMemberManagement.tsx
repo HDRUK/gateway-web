@@ -228,7 +228,7 @@ const getColumns = ({
                 />
             ),
         },
-        ...(permissions["fe.account.team_management.member.delete"]
+        ...(permissions["custodians.delete"]
             ? [
                   {
                       id: "furtherActions",

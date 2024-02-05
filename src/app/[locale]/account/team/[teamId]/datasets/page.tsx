@@ -40,7 +40,7 @@ export default async function TeamDatasetsPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.datasets"]}>
+            pagePermissions={["datasets.read"]}>
             <BoxContainer sx={{ gap: 0 }}>
                 <Paper>
                     <Box sx={{ bgcolor: "white", mb: 0 }}>
@@ -48,7 +48,7 @@ export default async function TeamDatasetsPage({
                         <Typography>{t(TEXT)}</Typography>
                     </Box>
                 </Paper>
-                <TeamDatasets />
+                <TeamDatasets permissions={permissions} />
             </BoxContainer>
         </ProtectedAccountRoute>
     );

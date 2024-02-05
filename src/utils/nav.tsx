@@ -53,7 +53,7 @@ const getTeamNav = (
             label: "Team Management",
             href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
         },
-        ...(permissions["fe.account.nav.datasets"]
+        ...(permissions["datasets.read"]
             ? [
                   {
                       icon: <StorageOutlinedIcon />,
@@ -63,16 +63,16 @@ const getTeamNav = (
               ]
             : []),
         ...([
-            permissions["fe.account.nav.dar.applications"],
-            permissions["fe.account.nav.dar.workflows"],
-            permissions["fe.account.nav.dar.editForm"],
+            permissions["dar.read.assigned"],
+            permissions["workflows.read"],
+            permissions["dar-form.update"],
         ].some(isTrue => isTrue)
             ? [
                   {
                       icon: <GroupsOutlinedIcon />,
                       label: "Data Access Requests",
                       subItems: [
-                          ...(permissions["fe.account.nav.dar.applications"]
+                          ...(permissions["dar.read.assigned"]
                               ? [
                                     {
                                         label: "Applications",
@@ -80,7 +80,7 @@ const getTeamNav = (
                                     },
                                 ]
                               : []),
-                          ...(permissions["fe.account.nav.dar.workflows"]
+                          ...(permissions["workflows.read"]
                               ? [
                                     {
                                         label: "Workflows",
@@ -88,7 +88,7 @@ const getTeamNav = (
                                     },
                                 ]
                               : []),
-                          ...(permissions["fe.account.nav.dar.editForm"]
+                          ...(permissions["dar-form.update"]
                               ? [
                                     {
                                         label: "Edit Form",
@@ -100,7 +100,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...(permissions["fe.account.nav.dur"]
+        ...(permissions["dur.read"]
             ? [
                   {
                       icon: <SchemaOutlinedIcon />,
@@ -110,17 +110,16 @@ const getTeamNav = (
               ]
             : []),
         ...([
-            permissions["fe.account.nav.integrations.api-management"],
-            permissions["fe.account.nav.integrations.integration"],
+            permissions["integrations.metadata"],
+            permissions["integrations.dar"],
+            permissions["applications.read"],
         ].some(isTrue => isTrue)
             ? [
                   {
                       icon: <DescriptionOutlinedIcon />,
                       label: "Integrations",
                       subItems: [
-                          ...(permissions[
-                              "fe.account.nav.integrations.api-management"
-                          ]
+                          ...(permissions["applications.read"]
                               ? [
                                     {
                                         label: "API management",
@@ -128,9 +127,10 @@ const getTeamNav = (
                                     },
                                 ]
                               : []),
-                          ...(permissions[
-                              "fe.account.nav.integrations.integration"
-                          ]
+                          ...([
+                              permissions["integrations.metadata"],
+                              permissions["integrations.dar"],
+                          ].some(isTrue => isTrue)
                               ? [
                                     {
                                         label: "Integration",

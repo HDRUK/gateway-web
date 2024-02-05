@@ -35,8 +35,9 @@ describe("LeftNav", () => {
             <LeftNav
                 teamId="1"
                 permissions={{
-                    "fe.account.nav.integrations.api-management": true,
-                    "fe.account.nav.integrations.integration": true,
+                    "applications.read": true,
+                    "integrations.metadata": true,
+                    "integrations.dar": true,
                 }}
             />
         );

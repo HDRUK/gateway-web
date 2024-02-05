@@ -18,10 +18,7 @@ describe("Nav utils", () => {
         });
 
         it("should include Datasets item", () => {
-            const navItems = getTeamNav(
-                { "fe.account.nav.datasets": true },
-                teamId
-            );
+            const navItems = getTeamNav({ "datasets.read": true }, teamId);
             const datasetsItem = navItems.find(
                 item => item.label === "Datasets"
             );
@@ -33,10 +30,7 @@ describe("Nav utils", () => {
         });
 
         it("should include Data Access Requests Applications item", () => {
-            const navItems = getTeamNav(
-                { "fe.account.nav.dar.applications": true },
-                teamId
-            );
+            const navItems = getTeamNav({ "dar.read.assigned": true }, teamId);
             const darItem = navItems.find(
                 item => item.label === "Data Access Requests"
             );
@@ -53,10 +47,7 @@ describe("Nav utils", () => {
             );
         });
         it("should include Data Access Requests Workflows item", () => {
-            const navItems = getTeamNav(
-                { "fe.account.nav.dar.workflows": true },
-                teamId
-            );
+            const navItems = getTeamNav({ "workflows.read": true }, teamId);
             const darItem = navItems.find(
                 item => item.label === "Data Access Requests"
             );
@@ -74,10 +65,7 @@ describe("Nav utils", () => {
             );
         });
         it("should include Data Access Requests Edit form", () => {
-            const navItems = getTeamNav(
-                { "fe.account.nav.dar.editForm": true },
-                teamId
-            );
+            const navItems = getTeamNav({ "dar-form.update": true }, teamId);
             const darItem = navItems.find(
                 item => item.label === "Data Access Requests"
             );
@@ -96,7 +84,7 @@ describe("Nav utils", () => {
         });
 
         it("should include Data Uses item", () => {
-            const navItems = getTeamNav({ "fe.account.nav.dur": true }, teamId);
+            const navItems = getTeamNav({ "dur.read": true }, teamId);
             const dataUsesItem = navItems.find(
                 item => item.label === "Data Uses"
             );
@@ -108,10 +96,7 @@ describe("Nav utils", () => {
         });
 
         it("should include API management", () => {
-            const navItems = getTeamNav(
-                { "fe.account.nav.integrations.api-management": true },
-                teamId
-            );
+            const navItems = getTeamNav({ "applications.read": true }, teamId);
             const integrationsItem = navItems.find(
                 item => item.label === "Integrations"
             );
@@ -131,7 +116,7 @@ describe("Nav utils", () => {
 
         it("should include Integrations", () => {
             const navItems = getTeamNav(
-                { "fe.account.nav.integrations.integration": true },
+                { "integrations.metadata": true, "integrations.dar": true },
                 teamId
             );
             const integrationsItem = navItems.find(
