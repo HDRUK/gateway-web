@@ -37,7 +37,7 @@ describe("LeftNav", () => {
                 permissions={{
                     "applications.read": true,
                     "integrations.metadata": true,
-                    "integrations.sar": true,
+                    "integrations.dar": true,
                 }}
             />
         );
