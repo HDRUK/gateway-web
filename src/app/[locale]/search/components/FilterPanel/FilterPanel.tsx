@@ -76,7 +76,7 @@ const FilterPanel = ({ filters }: { filters: Filter[] }) => {
             <BarSlider
                 step={1000}
                 data={mockData}
-                ariaLabel="Dataset Population"
+                ariaLabel={t("populationSize")}
                 height={130}
             />
         </>
