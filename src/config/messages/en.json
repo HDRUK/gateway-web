@@ -217,6 +217,13 @@
         "home": {
             "title": "Gateway to health data and tools for research",
             "text": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery."
+        },
+        "search": {
+            "components": {
+                "FilterPanel": {
+                    "populationSize": "Population size"
+                }
+            }
         }
     },
     "components": {

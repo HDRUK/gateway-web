@@ -7,6 +7,12 @@ require("jest-fetch-mock").enableMocks();
 
 jest.mock("next/router", () => nextRouterMock);
 
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+}));
+
 jest.mock("next/navigation", () => {
     const { useRouter } = nextRouterMock;
     const usePathname = () => {
