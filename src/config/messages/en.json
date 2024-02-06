@@ -219,6 +219,10 @@
             "text": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery."
         },
         "search": {
+            "datasets": "Datasets",
+            "dataUse": "Data Use",
+            "searchExplainer": "Search by keywords, phenotypes, ICD10 codes",
+            "searchPlaceholder": "Enter your search term",
             "components": {
                 "FilterPanel": {
                     "populationSize": "Population size",
