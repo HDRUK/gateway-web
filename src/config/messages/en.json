@@ -222,7 +222,13 @@
             "datasets": "Datasets",
             "dataUse": "Data Use",
             "searchExplainer": "Search by keywords, phenotypes, ICD10 codes",
-            "searchPlaceholder": "Enter your search term"
+            "searchPlaceholder": "Enter your search term",
+            "components": {
+                "FilterPanel": {
+                    "populationSize": "Population size",
+                    "datasetPopulation": "Dataset Population"
+                }
+            }
         }
     },
     "components": {

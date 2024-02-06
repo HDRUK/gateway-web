@@ -8,8 +8,8 @@ describe("FilterSection", () => {
         return (
             <FilterSection
                 filterItems={[
-                    { value: "1", label: "course 1" },
-                    { value: "2", label: "course 2" },
+                    { value: "1", label: "course 1", count: 234 },
+                    { value: "2", label: "course 2", count: 0 },
                 ]}
                 filterSection="course"
                 setValue={setValue}
@@ -21,6 +21,8 @@ describe("FilterSection", () => {
         render(<Component />);
         expect(screen.getByText("course 1")).toBeInTheDocument();
         expect(screen.getByText("course 2")).toBeInTheDocument();
+        expect(screen.getByText(234)).toBeInTheDocument();
+        expect(screen.getByText(0)).toBeInTheDocument();
     });
     it("should filter items and reset", () => {
         render(<Component />);

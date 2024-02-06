@@ -27,7 +27,7 @@ export default async function TeamIntegrationsPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.integrations.integration"]}>
+            pagePermissions={["integrations.metadata", "integrations.dar"]}>
             <Box
                 sx={{
                     gridColumn: { tablet: "span 3", laptop: "span 4" },

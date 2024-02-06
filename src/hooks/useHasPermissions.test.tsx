@@ -5,7 +5,7 @@ import { useHasPermissions } from "@/hooks/useHasPermission";
 import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 import { renderHook, waitFor } from "@/utils/testUtils";
 import { teamV1 } from "@/mocks/data/team";
-import { userV1 } from "@/mocks/data/user";
+import { generatePermissionV1, userV1 } from "@/mocks/data/user";
 import { getTeamV1 } from "@/mocks/handlers/teams";
 import { server } from "@/mocks/server";
 
@@ -26,6 +26,11 @@ describe("useHasPermissions", () => {
                                 ...teamV1.users[0].roles[0],
                                 enabled: true,
                                 name: ROLE_CUSTODIAN_TEAM_ADMIN,
+                                permissions: [
+                                    generatePermissionV1({
+                                        name: "custodians.delete",
+                                    }),
+                                ],
                             },
                         ],
                     },
@@ -49,7 +54,7 @@ describe("useHasPermissions", () => {
         await waitFor(() => {
             expect(
                 (result.current as { [key: string]: boolean })[
-                    "fe.account.team_management.member.delete"
+                    "custodians.delete"
                 ]
             ).toBeTruthy();
         });
@@ -57,7 +62,7 @@ describe("useHasPermissions", () => {
         await waitFor(() => {
             expect(
                 (result.current as { [key: string]: boolean })[
-                    "fe.account.nav.dar.applications.read"
+                    "application.read"
                 ]
             ).toBeFalsy();
         });

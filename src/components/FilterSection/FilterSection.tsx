@@ -10,7 +10,7 @@ import Typography from "@/components/Typography";
 import { SearchIcon } from "@/consts/icons";
 
 interface FilterSectionProps {
-    filterItems: { label: string; value: string }[];
+    filterItems: { label: string; value: string; count?: number }[];
     control: Control;
     filterSection: FilterType;
     noFilterLabel?: string;

@@ -26,7 +26,7 @@ export default async function TeamApplicationPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.integrations.api-management"]}>
+            pagePermissions={["applications.read"]}>
             <BackButton label="Back to API selection" />
             <ApplicationTabs />
         </ProtectedAccountRoute>

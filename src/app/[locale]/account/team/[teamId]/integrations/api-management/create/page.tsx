@@ -44,7 +44,7 @@ export default async function TeamCreatePage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.integrations.api-management"]}>
+            pagePermissions={["applications.create"]}>
             <BackButton label="Back to API Management" />
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>

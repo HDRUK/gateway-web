@@ -337,6 +337,7 @@ const theme = createTheme({
                 },
                 label: {
                     fontSize: 14,
+                    width: "100%",
                 },
                 asterisk: {
                     color: palette.error.main,

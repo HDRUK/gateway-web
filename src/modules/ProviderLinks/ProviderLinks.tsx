@@ -60,6 +60,7 @@ const ProviderLinks = () => {
                 <Link
                     href={link.href}
                     key={link.image}
+                    prefetch={false}
                     underline="none"
                     sx={{ color: colors.grey700 }}>
                     <Box

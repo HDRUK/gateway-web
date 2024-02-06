@@ -29,7 +29,7 @@ const WrapperComponent = () => {
     return (
         <SearchBar
             control={control}
-            explainerText={"Search by keywords, phenotypes, ICD10 codes"}
+            explainerText="Search by keywords, phenotypes, ICD10 codes"
             resetAction={reset}
             resetDisabled={!formState.isDirty}
             submitAction={handleSubmit(onSubmit)}

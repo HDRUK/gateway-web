@@ -57,7 +57,7 @@ const ApplicationSearchBar = ({
                     : "",
             page: "1",
         }));
-    }, [watchAll.status.enabled, watchAll.status.disabled]);
+    }, [watchAll.status.enabled, watchAll.status.disabled, setQueryParams]);
 
     return (
         <Paper>

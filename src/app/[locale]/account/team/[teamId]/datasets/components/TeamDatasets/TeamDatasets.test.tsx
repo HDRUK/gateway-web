@@ -18,7 +18,7 @@ describe("TeamDatasets", () => {
             generateDatasetV1({ create_origin: "FMA", status: "DRAFT" }),
         ];
         server.use(getDatasetsV1(mockDatasets));
-        render(<TeamDatasets />);
+        render(<TeamDatasets permissions={{}} />);
 
         await waitFor(() => {
             const datasetCards = screen.getAllByTestId("dataset-card");
@@ -53,7 +53,7 @@ describe("TeamDatasets", () => {
     });
     it("should render message if no active datasets", async () => {
         server.use(getDatasetsV1([]));
-        render(<TeamDatasets />);
+        render(<TeamDatasets permissions={{}} />);
 
         await waitFor(() => {
             expect(

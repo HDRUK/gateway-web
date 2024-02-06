@@ -29,7 +29,7 @@ export default async function TeamDatasetPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["fe.account.nav.datasets"]}>
+            pagePermissions={["datasets.update"]}>
             <BoxContainer sx={{ gap: 0 }}>
                 <Paper>
                     <Box sx={{ bgcolor: "white", mb: 0 }}>

@@ -10,4 +10,22 @@ const getTrimmedpathname = (locale: string, pathname: string) => {
     return pathname.replace(`/${locale}`, "");
 };
 
-export { capitalise, splitCamelcase, getTrimmedpathname };
+function extractSubdomain(url: string) {
+    try {
+        const parsedUrl = new URL(url);
+        const hostnameParts = parsedUrl.hostname.split(".");
+
+        // Remove the first part (e.g., "api")
+        hostnameParts.shift();
+
+        // Join the remaining parts and prepend a dot
+        const subdomain = `.${hostnameParts.join(".")}`;
+
+        return subdomain;
+    } catch (error) {
+        console.error("Invalid URL:", url);
+        return null;
+    }
+}
+
+export { capitalise, splitCamelcase, extractSubdomain, getTrimmedpathname };

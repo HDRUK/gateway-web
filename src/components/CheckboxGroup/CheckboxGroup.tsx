@@ -17,7 +17,7 @@ export interface CheckboxGroupProps extends MuiCheckboxProps {
     extraInfo?: string;
     limit?: number;
     spacing?: number;
-    checkboxes: { value: string; label: string }[];
+    checkboxes: { value: string; label: string; count?: number }[];
     control: Control;
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
@@ -47,7 +47,6 @@ const CheckboxGroup = ({
         name,
         control,
     });
-
     return (
         <FormInputWrapper
             label={label}
