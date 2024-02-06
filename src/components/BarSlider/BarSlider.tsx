@@ -54,18 +54,26 @@ const BarSlider = ({
         [data, yMax]
     );
 
+    const getIsInRange = (d: dataType) => {
+        const [lowerRange, upperRange] = selected;
+        return d.xValue[0] >= lowerRange && d.xValue[1] <= upperRange;
+    };
+
+    const getBarData = (d: dataType) => {
+        const barWidth = xScale.bandwidth();
+        const barHeight = yMax - (yScale(d.yValue) ?? 0);
+        const barX = xScale(d.xValue[0]);
+        const barY = yMax - barHeight;
+        return { barWidth, barHeight, barX, barY };
+    };
+
     return width < 10 ? null : (
         <svg width={width} height={height}>
             <rect width={width} height={height} fill="transparent" rx={14} />
             <Group top={0}>
                 {data.map(d => {
-                    const [lowerRange, upperRange] = selected;
-                    const isInRange =
-                        d.xValue[0] >= lowerRange && d.xValue[1] <= upperRange;
-                    const barWidth = xScale.bandwidth();
-                    const barHeight = yMax - (yScale(d.yValue) ?? 0);
-                    const barX = xScale(d.xValue[0]);
-                    const barY = yMax - barHeight;
+                    const isInRange = getIsInRange(d);
+                    const { barWidth, barHeight, barX, barY } = getBarData(d);
                     return (
                         <Bar
                             key={`bar-${d.xValue[0]}`}
