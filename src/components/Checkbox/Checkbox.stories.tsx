@@ -79,6 +79,59 @@ const WrapperComponent = () => {
     );
 };
 
+const WrapperComponentWithCount = () => {
+    const { handleSubmit, control } = useForm<FormData>({
+        defaultValues: {
+            first: "",
+            second: false,
+            third: "",
+            fourth: "",
+        },
+        resolver: yupResolver(validationSchema),
+    });
+
+    const onSubmit = (data: unknown) => console.log(data);
+
+    return (
+        <Form onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
+                <CheckboxComponent
+                    label="Simple Checkbox"
+                    control={control}
+                    count={34}
+                    name="first"
+                />
+                <CheckboxComponent
+                    label="Required Checkbox"
+                    required
+                    control={control}
+                    count={23}
+                    name="second"
+                />
+                <CheckboxComponent
+                    label="Disabled Checkbox"
+                    disabled
+                    control={control}
+                    count={2}
+                    name="third"
+                />
+                <CheckboxComponent
+                    label="indeterminate Checkbox"
+                    indeterminate
+                    control={control}
+                    count={12}
+                    name="fourth"
+                />
+                <Button type="submit">Submit</Button>
+            </Stack>
+        </Form>
+    );
+};
+
 export const Checkbox: Story = {
     render: () => <WrapperComponent />,
+};
+
+export const WithCount: Story = {
+    render: () => <WrapperComponentWithCount />,
 };

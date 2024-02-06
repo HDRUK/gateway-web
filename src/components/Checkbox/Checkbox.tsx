@@ -9,6 +9,8 @@ import {
     CheckboxIcon,
     CheckboxIndeterminateIcon,
 } from "@/consts/icons";
+import Box from "../Box";
+import Typography from "../Typography";
 
 export interface CheckboxProps extends MuiCheckboxProps {
     label?: string;
@@ -18,6 +20,7 @@ export interface CheckboxProps extends MuiCheckboxProps {
     control: Control;
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
+    count?: number;
 }
 
 const Checkbox = (props: CheckboxProps) => {
@@ -29,6 +32,7 @@ const Checkbox = (props: CheckboxProps) => {
         size = "medium",
         checkboxSx,
         formControlSx,
+        count,
         ...rest
     } = props;
 
@@ -63,7 +67,22 @@ const Checkbox = (props: CheckboxProps) => {
                         {...fieldProps}
                     />
                 }
-                label={label}
+                label={
+                    count !== undefined ? (
+                        <Box
+                            sx={{
+                                p: 0,
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                            }}>
+                            {label}
+                            <Typography fontWeight={400}>{count}</Typography>
+                        </Box>
+                    ) : (
+                        label
+                    )
+                }
             />
             {error && <FormError error={error} />}
         </FormControl>
