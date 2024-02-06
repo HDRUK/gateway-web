@@ -1,5 +1,6 @@
 "use client";
 
+/** @jsxImportSource @emotion/react */
 import { ElementType, ReactNode, forwardRef } from "react";
 import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
@@ -9,11 +10,17 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
+import { tabsStyle } from "./Tabs.styles";
 
 interface Tab {
     label: string;
     value: string;
     content: ReactNode;
+}
+
+export enum TabVariant {
+    STANDARD = "standard",
+    LARGE = "large",
 }
 
 export interface TabProps {
@@ -22,11 +29,14 @@ export interface TabProps {
     centered?: boolean;
     tabBoxSx?: SxProps;
     rootBoxSx?: SxProps;
+    variant?: TabVariant;
+    paramName?: string;
+    renderTabContent?: boolean;
 }
 
 const CustomLink = forwardRef<
-    HTMLAnchorElement,
-    { href: string; children: ReactNode }
+    HTMLAnchorElement & { paramName: string },
+    { href: string; children: ReactNode; paramName: string }
 >((props, ref) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -38,9 +48,9 @@ const CustomLink = forwardRef<
             {...props}
             href={{
                 pathname,
-                query: {
-                    ...Object.fromEntries(searchParams.entries()),
-                    tab: props.href,
+                query: searchParams?.entries() && {
+                    ...Object.fromEntries(searchParams?.entries()),
+                    [props.paramName]: props.href,
                 },
             }}>
             {props.children}
@@ -54,9 +64,12 @@ const Tabs = ({
     introContent,
     tabBoxSx,
     rootBoxSx,
+    variant = TabVariant.STANDARD,
+    paramName = "tab",
+    renderTabContent = true,
 }: TabProps) => {
     const searchParams = useSearchParams();
-    const currentTab = searchParams.get("tab");
+    const currentTab = searchParams?.get(paramName);
 
     const selectedTab = currentTab || tabs[0].value;
 
@@ -64,11 +77,15 @@ const Tabs = ({
         <Box sx={{ width: "100%", typography: "body1", ...rootBoxSx }}>
             <MuiTabContext value={selectedTab}>
                 <Paper
+                    css={variant === TabVariant.LARGE && tabsStyle.tabList}
                     sx={{
                         paddingBottom: 0,
                         ...tabBoxSx,
+                        background: "none",
                     }}>
-                    <MuiTabList sx={{ mb: 1 }} centered={centered}>
+                    <MuiTabList
+                        sx={{ mb: variant === TabVariant.STANDARD ? 1 : 0 }}
+                        centered={centered}>
                         {tabs.map(tab => (
                             <MuiTab<ElementType>
                                 component={CustomLink}
@@ -78,19 +95,25 @@ const Tabs = ({
                                 href={tab.value}
                                 value={tab.value}
                                 label={tab.label}
+                                css={
+                                    variant === TabVariant.LARGE &&
+                                    tabsStyle.tab
+                                }
+                                paramName={paramName}
                             />
                         ))}
                     </MuiTabList>
                 </Paper>
                 {introContent}
-                {tabs.map(tab => (
-                    <MuiTabPanel
-                        sx={{ padding: 0 }}
-                        key={tab.value}
-                        value={tab.value}>
-                        {tab.content}
-                    </MuiTabPanel>
-                ))}
+                {renderTabContent &&
+                    tabs.map(tab => (
+                        <MuiTabPanel
+                            sx={{ padding: 0 }}
+                            key={tab.value}
+                            value={tab.value}>
+                            {tab.content}
+                        </MuiTabPanel>
+                    ))}
             </MuiTabContext>
         </Box>
     );
