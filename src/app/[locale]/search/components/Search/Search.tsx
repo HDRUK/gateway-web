@@ -12,7 +12,6 @@ import SearchBar from "@/components/SearchBar";
 import Tabs from "@/components/Tabs";
 import searchFormConfig, {
     QUERY_FIELD,
-    SORT_DIRECTION,
     SORT_FIELD,
 } from "@/config/forms/search";
 import FilterPanel from "../FilterPanel";
@@ -20,10 +19,8 @@ import FilterPanel from "../FilterPanel";
 interface SearchForm {
     query: string;
     sort: string;
-    sortDirection: string;
 }
 
-const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
 
 const Search = ({ filters }: { filters: Filter[] }) => {
@@ -43,21 +40,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             o => o.value === watchAll.sort
         );
 
-        if (!selectedOption?.direction) {
+        if (!selectedOption?.value) {
             return;
         }
 
-        const sortQueryString = updateQueryString(
-            SORT_FIELD,
-            watchAll.sort.split(SORT_FIELD_DIVIDER)[0]
-        );
-
         router.push(
-            `${pathname}?${updateQueryString(
-                SORT_DIRECTION,
-                selectedOption.direction,
-                sortQueryString
-            )}`
+            `${pathname}?${updateQueryString(SORT_FIELD, selectedOption.value)}`
         );
     }, [watchAll.sort]);
 
