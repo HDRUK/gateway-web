@@ -223,7 +223,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     )}
 
                     {!isSearching && formattedSearchResults.length > 0 && (
-                        <>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                m: 2,
+                            }}>
                             <List>
                                 {formattedSearchResults.map(result => (
                                     <li>
@@ -251,7 +257,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     })
                                 }
                             />
-                        </>
+                        </Box>
                     )}
                 </Box>
             </BoxContainer>
