@@ -1,6 +1,6 @@
+/** @jsxImportSource @emotion/react */
 "use client";
 
-/** @jsxImportSource @emotion/react */
 import { Control } from "react-hook-form";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { colors } from "@/config/theme";

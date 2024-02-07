@@ -1,30 +1,30 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
+import { SearchCategory, SearchForm, SearchResult } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import InputWrapper from "@/components/InputWrapper";
+import Loading from "@/components/Loading";
 import SearchBar from "@/components/SearchBar";
 import Tabs from "@/components/Tabs";
+import { TabVariant } from "@/components/Tabs/Tabs";
+import usePostSwr from "@/hooks/usePostSwr";
+import apis from "@/config/apis";
 import searchFormConfig, {
     QUERY_FIELD,
-    SORT_DIRECTION,
     SORT_FIELD,
 } from "@/config/forms/search";
+import { colors } from "@/config/theme";
 import FilterPanel from "../FilterPanel";
-
-interface SearchForm {
-    query: string;
-    sort: string;
-    sortDirection: string;
-}
 
 const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
+const TYPE_PARAM = "type";
 
 const Search = ({ filters }: { filters: Filter[] }) => {
     const router = useRouter();
@@ -32,9 +32,21 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
 
+    const getQueryParam = (paramName: string) => {
+        return searchParams?.get(paramName)?.toString();
+    };
+
     const { control, handleSubmit, getValues, setValue, watch } =
         useForm<SearchForm>({
-            defaultValues: searchFormConfig.defaultValues,
+            defaultValues: {
+                ...searchFormConfig.defaultValues,
+                query:
+                    getQueryParam(QUERY_FIELD) ||
+                    searchFormConfig.defaultValues.query,
+                sort:
+                    getQueryParam(SORT_FIELD) ||
+                    searchFormConfig.defaultValues.sort,
+            },
         });
     const watchAll = watch();
 
@@ -43,23 +55,16 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             o => o.value === watchAll.sort
         );
 
-        if (!selectedOption?.direction) {
+        if (!selectedOption?.value) {
             return;
         }
 
-        const sortQueryString = updateQueryString(
-            SORT_FIELD,
-            watchAll.sort.split(SORT_FIELD_DIVIDER)[0]
-        );
-
         router.push(
-            `${pathname}?${updateQueryString(
-                SORT_DIRECTION,
-                selectedOption.direction,
-                sortQueryString
-            )}`
+            `${pathname}?${updateQueryString(SORT_FIELD, selectedOption.value)}`
         );
     }, [watchAll.sort]);
+
+    const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
 
     const updateQueryString = useCallback(
         (name: string, value: string, existingParams?: string) => {
@@ -79,21 +84,55 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     );
 
     const onSubmit: SubmitHandler<SearchForm> = async data => {
-        console.log(data);
+        router.push(
+            `${pathname}?${updateQueryString(QUERY_FIELD, data.query)}`
+        );
     };
+
+    const resetQueryInput = () => {
+        setValue(QUERY_FIELD, "");
+        router.push(`${pathname}?${updateQueryString(QUERY_FIELD, "")}`);
+    };
+
+    const { data: searchResults = [], isLoading: isSearching } = usePostSwr<
+        SearchResult[]
+    >(
+        `${apis.searchV1Url}/${searchType}`,
+        {
+            query: getQueryParam(QUERY_FIELD),
+            sort: getQueryParam(SORT_FIELD)?.split(SORT_FIELD_DIVIDER)[0],
+            direction: getQueryParam(SORT_FIELD)?.split(SORT_FIELD_DIVIDER)[1],
+        },
+        {
+            successNotificationsOn: false,
+        }
+    );
 
     const categoryTabs = [
         {
             label: t("datasets"),
-            value: "datasets",
+            value: SearchCategory.DATASETS,
             content: "",
         },
         {
             label: t("dataUse"),
-            value: "data-use",
+            value: SearchCategory.DATA_USE,
+            content: "",
+        },
+        {
+            label: t("collections"),
+            value: SearchCategory.COLLECTIONS,
+            content: "",
+        },
+        {
+            label: t("tools"),
+            value: SearchCategory.TOOLS,
             content: "",
         },
     ];
+
+    // TEMPORARY - Should be updated on the endpoint, currently returned as object of objects
+    var formattedSearchResults = Object.values(searchResults);
 
     return (
         <>
@@ -106,7 +145,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 <SearchBar
                     control={control}
                     explainerText={t("searchExplainer")}
-                    resetAction={() => setValue(QUERY_FIELD, "")}
+                    resetAction={() => resetQueryInput()}
                     resetDisabled={!getValues(QUERY_FIELD)}
                     submitAction={handleSubmit(onSubmit)}
                     queryPlaceholder={t("searchPlaceholder")}
@@ -134,8 +173,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 <Tabs
                     centered
                     tabs={categoryTabs}
-                    tabBoxSx={{ padding: 0 }}
+                    tabBoxSx={{
+                        paddingLeft: 4,
+                        paddingRight: 4,
+                        borderBottom: `1px solid ${colors.green400}`,
+                        marginBottom: 1,
+                    }}
                     rootBoxSx={{ padding: 0 }}
+                    variant={TabVariant.LARGE}
+                    paramName={TYPE_PARAM}
                 />
             </Box>
             <BoxContainer
@@ -158,8 +204,28 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 5", laptop: "span 5" },
-                    }}
-                />
+                    }}>
+                    {isSearching && <Loading />}
+
+                    {!isSearching && formattedSearchResults.length === 0 && (
+                        <Typography variant="h3">{t("noResults")}</Typography>
+                    )}
+
+                    {formattedSearchResults.length > 0 && (
+                        <ul>
+                            {formattedSearchResults.map(result => (
+                                <div>
+                                    <Typography variant="h3">
+                                        {result._source.shortTitle}
+                                    </Typography>
+                                    <Typography sx={{ marginBottom: 5 }}>
+                                        {result._source.abstract}
+                                    </Typography>
+                                </div>
+                            ))}
+                        </ul>
+                    )}
+                </Box>
             </BoxContainer>
         </>
     );
