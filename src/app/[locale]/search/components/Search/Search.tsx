@@ -6,6 +6,7 @@ import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
+import { PaginationType } from "@/interfaces/Pagination";
 import { SearchCategory, SearchForm, SearchResult } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import InputWrapper from "@/components/InputWrapper";
@@ -41,7 +42,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         query: getQueryParam(QUERY_FIELD),
         sort: getQueryParam(SORT_FIELD),
         page: "1",
-        per_page: "10",
+        per_page: "2",
     });
 
     const { control, handleSubmit, getValues, setValue, watch } =
@@ -105,10 +106,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         router.push(`${pathname}?${updateQueryString(QUERY_FIELD, "")}`);
     };
 
-    const { data: searchResults = [], isLoading: isSearching } = usePostSwr<
-        SearchResult[]
+    const { data, isLoading: isSearching } = usePostSwr<
+        PaginationType<SearchResult>
     >(
-        `${apis.searchV1Url}/${searchType}`,
+        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}`,
         {
             ...queryParams,
             sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
@@ -116,8 +117,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         },
         {
             keepPreviousData: true,
+            withPagination: true,
         }
     );
+
+    console.log(data);
 
     const categoryTabs = [
         {
@@ -141,9 +145,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             content: "",
         },
     ];
-
-    // TEMPORARY - Should be updated on the endpoint, currently returned as object of objects
-    var formattedSearchResults = Object.values(searchResults);
 
     return (
         <>
@@ -218,11 +219,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     }}>
                     {isSearching && <Loading />}
 
-                    {!isSearching && formattedSearchResults.length === 0 && (
+                    {!isSearching && !data?.list.length && (
                         <Typography variant="h3">{t("noResults")}</Typography>
                     )}
 
-                    {!isSearching && formattedSearchResults.length > 0 && (
+                    {!isSearching && data?.list.length > 0 && (
                         <Box
                             sx={{
                                 display: "flex",
@@ -231,7 +232,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 m: 2,
                             }}>
                             <List>
-                                {formattedSearchResults.map(result => (
+                                {data?.list.map(result => (
                                     <li>
                                         <Typography variant="h3">
                                             {result._source.shortTitle}
@@ -246,7 +247,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             <Pagination
                                 isLoading={isSearching}
                                 page={parseInt(queryParams.page, 10)}
-                                // count={lastPage}
+                                count={data?.lastPage}
                                 onChange={(
                                     e: React.ChangeEvent<unknown>,
                                     page: number
