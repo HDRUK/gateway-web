@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -13,6 +13,7 @@ import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import SearchBar from "@/components/SearchBar";
+import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import usePostSwr from "@/hooks/usePostSwr";
@@ -121,8 +122,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     );
 
-    console.log(data);
-
     const categoryTabs = [
         {
             label: t("datasets"),
@@ -223,42 +222,50 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         <Typography variant="h3">{t("noResults")}</Typography>
                     )}
 
-                    {!isSearching && data?.list.length > 0 && (
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                m: 2,
-                            }}>
-                            <List>
-                                {data?.list.map(result => (
-                                    <li>
-                                        <Typography variant="h3">
-                                            {result._source.shortTitle}
-                                        </Typography>
-                                        <Typography sx={{ marginBottom: 5 }}>
-                                            {result._source.abstract}
-                                        </Typography>
-                                    </li>
-                                ))}
-                            </List>
-
-                            <Pagination
-                                isLoading={isSearching}
-                                page={parseInt(queryParams.page, 10)}
-                                count={data?.lastPage}
-                                onChange={(
-                                    e: React.ChangeEvent<unknown>,
-                                    page: number
-                                ) =>
-                                    setQueryParams({
-                                        ...queryParams,
-                                        page: page.toString(),
-                                    })
-                                }
+                    {!isSearching && !!data?.list.length && (
+                        <>
+                            <ShowingXofX
+                                to={data?.to}
+                                from={data?.from}
+                                total={data?.total}
                             />
-                        </Box>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    m: 2,
+                                }}>
+                                <List>
+                                    {data?.list.map(result => (
+                                        <li>
+                                            <Typography variant="h3">
+                                                {result._source.shortTitle}
+                                            </Typography>
+                                            <Typography
+                                                sx={{ marginBottom: 5 }}>
+                                                {result._source.abstract}
+                                            </Typography>
+                                        </li>
+                                    ))}
+                                </List>
+
+                                <Pagination
+                                    isLoading={isSearching}
+                                    page={parseInt(queryParams.page, 10)}
+                                    count={data?.lastPage}
+                                    onChange={(
+                                        e: React.ChangeEvent<unknown>,
+                                        page: number
+                                    ) =>
+                                        setQueryParams({
+                                            ...queryParams,
+                                            page: page.toString(),
+                                        })
+                                    }
+                                />
+                            </Box>
+                        </>
                     )}
                 </Box>
             </BoxContainer>
