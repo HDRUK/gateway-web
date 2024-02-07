@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Box, Typography } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
@@ -10,6 +10,7 @@ import { SearchCategory, SearchForm, SearchResult } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
+import Pagination from "@/components/Pagination";
 import SearchBar from "@/components/SearchBar";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
@@ -36,6 +37,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         return searchParams?.get(paramName)?.toString();
     };
 
+    const [queryParams, setQueryParams] = useState({
+        query: getQueryParam(QUERY_FIELD),
+        sort: getQueryParam(SORT_FIELD),
+        page: "1",
+        per_page: "10",
+    });
+
     const { control, handleSubmit, getValues, setValue, watch } =
         useForm<SearchForm>({
             defaultValues: {
@@ -59,6 +67,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             return;
         }
 
+        setQueryParams({
+            ...queryParams,
+            sort: selectedOption.value,
+        });
+
         router.push(
             `${pathname}?${updateQueryString(SORT_FIELD, selectedOption.value)}`
         );
@@ -72,18 +85,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 ? new URLSearchParams(existingParams)
                 : new URLSearchParams(searchParams?.toString());
 
-            if (value) {
-                params.set(name, value);
-            } else {
-                params.delete(name);
-            }
-
+            params.set(name, value);
             return params.toString();
         },
         [searchParams]
     );
 
     const onSubmit: SubmitHandler<SearchForm> = async data => {
+        setQueryParams({ ...queryParams, query: data.query });
+
         router.push(
             `${pathname}?${updateQueryString(QUERY_FIELD, data.query)}`
         );
@@ -91,6 +101,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
     const resetQueryInput = () => {
         setValue(QUERY_FIELD, "");
+        setQueryParams({ ...queryParams, query: "" });
         router.push(`${pathname}?${updateQueryString(QUERY_FIELD, "")}`);
     };
 
@@ -99,12 +110,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     >(
         `${apis.searchV1Url}/${searchType}`,
         {
-            query: getQueryParam(QUERY_FIELD),
-            sort: getQueryParam(SORT_FIELD)?.split(SORT_FIELD_DIVIDER)[0],
-            direction: getQueryParam(SORT_FIELD)?.split(SORT_FIELD_DIVIDER)[1],
+            ...queryParams,
+            sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
+            direction: queryParams.sort?.split(SORT_FIELD_DIVIDER)[1],
         },
         {
-            successNotificationsOn: false,
+            keepPreviousData: true,
         }
     );
 
@@ -211,19 +222,36 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         <Typography variant="h3">{t("noResults")}</Typography>
                     )}
 
-                    {formattedSearchResults.length > 0 && (
-                        <ul>
-                            {formattedSearchResults.map(result => (
-                                <div>
-                                    <Typography variant="h3">
-                                        {result._source.shortTitle}
-                                    </Typography>
-                                    <Typography sx={{ marginBottom: 5 }}>
-                                        {result._source.abstract}
-                                    </Typography>
-                                </div>
-                            ))}
-                        </ul>
+                    {!isSearching && formattedSearchResults.length > 0 && (
+                        <>
+                            <List>
+                                {formattedSearchResults.map(result => (
+                                    <li>
+                                        <Typography variant="h3">
+                                            {result._source.shortTitle}
+                                        </Typography>
+                                        <Typography sx={{ marginBottom: 5 }}>
+                                            {result._source.abstract}
+                                        </Typography>
+                                    </li>
+                                ))}
+                            </List>
+
+                            <Pagination
+                                isLoading={isSearching}
+                                page={parseInt(queryParams.page, 10)}
+                                // count={lastPage}
+                                onChange={(
+                                    e: React.ChangeEvent<unknown>,
+                                    page: number
+                                ) =>
+                                    setQueryParams({
+                                        ...queryParams,
+                                        page: page.toString(),
+                                    })
+                                }
+                            />
+                        </>
                     )}
                 </Box>
             </BoxContainer>
