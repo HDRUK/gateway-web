@@ -1,7 +1,26 @@
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 
 interface Metadata {
-    [key: string]: { [key: string]: string | number | Metadata };
+    summary: {
+        abstract: string;
+        contactPoint: string;
+        controlledKeywords: string;
+        datasetType: string;
+        description: string;
+        doiName: string;
+        keywords: string;
+        shortTitle: string;
+        title: string;
+        publisher: {
+            publisherName: string;
+        };
+    };
+    provenance: {
+        temporal: {
+            startDate: string | undefined;
+            endDate: string | undefined;
+        };
+    };
 }
 interface VersionItem {
     id: number;

@@ -9,6 +9,20 @@ const generateDatasetMetadataV1 = (): { metadata: Metadata } => {
                 publisher: {
                     publisherName: faker.datatype.string(),
                 },
+                abstract: faker.datatype.string(),
+                contactPoint: faker.datatype.string(),
+                controlledKeywords: faker.datatype.string(),
+                datasetType: faker.datatype.string(),
+                description: faker.datatype.string(),
+                doiName: faker.datatype.string(),
+                keywords: faker.datatype.string(),
+                shortTitle: faker.datatype.string(),
+            },
+            provenance: {
+                temporal: {
+                    startDate: faker.date.past().toString(),
+                    endDate: faker.date.past().toString(),
+                },
             },
         },
         gwdmVersion: "1.0",
@@ -73,6 +87,7 @@ const datasetsV1p1 = Array.from({ length: 3 }).map(() =>
 
 export {
     generateDatasetV1,
+    generateDatasetMetadataV1,
     generateDatasetVersionV1,
     datasetsV1,
     datasetsV1p1,

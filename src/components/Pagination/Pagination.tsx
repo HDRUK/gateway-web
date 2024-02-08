@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import MuiPagination, {
     PaginationProps as MuiPaginationProps,
 } from "@mui/material/Pagination";
@@ -11,16 +12,21 @@ interface PaginationProps extends MuiPaginationProps {
 const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
     if (isLoading) return null;
     return (
-        <MuiPagination
-            renderItem={item => (
-                <PaginationItem
-                    data-testid="pagination-item"
-                    slots={{ previous: ArrowLeftIcon, next: ArrowRightIcon }}
-                    {...item}
-                />
-            )}
-            {...rest}
-        />
+        <Box sx={{ p: 0, display: "flex", justifyContent: "center" }}>
+            <MuiPagination
+                renderItem={item => (
+                    <PaginationItem
+                        data-testid="pagination-item"
+                        slots={{
+                            previous: ArrowLeftIcon,
+                            next: ArrowRightIcon,
+                        }}
+                        {...item}
+                    />
+                )}
+                {...rest}
+            />
+        </Box>
     );
 };
 

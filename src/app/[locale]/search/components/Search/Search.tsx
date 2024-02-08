@@ -24,6 +24,7 @@ import searchFormConfig, {
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import FilterPanel from "../FilterPanel";
+import ResultCard from "../ResultCard";
 
 const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
@@ -226,53 +227,44 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     )}
 
                     {!isSearching && !!data?.list.length && (
-                        <>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                // alignItems: "center",
+                                m: 2,
+                            }}>
                             <ShowingXofX
                                 to={data?.to}
                                 from={data?.from}
                                 total={data?.total}
                             />
-                            <Box
+                            <List
                                 sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    m: 2,
+                                    width: "100%",
+                                    bgcolor: "background.paper",
+                                    mb: 2,
+                                    pb: 2,
                                 }}>
-                                <List>
-                                    {data?.list.map(result => {
-                                        const { _source } = result;
-
-                                        return (
-                                            <li>
-                                                <Typography variant="h3">
-                                                    {_source.shortTitle}
-                                                </Typography>
-                                                <Typography
-                                                    sx={{ marginBottom: 5 }}>
-                                                    {_source.abstract}
-                                                </Typography>
-                                            </li>
-                                        );
-                                    })}
-                                </List>
-
-                                <Pagination
-                                    isLoading={isSearching}
-                                    page={parseInt(queryParams.page, 10)}
-                                    count={data?.lastPage}
-                                    onChange={(
-                                        e: React.ChangeEvent<unknown>,
-                                        page: number
-                                    ) =>
-                                        setQueryParams({
-                                            ...queryParams,
-                                            page: page.toString(),
-                                        })
-                                    }
-                                />
-                            </Box>
-                        </>
+                                {data?.list.map(result => (
+                                    <ResultCard result={result} />
+                                ))}
+                            </List>
+                            <Pagination
+                                isLoading={isSearching}
+                                page={parseInt(queryParams.page, 10)}
+                                count={data?.lastPage}
+                                onChange={(
+                                    e: React.ChangeEvent<unknown>,
+                                    page: number
+                                ) =>
+                                    setQueryParams({
+                                        ...queryParams,
+                                        page: page.toString(),
+                                    })
+                                }
+                            />
+                        </Box>
                     )}
                 </Box>
             </BoxContainer>
