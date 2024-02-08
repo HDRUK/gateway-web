@@ -10,7 +10,7 @@ export const searchBarStyle = {
         flexDirection: "column",
         justifyContent: "center",
         height: "135px",
-        maxWidth: '1200px',
+        maxWidth: '1000px',
         width: '100%'
     }),
 
