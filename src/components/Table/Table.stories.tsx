@@ -2,7 +2,6 @@ import { faker } from "@faker-js/faker";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ColumnDef } from "@tanstack/react-table";
 import Box from "@/components/Box";
-import TableActionCell from "@/components/TableActionCell";
 import TooltipIcon from "@/components/TooltipIcon";
 import PermissionDescriptions from "@/modules/PermissionDescriptions";
 import { DeleteForeverIcon } from "@/consts/icons";
@@ -10,6 +9,7 @@ import {
     ROLE_CUSTODIAN_DEVELOPER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
 } from "@/consts/roles";
+import TableActionCell from "@/app/[locale]/account/team/[teamId]/team-management/components/TableActionCell";
 import { userV1 } from "@/mocks/data";
 import Table from "./Table";
 

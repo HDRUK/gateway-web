@@ -179,6 +179,8 @@
                             "lastRoleAdminMessage": "All team members must have at least one role. If you would like to remove a team member, the 'remove team member' button can be found in the 'Actions' column.",
                             "lastRoleMessage": "All team members must have at least one role. Please contact your team admin to remove a team member.",
                             "noPermission": "You do not have permission to edit this",
+                            "deleteLastMember": "You are unable to delete the last member of a team. Please raise an enquiry.",
+                            "deleteYourself": "You are unable to delete yourself. Please contact your team admin.",
                             "columns": {
                                 "name": "Name",
                                 "actions": "Actions",

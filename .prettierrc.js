@@ -8,7 +8,6 @@ module.exports = {
     singleQuote: false,
     bracketSpacing: true,
     jsxSingleQuote: false,
-    jsxBracketSameLine: true,
     importOrder: [
         "^react",
         "<THIRD_PARTY_MODULES>",

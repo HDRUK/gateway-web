@@ -83,7 +83,7 @@ describe("TeamDatasets", () => {
             }),
         ];
         server.use(getDatasetsV1(mockDatasets));
-        render(<TeamDatasets permissions={{}}/>);
+        render(<TeamDatasets permissions={{}} />);
 
         await waitFor(() => {
             const datasetCards = screen.getAllByTestId("dataset-card");
