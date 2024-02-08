@@ -55,7 +55,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         query: getQueryParam(QUERY_FIELD),
         sort: getQueryParam(SORT_FIELD),
         page: "1",
-        per_page: "2",
+        per_page: "25",
     });
 
     const { control, handleSubmit, getValues, setValue, watch } =
@@ -153,6 +153,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     backgroundColor: "white",
                     paddingRight: 6,
                     paddingLeft: 6,
+                    display: 'flex',
+                    justifyContent: 'center'
                 }}>
                 <SearchBar
                     control={control}

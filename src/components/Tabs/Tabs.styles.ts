@@ -3,11 +3,15 @@ import { colors } from "@/config/theme";
 
 export const tabsStyle = {
     tabList: css({
-        boxShadow: "none",
+        boxShadow: "none",        
 
         ".MuiTabs-indicator": {
             display: "none",
         },
+
+        ".MuiTabs-root" : {
+            minHeight: '40px',
+        }
     }),
     tab: () =>
         css({
@@ -21,9 +25,11 @@ export const tabsStyle = {
                 flex: 1,
                 borderRadius: "20px 20px 0px 0px",
                 fontSize: "20px",
-                marginTop: "2px",
                 boxShadow: "1px -1px 3px 0px #2626261A",
                 backgroundColor: colors.white,
+                maxWidth: '220px',
+                minHeight: '40px',
+                padding: '6px',
 
                 "&:focus, &:hover": {
                     background: colors.green400,
