@@ -39,6 +39,18 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         return searchParams?.get(paramName)?.toString();
     };
 
+    const updateQueryString = useCallback(
+        (name: string, value: string, existingParams?: string) => {
+            const params = existingParams
+                ? new URLSearchParams(existingParams)
+                : new URLSearchParams(searchParams?.toString());
+
+            params.set(name, value);
+            return params.toString();
+        },
+        [searchParams]
+    );
+
     const [queryParams, setQueryParams] = useState({
         query: getQueryParam(QUERY_FIELD),
         sort: getQueryParam(SORT_FIELD),
@@ -77,21 +89,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         router.push(
             `${pathname}?${updateQueryString(SORT_FIELD, selectedOption.value)}`
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watchAll.sort]);
 
     const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
-
-    const updateQueryString = useCallback(
-        (name: string, value: string, existingParams?: string) => {
-            const params = existingParams
-                ? new URLSearchParams(existingParams)
-                : new URLSearchParams(searchParams?.toString());
-
-            params.set(name, value);
-            return params.toString();
-        },
-        [searchParams]
-    );
 
     const onSubmit: SubmitHandler<SearchForm> = async data => {
         setQueryParams({ ...queryParams, query: data.query });
@@ -237,17 +238,21 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     m: 2,
                                 }}>
                                 <List>
-                                    {data?.list.map(result => (
-                                        <li>
-                                            <Typography variant="h3">
-                                                {result._source.shortTitle}
-                                            </Typography>
-                                            <Typography
-                                                sx={{ marginBottom: 5 }}>
-                                                {result._source.abstract}
-                                            </Typography>
-                                        </li>
-                                    ))}
+                                    {data?.list.map(result => {
+                                        const { _source } = result;
+
+                                        return (
+                                            <li>
+                                                <Typography variant="h3">
+                                                    {_source.shortTitle}
+                                                </Typography>
+                                                <Typography
+                                                    sx={{ marginBottom: 5 }}>
+                                                    {_source.abstract}
+                                                </Typography>
+                                            </li>
+                                        );
+                                    })}
                                 </List>
 
                                 <Pagination

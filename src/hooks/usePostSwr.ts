@@ -24,7 +24,7 @@ interface Options {
 
 const usePostSwr = <T>(
     url: string,
-    formData?: any,
+    formData?: unknown,
     options?: Options
 ): Response<T> => {
     const {
