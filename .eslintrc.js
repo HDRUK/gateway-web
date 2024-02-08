@@ -90,7 +90,7 @@ module.exports = {
         "no-console": "off",
         "no-return-await": "off",
         "prettier/prettier": [
-            "warn",
+            "error",
             {
                 endOfLine: "auto",
             },
