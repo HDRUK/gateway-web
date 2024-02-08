@@ -3,7 +3,6 @@ import { ReactNode, useMemo } from "react";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import { User } from "@/interfaces/User";
-import TableActionCell from "@/components/TableActionCell";
 import TooltipIcon from "@/components/TooltipIcon";
 import PermissionDescriptions from "@/modules/PermissionDescriptions";
 import {
@@ -15,6 +14,7 @@ import {
     ROLE_CUSTODIAN_TEAM_ADMIN,
     rolesMeta,
 } from "@/consts/roles";
+import TableActionCell from "@/app/[locale]/account/team/[teamId]/team-management/components/TableActionCell";
 
 const CheckboxesCell = ({
     row: { index, original },

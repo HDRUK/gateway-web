@@ -98,10 +98,30 @@ const TeamMembers = ({
         if (teamMembers) setTableRows(teamMembers);
     }, [teamMembers]);
 
+    const isLastUser = teamMembers.length === 1;
+    const deleteLastUserMessage = t("deleteLastMember");
+    const deleteYourselfMessage = t("deleteYourself");
+
     const actions = useMemo(
         () => [
             {
-                icon: <DeleteForeverIcon color="primary" />,
+                icon: DeleteForeverIcon,
+                checkConditions: (rowUser: User) => {
+                    let overrides = {};
+                    if (isLastUser) {
+                        overrides = {
+                            disabled: true,
+                            title: deleteLastUserMessage,
+                        };
+                    }
+                    if (rowUser.id === user?.id) {
+                        overrides = {
+                            disabled: true,
+                            title: deleteYourselfMessage,
+                        };
+                    }
+                    return overrides;
+                },
                 onClick: (rowUser: User) =>
                     showModal({
                         confirmText: "Remove",
@@ -115,7 +135,7 @@ const TeamMembers = ({
             },
         ],
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [deleteTeamMember, showModal]
+        [deleteTeamMember, showModal, teamMembers]
     );
 
     useEffect(() => {

@@ -3,7 +3,13 @@ import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 
 type ButtonBaseProps = Pick<
     MuiButtonProps,
-    "variant" | "size" | "color" | "sx" | "disableRipple" | "startIcon"
+    | "disabled"
+    | "variant"
+    | "size"
+    | "color"
+    | "sx"
+    | "disableRipple"
+    | "startIcon"
 >;
 export type ButtonProps = ButtonBaseProps & ComponentPropsWithoutRef<"button">;
 
@@ -21,7 +27,8 @@ const Button: React.FC<ButtonProps> = ({
                 whiteSpace: "nowrap",
                 ...rest.sx,
             }}
-            {...rest}>
+            {...rest}
+        >
             {children}
         </MuiButton>
     );
