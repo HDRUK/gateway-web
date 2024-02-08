@@ -24,6 +24,7 @@ import searchFormConfig, {
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import FilterPanel from "../FilterPanel";
+import ResultCard from "../ResultCard";
 
 const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
@@ -237,22 +238,16 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     alignItems: "center",
                                     m: 2,
                                 }}>
-                                <List>
-                                    {data?.list.map(result => {
-                                        const { _source } = result;
-
-                                        return (
-                                            <li>
-                                                <Typography variant="h3">
-                                                    {_source.shortTitle}
-                                                </Typography>
-                                                <Typography
-                                                    sx={{ marginBottom: 5 }}>
-                                                    {_source.abstract}
-                                                </Typography>
-                                            </li>
-                                        );
-                                    })}
+                                <List
+                                    sx={{
+                                        width: "100%",
+                                        bgcolor: "background.paper",
+                                        mb: 2,
+                                        pb: 2,
+                                    }}>
+                                    {data?.list.map(result => (
+                                        <ResultCard result={result} />
+                                    ))}
                                 </List>
 
                                 <Pagination
