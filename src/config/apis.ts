@@ -31,6 +31,7 @@ const apis = {
     teamsV1Url: `${apiV1Url}/teams`,
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
+    searchV1Url: `${apiV1Url}/search`,
 };
 
 export default apis;

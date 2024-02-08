@@ -35,8 +35,8 @@ export interface TabProps {
 }
 
 const CustomLink = forwardRef<
-    HTMLAnchorElement & { paramName: string },
-    { href: string; children: ReactNode; paramName: string }
+    HTMLAnchorElement & { param: string },
+    { href: string; children: ReactNode; param: string }
 >((props, ref) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -50,7 +50,7 @@ const CustomLink = forwardRef<
                 pathname,
                 query: searchParams?.entries() && {
                     ...Object.fromEntries(searchParams?.entries()),
-                    [props.paramName]: props.href,
+                    [props.param]: props.href,
                 },
             }}>
             {props.children}
@@ -99,7 +99,7 @@ const Tabs = ({
                                     variant === TabVariant.LARGE &&
                                     tabsStyle.tab
                                 }
-                                paramName={paramName}
+                                param={paramName}
                             />
                         ))}
                     </MuiTabList>

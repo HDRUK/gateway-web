@@ -1,27 +1,33 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Box } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
+import { PaginationType } from "@/interfaces/Pagination";
+import { SearchCategory, SearchForm, SearchResult } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import InputWrapper from "@/components/InputWrapper";
+import Loading from "@/components/Loading";
+import Pagination from "@/components/Pagination";
 import SearchBar from "@/components/SearchBar";
+import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
+import { TabVariant } from "@/components/Tabs/Tabs";
+import usePostSwr from "@/hooks/usePostSwr";
+import apis from "@/config/apis";
 import searchFormConfig, {
     QUERY_FIELD,
     SORT_FIELD,
 } from "@/config/forms/search";
+import { colors } from "@/config/theme";
 import FilterPanel from "../FilterPanel";
 
-interface SearchForm {
-    query: string;
-    sort: string;
-}
-
+const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
+const TYPE_PARAM = "type";
 
 const Search = ({ filters }: { filters: Filter[] }) => {
     const router = useRouter();
@@ -29,9 +35,40 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
 
+    const getQueryParam = (paramName: string) => {
+        return searchParams?.get(paramName)?.toString();
+    };
+
+    const updateQueryString = useCallback(
+        (name: string, value: string, existingParams?: string) => {
+            const params = existingParams
+                ? new URLSearchParams(existingParams)
+                : new URLSearchParams(searchParams?.toString());
+
+            params.set(name, value);
+            return params.toString();
+        },
+        [searchParams]
+    );
+
+    const [queryParams, setQueryParams] = useState({
+        query: getQueryParam(QUERY_FIELD),
+        sort: getQueryParam(SORT_FIELD),
+        page: "1",
+        per_page: "25",
+    });
+
     const { control, handleSubmit, getValues, setValue, watch } =
         useForm<SearchForm>({
-            defaultValues: searchFormConfig.defaultValues,
+            defaultValues: {
+                ...searchFormConfig.defaultValues,
+                query:
+                    getQueryParam(QUERY_FIELD) ||
+                    searchFormConfig.defaultValues.query,
+                sort:
+                    getQueryParam(SORT_FIELD) ||
+                    searchFormConfig.defaultValues.sort,
+            },
         });
     const watchAll = watch();
 
@@ -44,41 +81,67 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             return;
         }
 
+        setQueryParams({
+            ...queryParams,
+            sort: selectedOption.value,
+        });
+
         router.push(
             `${pathname}?${updateQueryString(SORT_FIELD, selectedOption.value)}`
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watchAll.sort]);
 
-    const updateQueryString = useCallback(
-        (name: string, value: string, existingParams?: string) => {
-            const params = existingParams
-                ? new URLSearchParams(existingParams)
-                : new URLSearchParams(searchParams?.toString());
-
-            if (value) {
-                params.set(name, value);
-            } else {
-                params.delete(name);
-            }
-
-            return params.toString();
-        },
-        [searchParams]
-    );
+    const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
 
     const onSubmit: SubmitHandler<SearchForm> = async data => {
-        console.log(data);
+        setQueryParams({ ...queryParams, query: data.query });
+
+        router.push(
+            `${pathname}?${updateQueryString(QUERY_FIELD, data.query)}`
+        );
     };
+
+    const resetQueryInput = () => {
+        setValue(QUERY_FIELD, "");
+        setQueryParams({ ...queryParams, query: "" });
+        router.push(`${pathname}?${updateQueryString(QUERY_FIELD, "")}`);
+    };
+
+    const { data, isLoading: isSearching } = usePostSwr<
+        PaginationType<SearchResult>
+    >(
+        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}`,
+        {
+            ...queryParams,
+            sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
+            direction: queryParams.sort?.split(SORT_FIELD_DIVIDER)[1],
+        },
+        {
+            keepPreviousData: true,
+            withPagination: true,
+        }
+    );
 
     const categoryTabs = [
         {
             label: t("datasets"),
-            value: "datasets",
+            value: SearchCategory.DATASETS,
             content: "",
         },
         {
             label: t("dataUse"),
-            value: "data-use",
+            value: SearchCategory.DATA_USE,
+            content: "",
+        },
+        {
+            label: t("collections"),
+            value: SearchCategory.COLLECTIONS,
+            content: "",
+        },
+        {
+            label: t("tools"),
+            value: SearchCategory.TOOLS,
             content: "",
         },
     ];
@@ -90,11 +153,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     backgroundColor: "white",
                     paddingRight: 6,
                     paddingLeft: 6,
+                    display: 'flex',
+                    justifyContent: 'center'
                 }}>
                 <SearchBar
                     control={control}
                     explainerText={t("searchExplainer")}
-                    resetAction={() => setValue(QUERY_FIELD, "")}
+                    resetAction={() => resetQueryInput()}
                     resetDisabled={!getValues(QUERY_FIELD)}
                     submitAction={handleSubmit(onSubmit)}
                     queryPlaceholder={t("searchPlaceholder")}
@@ -122,8 +187,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 <Tabs
                     centered
                     tabs={categoryTabs}
-                    tabBoxSx={{ padding: 0 }}
+                    tabBoxSx={{
+                        paddingLeft: 4,
+                        paddingRight: 4,
+                        borderBottom: `1px solid ${colors.green400}`,
+                        marginBottom: 1,
+                    }}
                     rootBoxSx={{ padding: 0 }}
+                    variant={TabVariant.LARGE}
+                    paramName={TYPE_PARAM}
                 />
             </Box>
             <BoxContainer
@@ -146,8 +218,63 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 5", laptop: "span 5" },
-                    }}
-                />
+                    }}>
+                    {isSearching && <Loading />}
+
+                    {!isSearching && !data?.list.length && (
+                        <Typography variant="h3">{t("noResults")}</Typography>
+                    )}
+
+                    {!isSearching && !!data?.list.length && (
+                        <>
+                            <ShowingXofX
+                                to={data?.to}
+                                from={data?.from}
+                                total={data?.total}
+                            />
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    m: 2,
+                                }}>
+                                <List>
+                                    {data?.list.map(result => {
+                                        const { _source } = result;
+
+                                        return (
+                                            <li>
+                                                <Typography variant="h3">
+                                                    {_source.shortTitle}
+                                                </Typography>
+                                                <Typography
+                                                    sx={{ marginBottom: 5 }}>
+                                                    {_source.abstract}
+                                                </Typography>
+                                            </li>
+                                        );
+                                    })}
+                                </List>
+
+                                <Pagination
+                                    isLoading={isSearching}
+                                    page={parseInt(queryParams.page, 10)}
+                                    count={data?.lastPage}
+                                    onChange={(
+                                        e: React.ChangeEvent<unknown>,
+                                        page: number
+                                    ) =>
+                                        setQueryParams({
+                                            ...queryParams,
+                                            page: page.toString(),
+                                        })
+                                    }
+                                />
+                            </Box>
+                        </>
+                    )}
+                </Box>
             </BoxContainer>
         </>
     );

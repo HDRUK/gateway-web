@@ -7,7 +7,7 @@ const postRequest = async <T>(
     data: unknown,
     options: RequestOptions
 ): Promise<T> => {
-    const { axiosOptions = {}, notificationOptions } = options;
+    const { withPagination, axiosOptions = {}, notificationOptions } = options;
     const {
         successNotificationsOn = true,
         errorNotificationsOn = true,
@@ -23,7 +23,22 @@ const postRequest = async <T>(
                     props,
                 });
             }
-            return res.data?.data || res.data || res;
+            if (!withPagination) return res.data?.data || res.data || res;
+
+            const {
+                data: list,
+                current_page: currentPage,
+                last_page: lastPage,
+                next_page_url: nextPageUrl,
+                ...rest
+            } = res.data || {};
+            return {
+                list,
+                currentPage,
+                lastPage,
+                nextPageUrl,
+                ...rest,
+            };
         })
         .catch(error => {
             if (errorNotificationsOn) {
