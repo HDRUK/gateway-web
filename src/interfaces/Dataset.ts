@@ -9,7 +9,7 @@ interface VersionItem {
     updated_at: string;
     deleted_at: string | null;
     dataset_id: number;
-    metadata: { metadata: Metadata };
+    metadata: { metadata: Metadata; gwdmVersion: string };
     version: number;
 }
 

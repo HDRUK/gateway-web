@@ -28,13 +28,15 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
     const {
         version,
         updated_at,
-        metadata: { metadata },
+        metadata: { metadata, gwdmVersion },
     } = latestMetadata;
 
     const title = get(metadata, "summary.title") as unknown as string;
     const publisherName = get(
         metadata,
-        "summary.publisher.publisherName"
+        gwdmVersion === undefined || gwdmVersion === "1.0"
+            ? "summary.publisher.publisherName"
+            : "summary.publisher.name"
     ) as unknown as string;
 
     const originMapping = {
