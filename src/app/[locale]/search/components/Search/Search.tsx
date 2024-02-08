@@ -225,47 +225,44 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     )}
 
                     {!isSearching && !!data?.list.length && (
-                        <>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                // alignItems: "center",
+                                m: 2,
+                            }}>
                             <ShowingXofX
                                 to={data?.to}
                                 from={data?.from}
                                 total={data?.total}
                             />
-                            <Box
+                            <List
                                 sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    m: 2,
+                                    width: "100%",
+                                    bgcolor: "background.paper",
+                                    mb: 2,
+                                    pb: 2,
                                 }}>
-                                <List
-                                    sx={{
-                                        width: "100%",
-                                        bgcolor: "background.paper",
-                                        mb: 2,
-                                        pb: 2,
-                                    }}>
-                                    {data?.list.map(result => (
-                                        <ResultCard result={result} />
-                                    ))}
-                                </List>
-
-                                <Pagination
-                                    isLoading={isSearching}
-                                    page={parseInt(queryParams.page, 10)}
-                                    count={data?.lastPage}
-                                    onChange={(
-                                        e: React.ChangeEvent<unknown>,
-                                        page: number
-                                    ) =>
-                                        setQueryParams({
-                                            ...queryParams,
-                                            page: page.toString(),
-                                        })
-                                    }
-                                />
-                            </Box>
-                        </>
+                                {data?.list.map(result => (
+                                    <ResultCard result={result} />
+                                ))}
+                            </List>
+                            <Pagination
+                                isLoading={isSearching}
+                                page={parseInt(queryParams.page, 10)}
+                                count={data?.lastPage}
+                                onChange={(
+                                    e: React.ChangeEvent<unknown>,
+                                    page: number
+                                ) =>
+                                    setQueryParams({
+                                        ...queryParams,
+                                        page: page.toString(),
+                                    })
+                                }
+                            />
+                        </Box>
                     )}
                 </Box>
             </BoxContainer>
