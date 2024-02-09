@@ -42,6 +42,7 @@ const ApplicationSearchBar = ({
             text: filterTextDebounced,
             page: "1",
         }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterTextDebounced]);
 
     useEffect(() => {

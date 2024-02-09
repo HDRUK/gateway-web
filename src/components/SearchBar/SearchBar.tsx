@@ -1,7 +1,4 @@
 /** @jsxImportSource @emotion/react */
-// eslint-disable-next-line lines-around-directive
-"use client";
-
 import { Control } from "react-hook-form";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { colors } from "@/config/theme";

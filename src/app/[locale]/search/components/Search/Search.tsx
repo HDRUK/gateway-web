@@ -154,8 +154,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     backgroundColor: "white",
                     paddingRight: 6,
                     paddingLeft: 6,
-                    display: 'flex',
-                    justifyContent: 'center'
+                    display: "flex",
+                    justifyContent: "center",
                 }}>
                 <SearchBar
                     control={control}
