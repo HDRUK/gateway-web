@@ -228,7 +228,7 @@ const getColumns = ({
                 />
             ),
         },
-        ...(permissions["custodians.delete"]
+        ...(permissions["permissions.update"]
             ? [
                   {
                       id: "furtherActions",
