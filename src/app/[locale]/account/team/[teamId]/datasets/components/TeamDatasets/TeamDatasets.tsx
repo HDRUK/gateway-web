@@ -52,17 +52,24 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
     const params = useParams<{ teamId: string }>();
     const tab = searchParams?.get("tab");
 
+    const [initialSort] = sortByOptions.filter(
+        o => o.value === datasetSearchDefaultValues.sortField
+    );
+
     const [queryParams, setQueryParams] = useState({
         team_id: `${params?.teamId}`,
         withTrashed: "true",
         status: "ACTIVE",
         page: "1",
-        sort: `${datasetSearchDefaultValues.sortField}:${datasetSearchDefaultValues.sortDirection}`,
+        sort: `${datasetSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
         title: "",
     });
 
     const { control, watch, setValue } = useForm({
-        defaultValues: datasetSearchDefaultValues,
+        defaultValues: {
+            ...datasetSearchDefaultValues,
+            sortDirection: initialSort.initialDirection,
+        },
     });
     const watchAll = watch();
 
@@ -72,8 +79,9 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
         );
         setQueryParams(previous => ({
             ...previous,
-            sort: `${watchAll.sortField}:${option.direction}`,
+            sort: `${watchAll.sortField}:${option.initialDirection}`,
         }));
+        setValue("sortDirection", option.initialDirection);
     }, [watchAll.sortField]);
 
     useEffect(() => {
