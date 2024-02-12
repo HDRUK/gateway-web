@@ -21,7 +21,12 @@ const sortByOptions = [
         value: "metadata.summary.title",
         initialDirection: "asc",
     },
-    /* { Calum 12/02/2024 - why would you short by publisherName? - this is the team name and this is the team dataset page.. 
+    /*  Calum 12/02/2024 
+    // - why would you sort by publisherName? 
+    // - publisherName == team name
+    // - publisherName will always be the same
+    //   because this is the dataset page view
+    {
         label: "Sort By Publisher Name",
         value: "metadata.summary.publisher.name",
         initialDirection: "asc",
