@@ -82,7 +82,7 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
             sort: `${watchAll.sortField}:${option.initialDirection}`,
         }));
         setValue("sortDirection", option.initialDirection);
-    }, [watchAll.sortField]);
+    }, [watchAll.sortField, setValue]);
 
     useEffect(() => {
         setQueryParams(previous => ({
