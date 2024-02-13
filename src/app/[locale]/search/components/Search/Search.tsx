@@ -23,6 +23,7 @@ import searchFormConfig, {
     SORT_FIELD,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
+import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 
 const SORT_FIELD_DIVIDER = "__";
