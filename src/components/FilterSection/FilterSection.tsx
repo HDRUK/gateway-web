@@ -49,7 +49,7 @@ const FilterSection = ({
                     size="large"
                     control={control}
                     checkboxes={filterItems.filter(filterItem =>
-                        filterItem.label.includes(field.value || "")
+                        filterItem?.label?.includes(field.value || "")
                     )}
                     formControlSx={{ mb: 0 }}
                     checkboxSx={{ p: "4px" }}
