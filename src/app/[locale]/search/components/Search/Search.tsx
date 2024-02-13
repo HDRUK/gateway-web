@@ -213,7 +213,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 2" },
                     }}>
-                    {/* <FilterPanel filters={filters} /> */}
+                    <FilterPanel filters={filters} />
                 </Box>
                 <Box
                     sx={{
