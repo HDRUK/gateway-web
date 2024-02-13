@@ -21,11 +21,6 @@ const sortByOptions = [
         value: "metadata.summary.title",
         initialDirection: "asc",
     },
-    {
-        label: "Sort By Publisher Name",
-        value: "metadata.summary.publisher.name",
-        initialDirection: "asc",
-    },
 ];
 
 const searchFilter = {
