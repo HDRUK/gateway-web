@@ -23,7 +23,6 @@ import searchFormConfig, {
     SORT_FIELD,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 
 const SORT_FIELD_DIVIDER = "__";
@@ -214,7 +213,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 2" },
                     }}>
-                    <FilterPanel filters={filters} />
+                    {/* <FilterPanel filters={filters} /> */}
                 </Box>
                 <Box
                     sx={{
