@@ -27,8 +27,7 @@ const Button: React.FC<ButtonProps> = ({
                 whiteSpace: "nowrap",
                 ...rest.sx,
             }}
-            {...rest}
-        >
+            {...rest}>
             {children}
         </MuiButton>
     );

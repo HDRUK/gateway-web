@@ -35,14 +35,12 @@ const TableActionCell = ({ actions, user }: TableActionCellProps) => {
             <Box display="flex" alignItems="center" justifyContent="center">
                 <ConditionalWrapper
                     requiresWrapper={!!title}
-                    wrapper={linkWrapper(title || "")}
-                >
+                    wrapper={linkWrapper(title || "")}>
                     <IconButton
                         color="primary"
                         onClick={() => onClick(user)}
                         disabled={disabled}
-                        {...rest}
-                    >
+                        {...rest}>
                         <Icon />
                     </IconButton>
                 </ConditionalWrapper>
