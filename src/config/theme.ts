@@ -132,7 +132,10 @@ const palette = {
 
 const theme = createTheme({
     typography: {
-        fontFamily: ["Arial"].join(","),
+        fontFamily: [
+            "__Source_Sans_3_32aa65",
+            "__Source_Sans_3_Fallback_32aa65",
+        ].join(","),
         body1: {
             fontSize: 14,
         },
