@@ -26,11 +26,12 @@ const sortByOptions = [
     // - publisherName == team name
     // - publisherName will always be the same
     //   because this is the dataset page view
+    */
     {
         label: "Sort By Publisher Name",
         value: "metadata.summary.publisher.name",
         initialDirection: "asc",
-    }, */
+    },
 ];
 
 const searchFilter = {
